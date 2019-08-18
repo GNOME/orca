@@ -9,8 +9,8 @@
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2019-03-14 14:20+0000\n"
-"PO-Revision-Date: 2019-05-10 10:00+0100\n"
+"POT-Creation-Date: 2019-07-22 15:41+0000\n"
+"PO-Revision-Date: 2019-08-18 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -606,7 +606,7 @@ msgstr "Belgikako nederlandera 1. maila"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: src/orca/chnames.py:41 src/orca/keynames.py:138
+#: src/orca/chnames.py:41 src/orca/keynames.py:143
 msgid "space"
 msgstr "zuriunea"
 
@@ -620,7 +620,7 @@ msgstr "lerro berria"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: src/orca/chnames.py:49 src/orca/keynames.py:130
+#: src/orca/chnames.py:49 src/orca/keynames.py:135
 msgid "tab"
 msgstr "tabulazioa"
 
@@ -688,7 +688,7 @@ msgstr "izartxoa"
 #.
 #. Translators: this is how someone would speak the name of the plus key
 #.
-#: src/orca/chnames.py:93 src/orca/keynames.py:298
+#: src/orca/chnames.py:93 src/orca/keynames.py:303
 msgid "plus"
 msgstr "plus zeinua"
 
@@ -793,7 +793,7 @@ msgstr "azpimarra"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: src/orca/chnames.py:161 src/orca/keynames.py:255
+#: src/orca/chnames.py:161 src/orca/keynames.py:260
 msgid "grave"
 msgstr "azentu kamutsa"
 
@@ -820,7 +820,7 @@ msgstr "eskuin-giltza"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: src/orca/chnames.py:177 src/orca/keynames.py:270
+#: src/orca/chnames.py:177 src/orca/keynames.py:275
 msgid "tilde"
 msgstr "tileta"
 
@@ -878,7 +878,7 @@ msgstr "sekzio-marka"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the diaeresis glyph
 #.
-#: src/orca/chnames.py:214 src/orca/keynames.py:275
+#: src/orca/chnames.py:214 src/orca/keynames.py:280
 msgid "diaeresis"
 msgstr "dieresia"
 
@@ -953,7 +953,7 @@ msgstr "3 goi-indizea"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
 #.
-#: src/orca/chnames.py:262 src/orca/keynames.py:260
+#: src/orca/chnames.py:262 src/orca/keynames.py:265
 msgid "acute"
 msgstr "zorrotza"
 
@@ -980,7 +980,7 @@ msgstr "erdiko puntua"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: src/orca/chnames.py:278 src/orca/keynames.py:285
+#: src/orca/chnames.py:278 src/orca/keynames.py:290
 msgid "cedilla"
 msgstr "zedila"
 
@@ -4353,8 +4353,8 @@ msgstr "Fokuaren modu automatikoa kurtsore-nabigazioan"
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:82 src/orca/orca-setup.ui:2282
-#: src/orca/orca-setup.ui:2382 src/orca/orca-setup.ui:3301
+#: src/orca/guilabels.py:82 src/orca/orca-setup.ui:2308
+#: src/orca/orca-setup.ui:2408 src/orca/orca-setup.ui:3327
 msgid "Dot _7"
 msgstr "_7. botoia"
 
@@ -4362,8 +4362,8 @@ msgstr "_7. botoia"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:88 src/orca/orca-setup.ui:2298
-#: src/orca/orca-setup.ui:2398 src/orca/orca-setup.ui:3317
+#: src/orca/guilabels.py:88 src/orca/orca-setup.ui:2324
+#: src/orca/orca-setup.ui:2424 src/orca/orca-setup.ui:3343
 msgid "Dot _8"
 msgstr "_8. botoia"
 
@@ -4371,8 +4371,8 @@ msgstr "_8. botoia"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:94 src/orca/orca-setup.ui:2314
-#: src/orca/orca-setup.ui:2414 src/orca/orca-setup.ui:3333
+#: src/orca/guilabels.py:94 src/orca/orca-setup.ui:2340
+#: src/orca/orca-setup.ui:2440 src/orca/orca-setup.ui:3359
 msgid "Dots 7 an_d 8"
 msgstr "7. _eta 8. botoiak"
 
@@ -4568,7 +4568,7 @@ msgstr "Ordezteko erabiliko den katea"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: src/orca/guilabels.py:213 src/orca/orca-setup.ui:2783
+#: src/orca/guilabels.py:213 src/orca/orca-setup.ui:2809
 msgid "Enable echo by cha_racter"
 msgstr "Gaitu oihartzuna _karaktere arabera"
 
@@ -4576,7 +4576,7 @@ msgstr "Gaitu oihartzuna _karaktere arabera"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: src/orca/guilabels.py:218 src/orca/orca-setup.ui:2757
+#: src/orca/guilabels.py:218 src/orca/orca-setup.ui:2783
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Gaitu tarterik gabeko tekla _diakritikoak"
 
@@ -4852,7 +4852,7 @@ msgstr "Leihoa"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: src/orca/guilabels.py:419 src/orca/orca-setup.ui:1521
+#: src/orca/guilabels.py:419 src/orca/orca-setup.ui:1547
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Bat ere ez"
@@ -4860,13 +4860,13 @@ msgstr "_Bat ere ez"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: src/orca/guilabels.py:424 src/orca/orca-setup.ui:1537
+#: src/orca/guilabels.py:424 src/orca/orca-setup.ui:1563
 msgid "So_me"
 msgstr "_Batzuk"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: src/orca/guilabels.py:428 src/orca/orca-setup.ui:1553
+#: src/orca/guilabels.py:428 src/orca/orca-setup.ui:1579
 msgid "M_ost"
 msgstr "_Gehienak"
 
@@ -5298,7 +5298,7 @@ msgstr "Au_rkeztu orriaren laburpena lehenengoz kargatzean"
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: src/orca/guilabels.py:715 src/orca/orca-setup.ui:1316
+#: src/orca/guilabels.py:715 src/orca/orca-setup.ui:1342
 msgid "Break speech into ch_unks between pauses"
 msgstr "Zatitu irakurketa _pusketatan pausen artean"
 
@@ -5462,8 +5462,8 @@ msgstr "Gaitu _egitura-nabigazioa"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:829 src/orca/orca-setup.ui:1454
-#: src/orca/orca-setup.ui:2198
+#: src/orca/guilabels.py:829 src/orca/orca-setup.ui:1480
+#: src/orca/orca-setup.ui:2224
 msgid "Brie_f"
 msgstr "_Laburra"
 
@@ -5548,176 +5548,183 @@ msgstr "Blok Zenb tekla"
 msgid "caps lock"
 msgstr "Blok Maius tekla"
 
+#. Translators: this is how someone would speak the name of the shift lock key
+#. There is no reason to make it different from the translation for "caps lock"
+#.
+#: src/orca/keynames.py:95
+msgid "shift lock"
+msgstr ""
+
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
-#: src/orca/keynames.py:94
+#: src/orca/keynames.py:99
 msgid "scroll lock"
 msgstr "Blok Korr tekla"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: src/orca/keynames.py:98 src/orca/keynames.py:102 src/orca/keynames.py:106
-#: src/orca/keynames.py:110
+#: src/orca/keynames.py:103 src/orca/keynames.py:107 src/orca/keynames.py:111
+#: src/orca/keynames.py:115
 msgid "page up"
 msgstr "Orria Gora tekla"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: src/orca/keynames.py:114 src/orca/keynames.py:118 src/orca/keynames.py:122
-#: src/orca/keynames.py:126
+#: src/orca/keynames.py:119 src/orca/keynames.py:123 src/orca/keynames.py:127
+#: src/orca/keynames.py:131
 msgid "page down"
 msgstr "Orria Behera tekla"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
-#: src/orca/keynames.py:134
+#: src/orca/keynames.py:139
 msgid "left tab"
 msgstr "ezkerreko Tab tekla"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
-#: src/orca/keynames.py:142
+#: src/orca/keynames.py:147
 msgid "backspace"
 msgstr "atzera-tekla"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
-#: src/orca/keynames.py:146
+#: src/orca/keynames.py:151
 msgid "return"
 msgstr "itzuli tekla"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
-#: src/orca/keynames.py:150
+#: src/orca/keynames.py:155
 msgid "enter"
 msgstr "sartu tekla"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: src/orca/keynames.py:154 src/orca/keynames.py:158
+#: src/orca/keynames.py:159 src/orca/keynames.py:163
 msgid "up"
 msgstr "gora"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: src/orca/keynames.py:162 src/orca/keynames.py:166
+#: src/orca/keynames.py:167 src/orca/keynames.py:171
 msgid "down"
 msgstr "behera"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: src/orca/keynames.py:170 src/orca/keynames.py:174
+#: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
 msgstr "ezkerrera"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: src/orca/keynames.py:178 src/orca/keynames.py:182
+#: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
 msgstr "eskuinera"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
-#: src/orca/keynames.py:186
+#: src/orca/keynames.py:191
 msgid "left super"
 msgstr "ezker-super"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
-#: src/orca/keynames.py:190
+#: src/orca/keynames.py:195
 msgid "right super"
 msgstr "eskuin-super"
 
 #. Translators: this is how someone would speak the name of the menu key
 #.
-#: src/orca/keynames.py:194
+#: src/orca/keynames.py:199
 msgid "menu"
 msgstr "menua"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
-#: src/orca/keynames.py:198
+#: src/orca/keynames.py:203
 msgid "Alt Gr"
 msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
-#: src/orca/keynames.py:202
+#: src/orca/keynames.py:207
 msgid "help"
 msgstr "laguntza"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
-#: src/orca/keynames.py:206
+#: src/orca/keynames.py:211
 msgid "multi"
 msgstr "anitza"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
-#: src/orca/keynames.py:210
+#: src/orca/keynames.py:215
 msgid "mode switch"
 msgstr "modu aldaketa"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
-#: src/orca/keynames.py:214
+#: src/orca/keynames.py:219
 msgid "escape"
 msgstr "ihes"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: src/orca/keynames.py:218 src/orca/keynames.py:222
+#: src/orca/keynames.py:223 src/orca/keynames.py:227
 msgid "insert"
 msgstr "txertatu"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: src/orca/keynames.py:226 src/orca/keynames.py:230
+#: src/orca/keynames.py:231 src/orca/keynames.py:235
 msgid "delete"
 msgstr "ezabatu"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: src/orca/keynames.py:234 src/orca/keynames.py:238
+#: src/orca/keynames.py:239 src/orca/keynames.py:243
 msgid "home"
 msgstr "hasiera"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: src/orca/keynames.py:242 src/orca/keynames.py:246
+#: src/orca/keynames.py:247 src/orca/keynames.py:251
 msgid "end"
 msgstr "amaiera"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
-#: src/orca/keynames.py:250
+#: src/orca/keynames.py:255
 msgid "begin"
 msgstr "hasiera"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
-#: src/orca/keynames.py:265
+#: src/orca/keynames.py:270
 msgid "circumflex"
 msgstr "zirkunflexua"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
-#: src/orca/keynames.py:280
+#: src/orca/keynames.py:285
 msgid "ring"
 msgstr "eraztunduna"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
 #.
-#: src/orca/keynames.py:290
+#: src/orca/keynames.py:295
 msgid "stroke"
 msgstr "barraduna"
 
 #. Translators: this is how someone would speak the name of the minus key
 #.
-#: src/orca/keynames.py:294
+#: src/orca/keynames.py:299
 msgid "minus"
 msgstr "minus"
 
@@ -5958,7 +5965,7 @@ msgstr "sans-serif lodi etzana %s"
 #, python-format
 msgctxt "math symbol"
 msgid "monospace %s"
-msgstr ""
+msgstr "tarte bakarrekoa %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5972,7 +5979,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "dotless %s"
-msgstr ""
+msgstr "punturik gabekoa %s"
 
 #. Translators: this is the spoken representation for the character '←' (U+2190)
 #: src/orca/mathsymbols.py:1253
@@ -6269,7 +6276,7 @@ msgstr "ez dauka kide gisa"
 #: src/orca/mathsymbols.py:1402
 msgctxt "math symbol"
 msgid "small contains as a member"
-msgstr ""
+msgstr "txikiak kide gisa dauka"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
 #: src/orca/mathsymbols.py:1405
@@ -6305,7 +6312,7 @@ msgstr "minus edo plus"
 #: src/orca/mathsymbols.py:1423
 msgctxt "math symbol"
 msgid "dot plus"
-msgstr ""
+msgstr "puntu plusa"
 
 #. Translators: this is the spoken representation for the character '∕' (U+2215)
 #: src/orca/mathsymbols.py:1426
@@ -6483,19 +6490,19 @@ msgstr "bolumen-integrala"
 #: src/orca/mathsymbols.py:1510
 msgctxt "math symbol"
 msgid "clockwise integral"
-msgstr ""
+msgstr "integrala erlojuaren noranzkoan"
 
 #. Translators: this is the spoken representation for the character '∲' (U+2232)
 #: src/orca/mathsymbols.py:1513
 msgctxt "math symbol"
 msgid "clockwise contour integral"
-msgstr ""
+msgstr "lerro-integrala erlojuaren noranzkoan"
 
 #. Translators: this is the spoken representation for the character '∳' (U+2233)
 #: src/orca/mathsymbols.py:1516
 msgctxt "math symbol"
 msgid "anticlockwise contour integral"
-msgstr ""
+msgstr "lerro-integrala erlojuaren noranzkoaren aurka"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
 #: src/orca/mathsymbols.py:1519
@@ -6525,7 +6532,7 @@ msgstr "proportzioa"
 #: src/orca/mathsymbols.py:1531
 msgctxt "math symbol"
 msgid "dot minus"
-msgstr ""
+msgstr "puntu minusa"
 
 #. Translators: this is the spoken representation for the character '∹' (U+2239)
 #: src/orca/mathsymbols.py:1534
@@ -6543,7 +6550,7 @@ msgstr "proportzio geometrikoa"
 #: src/orca/mathsymbols.py:1540
 msgctxt "math symbol"
 msgid "homothetic"
-msgstr ""
+msgstr "homotetikoa"
 
 #. Translators: this is the spoken representation for the character '∼' (U+223c)
 #: src/orca/mathsymbols.py:1543
@@ -6567,7 +6574,7 @@ msgstr "alderantzikatutako S alferra"
 #: src/orca/mathsymbols.py:1552
 msgctxt "math symbol"
 msgid "sine wave"
-msgstr ""
+msgstr "sinu uhina"
 
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
 #: src/orca/mathsymbols.py:1555
@@ -6663,7 +6670,7 @@ msgstr "geometrikoki baliokidea"
 #: src/orca/mathsymbols.py:1600
 msgctxt "math symbol"
 msgid "difference between"
-msgstr ""
+msgstr "bien arteko ezberdintasuna"
 
 #. Translators: this is the spoken representation for the character '≐' (U+2250)
 #: src/orca/mathsymbols.py:1603
@@ -6825,37 +6832,37 @@ msgstr ""
 #: src/orca/mathsymbols.py:1681
 msgctxt "math symbol"
 msgid "much less than"
-msgstr ""
+msgstr "hau baino askoz gutxiago"
 
 #. Translators: this is the spoken representation for the character '≫' (U+226b)
 #: src/orca/mathsymbols.py:1684
 msgctxt "math symbol"
 msgid "much greater than"
-msgstr ""
+msgstr "hau baino askoz handiago"
 
 #. Translators: this is the spoken representation for the character '≬' (U+226c)
 #: src/orca/mathsymbols.py:1687
 msgctxt "math symbol"
 msgid "between"
-msgstr ""
+msgstr "artean"
 
 #. Translators: this is the spoken representation for the character '≭' (U+226d)
 #: src/orca/mathsymbols.py:1690
 msgctxt "math symbol"
 msgid "not equivalent to"
-msgstr ""
+msgstr "ez baliokidea"
 
 #. Translators: this is the spoken representation for the character '≮' (U+226e)
 #: src/orca/mathsymbols.py:1693
 msgctxt "math symbol"
 msgid "not less than"
-msgstr ""
+msgstr "ez gutxiago"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
 #: src/orca/mathsymbols.py:1696
 msgctxt "math symbol"
 msgid "not greater than"
-msgstr ""
+msgstr "ez handiago"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: src/orca/mathsymbols.py:1699
@@ -7084,13 +7091,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1810 src/orca/mathsymbols.py:2158
 msgctxt "math symbol"
 msgid "circled plus"
-msgstr ""
+msgstr "zirkularra plusa"
 
 #. Translators: this is the spoken representation for the character '⊖' (U+2296)
 #: src/orca/mathsymbols.py:1813
 msgctxt "math symbol"
 msgid "circled minus"
-msgstr ""
+msgstr "zirkularra minusa"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
 #. Translators: this is the spoken representation for the character '⨂' (U+2a02)
@@ -7415,25 +7422,25 @@ msgstr ""
 #: src/orca/mathsymbols.py:1987
 msgctxt "math symbol"
 msgid "double subset"
-msgstr ""
+msgstr "azpimultzo bikoitza"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
 #: src/orca/mathsymbols.py:1990
 msgctxt "math symbol"
 msgid "double superset"
-msgstr ""
+msgstr "goimultzo bikoitza"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
 #: src/orca/mathsymbols.py:1993
 msgctxt "math symbol"
 msgid "double intersection"
-msgstr ""
+msgstr "ebaketa bikoitza"
 
 #. Translators: this is the spoken representation for the character '⋓' (U+22d3)
 #: src/orca/mathsymbols.py:1996
 msgctxt "math symbol"
 msgid "double union"
-msgstr ""
+msgstr "batuketa bikoitza"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
 #: src/orca/mathsymbols.py:1999
@@ -7595,25 +7602,25 @@ msgstr ""
 #: src/orca/mathsymbols.py:2077
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr ""
+msgstr "elipsi bertikala"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: src/orca/mathsymbols.py:2080
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr ""
+msgstr "erdiko marrako elipsi horizontala"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: src/orca/mathsymbols.py:2083
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
-msgstr ""
+msgstr "goiko eskuineko zeharkako elipsia"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
 #: src/orca/mathsymbols.py:2086
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
-msgstr ""
+msgstr "beheko eskuineko zeharkako elipsia"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
 #: src/orca/mathsymbols.py:2089
@@ -7703,25 +7710,25 @@ msgstr ""
 #: src/orca/mathsymbols.py:2131
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr ""
+msgstr "ezkerreko sabaia"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: src/orca/mathsymbols.py:2134
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr ""
+msgstr "eskuineko sabaia"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: src/orca/mathsymbols.py:2137
 msgctxt "math symbol"
 msgid "left floor"
-msgstr ""
+msgstr "ezkerreko zorua"
 
 #. Translators: this is the spoken representation for the character '⌋' (U+230b)
 #: src/orca/mathsymbols.py:2140
 msgctxt "math symbol"
 msgid "right floor"
-msgstr ""
+msgstr "eskuineko zorua"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: src/orca/mathsymbols.py:2143
@@ -8014,7 +8021,7 @@ msgstr ""
 #, python-format
 msgctxt "cell"
 msgid "%s unselected"
-msgstr ""
+msgstr "%s hautatu gabea"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
@@ -8831,7 +8838,7 @@ msgstr "zatiketa-ikur luzea"
 #: src/orca/messages.py:810
 msgctxt "math enclosure"
 msgid "a radical"
-msgstr ""
+msgstr "erradikal bat"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9331,7 +9338,7 @@ msgstr "laburpena uzten."
 #: src/orca/messages.py:1174
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr ""
+msgstr "aitortzak uzten."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9934,7 +9941,7 @@ msgstr "Fokuaren modua finkoa da."
 #. This string is the message presented when Orca switches to sticky browse mode.
 #: src/orca/messages.py:1617
 msgid "Browse mode is sticky."
-msgstr ""
+msgstr "Arakatze modua itsaskorra da."
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -10216,7 +10223,7 @@ msgstr "Behean"
 #. notifications mode is being exited.
 #: src/orca/messages.py:1822
 msgid "Exiting list notification messages mode."
-msgstr "Jakinarazpenen mezuen zerrendaren modutik irtetzen"
+msgstr "Jakinarazpenen mezuen zerrendaren modutik irteten"
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -10329,7 +10336,7 @@ msgstr "%s kargatzen bukatu du."
 #: src/orca/messages.py:1899
 #, python-format
 msgid "Page has %s."
-msgstr ""
+msgstr "Orrialdeak %s dauka."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10533,7 +10540,7 @@ msgstr "Pantaila-irakurlearen ezarpenak berriro kargatu dira."
 #: src/orca/messages.py:2044
 #, python-format
 msgid "Selected text is: %s"
-msgstr ""
+msgstr "Hautatutako testua honakoa da: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -11131,8 +11138,8 @@ msgstr[1] "%d zerrenda uzten."
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] "Elementu %deko zerrenda"
-msgstr[1] "%d elementuko zerrenda"
+msgstr[0] "Elementu %d duen zerrenda"
+msgstr[1] "%d elementu dituen zerrenda"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11140,8 +11147,8 @@ msgstr[1] "%d elementuko zerrenda"
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] "%d errenkadako matematika-taula"
-msgstr[1] "%d errenkadatako matematika-taula"
+msgstr[0] "Errenkada %d duen matematika-taula"
+msgstr[1] "%d errenkada dituen matematika-taula"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11164,8 +11171,8 @@ msgstr[1] "%d zutabe"
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] "%d errenkadako matematika-taula habiaratua"
-msgstr[1] "%d errenkadatako matematika-taula habiaratua"
+msgstr[0] "%d errenkada duen matematika-taula habiaratua"
+msgstr[1] "%d errenkada dituen matematika-taula habiaratua"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -12082,12 +12089,12 @@ msgstr "Pantaila-irakurlearen 'Bilatu' elkarrizketa-koadroa"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-find.ui:29
 msgid "_Close"
-msgstr "_Itxi"
+msgstr "It_xi"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-find.ui:45
 msgid "_Find"
-msgstr "_Bilatu"
+msgstr "A_urkitu"
 
 #: src/orca/orca-find.ui:85
 msgid "_Search for:"
@@ -12238,7 +12245,7 @@ msgstr "_Esan eguneratzeak"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: src/orca/orca-setup.ui:659
 msgid "_Braille updates"
-msgstr ""
+msgstr "_Braille eguneratzeak"
 
 #: src/orca/orca-setup.ui:684
 msgid "10"
@@ -12258,7 +12265,7 @@ msgstr "Murriztu hona:"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
 msgid "Bee_p updates"
-msgstr ""
+msgstr "Bee_p eguneratzeak"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: src/orca/orca-setup.ui:775
@@ -12335,356 +12342,360 @@ msgid "_Person:"
 msgstr "_Pertsona:"
 
 #: src/orca/orca-setup.ui:1178
+msgid "_Language:"
+msgstr "_Hizkuntza:"
+
+#: src/orca/orca-setup.ui:1204
 msgid "Speech synthesi_zer:"
 msgstr "Ahots-sinteti_zatzailea:"
 
-#: src/orca/orca-setup.ui:1204
+#: src/orca/orca-setup.ui:1230
 msgid "Speech _system:"
 msgstr "Ahots-s_istema:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
-#: src/orca/orca-setup.ui:1237
+#: src/orca/orca-setup.ui:1263
 msgid "_Voice type:"
 msgstr "_Ahots mota:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word 'capital' prior to presenting a capital letter (which Speech Dispatcher refers to as 'spell'), or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca refers to these things as 'capitalization style'. This string is the text of the label through which users can choose which of style they would prefer.
-#: src/orca/orca-setup.ui:1251
+#: src/orca/orca-setup.ui:1277
 msgid "_Capitalization style:"
-msgstr ""
+msgstr "_Maiuskulen estiloa:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
-#: src/orca/orca-setup.ui:1287
+#: src/orca/orca-setup.ui:1313
 msgid "Voice Type Settings"
 msgstr "Ahots motaren ezarpenak"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
-#: src/orca/orca-setup.ui:1332
+#: src/orca/orca-setup.ui:1358
 msgid "Speak multicase strings as wor_ds"
 msgstr "Irakurri Maiuskulak dituzten kateak _hitz gisa"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
-#: src/orca/orca-setup.ui:1348
+#: src/orca/orca-setup.ui:1374
 msgid "Speak _numbers as digits"
 msgstr "Esan _zenbakiak digitu eran"
 
-#: src/orca/orca-setup.ui:1373
+#: src/orca/orca-setup.ui:1399
 msgid "Global Voice Settings"
 msgstr "Ahots orokorraren ezarpenak"
 
-#: src/orca/orca-setup.ui:1394
+#: src/orca/orca-setup.ui:1420
 msgid "Voice"
 msgstr "Ahotsa"
 
-#: src/orca/orca-setup.ui:1410
+#: src/orca/orca-setup.ui:1436
 msgid "_Enable speech"
 msgstr "_Gaitu ahotsa"
 
-#: src/orca/orca-setup.ui:1470 src/orca/orca-setup.ui:2214
+#: src/orca/orca-setup.ui:1496 src/orca/orca-setup.ui:2240
 msgid "Ver_bose"
 msgstr "_Xehatua"
 
-#: src/orca/orca-setup.ui:1492 src/orca/orca-setup.ui:2236
+#: src/orca/orca-setup.ui:1518 src/orca/orca-setup.ui:2262
 msgid "Verbosity"
 msgstr "Xehetasun-maila"
 
-#: src/orca/orca-setup.ui:1569
+#: src/orca/orca-setup.ui:1595
 msgid "_All"
 msgstr "_Denak"
 
-#: src/orca/orca-setup.ui:1591
+#: src/orca/orca-setup.ui:1617
 msgid "Punctuation Level"
 msgstr "Puntuazio-maila"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: src/orca/orca-setup.ui:1632
+#: src/orca/orca-setup.ui:1658
 msgid "Only speak displayed text"
 msgstr "Soilik bistaratutako testua irakurri"
 
-#: src/orca/orca-setup.ui:1652
+#: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
 msgstr "Irakurri lerro hutsak"
 
-#: src/orca/orca-setup.ui:1668
+#: src/orca/orca-setup.ui:1694
 msgid "Speak _indentation and justification"
 msgstr "Irakurri _koskak eta justifikazioak"
 
-#: src/orca/orca-setup.ui:1683
+#: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
 msgstr "I_rakurri objektu mnemoteknikoak"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
-#: src/orca/orca-setup.ui:1699
+#: src/orca/orca-setup.ui:1725
 msgid "Speak child p_osition"
 msgstr "Irakurri haurraren _posizioa"
 
-#: src/orca/orca-setup.ui:1715
+#: src/orca/orca-setup.ui:1741
 msgid "Speak tutorial messages"
 msgstr "Irakurri tutoretzako mezuak"
 
 #. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
-#: src/orca/orca-setup.ui:1731
+#: src/orca/orca-setup.ui:1757
 msgid "_System messages are detailed"
-msgstr ""
+msgstr "_Sistema-mezuak xeheak dira"
 
 #. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
-#: src/orca/orca-setup.ui:1748
+#: src/orca/orca-setup.ui:1774
 msgid "S_peak colors as names"
-msgstr ""
+msgstr "I_rakurri koloreak izen modura"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
-#: src/orca/orca-setup.ui:1765
+#: src/orca/orca-setup.ui:1791
 msgid "Announce block_quotes during navigation"
 msgstr ""
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
-#: src/orca/orca-setup.ui:1782
+#: src/orca/orca-setup.ui:1808
 msgid "Announce _lists during navigation"
 msgstr ""
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered as the user arrows into it and before speaking the table content. Upon navigating out of the table, Orca will announce that the table has been exited prior to speaking the new location.
-#: src/orca/orca-setup.ui:1799
+#: src/orca/orca-setup.ui:1825
 msgid "Announce _tables during navigation"
 msgstr ""
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
-#: src/orca/orca-setup.ui:1816
+#: src/orca/orca-setup.ui:1842
 msgid "Speak _misspelled-word indicator"
 msgstr ""
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
-#: src/orca/orca-setup.ui:1833
+#: src/orca/orca-setup.ui:1859
 msgid "Announce _panels during navigation"
 msgstr ""
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
-#: src/orca/orca-setup.ui:1850
+#: src/orca/orca-setup.ui:1876
 msgid "Announce land_marks during navigation"
 msgstr ""
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
-#: src/orca/orca-setup.ui:1867
+#: src/orca/orca-setup.ui:1893
 msgid "Announce _forms during navigation"
 msgstr ""
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
-#: src/orca/orca-setup.ui:1884
+#: src/orca/orca-setup.ui:1910
 msgid "Speak _description"
 msgstr ""
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/orca-setup.ui:1907
+#: src/orca/orca-setup.ui:1933
 msgid "Speak full row in sp_readsheets"
 msgstr ""
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/orca-setup.ui:1924
+#: src/orca/orca-setup.ui:1950
 msgid "Speak full row in _document tables"
 msgstr ""
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a GUI table, such as a GtkTreeView. Document tables, such as those found in Writer and web content, and spreadsheet tables such as those found in Calc are not considered GUI tables. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/orca-setup.ui:1941
+#: src/orca/orca-setup.ui:1967
 msgid "Speak full row in _GUI tables"
 msgstr ""
 
-#: src/orca/orca-setup.ui:1964
+#: src/orca/orca-setup.ui:1990
 msgid "Spoken Context"
 msgstr "Irakurketaren testuingurua"
 
-#: src/orca/orca-setup.ui:2000
+#: src/orca/orca-setup.ui:2026
 msgid "Speech"
 msgstr "Ahotsa"
 
-#: src/orca/orca-setup.ui:2020
+#: src/orca/orca-setup.ui:2046
 msgid "Enable Braille _support"
 msgstr "Gaitu braille-_euskarria"
 
-#: src/orca/orca-setup.ui:2063
+#: src/orca/orca-setup.ui:2089
 msgid "_Abbreviated role names"
 msgstr "_Rol-izen laburtuak"
 
-#: src/orca/orca-setup.ui:2078
+#: src/orca/orca-setup.ui:2104
 msgid "Disable _end of line symbol"
 msgstr "Desgaitu lerro amaierako ikurra"
 
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
-#: src/orca/orca-setup.ui:2102
+#: src/orca/orca-setup.ui:2128
 msgid "Contraction _Table:"
 msgstr "Uzkurduraren _taula:"
 
-#: src/orca/orca-setup.ui:2133
+#: src/orca/orca-setup.ui:2159
 msgid "_Enable Contracted Braille"
 msgstr "_Gaitu uzkurtutako Braille"
 
 #. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
-#: src/orca/orca-setup.ui:2148
+#: src/orca/orca-setup.ui:2174
 msgid "Enable _word wrap"
 msgstr "Gaitu hitzen e_gokitzea"
 
-#: src/orca/orca-setup.ui:2169
+#: src/orca/orca-setup.ui:2195
 msgid "Display Settings"
 msgstr "Pantailaren ezarpenak"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
-#: src/orca/orca-setup.ui:2266 src/orca/orca-setup.ui:2366
-#: src/orca/orca-setup.ui:3285
+#: src/orca/orca-setup.ui:2292 src/orca/orca-setup.ui:2392
+#: src/orca/orca-setup.ui:3311
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Bat ere ez"
 
-#: src/orca/orca-setup.ui:2336
+#: src/orca/orca-setup.ui:2362
 msgid "Selection Indicator"
 msgstr "Hautapenaren adierazlea"
 
-#: src/orca/orca-setup.ui:2436
+#: src/orca/orca-setup.ui:2462
 msgid "Hyperlink Indicator"
 msgstr "Hiperestekaren adierazlea"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
-#: src/orca/orca-setup.ui:2465
+#: src/orca/orca-setup.ui:2491
 msgid "Enable flash _messages"
 msgstr ""
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
-#: src/orca/orca-setup.ui:2488
+#: src/orca/orca-setup.ui:2514
 msgid "Messa_ge duration (secs):"
 msgstr ""
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
-#: src/orca/orca-setup.ui:2522
+#: src/orca/orca-setup.ui:2548
 msgid "Messages are _persistent"
 msgstr ""
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer the brief alternative can uncheck this checkbox.
-#: src/orca/orca-setup.ui:2539
+#: src/orca/orca-setup.ui:2565
 msgid "Messages are _detailed"
 msgstr ""
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
-#: src/orca/orca-setup.ui:2562
+#: src/orca/orca-setup.ui:2588
 msgid "Flash Message Settings"
 msgstr ""
 
-#: src/orca/orca-setup.ui:2599
+#: src/orca/orca-setup.ui:2625
 msgid "Braille"
 msgstr "Braillea"
 
-#: src/orca/orca-setup.ui:2613
+#: src/orca/orca-setup.ui:2639
 msgid "Enable _key echo"
 msgstr "Gaitu _teklen oihartzuna"
 
-#: src/orca/orca-setup.ui:2637
+#: src/orca/orca-setup.ui:2663
 msgid "Enable _alphabetic keys"
 msgstr ""
 
-#: src/orca/orca-setup.ui:2652
+#: src/orca/orca-setup.ui:2678
 msgid "Enable n_umeric keys"
 msgstr ""
 
-#: src/orca/orca-setup.ui:2667
+#: src/orca/orca-setup.ui:2693
 msgid "Enable _punctuation keys"
 msgstr ""
 
-#: src/orca/orca-setup.ui:2682
+#: src/orca/orca-setup.ui:2708
 msgid "Enable _space"
 msgstr ""
 
-#: src/orca/orca-setup.ui:2697
+#: src/orca/orca-setup.ui:2723
 msgid "Enable _modifier keys"
 msgstr "Gaitu tekla _aldatzaileak"
 
-#: src/orca/orca-setup.ui:2712
+#: src/orca/orca-setup.ui:2738
 msgid "Enable _function keys"
 msgstr "Gaitu _funtzio-teklak"
 
-#: src/orca/orca-setup.ui:2727
+#: src/orca/orca-setup.ui:2753
 msgid "Enable ac_tion keys"
 msgstr "Gaitu e_kintza-teklak"
 
-#: src/orca/orca-setup.ui:2742
+#: src/orca/orca-setup.ui:2768
 msgid "Enable _navigation keys"
 msgstr "Gaitu _nabigazio-teklak"
 
-#: src/orca/orca-setup.ui:2798
+#: src/orca/orca-setup.ui:2824
 msgid "Enable echo by _word"
 msgstr "Gaitu _hitzen oihartzuna"
 
-#: src/orca/orca-setup.ui:2813
+#: src/orca/orca-setup.ui:2839
 msgid "Enable echo by _sentence"
 msgstr "Gaitu oihartzuna _sententzien arabera"
 
-#: src/orca/orca-setup.ui:2835
+#: src/orca/orca-setup.ui:2861
 msgid "Key Echo"
 msgstr "Teklen oihartzuna"
 
-#: src/orca/orca-setup.ui:2859
+#: src/orca/orca-setup.ui:2885
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "Pantaila-irakurlearen tekla _aldatzailea(k):"
 
-#: src/orca/orca-setup.ui:2927
+#: src/orca/orca-setup.ui:2953
 msgid "Key Bindings"
 msgstr "Laster-teklak"
 
-#: src/orca/orca-setup.ui:2976
+#: src/orca/orca-setup.ui:3002
 msgid "Pronunciation Dictionary"
 msgstr "Ahoskeraren hiztegia"
 
-#: src/orca/orca-setup.ui:2994
+#: src/orca/orca-setup.ui:3020
 msgid "_New entry"
 msgstr "_Sarrera berria"
 
-#: src/orca/orca-setup.ui:3009
+#: src/orca/orca-setup.ui:3035
 msgid "_Delete"
 msgstr "Ez_abatu"
 
-#: src/orca/orca-setup.ui:3037
+#: src/orca/orca-setup.ui:3063
 msgid "Pronunciation"
 msgstr "Ahoskera"
 
-#: src/orca/orca-setup.ui:3076
+#: src/orca/orca-setup.ui:3102
 msgid "_Speak all"
 msgstr "_Irakurri dena"
 
-#: src/orca/orca-setup.ui:3090
+#: src/orca/orca-setup.ui:3116
 msgid "Speak _none"
 msgstr "Bat ere _ez irakurri"
 
-#: src/orca/orca-setup.ui:3104
+#: src/orca/orca-setup.ui:3130
 msgid "_Reset"
 msgstr "_Berrezarri"
 
-#: src/orca/orca-setup.ui:3155
+#: src/orca/orca-setup.ui:3181
 msgid "Text attributes"
 msgstr "Testuaren atributuak"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: src/orca/orca-setup.ui:3189
+#: src/orca/orca-setup.ui:3215
 msgid "Move to _bottom"
 msgstr "Mugitu b_eheraino"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: src/orca/orca-setup.ui:3204
+#: src/orca/orca-setup.ui:3230
 msgid "Move _down one"
 msgstr "Mugitu bat _behera"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: src/orca/orca-setup.ui:3219
+#: src/orca/orca-setup.ui:3245
 msgid "Move _up one"
 msgstr "Mugitu bat _gora"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: src/orca/orca-setup.ui:3234
+#: src/orca/orca-setup.ui:3260
 msgid "Move to _top"
 msgstr "Mugitu g_oraino"
 
-#: src/orca/orca-setup.ui:3255
+#: src/orca/orca-setup.ui:3281
 msgid "Adjust selected attributes"
 msgstr "Doitu hautatutako atributuak"
 
-#: src/orca/orca-setup.ui:3355
+#: src/orca/orca-setup.ui:3381
 msgid "Braille Indicator"
 msgstr "Braille-adierazlea"
 
-#: src/orca/orca-setup.ui:3382
+#: src/orca/orca-setup.ui:3408
 msgid "Text Attributes"
 msgstr "Testuaren atributuak"
 
