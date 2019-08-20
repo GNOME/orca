@@ -1801,8 +1801,7 @@ class Script(default.Script):
 
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
-                notify = self.utilities.inFindContainer(orca_state.locusOfFocus) \
-                    or self.utilities.isFocusModeWidget(obj)
+                notify = self.utilities.inFindContainer(orca_state.locusOfFocus)
                 msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, obj, notify)
