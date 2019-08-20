@@ -1644,9 +1644,11 @@ class Script(default.Script):
 
         if self.utilities.isZombie(obj):
             if self.utilities.isSameObject(obj, event.any_data, comparePaths=True, ignoreNames=True):
+                path, role, name = self.utilities.getCaretContextPathRoleAndName()
+                notify = event.any_data.name != name
                 msg = "WEB: Event handled by updating locusOfFocus and context"
                 debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.any_data, False)
+                orca.setLocusOfFocus(event, event.any_data, notify)
                 self.utilities.setCaretContext(event.any_data, offset)
                 return True
 

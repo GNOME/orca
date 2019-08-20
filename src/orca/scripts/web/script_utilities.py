@@ -4029,7 +4029,7 @@ class Utilities(script_utilities.Utilities):
 
         return obj, offset
 
-    def _getCaretContextPathRoleAndName(self, documentFrame=None):
+    def getCaretContextPathRoleAndName(self, documentFrame=None):
         documentFrame = documentFrame or self.documentFrame()
         if not documentFrame:
             return [-1], None, None
@@ -4077,7 +4077,7 @@ class Utilities(script_utilities.Utilities):
         self._priorContexts.pop(hash(parent), None)
 
     def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
-        path, oldRole, oldName = self._getCaretContextPathRoleAndName(documentFrame)
+        path, oldRole, oldName = self.getCaretContextPathRoleAndName(documentFrame)
         obj = self.getObjectFromPath(path)
         if obj and matchRole:
             if obj.getRole() != oldRole:
