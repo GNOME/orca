@@ -1829,7 +1829,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         priorObj = args.get('priorObj')
-        if not priorObj or obj == priorObj:
+        if not priorObj or obj == priorObj or self._script.utilities.isZombie(priorObj):
             return []
 
         if obj.getRole() == pyatspi.ROLE_PAGE_TAB:
