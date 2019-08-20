@@ -1655,6 +1655,14 @@ class Script(default.Script):
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if not obj:
                 if self._inFocusMode:
+                    if event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+                       and not self.utilities.isTextBlockElement(event.source):
+                        msg = "WEB: Event handled by updating locusOfFocus and context"
+                        debug.println(debug.LEVEL_INFO, msg, True)
+                        orca.setLocusOfFocus(event, event.source, False)
+                        self.utilities.setCaretContext(event.source, 0)
+                        return True
+
                     msg = "WEB: Not looking for replicant due to focus mode."
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
