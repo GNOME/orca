@@ -2745,7 +2745,7 @@ class Utilities(script_utilities.Utilities):
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
             for i in range(nChars):
                 string, start, end = text.getTextAtOffset(i, boundary)
-                if len(string) > 1:
+                if len(string) != 1:
                     rv = False
                     break
 
