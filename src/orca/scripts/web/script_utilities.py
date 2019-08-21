@@ -243,6 +243,16 @@ class Utilities(script_utilities.Utilities):
 
         return pyatspi.findAncestor(obj, self.isDocument)
 
+    def getTopLevelDocumentForObject(self, obj):
+        document = self.getDocumentForObject(obj)
+        while document:
+            ancestor = pyatspi.findAncestor(document, self.isDocument)
+            if not ancestor or ancestor == document:
+                break
+            document = ancestor
+
+        return document
+
     def _getDocumentsEmbeddedBy(self, frame):
         if not frame:
             return []
@@ -4027,7 +4037,7 @@ class Utilities(script_utilities.Utilities):
             return self._getCaretContextViaLocusOfFocus()
 
         context = self._caretContexts.get(hash(documentFrame.parent))
-        if not context or documentFrame != self.getDocumentForObject(context[0]):
+        if not context or documentFrame != self.getTopLevelDocumentForObject(context[0]):
             obj, offset = self.searchForCaretContext(documentFrame)
         elif not getZombieReplicant:
             return context
