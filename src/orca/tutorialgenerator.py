@@ -778,6 +778,15 @@ class TutorialGenerator:
         if not (obj and obj == orca_state.locusOfFocus):
             return []
 
+        # Widgets in document content don't necessarily have the same interaction
+        # as native toolkits. Because we can't know for certain what a keystroke
+        # will do, better to say nothing than to risk confusing the user with
+        # bogus info.
+        if self._script.utilities.inDocumentContent(obj):
+            msg = "INFO: Not generating tutorial for document object %s." % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         utterances = []
         role = role or obj.getRole()
         msg = self._getModeTutorial(obj, alreadyFocused, forceTutorial)
