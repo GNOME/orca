@@ -1251,21 +1251,23 @@ class Utilities(script_utilities.Utilities):
                     math = self.getMathAncestor(obj)
                 return [[math, 0, 1, '']]
 
+            text = self.queryNonEmptyText(obj)
+
             if self.elementLinesAreSingleChars(obj):
-                if obj.name:
+                if obj.name and text:
                     msg = "WEB: Returning name as contents for %s (single-char lines)" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
-                    return [[obj, 0, len(obj.name), obj.name]]
+                    return [[obj, 0, text.characterCount, obj.name]]
 
                 msg = "WEB: Returning all text as contents for %s (single-char lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 boundary = None
 
             if self.elementLinesAreSingleWords(obj):
-                if obj.name:
+                if obj.name and text:
                     msg = "WEB: Returning name as contents for %s (single-word lines)" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
-                    return [[obj, 0, len(obj.name), obj.name]]
+                    return [[obj, 0, text.characterCount, obj.name]]
 
                 msg = "WEB: Returning all text as contents for %s (single-word lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
