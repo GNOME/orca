@@ -2692,7 +2692,7 @@ class Utilities(script_utilities.Utilities):
             i = 0
             while i < nChars:
                 string, start, end = text.getTextAtOffset(i, boundary)
-                if len(string.split()) > 1:
+                if len(string.split()) != 1:
                     rv = False
                     break
                 i = max(i+1, end)
