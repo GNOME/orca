@@ -4015,7 +4015,7 @@ class Utilities(script_utilities.Utilities):
             return self._getCaretContextViaLocusOfFocus()
 
         context = self._caretContexts.get(hash(documentFrame.parent))
-        if not context:
+        if not context or documentFrame != self.getDocumentForObject(context[0]):
             obj, offset = self.searchForCaretContext(documentFrame)
         elif not getZombieReplicant:
             return context
