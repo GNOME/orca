@@ -981,26 +981,44 @@ class Utilities(script_utilities.Utilities):
         try:
             rv = obj.queryText()
             characterCount = rv.characterCount
+        except NotImplementedError:
+            msg = "WEB: %s doesn't implement text interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = None
         except:
+            msg = "WEB: Exception getting character count for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             rv = None
         else:
             if not characterCount:
+                msg = "WEB: %s reports 0 characters" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
 
         if self.isCellWithNameFromHeader(obj):
             pass
         elif self._treatObjectAsWhole(obj) and obj.name:
+            msg = "WEB: Treating %s as non-text: named object treated as whole." % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             rv = None
         elif not self.isLiveRegion(obj):
             doNotQuery = [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_LIST_BOX]
             role = obj.getRole()
             if rv and role in doNotQuery:
+                msg = "WEB: Treating %s as non-text due to role." % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
             if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
+                msg = "WEB: Treating %s as non-text: is non-entry text widget." % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+                msg = "WEB: Treating %s as non-text: is hidden or off-screen label." % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
             if rv and self.isNonNavigableEmbeddedDocument(obj):
+                msg = "WEB: Treating %s as non-text: is non-navigable embedded document." % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
 
         self._text[hash(obj)] = rv
