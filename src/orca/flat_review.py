@@ -921,7 +921,7 @@ class Context:
 
     def _getClickPoint(self):
         string, x, y, width, height = self.getCurrent(Context.CHAR)
-        if x < 0 and y < 0:
+        if (x < 0 and y < 0) or (width <= 0 and height <=0):
             return -1, -1
 
         # Click left of center to position the caret there.
