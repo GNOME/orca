@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2019-07-01 21:28+0000\n"
-"PO-Revision-Date: 2019-07-02 17:42+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
+"POT-Creation-Date: 2019-08-24 13:49+0000\n"
+"PO-Revision-Date: 2019-08-24 18:46+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -609,7 +609,7 @@ msgstr "Belgijska nizozemščina, 1. razred"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: src/orca/chnames.py:41 src/orca/keynames.py:138
+#: src/orca/chnames.py:41 src/orca/keynames.py:143
 msgid "space"
 msgstr "presledek"
 
@@ -623,7 +623,7 @@ msgstr "nova vrstica"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: src/orca/chnames.py:49 src/orca/keynames.py:130
+#: src/orca/chnames.py:49 src/orca/keynames.py:135
 msgid "tab"
 msgstr "tabulator"
 
@@ -691,7 +691,7 @@ msgstr "zvezdica"
 #.
 #. Translators: this is how someone would speak the name of the plus key
 #.
-#: src/orca/chnames.py:93 src/orca/keynames.py:298
+#: src/orca/chnames.py:93 src/orca/keynames.py:303
 msgid "plus"
 msgstr "plus"
 
@@ -796,7 +796,7 @@ msgstr "podčrtaj"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: src/orca/chnames.py:161 src/orca/keynames.py:255
+#: src/orca/chnames.py:161 src/orca/keynames.py:260
 msgid "grave"
 msgstr "krativec"
 
@@ -823,7 +823,7 @@ msgstr "desni zaviti zaklepaj"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: src/orca/chnames.py:177 src/orca/keynames.py:270
+#: src/orca/chnames.py:177 src/orca/keynames.py:275
 msgid "tilde"
 msgstr "tilda"
 
@@ -881,7 +881,7 @@ msgstr "znak za člen"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the diaeresis glyph
 #.
-#: src/orca/chnames.py:214 src/orca/keynames.py:275
+#: src/orca/chnames.py:214 src/orca/keynames.py:280
 msgid "diaeresis"
 msgstr "preglas"
 
@@ -956,7 +956,7 @@ msgstr "nadpisana številka 3"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
 #.
-#: src/orca/chnames.py:262 src/orca/keynames.py:260
+#: src/orca/chnames.py:262 src/orca/keynames.py:265
 msgid "acute"
 msgstr "ostrivec"
 
@@ -983,7 +983,7 @@ msgstr "sredinska pika"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: src/orca/chnames.py:278 src/orca/keynames.py:285
+#: src/orca/chnames.py:278 src/orca/keynames.py:290
 msgid "cedilla"
 msgstr "sedij"
 
@@ -5559,176 +5559,183 @@ msgstr "zaklep številčnice"
 msgid "caps lock"
 msgstr "zaklep velikosti črk"
 
+#. Translators: this is how someone would speak the name of the shift lock key
+#. There is no reason to make it different from the translation for "caps lock"
+#.
+#: src/orca/keynames.py:95
+msgid "shift lock"
+msgstr "zaklep dvigalke"
+
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
-#: src/orca/keynames.py:94
+#: src/orca/keynames.py:99
 msgid "scroll lock"
 msgstr "zaklep drsnika"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: src/orca/keynames.py:98 src/orca/keynames.py:102 src/orca/keynames.py:106
-#: src/orca/keynames.py:110
+#: src/orca/keynames.py:103 src/orca/keynames.py:107 src/orca/keynames.py:111
+#: src/orca/keynames.py:115
 msgid "page up"
 msgstr "predhodna stran"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: src/orca/keynames.py:114 src/orca/keynames.py:118 src/orca/keynames.py:122
-#: src/orca/keynames.py:126
+#: src/orca/keynames.py:119 src/orca/keynames.py:123 src/orca/keynames.py:127
+#: src/orca/keynames.py:131
 msgid "page down"
 msgstr "naslednja stran"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
-#: src/orca/keynames.py:134
+#: src/orca/keynames.py:139
 msgid "left tab"
 msgstr "levi tabulator"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
-#: src/orca/keynames.py:142
+#: src/orca/keynames.py:147
 msgid "backspace"
 msgstr "vračalka"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
-#: src/orca/keynames.py:146
+#: src/orca/keynames.py:151
 msgid "return"
 msgstr "vnašalka"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
-#: src/orca/keynames.py:150
+#: src/orca/keynames.py:155
 msgid "enter"
 msgstr "vnašalka"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: src/orca/keynames.py:154 src/orca/keynames.py:158
+#: src/orca/keynames.py:159 src/orca/keynames.py:163
 msgid "up"
 msgstr "gor"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: src/orca/keynames.py:162 src/orca/keynames.py:166
+#: src/orca/keynames.py:167 src/orca/keynames.py:171
 msgid "down"
 msgstr "dol"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: src/orca/keynames.py:170 src/orca/keynames.py:174
+#: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
 msgstr "levo"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: src/orca/keynames.py:178 src/orca/keynames.py:182
+#: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
 msgstr "desno"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
-#: src/orca/keynames.py:186
+#: src/orca/keynames.py:191
 msgid "left super"
 msgstr "leva menijska tipka"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
-#: src/orca/keynames.py:190
+#: src/orca/keynames.py:195
 msgid "right super"
 msgstr "desna menijska tipka"
 
 #. Translators: this is how someone would speak the name of the menu key
 #.
-#: src/orca/keynames.py:194
+#: src/orca/keynames.py:199
 msgid "menu"
 msgstr "meni"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
-#: src/orca/keynames.py:198
+#: src/orca/keynames.py:203
 msgid "Alt Gr"
 msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
-#: src/orca/keynames.py:202
+#: src/orca/keynames.py:207
 msgid "help"
 msgstr "pomoč"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
-#: src/orca/keynames.py:206
+#: src/orca/keynames.py:211
 msgid "multi"
 msgstr "večnamenska tipka"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
-#: src/orca/keynames.py:210
+#: src/orca/keynames.py:215
 msgid "mode switch"
 msgstr "preklopna tipka"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
-#: src/orca/keynames.py:214
+#: src/orca/keynames.py:219
 msgid "escape"
 msgstr "ubežnica"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: src/orca/keynames.py:218 src/orca/keynames.py:222
+#: src/orca/keynames.py:223 src/orca/keynames.py:227
 msgid "insert"
 msgstr "vstavi"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: src/orca/keynames.py:226 src/orca/keynames.py:230
+#: src/orca/keynames.py:231 src/orca/keynames.py:235
 msgid "delete"
 msgstr "izbriši"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: src/orca/keynames.py:234 src/orca/keynames.py:238
+#: src/orca/keynames.py:239 src/orca/keynames.py:243
 msgid "home"
 msgstr "začetek"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: src/orca/keynames.py:242 src/orca/keynames.py:246
+#: src/orca/keynames.py:247 src/orca/keynames.py:251
 msgid "end"
 msgstr "konec"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
-#: src/orca/keynames.py:250
+#: src/orca/keynames.py:255
 msgid "begin"
 msgstr "začetek"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
-#: src/orca/keynames.py:265
+#: src/orca/keynames.py:270
 msgid "circumflex"
 msgstr "cirkumfleks"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
-#: src/orca/keynames.py:280
+#: src/orca/keynames.py:285
 msgid "ring"
 msgstr "krožec"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
 #.
-#: src/orca/keynames.py:290
+#: src/orca/keynames.py:295
 msgid "stroke"
 msgstr "prečrtano"
 
 #. Translators: this is how someone would speak the name of the minus key
 #.
-#: src/orca/keynames.py:294
+#: src/orca/keynames.py:299
 msgid "minus"
 msgstr "minus"
 
@@ -13912,6 +13919,10 @@ msgid ""
 msgstr ""
 "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za najmanjšo "
 "vrednost pritisnite tipko Začetek, za največjo pa tipko Konec."
+
+#~| msgid "Shift"
+#~ msgid "Shift_Lock"
+#~ msgstr "Shift_Lock"
 
 #~ msgid "Speaks the selected text."
 #~ msgstr "Izgovori izbrano besedilo."
