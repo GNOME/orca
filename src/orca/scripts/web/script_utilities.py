@@ -4103,6 +4103,11 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(obj):
             return
 
+        # For performance reasons. If clearing the selection on a table doesn't
+        # clear it, file a bug against the user agent in question.
+        if self.getTable(obj):
+            return
+
         try:
             for child in obj:
                 self.clearTextSelection(child)
