@@ -4098,22 +4098,6 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
-    def clearTextSelection(self, obj):
-        super().clearTextSelection(obj)
-        if self.isDocument(obj):
-            return
-
-        # For performance reasons. If clearing the selection on a table doesn't
-        # clear it, file a bug against the user agent in question.
-        if self.getTable(obj):
-            return
-
-        try:
-            for child in obj:
-                self.clearTextSelection(child)
-        except:
-            pass
-
     def clearCaretContext(self, documentFrame=None):
         self.clearContentCache()
         documentFrame = documentFrame or self.documentFrame()
