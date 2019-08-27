@@ -1,3 +1,53 @@
+3.33.91 - 27 August 2019
+
+Web:
+
+ * Improve performance with structural navigation amongst large objects.
+   Also fix performance regression introduced in unstable release.
+
+ * Treat headings as paragraphs for the purpose of structural navigation
+
+ * Treat push buttons with state has-popup as focus-mode widgets
+
+ * Fix chattiness resulting from svg elements with no information
+
+ * Don't generate tutorial messages for widgets in document content
+
+ * Eliminate some chattiness with Google Drive menus
+
+ * Improve presentation of widgets which are destroyed and recreated
+   while focused
+
+ * Improve detection and presentation of content which is exposed to
+   us incorrectly due to CSS properties
+
+ * Ongoing work on Chromium support. Note: ATK support in Chromium is
+   still a work in progress and not yet ready for end-user testing.
+   But we're getting close, so stay tuned!
+
+GNOME Shell:
+
+ * Eliminate some chattiness with Dash
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   ca            Catalan               Robert Antoni Buj i Gelonch
+   cs            Czech                 Marek Cernocky
+   de            German                Tim Sabsch
+   en_GB         British English       Bruce Cowan
+   eu            Basque                Asier Sarasua Garmendia
+   fr            French                Claude Paroz
+   gl            Galician              Fran Diéguez
+   lt            Lithuanian            Aurimas Černius
+   lv            Latvian               Rūdolfs Mazurs
+   ne            Nepali                Pawan Chitrakar
+   po            Polish                Piotr Drąg
+   sl            Slovenian             Matej Urbančič
+   sr            Serbian               Марко Костић
+   tr            Turkish               Çağatay Yiğit Şahin
+
+=========
+
 3.33.90 - 2 August 2019
 
 Web:
