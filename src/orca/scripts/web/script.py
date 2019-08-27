@@ -2142,6 +2142,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.eventIsSpinnerNoise(event):
+            msg = "WEB: Ignoring: Event believed to be spinner noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.textEventIsForNonNavigableTextObject(event):
             msg = "WEB: Ignoring event for non-navigable text object"
             debug.println(debug.LEVEL_INFO, msg, True)

@@ -3623,18 +3623,20 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return False
 
-        # TODO - JD: Ideally, things that look and act like spinners (such number inputs)
-        # would look and act like platform native spinners. That's not true for Gecko. And
-        # the only thing that's funkier is what we get from WebKitGtk. Try to at least get
-        # the two engines into alignment before migrating Epiphany support to the web script.
-        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
-           and obj.parent.getRole() == pyatspi.ROLE_SPIN_BUTTON:
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        if pyatspi.ROLE_SPIN_BUTTON in [obj.getRole(), obj.parent.getRole()]:
             return True
 
         return False
 
     def eventIsSpinnerNoise(self, event):
-        if event.type.startswith("object:text-changed") and self.isSpinnerEntry(event.source):
+        if not self.isSpinnerEntry(event.source):
+            return False
+
+        if event.type.startswith("object:text-changed") \
+           or event.type.startswith("object:text-selection-changed"):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey in ["Down", "Up"]:
                 return True
