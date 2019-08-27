@@ -655,8 +655,8 @@ class KeyboardEvent(InputEvent):
         """Processes this input event."""
 
         if self._bypassOrca:
-            if self.event_string == "Caps_Lock" \
-               or self.event_string == "Shift_Lock" \
+            if (self.event_string == "Caps_Lock" \
+                or self.event_string == "Shift_Lock") \
                and self.type == pyatspi.KEY_PRESSED_EVENT:
                     self._lock_mod()
                     self.keyType = KeyboardEvent.TYPE_LOCKING
