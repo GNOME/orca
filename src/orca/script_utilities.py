@@ -2109,7 +2109,7 @@ class Utilities:
             return obj
 
         hasContent = [x for x in obj if self.displayedText(x).strip()]
-        if len(hasContent) == 1:
+        if len(hasContent) == 1 and not self.isStaticTextLeaf(hasContent[0]):
             return hasContent[0]
 
         return obj
