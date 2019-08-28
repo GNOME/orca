@@ -1790,6 +1790,10 @@ class Utilities(script_utilities.Utilities):
 
         return handled
 
+    def inPDFViewer(self, obj=None):
+        uri = self.documentFrameURI()
+        return uri.lower().endswith(".pdf")
+
     def inTopLevelWebApp(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus
@@ -1870,7 +1874,8 @@ class Utilities(script_utilities.Utilities):
 
         if role in focusModeRoles \
            and not self.isTextBlockElement(obj) \
-           and not self.hasNameAndActionAndNoUsefulChildren(obj):
+           and not self.hasNameAndActionAndNoUsefulChildren(obj) \
+           and not self.inPDFViewer(obj):
             return True
 
         if self.isGridDescendant(obj) \
