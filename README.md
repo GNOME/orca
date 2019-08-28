@@ -14,7 +14,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also http://wiki.gnome.org/Projects/Orca for detailed English and Spanish
+See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
@@ -31,7 +31,7 @@ Orca also has the following dependencies:
 * Python           - Python platform (minimum version 3.3)
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - GTK+ toolkit
-* json-py          - a JSON (http://json.org) reader and writer in Python
+* json-py          - a JSON (<https://json.org/>) reader and writer in Python
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
@@ -41,15 +41,19 @@ Orca also has the following dependencies:
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.34.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
-NOTE: If you have multiple versions of the Python interpreter installed
+> NOTE: If you have multiple versions of the Python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
-   PYTHON=/usr/bin/python3.3 ./autogen.sh
+```sh
+PYTHON=/usr/bin/python3.3 ./autogen.sh
+```
 
 or
 
-   PYTHON=/usr/bin/python3.3 ./configure
+```sh
+PYTHON=/usr/bin/python3.3 ./configure
+```
 
 ## NOTE FOR BRLTTY USERS:
 
@@ -57,11 +61,13 @@ Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
 installed by running the following command:
 
+```sh
 python -c "import brlapi"
+```
 
 If you get an error, the Python bindings for BrlAPI are not installed.
 
-See also http://wiki.gnome.org/Projects/Orca/Braille for more information on
+See also <http://wiki.gnome.org/Projects/Orca/Braille> for more information on
 BrlTTY and also using liblouis for contracted braille.
 
 ## Running Orca
@@ -76,7 +82,7 @@ learn mode, press "Escape."  Finally, the preferences dialog contains
 a "Key Bindings" tab that lists the keyboard binding for Orca.
 
 For more information, see the Orca documentation which is available
-within Orca as well as at: http://library.gnome.org/users/orca/stable
+within Orca as well as at: <https://help.gnome.org/users/orca/stable/>
 
 ## Scripting Orca
 
