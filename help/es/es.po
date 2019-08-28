@@ -15,16 +15,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2019-03-14 14:22+0000\n"
-"PO-Revision-Date: 2019-05-13 16:05+0200\n"
+"POT-Creation-Date: 2019-08-20 19:10+0000\n"
+"PO-Revision-Date: 2019-08-28 09:17+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"X-Generator: Gtranslator 3.32.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1485,7 +1485,6 @@ msgstr "Atributos del texto y texto seleccionado"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
-#, fuzzy
 #| msgid ""
 #| "<app>Orca</app> has a dedicated command for obtaining the attributes of "
 #| "the text at the caret location. In addition, if you use <app>Orca</app>'s "
@@ -1506,11 +1505,9 @@ msgstr ""
 "<app>Orca</app> tiene un comando dedicado para obtener los atributos del "
 "texto en la ubicación del cursor. Además, si usa los comandos «Dónde estoy» "
 "de <app>Orca</app> desde un objeto de texto en el que se ha seleccionado "
-"texto, <app>Orca</app> hablará el texto seleccionado. Si en lugar de esto "
-"prefiere un comando dedicado para este propósito, puede vincular el comando "
-"Hablar el texto seleccionado de <app>Orca</app> a una pulsación de teclas. "
-"Consulte el apartado <link xref=\"howto_key_bindings\">Modificar las "
-"asociaciones de teclas</link> para obtener información sobre cómo hacerlo."
+"texto, <app>Orca</app> hablará el texto seleccionado. El comando para hablar "
+"el texto seleccionado de <app>Orca</app> realizará esta función en un objeto "
+"de texto."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:185
@@ -1558,7 +1555,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:222
-#, fuzzy
 #| msgid ""
 #| "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></"
 #| "keyseq>"
@@ -1566,8 +1562,8 @@ msgid ""
 "Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Up</key></keyseq>"
 msgstr ""
-"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>U</key></"
-"keyseq>"
+"Hablar la selección actual: <keyseq><key>Modificador de Orca</"
+"key><key>Mayús</key><key>Arriba</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:230
@@ -1641,10 +1637,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:273
-#, fuzzy
 #| msgid "Using Learn Mode"
 msgid "Toggling Layout Mode"
-msgstr "Usar el modo de aprendizaje"
+msgstr "Cambiar el modo de la disposición"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:274
@@ -1694,7 +1689,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
 msgid "Switch between Layout mode and Object mode: (Unbound)"
-msgstr ""
+msgstr "Cambiar entre modo de disposición y modo objeto: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -2619,9 +2614,6 @@ msgstr "<app>Orca</app> proporciona los siguientes comandos de «Dónde estoy»:
 
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
-#| msgid ""
-#| "In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-#| "additional commands related to obtaining your present location:"
 msgid ""
 "In addition to the dedicated Where Am I commands, <app>Orca</app> has "
 "additional commands related to obtaining information about your present "
@@ -2671,11 +2663,11 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:92
-#, fuzzy
 #| msgid "Present the last (most recent) notification message: (Unbound)"
 msgid "Present size and location of current object in pixels: (Unbound)"
 msgstr ""
-"Presentar el último mensaje (el más reciente) de notificación: (sin asociar)"
+"Presentar el tamaño y la ubicación del objeto actual en píxeles: (sin "
+"asociar)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
@@ -5961,12 +5953,6 @@ msgstr "Longitud mínima del texto coincidente"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:188
-#| msgid ""
-#| "This editable spin button is where you can specify the number of "
-#| "characters which much match before <app>Orca</app> announces the matching "
-#| "line. This option is also designed to prevent \"chattiness\" as there are "
-#| "many matches when you first begin typing the string for which you are "
-#| "searching."
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which must match before <app>Orca</app> announces the matching line. This "
