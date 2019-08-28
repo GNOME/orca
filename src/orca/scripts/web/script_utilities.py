@@ -1864,7 +1864,7 @@ class Utilities(script_utilities.Utilities):
            and self.isLayoutOnly(self.getTable(obj)):
             return False
 
-        if role == pyatspi.ROLE_PUSH_BUTTON and state.contains(pyatspi.STATE_HAS_POPUP):
+        if self.isButtonWithPopup(obj):
             return True
 
         focusModeRoles = [pyatspi.ROLE_EMBEDDED,

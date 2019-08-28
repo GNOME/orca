@@ -3729,6 +3729,20 @@ class Utilities:
 
         return None
 
+    def isButtonWithPopup(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return role == pyatspi.ROLE_PUSH_BUTTON and state.contains(pyatspi.STATE_HAS_POPUP)
+
     def isMenuButton(self, obj):
         if not obj:
             return False

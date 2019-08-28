@@ -1792,6 +1792,8 @@ class SpeechGenerator(generator.Generator):
                 pass
             elif self._script.utilities.isLayoutOnly(parent):
                 pass
+            elif self._script.utilities.isButtonWithPopup(parent):
+                pass
             elif parent != commonAncestor or presentCommonAncestor:
                 ancestors.append(parent)
                 ancestorRoles.append(parentRole)
