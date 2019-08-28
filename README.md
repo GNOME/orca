@@ -1,7 +1,6 @@
-Orca v3.33.92pre
+# Orca v3.33.92pre
 
-Introduction
-========================================================================
+## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
 that provides access to the graphical desktop via user-customizable
@@ -20,8 +19,8 @@ information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
 
-Dependencies
-========================================================================
+## Dependencies
+
 
 Orca v3.34.x is supported on GNOME 3.34.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
@@ -52,8 +51,7 @@ or
 
    PYTHON=/usr/bin/python3.3 ./configure
 
-NOTE FOR BRLTTY USERS:
-========================================================================
+## NOTE FOR BRLTTY USERS:
 
 Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
@@ -66,8 +64,7 @@ If you get an error, the Python bindings for BrlAPI are not installed.
 See also http://wiki.gnome.org/Projects/Orca/Braille for more information on
 BrlTTY and also using liblouis for contracted braille.
 
-Running Orca
-========================================================================
+## Running Orca
 
 If you wish to modify your Orca preferences, you can press "Insert+space"
 while Orca is running.
@@ -81,8 +78,7 @@ a "Key Bindings" tab that lists the keyboard binding for Orca.
 For more information, see the Orca documentation which is available
 within Orca as well as at: http://library.gnome.org/users/orca/stable
 
-Scripting Orca
-========================================================================
+## Scripting Orca
 
 So, you want to write a script for Orca?  The best thing to do is 
 start by looking at other scripts under the src/orca/scripts/ hierarchy
