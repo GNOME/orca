@@ -2404,7 +2404,7 @@ msgstr "Enregistrer les signets."
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:524
 msgid "Toggle mouse review mode."
-msgstr "Active ou désactive le mode d’examen à la souris."
+msgstr "Active ou désactive le mode lecture sous la souris."
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
@@ -10042,14 +10042,14 @@ msgstr "L’objet généré par le survol du pointeur n’a pas été trouvé."
 #. the message which Orca will present when mouse review is toggled off via command.
 #: src/orca/messages.py:1655
 msgid "Mouse review disabled."
-msgstr "Mode d’examen à la souris désactivé."
+msgstr "Mode lecture sous la souris désactivé."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: src/orca/messages.py:1660
 msgid "Mouse review enabled."
-msgstr "Mode d’examen à la souris activé."
+msgstr "Mode lecture sous la souris activé."
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
