@@ -16,6 +16,9 @@ for the KDE Qt toolkit is currently being pursued.
 
 See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
+with the Orca user community, and where to log bugs and feature
+requests.
+
 
 ## Dependencies
 
