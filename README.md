@@ -14,13 +14,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
-information on Orca, including how to run Orca, how to communicate
-with the Orca user community, and where to log bugs and feature
-requests.
-
 ## Dependencies
-
 
 Orca v3.34.x is supported on GNOME 3.34.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
@@ -33,8 +27,9 @@ Orca also has the following dependencies:
 * gtk+-3.0         - GTK+ toolkit
 * json-py          - a JSON (<https://json.org/>) reader and writer in Python
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
-* BrlTTY           - BrlTTY support for braille (optional)
+* BrlTTY           - BrlTTY (<https://mielke.cc/brltty/>) support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
+* liblouis         - Liblouis (<http://liblouis.org/>) enables Orca to display text in grade 2 braille on a braille display (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
@@ -42,7 +37,7 @@ YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.34.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 > NOTE: If you have multiple versions of the Python interpreter installed
-on your machine, you should set the PYTHON environment variable when 
+on your machine, you should set the PYTHON environment variable when
 configuring Orca.  For example:
 
 ```sh
