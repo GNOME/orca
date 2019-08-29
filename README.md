@@ -14,6 +14,9 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
+See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
+information on Orca, including how to run Orca, how to communicate
+
 ## Dependencies
 
 Orca v3.34.x is supported on GNOME 3.34.x only.  We highly suggest you
@@ -61,9 +64,6 @@ python -c "import brlapi"
 ```
 
 If you get an error, the Python bindings for BrlAPI are not installed.
-
-See also <http://wiki.gnome.org/Projects/Orca/Braille> for more information on
-BrlTTY and also using liblouis for contracted braille.
 
 ## Running Orca
 
