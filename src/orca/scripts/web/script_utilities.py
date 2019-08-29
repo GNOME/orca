@@ -4208,9 +4208,11 @@ class Utilities(script_utilities.Utilities):
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return nextObj, nextOffset
 
-            msg = "WEB: First caret context for non-text context %s, %i is %s, %i" % (obj, offset, obj, 0)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return obj, 0
+            if self._canHaveCaretContext(obj):
+                msg = "WEB: First caret context for non-text context %s, %i is %s, %i" % \
+                    (obj, offset, obj, 0)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return obj, 0
 
         if offset >= text.characterCount:
             if self.isLink(obj) and self.isContentEditableWithEmbeddedObjects(obj):
@@ -4243,6 +4245,13 @@ class Utilities(script_utilities.Utilities):
                 (obj, offset, obj, offset + 1)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset + 1
+
+        if not self._canHaveCaretContext(child):
+            nextObj, nextOffset = self.nextContext(obj, offset)
+            msg = "WEB: First caret context for %s, %i is %s, %i (child cannot be context)" % \
+                (obj, offset, nextObj, nextOffset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return nextObj, nextOffset
 
         msg = "WEB: Looking in child %s for first caret context for %s, %i" % (child, obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
