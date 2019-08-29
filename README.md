@@ -1,7 +1,6 @@
-Orca v3.33.92pre
+# Orca v3.33.92pre
 
-Introduction
-========================================================================
+## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
 that provides access to the graphical desktop via user-customizable
@@ -15,13 +14,13 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also http://wiki.gnome.org/Projects/Orca for detailed English and Spanish
+See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
 
-Dependencies
-========================================================================
+
+## Dependencies
 
 Orca v3.34.x is supported on GNOME 3.34.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
@@ -32,42 +31,44 @@ Orca also has the following dependencies:
 * Python           - Python platform (minimum version 3.3)
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - GTK+ toolkit
-* json-py          - a JSON (http://json.org) reader and writer in Python
+* json-py          - a JSON (<https://json.org/>) reader and writer in Python
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
-* BrlTTY           - BrlTTY support for braille (optional)
+* BrlTTY           - BrlTTY (<https://mielke.cc/brltty/>) support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
+* liblouis         - Liblouis (<http://liblouis.org/>) support for contracted braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.34.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
-NOTE: If you have multiple versions of the Python interpreter installed
-on your machine, you should set the PYTHON environment variable when 
+> NOTE: If you have multiple versions of the Python interpreter installed
+on your machine, you should set the PYTHON environment variable when
 configuring Orca.  For example:
 
-   PYTHON=/usr/bin/python3.3 ./autogen.sh
+```sh
+PYTHON=/usr/bin/python3.3 ./autogen.sh
+```
 
 or
 
-   PYTHON=/usr/bin/python3.3 ./configure
+```sh
+PYTHON=/usr/bin/python3.3 ./configure
+```
 
-NOTE FOR BRLTTY USERS:
-========================================================================
+## NOTE FOR BRLTTY USERS:
 
 Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
 installed by running the following command:
 
+```sh
 python -c "import brlapi"
+```
 
 If you get an error, the Python bindings for BrlAPI are not installed.
 
-See also http://wiki.gnome.org/Projects/Orca/Braille for more information on
-BrlTTY and also using liblouis for contracted braille.
-
-Running Orca
-========================================================================
+## Running Orca
 
 If you wish to modify your Orca preferences, you can press "Insert+space"
 while Orca is running.
@@ -79,10 +80,9 @@ learn mode, press "Escape."  Finally, the preferences dialog contains
 a "Key Bindings" tab that lists the keyboard binding for Orca.
 
 For more information, see the Orca documentation which is available
-within Orca as well as at: http://library.gnome.org/users/orca/stable
+within Orca as well as at: <https://help.gnome.org/users/orca/stable/>
 
-Scripting Orca
-========================================================================
+## Scripting Orca
 
 So, you want to write a script for Orca?  The best thing to do is 
 start by looking at other scripts under the src/orca/scripts/ hierarchy
