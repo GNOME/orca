@@ -263,6 +263,21 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu
 
+    def _getActionNames(self, obj):
+        names = super()._getActionNames(obj)
+
+        # click-ancestor is meant to bubble up to an ancestor which is actually
+        # clickable. But attempting to perform this action doesn't reliably work;
+        # and the clickable ancestor is what we want to click on anyway. Treating
+        # this as a valid action is causing us to include otherwise ignorable
+        # elements such as sections with no semantic meaning.
+        if "click-ancestor" in names:
+            names = list(filter(lambda x: x != "click-ancestor", names))
+            msg = "CHROMIUM: Ignoring 'click-ancestor' action on %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return names
+
     def topLevelObject(self, obj):
         if not obj:
             return None
