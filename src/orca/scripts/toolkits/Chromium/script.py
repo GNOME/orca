@@ -51,14 +51,6 @@ class Script(web.Script):
 
         self.presentIfInactive = False
 
-        # Chromium fails to emit notifications when objects are reparented,
-        # leading to dead accessibles in the ancestry.
-        app.setCacheMask(pyatspi.cache.DEFAULT ^
-                         pyatspi.cache.CHILDREN ^
-                         pyatspi.cache.NAME ^
-                         pyatspi.cache.DESCRIPTION ^
-                         pyatspi.cache.PARENT)
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
 
