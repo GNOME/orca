@@ -4112,6 +4112,7 @@ class Utilities:
                         return cell
                     return child
 
+        candidates_showing = []
         candidates = []
         for child in root:
             obj = self.descendantAtPoint(child, x, y, coordType)
@@ -4123,8 +4124,13 @@ class Utilities:
                 string = child.queryText().getText(0, -1)
                 if re.search("[^\ufffc\s]", string):
                     candidates.append(child)
+                    if child.getState().contains(pyatspi.STATE_SHOWING):
+                        candidates_showing.append(child)
 
+        if len(candidates_showing) == 1:
+            return candidates_showing[0]
         if len(candidates) == 1:
+            # It should have had state "showing" actually
             return candidates[0]
 
         return None
