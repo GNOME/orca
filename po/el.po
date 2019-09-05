@@ -10,21 +10,22 @@
 # Marios Zindilis <m.zindilis@dmajor.org>, 2011.
 # Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013, 2014, 2015.
 # Efstathios Iosifidis <iosifidis@opensuse.org>, 2013, 2016.
+# Dimitris Maroulidis  <dmaroulidis@dimitrismaroulidis.com>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2019-06-04 13:26+0000\n"
-"PO-Revision-Date: 2019-06-12 11:37+0300\n"
-"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
+"POT-Creation-Date: 2019-08-20 19:09+0000\n"
+"PO-Revision-Date: 2019-08-25 20:37+0300\n"
+"Last-Translator: Dimitris Maroulidis <dmaroulidis@dimitrismaroulidis.com>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:4
@@ -139,7 +140,7 @@ msgstr "html"
 #. Translators: short braille for the rolename of a drawing area.
 #: src/orca/braille_rolenames.py:101
 msgid "draw"
-msgstr "Σχεδίαση"
+msgstr "σχεδίαση"
 
 #. Translators: short braille for the rolename of a file chooser.
 #: src/orca/braille_rolenames.py:104
@@ -193,7 +194,7 @@ msgstr "ετκ"
 #. Translators: short braille for the rolename of a layered pane.
 #: src/orca/braille_rolenames.py:143
 msgid "lyrdpn"
-msgstr "Τμπλεπίπ"
+msgstr "τμπλεπίπ"
 
 #. Translators: short braille for the rolename of a link.
 #: src/orca/braille_rolenames.py:146
@@ -615,7 +616,7 @@ msgstr "Γερμανικός βαθμός 1 του Βεγίου"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: src/orca/chnames.py:41 src/orca/keynames.py:138
+#: src/orca/chnames.py:41 src/orca/keynames.py:143
 msgid "space"
 msgstr "διάστημα"
 
@@ -629,7 +630,7 @@ msgstr "νέα γραμμή"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: src/orca/chnames.py:49 src/orca/keynames.py:130
+#: src/orca/chnames.py:49 src/orca/keynames.py:135
 msgid "tab"
 msgstr "στηλοθέτης"
 
@@ -697,7 +698,7 @@ msgstr "αστερίσκος"
 #.
 #. Translators: this is how someone would speak the name of the plus key
 #.
-#: src/orca/chnames.py:93 src/orca/keynames.py:298
+#: src/orca/chnames.py:93 src/orca/keynames.py:303
 msgid "plus"
 msgstr "συν"
 
@@ -809,7 +810,7 @@ msgstr "υπογραμμισμένο"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: src/orca/chnames.py:161 src/orca/keynames.py:255
+#: src/orca/chnames.py:161 src/orca/keynames.py:260
 msgid "grave"
 msgstr "δασεία"
 
@@ -836,7 +837,7 @@ msgstr "δεξί άγκιστρο"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: src/orca/chnames.py:177 src/orca/keynames.py:270
+#: src/orca/chnames.py:177 src/orca/keynames.py:275
 msgid "tilde"
 msgstr "περισπωμένη"
 
@@ -905,7 +906,7 @@ msgstr "παράγραφος"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the diaeresis glyph
 #.
-#: src/orca/chnames.py:214 src/orca/keynames.py:275
+#: src/orca/chnames.py:214 src/orca/keynames.py:280
 msgid "diaeresis"
 msgstr "διαλυτικά"
 
@@ -980,7 +981,7 @@ msgstr "εκθέτης 3"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
 #.
-#: src/orca/chnames.py:262 src/orca/keynames.py:260
+#: src/orca/chnames.py:262 src/orca/keynames.py:265
 msgid "acute"
 msgstr "οξεία"
 
@@ -1007,7 +1008,7 @@ msgstr "άνω τελεία"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: src/orca/chnames.py:278 src/orca/keynames.py:285
+#: src/orca/chnames.py:278 src/orca/keynames.py:290
 msgid "cedilla"
 msgstr "cedilla"
 
@@ -2295,7 +2296,7 @@ msgstr "Εναλλάσσει τη σίγαση της εκφώνησης."
 #. This string describes that command.
 #: src/orca/cmdnames.py:426
 msgid "Toggles speech verbosity level."
-msgstr "Εναλλάσσει το επίπεδο περιφραστικότητας της ομιλίας"
+msgstr "Εναλλάσσει το επίπεδο περιφραστικότητας της ομιλίας."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
@@ -2327,7 +2328,7 @@ msgstr "Εναλλάσσει την εκφώνηση ή μη των εσοχών
 #. toggling between the two options.
 #: src/orca/cmdnames.py:450
 msgid "Changes spoken number style."
-msgstr "Αλλαγές στο στυλ της προφοράς του αριθμού"
+msgstr "Αλλαγές στο στυλ της προφοράς του αριθμού."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -2442,10 +2443,8 @@ msgstr "Παρουσίαση τρέχουσας ημερομηνίας."
 #. the current object. This string is how this command is described in the list
 #. of keyboard shortcuts.
 #: src/orca/cmdnames.py:537
-#, fuzzy
-#| msgid "Reports information on current script."
 msgid "Present size and location of current object."
-msgstr "Αναφέρει πληροφορίες για το τρέχον σενάριο."
+msgstr "Αναφέρει πληροφορίες για το τρέχον αντικείμενο."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -2859,19 +2858,15 @@ msgstr "Μεταβαίνει στο επόμενο πλαίσιο πολλαπλ
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:831
-#, fuzzy
-#| msgid "Goes to the top of the file."
 msgid "Goes to start of container."
-msgstr "Μεταβαίνει στην αρχή του αρχείου."
+msgstr "Μεταβαίνει στην αρχή του πλαισίου."
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:836
-#, fuzzy
-#| msgid "Goes to the end of the line."
 msgid "Goes to end of container."
-msgstr "Μεταβαίνει στο τέλος της γραμμής."
+msgstr "Μεταβαίνει στο τέλος του πλαισίου."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:839
@@ -3166,10 +3161,8 @@ msgstr "Μεταβαίνει προς τα πάνω κατά ένα κελί."
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1025
-#, fuzzy
-#| msgid "Toggle mouse review mode."
 msgid "Toggles layout mode."
-msgstr "Εναλλαγή της λειτουργίας προεπισκόπησης με το ποντίκι."
+msgstr "Εναλλαγή της λειτουργίας διάταξης."
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -4871,10 +4864,8 @@ msgstr "Όνομα _προφίλ:"
 #. The following is a title in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:380
-#, fuzzy
-#| msgid "Load user profile"
 msgid "Remove User Profile"
-msgstr "Φόρτωση προφίλ χρήστη"
+msgstr "Αφαίρεση Προφίλ Χρήστη"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4883,10 +4874,8 @@ msgstr "Φόρτωση προφίλ χρήστη"
 #. The following is a label in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:388
-#, fuzzy
-#| msgid "Load user profile"
 msgid "Remove user profile"
-msgstr "Φόρτωση προφίλ χρήστη"
+msgstr "Αφαίρεση προφίλ χρήστη"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4901,6 +4890,9 @@ msgid ""
 "in this profile will be lost. Do you want to continue and remove this "
 "profile and all related settings?"
 msgstr ""
+"Πρόκειται να αφαιρέσετε το προφίλ %s. Όλες οι μη αποθηκευμένες αλλαγές και "
+"ρυθμίσεις του προφίλ θα χαθούν. Θέλετε να συνεχίσετε με την αφαίρεση του "
+"προφίλ και των σχετικών ρυθμίσεων;"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "All" means that Orca will present progress bar
@@ -5480,10 +5472,8 @@ msgstr "Παρόν πε_ριεχόμενο σφάλματος"
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
 #: src/orca/guilabels.py:774
-#, fuzzy
-#| msgid "Speak spread sheet cell coordinates"
 msgid "Speak spreadsheet cell coordinates"
-msgstr "Εκφώνηση συντεταγμένων κελιών λογιστικού φύλλου"
+msgstr "Εκφώνηση συντεταγμένων κελιών λογιστικών φύλλων"
 
 #. Translators: This is a label for an option which controls what Orca speaks when
 #. presenting selection changes in a spreadsheet. By default, Orca will speak just
@@ -5494,7 +5484,7 @@ msgstr "Εκφώνηση συντεταγμένων κελιών λογιστι�
 #. this option.
 #: src/orca/guilabels.py:783
 msgid "Always speak selected spreadsheet range"
-msgstr ""
+msgstr "Εκφώνηση πάντα των επιλεγμένων υπολογιστικών φύλλων"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
@@ -5644,176 +5634,183 @@ msgstr "num lock"
 msgid "caps lock"
 msgstr "caps lock"
 
+#. Translators: this is how someone would speak the name of the shift lock key
+#. There is no reason to make it different from the translation for "caps lock"
+#.
+#: src/orca/keynames.py:95
+msgid "shift lock"
+msgstr "shift lock"
+
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
-#: src/orca/keynames.py:94
+#: src/orca/keynames.py:99
 msgid "scroll lock"
 msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: src/orca/keynames.py:98 src/orca/keynames.py:102 src/orca/keynames.py:106
-#: src/orca/keynames.py:110
+#: src/orca/keynames.py:103 src/orca/keynames.py:107 src/orca/keynames.py:111
+#: src/orca/keynames.py:115
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: src/orca/keynames.py:114 src/orca/keynames.py:118 src/orca/keynames.py:122
-#: src/orca/keynames.py:126
+#: src/orca/keynames.py:119 src/orca/keynames.py:123 src/orca/keynames.py:127
+#: src/orca/keynames.py:131
 msgid "page down"
 msgstr "page down"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
-#: src/orca/keynames.py:134
+#: src/orca/keynames.py:139
 msgid "left tab"
 msgstr "αριστερός στηλοθέτης"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
-#: src/orca/keynames.py:142
+#: src/orca/keynames.py:147
 msgid "backspace"
 msgstr "backspace"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
-#: src/orca/keynames.py:146
+#: src/orca/keynames.py:151
 msgid "return"
 msgstr "επιστροφή"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
-#: src/orca/keynames.py:150
+#: src/orca/keynames.py:155
 msgid "enter"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: src/orca/keynames.py:154 src/orca/keynames.py:158
+#: src/orca/keynames.py:159 src/orca/keynames.py:163
 msgid "up"
 msgstr "πάνω"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: src/orca/keynames.py:162 src/orca/keynames.py:166
+#: src/orca/keynames.py:167 src/orca/keynames.py:171
 msgid "down"
 msgstr "κάτω"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: src/orca/keynames.py:170 src/orca/keynames.py:174
+#: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
 msgstr "αριστερά"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: src/orca/keynames.py:178 src/orca/keynames.py:182
+#: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
 msgstr "δεξιά"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
-#: src/orca/keynames.py:186
+#: src/orca/keynames.py:191
 msgid "left super"
 msgstr "αριστερό super"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
-#: src/orca/keynames.py:190
+#: src/orca/keynames.py:195
 msgid "right super"
 msgstr "δεξί super"
 
 #. Translators: this is how someone would speak the name of the menu key
 #.
-#: src/orca/keynames.py:194
+#: src/orca/keynames.py:199
 msgid "menu"
 msgstr "μενού"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
-#: src/orca/keynames.py:198
+#: src/orca/keynames.py:203
 msgid "Alt Gr"
 msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
-#: src/orca/keynames.py:202
+#: src/orca/keynames.py:207
 msgid "help"
 msgstr "βοήθεια"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
-#: src/orca/keynames.py:206
+#: src/orca/keynames.py:211
 msgid "multi"
 msgstr "multi"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
-#: src/orca/keynames.py:210
+#: src/orca/keynames.py:215
 msgid "mode switch"
 msgstr "αλλαγή λειτουργίας"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
-#: src/orca/keynames.py:214
+#: src/orca/keynames.py:219
 msgid "escape"
 msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: src/orca/keynames.py:218 src/orca/keynames.py:222
+#: src/orca/keynames.py:223 src/orca/keynames.py:227
 msgid "insert"
 msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: src/orca/keynames.py:226 src/orca/keynames.py:230
+#: src/orca/keynames.py:231 src/orca/keynames.py:235
 msgid "delete"
 msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: src/orca/keynames.py:234 src/orca/keynames.py:238
+#: src/orca/keynames.py:239 src/orca/keynames.py:243
 msgid "home"
 msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: src/orca/keynames.py:242 src/orca/keynames.py:246
+#: src/orca/keynames.py:247 src/orca/keynames.py:251
 msgid "end"
 msgstr "end"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
-#: src/orca/keynames.py:250
+#: src/orca/keynames.py:255
 msgid "begin"
 msgstr "begin"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
-#: src/orca/keynames.py:265
+#: src/orca/keynames.py:270
 msgid "circumflex"
 msgstr "circumflex"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
-#: src/orca/keynames.py:280
+#: src/orca/keynames.py:285
 msgid "ring"
 msgstr "κύκλος"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
 #.
-#: src/orca/keynames.py:290
+#: src/orca/keynames.py:295
 msgid "stroke"
 msgstr "κάθετος"
 
 #. Translators: this is how someone would speak the name of the minus key
 #.
-#: src/orca/keynames.py:294
+#: src/orca/keynames.py:299
 msgid "minus"
 msgstr "μείον"
 
@@ -8096,12 +8093,10 @@ msgstr "Κελί %s"
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
 #: src/orca/messages.py:159
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "selected"
+#, python-format
 msgctxt "cell"
 msgid "%s selected"
-msgstr "επιλεγμένο"
+msgstr "%s επιλεγμένο"
 
 #. Translators: this message is spoken to announce that multiple table cells just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -8112,7 +8107,7 @@ msgstr "επιλεγμένο"
 #, python-format
 msgctxt "cell"
 msgid "%s through %s selected"
-msgstr ""
+msgstr "%s εώς %s επιλεγμένα"
 
 #. Translators: this message is spoken to announce that multiple table cells just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -8123,19 +8118,17 @@ msgstr ""
 #, python-format
 msgctxt "cell"
 msgid "%s through %s unselected"
-msgstr ""
+msgstr "%s εώς %s μη επιλεγμένα"
 
 #. Translators: this message is spoken to announce that a table cell just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
 #: src/orca/messages.py:179
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgctxt "cell"
 msgid "%s unselected"
-msgstr "ανεπίλεκτο"
+msgstr "%s μη επιλεγμένο"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
@@ -8219,10 +8212,6 @@ msgstr "Αδύνατη η ενεργοποίηση του διαχειριστή
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: src/orca/messages.py:239
-#, fuzzy
-#| msgid ""
-#| "Another screen reader process is already running for this session.\n"
-#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
@@ -8421,7 +8410,7 @@ msgstr "Να μη γίνεται εκφώνηση του ονόματος του
 #. the value of the setting is toggled.
 #: src/orca/messages.py:379
 msgid "speak chat room name."
-msgstr "Εκφώνηση ονόματος του δωματίου συνομιλίας."
+msgstr "εκφώνηση ονόματος του δωματίου συνομιλίας."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -8451,29 +8440,22 @@ msgstr "Να παρέχονται ξεχωριστά ιστορικά για κ�
 #. instead present this message as an indication that the container was not
 #. exited as expected.
 #: src/orca/messages.py:422
-#, fuzzy
-#| msgid "End of table"
 msgid "End of container."
-msgstr "Τέλος πίνακα"
+msgstr "Τέλος πλαισίου."
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
 #. blockquotes. If the user attempts to use this command in an object which is
 #. not a container, this message will be presented.
 #: src/orca/messages.py:428
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a container."
-msgstr "Όχι σε πίνακα."
+msgstr "Όχι σε περιέκτη."
 
 #. Translators: This message is presented when the user selects all of the items
 #. in a container that supports selection, such as a GUI table or a list of icons.
 #: src/orca/messages.py:432
-#, fuzzy
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgid "all items selected"
-msgstr "δεν είναι επιλεγμένο"
+msgstr "όλα τα αντικείμενα επιλεγμένα"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box.
@@ -8514,10 +8496,8 @@ msgstr "έχει επιλεγεί ολόκληρο το έγγραφο"
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
 #: src/orca/messages.py:461
-#, fuzzy
-#| msgid "entire document selected"
 msgid "entire document unselected"
-msgstr "έχει επιλεγεί ολόκληρο το έγγραφο"
+msgstr "ολόκληρο το έγγραφο μη επιλεγμένο"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9339,13 +9319,6 @@ msgstr "Κατάσταση εκμάθησης.  Πιέστε escape για να 
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: src/orca/messages.py:1082
-#, fuzzy
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To view the "
-#| "screen reader's documentation, press F1. To get a list of the screen "
-#| "reader's default shortcuts, press F2. To get a list of the screen "
-#| "reader's shortcuts for the current application, press F3. To exit learn "
-#| "mode, press the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader’s documentation, press F1. To get a list of the screen "
@@ -9363,352 +9336,285 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
 #: src/orca/messages.py:1091
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving blockquote."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την παράθεση."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1097
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving feed."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τη ροή."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1103
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving figure."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το σχήμα."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: src/orca/messages.py:1107
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving form."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τη φόρμα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1113
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving banner."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την ειδοποίηση."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1119
-#, fuzzy
-#| msgctxt "role"
-#| msgid "complementary content"
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr "συμπληρωματικό περιεχόμενο"
+msgstr "έξοδος από το συμπληρωματικό περιεχόμενο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1125
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "role"
 msgid "leaving information."
-msgstr "πληροφορίες"
+msgstr "έξοδος από τις πληροφορίες."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1131
-#, fuzzy
-#| msgctxt "role"
-#| msgid "main content"
 msgctxt "role"
 msgid "leaving main content."
-msgstr "κύριο περιεχόμενο"
+msgstr "έξοδος από το κύριο περιεχόμενο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1137
-#, fuzzy
-#| msgid "Page Navigation"
 msgctxt "role"
 msgid "leaving navigation."
-msgstr "Πλοήγηση σελίδας"
+msgstr "έξοδος από την πλοήγηση."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1143
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving region."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την περιοχή."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1149
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving search."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την αναζήτηση."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: src/orca/messages.py:1153
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving list."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τη λίστα."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: src/orca/messages.py:1158
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving panel."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον πίνακα."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
 #: src/orca/messages.py:1162
 msgid "leaving table."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον πίνακα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1168
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving abstract."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την περίληψη."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1174
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τις αναγνωρίσεις."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1180
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving afterword."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον επίλογο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1186
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving appendix."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το παράρτημα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1192
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving bibliography."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τη βιβλιογραφία."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1198
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving chapter."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το κεφάλαιο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1204
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving colophon."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το κολοφώνα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1210
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving conclusion."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την περίληψη."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1216
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving credit."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον τίτλο αναγνώρισης."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1222
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving credits."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τους τίτλους αναγνώρισης."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1228
-#, fuzzy
-#| msgid "Table Navigation"
 msgctxt "role"
 msgid "leaving dedication."
-msgstr "Πλοήγηση πίνακα"
+msgstr "έξοδος από την αφιέρωση."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1234
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τις σημειώσεις τέλους."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1240
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την επιγραφή."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1246
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving epilogue."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον επίλογο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1252
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το παρόραμα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1258
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving example."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το παράδειγμα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1264
-#, fuzzy
-#| msgid "Leaving flat review."
 msgctxt "role"
 msgid "leaving foreword."
-msgstr "Έξοδος από την επίπεδη προεπισκόπηση."
+msgstr "έξοδος από τον πρόλογο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1270
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving glossary."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το γλωσσάρι."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1276
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving index."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον πίνακα περιεχομένων."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9717,84 +9623,70 @@ msgstr "Έξοδος από τον πίνακα."
 #: src/orca/messages.py:1282
 msgctxt "role"
 msgid "leaving introduction."
-msgstr ""
+msgstr "έξοδος από την εισαγωγή."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1288
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving page list."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τη λίστα σελίδων."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1294
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving part."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από το τμήμα."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1300
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving preface."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την εισαγωγή."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1306
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving prologue."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον πρόλογο."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1312
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από την παράθεση."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1318
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving QNA."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τις ερωταπαντήσεις."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1324
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving table of contents."
-msgstr "Έξοδος από τον πίνακα."
+msgstr "έξοδος από τον πίνακα περιεχομένων."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9933,7 +9825,7 @@ msgstr "Ρύθμιση όλων των ζωντανών περιοχών ως α
 #. regions has been restored to their original values.
 #: src/orca/messages.py:1423
 msgid "live regions politeness levels restored"
-msgstr "Έγινε επαναφορά των επιπέδων ευγένειας των ζωντανών περιοχών"
+msgstr "έγινε επαναφορά των επιπέδων ευγένειας των ζωντανών περιοχών"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9957,7 +9849,7 @@ msgstr "επίπεδο ευγένειας %s"
 #. the current live region.
 #: src/orca/messages.py:1442
 msgid "setting live region to assertive"
-msgstr "Ρύθμιση ζωντανής περιοχής ως αποφασιστικής"
+msgstr "ρύθμιση ζωντανής περιοχής ως αποφασιστικής"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9969,7 +9861,7 @@ msgstr "Ρύθμιση ζωντανής περιοχής ως αποφασιστ
 #. the current live region.
 #: src/orca/messages.py:1452
 msgid "setting live region to off"
-msgstr "Ρύθμιση ζωντανής περιοχής ως απενεργοποιημένης"
+msgstr "ρύθμιση ζωντανής περιοχής ως απενεργοποιημένης"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9981,7 +9873,7 @@ msgstr "Ρύθμιση ζωντανής περιοχής ως απενεργοπ
 #. the current live region.
 #: src/orca/messages.py:1462
 msgid "setting live region to polite"
-msgstr "Ρύθμιση ζωντανής περιοχής ως ευγενικής"
+msgstr "ρύθμιση ζωντανής περιοχής ως ευγενικής"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9993,7 +9885,7 @@ msgstr "Ρύθμιση ζωντανής περιοχής ως ευγενικής
 #. the current live region.
 #: src/orca/messages.py:1472
 msgid "setting live region to rude"
-msgstr "Ρύθμιση ζωντανής περιοχής ως αγενούς"
+msgstr "ρύθμιση ζωντανής περιοχής ως αγενούς"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -10190,10 +10082,8 @@ msgstr "Η λειτουργίας περιήγησης είναι κολλώδη
 #. both for presentation and navigation. This string is presented when the user
 #. switches to layout mode via an Orca command.
 #: src/orca/messages.py:1630
-#, fuzzy
-#| msgid "Focus mode"
 msgid "Layout mode."
-msgstr "Λειτουργίας εστίασης"
+msgstr "Λειτουργίας διάταξης."
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -10208,11 +10098,8 @@ msgstr "Λειτουργίας εστίασης"
 #. toggles layout mode off via an Orca command and switches to the aforementioned
 #. object-based presentation.
 #: src/orca/messages.py:1644
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Object"
 msgid "Object mode."
-msgstr "Αντικείμενο"
+msgstr "Λειτουργία αντικειμένου."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -10516,7 +10403,7 @@ msgstr "ψηφία"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:1855
 msgid "Speak numbers as digits."
-msgstr "Εκφώνηση αριθμών ως ψηφία"
+msgstr "Εκφώνηση αριθμών ως ψηφία."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10535,7 +10422,7 @@ msgstr "λέξεις"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:1869
 msgid "Speak numbers as words."
-msgstr "Εκφώνηση αριθμών ως λέξεις"
+msgstr "Εκφώνηση αριθμών ως λέξεις."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10690,7 +10577,7 @@ msgstr "Δεν βρέθηκαν προφίλ."
 #: src/orca/messages.py:1979
 #, python-format
 msgid "Progress bar %d."
-msgstr "γραμμή προόδου %d."
+msgstr "Γραμμή προόδου %d."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10816,7 +10703,7 @@ msgstr "Επαναφέρθηκε η επιλογή."
 #: src/orca/messages.py:2067
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "Μέγεθος: %d, %d. Τοποθεσία: %d, %d."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -10825,7 +10712,7 @@ msgstr ""
 #: src/orca/messages.py:2073
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "Πλάτος: %d. Ύψος: %d. %d από αριστερά. %d από πάνω."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -11035,11 +10922,9 @@ msgstr "Αρχή της στήλης."
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2216
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s selected"
-msgstr "ανεπίλεκτο"
+msgstr "Στήλη %s επιλεγμένη"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11049,7 +10934,7 @@ msgstr "ανεπίλεκτο"
 #: src/orca/messages.py:2223
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "Στήλες %s εώς %s επιλεγμένες"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11059,17 +10944,15 @@ msgstr ""
 #: src/orca/messages.py:2230
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr ""
+msgstr "Στήλες %s εώς %s μη επιλεγμένες"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2235
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s unselected"
-msgstr "ανεπίλεκτο"
+msgstr "Στήλη %s μη επιλεγμένη"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
@@ -11128,10 +11011,9 @@ msgstr "Γραμμή εισήχθη στο τέλος του πίνακα."
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
 #: src/orca/messages.py:2275
-#, fuzzy, python-format
-#| msgid "Row deleted."
+#, python-format
 msgid "Row %s selected"
-msgstr "Διαγράφτηκε γραμμή."
+msgstr "Σειρά %s επιλεγμένη"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11141,7 +11023,7 @@ msgstr "Διαγράφτηκε γραμμή."
 #: src/orca/messages.py:2282
 #, python-format
 msgid "Rows %s through %s selected"
-msgstr ""
+msgstr "Σειρές %s εώς %s επιλεγμένες"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11151,17 +11033,15 @@ msgstr ""
 #: src/orca/messages.py:2289
 #, python-format
 msgid "Rows %s through %s unselected"
-msgstr ""
+msgstr "Σειρές %s εώς %s μη επιλεγμένες"
 
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
 #: src/orca/messages.py:2294
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Row %s unselected"
-msgstr "ανεπίλεκτο"
+msgstr "Σειρά %s μη επιλεγμένη"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -11371,22 +11251,20 @@ msgstr[1] "βρέθηκαν %d στοιχεία"
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
 #: src/orca/messages.py:2454
-#, fuzzy, python-format
-#| msgid "No more blockquotes."
+#, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] "Δεν υπάρχουν άλλα εισαγωγικά."
-msgstr[1] "Δεν υπάρχουν άλλα εισαγωγικά."
+msgstr[0] "Έξοδος από την %d παράθεση."
+msgstr[1] "Έξοδος από τις %d παραθέσεις."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
 #: src/orca/messages.py:2459
-#, fuzzy, python-format
-#| msgid "Leaving flat review."
+#, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] "Έξοδος από την επίπεδη προεπισκόπηση."
-msgstr[1] "Έξοδος από την επίπεδη προεπισκόπηση."
+msgstr[0] "Έξοδος από την %d λίστα."
+msgstr[1] "Έξοδος από τις %d λίστες."
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2463
@@ -11620,11 +11498,8 @@ msgstr "επεξεργαζόμενο πλαίσιο πολλαπλών επιλ�
 #. This role is to describe elements in web content which have the contenteditable
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:79
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "editable"
 msgid "editable content"
-msgstr "επεξεργάσιμο"
+msgstr "επεξεργάσιμο περιεχόμενο"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11634,7 +11509,7 @@ msgstr "επεξεργάσιμο"
 #: src/orca/object_properties.py:86
 msgctxt "role"
 msgid "feed"
-msgstr ""
+msgstr "ροή"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11644,7 +11519,7 @@ msgstr ""
 #: src/orca/object_properties.py:93
 msgctxt "role"
 msgid "figure"
-msgstr ""
+msgstr "σχήμα"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11653,31 +11528,25 @@ msgstr ""
 #: src/orca/object_properties.py:99
 msgctxt "role"
 msgid "abstract"
-msgstr ""
+msgstr "περίληψη"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
 #: src/orca/object_properties.py:105
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "acknowledgments"
-msgstr "συμπληρωματικό"
+msgstr "ευχαριστίες"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
 #: src/orca/object_properties.py:111
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
-msgstr "λέξη"
+msgstr "επίλογος"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11695,7 +11564,7 @@ msgstr "παράρτημα"
 #: src/orca/object_properties.py:123
 msgctxt "role"
 msgid "bibliography entry"
-msgstr ""
+msgstr "καταχώρηση βιβλιογραφίας"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11720,11 +11589,9 @@ msgstr "κεφάλαιο"
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
 #: src/orca/object_properties.py:141
-#, fuzzy
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
-msgstr "άνω-κάτω τελεία"
+msgstr "κολοφώνας"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11740,12 +11607,9 @@ msgstr "συμπέρασμα"
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
 #: src/orca/object_properties.py:153
-#, fuzzy
-#| msgctxt "math fraction"
-#| msgid "over"
 msgctxt "role"
 msgid "cover"
-msgstr "πάνω από"
+msgstr "κάλυμμα"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11754,7 +11618,7 @@ msgstr "πάνω από"
 #: src/orca/object_properties.py:159
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "αναγνώριση"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11763,7 +11627,7 @@ msgstr ""
 #: src/orca/object_properties.py:165
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "αναγνωρίσεις"
 
 # #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
@@ -11774,12 +11638,9 @@ msgstr ""
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
 #: src/orca/object_properties.py:171
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
-msgstr "κατεύθυνση"
+msgstr "αφιέρωση"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11788,7 +11649,7 @@ msgstr "κατεύθυνση"
 #: src/orca/object_properties.py:177
 msgctxt "role"
 msgid "endnote"
-msgstr ""
+msgstr "υποσημείωση"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11797,7 +11658,7 @@ msgstr ""
 #: src/orca/object_properties.py:183
 msgctxt "role"
 msgid "endnotes"
-msgstr ""
+msgstr "υποσημειώσεις"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11806,7 +11667,7 @@ msgstr ""
 #: src/orca/object_properties.py:189
 msgctxt "role"
 msgid "epigraph"
-msgstr ""
+msgstr "επιγραφή"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11815,7 +11676,7 @@ msgstr ""
 #: src/orca/object_properties.py:195
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "επίλογος"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11824,7 +11685,7 @@ msgstr ""
 #: src/orca/object_properties.py:201
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "παρόραμα"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11849,12 +11710,9 @@ msgstr "υποσημείωση"
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
 #: src/orca/object_properties.py:219
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
-msgstr "λέξη"
+msgstr "πρόλογος"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11870,12 +11728,9 @@ msgstr "γλωσσάριο"
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: src/orca/object_properties.py:231
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
-msgstr "εσοχή"
+msgstr "πίνακας περιεχομένων"
 
 # #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
@@ -11904,11 +11759,9 @@ msgstr "αλλαγή σελίδας"
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
 #: src/orca/object_properties.py:249
-#, fuzzy
-#| msgid "page up"
 msgctxt "role"
 msgid "page list"
-msgstr "page up"
+msgstr "λίστα σελίδων"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11926,7 +11779,7 @@ msgstr "μέρος"
 #: src/orca/object_properties.py:261
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "εισαγωγή"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11935,18 +11788,16 @@ msgstr ""
 #: src/orca/object_properties.py:267
 msgctxt "role"
 msgid "prologue"
-msgstr ""
+msgstr "πρόλογος"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
 #: src/orca/object_properties.py:273
-#, fuzzy
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
-msgstr "εισαγωγικό"
+msgstr "παράθεση"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11958,7 +11809,7 @@ msgstr "εισαγωγικό"
 #: src/orca/object_properties.py:282
 msgctxt "role"
 msgid "QNA"
-msgstr ""
+msgstr "Ερωταπαντήσεις"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12071,11 +11922,9 @@ msgstr "κατακόρυφος διαχωριστής"
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: src/orca/object_properties.py:367
-#, fuzzy
-#| msgid "mode switch"
 msgctxt "role"
 msgid "switch"
-msgstr "αλλαγή λειτουργίας"
+msgstr "αλλαγή"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
@@ -12170,10 +12019,8 @@ msgstr "σύνδεσμο που έχει επισκεφθεί"
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
 #: src/orca/object_properties.py:436
-#, fuzzy
-#| msgid "No more buttons."
 msgid "menu button"
-msgstr "Δεν υπάρχουν άλλα κουμπιά."
+msgstr "πλήκτρο μενού"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
@@ -12332,7 +12179,7 @@ msgstr "πολλαπλή επιλογή"
 #: src/orca/object_properties.py:539
 msgctxt "error"
 msgid "invalid entry"
-msgstr ""
+msgstr "λανθασμένη καταχώρηση"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -12342,19 +12189,16 @@ msgstr ""
 #: src/orca/object_properties.py:546
 msgctxt "error"
 msgid "invalid"
-msgstr ""
+msgstr "σφάλμα"
 
 #
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
 #: src/orca/object_properties.py:551
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "invalid spelling"
-msgstr "ορθογραφία"
+msgstr "λανθασμένη ορθογραφία"
 
 #
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
@@ -12372,7 +12216,7 @@ msgstr "ορθογραφία"
 #: src/orca/object_properties.py:562
 msgctxt "error"
 msgid "invalid grammar"
-msgstr ""
+msgstr "γραμματικό σφάλμα"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -12596,32 +12440,33 @@ msgstr "Να γίνει εκφώνηση α_νά:"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: src/orca/orca-setup.ui:886
 msgid "Announce block_quotes in Say All"
-msgstr ""
+msgstr "Ανακοίνωση παρα_θέσεων στη λειτουργία Ανάγνωση Όλων"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a list with x items has been entered before speaking the content of that list. At the end of the list content, Orca will announce that the list is being exited.
 #: src/orca/orca-setup.ui:903
 msgid "Announce li_sts in Say All"
-msgstr ""
+msgstr "Ανακοίνωση λι_στών στη λειτουργία Ανάγνωση Όλων"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: src/orca/orca-setup.ui:920
 msgid "Announce _tables in Say All"
-msgstr ""
+msgstr "Ανακοίνωση _πινάκων στη λειτουργία Ανάγνωση Όλων"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:937
 msgid "Announce _panels in Say All"
-msgstr ""
+msgstr "Ανακοίνωση π_λαισίων στη λειτουργία Ανάγνωση Όλων"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
 msgid "Announce _forms in Say All"
-msgstr ""
+msgstr "Ανακοίνωση _φορμών στη λειτουργία Ανάγνωση Όλων"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
 msgstr ""
+"Ανακοίνωση σημαντικών _αντικειμένων σελίδας στη λειτουργία Ανάγνωση Όλων"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
@@ -12752,24 +12597,18 @@ msgstr "Εκ_φώνηση χρωμάτων ως χρώματα"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1791
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce block_quotes during navigation"
-msgstr "Αυτόματη λειτουργία εστίασης κατά την πλοήγηση δρομέα"
+msgstr "Ανακοίνωση παρα_θέσεων κατά την πλοήγηση"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1808
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Announce _lists during navigation"
-msgstr "Ενεργοποίηση _δομικής περιήγησης"
+msgstr "Ανακοίνωση _λιστών κατά την πλοήγηση"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered as the user arrows into it and before speaking the table content. Upon navigating out of the table, Orca will announce that the table has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1825
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Announce _tables during navigation"
-msgstr "Ενεργοποίηση _δομικής περιήγησης"
+msgstr "Ανακοίνωση _πινάκων κατά την πλοήγηση"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: src/orca/orca-setup.ui:1842
@@ -12779,27 +12618,22 @@ msgstr "Εκφώνηση ένδειξης της ανορ_θόγραφης λέ�
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:1859
 msgid "Announce _panels during navigation"
-msgstr ""
+msgstr "Ανακοίνωση _πλαισίων κατά την πλοήγηση"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:1876
 msgid "Announce land_marks during navigation"
-msgstr ""
+msgstr "Ανακοίνωση σημαντικών _αντικειμένων σελίδας κατά την πλοήγηση"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1893
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce _forms during navigation"
-msgstr "Αυτόματη λειτουργία εστίασης κατά την πλοήγηση δρομέα"
+msgstr "Ανακοίνωση _φορμών κατά την πλοήγηση"
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: src/orca/orca-setup.ui:1910
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "Speak _description"
-msgstr "Περιγραφή"
+msgstr "Εκφώνηση _περιγραφής"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1933
@@ -12847,10 +12681,8 @@ msgstr "Ενεργοποίηση συμ_βατού Μπράιγ"
 
 #. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
 #: src/orca/orca-setup.ui:2174
-#, fuzzy
-#| msgid "Enable echo by _word"
 msgid "Enable _word wrap"
-msgstr "Ενεργοποίηση echo ανά λέ_ξη"
+msgstr "Ενεργοποίηση αναδίπλωσης λέ_ξεων"
 
 #: src/orca/orca-setup.ui:2195
 msgid "Display Settings"
@@ -13803,7 +13635,7 @@ msgstr "πλάγια"
 #: src/orca/text_attribute_names.py:585
 msgctxt "textattr"
 msgid "Default"
-msgstr "προεπιλεγμένο"
+msgstr "Προεπιλεγμένο"
 
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
