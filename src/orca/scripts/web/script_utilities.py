@@ -4214,7 +4214,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return obj, 0
 
-        if offset >= text.characterCount:
+        if text and offset >= text.characterCount:
             if self.isLink(obj) and self.isContentEditableWithEmbeddedObjects(obj):
                 nextObj, nextOffset = self.nextContext(obj, text.characterCount)
                 if nextObj:
@@ -4227,12 +4227,13 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, text.characterCount
 
-        allText = text.getText(0, -1)
         offset = max (0, offset)
-        if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == pyatspi.ROLE_ENTRY:
-            msg = "WEB: First caret context for %s, %i is unchanged" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return obj, offset
+        if text:
+            allText = text.getText(0, -1)
+            if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == pyatspi.ROLE_ENTRY:
+                msg = "WEB: First caret context for %s, %i is unchanged" % (obj, offset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return obj, offset
 
         child = self.getChildAtOffset(obj, offset)
         if not child:
