@@ -175,6 +175,9 @@ class Utilities(web.Utilities):
         if uri.startswith("moz-extension"):
             return True
 
+        if not uri and "pixels" in name:
+            return True
+
         return False
 
     def canBeActiveWindow(self, window, clearCache=False):
