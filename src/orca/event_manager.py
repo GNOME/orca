@@ -169,6 +169,8 @@ class EventManager:
         if event.type.startswith('object:property-change:accessible-name'):
             if role in [pyatspi.ROLE_CANVAS,
                         pyatspi.ROLE_ICON,
+                        pyatspi.ROLE_TABLE_ROW,  # Thunderbird spam
+                        pyatspi.ROLE_TABLE_CELL, # Thunderbird spam
                         pyatspi.ROLE_MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
