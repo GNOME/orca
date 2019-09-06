@@ -236,7 +236,12 @@ class LiveRegionManager:
                 utts = message['content']
             else:
                 utts = message['labels'] + message['content']
-            self._script.presentMessage(utts)
+
+            if self.monitoring:
+                self._script.presentMessage(utts)
+            else:
+                msg = "INFO: Not presenting message because monitoring is off"
+                debug.println(debug.LEVEL_INFO, msg, True)
 
             # set the last live obj to be announced
             self.lastliveobj = obj
