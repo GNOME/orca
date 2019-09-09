@@ -4237,9 +4237,9 @@ class Utilities(script_utilities.Utilities):
 
         child = self.getChildAtOffset(obj, offset)
         if not child:
-            msg = "WEB: First caret context for %s, %i is null child" % (obj, offset)
+            msg = "WEB: Child at offset is null. Returning %s, %i unchanged." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
-            return None, -1
+            return obj, offset
 
         if self.isListItemMarker(child):
             msg = "WEB: First caret context for %s, %i is %s, %i (skip list item marker child)" % \
