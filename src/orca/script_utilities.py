@@ -128,7 +128,12 @@ class Utilities:
         if not app:
             return ""
 
-        pid = app.get_process_id()
+        try:
+            pid = app.get_process_id()
+        except:
+            msg = "ERROR: Exception getting process id of %s. May be defunct." % app
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
 
         try:
             cmdline = subprocess.getoutput("cat /proc/%s/cmdline" % pid)
