@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2018 Igalia, S.L.
+# Copyright 2018-2019 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -21,14 +21,10 @@
 
 """Custom braille generator for Chromium."""
 
-# Please note: ATK support in Chromium needs much work. Until that work has been
-# done, Orca will not be able to provide access to Chromium. This generator is a
-# work in progress.
-
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2018 Igalia, S.L."
+__copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi

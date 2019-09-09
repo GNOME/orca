@@ -1,3 +1,46 @@
+3.34.0 - 9 September 2019
+
+Web:
+
+ * Complete *initial* support for Chrome/Chromium. Important: In order
+   for this support to work, you will need a version of Chrome/Chromium
+   which has not yet been released. In addition, you will need fixes
+   which have not yet been committed to Chrome/Chromium. While the Orca
+   side of things should largely be ready, Chrome/Chromium is not yet
+   ready for end-user testing with Orca. But we're even closer now. So
+   stay tuned!
+
+ * Don't auto-enter focus mode for embedded role if reading PDF.
+
+ * Ensure we respect the choice to temporarily turn live regions off.
+
+ * Ignore "document" load events for images emitted by Gecko.
+
+ * Eliminate some chattiness with popup button elements.
+
+Thunderbird:
+
+ * Attempt to improve performance by ignoring some event spam.
+
+General:
+
+ * Several stability fixes for objects and applications going defunct.
+
+ * Fix regression introduced by Shift Lock change.
+
+ * Improve reliability of mouse review when multiple objects report
+   same bounding box.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   el            Greek                 Dimitris Maroulidis
+   es            Spanish               Daniel Mustieles
+   fi            Finnish               Jiri Grönroos
+   fr            French                Claude Paroz
+   it            Italian               Milo Casagrande
+
+=========
+
 3.33.91 - 27 August 2019
 
 Web:
