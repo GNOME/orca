@@ -93,6 +93,7 @@ class ScriptManager:
                      'marco': 'switcher',
                      'mate-notification-daemon': 'notification-daemon',
                      'metacity': 'switcher',
+                     'org.gnome.gedit': 'gedit'}
                      'pluma': 'gedit'}
         alt_names = list(app_names.keys())
         if name.endswith(".py") or name.endswith(".bin"):
