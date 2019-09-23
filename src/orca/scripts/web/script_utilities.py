@@ -1783,7 +1783,10 @@ class Utilities(script_utilities.Utilities):
         handled = False
         descendants = self.findAllDescendants(obj, self.hasPresentableText)
         for descendant in descendants:
-            handled = super().handleTextSelectionChange(descendant) or handled
+            if handled:
+                super().updateCachedTextSelection(descendant)
+            else:
+                handled = handled or super().handleTextSelectionChange(descendant)
 
         return handled
 
