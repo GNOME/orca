@@ -5253,7 +5253,7 @@ class Utilities:
 
         return False
 
-    def handleTextSelectionChange(self, obj):
+    def handleTextSelectionChange(self, obj, speakMessage=True):
         # Note: This guesswork to figure out what actually changed with respect
         # to text selection will get eliminated once the new text-selection API
         # is added to ATK and implemented by the toolkits. (BGO 638378)
@@ -5290,10 +5290,20 @@ class Utilities:
             changeStart, changeEnd = change[0], change[-1] + 1
             if oldChars < newChars:
                 changes.append([changeStart, changeEnd, messages.TEXT_SELECTED])
+                if oldString.endswith(self.EMBEDDED_OBJECT_CHARACTER) and oldEnd == changeStart:
+                    # There's a possibility that we have a link spanning multiple lines. If so,
+                    # we want to present the continuation that just became selected.
+                    child = self.getChildAtOffset(obj, oldEnd - 1)
+                    self.handleTextSelectionChange(child, False)
             else:
                 changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
+                if newString.endswith(self.EMBEDDED_OBJECT_CHARACTER):
+                    # There's a possibility that we have a link spanning multiple lines. If so,
+                    # we want to present the continuation that just became unselected.
+                    child = self.getChildAtOffset(obj, newEnd - 1)
+                    self.handleTextSelectionChange(child, False)
 
-        speakMessage = not _settingsManager.getSetting('onlySpeakDisplayedText')
+        speakMessage = speakMessage and not _settingsManager.getSetting('onlySpeakDisplayedText')
         text = obj.queryText()
         for start, end, message in changes:
             string = text.getText(start, end)
@@ -5307,7 +5317,7 @@ class Utilities:
 
             if endsWithChild:
                 child = self.getChildAtOffset(obj, end)
-                self.handleTextSelectionChange(child)
+                self.handleTextSelectionChange(child, speakMessage)
 
         return True
 

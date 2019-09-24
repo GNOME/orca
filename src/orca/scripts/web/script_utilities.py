@@ -1773,11 +1773,11 @@ class Utilities(script_utilities.Utilities):
         if self.hasPresentableText(obj):
             super().updateCachedTextSelection(obj)
 
-    def handleTextSelectionChange(self, obj):
+    def handleTextSelectionChange(self, obj, speakMessage=True):
         if not self.inDocumentContent(obj):
             return super().handleTextSelectionChange(obj)
 
-        if self.hasPresentableText(obj) and super().handleTextSelectionChange(obj):
+        if self.hasPresentableText(obj) and super().handleTextSelectionChange(obj, speakMessage):
             return True
 
         handled = False
@@ -1786,7 +1786,7 @@ class Utilities(script_utilities.Utilities):
             if handled:
                 super().updateCachedTextSelection(descendant)
             else:
-                handled = handled or super().handleTextSelectionChange(descendant)
+                handled = super().handleTextSelectionChange(descendant, speakMessage)
 
         return handled
 
