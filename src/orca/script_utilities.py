@@ -4633,9 +4633,6 @@ class Utilities:
                 start = end = 0
             if start != end:
                 string = text.getText(start, end)
-                while string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
-                    end -= 1
-                    string = string[:-1]
 
         msg = "INFO: New selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -5261,6 +5258,9 @@ class Utilities:
         # to text selection will get eliminated once the new text-selection API
         # is added to ATK and implemented by the toolkits. (BGO 638378)
 
+        if not (obj and 'Text' in pyatspi.listInterfaces(obj)):
+            return False
+
         oldStart, oldEnd, oldString = self.getCachedTextSelection(obj)
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
@@ -5294,10 +5294,20 @@ class Utilities:
                 changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
 
         speakMessage = not _settingsManager.getSetting('onlySpeakDisplayedText')
+        text = obj.queryText()
         for start, end, message in changes:
+            string = text.getText(start, end)
+            endsWithChild = string.endswith(self.EMBEDDED_OBJECT_CHARACTER)
+            if endsWithChild:
+                end -= 1
+
             self._script.sayPhrase(obj, start, end)
-            if speakMessage:
+            if speakMessage and not endsWithChild:
                 self._script.speakMessage(message, interrupt=False)
+
+            if endsWithChild:
+                child = self.getChildAtOffset(obj, end)
+                self.handleTextSelectionChange(child)
 
         return True
 
