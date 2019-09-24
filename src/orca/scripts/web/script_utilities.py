@@ -3859,33 +3859,6 @@ class Utilities(script_utilities.Utilities):
         start, end = self.getHyperlinkRange(obj)
         return start, end, text.characterCount
 
-    def getChildAtOffset(self, obj, offset):
-        try:
-            hypertext = obj.queryHypertext()
-        except NotImplementedError:
-            msg = "WEB: %s does not implement the hypertext interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-        except:
-            msg = "WEB: Exception querying hypertext interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        index = hypertext.getLinkIndex(offset)
-        if index == -1:
-            return None
-
-        hyperlink = hypertext.getLink(index)
-        if not hyperlink:
-            msg = "ERROR: No hyperlink object at index %i for %s" % (index, obj)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        child = hyperlink.getObject(0)
-        msg = "WEB: Hyperlink object at index %i for %s is %s" % (index, obj, child)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return child
-
     def getError(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().getError(obj)
