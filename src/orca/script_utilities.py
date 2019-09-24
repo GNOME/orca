@@ -2630,6 +2630,33 @@ class Utilities:
 
         return rv
 
+    def getChildAtOffset(self, obj, offset):
+        try:
+            hypertext = obj.queryHypertext()
+        except NotImplementedError:
+            msg = "INFO: %s does not implement the hypertext interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+        except:
+            msg = "INFO: Exception querying hypertext interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        index = hypertext.getLinkIndex(offset)
+        if index == -1:
+            return None
+
+        hyperlink = hypertext.getLink(index)
+        if not hyperlink:
+            msg = "INFO: No hyperlink object at index %i for %s" % (index, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        child = hyperlink.getObject(0)
+        msg = "INFO: Hyperlink object at index %i for %s is %s" % (index, obj, child)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return child
+
     def characterOffsetInParent(self, obj):
         """Returns the character offset of the embedded object
         character for this object in its parent's accessible text.
