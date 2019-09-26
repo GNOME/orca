@@ -2724,30 +2724,16 @@ class Utilities:
         except:
             return ""
 
-        if self.EMBEDDED_OBJECT_CHARACTER in string:
-            # If we're not getting the full text of this object, but
-            # rather a substring, we need to figure out the offset of
-            # the first child within this substring.
-            #
-            childOffset = 0
-            for child in obj:
-                if self.characterOffsetInParent(child) >= startOffset:
-                    break
-                childOffset += 1
+        if not self.EMBEDDED_OBJECT_CHARACTER in string:
+            return string
 
-            toBuild = list(string)
-            count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-            for i in range(count):
-                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
-                child = obj[i + childOffset]
-                childText = self.expandEOCs(child)
-                if not childText:
-                    childText = ""
-                toBuild[index] = childText
+        toBuild = list(string)
+        for i, char in enumerate(toBuild):
+            if char == self.EMBEDDED_OBJECT_CHARACTER:
+                child = self.getChildAtOffset(obj, i + startOffset)
+                toBuild[i] = self.expandEOCs(child)
 
-            string = "".join(toBuild)
-
-        return string
+        return "".join(toBuild)
 
     def isWordMisspelled(self, obj, offset):
         """Identifies if the current word is flagged as misspelled by the
