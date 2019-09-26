@@ -877,30 +877,7 @@ class Utilities(script_utilities.Utilities):
             utterances = self._script.speechGenerator.generateSpeech(obj)
             return self._script.speechGenerator.utterancesToString(utterances)
 
-        string = text.getText(startOffset, endOffset)
-        if self.EMBEDDED_OBJECT_CHARACTER in string:
-            # If we're not getting the full text of this object, but
-            # rather a substring, we need to figure out the offset of
-            # the first child within this substring.
-            childOffset = 0
-            for child in obj:
-                if self.characterOffsetInParent(child) >= startOffset:
-                    break
-                childOffset += 1
-
-            toBuild = list(string)
-            count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-            for i in range(count):
-                try:
-                    child = obj[i + childOffset]
-                except:
-                    continue
-                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
-                toBuild[index] = "%s " % self.expandEOCs(child)
-
-            string = "".join(toBuild).strip()
-
-        return string
+        return super().expandEOCs(obj, startOffset, endOffset).strip()
 
     def substring(self, obj, startOffset, endOffset):
         if not self.inDocumentContent(obj):
