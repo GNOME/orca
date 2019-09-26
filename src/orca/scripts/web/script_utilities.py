@@ -25,6 +25,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import functools
 import pyatspi
 import re
 import time
@@ -1754,18 +1755,25 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return super().handleTextSelectionChange(obj)
 
-        if self.hasPresentableText(obj) and super().handleTextSelectionChange(obj, speakMessage):
-            return True
+        oldStart, oldEnd = self._script.pointOfReference.get('selectionAnchorAndFocus', (None, None))
+        start, end = self._getSelectionAnchorAndFocus(obj)
+        self._script.pointOfReference['selectionAnchorAndFocus'] = (start, end)
 
-        handled = False
-        descendants = self.findAllDescendants(obj, self.hasPresentableText)
+        oldSubtree = self._getSubtree(oldStart, oldEnd)
+        newSubtree = self._getSubtree(start, end)
+
+        def _cmp(obj1, obj2):
+            return self.pathComparison(pyatspi.getPath(obj1), pyatspi.getPath(obj2))
+
+        descendants = sorted(set(oldSubtree).union(newSubtree), key=functools.cmp_to_key(_cmp))
         for descendant in descendants:
-            if handled:
+            if descendant not in (oldStart, oldEnd, start, end) \
+               and pyatspi.findAncestor(descendant, lambda x: x in descendants):
                 super().updateCachedTextSelection(descendant)
             else:
-                handled = super().handleTextSelectionChange(descendant, speakMessage)
+                super().handleTextSelectionChange(descendant, speakMessage)
 
-        return handled
+        return True
 
     def inPDFViewer(self, obj=None):
         uri = self.documentFrameURI()
