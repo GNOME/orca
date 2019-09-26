@@ -5292,6 +5292,9 @@ class Utilities:
             if endObj in subtree:
                 break
 
+        if endObj == startObj:
+            return subtree
+
         try:
             endIndex = subtree.index(endObj)
         except ValueError:
