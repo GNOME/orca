@@ -5239,6 +5239,69 @@ class Utilities:
 
         return False
 
+    def _findSelectionBoundaryObject(self, root, findStart=True):
+        try:
+            text = root.queryText()
+            childCount = root.childCount
+        except:
+            msg = "ERROR: Exception querying text and getting childCount for %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if not text.getNSelections():
+            return None
+
+        start, end = text.getSelection(0)
+        string = text.getText(start, end)
+        if not string:
+            return None
+
+        if findStart and not string.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+            return root
+
+        if not findStart and not string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
+            return root
+
+        indices = list(range(childCount))
+        if not findStart:
+            indices.reverse()
+
+        for i in indices:
+            result = self._findSelectionBoundaryObject(root[i], findStart)
+            if result:
+                return result
+
+        return None
+
+    def _getSelectionAnchorAndFocus(self, root):
+        # Any scripts which need to make a distinction between the anchor and
+        # the focus should override this method.
+        obj1 = self._findSelectionBoundaryObject(root, True)
+        obj2 = self._findSelectionBoundaryObject(root, False)
+        return obj1, obj2
+
+    def _getSubtree(self, startObj, endObj):
+        if not (startObj and endObj):
+            return []
+
+        subtree = []
+        for i in range(startObj.getIndexInParent(), startObj.parent.childCount):
+            child = startObj.parent[i]
+            subtree.append(child)
+            subtree.extend(self.findAllDescendants(child, lambda x: x))
+            if endObj in subtree:
+                break
+
+        try:
+            endIndex = subtree.index(endObj)
+        except ValueError:
+            msg = "ERROR: %s not in subtree" % endObj
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            subtree = subtree[:endIndex+1]
+
+        return subtree
+
     def handleTextSelectionChange(self, obj, speakMessage=True):
         # Note: This guesswork to figure out what actually changed with respect
         # to text selection will get eliminated once the new text-selection API
