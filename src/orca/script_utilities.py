@@ -2731,7 +2731,7 @@ class Utilities:
         for i, char in enumerate(toBuild):
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = self.getChildAtOffset(obj, i + startOffset)
-                toBuild[i] = expandEOCs(child)
+                toBuild[i] = self.expandEOCs(child)
 
         return "".join(toBuild)
 
