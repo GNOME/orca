@@ -124,7 +124,7 @@ def _mouseEventOnCharacter(obj, event):
     objExtents = _objectExtents(obj)
     intersection = _intersection(extents, objExtents)
     if intersection == (0, 0, 0, 0):
-        msg = "EVENT SYNTHESIZER: %s's Caret %s not in obj %s" % (extents, objExtents, obj)
+        msg = "EVENT SYNTHESIZER: %s's caret %s not in obj %s" % (obj, extents, objExtents)
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
