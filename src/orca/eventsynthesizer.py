@@ -66,14 +66,65 @@ def _generateMouseEvent(x, y, event):
 
     return True
 
-def _mouseEventOnCharacter(obj, event):
-    """Performs the specified mouse event on the current character in obj."""
+def _intersection(extents1, extents2):
+    """Returns the bounding box containing the intersection of the two boxes."""
+
+    x1, y1, width1, height1 = extents1
+    x2, y2, width2, height2 = extents2
+
+    xPoints1 = range(x1, x1 + width1 + 1)
+    xPoints2 = range(x2, x2 + width2 + 1)
+    xIntersection = sorted(set(xPoints1).intersection(set(xPoints2)))
+
+    yPoints1 = range(y1, y1 + height1 + 1)
+    yPoints2 = range(y2, y2 + height2 + 1)
+    yIntersection = sorted(set(yPoints1).intersection(set(yPoints2)))
+
+    if not (xIntersection and yIntersection):
+        return 0, 0, 0, 0
+
+    x = xIntersection[0]
+    y = yIntersection[0]
+    width = xIntersection[-1] - x
+    height = yIntersection[-1] - y
+    return x, y, width, height
+
+def _extentsAtCaret(obj):
+    """Returns the character extents of obj at the current caret offset."""
 
     try:
         text = obj.queryText()
         extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
     except:
         msg = "ERROR: Exception getting character extents for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return 0, 0, 0, 0
+
+    return extents
+
+def _objectExtents(obj):
+    """Returns the bounding box associated with obj."""
+
+    try:
+        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+    except:
+        msg = "ERROR: Exception getting extents for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return 0, 0, 0, 0
+
+    return extents
+
+def _mouseEventOnCharacter(obj, event):
+    """Performs the specified mouse event on the current character in obj."""
+
+    extents = _extentsAtCaret(obj)
+    if extents == (0, 0, 0, 0):
+        return False
+
+    objExtents = _objectExtents(obj)
+    intersection = _intersection(extents, objExtents)
+    if intersection == (0, 0, 0, 0):
+        msg = "EVENT SYNTHESIZER: %s's Caret %s not in obj %s" % (extents, objExtents, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
@@ -84,11 +135,8 @@ def _mouseEventOnCharacter(obj, event):
 def _mouseEventOnObject(obj, event):
     """Performs the specified mouse event on obj."""
 
-    try:
-        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
-    except:
-        msg = "ERROR: Exception getting extents for %s" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
+    extents = _objectExtents(obj)
+    if extents == (0, 0, 0, 0):
         return False
 
     x = extents.x + extents.width/2
