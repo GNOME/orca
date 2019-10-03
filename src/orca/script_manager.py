@@ -101,10 +101,12 @@ class ScriptManager:
         if not appAndNameExist:
             return None
 
-        # Many python apps have an accessible name which ends in '.py'.
-        # Sometimes OOo has 'soffice.bin' as its name.
-        name = app.name.split('.')[0]
+        name = app.name
         altNames = list(self._appNames.keys())
+        if name.endswith(".py") or name.endswith(".bin"):
+            name = name.split('.')[0]
+        elif name.startswith("org.") or name.startswith("com."):
+            name = name.split('.')[-1]
 
         names = [n for n in altNames if n.lower() == name.lower()]
         if names:
