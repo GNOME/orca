@@ -4361,6 +4361,14 @@ class Utilities(script_utilities.Utilities):
         if not self.isLiveRegion(event.source):
             return False
 
+        if event.type.startswith("object:text-changed:insert"):
+            isAlert = lambda x: x and x.getRole() == pyatspi.ROLE_ALERT
+            alert = pyatspi.findAncestor(event.source, isAlert)
+            if alert and self.focusedObject(alert) == event.source:
+                msg = "WEB: Focused source will be presented as part of alert"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
         if isinstance(event.any_data, pyatspi.Accessible):
             try:
                 role = event.any_data.getRole()
