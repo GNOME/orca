@@ -2727,11 +2727,18 @@ class Utilities:
         if not self.EMBEDDED_OBJECT_CHARACTER in string:
             return string
 
+        blockRoles = [pyatspi.ROLE_HEADING,
+                      pyatspi.ROLE_PARAGRAPH,
+                      pyatspi.ROLE_SECTION]
+
         toBuild = list(string)
         for i, char in enumerate(toBuild):
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = self.getChildAtOffset(obj, i + startOffset)
-                toBuild[i] = self.expandEOCs(child)
+                result = self.expandEOCs(child)
+                if child.getRole() in blockRoles:
+                    result += " "
+                toBuild[i] = result
 
         return "".join(toBuild)
 
