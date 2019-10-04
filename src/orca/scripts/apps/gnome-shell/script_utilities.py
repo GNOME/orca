@@ -117,3 +117,13 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def isBogusWindowFocusClaim(self, event):
+        if event.type.startswith('object:state-changed:focused') and event.detail1 \
+           and event.source.getRole() == pyatspi.ROLE_WINDOW \
+           and not self.canBeActiveWindow(event.source):
+            msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
