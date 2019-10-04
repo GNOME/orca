@@ -5302,13 +5302,23 @@ class Utilities:
         if endObj == startObj:
             return subtree
 
+        if endObj not in subtree:
+            subtree.append(endObj)
+            subtree.extend(self.findAllDescendants(endObj, lambda x: x))
+
         try:
-            endIndex = subtree.index(endObj)
+            lastObj = endObj.parent[endObj.getIndexInParent() + 1]
+        except:
+            lastObj = endObj
+
+        try:
+            endIndex = subtree.index(lastObj)
         except ValueError:
-            msg = "ERROR: %s not in subtree" % endObj
-            debug.println(debug.LEVEL_INFO, msg, True)
+            pass
         else:
-            subtree = subtree[:endIndex+1]
+            if lastObj == endObj:
+                endIndex += 1
+            subtree = subtree[:endIndex]
 
         return subtree
 
