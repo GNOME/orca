@@ -62,6 +62,9 @@ class Script(clutter.Script):
             if role == pyatspi.ROLE_DIALOG:
                 return False
 
+            if role == pyatspi.ROLE_WINDOW:
+                return self.utilities.isBogusWindowFocusClaim(event)
+
         return clutter.Script.skipObjectEvent(self, event)
 
     def _presentDialogLabel(self, event):
@@ -226,5 +229,8 @@ class Script(clutter.Script):
     def isActivatableEvent(self, event):
         if event.type.startswith('object:state-changed:selected') and event.detail1:
             return True
+
+        if self.utilities.isBogusWindowFocusClaim(event):
+            return False
 
         return super().isActivatableEvent(event)
