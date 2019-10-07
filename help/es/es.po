@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2019-08-20 19:10+0000\n"
-"PO-Revision-Date: 2019-08-28 09:17+0200\n"
+"POT-Creation-Date: 2019-09-24 11:21+0000\n"
+"PO-Revision-Date: 2019-10-07 10:22+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"X-Generator: Gtranslator 3.34.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1485,15 +1485,6 @@ msgstr "Atributos del texto y texto seleccionado"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
-#| msgid ""
-#| "<app>Orca</app> has a dedicated command for obtaining the attributes of "
-#| "the text at the caret location. In addition, if you use <app>Orca</app>'s "
-#| "Where Am I commands from within a text object in which text has been "
-#| "selected, <app>Orca</app> will announce the selected text. If you would "
-#| "instead prefer a dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speak Selected Text command to a keystroke. Please see "
-#| "<link xref=\"howto_key_bindings\">Modifying Keybindings</link> for "
-#| "information on how to do so."
 msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
@@ -1555,9 +1546,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:222
-#| msgid ""
-#| "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></"
-#| "keyseq>"
 msgid ""
 "Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Up</key></keyseq>"
@@ -1637,13 +1625,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:273
-#| msgid "Using Learn Mode"
 msgid "Toggling Layout Mode"
 msgstr "Cambiar el modo de la disposición"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:274
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app>'s caret navigation will "
 #| "respect the on-screen layout of the content and present the full line, "
@@ -1657,16 +1643,16 @@ msgid ""
 "app> will treat objects such as links and form fields as if they were on "
 "separate lines, both for presentation and navigation."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> respetará siempre la "
-"distribución del contenido de la pantalla y mostrará la línea completa, "
-"incluyendo los enlaces o campos de formulario de esa línea. Si esta casilla "
-"no está marcada, <app>Orca</app> tratará los objetos como enlaces y campos "
-"de formulario como si estuvieran en líneas separadas, tanto para "
-"presentación como para navegación."
+"Cuando el modo de disposición está activado, la navegación del cursor de "
+"<app>Orca</app> respetará siempre la distribución del contenido de la "
+"pantalla y mostrará la línea completa, incluyendo los enlaces o campos de "
+"formulario de esa línea. Cuando el modo de disposición está desactivado, "
+"<app>Orca</app> tratará los objetos como enlaces y campos de formulario como "
+"si estuvieran en líneas separadas, tanto para presentación como para "
+"navegación."
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:281
-#, fuzzy
 #| msgid ""
 #| "If you are using <app>Orca</app> in another desktop environment in which "
 #| "there is no command to toggle <app>Orca</app> on and off, you may find "
@@ -1679,12 +1665,11 @@ msgid ""
 "\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
 "to bind unbound commands."
 msgstr ""
-"Si está usando <app>Orca</app> en otro entorno de escritorio en el que no "
-"haya un comando para activar o desactivar <app>Orca</app> puede que le "
-"resulte útil el comando para salir de <app>Orca</app>. Este comando no está "
-"asociado de manera predeterminada. Consulte cómo <link xref="
-"\"howto_key_bindings\">Modificar las asociaciones de teclas</link> para "
-"obtener información sobre cómo asociar comandos que no estén asociados."
+"<app>Orca</app> proporciona un comando para cambiar entre el modo de "
+"disposición y el modo objeto. Este comando no está asociado de manera "
+"predeterminada. Consulte cómo <link xref=\"howto_key_bindings\">Modificar "
+"las asociaciones de teclas</link> para obtener información sobre cómo "
+"asociar comandos que no estén asociados."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
@@ -2663,7 +2648,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:92
-#| msgid "Present the last (most recent) notification message: (Unbound)"
 msgid "Present size and location of current object in pixels: (Unbound)"
 msgstr ""
 "Presentar el tamaño y la ubicación del objeto actual en píxeles: (sin "
@@ -4738,7 +4722,6 @@ msgstr "Bloq Mayús en distribución de portátil"
 
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
-#, fuzzy
 #| msgid ""
 #| "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 #| "impacts which key is used as the Orca Modifier. If you are using the "
@@ -4758,8 +4741,9 @@ msgstr ""
 "distribución que elija afecta a qué tecla se usa como «modificador de Orca». "
 "Si está usando la distribución de portátil, el «modificador de Orca» "
 "predeterminado será <key>Bloq Mayús</key>. Si está usando la distribución de "
-"escritorio, y quiere bloquear o desbloquear el <key>Bloq Mayús</key>, puede "
-"hacerlo siguiendo estos pasos:"
+"escritorio de <app>Orca</app>, y quiere bloquear o desbloquear el <key>Bloq "
+"Mayús</key>, puede hacerlo pulsando <key>Bloq Mayús</key> dos veces "
+"(requiere at-spi2 versión 2.32 o superior) o realizando los siguientes pasos:"
 
 #. (itstool) path: steps/title
 #: C/howto_toggling_caps_lock.page:26
