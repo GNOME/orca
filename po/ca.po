@@ -770,7 +770,7 @@ msgstr "claudàtor esquerre"
 #.
 #: ../src/orca/chnames.py:145
 msgid "backslash"
-msgstr "barra invertida"
+msgstr "barra inversa"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
@@ -5304,7 +5304,7 @@ msgstr "Majúscules"
 #. system. (http://devel.freebsoft.org/speechd)
 #: ../src/orca/guilabels.py:720
 msgid "Speech Dispatcher"
-msgstr "Distribuïdor de pronunciació."
+msgstr "Distribuïdor de pronunciació"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
@@ -8484,7 +8484,7 @@ msgstr "enllaç de mapa d'imatges"
 #: ../src/orca/messages.py:573
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr "La tecla introduïda ja està vinculada a %s."
+msgstr "La tecla introduïda ja està vinculada a %s"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
