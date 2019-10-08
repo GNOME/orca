@@ -66,6 +66,7 @@ _settingsManager = settings_manager.getManager()
 class Utilities:
 
     _desktop = pyatspi.Registry.getDesktop(0)
+    _last_clipboard_update = time.time()
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
@@ -4638,6 +4639,12 @@ class Utilities:
         if not script:
             return
 
+        if time.time() - Utilities._last_clipboard_update < 0.05:
+            msg = "INFO: Clipboard contents change notification believed to be duplicate"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        Utilities._last_clipboard_update = time.time()
         script.onClipboardContentsChanged(*args)
 
     def connectToClipboard(self):
