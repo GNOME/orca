@@ -4363,6 +4363,12 @@ class Utilities(script_utilities.Utilities):
         if not self.isLiveRegion(event.source):
             return False
 
+        if not _settingsManager.getSetting('presentLiveRegionFromInactiveTab') \
+           and self.getDocumentForObject(event.source) != self.activeDocument():
+            msg = "WEB: Live region source is not in active tab."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if event.type.startswith("object:text-changed:insert"):
             isAlert = lambda x: x and x.getRole() == pyatspi.ROLE_ALERT
             alert = pyatspi.findAncestor(event.source, isAlert)
