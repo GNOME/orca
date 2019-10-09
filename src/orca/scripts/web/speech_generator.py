@@ -104,6 +104,28 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # call utility methods rather than generate it.
         return super()._generateAnyTextSelection(obj, **args)
 
+    def _generateHasPopup(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return []
+
+        result = []
+        popupType = self._script.utilities.popupType(obj)
+        if popupType == 'dialog':
+            result = [messages.HAS_POPUP_DIALOG]
+        elif popupType == 'grid':
+            result = [messages.HAS_POPUP_GRID]
+        elif popupType == 'listbox':
+            result = [messages.HAS_POPUP_LISTBOX]
+        elif popupType in ('menu', 'true'):
+            result = [messages.HAS_POPUP_MENU]
+        elif popupType == 'tree':
+            result = [messages.HAS_POPUP_TREE]
+
+        if result:
+            result.extend(self.voice(speech_generator.SYSTEM))
+
+        return result
+
     def _generateClickable(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return []

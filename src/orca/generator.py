@@ -486,6 +486,9 @@ class Generator:
     def _generateHasLongDesc(self, obj, **args):
         return []
 
+    def _generateHasPopup(self, obj, **args):
+        return []
+
     def _generateAvailability(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the grayed/sensitivity/availability state of the

@@ -76,6 +76,7 @@ class Utilities(script_utilities.Utilities):
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._popupType = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
         self._displayStyle = {}
@@ -155,6 +156,7 @@ class Utilities(script_utilities.Utilities):
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._popupType = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
         self._displayStyle = {}
@@ -3528,6 +3530,23 @@ class Utilities(script_utilities.Utilities):
         rv = "showlongdesc" in names
 
         self._hasLongDesc[hash(obj)] = rv
+        return rv
+
+    def popupType(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._popupType.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        rv = attrs.get('haspopup', 'false').lower()
+        self._popupType[hash(obj)] = rv
         return rv
 
     def inferLabelFor(self, obj):

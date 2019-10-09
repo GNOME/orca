@@ -3901,6 +3901,9 @@ class Utilities:
     def hasLongDesc(self, obj):
         return False
 
+    def popupType(self, obj):
+        return ''
+
     def headingLevel(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_HEADING):
             return 0

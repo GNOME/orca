@@ -563,6 +563,28 @@ FLAT_REVIEW_STOP = _("Leaving flat review.")
 # (e.g., "=sum(a1:d1)")
 HAS_FORMULA = _("has formula")
 
+# Translators: this message will be presented to indicate the focused object
+# will cause a dialog to appear if activated.
+HAS_POPUP_DIALOG = _("opens dialog")
+
+# Translators: this message will be presented to indicate the focused object
+# will cause a grid to appear if activated. A grid is an interactive table.
+HAS_POPUP_GRID = _("opens grid")
+
+# Translators: this message will be presented to indicate the focused object
+# will cause a listbox to appear if activated.
+HAS_POPUP_LISTBOX = _("opens listbox")
+
+# Translators: this message will be presented to indicate the focused object
+# will cause a menu to appear if activated.
+HAS_POPUP_MENU = _("opens menu")
+
+# Translators: this message will be presented to indicate the focused object
+# will cause a tree to appear if activated. A tree is a list with sub-levels
+# which can be expanded or collapsed, similar to the list of folders in an
+# email client.
+HAS_POPUP_TREE = _("opens tree")
+
 # Translators: The following string is spoken to let the user know that he/she
 # is on a link within an image map. An image map is an image/graphic which has
 # been divided into regions. Each region can be clicked on and has an associated

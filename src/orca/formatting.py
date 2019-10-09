@@ -116,9 +116,9 @@ formatting = {
             },
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + unselectedCell + clickable + hasLongDesc + ' + TUTORIAL + ' + description',
-            'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description',
-            'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description'
+            'unfocused': 'newNodeLevel + unselectedCell + clickable + hasLongDesc + ' + TUTORIAL + ' + description + pause + hasPopup',
+            'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup',
+            'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup'
             },
         'default': {
             'focused': '[]',
