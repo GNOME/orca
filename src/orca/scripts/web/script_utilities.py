@@ -3534,7 +3534,7 @@ class Utilities(script_utilities.Utilities):
 
     def popupType(self, obj):
         if not (obj and self.inDocumentContent(obj)):
-            return False
+            return 'false'
 
         rv = self._popupType.get(hash(obj))
         if rv is not None:
