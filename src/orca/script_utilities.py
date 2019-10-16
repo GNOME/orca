@@ -759,6 +759,12 @@ class Utilities:
     def isTypeahead(self, obj):
         return False
 
+    def isOrDescendsFrom(self, obj, ancestor):
+        if obj == ancestor:
+            return True
+
+        return pyatspi.findAncestor(obj, lambda x: x and x == ancestor)
+
     def isFunctionalDialog(self, obj):
         """Returns True if the window is a functioning as a dialog.
         This method should be subclassed by application scripts as

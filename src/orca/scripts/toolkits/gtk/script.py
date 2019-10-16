@@ -176,7 +176,8 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if self.utilities.isComboBoxWithToggleDescendant(event.source):
+        if self.utilities.isComboBoxWithToggleDescendant(event.source) \
+            and self.utilities.isOrDescendsFrom(orca_state.locusOfFocus, event.source):
             super().onSelectionChanged(event)
             return
 
