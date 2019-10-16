@@ -937,6 +937,8 @@ class Generator:
                             result.append(braille.Region(
                                 object_properties.TABLE_CELL_DELIMITER_BRAILLE))
                         result.extend(cellResult)
+
+                result.extend(self._generatePositionInList(obj, **args))
             else:
                 result.extend(self._generateRealTableCell(obj, **args))
         else:
@@ -1164,6 +1166,9 @@ class Generator:
         return result
 
     def _generatePageSummary(self, obj, **args):
+        return []
+
+    def _generatePositionInList(self, obj, **args):
         return []
 
     def _generateProgressBarIndex(self, obj, **args):
