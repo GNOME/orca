@@ -2735,8 +2735,13 @@ class Utilities:
             return string
 
         blockRoles = [pyatspi.ROLE_HEADING,
+                      pyatspi.ROLE_LIST,
+                      pyatspi.ROLE_LIST_ITEM,
                       pyatspi.ROLE_PARAGRAPH,
-                      pyatspi.ROLE_SECTION]
+                      pyatspi.ROLE_SECTION,
+                      pyatspi.ROLE_TABLE,
+                      pyatspi.ROLE_TABLE_CELL,
+                      pyatspi.ROLE_TABLE_ROW]
 
         toBuild = list(string)
         for i, char in enumerate(toBuild):
