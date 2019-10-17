@@ -1293,6 +1293,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if event.source.getRole() != pyatspi.ROLE_DOCUMENT_WEB \
+           and not self.utilities.isOrDescendsFrom(orca_state.locusOfFocus, event.source):
+            msg = "WEB: Ignoring: Not document and not something we're in"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         self.structuralNavigation.clearCache()
 
         if self.utilities.getDocumentForObject(event.source.parent):
