@@ -2708,8 +2708,6 @@ class Script(script.Script):
         elif self.utilities.isSelectedTextInsertionEvent(event):
             msg = "DEFAULT: Insertion is also selected"
             debug.println(debug.LEVEL_INFO, msg, True)
-            # TODO - JD: This may be (now or soon) obsolete.
-            self.pointOfReference['lastAutoComplete'] = hash(event.source)
         else:
             msg = "DEFAULT: Not speaking inserted string due to lack of cause"
             debug.println(debug.LEVEL_INFO, msg, True)
