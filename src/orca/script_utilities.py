@@ -3331,6 +3331,9 @@ class Utilities:
                 selection, start, end = self.selectedText(event.source)
                 if selection == event.any_data:
                     return True
+                if string == event.any_data and string.endswith(selection):
+                    beginning = string[:string.find(selection)]
+                    return beginning.lower().endswith(lastKey.lower())
 
         return False
 
