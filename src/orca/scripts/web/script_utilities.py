@@ -4157,6 +4157,13 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(obj[0], 0)
 
+        if self.isListItemMarker(obj):
+            nextObj, nextOffset = obj, offset
+            while nextObj and self.isListItemMarker(nextObj):
+                nextObj, nextOffset = self.nextContext(nextObj, nextOffset)
+            if nextObj:
+                obj, offset = nextObj, nextOffset
+
         text = self.queryNonEmptyText(obj)
         if not text:
             if self._advanceCaretInEmptyObject(obj) \
