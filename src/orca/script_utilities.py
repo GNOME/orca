@@ -3326,6 +3326,12 @@ class Utilities:
             if lastKey in ["Up", "Down", "Page_Up", "Page_Down"]:
                 return self.isEditableDescendantOfComboBox(event.source)
 
+            string = event.source.queryText().getText(0, -1)
+            if string.endswith(event.any_data):
+                selection, start, end = self.selectedText(obj)
+                if selection == event.any_data:
+                    return True
+
         return False
 
     def isSentenceDelimiter(self, currentChar, previousChar):
