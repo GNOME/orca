@@ -3328,7 +3328,7 @@ class Utilities:
 
             string = event.source.queryText().getText(0, -1)
             if string.endswith(event.any_data):
-                selection, start, end = self.selectedText(obj)
+                selection, start, end = self.selectedText(event.source)
                 if selection == event.any_data:
                     return True
 
