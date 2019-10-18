@@ -32,6 +32,7 @@ __license__   = "LGPL"
 
 import pyatspi
 import re
+import time
 
 from orca import debug
 from orca import orca_state
@@ -42,6 +43,9 @@ class Utilities(web.Utilities):
 
     def __init__(self, script):
         super().__init__(script)
+        self._lastAutoTextObjectEvent = None
+        self._lastAutoTextInputEvent = None
+        self._lastAutoTextEventTime = 0
 
     def _attemptBrokenTextRecovery(self, obj, **args):
         boundary = args.get('boundary')
@@ -322,3 +326,22 @@ class Utilities(web.Utilities):
         label = labels[0]
         label.clearCache()
         return label.name
+
+    def isAutoTextEvent(self, event):
+        if not super().isAutoTextEvent(event):
+            return False
+
+        if self.inDocumentContent(event.source):
+            return True
+
+        if self.treatAsDuplicateEvent(self._lastAutoTextObjectEvent, event) \
+           and time.time() - self._lastAutoTextEventTime < 0.5 \
+           and orca_state.lastInputEvent.isReleaseFor(self._lastAutoTextInputEvent):
+            msg = "GECKO: Event believed to be duplicate auto text event."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        self._lastAutoTextObjectEvent = event
+        self._lastAutoTextInputEvent = orca_state.lastInputEvent
+        self._lastAutoTextEventTime = time.time()
+        return True

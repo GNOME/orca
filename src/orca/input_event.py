@@ -296,6 +296,24 @@ class KeyboardEvent(InputEvent):
 
         return False
 
+    def isReleaseFor(self, other):
+        """Return True if this is the release event for other."""
+
+        if not other:
+            return False
+
+        if not other.isPressedKey() or self.isPressedKey():
+            return False
+
+        return self.id == other.id \
+            and self.hw_code == other.hw_code \
+            and self.modifiers == other.modifiers \
+            and self.event_string == other.event_string \
+            and self.keyval_name == other.keyval_name \
+            and self.is_text == other.is_text \
+            and self.keyType == other.keyType \
+            and self._clickCount == other._clickCount
+
     def isNavigationKey(self):
         """Return True if this is a navigation key."""
 
