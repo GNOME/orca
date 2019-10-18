@@ -5355,10 +5355,6 @@ class Utilities:
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
-        # TODO - JD: This may be (now or soon) obsolete.
-        if self._script.pointOfReference.get('lastAutoComplete') == hash(obj):
-            return False
-
         if self._speakTextSelectionState(len(newString)):
             return True
 

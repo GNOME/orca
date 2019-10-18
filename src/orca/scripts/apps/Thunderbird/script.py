@@ -173,8 +173,6 @@ class Script(Gecko.Script):
             return
 
         self._lastAutoComplete = ""
-        self.pointOfReference['lastAutoComplete'] = None
-
         obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
             orca.setLocusOfFocus(event, event.source, False)
@@ -321,7 +319,6 @@ class Script(Gecko.Script):
             if hasSelection or isSystemEvent:
                 speech.speak(event.any_data)
                 self._lastAutoComplete = event.any_data
-                self.pointOfReference['lastAutoComplete'] = hash(obj)
                 return
 
         super().onTextInserted(event)
