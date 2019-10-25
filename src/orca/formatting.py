@@ -230,7 +230,7 @@ formatting = {
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
             },
         pyatspi.ROLE_FRAME: {
-            'focused': 'labelOrName + roleName',
+            'focused': 'labelOrName',
             'unfocused': 'labelOrName + roleName + unfocusedDialogCount + availability'
             },
         pyatspi.ROLE_HEADER: {
