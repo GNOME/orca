@@ -4137,7 +4137,8 @@ class Utilities:
             return not state.contains(pyatspi.STATE_EXPANDED)
 
         roles = [pyatspi.ROLE_COMBO_BOX,
-                 pyatspi.ROLE_PUSH_BUTTON]
+                 pyatspi.ROLE_PUSH_BUTTON,
+                 pyatspi.ROLE_TOGGLE_BUTTON]
 
         return role in roles
 
