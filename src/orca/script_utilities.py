@@ -4132,12 +4132,15 @@ class Utilities:
         if role in roles:
             return False
 
+        if role == pyatspi.ROLE_COMBO_BOX:
+            entry = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY)
+            return entry is None
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             return not state.contains(pyatspi.STATE_EXPANDED)
 
-        roles = [pyatspi.ROLE_COMBO_BOX,
-                 pyatspi.ROLE_PUSH_BUTTON,
+        roles = [pyatspi.ROLE_PUSH_BUTTON,
                  pyatspi.ROLE_TOGGLE_BUTTON]
 
         return role in roles
