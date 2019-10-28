@@ -704,8 +704,24 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isTextArea(self, obj):
+        if not self.inDocumentContent(obj):
+            return super().isTextArea(obj)
+
         if self.isLink(obj):
             return False
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "WEB: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_COMBO_BOX \
+           and state.contains(pyatspi.STATE_EDITABLE) \
+           and not obj.childCount:
+            return True
 
         return super().isTextArea(obj)
 
