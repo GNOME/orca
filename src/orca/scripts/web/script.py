@@ -895,8 +895,12 @@ class Script(default.Script):
             self.updateBraille(obj)
             return
 
+        # We shouldn't use cache in this method, because if the last thing we presented
+        # included this object and offset (e.g. a Say All or Mouse Review), we're in
+        # danger of presented irrelevant context.
+        useCache = False
         offset = args.get("offset", 0)
-        contents = self.utilities.getObjectContentsAtOffset(obj, offset)
+        contents = self.utilities.getObjectContentsAtOffset(obj, offset, useCache)
         self.displayContents(contents)
         self.speakContents(contents, **args)
  
