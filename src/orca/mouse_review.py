@@ -490,10 +490,6 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 menu = None
 
-        document = None
-        if script.utilities.inDocumentContent():
-            document = script.utilities.activeDocument()
-
         screen, nowX, nowY = self._pointer.get_position()
         if (pX, pY) != (nowX, nowY):
             msg = "MOUSE REVIEW: Pointer moved again: (%i, %i)" % (nowX, nowY)
@@ -501,7 +497,6 @@ class MouseReviewer:
             return
 
         obj = script.utilities.descendantAtPoint(menu, pX, pY) \
-            or script.utilities.descendantAtPoint(document, pX, pY) \
             or script.utilities.descendantAtPoint(window, pX, pY)
         msg = "MOUSE REVIEW: Object at (%i, %i) is %s" % (pX, pY, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -513,10 +508,13 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
-        if document and obj and document != script.utilities.getContainingDocument(obj):
-            msg = "MOUSE REVIEW: %s is not in active document %s" % (obj, document)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
+        objDocument = script.utilities.getContainingDocument(obj)
+        if objDocument and script.utilities.inDocumentContent():
+            document = script.utilities.activeDocument()
+            if document != objDocument:
+                msg = "MOUSE REVIEW: %s is not in active document %s" % (obj, document)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
 
         if obj and obj.getRole() in script.utilities.getCellRoles() \
            and script.utilities.shouldReadFullRow(obj):
