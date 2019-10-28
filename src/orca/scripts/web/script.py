@@ -887,9 +887,10 @@ class Script(default.Script):
         priorObj = args.get("priorObj")
         if self._lastCommandWasCaretNav or args.get("includeContext"):
             priorObj, priorOffset = self.utilities.getPriorContext()
+            args["priorObj"] = priorObj
 
         if obj.getRole() == pyatspi.ROLE_ENTRY:
-            utterances = self.speechGenerator.generateSpeech(obj, priorObj=priorObj)
+            utterances = self.speechGenerator.generateSpeech(obj, **args)
             speech.speak(utterances)
             self.updateBraille(obj)
             return
