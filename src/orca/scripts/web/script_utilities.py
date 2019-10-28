@@ -2005,19 +2005,6 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def _treatAsLeafNode(self, obj):
-        if super()._treatAsLeafNode(obj):
-            return True
-
-        if not self.isTextBlockElement(obj):
-            return False
-
-        for child in obj:
-            if self.isTextBlockElement(child):
-                return False
-
-        return True
-
     def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
         if coordType is None:
             coordType = pyatspi.DESKTOP_COORDS
