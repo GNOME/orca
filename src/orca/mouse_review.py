@@ -494,6 +494,12 @@ class MouseReviewer:
         if script.utilities.inDocumentContent():
             document = script.utilities.activeDocument()
 
+        screen, nowX, nowY = self._pointer.get_position()
+        if (pX, pY) != (nowX, nowY):
+            msg = "MOUSE REVIEW: Pointer moved again: (%i, %i)" % (nowX, nowY)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         obj = script.utilities.descendantAtPoint(menu, pX, pY) \
             or script.utilities.descendantAtPoint(document, pX, pY) \
             or script.utilities.descendantAtPoint(window, pX, pY)
