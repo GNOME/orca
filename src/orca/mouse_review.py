@@ -535,6 +535,8 @@ class MouseReviewer:
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         elif obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        elif script.utilities.isMultiParagraphObject(obj):
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
         new = _ItemContext(pX, pY, obj, boundary, window, script)
         if new.present(self._currentMouseOver):

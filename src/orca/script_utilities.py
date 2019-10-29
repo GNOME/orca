@@ -4207,6 +4207,18 @@ class Utilities:
     def _adjustPointForObj(self, obj, x, y, coordType):
         return x, y
 
+    def isMultiParagraphObject(self, obj):
+        if not obj:
+            return False
+
+        if "Text" not in pyatspi.listInterfaces(obj):
+            return False
+
+        text = obj.queryText()
+        string = text.getText(0, -1)
+        chunks = list(filter(lambda x: x.strip(), string.split("\n\n")))
+        return len(chunks) > 1
+
     def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
         text = self.queryNonEmptyText(obj)
         if not text:
