@@ -344,6 +344,8 @@ def _obscuringBanner(obj):
     if not (left and right and left == right != document):
         return None
 
+    msg = "EVENT SYNTHESIZER: %s believed to be obscured by banner %s" % (obj, left)
+    debug.println(debug.LEVEL_INFO, msg, True)
     return left
 
 def scrollToTopEdge(obj, startOffset=None, endOffset=None):
