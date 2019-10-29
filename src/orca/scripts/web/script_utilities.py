@@ -723,6 +723,11 @@ class Utilities(script_utilities.Utilities):
            and not obj.childCount:
             return True
 
+        if role in self._textBlockElementRoles():
+            document = self.getDocumentForObject(obj)
+            if document and document.getState().contains(pyatspi.STATE_EDITABLE):
+                return True
+
         return super().isTextArea(obj)
 
     def isReadOnlyTextArea(self, obj):
