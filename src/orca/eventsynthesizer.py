@@ -94,7 +94,7 @@ def _extentsAtCaret(obj):
 
     try:
         text = obj.queryText()
-        extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
+        extents = text.getCharacterExtents(text.caretOffset, pyatspi.WINDOW_COORDS)
     except:
         msg = "ERROR: Exception getting character extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -106,7 +106,7 @@ def _objectExtents(obj):
     """Returns the bounding box associated with obj."""
 
     try:
-        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        extents = obj.queryComponent().getExtents(pyatspi.WINDOW_COORDS)
     except:
         msg = "ERROR: Exception getting extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -280,6 +280,31 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
 
+def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
+    """Attemps to scroll obj to the specified point."""
+
+    try:
+        component = obj.queryComponent()
+    except:
+        msg = "ERROR: Exception querying component of %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    try:
+        component.scrollToPoint(pyatspi.WINDOW_COORDS, x, y)
+    except:
+        msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    else:
+        msg = "INFO: Attemped to scroll %s to %i,%i" % (obj, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
+          (before[0], before[1], after[0], after[1])
+    debug.println(debug.LEVEL_INFO, msg, True)
+
 def scrollIntoView(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
@@ -288,6 +313,39 @@ def scrollIntoView(obj, startOffset=None, endOffset=None):
 
     _scrollToLocation(obj, pyatspi.SCROLL_ANYWHERE, startOffset, endOffset)
 
+def _containingDocument(obj):
+    roles = [pyatspi.ROLE_DOCUMENT_EMAIL,
+             pyatspi.ROLE_DOCUMENT_FRAME,
+             pyatspi.ROLE_DOCUMENT_PRESENTATION,
+             pyatspi.ROLE_DOCUMENT_SPREADSHEET,
+             pyatspi.ROLE_DOCUMENT_TEXT,
+             pyatspi.ROLE_DOCUMENT_WEB]
+    isDocument = lambda x: x and x.getRole() in roles
+    document = pyatspi.findAncestor(obj, isDocument)
+    while document:
+        ancestor = pyatspi.findAncestor(document, isDocument)
+        if not ancestor or ancestor == document:
+            break
+        document = ancestor
+
+    return document
+
+def _obscuringBanner(obj):
+    document = _containingDocument(obj)
+    if not document and "Component" in pyatspi.listInterfaces(document):
+        return None
+
+    objX, objY, objWidth, objHeight = _objectExtents(obj)
+    docX, docY, docWidth, docHeight = _objectExtents(document)
+
+    component = document.queryComponent()
+    left = component.getAccessibleAtPoint(docX, objY, pyatspi.WINDOW_COORDS)
+    right = component.getAccessibleAtPoint(docX + docWidth, objY, pyatspi.WINDOW_COORDS)
+    if not (left and right and left == right != document):
+        return None
+
+    return left
+
 def scrollToTopEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
@@ -295,6 +353,13 @@ def scrollToTopEdge(obj, startOffset=None, endOffset=None):
         return
 
     _scrollToLocation(obj, pyatspi.SCROLL_TOP_EDGE, startOffset, endOffset)
+
+    banner = _obscuringBanner(obj)
+    if not banner:
+        return
+
+    bannerX, bannerY, bannerWidth, bannerHeight = _objectExtents(banner)
+    _scrollToPoint(obj, bannerX + 10, bannerY + bannerHeight, startOffset, endOffset)
 
 def scrollToTopLeft(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
