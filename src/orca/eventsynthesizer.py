@@ -340,8 +340,16 @@ def _obscuringBanner(obj):
 
     component = document.queryComponent()
     left = component.getAccessibleAtPoint(docX, objY, pyatspi.WINDOW_COORDS)
+    msg = "EVENT SYNTHESIZER: Accessible at (%i, %i): %s" % (docX, objY, left)
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     right = component.getAccessibleAtPoint(docX + docWidth, objY, pyatspi.WINDOW_COORDS)
+    msg = "EVENT SYNTHESIZER: Accessible at (%i, %i): %s" % (docX + docWidth, objY, right)
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if not (left and right and left == right != document):
+        msg = "EVENT SYNTHESIZER: No obscuring banner found for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
         return None
 
     msg = "EVENT SYNTHESIZER: %s believed to be obscured by banner %s" % (obj, left)
