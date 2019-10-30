@@ -360,8 +360,9 @@ def scrollToTopEdge(obj, startOffset=None, endOffset=None):
     if not banner:
         return
 
+    objX, objY, objWidth, objHeight = _objectExtents(obj)
     bannerX, bannerY, bannerWidth, bannerHeight = _objectExtents(banner)
-    _scrollToPoint(obj, bannerX, bannerY + bannerHeight + 25, startOffset, endOffset)
+    _scrollToPoint(obj, objX, bannerY + bannerHeight + 25, startOffset, endOffset)
 
 def scrollToTopLeft(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
