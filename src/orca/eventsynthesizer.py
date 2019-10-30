@@ -370,6 +370,10 @@ def scrollToTopEdge(obj, startOffset=None, endOffset=None):
 
     objX, objY, objWidth, objHeight = _objectExtents(obj)
     bannerX, bannerY, bannerWidth, bannerHeight = _objectExtents(banner)
+    msg = "EVENT SYNTHESIZER: Extents of banner: (%i, %i, %i, %i)" % \
+        (bannerX, bannerY, bannerWidth, bannerHeight)
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     _scrollToPoint(obj, objX, bannerY + bannerHeight + 25, startOffset, endOffset)
 
 def scrollToTopLeft(obj, startOffset=None, endOffset=None):
