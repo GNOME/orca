@@ -5107,8 +5107,14 @@ class Utilities:
 
         try:
             role = event.source.getRole()
+            state = event.source.getState()
         except:
-            msg = "ERROR: Exception getting role of %s" % event.source
+            msg = "ERROR: Exception getting role and state of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not state.contains(pyatspi.STATE_FOCUSED):
+            msg = "INFO: Not echoable text insertion event: source is not focused"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
