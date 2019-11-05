@@ -330,6 +330,22 @@ def _containingDocument(obj):
 
     return document
 
+def _getAccessibleAtPoint(root, x, y):
+    try:
+        result = root.queryComponent().getAccessibleAtPoint(x, y, pyatspi.WINDOW_COORDS)
+    except NotImplementedError:
+        msg = "ERROR: Component interface not implemented for %s" % root
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return None
+    except:
+        msg = "ERROR: Exception getting accessible at (%i, %i) for %s" % (x, y, root)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return None
+
+    msg = "EVENT SYNTHESIZER: Accessible at (%i, %i) in %s: %s" % (x, y, root, result)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return result
+
 def _obscuringBanner(obj):
     document = _containingDocument(obj)
     if not document and "Component" in pyatspi.listInterfaces(document):
@@ -338,15 +354,8 @@ def _obscuringBanner(obj):
     objX, objY, objWidth, objHeight = _objectExtents(obj)
     docX, docY, docWidth, docHeight = _objectExtents(document)
 
-    component = document.queryComponent()
-    left = component.getAccessibleAtPoint(docX, objY, pyatspi.WINDOW_COORDS)
-    msg = "EVENT SYNTHESIZER: Accessible at (%i, %i): %s" % (docX, objY, left)
-    debug.println(debug.LEVEL_INFO, msg, True)
-
-    right = component.getAccessibleAtPoint(docX + docWidth, objY, pyatspi.WINDOW_COORDS)
-    msg = "EVENT SYNTHESIZER: Accessible at (%i, %i): %s" % (docX + docWidth, objY, right)
-    debug.println(debug.LEVEL_INFO, msg, True)
-
+    left = _getAccessibleAtPoint(document, docX, objY)
+    right = _getAccessibleAtPoint(document, docX + docWidth, objY)
     if not (left and right and left == right != document):
         msg = "EVENT SYNTHESIZER: No obscuring banner found for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
