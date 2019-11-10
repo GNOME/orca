@@ -4555,9 +4555,14 @@ class Utilities:
 
         return result or obj.parent
 
-    def getPositionAndSetSize(self, obj):
+    def getPositionAndSetSize(self, obj, **args):
         if not obj:
             return -1, -1
+
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL and args.get("readingRow"):
+            row, col = self.coordinatesForCell(obj)
+            rowcount, colcount = self.rowAndColumnCount(self.getTable(obj))
+            return row, rowcount
 
         isComboBox = obj.getRole() == pyatspi.ROLE_COMBO_BOX
         if isComboBox:

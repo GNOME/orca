@@ -1999,7 +1999,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         acss = self.voice(SYSTEM)
-        position, total = self._script.utilities.getPositionAndSetSize(obj)
+        position, total = self._script.utilities.getPositionAndSetSize(obj, **args)
         if position < 0 or total < 0:
             return []
 
