@@ -392,17 +392,10 @@ class Script:
         - keyboardEvent: an instance of input_event.KeyboardEvent
         """
 
-        try:
-            from gi.repository import Gdk
-            keyboardEvent.keyval_name = Gdk.keyval_name(keyboardEvent.id)
-        except:
-            msg = 'ERROR: Exception getting keyval_name for id: %d' % keyboardEvent.id
+        if keyboardEvent.event_string == '':
+            msg = 'INFO: Setting event_string to: %s' % keyboardEvent.keyval_name
             debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if keyboardEvent.event_string == '':
-                msg = 'INFO: Setting event_string to: %s' % keyboardEvent.keyval_name
-                debug.println(debug.LEVEL_INFO, msg, True)
-                keyboardEvent.event_string = keyboardEvent.keyval_name
+            keyboardEvent.event_string = keyboardEvent.keyval_name
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.

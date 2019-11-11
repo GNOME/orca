@@ -103,7 +103,7 @@ class KeyboardEvent(InputEvent):
         self.hw_code = event.hw_code
         self.modifiers = event.modifiers
         self.event_string = event.event_string
-        self.keyval_name = ""
+        self.keyval_name = Gdk.keyval_name(event.id)
         self.timestamp = event.timestamp
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
