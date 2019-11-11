@@ -90,6 +90,64 @@ class KeyboardEvent(InputEvent):
     TYPE_PUNCTUATION      = "punctuation"
     TYPE_SPACE            = "space"
 
+    GDK_PUNCTUATION_KEYS = [Gdk.KEY_acute,
+                            Gdk.KEY_ampersand,
+                            Gdk.KEY_apostrophe,
+                            Gdk.KEY_asciicircum,
+                            Gdk.KEY_asciitilde,
+                            Gdk.KEY_asterisk,
+                            Gdk.KEY_at,
+                            Gdk.KEY_backslash,
+                            Gdk.KEY_bar,
+                            Gdk.KEY_braceleft,
+                            Gdk.KEY_braceright,
+                            Gdk.KEY_bracketleft,
+                            Gdk.KEY_bracketright,
+                            Gdk.KEY_brokenbar,
+                            Gdk.KEY_cedilla,
+                            Gdk.KEY_cent,
+                            Gdk.KEY_colon,
+                            Gdk.KEY_comma,
+                            Gdk.KEY_copyright,
+                            Gdk.KEY_currency,
+                            Gdk.KEY_degree,
+                            Gdk.KEY_diaeresis,
+                            Gdk.KEY_dollar,
+                            Gdk.KEY_EuroSign,
+                            Gdk.KEY_equal,
+                            Gdk.KEY_exclam,
+                            Gdk.KEY_exclamdown,
+                            Gdk.KEY_grave,
+                            Gdk.KEY_greater,
+                            Gdk.KEY_guillemotleft,
+                            Gdk.KEY_guillemotright,
+                            Gdk.KEY_hyphen,
+                            Gdk.KEY_less,
+                            Gdk.KEY_macron,
+                            Gdk.KEY_minus,
+                            Gdk.KEY_notsign,
+                            Gdk.KEY_numbersign,
+                            Gdk.KEY_paragraph,
+                            Gdk.KEY_parenleft,
+                            Gdk.KEY_parenright,
+                            Gdk.KEY_percent,
+                            Gdk.KEY_period,
+                            Gdk.KEY_periodcentered,
+                            Gdk.KEY_plus,
+                            Gdk.KEY_plusminus,
+                            Gdk.KEY_question,
+                            Gdk.KEY_questiondown,
+                            Gdk.KEY_quotedbl,
+                            Gdk.KEY_quoteleft,
+                            Gdk.KEY_quoteright,
+                            Gdk.KEY_registered,
+                            Gdk.KEY_section,
+                            Gdk.KEY_semicolon,
+                            Gdk.KEY_slash,
+                            Gdk.KEY_sterling,
+                            Gdk.KEY_underscore,
+                            Gdk.KEY_yen]
+
     def __init__(self, event):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
 
@@ -119,8 +177,17 @@ class KeyboardEvent(InputEvent):
         self._result_reason = None
         self._bypassOrca = None
 
+        # Some implementors don't populate this field at all. More often than not,
+        # the event_string and the keyval_name coincide for input events.
+        if not self.event_string:
+            self.event_string = self.keyval_name
+
+        # Some implementors do populate the field, but with the keyname rather than
+        # the printable character. This messes us up with punctuation.
+        if len(self.event_string) > 1 and self.id in KeyboardEvent.GDK_PUNCTUATION_KEYS:
+            self.event_string = chr(self.id)
+
         if self._script:
-            self._script.checkKeyboardEventData(self)
             self._app = self._script.app
             if not self._window:
                 self._window = self._script.utilities.activeWindow()

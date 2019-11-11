@@ -73,45 +73,6 @@ class Script(default.Script):
         """Returns the utilites for this script."""
         return Utilities(self)
 
-    def checkKeyboardEventData(self, keyboardEvent):
-        """Checks the data on the keyboard event.
-
-        Some toolkits don't fill all the key event fields, and/or fills
-        them out with unexpected data. This method tries to fill in the
-        missing fields and validate/standardize the data we've been given.
-        While any script can override this method, it is expected that
-        this will only be done at the toolkit script level.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-        """
-
-        default.Script.checkKeyboardEventData(self, keyboardEvent)
-
-        if not keyboardEvent.keyval_name:
-            return
-
-        from gi.repository import Gdk
-
-        keymap = Gdk.Keymap.get_default()
-        keyval = Gdk.keyval_from_name(keyboardEvent.keyval_name)
-        success, entries = keymap.get_entries_for_keyval(keyval)
-        for entry in entries:
-            if entry.group == 0:
-                keyboardEvent.hw_code = entry.keycode
-                break
-
-        # Put the event_string back to what it was prior to the Java
-        # Atk Wrapper hack which gives us the keyname and not the
-        # expected and needed printable character for punctuation
-        # marks.
-        #
-        if keyboardEvent.event_string == keyboardEvent.keyval_name \
-           and len(keyboardEvent.event_string) > 1:
-            keyval = Gdk.keyval_from_name(keyboardEvent.keyval_name)
-            if 0 < keyval < 256:
-                keyboardEvent.event_string = chr(keyval)
-
     def onCaretMoved(self, event):
         # Java's SpinButtons are the most caret movement happy thing
         # I've seen to date.  If you Up or Down on the keyboard to
