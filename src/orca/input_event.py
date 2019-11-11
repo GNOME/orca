@@ -104,7 +104,6 @@ class KeyboardEvent(InputEvent):
         self.modifiers = event.modifiers
         self.event_string = event.event_string
         self.keyval_name = ""
-        self.is_text = event.is_text
         self.timestamp = event.timestamp
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
@@ -262,7 +261,6 @@ class KeyboardEvent(InputEvent):
              + ("                 modifiers=%d\n" % self.modifiers) \
              + ("                 event_string=(%s)\n" % self.event_string) \
              + ("                 keyval_name=(%s)\n" % self.keyval_name) \
-             + ("                 is_text=%s\n" % self.is_text) \
              + ("                 timestamp=%d\n" % self.timestamp) \
              + ("                 time=%f\n" % time.time()) \
              + ("                 keyType=%s\n" % self.keyType) \
@@ -296,7 +294,6 @@ class KeyboardEvent(InputEvent):
             and self.modifiers == other.modifiers \
             and self.event_string == other.event_string \
             and self.keyval_name == other.keyval_name \
-            and self.is_text == other.is_text \
             and self.keyType == other.keyType \
             and self._clickCount == other._clickCount
 

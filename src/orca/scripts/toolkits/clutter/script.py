@@ -32,39 +32,6 @@ import orca.scripts.default as default
 import orca.debug as debug
 from .script_utilities import Utilities
 
-# Set with non printable unicode categories. Full table:
-# http://www.fileformat.info/info/unicode/category/index.htm
-non_printable_set = ('Cc', 'Cf', 'Cn', 'Co', 'Cs')
-
-def _unicharIsPrint(unichar):
-    """ Checks if the unichar is printable
-
-    Equivalent to g_unichar_isprint
-
-    Arguments:
-    - unichar: unichar to check if it is printable
-    """
-    try:
-        import unicodedata
-        category = unicodedata.category (unichar)
-        result = category not in non_printable_set
-    except:
-        # Normally a exception is because there are a string
-        # instead of a single unicode, 'Control_L'
-        result = False
-
-    return result
-
-def _computeIsText(string):
-    """Decides if the string representation of a keyboard event is
-    text or not
-
-    Based on the at-spi equivalent code.
-
-    Arguments:
-    - string: a string representation of a keyboardEvent.
-    """
-    return string and _unicharIsPrint(string)
 
 class Script(default.Script):
 
@@ -79,7 +46,6 @@ class Script(default.Script):
 
         Here is used to:
         * Fill event_string using the key.id
-        * Set the is_text properly
 
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
@@ -143,11 +109,5 @@ class Script(default.Script):
                 msg = 'ERROR: Exception obtaining keyval_name for id: %d' \
                       % keyboardEvent.id
                 debug.println(debug.LEVEL_INFO, msg, True)
-
-            # at-spi uses event_string to compute is_text, so if it is
-            # NULL we should compute again with the proper
-            # event_string
-            #
-            keyboardEvent.is_text = _computeIsText(keyboardEvent.event_string)
 
         return default.Script.checkKeyboardEventData(self, keyboardEvent)
