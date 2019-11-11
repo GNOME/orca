@@ -126,20 +126,6 @@ class KeyboardEvent(InputEvent):
             if not self._window:
                 self._window = self._script.utilities.activeWindow()
 
-        # Control characters come through as control characters, so we
-        # just turn them into their ASCII equivalent.  NOTE that the
-        # upper case ASCII characters will be used (e.g., ctrl+a will
-        # be turned into the string "A").  All these checks here are
-        # to just do some sanity checking before doing the
-        # conversion. [[[WDW - this is making assumptions about
-        # mapping ASCII control characters to UTF-8.]]]
-        #
-        if (self.modifiers & keybindings.CTRL_MODIFIER_MASK) \
-            and (not self.is_text) and (len(self.event_string) == 1):
-            value = ord(self.event_string[0])
-            if value < 32:
-                self.event_string = chr(value + 0x40)
-
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
         else:
