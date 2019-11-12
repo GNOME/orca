@@ -148,6 +148,61 @@ class KeyboardEvent(InputEvent):
                             Gdk.KEY_underscore,
                             Gdk.KEY_yen]
 
+    GDK_ACCENTED_LETTER_KEYS = [Gdk.KEY_Aacute,
+                                Gdk.KEY_aacute,
+                                Gdk.KEY_Acircumflex,
+                                Gdk.KEY_acircumflex,
+                                Gdk.KEY_Adiaeresis,
+                                Gdk.KEY_adiaeresis,
+                                Gdk.KEY_Agrave,
+                                Gdk.KEY_agrave,
+                                Gdk.KEY_Aring,
+                                Gdk.KEY_aring,
+                                Gdk.KEY_Atilde,
+                                Gdk.KEY_atilde,
+                                Gdk.KEY_Ccedilla,
+                                Gdk.KEY_ccedilla,
+                                Gdk.KEY_Eacute,
+                                Gdk.KEY_eacute,
+                                Gdk.KEY_Ecircumflex,
+                                Gdk.KEY_ecircumflex,
+                                Gdk.KEY_Ediaeresis,
+                                Gdk.KEY_ediaeresis,
+                                Gdk.KEY_Egrave,
+                                Gdk.KEY_egrave,
+                                Gdk.KEY_Iacute,
+                                Gdk.KEY_iacute,
+                                Gdk.KEY_Icircumflex,
+                                Gdk.KEY_icircumflex,
+                                Gdk.KEY_Idiaeresis,
+                                Gdk.KEY_idiaeresis,
+                                Gdk.KEY_Igrave,
+                                Gdk.KEY_igrave,
+                                Gdk.KEY_Ntilde,
+                                Gdk.KEY_ntilde,
+                                Gdk.KEY_Oacute,
+                                Gdk.KEY_oacute,
+                                Gdk.KEY_Ocircumflex,
+                                Gdk.KEY_ocircumflex,
+                                Gdk.KEY_Odiaeresis,
+                                Gdk.KEY_odiaeresis,
+                                Gdk.KEY_Ograve,
+                                Gdk.KEY_ograve,
+                                Gdk.KEY_Ooblique,
+                                Gdk.KEY_ooblique,
+                                Gdk.KEY_Otilde,
+                                Gdk.KEY_otilde,
+                                Gdk.KEY_Uacute,
+                                Gdk.KEY_uacute,
+                                Gdk.KEY_Ucircumflex,
+                                Gdk.KEY_ucircumflex,
+                                Gdk.KEY_Udiaeresis,
+                                Gdk.KEY_udiaeresis,
+                                Gdk.KEY_Ugrave,
+                                Gdk.KEY_ugrave,
+                                Gdk.KEY_Yacute,
+                                Gdk.KEY_yacute]
+
     def __init__(self, event):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
 
@@ -183,8 +238,10 @@ class KeyboardEvent(InputEvent):
             self.event_string = self.keyval_name
 
         # Some implementors do populate the field, but with the keyname rather than
-        # the printable character. This messes us up with punctuation.
-        if len(self.event_string) > 1 and self.id in KeyboardEvent.GDK_PUNCTUATION_KEYS:
+        # the printable character. This messes us up with punctuation and other symbols.
+        if len(self.event_string) > 1 \
+           and (self.id in KeyboardEvent.GDK_PUNCTUATION_KEYS or \
+                self.id in KeyboardEvent.GDK_ACCENTED_LETTER_KEYS):
             self.event_string = chr(self.id)
 
         if self._script:
