@@ -2453,7 +2453,7 @@ class Utilities:
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
 
         isPresentable = lambda x: self.isShowingAndVisible(x) and (x.name or x.childCount)
-        presentable = list(filter(isPresentable, dialogs))
+        presentable = list(filter(isPresentable, set(dialogs)))
 
         unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), presentable))
         return len(unfocused)
