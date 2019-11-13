@@ -2435,6 +2435,9 @@ class Utilities:
 
         return sorted(labels, key=functools.cmp_to_key(self.spatialComparison))
 
+    def _treatAlertsAsDialogs(self):
+        return True
+
     def unfocusedAlertAndDialogCount(self, obj):
         """If the current application has one or more alert or dialog
         windows and the currently focused window is not an alert or a dialog,
@@ -2447,7 +2450,10 @@ class Utilities:
         Returns the alert and dialog count.
         """
 
-        roles = [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]
+        roles = [pyatspi.ROLE_DIALOG]
+        if self._treatAlertsAsDialogs():
+            roles.append(pyatspi.ROLE_ALERT)
+
         isDialog = lambda x: x and x.getRole() in roles or self.isFunctionalDialog(x)
         dialogs = [x for x in obj.getApplication() if isDialog(x)]
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])

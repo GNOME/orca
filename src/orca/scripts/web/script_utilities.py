@@ -2041,6 +2041,9 @@ class Utilities(script_utilities.Utilities):
 
         return string, start, end
 
+    def _treatAlertsAsDialogs(self):
+        return False
+
     def treatAsDiv(self, obj, offset=None):
         if not (obj and self.inDocumentContent(obj)):
             return False
