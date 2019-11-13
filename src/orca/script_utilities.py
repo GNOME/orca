@@ -2451,8 +2451,11 @@ class Utilities:
         isDialog = lambda x: x and x.getRole() in roles or self.isFunctionalDialog(x)
         dialogs = [x for x in obj.getApplication() if isDialog(x)]
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
-        showing = list(filter(self.isShowingAndVisible, dialogs))
-        unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), showing))
+
+        isPresentable = lambda x: self.isShowingAndVisible(x) and (x.name or x.childCount)
+        presentable = list(filter(isPresentable, dialogs))
+
+        unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), presentable))
         return len(unfocused)
 
     def uri(self, obj):
