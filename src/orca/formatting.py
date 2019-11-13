@@ -188,7 +188,7 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_DIALOG: {
-            'focused': 'labelOrName + roleName + description',
+            'focused': 'labelOrName + roleName + (unrelatedLabels or description)',
             'unfocused': 'expandedEOCs or (labelOrName + (unrelatedLabels or description))'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
