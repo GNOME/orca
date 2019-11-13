@@ -1236,7 +1236,7 @@ class Script(default.Script):
         speech.speak(utterances)
         self._saveFocusedObjectInfo(newFocus)
 
-        if self.utilities.inTopLevelWebApp(newFocus):
+        if self.utilities.inTopLevelWebApp(newFocus) and not self._browseModeIsSticky:
             announce = not self.utilities.inDocumentContent(oldFocus)
             self.enableStickyFocusMode(None, announce)
             return True
