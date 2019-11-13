@@ -2447,19 +2447,13 @@ class Utilities:
         Returns the alert and dialog count.
         """
 
-        alertAndDialogCount = 0
-        app = obj.getApplication()
-        window = self.topLevelObject(obj)
-        if window and window.getRole() != pyatspi.ROLE_ALERT and \
-           window.getRole() != pyatspi.ROLE_DIALOG and \
-           not self.isFunctionalDialog(window):
-            for child in app:
-                if child.getRole() == pyatspi.ROLE_ALERT or \
-                   child.getRole() == pyatspi.ROLE_DIALOG or \
-                   self.isFunctionalDialog(child):
-                    alertAndDialogCount += 1
-
-        return alertAndDialogCount
+        roles = [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]
+        isDialog = lambda x: x and x.getRole() in roles or self.isFunctionalDialog(x)
+        dialogs = [x for x in obj.getApplication() if isDialog(x)]
+        dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
+        showing = list(filter(self.isShowingAndVisible, dialogs))
+        unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), showing))
+        return len(unfocused)
 
     def uri(self, obj):
         """Return the URI for a given link object.
