@@ -3030,6 +3030,11 @@ class Utilities(script_utilities.Utilities):
             names = self._getActionNames(obj)
             rv = "click" in names
 
+        if rv and not obj.name and "Text" in pyatspi.listInterfaces(obj):
+            string = obj.queryText().getText(0, -1)
+            if not string.strip():
+                rv = obj.getRole() not in [pyatspi.ROLE_STATIC, pyatspi.ROLE_LINK]
+
         self._isClickableElement[hash(obj)] = rv
         return rv
 
