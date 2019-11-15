@@ -94,7 +94,7 @@ def _extentsAtCaret(obj):
 
     try:
         text = obj.queryText()
-        extents = text.getCharacterExtents(text.caretOffset, pyatspi.WINDOW_COORDS)
+        extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
     except:
         msg = "ERROR: Exception getting character extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -106,7 +106,7 @@ def _objectExtents(obj):
     """Returns the bounding box associated with obj."""
 
     try:
-        extents = obj.queryComponent().getExtents(pyatspi.WINDOW_COORDS)
+        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
     except:
         msg = "ERROR: Exception getting extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -270,12 +270,12 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    before = component.getExtents(pyatspi.DESKTOP_COORDS)
 
     if not _scrollSubstringToLocation(obj, location, startOffset, endOffset):
         _scrollObjectToLocation(obj, location)
 
-    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    after = component.getExtents(pyatspi.DESKTOP_COORDS)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
@@ -290,9 +290,9 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    before = component.getExtents(pyatspi.DESKTOP_COORDS)
     try:
-        component.scrollToPoint(pyatspi.WINDOW_COORDS, x, y)
+        component.scrollToPoint(pyatspi.DESKTOP_COORDS, x, y)
     except:
         msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -300,7 +300,7 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
         msg = "INFO: Attemped to scroll %s to %i,%i" % (obj, x, y)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    after = component.getExtents(pyatspi.DESKTOP_COORDS)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
@@ -332,7 +332,7 @@ def _containingDocument(obj):
 
 def _getAccessibleAtPoint(root, x, y):
     try:
-        result = root.queryComponent().getAccessibleAtPoint(x, y, pyatspi.WINDOW_COORDS)
+        result = root.queryComponent().getAccessibleAtPoint(x, y, pyatspi.DESKTOP_COORDS)
     except NotImplementedError:
         msg = "ERROR: Component interface not implemented for %s" % root
         debug.println(debug.LEVEL_INFO, msg, True)
