@@ -431,11 +431,13 @@ class Utilities(web.Utilities):
         if len(self.findAllDescendants(obj, isButton)) != 3:
             msg = "CHROMIUM: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         isSeparator = lambda x: x.getRole() == pyatspi.ROLE_SEPARATOR
         if len(self.findAllDescendants(obj, isSeparator)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (separator count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         msg = "CHROMIUM: %s believed to be find-in-page container (accessibility tree)" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
