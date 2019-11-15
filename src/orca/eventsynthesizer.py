@@ -222,12 +222,12 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    before = component.getExtents(pyatspi.DESKTOP_COORDS)
 
     if not _scrollSubstringToLocation(obj, location, startOffset, endOffset):
         _scrollObjectToLocation(obj, location)
 
-    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    after = component.getExtents(pyatspi.DESKTOP_COORDS)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
