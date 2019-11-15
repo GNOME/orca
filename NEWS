@@ -1,3 +1,45 @@
+3.34.1 - 15 November 2019
+
+Web:
+
+ * Continued improvement of Orca's support for Chromium
+
+ * Improve accuracy of synthesized clicks on web pages
+
+ * Be sure we don't override sticky browse mode for top-level web apps
+
+ * Fix bug causing Orca to not present button name during Say All
+
+ * Improve presentation of selection of links which span multiple lines
+
+General:
+
+ * Ensure we speak selected switcher item even when the user has set
+   onlySpeakDisplayedText
+
+ * Improve reliability of unfocusedAlertAndDialogCount()
+
+ * Correct the position and size reported for selectable table rows
+
+ * Don't present GtkComboBox selection changes if we're not on/in that
+   widget
+
+ * Present position in list for tables
+
+ * Filter out duplicate clipboard contents changed notifications
+
+ * Filter out bogus window focus claims from gnome-shell
+
+ * Add handling for accessible app names which start with "org." or "com."
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   da            Danish                Ask Hjorth Larsen
+   es            Spanish               Daniel Mustieles
+   nl            Dutch                 Nathan Follens
+
+=========
+
 3.34.0 - 9 September 2019
 
 Web:
