@@ -3812,7 +3812,7 @@ class Script(script.Script):
         speech.speakKeyEvent(event, voice)
         return True
 
-    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True):
+    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True, force=False):
         """Convenience method to speak a message and 'flash' it in braille.
 
         Arguments:
@@ -3840,7 +3840,7 @@ class Script(script.Script):
             else:
                 message = fullMessage
             if message:
-                self.speakMessage(message, voice=voice, resetStyles=resetStyles)
+                self.speakMessage(message, voice=voice, resetStyles=resetStyles, force=force)
 
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \
@@ -4229,7 +4229,7 @@ class Script(script.Script):
         voice = self.speechGenerator.voice(string=character)
         speech.speakCharacter(character, voice)
 
-    def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True):
+    def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True, force=False):
         """Method to speak a single string. Scripts should use this
         method rather than calling speech.speak directly.
 
@@ -4241,7 +4241,7 @@ class Script(script.Script):
         """
 
         if not _settingsManager.getSetting('enableSpeech') \
-           or _settingsManager.getSetting('onlySpeakDisplayedText'):
+           or (_settingsManager.getSetting('onlySpeakDisplayedText') and not force):
             return
 
         voices = _settingsManager.getSetting('voices')

@@ -73,7 +73,7 @@ class Script(default.Script):
         self.presentationInterrupt()
         orca_state.activeWindow = self.utilities.topLevelObject(event.source)
         orca.setLocusOfFocus(event, event.source, False)
-        self.presentMessage(self.utilities.getSelectionName(event.source))
+        self.presentMessage(self.utilities.getSelectionName(event.source), force=True)
         return True
 
     def onFocusedChanged(self, event):
