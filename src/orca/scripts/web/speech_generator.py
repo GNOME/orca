@@ -105,6 +105,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateAnyTextSelection(obj, **args)
 
     def _generateHasPopup(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
@@ -127,6 +130,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateClickable(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
@@ -142,6 +148,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateDescription(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateDescription(obj, **args)
 
@@ -171,6 +180,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateDescription(obj, **args)
 
     def _generateHasLongDesc(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
@@ -263,6 +275,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateLabel(obj, **args)
 
     def _generateNewNodeLevel(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if self._script.utilities.isTextBlockElement(obj) \
            or self._script.utilities.isLink(obj):
             return []
@@ -270,6 +285,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateNewNodeLevel(obj, **args)
 
     def _generateLeaving(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not args.get('leaving'):
             return []
 
@@ -331,6 +349,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return self._generateDisplayedText(obj, **args)
 
     def _generateRoleName(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
