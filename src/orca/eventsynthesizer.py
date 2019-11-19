@@ -221,11 +221,12 @@ def releaseAtPoint(x, y, button=1):
 def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
     """Attemps to scroll the given substring to the specified location."""
 
-    if startOffset is None or endOffset is None:
-        return False
-
     try:
         text = obj.queryText()
+        if startOffset is None:
+            startOffset = 0
+        if endOffset is None:
+            endOffset = text.characterCount - 1
         result = text.scrollSubstringTo(startOffset, endOffset, location)
     except NotImplementedError:
         msg = "ERROR: Text interface not implemented for %s" % obj
