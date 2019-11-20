@@ -133,7 +133,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj != orca_state.locusOfFocus:
             if role in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
                 return super()._generateDescription(obj, **args)
-            return []
+            if not args.get('inMouseReview'):
+                return []
 
         formatType = args.get('formatType')
         if formatType == 'basicWhereAmI' and self._script.utilities.isLiveRegion(obj):
