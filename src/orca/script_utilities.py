@@ -4142,6 +4142,9 @@ class Utilities:
             entry = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY)
             return entry is None
 
+        if role == pyatspi.ROLE_LINK and obj.name:
+            return True
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             return not state.contains(pyatspi.STATE_EXPANDED)
