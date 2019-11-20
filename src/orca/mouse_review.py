@@ -473,7 +473,7 @@ class MouseReviewer:
         if not window:
             return
 
-        script = orca_state.activeScript
+        script = _scriptManager.getScript(window.getApplication())
         if not script:
             return
 
