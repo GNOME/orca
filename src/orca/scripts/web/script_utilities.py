@@ -4555,6 +4555,9 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
         if not (root and self.inDocumentContent(root)):
             return super().descendantAtPoint(root, x, y, coordType)
 
@@ -4568,5 +4571,9 @@ class Utilities(script_utilities.Utilities):
             if self.containsPoint(child, x, y, coordType):
                 obj = child
                 break
+        else:
+            child = root.queryComponent().getAccessibleAtPoint(x, y, coordType)
+            if child:
+                return child
 
         return super().descendantAtPoint(obj, x, y, coordType)
