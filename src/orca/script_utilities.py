@@ -4096,6 +4096,9 @@ class Utilities:
         except:
             return False
 
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
         if component.contains(x, y, coordType):
             return True
 

@@ -4553,3 +4553,20 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
+
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        if not (root and self.inDocumentContent(root)):
+            return super().descendantAtPoint(root, x, y, coordType)
+
+        if self.containsPoint(root, x, y, coordType):
+            return super().descendantAtPoint(root, x, y, coordType)
+
+        # Authoring can cause user agents to expose containers with a bounding
+        # box that doesn't contain the child container at the specified point.
+        obj = root
+        for child in root:
+            if self.containsPoint(child, x, y, coordType):
+                obj = child
+                break
+
+        return super().descendantAtPoint(obj, x, y, coordType)
