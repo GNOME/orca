@@ -191,6 +191,11 @@ class _ItemContext:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self._x == prior._x and self._y == prior._y:
+            msg = "MOUSE REVIEW: Treating as duplicate: mouse didn't move"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         interval = self._time - prior._time
         if interval > 0.5:
             msg = "MOUSE REVIEW: Not a duplicate: was %.2fs ago" % interval
