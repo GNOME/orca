@@ -4578,22 +4578,15 @@ class Utilities(script_utilities.Utilities):
         if coordType is None:
             coordType = pyatspi.DESKTOP_COORDS
 
-        if not (root and self.inDocumentContent(root)):
+        if not self.inDocumentContent(root):
             return super().descendantAtPoint(root, x, y, coordType)
 
-        if self.containsPoint(root, x, y, coordType):
-            return super().descendantAtPoint(root, x, y, coordType)
+        isMatch = lambda o: self.containsPoint(o, x, y, coordType)
+        candidates = self.findAllDescendants(root, isMatch)
 
-        # Authoring can cause user agents to expose containers with a bounding
-        # box that doesn't contain the child container at the specified point.
-        obj = root
-        for child in root:
-            if self.containsPoint(child, x, y, coordType):
-                obj = child
-                break
-        else:
-            child = root.queryComponent().getAccessibleAtPoint(x, y, coordType)
-            if child and self.containsPoint(child, x, y, coordType):
-                return child
+        isPresentable = lambda x: x and (x.name or self.hasPresentableText(x))
+        candidates = list(filter(isPresentable, candidates))
+        if len(candidates) == 1:
+            return candidates[0]
 
-        return super().descendantAtPoint(obj, x, y, coordType)
+        return super().descendantAtPoint(root, x, y, coordType)
