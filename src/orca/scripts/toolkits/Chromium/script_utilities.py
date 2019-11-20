@@ -486,3 +486,10 @@ class Utilities(web.Utilities):
             return []
 
         return super().findAllDescendants(root, includeIf, excludeIf)
+
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        result = super().descendantAtPoint(root, x, y, coordType)
+        if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
+            return result.parent
+
+        return result
