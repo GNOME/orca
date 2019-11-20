@@ -4090,7 +4090,14 @@ class Utilities:
 
         return table.nRows, table.nColumns
 
+    def _objectBoundsMightBeBogus(self, obj):
+        return False
+
     def containsPoint(self, obj, x, y, coordType, margin=2):
+        if self._objectBoundsMightBeBogus(obj) \
+           and self.textAtPoint(obj, x, y, coordType) == ("", 0, 0):
+            return False
+
         try:
             component = obj.queryComponent()
         except:

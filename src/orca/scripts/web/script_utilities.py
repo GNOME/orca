@@ -2839,6 +2839,26 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
+    def _objectBoundsMightBeBogus(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super()._objectBoundsMightBeBogus(obj)
+
+        if obj.getRole() != pyatspi.ROLE_LINK or "Text" not in pyatspi.listInterfaces(obj):
+            return False
+
+        text = obj.queryText()
+        start = list(text.getRangeExtents(0, 1, 0))
+        end = list(text.getRangeExtents(text.characterCount - 1, text.characterCount, 0))
+        if self.extentsAreOnSameLine(start, end):
+            return False
+
+        if not self.hasPresentableText(obj.parent):
+            return False
+
+        msg = "WEB: Objects bounds of %s might be bogus" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
+
     def _isBrokenChildParentTree(self, child, parent):
         if not (child and parent):
             return False
@@ -4573,7 +4593,7 @@ class Utilities(script_utilities.Utilities):
                 break
         else:
             child = root.queryComponent().getAccessibleAtPoint(x, y, coordType)
-            if child:
+            if child and self.containsPoint(child, x, y, coordType):
                 return child
 
         return super().descendantAtPoint(obj, x, y, coordType)
