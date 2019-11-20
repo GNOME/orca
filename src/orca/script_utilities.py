@@ -4093,9 +4093,15 @@ class Utilities:
     def _objectBoundsMightBeBogus(self, obj):
         return False
 
+    def _objectMightBeBogus(self, obj):
+        return False
+
     def containsPoint(self, obj, x, y, coordType, margin=2):
         if self._objectBoundsMightBeBogus(obj) \
            and self.textAtPoint(obj, x, y, coordType) == ("", 0, 0):
+            return False
+
+        if self._objectMightBeBogus(obj):
             return False
 
         try:

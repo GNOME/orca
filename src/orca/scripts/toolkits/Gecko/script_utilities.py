@@ -184,6 +184,17 @@ class Utilities(web.Utilities):
 
         return False
 
+    def _objectMightBeBogus(self, obj):
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_SECTION and obj.parent.getRole() == pyatspi.ROLE_FRAME:
+            msg = "GECKO: %s is believed to be a bogus object" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
     def canBeActiveWindow(self, window, clearCache=False):
         # We apparently having missing events from Gecko requiring
         # we update the cache. This is not performant. :(
