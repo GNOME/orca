@@ -210,6 +210,9 @@ class Utilities(script_utilities.Utilities):
         self._text = {}
 
     def isDocument(self, obj):
+        if not obj:
+            return False
+
         roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
 
         try:

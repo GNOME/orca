@@ -2348,6 +2348,9 @@ class Utilities:
         return not (extents.width and extents.height)
 
     def _findAllDescendants(self, root, includeIf, excludeIf, matches):
+        if not root:
+            return
+
         try:
             childCount = root.childCount
         except:
