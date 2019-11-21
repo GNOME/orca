@@ -4584,13 +4584,6 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(root):
             return super().descendantAtPoint(root, x, y, coordType)
 
-        if self.isDocument(root):
-            active = self.activeDocument()
-            if active and root != active:
-                msg = "WEB: %s is not active. Updating to %s." % (root, active)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                root = active
-
         isMatch = lambda o: self.containsPoint(o, x, y, coordType)
         candidates = self.findAllDescendants(root, isMatch)
 
