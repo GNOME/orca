@@ -4584,6 +4584,13 @@ class Utilities(script_utilities.Utilities):
         if not (root and self.inDocumentContent(root)):
             return super().descendantAtPoint(root, x, y, coordType)
 
+        if self.isDocument(root):
+            active = self.activeDocument()
+            if active and root != active:
+                msg = "WEB: %s is not active. Updating to %s." % (root, active)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                root = active
+
         if self.containsPoint(root, x, y, coordType):
             return super().descendantAtPoint(root, x, y, coordType)
 
