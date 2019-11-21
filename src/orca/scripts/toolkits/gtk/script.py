@@ -117,6 +117,12 @@ class Script(default.Script):
            and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
+        if "Table" in pyatspi.listInterfaces(event.source):
+            selectedChildren = self.utilities.selectedChildren(event.source)
+            if selectedChildren:
+                orca.setLocusOfFocus(event, selectedChildren[0])
+                return
+
         ancestor = pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source)
         if not ancestor:
             orca.setLocusOfFocus(event, event.source)
