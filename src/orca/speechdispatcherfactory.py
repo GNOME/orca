@@ -353,7 +353,10 @@ class SpeechServer(speechserver.SpeechServer):
         # string offsets
         # Note: we need to do this before disturbing the text offsets
         # Note2: we assume that text mangling below leave U+E000 untouched
+        last_begin = None
+        last_end = None
         marks_offsets = []
+        marks_endoffsets = []
         marked_text = ""
 
         for i in range(len(text)):
@@ -362,14 +365,24 @@ class SpeechServer(speechserver.SpeechServer):
                 # Original text already contains U+E000. But syntheses will not
                 # know what to do of it anyway, so discard it
                 continue
+
+            if not c.isspace() and last_begin == None:
+                # Word begin
+                marked_text += '\ue000'
+                last_begin = i
+
+            if c.isspace() and last_begin != None:
+                # Word end, add a mark
+                marks_offsets.append(last_begin)
+                marks_endoffsets.append(i)
+                last_begin = None
+
             marked_text += c
 
-            if (c == ' ' or c == '\u00a0' or c == '\n') \
-               and i < len(text) - 1 \
-               and text[i + 1] != ' ' and text[i + 1] != '\u00a0' and text[i + 1] != '\n':
-                # Word separation, add a mark
-                marks_offsets.append(i + 1)
-                marked_text += '\ue000'
+        if last_begin != None:
+            # Finished with a word
+            marks_offsets.append(last_begin)
+            marks_endoffsets.append(i + 1)
 
         text = marked_text
 
@@ -400,7 +413,7 @@ class SpeechServer(speechserver.SpeechServer):
                     msg = "%uth U+E000 does not have corresponding index" % i
                     debug.println(debug.LEVEL_WARNING, msg, True)
                 else:
-                    ssml += '<mark name="%u"/>' % marks_offsets[i]
+                    ssml += '<mark name="%u:%u"/>' % (marks_offsets[i], marks_endoffsets[i])
                 i += 1
             # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
             #elif c == '"':
@@ -439,13 +452,21 @@ class SpeechServer(speechserver.SpeechServer):
                 t = self._CALLBACK_TYPE_MAP[callbackType]
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
-                        context.currentOffset = context.startOffset + int(index_mark)
-                        msg = "SPEECH DISPATCHER: Got mark %d / %d-%d" % (context.currentOffset, context.startOffset, context.endOffset)
-                        debug.println(debug.LEVEL_INFO, msg, True)
+                        index = index_mark.split(':')
+                        if len(index) >= 2:
+                            start, end = index[0:2]
+                            context.currentOffset = context.startOffset + int(start)
+                            context.currentEndOffset = context.startOffset + int(end)
+                            msg = "SPEECH DISPATCHER: Got mark %d:%d / %d-%d" % \
+                                (context.currentOffset, context.currentEndOffset, \
+                                 context.startOffset, context.endOffset)
+                            debug.println(debug.LEVEL_INFO, msg, True)
                     else:
                         context.currentOffset = context.startOffset
+                        context.currentEndOffset = None
                 elif t == speechserver.SayAllContext.COMPLETED:
                     context.currentOffset = context.endOffset
+                    context.currentEndOffset = None
                 GLib.idle_add(orca_callback, context, t)
                 if t == speechserver.SayAllContext.COMPLETED:
                     GLib.idle_add(self._say_all, iterator, orca_callback)
