@@ -264,7 +264,13 @@ class Utilities(script_utilities.Utilities):
             return []
 
         isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS
-        relations = list(filter(isEmbeds, frame.getRelationSet()))
+        try:
+            relations = list(filter(isEmbeds, frame.getRelationSet()))
+        except:
+            msg = "ERROR: Exception getting embeds relation for %s" % frame
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if not relations:
             return []
 
