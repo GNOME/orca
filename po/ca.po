@@ -6350,7 +6350,7 @@ msgstr "no divideix"
 #: ../src/orca/mathsymbols.py:1474
 msgctxt "math symbol"
 msgid "parallel to"
-msgstr "paral·lel a "
+msgstr "paral·lel a"
 
 #. Translators: this is the spoken representation for the character '∦' (U+2226)
 #: ../src/orca/mathsymbols.py:1477
@@ -6990,7 +6990,7 @@ msgstr "unió de multiconjunt"
 #: ../src/orca/mathsymbols.py:1792
 msgctxt "math symbol"
 msgid "square image of"
-msgstr "imatge quadrada de "
+msgstr "imatge quadrada de"
 
 #. Translators: this is the spoken representation for the character '⊐' (U+2290)
 #: ../src/orca/mathsymbols.py:1795
@@ -7949,7 +7949,7 @@ msgstr "S'ha seleccionat des de %s fins a %s"
 #, python-format
 msgctxt "cell"
 msgid "%s through %s unselected"
-msgstr "S'ha deseleccionat des de %s fins a %s"
+msgstr "S'ha desseleccionat des de %s fins a %s"
 
 #. Translators: this message is spoken to announce that a table cell just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
@@ -10716,7 +10716,7 @@ msgstr "S'han seleccionat les columnes entre %s i %s"
 #: ../src/orca/messages.py:2187
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr "Columnes des de %s fins a %s deseleccionades"
+msgstr "Columnes des de %s fins a %s desseleccionades"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
@@ -10726,7 +10726,7 @@ msgstr "Columnes des de %s fins a %s deseleccionades"
 #| msgctxt "text"
 #| msgid "unselected"
 msgid "Column %s unselected"
-msgstr "S'ha deseleccionat la columna %s"
+msgstr "S'ha desseleccionat la columna %s"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
@@ -10919,8 +10919,8 @@ msgstr[1] "La cel·la s'expandeix %d files"
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
-msgstr[0] "%d columna"
-msgstr[1] "%d columnes"
+msgstr[0] " %d columna"
+msgstr[1] " %d columnes"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
