@@ -4582,34 +4582,3 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
-
-    def descendantAtPoint(self, root, x, y, coordType=None):
-        if coordType is None:
-            coordType = pyatspi.DESKTOP_COORDS
-
-        if not (root and self.inDocumentContent(root)):
-            return super().descendantAtPoint(root, x, y, coordType)
-
-        if self.isDocument(root):
-            active = self.activeDocument()
-            if active and root != active:
-                msg = "WEB: %s is not active. Updating to %s." % (root, active)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                root = active
-
-        if self.containsPoint(root, x, y, coordType):
-            return super().descendantAtPoint(root, x, y, coordType)
-
-        # Authoring can cause user agents to expose containers with a bounding
-        # box that doesn't contain the child container at the specified point.
-        obj = root
-        for child in root:
-            if self.containsPoint(child, x, y, coordType):
-                obj = child
-                break
-        else:
-            child = root.queryComponent().getAccessibleAtPoint(x, y, coordType)
-            if child and self.containsPoint(child, x, y, coordType):
-                return child
-
-        return super().descendantAtPoint(obj, x, y, coordType)
