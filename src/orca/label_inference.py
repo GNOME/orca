@@ -288,19 +288,6 @@ class LabelInference:
 
         return rv
 
-    def _getPreviousObject(self, obj):
-        """Gets the object prior to obj."""
-
-        index = obj.getIndexInParent()
-        if not index > 0:
-            return obj.parent
-
-        prevObj = obj.parent[index-1]
-        if prevObj and prevObj.childCount:
-            prevObj = prevObj[prevObj.childCount - 1]
-
-        return prevObj
-
     def inferFromTextLeft(self, obj, proximity=75):
         """Attempt to infer the functional/displayed label of obj by
         looking at the contents of the current line, which are to the
