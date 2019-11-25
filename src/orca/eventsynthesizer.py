@@ -223,6 +223,8 @@ def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
 
     try:
         text = obj.queryText()
+        if not text.characterCount:
+            return False
         if startOffset is None:
             startOffset = 0
         if endOffset is None:
