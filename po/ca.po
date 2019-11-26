@@ -7961,7 +7961,7 @@ msgstr "S'ha desseleccionat des de %s fins a %s"
 #| msgid "unselected"
 msgctxt "cell"
 msgid "%s unselected"
-msgstr "S'ha deseleccionat %s"
+msgstr "S'ha desseleccionat %s"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
@@ -8323,7 +8323,7 @@ msgstr "seleccionat tot el document"
 #: ../src/orca/messages.py:457
 #| msgid "entire document selected"
 msgid "entire document unselected"
-msgstr "S'ha deseleccionat tot el document"
+msgstr "S'ha desseleccionat tot el document"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10808,7 +10808,7 @@ msgstr "S'han seleccionat les files entre %s i %s"
 #: ../src/orca/messages.py:2246
 #, python-format
 msgid "Rows %s through %s unselected"
-msgstr "S'han deseleccionat les files entre %s i %s"
+msgstr "S'han desseleccionat les files entre %s i %s"
 
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
@@ -10818,7 +10818,7 @@ msgstr "S'han deseleccionat les files entre %s i %s"
 #| msgctxt "text"
 #| msgid "unselected"
 msgid "Row %s unselected"
-msgstr "S'ha deseleccionat la fila %s"
+msgstr "S'ha desseleccionat la fila %s"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -12392,7 +12392,7 @@ msgstr "Pronuncia la d_escripció"
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:128
 msgid "Speak full row in sp_readsheets"
-msgstr "Pronuncia la ĺínia completa als fu_lls de càlcul"
+msgstr "Pronuncia la línia completa als fu_lls de càlcul"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:130
