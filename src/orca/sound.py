@@ -119,6 +119,9 @@ class Player:
 
         self._source = Gst.ElementFactory.make('audiotestsrc', 'src')
         self._sink = Gst.ElementFactory.make('autoaudiosink', 'output')
+        if self._source is None or self._sink is None:
+            return
+
         self._pipeline.add(self._source)
         self._pipeline.add(self._sink)
         self._source.link(self._sink)
