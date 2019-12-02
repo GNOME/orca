@@ -224,6 +224,7 @@ def _processBrailleEvent(event):
 ########################################################################
 
 def deviceChangeHandler(deviceManager, device):
+    """New keyboards being plugged in stomp on our changes to the keymappings, so we have to re-apply"""
     source = device.get_source()
     if source == Gdk.InputSource.KEYBOARD:
         msg = "Keyboard change detected, re-creating the xmodmap"
