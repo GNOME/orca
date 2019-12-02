@@ -223,6 +223,13 @@ def _processBrailleEvent(event):
 #                                                                      #
 ########################################################################
 
+def deviceChangeHandler(deviceManager, device):
+    source = device.get_source()
+    if source == Gdk.InputSource.KEYBOARD:
+        msg = "Keyboard change detected, re-creating the xmodmap"
+        debug.println(debug.LEVEL_ALL, msg, True)
+        _createOrcaXmodmap()
+
 def updateKeyMap(keyboardEvent):
     """Unsupported convenience method to call sad hacks which should go away."""
 
@@ -575,6 +582,15 @@ def start(registry, cacheValues):
 
     if cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
+
+    # Event handlers for input devices being plugged in/unplugged.
+    # Used to re-create the Xmodmap when a new keyboard is plugged in.
+    # Necessary, because plugging in a new keyboard resets the Xmodmap
+    # and stomps our changes
+    display = Gdk.Display.get_default()
+    devmanager=display.get_device_manager()
+    devmanager.connect("device-added", deviceChangeHandler)
+    devmanager.connect("device-removed", deviceChangeHandler)
 
     Gdk.notify_startup_complete()
     msg = 'ORCA: Startup complete notification made'
