@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2019-09-23 15:21+0000\n"
+"POT-Creation-Date: 2019-12-27 16:12+0000\n"
 "PO-Revision-Date: 2019-12-27 16:46+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
