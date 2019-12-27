@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "POT-Creation-Date: 2019-12-27 16:12+0000\n"
-"PO-Revision-Date: 2019-12-27 16:46+0100\n"
+"PO-Revision-Date: 2019-12-27 18:04+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -26,8 +26,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
-#, fuzzy
-#| msgid "4. Bookmarks"
 msgctxt "sort"
 msgid "4. Bookmarks"
 msgstr "4. Marcadores"
@@ -152,8 +150,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
-#, fuzzy
-#| msgid "2. Braille"
 msgctxt "sort"
 msgid "2. Braille"
 msgstr "2. Braille"
@@ -245,8 +241,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_chat.page:6
-#, fuzzy
-#| msgid "2. Chat"
 msgctxt "sort"
 msgid "2. Chat"
 msgstr "2. Chat"
@@ -303,8 +297,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
-#, fuzzy
-#| msgid "1. Controlling and Learning to Use Orca"
 msgctxt "sort"
 msgid "1. Controlling and Learning to Use Orca"
 msgstr "1. Controlar e aprender a usar Orca"
@@ -405,8 +397,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
-#, fuzzy
-#| msgid "1. Debugging"
 msgctxt "sort"
 msgid "1. Debugging"
 msgstr "1. Depuración"
@@ -446,11 +436,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
-#, fuzzy
-#| msgid "Orca Find"
 msgctxt "sort"
 msgid "2. Orca Find"
-msgstr "Buscar do Orca"
+msgstr "2. Buscar do Orca"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:7
@@ -531,8 +519,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_flat_review.page:6
-#, fuzzy
-#| msgid "1. Flat Review"
 msgctxt "sort"
 msgid "1. Flat Review"
 msgstr "1. Revisión plana"
@@ -1033,11 +1019,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
-#, fuzzy
-#| msgid "Mouse Pointer"
 msgctxt "sort"
 msgid "3. Mouse/Pointer-Related"
-msgstr "Punteiro do rato"
+msgstr "3. Relacionado co punteiro/rato"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:6
@@ -1147,11 +1131,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands.page:5
-#, fuzzy
-#| msgid "<app>Orca</app>'s Preferences Dialogs"
 msgctxt "sort"
 msgid "4. <app>Orca</app>'s Commands"
-msgstr "Diálogo de preferencias de <app>Orca</app>"
+msgstr "4. Ordes de <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/commands.page:6
@@ -1198,8 +1180,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_profiles.page:6
-#, fuzzy
-#| msgid "9. Profiles"
 msgctxt "sort"
 msgid "5. Profiles"
 msgstr "9. Perfís"
@@ -1219,10 +1199,8 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/commands_profiles.page:19
-#, fuzzy
-#| msgid "Braille Commands"
 msgid "Profile Commands"
-msgstr "Ordes de Braille"
+msgstr "Ordes de perfíl"
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:20
@@ -1246,11 +1224,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
-#, fuzzy
-#| msgid "Reading"
 msgctxt "sort"
 msgid "1. Reading"
-msgstr "Lectura"
+msgstr "1. Lectura"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:9
@@ -1509,11 +1485,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
-#, fuzzy
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "2. Speech Settings"
-msgstr "2. Voz"
+msgstr "2. Configuración de voz"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:7 C/preferences_speech.page:6
@@ -1619,8 +1593,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
-#, fuzzy
-#| msgid "3. Structural Navigation"
 msgctxt "sort"
 msgid "2. Structural Navigation"
 msgstr "3. Navegación estructural"
@@ -2102,8 +2074,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
-#, fuzzy
-#| msgid "3. Table Navigation"
 msgctxt "sort"
 msgid "3. Table Navigation"
 msgstr "3. Navegación de táboas"
@@ -2164,8 +2134,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_time_date_notifications.page:6
-#, fuzzy
-#| msgid "4. Time, Date, and Notification"
 msgctxt "sort"
 msgid "4. Time, Date, and Notification"
 msgstr "4. Hora, data e notificación"
@@ -2243,8 +2211,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_where_am_i.page:6
-#, fuzzy
-#| msgid "3. Where Am I"
 msgctxt "sort"
 msgid "3. Where Am I"
 msgstr "3. Onde estou"
@@ -2332,8 +2298,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
-#, fuzzy
-#| msgid "6. Bookmarks"
 msgctxt "sort"
 msgid "6. Bookmarks"
 msgstr "6. Marcadores"
@@ -2394,8 +2358,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_documents.page:5
-#, fuzzy
-#| msgid "1. Documents"
 msgctxt "sort"
 msgid "1. Documents"
 msgstr "1. Documentos"
@@ -2407,10 +2369,8 @@ msgstr "Ler contido"
 
 #. (itstool) path: page/title
 #: C/howto_documents.page:17
-#, fuzzy
-#| msgid "1. Documents"
 msgid "Documents"
-msgstr "1. Documentos"
+msgstr "Documentos"
 
 #. (itstool) path: page/p
 #: C/howto_documents.page:18
@@ -2479,8 +2439,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_flat_review.page:5
-#, fuzzy
-#| msgid "2. Flat Review"
 msgctxt "sort"
 msgid "2. Flat Review"
 msgstr "2. Revisión plana"
@@ -2646,8 +2604,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
-#, fuzzy
-#| msgid "8. Keybindings"
 msgctxt "sort"
 msgid "8. Keybindings"
 msgstr "8. Atallos de teclado"
@@ -2778,8 +2734,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_keyboard_layout.page:5
-#, fuzzy
-#| msgid "6. Keyboard Layout"
 msgctxt "sort"
 msgid "6. Keyboard Layout"
 msgstr "6. Disposicións do teclado"
@@ -2842,11 +2796,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
-#, fuzzy
-#| msgid "5. The \"Learn\" Modes"
 msgctxt "sort"
 msgid "5. \"Learn\" Mode"
-msgstr "5. Os modos de «aprendizaxe»"
+msgstr "5. Modo de «aprendizaxe»"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -2855,10 +2807,8 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-#, fuzzy
-#| msgid "5. The \"Learn\" Modes"
 msgid "\"Learn\" Mode"
-msgstr "5. Os modos de «aprendizaxe»"
+msgstr "Modos de «aprendizaxe»"
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:25
@@ -2989,8 +2939,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_mouse_review.page:5
-#, fuzzy
-#| msgid "4. Mouse Review"
 msgctxt "sort"
 msgid "4. Mouse Review"
 msgstr "4. Revisión do rato"
@@ -3049,8 +2997,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_notifications.page:5
-#, fuzzy
-#| msgid "5. Notifications"
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Notificacións"
@@ -3158,11 +3104,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_orca_find.page:5
-#, fuzzy
-#| msgid "Orca Find"
 msgctxt "sort"
 msgid "3. Orca Find"
-msgstr "Buscar do Orca"
+msgstr "3. Buscar do Orca"
 
 #. (itstool) path: info/desc
 #: C/howto_orca_find.page:6
@@ -3297,8 +3241,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_profiles.page:5
-#, fuzzy
-#| msgid "9. Profiles"
 msgctxt "sort"
 msgid "9. Profiles"
 msgstr "9. Perfís"
@@ -3434,11 +3376,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:6
-#, fuzzy
-#| msgid "3. Orca Configuration"
 msgctxt "sort"
 msgid "4. Orca Configuration"
-msgstr "3. Configuración de Orca"
+msgstr "4. Configuración de Orca"
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:7
@@ -3471,8 +3411,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
-#, fuzzy
-#| msgid "3. Structural Navigation"
 msgctxt "sort"
 msgid "3. Structural Navigation"
 msgstr "3. Navegación estructural"
@@ -3634,8 +3572,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_tables.page:5
-#, fuzzy
-#| msgid "4. Tables"
 msgctxt "sort"
 msgid "4. Tables"
 msgstr "4. Táboas"
@@ -3815,8 +3751,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_text_attributes.page:5
-#, fuzzy
-#| msgid "8. Text Attributes"
 msgctxt "sort"
 msgid "2. Text Attributes"
 msgstr "8. Atributos de texto"
@@ -3876,7 +3810,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_text_attributes.page:48
 msgid "Identifying Misspelled Words"
-msgstr "Identificar as palabras mal escritas."
+msgstr "Identificar as palabras mal escritas"
 
 #. (itstool) path: section/p
 #: C/howto_text_attributes.page:49
@@ -3910,8 +3844,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_the_orca_modifier.page:5
-#, fuzzy
-#| msgid "4. The Orca Modifier"
 msgctxt "sort"
 msgid "3. The Orca Modifier"
 msgstr "4. O modificador de Orca"
@@ -3988,8 +3920,6 @@ msgstr "Bloq_Maiús"
 
 #. (itstool) path: info/title
 #: C/howto_toggling_caps_lock.page:5
-#, fuzzy
-#| msgid "7. CapsLock in Laptop Layout"
 msgctxt "sort"
 msgid "7. CapsLock in Laptop Layout"
 msgstr "7. Bloqueo de maiúsculas na disposición do portátil"
@@ -4036,8 +3966,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
-#, fuzzy
-#| msgid "1. WhereAmI"
 msgctxt "sort"
 msgid "1. WhereAmI"
 msgstr "1. Onde estou"
@@ -4219,8 +4147,6 @@ msgstr "Referencia rápida"
 
 #. (itstool) path: info/title
 #: C/introduction.page:5
-#, fuzzy
-#| msgid "1. Welcome to Orca"
 msgctxt "sort"
 msgid "1. Welcome to Orca"
 msgstr "1. Benvida a Orca"
@@ -4387,8 +4313,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_braille.page:3
-#, fuzzy
-#| msgid "3. Braille"
 msgctxt "sort"
 msgid "3. Braille"
 msgstr "3. Braille"
@@ -4665,8 +4589,6 @@ msgstr "Valor por omisión: 4"
 
 #. (itstool) path: info/title
 #: C/preferences_chat.page:5
-#, fuzzy
-#| msgid "3. Chat"
 msgctxt "sort"
 msgid "3. Chat"
 msgstr "3. Chat"
@@ -4772,8 +4694,6 @@ msgstr "Valor por omisión: marcado"
 
 #. (itstool) path: info/title
 #: C/preferences_gecko.page:5
-#, fuzzy
-#| msgid "1. Gecko Navigation"
 msgctxt "sort"
 msgid "1. Gecko Navigation"
 msgstr "1. Navegación con Gecko"
@@ -5044,8 +4964,6 @@ msgstr "Valor por omisión: 4"
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
-#, fuzzy
-#| msgid "1. General"
 msgctxt "sort"
 msgid "1. General"
 msgstr "1. Xeral"
@@ -5438,12 +5356,10 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_general.page:274
 msgid "Default value: <gui>Application</gui>"
-msgstr "Valor predeterminado: <gui>Aplicativo</gui>"
+msgstr "Valor predeterminado: <gui>Application</gui>"
 
 #. (itstool) path: info/title
 #: C/preferences_introduction.page:3
-#, fuzzy
-#| msgid "0. Introduction to <app>Orca</app>'s Preferences"
 msgctxt "sort"
 msgid "0. Introduction to <app>Orca</app>'s Preferences"
 msgstr "0. Introdución ás preferencias do <app>Orca</app>"
@@ -5520,8 +5436,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:6
-#, fuzzy
-#| msgid "6. Key Bindings"
 msgctxt "sort"
 msgid "6. Key Bindings"
 msgstr "6. Atallos de teclado"
@@ -5638,8 +5552,6 @@ msgstr "Eco de teclas"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
-#, fuzzy
-#| msgid "4. Key Echo"
 msgctxt "sort"
 msgid "4. Key Echo"
 msgstr "4. Eco de teclas"
@@ -5677,11 +5589,10 @@ msgstr "Activar as teclas de acción"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:33
-#, fuzzy
 msgid ""
 "This option controls whether or not keys like <key>a</key>, <key>b</key>, "
 "and <key>c</key> should be spoken when pressed."
-msgstr "Esta opción controla se as teclas "
+msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:42
@@ -5692,11 +5603,10 @@ msgstr "Activar as teclas de modificación"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:43
-#, fuzzy
 msgid ""
 "This option controls whether or not keys like <key>1</key>, <key>2</key>, "
 "and <key>3</key> should be spoken when pressed."
-msgstr "Esta opción controla se as teclas "
+msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:52
@@ -5707,11 +5617,10 @@ msgstr "Activar as teclas de función"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:53
-#, fuzzy
 msgid ""
 "This option controls whether or not keys like <key>%</key>, <key>;</key>, "
 "and <key>?</key> should be spoken when pressed."
-msgstr "Esta opción controla se as teclas "
+msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:62
@@ -5722,11 +5631,10 @@ msgstr "Activar voz"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
-#, fuzzy
 msgid ""
 "This option controls whether or not <key>space</key> should be spoken when "
 "pressed."
-msgstr "Esta opción controla se as teclas "
+msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:72
@@ -5874,8 +5782,6 @@ msgstr "Diálogo de preferencias de <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/preferences_pronunciation.page:6
-#, fuzzy
-#| msgid "7. Pronunciation"
 msgctxt "sort"
 msgid "7. Pronunciation"
 msgstr "7. Pronunciación"
@@ -5989,11 +5895,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
-#, fuzzy
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "2.1 Speech"
-msgstr "2. Voz"
+msgstr "2.1 Voz"
 
 #. (itstool) path: info/desc
 #: C/preferences_speech.page:7
@@ -6419,11 +6323,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
-#, fuzzy
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "4. Spell Check"
-msgstr "2. Voz"
+msgstr "4. Voz"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:5
@@ -6472,10 +6374,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
-#, fuzzy
-#| msgid "Spell current word:"
 msgid "Spell error"
-msgstr "Ler a palabra actual:"
+msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:37
@@ -6492,10 +6392,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
-#, fuzzy
-#| msgid "Spell current line:"
 msgid "Spell suggestion"
-msgstr "Ler a liña actual:"
+msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:47
@@ -6530,8 +6428,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_table_navigation.page:8
-#, fuzzy
-#| msgid "2. Table Navigation"
 msgctxt "sort"
 msgid "2. Table Navigation"
 msgstr "2. Navegación por táboas"
@@ -6622,8 +6518,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_text_attributes.page:7
-#, fuzzy
-#| msgid "8. Text Attributes"
 msgctxt "sort"
 msgid "8. Text Attributes"
 msgstr "8. Atributos de texto"
@@ -7079,586 +6973,3 @@ msgid ""
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
 "\"2,\" and \"3\") prior to passing it along to the speech synthesizer."
 msgstr ""
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_text_attributes_table.png'; "
-#~ "md5=067627aeb9adfd314523903f408bb977"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_text_attributes_table.png'; "
-#~ "md5=067627aeb9adfd314523903f408bb977"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_text_attributes_rearranging.png'; "
-#~ "md5=0834c9af2a15c3d08be77f3a963ad245"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_text_attributes_rearranging.png'; "
-#~ "md5=0834c9af2a15c3d08be77f3a963ad245"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_text_attributes_braille.png'; "
-#~ "md5=3482a961cc9d30db5537ccb998bb7c71"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_text_attributes_braille.png'; "
-#~ "md5=3482a961cc9d30db5537ccb998bb7c71"
-
-#~ msgid "joanied@gnome.org"
-#~ msgstr "joanied@gnome.org"
-
-#~ msgid "Options for Controlling the Order in Which Attributes Are Presented"
-#~ msgstr "Opcións para controlar a orde na que se presentan os atributos"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_table_navigation.png'; "
-#~ "md5=a97b98bd9e3499e06844d56156419a7d"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_table_navigation.png'; "
-#~ "md5=a97b98bd9e3499e06844d56156419a7d"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_enable_speech.png'; "
-#~ "md5=66fff525659d9e3db4130f58f962f82e"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_enable_speech.png'; "
-#~ "md5=66fff525659d9e3db4130f58f962f82e"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_tts_options.png'; "
-#~ "md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_tts_options.png'; "
-#~ "md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_rate_pitch_volume.png'; "
-#~ "md5=98d310294cb4c7b945ecf81fda0df1f7"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_rate_pitch_volume.png'; "
-#~ "md5=98d310294cb4c7b945ecf81fda0df1f7"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_punctuation_level.png'; "
-#~ "md5=2578236bb97ab0109675417fcdb8dd4b"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_punctuation_level.png'; "
-#~ "md5=2578236bb97ab0109675417fcdb8dd4b"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_speech_verbosity.png'; "
-#~ "md5=d689e49513907f75e54b3635b7419247"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_speech_verbosity.png'; "
-#~ "md5=d689e49513907f75e54b3635b7419247"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_table_rows.png'; "
-#~ "md5=736ba1cf57c3cdc79de019160f3636ab"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_table_rows.png'; "
-#~ "md5=736ba1cf57c3cdc79de019160f3636ab"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_progress_bar_updates.png'; "
-#~ "md5=65ae433495a3efd95cd5259f10865c98"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_progress_bar_updates.png'; "
-#~ "md5=65ae433495a3efd95cd5259f10865c98"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_only_speak_displayed_text.png'; "
-#~ "md5=4636b63366ca45dd7f2679821e8e0099"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_only_speak_displayed_text.png'; "
-#~ "md5=4636b63366ca45dd7f2679821e8e0099"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
-#~ "md5=ac2c1da480acd938209d7f29b5ce12f1"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
-#~ "md5=ac2c1da480acd938209d7f29b5ce12f1"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_break_speech_into_chunks.png'; "
-#~ "md5=c2193d97d780a2a9349dcff4a64a3135"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_break_speech_into_chunks.png'; "
-#~ "md5=c2193d97d780a2a9349dcff4a64a3135"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_say_all_by.png'; "
-#~ "md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_say_all_by.png'; "
-#~ "md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_system_voice_options.png'; "
-#~ "md5=15083bf706ad1b905332746300f206a9"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_system_voice_options.png'; "
-#~ "md5=15083bf706ad1b905332746300f206a9"
-
-#~ msgid "Text-To-Speech Options"
-#~ msgstr "Opcións de texto a voz"
-
-#~ msgid "Default value: <gui>Speak row</gui>"
-#~ msgstr "Valor predeterminado: <gui>Ler fila</gui>"
-
-#~ msgid "Enabled"
-#~ msgstr "Activado"
-
-#~ msgid "System Information"
-#~ msgstr "Información do sistema"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_pronunciation.png'; "
-#~ "md5=a4fa07be0148dfa9ddc12d7c40f4c864"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_pronunciation.png'; "
-#~ "md5=a4fa07be0148dfa9ddc12d7c40f4c864"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_key_echo.png'; "
-#~ "md5=8a24d33dfd2f274ce4da3e756e866d65"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_key_echo.png'; "
-#~ "md5=8a24d33dfd2f274ce4da3e756e866d65"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_character_echo.png'; "
-#~ "md5=ae0f0f530ed8a742d08df4d388561847"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_character_echo.png'; "
-#~ "md5=ae0f0f530ed8a742d08df4d388561847"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_word_and_sentence_echo.png'; "
-#~ "md5=d31bd26801793b290e740fcabe7ba86d"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_word_and_sentence_echo.png'; "
-#~ "md5=d31bd26801793b290e740fcabe7ba86d"
-
-#~ msgid "Enable alphanumeric and punctuation keys"
-#~ msgstr "Activar as teclas alfanuméricas e de puntuación"
-
-#~ msgid "Enable locking keys"
-#~ msgstr "Activar as teclas de bloqueo"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_Orca_modifier_keys.png'; "
-#~ "md5=e7f8a86f1476d63486769af2fdf34a9a"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_Orca_modifier_keys.png'; "
-#~ "md5=e7f8a86f1476d63486769af2fdf34a9a"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_key_bindings_table.png'; "
-#~ "md5=87f1b17b497b7c34c9d88cacb2c3046c"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_key_bindings_table.png'; "
-#~ "md5=87f1b17b497b7c34c9d88cacb2c3046c"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_keyboard_layout.png'; "
-#~ "md5=87362e2a6c4530f1a7928a84eb2a4fb2"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_keyboard_layout.png'; "
-#~ "md5=87362e2a6c4530f1a7928a84eb2a4fb2"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
-#~ "md5=b79e1083ad179abaa45fafaf5d80cdd7"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
-#~ "md5=b79e1083ad179abaa45fafaf5d80cdd7"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_present_tooltips.png'; "
-#~ "md5=a6e33e8bb91b375f1432bcd41d271f5f"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_present_tooltips.png'; "
-#~ "md5=a6e33e8bb91b375f1432bcd41d271f5f"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_show_Orca_main_window.png'; "
-#~ "md5=f9dcacd77f6dbe80f5c70575212a8717"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_show_Orca_main_window.png'; "
-#~ "md5=f9dcacd77f6dbe80f5c70575212a8717"
-
-#~ msgid ""
-#~ "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
-#~ msgstr ""
-#~ "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
-
-#, fuzzy
-#~| msgid ""
-#~| "@@image: 'figures/preferences_start_Orca_when_you_login.png'; "
-#~| "md5=3c23f673e1056fbd5d4d102ae3395c6f"
-#~ msgid ""
-#~ "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS "
-#~ "FILE DOESN'T EXIST"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_start_Orca_when_you_login.png'; "
-#~ "md5=3c23f673e1056fbd5d4d102ae3395c6f"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_speak_object_under_mouse.png'; "
-#~ "md5=e1a7682e7ee6427a47a7900f45b37387"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_speak_object_under_mouse.png'; "
-#~ "md5=e1a7682e7ee6427a47a7900f45b37387"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_date_and_time.png'; "
-#~ "md5=931f4814b0e41379a06eeae11cd88c1b"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_date_and_time.png'; "
-#~ "md5=931f4814b0e41379a06eeae11cd88c1b"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_profiles.png'; "
-#~ "md5=9c4666e94c98347f5f4efc24c74c9458"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_profiles.png'; "
-#~ "md5=9c4666e94c98347f5f4efc24c74c9458"
-
-#~ msgid "Quit Orca Without Confirmation"
-#~ msgstr "Saír de Orca sen confirmación"
-
-#~ msgid "Show Orca Main Window"
-#~ msgstr "Mostrar a xanela principal de Orca"
-
-#~ msgid "The Orca Main Window"
-#~ msgstr "A xanela principal de Orca"
-
-#~ msgid "Start Orca When You Login"
-#~ msgstr "Iniciar Orca ao iniciar a sesión"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_gecko_page_navigation.png'; "
-#~ "md5=882c3f79d6d26636c42b9e6351a3cbbe"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_gecko_page_navigation.png'; "
-#~ "md5=882c3f79d6d26636c42b9e6351a3cbbe"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_gecko_find_options.png'; "
-#~ "md5=641af19881288848ba7f8fdc6d4db02e"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_gecko_find_options.png'; "
-#~ "md5=641af19881288848ba7f8fdc6d4db02e"
-
-#~ msgid "Grab focus on objects when navigating"
-#~ msgstr "Obter o foco sobre os obxectos ao navegar"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_chat.png'; "
-#~ "md5=f77f2387185d7498ae9842104a7ae5c0"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_chat.png'; "
-#~ "md5=f77f2387185d7498ae9842104a7ae5c0"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_enable_braille_support.png'; "
-#~ "md5=f08627f0177c20df349ab87fde697f1f"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_enable_braille_support.png'; "
-#~ "md5=f08627f0177c20df349ab87fde697f1f"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_enable_braille_monitor.png'; "
-#~ "md5=2dead5fbf717ce30339e2248e4f61aed"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_enable_braille_monitor.png'; "
-#~ "md5=2dead5fbf717ce30339e2248e4f61aed"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_braille_contracted.png'; "
-#~ "md5=81d80b6854847656862fe4ea167d29f8"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_braille_contracted.png'; "
-#~ "md5=81d80b6854847656862fe4ea167d29f8"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_abbreviated_role_names.png'; "
-#~ "md5=f26a6ef63ff0d1b40514830de7788c8b"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_abbreviated_role_names.png'; "
-#~ "md5=f26a6ef63ff0d1b40514830de7788c8b"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_disable_eol_symbol.png'; "
-#~ "md5=c43c2b7dff5efd265a40a260c2bc0d73"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_disable_eol_symbol.png'; "
-#~ "md5=c43c2b7dff5efd265a40a260c2bc0d73"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_braille_verbosity.png'; "
-#~ "md5=18969c222b3e1ea91cc75d47bb0fe48d"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_braille_verbosity.png'; "
-#~ "md5=18969c222b3e1ea91cc75d47bb0fe48d"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_braille_indicators.png'; "
-#~ "md5=719cd227dee9df85de633c4e2417301b"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_braille_indicators.png'; "
-#~ "md5=719cd227dee9df85de633c4e2417301b"
-
-#~ msgid "Enable Braille Monitor"
-#~ msgstr "Activar o monitor de Braille"
-
-#~ msgid "braille"
-#~ msgstr "braille"
-
-#~ msgid "main-window"
-#~ msgstr "main-window"
-
-#~ msgid "splash-window"
-#~ msgstr "splash-window"
-
-#~ msgid ""
-#~ "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
-#~ msgstr ""
-#~ "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
-
-#~ msgid "alphanumeric and punctuation keys"
-#~ msgstr "teclas alfanuméricas e de puntuación"
-
-#~ msgid "modifier keys"
-#~ msgstr "teclas modificadoras"
-
-#~ msgid "function keys"
-#~ msgstr "teclas de función"
-
-#~ msgid "action keys"
-#~ msgstr "teclas de acción"
-
-#~ msgid "Enable Braille"
-#~ msgstr "Activar Braille"
-
-#~ msgid "Initial Setup"
-#~ msgstr "Configuración inicial"
-
-#~ msgid ""
-#~ "@@image: 'figures/profiles_save_as.png'; "
-#~ "md5=e900250869a33ea0030fb42d4bf1da4e"
-#~ msgstr ""
-#~ "@@image: 'figures/profiles_save_as.png'; "
-#~ "md5=e900250869a33ea0030fb42d4bf1da4e"
-
-#~ msgid ""
-#~ "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
-#~ msgstr ""
-#~ "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
-
-#~ msgid ""
-#~ "@@image: 'figures/profiles_conflict.png'; "
-#~ "md5=0da0839b41fce88a4c177e5fb52b3e6b"
-#~ msgstr ""
-#~ "@@image: 'figures/profiles_conflict.png'; "
-#~ "md5=0da0839b41fce88a4c177e5fb52b3e6b"
-
-#~ msgid ""
-#~ "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
-#~ msgstr ""
-#~ "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_enable_magnifier.png'; "
-#~ "md5=0129d09c51c20afe13efe370fa91a0b1"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_enable_magnifier.png'; "
-#~ "md5=0129d09c51c20afe13efe370fa91a0b1"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_zoomer.png'; "
-#~ "md5=895ba22ba94f4552fd85e99306b1b566"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_zoomer.png'; "
-#~ "md5=895ba22ba94f4552fd85e99306b1b566"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_tracking_and_alignment.png'; "
-#~ "md5=90444cfdc60633e80f62f56d6ca4ff9f"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_tracking_and_alignment.png'; "
-#~ "md5=90444cfdc60633e80f62f56d6ca4ff9f"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_color.png'; "
-#~ "md5=516f342d24c34d2b338066e8c0e6289d"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_color.png'; "
-#~ "md5=516f342d24c34d2b338066e8c0e6289d"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_border.png'; "
-#~ "md5=cd909a43c0e6a30e9634070c69d98ecc"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_border.png'; "
-#~ "md5=cd909a43c0e6a30e9634070c69d98ecc"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_cursor.png'; "
-#~ "md5=24ac906c5652d48ea6613baf1c3ee355"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_cursor.png'; "
-#~ "md5=24ac906c5652d48ea6613baf1c3ee355"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_cross-hair.png'; "
-#~ "md5=8e14c03b420b1505e3fcd9707965004d"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_cross-hair.png'; "
-#~ "md5=8e14c03b420b1505e3fcd9707965004d"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_advanced_button.png'; "
-#~ "md5=7992710657c23612df3d0713d8bfaea7"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_advanced_button.png'; "
-#~ "md5=7992710657c23612df3d0713d8bfaea7"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_magnifier_advanced.png'; "
-#~ "md5=95167358edeb3371a05a717eb1e1ea6f"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_magnifier_advanced.png'; "
-#~ "md5=95167358edeb3371a05a717eb1e1ea6f"
-
-#~ msgid "5. Magnifier"
-#~ msgstr "5. Lupa"
-
-#~ msgid "Magnifier"
-#~ msgstr "Lupa"
-
-#~ msgid "Magnifier Preferences"
-#~ msgstr "Preferencias da lupa"
-
-#~ msgid "Enable Magnifier"
-#~ msgstr "Activar a lupa"
-
-#~ msgid "Scale factor"
-#~ msgstr "Factor de escala"
-
-#~ msgid "Position"
-#~ msgstr "Posicións"
-
-#~ msgid "Default value: <gui>Full Screen</gui>"
-#~ msgstr "Valor predeterminado: <gui>Pantalla completa</gui>"
-
-#~ msgid "Hide system pointer"
-#~ msgstr "Agochar o punteiro do rato"
-
-#~ msgid "Default value: unchecked"
-#~ msgstr "Valor predeterminado: non marcado"
-
-#~ msgid "These options control the tracking of the mouse cursor."
-#~ msgstr "Estas opcións controlan o seguimento do cursor do rato"
-
-#~ msgid "Control and menu item"
-#~ msgstr "Elemento de control e de menú"
-
-#~ msgid "Pointer follows focus"
-#~ msgstr "O punteiro segue o foco"
-
-#~ msgid "Text cursor"
-#~ msgstr "Cursor de texto"
-
-#~ msgid "These options control how the text cursor behaves."
-#~ msgstr "Estas opcións controlan como se comporta o cursor de texto"
-
-#~ msgid "Default value: 0"
-#~ msgstr "Valor por omisión: 0"
-
-#~ msgid "Color"
-#~ msgstr "Cor"
-
-#~ msgid "Invert colors"
-#~ msgstr "Inverter as cores"
-
-#~ msgid "Brightness"
-#~ msgstr "Brillo"
-
-#~ msgid "Default value: 0.00"
-#~ msgstr "Valor por omisión: 0.00"
-
-#~ msgid "Contrast"
-#~ msgstr "Contraste"
-
-#~ msgid "Border"
-#~ msgstr "Bordo"
-
-#~ msgid "Border size"
-#~ msgstr "Tamaño do borde"
-
-#~ msgid "Default value: 1"
-#~ msgstr "Valor por omisión: 1"
-
-#~ msgid "Border color"
-#~ msgstr "Cor do bordo"
-
-#~ msgid "Default value: black"
-#~ msgstr "Valor por omisión: negro"
-
-#~ msgid "Cursor"
-#~ msgstr "Cursor"
-
-#~ msgid "Enable cursor"
-#~ msgstr "Activar o cursor"
-
-#~ msgid "Custom size"
-#~ msgstr "Tamaño personalizado"
-
-#~ msgid "Cursor size"
-#~ msgstr "Tamaño do cursor"
-
-#~ msgid "Default value: 32"
-#~ msgstr "Valor por omisión: 32"
-
-#~ msgid "Cursor color"
-#~ msgstr "Cor do cursor"
-
-#~ msgid "Cross-hair"
-#~ msgstr "Punto de mira"
-
-#~ msgid "Enable cross-hair"
-#~ msgstr "Activar o punto de mira"
-
-#~ msgid "Cross-hair size"
-#~ msgstr "Tamaño do punto de mira"
-
-#~ msgid "Default value: 16"
-#~ msgstr "Valor por omisión: 16"
-
-#~ msgid "Cross-hair color"
-#~ msgstr "Cor do punto de mira"
-
-#~ msgid "Advanced"
-#~ msgstr "Avanzado"
-
-#~ msgid ""
-#~ "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
-#~ "md5=25eb0099c32ea81aca97096abca57b77"
-#~ msgstr ""
-#~ "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
-#~ "md5=25eb0099c32ea81aca97096abca57b77"
-
-#~ msgid "Disable gksu Keyboard Grab"
-#~ msgstr "Desactivar a captura de teclado de gksu"
-
-#~ msgid "magnifier"
-#~ msgstr "lupa"
-
-#~ msgid "Magnifier Settings"
-#~ msgstr "Configuracións da lupa"
-
-#~ msgid "5. Form Controls"
-#~ msgstr "5. Controis de formularios"
-
-#~ msgid "Documents (WRITE ME)"
-#~ msgstr "Documentos (ESCRIBIRME)"
