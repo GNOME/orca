@@ -8514,14 +8514,14 @@ msgstr "S'ha suprimit la vinculació de tecla. Premeu retorn per confirmar-ho."
 #. their input.
 #: ../src/orca/messages.py:593
 msgid "The keybinding has been removed."
-msgstr "S'ha mogut la vinculació de tecla."
+msgstr "S'ha suprimit la vinculació de tecla."
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 #. Orca command.
 #: ../src/orca/messages.py:598
 msgid "enter new key"
-msgstr "teclegeu la clau nova"
+msgstr "teclegeu la tecla nova"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
