@@ -198,6 +198,21 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return []
 
+    def _generateHasDetails(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateHasDetails(obj, **args)
+
+        args['stringType'] = 'hasdetails'
+        if self._script.utilities.hasDetails(obj):
+            result = [self._script.formatting.getString(**args)]
+            result.extend(self.voice(speech_generator.SYSTEM))
+            return result
+
+        return []
+
     def _generateLabelOrName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateLabelOrName(obj, **args)

@@ -69,6 +69,7 @@ formatting = {
             'groupindex': object_properties.GROUP_INDEX_SPEECH,
             'clickable': object_properties.STATE_CLICKABLE,
             'haslongdesc': object_properties.STATE_HAS_LONGDESC,
+            'hasdetails': object_properties.STATE_HAS_DETAILS,
         },
         'braille': {
             'eol': object_properties.EOL_INDICATOR_BRAILLE,
@@ -116,7 +117,7 @@ formatting = {
             },
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + unselectedCell + clickable + hasLongDesc + ' + TUTORIAL + ' + description + pause + hasPopup',
+            'unfocused': 'newNodeLevel + unselectedCell + clickable + pause + hasLongDesc + hasDetails +' + TUTORIAL + ' + description + pause + hasPopup',
             'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup',
             'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup'
             },

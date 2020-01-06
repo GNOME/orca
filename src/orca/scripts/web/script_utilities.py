@@ -76,6 +76,7 @@ class Utilities(script_utilities.Utilities):
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasDetails = {}
         self._popupType = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
@@ -156,6 +157,7 @@ class Utilities(script_utilities.Utilities):
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasDetails = {}
         self._popupType = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
@@ -3575,6 +3577,31 @@ class Utilities(script_utilities.Utilities):
         rv = "showlongdesc" in names
 
         self._hasLongDesc[hash(obj)] = rv
+        return rv
+
+    def hasDetails(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().hasDetails(obj)
+
+        rv = self._hasDetails.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            relations = obj.getRelationSet()
+        except:
+            msg = 'ERROR: Exception getting relationset for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = False
+        relation = filter(lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS, relations)
+        for r in relation:
+            if r.getNTargets() > 0:
+                rv = True
+                break
+
+        self._hasDetails[hash(obj)] = rv
         return rv
 
     def popupType(self, obj):

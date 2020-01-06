@@ -477,13 +477,10 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        if not state.contains(pyatspi.STATE_EXPANDED):
-            return []
-
         hasDetails = lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS
         relation = filter(hasDetails, relations)
         details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
-        if not details and role == pyatspi.ROLE_TOGGLE_BUTTON:
+        if not details and role == pyatspi.ROLE_TOGGLE_BUTTON and state.contains(pyatspi.STATE_EXPANDED):
             details = [child for child in obj]
 
         if not textOnly:
@@ -3941,6 +3938,9 @@ class Utilities:
         return False
 
     def hasLongDesc(self, obj):
+        return False
+
+    def hasDetails(self, obj):
         return False
 
     def popupType(self, obj):

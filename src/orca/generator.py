@@ -486,6 +486,9 @@ class Generator:
     def _generateHasLongDesc(self, obj, **args):
         return []
 
+    def _generateHasDetails(self, obj, **args):
+        return []
+
     def _generateHasPopup(self, obj, **args):
         return []
 

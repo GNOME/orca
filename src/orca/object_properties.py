@@ -453,6 +453,13 @@ STATE_EXPANDED = _("expanded")
 # which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 STATE_HAS_LONGDESC = _("has long description")
 
+# Translators: This is a state which applies to elements in document content
+# which have a detailed description or explanation. That description might
+# be hidden or might be in a different location on the page. Therefore Orca
+# announces the presence of the additional information so that the user can
+# use native application and/or Orca commands to read those details.
+STATE_HAS_DETAILS = _("has details")
+
 # Translators: This is a state which applies to the orientation of widgets
 # such as sliders and scroll bars.
 STATE_HORIZONTAL = _("horizontal")
