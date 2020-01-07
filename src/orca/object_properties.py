@@ -65,6 +65,35 @@ NODE_LEVEL_SPEECH = _("tree level %d")
 # ancestors the node has). This is the braille version.
 NODE_LEVEL_BRAILLE = _("TREE LEVEL %d")
 
+# Translators: In web content, authors can identify an element which contains
+# detailed information about another element. For instance, for a password
+# field, there may be a list of requirements (number of characters, number of
+# special symbols, etc.). For an image, there may be an extended description
+# before or after the image. Often there are visual clues connecting the
+# detailed information to its related object. We need to convey this non-visually.
+# This relationship will be presented for the object containing the details, e.g.
+# when arrowing into or out of it. The string substitution is for the object to
+# which the detailed information applies. For instance, when navigating into
+# the details for an image named Pythagorean Theorem, Orca would present:
+# "details for Pythagorean Theorem image".
+# See https://w3c.github.io/aria/#aria-details
+RELATION_DETAILS_FOR = _("details for %s")
+
+# Translators: In web content, authors can identify an element which contains
+# detailed information about another element. For instance, for a password
+# field, there may be a list of requirements (number of characters, number of
+# special symbols, etc.). For an image, there may be an extended description
+# before or after the image. Often there are visual clues connecting the
+# detailed information to its related object. We need to convey this non-visually.
+# This relationship will be presented for the object which has details to tell
+# the user the type of object where the details can be found so that they can
+# more quickly navigate to it. The string substitution is for the object to
+# which the detailed information applies. For instance, when navigating to
+# a password field which has details in a list named "Requirements", Orca would
+# present: "has details in Requirements list".
+# See https://w3c.github.io/aria/#aria-details
+RELATION_HAS_DETAILS = _("has details in %s")
+
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The reason for including the editable state as part of the role is to make it
@@ -452,13 +481,6 @@ STATE_EXPANDED = _("expanded")
 # Translators: This is a state which applies to elements in document content
 # which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 STATE_HAS_LONGDESC = _("has long description")
-
-# Translators: This is a state which applies to elements in document content
-# which have a detailed description or explanation. That description might
-# be hidden or might be in a different location on the page. Therefore Orca
-# announces the presence of the additional information so that the user can
-# use native application and/or Orca commands to read those details.
-STATE_HAS_DETAILS = _("has details")
 
 # Translators: This is a state which applies to the orientation of widgets
 # such as sliders and scroll bars.

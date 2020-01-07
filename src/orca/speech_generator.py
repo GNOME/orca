@@ -296,6 +296,16 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateDetailsFor(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateDetailsFor(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateAvailability(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
@@ -1632,13 +1642,15 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', obj.getRole())
         enabled, disabled = self._getEnabledAndDisabledContextRoles()
-        if not role in enabled:
+        if not (role in enabled or self._script.utilities.isDetails(obj)):
             return []
 
         count = args.get('count', 1)
 
         result = []
-        if role == pyatspi.ROLE_BLOCK_QUOTE:
+        if self._script.utilities.isDetails(obj):
+            result.append(messages.LEAVING_DETAILS)
+        elif role == pyatspi.ROLE_BLOCK_QUOTE:
             if count > 1:
                 result.append(messages.leavingNBlockquotes(count))
             else:

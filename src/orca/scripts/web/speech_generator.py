@@ -205,13 +205,39 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateHasDetails(obj, **args)
 
-        args['stringType'] = 'hasdetails'
-        if self._script.utilities.hasDetails(obj):
-            result = [self._script.formatting.getString(**args)]
-            result.extend(self.voice(speech_generator.SYSTEM))
-            return result
+        objs = self._script.utilities.detailsIn(obj)
+        if not objs:
+            return []
 
-        return []
+        objString = lambda x: "%s %s" % (x.name, self.getLocalizedRoleName(x))
+        toPresent = ", ".join(list(map(objString, objs)))
+
+        args['stringType'] = 'hasdetails'
+        result = [self._script.formatting.getString(**args) % toPresent]
+        result.extend(self.voice(speech_generator.SYSTEM))
+        return result
+
+    def _generateDetailsFor(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateDetailsFor(obj, **args)
+
+        objs = self._script.utilities.detailsFor(obj)
+        if not objs:
+            return []
+
+        if args.get('leaving'):
+            return []
+
+        objString = lambda x: "%s %s" % (x.name, self.getLocalizedRoleName(x))
+        toPresent = ", ".join(list(map(objString, objs)))
+
+        args['stringType'] = 'detailsfor'
+        result = [self._script.formatting.getString(**args) % toPresent]
+        result.extend(self.voice(speech_generator.SYSTEM))
+        return result
 
     def _generateLabelOrName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):

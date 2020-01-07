@@ -1112,6 +1112,17 @@ LEARN_MODE_START_SPEECH = \
 # blockquote and then navigates out of it.
 LEAVING_BLOCKQUOTE = _("leaving blockquote.")
 
+# Translators: In web content, authors can identify an element which contains
+# detailed information about another element. For instance, for a password
+# field, there may be a list of requirements (number of characters, number of
+# special symbols, etc.). For an image, there may be an extended description
+# before or after the image. Often there are visual clues connecting the
+# detailed information to its related object. We need to convey this non-visually.
+# This message is presented when a user just navigated out of a container holding
+# detailed information about another object.
+# See https://w3c.github.io/aria/#aria-details
+LEAVING_DETAILS = _("leaving details.")
+
 # Translators: This message is presented when a user is navigating within
 # an object and then navigates out of it. The word or phrase that follows
 # "leaving" should be consistent with the translation provided for the

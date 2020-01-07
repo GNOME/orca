@@ -3943,6 +3943,12 @@ class Utilities:
     def hasDetails(self, obj):
         return False
 
+    def isDetails(self, obj):
+        return False
+
+    def detailsFor(self, obj):
+        return []
+
     def popupType(self, obj):
         return ''
 

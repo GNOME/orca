@@ -69,7 +69,8 @@ formatting = {
             'groupindex': object_properties.GROUP_INDEX_SPEECH,
             'clickable': object_properties.STATE_CLICKABLE,
             'haslongdesc': object_properties.STATE_HAS_LONGDESC,
-            'hasdetails': object_properties.STATE_HAS_DETAILS,
+            'hasdetails': object_properties.RELATION_HAS_DETAILS,
+            'detailsfor': object_properties.RELATION_DETAILS_FOR
         },
         'braille': {
             'eol': object_properties.EOL_INDICATOR_BRAILLE,
@@ -110,14 +111,14 @@ formatting = {
 
     'speech': {
         'prefix': {
-            'focused': '[]',
+            'focused': 'detailsFor',
             'unfocused': 'oldAncestors + newAncestors',
             'basicWhereAmI': 'toolbar',
             'detailedWhereAmI' : '[]'
             },
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + unselectedCell + clickable + pause + hasLongDesc + hasDetails +' + TUTORIAL + ' + description + pause + hasPopup',
+            'unfocused': 'newNodeLevel + unselectedCell + clickable + pause + hasLongDesc + hasDetails + detailsFor +' + TUTORIAL + ' + description + pause + hasPopup',
             'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup',
             'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup'
             },
