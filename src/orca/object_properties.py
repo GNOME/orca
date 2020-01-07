@@ -111,200 +111,200 @@ ROLE_EDITABLE_CONTENT = _("editable content")
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The feed role is a scrollable list of articles where scrolling may cause
 # articles to be added to or removed from either end of the list.
-# http://rawgit.com/w3c/aria/master/aria/aria.html#feed
+# https://w3c.github.io/aria/#feed
 ROLE_FEED = C_("role", "feed")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The figure role is a perceivable section of content that typically contains a
 # graphical document, images, code snippets, or example text.
-# http://rawgit.com/w3c/aria/master/aria/aria.html#figure
+# https://w3c.github.io/aria/#figure
 ROLE_FIGURE = C_("role", "figure")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the abstract in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-abstract
+# https://w3c.github.io/dpub-aria/#doc-abstract
 ROLE_ABSTRACT = C_("role", "abstract")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the acknowledgments in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
+# https://w3c.github.io/dpub-aria/#doc-acknowledgments
 ROLE_ACKNOWLEDGMENTS = C_("role", "acknowledgments")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the afterword in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
+# https://w3c.github.io/dpub-aria/#doc-afterword
 ROLE_AFTERWORD = C_("role", "afterword")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the appendix in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-appendix
+# https://w3c.github.io/dpub-aria/#doc-appendix
 ROLE_APPENDIX = C_("role", "appendix")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a bibliography entry in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-biblioentry
+# https://w3c.github.io/dpub-aria/#doc-biblioentry
 ROLE_BIBLIOENTRY = C_("role", "bibliography entry")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the bibliography in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-bibliography
+# https://w3c.github.io/dpub-aria/#doc-bibliography
 ROLE_BIBLIOGRAPHY = C_("role", "bibliography")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a chapter in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-chapter
+# https://w3c.github.io/dpub-aria/#doc-chapter
 ROLE_CHAPTER = C_("role", "chapter")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the colophon in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
+# https://w3c.github.io/dpub-aria/#doc-colophon
 ROLE_COLOPHON = C_("role", "colophon")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the conclusion in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-conclusion
+# https://w3c.github.io/dpub-aria/#doc-conclusion
 ROLE_CONCLUSION = C_("role", "conclusion")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the cover in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
+# https://w3c.github.io/dpub-aria/#doc-cover
 ROLE_COVER = C_("role", "cover")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a single credit in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credit
+# https://w3c.github.io/dpub-aria/#doc-credit
 ROLE_CREDIT = C_("role", "credit")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the credits in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credits
+# https://w3c.github.io/dpub-aria/#doc-credits
 ROLE_CREDITS = C_("role", "credits")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the dedication in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
+# https://w3c.github.io/dpub-aria/#doc-dedication
 ROLE_DEDICATION = C_("role", "dedication")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a single endnote in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnote
+# https://w3c.github.io/dpub-aria/#doc-endnote
 ROLE_ENDNOTE = C_("role", "endnote")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the endnotes in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnotes
+# https://w3c.github.io/dpub-aria/#doc-endnotes
 ROLE_ENDNOTES = C_("role", "endnotes")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the epigraph in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epigraph
+# https://w3c.github.io/dpub-aria/#doc-epigraph
 ROLE_EPIGRAPH = C_("role", "epigraph")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the epilogue in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epilogue
+# https://w3c.github.io/dpub-aria/#doc-epilogue
 ROLE_EPILOGUE = C_("role", "epilogue")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the errata in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-errata
+# https://w3c.github.io/dpub-aria/#doc-errata
 ROLE_ERRATA = C_("role", "errata")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to an example in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-example
+# https://w3c.github.io/dpub-aria/#doc-example
 ROLE_EXAMPLE = C_("role", "example")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a single footnote in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-footnote
+# https://w3c.github.io/dpub-aria/#doc-footnote
 ROLE_FOOTNOTE = C_("role", "footnote")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the foreword in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
+# https://w3c.github.io/dpub-aria/#doc-foreword
 ROLE_FOREWORD = C_("role", "foreword")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the glossary in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-glossary
+# https://w3c.github.io/dpub-aria/#doc-glossary
 ROLE_GLOSSARY = C_("role", "glossary")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the index in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
+# https://w3c.github.io/dpub-aria/#doc-index
 ROLE_INDEX = C_("role", "index")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the introduction in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
+# https://w3c.github.io/dpub-aria/#doc-introduction
 ROLE_INTRODUCTION = C_("role", "introduction")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a pagebreak in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagebreak
+# https://w3c.github.io/dpub-aria/#doc-pagebreak
 ROLE_PAGEBREAK = C_("role", "page break")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a page list in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
+# https://w3c.github.io/dpub-aria/#doc-pagelist
 ROLE_PAGELIST = C_("role", "page list")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a named part in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-part
+# https://w3c.github.io/dpub-aria/#doc-part
 ROLE_PART = C_("role", "part")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the preface in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-preface
+# https://w3c.github.io/dpub-aria/#doc-preface
 ROLE_PREFACE = C_("role", "preface")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the prologue in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-prologue
+# https://w3c.github.io/dpub-aria/#doc-prologue
 ROLE_PROLOGUE = C_("role", "prologue")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a pullquote in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
+# https://w3c.github.io/dpub-aria/#doc-pullquote
 ROLE_PULLQUOTE = C_("role", "pullquote")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to a questions-and-answers section in a digitally-published
-# document. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-qna
+# document. https://w3c.github.io/dpub-aria/#doc-qna
 # In English, "QNA" is generally recognized by native speakers. If your language
 # lacks the equivalent, please prefer the shortest phrase which clearly conveys
 # the meaning.
@@ -313,13 +313,13 @@ ROLE_QNA = C_("role", "QNA")
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the subtitle in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-subtitle
+# https://w3c.github.io/dpub-aria/#doc-subtitle
 ROLE_SUBTITLE = C_("role", "subtitle")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the table of contents in a digitally-published document.
-# https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
+# https://w3c.github.io/dpub-aria/#doc-toc
 ROLE_TOC = C_("role", "table of contents")
 
 # Translators: The 'h' in this string represents a heading level attribute for
