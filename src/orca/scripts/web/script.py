@@ -596,6 +596,9 @@ class Script(default.Script):
                     continue
 
                 obj, startOffset, endOffset, text = content
+                if startOffset == endOffset:
+                    continue
+
                 if self.utilities.isLabellingContents(obj):
                     continue
 
