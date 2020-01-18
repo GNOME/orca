@@ -1975,9 +1975,6 @@ class Utilities:
     def isListItemMarker(self, obj):
         return False
 
-    def getListItemMarkerText(self, obj):
-        return ""
-
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []

@@ -117,11 +117,6 @@ class BrailleGenerator(generator.Generator):
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break
-            elif role == pyatspi.ROLE_LIST_ITEM:
-                marker = self._script.utilities.getListItemMarkerText(obj)
-                if marker and marker == region.string:
-                    focusedRegion = region
-                    break
 
         return [result, focusedRegion]
 

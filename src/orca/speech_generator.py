@@ -1317,14 +1317,6 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(SYSTEM))
         return result
 
-    def _generateListItemMarker(self, obj, **args):
-        result = super()._generateListItemMarker(obj, **args)
-        if result and result[0]:
-            result[0] = result[0].strip()
-            result.extend(self.voice(DEFAULT))
-
-        return result
-
     def _generateNestingLevel(self, obj, **args):
         result = super()._generateNestingLevel(obj, **args)
         if result:
