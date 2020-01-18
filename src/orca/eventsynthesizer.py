@@ -283,6 +283,51 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
 
+def _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
+    """Attemps to scroll the given substring to the specified location."""
+
+    try:
+        text = obj.queryText()
+        if not text.characterCount:
+            return False
+        if startOffset is None:
+            startOffset = 0
+        if endOffset is None:
+            endOffset = text.characterCount - 1
+        result = text.scrollSubstringToPoint(startOffset, endOffset, pyatspi.DESKTOP_COORDS, x, y)
+    except NotImplementedError:
+        msg = "ERROR: Text interface not implemented for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+    except:
+        msg = "ERROR: Exception scrolling %s (%i,%i) to %i,%i." % \
+            (obj, startOffset, endOffset, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    msg = "EVENT SYNTHESIZER: scrolled %s (%i,%i) to %i,%i: %s" % \
+        (obj, startOffset, endOffset, x, y, result)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return result
+
+def _scrollObjectToPoint(obj, x, y):
+    """Attemps to scroll obj to the specified point."""
+
+    try:
+        result = obj.queryComponent().scrollToPoint(pyatspi.DESKTOP_COORDS, x, y)
+    except NotImplementedError:
+        msg = "ERROR: Component interface not implemented for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+    except:
+        msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    msg = "EVENT SYNTHESIZER: scrolled %s to %i,%i: %s" % (obj, x, y, result)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return result
+
 def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
     """Attemps to scroll obj to the specified point."""
 
@@ -294,14 +339,9 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
         return
 
     before = component.getExtents(pyatspi.DESKTOP_COORDS)
-    try:
-        component.scrollToPoint(pyatspi.DESKTOP_COORDS, x, y)
-    except:
-        msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
-    else:
-        msg = "INFO: Attemped to scroll %s to %i,%i" % (obj, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
+
+    if not _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
+        _scrollObjectToPoint(obj, x, y)
 
     after = component.getExtents(pyatspi.DESKTOP_COORDS)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
