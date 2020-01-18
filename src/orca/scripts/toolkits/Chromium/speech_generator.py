@@ -64,6 +64,12 @@ class SpeechGenerator(web.SpeechGenerator):
 
         return super()._generateListBoxItemWidgets(obj, **args)
 
+    def _generateRoleName(self, obj, **args):
+        if self._script.utilities.isListItemMarker(obj):
+            return []
+
+        return super()._generateRoleName(obj, **args)
+
     def generateSpeech(self, obj, **args):
         if self._script.utilities.inDocumentContent(obj):
             return super().generateSpeech(obj, **args)

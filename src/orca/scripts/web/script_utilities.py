@@ -2900,16 +2900,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def isListItemMarkerInSimpleItem(self, obj):
-        if not self.isListItemMarker(obj):
-            return False
-
-        for i in range(1, obj.parent.childCount):
-            if not self.isStaticTextLeaf(obj.parent[i]):
-                return False
-
-        return True
-
     def isInferredLabelForContents(self, content, contents):
         obj, start, end, string = content
         objs = list(filter(self.shouldInferLabelFor, [x[0] for x in contents]))
@@ -3973,10 +3963,6 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Static text leaf cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-        if self.isListItemMarkerInSimpleItem(obj):
-            msg = "WEB: List item marker in simple item cannot have caret context %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
 
         return True
 
@@ -4159,13 +4145,6 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
             debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(obj[0], 0)
-
-        if self.isListItemMarker(obj):
-            nextObj, nextOffset = obj, offset
-            while nextObj and self.isListItemMarker(nextObj):
-                nextObj, nextOffset = self.nextContext(nextObj, nextOffset)
-            if nextObj:
-                obj, offset = nextObj, nextOffset
 
         text = self.queryNonEmptyText(obj)
         if not text:
