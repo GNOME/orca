@@ -380,6 +380,13 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onWindowActivated(self, event)
 
+        # Right now we don't get accessibility events for alerts which are
+        # already showing at the time of window activation. If that changes,
+        # we should store presented alerts so we don't double-present them.
+        for child in event.source:
+            if child.getRole() == pyatspi.ROLE_ALERT:
+                self.presentObject(child)
+
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
