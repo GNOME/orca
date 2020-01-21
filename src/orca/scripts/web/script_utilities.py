@@ -1859,8 +1859,10 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if state.contains(pyatspi.STATE_EDITABLE) \
-           or state.contains(pyatspi.STATE_EXPANDABLE):
+        if state.contains(pyatspi.STATE_EDITABLE):
+            return True
+
+        if state.contains(pyatspi.STATE_EXPANDABLE) and state.contains(pyatspi.STATE_FOCUSABLE):
             return True
 
         alwaysFocusModeRoles = [pyatspi.ROLE_COMBO_BOX,
