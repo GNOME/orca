@@ -1445,6 +1445,11 @@ class Script(default.Script):
             return True
 
         if self._lastCommandWasMouseButton:
+            if (event.source, event.detail1) == self.utilities.getCaretContext():
+                msg = "WEB: Event is for current caret context."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
             msg = "WEB: Event handled: Last command was mouse button"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
