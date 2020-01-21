@@ -189,8 +189,10 @@ class Script(web.Script):
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
-        # We should get proper state-changed events for these.
-        if self.utilities.inDocumentContent(event.source):
+        # This event is deprecated. We should get object:state-changed:focused
+        # events instead.
+
+        if super().onFocus(event):
             return
 
         if self.utilities.isLayoutOnly(event.source):

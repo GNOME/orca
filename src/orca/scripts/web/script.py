@@ -1774,6 +1774,17 @@ class Script(default.Script):
 
         return False
 
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        # We should get proper state-changed events for these.
+        if self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Ignoring because object:state-changed-focused expected."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
