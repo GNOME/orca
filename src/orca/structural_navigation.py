@@ -1233,7 +1233,7 @@ class StructuralNavigation:
         self._script.updateBraille(obj)
         self._script.sayLine(obj)
 
-    def _presentObject(self, obj, offset, includeContext=True):
+    def _presentObject(self, obj, offset, priorObj=None):
         """Presents the entire object to the user.
 
         Arguments:
@@ -1248,13 +1248,7 @@ class StructuralNavigation:
             return
 
         eventsynthesizer.scrollToTopEdge(obj)
-        priorObj = None
-        if not includeContext:
-            priorObj = obj
-            includeContext = True
-
-        self._script.presentObject(
-            obj, offset=offset, includeContext=includeContext, priorObj=priorObj)
+        self._script.presentObject(obj, offset=offset, priorObj=priorObj)
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
@@ -2862,7 +2856,7 @@ class StructuralNavigation:
                     debug.println(debug.LEVEL_INFO, msg)
 
             self.lastTableCell = [0, 0]
-            self._presentObject(cell, 0, includeContext=False)
+            self._presentObject(cell, 0, priorObj=obj)
             [cell, characterOffset] = self._getCaretPosition(cell)
             self._setCaretPosition(cell, characterOffset)
         else:
