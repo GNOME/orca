@@ -108,7 +108,6 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
-        self._shouldReadFullRow = {}
         self._text = {}
         self._tag = {}
         self._xmlRoles = {}
@@ -190,7 +189,6 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
-        self._shouldReadFullRow = {}
         self._tag = {}
         self._xmlRoles = {}
         self._treatAsDiv = {}
@@ -2570,27 +2568,13 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().shouldReadFullRow(obj)
 
-        rv = self._shouldReadFullRow.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            role = obj.getRole()
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting role and state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if not super().shouldReadFullRow(obj):
             return False
 
-        if role == pyatspi.ROLE_TABLE_CELL and state.contains(pyatspi.STATE_FOCUSABLE):
-            msg = "WEB: Should not read full row: focusable cell %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv = False
-        else:
-            rv = super().shouldReadFullRow(obj)
+        if self.isGridDescendant(obj):
+            return not self._script.inFocusMode()
 
-        self._shouldReadFullRow[hash(obj)] = rv
-        return rv
+        return True
 
     def isEntryDescendant(self, obj):
         if not obj:

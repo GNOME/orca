@@ -634,9 +634,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateTableCellRow(self, obj, **args):
-        if not self._script.inFocusMode():
-            return super()._generateTableCellRow(obj, **args)
-
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
