@@ -1326,6 +1326,9 @@ class Utilities:
         if self._script.inSayAll():
             return False
 
+        if not self.cellRowChanged(obj):
+            return False
+
         table = self.getTable(obj)
         if not table:
             return False
@@ -4394,7 +4397,7 @@ class Utilities:
 
         return startIndex, endIndex
 
-    def getShowingCellsInSameRow(self, obj):
+    def getShowingCellsInSameRow(self, obj, forceFullRow=False):
         parent = self.getTable(obj)
         try:
             table = parent.queryTable()
@@ -4407,7 +4410,10 @@ class Utilities:
         if row == -1:
             return []
 
-        startIndex, endIndex = self._getTableRowRange(obj)
+        if forceFullRow:
+            startIndex, endIndex = 0, table.nColumns
+        else:
+            startIndex, endIndex = self._getTableRowRange(obj)
         if startIndex == endIndex:
             return []
 

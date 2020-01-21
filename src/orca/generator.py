@@ -894,64 +894,25 @@ class Generator:
         has changed.  Otherwise, it will return an array for just the
         current cell.
         """
+
+        presentAll = args.get('readingRow') == True \
+            or args.get('formatType') == 'detailedWhereAmI' \
+            or self._mode == 'braille' \
+            or self._script.utilities.shouldReadFullRow(obj)
+
+        if not presentAll:
+            return self._generateRealTableCell(obj, **args)
+
+        args['readingRow'] = True
         result = []
+        cells = self._script.utilities.getShowingCellsInSameRow(obj, forceFullRow=True)
+        for cell in cells:
+            cellResult = self._generateRealTableCell(cell, **args)
+            if cellResult and result and self._mode == 'braille':
+                result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
+            result.extend(cellResult)
 
-        try:
-            parentTable = obj.parent.queryTable()
-        except:
-            parentTable = None
-        isDetailedWhereAmI = args.get('formatType', None) == 'detailedWhereAmI'
-        readFullRow = self._script.utilities.shouldReadFullRow(obj)
-        if (readFullRow or isDetailedWhereAmI) and parentTable \
-           and (not self._script.utilities.isLayoutOnly(obj.parent)):
-            parent = obj.parent
-            index = self._script.utilities.cellIndex(obj)
-            row = parentTable.getRowAtIndex(index)
-            column = parentTable.getColumnAtIndex(index)
-
-            # This is an indication of whether we should speak all the
-            # table cells (the user has moved focus up or down a row),
-            # or just the current one (focus has moved left or right in
-            # the same row).
-            #
-            presentAll = True
-            if isDetailedWhereAmI:
-                if parentTable.nColumns <= 1:
-                    return result
-            elif "lastRow" in self._script.pointOfReference \
-               and "lastColumn" in self._script.pointOfReference:
-                pointOfReference = self._script.pointOfReference
-                presentAll = \
-                    (self._mode == 'braille') \
-                    or \
-                    ((pointOfReference["lastRow"] != row) \
-                     or ((row == 0 or row == parentTable.nRows-1) \
-                         and pointOfReference["lastColumn"] == column))
-            if presentAll:
-                args['readingRow'] = True
-                if self._script.utilities.isTableRow(obj):
-                    cells = [x for x in obj]
-                else:
-                    cells = [parentTable.getAccessibleAt(row, i) \
-                                 for i in range(parentTable.nColumns)]
-
-                for cell in cells:
-                    if not cell:
-                        continue
-                    state = cell.getState()
-                    showing = state.contains(pyatspi.STATE_SHOWING)
-                    if showing:
-                        cellResult = self._generateRealTableCell(cell, **args)
-                        if cellResult and result and self._mode == 'braille':
-                            result.append(braille.Region(
-                                object_properties.TABLE_CELL_DELIMITER_BRAILLE))
-                        result.extend(cellResult)
-
-                result.extend(self._generatePositionInList(obj, **args))
-            else:
-                result.extend(self._generateRealTableCell(obj, **args))
-        else:
-            result.extend(self._generateRealTableCell(obj, **args))
+        result.extend(self._generatePositionInList(obj, **args))
         return result
 
     #####################################################################

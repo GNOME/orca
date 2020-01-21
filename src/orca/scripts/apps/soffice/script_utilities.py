@@ -752,10 +752,7 @@ class Utilities(script_utilities.Utilities):
         if lastKey in ["Tab", "ISO_Left_Tab"]:
             return False
 
-        if not super().shouldReadFullRow(obj):
-            return False
-
-        return self.cellRowChanged(obj)
+        return super().shouldReadFullRow(obj)
 
     def presentEventFromNonShowingObject(self, event):
         return self.inDocumentContent(event.source)
