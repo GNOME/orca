@@ -1745,7 +1745,7 @@ class Script(script.Script):
         them in the clipboard."""
 
         if self.flatReviewContext:
-            self.utilities.setClipboardText(self.currentReviewContents)
+            self.utilities.setClipboardText(self.currentReviewContents.rstrip("\n"))
             self.presentMessage(messages.FLAT_REVIEW_COPIED)
         else:
             self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
@@ -1757,7 +1757,7 @@ class Script(script.Script):
         the clipboard."""
 
         if self.flatReviewContext:
-            self.utilities.appendTextToClipboard(self.currentReviewContents)
+            self.utilities.appendTextToClipboard(self.currentReviewContents.rstrip("\n"))
             self.presentMessage(messages.FLAT_REVIEW_APPENDED)
         else:
             self.presentMessage(messages.FLAT_REVIEW_NOT_IN)

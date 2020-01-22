@@ -4768,9 +4768,9 @@ class Utilities:
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
         clipboard.request_text(self._appendTextToClipboardCallback, text)
 
-    def _appendTextToClipboardCallback(self, clipboard, text, newText):
+    def _appendTextToClipboardCallback(self, clipboard, text, newText, separator=" "):
         text = text.rstrip("\n")
-        text = "%s\n%s" % (text, newText)
+        text = "%s%s%s" % (text, separator, newText)
         clipboard.set_text(text, -1)
 
     def lastInputEventCameFromThisApp(self):
