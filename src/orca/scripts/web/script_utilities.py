@@ -2579,10 +2579,6 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().shouldReadFullRow(obj)
 
-        # TODO - JD: This is private.
-        if self._script._lastCommandWasCaretNav and self.lastInputEventWasLineNav():
-            return _settingsManager.getSetting('layoutMode')
-
         if not super().shouldReadFullRow(obj):
             return False
 
