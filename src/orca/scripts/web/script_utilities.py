@@ -1082,6 +1082,10 @@ class Utilities(script_utilities.Utilities):
             if self.hasNameAndActionAndNoUsefulChildren(obj):
                 return True
 
+        if role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER] \
+           and self.hasExplicitName(obj):
+            return True
+
         if role == pyatspi.ROLE_COMBO_BOX:
             return not self.isEditableComboBox(obj)
 
