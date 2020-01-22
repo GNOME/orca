@@ -1029,6 +1029,10 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: Treating %s as non-text: is non-navigable embedded document." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = None
+            if rv and self.isFakePlaceholderForEntry(obj):
+                msg = "WEB: Treating %s as non-text: is fake placeholder for entry." % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = None
 
         self._text[hash(obj)] = rv
         return rv
@@ -1096,6 +1100,9 @@ class Utilities(script_utilities.Utilities):
             return self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)
 
         if self.isNonNavigableEmbeddedDocument(obj):
+            return True
+
+        if self.isFakePlaceholderForEntry(obj):
             return True
 
         return False
@@ -3236,6 +3243,26 @@ class Utilities(script_utilities.Utilities):
         self._isErrorMessage[hash(obj)] = rv
         return rv
 
+    def isFakePlaceholderForEntry(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        if not (obj.parent.getRole() == pyatspi.ROLE_ENTRY and obj.parent.name):
+            return False
+
+        def _isMatch(x):
+            try:
+                role = x.getRole()
+                string = x.queryText().getText(0, -1).strip()
+            except:
+                return False
+            return role in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC] and obj.parent.name == string
+
+        if _isMatch(obj):
+            return True
+
+        return pyatspi.findDescendant(obj, _isMatch) is not None
+
     def isInlineListItem(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -4101,6 +4128,10 @@ class Utilities(script_utilities.Utilities):
             return False
         if self.isStaticTextLeaf(obj):
             msg = "WEB: Static text leaf cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isFakePlaceholderForEntry(obj):
+            msg = "WEB: Fake placeholder for entry cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
