@@ -449,6 +449,9 @@ class Utilities(script_utilities.Utilities):
         if obj:
             obj.clearCache()
 
+        # TODO - JD: This is private.
+        self._script._saveFocusedObjectInfo(obj)
+
     def getNextObjectInDocument(self, obj, documentFrame):
         if not obj:
             return None
