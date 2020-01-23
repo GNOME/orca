@@ -2117,8 +2117,9 @@ class Utilities:
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             return obj
 
-        hasContent = [x for x in obj if self.displayedText(x).strip()]
-        if len(hasContent) == 1 and not self.isStaticTextLeaf(hasContent[0]):
+        children = [x for x in obj if not self.isStaticTextLeaf(x)]
+        hasContent = [x for x in children if self.displayedText(x).strip()]
+        if len(hasContent) == 1:
             return hasContent[0]
 
         return obj
