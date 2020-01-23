@@ -96,6 +96,13 @@ RELATION_HAS_DETAILS = _("has details in %s")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# This role refers to a container with a proposed change. This change can
+# include the insertion and/or deletion of content, and would typically be seen
+# in a collaborative editor, such as in Google Docs.
+ROLE_CONTENT_SUGGESTION = C_("role", "suggestion")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The reason for including the editable state as part of the role is to make it
 # possible for users to quickly identify combo boxes in which a value can be
 # typed or arrowed to.

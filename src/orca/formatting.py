@@ -190,6 +190,10 @@ formatting = {
         'ROLE_CONTENT_MARK': {
             'unfocused': 'markStart + pause + displayedText + pause + markEnd',
             },
+        # TODO - JD: When we bump dependencies to 2.36, remove this fake role and use the real one.
+        'ROLE_CONTENT_SUGGESTION': {
+            'focused': 'leaving or (labelOrName + roleName)',
+            },
         pyatspi.ROLE_DESCRIPTION_TERM: {
             'unfocused': '(labelOrName or (displayedText + allTextSelection))',
             },

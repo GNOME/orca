@@ -779,6 +779,12 @@ class Utilities:
     def isContentMarked(self, obj):
         return False
 
+    def isContentSuggestion(self, obj):
+        return False
+
+    def isLastItemInInlineContentSuggestion(self, obj):
+        return False
+
     def isEmpty(self, obj):
         return False
 

@@ -330,6 +330,12 @@ class SpeechGenerator(generator.Generator):
 
         result = [messages.CONTENT_DELETION_END]
         result.extend(self.voice(SYSTEM))
+
+        if self._script.utilities.isLastItemInInlineContentSuggestion(obj):
+            result.extend(self._generatePause(obj, **args))
+            result.extend([messages.CONTENT_SUGGESTION_END])
+            result.extend(self.voice(SYSTEM))
+
         return result
 
     def _generateInsertionStart(self, obj, **args):
@@ -356,6 +362,12 @@ class SpeechGenerator(generator.Generator):
 
         result = [messages.CONTENT_INSERTION_END]
         result.extend(self.voice(SYSTEM))
+
+        if self._script.utilities.isLastItemInInlineContentSuggestion(obj):
+            result.extend(self._generatePause(obj, **args))
+            result.extend([messages.CONTENT_SUGGESTION_END])
+            result.extend(self.voice(SYSTEM))
+
         return result
 
     def _generateMarkStart(self, obj, **args):
@@ -1667,6 +1679,7 @@ class SpeechGenerator(generator.Generator):
 
     def _getEnabledAndDisabledContextRoles(self):
         allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
+                    'ROLE_CONTENT_SUGGESTION',
                     pyatspi.ROLE_FORM,
                     pyatspi.ROLE_LANDMARK,
                     'ROLE_DPUB_LANDMARK',
@@ -1684,7 +1697,9 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('sayAllContextPanel'):
-                enabled.extend([pyatspi.ROLE_PANEL, 'ROLE_DPUB_SECTION'])
+                enabled.extend([pyatspi.ROLE_PANEL,
+                                'ROLE_CONTENT_SUGGESTION',
+                                'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('sayAllContextNonLandmarkForm'):
                 enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('sayAllContextTable'):
@@ -1697,7 +1712,9 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
-                enabled.extend([pyatspi.ROLE_PANEL, 'ROLE_DPUB_SECTION'])
+                enabled.extend([pyatspi.ROLE_PANEL,
+                                'ROLE_CONTENT_SUGGESTION',
+                                'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('speakContextNonLandmarkForm'):
                 enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('speakContextTable'):
@@ -1818,6 +1835,8 @@ class SpeechGenerator(generator.Generator):
                 result = ['']
         elif role == pyatspi.ROLE_FORM:
             result.append(messages.LEAVING_FORM)
+        elif role == 'ROLE_CONTENT_SUGGESTION':
+            result.append(messages.LEAVING_SUGGESTION)
         else:
             result = ['']
         if result:
@@ -1953,6 +1972,7 @@ class SpeechGenerator(generator.Generator):
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
                                pyatspi.ROLE_FORM,
                                pyatspi.ROLE_LANDMARK,
+                               'ROLE_CONTENT_SUGGESTION',
                                'ROLE_DPUB_LANDMARK',
                                'ROLE_DPUB_SECTION',
                                pyatspi.ROLE_LIST,

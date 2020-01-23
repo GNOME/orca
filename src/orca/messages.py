@@ -442,6 +442,13 @@ CONTENT_MARK_START = C_("content", "highlight start")
 # is inside an HTML 'mark' element.
 CONTENT_MARK_END = C_("content", "highlight end")
 
+# Translators: This phrase is spoken to inform the user that the content being
+# presented is the end of an inline suggestion a document. A "suggestion" is a
+# proposed change. This change can include the insertion and/or deletion
+# of content, and would typically be seen in a collaborative editor, such as
+# in Google Docs.
+CONTENT_SUGGESTION_END = C_("content", "suggestion end")
+
 # Translators: This is for navigating document content by moving to the start
 # or end of a container. Examples of containers include tables, lists, and
 # blockquotes. When moving to the end of a container, Orca attempts to place
@@ -1379,6 +1386,13 @@ LEAVING_PULLQUOTE = C_("role", "leaving pullquote.")
 # that follows "leaving" should be consistent with the translation provided
 # for the corresponding term with context "role" found in object_properties.py
 LEAVING_QNA = C_("role", "leaving QNA.")
+
+# Translators: This message is presented when a user is navigating within a
+# suggestion and then navigates out of it. A "suggestion" is a container with
+# a proposed change. This change can include the insertion and/or deletion
+# of content, and would typically be seen in a collaborative editor, such as
+# in Google Docs.
+LEAVING_SUGGESTION = C_("role", "leaving suggestion.")
 
 # Translators: This message is presented when a user is navigating within
 # a document container and then navigates out of it. The word or phrase

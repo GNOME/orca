@@ -2152,6 +2152,30 @@ class Utilities(script_utilities.Utilities):
 
         return 'mark' in self._getXMLRoles(obj) or 'mark' in self._getTag(obj)
 
+    def isContentSuggestion(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isContentSuggestion(obj)
+
+        # Remove this check when we bump dependencies to 2.36
+        try:
+            if obj.getRole() == pyatspi.ROLE_SUGGESTION:
+                return True
+        except:
+            pass
+
+        return 'suggestion' in self._getXMLRoles(obj)
+
+    def isLastItemInInlineContentSuggestion(self, obj):
+        suggestion = pyatspi.findAncestor(obj, self.isContentSuggestion)
+        if not (suggestion and suggestion.childCount):
+            return False
+
+        displayStyle = self._getDisplayStyle(suggestion)
+        if "inline" not in displayStyle:
+            return False
+
+        return suggestion[-1] == obj
+
     def speakMathSymbolNames(self, obj=None):
         obj = obj or orca_state.locusOfFocus
         return self.isMath(obj)
@@ -2718,6 +2742,8 @@ class Utilities(script_utilities.Utilities):
         elif self.isMath(obj):
             rv = False
         elif self.isLandmark(obj):
+            rv = False
+        elif self.isContentSuggestion(obj):
             rv = False
         elif self.isDPub(obj):
             rv = False

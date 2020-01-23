@@ -1226,6 +1226,8 @@ class Generator:
             return 'ROLE_CONTENT_INSERTION'
         if self._script.utilities.isContentMarked(obj):
             return 'ROLE_CONTENT_MARK'
+        if self._script.utilities.isContentSuggestion(obj):
+            return 'ROLE_CONTENT_SUGGESTION'
         if self._script.utilities.isLandmark(obj):
             return pyatspi.ROLE_LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
@@ -1264,6 +1266,9 @@ class Generator:
                     return object_properties.ROLE_SPLITTER_VERTICAL
                 if isVertical:
                     return object_properties.ROLE_SPLITTER_HORIZONTAL
+
+        if self._script.utilities.isContentSuggestion(obj):
+            return object_properties.ROLE_CONTENT_SUGGESTION
 
         if self._script.utilities.isFeed(obj):
             return object_properties.ROLE_FEED
