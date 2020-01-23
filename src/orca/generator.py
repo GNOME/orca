@@ -1220,6 +1220,12 @@ class Generator:
             return pyatspi.ROLE_STATIC
         if self._script.utilities.isBlockquote(obj):
             return pyatspi.ROLE_BLOCK_QUOTE
+        if self._script.utilities.isContentDeletion(obj):
+            return 'ROLE_CONTENT_DELETION'
+        if self._script.utilities.isContentInsertion(obj):
+            return 'ROLE_CONTENT_INSERTION'
+        if self._script.utilities.isContentMarked(obj):
+            return 'ROLE_CONTENT_MARK'
         if self._script.utilities.isLandmark(obj):
             return pyatspi.ROLE_LANDMARK
         if self._script.utilities.isFocusableLabel(obj):

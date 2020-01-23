@@ -412,6 +412,36 @@ DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
 DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
 DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a."
 
+# Translators: This phrase is spoken to inform the user that what is about to
+# be said is content marked for deletion in a document, such as content which
+# is inside an HTML 'del' element, or the removed code in a diff.
+CONTENT_DELETION_START = C_("content", "deletion start")
+
+# Translators: This phrase is spoken to inform the user that they have reached
+# the end of content marked for deletion in a document, such as content which
+# is inside an HTML 'del' element, or the removed code in a diff.
+CONTENT_DELETION_END = C_("content", "deletion end")
+
+# Translators: This phrase is spoken to inform the user that what is about to
+# be said is content marked for insertion in a document, such as content which
+# is inside an HTML 'ins' element, or the added code in a diff.
+CONTENT_INSERTION_START = C_("content", "insertion start")
+
+# Translators: This phrase is spoken to inform the user that they have reached
+# the end of content marked for deletion in a document, such as content which
+# is inside an HTML 'ins' element, or the added code in a diff.
+CONTENT_INSERTION_END = C_("content", "insertion end")
+
+# Translators: This phrase is spoken to inform the user that what is about to
+# be said is content marked/highlighted in a document, such as content which
+# is inside an HTML 'mark' element.
+CONTENT_MARK_START = C_("content", "highlight start")
+
+# Translators: This phrase is spoken to inform the user that they have reached
+# the end of content marked/highlighted in a document, such as content which
+# is inside an HTML 'mark' element.
+CONTENT_MARK_END = C_("content", "highlight end")
+
 # Translators: This is for navigating document content by moving to the start
 # or end of a container. Examples of containers include tables, lists, and
 # blockquotes. When moving to the end of a container, Orca attempts to place

@@ -770,6 +770,15 @@ class Utilities:
 
         return False
 
+    def isContentDeletion(self, obj):
+        return False
+
+    def isContentInsertion(self, obj):
+        return False
+
+    def isContentMarked(self, obj):
+        return False
+
     def isEmpty(self, obj):
         return False
 

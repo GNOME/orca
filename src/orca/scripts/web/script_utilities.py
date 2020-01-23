@@ -2113,6 +2113,45 @@ class Utilities(script_utilities.Utilities):
 
         return self._getTag(obj) == 'blockquote'
 
+    def isContentDeletion(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isContentDeletion(obj)
+
+        # Remove this check when we bump dependencies to 2.34
+        try:
+            if obj.getRole() == pyatspi.ROLE_CONTENT_DELETION:
+                return True
+        except:
+            pass
+
+        return 'deletion' in self._getXMLRoles(obj) or 'del' in self._getTag(obj)
+
+    def isContentInsertion(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isContentInsertion(obj)
+
+        # Remove this check when we bump dependencies to 2.34
+        try:
+            if obj.getRole() == pyatspi.ROLE_CONTENT_INSERTION:
+                return True
+        except:
+            pass
+
+        return 'insertion' in self._getXMLRoles(obj) or 'ins' in self._getTag(obj)
+
+    def isContentMarked(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isContentMarked(obj)
+
+        # Remove this check when we bump dependencies to 2.36
+        try:
+            if obj.getRole() == pyatspi.ROLE_MARK:
+                return True
+        except:
+            pass
+
+        return 'mark' in self._getXMLRoles(obj) or 'mark' in self._getTag(obj)
+
     def speakMathSymbolNames(self, obj=None):
         obj = obj or orca_state.locusOfFocus
         return self.isMath(obj)

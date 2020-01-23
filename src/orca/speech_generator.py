@@ -306,6 +306,84 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateDeletionStart(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        startOffset = args.get('startOffset', 0)
+        if startOffset != 0:
+            return []
+
+        result = [messages.CONTENT_DELETION_START]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateDeletionEnd(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        endOffset = args.get('endOffset')
+        if endOffset is not None:
+            text = self._script.utilities.queryNonEmptyText(obj)
+            if text  and text.characterCount != endOffset:
+                return []
+
+        result = [messages.CONTENT_DELETION_END]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateInsertionStart(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        startOffset = args.get('startOffset', 0)
+        if startOffset != 0:
+            return []
+
+        result = [messages.CONTENT_INSERTION_START]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateInsertionEnd(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        endOffset = args.get('endOffset')
+        if endOffset is not None:
+            text = self._script.utilities.queryNonEmptyText(obj)
+            if text and text.characterCount != endOffset:
+                return []
+
+        result = [messages.CONTENT_INSERTION_END]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateMarkStart(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        startOffset = args.get('startOffset', 0)
+        if startOffset != 0:
+            return []
+
+        result = [messages.CONTENT_MARK_START]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateMarkEnd(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        endOffset = args.get('endOffset')
+        if endOffset is not None:
+            text = self._script.utilities.queryNonEmptyText(obj)
+            if text and text.characterCount != endOffset:
+                return []
+
+        result = [messages.CONTENT_MARK_END]
+        result.extend(self.voice(SYSTEM))
+        return result
+
     def _generateAvailability(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
