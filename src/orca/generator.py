@@ -906,8 +906,18 @@ class Generator:
         args['readingRow'] = True
         result = []
         cells = self._script.utilities.getShowingCellsInSameRow(obj, forceFullRow=True)
+
+        # Remove any pre-calcuated values which only apply to obj and not row cells.
+        doNotInclude = ['startOffset', 'endOffset', 'string']
+        otherCellArgs = args.copy()
+        for arg in doNotInclude:
+            otherCellArgs.pop(arg, None)
+
         for cell in cells:
-            cellResult = self._generateRealTableCell(cell, **args)
+            if cell == obj:
+                cellResult = self._generateRealTableCell(cell, **args)
+            else:
+                cellResult = self._generateRealTableCell(cell, **otherCellArgs)
             if cellResult and result and self._mode == 'braille':
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cellResult)
