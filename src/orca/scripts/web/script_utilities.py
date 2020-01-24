@@ -2165,13 +2165,16 @@ class Utilities(script_utilities.Utilities):
 
         return 'suggestion' in self._getXMLRoles(obj)
 
-    def isLastItemInInlineContentSuggestion(self, obj):
-        suggestion = pyatspi.findAncestor(obj, self.isContentSuggestion)
-        if not (suggestion and suggestion.childCount):
+    def isInlineSuggestion(self, obj):
+        if not self.isContentSuggestion(obj):
             return False
 
-        displayStyle = self._getDisplayStyle(suggestion)
-        if "inline" not in displayStyle:
+        displayStyle = self._getDisplayStyle(obj)
+        return "inline" in displayStyle
+
+    def isLastItemInInlineContentSuggestion(self, obj):
+        suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
+        if not (suggestion and suggestion.childCount):
             return False
 
         return suggestion[-1] == obj
@@ -2742,6 +2745,12 @@ class Utilities(script_utilities.Utilities):
         elif self.isMath(obj):
             rv = False
         elif self.isLandmark(obj):
+            rv = False
+        elif self.isContentDeletion(obj):
+            rv = False
+        elif self.isContentInsertion(obj):
+            rv = False
+        elif self.isContentMarked(obj):
             rv = False
         elif self.isContentSuggestion(obj):
             rv = False

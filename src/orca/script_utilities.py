@@ -782,6 +782,9 @@ class Utilities:
     def isContentSuggestion(self, obj):
         return False
 
+    def isInlineSuggestion(self, obj):
+        return False
+
     def isLastItemInInlineContentSuggestion(self, obj):
         return False
 

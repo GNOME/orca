@@ -180,19 +180,22 @@ formatting = {
             },
         # TODO - JD: When we bump dependencies to 2.34, remove this fake role and use the real one.
         'ROLE_CONTENT_DELETION': {
+            'focused': 'leaving or deletionStart',
             'unfocused': 'deletionStart + pause + displayedText + pause + deletionEnd',
             },
         # TODO - JD: When we bump dependencies to 2.34, remove this fake role and use the real one.
         'ROLE_CONTENT_INSERTION': {
+            'focused': 'leaving or insertionStart',
             'unfocused': 'insertionStart + pause + displayedText + pause + insertionEnd',
             },
         # TODO - JD: When we bump dependencies to 2.36, remove this fake role and use the real one.
         'ROLE_CONTENT_MARK': {
+            'focused': 'leaving or markStart',
             'unfocused': 'markStart + pause + displayedText + pause + markEnd',
             },
         # TODO - JD: When we bump dependencies to 2.36, remove this fake role and use the real one.
         'ROLE_CONTENT_SUGGESTION': {
-            'focused': 'leaving or (labelOrName + roleName)',
+            'focused': 'leaving or roleName',
             },
         pyatspi.ROLE_DESCRIPTION_TERM: {
             'unfocused': '(labelOrName or (displayedText + allTextSelection))',
