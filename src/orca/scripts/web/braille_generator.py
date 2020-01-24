@@ -31,6 +31,7 @@ import pyatspi
 
 from orca import braille
 from orca import braille_generator
+from orca import debug
 from orca import messages
 from orca import object_properties
 from orca import orca_state
@@ -53,6 +54,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
+
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateRoleName(obj, **args)
 
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
@@ -107,10 +111,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def _generateLabelOrName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabelOrName(obj, **args)
+
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        if self._script.utilities.inDocumentContent(obj) and obj.name:
+        if obj.name:
             name = obj.name
             if not self._script.utilities.hasExplicitName(obj):
                 name = name.strip()
@@ -119,6 +126,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generateLabelOrName(obj, **args)
 
     def _generateLabel(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabel(obj, **args)
+
         label, objects = self._script.utilities.inferLabelFor(obj)
         if label:
             return [label]
@@ -126,6 +136,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generateLabel(obj, **args)
 
     def _generateLabelAndName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabelAndName(obj, **args)
+
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
@@ -136,12 +149,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generateLabelAndName(obj, **args)
 
     def _generateDescription(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateDescription(obj, **args)
+
         if self._script.utilities.preferDescriptionOverName(obj):
             return []
 
         return super()._generateDescription(obj, **args)
 
     def _generateName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateName(obj, **args)
+
         if self._script.utilities.preferDescriptionOverName(obj):
             return [obj.description]
 
@@ -156,8 +175,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
-        result = []
 
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateExpandedEOCs(obj, **args)
+
+        result = []
         startOffset = args.get('startOffset', 0)
         endOffset = args.get('endOffset', -1)
         text = self._script.utilities.expandEOCs(obj, startOffset, endOffset)
@@ -173,6 +195,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return self._generateDisplayedText(obj, **args)
 
     def _generateTableCellRow(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateTableCellRow(obj, **args)
+
         if not self._script.inFocusMode():
             return super()._generateTableCellRow(obj, **args)
 
@@ -187,6 +212,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generateTableCellRow(obj, **args)
 
     def generateBraille(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            msg = "WEB: %s is not in document content. Calling default braille generator." % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return super().generateBraille(obj, **args)
+
+        msg = "WEB: Generating braille for document object %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         result = []
 
         args['includeContext'] = not self._script.utilities.inDocumentContent(obj)
