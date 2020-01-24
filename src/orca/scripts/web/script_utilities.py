@@ -1671,6 +1671,10 @@ class Utilities(script_utilities.Utilities):
 
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
+        firstObj, firstStart, firstEnd, firstString = objects[0]
+        if firstString == "\n" and len(objects) > 1:
+            objects.pop(0)
+
         if useCache:
             self._currentLineContents = objects
 
