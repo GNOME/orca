@@ -529,7 +529,7 @@ class Utilities:
             role = None
             name = ''
 
-        if role == pyatspi.ROLE_PUSH_BUTTON and name:
+        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_LABEL] and name:
             return name
 
         try:
