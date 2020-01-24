@@ -434,6 +434,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
             doNotSpeak.append(pyatspi.ROLE_TEXT)
             doNotSpeak.append(pyatspi.ROLE_STATIC)
+            if args.get('string'):
+                doNotSpeak.append("ROLE_CONTENT_SUGGESTION")
             if args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
