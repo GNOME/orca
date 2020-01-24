@@ -2800,10 +2800,11 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", text.getText(0, -1))))
+
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not state.contains(pyatspi.STATE_EDITABLE) \
-            and len(text.getText(0, -1).split()) > 1
+        rv = not state.contains(pyatspi.STATE_EDITABLE) and len(tokens) > 1
         if rv:
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
             i = 0
