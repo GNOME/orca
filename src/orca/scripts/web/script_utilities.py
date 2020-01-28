@@ -2128,7 +2128,7 @@ class Utilities(script_utilities.Utilities):
         except:
             pass
 
-        return 'deletion' in self._getXMLRoles(obj) or 'del' in self._getTag(obj)
+        return 'deletion' in self._getXMLRoles(obj) or 'del' == self._getTag(obj)
 
     def isContentInsertion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2141,7 +2141,7 @@ class Utilities(script_utilities.Utilities):
         except:
             pass
 
-        return 'insertion' in self._getXMLRoles(obj) or 'ins' in self._getTag(obj)
+        return 'insertion' in self._getXMLRoles(obj) or 'ins' == self._getTag(obj)
 
     def isContentMarked(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2154,7 +2154,7 @@ class Utilities(script_utilities.Utilities):
         except:
             pass
 
-        return 'mark' in self._getXMLRoles(obj) or 'mark' in self._getTag(obj)
+        return 'mark' in self._getXMLRoles(obj) or 'mark' == self._getTag(obj)
 
     def isContentSuggestion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
