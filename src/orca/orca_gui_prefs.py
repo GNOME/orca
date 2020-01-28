@@ -2943,13 +2943,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK) \
            and mods & keybindings.ORCA_MODIFIER_MASK:
             mods ^= (1 << pyatspi.MODIFIER_SHIFTLOCK)
-        try:
-            shiftmask = (1 << pyatspi.MODIFIER_SHIFT)
-        except:
-            shiftmask = 0
-        if mods & shiftmask \
-           and mods & keybindings.ORCA_MODIFIER_MASK:
-            mods ^= (1 << pyatspi.MODIFIER_SHIFT)
 
         treeModel.set(myiter,
                       modMask, str(keybindings.defaultModifierMask),
