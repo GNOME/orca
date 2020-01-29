@@ -381,7 +381,8 @@ class Generator:
         result.extend(label)
         if not len(label):
             result.extend(name)
-        elif len(name) and name[0].split() != label[0].split():
+        elif len(name) and name[0].split() != label[0].split() \
+             and not label[0].startswith(name[0]):
             result.extend(name)
         return result
 
