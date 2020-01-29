@@ -303,7 +303,7 @@ class Generator:
         """
         result = []
         self._script.pointOfReference['usedDescriptionForName'] = False
-        name = self._script.utilities.displayedText(obj)
+        name = obj.name or self._script.utilities.displayedText(obj)
         if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             children = self._script.utilities.selectedChildren(obj)
             if not children:
