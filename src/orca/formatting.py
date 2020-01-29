@@ -428,9 +428,9 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
-            'focused': 'name',
-            'unfocused': 'labelAndName + allTextSelection + roleName + required + pause + invalid + availability + ' + MNEMONIC,
-            'basicWhereAmI': 'label + roleName + name + allTextSelection + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
+            'focused': '(displayedText or value)',
+            'unfocused': 'labelAndName + (displayedText or value) + roleName + required + pause + invalid + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'label + roleName + name + (displayedText or value) + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'value',
