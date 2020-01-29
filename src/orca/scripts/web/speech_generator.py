@@ -268,9 +268,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isDPub(obj):
             return []
 
-        if obj.name and not self._script.utilities.hasValidName(obj):
-            return []
-
         role = args.get('role', obj.getRole())
         alwaysPresent = [pyatspi.ROLE_PUSH_BUTTON,
                          pyatspi.ROLE_IMAGE]
@@ -284,13 +281,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_SPIN_BUTTON]:
             return super()._generateName(obj, **args)
 
-        if self._script.utilities.isLink(obj) \
-           and not self._script.utilities.hasExplicitName(obj):
-            return []
-
         if obj.name:
             if self._script.utilities.preferDescriptionOverName(obj):
                 result = [obj.description]
+            elif self._script.utilities.isLink(obj) \
+                 and not self._script.utilities.hasExplicitName(obj):
+                return []
             else:
                 name = obj.name
                 if not self._script.utilities.hasExplicitName(obj):

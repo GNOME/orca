@@ -3575,6 +3575,11 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if len(obj.name) == 1 and ord(obj.name) in range(0xe000, 0xf8ff):
+            msg = "WEB: name of %s is in unicode private use area" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         return True
 
     def isUselessEmptyElement(self, obj):
@@ -4724,8 +4729,13 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
         else:
-            roles = [pyatspi.ROLE_PUSH_BUTTON]
-            rv = role in roles and len(name) == 1 and description
+            if len(obj.name) == 1 and ord(obj.name) in range(0xe000, 0xf8ff):
+                msg = "WEB: name of %s is in unicode private use area" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = True
+            else:
+                roles = [pyatspi.ROLE_PUSH_BUTTON]
+                rv = role in roles and len(name) == 1 and description
 
         self._preferDescriptionOverName[hash(obj)] = rv
         return rv
