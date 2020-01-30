@@ -1476,11 +1476,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.textEventIsForNonNavigableTextObject(event):
-            msg = "WEB: Event ignored: Event source is non-navigable text object"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Event handled: Updating position due to insertion"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1494,6 +1489,13 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
             orca.setLocusOfFocus(event, obj)
+            return True
+
+        # We want to do this check after the same-page-fragment check because some
+        # fragments start with non-navigable text objects.
+        if self.utilities.textEventIsForNonNavigableTextObject(event):
+            msg = "WEB: Event ignored: Event source is non-navigable text object"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.lastInputEventWasPageNav() \
