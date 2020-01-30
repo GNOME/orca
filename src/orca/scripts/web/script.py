@@ -1236,6 +1236,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.caretMovedToSamePageFragment(event, oldFocus):
+            msg = "WEB: Event source %s is same page fragment. Generating line contents." % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
+            utterances = self.speechGenerator.generateContents(contents)
         else:
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)

@@ -4020,14 +4020,15 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def caretMovedToSamePageFragment(self, event):
+    def caretMovedToSamePageFragment(self, event, oldFocus=None):
         if not event.type.startswith("object:text-caret-moved"):
             return False
 
         if event.source.getState().contains(pyatspi.STATE_EDITABLE):
             return False
 
-        linkURI = self.uri(orca_state.locusOfFocus)
+        oldFocus = oldFocus or orca_state.locusOfFocus
+        linkURI = self.uri(oldFocus)
         docURI = self.documentFrameURI()
         if linkURI == docURI:
             return True
