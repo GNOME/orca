@@ -99,11 +99,7 @@ class Utilities(web.Utilities):
         if rv is not None:
             return rv
 
-        rv = not self._getTag(obj) \
-            and obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM \
-            and obj.getIndexInParent() == 0 \
-            and obj.parent.queryText().getText(0, 1) == self.EMBEDDED_OBJECT_CHARACTER
-
+        rv = self._getTag(obj) == "::marker" and obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM
         self._isListItemMarker[hash(obj)] = rv
         return rv
 
