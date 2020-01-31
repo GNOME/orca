@@ -4021,7 +4021,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def caretMovedToSamePageFragment(self, event, oldFocus=None):
-        if not event.type.startswith("object:text-caret-moved"):
+        if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
         if event.source.getState().contains(pyatspi.STATE_EDITABLE):
