@@ -466,20 +466,21 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         family = self._getKeyValueForVoiceType(voiceType,
                                                acss.ACSS.FAMILY,
                                                False)
+
+        voiceACSS = self._getACSSForVoiceType(voiceType)
         if family:
             family[speechserver.VoiceFamily.NAME] = name
             family[speechserver.VoiceFamily.LANG] = language
             family[speechserver.VoiceFamily.DIALECT] = dialect
             family[speechserver.VoiceFamily.VARIANT] = variant
         else:
-            voiceACSS = self._getACSSForVoiceType(voiceType)
             voiceACSS[acss.ACSS.FAMILY] = {}
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LANG] = language
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.DIALECT] = dialect
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.VARIANT] = variant
+        voiceACSS['established'] = True
 
-        #voiceACSS = self._getACSSForVoiceType(voiceType)
         #settings.voices[voiceType] = voiceACSS
 
     def _getRateForVoiceType(self, voiceType):
@@ -504,6 +505,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         voiceACSS = self._getACSSForVoiceType(voiceType)
         voiceACSS[acss.ACSS.RATE] = value
+        voiceACSS['established'] = True
         #settings.voices[voiceType] = voiceACSS
 
     def _getPitchForVoiceType(self, voiceType):
@@ -529,6 +531,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         voiceACSS = self._getACSSForVoiceType(voiceType)
         voiceACSS[acss.ACSS.AVERAGE_PITCH] = value
+        voiceACSS['established'] = True
         #settings.voices[voiceType] = voiceACSS
 
     def _getVolumeForVoiceType(self, voiceType):
@@ -553,6 +556,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         voiceACSS = self._getACSSForVoiceType(voiceType)
         voiceACSS[acss.ACSS.GAIN] = value
+        voiceACSS['established'] = True
         #settings.voices[voiceType] = voiceACSS
 
     def _setVoiceSettingsForVoiceType(self, voiceType):
