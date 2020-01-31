@@ -1014,7 +1014,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = None
         elif not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_LIST_BOX]
+            doNotQuery = [pyatspi.ROLE_LIST_BOX]
             role = obj.getRole()
             if rv and role in doNotQuery:
                 msg = "WEB: Treating %s as non-text due to role." % obj
