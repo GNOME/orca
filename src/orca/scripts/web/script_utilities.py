@@ -2523,6 +2523,14 @@ class Utilities(script_utilities.Utilities):
         return ''
 
     def coordinatesForCell(self, obj):
+        roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER,
+                 pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER]
+        if not (obj and obj.getRole() in roles):
+            return -1, -1
+
         rowindex, colindex = self._rowAndColumnIndices(obj)
         if rowindex is not None and colindex is not None:
             return int(rowindex) - 1, int(colindex) - 1
