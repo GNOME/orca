@@ -734,7 +734,7 @@ class EventManager:
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
-            debug.printDetails(debug.LEVEL_INFO, ' ' * 11, event.source)
+            debug.printDetails(debug.LEVEL_INFO, ' ' * 18, event.source)
 
         script = self._getScriptForEvent(event)
         if not script:

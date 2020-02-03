@@ -254,18 +254,18 @@ class Generator:
                     globalsDict[arg] = self._methodsDict[arg](obj, **args)
                     duration = "%.4f" % (time.time() - currentTime)
                     debug.println(debug.LEVEL_ALL,
-                                  "           GENERATION TIME: %s  ---->  %s=%s" \
-                                  % (duration, arg, repr(globalsDict[arg])))
+                                  "%sGENERATION TIME: %s  ---->  %s=%s" \
+                                  % (' ' * 18, duration, arg, repr(globalsDict[arg])))
 
         except:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
         duration = "%.4f" % (time.time() - startTime)
-        debug.println(debug.LEVEL_ALL, "           COMPLETION TIME: %s" % duration)
+        debug.println(debug.LEVEL_ALL, "%sCOMPLETION TIME: %s" % (' ' * 18, duration))
         debug.println(debug.LEVEL_ALL, "%s GENERATOR: Results:" % self._mode.upper(), True)
         for element in result:
-            debug.println(debug.LEVEL_ALL, "           %s" % element)
+            debug.println(debug.LEVEL_ALL, "%s%s" % (' ' * 18, element))
 
         if args.get('isProgressBarUpdate') and result:
             self.setProgressBarUpdateTimeAndValue(obj)

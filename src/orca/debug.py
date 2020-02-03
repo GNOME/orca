@@ -29,12 +29,13 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import inspect
-import time
 import traceback
 import os
 import pyatspi
 import subprocess
 import sys
+
+from datetime import datetime
 
 # Used to turn off all debugging.
 #
@@ -208,7 +209,8 @@ def println(level, text="", timestamp=False):
     if level >= debugLevel:
         text = text.replace("\ufffc", "[OBJ]")
         if timestamp:
-            text = "%s - %s" % (time.strftime("%H:%M:%S"), text)
+            text = text.replace("\n", "\n%s" % (" " * 18))
+            text = "%s - %s" % (datetime.now().strftime("%H:%M:%S.%f"), text)
         if debugFile:
             try:
                 debugFile.writelines([text, "\n"])
@@ -273,7 +275,7 @@ def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
     println(level, text, timestamp)
 
     if sourceInfo:
-        println(level, "             %s" % sourceInfo, timestamp)
+        println(level, "%s%s" % (' ' * 18, sourceInfo), timestamp)
 
 def printInputEvent(level, string, timestamp=False):
     """Prints out an input event.  The given level may be overridden

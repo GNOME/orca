@@ -1208,12 +1208,12 @@ def refresh(panToCursor=True,
         cursorCell += 1 # Normalize to 1-based offset
 
     logLine = "BRAILLE LINE:  '%s'" % string
-    debug.println(debug.LEVEL_INFO, logLine)
+    debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
     logLine = "     VISIBLE:  '%s', cursor=%d" % \
                     (string[startPos:endPos], cursorCell)
-    debug.println(debug.LEVEL_INFO, logLine)
+    debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
     substring = string[startPos:endPos]
