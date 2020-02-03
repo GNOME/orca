@@ -673,9 +673,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         self._restoreRole(oldRole, args)
         msg = "WEB: Speech generation for document object %s complete:" % obj
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         for element in result:
-            debug.println(debug.LEVEL_ALL, "           %s" % element)
+            debug.println(debug.LEVEL_ALL, "%s%s" % (' ' * 18, element))
 
         return result
 

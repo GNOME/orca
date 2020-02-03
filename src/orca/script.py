@@ -373,7 +373,7 @@ class Script:
             reason = "appears to be duplicate state-changed event"
 
         if skip:
-            eventDetails = '           %s' % str(cachedEvent).replace('\t', ' ' * 11)
+            eventDetails = '        %s' % str(cachedEvent).replace('\t', ' ' * 8)
             msg = 'SCRIPT: Skipping object event due to %s\n%s' % (reason, eventDetails)
             debug.println(debug.LEVEL_INFO, msg, True)
 
