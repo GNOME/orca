@@ -49,10 +49,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get('index', 0) > 0:
             return []
 
+        priorObj = args.get('priorObj')
+        if self._script.utilities.isInlineIframeDescendant(priorObj):
+            return []
+
         return super()._generateOldAncestors(obj, **args)
 
     def _generateNewAncestors(self, obj, **args):
         if args.get('index', 0) > 0:
+            return []
+
+        if self._script.utilities.isInlineIframeDescendant(obj):
             return []
 
         return super()._generateNewAncestors(obj, **args)

@@ -87,6 +87,7 @@ class Utilities(script_utilities.Utilities):
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
+        self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLandmark = {}
@@ -168,6 +169,7 @@ class Utilities(script_utilities.Utilities):
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
+        self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLandmark = {}
@@ -2168,6 +2170,26 @@ class Utilities(script_utilities.Utilities):
             pass
 
         return 'suggestion' in self._getXMLRoles(obj)
+
+    def isInlineIframe(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_INTERNAL_FRAME):
+            return False
+
+        displayStyle = self._getDisplayStyle(obj)
+        return "inline" in displayStyle
+
+    def isInlineIframeDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isInlineIframeDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        ancestor = pyatspi.findAncestor(obj, self.isInlineIframe)
+        rv = ancestor is not None
+        self._isInlineIframeDescendant[hash(obj)] = rv
+        return rv
 
     def isInlineSuggestion(self, obj):
         if not self.isContentSuggestion(obj):
