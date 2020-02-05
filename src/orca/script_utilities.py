@@ -1221,8 +1221,8 @@ class Utilities:
         if not obj:
             return None
 
-        tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE]
-        isTable = lambda x: x and x.getRole() in tableRoles
+        tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE, pyatspi.ROLE_TREE]
+        isTable = lambda x: x and x.getRole() in tableRoles and "Table" in pyatspi.listInterfaces(x)
         if isTable(obj):
             return obj
 
