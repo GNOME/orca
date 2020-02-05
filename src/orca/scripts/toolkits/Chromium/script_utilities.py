@@ -474,7 +474,34 @@ class Utilities(web.Utilities):
 
         return super().findAllDescendants(root, includeIf, excludeIf)
 
+    def _accessibleAtPoint(self, root, x, y, coordType=None):
+        if self.isHidden(root):
+            return None
+
+        try:
+            component = root.queryComponent()
+        except:
+            msg = "CHROMIUM: Exception querying component of %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        result = component.getAccessibleAtPoint(x, y, coordType)
+        msg = "CHROMIUM: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
     def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        result = None
+        if self.isDocument(root):
+            result = self._accessibleAtPoint(root, x, y, coordType)
+            if self.isTextBlockElement(result) and not self.isStaticTextLeaf(result):
+                child = self._accessibleAtPoint(result, x, y, coordType)
+                result = child or result
+
+        root = result or root
         result = super().descendantAtPoint(root, x, y, coordType)
         if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
             return result.parent
