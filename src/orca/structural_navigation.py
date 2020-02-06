@@ -2818,10 +2818,7 @@ class StructuralNavigation:
         if not (obj and obj.childCount and obj.getRole() == pyatspi.ROLE_TABLE):
             return False
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return False
+        attrs = self._script.utilities.objectAttributes(obj)
         if attrs.get('layout-guess') == 'true':
             return False
 

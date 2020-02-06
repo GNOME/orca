@@ -362,8 +362,12 @@ class Generator:
         the assumption being that the user was able to see the text prior
         to giving the widget focus.
         """
-        result = [x for x in obj.getAttributes() if x.startswith('placeholder-text:')]
-        return [x.replace('placeholder-text:', '') for x in result]
+        attrs = self._script.utilities.objectAttributes(obj)
+        placeholder = attrs.get('placeholder-text')
+        if placeholder:
+            return [placeholder]
+
+        return []
 
     def _generateLabelAndName(self, obj, **args):
         """Returns the label and the name as an array of strings for speech

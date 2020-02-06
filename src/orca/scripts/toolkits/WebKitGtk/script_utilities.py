@@ -57,10 +57,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return False
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return False
+        attrs = self.objectAttributes(obj)
         return attrs.get('toolkit', '') == 'WebKitGtk'
 
     def getCaretContext(self):

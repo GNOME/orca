@@ -84,11 +84,7 @@ class SpellCheck(spellcheck.SpellCheck):
         return pyatspi.findDescendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
-        try:
-            attrs = dict([attr.split(':', 1) for attr in suggestion.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self._script.utilities.objectAttributes(suggestion)
         index = attrs.get("posinset")
         total = attrs.get("setsize")
         if index is None or total is None:

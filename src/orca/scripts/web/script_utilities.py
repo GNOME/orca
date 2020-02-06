@@ -50,7 +50,8 @@ class Utilities(script_utilities.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
-        self._currentAttrs = {}
+        self._objectAttributes = {}
+        self._currentTextAttrs = {}
         self._caretContexts = {}
         self._priorContexts = {}
         self._contextPathsRolesAndNames = {}
@@ -66,22 +67,16 @@ class Utilities(script_utilities.Utilities):
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
-        self._isDPub = {}
-        self._isMath = {}
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
-        self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasDetails = {}
         self._isDetails = {}
-        self._popupType = {}
         self._hasUselessCanvasDescendant = {}
-        self._id = {}
-        self._displayStyle = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
@@ -91,7 +86,6 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLandmark = {}
-        self._isLiveRegion = {}
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
@@ -105,17 +99,11 @@ class Utilities(script_utilities.Utilities):
         self._labelTargets = {}
         self._displayedLabelText = {}
         self._mimeType = {}
-        self._roleDescription = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
         self._text = {}
-        self._tag = {}
-        self._xmlRoles = {}
         self._treatAsDiv = {}
-        self._nodeLevel = {}
-        self._posinset = {}
-        self._setsize = {}
         self._currentObjectContents = None
         self._currentSentenceContents = None
         self._currentLineContents = None
@@ -137,6 +125,7 @@ class Utilities(script_utilities.Utilities):
 
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
+        self._objectAttributes = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -148,22 +137,16 @@ class Utilities(script_utilities.Utilities):
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
-        self._isDPub = {}
-        self._isMath = {}
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
-        self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasDetails = {}
         self._isDetails = {}
-        self._popupType = {}
         self._hasUselessCanvasDescendant = {}
-        self._id = {}
-        self._displayStyle = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
@@ -173,7 +156,6 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLandmark = {}
-        self._isLiveRegion = {}
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
@@ -187,16 +169,10 @@ class Utilities(script_utilities.Utilities):
         self._labelTargets = {}
         self._displayedLabelText = {}
         self._mimeType = {}
-        self._roleDescription = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
-        self._tag = {}
-        self._xmlRoles = {}
         self._treatAsDiv = {}
-        self._nodeLevel = {}
-        self._posinset = {}
-        self._setsize = {}
         self._paths = {}
         self._contextPathsRolesAndNames = {}
         self._cleanupContexts()
@@ -210,7 +186,7 @@ class Utilities(script_utilities.Utilities):
         self._currentLineContents = None
         self._currentWordContents = None
         self._currentCharacterContents = None
-        self._currentAttrs = {}
+        self._currentTextAttrs = {}
         self._text = {}
 
     def isDocument(self, obj):
@@ -540,128 +516,69 @@ class Utilities(script_utilities.Utilities):
 
         return lastChild
 
-    def getRoleDescription(self, obj):
-        rv = self._roleDescription.get(hash(obj))
+    def objectAttributes(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().objectAttributes(obj)
+
+        rv = self._objectAttributes.get(hash(obj))
         if rv is not None:
             return rv
 
         try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+            rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         except:
-            attrs = {}
+            rv = {}
 
-        rv = attrs.get('roledescription', '')
-        self._roleDescription[hash(obj)] = rv
+        self._objectAttributes[hash(obj)] = rv
         return rv
+
+    def getRoleDescription(self, obj):
+        attrs = self.objectAttributes(obj)
+        return attrs.get('roledescription', '')
 
     def nodeLevel(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().nodeLevel(obj)
 
-        rv = self._nodeLevel.get(hash(obj))
-        if rv is not None:
-            return rv
-
         rv = -1
         if not (self.inMenu(obj) or obj.getRole() == pyatspi.ROLE_HEADING):
-            try:
-                attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-            except:
-                attrs = {}
-
+            attrs = self.objectAttributes(obj)
             # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
             rv = int(attrs.get('level', 0)) -1
 
-        self._nodeLevel[hash(obj)] = rv
         return rv
 
     def getPositionInSet(self, obj):
-        rv = self._posinset.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(obj)
         position = attrs.get('posinset')
         if position is not None:
-            rv = int(position)
+            return int(position)
 
-        self._posinset[hash(obj)] = rv
-        return rv
+        return None
 
     def getSetSize(self, obj):
-        rv = self._setsize.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(obj)
         setsize = attrs.get('setsize')
         if setsize is not None:
-            rv = int(setsize)
+            return int(setsize)
 
-        self._setsize[hash(obj)] = rv
-        return rv
+        return None
 
     def _getID(self, obj):
-        if hash(obj) in self._id:
-            return self._id.get(hash(obj))
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return None
-
-        rv = attrs.get('id')
-        self._id[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('id')
 
     def _getDisplayStyle(self, obj):
-        if hash(obj) in self._displayStyle:
-            return self._displayStyle.get(hash(obj))
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return None
-
-        rv = attrs.get('display')
-        self._displayStyle[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('display')
 
     def _getTag(self, obj):
-        rv = self._tag.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return None
-
-        rv = attrs.get('tag')
-        self._tag[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('tag')
 
     def _getXMLRoles(self, obj):
-        rv = self._xmlRoles.get(hash(obj))
-        if rv:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return []
-
-        rv = attrs.get('xml-roles', '').split()
-        self._xmlRoles[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('xml-roles', '').split()
 
     def inFindContainer(self, obj=None):
         if not obj:
@@ -682,10 +599,7 @@ class Utilities(script_utilities.Utilities):
         return self.queryNonEmptyText(obj, False) is None
 
     def isHidden(self, obj):
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return False
+        attrs = self.objectAttributes(obj)
         return attrs.get('hidden', False)
 
     def _isOrIsIn(self, child, parent):
@@ -927,12 +841,12 @@ class Utilities(script_utilities.Utilities):
         return ""
 
     def textAttributes(self, acc, offset, get_defaults=False):
-        attrsForObj = self._currentAttrs.get(hash(acc)) or {}
+        attrsForObj = self._currentTextAttrs.get(hash(acc)) or {}
         if offset in attrsForObj:
             return attrsForObj.get(offset)
 
         attrs = super().textAttributes(acc, offset, get_defaults)
-        self._currentAttrs[hash(acc)] = {offset:attrs}
+        self._currentTextAttrs[hash(acc)] = {offset:attrs}
 
         return attrs
 
@@ -1956,11 +1870,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().mnemonicShortcutAccelerator(obj)
 
-        try:
-            attrs = dict([attr.split(":", 1) for attr in obj.getAttributes()])
-        except:
-            return ["", "", ""]
-
+        attrs = self.objectAttributes(obj)
         keys = map(lambda x: x.replace("+", " "), attrs.get("keyshortcuts", "").split(" "))
         keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
         rv = ["", " ".join(keys), ""]
@@ -2213,10 +2123,6 @@ class Utilities(script_utilities.Utilities):
         return self.isMath(orca_state.locusOfFocus)
 
     def isMath(self, obj):
-        rv = self._isMath.get(hash(obj))
-        if rv is not None:
-            return rv
-
         tag = self._getTag(obj)
         rv = tag in ['math',
                      'maction',
@@ -2259,7 +2165,6 @@ class Utilities(script_utilities.Utilities):
                      'munder',
                      'munderover']
 
-        self._isMath[hash(obj)] = rv
         return rv
 
     def isNoneElement(self, obj):
@@ -2287,11 +2192,7 @@ class Utilities(script_utilities.Utilities):
         if role != pyatspi.ROLE_MATH_FRACTION:
             return False
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return False
-
+        attrs = self.objectAttributes(obj)
         linethickness = attrs.get('linethickness')
         if not linethickness:
             return False
@@ -2463,33 +2364,21 @@ class Utilities(script_utilities.Utilities):
         if not self.isMathEnclose(obj):
             return []
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return []
-
+        attrs = self.objectAttributes(obj)
         return attrs.get('notation', 'longdiv').split()
 
     def getMathFencedSeparators(self, obj):
         if not self.isMathFenced(obj):
             return ['']
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return ['']
-
+        attrs = self.objectAttributes(obj)
         return list(attrs.get('separators', ','))
 
     def getMathFences(self, obj):
         if not self.isMathFenced(obj):
             return ['', '']
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return ['', '']
-
+        attrs = self.objectAttributes(obj)
         return [attrs.get('open', '('), attrs.get('close', ')')]
 
     def getMathNestingLevel(self, obj, test=None):
@@ -2580,11 +2469,7 @@ class Utilities(script_utilities.Utilities):
     def _rowAndColumnIndices(self, obj):
         rowindex = colindex = None
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(obj)
         rowindex = attrs.get('rowindex')
         colindex = attrs.get('colindex')
         if rowindex is not None and colindex is not None:
@@ -2595,11 +2480,7 @@ class Utilities(script_utilities.Utilities):
         if not row:
             return rowindex, colindex
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in row.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(row)
         rowindex = attrs.get('rowindex', rowindex)
         colindex = attrs.get('colindex', colindex)
         return rowindex, colindex
@@ -2620,10 +2501,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def labelForCellCoordinates(self, obj):
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
+        attrs = self.objectAttributes(obj)
 
         # The ARIA feature is still in the process of being discussed.
         collabel = attrs.get('colindextext', attrs.get('coltext'))
@@ -2636,11 +2514,7 @@ class Utilities(script_utilities.Utilities):
         if not row:
             return ''
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in row.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(row)
         collabel = attrs.get('colindextext', attrs.get('coltext', collabel))
         rowlabel = attrs.get('rowindextext', attrs.get('rowtext', rowlabel))
         if collabel is not None and rowlabel is not None:
@@ -2665,12 +2539,7 @@ class Utilities(script_utilities.Utilities):
 
     def rowAndColumnCount(self, obj):
         rows, cols = super().rowAndColumnCount(obj)
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(obj)
         rows = attrs.get('rowcount', rows)
         cols = attrs.get('colcount', cols)
         return int(rows), int(cols)
@@ -3218,13 +3087,8 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        rv = self._isDPub.get(hash(obj))
-        if rv is not None:
-            return rv
-
         roles = self._getXMLRoles(obj)
         rv = bool(list(filter(lambda x: x.startswith("doc-"), roles)))
-        self._isDPub[hash(obj)] = rv
         return rv
 
     def isDPubAbstract(self, obj):
@@ -3473,18 +3337,8 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        rv = self._isLiveRegion.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
-        rv = 'container-live' in attrs
-        self._isLiveRegion[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return 'container-live' in attrs
 
     def isLink(self, obj):
         if not obj:
@@ -3675,18 +3529,8 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        rv = self._hasExplicitName.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
-        rv = attrs.get('explicit-name') == 'true'
-        self._hasExplicitName[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('explicit-name') == 'true'
 
     def hasLongDesc(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3794,18 +3638,8 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return 'false'
 
-        rv = self._popupType.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
-        rv = attrs.get('haspopup', 'false').lower()
-        self._popupType[hash(obj)] = rv
-        return rv
+        attrs = self.objectAttributes(obj)
+        return attrs.get('haspopup', 'false').lower()
 
     def inferLabelFor(self, obj):
         if not self.shouldInferLabelFor(obj):
@@ -4139,7 +3973,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         try:
-            self._currentAttrs.pop(hash(obj))
+            self._currentTextAttrs.pop(hash(obj))
         except:
             pass
 

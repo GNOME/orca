@@ -535,10 +535,7 @@ class LiveRegionManager:
         else: return 'unknown'
 
     def _getAttrDictionary(self, obj):
-        try:
-            return dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return {}
+        return self._script.utilities.objectAttributes(obj)
     
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object 

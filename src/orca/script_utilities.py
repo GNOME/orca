@@ -241,6 +241,14 @@ class Utilities:
 
         return ancestor
 
+    def objectAttributes(self, obj):
+        try:
+            rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            rv = {}
+
+        return rv
+
     def cellIndex(self, obj):
         """Returns the index of the cell which should be used with the
         table interface.  This is necessary because in some apps we
@@ -250,11 +258,7 @@ class Utilities:
         -obj: the table cell whose index we need.
         """
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
+        attrs = self.objectAttributes(obj)
         index = attrs.get('table-cell-index')
         if index:
             return int(index)
@@ -738,13 +742,7 @@ class Utilities:
         if role != pyatspi.ROLE_FRAME:
             return False
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            msg = 'ERROR: Exception getting attributes of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        attrs = self.objectAttributes(obj)
         return attrs.get('is-desktop') == 'true'
 
     def isComboBoxWithToggleDescendant(self, obj):
@@ -1431,10 +1429,8 @@ class Utilities:
         if self.isDead(obj) or self.isZombie(obj):
             return True
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
+        attrs = self.objectAttributes(obj)
+
         try:
             role = obj.getRole()
         except:
@@ -3600,16 +3596,10 @@ class Utilities:
         Returns a string representing the value.
         """
 
-        # Use ARIA "valuetext" attribute if present.  See
-        # http://bugzilla.gnome.org/show_bug.cgi?id=552965
-        #
-        try:
-            attributes = obj.getAttributes()
-        except:
-            return ""
-        for attribute in attributes:
-            if attribute.startswith("valuetext"):
-                return attribute[10:]
+        attrs = self.objectAttributes(obj)
+        valuetext = attrs.get("valuetext")
+        if valuetext:
+            return valuetext
 
         try:
             value = obj.queryValue()
@@ -3975,12 +3965,7 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_HEADING):
             return 0
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            msg = "ERROR: Exception getting attributes for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return 0
+        attrs = self.objectAttributes(obj)
 
         try:
             value = int(attrs.get('level', '0'))
