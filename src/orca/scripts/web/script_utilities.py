@@ -1789,9 +1789,13 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if state.contains(pyatspi.STATE_EDITABLE):
+            msg = "WEB: %s is focus mode widget because it's editable" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if state.contains(pyatspi.STATE_EXPANDABLE) and state.contains(pyatspi.STATE_FOCUSABLE):
+            msg = "WEB: %s is focus mode widget because it's expandable and focusable" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         alwaysFocusModeRoles = [pyatspi.ROLE_COMBO_BOX,
@@ -1812,13 +1816,19 @@ class Utilities(script_utilities.Utilities):
                                 pyatspi.ROLE_TREE]
 
         if role in alwaysFocusModeRoles:
+            msg = "WEB: %s is focus mode widget due to its role" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if role in [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_TABLE] \
            and self.isLayoutOnly(self.getTable(obj)):
+            msg = "WEB: %s is not focus mode widget because it's layout only" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.isButtonWithPopup(obj):
+            msg = "WEB: %s is focus mode widget because it's a button with popup" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         focusModeRoles = [pyatspi.ROLE_EMBEDDED,
@@ -1830,14 +1840,28 @@ class Utilities(script_utilities.Utilities):
            and not self.isTextBlockElement(obj) \
            and not self.hasNameAndActionAndNoUsefulChildren(obj) \
            and not self.inPDFViewer(obj):
+            msg = "WEB: %s is focus mode widget based on presumed functionality" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.isGridDescendant(obj) \
-           or self.isMenuDescendant(obj) \
-           or self.isToolBarDescendant(obj):
+        if self.isGridDescendant(obj):
+            msg = "WEB: %s is focus mode widget because it's a grid descendant" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.isMenuDescendant(obj):
+            msg = "WEB: %s is focus mode widget because it's a menu descendant" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.isToolBarDescendant(obj):
+            msg = "WEB: %s is focus mode widget because it's a toolbar descendant" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.isContentEditableWithEmbeddedObjects(obj):
+            msg = "WEB: %s is focus mode widget because it's content editable" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
