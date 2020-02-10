@@ -2578,6 +2578,10 @@ class Utilities(script_utilities.Utilities):
         if self.isGridDescendant(obj):
             return not self._script.inFocusMode()
 
+        # TODO - JD: This is private.
+        if self._script._lastCommandWasCaretNav:
+            return False
+
         return True
 
     def isEntryDescendant(self, obj):
