@@ -734,6 +734,10 @@ class Generator:
         represent the row header for an object that is in a table, if
         it exists.  Otherwise, an empty array is returned.
         """
+
+        if args.get('readingRow'):
+            return []
+
         result = []
         header = self._script.utilities.rowHeaderForCell(obj)
         if not header:
