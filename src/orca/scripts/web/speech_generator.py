@@ -662,6 +662,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generateTableCellRow(obj, **args)
 
+    def _generateRowHeader(self, obj, **args):
+        # TODO - JD: _lastCommandWasCaretNav is private.
+        if self._script.utilities.lastInputEventWasLineNav() \
+           and self._script._lastCommandWasCaretNav:
+            return []
+
+        return super()._generateRowHeader()
+
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             msg = "WEB: %s is not in document content. Calling default speech generator." % obj
