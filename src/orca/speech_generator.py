@@ -2736,6 +2736,11 @@ class SpeechGenerator(generator.Generator):
         if not _settingsManager.getSetting('enablePauseBreaks') \
            or args.get('eliminatePauses', False):
             return []
+
+        if _settingsManager.getSetting('verbalizePunctuationStyle') == \
+           settings.PUNCTUATION_STYLE_ALL:
+            return []
+
         return PAUSE
 
     def _generateLineBreak(self, obj, **args):
