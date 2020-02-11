@@ -2110,7 +2110,10 @@ class Utilities(script_utilities.Utilities):
             return False
 
         displayStyle = self._getDisplayStyle(obj)
-        return "inline" in displayStyle
+        if "inline" not in displayStyle:
+            return False
+
+        return self.documentForObject(obj) is not None
 
     def isInlineIframeDescendant(self, obj):
         if not obj:
