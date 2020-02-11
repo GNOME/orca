@@ -1479,6 +1479,8 @@ class Utilities:
                 layoutOnly = self.isLayoutOnly(obj.parent)
         elif role == pyatspi.ROLE_SECTION:
             layoutOnly = not self.isBlockquote(obj)
+        elif role == pyatspi.ROLE_BLOCK_QUOTE:
+            layoutOnly = False
         elif role == pyatspi.ROLE_FILLER:
             layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:
