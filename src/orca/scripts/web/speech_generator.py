@@ -56,7 +56,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateOldAncestors(obj, **args)
 
     def _generateNewAncestors(self, obj, **args):
-        if args.get('index', 0) > 0:
+        if args.get('index', 0) > 0 \
+           and not self._script.utilities.isListDescendant(obj):
             return []
 
         if self._script.utilities.isInlineIframeDescendant(obj):

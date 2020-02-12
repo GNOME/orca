@@ -87,6 +87,7 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLink = {}
+        self._isListDescendant = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
@@ -157,6 +158,7 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLink = {}
+        self._isListDescendant = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
@@ -3285,6 +3287,21 @@ class Utilities(script_utilities.Utilities):
             rv = displayStyle and "inline" in displayStyle
 
         self._isInlineListItem[hash(obj)] = rv
+        return rv
+
+    def isListDescendant(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isListDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+        ancestor = pyatspi.findAncestor(obj, isList)
+        rv = ancestor is not None
+
+        self._isListDescendant[hash(obj)] = rv
         return rv
 
     def isInlineListDescendant(self, obj):
