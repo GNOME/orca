@@ -652,6 +652,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateTableCellRow(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateTableCellRow(obj, **args)
+
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
@@ -668,7 +671,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and self._script._lastCommandWasCaretNav:
             return []
 
-        return super()._generateRowHeader()
+        return super()._generateRowHeader(obj)
 
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
