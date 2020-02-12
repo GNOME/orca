@@ -1522,6 +1522,9 @@ class Utilities(script_utilities.Utilities):
             if self.isLandmark(obj) and self.isLandmark(xObj) and obj != xObj:
                 return False
 
+            if self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
+                return False
+
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
@@ -3288,6 +3291,12 @@ class Utilities(script_utilities.Utilities):
 
         self._isInlineListItem[hash(obj)] = rv
         return rv
+
+    def isBlockListDescendant(self, obj):
+        if not self.isListDescendant(obj):
+            return False
+
+        return not self.isInlineListDescendant(obj)
 
     def isListDescendant(self, obj):
         if not (obj and self.inDocumentContent(obj)):
