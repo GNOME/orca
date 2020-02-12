@@ -322,13 +322,18 @@ class CaretNavigation:
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
+        obj, offset = script.utilities.getCaretContext()
+        line = script.utilities.getLineContentsAtOffset(obj, offset)
+        if not (line and line[0]):
+            return False
+
         contents = script.utilities.getNextLineContents()
         if not contents:
             return False
 
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
-        script.speakContents(contents)
+        script.speakContents(contents, priorObj=line[-1][0])
         script.displayContents(contents)
         return True
 
