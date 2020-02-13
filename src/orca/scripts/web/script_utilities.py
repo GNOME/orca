@@ -1490,6 +1490,22 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def _debugContentsInfo(self, obj, offset, contents, contentsMsg=""):
+        if debug.LEVEL_INFO < debug.debugLevel:
+            return
+
+        msg = "WEB: %s for %s at offset %i:" % (contentsMsg, obj, offset)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        for i, (acc, start, end, string) in enumerate(contents):
+            indent = " " * 8
+            extents = self.getExtents(acc, start, end)
+            states = debug.statesToString(acc, indent)
+            attrs = debug.attributesToString(acc, indent)
+            msg = "     %i. %s (chars: %i-%i) '%s' extents=%s\n%s\n%s" % \
+                (i, acc, start, end, string, extents, states, attrs)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
     def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
         if not obj:
             return []
@@ -1499,6 +1515,7 @@ class Utilities(script_utilities.Utilities):
 
         if useCache:
             if self.findObjectInContents(obj, offset, self._currentLineContents, usingCache=True) != -1:
+                self._debugContentsInfo(obj, offset, self._currentLineContents, "Line (cached)")
                 return self._currentLineContents
 
         if layoutMode is None:
@@ -1537,6 +1554,8 @@ class Utilities(script_utilities.Utilities):
         if not layoutMode:
             if useCache:
                 self._currentLineContents = objects
+
+            self._debugContentsInfo(obj, offset, objects, "Line (not layout mode)")
             return objects
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
@@ -1599,6 +1618,7 @@ class Utilities(script_utilities.Utilities):
         if useCache:
             self._currentLineContents = objects
 
+        self._debugContentsInfo(obj, offset, objects, "Line (layout mode)")
         return objects
 
     def getPreviousLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
@@ -1619,9 +1639,6 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
-        msg = "WEB: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         if not (line and line[0]):
             return []
 
@@ -1665,9 +1682,6 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
-        msg = "WEB: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         if not (line and line[0]):
             return []
 

@@ -304,6 +304,38 @@ def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
                 getAccessibleDetails(level, accessible, indent, includeApp),
                 timestamp)
 
+def statesToString(acc, indent=""):
+    try:
+        states = acc.getState().getStates()
+    except:
+        return "%sstates=(exception)" % indent
+
+    return "%sstates='%s'" % (indent, " ".join(map(pyatspi.stateToString, states)))
+
+def relationsToString(acc, indent=""):
+    try:
+        relations = [r.getRelationType() for r in acc.getRelationSet()]
+    except:
+        return "%srelations=(exception)" % indent
+
+    return "%srelations='%s'" % (indent, " ".join(map(pyatspi.relationToString, [r for r in relations])))
+
+def interfacesToString(acc, indent=""):
+    try:
+        interfaces = pyatspi.listInterfaces(acc)
+    except:
+        return "%sinterfaces=(exception)" % indent
+
+    return "%sinterfaces='%s'" % (indent, " ".join(interfaces))
+
+def attributesToString(acc, indent=""):
+    try:
+        attributes = acc.getAttributes()
+    except:
+        return "%sattributes=(exception)" % indent
+
+    return "%sattributes='%s'" % (indent, " ".join(attributes))
+
 def getAccessibleDetails(level, acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
@@ -334,50 +366,28 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     else:
         string = indent
 
-    # create the States string
     try:
-        stateSet = acc.getState()
+        name_string = "name='%s'" % acc.name
     except:
-        string += "(exception getting state set)"
-    try:
-        states = stateSet.getStates()
-    except:
-        string += "(exception getting states)"
-        states = []
-    state_strings = []
-    for state in states:
-        state_strings.append(pyatspi.stateToString(state))
-    state_string = ' '.join(state_strings)
-
-    # create the relations string
-    try:
-        relations = acc.getRelationSet()
-    except:
-        string += "(exception getting relation set)"
-        relations = None
-    if relations:
-        relation_strings = []
-        for relation in relations:
-            relation_strings.append( \
-                          pyatspi.relationToString(relation.getRelationType()))
-        rel_string = ' '.join(relation_strings)
-    else:
-        rel_string = ''
+        name_string = "name=(exception)"
 
     try:
-        iface_string = " ".join(pyatspi.utils.listInterfaces(acc))
+        role_string = "role='%s'" % acc.getRoleName()
     except:
-        iface_string = "(exception calling listInterfaces)"
+        role_string = "role=(exception)"
+
+    state_string = statesToString(acc, indent)
+    rel_string = relationsToString(acc, indent)
+    iface_string = interfacesToString(acc, indent)
+    attr_string = attributesToString(acc, indent)
 
     try:
-        string += "name='%s' role='%s' state='%s' \n%srelations='%s' interfaces='%s'" \
-                  % (acc.name or 'None', acc.getRoleName(),
-                     state_string, indent, rel_string, iface_string)
+        string += "%s %s \n%s \n%s \n%s \n%s" \
+                  % (name_string, role_string, state_string, rel_string, iface_string, attr_string)
     except:
         string += "(exception fetching data)"
 
     return string
-
 
 # The following code originated from the following URL:
 # 
