@@ -1536,8 +1536,12 @@ class Utilities(script_utilities.Utilities):
             if xStart == xEnd:
                 return False
 
-            if self.isLandmark(obj) and self.isLandmark(xObj) and obj != xObj:
-                return False
+            if obj != xObj:
+                if self.isLandmark(obj) and self.isLandmark(xObj):
+                    return False
+                if self.isLink(obj) and self.isLink(xObj) and self.intersectingRegion(xObj, obj):
+                    # This happens with dynamic skip links such as found on Wikipedia.
+                    return False
 
             if self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
                 return False
