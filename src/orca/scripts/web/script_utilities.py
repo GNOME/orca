@@ -4267,6 +4267,25 @@ class Utilities(script_utilities.Utilities):
         self._caretContexts.pop(hash(parent), None)
         self._priorContexts.pop(hash(parent), None)
 
+    def handleEventFromContextReplicant(self, event, replicant):
+        if self.isDead(replicant):
+            return False
+
+        path, role, name = self.getCaretContextPathRoleAndName()
+        if path != pyatspi.getPath(replicant):
+            return False
+
+        if role != replicant.getRole():
+            return False
+
+        notify = replicant.name != name
+        documentFrame = self.documentFrame()
+        obj, offset = self._caretContexts.get(hash(documentFrame.parent))
+
+        orca.setLocusOfFocus(event, replicant, notify)
+        self.setCaretContext(replicant, offset, documentFrame)
+        return True
+
     def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
         path, oldRole, oldName = self.getCaretContextPathRoleAndName(documentFrame)
         obj = self.getObjectFromPath(path)

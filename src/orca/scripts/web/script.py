@@ -1664,20 +1664,16 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.handleEventFromContextReplicant(event, event.any_data):
+            msg = "WEB: Event handled by updating locusOfFocus and context to child."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
         msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.utilities.isZombie(obj):
-            if self.utilities.isSameObject(obj, event.any_data, comparePaths=True, ignoreNames=True):
-                path, role, name = self.utilities.getCaretContextPathRoleAndName()
-                notify = event.any_data.name != name
-                msg = "WEB: Event handled by updating locusOfFocus and context"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.any_data, notify)
-                self.utilities.setCaretContext(event.any_data, offset)
-                return True
-
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if not obj:
                 if self._inFocusMode:
@@ -1832,6 +1828,11 @@ class Script(default.Script):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
+            return True
+
+        if self.utilities.handleEventFromContextReplicant(event, event.source):
+            msg = "WEB: Event handled by updating locusOfFocus and context to source."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
