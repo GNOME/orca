@@ -1499,7 +1499,10 @@ class Utilities(script_utilities.Utilities):
 
         for i, (acc, start, end, string) in enumerate(contents):
             indent = " " * 8
-            extents = self.getExtents(acc, start, end)
+            try:
+                extents = self.getExtents(acc, start, end)
+            except:
+                extents = "(exception)"
             states = debug.statesToString(acc, indent)
             attrs = debug.attributesToString(acc, indent)
             msg = "     %i. %s (chars: %i-%i) '%s' extents=%s\n%s\n%s" % \
