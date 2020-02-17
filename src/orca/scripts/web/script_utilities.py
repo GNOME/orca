@@ -1561,9 +1561,8 @@ class Utilities(script_utilities.Utilities):
                     if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
-
-            if self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
-                return False
+                elif self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
+                    return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
