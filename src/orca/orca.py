@@ -227,8 +227,8 @@ def deviceChangeHandler(deviceManager, device):
     """New keyboards being plugged in stomp on our changes to the keymappings, so we have to re-apply"""
     source = device.get_source()
     if source == Gdk.InputSource.KEYBOARD:
-        msg = "Keyboard change detected, re-creating the xmodmap"
-        debug.println(debug.LEVEL_ALL, msg, True)
+        msg = "ORCA: Keyboard change detected, re-creating the xmodmap"
+        debug.println(debug.LEVEL_INFO, msg, True)
         _createOrcaXmodmap()
 
 def updateKeyMap(keyboardEvent):
