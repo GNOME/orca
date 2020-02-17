@@ -764,16 +764,24 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return [0, 0, 0, 0]
 
+        result = [0, 0, 0, 0]
         try:
             text = obj.queryText()
             if text.characterCount and 0 <= startOffset < endOffset:
-                return list(text.getRangeExtents(startOffset, endOffset, 0))
+                result = list(text.getRangeExtents(startOffset, endOffset, 0))
         except NotImplementedError:
             pass
         except:
             msg = "WEB: Exception getting range extents for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return [0, 0, 0, 0]
+        else:
+            if result[0] and result[1] and (result[2] == 0 or result[3] == 0):
+                msg = "WEB: Suspected bogus range extents for %s (chars: %i, %i): %s" % \
+                    (obj, startOffset, endOffset, result)
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return result
 
         role = obj.getRole()
         try:
