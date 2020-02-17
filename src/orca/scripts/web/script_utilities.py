@@ -1539,17 +1539,19 @@ class Utilities(script_utilities.Utilities):
             if xStart == xEnd:
                 return False
 
+            xExtents = self.getExtents(xObj, xStart, xStart + 1)
+
             if obj != xObj:
                 if self.isLandmark(obj) and self.isLandmark(xObj):
                     return False
-                if self.isLink(obj) and self.isLink(xObj) and self.intersectingRegion(xObj, obj):
-                    # This happens with dynamic skip links such as found on Wikipedia.
-                    return False
+                if self.isLink(obj) and self.isLink(xObj):
+                    if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
+                        # This happens with dynamic skip links such as found on Wikipedia.
+                        return False
 
             if self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
                 return False
 
-            xExtents = self.getExtents(xObj, xStart, xStart + 1)
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
             else:
