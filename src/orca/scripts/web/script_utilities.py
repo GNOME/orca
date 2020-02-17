@@ -1539,6 +1539,8 @@ class Utilities(script_utilities.Utilities):
             if container:
                 extents = self.getExtents(container, 0, 1)
 
+        objBanner = pyatspi.findAncestor(obj, self.isLandmarkBanner)
+
         def _include(x):
             if x in objects:
                 return False
@@ -1553,6 +1555,9 @@ class Utilities(script_utilities.Utilities):
                 if self.isLandmark(obj) and self.isLandmark(xObj):
                     return False
                 if self.isLink(obj) and self.isLink(xObj):
+                    xObjBanner =  pyatspi.findAncestor(xObj, self.isLandmarkBanner)
+                    if (objBanner or xObjBanner) and objBanner != xObjBanner:
+                        return False
                     if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
