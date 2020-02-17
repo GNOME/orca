@@ -2732,8 +2732,20 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly[hash(obj)] = rv
         return rv
 
+    def elementIsPreformattedText(self, obj):
+        if self._getTag(obj) in ["pre", "code"]:
+            return True
+
+        if "code" in self._getXMLRoles(obj):
+            return True
+
+        return False
+
     def elementLinesAreSingleWords(self, obj):
         if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        if self.elementIsPreformattedText(obj):
             return False
 
         rv = self._elementLinesAreSingleWords.get(hash(obj))
