@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.messages as messages
+import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 
@@ -85,7 +86,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represents the number of children the
         object has."""
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         result = []

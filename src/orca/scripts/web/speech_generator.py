@@ -34,6 +34,7 @@ from orca import debug
 from orca import messages
 from orca import object_properties
 from orca import orca_state
+from orca import settings
 from orca import settings_manager
 from orca import speech_generator
 
@@ -365,7 +366,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateNumberOfChildren(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         # We handle things even for non-document content due to issues in

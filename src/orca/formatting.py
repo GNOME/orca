@@ -295,12 +295,12 @@ formatting = {
             'basicWhereAmI': 'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
-            'focused' : 'leaving or (labelOrName + pause + numberOfChildren + pause + nestingLevel)',
-            'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
+            'focused' : 'leaving or (labelOrName + pause + (numberOfChildren or roleName) + pause + nestingLevel)',
+            'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
             },
         pyatspi.ROLE_LIST_BOX: {
-            'focused': 'labelOrName + multiselectableState + numberOfChildren',
-            'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
+            'focused': 'labelOrName + multiselectableState + (numberOfChildren or roleName)',
+            'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
             },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState',

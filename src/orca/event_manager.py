@@ -194,6 +194,7 @@ class EventManager:
                             pyatspi.ROLE_INFO_BAR,
                             pyatspi.ROLE_MENU,
                             pyatspi.ROLE_NOTIFICATION,
+                            pyatspi.ROLE_DIALOG,
                             pyatspi.ROLE_PANEL,
                             pyatspi.ROLE_STATUS_BAR,
                             pyatspi.ROLE_TOOL_TIP]:

@@ -1999,6 +1999,12 @@ class Script(default.Script):
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
+        if event.detail1 and self.utilities.isTopLevelBrowserUIAlert(event.source):
+            msg = "WEB: Event handled: Presenting event source"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.presentObject(event.source)
+            return True
+
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)
