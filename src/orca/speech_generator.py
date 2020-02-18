@@ -1524,7 +1524,9 @@ class SpeechGenerator(generator.Generator):
         this doesn't apply?]]] [[[WDW - I wonder if this string should
         be moved to settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         result = []
