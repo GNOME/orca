@@ -4604,7 +4604,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not _settingsManager.getSetting('presentLiveRegionFromInactiveTab') \
-           and self.getDocumentForObject(event.source) != self.activeDocument():
+           and self.getTopLevelDocumentForObject(event.source) != self.activeDocument():
             msg = "WEB: Live region source is not in active tab."
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
