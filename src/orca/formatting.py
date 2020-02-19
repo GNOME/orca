@@ -210,7 +210,7 @@ formatting = {
             },
         pyatspi.ROLE_DIALOG: {
             'focused': 'labelOrName + roleName + (unrelatedLabels or description)',
-            'unfocused': 'expandedEOCs or (labelOrName + (unrelatedLabels or description))'
+            'unfocused': '(expandedEOCs or (labelOrName + roleName + (unrelatedLabels or description)))'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
