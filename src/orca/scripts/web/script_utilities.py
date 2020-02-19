@@ -4626,7 +4626,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if role in [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_REDUNDANT_OBJECT] \
-               and not self._getTag(event.any_data):
+               and self._getTag(event.any_data) in ["", None, "br"]:
                 msg = "WEB: Child has unknown role and no tag %s" % event.any_data
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
