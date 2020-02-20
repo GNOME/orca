@@ -1,6 +1,6 @@
 m4_define([orca_major_version], [3])
 m4_define([orca_minor_version], [35])
-m4_define([orca_micro_version], [91])
+m4_define([orca_micro_version], [92pre])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
