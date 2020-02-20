@@ -518,13 +518,14 @@ class Utilities(script_utilities.Utilities):
 
         return lastChild
 
-    def objectAttributes(self, obj):
+    def objectAttributes(self, obj, useCache=True):
         if not (obj and self.inDocumentContent(obj)):
             return super().objectAttributes(obj)
 
-        rv = self._objectAttributes.get(hash(obj))
-        if rv is not None:
-            return rv
+        if useCache:
+            rv = self._objectAttributes.get(hash(obj))
+            if rv is not None:
+                return rv
 
         try:
             rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
@@ -551,7 +552,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def getPositionInSet(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = self.objectAttributes(obj, False)
         position = attrs.get('posinset')
         if position is not None:
             return int(position)
@@ -559,7 +560,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def getSetSize(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = self.objectAttributes(obj, False)
         setsize = attrs.get('setsize')
         if setsize is not None:
             return int(setsize)
