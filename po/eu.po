@@ -9,8 +9,8 @@
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-02-10 21:43+0000\n"
-"PO-Revision-Date: 2020-02-16 10:00+0100\n"
+"POT-Creation-Date: 2020-02-16 19:59+0000\n"
+"PO-Revision-Date: 2020-02-20 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -2908,21 +2908,21 @@ msgstr "Irudien zerrenda bistaratzen du."
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:892
 msgid "Goes to previous landmark."
-msgstr "Aurreko erreferentzi-puntura joaten da."
+msgstr "Aurreko erreferentzia-puntura joaten da."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:897
 msgid "Goes to next landmark."
-msgstr "Hurrengo erreferentzi-puntura joaten da."
+msgstr "Hurrengo erreferentzia-puntura joaten da."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:902
 msgid "Displays a list of landmarks."
-msgstr "Leku ezagunen zerrenda bistaratzen du."
+msgstr "Erreferentzia-puntuen zerrenda bistaratzen du."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -4981,7 +4981,7 @@ msgstr "Etiketa"
 #: src/orca/guilabels.py:504
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr "Erreferentzia puntua"
+msgstr "Erreferentzia-puntua"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5194,7 +5194,7 @@ msgstr "%d mailako izenburuak"
 #: src/orca/guilabels.py:644
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr "Leku ezagunak"
+msgstr "Erreferentzia-puntuak"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7704,7 +7704,7 @@ msgstr "dauka txikia gaineko barrarekin"
 #: src/orca/mathsymbols.py:2128
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr ""
+msgstr "z notazio poltsaren kidea"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: src/orca/mathsymbols.py:2131
@@ -9648,7 +9648,7 @@ msgstr "prologoa uzten."
 #: src/orca/messages.py:1382
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr ""
+msgstr "erauzitako aipua uzten."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -10231,7 +10231,7 @@ msgstr "Ez dago irudi gehiago."
 #. This is an indication that one was not found.
 #: src/orca/messages.py:1825
 msgid "No landmark found."
-msgstr "Ez da erreferentzi-punturik aurkitu."
+msgstr "Ez da erreferentzia-punturik aurkitu."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -11495,7 +11495,7 @@ msgstr "%s elementuaren xehetasunak"
 #: src/orca/object_properties.py:95
 #, python-format
 msgid "has details in %s"
-msgstr ""
+msgstr "%s(e)n ditu xehetasunak"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11812,7 +11812,7 @@ msgstr "prologoa"
 #: src/orca/object_properties.py:309
 msgctxt "role"
 msgid "pullquote"
-msgstr ""
+msgstr "erauzitako aipua"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11936,7 +11936,7 @@ msgstr "zatitzaile bertikala"
 #: src/orca/object_properties.py:403
 msgctxt "role"
 msgid "switch"
-msgstr ""
+msgstr "txandakatzailea"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
@@ -12433,7 +12433,7 @@ msgstr "Aurrerapen-barraren eguneratzeak"
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: src/orca/orca-setup.ui:805
 msgid "Enable _rewind and fast forward in Say All"
-msgstr ""
+msgstr "Gaitu _atzera joatea eta aurrera azkar joatea 'Esan dena' aukeran"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: src/orca/orca-setup.ui:821
@@ -12448,12 +12448,12 @@ msgstr "Esan dena honen _arabera:"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: src/orca/orca-setup.ui:886
 msgid "Announce block_quotes in Say All"
-msgstr ""
+msgstr "Iragarri aipu-_blokeak 'Esan dena' aukeran"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a list with x items has been entered before speaking the content of that list. At the end of the list content, Orca will announce that the list is being exited.
 #: src/orca/orca-setup.ui:903
 msgid "Announce li_sts in Say All"
-msgstr ""
+msgstr "Iragarri _zerrendak 'Esan dena' aukeran"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: src/orca/orca-setup.ui:920
@@ -12473,7 +12473,7 @@ msgstr "Iragarri _inprimakiak 'Esan dena' aukeran"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
-msgstr ""
+msgstr "Iragarri erreferentzia-puntuak 'Esan dena' aukeran"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
@@ -12603,7 +12603,7 @@ msgstr "I_rakurri koloreak izen modura"
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1791
 msgid "Announce block_quotes during navigation"
-msgstr "Iragarri aipuaren _blokeak nabigazioan"
+msgstr "Iragarri aipu-_blokeak nabigazioan"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1808
@@ -12618,7 +12618,7 @@ msgstr "Iragarri _taulak nabigazioan"
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: src/orca/orca-setup.ui:1842
 msgid "Speak _misspelled-word indicator"
-msgstr ""
+msgstr "Irakurri gaizki idatzitako _hitzen adierazlea"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:1859
@@ -12628,7 +12628,7 @@ msgstr "Iragarri _panelak nabigazioan"
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:1876
 msgid "Announce land_marks during navigation"
-msgstr ""
+msgstr "Iragarri e_rreferentzia-puntuak nabigazioan"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1893
@@ -12638,7 +12638,7 @@ msgstr "Iragarri _inprimakiak nabigazioan"
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: src/orca/orca-setup.ui:1910
 msgid "Speak _description"
-msgstr ""
+msgstr "Irakurri _deskribapena"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1933
