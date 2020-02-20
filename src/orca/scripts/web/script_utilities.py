@@ -777,7 +777,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return [0, 0, 0, 0]
         else:
-            if result[0] and result[1] and result[2] == 0 and result[3] == 0:
+            if result[0] and result[1] and result[2] == 0 and result[3] == 0 \
+               and text.getText(startOffset, endOffset).strip():
                 msg = "WEB: Suspected bogus range extents for %s (chars: %i, %i): %s" % \
                     (obj, startOffset, endOffset, result)
                 debug.println(debug.LEVEL_INFO, msg, True)
