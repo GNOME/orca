@@ -306,9 +306,9 @@ class Utilities(script_utilities.Utilities):
         orca_state.activeWindow = window
         return True
 
-    def activeDocument(self):
+    def activeDocument(self, window=None):
         isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
-        documents = self._getDocumentsEmbeddedBy(orca_state.activeWindow)
+        documents = self._getDocumentsEmbeddedBy(window or orca_state.activeWindow)
         documents = list(filter(isShowing, documents))
         if len(documents) == 1:
             return documents[0]

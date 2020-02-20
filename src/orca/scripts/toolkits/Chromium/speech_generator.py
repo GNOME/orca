@@ -64,6 +64,15 @@ class SpeechGenerator(web.SpeechGenerator):
 
         return super()._generateListBoxItemWidgets(obj, **args)
 
+    def _generateLabelOrName(self, obj, **args):
+        if obj.getRole() == pyatspi.ROLE_FRAME:
+            document = self._script.utilities.activeDocument(obj)
+            if document and not self._script.utilities.documentFrameURI(document):
+                # Eliminates including "untitled" in the frame name.
+                return super()._generateLabelOrName(obj.parent)
+
+        return super()._generateLabelOrName(obj)
+
     def _generateRoleName(self, obj, **args):
         if self._script.utilities.isListItemMarker(obj):
             return []

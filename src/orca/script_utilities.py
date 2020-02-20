@@ -1197,7 +1197,7 @@ class Utilities:
         obj = obj or orca_state.locusOfFocus
         return self.getContainingDocument(obj) is not None
 
-    def activeDocument(self):
+    def activeDocument(self, window=None):
         return self.getContainingDocument(orca_state.locusOfFocus)
 
     def getContainingDocument(self, obj):
