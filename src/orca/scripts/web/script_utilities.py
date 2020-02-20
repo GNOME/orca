@@ -4300,6 +4300,9 @@ class Utilities(script_utilities.Utilities):
         if self.isDead(replicant):
             return False
 
+        if not self.isDead(orca_state.locusOfFocus):
+            return False
+
         path, role, name = self.getCaretContextPathRoleAndName()
         if path != pyatspi.getPath(replicant):
             return False
