@@ -7,27 +7,29 @@
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
 # Claude Paroz <claude@2xlibre.net>, 2008-2020.
 # Pierre Lemaire <pierre.lemaire@kamick.org>, 2008.
-# Laurent Coudeur <laurentc@iol.ie>, 2009, 2010.
-# Bruno Brouard <annoa.b@gmail.com>, 2011-13.
+# Laurent Coudeur <laurentc@iol.ie>, 2009-2010.
+# Bruno Brouard <annoa.b@gmail.com>, 2011-2013.
 # Julien Hardelin <jhardlin@orange.fr>, 2011, 2015.
-# Frédéric Wang <fred.wang@free.fr>, 2015
+# Frédéric Wang <fred.wang@free.fr>, 2015.
 # Alain Lojewski <allomervan@gmail.com>, 2017.
 # Charles Monzat <charles.monzat@numericable.fr>, 2018.
-# Guillaume Bernard <associations@guillaume-bernard.fr>, 2019
+# Guillaume Bernard <associations@guillaume-bernard.fr>, 2019.
+# Julien Humbert <julroy67@gmail.com>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-01-23 19:57+0000\n"
-"PO-Revision-Date: 2020-02-09 11:23+0100\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"POT-Creation-Date: 2020-02-17 22:11+0000\n"
+"PO-Revision-Date: 2020-02-18 11:42+0900\n"
+"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca screen reader"
@@ -3422,7 +3424,7 @@ msgstr "vert foncé"
 #: src/orca/colornames.py:160
 msgctxt "color name"
 msgid "dark khaki"
-msgstr "khaki foncé"
+msgstr "kaki foncé"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4014,7 +4016,7 @@ msgstr "orange"
 #: src/orca/colornames.py:530
 msgctxt "color name"
 msgid "orange red"
-msgstr "rouge-orange"
+msgstr "rouge orange"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4182,7 +4184,7 @@ msgstr "coquillage"
 #: src/orca/colornames.py:635
 msgctxt "color name"
 msgid "sienna"
-msgstr "terre de sienne"
+msgstr "terre de Sienne"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4607,7 +4609,7 @@ msgstr "Active_r l’écho par caractère"
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: src/orca/guilabels.py:218 src/orca/orca-setup.ui:2783
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Activer les touches _diacritiques de non espacement"
+msgstr "Activer les touches _diacritiques de non-espacement"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This label is associated
@@ -5951,7 +5953,7 @@ msgstr "%s gothique gras"
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
-msgstr "%s sans-serif"
+msgstr "%s sans-sérif"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5965,7 +5967,7 @@ msgstr "%s sans-serif"
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold %s"
-msgstr "%s sans-serif gras"
+msgstr "%s sans-sérif gras"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5979,7 +5981,7 @@ msgstr "%s sans-serif gras"
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif italic %s"
-msgstr "%s sans-serif italique"
+msgstr "%s sans-sérif italique"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5993,7 +5995,7 @@ msgstr "%s sans-serif italique"
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold italic %s"
-msgstr "%s sans-serif italique gras"
+msgstr "%s sans-sérif italique gras"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6129,13 +6131,13 @@ msgstr "double flèche vers le bas"
 #: src/orca/mathsymbols.py:1304
 msgctxt "math symbol"
 msgid "left right double arrow"
-msgstr "double flèche bidirectionelle horizontale"
+msgstr "double flèche bidirectionnelle horizontale"
 
 #. Translators: this is the spoken representation for the character '⇕' (U+21d5)
 #: src/orca/mathsymbols.py:1307
 msgctxt "math symbol"
 msgid "up down double arrow"
-msgstr "double flèche bidirectionelle verticale"
+msgstr "double flèche bidirectionnelle verticale"
 
 #. Translators: this is the spoken representation for the character '⇖' (U+21d6)
 #: src/orca/mathsymbols.py:1310
@@ -6348,7 +6350,7 @@ msgstr "somme"
 #: src/orca/mathsymbols.py:1420
 msgctxt "math symbol"
 msgid "minus or plus"
-msgstr "moins-ou-plus"
+msgstr "moins ou plus"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
 #: src/orca/mathsymbols.py:1423
@@ -8930,7 +8932,7 @@ msgstr "Entouré par : %s"
 #: src/orca/messages.py:837
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
-msgstr "un symbole actuarial"
+msgstr "un symbole actuariel"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -12948,10 +12950,10 @@ msgid ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+"golf, h : hotel, i : india, j : juliett, k : kilo, l : lima, m : mike, n : "
+"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
+"u : uniform, v : victor, w : whiskey, x : x-ray, y : yankee, z : zulu"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -13609,7 +13611,7 @@ msgstr "condensé"
 #: src/orca/text_attribute_names.py:522
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr "semi condensé"
+msgstr "semi-condensé"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -13629,7 +13631,7 @@ msgstr "normal"
 #: src/orca/text_attribute_names.py:536
 msgctxt "textattr"
 msgid "semi expanded"
-msgstr "semi étendu"
+msgstr "semi-étendu"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
