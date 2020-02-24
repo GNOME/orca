@@ -38,6 +38,7 @@ from . import keybindings
 from . import keynames
 from . import messages
 from . import orca_state
+from . import script_manager
 from . import settings
 
 KEYBOARD_EVENT     = "keyboard"
@@ -248,6 +249,12 @@ class KeyboardEvent(InputEvent):
             self._app = self._script.app
             if not self._window:
                 self._window = self._script.utilities.activeWindow()
+
+        if self._window and self._app != self._window.getApplication():
+            self._script = script_manager.getManager().getScript(self._window.getApplication())
+            self._app = self._script.app
+            msg = 'INPUT EVENT: Updated script to %s' % self._script
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
