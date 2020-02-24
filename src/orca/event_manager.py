@@ -717,7 +717,10 @@ class EventManager:
         if state and state.contains(pyatspi.STATE_DEFUNCT):
             msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
-            if eType.startswith("window:deactivate"):
+            if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
+               and orca_state.activeWindow == event.source:
+                msg = 'EVENT MANAGER: Clearing active window and locus of focus'
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
             return
