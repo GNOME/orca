@@ -21,23 +21,23 @@
 # Rafael Gazoni <rafael.moreira@ifms.edu.br>, 2016.
 # Enrico Nicoletto <liverig@gmail.com>, 2013-2016, 2018.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
-# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015, 2017-2018.
+# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015, 2017-2018, 2020.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-01-27 12:30+0000\n"
-"PO-Revision-Date: 2020-01-27 14:15-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2020-02-14 22:00+0000\n"
+"PO-Revision-Date: 2020-02-17 22:54-0300\n"
+"Last-Translator: Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:4
@@ -635,7 +635,7 @@ msgstr "Hindi grau 1"
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr "húngaro de 8 pontos informático"
+msgstr "Húngaro informático de 8 pontos"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -928,7 +928,7 @@ msgstr "barra vertical separada"
 #.
 #: src/orca/chnames.py:210
 msgid "section"
-msgstr "seção"
+msgstr "parágrafo"
 
 #. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
@@ -1504,13 +1504,13 @@ msgstr "apóstrofo esquerdo"
 #.
 #: src/orca/chnames.py:584
 msgid "right single quote"
-msgstr "Apóstrofo direito"
+msgstr "apóstrofo direito"
 
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: src/orca/chnames.py:588
 msgid "single low quote"
-msgstr "aspas simples de citação"
+msgstr "aspa baixa simples"
 
 #. Translators: this is the spoken word for the character '“' (U+201c)
 #.
@@ -1529,7 +1529,7 @@ msgstr "fecha aspas"
 #.
 #: src/orca/chnames.py:600
 msgid "double low quote"
-msgstr "aspa dupla de citação"
+msgstr "aspa baixa dupla"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
@@ -1821,7 +1821,7 @@ msgstr "losango negro"
 #.
 #: src/orca/chnames.py:801
 msgid "object replacement character"
-msgstr "objeto de caractere de substituição"
+msgstr "caractere de substituição de objeto"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -2926,38 +2926,38 @@ msgstr "Exibe uma lista de campos de formulário."
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:860
 msgid "Goes to previous heading."
-msgstr "Vai para o cabeçalho anterior."
+msgstr "Vai para o título anterior."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:863
 msgid "Goes to next heading."
-msgstr "Vai para o próximo cabeçalho."
+msgstr "Vai para o próximo título."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:866
 msgid "Displays a list of headings."
-msgstr "Exibe uma lista de cabeçalhos."
+msgstr "Exibe uma lista de títulos."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:870
 #, python-format
 msgid "Goes to previous heading at level %d."
-msgstr "Vai para o cabeçalho anterior no nível %d."
+msgstr "Vai para o título anterior no nível %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:874
 #, python-format
 msgid "Goes to next heading at level %d."
-msgstr "Vai para o próximo cabeçalho no nível %d."
+msgstr "Vai para o próximo título no nível %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:878
 #, python-format
 msgid "Displays a list of headings at level %d."
-msgstr "Exibe uma lista de cabeçalhos de nível %d."
+msgstr "Exibe uma lista de títulos de nível %d."
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:881
@@ -2993,7 +2993,7 @@ msgstr "Vai para o próximo marco."
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:902
 msgid "Displays a list of landmarks."
-msgstr "Exibe uma lista de marcas comerciais."
+msgstr "Exibe uma lista de marcos."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -3182,7 +3182,7 @@ msgstr "Vai para a célula de cima."
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1025
 msgid "Toggles layout mode."
-msgstr "Habilita ou desabilita o modo de layout."
+msgstr "Habilita ou desabilita o modo de leiaute."
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -4584,7 +4584,7 @@ msgstr "_Falar o nome da sala de bate-papo"
 #. both for presentation and navigation.
 #: src/orca/guilabels.py:174
 msgid "Enable layout mode for content"
-msgstr "Habilita o modo layout para conteúdo"
+msgstr "Habilita o modo leiaute para conteúdo"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -5034,7 +5034,7 @@ msgstr "Descrição"
 #: src/orca/guilabels.py:484
 msgctxt "structural navigation"
 msgid "Heading"
-msgstr "Cabeçalho"
+msgstr "Título"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5063,7 +5063,7 @@ msgstr "Rótulo"
 #: src/orca/guilabels.py:504
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr "Marca comercial"
+msgstr "Marco"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5248,7 +5248,7 @@ msgstr "Campos do formulário"
 #: src/orca/guilabels.py:626
 msgctxt "structural navigation"
 msgid "Headings"
-msgstr "Cabeçalhos"
+msgstr "Títulos"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5266,7 +5266,7 @@ msgstr "Imagens"
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
-msgstr "Cabeçalhos de nível %d"
+msgstr "Títulos de nível %d"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5276,7 +5276,7 @@ msgstr "Cabeçalhos de nível %d"
 #: src/orca/guilabels.py:644
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr "Marcas comerciais"
+msgstr "Marcos"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5750,7 +5750,6 @@ msgstr "multi"
 msgid "mode switch"
 msgstr "alterar modo"
 
-# painel de rolagem
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: src/orca/keynames.py:219
@@ -6275,11 +6274,12 @@ msgctxt "math symbol"
 msgid "double vertical line"
 msgstr "linha vertical dupla"
 
+# reticências
 #. Translators: this is the spoken representation for the character '…' (U+2026)
 #: src/orca/mathsymbols.py:1360
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr "elipse horizontal"
+msgstr "reticências"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: src/orca/mathsymbols.py:1363
@@ -6652,7 +6652,7 @@ msgstr "til"
 #: src/orca/mathsymbols.py:1546
 msgctxt "math symbol"
 msgid "reversed tilde"
-msgstr "Til invertido"
+msgstr "til invertido"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
 #: src/orca/mathsymbols.py:1549
@@ -7894,7 +7894,7 @@ msgstr "quadrado branco"
 #: src/orca/mathsymbols.py:2181
 msgctxt "math symbol"
 msgid "black diamond"
-msgstr "diamante negro"
+msgstr "losango negro"
 
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7921,7 +7921,7 @@ msgstr "bolinha branca"
 #: src/orca/mathsymbols.py:2196
 msgctxt "math symbol"
 msgid "black medium small square"
-msgstr "quadrado pequeno médio negro"
+msgstr "quadradinho médio negro"
 
 #. Translators: this is the spoken representation for the character '̱' (U+0331)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -8419,7 +8419,6 @@ msgstr ""
 #. be said is content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:418
-#| msgid "fraction start"
 msgctxt "content"
 msgid "deletion start"
 msgstr "começo da exclusão"
@@ -8428,7 +8427,6 @@ msgstr "começo da exclusão"
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:423
-#| msgid "fraction end"
 msgctxt "content"
 msgid "deletion end"
 msgstr "fim da exclusão"
@@ -8437,7 +8435,6 @@ msgstr "fim da exclusão"
 #. be said is content marked for insertion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:428
-#| msgid "fraction start"
 msgctxt "content"
 msgid "insertion start"
 msgstr "começo da inserção"
@@ -8446,7 +8443,6 @@ msgstr "começo da inserção"
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:433
-#| msgid "fraction end"
 msgctxt "content"
 msgid "insertion end"
 msgstr "fim da inserção"
@@ -8463,8 +8459,6 @@ msgstr "começo do realce"
 #. the end of content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
 #: src/orca/messages.py:443
-#| msgctxt "color name"
-#| msgid "light green"
 msgctxt "content"
 msgid "highlight end"
 msgstr "fim do realce"
@@ -8475,7 +8469,6 @@ msgstr "fim do realce"
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:450
-#| msgid "Spell _suggestion"
 msgctxt "content"
 msgid "suggestion end"
 msgstr "fim da sugestão"
@@ -8706,7 +8699,7 @@ msgstr "abre grade"
 #. will cause a listbox to appear if activated.
 #: src/orca/messages.py:613
 msgid "opens listbox"
-msgstr "abre lista de caixas"
+msgstr "abre caixa de listagem"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a menu to appear if activated.
@@ -9364,7 +9357,7 @@ msgstr "Desabilitado"
 #. justification will not be spoken.
 #: src/orca/messages.py:1114
 msgid "Speaking of indentation and justification disabled."
-msgstr "Desabilitar a fala para endentação e justificação desabilitados."
+msgstr "Desabilitada fala de recuo e justificação."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
@@ -9377,7 +9370,7 @@ msgstr "Habilitado"
 #. justification will be spoken.
 #: src/orca/messages.py:1124
 msgid "Speaking of indentation and justification enabled."
-msgstr "Fala para endentação e justificação habilitados."
+msgstr "Habilitada fala de recuo e justificação."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -9425,7 +9418,6 @@ msgstr "deixando a citação."
 #. detailed information about another object.
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/messages.py:1161
-#| msgid "leaving table."
 msgid "leaving details."
 msgstr "deixando os detalhes."
 
@@ -9775,8 +9767,6 @@ msgstr "deixando P&R."
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:1395
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving suggestion."
 msgstr "deixando as sugestões."
@@ -10181,7 +10171,7 @@ msgstr "Modo pegajoso de navegação."
 #. switches to layout mode via an Orca command.
 #: src/orca/messages.py:1707
 msgid "Layout mode."
-msgstr "Modo layout."
+msgstr "Modo leiaute."
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -10319,7 +10309,7 @@ msgstr "Não há mais campos de formulário."
 #. if no more headings can be found.
 #: src/orca/messages.py:1808
 msgid "No more headings."
-msgstr "Não há mais cabeçalhos."
+msgstr "Não há mais títulos."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
@@ -10328,7 +10318,7 @@ msgstr "Não há mais cabeçalhos."
 #: src/orca/messages.py:1814
 #, python-format
 msgid "No more headings at level %d."
-msgstr "Não há mais cabeçalhos em nível %d."
+msgstr "Não há mais títulos de nível %d."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
@@ -10873,7 +10863,7 @@ msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Nível de verbosidade: verboso"
 
-# reticências [o espaço no início é necessário.]
+# " ponto ponto ponto" [o espaço no início é necessário]
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
@@ -11313,8 +11303,8 @@ msgstr[1] "%d formulários"
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
-msgstr[0] "%d cabeçalho"
-msgstr[1] "%d cabeçalhos"
+msgstr[0] "%d título"
+msgstr[1] "%d títulos"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
@@ -11332,8 +11322,8 @@ msgstr[1] "%d itens"
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] "%d marca comercial"
-msgstr[1] "%d marcas comerciais"
+msgstr[0] "%d marco"
+msgstr[1] "%d marcos"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -11622,7 +11612,6 @@ msgstr "possui detalhes em %s"
 #. include the insertion and/or deletion of content, and would typically be seen
 #. in a collaborative editor, such as in Google Docs.
 #: src/orca/object_properties.py:102
-#| msgid "question"
 msgctxt "role"
 msgid "suggestion"
 msgstr "sugestão"
@@ -11642,7 +11631,7 @@ msgstr "caixa de combinação editável"
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:115
 msgid "editable content"
-msgstr "Conteúdo editável"
+msgstr "conteúdo editável"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11964,7 +11953,7 @@ msgctxt "role"
 msgid "table of contents"
 msgstr "tabela de conteúdo"
 
-# cabeçalho
+# título
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
 #. The translated form is meant to be a single character followed by a numeric
@@ -12594,7 +12583,7 @@ msgstr "Anunciar _formulários no Ler tudo"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
-msgstr "Anunciar _marcas comerciais no Ler tudo"
+msgstr "Anunciar _marcos no Ler tudo"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
@@ -12724,7 +12713,7 @@ msgstr "_Ler cores como nomes"
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1791
 msgid "Announce block_quotes during navigation"
-msgstr "Anunciar c_tações durante a navegação"
+msgstr "Anunciar c_itações durante a navegação"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1808
@@ -12749,7 +12738,7 @@ msgstr "Anunciar _painéis durante a navegação"
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:1876
 msgid "Announce land_marks during navigation"
-msgstr "Anunciar _marcas comerciais durante a navegação"
+msgstr "Anunciar _marcos durante a navegação"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1893
