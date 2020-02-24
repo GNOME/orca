@@ -2869,7 +2869,7 @@ class Script(script.Script):
             return
 
         if event.source != orca_state.activeWindow:
-            msg = "DEFAULT: Ignoring event. Not for active window."
+            msg = "DEFAULT: Ignoring event. Not for active window %s." % orca_state.activeWindow
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
