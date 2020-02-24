@@ -704,17 +704,14 @@ class EventManager:
 
         try:
             state = event.source.getState()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Could not process event: %s' % eType
-            debug.println(debug.LEVEL_WARNING, msg, True)
-            if eType.startswith("window:deactivate"):
-                orca_state.locusOfFocus = None
-                orca_state.activeWindow = None
-            return
         except:
-            return
+            isDefunct = True
+            msg = 'ERROR: Exception getting state for event source'
+            debug.println(debug.LEVEL_WARNING, msg, True)
+        else:
+            isDefunct = state.contains(pyatspi.STATE_DEFUNCT)
 
-        if state and state.contains(pyatspi.STATE_DEFUNCT):
+        if isDefunct:
             msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
