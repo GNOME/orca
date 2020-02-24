@@ -601,6 +601,8 @@ class Script(script.Script):
             self.onWindowDeactivated
         listeners["window:create"]                          = \
             self.onWindowCreated
+        listeners["window:destroy"]                          = \
+            self.onWindowDestroyed
 
         return listeners
 
@@ -2846,6 +2848,11 @@ class Script(script.Script):
 
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
+
+        pass
+
+    def onWindowDestroyed(self, event):
+        """Callback for window:destroy accessibility events."""
 
         pass
 
