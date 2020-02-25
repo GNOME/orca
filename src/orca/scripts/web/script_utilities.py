@@ -2095,6 +2095,15 @@ class Utilities(script_utilities.Utilities):
 
         return self._getTag(obj) == 'blockquote'
 
+    def isComment(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isComment(obj)
+
+        if obj.getRole() == pyatspi.ROLE_COMMENT:
+            return True
+
+        return 'comment' in self._getXMLRoles(obj)
+
     def isContentDeletion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentDeletion(obj)

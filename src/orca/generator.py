@@ -1229,6 +1229,8 @@ class Generator:
             return pyatspi.ROLE_STATIC
         if self._script.utilities.isBlockquote(obj):
             return pyatspi.ROLE_BLOCK_QUOTE
+        if self._script.utilities.isComment(obj):
+            return pyatspi.ROLE_COMMENT
         if self._script.utilities.isContentDeletion(obj):
             return 'ROLE_CONTENT_DELETION'
         if self._script.utilities.isContentInsertion(obj):
@@ -1382,6 +1384,8 @@ class Generator:
                 return object_properties.ROLE_LANDMARK_SEARCH
             if self._script.utilities.isLandmarkForm(obj):
                 role = pyatspi.ROLE_FORM
+        elif self._script.utilities.isComment(obj):
+            role = pyatspi.ROLE_COMMENT
 
         if not isinstance(role, (pyatspi.Role, Atspi.Role)):
             try:
