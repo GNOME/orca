@@ -768,6 +768,9 @@ class Utilities:
 
         return False
 
+    def isComment(self, obj):
+        return False
+
     def isContentDeletion(self, obj):
         return False
 
