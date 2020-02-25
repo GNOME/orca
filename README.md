@@ -1,4 +1,4 @@
-# Orca v3.35.92pre
+# Orca v3.37.1pre
 
 ## Introduction
 
@@ -22,7 +22,7 @@ requests.
 
 ## Dependencies
 
-Orca v3.35.x is supported on GNOME 3.35.x only.  We highly suggest you
+Orca v3.37.x is supported on GNOME 3.37.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -39,7 +39,7 @@ Orca also has the following dependencies:
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.35.x
+YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.37.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 > NOTE: If you have multiple versions of the Python interpreter installed
