@@ -314,7 +314,13 @@ class SpeechGenerator(generator.Generator):
         if startOffset != 0:
             return []
 
-        result = [messages.CONTENT_DELETION_START]
+        result = []
+        if self._script.utilities.isFirstItemInInlineContentSuggestion(obj):
+            result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
+            result.extend(self.voice(SYSTEM))
+            result.extend(self._generatePause(obj, **args))
+
+        result.extend([messages.CONTENT_DELETION_START])
         result.extend(self.voice(SYSTEM))
         return result
 
@@ -346,7 +352,13 @@ class SpeechGenerator(generator.Generator):
         if startOffset != 0:
             return []
 
-        result = [messages.CONTENT_INSERTION_START]
+        result = []
+        if self._script.utilities.isFirstItemInInlineContentSuggestion(obj):
+            result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
+            result.extend(self.voice(SYSTEM))
+            result.extend(self._generatePause(obj, **args))
+
+        result.extend([messages.CONTENT_INSERTION_START])
         result.extend(self.voice(SYSTEM))
         return result
 
