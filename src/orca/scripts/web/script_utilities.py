@@ -2195,6 +2195,13 @@ class Utilities(script_utilities.Utilities):
         displayStyle = self._getDisplayStyle(obj)
         return "inline" in displayStyle
 
+    def isFirstItemInInlineContentSuggestion(self, obj):
+        suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
+        if not (suggestion and suggestion.childCount):
+            return False
+
+        return suggestion[0] == obj
+
     def isLastItemInInlineContentSuggestion(self, obj):
         suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
         if not (suggestion and suggestion.childCount):
