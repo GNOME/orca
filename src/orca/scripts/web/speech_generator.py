@@ -230,8 +230,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        objString = lambda x: "%s %s" % (x.name, self.getLocalizedRoleName(x))
-        toPresent = ", ".join(list(map(objString, objs)))
+        objString = lambda x: str.strip("%s %s" % (x.name, self.getLocalizedRoleName(x)))
+        toPresent = ", ".join(set(map(objString, objs)))
 
         args['stringType'] = 'hasdetails'
         result = [self._script.formatting.getString(**args) % toPresent]
