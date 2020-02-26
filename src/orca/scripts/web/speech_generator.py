@@ -252,6 +252,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get('leaving'):
             return []
 
+        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+        if (lastKey in ['Down', 'Right'] or self._script.inSayAll()) and args.get('startOffset'):
+            return []
+        if lastKey in ['Up', 'Left']:
+            text = self._script.utilities.queryNonEmptyText(obj)
+            if text and args.get('endOffset') not in [None, text.characterCount]:
+                return []
+
         objString = lambda x: "%s %s" % (x.name, self.getLocalizedRoleName(x))
         toPresent = ", ".join(list(map(objString, objs)))
 
