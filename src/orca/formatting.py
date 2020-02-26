@@ -183,6 +183,9 @@ formatting = {
             'focused': 'leaving or deletionStart',
             'unfocused': 'deletionStart + pause + displayedText + pause + deletionEnd',
             },
+        'ROLE_CONTENT_ERROR': {
+            'unfocused': 'displayedText + pause + invalid',
+            },
         # TODO - JD: When we bump dependencies to 2.34, remove this fake role and use the real one.
         'ROLE_CONTENT_INSERTION': {
             'focused': 'leaving or insertionStart',

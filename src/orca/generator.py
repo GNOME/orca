@@ -1233,6 +1233,8 @@ class Generator:
             return pyatspi.ROLE_COMMENT
         if self._script.utilities.isContentDeletion(obj):
             return 'ROLE_CONTENT_DELETION'
+        if self._script.utilities.isContentError(obj):
+            return 'ROLE_CONTENT_ERROR'
         if self._script.utilities.isContentInsertion(obj):
             return 'ROLE_CONTENT_INSERTION'
         if self._script.utilities.isContentMarked(obj):

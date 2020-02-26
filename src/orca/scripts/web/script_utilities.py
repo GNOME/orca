@@ -2117,6 +2117,15 @@ class Utilities(script_utilities.Utilities):
 
         return 'deletion' in self._getXMLRoles(obj) or 'del' == self._getTag(obj)
 
+    def isContentError(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isContentError(obj)
+
+        if obj.getRole() not in self._textBlockElementRoles():
+            return False
+
+        return obj.getState().contains(pyatspi.STATE_INVALID_ENTRY)
+
     def isContentInsertion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentInsertion(obj)

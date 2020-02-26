@@ -774,6 +774,9 @@ class Utilities:
     def isContentDeletion(self, obj):
         return False
 
+    def isContentError(self, obj):
+        return False
+
     def isContentInsertion(self, obj):
         return False
 
