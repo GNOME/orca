@@ -2505,6 +2505,7 @@ class Utilities(script_utilities.Utilities):
             displayedText = string or obj.name
             rv = True
             if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
+               or (self.isContentEditableWithEmbeddedObjects(obj) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
                or (self.hasNoSize(obj) and not displayedText) \
                or self.isHidden(obj) \
