@@ -497,6 +497,9 @@ class Generator:
     def _generateDetailsFor(self, obj, **args):
         return []
 
+    def _generateAllDetails(self, obj, **args):
+        return []
+
     def _generateHasPopup(self, obj, **args):
         return []
 
