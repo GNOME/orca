@@ -244,6 +244,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         objs = self._script.utilities.detailsIn(obj)
         if not objs:
+            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            objs = self._script.utilities.detailsIn(container)
+
+        if not objs:
             return []
 
         args['stringType'] = 'hasdetails'
