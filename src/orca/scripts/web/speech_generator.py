@@ -260,12 +260,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if text and args.get('endOffset') not in [None, text.characterCount]:
                 return []
 
-        objString = lambda x: "%s %s" % (x.name, self.getLocalizedRoleName(x))
-        toPresent = ", ".join(list(map(objString, objs)))
+        result = []
+        objArgs = {'stringType': 'detailsfor', 'mode': args.get('mode')}
+        for o in objs:
+            string = self._script.utilities.displayedText(o) or self.getLocalizedRoleName(o)
+            words = string.split()
+            if len(words) > 5:
+                words = words[0:5] + ['...']
 
-        args['stringType'] = 'detailsfor'
-        result = [self._script.formatting.getString(**args) % toPresent]
-        result.extend(self.voice(speech_generator.SYSTEM))
+            result.append(self._script.formatting.getString(**objArgs) % " ".join(words))
+            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self._generatePause(o, **objArgs))
+
         return result
 
     def _generateLabelOrName(self, obj, **args):
