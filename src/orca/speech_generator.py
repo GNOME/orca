@@ -352,6 +352,11 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM))
 
+            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            if self._script.utilities.isContentSuggestion(container):
+                result.extend(self._generatePause(obj, **args))
+                result.extend(self._generateHasDetails(container, mode=args.get('mode')))
+
         return result
 
     def _generateInsertionStart(self, obj, **args):
@@ -389,6 +394,11 @@ class SpeechGenerator(generator.Generator):
             result.extend(self._generatePause(obj, **args))
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM))
+
+            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            if self._script.utilities.isContentSuggestion(container):
+                result.extend(self._generatePause(obj, **args))
+                result.extend(self._generateHasDetails(container, mode=args.get('mode')))
 
         return result
 
