@@ -1912,6 +1912,7 @@ class Utilities(script_utilities.Utilities):
         roles = [pyatspi.ROLE_ARTICLE,
                  pyatspi.ROLE_CAPTION,
                  pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_COMMENT,
                  pyatspi.ROLE_DEFINITION,
                  pyatspi.ROLE_DESCRIPTION_LIST,
                  pyatspi.ROLE_DESCRIPTION_TERM,
@@ -1929,6 +1930,20 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_STATIC,
                  pyatspi.ROLE_TEXT,
                  pyatspi.ROLE_TABLE_CELL]
+
+        # Remove this check when we bump dependencies to 2.34
+        try:
+            roles.append(pyatspi.ROLE_CONTENT_DELETION)
+            roles.append(pyatspi.ROLE_CONTENT_INSERTION)
+        except:
+            pass
+
+        # Remove this check when we bump dependencies to 2.36
+        try:
+            roles.append(pyatspi.ROLE_MARK)
+            roles.append(pyatspi.ROLE_SUGGESTION)
+        except:
+            pass
 
         return roles
 
