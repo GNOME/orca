@@ -119,8 +119,8 @@ formatting = {
         'suffix': {
             'focused': '[]',
             'unfocused': 'newNodeLevel + unselectedCell + clickable + pause + hasLongDesc + hasDetails + detailsFor +' + TUTORIAL + ' + description + pause + hasPopup',
-            'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup',
-            'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup'
+            'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup + pause + detailsFor + pause + allDetails',
+            'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup + detailsFor + pause + allDetails'
             },
         'default': {
             'focused': '[]',

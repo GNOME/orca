@@ -238,6 +238,33 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
+    def _generateAllDetails(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        objs = self._script.utilities.detailsIn(obj)
+        if not objs:
+            return []
+
+        args['stringType'] = 'hasdetails'
+        result = [self._script.formatting.getString(**args) % ""]
+        result.extend(self.voice(speech_generator.SYSTEM))
+
+        result = []
+        for o in objs:
+            result.append(self.getLocalizedRoleName(o))
+            result.extend(self.voice(speech_generator.SYSTEM))
+
+            string = self._script.utilities.expandEOCs(o)
+            if not string.strip():
+                continue
+
+            result.append(string)
+            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self._generatePause(o))
+
+        return result
+
     def _generateDetailsFor(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
