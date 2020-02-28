@@ -410,7 +410,14 @@ class SpeechGenerator(generator.Generator):
         if startOffset != 0:
             return []
 
-        result = [messages.CONTENT_MARK_START]
+        result = []
+        roledescription = self._script.utilities.getRoleDescription(obj)
+        if roledescription:
+            result.append(roledescription)
+            result.extend(self.voice(SYSTEM))
+            result.extend(self._generatePause(obj, **args))
+
+        result.append(messages.CONTENT_MARK_START)
         result.extend(self.voice(SYSTEM))
         return result
 

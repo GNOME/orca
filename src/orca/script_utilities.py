@@ -4690,6 +4690,9 @@ class Utilities:
         setSize = len(siblings)
         return position, setSize
 
+    def getRoleDescription(self, obj):
+        return ""
+
     def getCachedTextSelection(self, obj):
         textSelections = self._script.pointOfReference.get('textSelections', {})
         start, end, string = textSelections.get(hash(obj), (0, 0, ''))
