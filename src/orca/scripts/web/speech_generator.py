@@ -513,22 +513,24 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isMenuInCollapsedSelectElement(obj):
                 doNotSpeak.append(pyatspi.ROLE_MENU)
 
-        if obj.getState().contains(pyatspi.STATE_EDITABLE) and role != pyatspi.ROLE_HEADING:
-            lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+        isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
+
+        if isEditable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if ((lastKey in ["Down", "Right"] and not mods) or self._script.inSayAll()) and start:
                 return []
             if lastKey in ["Up", "Left"] and not mods:
                 text = self._script.utilities.queryNonEmptyText(obj)
                 if text and end not in [None, text.characterCount]:
                     return []
-            if role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT, pyatspi.ROLE_SPIN_BUTTON]:
+            if role not in doNotSpeak:
                 result.append(self.getLocalizedRoleName(obj, **args))
-            elif obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE):
-                if lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
-                    result.append(object_properties.ROLE_EDITABLE_CONTENT)
-            elif role not in doNotSpeak:
-                result.append(self.getLocalizedRoleName(obj, **args))
-            if result:
+                result.extend(acss)
+
+        elif isEditable and self._script.utilities.isDocument(obj):
+            if obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE) \
+               and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
+                result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(acss)
 
         elif role == pyatspi.ROLE_HEADING:
