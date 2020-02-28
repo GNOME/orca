@@ -1220,8 +1220,6 @@ class Generator:
             if self._script.utilities.isMathTableRow(obj):
                 return 'ROLE_MATH_TABLE_ROW'
         if self._script.utilities.isDPub(obj):
-            if self._script.utilities.isDPubFootnote(obj):
-                return 'ROLE_FOOTNOTE'
             if self._script.utilities.isLandmark(obj):
                 return 'ROLE_DPUB_LANDMARK'
             if obj.getRole() == pyatspi.ROLE_SECTION:
@@ -1363,8 +1361,6 @@ class Generator:
             else:
                 if self._script.utilities.isDPubCover(obj):
                     return object_properties.ROLE_COVER
-                if self._script.utilities.isDPubFootnote(obj):
-                    return object_properties.ROLE_FOOTNOTE
                 if self._script.utilities.isDPubPagebreak(obj):
                     return object_properties.ROLE_PAGEBREAK
                 if self._script.utilities.isDPubSubtitle(obj):

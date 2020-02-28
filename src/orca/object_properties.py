@@ -244,12 +244,6 @@ ROLE_EXAMPLE = C_("role", "example")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
-# This role refers to a single footnote in a digitally-published document.
-# https://w3c.github.io/dpub-aria/#doc-footnote
-ROLE_FOOTNOTE = C_("role", "footnote")
-
-# Translators: This string should be treated as a role describing an object.
-# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the foreword in a digitally-published document.
 # https://w3c.github.io/dpub-aria/#doc-foreword
 ROLE_FOREWORD = C_("role", "foreword")
