@@ -3096,7 +3096,8 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if obj.getRole() == pyatspi.ROLE_LINK \
            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and not 'jump' in self._getActionNames(obj):
+           and not 'jump' in self._getActionNames(obj) \
+           and not self._getXMLRoles(obj):
             rv = True
 
         self._isAnchor[hash(obj)] = rv
