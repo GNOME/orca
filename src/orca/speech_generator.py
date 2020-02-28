@@ -552,6 +552,7 @@ class SpeechGenerator(generator.Generator):
         if role == pyatspi.ROLE_ENTRY \
            and obj.getState().contains(pyatspi.STATE_SUPPORTS_AUTOCOMPLETION):
             result.append(self.getLocalizedRoleName(obj, role=pyatspi.ROLE_AUTOCOMPLETE))
+            result.extend(acss)
 
         if role == pyatspi.ROLE_PANEL and obj.getState().contains(pyatspi.STATE_SELECTED):
             return []
