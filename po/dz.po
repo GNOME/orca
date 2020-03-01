@@ -2381,7 +2381,7 @@ msgstr "<b>ཡིག་རྟགས་གནས་རིམ་l</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Table Row Speech</b>"
-msgstr "<b>ཐིག་ཁྲམ་གྲལ་ཐིག་ཁ་སླབ་</"
+msgstr "<b>ཐིག་ཁྲམ་གྲལ་ཐིག་ཁ་སླབ་</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Verbosity</b>"
@@ -2393,7 +2393,7 @@ msgstr "<b>རྒྱས་ཟུམ་གནས་ས་</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "<b>Zoomer Settings</b>"
-msgstr "<b>རྒྱས་ཟུམ་སྒྲིག་སྟངས་</b"
+msgstr "<b>རྒྱས་ཟུམ་སྒྲིག་སྟངས་</b>"
 
 #: ../src/orca/orca-setup.glade.h:9
 msgid "Braille"
