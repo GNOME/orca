@@ -4141,7 +4141,7 @@ msgstr "కట్టుబడు:"
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:80
 msgid "<b>Progress Bar Updates</b>"
-msgstr "<b>పురోగతి బార్ అప్‌డేట్‌లు<b>"
+msgstr "<b>పురోగతి బార్ అప్‌డేట్‌లు</b>"
 
 #: ../src/orca/orca-setup.ui.h:81
 msgid "Speech"
