@@ -1246,6 +1246,8 @@ class Generator:
             return pyatspi.ROLE_LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
             return pyatspi.ROLE_LIST_ITEM
+        if self._script.utilities.isDocument(obj) and 'Image' in pyatspi.listInterfaces(obj):
+            return pyatspi.ROLE_IMAGE
 
         return args.get('role', obj.getRole())
 
