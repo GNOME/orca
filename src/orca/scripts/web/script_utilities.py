@@ -907,7 +907,9 @@ class Utilities(script_utilities.Utilities):
         role = obj.getRole()
         if role in roles:
             rv = True
-        elif role in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_TABLE_CELL]:
+        elif role == pyatspi.ROLE_LIST_ITEM:
+            rv = obj.parent.getRole() != pyatspi.ROLE_LIST
+        elif role == pyatspi.ROLE_TABLE_CELL:
             rv = not self.isTextBlockElement(obj)
 
         self._isNonEntryTextWidget[hash(obj)] = rv
