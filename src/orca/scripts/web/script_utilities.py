@@ -559,6 +559,13 @@ class Utilities(script_utilities.Utilities):
         if position is not None:
             return int(position)
 
+        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            rowindex = attrs.get('rowindex')
+            if rowindex is None and obj.childCount:
+                rowindex = self.objectAttributes(obj[0], False).get('rowindex')
+            if rowindex is not None:
+                return int(rowindex)
+
         return None
 
     def getSetSize(self, obj):
@@ -566,6 +573,11 @@ class Utilities(script_utilities.Utilities):
         setsize = attrs.get('setsize')
         if setsize is not None:
             return int(setsize)
+
+        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            rows, cols = self.rowAndColumnCount(self.getTable(obj))
+            if rows != -1:
+                return rows
 
         return None
 
