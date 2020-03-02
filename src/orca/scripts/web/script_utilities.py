@@ -91,6 +91,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isRedundantSVG = {}
         self._isUselessEmptyElement = {}
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
@@ -162,6 +163,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isRedundantSVG = {}
         self._isUselessEmptyElement = {}
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
@@ -3560,6 +3562,26 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument[hash(obj)] = rv
         return rv
 
+    def isRedundantSVG(self, obj):
+        if self._getTag(obj) != 'svg' or obj.parent.childCount == 1:
+            return False
+
+        rv = self._isRedundantSVG.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        children = [x for x in obj.parent if self._getTag(x) == 'svg']
+        if len(children) == obj.parent.childCount:
+            sortedChildren = sorted(children, key=functools.cmp_to_key(self.sizeComparison))
+            if obj != sortedChildren[-1]:
+                objExtents = self.getExtents(obj, 0, -1)
+                largestExtents = self.getExtents(sortedChildren[-1], 0, -1)
+                rv = self.intersection(objExtents, largestExtents) == tuple(objExtents)
+
+        self._isRedundantSVG[hash(obj)] = rv
+        return rv
+
     def isUselessImage(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3576,6 +3598,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and (self.isClickableElement(obj) or self.hasLongDesc(obj)):
             rv = False
+        if rv and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            rv = False
         if rv and obj.parent.getRole() == pyatspi.ROLE_LINK:
             uri = self.uri(obj.parent)
             if uri and not uri.startswith('javascript'):
@@ -3584,7 +3608,7 @@ class Utilities(script_utilities.Utilities):
             image = obj.queryImage()
             if image.imageDescription:
                 rv = False
-            elif not self.hasExplicitName(obj):
+            elif not self.hasExplicitName(obj) and not self.isRedundantSVG(obj):
                 width, height = image.getImageSize()
                 if width > 25 and height > 25:
                     rv = False
