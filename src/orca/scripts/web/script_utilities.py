@@ -4124,9 +4124,11 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
-        isTextBlockRole = role in self._textBlockElementRoles() or self.isLink(obj)
-        if state.contains(pyatspi.STATE_EDITABLE):
-            rv = isTextBlockRole
+        hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles()
+        if role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
+            rv = pyatspi.findDescendant(obj, hasTextBlockRole)
+        elif state.contains(pyatspi.STATE_EDITABLE):
+            rv = hasTextBlockRole(obj) or self.isLink(obj)
         elif not self.isDocument(obj):
             document = self.getDocumentForObject(obj)
             rv = self.isContentEditableWithEmbeddedObjects(document)
