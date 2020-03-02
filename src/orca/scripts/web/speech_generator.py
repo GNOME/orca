@@ -315,11 +315,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isContentSuggestion(obj):
             return []
 
-        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
-            lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-            if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
-                return []
-
         if obj.name:
             name = obj.name
             if not self._script.utilities.hasExplicitName(obj):
