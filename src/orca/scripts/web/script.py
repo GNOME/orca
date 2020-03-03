@@ -2040,6 +2040,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.textEventIsDueToDeletion(event):
+            msg = "WEB: Event believed to be due to editable text deletion"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.println(debug.LEVEL_INFO, msg, True)
