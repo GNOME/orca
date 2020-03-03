@@ -562,7 +562,10 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
             rowindex = attrs.get('rowindex')
             if rowindex is None and obj.childCount:
-                rowindex = self.objectAttributes(obj[0], False).get('rowindex')
+                roles = self._cellRoles()
+                cell = pyatspi.findDescendant(obj, lambda x: x and x.getRole() in roles)
+                rowindex = self.objectAttributes(cell, False).get('rowindex')
+
             if rowindex is not None:
                 return int(rowindex)
 
@@ -1923,6 +1926,15 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
+
+    def _cellRoles(self):
+        roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER,
+                 pyatspi.ROLE_ROW_HEADER,
+                 pyatspi.ROLE_COLUMN_HEADER]
+
+        return roles
 
     def _textBlockElementRoles(self):
         roles = [pyatspi.ROLE_ARTICLE,
