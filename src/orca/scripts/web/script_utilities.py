@@ -4055,6 +4055,17 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
+    def textEventIsDueToDeletion(self, event):
+        if not self.inDocumentContent(event.source) \
+           or not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        if self.isDeleteCommandTextDeletionEvent(event) \
+           or self.isBackSpaceCommandTextDeletionEvent(event):
+            return True
+
+        return False
+
     def textEventIsDueToInsertion(self, event):
         if not event.type.startswith("object:text-"):
             return False
