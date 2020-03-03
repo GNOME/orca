@@ -775,6 +775,19 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
+        if self.utilities.isSpreadSheetTable(event.source) and orca_state.locusOfFocus:
+            if self.utilities.isDead(orca_state.locusOfFocus):
+                msg = "SOFFICE: Event believed to be post-editing focus claim. Dead locusOfFocus."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, event.source, False)
+                return
+
+            if  orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_PARAGRAPH, pyatspi.ROLE_TABLE_CELL]:
+                msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, event.source, False)
+                return
+
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
