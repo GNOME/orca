@@ -4523,7 +4523,7 @@ class Utilities(script_utilities.Utilities):
                 return obj, 0
 
         if text and offset >= text.characterCount:
-            if self.isContentEditableWithEmbeddedObjects(obj):
+            if self.isContentEditableWithEmbeddedObjects(obj) and not self.lastInputEventWasLineNav():
                 nextObj, nextOffset = self.nextContext(obj, text.characterCount)
                 if nextObj:
                     msg = "WEB: First caret context at end of %s, %i is next context %s, %i" % \
