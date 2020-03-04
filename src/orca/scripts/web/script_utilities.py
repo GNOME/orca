@@ -4087,14 +4087,12 @@ class Utilities(script_utilities.Utilities):
 
         return self._treatObjectAsWhole(event.source)
 
-    # TODO - JD: As an experiment, we're stopping these at the event manager.
-    # If that works, this can be removed.
     def eventIsEOCAdded(self, event):
         if not self.inDocumentContent(event.source):
             return False
 
         if event.type.startswith("object:text-changed:insert"):
-            return self.EMBEDDED_OBJECT_CHARACTER in event.any_data
+            return not re.match("[^\s\ufffc]", event.any_data)
 
         return False
 
@@ -4722,6 +4720,13 @@ class Utilities(script_utilities.Utilities):
             alert = pyatspi.findAncestor(event.source, isAlert)
             if alert and self.focusedObject(alert) == event.source:
                 msg = "WEB: Focused source will be presented as part of alert"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
+            if self._lastQueuedLiveRegionEvent \
+               and self._lastQueuedLiveRegionEvent.type == event.type \
+               and self._lastQueuedLiveRegionEvent.any_data == event.any_data:
+                msg = "WEB: Event is believed to be duplicate message"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
