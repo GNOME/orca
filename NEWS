@@ -1,3 +1,54 @@
+3.35.92 - 4 March 2020
+
+Chromium:
+
+ * Fix presentation of child position for files in Google Drive
+
+ * Handle list item markers which lack "::marker" tag
+
+Web:
+
+ * Fix presentation of list items in GMail composition window
+
+ * Eliminate chattiness from redundant SVG images which lack accessible
+   information.
+
+ * Present SVG documents using the image role
+
+ * Several improvements to presentation of contenteditable content
+
+ * Several improvements to presentation of aria-details information
+
+ * Present aria-invalid info for non-widget elements
+
+ * Present aria-roledescription value before mark/highlight start
+   message
+
+ * Ensure ARIA links are not treated like anchors
+
+LibreOffice:
+
+ * Calc: Eliminate chattiness from spreadsheet reclaiming focus after
+   editing cell
+
+General:
+
+ * Ensure we use the right voice when presenting autocomplete role
+
+ * Improve handling for window switchers which fail to emit needed
+   accessibility events
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   da            Danish                Alan Mortensen
+   fr            French                Julien Humbert
+   id            Indonesian            Kukuh Syafaat
+   it            Italian               Milo Casagrande
+   pt_BR         Brazilian Portuguese  Tiago Casal
+   sl            Slovenian             Matej Urbančič
+
+=========
+
 3.35.91 - 20 February 2020
 
 Chromium:
