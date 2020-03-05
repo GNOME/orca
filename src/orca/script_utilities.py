@@ -3748,6 +3748,25 @@ class Utilities:
 
         return children
 
+    def getSelectionContainer(self, obj):
+        if not obj:
+            return None
+
+        isSelection = lambda x: x and "Selection" in pyatspi.listInterfaces(x)
+        if isSelection(obj):
+            return obj
+
+        rolemap = {
+            pyatspi.ROLE_LIST_ITEM: [pyatspi.ROLE_LIST_BOX],
+            pyatspi.ROLE_TREE_ITEM: [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE],
+            pyatspi.ROLE_TABLE_CELL: [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE],
+            pyatspi.ROLE_TABLE_ROW: [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE],
+        }
+
+        role = obj.getRole()
+        isMatch = lambda x: isSelection(x) and x.getRole() in rolemap.get(role)
+        return pyatspi.findAncestor(obj, isMatch)
+
     def selectedChildCount(self, obj):
         try:
             selection = obj.querySelection()

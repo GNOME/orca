@@ -2120,12 +2120,9 @@ class Script(script.Script):
         if not obj:
             return True
 
-        container = obj
-        if "Selection" in pyatspi.listInterfaces(container.parent):
-            container = obj.parent
-
-        if "Selection" not in pyatspi.listInterfaces(container):
-            msg = "INFO: %s and %s don't implement selection interface" % (obj, obj.parent)
+        container = self.utilities.getSelectionContainer(obj)
+        if not container:
+            msg = "INFO: Selection container not found for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return self._whereAmISelectedText(inputEvent, obj)
 
