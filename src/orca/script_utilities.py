@@ -3767,7 +3767,32 @@ class Utilities:
         isMatch = lambda x: isSelection(x) and x.getRole() in rolemap.get(role)
         return pyatspi.findAncestor(obj, isMatch)
 
+    def selectableChildCount(self, obj):
+        if not (obj and "Selection" in pyatspi.listInterfaces(obj)):
+            return 0
+
+        if "Table" in pyatspi.listInterfaces(obj):
+            rows, cols = self.rowAndColumnCount(obj)
+            return max(0, rows)
+
+        rolemap = {
+            pyatspi.ROLE_LIST_BOX: [pyatspi.ROLE_LIST_ITEM],
+            pyatspi.ROLE_TREE: [pyatspi.ROLE_TREE_ITEM],
+        }
+
+        role = obj.getRole()
+        if role not in rolemap:
+            return obj.childCount
+
+        isMatch = lambda x: x.getRole() in rolemap.get(role)
+        return len(self.findAllDescendants(obj, isMatch))
+
     def selectedChildCount(self, obj):
+        if "Table" in pyatspi.listInterfaces(obj):
+            table = obj.queryTable()
+            if table.nSelectedRows:
+                return table.nSelectedRows
+
         try:
             selection = obj.querySelection()
             count = selection.nSelectedChildren
