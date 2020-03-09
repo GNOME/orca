@@ -354,8 +354,8 @@ formatting = {
             },
         pyatspi.ROLE_MENU_ITEM: {
             'focused': 'expandableState',
-            'unfocused': 'labelOrName + menuItemCheckedState + expandableState + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList',
-            'basicWhereAmI': 'ancestors + pause + labelOrName + pause + accelerator + pause + positionInList + ' + MNEMONIC
+            'unfocused': 'labelOrName + checkedStateIfCheckable + expandableState + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList',
+            'basicWhereAmI': 'ancestors + pause + labelOrName + checkedStateIfCheckable + pause + accelerator + pause + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_NOTIFICATION: {
             'unfocused': 'roleName + unrelatedLabels'
@@ -691,7 +691,7 @@ formatting = {
         pyatspi.ROLE_MENU_ITEM: {
             'unfocused': '[Component(obj,\
                                      asString(labelOrName + expandableState + availability) + asString(accelerator),\
-                                     indicator=asString(menuItemCheckedState))]'
+                                     indicator=asString(checkedStateIfCheckable))]'
             },
         pyatspi.ROLE_PAGE: {
             'unfocused': BRAILLE_TEXT
