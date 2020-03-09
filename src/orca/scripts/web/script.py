@@ -509,6 +509,12 @@ class Script(default.Script):
 
         return super().skipObjectEvent(event)
 
+    def presentationInterrupt(self):
+        super().presentationInterrupt()
+        msg = "WEB: Flushing live region messages"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self.liveRegionManager.flushMessages()
+
     def consumesKeyboardEvent(self, keyboardEvent):
         """Returns True if the script will consume this keyboard event."""
 
