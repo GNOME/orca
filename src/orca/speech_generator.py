@@ -681,6 +681,16 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateCheckedStateIfCheckable(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(STATE)
+        result = super()._generateCheckedStateIfCheckable(obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateMenuItemCheckedState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the checked state of the menu item, only if it is
