@@ -1160,6 +1160,11 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return string, start, end
 
+        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and offset == text.characterCount:
+            offset -= 1
+            msg = "WEB: Line sought for %s at end of text. Adjusting offset to %i." % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         offset = max(0, offset)
         string, start, end = text.getTextAtOffset(offset, boundary)
 
