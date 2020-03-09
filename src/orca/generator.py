@@ -675,6 +675,13 @@ class Generator:
             result.append(indicators[0])
         return result
 
+    def _generateCheckedStateIfCheckable(self, obj, **args):
+        if obj.getState().contains(pyatspi.STATE_CHECKABLE) \
+           or obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
+            return self._generateCheckedState(obj, **args)
+
+        return []
+
     def _generateMenuItemCheckedState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the checked state of the menu item, only if it is
