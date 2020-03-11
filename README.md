@@ -1,4 +1,4 @@
-# Orca v3.36.0pre
+# Orca v3.36.0
 
 ## Introduction
 
