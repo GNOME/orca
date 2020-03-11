@@ -840,7 +840,15 @@ class Script(default.Script):
         if not obj:
             return
 
-        contents = self.utilities.getCharacterContentsAtOffset(obj, offset)
+        contents = None
+        if self.utilities.treatAsEndOfLine(obj, offset) and "Text" in pyatspi.listInterfaces(obj):
+            char = obj.queryText().getText(offset, offset + 1)
+            if char == self.EMBEDDED_OBJECT_CHARACTER:
+                char = ""
+            contents = [[obj, offset, offset + 1, char]]
+        else:
+            contents = self.utilities.getCharacterContentsAtOffset(obj, offset)
+
         if not contents:
             return
 

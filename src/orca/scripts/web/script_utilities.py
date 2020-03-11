@@ -1160,7 +1160,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return string, start, end
 
-        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and offset == text.characterCount:
+        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and self.treatAsEndOfLine(obj, offset):
             offset -= 1
             msg = "WEB: Line sought for %s at end of text. Adjusting offset to %i." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1543,6 +1543,39 @@ class Utilities(script_utilities.Utilities):
                 (i, acc, start, end, string, extents, states, attrs)
             debug.println(debug.LEVEL_INFO, msg, True)
 
+    def treatAsEndOfLine(self, obj, offset):
+        if not self.isContentEditableWithEmbeddedObjects(obj):
+            return False
+
+        if "Text" not in pyatspi.listInterfaces(obj):
+            return False
+
+        if self.isDocument(obj):
+            return False
+
+        text = obj.queryText()
+        if offset == text.characterCount:
+            msg = "WEB: %s offset %i is end of line: offset is characterCount" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        char = text.getText(offset, offset + 1)
+        if char == "\n":
+            msg = "WEB: %s offset %i is end of line: char at offset is newline" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            prevExtents = self.getExtents(obj, offset - 1, offset)
+            thisExtents = self.getExtents(obj, offset, offset + 1)
+            sameLine = self.extentsAreOnSameLine(prevExtents, thisExtents)
+            msg = "WEB: %s offset %i is [obj]. Same line: %s Is end of line: %s" % \
+                (obj, offset, sameLine, not sameLine)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return not sameLine
+
+        return False
+
     def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
         if not obj:
             return []
@@ -1559,7 +1592,11 @@ class Utilities(script_utilities.Utilities):
             layoutMode = _settingsManager.getSetting('layoutMode') or self._script.inFocusMode()
 
         objects = []
-        extents = self.getExtents(obj, offset, offset + 1)
+        if offset > 0 and self.treatAsEndOfLine(obj, offset):
+            extents = self.getExtents(obj, offset - 1, offset)
+        else:
+            extents = self.getExtents(obj, offset, offset + 1)
+
         if self.isInlineListDescendant(obj):
             container = self.listForInlineListDescendant(obj)
             if container:
@@ -4150,9 +4187,11 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
-        isTextBlockRole = role in self._textBlockElementRoles() or self.isLink(obj)
-        if state.contains(pyatspi.STATE_EDITABLE):
-            rv = isTextBlockRole
+        hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles()
+        if role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
+            rv = pyatspi.findDescendant(obj, hasTextBlockRole)
+        elif state.contains(pyatspi.STATE_EDITABLE):
+            rv = hasTextBlockRole(obj) or self.isLink(obj)
         elif not self.isDocument(obj):
             document = self.getDocumentForObject(obj)
             rv = self.isContentEditableWithEmbeddedObjects(document)
@@ -4526,11 +4565,19 @@ class Utilities(script_utilities.Utilities):
                 return obj, 0
 
         if text and offset >= text.characterCount:
-            if self.isContentEditableWithEmbeddedObjects(obj) and not self.lastInputEventWasLineNav():
+            if self.isContentEditableWithEmbeddedObjects(obj) \
+               and not self.lastInputEventWasLineNav() \
+               and not self.lastInputEventWasLineBoundaryNav():
                 nextObj, nextOffset = self.nextContext(obj, text.characterCount)
-                if nextObj:
-                    msg = "WEB: First caret context at end of %s, %i is next context %s, %i" % \
-                        (obj, offset, nextObj, nextOffset)
+                if not nextObj:
+                    msg = "WEB: No next object found at end of contenteditable %s" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                elif not self.isContentEditableWithEmbeddedObjects(nextObj):
+                    msg = "WEB: Next object found at end of contenteditable %s is not editable %s" % (obj, nextObj)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                else:
+                    msg = "WEB: First caret context at end of contenteditable %s is next context %s, %i" % \
+                        (obj, nextObj, nextOffset)
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return nextObj, nextOffset
 
