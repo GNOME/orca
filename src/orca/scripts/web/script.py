@@ -885,7 +885,7 @@ class Script(default.Script):
             priorObj, priorOffset = self.utilities.getPriorContext()
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
+        contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=not isEditable)
         self.speakContents(contents, priorObj=priorObj)
 
     def presentObject(self, obj, **args):
