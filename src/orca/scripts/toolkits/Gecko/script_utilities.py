@@ -60,10 +60,23 @@ class Utilities(web.Utilities):
         return True
 
     def _treatAsLeafNode(self, obj):
-        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TABLE_ROW:
             return not obj.childCount
 
-        return super()._treatAsLeafNode(obj)
+        if not super()._treatAsLeafNode(obj):
+            return False
+
+        state = obj.getState()
+        # Some sections get the "expandable" state because they can be
+        # expanded in some situations (e.g. mobile screens) but lack
+        # the "expanded" state in some other (e.g. desktop screens)
+        # although they are visible -- yet not technically "expanded",
+        # as in this layout they don't actually expand.
+        return not (state.contains(pyatspi.STATE_EXPANDABLE) and
+                    not state.contains(pyatspi.STATE_EXPANDED) and \
+                    role == pyatspi.ROLE_SECTION and \
+                    obj.childCount > 0)
 
     def containsPoint(self, obj, x, y, coordType, margin=2):
         if not super().containsPoint(obj, x, y, coordType, margin):
