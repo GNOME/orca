@@ -4248,7 +4248,7 @@ class Utilities:
         if self.containsPoint(root, x, y, coordType):
             if self._treatAsLeafNode(root) or not self._boundsIncludeChildren(root):
                 return root
-        elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
+        elif self._treatAsLeafNode(root):
             return None
 
         if "Table" in pyatspi.listInterfaces(root):
