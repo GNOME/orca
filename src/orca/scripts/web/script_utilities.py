@@ -34,6 +34,7 @@ import urllib
 from orca import debug
 from orca import input_event
 from orca import messages
+from orca import mouse_review
 from orca import orca
 from orca import orca_state
 from orca import script_utilities
@@ -636,11 +637,12 @@ class Utilities(script_utilities.Utilities):
         if rv or not self.inDocumentContent(obj):
             return rv
 
-        if not self._isOrIsIn(orca_state.locusOfFocus, obj):
-            return rv
+        if not mouse_review.reviewer.inMouseEvent:
+            if not self._isOrIsIn(orca_state.locusOfFocus, obj):
+                return rv
 
-        msg = "WEB: %s contains locusOfFocus but not showing and visible" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "WEB: %s contains locusOfFocus but not showing and visible" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         obj.clearCache()
         rv = super().isShowingAndVisible(obj)

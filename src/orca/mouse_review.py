@@ -311,6 +311,8 @@ class MouseReviewer:
         self._windows = []
         self._handlerIds = {}
 
+        self.inMouseEvent = False
+
         if not _mouseReviewCapable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -555,7 +557,9 @@ class MouseReviewer:
         debug.println(debug.LEVEL_INFO, msg, False)
 
         if event.type.startswith("mouse:abs"):
+            self.inMouseEvent = True
             self._on_mouse_moved(event)
+            self.inMouseEvent = False
 
         msg = "TOTAL PROCESSING TIME: %.4f\n" % (time.time() - startTime)
         msg += "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type
