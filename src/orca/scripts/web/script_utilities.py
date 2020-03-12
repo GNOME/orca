@@ -4093,7 +4093,8 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(event.source):
             return False
 
-        if event.type.startswith("object:text-changed:insert"):
+        if event.type.startswith("object:text-changed:insert") \
+           and self.EMBEDDED_OBJECT_CHARACTER in event.any_data:
             return not re.match("[^\s\ufffc]", event.any_data)
 
         return False
