@@ -46,6 +46,13 @@ class Utilities(web.Utilities):
         self._lastAutoTextObjectEvent = None
         self._lastAutoTextInputEvent = None
         self._lastAutoTextEventTime = 0
+        self._isStaticTextLeaf = {}
+        self._isListItemMarker = {}
+
+    def clearCachedObjects(self):
+        super().clearCachedObjects()
+        self._isStaticTextLeaf = {}
+        self._isListItemMarker = {}
 
     def _attemptBrokenTextRecovery(self, obj, **args):
         boundary = args.get('boundary')
@@ -76,6 +83,84 @@ class Utilities(web.Utilities):
             return False
 
         return True
+
+    def isListItemMarker(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isListItemMarker.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM:
+            rv = self._getTag(obj) in ["::marker", None] and obj.parent[0] == obj
+
+        self._isListItemMarker[hash(obj)] = rv
+        return rv
+
+    def isStaticTextLeaf(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isStaticTextLeaf(obj)
+
+        if obj.childCount:
+            return False
+
+        if self.isListItemMarker(obj):
+            return False
+
+        rv = self._isStaticTextLeaf.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        roles = [pyatspi.ROLE_STATIC, pyatspi.ROLE_TEXT, pyatspi.ROLE_UNKNOWN]
+        rv = obj.getRole() in roles and self._getTag(obj) in (None, "br")
+        if rv:
+            msg = "GECKO: %s believed to be static text leaf" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            print(msg)
+
+        self._isStaticTextLeaf[hash(obj)] = rv
+        return rv
+
+    def _accessibleAtPoint(self, root, x, y, coordType=None):
+        if self.isHidden(root):
+            return None
+
+        result = None
+        node = root
+        while node:
+            try:
+                component = node.queryComponent()
+            except:
+                msg = "GECKO: Exception querying component of %s" % node
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return result
+
+            result = component.getAccessibleAtPoint(x, y, coordType)
+            if result is None or result == node:
+                result = node
+                break
+            node = result
+
+        msg = "GECKO: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        result = None
+        if self.isDocument(root):
+            result = self._accessibleAtPoint(root, x, y, coordType)
+
+        root = result or root
+        result = super().descendantAtPoint(root, x, y, coordType)
+        if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
+            return result.parent
+
+        return result
 
     def isLayoutOnly(self, obj):
         if super().isLayoutOnly(obj):
