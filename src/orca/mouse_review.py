@@ -515,9 +515,15 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
-        objDocument = script.utilities.getContainingDocument(obj)
-        if objDocument and script.utilities.inDocumentContent():
-            document = script.utilities.activeDocument()
+        # we try and get the top-level document in case the object is in a
+        # sub-document, but that's a specific of the Web script.
+        # FIXME: maybe it should be generic?
+        try:
+            objDocument = script.utilities.getTopLevelDocumentForObject(obj)
+        except:
+            objDocument = script.utilities.getContainingDocument(obj)
+        if objDocument and script.utilities.inDocumentContent(obj):
+            document = script.utilities.activeDocument(window)
             if document != objDocument:
                 msg = "MOUSE REVIEW: %s is not in active document %s" % (obj, document)
                 debug.println(debug.LEVEL_INFO, msg, True)
