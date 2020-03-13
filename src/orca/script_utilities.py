@@ -5460,11 +5460,16 @@ class Utilities:
         if not (startObj and endObj):
             return []
 
+        _include = lambda x: x
+        _exclude = self.isStaticTextLeaf
+
         subtree = []
         for i in range(startObj.getIndexInParent(), startObj.parent.childCount):
             child = startObj.parent[i]
+            if self.isStaticTextLeaf(child):
+                continue
             subtree.append(child)
-            subtree.extend(self.findAllDescendants(child, lambda x: x))
+            subtree.extend(self.findAllDescendants(child, _include, _exclude))
             if endObj in subtree:
                 break
 
@@ -5473,7 +5478,7 @@ class Utilities:
 
         if endObj not in subtree:
             subtree.append(endObj)
-            subtree.extend(self.findAllDescendants(endObj, lambda x: x))
+            subtree.extend(self.findAllDescendants(endObj, _include, _exclude))
 
         try:
             lastObj = endObj.parent[endObj.getIndexInParent() + 1]
