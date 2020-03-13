@@ -1829,13 +1829,16 @@ class Utilities(script_utilities.Utilities):
         start, end = self._getSelectionAnchorAndFocus(obj)
         self._script.pointOfReference['selectionAnchorAndFocus'] = (start, end)
 
-        oldSubtree = self._getSubtree(oldStart, oldEnd)
-        newSubtree = self._getSubtree(start, end)
-
         def _cmp(obj1, obj2):
             return self.pathComparison(pyatspi.getPath(obj1), pyatspi.getPath(obj2))
 
-        descendants = sorted(set(oldSubtree).union(newSubtree), key=functools.cmp_to_key(_cmp))
+        oldSubtree = self._getSubtree(oldStart, oldEnd)
+        if start == oldStart and end == oldEnd:
+            descendants = oldSubtree
+        else:
+            newSubtree = self._getSubtree(start, end)
+            descendants = sorted(set(oldSubtree).union(newSubtree), key=functools.cmp_to_key(_cmp))
+
         for descendant in descendants:
             if descendant not in (oldStart, oldEnd, start, end) \
                and pyatspi.findAncestor(descendant, lambda x: x in descendants):
