@@ -1205,6 +1205,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
         caretOffset = 0
         if self.utilities.inFindContainer(oldFocus) \
            or (self.utilities.isDocument(newFocus) and oldFocus == orca_state.activeWindow):
