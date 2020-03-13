@@ -1795,8 +1795,6 @@ class Utilities(script_utilities.Utilities):
 
         descendants = sorted(set(oldSubtree).union(newSubtree), key=functools.cmp_to_key(_cmp))
         for descendant in descendants:
-            if self.isStaticTextLeaf(descendant):
-                continue
             if descendant not in (oldStart, oldEnd, start, end) \
                and pyatspi.findAncestor(descendant, lambda x: x in descendants):
                 super().updateCachedTextSelection(descendant)
