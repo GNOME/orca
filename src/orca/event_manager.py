@@ -100,10 +100,14 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
+        anydata = event.any_data
+        if isinstance(anydata, str) and len(anydata) > 100:
+            anydata = "%s (...)" % anydata[0:100]
+
         debug.println(debug.LEVEL_INFO, '')
         msg = 'EVENT MANAGER: %s for %s in %s (%s, %s, %s)' % \
               (event.type, event.source, event.host_application,
-               event.detail1,event.detail2, event.any_data)
+               event.detail1,event.detail2, anydata)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not self._active:
@@ -180,6 +184,11 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+        elif event.type.startswith('object:text-changed:insert') and event.detail2 > 1000 \
+             and role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_STATIC]:
+            msg = 'EVENT MANAGER: Ignoring because inserted text has more than 1000 chars'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
         elif event.type.startswith('object:state-changed:sensitive'):
             if role in [pyatspi.ROLE_MENU_ITEM,
                         pyatspi.ROLE_FILLER,
