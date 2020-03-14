@@ -5214,8 +5214,9 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not state.contains(pyatspi.STATE_FOCUSED):
-            msg = "INFO: Not echoable text insertion event: source is not focused"
+        if state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED) \
+           and event.source != orca_state.locusOfFocus:
+            msg = "INFO: Not echoable text insertion event: focusable source is not focused"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
