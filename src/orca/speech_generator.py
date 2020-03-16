@@ -2292,7 +2292,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         for child in statusBar:
-            childResult = self._generateName(child)
+            childResult = self._generateDisplayedText(child)
             if not childResult and child.getRole() != pyatspi.ROLE_LABEL:
                 childResult = self.generate(child, includeContext=False)
             if childResult:
