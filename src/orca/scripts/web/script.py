@@ -871,8 +871,8 @@ class Script(default.Script):
             return
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
-        text = self.utilities.queryNonEmptyText(obj)
-        if text and offset == text.characterCount:
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if keyString == "Right":
             offset -= 1
 
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset)

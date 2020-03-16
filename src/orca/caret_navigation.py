@@ -282,7 +282,7 @@ class CaretNavigation:
             return False
 
         obj, end, string = contents[-1][0], contents[-1][2], contents[-1][3]
-        if string and not string[-1].isalnum():
+        if string and string[-1].isspace():
             end -= 1
 
         script.utilities.setCaretPosition(obj, end)

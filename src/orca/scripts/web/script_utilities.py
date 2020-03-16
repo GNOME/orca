@@ -1424,7 +1424,7 @@ class Utilities(script_utilities.Utilities):
         # Check for things in the same word to the left of this object.
         firstObj, firstStart, firstEnd, firstString = objects[0]
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
-        while prevObj and firstString:
+        while prevObj and firstString and prevObj != firstObj:
             text = self.queryNonEmptyText(prevObj)
             if not text or text.getText(pOffset, pOffset + 1).isspace():
                 break
@@ -1445,6 +1445,9 @@ class Utilities(script_utilities.Utilities):
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         while lastObj and lastString and not lastString[-1].isspace():
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
+            if nextObj == lastObj:
+                break
+
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
                 onRight = onRight[0:-1]
