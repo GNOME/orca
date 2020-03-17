@@ -56,7 +56,14 @@ class Utilities(web.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
-        if obj.childCount:
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "CHROMIUM: Exception getting child count of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if childCount:
             return False
 
         if self.isListItemMarker(obj):

@@ -3405,7 +3405,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isFakePlaceholderForEntry(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
+        if not (obj and self.inDocumentContent(obj) and obj.parent):
             return False
 
         if not (obj.parent.getRole() == pyatspi.ROLE_ENTRY and obj.parent.name):

@@ -1431,7 +1431,12 @@ class Utilities:
         if not obj:
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TREE_ITEM:
+        try:
+            role = obj.getRole()
+        except:
+            return False
+
+        if role == pyatspi.ROLE_TREE_ITEM:
             return True
 
         isTree = lambda x: x and x.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE]
