@@ -225,16 +225,6 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent[hash(obj)] = rv
         return rv
 
-    def getTopLevelDocumentForObject(self, obj):
-        document = self.getDocumentForObject(obj)
-        while document:
-            ancestor = pyatspi.findAncestor(document, self.isDocument)
-            if not ancestor or ancestor == document:
-                break
-            document = ancestor
-
-        return document
-
     def _getDocumentsEmbeddedBy(self, frame):
         if not frame:
             return []
