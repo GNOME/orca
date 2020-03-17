@@ -1233,8 +1233,6 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = "INFO: Document containing %s is %s" % (obj, doc)
-        debug.println(debug.LEVEL_INFO, msg, True)
         return doc
 
     def getTable(self, obj):
