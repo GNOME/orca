@@ -1007,6 +1007,7 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_TOOL_BAR,
                  pyatspi.ROLE_TOOL_TIP,
                  pyatspi.ROLE_TREE,
+                 pyatspi.ROLE_TREE_ITEM,
                  pyatspi.ROLE_TREE_TABLE]
 
         role = obj.getRole()
