@@ -512,10 +512,7 @@ class Script(default.Script):
         if obj.getRole() == pyatspi.ROLE_LINK:
             obj = obj.parent
 
-        if self.utilities.isDocument(obj):
-            document = obj
-        else:
-            document = self.utilities.getContainingDocument(obj)
+        document = self.utilities.getDocumentForObject(obj)
         if not document or document.getState().contains(pyatspi.STATE_BUSY):
             return
 

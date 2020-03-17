@@ -562,11 +562,7 @@ class Utilities(script_utilities.Utilities):
         Returns a (title, position, count) tuple.
         """
 
-        if self.isDocument(obj):
-            dv = obj
-        else:
-            dv = self.getContainingDocument(obj)
-
+        dv = self.getDocumentForObject(obj)
         if not dv or not self.isDrawingView(dv):
             return "", 0, 0
 

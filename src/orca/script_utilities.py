@@ -1204,14 +1204,17 @@ class Utilities:
 
     def inDocumentContent(self, obj=None):
         obj = obj or orca_state.locusOfFocus
-        return self.getContainingDocument(obj) is not None
+        return self.getDocumentForObject(obj) is not None
 
     def activeDocument(self, window=None):
-        return self.getContainingDocument(orca_state.locusOfFocus)
+        return self.getDocumentForObject(orca_state.locusOfFocus)
 
-    def getContainingDocument(self, obj):
+    def getDocumentForObject(self, obj):
         if not obj:
             return None
+
+        if self.isDocument(obj):
+            return obj
 
         try:
             doc = pyatspi.findAncestor(obj, self.isDocument)
@@ -1246,7 +1249,7 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
             return False
 
-        doc = self.getContainingDocument(obj)
+        doc = self.getDocumentForObject(obj)
         if not doc:
             return False
 
@@ -1256,7 +1259,7 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
             return False
 
-        return self.getContainingDocument(obj) is None
+        return self.getDocumentForObject(obj) is None
 
     def isSpreadSheetTable(self, obj):
         if not obj:
@@ -1272,7 +1275,7 @@ class Utilities:
         if not role == pyatspi.ROLE_TABLE:
             return False
 
-        doc = self.getContainingDocument(obj)
+        doc = self.getDocumentForObject(obj)
         if not doc:
             return False
 
@@ -1358,7 +1361,7 @@ class Utilities:
         if not table:
             return False
 
-        if not self.getContainingDocument(table):
+        if not self.getDocumentForObject(table):
             return _settingsManager.getSetting('readFullRowInGUITable')
 
         if self.isSpreadSheetTable(table):

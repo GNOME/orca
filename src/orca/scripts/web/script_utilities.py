@@ -225,15 +225,6 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent[hash(obj)] = rv
         return rv
 
-    def getDocumentForObject(self, obj):
-        if not obj:
-            return None
-
-        if self.isDocument(obj):
-            return obj
-
-        return pyatspi.findAncestor(obj, self.isDocument)
-
     def getTopLevelDocumentForObject(self, obj):
         document = self.getDocumentForObject(obj)
         while document:

@@ -2006,7 +2006,7 @@ class Script(script.Script):
             self.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
-        if not self.utilities.getContainingDocument(table):
+        if not self.utilities.getDocumentForObject(table):
             settingName = 'readFullRowInGUITable'
         elif self.utilities.isSpreadSheetTable(table):
             settingName = 'readFullRowInSpreadSheet'
