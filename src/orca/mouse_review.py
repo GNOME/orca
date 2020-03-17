@@ -515,7 +515,7 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
-        objDocument = script.utilities.getDocumentForObject(obj)
+        objDocument = script.utilities.getTopLevelDocumentForObject(obj)
         if objDocument and script.utilities.inDocumentContent():
             document = script.utilities.activeDocument()
             if document != objDocument:
