@@ -117,12 +117,21 @@ class Utilities:
             return False
 
         if not state.contains(pyatspi.STATE_ACTIVE):
+            msg = "INFO: %s lacks state active" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if state.contains(pyatspi.STATE_ICONIFIED):
+            msg = "INFO: %s has state iconified" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        return state.contains(pyatspi.STATE_SHOWING)
+        if not state.contains(pyatspi.STATE_SHOWING):
+            msg = "INFO: %s lacks state showing" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
 
     @staticmethod
     def _getAppCommandLine(app):

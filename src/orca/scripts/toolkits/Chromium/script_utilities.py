@@ -522,3 +522,25 @@ class Utilities(web.Utilities):
             return result.parent
 
         return result
+
+    def _isActiveAndShowingAndNotIconified(self, obj):
+        if super()._isActiveAndShowingAndNotIconified(obj):
+            return True
+
+        # FIXME: This can potentially be non-performant because AT-SPI2 will recursively
+        # clear the cache of all descendants. This is an attempt to work around what may
+        # be a lack of window:activate and object:state-changed events from Chromium
+        # windows in at least some environments.
+        try:
+            obj.clearCache()
+        except:
+            msg = "CHROMIUM: Exception clearing cache for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if super()._isActiveAndShowingAndNotIconified(obj):
+            msg = "CHROMIUM: %s deemed to be active and showing after cache clear" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
