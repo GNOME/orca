@@ -47,12 +47,10 @@ class Utilities(web.Utilities):
         self._lastAutoTextInputEvent = None
         self._lastAutoTextEventTime = 0
         self._isStaticTextLeaf = {}
-        self._isListItemMarker = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
         self._isStaticTextLeaf = {}
-        self._isListItemMarker = {}
 
     def _attemptBrokenTextRecovery(self, obj, **args):
         boundary = args.get('boundary')
@@ -84,29 +82,11 @@ class Utilities(web.Utilities):
 
         return True
 
-    def isListItemMarker(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isListItemMarker.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        if obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM:
-            rv = self._getTag(obj) in ["::marker", None] and obj.parent[0] == obj
-
-        self._isListItemMarker[hash(obj)] = rv
-        return rv
-
     def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
         if obj.childCount:
-            return False
-
-        if self.isListItemMarker(obj):
             return False
 
         rv = self._isStaticTextLeaf.get(hash(obj))
@@ -156,7 +136,7 @@ class Utilities(web.Utilities):
 
         root = result or root
         result = super().descendantAtPoint(root, x, y, coordType)
-        if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
+        if self.isStaticTextLeaf(result):
             return result.parent
 
         return result
