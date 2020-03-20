@@ -3315,7 +3315,7 @@ class Script(script.Script):
             utterance.extend(voice)
             speech.speak(utterance)
         else:
-            self.sayCharacter(obj)
+            self.speakCharacter(phrase)
 
     def sayWord(self, obj):
         """Speaks the word at the caret.
