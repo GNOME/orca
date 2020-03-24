@@ -46,11 +46,6 @@ class Utilities(web.Utilities):
         self._lastAutoTextObjectEvent = None
         self._lastAutoTextInputEvent = None
         self._lastAutoTextEventTime = 0
-        self._isStaticTextLeaf = {}
-
-    def clearCachedObjects(self):
-        super().clearCachedObjects()
-        self._isStaticTextLeaf = {}
 
     def _attemptBrokenTextRecovery(self, obj, **args):
         boundary = args.get('boundary')
@@ -81,26 +76,6 @@ class Utilities(web.Utilities):
             return False
 
         return True
-
-    def isStaticTextLeaf(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isStaticTextLeaf(obj)
-
-        if obj.childCount:
-            return False
-
-        rv = self._isStaticTextLeaf.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        roles = [pyatspi.ROLE_STATIC, pyatspi.ROLE_TEXT, pyatspi.ROLE_UNKNOWN]
-        rv = obj.getRole() in roles and self._getTag(obj) in (None, "br")
-        if rv:
-            msg = "GECKO: %s believed to be static text leaf" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        self._isStaticTextLeaf[hash(obj)] = rv
-        return rv
 
     def _accessibleAtPoint(self, root, x, y, coordType=None):
         if self.isHidden(root):
@@ -136,7 +111,13 @@ class Utilities(web.Utilities):
 
         root = result or root
         result = super().descendantAtPoint(root, x, y, coordType)
-        if self.isStaticTextLeaf(result):
+
+        # Gecko's getAccessibleAtPoint() might return text nodes that are
+        # not normally exposed to AT-SPI.  Work around this getting the
+        # exposed parent.
+        if result is not None and \
+           result.getRole() == pyatspi.ROLE_UNKNOWN and \
+           result not in result.parent:
             return result.parent
 
         return result
