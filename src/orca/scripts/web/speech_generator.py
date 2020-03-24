@@ -557,11 +557,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(self.getLocalizedRoleName(obj, **args))
                     result.extend(acss)
 
-        elif role == pyatspi.ROLE_COMMENT:
-            if index == 0:
-                result.append(self.getLocalizedRoleName(obj, **args))
-                result.extend(acss)
-
         elif role not in doNotSpeak and args.get('priorObj') != obj:
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(acss)
