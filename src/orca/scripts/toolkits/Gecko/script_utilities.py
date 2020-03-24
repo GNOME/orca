@@ -78,9 +78,6 @@ class Utilities(web.Utilities):
         return True
 
     def _accessibleAtPoint(self, root, x, y, coordType=None):
-        if self.isHidden(root):
-            return None
-
         result = None
         node = root
         while node:
