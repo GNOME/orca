@@ -81,6 +81,7 @@ class Utilities:
     WORDS_RE = re.compile(r"(\W+)", flags)
     SUPERSCRIPTS_RE = re.compile("[%s]+" % "".join(SUPERSCRIPT_DIGITS), flags)
     SUBSCRIPTS_RE = re.compile("[%s]+" % "".join(SUBSCRIPT_DIGITS), flags)
+    PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
     # generatorCache
     #
@@ -738,6 +739,9 @@ class Utilities:
         return ""
 
     def isAnchor(self, obj):
+        return False
+
+    def isCode(self, obj):
         return False
 
     def isDesktop(self, obj):
@@ -3138,6 +3142,27 @@ class Utilities:
             line += segment
 
         return line
+
+    def shouldVerbalizeAllPunctuation(self, obj):
+        if not self.isCode(obj):
+            return False
+
+        # If the user has set their punctuation level to All, then the synthesizer will
+        # do the work for us. If the user has set their punctuation level to None, then
+        # they really don't want punctuation and we mustn't override that.
+        style = _settingsManager.getSetting("verbalizePunctuationStyle")
+        if style in [settings.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_NONE]:
+            return False
+
+        return True
+
+    def verbalizeAllPunctuation(self, string):
+        result = string
+        for symbol in set(re.findall(self.PUNCTUATION, result)):
+            charName = " %s " % chnames.getCharacterName(symbol)
+            result = re.sub("\%s" % symbol, charName, result)
+
+        return result
 
     def adjustForLinks(self, obj, line, startOffset):
         """Adjust line to include the word "link" after any hypertext links.

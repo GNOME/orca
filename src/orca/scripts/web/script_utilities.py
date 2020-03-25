@@ -3221,6 +3221,12 @@ class Utilities(script_utilities.Utilities):
         self._isClickableElement[hash(obj)] = rv
         return rv
 
+    def isCode(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isCode(obj)
+
+        return self._getTag(obj) == "code" or "code" in self._getXMLRoles(obj)
+
     def isEditableDescendantOfComboBox(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isEditableDescendantOfComboBox(obj)

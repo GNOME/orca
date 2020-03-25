@@ -1185,6 +1185,9 @@ class SpeechGenerator(generator.Generator):
            and not self._script.inSayAll() and args.get('total', 1) == 1:
             result = [messages.BLANK]
 
+        if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
+            result[0] = self._script.utilities.verbalizeAllPunctuation(result[0])
+
         result.extend(acss)
         return result
 
@@ -1442,6 +1445,9 @@ class SpeechGenerator(generator.Generator):
         if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines') \
            and not self._script.inSayAll() and args.get('total', 1) == 1:
             result[0] = messages.BLANK
+
+        if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
+            result[0] = self._script.utilities.verbalizeAllPunctuation(result[0])
 
         return result
 
