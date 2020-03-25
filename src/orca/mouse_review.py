@@ -345,6 +345,18 @@ class MouseReviewer:
         _eventManager.registerModuleListeners(self._get_listeners())
         screen = Wnck.Screen.get_default()
         if screen:
+            # On first startup windows and workspace are likely to be None,
+            # but the signals we connect to will get emitted when proper values
+            # become available;  but in case we got disabled and re-enabled we
+            # have to get the initial values manually.
+            stacked = screen.get_windows_stacked()
+            if stacked:
+                stacked.reverse()
+                self._all_windows = stacked
+            self._workspace = screen.get_active_workspace()
+            if self._workspace:
+                self._update_workspace_windows()
+
             i = screen.connect("window-stacking-changed", self._on_stacking_changed)
             self._handlerIds[i] = screen
             i = screen.connect("active-workspace-changed", self._on_workspace_changed)
@@ -359,6 +371,9 @@ class MouseReviewer:
         for key, value in self._handlerIds.items():
             value.disconnect(key)
         self._handlerIds = {}
+        self._workspace = None
+        self._windows = []
+        self._all_windows = []
 
         self._active = False
 
