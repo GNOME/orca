@@ -106,28 +106,26 @@ class Utilities(web.Utilities):
         if self.isDocument(root):
             result = self._accessibleAtPoint(root, x, y, coordType)
 
-        # Thunderbird doesn't return leaf text nodes, and
-        # super().descendantAtPoint() will not consider nodes that can have
-        # children unless it finds them itself as children of another node,
-        # but the node we got directly should as well if it is a text node
-        # that has actual text -- and not only references to its children.
-        if result and self.queryNonEmptyText(result):
-            string = result.queryText().getText(0, -1)
-            if re.search("[^\ufffc\s]", string):
-                return result
+            # Gecko's getAccessibleAtPoint() might return text nodes that are
+            # not normally exposed to AT-SPI.  Work around this getting the
+            # exposed parent, which will actually be the object we want.
+            if result is not None and \
+               result.getRole() == pyatspi.ROLE_UNKNOWN and \
+               result not in result.parent:
+                return result.parent
+
+            # Thunderbird doesn't return leaf text nodes, and
+            # super().descendantAtPoint() will not consider nodes that can have
+            # children unless it finds them itself as children of another node,
+            # but the node we got directly should as well if it is a text node
+            # that has actual text -- and not only references to its children.
+            if result and self.queryNonEmptyText(result):
+                string = result.queryText().getText(0, -1)
+                if re.search("[^\ufffc\s]", string):
+                    return result
 
         root = result or root
-        result = super().descendantAtPoint(root, x, y, coordType)
-
-        # Gecko's getAccessibleAtPoint() might return text nodes that are
-        # not normally exposed to AT-SPI.  Work around this getting the
-        # exposed parent.
-        if result is not None and \
-           result.getRole() == pyatspi.ROLE_UNKNOWN and \
-           result not in result.parent:
-            return result.parent
-
-        return result
+        return super().descendantAtPoint(root, x, y, coordType)
 
     def isLayoutOnly(self, obj):
         if super().isLayoutOnly(obj):
