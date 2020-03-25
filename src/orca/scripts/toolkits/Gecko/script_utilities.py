@@ -106,6 +106,16 @@ class Utilities(web.Utilities):
         if self.isDocument(root):
             result = self._accessibleAtPoint(root, x, y, coordType)
 
+        # Thunderbird doesn't return leaf text nodes, and
+        # super().descendantAtPoint() will not consider nodes that can have
+        # children unless it finds them itself as children of another node,
+        # but the node we got directly should as well if it is a text node
+        # that has actual text -- and not only references to its children.
+        if result and self.queryNonEmptyText(result):
+            string = result.queryText().getText(0, -1)
+            if re.search("[^\ufffc\s]", string):
+                return result
+
         root = result or root
         result = super().descendantAtPoint(root, x, y, coordType)
 
