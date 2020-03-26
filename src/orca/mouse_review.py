@@ -342,6 +342,17 @@ class MouseReviewer:
     def activate(self):
         """Activates mouse review."""
 
+        # Set up the initial object as the one with the focus to avoid
+        # presenting irrelevant info the first time.
+        obj = orca_state.locusOfFocus
+        script = None
+        frame = None
+        if obj:
+            script = _scriptManager.getScript(obj.getApplication(), obj)
+        if script:
+            frame = script.utilities.topLevelObject(obj)
+        self._currentMouseOver = _ItemContext(obj=obj, frame=frame, script=script)
+
         _eventManager.registerModuleListeners(self._get_listeners())
         screen = Wnck.Screen.get_default()
         if screen:
