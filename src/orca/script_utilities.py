@@ -744,6 +744,9 @@ class Utilities:
     def isCode(self, obj):
         return False
 
+    def isCodeDescendant(self, obj):
+        return False
+
     def isDesktop(self, obj):
         try:
             role = obj.getRole()
@@ -3144,7 +3147,7 @@ class Utilities:
         return line
 
     def shouldVerbalizeAllPunctuation(self, obj):
-        if not self.isCode(obj):
+        if not (self.isCode(obj) or self.isCodeDescendant(obj)):
             return False
 
         # If the user has set their punctuation level to All, then the synthesizer will

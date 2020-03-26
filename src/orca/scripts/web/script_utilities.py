@@ -61,6 +61,7 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
+        self._isCodeDescendant = {}
         self._isEntryDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
@@ -133,6 +134,7 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
+        self._isCodeDescendant = {}
         self._isEntryDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
@@ -3219,6 +3221,18 @@ class Utilities(script_utilities.Utilities):
                 rv = obj.getRole() not in [pyatspi.ROLE_STATIC, pyatspi.ROLE_LINK]
 
         self._isClickableElement[hash(obj)] = rv
+        return rv
+
+    def isCodeDescendant(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isCodeDescendant(obj)
+
+        rv = self._isCodeDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = pyatspi.findAncestor(obj, self.isCode) is not None
+        self._isCodeDescendant[hash(obj)] = rv
         return rv
 
     def isCode(self, obj):
