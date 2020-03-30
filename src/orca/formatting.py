@@ -216,14 +216,14 @@ formatting = {
             'unfocused': '(expandedEOCs or (labelOrName + roleName + (unrelatedLabels or description)))'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
-            'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_DOCUMENT_WEB: {
-            'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelorName + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         'ROLE_DPUB_LANDMARK': {
             'focused': 'leaving or labelOrName',
