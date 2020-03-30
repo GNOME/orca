@@ -1824,12 +1824,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.isTopLevelWebApp(document):
+        if self.utilities.isWebAppDescendant(event.source):
             if self._browseModeIsSticky:
-                msg = "WEB: Web app claimed focus, but browse mode is sticky"
+                msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
-                msg = "WEB: Event handled: Setting locusOfFocus to event source"
+                msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source)
                 return True
