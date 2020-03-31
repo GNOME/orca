@@ -2004,6 +2004,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.isWebAppDescendant(event.source):
+            msg = "WEB: Event source is web app descendant"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         obj, offset = self.utilities.getCaretContext()
         ancestor = self.utilities.commonAncestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
