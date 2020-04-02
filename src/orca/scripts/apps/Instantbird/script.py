@@ -146,11 +146,8 @@ class Script(Gecko.Script):
         else:
             default.Script.onCaretMoved(self, event)
 
-    def onChildrenChanged(self, event):
-        """Called when a child node has changed.  In particular, we are looking
-        for addition events often associated with Javascipt insertion. One such
-        such example would be the programmatic insertion of a tooltip or alert
-        dialog."""
+    def onChildrenAdded(self, event):
+        """Callback for object:children-changed:add accessibility events."""
 
         return
 

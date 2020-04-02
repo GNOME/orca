@@ -1631,8 +1631,8 @@ class Script(default.Script):
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
         return True
 
-    def onChildrenChanged(self, event):
-        """Callback for object:children-changed accessibility events."""
+    def onChildrenAdded(self, event):
+        """Callback for object:children-changed:add accessibility events."""
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"

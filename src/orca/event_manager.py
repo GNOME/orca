@@ -126,7 +126,7 @@ class EventManager:
             return False
 
         script = orca_state.activeScript
-        if event.type.startswith('object:children-changed:add'):
+        if event.type.startswith('object:children-changed'):
             if not script:
                 msg = 'EVENT MANAGER: Ignoring because there is no active script'
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -135,14 +135,6 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring because event is not from active app'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
-
-        # This should ultimately be changed as there are valid reasons
-        # to handle these events at the application level.
-        if event.type.startswith('object:children-changed:remove') \
-           and event.source != self._desktop:
-            msg = 'EVENT MANAGER: Ignoring because event type is ignored'
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
 
         if event.type.startswith('object:text-changed') and event.type.endswith('system'):
             # We should also get children-changed events telling us the same thing.
@@ -223,7 +215,7 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-        if event.type.startswith('object:children-changed:add') \
+        if event.type.startswith('object:children-changed') \
            or event.type.startswith('object:active-descendant-changed'):
             if role in [pyatspi.ROLE_MENU,
                         pyatspi.ROLE_LAYERED_PANE,
@@ -238,6 +230,7 @@ class EventManager:
             try:
                 childState = event.any_data.getState()
                 childRole = event.any_data.getRole()
+                name = event.any_data.name
             except:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -691,12 +684,7 @@ class EventManager:
                 if event.source == self._desktop:
                     _scriptManager.reclaimScripts()
                     return
-            except (LookupError, RuntimeError):
-                # If we got this error here, we'll get it again when we
-                # attempt to get the state, catch it, and clean up.
-                pass
             except:
-                debug.printException(debug.LEVEL_WARNING)
                 return
 
         if eType.startswith("window:") and not eType.endswith("create"):

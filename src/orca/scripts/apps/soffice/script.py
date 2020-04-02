@@ -642,8 +642,8 @@ class Script(default.Script):
 
         default.Script.onActiveDescendantChanged(self, event)
 
-    def onChildrenChanged(self, event):
-        """Callback for object:children-changed accessibility events."""
+    def onChildrenAdded(self, event):
+        """Callback for object:children-changed:add accessibility events."""
 
         if self.utilities.isSpreadSheetCell(event.any_data):
             orca.setLocusOfFocus(event, event.any_data)
@@ -669,7 +669,7 @@ class Script(default.Script):
             self.presentMessage(full, brief)
             return
 
-        default.Script.onChildrenChanged(self, event)
+        default.Script.onChildrenAdded(self, event)
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""

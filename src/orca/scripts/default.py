@@ -559,8 +559,10 @@ class Script(script.Script):
             self.onTextInserted
         listeners["object:active-descendant-changed"]       = \
             self.onActiveDescendantChanged
-        listeners["object:children-changed"]                = \
-            self.onChildrenChanged
+        listeners["object:children-changed:add"]            = \
+            self.onChildrenAdded
+        listeners["object:children-changed:remove"]         = \
+            self.onChildrenRemoved
         listeners["object:state-changed:active"]            = \
             self.onActiveChanged
         listeners["object:state-changed:busy"]              = \
@@ -2239,12 +2241,14 @@ class Script(script.Script):
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
 
-    def onChildrenChanged(self, event):
-        """Called when a child node has changed.
+    def onChildrenAdded(self, event):
+        """Callback for object:children-changed:add accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        pass
+
+    def onChildrenRemoved(self, event):
+        """Callback for object:children-changed:remove accessibility events."""
+
         pass
 
     def onCaretMoved(self, event):
