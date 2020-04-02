@@ -65,13 +65,9 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
-        """Called when this presentation manager is activated."""
+        """Called when this event manager is activated."""
 
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
-        self._registerListener("window:activate")
-        self._registerListener("window:deactivate")
-        self._registerListener("object:children-changed")
-        self._registerListener("mouse:button")
         self.registerKeystrokeListener(self._processKeyboardEvent)
         self._active = True
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
