@@ -234,6 +234,12 @@ class Utilities(web.Utilities):
 
         return False
 
+    def isTopLevelMenu(self, obj):
+        if obj.getRole() == pyatspi.ROLE_MENU:
+            return self.isFrameForPopupMenu(self.topLevelObject(obj))
+
+        return False
+
     def popupMenuForFrame(self, obj):
         if not self.isFrameForPopupMenu(obj):
             return None
