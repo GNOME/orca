@@ -3907,7 +3907,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def shouldInferLabelFor(self, obj):
-        if not self.inDocumentContent() or self.inTopLevelWebApp():
+        if not self.inDocumentContent() or self.isWebAppDescendant(obj):
             return False
 
         rv = self._shouldInferLabelFor.get(hash(obj))
