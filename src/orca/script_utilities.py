@@ -3982,6 +3982,12 @@ class Utilities:
 
         return obj.parent and obj.parent.getRole() in self._contextMenuParentRoles()
 
+    def isTopLevelMenu(self, obj):
+        if obj.getRole() == pyatspi.ROLE_MENU:
+            return obj.parent == self.topLevelObject(obj)
+
+        return False
+
     def isEntryCompletionPopupItem(self, obj):
         return False
 

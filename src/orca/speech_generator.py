@@ -2199,8 +2199,7 @@ class SpeechGenerator(generator.Generator):
                    or args.get('forceList', False)):
             return []
 
-        if obj.getRole() == pyatspi.ROLE_MENU \
-           and obj.parent == self._script.utilities.topLevelObject(obj):
+        if self._script.utilities.isTopLevelMenu(obj):
             return []
 
         if self._script.utilities.isEditableComboBox(obj):
