@@ -808,7 +808,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self._inFocusMode and obj and obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+        doNotToggle = [pyatspi.ROLE_LINK, pyatspi.ROLE_RADIO_BUTTON]
+        if self._inFocusMode and obj and obj.getRole() in doNotToggle:
             msg = "WEB: Staying in focus mode due to role of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
