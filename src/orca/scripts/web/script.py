@@ -1505,6 +1505,11 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
+        if self._inFocusMode and self.utilities.caretMovedOutsideActiveGrid(event):
+            msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
 
         if self.utilities.caretMovedToSamePageFragment(event):

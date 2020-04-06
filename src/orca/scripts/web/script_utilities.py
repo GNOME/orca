@@ -4147,6 +4147,16 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def caretMovedOutsideActiveGrid(self, event, oldFocus=None):
+        if not (event and event.type.startswith("object:text-caret-moved")):
+            return False
+
+        oldFocus = oldFocus or orca_state.locusOfFocus
+        if not self.isGridDescendant(oldFocus):
+            return False
+
+        return not self.isGridDescendant(event.source)
+
     def caretMovedToSamePageFragment(self, event, oldFocus=None):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
