@@ -312,7 +312,8 @@ class Generator:
                 except:
                     pass
             try:
-                children = children or [child for child in obj]
+                include = lambda x: not self._script.utilities.isStaticTextLeaf(x)
+                children = children or [child for child in obj if include(child)]
             except:
                 pass
             names = map(self._script.utilities.displayedText, children)
