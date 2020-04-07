@@ -1072,7 +1072,7 @@ class Script(default.Script):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
         if self._inFocusMode or not self.utilities.inDocumentContent(obj) \
-           or obj.getState().contains(pyatspi.STATE_EDITABLE):
+           or self.utilities.isFocusModeWidget(obj):
             return super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
 
         text = self.utilities.queryNonEmptyText(obj)
