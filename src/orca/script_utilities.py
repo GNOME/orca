@@ -2488,6 +2488,8 @@ class Utilities:
                 continue
             if len(name.split()) < minimumWords:
                 continue
+            if rootName.find(name) >= 0:
+                continue
             d[name] = label
         labels = list(d.values())
 
