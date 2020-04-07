@@ -1172,10 +1172,6 @@ class SpeechGenerator(generator.Generator):
         if args.get('inMouseReview') and obj.getState().contains(pyatspi.STATE_EDITABLE):
             return []
 
-        result = self._generateSubstring(obj, **args)
-        if result and result[0]:
-            return result
-
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
         if not (result and result[0]):
