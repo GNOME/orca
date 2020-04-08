@@ -1184,7 +1184,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
             result[0] = self._script.utilities.verbalizeAllPunctuation(result[0])
 
-        result.extend(acss)
+        if len(result) == 1:
+            result.extend(acss)
+
         return result
 
     def _generateDisplayedText(self, obj, **args):
