@@ -3670,7 +3670,7 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
-        if rv and (obj.name or obj.description or obj.childCount):
+        if rv and (obj.name or obj.description):
             rv = False
         if rv and (self.isClickableElement(obj) or self.hasLongDesc(obj)):
             rv = False
@@ -3690,6 +3690,11 @@ class Utilities(script_utilities.Utilities):
                     rv = False
         if rv and 'Text' in pyatspi.listInterfaces(obj):
             rv = self.queryNonEmptyText(obj) is None
+        if rv and obj.childCount:
+            for i in range(min(obj.childCount, 50)):
+                if not self.isUselessImage(obj[i]):
+                    rv = False
+                    break
 
         self._isUselessImage[hash(obj)] = rv
         return rv
