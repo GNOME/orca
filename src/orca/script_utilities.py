@@ -2208,7 +2208,7 @@ class Utilities:
             elif not obj[i].getRole() in skipRoles:
                 statusBar = self.statusBar(obj[i])
 
-            if statusBar:
+            if statusBar and self.isShowingAndVisible(statusBar):
                 break
 
         return statusBar
