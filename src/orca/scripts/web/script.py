@@ -1746,6 +1746,11 @@ class Script(default.Script):
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
+        if self.utilities.getDocumentForObject(event.source.parent):
+            msg = "WEB: Ignoring: Event source is nested document"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         msg = "WEB: Updating loading state and resetting live regions"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
@@ -1755,6 +1760,11 @@ class Script(default.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
+        if self.utilities.getDocumentForObject(event.source.parent):
+            msg = "WEB: Ignoring: Event source is nested document"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         msg = "WEB: Updating loading state"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
@@ -1762,6 +1772,11 @@ class Script(default.Script):
 
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
+
+        if self.utilities.getDocumentForObject(event.source.parent):
+            msg = "WEB: Ignoring: Event source is nested document"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
         msg = "WEB: Updating loading state"
         debug.println(debug.LEVEL_INFO, msg, True)
