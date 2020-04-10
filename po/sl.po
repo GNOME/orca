@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-02-28 14:03+0000\n"
-"PO-Revision-Date: 2020-02-29 22:30+0100\n"
+"POT-Creation-Date: 2020-04-03 17:05+0000\n"
+"PO-Revision-Date: 2020-04-05 22:58+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -8341,41 +8341,33 @@ msgstr "Omogoči podporo zgodovini določenih sporočil v klepetalnicah."
 #. be said is content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:418
-#, fuzzy
-#| msgid "fraction start"
 msgctxt "content"
 msgid "deletion start"
-msgstr "začetek ulomka"
+msgstr "začetek brisanja"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:423
-#, fuzzy
-#| msgid "fraction end"
 msgctxt "content"
 msgid "deletion end"
-msgstr "konec ulomka"
+msgstr "konec brisanja"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for insertion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:428
-#, fuzzy
-#| msgid "fraction start"
 msgctxt "content"
 msgid "insertion start"
-msgstr "začetek ulomka"
+msgstr "začetek vstavljanja"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:433
-#, fuzzy
-#| msgid "fraction end"
 msgctxt "content"
 msgid "insertion end"
-msgstr "konec ulomka"
+msgstr "konec vstavljanja"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked/highlighted in a document, such as content which
@@ -8383,18 +8375,15 @@ msgstr "konec ulomka"
 #: src/orca/messages.py:438
 msgctxt "content"
 msgid "highlight start"
-msgstr ""
+msgstr "začetek poudarjanja"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
 #: src/orca/messages.py:443
-#, fuzzy
-#| msgctxt "color name"
-#| msgid "light green"
 msgctxt "content"
 msgid "highlight end"
-msgstr "svetlo zelena"
+msgstr "konec poudarjanja"
 
 #. Translators: This phrase is spoken to inform the user that the content being
 #. presented is the end of an inline suggestion a document. A "suggestion" is a
@@ -8402,11 +8391,9 @@ msgstr "svetlo zelena"
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:450
-#, fuzzy
-#| msgid "Spell _suggestion"
 msgctxt "content"
 msgid "suggestion end"
-msgstr "Predlog _črkovanja"
+msgstr "konec predloga"
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
@@ -9353,10 +9340,8 @@ msgstr "konec navedka."
 #. detailed information about another object.
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/messages.py:1161
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving details."
-msgstr "konec razpredelnice."
+msgstr "konec podrobnosti."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -9704,12 +9689,9 @@ msgstr "konec vprašanj in odgovorov."
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:1395
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving suggestion."
-msgstr "konec območja."
+msgstr "konec predloga."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
