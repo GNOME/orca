@@ -1350,6 +1350,10 @@ class Script(default.Script):
             shouldPresent = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.println(debug.LEVEL_INFO, msg, True)
+        elif not event.detail1 and self._inFocusMode and not self.utilities.isZombie(obj):
+            shouldPresent = False
+            msg = "WEB: Not presenting due to focus mode for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         if not _settingsManager.getSetting('onlySpeakDisplayedText') and shouldPresent:
             if event.detail1:
