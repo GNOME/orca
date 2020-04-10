@@ -1341,7 +1341,16 @@ class Script(default.Script):
         if not obj or self.utilities.isZombie(obj):
             self.utilities.clearCaretContext()
 
-        shouldPresent = self.utilities.isShowingOrVisible(event.source)
+        shouldPresent = True
+        if not self.utilities.isShowingOrVisible(event.source):
+            shouldPresent = False
+            msg = "WEB: Not presenting because source is not showing or visible"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif not self.utilities.documentFrameURI(event.source):
+            shouldPresent = False
+            msg = "WEB: Not presenting because source lacks URI"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         if not _settingsManager.getSetting('onlySpeakDisplayedText') and shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
