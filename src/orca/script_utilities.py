@@ -4779,10 +4779,12 @@ class Utilities:
             if selected:
                 obj = selected[0]
             else:
-                isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+                isMenu = lambda x: x and x.getRole() in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_BOX]
                 selected = self.selectedChildren(pyatspi.findDescendant(obj, isMenu))
                 if selected:
                     obj = selected[0]
+                else:
+                    return -1, -1
 
         parent = self.getFunctionalParent(obj)
         childCount = self.getFunctionalChildCount(parent)
