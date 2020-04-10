@@ -1177,8 +1177,8 @@ class Script(default.Script):
                 self.utilities.setCaretContext(obj.parent, -1)
             elif parentRole == pyatspi.ROLE_MENU:
                 self.utilities.setCaretContext(obj.parent.parent, -1)
-
-            self.presentMessage(messages.MODE_BROWSE)
+            if not self._loadingDocumentContent:
+                self.presentMessage(messages.MODE_BROWSE)
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
                and (self._lastCommandWasCaretNav \
