@@ -546,12 +546,8 @@ class Utilities:
         if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_LABEL] and name:
             return name
 
-        try:
-            text = self.queryNonEmptyText(obj)
-            displayedText = text.getText(0, text.characterCount)
-        except:
-            pass
-        else:
+        if 'Text' in pyatspi.listInterfaces(obj):
+            displayedText = obj.queryText().getText(0, -1)
             if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
                 displayedText = None
 
@@ -4032,6 +4028,21 @@ class Utilities:
 
         isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
         return pyatspi.findAncestor(obj, isComboBox) is not None
+
+    def getComboBoxValue(self, obj):
+        if not obj.childCount:
+            return self.displayedText(obj)
+
+        entry = self.getEntryForEditableComboBox(obj)
+        if entry:
+            return self.displayedText(entry)
+
+        selected = self._script.utilities.selectedChildren(obj)
+        selected = selected or self._script.utilities.selectedChildren(obj[0])
+        if len(selected) == 1:
+            return selected[0].name or self.displayedText(selected[0])
+
+        return self.displayedText(obj)
 
     def isPopOver(self, obj):
         return False

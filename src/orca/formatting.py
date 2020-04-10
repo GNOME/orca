@@ -170,9 +170,8 @@ formatting = {
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
             },
         pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'labelAndName + roleName + expandableState',
-            'unfocused': 'labelAndName + roleName + pause + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'label + roleName + pause + name + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator'
+            'focused': 'labelOrName + roleName + expandableState',
+            'unfocused': 'labelOrName + roleName + pause + value + pause + positionInList + ' + MNEMONIC + ' + accelerator',
             },
         pyatspi.ROLE_COMMENT: {
             'focused': 'labelOrName + roleName',
@@ -596,13 +595,8 @@ formatting = {
             },
         #pyatspi.ROLE_COLUMN_HEADER: 'default'
         pyatspi.ROLE_COMBO_BOX: {
-            # [[[TODO: WDW - maybe pass the label into the region constructor?
-            # We could then use the cursorOffset field to indicate where the
-            # combobox starts.]]]
-            #
-            'unfocused': '((comboBoxTextObj and ([Text(comboBoxTextObj[0], asString(label), asString(eol))] \
-                                               + [Region(" " + asString(roleName))])) \
-                           or [Component(obj, asString(label + name + roleName), label and (len(asString(label)) + 1) or 0)])'
+            'unfocused': '[Component(obj, asString(labelOrName + value + roleName), \
+                                     labelOrName and (len(asString(labelOrName)) + 1) or 0)]'
             },
         #pyatspi.ROLE_DESKTOP_ICON: 'default'
         pyatspi.ROLE_DIAL: {

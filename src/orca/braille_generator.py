@@ -414,24 +414,6 @@ class BrailleGenerator(generator.Generator):
             self._restoreRole(oldRole, args)
         return result
 
-    def _generateComboBoxTextObj(self, obj, **args):
-        """For a combo box, we check to see if the text is editable. If so,
-        then we want to show the text attributes (such as selection --
-        see bug 496846 for more details).  This will return an array
-        containing a single object, which is the accessible for the
-        text object. Note that this is different from the rest of the
-        generators, which all return an array of strings.  Yes, this
-        is a hack.
-        """
-        result = []
-        textObj = None
-        for child in obj:
-            if child and child.getRole() == pyatspi.ROLE_TEXT:
-                textObj = child
-        if textObj and textObj.getState().contains(pyatspi.STATE_EDITABLE):
-            result.append(textObj)
-        return result
-
     def _generateIncludeContext(self, obj, **args):
         """Returns True or False to indicate whether context should be
         included or not.

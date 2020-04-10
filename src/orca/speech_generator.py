@@ -1509,6 +1509,13 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
+    def _generateValue(self, obj, **args):
+        result = super()._generateValue(obj, **args)
+        if result:
+            result.extend(self.voice(DEFAULT))
+
+        return result
+
     def _generatePercentage(self, obj, **args ):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represents the percentage value of the

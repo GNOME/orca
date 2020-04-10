@@ -3241,6 +3241,10 @@ class Utilities(script_utilities.Utilities):
 
         return self._getTag(obj) == "code" or "code" in self._getXMLRoles(obj)
 
+    def getComboBoxValue(self, obj):
+        attrs = self.objectAttributes(obj, False)
+        return attrs.get("valuetext", super().getComboBoxValue(obj))
+
     def isEditableDescendantOfComboBox(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isEditableDescendantOfComboBox(obj)

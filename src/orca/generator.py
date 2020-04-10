@@ -304,26 +304,6 @@ class Generator:
         result = []
         self._script.pointOfReference['usedDescriptionForName'] = False
         name = obj.name
-        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            children = self._script.utilities.selectedChildren(obj)
-            if not children:
-                try:
-                    children = self._script.utilities.selectedChildren(obj[0])
-                except:
-                    pass
-            try:
-                include = lambda x: not self._script.utilities.isStaticTextLeaf(x)
-                children = children or [child for child in obj if include(child)]
-            except:
-                pass
-            names = map(self._script.utilities.displayedText, children)
-            names = list(filter(lambda x: x, names))
-            if len(names) == 1:
-                name = names[0].strip()
-            elif len(children) == 1 and children[0].name:
-                name = children[0].name.strip()
-            elif not names and obj.name:
-                name = obj.name
         if name:
             result.append(name)
         else:
@@ -1037,6 +1017,14 @@ class Generator:
         attribute if it exists on the object.  [[[WDW - we should
         consider returning an empty array if there is no value.
         """
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_COMBO_BOX:
+            value = self._script.utilities.getComboBoxValue(obj)
+            if value == obj.name:
+                return []
+            return [value]
+
         return [self._script.utilities.textForValue(obj)]
 
     #####################################################################

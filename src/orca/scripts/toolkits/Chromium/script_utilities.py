@@ -114,6 +114,9 @@ class Utilities(web.Utilities):
         return rv
 
     def selectedChildCount(self, obj):
+        if not obj:
+            return []
+
         count = super().selectedChildCount(obj)
         if count or "Selection" in pyatspi.listInterfaces(obj):
             return count
@@ -130,6 +133,9 @@ class Utilities(web.Utilities):
         return count
 
     def selectedChildren(self, obj):
+        if not obj:
+            return []
+
         result = super().selectedChildren(obj)
         if result or "Selection" in pyatspi.listInterfaces(obj):
             return result
