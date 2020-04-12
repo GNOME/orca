@@ -251,7 +251,7 @@ class Utilities:
 
         return ancestor
 
-    def objectAttributes(self, obj):
+    def objectAttributes(self, obj, useCache=True):
         try:
             rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         except:
@@ -3658,7 +3658,7 @@ class Utilities:
         Returns a string representing the value.
         """
 
-        attrs = self.objectAttributes(obj)
+        attrs = self.objectAttributes(obj, False)
         valuetext = attrs.get("valuetext")
         if valuetext:
             return valuetext
