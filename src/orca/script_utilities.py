@@ -551,7 +551,7 @@ class Utilities:
             if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
                 displayedText = None
 
-        if not displayedText:
+        if not displayedText and role != pyatspi.ROLE_COMBO_BOX:
             # TODO - JD: This should probably get nuked. But all sorts of
             # existing code might be relying upon this bogus hack. So it
             # will need thorough testing when removed.

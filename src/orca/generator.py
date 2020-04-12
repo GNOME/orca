@@ -1021,8 +1021,6 @@ class Generator:
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_COMBO_BOX:
             value = self._script.utilities.getComboBoxValue(obj)
-            if value == obj.name:
-                return []
             return [value]
 
         return [self._script.utilities.textForValue(obj)]
