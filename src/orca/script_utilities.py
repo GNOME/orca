@@ -4932,7 +4932,13 @@ class Utilities:
         if not keyString in ["Left", "Right", "Up", "Down"]:
             return False
 
-        return not mods
+        if mods & keybindings.CTRL_MODIFIER_MASK \
+           or mods & keybindings.SHIFT_MODIFIER_MASK \
+           or mods & keybindings.ALT_MODIFIER_MASK \
+           or mods & keybindings.ORCA_MODIFIER_MASK:
+            return False
+
+        return True
 
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
