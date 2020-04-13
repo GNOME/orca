@@ -108,7 +108,15 @@ class Utilities(web.Utilities):
 
         rv = False
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM:
-            rv = self._getTag(obj) in ["::marker", None] and obj.parent[0] == obj
+            tag = self._getTag(obj)
+            if tag == "::marker":
+                rv = True
+            elif tag is not None:
+                rv = False
+            elif obj.parent.childCount > 1:
+                rv = obj.parent[0] == obj
+            else:
+                rv = obj.name != self.displayedText(obj.parent)
 
         self._isListItemMarker[hash(obj)] = rv
         return rv
