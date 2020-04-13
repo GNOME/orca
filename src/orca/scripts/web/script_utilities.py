@@ -784,7 +784,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: Suspected bogus range extents for %s (chars: %i, %i): %s" % \
                     (obj, startOffset, endOffset, result)
                 debug.println(debug.LEVEL_INFO, msg, True)
-            else:
+            elif text.characterCount:
                 return result
 
         role = obj.getRole()
