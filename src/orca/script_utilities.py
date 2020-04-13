@@ -635,6 +635,12 @@ class Utilities:
 
         results = [None, None]
 
+        obj = obj or orca_state.locusOfFocus
+        if not obj:
+            msg = "ERROR: frameAndDialog() called without valid object"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return results
+
         if obj.getRole() == pyatspi.ROLE_FRAME:
             results[0] = obj
 
