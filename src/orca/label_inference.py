@@ -464,6 +464,56 @@ class LabelInference:
 
         return None, []
 
+    def _isTable(self, obj):
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TABLE:
+            return True
+
+        return self._getTag(obj) == 'table'
+
+    def _isRow(self, obj):
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            return True
+
+        return self._getTag(obj) == 'tr'
+
+    def _isCell(self, obj):
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            return True
+
+        return self._getTag(obj) in ['td', 'th']
+
+    def _getCellFromTable(self, table, rowindex, colindex):
+        if "Table" not in pyatspi.listInterfaces(table):
+            return NOne
+
+        if rowindex < 0 or colindex < 0:
+            return None
+
+        iface = table.queryTable()
+        if rowindex >= iface.nRows or colindex >= iface.nColumns:
+            return None
+
+        return table.queryTable().getAccessibleAt(rowindex, colindex)
+
+    def _getCellFromRow(self, row, colindex):
+        if 0 <= colindex < row.childCount:
+            return row[colindex]
+
+        return None
+
+    def _getTag(self, obj):
+        attrs = self._script.utilities.objectAttributes(obj)
+        return attrs.get('tag')
+
     def inferFromTable(self, obj, proximityForRight=50):
         """Attempt to infer the functional/displayed label of obj by looking
         at the contents of the surrounding table cells. Note that this approach
@@ -476,53 +526,57 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
-        pred = lambda x: x.getRole() == pyatspi.ROLE_TABLE_CELL
-        cell = pyatspi.utils.findAncestor(obj, pred)
+        cell = pyatspi.findAncestor(obj, self._isCell)
         if not self._isSimpleObject(cell):
             return None, []
 
         if not cell in [obj.parent, obj.parent.parent]:
             return None, []
 
-        pred = lambda x: x.getRole() == pyatspi.ROLE_TABLE
-        grid = pyatspi.utils.findAncestor(cell, pred)
+        grid = pyatspi.findAncestor(cell, self._isTable)
         if not grid:
             return None, []
 
-        try:
-            table = grid.queryTable()
-        except NotImplementedError:
-            return None, []
+        cellLeft = cellRight = cellAbove = cellBelow = None
+        gridrow = pyatspi.findAncestor(cell, self._isRow)
+        rowindex, colindex = self._script.utilities.coordinatesForCell(cell)
+        if colindex > -1:
+            cellLeft = self._getCellFromTable(grid, rowindex, colindex - 1)
+            cellRight = self._getCellFromTable(grid, rowindex, colindex + 1)
+            cellAbove = self._getCellFromTable(grid, rowindex - 1, colindex)
+            cellBelow = self._getCellFromTable(grid, rowindex + 1, colindex)
+        elif gridrow and cell.parent == gridrow:
+            cellindex = cell.getIndexInParent()
+            cellLeft = self._getCellFromRow(gridrow, cellindex - 1)
+            cellRight = self._getCellFromRow(gridrow, cellindex + 1)
+            rowindex = gridrow.getIndexInParent()
+            if rowindex > 0:
+                cellAbove = self._getCellFromRow(gridrow.parent[rowindex - 1], cellindex)
+            if rowindex + 1 < grid.childCount:
+                cellBelow = self._getCellFromRow(gridrow.parent[rowindex + 1], cellindex)
 
-        index = self._script.utilities.cellIndex(cell)
-        row = table.getRowAtIndex(index)
-        col = table.getColumnAtIndex(index)
-        objX, objY, objWidth, objHeight = self._getExtents(obj)
-
-        if col > 0 and not self._preferRight(obj):
-            candidate = table.getAccessibleAt(row, col - 1)
-            label, sources = self._createLabelFromContents(candidate)
+        if cellLeft and not self._preferRight(obj):
+            label, sources = self._createLabelFromContents(cellLeft)
             if label:
                 return label.strip(), sources
 
-        if col < table.nColumns and not self._preventRight(obj):
-            candidate = table.getAccessibleAt(row, col + 1)
-            x, y, width, height = self._getExtents(candidate)
+        objX, objY, objWidth, objHeight = self._getExtents(obj)
+
+        if cellRight and not self._preventRight(obj):
+            x, y, width, height = self._getExtents(cellRight)
             distance = x - (objX + objWidth)
             if distance <= proximityForRight or self._preferRight(obj):
-                label, sources = self._createLabelFromContents(candidate)
+                label, sources = self._createLabelFromContents(cellRight)
                 if label:
                     return label.strip(), sources
 
-        cellAbove = cellBelow = labelAbove = labelBelow = None
-        if row > 0:
-            cellAbove = table.getAccessibleAt(row - 1, col)
+        labelAbove = labelBelow = None
+        if cellAbove:
             labelAbove, sourcesAbove = self._createLabelFromContents(cellAbove)
             if labelAbove and self._preferTop(obj):
                 return labelAbove.strip(), sourcesAbove
 
-        if row < table.nRows and not self._preventBelow(obj):
-            cellBelow = table.getAccessibleAt(row + 1, col)
+        if cellBelow and not self._preventBelow(obj):
             labelBelow, sourcesBelow = self._createLabelFromContents(cellBelow)
 
         if labelAbove and labelBelow:
@@ -542,6 +596,12 @@ class LabelInference:
         # None of the cells immediately surrounding this cell seem to be serving
         # as a functional label. Therefore, see if this table looks like a grid
         # of widgets with the functional labels in the first row.
+
+        try:
+            table = grid.queryTable()
+        except NotImplementedError:
+            return None, []
+
         firstRow = [table.getAccessibleAt(0, i) for i in range(table.nColumns)]
         if not firstRow or list(filter(self._isWidget, firstRow)):
             return None, []
