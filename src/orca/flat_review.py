@@ -532,6 +532,24 @@ class Context:
 
         return zones
 
+    def _getLines(self, accessible, startOffset, endOffset):
+        # TODO - JD: Move this into the script utilities so we can better handle
+        # app and toolkit quirks and also reuse this (e.g. for SayAll).
+        try:
+            text = accessible.queryText()
+        except NotImplementedError:
+            return []
+
+        lines = []
+        offset = startOffset
+        while offset < min(endOffset, text.characterCount):
+            result = text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+            if result[0] and result not in lines:
+                lines.append(result)
+            offset = max(result[2], offset + 1)
+
+        return lines
+
     def getZonesFromText(self, accessible, cliprect):
         """Gets a list of Zones from an object that implements the
         AccessibleText specialization.
@@ -560,8 +578,6 @@ class Context:
            and accessible.getState().contains(pyatspi.STATE_SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
-
-        debug.println(debug.LEVEL_FINEST, "  looking at text:")
 
         offset = 0
         lastEndOffset = -1
@@ -599,72 +615,15 @@ class Context:
                 lowerMin = lowerMid
             lowerMid = int((lowerMax - lowerMin) / 2) + lowerMin
 
-        # finding out the zones
-        offset = upperMin
-        length = lowerMax
-        while offset < length:
+        msg = "FLAT REVIEW: Gettings lines for %s offsets %i-%i" % (accessible, upperMin, lowerMax)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
-            [string, startOffset, endOffset] = text.getTextAtOffset(
-                offset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
+        lines = self._getLines(accessible, upperMin, lowerMax)
+        msg = "FLAT REVIEW: %i lines found for %s" % (len(lines), accessible)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
-            debug.println(debug.LEVEL_FINEST,
-                          "    line at %d is (start=%d end=%d): '%s'" \
-                          % (offset, startOffset, endOffset, string))
-
-            # [[[WDW - HACK: well...gnome-terminal sometimes wants to
-            # give us outrageous values back from getTextAtOffset
-            # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
-            # so we try to handle it.  Evolution does similar things.]]]
-            #
-            if (startOffset < 0) \
-               or (endOffset < 0) \
-               or (startOffset > offset) \
-               or (endOffset < offset) \
-               or (startOffset > endOffset) \
-               or (abs(endOffset - startOffset) > 666e3):
-                debug.println(debug.LEVEL_WARNING,
-                              "flat_review:getZonesFromText detected "\
-                              "garbage from getTextAtOffset for accessible "\
-                              "name='%s' role'='%s': offset used=%d, "\
-                              "start/end offset returned=(%d,%d), string='%s'"\
-                              % (accessible.name, accessible.getRoleName(),
-                                 offset, startOffset, endOffset, string))
-                break
-
-            # [[[WDW - HACK: this is here because getTextAtOffset
-            # tends not to be implemented consistently across toolkits.
-            # Sometimes it behaves properly (i.e., giving us an endOffset
-            # that is the beginning of the next line), sometimes it
-            # doesn't (e.g., giving us an endOffset that is the end of
-            # the current line).  So...we hack.  The whole 'max' deal
-            # is to account for lines that might be a brazillion lines
-            # long.]]]
-            #
-            if endOffset == lastEndOffset:
-                offset = max(offset + 1, lastEndOffset + 1)
-                lastEndOffset = endOffset
-                continue
-            else:
-                offset = endOffset
-                lastEndOffset = endOffset
-
-            textZones = self.splitTextIntoZones(
-                accessible, string, startOffset, cliprect)
-
-            if textZones:
-                zones.extend(textZones)
-            elif len(zones):
-                # We'll break out of searching all the text - the idea
-                # here is that we'll at least try to optimize for when
-                # we gone below the visible clipping area.
-                #
-                # [[[TODO: WDW - would be nice to optimize this better.
-                # for example, perhaps we can assume the caret will always
-                # be visible, and we can start our text search from there.
-                # Logged as bugzilla bug 319771.]]]
-                #
-                break
+        for string, startOffset, endOffset in lines:
+            zones.extend(self.splitTextIntoZones(accessible, string, startOffset, cliprect))
 
         return zones
 
