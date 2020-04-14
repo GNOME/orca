@@ -518,80 +518,19 @@ class Context:
         - startOffset: the starting character offset of the string
         - cliprect: the extents that the Zones must fit inside.
 
-        Returns a list of Zones for the visible text or None if nothing is
-        visible.
+        Returns a list of Zones for the visible text.
         """
 
-        # We convert the string to unicode and walk through it.  While doing
-        # this, we keep two sets of offsets:
-        #
-        # substring{Start,End}Offset: where in the accessible text 
-        # implementation we are
-        #
-        # unicodeStartOffset: where we are in the unicodeString
-        #
-        anyVisible = False
         zones = []
-        text = accessible.queryText()
-        substringStartOffset = startOffset
-        substringEndOffset   = startOffset
-        unicodeStartOffset   = 0
-        unicodeString = string
-        #print "LOOKING AT '%s'" % unicodeString
-        for i in range(0, len(unicodeString) + 1):
-            if (i != len(unicodeString)) \
-               and (unicodeString[i] != EMBEDDED_OBJECT_CHARACTER):
-                substringEndOffset += 1
-            elif (substringEndOffset == substringStartOffset):
-                substringStartOffset += 1
-                substringEndOffset   = substringStartOffset
-                unicodeStartOffset   = i + 1
-            else:
-                extents = text.getRangeExtents(
-                    substringStartOffset, substringEndOffset, 0)
-                if self.script.utilities.containsRegion(extents, cliprect):
-                    anyVisible = True
-                    clipping = self.script.utilities.intersection(extents, cliprect)
+        substrings = [(*m.span(), m.group(0))  for m in re.finditer(r"[^\ufffc]+", string)]
+        substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
+        for (start, end, substring) in substrings:
+            extents = accessible.queryText().getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+            if self.script.utilities.containsRegion(extents, cliprect):
+                clipping = self.script.utilities.intersection(extents, cliprect)
+                zones.append(TextZone(accessible, start, substring, *clipping))
 
-
-                    # [[[TODO: WDW - HACK it would be nice to clip the
-                    # the text by what is really showing on the screen,
-                    # but this seems to hang Orca and the client. Logged
-                    # as bugzilla bug 319770.]]]
-                    #
-                    #ranges = text.getBoundedRanges(\
-                    #    clipping[0],
-                    #    clipping[1],
-                    #    clipping[2],
-                    #    clipping[3],
-                    #    0,
-                    #    pyatspi.TEXT_CLIP_BOTH,
-                    #    pyatspi.TEXT_CLIP_BOTH)
-                    #
-                    #print
-                    #print "HERE!"
-                    #for range in ranges:
-                    #    print range.startOffset
-                    #    print range.endOffset
-                    #    print range.content
-
-                    substring = unicodeString[unicodeStartOffset:i]
-                    #print " SUBSTRING '%s'" % substring
-                    zones.append(TextZone(accessible,
-                                          substringStartOffset,
-                                          substring,
-                                          clipping[0],
-                                          clipping[1],
-                                          clipping[2],
-                                          clipping[3]))
-                    substringStartOffset = substringEndOffset + 1
-                    substringEndOffset   = substringStartOffset
-                    unicodeStartOffset   = i + 1
-
-        if anyVisible:
-            return zones
-        else:
-            return None
+        return zones
 
     def getZonesFromText(self, accessible, cliprect):
         """Gets a list of Zones from an object that implements the
