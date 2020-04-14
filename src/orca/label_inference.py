@@ -149,8 +149,10 @@ class LabelInference:
         if not obj:
             return False
 
+        isMatch = lambda x: x and not self._script.utilities.isStaticTextLeaf(x)
+
         try:
-            children = [child for child in obj]
+            children = [child for child in obj if isMatch(child)]
         except (LookupError, RuntimeError):
             debug.println(debug.LEVEL_INFO, 'Dead Accessible in %s' % obj, True)
             return False
