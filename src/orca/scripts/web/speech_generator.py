@@ -321,6 +321,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 return []
 
+        priorObj = args.get("priorObj")
+        if priorObj and priorObj.getRole() == pyatspi.ROLE_PAGE_TAB and priorObj.name == obj.name:
+            return []
+
         if obj.name:
             name = obj.name
             if not self._script.utilities.hasExplicitName(obj):
