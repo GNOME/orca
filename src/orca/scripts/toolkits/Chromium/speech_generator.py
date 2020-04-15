@@ -71,7 +71,7 @@ class SpeechGenerator(web.SpeechGenerator):
                 # Eliminates including "untitled" in the frame name.
                 return super()._generateLabelOrName(obj.parent)
 
-        return super()._generateLabelOrName(obj)
+        return super()._generateLabelOrName(obj, **args)
 
     def _generateRoleName(self, obj, **args):
         if self._script.utilities.isListItemMarker(obj):
