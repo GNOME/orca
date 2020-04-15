@@ -3338,6 +3338,9 @@ class Script(script.Script):
             text.getTextAtOffset(offset,
                                  pyatspi.TEXT_BOUNDARY_WORD_START)
 
+        msg = "DEFAULT: Word at offset %i is '%s' (%i-%i)" % (offset, word, startOffset, endOffset)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if not word:
             self.sayCharacter(obj)
             return
@@ -3360,9 +3363,12 @@ class Script(script.Script):
 
 
         self.speakMisspelledIndicator(obj, startOffset)
-
         voice = self.speechGenerator.voice(string=word)
         word = self.utilities.adjustForRepeats(word)
+
+        msg = "DEFAULT: Word adjusted for repeats: '%s'" % word
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self._lastWord = word
         speech.speak(word, voice)
 

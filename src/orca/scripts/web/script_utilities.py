@@ -1388,6 +1388,7 @@ class Utilities(script_utilities.Utilities):
 
         if useCache:
             if self.findObjectInContents(obj, offset, self._currentWordContents, usingCache=True) != -1:
+                self._debugContentsInfo(obj, offset, self._currentWordContents, "Word (cached)")
                 return self._currentWordContents
 
         boundary = pyatspi.TEXT_BOUNDARY_WORD_START
@@ -1451,6 +1452,7 @@ class Utilities(script_utilities.Utilities):
         if useCache:
             self._currentWordContents = objects
 
+        self._debugContentsInfo(obj, offset, objects, "Word (not cached)")
         return objects
 
     def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
