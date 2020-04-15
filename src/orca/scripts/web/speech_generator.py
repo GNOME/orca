@@ -337,7 +337,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.isLandmark(obj) \
-           and not self._script.utilities.isDPub(obj):
+           and not self._script.utilities.isDPub(obj) \
+           and not args.get('inFlatReview'):
             return []
 
         role = args.get('role', obj.getRole())

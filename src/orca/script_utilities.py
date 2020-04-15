@@ -2083,9 +2083,10 @@ class Utilities:
                 return visibleCells
 
         objects = []
-        if role in [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_IMAGE] and root.name:
+        hasNameOrDescription = (root.name or root.description)
+        if role in [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_IMAGE] and hasNameOrDescription:
             objects.append(root)
-        elif "Text" in pyatspi.listInterfaces(root) and re.findall("\w+", root.queryText().getText(0, -1)):
+        elif "Text" in interfaces and re.match("\w+", root.queryText().getText(0, -1)):
             objects.append(root)
 
         for child in root:
@@ -2098,14 +2099,16 @@ class Utilities:
         if objects:
             return objects
 
-        containers = [pyatspi.ROLE_FILLER,
+        containers = [pyatspi.ROLE_CANVAS,
+                      pyatspi.ROLE_FILLER,
                       pyatspi.ROLE_IMAGE,
+                      pyatspi.ROLE_LINK,
                       pyatspi.ROLE_LIST_BOX,
                       pyatspi.ROLE_PANEL,
                       pyatspi.ROLE_SECTION,
                       pyatspi.ROLE_SCROLL_PANE,
                       pyatspi.ROLE_VIEWPORT]
-        if role in containers:
+        if role in containers and not hasNameOrDescription:
             return []
 
         return [root]

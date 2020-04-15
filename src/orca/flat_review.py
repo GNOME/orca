@@ -615,7 +615,7 @@ class Context:
                 lowerMin = lowerMid
             lowerMid = int((lowerMax - lowerMin) / 2) + lowerMin
 
-        msg = "FLAT REVIEW: Gettings lines for %s offsets %i-%i" % (accessible, upperMin, lowerMax)
+        msg = "FLAT REVIEW: Getting lines for %s offsets %i-%i" % (accessible, upperMin, lowerMax)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         lines = self._getLines(accessible, upperMin, lowerMax)
@@ -697,7 +697,7 @@ class Context:
             string = ""
             redundant = [pyatspi.ROLE_TABLE_ROW]
             if role not in redundant:
-                string = self.script.speechGenerator.getName(accessible)
+                string = self.script.speechGenerator.getName(accessible, inFlatReview=True)
 
             useless = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LABEL]
             if not string and role not in useless:
