@@ -3285,6 +3285,9 @@ class Script(script.Script):
             voice = self.speechGenerator.voice(string=line)
             line = self.utilities.adjustForLinks(obj, line, startOffset)
             line = self.utilities.adjustForRepeats(line)
+            if self.utilities.shouldVerbalizeAllPunctuation(obj):
+                line = self.utilities.verbalizeAllPunctuation(line)
+
             utterance = [line]
             utterance.extend(voice)
             speech.speak(utterance)
