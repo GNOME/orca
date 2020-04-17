@@ -2697,7 +2697,11 @@ class Script(script.Script):
         # Because some implementations are broken.
         string = self.utilities.insertedText(event)
 
-        if self.utilities.lastInputEventWasCommand():
+        if self.utilities.lastInputEventWasPageSwitch():
+            msg = "DEFAULT: Insertion is believed to be due to page switch"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            speakString = False
+        elif self.utilities.lastInputEventWasCommand():
             msg = "DEFAULT: Insertion is believed to be due to command"
             debug.println(debug.LEVEL_INFO, msg, True)
         elif self.utilities.isMiddleMouseButtonTextInsertionEvent(event):

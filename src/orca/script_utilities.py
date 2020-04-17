@@ -4936,6 +4936,16 @@ class Utilities:
         keyString, mods = self.lastKeyAndModifiers()
         return mods & keybindings.CTRL_MODIFIER_MASK
 
+    def lastInputEventWasPageSwitch(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if keyString.isnumeric():
+            return mods & keybindings.ALT_MODIFIER_MASK
+
+        if keyString in ["Page_Up", "Page_Down"]:
+            return mods & keybindings.CTRL_MODIFIER_MASK
+
+        return False
+
     def lastInputEventWasUnmodifiedArrow(self):
         keyString, mods = self.lastKeyAndModifiers()
         if not keyString in ["Left", "Right", "Up", "Down"]:
