@@ -1181,6 +1181,8 @@ class SpeechGenerator(generator.Generator):
            and not self._script.inSayAll() and args.get('total', 1) == 1:
             result = [messages.BLANK]
 
+        result[0] = self._script.utilities.adjustForRepeats(result[0])
+
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
             result[0] = self._script.utilities.verbalizeAllPunctuation(result[0])
 
