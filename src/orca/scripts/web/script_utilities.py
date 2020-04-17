@@ -66,6 +66,7 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
+        self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
@@ -139,6 +140,7 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
+        self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
@@ -393,7 +395,8 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
-        self.clearTextSelection(orca_state.locusOfFocus)
+        oldFocus = orca_state.locusOfFocus
+        self.clearTextSelection(oldFocus)
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         if grabFocus:
             self.grabFocus(obj)
@@ -409,7 +412,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: Caret set to %i in %s" % (offset, obj)
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-        if self._script.useFocusMode(obj) != self._script.inFocusMode():
+        if self._script.useFocusMode(obj, oldFocus) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
 
         if obj:
@@ -1007,7 +1010,6 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_PUSH_BUTTON,
                  pyatspi.ROLE_TOGGLE_BUTTON,
                  pyatspi.ROLE_TOOL_BAR,
-                 pyatspi.ROLE_TOOL_TIP,
                  pyatspi.ROLE_TREE,
                  pyatspi.ROLE_TREE_ITEM,
                  pyatspi.ROLE_TREE_TABLE]
@@ -1871,6 +1873,15 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: %s is top-level web application: %s (URI: %s)" % (obj, rv, uri)
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
+
+        return False
+
+    def forceBrowseModeForWebAppDescendant(self, obj):
+        if not self.isWebAppDescendant(obj):
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TOOL_TIP:
+            return obj.getState().contains(pyatspi.STATE_FOCUSED)
 
         return False
 
@@ -2774,6 +2785,23 @@ class Utilities(script_utilities.Utilities):
         self._isMenuDescendant[hash(obj)] = rv
         return rv
 
+    def isNavigableToolTipDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isNavigableToolTipDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isToolTip = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_TIP
+        if isToolTip(obj):
+            ancestor = obj
+        else:
+            ancestor = pyatspi.findAncestor(obj, isToolTip)
+        rv = ancestor and not self.isNonNavigablePopup(ancestor)
+        self._isNavigableToolTipDescendant[hash(obj)] = rv
+        return rv
+
     def isToolBarDescendant(self, obj):
         if not obj:
             return False
@@ -3601,7 +3629,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = obj.getRole() == pyatspi.ROLE_TOOL_TIP
+        rv = obj.getRole() == pyatspi.ROLE_TOOL_TIP \
+            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv

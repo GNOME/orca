@@ -778,7 +778,7 @@ class Script(default.Script):
 
         return self._browseModeIsSticky
 
-    def useFocusMode(self, obj):
+    def useFocusMode(self, obj, prevObj=None):
         """Returns True if we should use focus mode in obj."""
 
         if self._focusModeIsSticky:
@@ -798,7 +798,8 @@ class Script(default.Script):
             return False
 
         if not _settingsManager.getSetting('caretNavTriggersFocusMode') \
-           and self._lastCommandWasCaretNav:
+           and self._lastCommandWasCaretNav \
+           and not self.utilities.isNavigableToolTipDescendant(prevObj):
             msg = "WEB: Not using focus mode due to caret nav settings"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -816,6 +817,11 @@ class Script(default.Script):
             return True
 
         if self._inFocusMode and self.utilities.isWebAppDescendant(obj):
+            if self.utilities.forceBrowseModeForWebAppDescendant(obj):
+                msg = "WEB: Forcing browse mode for web app descendant %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
             msg = "WEB: Staying in focus mode because we're inside a web application"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1275,7 +1281,7 @@ class Script(default.Script):
 
         if not self._focusModeIsSticky \
            and not self._browseModeIsSticky \
-           and self.useFocusMode(newFocus) != self._inFocusMode:
+           and self.useFocusMode(newFocus, oldFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
         return True
@@ -1840,10 +1846,16 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = event.source.getRole()
         if self.utilities.isWebAppDescendant(event.source):
             if self._browseModeIsSticky:
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
                 debug.println(debug.LEVEL_INFO, msg, True)
+            elif role == pyatspi.ROLE_TOOL_TIP \
+                 and pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x and x == event.source):
+                msg = "WEB: Event believed to be side effect of tooltip navigation."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1856,7 +1868,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        role = event.source.getRole()
         if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2021,9 +2032,14 @@ class Script(default.Script):
             return True
 
         if self.utilities.isWebAppDescendant(event.source):
-            msg = "WEB: Event source is web app descendant"
+            if self._inFocusMode:
+                msg = "WEB: Event source is web app descendant and we're in focus mode"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
+            msg = "WEB: Event source is web app descendant and we're in browse mode"
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            return True
 
         obj, offset = self.utilities.getCaretContext()
         ancestor = self.utilities.commonAncestor(obj, event.source)

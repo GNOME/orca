@@ -508,8 +508,9 @@ formatting = {
             'unfocused': 'labelAndName + roleName',
             },
         pyatspi.ROLE_TOOL_TIP: {
-            'unfocused': 'labelAndName',
-            'basicWhereAmI': 'labelAndName'
+            'focused': 'leaving or roleName',
+            'unfocused': 'roleName + labelAndName',
+            'basicWhereAmI': 'roleName + labelAndName'
             },
         pyatspi.ROLE_TREE_ITEM: {
             'focused': 'expandableState',

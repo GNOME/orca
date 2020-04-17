@@ -1231,6 +1231,10 @@ LEAVING_PANEL = _("leaving panel.")
 # table and then navigates out of it.
 LEAVING_TABLE = _("leaving table.")
 
+# Translators: This message is presented when a user is navigating within a
+# tooltip in a web application and then navigates out of it.
+LEAVING_TOOL_TIP = _("leaving tooltip.")
+
 # Translators: This message is presented when a user is navigating within
 # a document container and then navigates out of it. The word or phrase
 # that follows "leaving" should be consistent with the translation provided

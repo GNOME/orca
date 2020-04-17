@@ -1756,13 +1756,14 @@ class SpeechGenerator(generator.Generator):
                     'ROLE_CONTENT_INSERTION',
                     'ROLE_CONTENT_MARK',
                     'ROLE_CONTENT_SUGGESTION',
-                    pyatspi.ROLE_FORM,
-                    pyatspi.ROLE_LANDMARK,
                     'ROLE_DPUB_LANDMARK',
                     'ROLE_DPUB_SECTION',
+                    pyatspi.ROLE_FORM,
+                    pyatspi.ROLE_LANDMARK,
                     pyatspi.ROLE_LIST,
                     pyatspi.ROLE_PANEL,
-                    pyatspi.ROLE_TABLE]
+                    pyatspi.ROLE_TABLE,
+                    pyatspi.ROLE_TOOL_TIP]
 
         enabled, disabled = [], []
         if self._script.inSayAll():
@@ -1774,6 +1775,7 @@ class SpeechGenerator(generator.Generator):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('sayAllContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
+                                pyatspi.ROLE_TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
                                 'ROLE_CONTENT_INSERTION',
                                 'ROLE_CONTENT_MARK',
@@ -1792,6 +1794,7 @@ class SpeechGenerator(generator.Generator):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
+                                pyatspi.ROLE_TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
                                 'ROLE_CONTENT_INSERTION',
                                 'ROLE_CONTENT_MARK',
@@ -1917,6 +1920,8 @@ class SpeechGenerator(generator.Generator):
                 result = ['']
         elif role == pyatspi.ROLE_FORM:
             result.append(messages.LEAVING_FORM)
+        elif role == pyatspi.ROLE_TOOL_TIP:
+            result.append(messages.LEAVING_TOOL_TIP)
         elif role == 'ROLE_CONTENT_DELETION':
             result.append(messages.CONTENT_DELETION_END)
         elif role == 'ROLE_CONTENT_INSERTION':
@@ -1979,6 +1984,9 @@ class SpeechGenerator(generator.Generator):
         stopAtRoles = args.get('stopAtRoles', [])
         stopAtRoles.extend([pyatspi.ROLE_APPLICATION, pyatspi.ROLE_MENU_BAR])
 
+        stopAfterRoles = args.get('stopAfterRoles', [])
+        stopAfterRoles.extend([pyatspi.ROLE_TOOL_TIP])
+
         presentOnce = [pyatspi.ROLE_BLOCK_QUOTE, pyatspi.ROLE_LIST]
 
         presentCommonAncestor = False
@@ -2010,7 +2018,7 @@ class SpeechGenerator(generator.Generator):
                 ancestors.append(parent)
                 ancestorRoles.append(parentRole)
 
-            if parent == commonAncestor:
+            if parent == commonAncestor or parentRole in stopAfterRoles:
                 break
 
             parent = parent.parent
@@ -2069,7 +2077,8 @@ class SpeechGenerator(generator.Generator):
                                'ROLE_DPUB_SECTION',
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
-                               pyatspi.ROLE_TABLE]
+                               pyatspi.ROLE_TABLE,
+                               pyatspi.ROLE_TOOL_TIP]
 
         result = []
         if self._script.utilities.isBlockquote(priorObj):

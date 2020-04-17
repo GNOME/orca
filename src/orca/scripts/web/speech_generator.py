@@ -83,7 +83,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if self._script.utilities.isLink(obj) \
            or self._script.utilities.isLandmark(obj) \
-           or self._script.utilities.isMath(obj):
+           or self._script.utilities.isMath(obj) \
+           or obj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return result
 
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
