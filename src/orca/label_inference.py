@@ -606,12 +606,15 @@ class LabelInference:
         if not firstRow or list(filter(self._isWidget, firstRow)):
             return None, []
 
-        cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
+        if colindex < 0:
+            return None, []
+
+        cells = [table.getAccessibleAt(i, colindex) for i in range(1, table.nRows)]
         cells = [x for x in cells if x is not None]
         if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
             return None, []
 
-        label, sources = self._createLabelFromContents(firstRow[col])
+        label, sources = self._createLabelFromContents(firstRow[colindex])
         if label:
             return label.strip(), sources
 
