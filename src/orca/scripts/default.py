@@ -2529,6 +2529,13 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
+            if child.getRole() == pyatspi.ROLE_PAGE_TAB and orca_state.locusOfFocus \
+               and child.name == orca_state.locusOfFocus.name \
+               and not state.contains(pyatspi.STATE_FOCUSED):
+                msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                break
+
             if not self.utilities.isLayoutOnly(child):
                 orca.setLocusOfFocus(event, child)
                 break
