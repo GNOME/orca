@@ -351,7 +351,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                          pyatspi.ROLE_IMAGE]
 
         if obj.parent and obj.name and obj.name == obj.parent.name \
-           and obj != orca_state.locusOfFocus and role not in alwaysPresent:
+           and obj != orca_state.locusOfFocus and role not in alwaysPresent \
+           and not args.get('inFlatReview'):
             return []
 
         # TODO - JD: Once the formatting strings are vastly cleaned up
