@@ -100,9 +100,13 @@ class EventManager:
         if isinstance(anydata, str) and len(anydata) > 100:
             anydata = "%s (...)" % anydata[0:100]
 
+        source = str(event.source)
+        if len(source) > 100:
+            source = "%s (...) ]" % source[0:100]
+
         debug.println(debug.LEVEL_INFO, '')
         msg = 'EVENT MANAGER: %s for %s in %s (%s, %s, %s)' % \
-              (event.type, event.source, event.host_application,
+              (event.type, source, event.host_application,
                event.detail1,event.detail2, anydata)
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -293,8 +297,11 @@ class EventManager:
         elif isinstance(e, input_event.BrailleEvent):
             data = "'%s'" % repr(e.event)
         elif not debug.eventDebugFilter or debug.eventDebugFilter.match(e.type):
+            anydata = e.any_data
+            if isinstance(anydata, str) and len(anydata) > 100:
+                anydata = "%s (...)" % anydata[0:100]
             data = "%s (%s,%s,%s) from %s" % \
-                   (e.source, e.detail1, e.detail2, e.any_data, e.host_application)
+                   (e.source, e.detail1, e.detail2, anydata, e.host_application)
         else:
             return
 
