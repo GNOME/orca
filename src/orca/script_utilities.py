@@ -2037,6 +2037,16 @@ class Utilities:
     def isListItemMarker(self, obj):
         return False
 
+    def hasPresentableText(self, obj):
+        if self.isStaticTextLeaf(obj):
+            return False
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return False
+
+        return bool(re.search(r"\w+", text.getText(0, -1)))
+
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []
@@ -2086,7 +2096,7 @@ class Utilities:
         hasNameOrDescription = (root.name or root.description)
         if role in [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_IMAGE] and hasNameOrDescription:
             objects.append(root)
-        elif "Text" in interfaces and re.match("\w+", root.queryText().getText(0, -1)):
+        elif self.hasPresentableText(root):
             objects.append(root)
 
         for child in root:

@@ -561,19 +561,14 @@ class Context:
         Returns a list of Zones.
         """
 
-        try:
-            text = accessible.queryText()
-        except NotImplementedError:
+        if not self.script.utilities.hasPresentableText(accessible):
             return []
-        else:
-            zones = []
+
+        zones = []
+        text = accessible.queryText()
 
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
-        if not re.search("[^\ufffc]", text.getText(0, -1)):
-            return []
-
-        # TODO - JD: Ditto.
         if "EditableText" in pyatspi.listInterfaces(accessible) \
            and accessible.getState().contains(pyatspi.STATE_SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)

@@ -1794,16 +1794,6 @@ class Utilities(script_utilities.Utilities):
 
         return contents
 
-    def hasPresentableText(self, obj):
-        if self.isStaticTextLeaf(obj):
-            return False
-
-        text = self.queryNonEmptyText(obj)
-        if not text:
-            return False
-
-        return bool(re.search(r"\w", text.getText(0, -1)))
-
     def updateCachedTextSelection(self, obj):
         if not self.inDocumentContent(obj):
             super().updateCachedTextSelection(obj)
