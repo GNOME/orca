@@ -2074,6 +2074,16 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.lastInputEventWasPageSwitch():
+            msg = "WEB: Deletion is believed to be due to page switch"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.utilities.isLiveRegion(event.source):
+            msg = "WEB: Ignoring deletion from live region"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2084,8 +2094,13 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.eventIsAutocompleteNoise(event):
-            msg = "WEB: Ignoring event believed to be autocomplete noise"
+        if self.utilities.textEventIsDueToDeletion(event):
+            msg = "WEB: Event believed to be due to editable text deletion"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if self.utilities.textEventIsDueToInsertion(event):
+            msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2094,13 +2109,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.textEventIsDueToDeletion(event):
-            msg = "WEB: Event believed to be due to editable text deletion"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self.utilities.textEventIsDueToInsertion(event):
-            msg = "WEB: Ignoring event believed to be due to text insertion"
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2157,6 +2167,22 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.lastInputEventWasPageSwitch():
+            msg = "WEB: Insertion is believed to be due to page switch"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.utilities.handleAsLiveRegion(event):
+            msg = "WEB: Event to be handled as live region"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.liveRegionManager.handleEvent(event)
+            return True
+
+        if self.utilities.eventIsEOCAdded(event):
+            msg = "WEB: Ignoring: Event was for embedded object char"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2167,30 +2193,19 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.eventIsAutocompleteNoise(event):
-            msg = "WEB: Ignoring: Event believed to be autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsEOCAdded(event):
-            msg = "WEB: Ignoring: Event was for embedded object char"
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "WEB: Ignoring: Event believed to be autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Clearing content cache due to text insertion"
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
-
-        if self.utilities.handleAsLiveRegion(event):
-            msg = "WEB: Event to be handled as live region"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.liveRegionManager.handleEvent(event)
-            return True
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
