@@ -2110,6 +2110,9 @@ class Script(script.Script):
 
     def _whereAmISelectedText(self, inputEvent, obj):
         text, startOffset, endOffset = self.utilities.allSelectedText(obj)
+        if self.utilities.shouldVerbalizeAllPunctuation(obj):
+            text = self.utilities.verbalizeAllPunctuation(text)
+
         if not text:
             msg = messages.NO_SELECTED_TEXT
         else:

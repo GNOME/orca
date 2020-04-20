@@ -1303,6 +1303,9 @@ class SpeechGenerator(generator.Generator):
                 if char[0] == "\n" and startOffset == caretOffset:
                     textContents = char[0]
 
+        if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
+            textContents = self._script.utilities.verbalizeAllPunctuation(textContents)
+
         self._script.generatorCache['textInformation'] = \
             [textContents, startOffset, endOffset, selected]
 
