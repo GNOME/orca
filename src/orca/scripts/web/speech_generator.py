@@ -724,9 +724,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateTableCellRow(obj, **args)
 
     def _generateRowHeader(self, obj, **args):
-        # TODO - JD: _lastCommandWasCaretNav is private.
-        if self._script.utilities.lastInputEventWasLineNav() \
-           and self._script._lastCommandWasCaretNav:
+        if self._script.utilities.lastInputEventWasLineNav():
             return []
 
         return super()._generateRowHeader(obj)

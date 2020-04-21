@@ -913,7 +913,10 @@ class Utilities(script_utilities.Utilities):
         elif role == pyatspi.ROLE_LIST_ITEM:
             rv = obj.parent.getRole() != pyatspi.ROLE_LIST
         elif role == pyatspi.ROLE_TABLE_CELL:
-            rv = not self.isTextBlockElement(obj)
+            if obj.getState().contains(pyatspi.STATE_EDITABLE):
+                rv = False
+            else:
+                rv = not self.isTextBlockElement(obj)
 
         self._isNonEntryTextWidget[hash(obj)] = rv
         return rv
@@ -1018,6 +1021,10 @@ class Utilities(script_utilities.Utilities):
         if role in roles:
             return True
 
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EDITABLE):
+            return False
+
         if role == pyatspi.ROLE_TABLE_CELL:
             if self.isFocusModeWidget(obj):
                 return True
@@ -1029,7 +1036,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role == pyatspi.ROLE_COMBO_BOX:
-            return not self.isEditableComboBox(obj)
+            return True
 
         if role == pyatspi.ROLE_EMBEDDED:
             return not self._script.browseModeIsSticky()
@@ -2727,8 +2734,7 @@ class Utilities(script_utilities.Utilities):
         if self.isGridDescendant(obj):
             return not self._script.inFocusMode()
 
-        # TODO - JD: This is private.
-        if self._script._lastCommandWasCaretNav:
+        if self.lastInputEventWasLineNav():
             return False
 
         return True
