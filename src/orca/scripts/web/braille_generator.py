@@ -117,6 +117,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+           and self._script.utilities.isCodeDescendant(obj):
+            return []
+
         if obj.name:
             name = obj.name
             if not self._script.utilities.hasExplicitName(obj):
