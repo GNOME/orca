@@ -1827,6 +1827,9 @@ class Utilities(script_utilities.Utilities):
             newSubtree = self._getSubtree(start, end)
             descendants = sorted(set(oldSubtree).union(newSubtree), key=functools.cmp_to_key(_cmp))
 
+        if not descendants:
+            return False
+
         for descendant in descendants:
             if descendant not in (oldStart, oldEnd, start, end) \
                and pyatspi.findAncestor(descendant, lambda x: x in descendants):
@@ -4200,18 +4203,22 @@ class Utilities(script_utilities.Utilities):
         if event.source.getState().contains(pyatspi.STATE_EDITABLE):
             return False
 
-        oldFocus = oldFocus or orca_state.locusOfFocus
-        linkURI = self.uri(oldFocus)
         docURI = self.documentFrameURI()
-        if linkURI == docURI:
-            return True
+        fragment = urllib.parse.urlparse(docURI).fragment
+        if not fragment:
+            return False
 
         sourceID = self._getID(event.source)
-        if sourceID:
-            parseResult = urllib.parse.urlparse(docURI)
-            return parseResult.fragment == sourceID
+        if sourceID and fragment == sourceID:
+            return True
 
-        return False
+        oldFocus = oldFocus or orca_state.locusOfFocus
+        if self.isLink(oldFocus):
+            link = oldFocus
+        else:
+            link = pyatspi.findAncestor(oldFocus, self.isLink)
+
+        return link and self.uri(link) == docURI
 
     def isChildOfCurrentFragment(self, obj):
         parseResult = urllib.parse.urlparse(self.documentFrameURI())

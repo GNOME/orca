@@ -4969,6 +4969,12 @@ class Utilities:
 
         return True
 
+    def lastInputEventWasCaretNav(self):
+        return self.lastInputEventWasCharNav() \
+            or self.lastInputEventWasWordNav() \
+            or self.lastInputEventWasLineNav() \
+            or self.lastInputEventWasLineBoundaryNav()
+
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
         if not keyString in ["Left", "Right"]:

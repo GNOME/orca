@@ -1509,13 +1509,8 @@ class Script(default.Script):
             self._saveFocusedObjectInfo(orca_state.locusOfFocus)
             return True
 
-        if self.utilities.inContextMenu():
-            msg = "WEB: Event ignored: In context menu"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.eventIsAutocompleteNoise(event):
-            msg = "WEB: Event ignored: Autocomplete noise"
+        if not self.utilities.eventIsFromLocusOfFocusDocument(event):
+            msg = "WEB: Event ignored: Not from locus of focus document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1525,83 +1520,20 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
+        if self.utilities.textEventIsDueToDeletion(event):
+            msg = "WEB: Event handled: Updating position due to deletion"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._saveLastCursorPosition(event.source, event.detail1)
+            return True
+
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "WEB: Event ignored: Autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self._inFocusMode and self.utilities.caretMovedOutsideActiveGrid(event):
             msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
             debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
-
-        if self.utilities.caretMovedToSamePageFragment(event):
-            msg = "WEB: Event handled: Caret moved to fragment"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, obj)
-            return True
-
-        # We want to do this check after the same-page-fragment check because some
-        # fragments start with non-navigable text objects.
-        if self.utilities.textEventIsForNonNavigableTextObject(event):
-            msg = "WEB: Event ignored: Event source is non-navigable text object"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.lastInputEventWasPageNav() \
-           and not self.utilities.isLink(event.source) \
-           and not event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
-            msg = "WEB: Event handled: Caret moved due to scrolling"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, obj, force=True)
-            return True
-
-        if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
-            msg = "WEB: In content editable with embedded objects"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            if not self.utilities.eventIsFromLocusOfFocusDocument(event):
-                msg = "WEB: Event ignored: Not from locus of focus document"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return True
-
-            self.utilities.setCaretContext(obj, offset)
-            notify = not self.utilities.lastInputEventWasCharNav() \
-                     and not self.utilities.isEntryDescendant(obj)
-            orca.setLocusOfFocus(event, event.source, notify)
-            return False
-
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
-            if event.source.getRole() == pyatspi.ROLE_LINK:
-                msg = "WEB: Event handled: Was for non-text link"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                self.utilities.setCaretContext(event.source, event.detail1)
-                orca.setLocusOfFocus(event, event.source)
-            else:
-                msg = "WEB: Event ignored: Was for non-text non-link"
-                debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        char = text.getText(event.detail1, event.detail1+1)
-        try:
-            isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
-        except:
-            isEditable = False
-
-        if not char and not isEditable:
-            msg = "WEB: Event ignored: Was for empty char in non-editable text"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if char == self.EMBEDDED_OBJECT_CHARACTER:
-            if not self.utilities.isTextBlockElement(obj):
-                msg = "WEB: Event ignored: Was for embedded non-textblock"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return True
-
-            msg = "WEB: Setting locusOfFocus, context to: %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, obj)
             return True
 
         if self.utilities.treatEventAsSpinnerValueChange(event):
@@ -1611,18 +1543,32 @@ class Script(default.Script):
             self._presentTextAtNewCaretPosition(event)
             return True
 
-        if not _settingsManager.getSetting('caretNavigationEnabled') \
-           or self._inFocusMode or isEditable:
-            msg = "WEB: Setting locusOfFocus, context to: %s, %i" % (event.source, event.detail1)
+        if not self.utilities.queryNonEmptyText(event.source):
+            msg = "WEB: Event ignored: Was for object we're treating as textless"
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.utilities.setCaretContext(event.source, event.detail1)
-            notify = event.source.getState().contains(pyatspi.STATE_FOCUSED)
-            orca.setLocusOfFocus(event, event.source, notify)
-            return False
+            return True
 
-        self.utilities.setCaretContext(obj, offset)
-        msg = "WEB: Setting context to: %s, %i" % (obj, offset)
+        obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
+        notify = force = handled = False
+
+        if self.utilities.lastInputEventWasPageNav():
+            msg = "WEB: Caret moved due to scrolling."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            notify = force = handled = True
+
+        elif self.utilities.caretMovedToSamePageFragment(event):
+            msg = "WEB: Caret moved to fragment."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            notify = force = handled = True
+
+        elif self.utilities.lastInputEventWasCaretNav():
+            msg = "WEB: Caret moved to due native caret navigation."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        msg = "WEB: Setting context and focus to: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
+        self.utilities.setCaretContext(obj, offset)
+        orca.setLocusOfFocus(event, obj, notify, force)
         return False
 
     def onCheckedChanged(self, event):

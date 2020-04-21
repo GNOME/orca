@@ -2309,6 +2309,8 @@ class Script(script.Script):
         else:
             start, end, string = self.utilities.getCachedTextSelection(obj)
             if string and self.utilities.handleTextSelectionChange(obj):
+                msg = "DEFAULT: Event handled as text selection change"
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         msg = "DEFAULT: Presenting text at new caret position"
