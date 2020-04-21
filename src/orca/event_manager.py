@@ -157,6 +157,12 @@ class EventManager:
             msg = 'ERROR: Event is from potentially-defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
+
+        if state.isEmpty():
+            msg = 'EVENT MANAGER: Ignoring event due to empty state set'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if state.contains(pyatspi.STATE_DEFUNCT):
             msg = 'ERROR: Event is from defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
