@@ -74,6 +74,20 @@ class BrailleGenerator(generator.Generator):
         globalsDict['Link'] = braille.Link
         globalsDict['asString'] = self.asString
 
+    def _isCandidateFocusedRegion(self, obj, region):
+        if not isinstance(region, (braille.Component, braille.Text)):
+            return False
+
+        try:
+            sameRole = obj.getRole() == region.accessible.getRole()
+            sameName = obj.name == region.accessible.name
+        except:
+            msg = 'ERROR: Could not get names, roles for %s, %s' % (obj, region.accessible)
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        return sameRole and sameName
+
     def generateBraille(self, obj, **args):
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
@@ -117,6 +131,12 @@ class BrailleGenerator(generator.Generator):
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break
+        else:
+            candidates = list(filter(lambda x: self._isCandidateFocusedRegion(obj, x), result))
+            msg = 'INFO: Could not determine focused region. Candidates: %i' % len(candidates)
+            debug.println(debug.LEVEL_INFO, msg)
+            if len(candidates) == 1:
+                focusedRegion = candidates[0]
 
         return [result, focusedRegion]
 
