@@ -4141,10 +4141,19 @@ class Utilities(script_utilities.Utilities):
     def eventIsFromLocusOfFocusDocument(self, event):
         source = self.getDocumentForObject(event.source)
         focus = self.getDocumentForObject(orca_state.locusOfFocus)
-        rv = source and focus and source == focus
-        msg = "WEB: Event doc %s is same as focus doc %s: %s" % (source, focus, rv)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return rv
+        if not (source and focus):
+            return False
+
+        if source == focus:
+            return True
+
+        if self.isZombie(focus) and not self.isZombie(source):
+            if self.activeDocument() == source:
+                msg = "WEB: Treating active doc as locusOfFocus doc"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
+        return False
 
     def textEventIsDueToDeletion(self, event):
         if not self.inDocumentContent(event.source) \
