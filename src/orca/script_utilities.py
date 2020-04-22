@@ -547,7 +547,9 @@ class Utilities:
             return name
 
         if 'Text' in pyatspi.listInterfaces(obj):
-            displayedText = obj.queryText().getText(0, -1)
+            # We should be able to use -1 for the final offset, but that crashes Nautilus.
+            text = obj.queryText()
+            displayedText = text.getText(0, text.characterCount)
             if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
                 displayedText = None
 
