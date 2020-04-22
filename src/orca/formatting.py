@@ -691,6 +691,10 @@ formatting = {
                                      asString(labelOrName + expandableState + availability) + asString(accelerator),\
                                      indicator=asString(checkedStateIfCheckable))]'
             },
+        pyatspi.ROLE_NOTIFICATION: {
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]))'
+            },
         pyatspi.ROLE_PAGE: {
             'unfocused': BRAILLE_TEXT
             },
