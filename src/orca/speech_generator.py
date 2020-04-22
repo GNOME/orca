@@ -219,6 +219,9 @@ class SpeechGenerator(generator.Generator):
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 
+        if priorObj == obj:
+            return []
+
         acss = self.voice(SYSTEM)
         result = generator.Generator._generateDescription(self, obj, **args)
         if result:
