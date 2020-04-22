@@ -2866,6 +2866,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isFigure(obj):
             rv = False
+        elif role == pyatspi.ROLE_PANEL:
+            rv = not self.hasExplicitName(obj)
         elif role == pyatspi.ROLE_TABLE_ROW and not state.contains(pyatspi.STATE_EXPANDABLE):
             rv = not self.hasExplicitName(obj)
         else:
