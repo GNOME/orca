@@ -1559,12 +1559,13 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        char = text.getText(offset, offset + 1)
-        if char == "\n":
-            msg = "WEB: %s offset %i is end of line: char at offset is newline" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+        # Do not treat a literal newline char as the end of line. When there is an
+        # actual newline character present, user agents should give us the right value
+        # for the line at that offset. Here we are trying to figure out where asking
+        # for the line at offset will give us the next line rather than the line where
+        # the cursor is physically blinking.
 
+        char = text.getText(offset, offset + 1)
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             prevExtents = self.getExtents(obj, offset - 1, offset)
             thisExtents = self.getExtents(obj, offset, offset + 1)
