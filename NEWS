@@ -1,3 +1,61 @@
+3.36.2 - 23 April 2020
+
+Chromium:
+
+ * Fix chattiness issue resulting from failing to consider the prior
+   object when generating labelOrName
+
+ * Improve responsiveness of text selection in large objects
+
+ * Prevent double-speaking of ARIA combobox value
+
+ * Don't speak child position for popup menus (it's always 1 of 1)
+
+Web:
+
+ * Fix bug causing us to present stale value information for ARIA
+   range widgets
+
+ * Don't present load completed or page summary information if we are
+   in focus mode for a valid object
+
+ * Don't present loading message from pages which have no URI (fixes
+   some chattiness when launching Firefox)
+
+ * Work harder to find presentable text for ARIA alert role
+
+ * Don't iterate through all children of very complex SVGs (improves
+   performance)
+
+ * Only present comment role when first entering the comment (chattiness)
+
+ * Fix bug causing us to not present text which is directly inside a
+   scroll pane
+
+ * Fix bug causing us to present stale information in rich-text editors
+
+Mouse Review:
+
+ * Fix mouse review on some web elements after scrolling
+
+General:
+
+ * Don't present position in list for comboboxes which lack children
+
+ * Fix bug causing us to not present changes in already-focused terminal
+   when Orca is launched
+
+ * Improve presentation of status bar labels
+
+ * Fix bug causing us to not echo text insertions
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   oc            Occitan               Quentin PAGÈS
+   sl            Slovenian             Matej Urbančič
+
+=========
+
 3.36.1 - 11 March 2020
 
 Web:
