@@ -1,3 +1,141 @@
+3.37.1 - 23 April 2020
+
+VSCode:
+
+As a consequence of feature implementation and bug fixes described below
+under "Chromium" and "Web," Orca support for VSCode has been improved
+significantly. Users are encouraged to test Orca with VSCode Insiders
+build, where Microsoft has many accessibility fixes to work with Orca.
+
+Chromium:
+
+ * Improve label inference for form fields without author-provided names
+
+ * Fix issue causing us to present the previous line in contenteditable
+
+ * Fix chattiness issue resulting from failing to consider the prior
+   object when generating labelOrName
+
+ * Fix false positive on identifying list item marker
+
+ * Prevent double-speaking of ARIA combobox value
+
+ * Don't speak child position for popup menus (it's always 1 of 1)
+
+ * Attempt to identify and work around possible missing window events
+
+ * Improve responsiveness of text selection in large objects
+
+Web:
+
+ * Support navigation within focusable tooltips in web applications
+
+ * Update Orca to handle new mappings for ARIA alert and alertdialog
+
+ * Add support for new ARIA code role
+
+ * Multiple performance improvements to event handling
+
+ * Ensure we always present ARIA groups with author-provided names
+
+ * Improve behavior navigating in tables in web-based rich-text editors
+
+ * Ensure we adjust text for repeated characters even in browse mode
+
+ * Fix bug causing us to present stale value information for ARIA
+   range widgets
+
+ * Don't announce returning to browse mode when page is loading
+
+ * Don't present load completed or page summary information if we are
+   in focus mode for a valid object
+
+ * Don't present loading message from pages which have no URI (fixes
+   some chattiness when launching Firefox)
+
+ * Ensure more objects with info get presented in flat review
+
+ * General improvements for presentation of ARIA comboboxes
+
+ * Don't iterate through all children of very complex SVGs (improves
+   performance)
+
+ * Ignore caret-moved events from outside the active grid in focus mode
+   (fixes chattiness and also incorrectly updating our location)
+
+ * Don't infer labels for any web app descendant (names must come from
+   authors in ARIA apps)
+
+ * Ensure we handle selection-change events from web app descendants
+
+ * Ensure we present the name of focused web documents
+
+ * Update focus when web app descendant claims focus, unless browse mode
+   is sticky
+
+ * Only present comment role when first entering the comment (chattiness)
+
+ * Fix bug causing us to not present text which is directly inside a
+   scroll pane
+
+ * Treat treeitems as a whole for the purpose of caret navigation
+
+ * Prevent Orca from combining words into a single word in web content
+   when navigating by word
+
+ * Fix several issues related to rich-text editors in web apps
+
+Thunderbird:
+
+ * Fix bug causing us to incorrectly update the focused location when
+   navigating in Settings
+
+Mouse Review:
+
+ * Do not announce redundant information when enabling mouse review
+
+ * Fix window list the second time mouse review gets enabled
+
+ * Fix window detection with more than one workspace
+
+ * Ensure we compare the top level document with the active one
+
+ * Fix mouse review on some web elements after scrolling
+
+Chat apps:
+
+ * Fix false positive with autocompleted text event (causing us to
+   present membership count changes, e.g. in Pidgin)
+
+General:
+
+ * Reduce chattiness from page tab selection events following focus
+
+ * Reduce chattiness from text insertions resulting from page tab switch
+
+ * Don't re-present the description if the locusOfFocus hasn't changed
+
+ * Don't present position in list for comboboxes which lack children
+
+ * Fix bug causing us to not present changes in already-focused terminal
+   when Orca is launched
+
+ * Only present the status bar if it is showing and visible (increases
+   likelihood of Orca finding the right status bar when command to
+   speak the status bar is given)
+
+ * Prevent double-speaking of static text in alerts and other containers
+
+ * Speak "alert" role before its name rather than after
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   nl            Dutch                 Justin van Steijn
+   sl            Slovenian             Matej Urbančič
+   zh_CN         Chinese (China)       Dz Chen
+
+=========
+
 3.36.1 - 11 March 2020
 
 Web:
