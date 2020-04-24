@@ -580,6 +580,9 @@ formatting = {
                              + (childWidget and ([Region(" ")] + childWidget))))'
             },
         #pyatspi.ROLE_ARROW: 'default'
+        pyatspi.ROLE_BLOCK_QUOTE: {
+            'unfocused': BRAILLE_TEXT + ' + (roleName and [Region(" " + asString(roleName + nestingLevel))])',
+            },
         pyatspi.ROLE_CANVAS: {
             'unfocused': '[Component(obj,\
                                      asString(((label + displayedText + imageDescription) or name) + roleName))]'
