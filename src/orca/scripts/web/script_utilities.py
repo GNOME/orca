@@ -83,7 +83,6 @@ class Utilities(script_utilities.Utilities):
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
-        self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
@@ -157,7 +156,6 @@ class Utilities(script_utilities.Utilities):
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
-        self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
@@ -3290,30 +3288,6 @@ class Utilities(script_utilities.Utilities):
     def getComboBoxValue(self, obj):
         attrs = self.objectAttributes(obj, False)
         return attrs.get("valuetext", super().getComboBoxValue(obj))
-
-    def isEditableDescendantOfComboBox(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isEditableDescendantOfComboBox(obj)
-
-        rv = self._isEditableDescendantOfComboBox.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not state.contains(pyatspi.STATE_EDITABLE):
-            return False
-
-        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
-        rv = pyatspi.findAncestor(obj, isComboBox) is not None
-
-        self._isEditableDescendantOfComboBox[hash(obj)] = rv
-        return rv
 
     def isEditableComboBox(self, obj):
         if not (obj and self.inDocumentContent(obj)):
