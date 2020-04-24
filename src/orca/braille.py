@@ -1192,7 +1192,7 @@ def refresh(panToCursor=True,
             if cursorOffset >= (viewport[0] + _displaySize[0]):
                 viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
 
-    startPos, endPos = _adjustForWordWrap()
+    startPos, endPos = _adjustForWordWrap(targetCursorCell)
     viewport[0] = startPos
 
     # Now normalize the cursor position to BrlTTY, which uses 1 as
@@ -1413,10 +1413,10 @@ def displayKeyEvent(event):
         msg = "%s %s" % (keyname, lockingStateString)
         displayMessage(msg, flashTime=settings.brailleFlashTime)
 
-def _adjustForWordWrap():
+def _adjustForWordWrap(targetCursorCell):
     startPos = viewport[0]
     endPos = startPos + _displaySize[0]
-    msg = "BRAILLE: Current range: (%i, %i)." % (startPos, endPos)
+    msg = "BRAILLE: Current range: (%i, %i). Target cell: %i." % (startPos, endPos, targetCursorCell)
     debug.println(debug.LEVEL_INFO, msg, True)
 
     if not _lines or not settings.enableBrailleWordWrap:
@@ -1424,7 +1424,7 @@ def _adjustForWordWrap():
 
     line = _lines[viewport[1]]
     lineString, focusOffset, attributeMask, ranges = line.getLineInfo()
-    ranges = list(filter(lambda x: x[0] <= startPos < x[1], ranges))
+    ranges = list(filter(lambda x: x[0] <= startPos + targetCursorCell < x[1], ranges))
     if ranges:
         msg = "BRAILLE: Adjusted range: (%i, %i)" % (ranges[0][0], ranges[-1][1])
         debug.println(debug.LEVEL_INFO, msg, True)
