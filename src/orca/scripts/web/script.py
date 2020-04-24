@@ -1266,6 +1266,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.lastInputEventWasLineNav() and self.utilities.isZombie(oldFocus):
+            msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line contents."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
         else:
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1476,6 +1481,19 @@ class Script(default.Script):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+
+        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if not obj or self.utilities.isZombie(obj):
+            obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
+            if obj:
+                msg = "WEB: Event handled by updating locusOfFocus and context"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, obj, True)
+                self.utilities.setCaretContext(obj, offset)
+                return True
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
