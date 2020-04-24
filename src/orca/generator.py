@@ -775,6 +775,18 @@ class Generator:
         result.append(text)
         return result
 
+    def _generateSortOrder(self, obj, **args):
+        if not self._script.utilities.isSorted(obj):
+            return []
+
+        if self._script.utilities.isAscending(obj):
+            return [object_properties.SORT_ORDER_ASCENDING]
+
+        if self._script.utilities.isDescending(obj):
+            return [object_properties.SORT_ORDER_DESCENDING]
+
+        return [object_properties.SORT_ORDER_OTHER]
+
     def _generateTableCell2ChildLabel(self, obj, **args):
         """Returns an array of strings for use by speech and braille for the
         label of a toggle in a table cell that has a special 2 child

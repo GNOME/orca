@@ -465,6 +465,19 @@ ROLE_VISITED_LINK = _("visited link")
 # activates the button.
 ROLE_MENU_BUTTON = _("menu button")
 
+# Translators: This string refers to a row or column whose sort-order has been set
+# to ascending.
+SORT_ORDER_ASCENDING = _("sorted ascending")
+
+# Translators: This string refers to a row or column whose sort-order has been set
+# to descending.
+SORT_ORDER_DESCENDING = _("sorted descending")
+
+# Translators: This string refers to a row or column whose sort-order has been set,
+# but the nature of the sort order is unknown or something other than ascending or
+# descending.
+SORT_ORDER_OTHER = _("sorted")
+
 # Translators: This is a state which applies to elements in document content
 # which have an "onClick" action.
 STATE_CLICKABLE = _("clickable")
@@ -609,6 +622,7 @@ INVALID_INDICATORS_SPEECH = \
      STATE_INVALID_GRAMMAR_SPEECH]
 RADIO_BUTTON_INDICATORS_SPEECH = \
     [STATE_UNSELECTED_RADIO_BUTTON, STATE_SELECTED_RADIO_BUTTON]
+
 SWITCH_INDICATORS_SPEECH = [STATE_OFF_SWITCH, STATE_ON_SWITCH]
 TOGGLE_BUTTON_INDICATORS_SPEECH = \
     [STATE_NOT_PRESSED, STATE_PRESSED]

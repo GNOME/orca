@@ -1397,6 +1397,12 @@ class Utilities:
 
         return _settingsManager.getSetting('readFullRowInDocumentTable')
 
+    def isAscending(self, obj):
+        return False
+
+    def isDescending(self, obj):
+        return False
+
     def isFocusableLabel(self, obj):
         try:
             role = obj.getRole()

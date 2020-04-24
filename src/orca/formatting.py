@@ -167,7 +167,8 @@ formatting = {
             'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_COLUMN_HEADER: {
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
+            'focused': 'labelAndName + roleName + pause + sortOrder',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder'
             },
         pyatspi.ROLE_COMBO_BOX: {
             'focused': 'labelOrName + roleName + expandableState',
@@ -413,7 +414,8 @@ formatting = {
             'basicWhereAmI': 'ancestors + labelOrName + roleName + radioState + accelerator + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_ROW_HEADER: {
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
+            'focused': 'labelAndName + roleName + pause + sortOrder',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder'
             },
         pyatspi.ROLE_SCROLL_BAR: {
             'focused': 'value',
@@ -597,7 +599,10 @@ formatting = {
                                      asString(label + displayedText + roleName + availability) + asString(accelerator),\
                                      indicator=asString(checkedState))]'
             },
-        #pyatspi.ROLE_COLUMN_HEADER: 'default'
+        pyatspi.ROLE_COLUMN_HEADER: {
+            'unfocused': '[Component(obj,\
+                                     asString(((substring and currentLineText) or labelAndName) + roleName + sortOrder))]',
+            },
         pyatspi.ROLE_COMBO_BOX: {
             'unfocused': '[Component(obj, asString(labelOrName + value + roleName), \
                                      labelOrName and (len(asString(labelOrName)) + 1) or 0)]'
@@ -744,7 +749,10 @@ formatting = {
                                      + asString(accelerator),\
                                      indicator=asString(radioState))]'
             },
-        #pyatspi.ROLE_ROW_HEADER: 'default'
+        pyatspi.ROLE_ROW_HEADER: {
+            'unfocused': '[Component(obj,\
+                                     asString(((substring and currentLineText) or labelAndName) + roleName + sortOrder))]',
+            },
         pyatspi.ROLE_SCROLL_BAR: {
             'unfocused': '[Component(obj,\
                                      asString(labelOrName + value + roleName + required))]'

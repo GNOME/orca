@@ -2650,6 +2650,18 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
+    def isSorted(self, obj):
+        attrs = self.objectAttributes(obj, False)
+        return not attrs.get("sort") in ("none", None)
+
+    def isAscending(self, obj):
+        attrs = self.objectAttributes(obj, False)
+        return attrs.get("sort") == "ascending"
+
+    def isDescending(self, obj):
+        attrs = self.objectAttributes(obj, False)
+        return attrs.get("sort") == "descending"
+
     def _rowAndColumnIndices(self, obj):
         rowindex = colindex = None
 
@@ -2866,6 +2878,8 @@ class Utilities(script_utilities.Utilities):
         elif self.isFeed(obj):
             rv = False
         elif self.isFigure(obj):
+            rv = False
+        elif role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER]:
             rv = False
         elif role == pyatspi.ROLE_PANEL:
             rv = not self.hasExplicitName(obj)

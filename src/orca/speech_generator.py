@@ -951,6 +951,13 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _generateSortOrder(self, obj, **args):
+        result = super()._generateSortOrder(obj, **args)
+        if result:
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
     def _generateNewRowHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the row header for an object
