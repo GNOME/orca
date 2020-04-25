@@ -1180,7 +1180,10 @@ def refresh(panToCursor=True,
     # right of the display if we need to pan right.
     #
     if panToCursor and (cursorOffset >= 0):
-        if targetCursorCell:
+        if len(string) <= _displaySize[0] \
+           and cursorOffset < _displaySize[0]:
+            viewport[0] = 0
+        elif targetCursorCell:
             viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
         elif cursorOffset < viewport[0]:
             viewport[0] = max(0, cursorOffset)
