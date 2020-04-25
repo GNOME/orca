@@ -4627,9 +4627,7 @@ class Utilities(script_utilities.Utilities):
                 return obj, 0
 
         if text and offset >= text.characterCount:
-            if self.isContentEditableWithEmbeddedObjects(obj) \
-               and not self.lastInputEventWasLineNav() \
-               and not self.lastInputEventWasLineBoundaryNav():
+            if self.isContentEditableWithEmbeddedObjects(obj) and self.lastInputEventWasCharNav():
                 nextObj, nextOffset = self.nextContext(obj, text.characterCount)
                 if not nextObj:
                     msg = "WEB: No next object found at end of contenteditable %s" % obj
