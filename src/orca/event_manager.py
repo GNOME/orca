@@ -386,6 +386,7 @@ class EventManager:
             return False
 
         defaultScript = _scriptManager.getDefaultScript()
+        defaultScript.idleMessage()
         _scriptManager.setActiveScript(defaultScript, 'No focus')
         return False
 

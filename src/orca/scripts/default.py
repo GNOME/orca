@@ -3902,6 +3902,13 @@ class Script(script.Script):
 
             braille.displayMessage(message, flashTime=duration)
 
+    def idleMessage(self):
+        """Convenience method to tell speech and braille engines to hand off
+        control to other screen readers."""
+
+        if _settingsManager.getSetting('enableBraille'):
+            braille.idleMessage()
+
     @staticmethod
     def __play(sounds, interrupt=True):
         if not sounds:
