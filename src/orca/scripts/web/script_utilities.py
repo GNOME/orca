@@ -1019,6 +1019,11 @@ class Utilities(script_utilities.Utilities):
         if role in roles:
             return True
 
+        if role == pyatspi.ROLE_ENTRY:
+            if obj.childCount == 1 and self.isFakePlaceholderForEntry(obj[0]):
+                return True
+            return False
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_EDITABLE):
             return False
@@ -4249,7 +4254,9 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
-        hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles()
+        hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles() \
+            and not self.isFakePlaceholderForEntry(x)
+
         if role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
             rv = pyatspi.findDescendant(obj, hasTextBlockRole)
         elif state.contains(pyatspi.STATE_EDITABLE):
