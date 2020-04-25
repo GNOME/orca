@@ -255,7 +255,6 @@ sayAllContextList            = True
 sayAllContextTable           = True
 
 # Braille
-tty = 7
 enableBraille                  = True
 enableBrailleMonitor           = False
 enableBrailleContext           = True

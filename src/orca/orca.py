@@ -402,7 +402,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     if _settingsManager.getSetting('enableBraille'):
         try:
-            braille.init(_processBrailleEvent, settings.tty)
+            braille.init(_processBrailleEvent)
         except:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
