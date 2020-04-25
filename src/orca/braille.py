@@ -1117,7 +1117,7 @@ def refresh(panToCursor=True,
 
     if len(_lines) == 0:
         if not _brlAPIRunning:
-            init(_callback, settings.tty)
+            init(_callback)
         if _brlAPIRunning:
             try:
                 _brlAPI.writeText("", 0)
@@ -1223,7 +1223,7 @@ def refresh(panToCursor=True,
 
     submask += '\x00' * (len(substring) - len(submask))
     if not _brlAPIRunning:
-        init(_callback, settings.tty)
+        init(_callback)
     if _brlAPIRunning:
         writeStruct = brlapi.WriteStruct()
         writeStruct.regionBegin = 1
@@ -1255,7 +1255,7 @@ def refresh(panToCursor=True,
             writeStruct.attrOr = submask
 
         if not _brlAPIRunning:
-            init(_callback, settings.tty)
+            init(_callback)
         if _brlAPIRunning:
             try:
                 _brlAPI.write(writeStruct)
@@ -1615,7 +1615,7 @@ def setupKeyRanges(keys):
     -keys: a list of BrlAPI commands.
     """
     if not _brlAPIRunning:
-        init(_callback, settings.tty)
+        init(_callback)
     if not _brlAPIRunning:
         return
 
@@ -1634,12 +1634,11 @@ def setupKeyRanges(keys):
 
     _brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
 
-def init(callback=None, tty=7):
+def init(callback=None):
     """Initializes the braille module, connecting to the BrlTTY driver.
 
     Arguments:
     - callback: the method to call with a BrlTTY input event.
-    - tty: the tty port to take ownership of (default = 7)
     Returns False if BrlTTY cannot be accessed or braille has
     not been enabled.
     """
@@ -1680,11 +1679,11 @@ def init(callback=None, tty=7):
                     "Braille module has been initialized using XDG_VTNR=" \
                     + "%s" % vtnr)
             except:
-                _brlAPI.enterTtyMode(tty)
+                _brlAPI.enterTtyModeWithPath()
                 _brlAPIRunning = True
                 debug.println(
                     debug.LEVEL_CONFIGURATION,
-                    "Braille module has been initialized using tty=%d" % tty)
+                    "Braille module has been initialized using no WINDOWPATH or XDG_VTNR")
 
         # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
         # Vario is 40 so we hardcode it to 1 for now.]]]
