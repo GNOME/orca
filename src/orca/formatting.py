@@ -761,9 +761,7 @@ formatting = {
             'unfocused': 'asPageTabOrScrollPane'
             },
         pyatspi.ROLE_SECTION: {
-            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
-                          or ([Component(obj, asString(labelAndName + roleName))]\
-                             + (childWidget and ([Region(" ")] + childWidget))))'
+            'unfocused': BRAILLE_TEXT
             },
         #'REAL_ROLE_SCROLL_PANE': 'default'
         pyatspi.ROLE_SLIDER: {
