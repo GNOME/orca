@@ -177,7 +177,7 @@ class Backend:
             dump(prefs, settingsFile, indent=4)
 
     def setFirstStart(self, value=False):
-        """Set firstStart. This user-configurable settting is primarily
+        """Set firstStart. This user-configurable setting is primarily
         intended to serve as an indication as to whether or not initial
         configuration is needed."""
         self.general['firstStart'] = value

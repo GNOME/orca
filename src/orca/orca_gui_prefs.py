@@ -361,7 +361,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._initGUIState()
 
     def _getACSSForVoiceType(self, voiceType):
-        """Return the ACSS value for the the given voice type.
+        """Return the ACSS value for the given voice type.
 
         Arguments:
         - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM

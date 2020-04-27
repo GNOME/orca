@@ -323,7 +323,7 @@ class Region:
         Arguments:
         - getLinkMask: Whether or not we should take the time to get
           the attributeMask for links. Reasons we might not want to
-          include knowning that we will fail and/or it taking an
+          include knowing that we will fail and/or it taking an
           unreasonable amount of time (AKA Gecko).
         """
 
@@ -501,7 +501,7 @@ class Link(Component):
 
         - getLinkMask: Whether or not we should take the time to get
           the attributeMask for links. Reasons we might not want to
-          include knowning that we will fail and/or it taking an
+          include knowing that we will fail and/or it taking an
           unreasonable amount of time (AKA Gecko).
         """
 
@@ -646,7 +646,7 @@ class Text(Region):
         Arguments:
         - getLinkMask: Whether or not we should take the time to get
           the attributeMask for links. Reasons we might not want to
-          include knowning that we will fail and/or it taking an
+          include knowing that we will fail and/or it taking an
           unreasonable amount of time (AKA Gecko).
         """
 
@@ -845,7 +845,7 @@ class Line:
         Arguments:
         - getLinkMask: Whether or not we should take the time to get
           the attributeMask for links. Reasons we might not want to
-          include knowning that we will fail and/or it taking an
+          include knowing that we will fail and/or it taking an
           unreasonable amount of time (AKA Gecko).
 
         Returns [string, offsetIndex, attributeMask, ranges]
@@ -1009,7 +1009,7 @@ def setFocus(region, panToFocus=True, getLinkMask=True):
       position
     - getLinkMask: Whether or not we should take the time to get the
       attributeMask for links. Reasons we might not want to include
-      knowning that we will fail and/or it taking an unreasonable
+      knowing that we will fail and/or it taking an unreasonable
       amount of time (AKA Gecko).
     """
 
@@ -1073,7 +1073,7 @@ def refresh(panToCursor=True,
       right side of the display.
     - getLinkMask: Whether or not we should take the time to get the
       attributeMask for links. Reasons we might not want to include
-      knowning that we will fail and/or it taking an unreasonable
+      knowing that we will fail and/or it taking an unreasonable
       amount of time (AKA Gecko).
     - stopFlash: if True, kill any flashed message that may be showing.
     """

@@ -290,7 +290,7 @@ class Chat:
         Arguments:
         - script: the script with which this instance is associated.
         - buddyListAncestries: a list of lists of pyatspi roles beginning
-          with the the object serving as the actual buddy list (e.g.
+          with the object serving as the actual buddy list (e.g.
           ROLE_TREE_TABLE) and ending with the top level object (e.g.
           ROLE_FRAME).
         """

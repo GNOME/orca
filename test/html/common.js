@@ -117,7 +117,7 @@ function can_use_gui_editor() {
 
 
 function update_edit_links() {
-    // Update editlink according if if the browser is compatible
+    // Update editlink according if the browser is compatible
     if (can_use_gui_editor() == false){
         //alert("update_edit_links: can't use gui editor");
         return;
