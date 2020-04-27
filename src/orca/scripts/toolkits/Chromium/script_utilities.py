@@ -320,6 +320,9 @@ class Utilities(web.Utilities):
         if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
             listbox = listbox.parent
 
+        if not listbox:
+            return result
+
         # The listbox sometimes claims to be a redundant object rather than a listbox.
         # Clearing the AT-SPI2 cache seems to be the trigger.
         if not (listbox and listbox.getRole() in roles):
