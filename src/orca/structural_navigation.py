@@ -1111,7 +1111,7 @@ class StructuralNavigation:
         """Returns True if the table cell is empty or consists of whitespace.
 
         Arguments:
-        - obj: the accessible table cell to examime
+        - obj: the accessible table cell to examine
         """
 
         if obj and (obj.name or obj.childCount):
@@ -1131,7 +1131,7 @@ class StructuralNavigation:
         """Looks at the table cell and tries to get its text.
 
         Arguments:
-        - obj: the accessible table cell to examime
+        - obj: the accessible table cell to examine
         """
 
         text = ""

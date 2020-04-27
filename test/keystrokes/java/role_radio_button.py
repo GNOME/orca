@@ -268,7 +268,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Radio Three RadioButton', cursor=1",
      "SPEECH OUTPUT: 'selected'"]))
     
-# Tab back up to begining
+# Tab back up to beginning
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Paint Border", acc_role=pyatspi.ROLE_CHECK_BOX))
 sequence.append(KeyComboAction("Tab"))

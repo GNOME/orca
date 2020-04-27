@@ -1016,7 +1016,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
       <literal>orca.braille</literal> module provides the main
       interface to the braille display. The
       <literal>orca.braillegenerator</literal> module provides a
-      <literal>BrailleGenerator</literal> class that can be used to to
+      <literal>BrailleGenerator</literal> class that can be used to
       actually generate the text to be displayed for various objects.
       The expected use of the two modules is as follows: a script will
       create its own instance of a

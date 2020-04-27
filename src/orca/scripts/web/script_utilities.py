@@ -4707,7 +4707,7 @@ class Utilities(script_utilities.Utilities):
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
-        # If we're here, start looking up the the tree, up to the document.
+        # If we're here, start looking up the tree, up to the document.
         documentFrame = self.documentFrame()
         if self.isSameObject(obj, documentFrame):
             return None, -1
@@ -4771,7 +4771,7 @@ class Utilities(script_utilities.Utilities):
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
-        # If we're here, start looking up the the tree, up to the document.
+        # If we're here, start looking up the tree, up to the document.
         documentFrame = self.documentFrame()
         if self.isSameObject(obj, documentFrame):
             return None, -1

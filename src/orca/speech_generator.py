@@ -910,7 +910,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateImage(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the image on the the object, if
+        specifications) that represent the image on the object, if
         it exists.  Otherwise, an empty array is returned.
         """
         result = []

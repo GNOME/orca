@@ -4235,7 +4235,7 @@ class Script(script.Script):
           position
         - getLinkMask: Whether or not we should take the time to get the
           attributeMask for links. Reasons we might not want to include
-          knowning that we will fail and/or it taking an unreasonable
+          knowing that we will fail and/or it taking an unreasonable
           amount of time (AKA Gecko).
         """
 

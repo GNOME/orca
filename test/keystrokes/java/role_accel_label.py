@@ -67,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Exit'"]))
 
 ########################################################################
-# Return SwingSet2 to begining state.
+# Return SwingSet2 to beginning state.
 sequence.append(KeyComboAction("Escape"))
 
 # Just a little extra wait to let some events get through.
