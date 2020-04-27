@@ -661,6 +661,9 @@ class Generator:
            or obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
             return self._generateCheckedState(obj, **args)
 
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
+            return self._generateCheckedState(obj, **args)
+
         return []
 
     def _generateMenuItemCheckedState(self, obj, **args):
