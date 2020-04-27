@@ -86,5 +86,4 @@ within Orca as well as at: <https://help.gnome.org/users/orca/stable/>
 
 So, you want to write a script for Orca?  The best thing to do is 
 start by looking at other scripts under the src/orca/scripts/ hierarchy
-of the source tree.  Also, the docs/doc-set/internals.html file contains
-detailed information about the internal workings of Orca.
+of the source tree.
