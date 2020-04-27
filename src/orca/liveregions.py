@@ -439,7 +439,11 @@ class LiveRegionManager:
 
         elif event.type.startswith('object:text-changed:insert'):
             if attrs.get('container-atomic') != 'true':
-                content = event.any_data
+                if not "\ufffc" in event.any_data:
+                    content = event.any_data
+                else:
+                    content = self._script.utilities.expandEOCs(
+                        event.source, event.detail1, event.detail1 + event.detail2)
             else:
                 container = self._findContainer(event.source)
                 content = self._script.utilities.expandEOCs(container)
