@@ -2181,6 +2181,9 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
+    def isAriaAlert(self, obj):
+        return 'alert' in self._getXMLRoles(obj)
+
     def isBlockquote(self, obj):
         if super().isBlockquote(obj):
             return True
@@ -3771,7 +3774,7 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_STATIC,
                  pyatspi.ROLE_TABLE_ROW]
 
-        if role not in roles:
+        if role not in roles and not self.isAriaAlert(obj):
             rv = False
         elif state.contains(pyatspi.STATE_FOCUSABLE) or state.contains(pyatspi.STATE_FOCUSED):
             rv = False
@@ -4835,8 +4838,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if event.type.startswith("object:text-changed:insert"):
-            isAlert = lambda x: x and x.getRole() == pyatspi.ROLE_ALERT
-            alert = pyatspi.findAncestor(event.source, isAlert)
+            alert = pyatspi.findAncestor(event.source, self.isAriaAlert)
             if alert and self.focusedObject(alert) == event.source:
                 msg = "WEB: Focused source will be presented as part of alert"
                 debug.println(debug.LEVEL_INFO, msg, True)
