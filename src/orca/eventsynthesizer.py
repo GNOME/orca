@@ -221,7 +221,7 @@ def releaseAtPoint(x, y, button=1):
     return _generateMouseEvent(x, y, "b%dr" % button)
 
 def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
-    """Attemps to scroll the given substring to the specified location."""
+    """Attempts to scroll the given substring to the specified location."""
 
     try:
         text = obj.queryText()
@@ -248,7 +248,7 @@ def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
     return result
 
 def _scrollObjectToLocation(obj, location):
-    """Attemps to scroll obj to the specified location."""
+    """Attempts to scroll obj to the specified location."""
 
     try:
         result = obj.queryComponent().scrollTo(location)
@@ -266,7 +266,7 @@ def _scrollObjectToLocation(obj, location):
     return result
 
 def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
-    """Attemps to scroll to the specified location."""
+    """Attempts to scroll to the specified location."""
 
     try:
         component = obj.queryComponent()
@@ -286,7 +286,7 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
     debug.println(debug.LEVEL_INFO, msg, True)
 
 def _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
-    """Attemps to scroll the given substring to the specified location."""
+    """Attempts to scroll the given substring to the specified location."""
 
     try:
         text = obj.queryText()
@@ -313,7 +313,7 @@ def _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
     return result
 
 def _scrollObjectToPoint(obj, x, y):
-    """Attemps to scroll obj to the specified point."""
+    """Attempts to scroll obj to the specified point."""
 
     try:
         result = obj.queryComponent().scrollToPoint(pyatspi.DESKTOP_COORDS, x, y)
@@ -331,7 +331,7 @@ def _scrollObjectToPoint(obj, x, y):
     return result
 
 def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
-    """Attemps to scroll obj to the specified point."""
+    """Attempts to scroll obj to the specified point."""
 
     try:
         component = obj.queryComponent()

@@ -258,7 +258,7 @@ class Script(Gecko.Script):
         default.Script.onShowingChanged(self, event)
 
     def onTextDeleted(self, event):
-        """Called whenever text is from an an object.
+        """Called whenever text is from an object.
 
         Arguments:
         - event: the Event
