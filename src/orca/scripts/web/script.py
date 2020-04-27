@@ -1561,8 +1561,9 @@ class Script(default.Script):
             self._presentTextAtNewCaretPosition(event)
             return True
 
-        if not self.utilities.queryNonEmptyText(event.source):
-            msg = "WEB: Event ignored: Was for object we're treating as textless"
+        if not self.utilities.queryNonEmptyText(event.source) \
+           and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+            msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
