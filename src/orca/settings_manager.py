@@ -41,6 +41,8 @@ from . import pronunciation_dict
 from .acss import ACSS
 from .keybindings import KeyBinding
 
+import orca.braille as braille
+
 try:
     _proxy = Gio.DBusProxy.new_for_bus_sync(
         Gio.BusType.SESSION,
