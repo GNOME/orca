@@ -191,6 +191,10 @@ _flashEventSourceId = 0
 #
 _saved = None
 
+# Set to True when we lower our output priority
+#
+idle = False
+
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
 # http://en.wikipedia.org/wiki/Braille
@@ -1110,6 +1114,13 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         _lastTextInfo = (None, 0, 0, 0)
         return
 
+    try:
+        if idle:
+            # Restore default priority
+            _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 50)
+            idle = False
+    except:
+        pass
 
     lastTextObj, lastCaretOffset, lastLineOffset, lastCursorCell = _lastTextInfo
     msg = "BRAILLE: Last text obj: %s (Caret: %i, Line: %i, Cell: %i)" % _lastTextInfo
@@ -1425,6 +1436,16 @@ def displayMessage(message, cursor=-1, flashTime=0):
     addLine(Line(region))
     setFocus(region)
     refresh(True, stopFlash=False)
+
+def idleMessage():
+    """Hand off control to other screen readers, notably to xbrlapi which shows
+    the X window title."""
+    try:
+        # We do not have anything interesting to show
+        _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 0)
+        idle = True
+    except:
+        pass
 
 def displayKeyEvent(event):
     """Displays a KeyboardEvent. Typically reserved for locking keys like
