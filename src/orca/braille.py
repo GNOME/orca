@@ -1482,7 +1482,9 @@ def panRight(panAmount=0):
 
     oldX = viewport[0]
     if panAmount == 0:
-        panAmount = _displaySize[0]
+        oldStart, oldEnd = _getRangeForOffset(oldX)
+        newStart, newEnd = _getRangeForOffset(oldEnd)
+        panAmount = max(0, min(newStart - oldStart, _displaySize[0]))
 
     if len(_lines) > 0:
         lineNum = viewport[1]
