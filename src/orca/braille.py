@@ -1463,7 +1463,7 @@ def panLeft(panAmount=0):
     oldX = viewport[0]
     if panAmount == 0:
         oldStart, oldEnd = _getRangeForOffset(oldX)
-        newStart, newEnd = _getRangeForOffset(oldStart - 1)
+        newStart, newEnd = _getRangeForOffset(oldStart - _displaySize[0])
         panAmount = max(0, min(oldStart - newStart, _displaySize[0]))
 
     viewport[0] = max(0, viewport[0] - panAmount)
