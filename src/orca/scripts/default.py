@@ -1060,10 +1060,16 @@ class Script(script.Script):
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
 
+            # TODO - JD: Why is this here?
             [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
+            # TODO - JD: Why are we resetting the target cursor cell here?
+            oldCell = self.targetCursorCell
             self.targetCursorCell = 1
+            msg = "DEFAULT: pan left: targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             self.updateBrailleReview(self.targetCursorCell)
         elif self.isBrailleBeginningShowing() and orca_state.locusOfFocus \
              and self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -1133,10 +1139,16 @@ class Script(script.Script):
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
 
+            # TODO - JD: Why is this here?
             [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
+            # TODO - JD: Why are we resetting the target cursor cell here?
+            oldCell = self.targetCursorCell
             self.targetCursorCell = 1
+            msg = "DEFAULT: pan right: targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             self.updateBrailleReview(self.targetCursorCell)
         elif self.isBrailleEndShowing() and orca_state.locusOfFocus \
              and self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -3487,29 +3499,55 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
-        for region in regions:
-            if ((region.brailleOffset + len(region.string)) \
-                   > braille.viewport[0]) \
-                and (isinstance(region, braille.ReviewText) \
-                     or isinstance(region, braille.ReviewComponent)):
-                position = max(region.brailleOffset, braille.viewport[0])
-                offset = position - region.brailleOffset
-                self.targetCursorCell = region.brailleOffset \
-                                        - braille.viewport[0]
-                [word, charOffset] = region.zone.getWordAtOffset(offset)
-                if word:
-                    self.flatReviewContext.setCurrent(
-                        word.zone.line.index,
-                        word.zone.index,
-                        word.index,
-                        charOffset)
-                else:
-                    self.flatReviewContext.setCurrent(
-                        region.zone.line.index,
-                        region.zone.index,
-                        0, # word index
-                        0) # character index
-                break
+
+        # The first character on the flat review line has to be in object with text.
+        isTextOrComponent = lambda x: isinstance(x, (braille.ReviewText, braille.ReviewComponent))
+        regions = list(filter(isTextOrComponent, regions))
+
+        # TODO - JD: The current code was stopping on the first region which met the
+        # following condition. Is that definitely the right thing to do? Assume so for now.
+        # Also: Should the default script be accessing things like the viewport directly??
+        isMatch = lambda x: x.brailleOffset + len(x.string) > braille.viewport[0]
+        regions = list(filter(isMatch, regions))
+
+        if not regions:
+            msg = "DEFAULT: Could not find review region to move to start of display"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "DEFAULT: Candidates for start of display:\n%s" % "\n".join(map(str, regions))
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        # TODO - JD: Again, for now we're preserving the original behavior of choosing the first.
+        region = regions[0]
+        position = max(region.brailleOffset, braille.viewport[0])
+        offset = position - region.brailleOffset
+        msg = "DEFAULT: Offset for region: %i" % offset
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        # TODO - JD: Why are we doing this here? The only caller undoes it.
+        oldCell = self.targetCursorCell
+        self.targetCursorCell = region.brailleOffset - braille.viewport[0]
+        msg = "DEFAULT: Updating targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        [word, charOffset] = region.zone.getWordAtOffset(offset)
+        if word:
+            msg = "DEFAULT: Setting start of display to %s, %i" % (str(word), charOffset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.flatReviewContext.setCurrent(
+                word.zone.line.index,
+                word.zone.index,
+                word.index,
+                charOffset)
+        else:
+            msg = "DEFAULT: Setting start of display to %s" % region.zone
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.flatReviewContext.setCurrent(
+                region.zone.line.index,
+                region.zone.index,
+                0, # word index
+                0) # character index
 
     def find(self, query=None):
         """Searches for the specified query.  If no query is specified,

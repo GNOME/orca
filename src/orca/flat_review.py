@@ -89,6 +89,9 @@ class Word:
         self.height = height
         self.chars = []
 
+    def __str__(self):
+        return "WORD: '%s' %s" % (self.string.replace("\n", "\\n"), self.zone.accessible)
+
     def __getattribute__(self, attr):
         if attr != "chars":
             return super().__getattribute__(attr)
@@ -145,6 +148,9 @@ class Zone:
         self.height = height
         self.role = role or accessible.getRole()
         self._words = []
+
+    def __str__(self):
+        return "ZONE: '%s' %s" % (self._string.replace("\n", "\\n"), self.accessible)
 
     def __getattribute__(self, attr):
         """To ensure we update the content."""
