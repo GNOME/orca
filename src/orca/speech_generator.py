@@ -2331,6 +2331,7 @@ class SpeechGenerator(generator.Generator):
                 childResult = self.generate(child, includeContext=False)
             if childResult:
                 result.extend(childResult)
+                result.extend(self._generatePause(child, **args))
 
         return result
 
