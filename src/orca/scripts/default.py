@@ -1060,10 +1060,6 @@ class Script(script.Script):
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
 
-            # TODO - JD: Why is this here?
-            [charString, x, y, width, height] = \
-                self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-
             # TODO - JD: Why are we resetting the target cursor cell here?
             oldCell = self.targetCursorCell
             self.targetCursorCell = 1
@@ -1138,10 +1134,6 @@ class Script(script.Script):
             # This will update our target cursor cell
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
-
-            # TODO - JD: Why is this here?
-            [charString, x, y, width, height] = \
-                self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
             # TODO - JD: Why are we resetting the target cursor cell here?
             oldCell = self.targetCursorCell
