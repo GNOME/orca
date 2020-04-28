@@ -385,8 +385,10 @@ class EventManager:
         if not self._isNoFocus():
             return False
 
+        print("onnofocus")
         defaultScript = _scriptManager.getDefaultScript()
         _scriptManager.setActiveScript(defaultScript, 'No focus')
+        defaultScript.idleMessage()
         return False
 
     def _dequeue(self):
