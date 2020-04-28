@@ -41,6 +41,8 @@ from . import pronunciation_dict
 from .acss import ACSS
 from .keybindings import KeyBinding
 
+import orca.braille as braille
+
 try:
     _proxy = Gio.DBusProxy.new_for_bus_sync(
         Gio.BusType.SESSION,
@@ -268,6 +270,7 @@ class SettingsManager(object):
 
     def setSetting(self, settingName, settingValue):
         self._setSettingsRuntime({settingName:settingValue})
+        self._notifyBrailleSettings()
 
     def getSetting(self, settingName):
         return getattr(settings, settingName, None)
@@ -359,6 +362,7 @@ class SettingsManager(object):
         self._loadProfileSettings(profile)
         self._mergeSettings()
         self._setSettingsRuntime(self.general)
+        self._notifyBrailleSettings()
 
         if not updateLocale:
             return
@@ -567,6 +571,13 @@ class SettingsManager(object):
         self._setSettingsRuntime(self.general)
         self._setPronunciationsRuntime(self.pronunciations)
         script.keyBindings = self.overrideKeyBindings(script, script.getKeyBindings())
+
+        self._notifyBrailleSettings()
+
+    def _notifyBrailleSettings(self):
+        """Notify Braille when it gets disabled"""
+        if not self.getSetting('enableBraille'):
+            braille.disableBraille()
 
 _manager = SettingsManager()
 

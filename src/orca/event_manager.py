@@ -387,6 +387,7 @@ class EventManager:
 
         defaultScript = _scriptManager.getDefaultScript()
         _scriptManager.setActiveScript(defaultScript, 'No focus')
+        defaultScript.idleMessage()
         return False
 
     def _dequeue(self):
