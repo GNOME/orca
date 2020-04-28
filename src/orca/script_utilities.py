@@ -2892,10 +2892,14 @@ class Utilities:
 
         try:
             text = obj.queryText()
-        except:
+            charCount = text.characterCount
+        except NotImplementedError:
             pass
+        except:
+            msg = "ERROR: Exception getting character count of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
-            if text.characterCount:
+            if charCount:
                 return text
 
         return None
