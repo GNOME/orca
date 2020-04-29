@@ -774,6 +774,9 @@ class ReviewComponent(Component):
                            cursorOffset, expandOnCursor=True)
         self.zone = zone
 
+    def __str__(self):
+        return "ReviewComponent: %s, %d" % (self.zone, self.cursorOffset)
+
 class ReviewText(Region):
     """A subclass of Region backed by a Text object.  This Region will
     does not react to the caret changes, but will react if one updates
@@ -794,6 +797,9 @@ class ReviewText(Region):
         self.accessible = accessible
         self.lineOffset = lineOffset
         self.zone = zone
+
+    def __str__(self):
+        return "ReviewText: %s, %d" % (self.zone, self.cursorOffset)
 
     def getCaretOffset(self, offset):
         """Returns the caret position of the given offset if the object

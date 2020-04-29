@@ -3460,8 +3460,10 @@ class Script(script.Script):
         braille.setLines([line])
         self.setBrailleFocus(regionWithFocus, False)
         if regionWithFocus:
-            self.panBrailleToOffset(regionWithFocus.brailleOffset \
-                                    + regionWithFocus.cursorOffset)
+            offset = regionWithFocus.brailleOffset + regionWithFocus.cursorOffset
+            msg = "DEFAULT: Update to %i in %s" % (offset, regionWithFocus)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.panBrailleToOffset(offset)
 
         if self.justEnteredFlatReviewMode:
             self.refreshBraille(True, self.targetCursorCell)
@@ -3479,6 +3481,9 @@ class Script(script.Script):
         # The first character on the flat review line has to be in object with text.
         isTextOrComponent = lambda x: isinstance(x, (braille.ReviewText, braille.ReviewComponent))
         regions = list(filter(isTextOrComponent, regions))
+
+        msg = "DEFAULT: Text/Component regions on line:\n%s" % "\n".join(map(str, regions))
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         # TODO - JD: The current code was stopping on the first region which met the
         # following condition. Is that definitely the right thing to do? Assume so for now.

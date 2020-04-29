@@ -90,7 +90,11 @@ class Word:
         self.chars = []
 
     def __str__(self):
-        return "WORD: '%s' %s" % (self.string.replace("\n", "\\n"), self.zone.accessible)
+        return "WORD: '%s' (%i-%i) %s" % \
+            (self.string.replace("\n", "\\n"),
+             self.startOffset,
+             self.endOffset,
+             self.zone.accessible)
 
     def __getattribute__(self, attr):
         if attr != "chars":
@@ -231,7 +235,13 @@ class Zone:
         return self._extentsAreOnSameLine(zone)
 
     def getWordAtOffset(self, charOffset):
+        msg = "FLAT REVIEW: Searching for word at offset %i" % charOffset
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         for word in self.words:
+            msg = "FLAT REVIEW: Checking %s" % word
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             offset = word.getRelativeOffset(charOffset)
             if offset >= 0:
                 return word, offset
