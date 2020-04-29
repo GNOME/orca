@@ -1056,16 +1056,8 @@ class Script(script.Script):
             else:
                 self.panBrailleInDirection(panAmount, panToLeft=True)
 
-            # This will update our target cursor cell
-            #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
-
-            # TODO - JD: Why are we resetting the target cursor cell here?
-            oldCell = self.targetCursorCell
             self.targetCursorCell = 1
-            msg = "DEFAULT: pan left: targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
             self.updateBrailleReview(self.targetCursorCell)
         elif self.isBrailleBeginningShowing() and orca_state.locusOfFocus \
              and self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -1131,16 +1123,8 @@ class Script(script.Script):
             else:
                 self.panBrailleInDirection(panAmount, panToLeft=False)
 
-            # This will update our target cursor cell
-            #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
-
-            # TODO - JD: Why are we resetting the target cursor cell here?
-            oldCell = self.targetCursorCell
             self.targetCursorCell = 1
-            msg = "DEFAULT: pan right: targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
             self.updateBrailleReview(self.targetCursorCell)
         elif self.isBrailleEndShowing() and orca_state.locusOfFocus \
              and self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -3515,12 +3499,6 @@ class Script(script.Script):
         position = max(region.brailleOffset, braille.viewport[0])
         offset = position - region.brailleOffset
         msg = "DEFAULT: Offset for region: %i" % offset
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-        # TODO - JD: Why are we doing this here? The only caller undoes it.
-        oldCell = self.targetCursorCell
-        self.targetCursorCell = region.brailleOffset - braille.viewport[0]
-        msg = "DEFAULT: Updating targetCursorCell %i -> %i" % (oldCell, self.targetCursorCell)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         [word, charOffset] = region.zone.getWordAtOffset(offset)
