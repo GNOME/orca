@@ -3459,7 +3459,7 @@ class Script(script.Script):
         self.addBrailleRegionsToLine(regions, line)
         braille.setLines([line])
         self.setBrailleFocus(regionWithFocus, False)
-        if regionWithFocus:
+        if regionWithFocus and not targetCursorCell:
             offset = regionWithFocus.brailleOffset + regionWithFocus.cursorOffset
             msg = "DEFAULT: Update to %i in %s" % (offset, regionWithFocus)
             debug.println(debug.LEVEL_INFO, msg, True)
