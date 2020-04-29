@@ -4260,7 +4260,9 @@ class Utilities(script_utilities.Utilities):
         hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles() \
             and not self.isFakePlaceholderForEntry(x)
 
-        if role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
+        if self._getTag(obj) in ["input", "textarea"]:
+            rv = False
+        elif role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
             rv = pyatspi.findDescendant(obj, hasTextBlockRole)
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = hasTextBlockRole(obj) or self.isLink(obj)
