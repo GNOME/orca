@@ -361,7 +361,8 @@ class EventManager:
             except:
                 toolkitName = None
             if toolkitName in self._synchronousToolkits \
-               or isinstance(e, input_event.MouseButtonEvent):
+               or isinstance(e, input_event.MouseButtonEvent) \
+               or e.type.startswith("object:children-changed"):
                 asyncMode = False
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
