@@ -1537,13 +1537,15 @@ class Utilities(script_utilities.Utilities):
         for i, (acc, start, end, string) in enumerate(contents):
             indent = " " * 8
             try:
+                description = acc.description
                 extents = self.getExtents(acc, start, end)
             except:
+                description = "(exception)"
                 extents = "(exception)"
             states = debug.statesToString(acc, indent)
             attrs = debug.attributesToString(acc, indent)
-            msg = "     %i. %s (chars: %i-%i) '%s' extents=%s\n%s\n%s" % \
-                (i, acc, start, end, string, extents, states, attrs)
+            msg = "     %i. %s (chars: %i-%i) '%s' extents=%s description=%s\n%s\n%s" % \
+                (i, acc, start, end, string, extents, description, states, attrs)
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def treatAsEndOfLine(self, obj, offset):
