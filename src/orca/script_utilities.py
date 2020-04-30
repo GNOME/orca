@@ -2834,7 +2834,7 @@ class Utilities:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = self.getChildAtOffset(obj, i + startOffset)
                 result = self.expandEOCs(child)
-                if child.getRole() in blockRoles:
+                if child and child.getRole() in blockRoles:
                     result += " "
                 toBuild[i] = result
 
