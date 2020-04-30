@@ -1645,6 +1645,11 @@ class Script(default.Script):
             self.liveRegionManager.handleEvent(event)
             return True
 
+        if self.utilities.isLiveRegion(event.source):
+            msg = "WEB: Ignoring because live region event not to be handled."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self._loadingDocumentContent:
             msg = "WEB: Ignoring because document content is being loaded."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2141,6 +2146,11 @@ class Script(default.Script):
             msg = "WEB: Event to be handled as live region"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.liveRegionManager.handleEvent(event)
+            return True
+
+        if self.utilities.isLiveRegion(event.source):
+            msg = "WEB: Ignoring because live region event not to be handled."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsEOCAdded(event):
