@@ -141,6 +141,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onChildrenAdded(self, event)
 
+    def onChildrenRemoved(self, event):
+        """Callback for object:children-changed:removed accessibility events."""
+
+        if super().onChildrenRemoved(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onChildrenRemoved(self, event)
+
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 

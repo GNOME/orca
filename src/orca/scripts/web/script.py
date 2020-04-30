@@ -1731,6 +1731,38 @@ class Script(default.Script):
 
         return False
 
+    def onChildrenRemoved(self, event):
+        """Callback for object:children-changed:removed accessibility events."""
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # TODO - JD: Handle this case.
+        if event.any_data == orca_state.locusOfFocus:
+            msg = "WEB: Removed child is locusOfFocus."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # TODO - JD: Handle this case.
+        if event.source == orca_state.locusOfFocus:
+            msg = "WEB: Parent is locusOfFocus."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if self.utilities.isLiveRegion(event.source):
+            msg = "WEB: Ignoring removal from live region."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self._loadingDocumentContent:
+            msg = "WEB: Ignoring because document content is being loaded."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
