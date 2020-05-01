@@ -2617,7 +2617,7 @@ class Utilities:
                 return relation.getTarget(0)
 
         index = obj.getIndexInParent() - 1
-        if obj.parent and not (0 <= index < obj.parent.childCount - 1):
+        while obj.parent and not (0 <= index < obj.parent.childCount - 1):
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
@@ -2642,7 +2642,7 @@ class Utilities:
                 return relation.getTarget(0)
 
         index = obj.getIndexInParent() + 1
-        if obj.parent and not (0 < index < obj.parent.childCount):
+        while obj.parent and not (0 < index < obj.parent.childCount):
             obj = obj.parent
             index = obj.getIndexInParent() + 1
 

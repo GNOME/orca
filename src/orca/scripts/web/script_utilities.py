@@ -890,6 +890,36 @@ class Utilities(script_utilities.Utilities):
 
         return -1
 
+    def findPreviousObject(self, obj):
+        result = super().findPreviousObject(obj)
+        if not (obj and self.inDocumentContent(obj)):
+            return result
+
+        if not (result and self.inDocumentContent(result)):
+            return None
+
+        if self.getTopLevelDocumentForObject(result) != self.getTopLevelDocumentForObject(obj):
+            return None
+
+        msg = "WEB: Previous object for %s is %s." % (obj, result)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def findNextObject(self, obj):
+        result = super().findNextObject(obj)
+        if not (obj and self.inDocumentContent(obj)):
+            return result
+
+        if not (result and self.inDocumentContent(result)):
+            return None
+
+        if self.getTopLevelDocumentForObject(result) != self.getTopLevelDocumentForObject(obj):
+            return None
+
+        msg = "WEB: Next object for %s is %s." % (obj, result)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
     def isNonEntryTextWidget(self, obj):
         rv = self._isNonEntryTextWidget.get(hash(obj))
         if rv is not None:
@@ -4540,6 +4570,55 @@ class Utilities(script_utilities.Utilities):
         orca.setLocusOfFocus(event, replicant, notify)
         self.setCaretContext(replicant, offset, documentFrame)
         return True
+
+    def handleEventForRemovedChild(self, event):
+        if event.any_data != orca_state.locusOfFocus:
+            return False
+
+        msg = "WEB: Removed child is locusOfFocus."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        obj, offset = None, -1
+        keyString, mods = self.lastKeyAndModifiers()
+        if keyString == "Up":
+            if event.detail1 >= event.source.childCount:
+                msg = "WEB: Last child removed. Getting new location from end of parent."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.previousContext(event.source, -1)
+            elif 0 <= event.detail1 - 1 < event.source.childCount:
+                child = event.source[event.detail1 - 1]
+                msg = "WEB: Getting new location from end of previous child %s." % child
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.previousContext(child, -1)
+            else:
+                prevObj = self.findPreviousObject(event.source)
+                msg = "WEB: Getting new location from end of source's previous object %s." % prevObj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.previousContext(prevObj, -1)
+
+        elif keyString == "Down":
+            if event.detail1 == 0:
+                msg = "WEB: First child removed. Getting new location from start of parent."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.nextContext(event.source, -1)
+            elif 0 < event.detail1 < event.source.childCount:
+                child = event.source[event.detail1]
+                msg = "WEB: Getting new location from start of child %i %s." % (child, event.detail1)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.nextContext(child, -1)
+            else:
+                nextObj = self.findNextObject(event.source)
+                msg = "WEB: Getting new location from start of source's next object %s." % nextObj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                obj, offset = self.nextContext(nextObj, -1)
+
+        if obj:
+            msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
+            orca.setLocusOfFocus(event, obj, True)
+            self.setCaretContext(obj, offset)
+            return True
+
+        return False
 
     def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
         path, oldRole, oldName = self.getCaretContextPathRoleAndName(documentFrame)

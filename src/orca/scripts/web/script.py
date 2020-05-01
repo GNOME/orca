@@ -1271,6 +1271,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.lastInputEventWasLineNav() and event \
+             and event.type.startswith("object:children-changed"):
+            msg = "WEB: Last input event was line nav and children changed. Generating line contents."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
         else:
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1739,11 +1745,15 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        # TODO - JD: Handle this case.
-        if event.any_data == orca_state.locusOfFocus:
-            msg = "WEB: Removed child is locusOfFocus."
+        if self._loadingDocumentContent:
+            msg = "WEB: Ignoring because document content is being loaded."
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            return True
+
+        if self.utilities.handleEventForRemovedChild(event):
+            msg = "WEB: Event handled for removed child."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
         # TODO - JD: Handle this case.
         if event.source == orca_state.locusOfFocus:
@@ -1753,11 +1763,6 @@ class Script(default.Script):
 
         if self.utilities.isLiveRegion(event.source):
             msg = "WEB: Ignoring removal from live region."
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self._loadingDocumentContent:
-            msg = "WEB: Ignoring because document content is being loaded."
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
