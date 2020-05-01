@@ -876,7 +876,19 @@ class Line:
                 ranges.append(span)
                 span = []
             if not span:
-                span = [start, end]
+                # Subdivide long words that exceed the display width.
+                wordLength = end - start
+                if wordLength > _displaySize[0]:
+                    displayWidths = wordLength // _displaySize[0]
+                    if displayWidths:
+                        for i in range(displayWidths):
+                            ranges.append([start + i * _displaySize[0], start + (i+1) * _displaySize[0]])
+                        if wordLength % _displaySize[0]:
+                            span = [start + displayWidths * _displaySize[0], end]
+                        else:
+                            continue
+                else:
+                    span = [start, end]
             else:
                 span[1] = end
             if end == focusOffset:
