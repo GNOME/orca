@@ -4782,9 +4782,9 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child and self._treatObjectAsWhole(child):
-                        return child, 0
                     if self._canHaveCaretContext(child):
+                        if self._treatObjectAsWhole(child):
+                            return child, 0
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
@@ -4846,9 +4846,9 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child and self._treatObjectAsWhole(child):
-                        return child, 0
                     if self._canHaveCaretContext(child):
+                        if self._treatObjectAsWhole(child):
+                            return child, 0
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
