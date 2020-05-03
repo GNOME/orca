@@ -3543,7 +3543,10 @@ class Script(script.Script):
         # TODO - JD: Again, for now we're preserving the original behavior of choosing the first.
         region = regions[0]
         position = max(region.brailleOffset, braille.viewport[0])
-        offset = position - region.brailleOffset
+        if region.contracted:
+            offset = region.inPos[position - region.brailleOffset]
+        else:
+            offset = position - region.brailleOffset
         msg = "DEFAULT: Offset for region: %i" % offset
         debug.println(debug.LEVEL_INFO, msg, True)
 
