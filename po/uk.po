@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2020-04-24 19:59+0000\n"
-"PO-Revision-Date: 2020-04-25 09:44+0300\n"
+"PO-Revision-Date: 2020-05-03 19:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2337,7 +2337,7 @@ msgstr "Перемикає на наступний стиль прописних
 #. choose which type of echo is being used.
 #: src/orca/cmdnames.py:483
 msgid "Cycles to the next key echo level."
-msgstr "Перемикає на наступний рівень відлуння клавіш."
+msgstr "Перемикає на наступний рівень озвучування клавіш."
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -4584,7 +4584,7 @@ msgstr "Рядок заміни"
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: src/orca/guilabels.py:213 src/orca/orca-setup.ui:2809
 msgid "Enable echo by cha_racter"
-msgstr "Увімкнути озвучення по _буквам"
+msgstr "Увімкнути озвучення за _буквами"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. This string refers to a "key echo" option. When this option is
@@ -4699,7 +4699,7 @@ msgstr "Параметри програми читання з екрана дл�
 #. "underlining" with braille dots 7-8 a word that is bold.
 #: src/orca/guilabels.py:294
 msgid "Mark in braille"
-msgstr "Відмічати у брайлі"
+msgstr "Позначати у брайлі"
 
 #. Translators: "Present Unless" is a column header of the text attributes panel
 #. of the Orca preferences dialog. On this panel, the user can select a set of
@@ -7898,7 +7898,7 @@ msgstr "програма"
 #. Translators: This is presented when the user has navigated to an empty line.
 #: src/orca/messages.py:43
 msgid "blank"
-msgstr "чистий"
+msgstr "порожній"
 
 #. Translators: This refers to font weight.
 #: src/orca/messages.py:46
@@ -8728,7 +8728,7 @@ msgstr "клавіша"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:687
 msgid "Key echo set to key."
-msgstr "Клавішу відлуння вказано для клавіші."
+msgstr "Встановлено озвучування для клавіш."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8790,7 +8790,7 @@ msgstr "клавіша та слово"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:739
 msgid "Key echo set to key and word."
-msgstr "Клавішу відлуння вказано для клавіші та слова."
+msgstr "Встановлено озвучування для клавіші і слів."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8821,7 +8821,7 @@ msgstr "речення"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:765
 msgid "Key echo set to sentence."
-msgstr "Клавішу відлуння вказано для речення."
+msgstr "Встановлено озвучування для речень."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8852,7 +8852,7 @@ msgstr "слово"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:791
 msgid "Key echo set to word."
-msgstr "Клавішу відлуння вказано для слова."
+msgstr "Встановлено озвучування для слів."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8883,7 +8883,7 @@ msgstr "слово та речення"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:817
 msgid "Key echo set to word and sentence."
-msgstr "Клавішу відлуння вказано для слова та речення."
+msgstr "Встановлено озвучування для слів і речень."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -12435,11 +12435,11 @@ msgstr "Розкладка клавіатури"
 
 #: src/orca/orca-setup.ui:314
 msgid "Active _Profile:"
-msgstr "Активні _профілі:"
+msgstr "Активний _профіль:"
 
 #: src/orca/orca-setup.ui:331
 msgid "Start-up Profile:"
-msgstr "Запуск профілю:"
+msgstr "Профіль запуску:"
 
 #. This button will load the selected settings profile in the application.
 #: src/orca/orca-setup.ui:379
@@ -12487,12 +12487,12 @@ msgstr "Час і дата"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: src/orca/orca-setup.ui:640
 msgid "_Speak updates"
-msgstr "Вимовити _оновлення"
+msgstr "Вимовляти _оновлення"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: src/orca/orca-setup.ui:659
 msgid "_Braille updates"
-msgstr "Оновлення _Брайля"
+msgstr "Оновлення на _брайлі"
 
 #: src/orca/orca-setup.ui:684
 msgid "10"
@@ -12512,7 +12512,7 @@ msgstr "Обмежити до: "
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
 msgid "Bee_p updates"
-msgstr "_Гарячі оновлення"
+msgstr "_Гудки оновлення"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: src/orca/orca-setup.ui:775
@@ -12668,12 +12668,12 @@ msgstr "Вимовляти _відступи та вирівнювання"
 
 #: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
-msgstr "Озвучувати _короткі назви об'єктів"
+msgstr "Озвучувати _мнемоніку об'єктів"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1725
 msgid "Speak child p_osition"
-msgstr "Промовити дочірню _позицію"
+msgstr "Озвучувати дочірню _позицію"
 
 #: src/orca/orca-setup.ui:1741
 msgid "Speak tutorial messages"
