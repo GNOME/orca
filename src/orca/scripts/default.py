@@ -3547,6 +3547,8 @@ class Script(script.Script):
             offset = region.inPos[position - region.brailleOffset]
         else:
             offset = position - region.brailleOffset
+        if isinstance(region.zone, flat_review.TextZone):
+            offset += region.zone.startOffset
         msg = "DEFAULT: Offset for region: %i" % offset
         debug.println(debug.LEVEL_INFO, msg, True)
 
