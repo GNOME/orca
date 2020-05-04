@@ -330,6 +330,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             name = obj.name
             if not self._script.utilities.hasExplicitName(obj):
                 name = name.strip()
+
+            if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
+                name = self._script.utilities.verbalizeAllPunctuation(name)
+
             result = [name]
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
