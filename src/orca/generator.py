@@ -1038,6 +1038,9 @@ class Generator:
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
 
+        if role == pyatspi.ROLE_SEPARATOR and not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            return []
+
         return [self._script.utilities.textForValue(obj)]
 
     #####################################################################

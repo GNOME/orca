@@ -2919,6 +2919,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER]:
             rv = False
+        elif role == pyatspi.ROLE_SEPARATOR:
+            rv = False
         elif role == pyatspi.ROLE_PANEL:
             rv = not self.hasExplicitName(obj)
         elif role == pyatspi.ROLE_TABLE_ROW and not state.contains(pyatspi.STATE_EXPANDABLE):

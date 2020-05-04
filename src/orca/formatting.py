@@ -439,6 +439,10 @@ formatting = {
             'unfocused': 'labelAndName + (displayedText or value) + roleName + required + pause + invalid + availability + ' + MNEMONIC,
             'basicWhereAmI': 'label + roleName + name + (displayedText or value) + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
+        pyatspi.ROLE_SEPARATOR: {
+            'focused': 'roleName',
+            'unfocused': 'roleName + (labelOrName or displayedText or value) + ' + MNEMONIC,
+            },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'value',
             'unfocused': 'labelAndName + roleName + value + availability + ' + MNEMONIC,
