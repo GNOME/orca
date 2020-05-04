@@ -3492,7 +3492,8 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj) and obj.parent):
             return False
 
-        if not (obj.parent.getRole() == pyatspi.ROLE_ENTRY and obj.parent.name):
+        entry = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY)
+        if not (entry and entry.name):
             return False
 
         def _isMatch(x):
@@ -3501,7 +3502,7 @@ class Utilities(script_utilities.Utilities):
                 string = x.queryText().getText(0, -1).strip()
             except:
                 return False
-            return role in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC] and obj.parent.name == string
+            return role in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC] and entry.name == string
 
         if _isMatch(obj):
             return True
@@ -4290,7 +4291,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         hasTextBlockRole = lambda x: x and x.getRole() in self._textBlockElementRoles() \
-            and not self.isFakePlaceholderForEntry(x)
+            and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
 
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
