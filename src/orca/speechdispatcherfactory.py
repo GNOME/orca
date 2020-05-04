@@ -138,9 +138,13 @@ class SpeechServer(speechserver.SpeechServer):
             return
         # The following constants must be initialized in runtime since they
         # depend on the speechd module being available.
+        try:
+            most = speechd.PunctuationMode.MOST
+        except:
+            most = speechd.PunctuationMode.SOME
         self._PUNCTUATION_MODE_MAP = {
             settings.PUNCTUATION_STYLE_ALL:  speechd.PunctuationMode.ALL,
-            settings.PUNCTUATION_STYLE_MOST: speechd.PunctuationMode.SOME,
+            settings.PUNCTUATION_STYLE_MOST: most,
             settings.PUNCTUATION_STYLE_SOME: speechd.PunctuationMode.SOME,
             settings.PUNCTUATION_STYLE_NONE: speechd.PunctuationMode.NONE,
             }
