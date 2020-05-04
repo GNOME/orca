@@ -183,6 +183,11 @@ class Script(web.Script):
     def onChildrenRemoved(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
+        if self.utilities.isStaticTextLeaf(event.any_data):
+            msg = "CHROMIUM: Ignoring because child is static text leaf"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onChildrenRemoved(event):
             return
 
