@@ -271,14 +271,21 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY)
 
+        styles = {settings.PUNCTUATION_STYLE_NONE: "NONE",
+                  settings.PUNCTUATION_STYLE_SOME: "SOME",
+                  settings.PUNCTUATION_STYLE_MOST: "MOST",
+                  settings.PUNCTUATION_STYLE_ALL: "ALL"}
+
         current = self._current_voice_properties
-        msg = "SPEECH DISPATCHER: %sOrca rate %s, pitch %s, volume %s, language %s; " \
+        msg = "SPEECH DISPATCHER: %s\n" \
+              "ORCA rate %s, pitch %s, volume %s, language %s, punctuation: %s \n" \
               "SD rate %s, pitch %s, volume %s, language %s" % \
               (prefix,
                self._current_voice_properties.get(ACSS.RATE),
                self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
                self._current_voice_properties.get(ACSS.GAIN),
                self._get_language_and_dialect(family)[0],
+               styles.get(_settingsManager.getSetting("verbalizePunctuationStyle")),
                sd_rate,
                sd_pitch,
                sd_volume,
