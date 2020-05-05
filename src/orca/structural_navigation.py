@@ -855,6 +855,8 @@ class StructuralNavigation:
                     desiredRow -= 1
                 elif rowDiff > 0:
                     desiredRow += 1
+                else:
+                    break
             else:
                 break
 
