@@ -4568,7 +4568,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        row, column = self.coordinatesForCell(obj)
+        row, column = self.coordinatesForCell(obj, False)
         if row == -1:
             return []
 
