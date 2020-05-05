@@ -477,8 +477,7 @@ class StructuralNavigationObject:
         def goCell(script, inputEvent):
             obj, offset = script.utilities.getCaretContext()
             thisCell = self.structuralNavigation.getCellForObj(obj)
-            currentCoordinates = \
-                self.structuralNavigation.getCellCoordinates(thisCell)
+            currentCoordinates = self.structuralNavigation.getCellCoordinates(thisCell, False)
             if direction == "Left":
                 desiredCoordinates = [currentCoordinates[0],
                                       currentCoordinates[1] - 1]
@@ -497,9 +496,9 @@ class StructuralNavigationObject:
                 desiredCoordinates = [-1, -1]
                 table = self.structuralNavigation.getTableForCell(thisCell)
                 if table:
-                    iTable = table.queryTable()
-                    lastRow = iTable.nRows - 1
-                    lastCol = iTable.nColumns - 1
+                    nRows, nColumns = script.utilities.rowAndColumnCount(table, False)
+                    lastRow = nRows - 1
+                    lastCol = nColumns - 1
                     desiredCoordinates = [lastRow, lastCol]
             self.structuralNavigation.goCell(self,
                                              thisCell,
@@ -810,17 +809,7 @@ class StructuralNavigation:
         """
 
         table = self.getTableForCell(thisCell)
-        try:
-            iTable = table.queryTable()
-        except NotImplementedError:
-            msg = 'ERROR: Table %s does not implement table interface' % table
-            debug.println(debug.LEVEL_INFO, msg)
-            iTable = None
-        except:
-            msg = 'ERROR: Exception querying table interface of %s' % table
-            debug.println(debug.LEVEL_INFO, msg)
-            iTable = None
-        if not iTable:
+        if not table:
             self._script.presentMessage(messages.TABLE_NOT_IN_A)
             return None
 
@@ -828,24 +817,24 @@ class StructuralNavigation:
         desiredRow, desiredCol = desiredCoordinates
         rowDiff = desiredRow - currentRow
         colDiff = desiredCol - currentCol
-        oldRowHeaders = self._script.utilities.rowHeadersForCell(thisCell)
-        oldColHeaders = self._script.utilities.columnHeadersForCell(thisCell)
+
+        nRows, nColumns = self._script.utilities.rowAndColumnCount(table, False)
         cell = thisCell
         while cell:
-            cell = iTable.getAccessibleAt(desiredRow, desiredCol)
+            cell = self._script.utilities.cellForCoordinates(table, desiredRow, desiredCol)
             if not cell:
                 if desiredCol < 0:
                     self._script.presentMessage(messages.TABLE_ROW_BEGINNING)
                     desiredCol = 0
-                elif desiredCol > iTable.nColumns - 1:
+                elif desiredCol > nColumns - 1:
                     self._script.presentMessage(messages.TABLE_ROW_END)
-                    desiredCol = iTable.nColumns - 1
+                    desiredCol = nColumns - 1
                 if desiredRow < 0:
                     self._script.presentMessage(messages.TABLE_COLUMN_TOP)
                     desiredRow = 0
-                elif desiredRow > iTable.nRows - 1:
+                elif desiredRow > nRows - 1:
                     self._script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
-                    desiredRow = iTable.nRows - 1
+                    desiredRow = nRows - 1
             elif thisCell == cell or (settings.skipBlankCells and self._isBlankCell(cell)):
                 if colDiff < 0:
                     desiredCol -= 1
@@ -855,11 +844,15 @@ class StructuralNavigation:
                     desiredRow -= 1
                 elif rowDiff > 0:
                     desiredRow += 1
+                else:
+                    break
             else:
                 break
 
         self.lastTableCell = [desiredRow, desiredCol]
         if cell:
+            oldRowHeaders = self._script.utilities.rowHeadersForCell(thisCell)
+            oldColHeaders = self._script.utilities.columnHeadersForCell(thisCell)
             arg = [rowDiff, colDiff, oldRowHeaders, oldColHeaders]
             structuralNavigationObject.present(cell, arg)
 
@@ -1042,8 +1035,8 @@ class StructuralNavigation:
         if nonUniform:
             nonUniformString = messages.TABLE_NON_UNIFORM + " "
 
-        table = obj.queryTable()
-        sizeString = messages.tableSize(table.nRows, table.nColumns)
+        nRows, nColumns = self._script.utilities.rowAndColumnCount(obj, True)
+        sizeString = messages.tableSize(nRows, nColumns)
         return (nonUniformString + sizeString)
 
     def getCellForObj(self, obj):
@@ -1174,17 +1167,23 @@ class StructuralNavigation:
                     text = self._getCellText(header)
                     speech.speak(text)
 
-    def getCellCoordinates(self, obj):
+    def getCellCoordinates(self, obj, preferAttribute=True):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
         if the coordinates cannot be found.
 
         Arguments:
         - obj: the accessible table cell whose coordinates we want.
+        - preferAttribute: If True, prefer object attribute over table interface
         """
 
         cell = self.getCellForObj(obj)
         table = self.getTableForCell(cell)
-        thisRow, thisCol = self._script.utilities.coordinatesForCell(cell)
+        thisRow, thisCol = self._script.utilities.coordinatesForCell(cell, preferAttribute)
+
+        # If preferAttribute is True, we are getting coordinates to be spoken,
+        # and not to deal with the logic below.
+        if preferAttribute:
+            return thisRow, thisCol
 
         # If we're in a cell that spans multiple rows and/or columns,
         # thisRow and thisCol will refer to the upper left cell in

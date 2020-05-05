@@ -4219,7 +4219,7 @@ class Utilities:
         rowIndex = table.getRowAtIndex(index)
         return table.getRowHeader(rowIndex)
 
-    def coordinatesForCell(self, obj):
+    def coordinatesForCell(self, obj, preferAttribute=True):
         roles = [pyatspi.ROLE_TABLE_CELL,
                  pyatspi.ROLE_TABLE_COLUMN_HEADER,
                  pyatspi.ROLE_TABLE_ROW_HEADER,
@@ -4253,7 +4253,7 @@ class Utilities:
         row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
-    def rowAndColumnCount(self, obj):
+    def rowAndColumnCount(self, obj, preferAttribute=True):
         try:
             table = obj.queryTable()
         except:

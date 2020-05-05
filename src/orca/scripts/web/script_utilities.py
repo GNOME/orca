@@ -2756,7 +2756,7 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def coordinatesForCell(self, obj):
+    def coordinatesForCell(self, obj, preferAttribute=True):
         roles = [pyatspi.ROLE_TABLE_CELL,
                  pyatspi.ROLE_TABLE_COLUMN_HEADER,
                  pyatspi.ROLE_TABLE_ROW_HEADER,
@@ -2765,14 +2765,18 @@ class Utilities(script_utilities.Utilities):
         if not (obj and obj.getRole() in roles):
             return -1, -1
 
-        rowindex, colindex = self._rowAndColumnIndices(obj)
-        if rowindex is not None and colindex is not None:
-            return int(rowindex) - 1, int(colindex) - 1
+        if preferAttribute:
+            rowindex, colindex = self._rowAndColumnIndices(obj)
+            if rowindex is not None and colindex is not None:
+                return int(rowindex) - 1, int(colindex) - 1
 
-        return super().coordinatesForCell(obj)
+        return super().coordinatesForCell(obj, preferAttribute)
 
-    def rowAndColumnCount(self, obj):
+    def rowAndColumnCount(self, obj, preferAttribute=True):
         rows, cols = super().rowAndColumnCount(obj)
+        if not preferAttribute:
+            return rows, cols
+
         attrs = self.objectAttributes(obj)
         rows = attrs.get('rowcount', rows)
         cols = attrs.get('colcount', cols)
