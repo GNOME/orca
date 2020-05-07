@@ -42,20 +42,6 @@ Orca also has the following dependencies:
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.37.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
-> NOTE: If you have multiple versions of the Python interpreter installed
-on your machine, you should set the PYTHON environment variable when
-configuring Orca.  For example:
-
-```sh
-PYTHON=/usr/bin/python3.3 ./autogen.sh
-```
-
-or
-
-```sh
-PYTHON=/usr/bin/python3.3 ./configure
-```
-
 ## NOTE FOR BRLTTY USERS:
 
 Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
