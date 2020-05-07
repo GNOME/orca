@@ -1713,42 +1713,27 @@ class Utilities:
         return [x for x in Utilities._desktop if x is not None]
 
     def labelsForObject(self, obj):
-        """Return a list of the objects that are labelling this object.
+        """Return a list of the labels for this object."""
 
-        Argument:
-        - obj: the object in question
-
-        Returns a list of the objects that are labelling this object.
-        """
-
-        # For some reason, some objects are labelled by the same thing
-        # more than once.  Go figure, but we need to check for this.
-        #
-        label = []
         try:
             relations = obj.getRelationSet()
         except (LookupError, RuntimeError):
             msg = 'ERROR: Exception getting relationset for %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return label
+            return []
 
-        allTargets = []
-        for relation in relations:
-            if relation.getRelationType() == pyatspi.RELATION_LABELLED_BY:
+        pred = lambda r: r.getRelationType() == pyatspi.RELATION_LABELLED_BY
+        relations = list(filter(pred, obj.getRelationSet()))
+        if not relations:
+            return []
 
-                # The object can be labelled by more than one thing, so we just
-                # get all the labels (from unique objects) and append them
-                # together.  An example of such objects live in the "Basic"
-                # page of the gnome-accessibility-keyboard-properties app.
-                # The "Delay" and "Speed" objects are labelled both by
-                # their names and units.
-                #
-                for i in range(0, relation.getNTargets()):
-                    target = relation.getTarget(i)
-                    if not target in allTargets:
-                        allTargets.append(target)
-                        label.append(target)
-        return label
+        r = relations[0]
+        result = set([r.getTarget(i) for i in range(r.getNTargets())])
+
+        def isNotAncestor(acc):
+            return not pyatspi.findAncestor(obj, lambda x: x == acc)
+
+        return list(filter(isNotAncestor, result))
 
     @staticmethod
     def linkBasename(obj):
