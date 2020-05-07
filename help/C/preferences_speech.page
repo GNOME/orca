@@ -308,10 +308,10 @@
         Default value: checked
       </p>
     </section>
-    <section id="read_full_row_in_gui_tables">
-      <title>Read full row in GUI tables</title>
+    <section id="speak_full_row_in_gui_tables">
+      <title>Speak full row in GUI tables</title>
       <p>
-        If <gui>Read full row in GUI tables</gui> is checked, as you arrow up
+        If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up
         and down in application tables such as the list of messages in your
         Inbox, <app>Orca</app> will speak the entire row. If you would prefer
         to hear only the cell with focus, you should uncheck this checkbox.
@@ -320,10 +320,10 @@
         Default value: checked
       </p>
     </section>
-    <section id="read_full_row_in_document_tables">
-      <title>Read full row in document tables</title>
+    <section id="speak_full_row_in_document_tables">
+      <title>Speak full row in document tables</title>
       <p>
-        If <gui>Read full row in document tables</gui> is checked, as you arrow
+        If <gui>Speak full row in document tables</gui> is checked, as you arrow
         up and down in tables such as those found in <app>Writer</app> and web
         documents, <app>Orca</app> will speak the entire row. If you would prefer
         to hear only the cell with focus, you should uncheck this checkbox.
@@ -332,10 +332,10 @@
         Default value: checked
       </p>
     </section>
-    <section id="read_full_row_in_spreadsheets">
-      <title>Read full row in spreadsheets</title>
+    <section id="speak_full_row_in_spreadsheets">
+      <title>Speak full row in spreadsheets</title>
       <p>
-        If <gui>Read full row in spreadsheets</gui> is checked, as you arrow
+        If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow
         up and down in spreadsheets, <app>Orca</app> will speak the entire
         row. If you would prefer to hear only the cell with focus, you should
         uncheck this checkbox.
