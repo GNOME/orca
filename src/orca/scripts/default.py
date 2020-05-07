@@ -551,6 +551,8 @@ class Script(script.Script):
             self.onMouseButton
         listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
+        listeners["object:property-change:accessible-description"] = \
+            self.onDescriptionChanged
         listeners["object:text-caret-moved"]                = \
             self.onCaretMoved
         listeners["object:text-changed:delete"]             = \
@@ -750,6 +752,7 @@ class Script(script.Script):
             role = obj.getRole()
             state = obj.getState()
             name = obj.name
+            description = obj.description
         except:
             return
 
@@ -766,6 +769,10 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         self.pointOfReference['names'] = names
+
+        descriptions = self.pointOfReference.get('descriptions', {})
+        descriptions[hash(obj)] = description
+        self.pointOfReference['descriptions'] = descriptions
 
         # We want to save the offset for text objects because some apps and
         # toolkits emit caret-moved events immediately after a text object
@@ -2304,6 +2311,27 @@ class Script(script.Script):
         msg = "DEFAULT: Presenting text at new caret position"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._presentTextAtNewCaretPosition(event)
+
+    def onDescriptionChanged(self, event):
+        """Callback for object:property-change:accessible-description events."""
+
+        obj = event.source
+        descriptions = self.pointOfReference.get('description', {})
+        oldDescription = descriptions.get(hash(obj))
+        if oldDescription == event.any_data:
+            msg = "DEFAULT: Old description (%s) is the same as new one" % oldDescription
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        if obj != orca_state.locusOfFocus:
+            msg = "DEFAULT: Event is for object other than the locusOfFocus"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        descriptions[hash(obj)] = event.any_data
+        self.pointOfReference['descriptions'] = descriptions
+        if event.any_data:
+            self.presentMessage(event.any_data)
 
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
