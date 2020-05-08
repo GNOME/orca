@@ -388,17 +388,41 @@ class KeyboardEvent(InputEvent):
         return False
 
     def __str__(self):
-        return ("KEYBOARD_EVENT:  type=%d\n" % self.type) \
-             + ("                 id=%d\n" % self.id) \
-             + ("                 hw_code=%d\n" % self.hw_code) \
-             + ("                 modifiers=%d\n" % self.modifiers) \
-             + ("                 event_string=(%s)\n" % self.event_string) \
-             + ("                 keyval_name=(%s)\n" % self.keyval_name) \
+        if self._shouldObscure():
+            keyid = hw_code = modifiers = event_string = keyval_name = key_type = "*"
+        else:
+            keyid = self.id
+            hw_code = self.hw_code
+            modifiers = self.modifiers
+            event_string = self.event_string
+            keyval_name = self.keyval_name
+            key_type = self.keyType
+
+        return ("KEYBOARD_EVENT:  type=%s\n" % self.type.value_name.upper()) \
+             + ("                 id=%s\n" % keyid) \
+             + ("                 hw_code=%s\n" % hw_code) \
+             + ("                 modifiers=%s\n" % modifiers) \
+             + ("                 event_string=(%s)\n" % event_string) \
+             + ("                 keyval_name=(%s)\n" % keyval_name) \
              + ("                 timestamp=%d\n" % self.timestamp) \
              + ("                 time=%f\n" % time.time()) \
-             + ("                 keyType=%s\n" % self.keyType) \
+             + ("                 keyType=%s\n" % key_type) \
              + ("                 clickCount=%s\n" % self._clickCount) \
              + ("                 shouldEcho=%s\n" % self.shouldEcho)
+
+    def _shouldObscure(self):
+        if not (self._obj and self._obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT):
+            return False
+
+        if not self.isPrintableKey():
+            return False
+
+        if self.modifiers & keybindings.CTRL_MODIFIER_MASK \
+           or self.modifiers & keybindings.ALT_MODIFIER_MASK \
+           or self.modifiers & keybindings.ORCA_MODIFIER_MASK:
+            return False
+
+        return True
 
     def _isReleaseForLastNonModifierKeyEvent(self):
         last = orca_state.lastNonModifierKeyEvent
@@ -752,7 +776,11 @@ class KeyboardEvent(InputEvent):
         """Processes this input event."""
 
         startTime = time.time()
-        data = "'%s' (%d)" % (self.event_string, self.hw_code)
+        if not self._shouldObscure():
+            data = "'%s' (%d)" % (self.event_string, self.hw_code)
+        else:
+            data = "(obscured)"
+
         if self.is_duplicate:
             data = '%s DUPLICATE EVENT #%i' % (data, KeyboardEvent.duplicateCount)
 
