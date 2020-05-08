@@ -2102,6 +2102,9 @@ class Utilities:
         if objects:
             return objects
 
+        if role == pyatspi.ROLE_LABEL and not (root.name or self.queryNonEmptyText(root)):
+            return []
+
         containers = [pyatspi.ROLE_CANVAS,
                       pyatspi.ROLE_FILLER,
                       pyatspi.ROLE_IMAGE,
@@ -2200,7 +2203,12 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_STATUS_BAR):
             return []
 
-        return self.getOnScreenObjects(obj)
+        items = self._script.pointOfReference.get('statusBarItems')
+        if not items:
+            items = self.getOnScreenObjects(obj)
+            self._script.pointOfReference['statusBarItems'] = items
+
+        return items
 
     def statusBar(self, obj):
         """Returns the status bar in the window which contains obj.

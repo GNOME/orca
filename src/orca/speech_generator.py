@@ -2336,13 +2336,6 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
-    def generateStatusBar(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the status bar of the window
-        containing the object.
-        """
-        return self._generateStatusBar(obj, **args)
-
     def generateTitle(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the title of the window, obj.

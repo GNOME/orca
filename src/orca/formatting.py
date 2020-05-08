@@ -450,13 +450,16 @@ formatting = {
             },
         pyatspi.ROLE_STATIC: {
             'unfocused': '(displayedText or name) + roleName',
-        },
+            },
+        pyatspi.ROLE_STATUS_BAR: {
+            'focused': 'labelAndName + roleName',
+            'unfocused': 'labelAndName + roleName + pause + statusBar',
+            },
         'ROLE_SWITCH': {
             'focused': 'switchState',
             'unfocused': 'labelOrName + roleName + switchState + availability + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'labelOrName + roleName + switchState'
             },
-
         pyatspi.ROLE_TABLE: {
             'focused': 'leaving or (labelAndName + pause + table)',
             'unfocused': 'labelAndName + pause + table',
@@ -661,13 +664,10 @@ formatting = {
                                      asString(labelAndName + value + roleName + required))]',
             },
         pyatspi.ROLE_LABEL: {
-            'focused': '[Text(obj, asString(labelAndName))]',
-            'unfocused': '[Text(obj, asString(labelAndName))]'
+            'unfocused': BRAILLE_TEXT
             },
         pyatspi.ROLE_LINK: {
-            'unfocused': '[Link(obj, asString(currentLineText)\
-                                     or asString(displayedText)\
-                                     or asString(name))] \
+            'unfocused': '[Link(obj, asString(name or displayedText))] \
                         + (roleName and [Region(" " + asString(roleName))])',
         },
         pyatspi.ROLE_LIST: {
@@ -776,6 +776,10 @@ formatting = {
             'unfocused': '[Text(obj, asString(label), asString(eol))]\
                           + (required and [Region(" " + asString(required))] or [])\
                           + (readOnly and [Region(" " + asString(readOnly))] or [])'
+            },
+        pyatspi.ROLE_STATUS_BAR: {
+            'unfocused': '[Component(obj, asString(labelOrName + roleName))]\
+                              + [Region(" ")] + statusBar',
             },
         'ROLE_SWITCH' : {
             'unfocused': '[Component(obj,\

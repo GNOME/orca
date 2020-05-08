@@ -287,6 +287,13 @@ class Generator:
         # Subclasses must override this.
         return []
 
+    def _fallBackOnDescriptionForName(self, obj, **args):
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LABEL:
+            return False
+
+        return True
+
     def _generateName(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the name of the object.  If the object is directly
@@ -306,7 +313,7 @@ class Generator:
         name = obj.name
         if name:
             result.append(name)
-        else:
+        elif self._fallBackOnDescriptionForName(obj, **args):
             try:
                 description = obj.description
             except (LookupError, RuntimeError):
@@ -437,6 +444,11 @@ class Generator:
         if label:
             result.append(label)
         return result
+
+    def generateStatusBar(self, obj, **args):
+        """Returns an array of strings that represent a status bar."""
+
+        return self._generateStatusBar(obj, **args)
 
     #####################################################################
     #                                                                   #

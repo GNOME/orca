@@ -1246,7 +1246,12 @@ class Script(script.Script):
 
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
-            speech.speak(self.speechGenerator.generateStatusBar(frame))
+            statusbar = self.utilities.statusBar(frame)
+            if statusbar:
+                self.pointOfReference['statusBarItems'] = None
+                self.presentObject(statusbar)
+                self.pointOfReference['statusBarItems'] = None
+
             infobar = self.utilities.infoBar(frame)
             if infobar:
                 speech.speak(self.speechGenerator.generateSpeech(infobar))

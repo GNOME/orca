@@ -345,6 +345,24 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
+    def _generateStatusBar(self, obj, **args):
+        statusBar = self._script.utilities.statusBar(obj)
+        if not statusBar:
+            return []
+
+        items = self._script.utilities.statusBarItems(obj)
+        if not items:
+            return []
+
+        result = []
+        for child in items:
+            childResult = self.generate(child, includeContext=False)
+            if childResult:
+                result.extend(childResult)
+                result.append(braille.Region(" "))
+
+        return result
+
     def _generateListBoxItemWidgets(self, obj, **args):
         widgetRoles = [pyatspi.ROLE_CHECK_BOX,
                        pyatspi.ROLE_COMBO_BOX,
