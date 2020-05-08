@@ -2189,6 +2189,19 @@ class Utilities:
 
         return obj
 
+    def isStatusBarDescendant(self, obj):
+        if not obj:
+            return False
+
+        isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
+        return pyatspi.findAncestor(obj, isStatusBar) is not None
+
+    def statusBarItems(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_STATUS_BAR):
+            return []
+
+        return self.getOnScreenObjects(obj)
+
     def statusBar(self, obj):
         """Returns the status bar in the window which contains obj.
 
@@ -2196,6 +2209,9 @@ class Utilities:
         - obj: the top-level object (e.g. window, frame, dialog) for which
           the status bar is sought.
         """
+
+        if obj.getRole() == pyatspi.ROLE_STATUS_BAR:
+            return obj
 
         # There are some objects which are not worth descending.
         #

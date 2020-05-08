@@ -564,6 +564,9 @@ class SpeechGenerator(generator.Generator):
         if parentRole == pyatspi.ROLE_LIST_BOX:
             doNotPresent.append(obj.getRole())
 
+        if self._script.utilities.isStatusBarDescendant(obj):
+            doNotPresent.append(pyatspi.ROLE_LABEL)
+
         if _settingsManager.getSetting('speechVerbosityLevel') \
                 == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
@@ -2314,21 +2317,19 @@ class SpeechGenerator(generator.Generator):
     def _generateStatusBar(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the status bar of a window.
-        This method should initially be called with a top-level window.
         """
 
         statusBar = self._script.utilities.statusBar(obj)
         if not statusBar:
             return []
 
-        result = self._generateName(statusBar)
-        if result:
-            return result
+        items = self._script.utilities.statusBarItems(statusBar)
+        if not items:
+            return []
 
-        for child in statusBar:
-            childResult = self._generateDisplayedText(child)
-            if not childResult and child.getRole() != pyatspi.ROLE_LABEL:
-                childResult = self.generate(child, includeContext=False)
+        result = []
+        for child in items:
+            childResult = self.generate(child, includeContext=False)
             if childResult:
                 result.extend(childResult)
                 result.extend(self._generatePause(child, **args))
