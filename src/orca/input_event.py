@@ -411,7 +411,12 @@ class KeyboardEvent(InputEvent):
              + ("                 shouldEcho=%s\n" % self.shouldEcho)
 
     def _shouldObscure(self):
-        if not (self._obj and self._obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT):
+        try:
+            role = self._obj.getRole()
+        except:
+            return False
+
+        if role != pyatspi.ROLE_PASSWORD_TEXT:
             return False
 
         if not self.isPrintableKey():
