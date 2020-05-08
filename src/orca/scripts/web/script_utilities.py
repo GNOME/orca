@@ -4097,6 +4097,9 @@ class Utilities(script_utilities.Utilities):
             return False
 
         eType = event.type
+        if eType.startswith("object:text-") and self.isSingleLineAutocompleteEntry(event.source):
+            lastKey, mods = self.lastKeyAndModifiers()
+            return lastKey == "Return"
         if eType.startswith("object:text-") or eType.endswith("accessible-name"):
             return role in [pyatspi.ROLE_STATUS_BAR, pyatspi.ROLE_LABEL]
         if eType.startswith("object:children-changed"):

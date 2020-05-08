@@ -1483,6 +1483,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2251,6 +2256,11 @@ class Script(default.Script):
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 

@@ -552,10 +552,10 @@ class SpeechGenerator(generator.Generator):
         if role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
             return self._generateRoleName(obj.parent)
 
-        if role == pyatspi.ROLE_ENTRY \
-           and obj.getState().contains(pyatspi.STATE_SUPPORTS_AUTOCOMPLETION):
+        if self._script.utilities.isSingleLineAutocompleteEntry(obj):
             result.append(self.getLocalizedRoleName(obj, role=pyatspi.ROLE_AUTOCOMPLETE))
             result.extend(acss)
+            return result
 
         if role == pyatspi.ROLE_PANEL and obj.getState().contains(pyatspi.STATE_SELECTED):
             return []

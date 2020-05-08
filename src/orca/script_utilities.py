@@ -4002,6 +4002,21 @@ class Utilities:
 
         return False
 
+    def isSingleLineAutocompleteEntry(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_ENTRY:
+            return False
+
+        return state.contains(pyatspi.STATE_SUPPORTS_AUTOCOMPLETION) \
+            and state.contains(pyatspi.STATE_SINGLE_LINE)
+
     def isEntryCompletionPopupItem(self, obj):
         return False
 
