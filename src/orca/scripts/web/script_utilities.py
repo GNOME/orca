@@ -2057,9 +2057,6 @@ class Utilities(script_utilities.Utilities):
         return roles
 
     def mnemonicShortcutAccelerator(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().mnemonicShortcutAccelerator(obj)
-
         attrs = self.objectAttributes(obj)
         keys = map(lambda x: x.replace("+", " "), attrs.get("keyshortcuts", "").split(" "))
         keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
