@@ -1255,6 +1255,10 @@ class Script(script.Script):
                 self.pointOfReference['statusBarItems'] = None
                 self.presentObject(statusbar)
                 self.pointOfReference['statusBarItems'] = None
+            else:
+                full = messages.STATUS_BAR_NOT_FOUND_FULL
+                brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
+                self.presentMessage(full, brief)
 
             infobar = self.utilities.infoBar(frame)
             if infobar:

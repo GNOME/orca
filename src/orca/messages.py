@@ -2208,6 +2208,16 @@ STOP_ORCA = _("Screen reader off.")
 # Translators: This message means speech synthesis is not installed or working.
 SPEECH_UNAVAILABLE = _("Speech is unavailable.")
 
+# Translators: Orca has a command to present the contents of the status bar.
+# This is a brief message which will be presented if Orca cannot find the
+# status bar (e.g. because there isn't one).
+STATUS_BAR_NOT_FOUND_BRIEF = C_("status bar", "Not found")
+
+# Translators: Orca has a command to present the contents of the status bar.
+# This is a detailed message which will be presented if Orca cannot find the
+# status bar (e.g. because there isn't one).
+STATUS_BAR_NOT_FOUND_FULL = _("Status bar not found")
+
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text.  For example, they may want to find
 # the "OK" button.  This message lets them know a string they were searching
