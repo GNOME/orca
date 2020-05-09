@@ -118,7 +118,7 @@ class SpeechGenerator(generator.Generator):
 
     def _resultElementToString(self, element, includeAll=True):
         if debug.LEVEL_ALL < debug.debugLevel:
-            return element
+            return str(element)
 
         if isinstance(element, str):
             return super()._resultElementToString(element, includeAll)
