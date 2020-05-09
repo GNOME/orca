@@ -44,6 +44,9 @@ class Pause:
     def __init__(self):
         pass
 
+    def __str__(self):
+        return "PAUSE"
+
 PAUSE = [Pause()]
 
 class LineBreak:
@@ -112,6 +115,27 @@ class SpeechGenerator(generator.Generator):
 
     def generateSpeech(self, obj, **args):
         return self.generate(obj, **args)
+
+    def _resultElementToString(self, element, includeAll=True):
+        if debug.LEVEL_ALL < debug.debugLevel:
+            return element
+
+        if isinstance(element, str):
+            return super()._resultElementToString(element, includeAll)
+
+        if not isinstance(element, acss.ACSS):
+            return str(element)
+
+        if not includeAll:
+            return ""
+
+        voices = {"default": self.voice(DEFAULT)[0],
+                  "system": self.voice(SYSTEM)[0],
+                  "hyperlink": self.voice(HYPERLINK)[0],
+                  "uppercase": self.voice(UPPERCASE)[0]}
+
+        voicetypes = [k for k in voices if voices.get(k) == element]
+        return "Voice(s): (%s)" % ", ".join(voicetypes)
 
     #####################################################################
     #                                                                   #

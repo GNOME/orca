@@ -755,11 +755,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result = list(filter(lambda x: x, super().generateSpeech(obj, **args)))
 
         self._restoreRole(oldRole, args)
-        msg = "WEB: Speech generation for document object %s complete:" % obj
+        msg = "WEB: Speech generation for document object %s complete." % obj
         debug.println(debug.LEVEL_INFO, msg, True)
-        for element in result:
-            debug.println(debug.LEVEL_ALL, "%s%s" % (' ' * 18, element))
-
         return result
 
     def generateContents(self, contents, **args):

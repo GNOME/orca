@@ -1246,7 +1246,11 @@ class Script(script.Script):
 
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
+            start = time.time()
             statusbar = self.utilities.statusBar(frame)
+            end = time.time()
+            msg = "DEFAULT: Time searching for status bar: %.4f" % (end - start)
+            debug.println(debug.LEVEL_INFO, msg, True)
             if statusbar:
                 self.pointOfReference['statusBarItems'] = None
                 self.presentObject(statusbar)

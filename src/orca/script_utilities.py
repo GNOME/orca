@@ -2203,10 +2203,15 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_STATUS_BAR):
             return []
 
+        start = time.time()
         items = self._script.pointOfReference.get('statusBarItems')
         if not items:
             items = self.getOnScreenObjects(obj)
             self._script.pointOfReference['statusBarItems'] = items
+
+        end = time.time()
+        msg = "INFO: Time getting status bar items: %.4f" % (end - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         return items
 
