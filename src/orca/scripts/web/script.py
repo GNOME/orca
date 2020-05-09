@@ -909,6 +909,10 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
+        if obj.getRole() == pyatspi.ROLE_STATUS_BAR:
+            super().presentObject(obj, **args)
+            return
+
         priorObj = args.get("priorObj")
         if self._lastCommandWasCaretNav or args.get("includeContext"):
             priorObj, priorOffset = self.utilities.getPriorContext()
