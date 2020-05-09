@@ -4964,6 +4964,12 @@ class Utilities(script_utilities.Utilities):
         self._lastQueuedLiveRegionEvent = event
         return True
 
+    def getOnScreenObjects(self, root, extents=None):
+        if self._treatObjectAsWhole(root):
+            return [root]
+
+        return super().getOnScreenObjects(root, extents)
+
     def getPageObjectCount(self, obj):
         result = {'landmarks': 0,
                   'headings': 0,
