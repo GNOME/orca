@@ -115,7 +115,7 @@ class Utilities(script_utilities.Utilities):
         self._currentCharacterContents = None
         self._lastQueuedLiveRegionEvent = None
         self._findContainer = None
-
+        self._statusBar = None
         self._validChildRoles = {pyatspi.ROLE_LIST: [pyatspi.ROLE_LIST_ITEM]}
 
     def _cleanupContexts(self):
@@ -186,6 +186,7 @@ class Utilities(script_utilities.Utilities):
         self._priorContexts = {}
         self._lastQueuedLiveRegionEvent = None
         self._findContainer = None
+        self._statusBar = None
 
     def clearContentCache(self):
         self._currentObjectContents = None
@@ -4963,6 +4964,15 @@ class Utilities(script_utilities.Utilities):
 
         self._lastQueuedLiveRegionEvent = event
         return True
+
+    def statusBar(self, obj):
+        if self._statusBar and not self.isZombie(self._statusBar):
+            msg = "WEB: Returning cached status bar: %s" % self._statusBar
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return self._statusBar
+
+        self._statusBar = super().statusBar(obj)
+        return self._statusBar
 
     def getOnScreenObjects(self, root, extents=None):
         if self._treatObjectAsWhole(root):
