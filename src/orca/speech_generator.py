@@ -2324,7 +2324,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         items = self._script.utilities.statusBarItems(statusBar)
-        if not items:
+        if not items or items == [statusBar]:
             return []
 
         result = []
