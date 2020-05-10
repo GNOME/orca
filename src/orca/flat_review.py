@@ -901,6 +901,7 @@ class Context:
                 regionWithFocus = zone.brailleRegion
                 regionWithFocus.cursorOffset = 0
                 if zone.words:
+                    regionWithFocus.cursorOffset += zone.words[0].startOffset - zone.startOffset
                     for wordIndex in range(0, self.wordIndex):
                         regionWithFocus.cursorOffset += \
                             len(zone.words[wordIndex].string)
