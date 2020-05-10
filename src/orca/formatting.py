@@ -279,9 +279,7 @@ formatting = {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
         pyatspi.ROLE_LABEL: {
-            'focused': 'label + displayedText + allTextSelection + roleName',
-            'unfocused': 'label + displayedText + allTextSelection + roleName',
-            'basicWhereAmI': 'label + displayedText + allTextSelection + roleName'
+            'unfocused': 'label + ((displayedText + allTextSelection) or name) + roleName',
             },
         pyatspi.ROLE_LANDMARK: {
             'focused': 'leaving or (roleName + labelAndName)',
