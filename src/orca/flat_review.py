@@ -1163,12 +1163,14 @@ class Context:
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
+                    braille.clear()
                 elif wrap & Context.WRAP_TOP_BOTTOM:
                     self.lineIndex  = 0
                     self.zoneIndex  = 0
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
+                    braille.clear()
         elif flatReviewType == Context.CHAR:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             if zone.words:
