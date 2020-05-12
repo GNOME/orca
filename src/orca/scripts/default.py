@@ -1126,10 +1126,10 @@ class Script(script.Script):
         if self.flatReviewContext:
             if self.isBrailleEndShowing():
                 self.flatReviewContext.goEnd(flat_review.Context.LINE)
+                # Reviewing the next character also updates the braille output and refreshes the display.
                 self.reviewNextCharacter(inputEvent)
-            else:
-                self.panBrailleInDirection(panAmount, panToLeft=False)
-
+                return
+            self.panBrailleInDirection(panAmount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
