@@ -78,6 +78,8 @@ class KeyboardEvent(InputEvent):
     # When the second orca press happened
     secondOrcaModifierTime = None
 
+    capsLocked = False
+
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
     TYPE_MODIFIER         = "modifier"
@@ -872,12 +874,14 @@ class KeyboardEvent(InputEvent):
         def lock_mod(modifiers, modifier):
             def lockit():
                 try:
-                    if modifiers & modifier:
+                    if modifiers & modifier or KeyboardEvent.capsLocked:
                         lock = pyatspi.KEY_UNLOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Locking capslock", True)
+                        debug.println(debug.LEVEL_INFO, "Unlocking capslock", True)
+                        KeyboardEvent.capsLocked = False
                     else:
                         lock = pyatspi.KEY_LOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Unlocking capslock", True)
+                        debug.println(debug.LEVEL_INFO, "Locking capslock", True)
+                        KeyboardEvent.capsLocked = True
                     pyatspi.Registry.generateKeyboardEvent(modifier, None, lock)
                     debug.println(debug.LEVEL_INFO, "Done with capslock", True)
                 except:
