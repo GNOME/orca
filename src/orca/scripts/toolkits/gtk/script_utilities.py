@@ -249,3 +249,16 @@ class Utilities(script_utilities.Utilities):
         msg = "INFO: Adjusted (%i, %i) to (%i, %i)" % (x, y, newX, newY)
         debug.println(debug.LEVEL_INFO, msg, True)
         return newX, newY
+
+    def cellIndex(self, obj):
+        # We cannot trust @obj to really be a direct child of the table it is
+        # in, so we cannot directly trust getIndexInParent() as that would
+        # return the index in the direct parent rather than in the table.
+        # So, find the actual direct child of the table and get the index of
+        # that object instead.
+
+        isTableChild = lambda x: x and 'Table' in pyatspi.listInterfaces(x.parent)
+        if not isTableChild(obj):
+            obj = pyatspi.findAncestor(obj, isTableChild)
+
+        return obj.getIndexInParent()
