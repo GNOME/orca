@@ -367,8 +367,13 @@ class Region:
                             mode=mode)
 
         # Make sure the cursor is at a realistic spot.
+        # Note that if cursorOffset is beyond the end of the buffer,
+        # a spurious value is returned by liblouis in cursorPos.
         #
-        cursorPos = min(cursorPos, len(contracted))
+        if cursorOffset >= len(line):
+            cursorPos = len(contracted)
+        else:
+            cursorPos = min(cursorPos, len(contracted))
 
         return contracted, inPos, outPos, cursorPos
 
