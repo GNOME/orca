@@ -1159,13 +1159,14 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         msg = "BRAILLE: Adjusted targetCursorCell to: %i" % targetCursorCell
         debug.println(debug.LEVEL_INFO, msg, True)
 
-    # If there is no target cursor cell, then try to set one.  We
+    # If there is no target cursor cell and panning to cursor was
+    # requested, then try to set one.  We
     # currently only do this for text objects, and we do so by looking
     # at the last position of the caret offset and cursor cell.  The
     # primary goal here is to keep the cursor movement on the display
     # somewhat predictable.
 
-    if targetCursorCell == 0 and onSameLine:
+    if panToCursor and targetCursorCell == 0 and onSameLine:
         if lastCursorCell == 0:
             msg = "BRAILLE: Not adjusting targetCursorCell. User panned caret out of view."
             debug.println(debug.LEVEL_INFO, msg, True)
