@@ -901,6 +901,7 @@ class Context:
                 regionWithFocus = zone.brailleRegion
                 regionWithFocus.cursorOffset = 0
                 if zone.words:
+                    regionWithFocus.cursorOffset += zone.words[0].startOffset - zone.startOffset
                     for wordIndex in range(0, self.wordIndex):
                         regionWithFocus.cursorOffset += \
                             len(zone.words[wordIndex].string)
@@ -1162,12 +1163,14 @@ class Context:
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
+                    braille.clear()
                 elif wrap & Context.WRAP_TOP_BOTTOM:
                     self.lineIndex  = 0
                     self.zoneIndex  = 0
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
+                    braille.clear()
         elif flatReviewType == Context.CHAR:
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             if zone.words:
