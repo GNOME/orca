@@ -124,6 +124,7 @@ class Script(Gecko.Script):
 
         if self.spellcheck.isSuggestionsItem(newFocus):
             includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
+            orca.emitRegionChanged(newFocus)
             self.updateBraille(newFocus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return

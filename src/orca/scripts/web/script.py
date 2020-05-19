@@ -752,6 +752,7 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
+                    orca.emitRegionChanged(obj, offset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
@@ -761,6 +762,8 @@ class Script(default.Script):
             return
 
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+        orca.emitRegionChanged(
+            context.obj, context.currentOffset, context.currentEndOffset, orca.SAY_ALL)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
     def inFocusMode(self):
@@ -1238,6 +1241,7 @@ class Script(default.Script):
 
         self.utilities.setCaretContext(newFocus, caretOffset)
         self.updateBraille(newFocus)
+        orca.emitRegionChanged(newFocus, caretOffset)
 
         if self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):

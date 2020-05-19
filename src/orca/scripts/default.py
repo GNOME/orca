@@ -845,6 +845,7 @@ class Script(script.Script):
             priorObj=oldLocusOfFocus)
 
         speech.speak(utterances, interrupt=not shouldNotInterrupt)
+        orca.emitRegionChanged(newLocusOfFocus)
         self._saveFocusedObjectInfo(newLocusOfFocus)
 
     def activate(self):
@@ -3081,8 +3082,11 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
+            orca.emitRegionChanged(
+                context.obj, context.currentOffset, context.currentEndOffset, orca.SAY_ALL)
             return
-        elif progressType == speechserver.SayAllContext.INTERRUPTED:
+
+        if progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 self._sayAllIsInterrupted = True
                 lastKey = orca_state.lastInputEvent.event_string
@@ -3093,9 +3097,11 @@ class Script(script.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
+            orca.emitRegionChanged(context.obj, context.currentOffset)
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            orca.emitRegionChanged(context.obj, context.currentOffset, mode=orca.SAY_ALL)
             text.setCaretOffset(context.currentOffset)
 
         # If there is a selection, clear it. See bug #489504 for more details.
@@ -3286,8 +3292,9 @@ class Script(script.Script):
            and eventString in ["Right", "Down"]:
             offset -= 1
 
-        character, startOffset, endOffset = \
-            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        character, startOffset, endOffset = text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
+
         if not character or character == '\r':
             character = "\n"
 
@@ -3327,6 +3334,9 @@ class Script(script.Script):
             if result:
                 self.speakMessage(result)
 
+            endOffset = startOffset + len(line)
+            orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
+
             voice = self.speechGenerator.voice(string=line)
             line = self.utilities.adjustForLinks(obj, line, startOffset)
             line = self.utilities.adjustForRepeats(line)
@@ -3360,6 +3370,8 @@ class Script(script.Script):
             result = self.utilities.indentationDescription(phrase)
             if result:
                 self.speakMessage(result)
+
+            orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
 
             voice = self.speechGenerator.voice(string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
@@ -3412,6 +3424,7 @@ class Script(script.Script):
             if lastChar == "\n" and lastWord != word:
                 self.speakCharacter("\n")
 
+        orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
 
         self.speakMisspelledIndicator(obj, startOffset)
         voice = self.speechGenerator.voice(string=word)

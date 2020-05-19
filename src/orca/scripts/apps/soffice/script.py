@@ -510,6 +510,7 @@ class Script(default.Script):
 
         if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
            and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):
+            orca.emitRegionChanged(newFocus)
             self.updateBraille(newLocusOfFocus)
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return

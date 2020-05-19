@@ -43,6 +43,7 @@ except:
 from . import debug
 from . import event_manager
 from . import messages
+from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings_manager
@@ -66,7 +67,7 @@ class _StringContext:
         - script: The script associated with the accessible object
         """
 
-        self._obj = hash(obj)
+        self._obj = obj
         self._script = script
         self._string = string
         self._start = start
@@ -142,6 +143,8 @@ class _StringContext:
 
         voice = self._script.speechGenerator.voice(string=self._string)
         string = self._script.utilities.adjustForRepeats(self._string)
+
+        orca.emitRegionChanged(self._obj, self._start, self._end, orca.MOUSE_REVIEW)
         self._script.speakMessage(string, voice=voice, interrupt=False)
         self._script.displayBrailleMessage(self._string, -1)
         return True
@@ -291,6 +294,7 @@ class _ItemContext:
 
         if self._obj and self._obj != prior._obj:
             priorObj = prior._obj or self._getContainer()
+            orca.emitRegionChanged(self._obj, mode=orca.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True

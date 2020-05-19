@@ -44,6 +44,9 @@ activeWindow = None
 #
 activeScript = None
 
+# The currently active mode (focus, say all, flat review, etc.)
+activeMode = None
+
 # Used to capture keys to redefine key bindings by the user.
 #
 capturingKeys   = False
