@@ -273,6 +273,8 @@ class Utilities:
         if index:
             return int(index)
 
+        isCell = lambda x: x and x.getRole() in self.getCellRoles()
+        obj = pyatspi.findAncestor(obj, isCell) or obj
         return obj.getIndexInParent()
 
     def childNodes(self, obj):
