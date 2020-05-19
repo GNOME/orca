@@ -4611,7 +4611,7 @@ class Utilities(script_utilities.Utilities):
                 obj, offset = self.nextContext(event.source, -1)
             elif 0 < event.detail1 < event.source.childCount:
                 child = event.source[event.detail1]
-                msg = "WEB: Getting new location from start of child %i %s." % (child, event.detail1)
+                msg = "WEB: Getting new location from start of child %i %s." % (event.detail1, child)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(child, -1)
             else:
