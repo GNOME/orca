@@ -187,6 +187,9 @@ UPPERCASE_VOICE         = "uppercase"
 HYPERLINK_VOICE         = "hyperlink"
 SYSTEM_VOICE            = "system"
 
+# version of the settings, allowing to check compatibility
+settingsVersion = 1
+
 voicesKeys = {
 "DEFAULT_VOICE"     : "default",
 "UPPERCASE_VOICE"   : "uppercase",

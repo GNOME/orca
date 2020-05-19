@@ -29,7 +29,7 @@ __license__   = "LGPL"
 
 from json import load, dump
 import os
-from orca import settings, acss
+from orca import settings, settings_migration, acss
 
 class Backend:
 
@@ -52,7 +52,8 @@ class Backend:
     def saveDefaultSettings(self, general, pronunciations, keybindings):
         """ Save default settings for all the properties from
             orca.settings. """
-        prefs = {'general': general,
+        prefs = {'version': settings.settingsVersion,
+                 'general': general,
                  'profiles': self._defaultProfiles,
                  'pronunciations': pronunciations,
                  'keybindings': keybindings}
@@ -72,6 +73,9 @@ class Backend:
             settingsFile = open(fileName, 'r')
             prefs = load(settingsFile)
             settingsFile.close()
+            if self._updatePrefs(prefs, isAppSettings=True):
+                with open(fileName, 'w') as settingsFile:
+                    dump(prefs, settingsFile, indent=4)
         else:
             prefs = {}
 
@@ -83,6 +87,7 @@ class Backend:
         profiles[profile] = {'general': general,
                              'pronunciations': pronunciations,
                              'keybindings': keybindings}
+        prefs['version'] = settings.settingsVersion
         prefs['profiles'] = profiles
 
         fileName = os.path.join(self.appPrefsDir, "%s.conf" % appName)
@@ -102,10 +107,41 @@ class Backend:
 
         with open(self.settingsFile, 'r+') as settingsFile:
             prefs = load(settingsFile)
+            prefs['version'] = settings.settingsVersion
             prefs['profiles'][profile] = general
             settingsFile.seek(0)
             settingsFile.truncate()
             dump(prefs, settingsFile, indent=4)
+
+    def _updatePrefs(self, prefs, isAppSettings):
+        """Updates prefs to a new settings version if needed, and return
+           whether prefs have changed.
+
+           isAppSettings: whether `prefs` comes from an app settings file, as
+                          the layout is slightly different"""
+        version = prefs.get('version', 0)
+        if version == settings.settingsVersion:
+            return False
+
+        m = settings_migration.SettingsMigration(version, settings.settingsVersion)
+        if 'general' in prefs:
+            prefs['general'] = m.migrateGeneral(prefs['general'])
+        if 'keybindings' in prefs:
+            prefs['keybindings'] = m.migrateKeybindings(prefs['keybindings'])
+        for profileName in prefs['profiles'].keys():
+            if not isAppSettings:
+                prefs['profiles'][profileName] = \
+                    m.migrateGeneral(prefs['profiles'][profileName])
+            elif 'general' in prefs['profiles'][profileName]:
+                prefs['profiles'][profileName]['general'] = \
+                    m.migrateGeneral(prefs['profiles'][profileName]['general'])
+            if 'keybindings' in prefs['profiles'][profileName]:
+                prefs['profiles'][profileName]['keybindings'] = \
+                    m.migrateKeybindings(prefs['profiles'][profileName]['keybindings'])
+
+        prefs['version'] = settings.settingsVersion
+
+        return True
 
     def _getSettings(self):
         """ Load from config file all settings """
@@ -114,6 +150,11 @@ class Backend:
             prefs = load(settingsFile)
         except ValueError:
             return
+
+        if self._updatePrefs(prefs, isAppSettings=False):
+            with open(self.settingsFile, 'w') as settingsFile:
+                dump(prefs, settingsFile, indent=4)
+
         self.general = prefs['general'].copy()
         self.pronunciations = prefs['pronunciations']
         self.keybindings = prefs['keybindings']
@@ -171,6 +212,7 @@ class Backend:
 
         with open(self.settingsFile, 'r+') as settingsFile:
             prefs = load(settingsFile)
+            prefs['version'] = settings.settingsVersion
             prefs['general'][key] = value
             settingsFile.seek(0)
             settingsFile.truncate()
