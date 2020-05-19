@@ -191,6 +191,10 @@ _flashEventSourceId = 0
 #
 _saved = None
 
+# Set to True when we lower our output priority
+#
+idle = False
+
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
 # http://en.wikipedia.org/wiki/Braille
@@ -1074,6 +1078,72 @@ def setFocus(region, panToFocus=True, getLinkMask=True):
 
     viewport[0] = max(0, offset)
 
+def _idleBraille():
+    """Try to hand off control to other screen readers without completely
+    shutting down the BrlAPI connection"""
+    global idle
+
+    if not idle:
+        try:
+            _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 0)
+            idle = True
+        except:
+            # BrlAPI before 0.8
+            pass
+
+    return idle
+
+def _clearBraille():
+    """Clear Braille output, hand off control to other screen readers, without
+    completely shutting down the BrlAPI connection"""
+
+    if not _brlAPIRunning:
+        # We do want to try to clear the output we left on the device
+        init(_callback)
+
+    if _brlAPIRunning:
+        try:
+            _brlAPI.writeText("", 0)
+            _idleBraille()
+        except:
+            msg = "BRAILLE: BrlTTY seems to have disappeared."
+            debug.println(debug.LEVEL_WARNING, msg, True)
+            shutdown()
+
+def _enableBraille():
+    """Re-enable Braille output after making it idle or clearing it"""
+    global idle
+
+    if not _brlAPIRunning:
+        init(_callback)
+
+    if _brlAPIRunning:
+        if idle:
+            try:
+                # Restore default priority
+                _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 50)
+                idle = False
+            except:
+                msg = "BRAILLE: could not restore priority"
+                debug.println(debug.LEVEL_INFO, msg, True)
+
+def disableBraille():
+    """Hand off control to other screen readers, shutting down the BrlAPI
+    connection if needed"""
+    global idle
+
+    if _brlAPIRunning and not idle:
+        if not _idleBraille():
+            # BrlAPI before 0.8
+            msg = "BRAILLE: could not go idle, completely shut down"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            shutdown()
+
+def checkBrailleSetting():
+    """Disable Braille if it got disabled in the preferences"""
+    if not _settingsManager.getSetting('enableBraille'):
+        disableBraille()
+
 def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=True):
     """Repaints the Braille on the physical display.  This clips the entire
     logical structure by the viewport and also sets the cursor to the
@@ -1121,15 +1191,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         return
 
     if len(_lines) == 0:
-        if not _brlAPIRunning:
-            init(_callback)
-        if _brlAPIRunning:
-            try:
-                _brlAPI.writeText("", 0)
-            except:
-                msg = "BRAILLE: BrlTTY seems to have disappeared."
-                debug.println(debug.LEVEL_WARNING, msg, True)
-                shutdown()
+        _clearBraille()
         _lastTextInfo = (None, 0, 0, 0)
         return
 
@@ -1267,9 +1329,11 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         submask = ""
 
     submask += '\x00' * (len(substring) - len(submask))
-    if not _brlAPIRunning:
-        init(_callback)
-    if _brlAPIRunning:
+
+    if _settingsManager.getSetting('enableBraille'):
+        _enableBraille()
+
+    if _settingsManager.getSetting('enableBraille') and _brlAPIRunning:
         writeStruct = brlapi.WriteStruct()
         writeStruct.regionBegin = 1
         writeStruct.regionSize = len(substring)
@@ -1299,16 +1363,12 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         if attributeMask:
             writeStruct.attrOr = submask
 
-        if not _brlAPIRunning:
-            init(_callback)
-        if _brlAPIRunning:
-            try:
-                _brlAPI.write(writeStruct)
-            except:
-                debug.println(debug.LEVEL_WARNING,
-                              "BrlTTY seems to have disappeared:")
-                debug.printException(debug.LEVEL_WARNING)
-                shutdown()
+        try:
+            _brlAPI.write(writeStruct)
+        except:
+            msg = "BRAILLE: BrlTTY seems to have disappeared."
+            debug.println(debug.LEVEL_WARNING, msg, True)
+            shutdown()
 
     if settings.enableBrailleMonitor:
         if not _monitor:
@@ -1768,6 +1828,7 @@ def init(callback=None):
         return False
 
     _displaySize = [x, 1]
+    idle = False
 
     # The monitor will be created in refresh if needed.
     #
