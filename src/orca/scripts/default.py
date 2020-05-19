@@ -1126,10 +1126,10 @@ class Script(script.Script):
         if self.flatReviewContext:
             if self.isBrailleEndShowing():
                 self.flatReviewContext.goEnd(flat_review.Context.LINE)
+                # Reviewing the next character also updates the braille output and refreshes the display.
                 self.reviewNextCharacter(inputEvent)
-            else:
-                self.panBrailleInDirection(panAmount, panToLeft=False)
-
+                return
+            self.panBrailleInDirection(panAmount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -3543,7 +3543,12 @@ class Script(script.Script):
         # TODO - JD: Again, for now we're preserving the original behavior of choosing the first.
         region = regions[0]
         position = max(region.brailleOffset, braille.viewport[0])
-        offset = position - region.brailleOffset
+        if region.contracted:
+            offset = region.inPos[position - region.brailleOffset]
+        else:
+            offset = position - region.brailleOffset
+        if isinstance(region.zone, flat_review.TextZone):
+            offset += region.zone.startOffset
         msg = "DEFAULT: Offset for region: %i" % offset
         debug.println(debug.LEVEL_INFO, msg, True)
 

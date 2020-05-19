@@ -367,8 +367,13 @@ class Region:
                             mode=mode)
 
         # Make sure the cursor is at a realistic spot.
+        # Note that if cursorOffset is beyond the end of the buffer,
+        # a spurious value is returned by liblouis in cursorPos.
         #
-        cursorPos = min(cursorPos, len(contracted))
+        if cursorOffset >= len(line):
+            cursorPos = len(contracted)
+        else:
+            cursorPos = min(cursorPos, len(contracted))
 
         return contracted, inPos, outPos, cursorPos
 
@@ -876,7 +881,19 @@ class Line:
                 ranges.append(span)
                 span = []
             if not span:
-                span = [start, end]
+                # Subdivide long words that exceed the display width.
+                wordLength = end - start
+                if wordLength > _displaySize[0]:
+                    displayWidths = wordLength // _displaySize[0]
+                    if displayWidths:
+                        for i in range(displayWidths):
+                            ranges.append([start + i * _displaySize[0], start + (i+1) * _displaySize[0]])
+                        if wordLength % _displaySize[0]:
+                            span = [start + displayWidths * _displaySize[0], end]
+                        else:
+                            continue
+                else:
+                    span = [start, end]
             else:
                 span[1] = end
             if end == focusOffset:
@@ -1142,13 +1159,14 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         msg = "BRAILLE: Adjusted targetCursorCell to: %i" % targetCursorCell
         debug.println(debug.LEVEL_INFO, msg, True)
 
-    # If there is no target cursor cell, then try to set one.  We
+    # If there is no target cursor cell and panning to cursor was
+    # requested, then try to set one.  We
     # currently only do this for text objects, and we do so by looking
     # at the last position of the caret offset and cursor cell.  The
     # primary goal here is to keep the cursor movement on the display
     # somewhat predictable.
 
-    if targetCursorCell == 0 and onSameLine:
+    if panToCursor and targetCursorCell == 0 and onSameLine:
         if lastCursorCell == 0:
             msg = "BRAILLE: Not adjusting targetCursorCell. User panned caret out of view."
             debug.println(debug.LEVEL_INFO, msg, True)
