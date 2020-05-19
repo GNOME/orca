@@ -752,7 +752,7 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
-                    orca.emitRegionChanged(obj, offset)
+                    orca.emitRegionChanged(context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
