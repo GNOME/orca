@@ -852,6 +852,7 @@ class Script(script.Script):
         """Called when this script is activated."""
 
         _settingsManager.loadAppSettings(self)
+        braille.checkBrailleSetting()
         braille.setupKeyRanges(self.brailleBindings.keys())
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
@@ -1923,6 +1924,8 @@ class Script(script.Script):
             name, profileID = profiles[0]
 
         _settingsManager.setProfile(profileID, updateLocale=True)
+
+        braille.checkBrailleSetting()
 
         speech.shutdown()
         speech.init()
@@ -3973,6 +3976,12 @@ class Script(script.Script):
                 duration = _settingsManager.getSetting('brailleFlashTime')
 
             braille.displayMessage(message, flashTime=duration)
+
+    def idleMessage(self):
+        """Convenience method to tell speech and braille engines to hand off
+        control to other screen readers."""
+
+        braille.disableBraille()
 
     @staticmethod
     def __play(sounds, interrupt=True):

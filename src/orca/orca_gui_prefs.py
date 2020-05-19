@@ -3259,6 +3259,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca.loadUserSettings(self.script)
 
+        braille.checkBrailleSetting()
+
         self._initSpeechState()
 
         self._populateKeyBindings()
@@ -3470,6 +3472,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         orca.loadUserSettings(skipReloadMessage=True)
 
         self._initGUIState()
+
+        braille.checkBrailleSetting()
 
         self._initSpeechState()
 
