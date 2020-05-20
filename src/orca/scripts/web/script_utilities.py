@@ -831,8 +831,9 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(root):
             result = self.accessibleAtPoint(root, x, y, coordType)
 
-        root = result or root
-        result = super().descendantAtPoint(root, x, y, coordType)
+        if result is None:
+            result = super().descendantAtPoint(root, x, y, coordType)
+
         if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
             return result.parent
 
