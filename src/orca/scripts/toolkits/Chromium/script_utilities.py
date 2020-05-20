@@ -507,28 +507,17 @@ class Utilities(web.Utilities):
 
         return super().findAllDescendants(root, includeIf, excludeIf)
 
-    def _accessibleAtPoint(self, root, x, y, coordType=None):
-        if self.isHidden(root):
-            return None
-
-        try:
-            component = root.queryComponent()
-        except:
-            msg = "CHROMIUM: Exception querying component of %s" % root
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        result = component.getAccessibleAtPoint(x, y, coordType)
+    def accessibleAtPoint(self, root, x, y, coordType=None):
+        result = super().accessibleAtPoint(root, x, y, coordType)
 
         # Chromium cannot do a hit test of web content synchronously. So what it
         # does is return a guess, then fire off an async hit test. The next time
         # one calls it, Chromium returns the previous async hit test result if
         # the point is still within its bounds. Therefore, we need to call
-        # getAccessibleAtPoint() twice to be safe.
-        result = component.getAccessibleAtPoint(x, y, coordType)
-
-        msg = "CHROMIUM: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
+        # accessibleAtPoint() twice to be safe.
+        msg = "CHROMIUM: Getting accessibleAtPoint again due to async hit test result."
         debug.println(debug.LEVEL_INFO, msg, True)
+        result = super().accessibleAtPoint(root, x, y, coordType)
         return result
 
     def descendantAtPoint(self, root, x, y, coordType=None):
@@ -537,7 +526,7 @@ class Utilities(web.Utilities):
 
         result = None
         if self.isDocument(root):
-            result = self._accessibleAtPoint(root, x, y, coordType)
+            result = self.accessibleAtPoint(root, x, y, coordType)
 
         root = result or root
         result = super().descendantAtPoint(root, x, y, coordType)

@@ -4369,6 +4369,22 @@ class Utilities:
 
         return role in roles
 
+    def accessibleAtPoint(self, root, x, y, coordType=None):
+        if self.isHidden(root):
+            return None
+
+        try:
+            component = root.queryComponent()
+        except:
+            msg = "INFO: Exception querying component of %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        result = component.getAccessibleAtPoint(x, y, coordType)
+        msg = "INFO: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
     def descendantAtPoint(self, root, x, y, coordType=None):
         if not root:
             return None
@@ -4386,24 +4402,12 @@ class Utilities:
             return None
 
         if "Table" in pyatspi.listInterfaces(root):
-            try:
-                component = root.queryComponent()
-            except:
-                msg = "ERROR: Exception querying component of %s" % root
-                debug.println(debug.LEVEL_INFO, msg, True)
-                child = None
-            else:
-                child = component.getAccessibleAtPoint(x, y, coordType)
-                msg = "INFO: %s is at (%s, %s) in %s" % (child, x, y, root)
-                debug.println(debug.LEVEL_INFO, msg, True)
-
-                if child and child != root:
-                    cell = self.descendantAtPoint(child, x, y, coordType)
-                    msg = "INFO: %s is at (%s, %s) in %s" % (cell, x, y, child)
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    if cell:
-                        return cell
-                    return child
+            child = self.accessibleAtPoint(root, x, y, coordType)
+            if child and child != root:
+                cell = self.descendantAtPoint(child, x, y, coordType)
+                if cell:
+                    return cell
+                return child
 
         candidates_showing = []
         candidates = []
