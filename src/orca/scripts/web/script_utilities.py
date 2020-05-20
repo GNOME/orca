@@ -823,6 +823,21 @@ class Utilities(script_utilities.Utilities):
 
         return [ext.x, ext.y, ext.width, ext.height]
 
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        result = None
+        if self.isDocument(root):
+            result = self.accessibleAtPoint(root, x, y, coordType)
+
+        root = result or root
+        result = super().descendantAtPoint(root, x, y, coordType)
+        if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
+            return result.parent
+
+        return result
+
     def _preserveTree(self, obj):
         if not (obj and obj.childCount):
             return False
