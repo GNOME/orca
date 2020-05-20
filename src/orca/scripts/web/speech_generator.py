@@ -317,6 +317,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isContentSuggestion(obj):
             return []
 
+        if self._script.inSayAll() and obj == args.get('priorObj'):
+            return []
+
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
@@ -470,6 +473,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
+
+        if self._script.inSayAll() and obj == args.get('priorObj'):
+            return []
 
         result = []
         acss = self.voice(speech_generator.SYSTEM)
