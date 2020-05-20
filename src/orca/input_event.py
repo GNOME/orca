@@ -64,7 +64,21 @@ class InputEvent:
 
         pass
 
+def _getXkbStickyKeysState():
+    from subprocess import check_output, CalledProcessError
+
+    try:
+        output = check_output(['xkbset', 'q'])
+        for line in output.decode('ASCII', errors='ignore').split('\n'):
+            if line.startswith('Sticky-Keys = '):
+                return line.endswith('On')
+    except:
+        pass
+    return False
+
 class KeyboardEvent(InputEvent):
+
+    stickyKeys = _getXkbStickyKeysState()
 
     duplicateCount = 0
     orcaModifierPressed = False
@@ -77,6 +91,8 @@ class KeyboardEvent(InputEvent):
     currentOrcaModifierAloneTime = None
     # When the second orca press happened
     secondOrcaModifierTime = None
+    # Sticky modifiers state, to be applied to the next keyboard event
+    orcaStickyModifiers = 0
 
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
@@ -273,6 +289,15 @@ class KeyboardEvent(InputEvent):
             role = None
         _mayEcho = _isPressed or role == pyatspi.ROLE_TERMINAL
 
+        if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
+           and not KeyboardEvent.lastOrcaModifierAlone:
+            doubleEvent = self._getDoubleClickCandidate()
+            if doubleEvent and \
+               doubleEvent.modifiers & keybindings.ORCA_MODIFIER_MASK:
+                # this is the second event of a double-click, and sticky Orca
+                # affected the first, so copy over the modifiers to the second
+                KeyboardEvent.orcaStickyModifiers = doubleEvent.modifiers
+
         if not self.isOrcaModifier():
             if KeyboardEvent.orcaModifierPressed:
                 KeyboardEvent.currentOrcaModifierAlone = False
@@ -353,19 +378,38 @@ class KeyboardEvent(InputEvent):
         if KeyboardEvent.orcaModifierPressed:
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
+        if KeyboardEvent.stickyKeys:
+            # apply all recorded sticky modifiers
+            self.modifiers |= KeyboardEvent.orcaStickyModifiers
+            if self.isModifierKey():
+                # add this modifier to the sticky ones
+                KeyboardEvent.orcaStickyModifiers |= self.modifiers
+            else:
+                # Non-modifier key, so clear the sticky modifiers. If the user
+                # actually double-presses that key, the modifiers of this event
+                # will be copied over to the second event, see earlier in this
+                # function.
+                KeyboardEvent.orcaStickyModifiers = 0
+
         self._should_consume, self._consume_reason = self.shouldConsume()
+
+    def _getDoubleClickCandidate(self):
+        lastEvent = orca_state.lastNonModifierKeyEvent
+        if isinstance(lastEvent, KeyboardEvent) \
+           and lastEvent.event_string == self.event_string \
+           and self.time - lastEvent.time <= settings.doubleClickTimeout:
+            return lastEvent
+        return None
 
     def setClickCount(self):
         """Updates the count of the number of clicks a user has made."""
 
-        lastEvent = orca_state.lastNonModifierKeyEvent
-        if not isinstance(lastEvent, KeyboardEvent) \
-           or lastEvent.event_string != self.event_string \
-           or self.time - lastEvent.time > settings.doubleClickTimeout:
+        doubleEvent = self._getDoubleClickCandidate()
+        if not doubleEvent:
             self._clickCount = 1
             return
 
-        self._clickCount = lastEvent.getClickCount()
+        self._clickCount = doubleEvent.getClickCount()
         if self.is_duplicate:
             return
 
