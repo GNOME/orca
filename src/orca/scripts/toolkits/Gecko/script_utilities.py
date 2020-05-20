@@ -77,6 +77,56 @@ class Utilities(web.Utilities):
 
         return True
 
+    def _accessibleAtPoint(self, root, x, y, coordType=None):
+        result = None
+        node = root
+        while node:
+            try:
+                component = node.queryComponent()
+            except:
+                msg = "GECKO: Exception querying component of %s" % node
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return result
+
+            result = component.getAccessibleAtPoint(x, y, coordType)
+            if result is None or result == node:
+                result = node
+                break
+            node = result
+
+        msg = "GECKO: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        result = None
+        if self.isDocument(root):
+            result = self._accessibleAtPoint(root, x, y, coordType)
+
+            # Gecko's getAccessibleAtPoint() might return text nodes that are
+            # not normally exposed to AT-SPI.  Work around this getting the
+            # exposed parent, which will actually be the object we want.
+            if result is not None and \
+               result.getRole() == pyatspi.ROLE_UNKNOWN and \
+               result not in result.parent:
+                return result.parent
+
+            # Thunderbird doesn't return leaf text nodes, and
+            # super().descendantAtPoint() will not consider nodes that can have
+            # children unless it finds them itself as children of another node,
+            # but the node we got directly should as well if it is a text node
+            # that has actual text -- and not only references to its children.
+            if result and self.queryNonEmptyText(result):
+                string = result.queryText().getText(0, -1)
+                if re.search("[^\ufffc\s]", string):
+                    return result
+
+        root = result or root
+        return super().descendantAtPoint(root, x, y, coordType)
+
     def isLayoutOnly(self, obj):
         if super().isLayoutOnly(obj):
             return True
