@@ -342,7 +342,17 @@ class ScriptManager:
             try:
                 return app.get_process_id()
             except:
+                msg = "SCRIPT MANAGER: Exception getting pid for %s" % app
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return -1
+
+        def _isValidApp(app):
+            try:
+                return a in self._desktop
+            except:
+                msg = "SCRIPT MANAGER: Exception seeing if %s is in desktop" % app
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
 
         pid = _pid(app)
         if pid == -1:
@@ -350,7 +360,7 @@ class ScriptManager:
 
         items = self.appScripts.items()
         for a, script in items:
-            if a != app and _pid(a) == pid and a in self._desktop:
+            if a != app and _pid(a) == pid and _isValidApp(a):
                 return script
 
         return None
