@@ -1933,8 +1933,12 @@ class Utilities(script_utilities.Utilities):
         if not self.isWebAppDescendant(obj):
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TOOL_TIP:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TOOL_TIP:
             return obj.getState().contains(pyatspi.STATE_FOCUSED)
+
+        if role == pyatspi.ROLE_DOCUMENT_WEB:
+            return not self.isFocusModeWidget(obj)
 
         return False
 
