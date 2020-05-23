@@ -3766,10 +3766,6 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             rv = False
-        if rv and obj.parent.getRole() == pyatspi.ROLE_LINK:
-            uri = self.uri(obj.parent)
-            if uri and not uri.startswith('javascript'):
-                rv = False
         if rv and 'Image' in pyatspi.listInterfaces(obj):
             image = obj.queryImage()
             if image.imageDescription:
