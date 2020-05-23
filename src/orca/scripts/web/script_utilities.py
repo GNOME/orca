@@ -3766,7 +3766,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             rv = False
-        if rv and obj.parent.getRole() == pyatspi.ROLE_LINK:
+        if rv and obj.parent.getRole() == pyatspi.ROLE_LINK and not self.hasExplicitName(obj):
             uri = self.uri(obj.parent)
             if uri and not uri.startswith('javascript'):
                 rv = False
@@ -4792,11 +4792,9 @@ class Utilities(script_utilities.Utilities):
             return obj, offset + 1
 
         if not self._canHaveCaretContext(child):
-            nextObj, nextOffset = self.nextContext(obj, offset)
-            msg = "WEB: First caret context for %s, %i is %s, %i (child cannot be context)" % \
-                (obj, offset, nextObj, nextOffset)
+            msg = "WEB: Child cannot be context. Returning %s, %i unchanged." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
-            return nextObj, nextOffset
+            return obj, offset
 
         msg = "WEB: Looking in child %s for first caret context for %s, %i" % (child, obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
