@@ -2816,6 +2816,14 @@ class Utilities:
         for i in range(text.getNSelections()):
             text.removeSelection(i)
 
+    def containsOnlyEOCs(self, obj):
+        try:
+            string = obj.queryText().getText(0, -1)
+        except:
+            return False
+
+        return string and not re.search(r"[^\ufffc]", string)
+
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with their text.

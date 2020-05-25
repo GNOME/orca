@@ -292,6 +292,11 @@ class _ItemContext:
         if self._frame and self._frame != prior._frame:
             self._script.presentObject(self._frame, alreadyFocused=True, inMouseReview=True)
 
+        if self._script.utilities.containsOnlyEOCs(self._obj):
+            msg = "MOUSE REVIEW: Not presenting object which contains only EOCs"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if self._obj and self._obj != prior._obj:
             priorObj = prior._obj or self._getContainer()
             orca.emitRegionChanged(self._obj, mode=orca.MOUSE_REVIEW)
