@@ -1077,7 +1077,7 @@ class Utilities(script_utilities.Utilities):
 
         if role == pyatspi.ROLE_TABLE_CELL:
             if self.isFocusModeWidget(obj):
-                return True
+                return not self._script.browseModeIsSticky()
             if self.hasNameAndActionAndNoUsefulChildren(obj):
                 return True
 
