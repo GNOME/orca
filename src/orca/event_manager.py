@@ -125,6 +125,11 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if event.type.startswith('mouse:button'):
+            msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         script = orca_state.activeScript
         if event.type.startswith('object:children-changed'):
             if not script:
