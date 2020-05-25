@@ -3500,6 +3500,13 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
+        try:
+            relations = obj.getRelationSet()
+        except:
+            msg = 'ERROR: Exception getting relationset for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         # Remove this when we bump dependencies to 2.26
         try:
             relationType = pyatspi.RELATION_ERROR_FOR
@@ -3507,7 +3514,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         else:
             isMessage = lambda r: r.getRelationType() == relationType
-            rv = bool(list(filter(isMessage, obj.getRelationSet())))
+            rv = bool(list(filter(isMessage, relations)))
 
         self._isErrorMessage[hash(obj)] = rv
         return rv
