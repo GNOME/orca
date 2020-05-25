@@ -4743,21 +4743,10 @@ class Utilities(script_utilities.Utilities):
             return self.findFirstCaretContext(obj[0], 0)
 
         text = self.queryNonEmptyText(obj)
-        if not text:
-            if self._advanceCaretInEmptyObject(obj) \
-               and (self.isTextBlockElement(obj) or self.isEmptyAnchor(obj)):
-                nextObj, nextOffset = self.nextContext(obj, offset)
-                if nextObj:
-                    msg = "WEB: First caret context for non-text context %s, %i is next context %s, %i" % \
-                        (obj, offset, nextObj, nextOffset)
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    return nextObj, nextOffset
-
-            if self._canHaveCaretContext(obj):
-                msg = "WEB: First caret context for non-text context %s, %i is %s, %i" % \
-                    (obj, offset, obj, 0)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return obj, 0
+        if not text and self._canHaveCaretContext(obj):
+            msg = "WEB: First caret context for non-text context %s, %i is %s, %i" % (obj, offset, obj, 0)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return obj, 0
 
         if text and offset >= text.characterCount:
             if self.isContentEditableWithEmbeddedObjects(obj) and self.lastInputEventWasCharNav():
