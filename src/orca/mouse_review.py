@@ -574,11 +574,6 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
-        if obj and obj.getRole() in script.utilities.getCellRoles() \
-           and script.utilities.shouldReadFullRow(obj):
-            isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
-            obj = pyatspi.findAncestor(obj, isRow) or obj
-
         screen, nowX, nowY = self._pointer.get_position()
         if (pX, pY) != (nowX, nowY):
             msg = "MOUSE REVIEW: Pointer moved again: (%i, %i)" % (nowX, nowY)
