@@ -301,6 +301,8 @@ class _ItemContext:
             priorObj = prior._obj or self._getContainer()
             orca.emitRegionChanged(self._obj, mode=orca.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
+            if self._string.getString() == self._obj.name:
+                return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
 
