@@ -1133,8 +1133,9 @@ def disableBraille():
     global idle
 
     if _brlAPIRunning and not idle:
-        if not _idleBraille():
-            # BrlAPI before 0.8
+        if not _idleBraille() and \
+            not _settingsManager.getSetting('enableBraille'):
+            # BrlAPI before 0.8 and we really want to shut down
             msg = "BRAILLE: could not go idle, completely shut down"
             debug.println(debug.LEVEL_INFO, msg, True)
             shutdown()
