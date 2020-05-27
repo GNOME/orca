@@ -305,6 +305,9 @@ class _ItemContext:
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
+            if self._obj.getRole() == pyatspi.ROLE_TABLE_CELL \
+               and self._string.getString() == self._script.utilities.displayedText(self._obj):
+                return True
 
         if self._string != prior._string and self._string.present():
             return True
