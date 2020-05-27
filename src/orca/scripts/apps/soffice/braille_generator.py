@@ -89,6 +89,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return []
 
     def _generateRealTableCell(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateRealTableCell(obj, **args)
+
         if not obj.childCount:
             result = super()._generateRealTableCell(obj, **args)
         else:
