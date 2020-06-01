@@ -1,3 +1,128 @@
+3.37.2 - 1 June 2020
+
+Web:
+
+ * Present aria-sort value when focus moves to sorted row/col header
+
+ * Ensure we present functionally-empty entries from web apps
+
+ * Make ARIA gridcell cells caret-navigable if browse mode is sticky
+
+ * Fix bug causing us to skip over objects in certain grids in browse
+   mode
+
+ * Handle links whose sole content is an image with alt=""
+
+ * Force browse mode switch in web apps when child document claims focus
+
+ * Don't repeat label, name, or role when in the same object in SayAll
+
+ * Improve performance of presenting status bar items for web/Electron
+   apps (e.g. VSCode)
+
+ * Check for "keyshortcuts" attribute also for browser UI
+
+ * Eliminate chattiness from Chromium omnibox
+
+ * Ensure we present the correct row when navigating to table with
+   missing rows
+
+ * Improve structural navigation in HTML tables with conflicting ARIA
+   semantics
+
+ * Ensure we announce role and content of elements with ARIA's separator
+   role
+
+ * Ensure we verbalize punctuation for named items inside code elements
+
+ * Improve heuristic to identify elements serving as fake placeholder
+   for text
+
+ * Use caret-moved event to recover from object destruction
+
+ * Prevent Orca from wandering into hidden objects and improve recovery
+   when the currently-focused object is removed/destroyed
+
+ * Improve overall performance processing caret-moved, children-changed,
+   and text-changed events
+
+ * Expand embedded objects for live region text insertions
+
+Mouse Review:
+
+ * Fix several chattiness issues
+
+ * Fix presentation of nested cells
+
+Braille:
+
+ * Ensure blockquote and section text is always displayed
+
+ * Ensure focused region starts the display when panToCursor
+
+ * Fix bug in word wrap causing us to not display the relevant info
+
+ * Fix error using braille with JavaAtkWrapper
+
+ * Ensure we update our position when an anchor is clicked on
+   via braille display
+
+ * Hand off Braille output on NoFocus so other screen readers can
+   provide information
+
+ * Correctly display long strings of non-space characters that exceed
+   the width of the braille line
+
+ * Fix several panning issues
+
+ * Remove fallback on VT 7
+
+Speech:
+
+ * Use punct level 'most' when available in speech-dispatcher
+
+ * Insert pause breaks when generating status bar items so they don't
+   all run together when spoken
+
+General:
+
+ * Emit region-changed events to inform other tools (e.g. magnifiers,
+   highlighting tools) the object and optional text range Orca is
+   presenting
+
+ * Present description change events for the current object
+
+ * Fix crash related to non-standard tables
+
+ * Work around Qt not exposing STATE_CHECKABLE and/or using
+   ROLE_CHECK_MENU_ITEM on checkable menu items
+
+ * Fix presentation of Qt widgets labelled by their parent
+   container
+
+ * Gracefully handle AT-SPI2 timeout when checking validity of app
+
+ * Add support for the Orca key being "sticky"
+
+ * Fall back on name for labels which lack displayed text
+
+ * Present message when the status bar cannot be found
+
+ * Respect user's punctuation settings in app switchers
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   ckb           Kurdish Sorani        Jwtiyar Nariman
+   de            German                Tim Sabsch
+   es            Spanish               Daniel Mustieles
+   hu            Hungarian             Attila Hammer
+   ro            Romanian              Daniel Șerbănescu, Florentina Mușat
+   sv            Swedish               Anders Jonsson
+   tr            Turkish               Emin Tufan Çetin
+   uk            Ukrainian             Yuri Chornoivan
+
+=========
+
 3.37.1 - 23 April 2020
 
 VSCode:
