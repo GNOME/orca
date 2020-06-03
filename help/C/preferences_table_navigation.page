@@ -22,7 +22,7 @@
   <p>
     The following options allow you to customize how <app>Orca</app>
     behaves when navigating within a table in
-    <link xref="howto_structural_navigation">Structural-Navigation</link>-enabled
+    <link xref="howto_structural_navigation">Structural Navigation</link>-enabled
     applications.
   </p>
   <section id="speak_cell_coordinates">
