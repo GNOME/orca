@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-05-09 20:33+0000\n"
-"PO-Revision-Date: 2020-05-10 11:26+0300\n"
+"POT-Creation-Date: 2020-06-03 15:17+0000\n"
+"PO-Revision-Date: 2020-06-03 18:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -27,8 +27,9 @@ msgstr ""
 "X-Generator: Lokalize 20.07.70\n"
 
 #: orca-autostart.desktop.in:4
-msgid "Orca screen reader"
-msgstr "Інструмент читання з екрана"
+#| msgid "Orca screen reader"
+msgid "Orca Screen Reader"
+msgstr "Інструмент читання з екрана «Orca»"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -10825,8 +10826,6 @@ msgstr "Вимова недоступна."
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2214
-#| msgctxt "location"
-#| msgid "Not found"
 msgctxt "status bar"
 msgid "Not found"
 msgstr "Не знайдено"
@@ -10835,7 +10834,6 @@ msgstr "Не знайдено"
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2219
-#| msgid "string not found"
 msgid "Status bar not found"
 msgstr "Смужку стану не знайдено"
 
