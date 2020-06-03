@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Orca screen reader
+Name=Orca Screen Reader
 Exec=orca
 NoDisplay=true
 AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-enabled
