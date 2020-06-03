@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-03 15:18+0000\n"
-"PO-Revision-Date: 2020-06-03 19:07+0300\n"
+"POT-Creation-Date: 2020-06-03 16:12+0000\n"
+"PO-Revision-Date: 2020-06-03 20:22+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1065,8 +1065,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
-#| msgctxt "sort"
-#| msgid "1. Live Region"
 msgctxt "sort"
 msgid "1. Live Regions"
 msgstr "1. Інтерактивні області"
@@ -4742,12 +4740,20 @@ msgstr "CapsLock у розкладці для ноутбука"
 
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
+#| msgid ""
+#| "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+#| "impacts which key is used as the Orca Modifier. If you are using the "
+#| "Laptop layout, the default Orca Modifier will be <key>CapsLock</key>. If "
+#| "you are using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
+#| "<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+#| "twice (requires at-spi2 version 2.32 or later), or by performing the "
+#| "following steps:"
 msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"<key>CapsLock</key>, you can do so by either pressing <key>CapsLock</key> "
 "twice (requires at-spi2 version 2.32 or later), or by performing the "
 "following steps:"
 msgstr ""
@@ -6575,10 +6581,6 @@ msgstr "Клавіші-модифікатори Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
-#| msgid ""
-#| "The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
-#| "which key or keys will serve as the Orca Modifier. The available options "
-#| "are:"
 msgid ""
 "The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
@@ -7013,14 +7015,12 @@ msgstr "Додавання нового запису словника"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
-#| msgid ""
-#| "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgid ""
 "Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
 "keyseq>)"
 msgstr ""
-"Натисніть кнопку <gui>Нова стаття</gui> (<keyseq><key>Alt</key><key>N</key><"
-"/keyseq>)"
+"Натисніть кнопку <gui>Нова стаття</gui> (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:44
@@ -7082,8 +7082,6 @@ msgstr "Перейдіть до запису, який ви хочете вил�
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-#| msgid ""
-#| "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
 msgid ""
 "Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
 "keyseq>."
