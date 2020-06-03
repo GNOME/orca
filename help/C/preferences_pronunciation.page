@@ -37,7 +37,7 @@
     <title>Adding a new dictionary entry</title>
     <item>
       <p>
-        Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)
+        Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></keyseq>)
       </p>
     </item>
     <item>
@@ -80,7 +80,7 @@
     </item>
     <item>
       <p>
-        Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>.
+        Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></keyseq>.
       </p>
     </item>
   </steps>
