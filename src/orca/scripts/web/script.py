@@ -1247,6 +1247,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self._lastCommandWasMouseButton and event \
+             and event.type.startswith("object:text-caret-moved"):
+            msg = "WEB: Last input event was mouse button. Generating line contents."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
         else:
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
