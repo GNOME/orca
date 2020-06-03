@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2020-06-03 15:17+0000\n"
-"PO-Revision-Date: 2020-06-03 18:28+0300\n"
+"PO-Revision-Date: 2020-06-03 19:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -12392,11 +12392,11 @@ msgstr "Напрямок пошуку:"
 
 #: src/orca/orca-find.ui:291
 msgid "_Match case"
-msgstr "Збігається _регістр"
+msgstr "Збігатися за _регістром"
 
 #: src/orca/orca-find.ui:306
 msgid "Match _entire word only"
-msgstr "Збігається _ціле слово"
+msgstr "Збігатися за _цілими словами"
 
 #: src/orca/orca-find.ui:327
 msgid "Results must:"
