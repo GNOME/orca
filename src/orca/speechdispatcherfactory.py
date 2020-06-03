@@ -187,7 +187,16 @@ class SpeechServer(speechserver.SpeechServer):
             style = 'spell'
         else:
             style = 'none'
-        self._client.set_cap_let_recogn(style)
+
+        try:
+            self._client.set_cap_let_recogn(style)
+        except speechd.SSIPCommunicationError:
+            msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.reset()
+            self._client.set_cap_let_recogn(style)
+        except:
+            pass
 
     def updatePunctuationLevel(self):
         """ Punctuation level changed, inform this speechServer. """
@@ -195,19 +204,15 @@ class SpeechServer(speechserver.SpeechServer):
         self._client.set_punctuation(mode)
 
     def _send_command(self, command, *args, **kwargs):
-        if hasattr(speechd, 'SSIPCommunicationError'):
-            try:
-                return command(*args, **kwargs)
-            except speechd.SSIPCommunicationError:
-                msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
-                debug.println(debug.LEVEL_INFO, msg, True)
-                self.reset()
-                return command(*args, **kwargs)
-            except:
-                pass
-        else:
-            # It is not possible tho catch the error with older SD versions. 
+        try:
             return command(*args, **kwargs)
+        except speechd.SSIPCommunicationError:
+            msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.reset()
+            return command(*args, **kwargs)
+        except:
+            pass
 
     def _set_rate(self, acss_rate):
         rate = int(2 * max(0, min(99, acss_rate)) - 98)
