@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-05-07 15:40+0000\n"
-"PO-Revision-Date: 2020-05-07 19:10+0300\n"
+"POT-Creation-Date: 2020-06-03 15:18+0000\n"
+"PO-Revision-Date: 2020-06-03 19:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1065,9 +1065,11 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
+#| msgctxt "sort"
+#| msgid "1. Live Region"
 msgctxt "sort"
-msgid "1. Live Region"
-msgstr "1. Інтерактивна область"
+msgid "1. Live Regions"
+msgstr "1. Інтерактивні області"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:7
@@ -6573,8 +6575,12 @@ msgstr "Клавіші-модифікатори Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
+#| msgid ""
+#| "The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
+#| "which key or keys will serve as the Orca Modifier. The available options "
+#| "are:"
 msgid ""
-"The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
+"The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
 "За допомогою спадного списку <gui>Клавіші-модифікатори екранного читача</"
@@ -7007,10 +7013,14 @@ msgstr "Додавання нового запису словника"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
+#| msgid ""
+#| "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgid ""
-"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 msgstr ""
-"Натисніть кнопку «Нова стаття» (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Натисніть кнопку <gui>Нова стаття</gui> (<keyseq><key>Alt</key><key>N</key><"
+"/keyseq>)"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:44
@@ -7072,9 +7082,13 @@ msgstr "Перейдіть до запису, який ви хочете вил�
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+#| msgid ""
+#| "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+msgid ""
+"Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
+"keyseq>."
 msgstr ""
-"Натисніть кнопку «Вилучити» або комбінацію клавіш <keyseq><key>Alt</"
+"Натисніть кнопку <gui>Вилучити</gui> або комбінацію клавіш <keyseq><key>Alt</"
 "key><key>D</key></keyseq>."
 
 #. (itstool) path: info/title
@@ -7553,17 +7567,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
-#| msgid "Read full row in GUI tables"
 msgid "Speak full row in GUI tables"
 msgstr "Вимовляти увесь рядок у таблицях граф. інтерфейсу"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
-#| msgid ""
-#| "If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
-#| "down in application tables such as the list of messages in your Inbox, "
-#| "<app>Orca</app> will speak the entire row. If you would prefer to hear "
-#| "only the cell with focus, you should uncheck this checkbox."
 msgid ""
 "If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
@@ -7579,17 +7587,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
-#| msgid "Read full row in document tables"
 msgid "Speak full row in document tables"
 msgstr "Вимовляти увесь рядок у таблицях документа"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
-#| msgid ""
-#| "If <gui>Read full row in document tables</gui> is checked, as you arrow "
-#| "up and down in tables such as those found in <app>Writer</app> and web "
-#| "documents, <app>Orca</app> will speak the entire row. If you would prefer "
-#| "to hear only the cell with focus, you should uncheck this checkbox."
 msgid ""
 "If <gui>Speak full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7605,17 +7607,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
-#| msgid "Read full row in spreadsheets"
 msgid "Speak full row in spreadsheets"
 msgstr "Вимовляти увесь рядок у електронних таблицях"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
-#| msgid ""
-#| "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up "
-#| "and down in spreadsheets, <app>Orca</app> will speak the entire row. If "
-#| "you would prefer to hear only the cell with focus, you should uncheck "
-#| "this checkbox."
 msgid ""
 "If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
