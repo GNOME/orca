@@ -324,7 +324,7 @@
                       <object class="GtkLabel" id="resultsMustLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Results must:</property>
+                        <property name="label" translatable="yes">Options:</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
