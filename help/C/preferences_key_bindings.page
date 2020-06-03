@@ -20,7 +20,7 @@
   <section id="orca_modifier_keys">
     <title>Orca Modifier Keys</title>
     <p>
-      The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select which
+      The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select which
       key or keys will serve as the Orca Modifier. The available options are:
     </p>
     <list>
