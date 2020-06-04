@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-03 15:17+0000\n"
-"PO-Revision-Date: 2020-06-03 19:06+0300\n"
+"POT-Creation-Date: 2020-06-03 21:53+0000\n"
+"PO-Revision-Date: 2020-06-04 12:13+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -24,10 +24,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #: orca-autostart.desktop.in:4
-#| msgid "Orca screen reader"
 msgid "Orca Screen Reader"
 msgstr "Інструмент читання з екрана «Orca»"
 
@@ -12392,15 +12391,16 @@ msgstr "Напрямок пошуку:"
 
 #: src/orca/orca-find.ui:291
 msgid "_Match case"
-msgstr "Збігатися за _регістром"
+msgstr "Збіг за _регістром"
 
 #: src/orca/orca-find.ui:306
 msgid "Match _entire word only"
-msgstr "Збігатися за _цілими словами"
+msgstr "Збіг за _цілими словами"
 
 #: src/orca/orca-find.ui:327
-msgid "Results must:"
-msgstr "Результати повинні:"
+#| msgid "Find Options"
+msgid "Options:"
+msgstr "Параметри:"
 
 #: src/orca/orca-setup.ui:29
 msgid "Default"
@@ -14084,3 +14084,6 @@ msgstr ""
 "Для зменшення значення натисніть стрілку ліворуч, для збільшення - праворуч. "
 "Для встановлення мінімального значення натисніть Home, для максимального - "
 "End."
+
+#~ msgid "Results must:"
+#~ msgstr "Результати повинні:"
