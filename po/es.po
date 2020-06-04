@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-05-09 20:33+0000\n"
-"PO-Revision-Date: 2020-05-14 12:00+0200\n"
+"POT-Creation-Date: 2020-06-03 21:53+0000\n"
+"PO-Revision-Date: 2020-06-04 09:52+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -29,7 +29,8 @@ msgstr ""
 "X-Generator: Gtranslator 3.36.0\n"
 
 #: orca-autostart.desktop.in:4
-msgid "Orca screen reader"
+#| msgid "Orca screen reader"
+msgid "Orca Screen Reader"
 msgstr "Lector de pantalla Orca"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -10846,8 +10847,6 @@ msgstr "La voz no está disponible."
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2214
-#| msgctxt "location"
-#| msgid "Not found"
 msgctxt "status bar"
 msgid "Not found"
 msgstr "No encontrada"
@@ -10856,7 +10855,6 @@ msgstr "No encontrada"
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2219
-#| msgid "string not found"
 msgid "Status bar not found"
 msgstr "Barra de estado no encontrada"
 
@@ -12390,8 +12388,9 @@ msgid "Match _entire word only"
 msgstr "Coincidir sólo con la palabra _entera"
 
 #: src/orca/orca-find.ui:327
-msgid "Results must:"
-msgstr "Los resultados deben:"
+#| msgid "Find Options"
+msgid "Options:"
+msgstr "Opciones:"
 
 #: src/orca/orca-setup.ui:29
 msgid "Default"
@@ -14067,6 +14066,9 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "Results must:"
+#~ msgstr "Los resultados deben:"
 
 #~ msgctxt "role"
 #~ msgid "footnote"
