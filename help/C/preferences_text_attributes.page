@@ -82,7 +82,7 @@
   <section id="rearranging">
      <title>Rearranging the order of presentation</title>
      <p>
-        When you initially display the text attribute page, all of your enabled
+        When you initially display the <gui>Text Attributes</gui> page, all of your enabled
         attributes are placed at the top of the table in the order in which they
         will be spoken. There are four buttons which can be used to rearrange
         the order of presentation.
