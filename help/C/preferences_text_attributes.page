@@ -73,7 +73,7 @@
   <section id="reset">
      <title>Undoing changes</title>
      <p>
-       Beneath the list of text attributes, there is a Reset button
+       Beneath the list of text attributes, there is a <gui>Reset</gui> button
        (<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore
        the values of the table to what they were when the dialog was
        first displayed.
