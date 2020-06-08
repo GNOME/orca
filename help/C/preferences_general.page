@@ -25,7 +25,7 @@
     </info>
     <title>Keyboard Layout</title>
     <p>
-      The <gui>keyboard layout</gui> radio button group allows you to specify if
+      The <gui>Keyboard layout</gui> radio button group allows you to specify if
       you will be working on a desktop (i.e. with a numeric keypad) or laptop
       keyboard. Which layout you choose will determine both the <key>Orca
       Modifier</key> as well as a number of keyboard shortcuts for performing
