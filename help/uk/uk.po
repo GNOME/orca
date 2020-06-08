@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-08 12:46+0000\n"
-"PO-Revision-Date: 2020-06-08 16:02+0300\n"
+"POT-Creation-Date: 2020-06-08 13:56+0000\n"
+"PO-Revision-Date: 2020-06-08 17:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6014,8 +6014,14 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:27
+#| msgid ""
+#| "The <gui>keyboard layout</gui> radio button group allows you to specify "
+#| "if you will be working on a desktop (i.e. with a numeric keypad) or "
+#| "laptop keyboard. Which layout you choose will determine both the "
+#| "<key>Orca Modifier</key> as well as a number of keyboard shortcuts for "
+#| "performing <app>Orca</app> commands."
 msgid ""
-"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"The <gui>Keyboard Layout</gui> radio button group allows you to specify if "
 "you will be working on a desktop (i.e. with a numeric keypad) or laptop "
 "keyboard. Which layout you choose will determine both the <key>Orca "
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
@@ -7932,22 +7938,16 @@ msgstr "Зміна порядку озвучування атрибутів"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
-#| msgid ""
-#| "When you initially display the text attribute page, all of your enabled "
-#| "attributes are placed at the top of the table in the order in which they "
-#| "will be spoken. There are four buttons which can be used to rearrange the "
-#| "order of presentation."
 msgid ""
 "When you initially display the <gui>Text Attributes</gui> page, all of your "
 "enabled attributes are placed at the top of the table in the order in which "
 "they will be spoken. There are four buttons which can be used to rearrange "
 "the order of presentation."
 msgstr ""
-"Під час початкового показу сторінки <gui>Атрибути тексту</gui> усі увімкнені"
-" атрибути "
-"буде розташовано у верхній частині таблиці у порядку, у якому програма їх "
-"озвучуватиме. Передбачено чотири кнопки, за допомогою яких можна змінити "
-"порядок представлення атрибутів."
+"Під час початкового показу сторінки <gui>Атрибути тексту</gui> усі увімкнені "
+"атрибути буде розташовано у верхній частині таблиці у порядку, у якому "
+"програма їх озвучуватиме. Передбачено чотири кнопки, за допомогою яких можна "
+"змінити порядок представлення атрибутів."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:92
