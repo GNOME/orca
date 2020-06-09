@@ -1693,6 +1693,10 @@ class Utilities:
 
         r = relations[0]
         result = set([r.getTarget(i) for i in range(r.getNTargets())])
+        if obj in result:
+            msg = 'WARNING: %s claims to be labelled by itself' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            result.remove(obj)
 
         def isNotAncestor(acc):
             return not pyatspi.findAncestor(obj, lambda x: x == acc)
