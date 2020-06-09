@@ -96,13 +96,13 @@
       </item>
       <item>
         <p>
-          <gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>):
+          <gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>):
           moves the selected attribute up one row.
         </p>
       </item>
       <item>
         <p>
-          <gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>):
+          <gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>):
           moves the selected attribute down one row.
         </p>
       </item>
