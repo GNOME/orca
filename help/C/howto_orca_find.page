@@ -107,6 +107,6 @@
     matching item or text will become the current review item. Note that focus
     within the application will not be modified, nor will the caret be
     repositioned. If you need to accomplish either, please see
-    <link xref="commands_mouse">Mouse/Pointer-Related Commands</link>.
+    <link xref="commands_mouse">Orca's Mouse/Pointer-Related Commands</link>.
   </p>
 </page>
