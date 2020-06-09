@@ -3766,9 +3766,9 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
-        if rv and (obj.name or obj.description):
+        if rv and (obj.name or obj.description or self.hasLongDesc(obj)):
             rv = False
-        if rv and (self.isClickableElement(obj) or self.hasLongDesc(obj)):
+        if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
         if rv and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             rv = False
