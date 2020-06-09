@@ -2,7 +2,7 @@
   <info>
     <link type="guide" xref="index#getting_started" />
     <link type="next" xref="howto_keyboard_layout" />
-    <title type="sort">5. "Learn" Mode</title>
+    <title type="sort">5. Learn Mode</title>
     <desc>
       Discovering <app>Orca</app>'s commands
     </desc>
@@ -14,7 +14,7 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>"Learn" Mode</title>
+  <title>Learn Mode</title>
   <p>
     In Learn Mode, <app>Orca</app> will announce each keystroke you pressed
     along with any associated <app>Orca</app> command that keystroke is bound

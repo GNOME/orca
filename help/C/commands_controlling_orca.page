@@ -71,13 +71,13 @@
     <list>
       <item>
         <p>
-          Enter learn mode:
+          Enter Learn Mode:
           <keyseq><key>Orca Modifier</key><key>H</key></keyseq>
         </p>
       </item>
       <item>
         <p>
-          Exit learn mode:
+          Exit Learn Mode:
           <keyseq><key>Esc</key></keyseq>
         </p>
       </item>
