@@ -432,15 +432,11 @@ class BrailleGenerator(generator.Generator):
         details.
         """
         result = []
-        try:
-            relations = obj.getRelationSet()
-        except:
-            relations = []
-        for relation in relations:
-            if relation.getRelationType() ==  pyatspi.RELATION_LABELLED_BY:
-                labelledBy = relation.getTarget(0)
-                result.extend(self.generate(labelledBy, **args))
-                break
+        labels = self._script.utilities.labelsForObject(obj)
+        for label in labels:
+            result.extend(self.generate(label, **args))
+            break
+
         if not result:
             # NOTE: there is no REAL_ROLE_SCROLL_PANE in formatting.py
             # because currently fallback to the default formatting.
