@@ -137,7 +137,11 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
     if mode is None:
         mode = FOCUS_TRACKING
 
-    # TODO - JD: Once the API has been defined in AT-SPI2, emit mode-change here.
+    try:
+        obj.emit("mode-changed::" + mode, 1, "")
+    except:
+        msg = "ORCA: Exception emitting mode-changed notification"
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     if mode != orca_state.activeMode:
         msg = "ORCA: Switching active mode from %s to %s" % (orca_state.activeMode, mode)
