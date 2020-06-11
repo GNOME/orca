@@ -108,7 +108,7 @@ BTN_OK = _("_OK")
 # presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 # or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 # string to be translated appears as a combo box item in Orca's Preferences.
-CAPITALIZATION_STYLE_ICON = C_("capitalization style", "icon")
+CAPITALIZATION_STYLE_ICON = C_("capitalization style", "Icon")
 
 # Translators: Orca uses Speech Dispatcher to present content to users via
 # text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -116,7 +116,7 @@ CAPITALIZATION_STYLE_ICON = C_("capitalization style", "icon")
 # presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 # or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 # string to be translated appears as a combo box item in Orca's Preferences.
-CAPITALIZATION_STYLE_NONE = C_("capitalization style", "none")
+CAPITALIZATION_STYLE_NONE = C_("capitalization style", "None")
 
 # Translators: Orca uses Speech Dispatcher to present content to users via
 # text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -124,7 +124,7 @@ CAPITALIZATION_STYLE_NONE = C_("capitalization style", "none")
 # presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 # or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 # string to be translated appears as a combo box item in Orca's Preferences.
-CAPITALIZATION_STYLE_SPELL = C_("capitalization style", "spell")
+CAPITALIZATION_STYLE_SPELL = C_("capitalization style", "Spell")
 
 # Translators: If this checkbox is checked, then Orca will tell you when one of
 # your buddies is typing a message.
