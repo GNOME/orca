@@ -68,9 +68,9 @@
        terminology, are:
      </p>
      <list>
-       <item><p><gui>icon</gui>: Plays a tone</p></item>
-       <item><p><gui>spell</gui>: Speaks the word "capital"</p></item>
-       <item><p><gui>none</gui></p></item>
+       <item><p><gui>Icon</gui>: Plays a tone</p></item>
+       <item><p><gui>Spell</gui>: Speaks the word "capital"</p></item>
+       <item><p><gui>None</gui></p></item>
     </list>
     <note style="tip">
       <title>This setting can be toggled on the fly</title>
