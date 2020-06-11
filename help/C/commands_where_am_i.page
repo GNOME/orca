@@ -28,7 +28,7 @@
   <p><app>Orca</app> provides the following Where Am I commands:</p>
   <list>
     <item>
-      <p>Perform basic where am I:</p>
+      <p>Perform basic Where Am I:</p>
       <list>
         <item>
           <p>Desktop: <key>KP Enter</key></p>
@@ -39,7 +39,7 @@
       </list>
     </item>
     <item>
-      <p>Perform detailed where am I:</p>
+      <p>Perform detailed Where Am I:</p>
       <list>
         <item>
           <p>Desktop: <key>KP Enter</key> (double-clicked)</p>
