@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-11 14:59+0000\n"
-"PO-Revision-Date: 2020-06-11 18:13+0300\n"
+"POT-Creation-Date: 2020-06-11 17:37+0000\n"
+"PO-Revision-Date: 2020-06-11 20:57+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1186,17 +1186,24 @@ msgstr ""
 "непов'язані команди із комбінаціями клавіш."
 
 #. (itstool) path: note/p
-#: C/commands_mouse.page:29
+#: C/commands_mouse.page:29 C/commands_reading.page:28
+#| msgid ""
+#| "In the list that follows, you will see several references to \"KP\". All "
+#| "\"KP\" keys are located on the numeric keypad. You will also notice that "
+#| "there are different keystrokes depending upon whether you are using a "
+#| "desktop or a laptop -- or more accurately, whether you are using "
+#| "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
+#| "For additional information, please see the <link xref="
+#| "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgid ""
-"In the list that follows, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
+"Below you will see several references to \"KP\". All \"KP\" keys are located "
+"on the numeric keypad. You will also notice that there are different "
+"keystrokes depending upon whether you are using a desktop or a laptop -- or "
+"more accurately, whether you are using <app>Orca</app>'s Desktop keyboard "
+"layout or its Laptop keyboard layout. For additional information, please see "
+"the <link xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgstr ""
-"У наведеному нижче списку ви побачите декілька посилань на «ЦБ». Усі клавіші "
+"Нижче ви побачите декілька посилань на «ЦБ». Усі клавіші "
 "із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви також "
 "побачите, що клавіатурні скорочення залежать від того, користуєтеся "
 "стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
@@ -1406,25 +1413,6 @@ msgstr ""
 "<app>Orca</app> передбачено декілька команд, якими ви можете скористатися "
 "для читання документа."
 
-#. (itstool) path: note/p
-#: C/commands_reading.page:28
-msgid ""
-"In the lists that follow, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
-msgstr ""
-"У наведених ниже списках ви побачите декілька посилань на «ЦБ». Усі клавіші "
-"із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви також "
-"побачите, що клавіатурні скорочення залежать від того, користуєтеся "
-"стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
-"користуєтеся клавіатурною розкладкою <app>Orca</app> для робочої станції чи "
-"розкладкою клавіатури для ноутбука. Докладніші відомості можна знайти у "
-"розділі <link xref=\"howto_keyboard_layout\">Розкладка клавіатури</link>."
-
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
 msgid "Reading Your Current Location"
@@ -1533,8 +1521,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:191
-#| msgid "Perform basic where am I:"
+#: C/commands_reading.page:191 C/commands_where_am_i.page:31
 msgid "Perform basic Where Am I:"
 msgstr "Повідомити про поточну позицію:"
 
@@ -1549,8 +1536,7 @@ msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr "Ноутбук: <keyseq><key>Модифікатор Orca</key><key>Enter</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:206
-#| msgid "Perform detailed where am I:"
+#: C/commands_reading.page:206 C/commands_where_am_i.page:42
 msgid "Perform detailed Where Am I:"
 msgstr "Докладне повідомлення про поточну позицію:"
 
@@ -2610,16 +2596,6 @@ msgstr ""
 #: C/commands_where_am_i.page:28
 msgid "<app>Orca</app> provides the following Where Am I commands:"
 msgstr "У <app>Orca</app> передбачено такі команди «Де я»:"
-
-#. (itstool) path: item/p
-#: C/commands_where_am_i.page:31
-msgid "Perform basic where am I:"
-msgstr "Повідомити про поточну позицію:"
-
-#. (itstool) path: item/p
-#: C/commands_where_am_i.page:42
-msgid "Perform detailed where am I:"
-msgstr "Докладне повідомлення про поточну позицію:"
 
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
@@ -4793,8 +4769,6 @@ msgstr "Натисніть клавішу <key>CapsLock</key>, щоб перем
 
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
-#| msgctxt "sort"
-#| msgid "3. Where Am I"
 msgctxt "sort"
 msgid "1. Where Am I"
 msgstr "1. Де я"
@@ -4806,8 +4780,6 @@ msgstr "Визначення поточної позиції"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-#| msgctxt "link"
-#| msgid "Where Am I"
 msgid "Where Am I"
 msgstr "Де я"
 
@@ -8279,6 +8251,30 @@ msgstr ""
 "Якщо буде позначено пункт <gui>Вимовляти числа як цифри</gui>, <app>Orca</"
 "app> розбиватиме числа, наприклад «123», на окремі цифри («1», «2» і «3»), "
 "перш ніж передавати їх синтезатору мовлення."
+
+#~ msgid ""
+#~ "In the lists that follow, you will see several references to \"KP\". All "
+#~ "\"KP\" keys are located on the numeric keypad. You will also notice that "
+#~ "there are different keystrokes depending upon whether you are using a "
+#~ "desktop or a laptop -- or more accurately, whether you are using "
+#~ "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
+#~ "For additional information, please see the <link xref="
+#~ "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
+#~ msgstr ""
+#~ "У наведених ниже списках ви побачите декілька посилань на «ЦБ». Усі "
+#~ "клавіші із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви "
+#~ "також побачите, що клавіатурні скорочення залежать від того, користуєтеся "
+#~ "стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
+#~ "користуєтеся клавіатурною розкладкою <app>Orca</app> для робочої станції "
+#~ "чи розкладкою клавіатури для ноутбука. Докладніші відомості можна знайти "
+#~ "у розділі <link xref=\"howto_keyboard_layout\">Розкладка клавіатури</"
+#~ "link>."
+
+#~ msgid "Perform basic where am I:"
+#~ msgstr "Повідомити про поточну позицію:"
+
+#~ msgid "Perform detailed where am I:"
+#~ msgstr "Докладне повідомлення про поточну позицію:"
 
 #~ msgctxt "sort"
 #~ msgid "1. WhereAmI"
