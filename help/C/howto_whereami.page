@@ -2,7 +2,7 @@
   <info>
     <link type="guide" xref="index#reviewing"/>
     <link type="next" xref="howto_flat_review" />
-    <title type="sort">1. WhereAmI</title>
+    <title type="sort">1. Where Am I</title>
     <desc>
       Learning about your location
     </desc>
@@ -14,7 +14,7 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>WhereAmI</title>
+  <title>Where Am I</title>
   <p>
     In addition to dedicated commands for reading the title bar and the
     status bar, Orca provides two context-sensitive Where Am I commands:
