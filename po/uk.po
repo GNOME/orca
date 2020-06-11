@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-03 21:53+0000\n"
-"PO-Revision-Date: 2020-06-04 12:13+0300\n"
+"POT-Creation-Date: 2020-06-11 17:35+0000\n"
+"PO-Revision-Date: 2020-06-11 20:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.07.70\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -1808,20 +1808,22 @@ msgstr "Промовляє цілий документ."
 msgid "Speaks entire window using flat review."
 msgstr "Вимовити ціле вікно при плоскому перегляді."
 
-#. Translators: the "Where am I" feature of Orca allows a user to press a key and
+#. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-msgid "Performs the basic where am I operation."
+#| msgid "Performs the basic where am I operation."
+msgid "Performs the basic Where Am I operation."
 msgstr "Повідомити про поточне положення."
 
-#. Translators: the "Where am I" feature of Orca allows a user to press a key and
+#. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-msgid "Performs the detailed where am I operation."
+#| msgid "Performs the detailed where am I operation."
+msgid "Performs the detailed Where Am I operation."
 msgstr "Докладно оголосити поточне положення."
 
 #. Translators: This is the description of a dedicated command to speak the
@@ -12398,7 +12400,6 @@ msgid "Match _entire word only"
 msgstr "Збіг за _цілими словами"
 
 #: src/orca/orca-find.ui:327
-#| msgid "Find Options"
 msgid "Options:"
 msgstr "Параметри:"
 
