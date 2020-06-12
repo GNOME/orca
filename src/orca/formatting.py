@@ -618,7 +618,7 @@ formatting = {
                                      asString(labelOrName + value + roleName + required))]'
             },
         pyatspi.ROLE_DIALOG: {
-            'unfocused': '[Component(obj, asString(labelOrName + roleName))]'
+            'unfocused': '[Component(obj, asString(labelOrName + roleName + (unrelatedLabels or description)))]'
             },
         #pyatspi.ROLE_DIRECTORY_PANE: 'default'
         pyatspi.ROLE_DOCUMENT_FRAME: {
