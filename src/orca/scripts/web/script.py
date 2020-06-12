@@ -1744,12 +1744,6 @@ class Script(default.Script):
                 self.utilities.setCaretContext(focused, 0)
             return True
 
-        if childRole == pyatspi.ROLE_DIALOG:
-            msg = "WEB: Setting locusOfFocus to event.any_data"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.any_data)
-            return True
-
         if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
             utterances.append(messages.NEW_ITEM_ADDED)
