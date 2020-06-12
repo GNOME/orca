@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-11 21:56+0000\n"
-"PO-Revision-Date: 2020-06-12 07:35+0300\n"
+"POT-Creation-Date: 2020-06-12 15:11+0000\n"
+"PO-Revision-Date: 2020-06-12 18:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6600,11 +6600,14 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
+#| msgid ""
+#| "The <gui>Function</gui> column contains a description of the <app>Orca</"
+#| "app> command to be performed."
 msgid ""
-"The <gui>Function</gui> column contains a description of the <app>Orca</app> "
+"The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
 msgstr ""
-"У стовпчику <gui>Функція</gui> буде показано опис команди <app>Orca</app>, "
+"У стовпчику <gui>Команда</gui> буде показано опис команди <app>Orca</app>, "
 "яку буде виконано."
 
 #. (itstool) path: item/p
@@ -6622,14 +6625,18 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:59
+#| msgid ""
+#| "The <gui>Modified</gui> column serves both as an indicator to what has "
+#| "been changed and as a way to restore the default bindings associated with "
+#| "that function."
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
-"function."
+"command."
 msgstr ""
 "Стовпчик <gui>Змінено</gui> слугує одночасно індикатором того, чи було "
 "внесено зміни, і способом відновити типову прив'язку, яку використано для "
-"відповідної функції."
+"відповідної команди."
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:66
@@ -7934,9 +7941,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
-#| msgid ""
-#| "<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): "
-#| "moves the selected attribute up one row."
 msgid ""
 "<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
 "selected attribute up one row."
@@ -7946,9 +7950,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
-#| msgid ""
-#| "<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-#| "moves the selected attribute down one row."
 msgid ""
 "<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
 "the selected attribute down one row."
@@ -8140,19 +8141,16 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-#| msgid "<gui>icon</gui>: Plays a tone"
 msgid "<gui>Icon</gui>: Plays a tone"
 msgstr "<gui>Піктограма</gui>: відтворити сигнал"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-#| msgid "<gui>spell</gui>: Speaks the word \"capital\""
 msgid "<gui>Spell</gui>: Speaks the word \"capital\""
 msgstr "<gui>Вимова</gui>: вимовити слово «велика»"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-#| msgid "<gui>none</gui>"
 msgid "<gui>None</gui>"
 msgstr "<gui>Немає</gui>"
 
