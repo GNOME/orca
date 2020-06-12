@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-11 21:54+0000\n"
-"PO-Revision-Date: 2020-06-12 07:33+0300\n"
+"POT-Creation-Date: 2020-06-12 15:10+0000\n"
+"PO-Revision-Date: 2020-06-12 18:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1767,8 +1767,9 @@ msgstr "символ заміни об'єкта"
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: src/orca/cmdnames.py:37
-msgid "Routes the pointer to the current item."
-msgstr "Направляє вказівник до поточного елементу."
+#| msgid "Routes the pointer to the current item."
+msgid "Route the pointer to the current item"
+msgstr "Направляє вказівник до поточного елемента"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1777,8 +1778,9 @@ msgstr "Направляє вказівник до поточного елеме
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Left click means to generate a left mouse button click on the current item.
 #: src/orca/cmdnames.py:45
-msgid "Performs left click on current flat review item."
-msgstr "Клацнути лівою кнопкою миші на поточному елементі у звичайному режимі."
+#| msgid "Performs left click on current flat review item."
+msgid "Perform left click on current flat review item"
+msgstr "Клацнути лівою кнопкою миші на поточному елементі у звичайному режимі"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1787,7 +1789,8 @@ msgstr "Клацнути лівою кнопкою миші на поточно�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Right click means to generate a right mouse button click on the current item.
 #: src/orca/cmdnames.py:53
-msgid "Performs right click on current flat review item."
+#| msgid "Performs right click on current flat review item."
+msgid "Perform right click on current flat review item"
 msgstr "Клацнути правою кнопкою миші на поточному елементі у простому режимі."
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
@@ -1795,8 +1798,9 @@ msgstr "Клацнути правою кнопкою миші на поточн�
 #. user presses any key during a SayAll operation, the speech will be interrupted
 #. and the cursor will be positioned at the point where the speech was interrupted.
 #: src/orca/cmdnames.py:59
-msgid "Speaks entire document."
-msgstr "Промовляє цілий документ."
+#| msgid "Speaks entire document."
+msgid "Speak entire document"
+msgstr "Виголосити цілий документ"
 
 #. Translators: the 'flat review' feature of Orca allows the user to explore the
 #. text in a window in a 2D fashion. That is, Orca treats all the text from all
@@ -1805,8 +1809,9 @@ msgstr "Промовляє цілий документ."
 #. by the {previous,next} {line,word,character}. This string is the name of a command
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: src/orca/cmdnames.py:67
-msgid "Speaks entire window using flat review."
-msgstr "Вимовити ціле вікно при плоскому перегляді."
+#| msgid "Speaks entire window using flat review."
+msgid "Speak entire window using flat review"
+msgstr "Виголосити ціле вікно при плоскому перегляді"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1830,48 +1835,55 @@ msgstr "Докладно оголосити поточне положення."
 #. refers to the selected/highlighted cells. In an file manager, it refers to
 #. the selected/highlighted icons. Etc.
 #: src/orca/cmdnames.py:86
-msgid "Speaks the current selection."
-msgstr "Вимовити поточний позначений фрагмент тексту."
+#| msgid "Speaks the current selection."
+msgid "Speak the current selection"
+msgstr "Вимовити поточний позначений фрагмент тексту"
 
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: src/orca/cmdnames.py:90
-msgid "Speaks link details."
-msgstr "Вимовляє подробиці посилання."
+#| msgid "Speaks link details."
+msgid "Speak link details"
+msgstr "Вимовити подробиці посилання"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken.
 #: src/orca/cmdnames.py:94
-msgid "Speaks the status bar."
-msgstr "Вимовити зміст рядка стану."
+#| msgid "Speaks the status bar."
+msgid "Speak the status bar"
+msgstr "Вимовити зміст рядка стану"
 
 #. Translators: This command will cause the window's title to be spoken.
 #: src/orca/cmdnames.py:97
-msgid "Speaks the title bar."
-msgstr "Вимовити заголовок вікна."
+#| msgid "Speaks the title bar."
+msgid "Speak the title bar"
+msgstr "Вимовити заголовок вікна"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button.
 #: src/orca/cmdnames.py:102
-msgid "Opens the Find dialog."
-msgstr "Відриває діалогове вікно пошуку."
+#| msgid "Opens the Find dialog."
+msgid "Open the Find dialog"
+msgstr "Відкрити діалогове вікно пошуку"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button. This string is used for finding the next occurrence of a
 #. string.
 #: src/orca/cmdnames.py:108
-msgid "Searches for the next instance of a string."
-msgstr "Перемикає на наступний екземпляр рядка."
+#| msgid "Searches for the next instance of a string."
+msgid "Search for the next instance of a string"
+msgstr "Шукати наступний екземпляр рядка"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button. This string is used for finding the previous occurrence of a
 #. string.
 #: src/orca/cmdnames.py:114
-msgid "Searches for the previous instance of a string."
-msgstr "Пошук попереднього екземпляру рядка."
+#| msgid "Searches for the previous instance of a string."
+msgid "Search for the previous instance of a string"
+msgstr "Шукати попередній екземпляр рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1879,8 +1891,9 @@ msgstr "Пошук попереднього екземпляру рядка."
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:121
-msgid "Enters and exits flat review mode."
-msgstr "Вхід та вихід у режим плоского перегляду."
+#| msgid "Enters and exits flat review mode."
+msgid "Enter and exits flat review mode"
+msgstr "Вхід та вихід у режим плоского перегляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1889,8 +1902,9 @@ msgstr "Вхід та вихід у режим плоского перегляд
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The home position is the beginning of the content in the window.
 #: src/orca/cmdnames.py:129
-msgid "Moves flat review to the home position."
-msgstr "Переміщує плоский вигляд на початок на початок рядка."
+#| msgid "Moves flat review to the home position."
+msgid "Move flat review to the home position"
+msgstr "Перемістити плоский перегляд на початок рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1899,8 +1913,9 @@ msgstr "Переміщує плоский вигляд на початок на 
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The home position is the last bit of information in the window.
 #: src/orca/cmdnames.py:137
-msgid "Moves flat review to the end position."
-msgstr "Переміщує плоский вигляд на кінець рядка."
+#| msgid "Moves flat review to the end position."
+msgid "Move flat review to the end position"
+msgstr "Перемістити плоский перегляд на кінець рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1908,8 +1923,9 @@ msgstr "Переміщує плоский вигляд на кінець ряд�
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:145
-msgid "Moves flat review to the beginning of the previous line."
-msgstr "Переміщує плоский вигляд на початок попереднього рядка."
+#| msgid "Moves flat review to the beginning of the previous line."
+msgid "Move flat review to the beginning of the previous line"
+msgstr "Перемістити плоский перегляд на початок попереднього рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1917,8 +1933,9 @@ msgstr "Переміщує плоский вигляд на початок по�
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:152
-msgid "Speaks the current flat review line."
-msgstr "Вимовити поточний рядок при плоскому перегляді."
+#| msgid "Speaks the current flat review line."
+msgid "Speak the current flat review line"
+msgstr "Вимовити поточний рядок при плоскому перегляді"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1928,8 +1945,9 @@ msgstr "Вимовити поточний рядок при плоскому п�
 #. This particular command will cause Orca to spell the current line character
 #. by character.
 #: src/orca/cmdnames.py:161
-msgid "Spells the current flat review line."
-msgstr "Вимовити поточний рядок по літерах у режимі загального огляду."
+#| msgid "Spells the current flat review line."
+msgid "Spell the current flat review line"
+msgstr "Вимовити поточний рядок по літерах у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1939,9 +1957,10 @@ msgstr "Вимовити поточний рядок по літерах у ре
 #. This particular command will cause Orca to spell the current line character
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:171
-msgid "Phonetically spells the current flat review line."
+#| msgid "Phonetically spells the current flat review line."
+msgid "Phonetically spell the current flat review line"
 msgstr ""
-"Фонетично вимовити поточний рядок по літерах у режимі загального огляду."
+"Фонетично вимовити поточний рядок по літерах у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1949,8 +1968,9 @@ msgstr ""
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:178
-msgid "Moves flat review to the beginning of the next line."
-msgstr "Переміщує плоский вигляд на початок наступного рядка."
+#| msgid "Moves flat review to the beginning of the next line."
+msgid "Move flat review to the beginning of the next line"
+msgstr "Перемістити плоский перегляд на початок наступного рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1960,8 +1980,9 @@ msgstr "Переміщує плоский вигляд на початок на�
 #. Previous will go backwards in the window until you reach the top (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:187
-msgid "Moves flat review to the previous item or word."
-msgstr "Переміщує плоский вигляд на попередній пункт або слово."
+#| msgid "Moves flat review to the previous item or word."
+msgid "Move flat review to the previous item or word"
+msgstr "Перемістити плоский перегляд на попередній пункт або слово"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1970,8 +1991,9 @@ msgstr "Переміщує плоский вигляд на попередній
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will speak the current word or item.
 #: src/orca/cmdnames.py:195
-msgid "Speaks the current flat review item or word."
-msgstr "Вимовити поточний елемент або слово у режимі загального огляду."
+#| msgid "Speaks the current flat review item or word."
+msgid "Speak the current flat review item or word"
+msgstr "Вимовити поточний елемент або слово у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1981,9 +2003,10 @@ msgstr "Вимовити поточний елемент або слово у р
 #. This particular command will cause Orca to spell the current word or item
 #. character by character.
 #: src/orca/cmdnames.py:204
-msgid "Spells the current flat review item or word."
+#| msgid "Spells the current flat review item or word."
+msgid "Spell the current flat review item or word"
 msgstr ""
-"Вимовити по літерах поточний елемент або слово у режимі загального огляду."
+"Вимовити по літерах поточний елемент або слово у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1994,9 +2017,10 @@ msgstr ""
 #. character by character phonetically, saying "Alpha" for "a", "Bravo" for "b"
 #. and so on.
 #: src/orca/cmdnames.py:215
-msgid "Phonetically spells the current flat review item or word."
+#| msgid "Phonetically spells the current flat review item or word."
+msgid "Phonetically spell the current flat review item or word"
 msgstr ""
-"Вимовити по буквах поточний елемент або слово у режимі загального огляду."
+"Вимовити за буквами поточний елемент або слово у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2006,8 +2030,9 @@ msgstr ""
 #. Next will go forwards in the window until you reach the end (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:224
-msgid "Moves flat review to the next item or word."
-msgstr "Переміщує плоский вигляд на наступний елемент чи слово."
+#| msgid "Moves flat review to the next item or word."
+msgid "Move flat review to the next item or word"
+msgstr "Перемістити плоский перегляд на наступний елемент чи слово"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2017,8 +2042,9 @@ msgstr "Переміщує плоский вигляд на наступний �
 #. Above in this case means geographically above, as if you drew a vertical
 #. line upward on the screen.
 #: src/orca/cmdnames.py:233
-msgid "Moves flat review to the word above the current word."
-msgstr "Переміщує плоский вигляд на слово, що вище від поточного слова."
+#| msgid "Moves flat review to the word above the current word."
+msgid "Move flat review to the word above the current word"
+msgstr "Перемістити плоский перегляд на слово, що вище від поточного слова"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2029,8 +2055,9 @@ msgstr "Переміщує плоский вигляд на слово, що в�
 #. like a pushbutton, a label, or some other GUI widget. The 'speaks' means it
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:243
-msgid "Speaks the current flat review object."
-msgstr "Вимовити поточний об'єкт при плоскому перегляді."
+#| msgid "Speaks the current flat review object."
+msgid "Speak the current flat review object"
+msgstr "Вимовити поточний об'єкт при плоскому перегляді"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2040,8 +2067,9 @@ msgstr "Вимовити поточний об'єкт при плоскому п
 #. Below in this case means geographically below, as if you drew a vertical
 #. line downward on the screen.
 #: src/orca/cmdnames.py:252
-msgid "Moves flat review to the word below the current word."
-msgstr "Переміщує плоский вигляд на слово нижче поточного слова."
+#| msgid "Moves flat review to the word below the current word."
+msgid "Move flat review to the word below the current word"
+msgstr "Перемістити плоский перегляд на слово нижче поточного слова"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2051,8 +2079,9 @@ msgstr "Переміщує плоский вигляд на слово нижч�
 #. Previous will go backwards in the window until you reach the top (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:261
-msgid "Moves flat review to the previous character."
-msgstr "Переміщує плоский вигляд на попередній символ."
+#| msgid "Moves flat review to the previous character."
+msgid "Move flat review to the previous character"
+msgstr "Перемістити плоский перегляд на попередній символ"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2061,8 +2090,9 @@ msgstr "Переміщує плоский вигляд на попередній
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will speak the current character
 #: src/orca/cmdnames.py:269
-msgid "Speaks the current flat review character."
-msgstr "Вимовити поточний символ при плоскому перегляді."
+#| msgid "Speaks the current flat review character."
+msgid "Speak the current flat review character"
+msgstr "Вимовити поточний символ при плоскому перегляді"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2072,8 +2102,9 @@ msgstr "Вимовити поточний символ при плоскому �
 #. This particular command will cause Orca to present the character phonetically,
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:279
-msgid "Phonetically speaks the current flat review character."
-msgstr "Вимовити поточний символ у режимі загального огляду."
+#| msgid "Phonetically speaks the current flat review character."
+msgid "Phonetically speak the current flat review character"
+msgstr "Вимовити поточний символ у режимі загального огляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2083,8 +2114,9 @@ msgstr "Вимовити поточний символ у режимі зага�
 #. This particular command will cause Orca to present the character's unicode
 #. value.
 #: src/orca/cmdnames.py:289
-msgid "Speaks unicode value of the current flat review character."
-msgstr "Вимовити значення Юнікоду теперішнього символу при плоскому перегляді."
+#| msgid "Speaks unicode value of the current flat review character."
+msgid "Speak unicode value of the current flat review character"
+msgstr "Вимовити значення Юнікоду теперішнього символу при плоскому перегляді"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2094,8 +2126,9 @@ msgstr "Вимовити значення Юнікоду теперішньог�
 #. Previous will go forwards in the window until you reach the end (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:298
-msgid "Moves flat review to the next character."
-msgstr "Переміщує плоский вигляд на початок на наступний символ."
+#| msgid "Moves flat review to the next character."
+msgid "Move flat review to the next character"
+msgstr "Перемістити плоский перегляд на початок на наступний символ"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2104,8 +2137,9 @@ msgstr "Переміщує плоский вигляд на початок на 
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will move to and present the end of the line.
 #: src/orca/cmdnames.py:306
-msgid "Moves flat review to the end of the line."
-msgstr "Переміщує плоский вигляд на кінець рядка."
+#| msgid "Moves flat review to the end of the line."
+msgid "Move flat review to the end of the line"
+msgstr "Перемістити плоский перегляд на кінець рядка"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2114,8 +2148,9 @@ msgstr "Переміщує плоский вигляд на кінець ряд�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: src/orca/cmdnames.py:314
-msgid "Moves flat review to the bottom left."
-msgstr "Переміщує плоский перегляд вниз ліворуч."
+#| msgid "Moves flat review to the bottom left."
+msgid "Move flat review to the bottom left"
+msgstr "Перемістити плоский перегляд вниз ліворуч"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2125,8 +2160,9 @@ msgstr "Переміщує плоский перегляд вниз лівору
 #. This command lets the user copy the contents currently being reviewed to the
 #. clipboard.
 #: src/orca/cmdnames.py:323
-msgid "Copies the contents under flat review to the clipboard."
-msgstr "Копіює вміст загального огляду в буфер обміну."
+#| msgid "Copies the contents under flat review to the clipboard."
+msgid "Copy the contents under flat review to the clipboard"
+msgstr "Копіює вміст загального огляду в буфер обміну"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2136,21 +2172,25 @@ msgstr "Копіює вміст загального огляду в буфер 
 #. This command lets the user append the contents currently being reviewed to
 #. the existing contents of the clipboard.
 #: src/orca/cmdnames.py:333
-msgid "Appends the contents under flat review to the clipboard."
-msgstr "Додає вміст загального огляду в буфер обміну."
+#| msgid "Appends the contents under flat review to the clipboard."
+msgid "Append the contents under flat review to the clipboard"
+msgstr "Додає вміст загального огляду в буфер обміну"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
 #. to be presented to them.
 #: src/orca/cmdnames.py:339
-msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr "Увімкнути/вимкнути читання поточної комірки або всього рядка."
+#| msgid ""
+#| "Toggles whether to read just the current table cell or the whole row."
+msgid "Toggle whether to read just the current table cell or the whole row"
+msgstr "Увімкнути/вимкнути читання поточної комірки або всього рядка"
 
 #. Translators: the attributes being presented are the text attributes, such as
 #. bold, italic, font name, font size, etc.
 #: src/orca/cmdnames.py:344
-msgid "Reads the attributes associated with the current text character."
-msgstr "Читає атрибути з поточного символу тексту."
+#| msgid "Reads the attributes associated with the current text character."
+msgid "Read the attributes associated with the current text character"
+msgstr "Читає атрибути з поточного символу тексту"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2158,8 +2198,9 @@ msgstr "Читає атрибути з поточного символу тек�
 #. longer logical line and allow the user to press buttons on the braille display
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:351
-msgid "Pans the braille display to the left."
-msgstr "Пристосувати дисплей брайля ліворуч."
+#| msgid "Pans the braille display to the left."
+msgid "Pan the braille display to the left"
+msgstr "Пристосувати дисплей брайля ліворуч"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2167,8 +2208,9 @@ msgstr "Пристосувати дисплей брайля ліворуч."
 #. longer logical line and allow the user to press buttons on the braille display
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:358
-msgid "Pans the braille display to the right."
-msgstr "Пристосувати дисплей Брайля справа."
+#| msgid "Pans the braille display to the right."
+msgid "Pan the braille display to the right"
+msgstr "Пристосувати дисплей Брайля справа"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2179,33 +2221,38 @@ msgstr "Пристосувати дисплей Брайля справа."
 #. changing which object in the window which has focus. The feature used here
 #. will return the flat review to the object with focus.
 #: src/orca/cmdnames.py:368
-msgid "Returns to object with keyboard focus."
-msgstr "Повертає об'єкт, що має фокус клавіатури."
+#| msgid "Returns to object with keyboard focus."
+msgid "Return to object with keyboard focus"
+msgstr "Повертає об'єкт, що має фокус клавіатури"
 
 #. Translators: braille can be displayed in many ways. Contracted braille
 #. provides a more efficient means to represent text, especially long
 #. documents. The feature used here is an option to toggle between contracted
 #. and uncontracted.
 #: src/orca/cmdnames.py:374
-msgid "Turns contracted braille on and off."
-msgstr "Вмикає/вимикає обмеження Брайля"
+#| msgid "Turns contracted braille on and off."
+msgid "Turn contracted braille on and off"
+msgstr "Увімкнути або вимкнути обмеження Брайля"
 
 #. Translators: hardware braille displays often have buttons near each braille
 #. cell. These are called cursor routing keys and are a way for a user to tell
 #. the machine they are interested in a particular character on the display.
 #: src/orca/cmdnames.py:379
-msgid "Processes a cursor routing key."
-msgstr "Обробляє ключ руху курсора."
+#| msgid "Processes a cursor routing key."
+msgid "Process a cursor routing key"
+msgstr "Обробити ключ руху курсора"
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: src/orca/cmdnames.py:382
-msgid "Marks the beginning of a text selection."
-msgstr "Позначає початок вибраного тексту."
+#| msgid "Marks the beginning of a text selection."
+msgid "Mark the beginning of a text selection"
+msgstr "Позначити початок вибраного тексту"
 
 #. Translators: this is used to indicate the end point of a text selection.
 #: src/orca/cmdnames.py:385
-msgid "Marks the end of a text selection."
-msgstr "Позначає кінець вибраного тексту."
+#| msgid "Marks the end of a text selection."
+msgid "Mark the end of a text selection"
+msgstr "Позначити кінець вибраного тексту"
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be. The effects
@@ -2213,96 +2260,111 @@ msgstr "Позначає кінець вибраного тексту."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler.
 #: src/orca/cmdnames.py:392
-msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Вхід у режим навчання. Для виходу з режиму навчання натисніть Esc."
+#| msgid "Enters learn mode.  Press escape to exit learn mode."
+msgid "Enter learn mode.  Press escape to exit learn mode"
+msgstr "Вхід у режим навчання. Для виходу з режиму навчання натисніть Esc"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:396
-msgid "Decreases the speech rate."
-msgstr "Зменшує швидкість вимови."
+#| msgid "Decreases the speech rate."
+msgid "Decrease the speech rate"
+msgstr "Зменшити швидкість вимови"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:400
-msgid "Increases the speech rate."
-msgstr "Збільшує швидкість вимови."
+#| msgid "Increases the speech rate."
+msgid "Increase the speech rate"
+msgstr "Збільшити швидкість вимови"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:404
-msgid "Decreases the speech pitch."
+#| msgid "Decreases the speech pitch."
+msgid "Decrease the speech pitch"
 msgstr "Зменшити висоту тону вимови"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:408
-msgid "Increases the speech pitch."
+#| msgid "Increases the speech pitch."
+msgid "Increase the speech pitch"
 msgstr "Збільшити висоту тону вимови"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:412
-msgid "Increases the speech volume."
-msgstr "Збільшує гучність вимови."
+#| msgid "Increases the speech volume."
+msgid "Increase the speech volume"
+msgstr "Збільшити гучність вимови"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:416
-msgid "Decreases the speech volume."
-msgstr "Зменшує гучність вимови."
+#| msgid "Decreases the speech volume."
+msgid "Decrease the speech volume"
+msgstr "Зменшити гучність вимови"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:420
-msgid "Toggles the silencing of speech."
-msgstr "Увімкнути/вимкнути гучність вимови."
+#| msgid "Toggles the silencing of speech."
+msgid "Toggle the silencing of speech"
+msgstr "Увімкнути або вимкнути звук вимови"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
 #. applications and reads content. The levels can be toggled via command.
 #. This string describes that command.
 #: src/orca/cmdnames.py:426
-msgid "Toggles speech verbosity level."
-msgstr "Перемикає рівень подробиць у мовленні."
+#| msgid "Toggles speech verbosity level."
+msgid "Toggle speech verbosity level"
+msgstr "Перемкнути рівень подробиць у мовленні"
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: src/orca/cmdnames.py:430
-msgid "Quits the screen reader"
+#| msgid "Quits the screen reader"
+msgid "Quit the screen reader"
 msgstr "Вийти з програми для читання з екрана"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
 #: src/orca/cmdnames.py:434
-msgid "Displays the preferences configuration dialog."
-msgstr "Показує вікно параметрів."
+#| msgid "Displays the preferences configuration dialog."
+msgid "Display the preferences configuration dialog"
+msgstr "Показати вікно параметрів"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:439
-msgid "Displays the application preferences configuration dialog."
-msgstr "Показує вікно параметрів програми."
+#| msgid "Displays the application preferences configuration dialog."
+msgid "Display the application preferences configuration dialog"
+msgstr "Показати вікно параметрів програми"
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
 #: src/orca/cmdnames.py:444
-msgid "Toggles the speaking of indentation and justification."
-msgstr "Перемикає вимову відступів та вирівнювання."
+#| msgid "Toggles the speaking of indentation and justification."
+msgid "Toggle the speaking of indentation and justification"
+msgstr "Перемкнути вимову відступів та вирівнювання"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
 #. three"). This string to be translated refers to an Orca command for quickly
 #. toggling between the two options.
 #: src/orca/cmdnames.py:450
-msgid "Changes spoken number style."
-msgstr "Змінює стиль розмовного числа."
+#| msgid "Changes spoken number style."
+msgid "Change spoken number style"
+msgstr "Змінити стиль вимови числа"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
 #: src/orca/cmdnames.py:454
-msgid "Cycles to the next speaking of punctuation level."
-msgstr "Перемикає на наступний рівень вимови пунктуації."
+#| msgid "Cycles to the next speaking of punctuation level."
+msgid "Cycle to the next speaking of punctuation level"
+msgstr "Перемкнути на наступний рівень вимови пунктуації"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2311,8 +2373,9 @@ msgstr "Перемикає на наступний рівень вимови п�
 #. to an Orca command which makes it possible for users to quickly cycle amongst
 #. their saved profiles without having to get into a GUI.
 #: src/orca/cmdnames.py:462
-msgid "Cycles to the next settings profile."
-msgstr "Наступний профіль параметрів."
+#| msgid "Cycles to the next settings profile."
+msgid "Cycle to the next settings profile"
+msgstr "Перемкнути на наступний профіль параметрів"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-
 #. to-speech. Speech Dispatcher has a feature to control how capital letters are
@@ -2322,8 +2385,9 @@ msgstr "Наступний профіль параметрів."
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: src/orca/cmdnames.py:471
-msgid "Cycles to the next capitalization style."
-msgstr "Перемикає на наступний стиль прописних літер."
+#| msgid "Cycles to the next capitalization style."
+msgid "Cycle to the next capitalization style"
+msgstr "Перемкнути на наступний стиль прописних літер"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -2336,22 +2400,25 @@ msgstr "Перемикає на наступний стиль прописних
 #. echo. The following string refers to a command that allows the user to quickly
 #. choose which type of echo is being used.
 #: src/orca/cmdnames.py:483
-msgid "Cycles to the next key echo level."
-msgstr "Перемикає на наступний рівень озвучування клавіш."
+#| msgid "Cycles to the next key echo level."
+msgid "Cycle to the next key echo level"
+msgstr "Перемкнути на наступний рівень озвучування клавіш"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
 #: src/orca/cmdnames.py:488
-msgid "Cycles the debug level at run time."
-msgstr "Перемикнутися між рівнями налагодження під час роботи програми."
+#| msgid "Cycles the debug level at run time."
+msgid "Cycle the debug level at run time"
+msgstr "Перемикнутися між рівнями діагностики під час роботи програми"
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
 #: src/orca/cmdnames.py:495
-msgid "Bookmark where am I with respect to current position."
+#| msgid "Bookmark where am I with respect to current position."
+msgid "Bookmark where am I with respect to current position"
 msgstr "Шлях від закладки до поточного положення"
 
 #. Translators: this event handler cycles through the registered bookmarks and
@@ -2359,14 +2426,16 @@ msgstr "Шлях від закладки до поточного положен�
 #. the "bookmark" is storing the location of an accessible object, typically on
 #. a web page.
 #: src/orca/cmdnames.py:501
-msgid "Go to previous bookmark location."
-msgstr "Перейти до положення попередньої закладки."
+#| msgid "Go to previous bookmark location."
+msgid "Go to previous bookmark location"
+msgstr "Перейти до попередньої закладки"
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
 #: src/orca/cmdnames.py:506
-msgid "Go to bookmark."
+#| msgid "Go to bookmark."
+msgid "Go to bookmark"
 msgstr "Перейти до закладки"
 
 #. Translators: this event handler cycles through the registered bookmarks and
@@ -2374,60 +2443,69 @@ msgstr "Перейти до закладки"
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
 #: src/orca/cmdnames.py:512
-msgid "Go to next bookmark location."
-msgstr "Перейти до положення наступної закладки."
+#| msgid "Go to next bookmark location."
+msgid "Go to next bookmark location"
+msgstr "Перейти до наступної закладки"
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
 #: src/orca/cmdnames.py:516
-msgid "Add bookmark."
-msgstr "Додати закладку."
+#| msgid "Add bookmark."
+msgid "Add bookmark"
+msgstr "Додати закладку"
 
 #. Translators: this event handler saves all bookmarks for the current application
 #. to disk.
 #: src/orca/cmdnames.py:520
-msgid "Save bookmarks."
-msgstr "Зберегти закладки."
+#| msgid "Save bookmarks."
+msgid "Save bookmarks"
+msgstr "Зберегти закладки"
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:524
-msgid "Toggle mouse review mode."
-msgstr "Вимовити елементи під вказівником миші."
+#| msgid "Toggle mouse review mode."
+msgid "Toggle mouse review mode"
+msgstr "Увімкнути або вимкнути режим вимови під вказівником миші"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
 #: src/orca/cmdnames.py:528
-msgid "Present current time."
-msgstr "Показує теперішній час."
+#| msgid "Present current time."
+msgid "Present current time"
+msgstr "Показати поточний час"
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
 #: src/orca/cmdnames.py:532
-msgid "Present current date."
-msgstr "Показує теперішню дату."
+#| msgid "Present current date."
+msgid "Present current date"
+msgstr "Показати поточну дату"
 
 #. Translators: Orca has a command to present the pixel size and location of
 #. the current object. This string is how this command is described in the list
 #. of keyboard shortcuts.
 #: src/orca/cmdnames.py:537
-msgid "Present size and location of current object."
-msgstr "Вивести дані щодо розміру і розташування поточного об'єкта."
+#| msgid "Present size and location of current object."
+msgid "Present size and location of current object"
+msgstr "Вивести дані щодо розміру і розташування поточного об'єкта"
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
 #. command causes the next command issued to be passed along to the current
 #. application, bypassing Orca's interception of it.
 #: src/orca/cmdnames.py:544
-msgid "Passes the next command on to the current application."
-msgstr "Передавати наступні команди прямо у програму."
+#| msgid "Passes the next command on to the current application."
+msgid "Pass the next command on to the current application"
+msgstr "Передати наступну команду прямо до поточної програми"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
 #: src/orca/cmdnames.py:549
-msgid "Speak and braille a previous chat room message."
-msgstr "Вимовити кодом брайля попереднє повідомлення кімнати розмов."
+#| msgid "Speak and braille a previous chat room message."
+msgid "Speak and braille a previous chat room message"
+msgstr "Вимовити кодом брайля попереднє повідомлення кімнати спілкування"
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -2435,8 +2513,9 @@ msgstr "Вимовити кодом брайля попереднє повідо
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is associated with the command to toggle typing status presentation on or off.
 #: src/orca/cmdnames.py:557
-msgid "Toggle whether we announce when our buddies are typing."
-msgstr "Озвучувати те, що співрозмовник почав друкувати."
+#| msgid "Toggle whether we announce when our buddies are typing."
+msgid "Toggle whether we announce when our buddies are typing"
+msgstr "Озвучувати те, що співрозмовник почав друкувати"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -2446,8 +2525,9 @@ msgstr "Озвучувати те, що співрозмовник почав д
 #. translated is associated with the command to toggle specific room history on
 #. or off.
 #: src/orca/cmdnames.py:567
-msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Чи представляти історію повідомлень бесіди."
+#| msgid "Toggle whether we provide chat room specific message histories."
+msgid "Toggle whether we provide chat room specific message histories"
+msgstr "Чи представляти історію повідомлень бесіди"
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -2457,25 +2537,28 @@ msgstr "Чи представляти історію повідомлень бе
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:578
+#| msgid ""
+#| "Toggle whether we prefix chat room messages with the name of the chat "
+#| "room."
 msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+"Toggle whether we prefix chat room messages with the name of the chat room"
 msgstr ""
-"Увімкнути/вимкнути префікс з назвою кімнати розмов для повідомлень у кімнаті "
-"розмов. "
+"Увімкнути або вимкнути префікс з назвою кімнати розмов для повідомлень у"
+" кімнаті спілкування."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the left.
 #: src/orca/cmdnames.py:584
 msgid "Line Left"
-msgstr "Лінія наліво"
+msgstr "Рядок ліворуч"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
 #: src/orca/cmdnames.py:589
 msgid "Line Right"
-msgstr "Лінія направо"
+msgstr "Рядок праворуч"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2556,96 +2639,112 @@ msgstr "Вирізаний рядок"
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
 #: src/orca/cmdnames.py:649
-msgid "Present last notification message."
-msgstr "Показати останнє повідомлення сповіщення."
+#| msgid "Present last notification message."
+msgid "Present last notification message"
+msgstr "Показати останнє повідомлення сповіщення"
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
 #: src/orca/cmdnames.py:653
 msgid "Present notification messages list"
-msgstr "Показати перелік повідомлень сповіщення"
+msgstr "Показати список повідомлень сповіщення"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
 #: src/orca/cmdnames.py:657
-msgid "Present previous notification message."
-msgstr "Показати попереднє повідомлення сповіщення."
+#| msgid "Present previous notification message."
+msgid "Present previous notification message"
+msgstr "Показати попереднє повідомлення сповіщення"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:660
-msgid "Goes to next character."
-msgstr "Перейти до наступного символу."
+#| msgid "Goes to next character."
+msgid "Go to next character"
+msgstr "Перейти до наступного символу"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:663
-msgid "Goes to previous character."
-msgstr "Перейти до попереднього символу."
+#| msgid "Goes to previous character."
+msgid "Go to previous character"
+msgstr "Перейти до попереднього символу"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:666
-msgid "Goes to next word."
-msgstr "Перейти до наступного слова."
+#| msgid "Goes to next word."
+msgid "Go to next word"
+msgstr "Перейти до наступного слова"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:669
-msgid "Goes to previous word."
-msgstr "Перейти до попереднього слова."
+#| msgid "Goes to previous word."
+msgid "Go to previous word"
+msgstr "Перейти до попереднього слова"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:672
-msgid "Goes to next line."
-msgstr "Перейти до наступного рядка."
+#| msgid "Goes to next line."
+msgid "Go to next line"
+msgstr "Перейти до наступного рядка"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:675
-msgid "Goes to previous line."
-msgstr "Перейти до попереднього рядка."
+#| msgid "Goes to previous line."
+msgid "Go to previous line"
+msgstr "Перейти до попереднього рядка"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:678
-msgid "Goes to the top of the file."
-msgstr "Перейти до початку файлу."
+#| msgid "Goes to the top of the file."
+msgid "Go to the top of the file"
+msgstr "Перейти до початку файла"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:681
-msgid "Goes to the bottom of the file."
-msgstr "Перейти до кінця файлу."
+#| msgid "Goes to the bottom of the file."
+msgid "Go to the bottom of the file"
+msgstr "Перейти до кінця файла"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:684
-msgid "Goes to the beginning of the line."
-msgstr "Перейти до початку рядка."
+#| msgid "Goes to the beginning of the line."
+msgid "Go to the beginning of the line"
+msgstr "Перейти до початку рядка"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:687
-msgid "Goes to the end of the line."
-msgstr "Перейти до кінця рядка."
+#| msgid "Goes to the end of the line."
+msgid "Go to the end of the line"
+msgstr "Перейти до кінця рядка"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:690
-msgid "Goes to the next object."
-msgstr "Перейти до наступного об'єкта."
+#| msgid "Goes to the next object."
+msgid "Go to the next object"
+msgstr "Перейти до наступного об'єкта"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:693
-msgid "Goes to the previous object."
-msgstr "Перейти до попереднього об'єкта."
+#| msgid "Goes to the previous object."
+msgid "Go to the previous object"
+msgstr "Перейти до попереднього об'єкта"
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
 #: src/orca/cmdnames.py:698
-msgid "Causes the current combo box to be expanded."
-msgstr "Розкриває поточний розкривний список."
+#| msgid "Causes the current combo box to be expanded."
+msgid "Cause the current combo box to be expanded"
+msgstr "Розгорнути поточний розкривний список"
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: src/orca/cmdnames.py:705
-msgid "Switches between native and screen-reader caret navigation."
+#| msgid "Switches between native and screen-reader caret navigation."
+msgid "Switch between native and screen-reader caret navigation"
 msgstr ""
-"Перемикає навігацію курсором між типовою програмою та програмою читання з "
-"екрана."
+"Перемкнути навігацію курсором між типовою програмою та програмою читання з "
+"екрана"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2655,8 +2754,9 @@ msgstr ""
 #. features to facilitate accessing live regions. This string refers to a command
 #. to cycle through the different "politeness" levels.
 #: src/orca/cmdnames.py:714
-msgid "Advance live region politeness setting."
-msgstr "Розширені параметри роботи із змінюваними областями."
+#| msgid "Advance live region politeness setting."
+msgid "Advance live region politeness setting"
+msgstr "Розширені параметри роботи із змінюваними областями"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2666,16 +2766,18 @@ msgstr "Розширені параметри роботи із змінюван
 #. features to facilitate accessing live regions. This string refers to a command
 #. to turn off live regions by default.
 #: src/orca/cmdnames.py:724
-msgid "Set default live region politeness level to off."
-msgstr "Вимкнути ввічливе нагадування про змінювані області."
+#| msgid "Set default live region politeness level to off."
+msgid "Set default live region politeness level to off"
+msgstr "Вимкнути ввічливе нагадування про змінювані області"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #. This string refers to a command for reviewing up to nine stored previous live
 #. messages.
 #: src/orca/cmdnames.py:730
-msgid "Review live region announcement."
-msgstr "Повторити попередні повідомлення про змінювані області."
+#| msgid "Review live region announcement."
+msgid "Review live region announcement"
+msgstr "Повторити попередні повідомлення про змінювані області"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2687,8 +2789,9 @@ msgstr "Повторити попередні повідомлення про з
 #. Orca commands for doing so -- as long as the monitoring of live regions is
 #. enabled.
 #: src/orca/cmdnames.py:741
-msgid "Monitor live regions."
-msgstr "Слідкувати за змінюваними областями."
+#| msgid "Monitor live regions."
+msgid "Monitor live regions"
+msgstr "Слідкувати за змінюваними областями"
 
 #. Translators: hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. This command will move the user
@@ -2696,44 +2799,50 @@ msgstr "Слідкувати за змінюваними областями."
 #. If the user is already in the mouse over object, this command will hide the
 #. mouse over and return the user to the object he/she was in.
 #: src/orca/cmdnames.py:748
-msgid "Moves focus into and away from the current mouse over."
-msgstr "Переміщує курсор у поточне розташування миші та з нього."
+#| msgid "Moves focus into and away from the current mouse over."
+msgid "Move focus into and away from the current mouse over"
+msgstr "Перемістити курсор у поточне розташування миші та з нього"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
 #: src/orca/cmdnames.py:753
-msgid "Set the row to use as dynamic column headers."
-msgstr "Вказати рядок як динамічниі заголовки стовпчиків."
+#| msgid "Set the row to use as dynamic column headers."
+msgid "Set the row to use as dynamic column headers"
+msgstr "Вказати рядок як динамічні заголовки стовпчиків"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to unset the row so it is no longer treated as if it contained
 #. column headers.
 #: src/orca/cmdnames.py:759
-msgid "Clears the dynamic column headers."
-msgstr "Очищає тимчасовий заголовок стовпчика."
+#| msgid "Clears the dynamic column headers."
+msgid "Clear the dynamic column headers"
+msgstr "Очистити тимчасовий заголовок стовпчика"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
 #: src/orca/cmdnames.py:764
-msgid "Set the column to use as dynamic row headers."
-msgstr "Вказати стовпчик як динамічні заголовки рядків."
+#| msgid "Set the column to use as dynamic row headers."
+msgid "Set the column to use as dynamic row headers"
+msgstr "Вказати стовпчик як динамічні заголовки рядків"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
 #. string refers to the command to unset the column so it is no longer treated
 #. as if it contained row headers.
 #: src/orca/cmdnames.py:770
-msgid "Clears the dynamic row headers"
-msgstr "Очищати часові заголовки рядків"
+#| msgid "Clears the dynamic row headers"
+msgid "Clear the dynamic row headers"
+msgstr "Очистити динамічні заголовки рядків"
 
 #. Translators: This string refers to an Orca command. The "input line" refers
 #. to the place where one enters formulas for a spreadsheet.
 #: src/orca/cmdnames.py:774
-msgid "Presents the contents of the input line."
-msgstr "Вимовляє вміст вхідного рядка."
+#| msgid "Presents the contents of the input line."
+msgid "Present the contents of the input line"
+msgstr "Показати вміст рядка введення"
 
 #. Translators: the structural navigation keys are designed to move the caret
 #. around the document content by object type. Thus H moves you to the next
@@ -2741,376 +2850,444 @@ msgstr "Вимовляє вміст вхідного рядка."
 #. This feature needs to be toggle-able so that it does not interfere with normal
 #. writing functions.
 #: src/orca/cmdnames.py:781
-msgid "Toggles structural navigation keys."
-msgstr "Вмикає клавіші структурної навігації."
+#| msgid "Toggles structural navigation keys."
+msgid "Toggle structural navigation keys"
+msgstr "Увімкнути або вимкнути клавіші структурної навігації"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:784
-msgid "Goes to previous blockquote."
-msgstr "Перейти до попереднього блоку."
+#| msgid "Goes to previous blockquote."
+msgid "Go to previous blockquote"
+msgstr "Перейти до попереднього блоку"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:787
-msgid "Goes to next blockquote."
-msgstr "Перейти до наступного блоку."
+#| msgid "Goes to next blockquote."
+msgid "Go to next blockquote"
+msgstr "Перейти до наступного блоку"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:790
-msgid "Displays a list of blockquotes."
-msgstr "Показує перелік блоків цитування."
+#| msgid "Displays a list of blockquotes."
+msgid "Display a list of blockquotes"
+msgstr "Показати список блоків цитування"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:793
-msgid "Goes to previous button."
-msgstr "Перейти до попередньої кнопки."
+#| msgid "Goes to previous button."
+msgid "Go to previous button"
+msgstr "Перейти до попередньої кнопки"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:796
-msgid "Goes to next button."
-msgstr "Перейти до наступної кнопки."
+#| msgid "Goes to next button."
+msgid "Go to next button"
+msgstr "Перейти до наступної кнопки"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:799
-msgid "Displays a list of buttons."
-msgstr "Показує перелік кнопок."
+#| msgid "Displays a list of buttons."
+msgid "Display a list of buttons"
+msgstr "Показати список кнопок"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:802
-msgid "Goes to previous check box."
-msgstr "Перейти до попередньої позначки."
+#| msgid "Goes to previous check box."
+msgid "Go to previous check box"
+msgstr "Перейти до попередньої позначки"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:805
-msgid "Goes to next check box."
-msgstr "Перейти до наступної позначки."
+#| msgid "Goes to next check box."
+msgid "Go to next check box"
+msgstr "Перейти до наступної позначки"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:808
-msgid "Displays a list of check boxes."
-msgstr "Показує перелік позначок."
+#| msgid "Displays a list of check boxes."
+msgid "Display a list of check boxes"
+msgstr "Показати список позначок"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:812
-msgid "Goes to previous clickable."
-msgstr "Переходить до попереднього об'єкта для клацання"
+#| msgid "Goes to previous clickable."
+msgid "Go to previous clickable"
+msgstr "Перейти до попереднього об'єкта для клацання"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:816
-msgid "Goes to next clickable."
-msgstr "Переходить до наступного об'єкта для клацання"
+#| msgid "Goes to next clickable."
+msgid "Go to next clickable"
+msgstr "Перейти до наступного об'єкта для клацання"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:820
-msgid "Displays a list of clickables."
-msgstr "Показує список об'єктів для клацання"
+#| msgid "Displays a list of clickables."
+msgid "Display a list of clickables"
+msgstr "Показати список об'єктів для клацання"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:823
-msgid "Goes to previous combo box."
-msgstr "Переходить до попереднього розкривного списку."
+#| msgid "Goes to previous combo box."
+msgid "Go to previous combo box"
+msgstr "Перейти до попереднього спадного списку"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:826
-msgid "Goes to next combo box."
-msgstr "Переходить до наступного розкривного списку."
+#| msgid "Goes to next combo box."
+msgid "Go to next combo box"
+msgstr "Перейти до наступного спадного списку"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:831
-msgid "Goes to start of container."
-msgstr "Переходить до початку контейнера."
+#| msgid "Goes to start of container."
+msgid "Go to start of container"
+msgstr "Перейти до початку контейнера"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:836
-msgid "Goes to end of container."
-msgstr "Переходить до кінця контейнера."
+#| msgid "Goes to end of container."
+msgid "Go to end of container"
+msgstr "Перейти до кінця контейнера"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:839
-msgid "Displays a list of combo boxes."
-msgstr "Показує перелік розкривних списків."
+#| msgid "Displays a list of combo boxes."
+msgid "Display a list of combo boxes"
+msgstr "Показати список спадних списків"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:842
-msgid "Goes to previous entry."
-msgstr "Перейти до попереднього поля вводу."
+#| msgid "Goes to previous entry."
+msgid "Go to previous entry"
+msgstr "Перейти до попереднього поля введення"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:845
-msgid "Goes to next entry."
-msgstr "Перейти до наступного поля вводу."
+#| msgid "Goes to next entry."
+msgid "Go to next entry"
+msgstr "Перейти до наступного поля введення"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:848
-msgid "Displays a list of entries."
-msgstr "Показує перелік елементів."
+#| msgid "Displays a list of entries."
+msgid "Display a list of entries"
+msgstr "Показати список полів введення"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:851
-msgid "Goes to previous form field."
-msgstr "Перейти до попереднього поля форми."
+#| msgid "Goes to previous form field."
+msgid "Go to previous form field"
+msgstr "Перейти до попереднього поля форми"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:854
-msgid "Goes to next form field."
-msgstr "Перейти до наступного поля форми."
+#| msgid "Goes to next form field."
+msgid "Go to next form field"
+msgstr "Перейти до наступного поля форми"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:857
-msgid "Displays a list of form fields."
-msgstr "Показує перелік полів форми."
+#| msgid "Displays a list of form fields."
+msgid "Display a list of form fields"
+msgstr "Показати список полів форми"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:860
-msgid "Goes to previous heading."
-msgstr "Перейти до попереднього заголовку."
+#| msgid "Goes to previous heading."
+msgid "Go to previous heading"
+msgstr "Перейти до попереднього заголовка"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:863
-msgid "Goes to next heading."
-msgstr "Перейти до наступного заголовку."
+#| msgid "Goes to next heading."
+msgid "Go to next heading"
+msgstr "Перейти до наступного заголовка"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:866
-msgid "Displays a list of headings."
-msgstr "Показує перелік заголовків."
+#| msgid "Displays a list of headings."
+msgid "Display a list of headings"
+msgstr "Показати список заголовків"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:870
 #, python-format
-msgid "Goes to previous heading at level %d."
-msgstr "Перейти до попереднього заголовку рівня %d."
+#| msgid "Goes to previous heading at level %d."
+msgid "Go to previous heading at level %d"
+msgstr "Перейти до попереднього заголовка рівня %d"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:874
 #, python-format
-msgid "Goes to next heading at level %d."
-msgstr "Перейти до наступного заголовку рівня %d."
+#| msgid "Goes to next heading at level %d."
+msgid "Go to next heading at level %d"
+msgstr "Перейти до наступного заголовка рівня %d"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:878
 #, python-format
-msgid "Displays a list of headings at level %d."
-msgstr "Показує перелік заголовків рівню %d."
+#| msgid "Displays a list of headings at level %d."
+msgid "Display a list of headings at level %d"
+msgstr "Показати список заголовків рівня %d"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:881
-msgid "Goes to previous image."
-msgstr "Переходить до попереднього зображення."
+#| msgid "Goes to previous image."
+msgid "Go to previous image"
+msgstr "Перейти до попереднього зображення"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:884
-msgid "Goes to next image."
-msgstr "Переходить до наступного зображення."
+#| msgid "Goes to next image."
+msgid "Go to next image"
+msgstr "Перейти до наступного зображення"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:887
-msgid "Displays a list of images."
-msgstr "Показує перелік зображень."
+#| msgid "Displays a list of images."
+msgid "Display a list of images"
+msgstr "Показати список зображень"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:892
-msgid "Goes to previous landmark."
-msgstr "Перейти до попереднього орієнтира."
+#| msgid "Goes to previous landmark."
+msgid "Go to previous landmark"
+msgstr "Перейти до попереднього орієнтира"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:897
-msgid "Goes to next landmark."
-msgstr "Перейти до наступного орієнтира."
+#| msgid "Goes to next landmark."
+msgid "Go to next landmark"
+msgstr "Перейти до наступного орієнтира"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:902
-msgid "Displays a list of landmarks."
-msgstr "Показує перелік орієнтирів"
+#| msgid "Displays a list of landmarks."
+msgid "Display a list of landmarks"
+msgstr "Показати список орієнтирів"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:907
-msgid "Goes to previous large object."
+#| msgid "Goes to previous large object."
+msgid "Go to previous large object"
 msgstr "Перейти до попереднього великого об'єкта"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:912
-msgid "Goes to next large object."
-msgstr "Перейти до наступного великого об'єкта."
+#| msgid "Goes to next large object."
+msgid "Go to next large object"
+msgstr "Перейти до наступного великого об'єкта"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:917
-msgid "Displays a list of large objects."
-msgstr "Показує перелік великих об’єктів."
+#| msgid "Displays a list of large objects."
+msgid "Display a list of large objects"
+msgstr "Показати список великих об’єктів"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:920
-msgid "Goes to previous link."
-msgstr "Переходить до попереднього посилання."
+#| msgid "Goes to previous link."
+msgid "Go to previous link"
+msgstr "Перейти до попереднього посилання"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:923
-msgid "Goes to next link."
-msgstr "Переходить до наступного посилання."
+#| msgid "Goes to next link."
+msgid "Go to next link"
+msgstr "Перейти до наступного посилання"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:926
-msgid "Displays a list of links."
-msgstr "Показує перелік посилань."
+#| msgid "Displays a list of links."
+msgid "Display a list of links"
+msgstr "Показати список посилань"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:929
-msgid "Goes to previous list."
-msgstr "Перейти до наступного списку."
+#| msgid "Goes to previous list."
+msgid "Go to previous list"
+msgstr "Перейти до наступного списку"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:932
-msgid "Goes to next list."
-msgstr "Перейти до наступного списку."
+#| msgid "Goes to next list."
+msgid "Go to next list"
+msgstr "Перейти до наступного списку"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:935
-msgid "Displays a list of lists."
-msgstr "Показує перелік списків."
+#| msgid "Displays a list of lists."
+msgid "Display a list of lists"
+msgstr "Показати список списків"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:938
-msgid "Goes to previous list item."
-msgstr "Перейти до попереднього елементу списку."
+#| msgid "Goes to previous list item."
+msgid "Go to previous list item"
+msgstr "Перейти до попереднього елемента списку"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:941
-msgid "Goes to next list item."
-msgstr "Перейти до наступного елементу списку."
+#| msgid "Goes to next list item."
+msgid "Go to next list item"
+msgstr "Перейти до наступного елемента списку"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:944
-msgid "Displays a list of list items."
-msgstr "Показує перелік елементів списку."
+#| msgid "Displays a list of list items."
+msgid "Display a list of list items"
+msgstr "Показати список елементів списку"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:949
-msgid "Goes to previous live region."
-msgstr "Перейти до попередньої змінюваної області."
+#| msgid "Goes to previous live region."
+msgid "Go to previous live region"
+msgstr "Перейти до попередньої інтерактивної області."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:954
-msgid "Goes to next live region."
-msgstr "Перейти до попередньої змінюваної області."
+#| msgid "Goes to next live region."
+msgid "Go to next live region"
+msgstr "Перейти до попередньої інтерактивної області."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:959
-msgid "Goes to the last live region which made an announcement."
-msgstr "Переходить до останньої живої ділянки, яка зробила оголошення."
+#| msgid "Goes to the last live region which made an announcement."
+msgid "Go to the last live region which made an announcement"
+msgstr "Перейти до останньої інтерактивної ділянки, яка зробила оголошення"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:962
-msgid "Goes to previous paragraph."
-msgstr "Перейти до попереднього абзацу."
+#| msgid "Goes to previous paragraph."
+msgid "Go to previous paragraph"
+msgstr "Перейти до попереднього абзацу"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:965
-msgid "Goes to next paragraph."
-msgstr "Перейти до наступного абзацу."
+#| msgid "Goes to next paragraph."
+msgid "Go to next paragraph"
+msgstr "Перейти до наступного абзацу"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:968
-msgid "Displays a list of paragraphs."
-msgstr "Показує перелік абзаців."
+#| msgid "Displays a list of paragraphs."
+msgid "Display a list of paragraphs"
+msgstr "Показати список абзаців"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:971
-msgid "Goes to previous radio button."
-msgstr "Перейти до попередньої кнопки вибору."
+#| msgid "Goes to previous radio button."
+msgid "Go to previous radio button"
+msgstr "Перейти до попередньої кнопки вибору"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:974
-msgid "Goes to next radio button."
-msgstr "Перейти до наступної кнопки вибору."
+#| msgid "Goes to next radio button."
+msgid "Go to next radio button"
+msgstr "Перейти до наступної кнопки вибору"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:977
-msgid "Displays a list of radio buttons."
-msgstr "Показує перелік перемикачів."
+#| msgid "Displays a list of radio buttons."
+msgid "Display a list of radio buttons"
+msgstr "Показати список перемикачів"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:981
-msgid "Goes to previous separator."
-msgstr "Перейти до попереднього розділювача."
+#| msgid "Goes to previous separator."
+msgid "Go to previous separator"
+msgstr "Перейти до попереднього розділювача"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:985
-msgid "Goes to next separator."
-msgstr "Перейти до наступного розділювача."
+#| msgid "Goes to next separator."
+msgid "Go to next separator"
+msgstr "Перейти до наступного розділювача"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:988
-msgid "Goes to previous table."
-msgstr "Перейти до попередньої таблиці."
+#| msgid "Goes to previous table."
+msgid "Go to previous table"
+msgstr "Перейти до попередньої таблиці"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:991
-msgid "Goes to next table."
-msgstr "Перейти до наступної таблиці."
+#| msgid "Goes to next table."
+msgid "Go to next table"
+msgstr "Перейти до наступної таблиці"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:994
-msgid "Displays a list of tables."
-msgstr "Показує перелік таблиць."
+#| msgid "Displays a list of tables."
+msgid "Display a list of tables"
+msgstr "Показати список таблиць"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:997
-msgid "Goes down one cell."
-msgstr "Перейти до комірки знизу."
+#| msgid "Goes down one cell."
+msgid "Go down one cell"
+msgstr "Перейти до комірки нижче"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1000
-msgid "Goes to the first cell in a table."
-msgstr "Перейти до першої комірки таблиці."
+#| msgid "Goes to the first cell in a table."
+msgid "Go to the first cell in a table"
+msgstr "Перейти до першої комірки таблиці"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1003
-msgid "Goes to the last cell in a table."
-msgstr "Перейти до останньої комірки таблиці."
+#| msgid "Goes to the last cell in a table."
+msgid "Go to the last cell in a table"
+msgstr "Перейти до останньої комірки таблиці"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1006
-msgid "Goes left one cell."
-msgstr "Перейти до комірки ліворуч."
+#| msgid "Goes left one cell."
+msgid "Go left one cell"
+msgstr "Перейти до комірки ліворуч"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1009
-msgid "Goes right one cell."
-msgstr "Перейти до комірки праворуч."
+#| msgid "Goes right one cell."
+msgid "Go right one cell"
+msgstr "Перейти до комірки праворуч"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1012
-msgid "Goes up one cell."
-msgstr "Перейти до комірки згори."
+#| msgid "Goes up one cell."
+msgid "Go up one cell"
+msgstr "Перейти до комірки вище"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -3124,8 +3301,9 @@ msgstr "Перейти до комірки згори."
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1025
-msgid "Toggles layout mode."
-msgstr "Увімкнути або вимкнути режим компонування."
+#| msgid "Toggles layout mode."
+msgid "Toggle layout mode"
+msgstr "Увімкнути або вимкнути режим компонування"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -3142,8 +3320,9 @@ msgstr "Увімкнути або вимкнути режим компонува
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
 #: src/orca/cmdnames.py:1041
-msgid "Switches between browse mode and focus mode."
-msgstr "Перемикає між режимом читання та фокусування."
+#| msgid "Switches between browse mode and focus mode."
+msgid "Switch between browse mode and focus mode"
+msgstr "Перемкнути між режимом читання та фокусування"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3155,8 +3334,9 @@ msgstr "Перемикає між режимом читання та фокус�
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: src/orca/cmdnames.py:1052
-msgid "Enables sticky focus mode."
-msgstr "Вмикає примусовий режим фокусування."
+#| msgid "Enables sticky focus mode."
+msgid "Enable sticky focus mode"
+msgstr "Увімкнути примусовий режим фокусування"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3168,38 +3348,45 @@ msgstr "Вмикає примусовий режим фокусування."
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky browse mode.
 #: src/orca/cmdnames.py:1063
-msgid "Enables sticky browse mode."
-msgstr "Вмикає примусовий режим огляду."
+#| msgid "Enables sticky browse mode."
+msgid "Enable sticky browse mode"
+msgstr "Увімкнути примусовий режим огляду"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1066
-msgid "Goes to previous unvisited link."
-msgstr "Переходить до попереднього невідвіданого посилання."
+#| msgid "Goes to previous unvisited link."
+msgid "Go to previous unvisited link"
+msgstr "Перейти до попереднього невідвіданого посилання"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1069
-msgid "Goes to next unvisited link."
-msgstr "Переходить до наступного невідвіданого посилання."
+#| msgid "Goes to next unvisited link."
+msgid "Go to next unvisited link"
+msgstr "Перейти до наступного невідвіданого посилання"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1072
-msgid "Displays a list of unvisited links."
-msgstr "Показує перелік невідвіданих посилань."
+#| msgid "Displays a list of unvisited links."
+msgid "Display a list of unvisited links"
+msgstr "Показати список невідвіданих посилань"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1075
-msgid "Goes to previous visited link."
-msgstr "Переходить до попереднього відвіданого посилання."
+#| msgid "Goes to previous visited link."
+msgid "Go to previous visited link"
+msgstr "Перейти до попереднього відвіданого посилання"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1078
-msgid "Goes to next visited link."
-msgstr "Переходить до наступного відвіданого посилання."
+#| msgid "Goes to next visited link."
+msgid "Go to next visited link"
+msgstr "Перейти до наступного відвіданого посилання"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1081
-msgid "Displays a list of visited links."
-msgstr "Показує перелік відвіданих посилань."
+#| msgid "Displays a list of visited links."
+msgid "Display a list of visited links"
+msgstr "Показати список відвіданих посилань"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4423,8 +4610,6 @@ msgstr "Піктограма"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 #. string to be translated appears as a combo box item in Orca's Preferences.
 #: src/orca/guilabels.py:119
-#| msgctxt "key echo"
-#| msgid "None"
 msgctxt "capitalization style"
 msgid "None"
 msgstr "Немає"
@@ -4436,8 +4621,6 @@ msgstr "Немає"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 #. string to be translated appears as a combo box item in Orca's Preferences.
 #: src/orca/guilabels.py:127
-#| msgctxt "capitalization style"
-#| msgid "spell"
 msgctxt "capitalization style"
 msgid "Spell"
 msgstr "Вимова"
@@ -4611,12 +4794,13 @@ msgstr "Під час пошуку озвучувати _зміни рядка"
 msgid "Speak results during _find"
 msgstr "Вимовляти результати під час по_шуку"
 
-#. Translators: Function is a table column header where the cells in the column
+#. Translators: Command is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
 #. the user invokes that keyboard command.
 #: src/orca/guilabels.py:250
-msgid "Function"
-msgstr "Функція"
+#| msgid "comma"
+msgid "Command"
+msgstr "Команда"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
@@ -9346,8 +9530,8 @@ msgid ""
 msgstr ""
 "Вхід у режим вивчення клавіатури. Натисніть клавішу, щоб прослухати її "
 "призначення. Щоб переглянути документацію екранного читача, натисніть F1. "
-"Щоб отримати перелік типових комбінацій клавіш програми, натисніть F2. Щоб "
-"отримати перелік скорочень для поточної програми, натисніть F3. Щоб вийти з "
+"Щоб отримати список типових комбінацій клавіш програми, натисніть F2. Щоб "
+"отримати список скорочень для поточної програми, натисніть F3. Щоб вийти з "
 "режиму вивчення, натисніть клавішу скасування."
 
 #. Translators: This message is presented when a user is navigating within a
@@ -10174,7 +10358,7 @@ msgstr "Перевірка мишки увімкнена."
 #. from getting these objects.
 #: src/orca/messages.py:1748
 msgid "Error: Could not create list of objects."
-msgstr "Помилка: не можливо створити перелік об'єктів."
+msgstr "Помилка: не можливо створити список об'єктів."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -10394,7 +10578,7 @@ msgstr "Низ"
 #. notifications mode is being exited.
 #: src/orca/messages.py:1903
 msgid "Exiting list notification messages mode."
-msgstr "Режим переліку наявних повідомлень сповіщення."
+msgstr "Вихід з режиму списку повідомлень сповіщення."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -12968,7 +13152,6 @@ msgid "Move to _top"
 msgstr "На _початок"
 
 #: src/orca/orca-setup.ui:3281
-#| msgid "Adjust selected attributes"
 msgid "Adjust selected attribute"
 msgstr "Коригувати вибраний атрибут"
 
@@ -13998,7 +14181,7 @@ msgstr "Натисніть пробіл для перемикання."
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
 "Натисніть пробіл для розкриття списку, використовуйте стрілки вгору та вниз "
-"для вибору елементу."
+"для вибору елемента."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
@@ -14022,7 +14205,7 @@ msgstr "Для переходу у системне меню, натисніть
 #. Translators: this is the tutorial string when navigating lists.
 #: src/orca/tutorialgenerator.py:326
 msgid "Use up and down to select an item."
-msgstr "Використовуйте стрілки вгору та вниз для вибору елементу."
+msgstr "Використовуйте стрілки вгору та вниз для вибору елемента."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -14103,6 +14286,9 @@ msgstr ""
 "Для зменшення значення натисніть стрілку ліворуч, для збільшення - праворуч. "
 "Для встановлення мінімального значення натисніть Home, для максимального - "
 "End."
+
+#~ msgid "Function"
+#~ msgstr "Функція"
 
 #~ msgid "Results must:"
 #~ msgstr "Результати повинні:"
