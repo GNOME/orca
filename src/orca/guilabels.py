@@ -244,10 +244,10 @@ FIND_ONLY_SPEAK_CHANGED_LINES = _("Onl_y speak changed lines during find")
 # Firefox.
 FIND_SPEAK_RESULTS = _("Speak results during _find")
 
-# Translators: Function is a table column header where the cells in the column
+# Translators: Command is a table column header where the cells in the column
 # are a sentence that briefly describes what action Orca will take if and when
 # the user invokes that keyboard command.
-KB_HEADER_FUNCTION = _("Function")
+KB_HEADER_FUNCTION = _("Command")
 
 # Translators: Key Binding is a table column header where the cells in the
 # column represent keyboard combinations the user can press to invoke Orca
