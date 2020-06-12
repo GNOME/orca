@@ -43,7 +43,7 @@
     <list>
       <item>
         <p>
-          The <gui>Function</gui> column contains a description of the
+          The <gui>Command</gui> column contains a description of the
           <app>Orca</app> command to be performed.
         </p>
       </item>
@@ -59,7 +59,7 @@
         <p>
           The <gui>Modified</gui> column serves both as an indicator to what
           has been changed and as a way to restore the default bindings
-          associated with that function.
+          associated with that command.
         </p>
       </item>
     </list>
