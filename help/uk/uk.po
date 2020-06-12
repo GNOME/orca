@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-09 14:19+0000\n"
-"PO-Revision-Date: 2020-06-09 18:44+0300\n"
+"POT-Creation-Date: 2020-06-11 21:56+0000\n"
+"PO-Revision-Date: 2020-06-12 07:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -430,8 +430,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-#| msgid ""
-#| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Вхід до режиму навчання: <keyseq><key>Модифікатор Orca</key><key>H</key></"
@@ -439,7 +437,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-#| msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Вихід з режиму навчання: <keyseq><key>Esc</key></keyseq>"
 
@@ -1189,23 +1186,22 @@ msgstr ""
 "непов'язані команди із комбінаціями клавіш."
 
 #. (itstool) path: note/p
-#: C/commands_mouse.page:29
+#: C/commands_mouse.page:29 C/commands_reading.page:28
 msgid ""
-"In the list that follows, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
+"Below you will see several references to \"KP\". All \"KP\" keys are located "
+"on the numeric keypad. You will also notice that there are different "
+"keystrokes depending upon whether you are using a desktop or a laptop -- or "
+"more accurately, whether you are using <app>Orca</app>'s Desktop keyboard "
+"layout or its Laptop keyboard layout. For additional information, please see "
+"the <link xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgstr ""
-"У наведеному нижче списку ви побачите декілька посилань на «ЦБ». Усі клавіші "
-"із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви також "
-"побачите, що клавіатурні скорочення залежать від того, користуєтеся "
-"стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
-"користуєтеся клавіатурною розкладкою <app>Orca</app> для робочої станції чи "
-"розкладкою клавіатури для ноутбука. Докладніші відомості можна знайти у "
-"розділі <link xref=\"howto_keyboard_layout\">Розкладка клавіатури</link>."
+"Нижче ви побачите декілька посилань на «ЦБ». Усі клавіші із позначкою «ЦБ» "
+"розташовано на цифровому блоці клавіатури. Ви також побачите, що клавіатурні "
+"скорочення залежать від того, користуєтеся стаціонарним комп'ютером (робочою "
+"станцією) чи ноутбуком — або, точніше, користуєтеся клавіатурною розкладкою "
+"<app>Orca</app> для робочої станції чи розкладкою клавіатури для ноутбука. "
+"Докладніші відомості можна знайти у розділі <link xref="
+"\"howto_keyboard_layout\">Розкладка клавіатури</link>."
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:41
@@ -1409,25 +1405,6 @@ msgstr ""
 "<app>Orca</app> передбачено декілька команд, якими ви можете скористатися "
 "для читання документа."
 
-#. (itstool) path: note/p
-#: C/commands_reading.page:28
-msgid ""
-"In the lists that follow, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
-msgstr ""
-"У наведених ниже списках ви побачите декілька посилань на «ЦБ». Усі клавіші "
-"із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви також "
-"побачите, що клавіатурні скорочення залежать від того, користуєтеся "
-"стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
-"користуєтеся клавіатурною розкладкою <app>Orca</app> для робочої станції чи "
-"розкладкою клавіатури для ноутбука. Докладніші відомості можна знайти у "
-"розділі <link xref=\"howto_keyboard_layout\">Розкладка клавіатури</link>."
-
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
 msgid "Reading Your Current Location"
@@ -1537,7 +1514,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-msgid "Perform basic where am I:"
+msgid "Perform basic Where Am I:"
 msgstr "Повідомити про поточну позицію:"
 
 #. (itstool) path: item/p
@@ -1552,7 +1529,7 @@ msgstr "Ноутбук: <keyseq><key>Модифікатор Orca</key><key>Enter
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-msgid "Perform detailed where am I:"
+msgid "Perform detailed Where Am I:"
 msgstr "Докладне повідомлення про поточну позицію:"
 
 #. (itstool) path: item/p
@@ -1585,14 +1562,6 @@ msgstr "Параметри посилання"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
-#| msgid ""
-#| "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be "
-#| "used to announce the details associated with the link such as the link "
-#| "type, if the link is visited, the site description, and file size. If you "
-#| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speak Link Details command to a keystroke. Please see "
-#| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
-#| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -3317,8 +3286,6 @@ msgstr "Виберіть за допомогою стрілочок бажану
 
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
-#| msgctxt "sort"
-#| msgid "5. \"Learn\" Mode"
 msgctxt "sort"
 msgid "5. Learn Mode"
 msgstr "5. Режим навчання"
@@ -3330,7 +3297,6 @@ msgstr "Вивчення команд <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-#| msgid "\"Learn\" Mode"
 msgid "Learn Mode"
 msgstr "Режим навчання"
 
@@ -4796,7 +4762,7 @@ msgstr "Натисніть клавішу <key>CapsLock</key>, щоб перем
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
 msgctxt "sort"
-msgid "1. WhereAmI"
+msgid "1. Where Am I"
 msgstr "1. Де я"
 
 #. (itstool) path: info/desc
@@ -4806,7 +4772,7 @@ msgstr "Визначення поточної позиції"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-msgid "WhereAmI"
+msgid "Where Am I"
 msgstr "Де я"
 
 #. (itstool) path: page/p
@@ -7968,18 +7934,24 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
+#| msgid ""
+#| "<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): "
+#| "moves the selected attribute up one row."
 msgid ""
-"<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
-"the selected attribute up one row."
+"<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
+"selected attribute up one row."
 msgstr ""
 "<gui>На один вгору</gui> (<keyseq><key>Alt</key><key>Г</key></keyseq>): "
 "пересуває позначений пункт атрибута на один рядок вгору."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
+#| msgid ""
+#| "<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
+#| "moves the selected attribute down one row."
 msgid ""
-"<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-"moves the selected attribute down one row."
+"<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
+"the selected attribute down one row."
 msgstr ""
 "<gui>На один вниз</gui> (<keyseq><key>Alt</key><key>В</key></keyseq>): "
 "пересуває позначений пункт атрибута на один рядок вниз."
@@ -8168,18 +8140,21 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-msgid "<gui>icon</gui>: Plays a tone"
-msgstr "<gui>сигнал</gui>: відтворити сигнал"
+#| msgid "<gui>icon</gui>: Plays a tone"
+msgid "<gui>Icon</gui>: Plays a tone"
+msgstr "<gui>Піктограма</gui>: відтворити сигнал"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-msgid "<gui>spell</gui>: Speaks the word \"capital\""
-msgstr "<gui>вимова</gui>: вимовити слово «велика»"
+#| msgid "<gui>spell</gui>: Speaks the word \"capital\""
+msgid "<gui>Spell</gui>: Speaks the word \"capital\""
+msgstr "<gui>Вимова</gui>: вимовити слово «велика»"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-msgid "<gui>none</gui>"
-msgstr "<gui>немає</gui>"
+#| msgid "<gui>none</gui>"
+msgid "<gui>None</gui>"
+msgstr "<gui>Немає</gui>"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
@@ -8277,3 +8252,34 @@ msgstr ""
 "Якщо буде позначено пункт <gui>Вимовляти числа як цифри</gui>, <app>Orca</"
 "app> розбиватиме числа, наприклад «123», на окремі цифри («1», «2» і «3»), "
 "перш ніж передавати їх синтезатору мовлення."
+
+#~ msgid ""
+#~ "In the lists that follow, you will see several references to \"KP\". All "
+#~ "\"KP\" keys are located on the numeric keypad. You will also notice that "
+#~ "there are different keystrokes depending upon whether you are using a "
+#~ "desktop or a laptop -- or more accurately, whether you are using "
+#~ "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
+#~ "For additional information, please see the <link xref="
+#~ "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
+#~ msgstr ""
+#~ "У наведених ниже списках ви побачите декілька посилань на «ЦБ». Усі "
+#~ "клавіші із позначкою «ЦБ» розташовано на цифровому блоці клавіатури. Ви "
+#~ "також побачите, що клавіатурні скорочення залежать від того, користуєтеся "
+#~ "стаціонарним комп'ютером (робочою станцією) чи ноутбуком — або, точніше, "
+#~ "користуєтеся клавіатурною розкладкою <app>Orca</app> для робочої станції "
+#~ "чи розкладкою клавіатури для ноутбука. Докладніші відомості можна знайти "
+#~ "у розділі <link xref=\"howto_keyboard_layout\">Розкладка клавіатури</"
+#~ "link>."
+
+#~ msgid "Perform basic where am I:"
+#~ msgstr "Повідомити про поточну позицію:"
+
+#~ msgid "Perform detailed where am I:"
+#~ msgstr "Докладне повідомлення про поточну позицію:"
+
+#~ msgctxt "sort"
+#~ msgid "1. WhereAmI"
+#~ msgstr "1. Де я"
+
+#~ msgid "WhereAmI"
+#~ msgstr "Де я"

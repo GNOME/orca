@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-03 21:53+0000\n"
-"PO-Revision-Date: 2020-06-04 12:13+0300\n"
+"POT-Creation-Date: 2020-06-11 21:54+0000\n"
+"PO-Revision-Date: 2020-06-12 07:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.07.70\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -1808,20 +1808,20 @@ msgstr "Промовляє цілий документ."
 msgid "Speaks entire window using flat review."
 msgstr "Вимовити ціле вікно при плоскому перегляді."
 
-#. Translators: the "Where am I" feature of Orca allows a user to press a key and
+#. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-msgid "Performs the basic where am I operation."
+msgid "Performs the basic Where Am I operation."
 msgstr "Повідомити про поточне положення."
 
-#. Translators: the "Where am I" feature of Orca allows a user to press a key and
+#. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-msgid "Performs the detailed where am I operation."
+msgid "Performs the detailed Where Am I operation."
 msgstr "Докладно оголосити поточне положення."
 
 #. Translators: This is the description of a dedicated command to speak the
@@ -4411,18 +4411,10 @@ msgstr "_Гаразд"
 #. presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 #. string to be translated appears as a combo box item in Orca's Preferences.
-#. Translators: Orca uses Speech Dispatcher to present content to users via
-#. text-to-speech. Speech Dispatcher has a feature to control how capital
-#. letters are presented: Do nothing at all, say the word 'capital' prior to
-#. presenting a capital letter, or play a tone which Speech Dispatcher refers
-#. to as a sound 'icon'. This string to be translated refers to the brief/
-#. non-verbose output presented in response to the use of an Orca command which
-#. makes it possible for users to quickly cycle amongst these alternatives
-#. without having to get into a GUI.
-#: src/orca/guilabels.py:111 src/orca/messages.py:87
+#: src/orca/guilabels.py:111
 msgctxt "capitalization style"
-msgid "icon"
-msgstr "сигнал"
+msgid "Icon"
+msgstr "Піктограма"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4430,18 +4422,12 @@ msgstr "сигнал"
 #. presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 #. string to be translated appears as a combo box item in Orca's Preferences.
-#. Translators: Orca uses Speech Dispatcher to present content to users via
-#. text-to-speech. Speech Dispatcher has a feature to control how capital
-#. letters are presented: Do nothing at all, say the word 'capital' prior to
-#. presenting a capital letter, or play a tone which Speech Dispatcher refers
-#. to as a sound 'icon'. This string to be translated refers to the brief/
-#. non-verbose output presented in response to the use of an Orca command which
-#. makes it possible for users to quickly cycle amongst these alternatives
-#. without having to get into a GUI.
-#: src/orca/guilabels.py:119 src/orca/messages.py:107
+#: src/orca/guilabels.py:119
+#| msgctxt "key echo"
+#| msgid "None"
 msgctxt "capitalization style"
-msgid "none"
-msgstr "немає"
+msgid "None"
+msgstr "Немає"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4449,18 +4435,12 @@ msgstr "немає"
 #. presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
 #. string to be translated appears as a combo box item in Orca's Preferences.
-#. Translators: Orca uses Speech Dispatcher to present content to users via
-#. text-to-speech. Speech Dispatcher has a feature to control how capital
-#. letters are presented: Do nothing at all, say the word 'capital' prior to
-#. presenting a capital letter, or play a tone which Speech Dispatcher refers
-#. to as a sound 'icon'. This string to be translated refers to the brief/
-#. non-verbose output presented in response to the use of an Orca command which
-#. makes it possible for users to quickly cycle amongst these alternatives
-#. without having to get into a GUI.
-#: src/orca/guilabels.py:127 src/orca/messages.py:127
+#: src/orca/guilabels.py:127
+#| msgctxt "capitalization style"
+#| msgid "spell"
 msgctxt "capitalization style"
-msgid "spell"
-msgstr "вимова"
+msgid "Spell"
+msgstr "Вимова"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
@@ -7950,6 +7930,19 @@ msgstr "Не вдається знайти дисплей калькулятор
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
 #. letters are presented: Do nothing at all, say the word 'capital' prior to
 #. presenting a capital letter, or play a tone which Speech Dispatcher refers
+#. to as a sound 'icon'. This string to be translated refers to the brief/
+#. non-verbose output presented in response to the use of an Orca command which
+#. makes it possible for users to quickly cycle amongst these alternatives
+#. without having to get into a GUI.
+#: src/orca/messages.py:87
+msgctxt "capitalization style"
+msgid "icon"
+msgstr "сигнал"
+
+#. Translators: Orca uses Speech Dispatcher to present content to users via
+#. text-to-speech. Speech Dispatcher has a feature to control how capital
+#. letters are presented: Do nothing at all, say the word 'capital' prior to
+#. presenting a capital letter, or play a tone which Speech Dispatcher refers
 #. to as a sound 'icon'. This string to be translated refers to the full/verbose
 #. output presented in response to the use of an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
@@ -7962,6 +7955,19 @@ msgstr "Прописні літери позначаються піктогра�
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
 #. letters are presented: Do nothing at all, say the word 'capital' prior to
 #. presenting a capital letter, or play a tone which Speech Dispatcher refers
+#. to as a sound 'icon'. This string to be translated refers to the brief/
+#. non-verbose output presented in response to the use of an Orca command which
+#. makes it possible for users to quickly cycle amongst these alternatives
+#. without having to get into a GUI.
+#: src/orca/messages.py:107
+msgctxt "capitalization style"
+msgid "none"
+msgstr "немає"
+
+#. Translators: Orca uses Speech Dispatcher to present content to users via
+#. text-to-speech. Speech Dispatcher has a feature to control how capital
+#. letters are presented: Do nothing at all, say the word 'capital' prior to
+#. presenting a capital letter, or play a tone which Speech Dispatcher refers
 #. to as a sound 'icon'. This string to be translated refers to the full/verbose
 #. output presented in response to the use of an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
@@ -7969,6 +7975,19 @@ msgstr "Прописні літери позначаються піктогра�
 #: src/orca/messages.py:117
 msgid "Capitalization style set to none."
 msgstr "Стиль прописних літер не встановлено."
+
+#. Translators: Orca uses Speech Dispatcher to present content to users via
+#. text-to-speech. Speech Dispatcher has a feature to control how capital
+#. letters are presented: Do nothing at all, say the word 'capital' prior to
+#. presenting a capital letter, or play a tone which Speech Dispatcher refers
+#. to as a sound 'icon'. This string to be translated refers to the brief/
+#. non-verbose output presented in response to the use of an Orca command which
+#. makes it possible for users to quickly cycle amongst these alternatives
+#. without having to get into a GUI.
+#: src/orca/messages.py:127
+msgctxt "capitalization style"
+msgid "spell"
+msgstr "вимова"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -12398,7 +12417,6 @@ msgid "Match _entire word only"
 msgstr "Збіг за _цілими словами"
 
 #: src/orca/orca-find.ui:327
-#| msgid "Find Options"
 msgid "Options:"
 msgstr "Параметри:"
 
@@ -12950,8 +12968,9 @@ msgid "Move to _top"
 msgstr "На _початок"
 
 #: src/orca/orca-setup.ui:3281
-msgid "Adjust selected attributes"
-msgstr "Коригувати вибрані атрибути"
+#| msgid "Adjust selected attributes"
+msgid "Adjust selected attribute"
+msgstr "Коригувати вибраний атрибут"
 
 #: src/orca/orca-setup.ui:3381
 msgid "Braille Indicator"
