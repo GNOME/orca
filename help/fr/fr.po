@@ -6,20 +6,22 @@
 # Bruno Brouard <annoa.b@gmail.com>, 2011, 2012.
 # Julien Hardelin <jhardlin@orange.fr>, 2011, 2013, 2015.
 # Mickael Albertus <mickael.albertus@gmail.com>, 2013.
-# Claude Paroz <claude@2xlibre.net>, 2016-2018
+# Claude Paroz <claude@2xlibre.net>, 2016-2020.
+# Charles Monzat <charles.monzat@free.fr>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2018-03-11 09:12+0000\n"
-"PO-Revision-Date: 2018-03-14 21:59+0100\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"POT-Creation-Date: 2020-05-27 14:28+0000\n"
+"PO-Revision-Date: 2020-06-26 17:05+0200\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 3.36.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -29,7 +31,8 @@ msgstr ""
 "Bruno Brouard <annoa.b@gmail.com>, 2011-12\n"
 "Julien Hardelin <jhardlin@orange.fr>, 2011, 2013, 2015\n"
 "Mickael Albertus <mickael.albertus@gmail.com>, 2013\n"
-"Claude Paroz <claude@2xlibre.net>, 2016"
+"Claude Paroz <claude@2xlibre.net>, 2016\n"
+"Charles Monzat <charles.monzat@free.fr>, 2020"
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -104,7 +107,7 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
 #: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
 msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons Partage des Conditions Initiales à l’Identique 3.0"
 
 #. (itstool) path: page/title
 #: C/commands_bookmarks.page:19
@@ -127,7 +130,7 @@ msgid ""
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 msgstr ""
 "Enregistrer un signet dans l’emplacement numéroté : <keyseq><key>Touche de "
-"modification  d’Orca</key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+"modification d’Orca</key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:32
@@ -145,8 +148,8 @@ msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
 "<key>1</key></keyseq>-<key>6</key>"
 msgstr ""
-"Aller à l’emplacement du signet numéroté spécifique : <keyseq><key> Touche "
-"de modification d’Orca</key><key>1</key></keyseq>-<key>6</key>"
+"Aller à l’emplacement du signet numéroté spécifique : <keyseq><key>Touche de "
+"modification d’Orca</key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:44
@@ -165,7 +168,7 @@ msgid ""
 "Modifier</key><key>B</key></keyseq>"
 msgstr ""
 "Aller à l’emplacement du signet suivant pour l’application ou la page : "
-"<keyseq><key>Touche de modification  d’Orca</key><key>B</key></keyseq>"
+"<keyseq><key>Touche de modification d’Orca</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -187,7 +190,7 @@ msgstr "Commandes exécutables sur les plages braille"
 #. (itstool) path: page/title
 #: C/commands_braille.page:19
 msgid "Braille Commands"
-msgstr "Commandes braille "
+msgstr "Commandes braille"
 
 #. (itstool) path: page/p
 #: C/commands_braille.page:20
@@ -201,37 +204,37 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_braille.page:25
 msgid "Pan braille display to the left: Line Left"
-msgstr "Déplacer l’afficheur braille vers la gauche : ligne gauche"
+msgstr "Déplacer l’afficheur braille vers la gauche : ligne à gauche"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:26
 msgid "Pan braille display to the right: Line Right"
-msgstr "Déplacer l’afficheur braille vers la droite : ligne droite"
+msgstr "Déplacer l’afficheur braille vers la droite : ligne à droite"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:27
 msgid "Toggle flat review mode: Freeze"
-msgstr "Activer ou désactiver le mode d’examen global : gel"
+msgstr "Activer ou désactiver le mode d’examen global : geler"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:28
 msgid "Review the word above: Line Up"
-msgstr "Lire le mot au dessus : ligne vers le haut"
+msgstr "Lire le mot au-dessus : ligne en haut"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:29
 msgid "Review the word below: Line Down"
-msgstr "Lire le mot en dessous : ligne vers le bas"
+msgstr "Lire le mot en dessous : ligne en bas"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:30
 msgid "Review bottom left: Bottom Right"
-msgstr "Lire en bas à gauche : bas droite"
+msgstr "Lire en bas à gauche : en bas à droite"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:31
 msgid "Review the home position: Top Left"
-msgstr "Lire la position de départ : haut gauche"
+msgstr "Lire la position de départ : en haut à gauche"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:32
@@ -241,12 +244,12 @@ msgstr "Braille abrégé : six points"
 #. (itstool) path: item/p
 #: C/commands_braille.page:33
 msgid "Marks the beginning of a text selection: Cut Begin"
-msgstr "Marquer le début d’une sélection de texte : début de coupe"
+msgstr "Marquer le début d’une sélection de texte : début couper"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:34
 msgid "Marks the end of a text selection: Cut Line"
-msgstr "Marquer la fin d’une sélection de texte : coupe la ligne"
+msgstr "Marquer la fin d’une sélection de texte : couper ligne"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:35
@@ -291,11 +294,11 @@ msgid ""
 "how to bind these commands to keystrokes."
 msgstr ""
 "Les commandes suivantes peuvent être utilisées pour accéder aux informations "
-"des messageries instantanées et des discussions relayées par internet (IRC) "
+"des messageries instantanées et des discussions relayées par Internet (IRC) "
 "prises en charge par <app>Orca</app>. Vous remarquerez que certaines de ces "
 "commandes sont « non liées ». Consultez <link xref=\"howto_key_bindings"
-"\">Modifier les raccourcis</link> pour en apprendre plus sur la façon de "
-"lier ces commandes à des combinaisons de touches."
+"\">Modifier les combinaisons de touches</link> pour en apprendre plus sur la "
+"façon de lier ces commandes à des combinaisons de touches."
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
@@ -306,23 +309,24 @@ msgstr ""
 "Lire les messages précédents du salon : <keyseq><key>Touche de modification "
 "d’Orca</key><key>F1</key></keyseq> à <key>F9</key>"
 
+# « Unbound » est traduit ici par « non liée » au féminin, car il s’agit d’une commande non liée (Charles).
 #. (itstool) path: item/p
 #: C/commands_chat.page:36
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
 "Activer ou désactiver l’annonce des noms de salon contenant des messages : "
-"(non lié)"
+"(non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:41
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
-"Activer ou désactiver l’annonce de l’état de saisie d’un contact : (non lié)"
+"Activer ou désactiver l’annonce de l’état de saisie d’un contact : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:44
 msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr "Activer ou désactiver l’historique d’un salon spécifique : (non lié)"
+msgstr "Activer ou désactiver l’historique d’un salon spécifique : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -360,8 +364,8 @@ msgid ""
 msgstr ""
 "Les commandes suivantes peuvent être utilisées pour aller dans la boîte de "
 "dialogue des préférences d’<app>Orca</app>, pour activer/désactiver "
-"<app>Orca</app>, et contourner des commandes d’<app>Orca</app> afin d’ "
-"éviter les conflits de raccourcis dans l’application en cours d’accès."
+"<app>Orca</app>, et contourner des commandes d’<app>Orca</app> afin d’éviter "
+"les conflits de raccourcis dans l’application en cours d’accès."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
@@ -369,7 +373,7 @@ msgid ""
 "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Activer/Désactiver <app>Orca</app> dans GNOME : <keyseq><key>Logo</"
+"Activer/Désactiver <app>Orca</app> dans GNOME : <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
@@ -383,7 +387,7 @@ msgid ""
 msgstr ""
 "Si vous utilisez <app>Orca</app> dans un environnement de bureau qui n’offre "
 "pas de commande pour lancer ou arrêter <app>Orca</app>, vous trouverez utile "
-"la commande pour quitter <app>Orca</app>. Cette commande est non-liée par "
+"la commande pour quitter <app>Orca</app>. Cette commande est non liée par "
 "défaut. Reportez-vous à <link xref=\"howto_key_bindings\">Modifier les "
 "combinaisons de touches</link> pour savoir comment lier les commandes non "
 "liées."
@@ -405,7 +409,7 @@ msgid ""
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
 "Boîte de dialogue d’Orca pour l’application qui a le focus : "
-"<keyseq><key>Ctrl</key><key>Touche de modification  d’Orca</key><key>Barre "
+"<keyseq><key>Ctrl</key><key>Touche de modification d’Orca</key><key>Barre "
 "d’espace</key></keyseq>."
 
 #. (itstool) path: item/p
@@ -443,12 +447,12 @@ msgstr ""
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Entrer dans le mode d’apprentissage : <keyseq><key>Touche de modification "
-"d’Orca</key><key>H</key></keyseq> (double clic)"
+"d’Orca</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
 msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
-msgstr "Quitter le mode d’apprentissage: <keyseq><key>Échap</key></keyseq>"
+msgstr "Quitter le mode d’apprentissage : <keyseq><key>Échap</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
@@ -484,13 +488,13 @@ msgstr ""
 "Les développeurs peuvent vous demander de leur fournir des informations de "
 "débogage pour les aider à identifier la source de votre problème. La "
 "commande suivante n’est pas « liée » à l’appui sur une touche. Si vous avez "
-"besoin de la lier, reportez-vous à  <link xref=\"howto_key_bindings"
+"besoin de la lier, reportez-vous à <link xref=\"howto_key_bindings"
 "\">Modifier les combinaisons de touches</link>."
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
 msgid "Cycle to the next debug level: (Unbound)"
-msgstr "Activer le niveau de débogage suivant : (non lié)"
+msgstr "Activer le niveau de débogage suivant : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -542,7 +546,7 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Crochet gauche</key></keyseq>"
+"key><key>Crochet ouvrant</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:38
@@ -562,7 +566,7 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Crochet droite</key></keyseq>"
+"key><key>Crochet fermant</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:55
@@ -585,7 +589,7 @@ msgid ""
 "key> </keyseq>"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Ctrl</key><key>Crochet droite</key></keyseq>"
+"key><key>Ctrl</key><key>Crochet fermant</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_flat_review.page:6
@@ -619,7 +623,7 @@ msgid ""
 "to keystrokes. Please see <link xref=\"howto_key_bindings\">Modifying "
 "Keybindings</link> for information on how to bind unbound commands."
 msgstr ""
-"Les commandes de <link xref=\"howto_flat_review\">Examen global</link> sont "
+"Les commandes d’<link xref=\"howto_flat_review\">Examen global</link> sont "
 "conçues pour un examen « spatial » des éléments affichés à l’écran. Elles "
 "fournissent aussi un moyen pour lire la ligne, le mot et le caractère "
 "actuel, pendant le parcours du texte d’un document. La plupart de ces "
@@ -694,7 +698,7 @@ msgstr "Épeler la ligne actuelle :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:54
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 8</key></keyseq> (double clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 8</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:55
@@ -703,7 +707,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>I</key></keyseq> (double clic)"
+"key><key>I</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:58
@@ -713,7 +717,7 @@ msgstr "Épeler phonétiquement la ligne actuelle :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:60
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 8</key></keyseq> (triple clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 8</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:61
@@ -722,7 +726,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>I</key></keyseq> (triple clic)"
+"key><key>I</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:64
@@ -828,7 +832,7 @@ msgstr "Épeler le mot actuel :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:101 C/commands_reading.page:79
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 5</key></keyseq> (double clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 5</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:102 C/commands_reading.page:84
@@ -837,7 +841,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>K</key></keyseq> (double clic)"
+"key><key>K</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:105
@@ -847,7 +851,7 @@ msgstr "Épeler phonétiquement le mot actuel :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:107 C/commands_reading.page:95
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 5</key></keyseq> (triple clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 5</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:108 C/commands_reading.page:100
@@ -856,7 +860,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>K</key></keyseq> (triple clic)"
+"key><key>K</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:111
@@ -942,7 +946,7 @@ msgstr "Lire phonétiquement le caractère actuel :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:142 C/commands_reading.page:126
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 2</key></keyseq> (double clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 2</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:143 C/commands_reading.page:131
@@ -951,7 +955,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Virgule</key></keyseq> (double clic)"
+"key><key>Virgule</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:146
@@ -961,7 +965,7 @@ msgstr "Lire la valeur Unicode du caractère actuel :"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:148 C/commands_reading.page:142
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
-msgstr "Ordinateur de bureau : <keyseq><key>PN 2</key></keyseq> (triple clic)"
+msgstr "Ordinateur de bureau : <keyseq><key>PN 2</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:149 C/commands_reading.page:147
@@ -970,7 +974,7 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Virgule</key></keyseq> (triple clic)"
+"key><key>Virgule</key></keyseq> (triple-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:152
@@ -1060,12 +1064,12 @@ msgstr ""
 #: C/commands_flat_review.page:181
 msgid "Use Say All to review the current dialog or window:"
 msgstr ""
-"Utiliser « Lire tout » pour examiner le dialogue ou la fenêtre courants :"
+"Utiliser « Tout lire » pour examiner le dialogue ou la fenêtre actuelle :"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:183
 msgid "Desktop: <key>KP Plus</key> (double-clicked)"
-msgstr "Ordinateur de bureau : <key>PN Plus</key> (double clic)"
+msgstr "Ordinateur de bureau : <key>PN Plus</key> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:184
@@ -1074,19 +1078,19 @@ msgid ""
 "(double-clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Point-virgule</key></keyseq> (double clic)"
+"key><key>Point-virgule</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:188
 msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
-"Copier le contenu sous examen global dans le presse-papier : (non liée)"
+"Copier le contenu sous examen global dans le presse-papiers : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:193
 msgid "Append the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
-"Ajouter le contenu sous examen global dans le presse-papier : (non liée)"
+"Ajouter le contenu sous examen global dans le presse-papiers : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
@@ -1117,7 +1121,7 @@ msgid ""
 "web pages which have been made accessible through ARIA."
 msgstr ""
 "Les commandes suivantes peuvent être utilisées pour accéder à du contenu mis "
-"à jour dynamiquement sur des pages Web rendues accessibles grâce à ARIA"
+"à jour dynamiquement sur des pages Web rendues accessibles grâce à ARIA."
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
@@ -1142,7 +1146,7 @@ msgid ""
 "key></keyseq>"
 msgstr ""
 "Définir le niveau de politesse par défaut à aucun : <keyseq><key>Maj</"
-"key><key>barre oblique inverse</key></keyseq>"
+"key><key>Barre oblique inversée</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:44
@@ -1206,7 +1210,7 @@ msgstr ""
 "manipuler le pointeur de la souris et lire ce qui est en dessous. Toutes ces "
 "commandes sont « liées » à des combinaisons de touches à une exception : "
 "activer ou désactiver le mode de lecture à la souris. Consultez <link xref="
-"\"howto_key_bindings\">Modifier les combinaison de touches</link> pour en "
+"\"howto_key_bindings\">Modifier les combinaisons de touches</link> pour en "
 "apprendre plus sur la façon de lier ces commandes à des combinaisons de "
 "touches."
 
@@ -1307,7 +1311,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_mouse.page:69
 msgid "Enable/disable mouse review mode: (Unbound)"
-msgstr "Activer ou désactiver le mode de lecture à la souris : (non lié)"
+msgstr "Activer ou désactiver le mode de lecture à la souris : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands.page:5
@@ -1349,7 +1353,7 @@ msgstr "Examen et interaction avec le contenu de l’écran"
 #. (itstool) path: section/title
 #: C/commands.page:29
 msgid "Accessing Dynamic Information"
-msgstr "Accés aux informations dynamiques"
+msgstr "Accès aux informations dynamiques"
 
 #. (itstool) path: section/title
 #: C/commands.page:32
@@ -1376,7 +1380,7 @@ msgstr "Commandes d’accès aux configurations enregistrées"
 #. (itstool) path: page/title
 #: C/commands_profiles.page:19
 msgid "Profile Commands"
-msgstr "Commandes de profil "
+msgstr "Commandes de profil"
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:20
@@ -1402,7 +1406,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
-msgstr "Activer le profil suivant : (non lié)"
+msgstr "Activer le profil suivant : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1509,7 +1513,7 @@ msgstr "Lire la valeur Unicode du caractère actuel :"
 #. (itstool) path: section/title
 #: C/commands_reading.page:157
 msgid "Say All"
-msgstr "« Lire tout »"
+msgstr "« Tout lire »"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:158
@@ -1517,20 +1521,20 @@ msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
 msgstr ""
-"La commande « Lire tout » d’Orca fait lire tout le texte du document à "
+"La commande « Tout lire » d’Orca fait lire tout le texte du document à "
 "partir de votre emplacement actuel."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:164
 msgid "Desktop: <key>KP Plus</key>"
-msgstr "Ordinateur de bureau : <key>PN plus</key>"
+msgstr "Ordinateur de bureau : <key>PN Plus</key>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:167
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Point virgule</key></keyseq>"
+"key><key>Point-virgule</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:174
@@ -1539,27 +1543,32 @@ msgstr "Attributs de texte et texte sélectionné"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
+#| msgid ""
+#| "<app>Orca</app> has a dedicated command for obtaining the attributes of "
+#| "the text at the caret location. In addition, if you use <app>Orca</app>'s "
+#| "Where Am I commands from within a text object in which text has been "
+#| "selected, <app>Orca</app> will announce the selected text. If you would "
+#| "instead prefer a dedicated command for this purpose, you can bind "
+#| "<app>Orca</app>'s Speak Selected Text command to a keystroke. Please see "
+#| "<link xref=\"howto_key_bindings\">Modifying Keybindings</link> for "
+#| "information on how to do so."
 msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
 "Am I commands from within a text object in which text has been selected, "
-"<app>Orca</app> will announce the selected text. If you would instead prefer "
-"a dedicated command for this purpose, you can bind <app>Orca</app>'s Speak "
-"Selected Text command to a keystroke. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to do so."
+"<app>Orca</app> will announce the selected text. <app>Orca</app>'s command "
+"to speak the current selection will also perform this function in a text "
+"object."
 msgstr ""
 "<app>Orca</app> dispose d’une commande dédiée pour obtenir les attributs du "
 "texte à l’emplacement de curseur. De plus, si vous utilisez les commandes "
 "« où suis-je » d’<app>Orca</app> depuis un objet texte dans lequel du texte "
-"est sélectionné, <app>Orca</app> lit alors le texte sélectionné. Si vous "
-"préférez plutôt une commande dédiée pour cela, vous pouvez lier la commande "
-"Lire le texte sélectionné d’<app>Orca</app> à une combinaison de touches. "
-"Consultez <link xref=\"howto_key_bindings\">Modifier les combinaisons de "
-"touches</link> pour plus d’informations sur la procédure."
+"est sélectionné, <app>Orca</app> lit alors le texte sélectionné. La commande "
+"d’<app>Orca</app> permettant de lire la sélection actuelle exécute également "
+"cette fonction dans un objet texte."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:187
+#: C/commands_reading.page:185
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -1568,53 +1577,60 @@ msgstr ""
 "d’Orca</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:193 C/commands_where_am_i.page:31
+#: C/commands_reading.page:191 C/commands_where_am_i.page:31
 msgid "Perform basic where am I:"
 msgstr "Effectuer l’opération « où suis-je » de base :"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:196 C/commands_where_am_i.page:34
+#: C/commands_reading.page:194 C/commands_where_am_i.page:34
 msgid "Desktop: <key>KP Enter</key>"
 msgstr "Ordinateur de bureau : <key>PN Entrée</key>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:201 C/commands_where_am_i.page:37
+#: C/commands_reading.page:199 C/commands_where_am_i.page:37
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
 "key><key>Entrée</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:208 C/commands_where_am_i.page:42
+#: C/commands_reading.page:206 C/commands_where_am_i.page:42
 msgid "Perform detailed where am I:"
 msgstr "Effectuer l’opération « où suis-je » détaillée :"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:211 C/commands_where_am_i.page:45
+#: C/commands_reading.page:209 C/commands_where_am_i.page:45
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
-msgstr "Ordinateur de bureau : <key>PN Entrée</key> (double clic)"
+msgstr "Ordinateur de bureau : <key>PN Entrée</key> (double-clic)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:216 C/commands_where_am_i.page:48
+#: C/commands_reading.page:214 C/commands_where_am_i.page:48
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Entrée</key></keyseq> (double clic)"
+"key><key>Entrée</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:224
-msgid "Speak the selected text: (Unbound)"
-msgstr "Lire le texte sélectionné : (non lié)"
+#: C/commands_reading.page:222
+#| msgid ""
+#| "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></"
+#| "keyseq>"
+msgid ""
+"Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
+"key><key>Up</key></keyseq>"
+msgstr ""
+"Lire la sélection actuelle : <keyseq><key>Touche de modification d’Orca</"
+"key><key>Maj</key><key>Flèche haut</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:229
+#: C/commands_reading.page:230
 msgid "Link Details"
 msgstr "Détails du lien"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:230
+#: C/commands_reading.page:231
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1625,7 +1641,7 @@ msgid ""
 "to do so."
 msgstr ""
 "Si vous vous trouvez sur un lien, la commande de base d’<app>Orca</app> « où "
-"suis-je ? » peut être utilisée pour annoncer les détails associés au lien, "
+"suis-je » peut être utilisée pour annoncer les détails associés au lien, "
 "comme le type de lien, si le lien a été visité, la description du site et la "
 "taille de fichier. Si vous préférez plutôt une commande dédiée pour cela, "
 "vous pouvez lier la commande Lire les détails du lien d’<app>Orca</app> à "
@@ -1634,17 +1650,17 @@ msgstr ""
 "la procédure."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:240
+#: C/commands_reading.page:241
 msgid "Speak the link details: (Unbound)"
-msgstr "Lire les détails du lien : (non lié)"
+msgstr "Lire les détails du lien : (non liée)"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:245
+#: C/commands_reading.page:246
 msgid "Browse and Focus Modes"
 msgstr "Modes de navigation et de focus"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:246
+#: C/commands_reading.page:247
 msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
@@ -1653,7 +1669,7 @@ msgstr ""
 "entre la lecture et l’interaction avec du contenu Web."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:252
+#: C/commands_reading.page:253
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
@@ -1662,22 +1678,75 @@ msgstr ""
 "modification d’Orca</key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:258
+#: C/commands_reading.page:259
 msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
 "Activer le mode focus permanent : <keyseq><key>Touche de modification "
-"d’Orca</key><key>A</key></keyseq> (double clic)"
+"d’Orca</key><key>A</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:264
+#: C/commands_reading.page:265
 msgid ""
 "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
 "Activer le mode navigation permanent : <keyseq><key>Touche de modification "
-"d’Orca</key><key>A</key></keyseq> (triple clic)"
+"d’Orca</key><key>A</key></keyseq> (triple-clic)"
+
+#. (itstool) path: section/title
+#: C/commands_reading.page:273
+#| msgid "Using Learn Mode"
+msgid "Toggling Layout Mode"
+msgstr "Basculement du mode mise en page"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:274
+#| msgid ""
+#| "If this checkbox is checked, <app>Orca</app>'s caret navigation will "
+#| "respect the on-screen layout of the content and present the full line, "
+#| "including any links or form fields on that line. If this checkbox is not "
+#| "checked, <app>Orca</app> will treat objects such as links and form fields "
+#| "as if they were on separate lines, both for presentation and navigation."
+msgid ""
+"When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. When Layout mode is disabled, <app>Orca</"
+"app> will treat objects such as links and form fields as if they were on "
+"separate lines, both for presentation and navigation."
+msgstr ""
+"Si le mode mise en page est activé, la navigation au curseur d’<app>Orca</"
+"app> respecte la disposition du contenu à l’écran et présente la ligne "
+"complète, y compris d’éventuels liens ou champs de formulaire sur cette "
+"ligne. Si le mode mise en page est désactivé, <app>Orca</app> traite les "
+"objets tels que les liens et les champs de formulaire comme s’ils "
+"apparaissaient sur des lignes séparées, aussi bien pour la présentation que "
+"la navigation."
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:281
+#| msgid ""
+#| "If you are using <app>Orca</app> in another desktop environment in which "
+#| "there is no command to toggle <app>Orca</app> on and off, you may find "
+#| "the command to quit <app>Orca</app> helpful. This command is unbound by "
+#| "default. Please see <link xref=\"howto_key_bindings\">Modifying "
+#| "Keybindings</link> for information on how to bind unbound commands."
+msgid ""
+"<app>Orca</app> provides a command to switch between Layout mode and Object "
+"mode. This command is unbound by default. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to bind unbound commands."
+msgstr ""
+"<app>Orca</app> fournit une commande permettant de basculer entre le mode "
+"mise en page et le mode objet. Cette commande est non liée par défaut. "
+"Reportez-vous à <link xref=\"howto_key_bindings\">Modifier les combinaisons "
+"de touches</link> pour savoir comment lier les commandes non liées."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:288
+msgid "Switch between Layout mode and Object mode: (Unbound)"
+msgstr "Basculer entre le mode mise en page et le mode objet : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1710,10 +1779,10 @@ msgid ""
 "for information on how to bind these commands to keystrokes."
 msgstr ""
 "Les commandes suivantes peuvent être utilisées pour personnaliser la "
-"synthèse vocale d’<app>Orca</app> Vous remarquerez que certaines de ces "
+"synthèse vocale d’<app>Orca</app>. Vous remarquerez que certaines de ces "
 "commandes sont « non liées ». Consultez <link xref=\"howto_key_bindings"
-"\">Modifier les raccourcis</link> pour en apprendre plus sur la façon de "
-"lier ces commandes à des combinaisons de touches."
+"\">Modifier les combinaisons de touches</link> pour en apprendre plus sur la "
+"façon de lier ces commandes à des combinaisons de touches."
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:29
@@ -1739,7 +1808,7 @@ msgid ""
 "Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
 "Modifier</key><key>V</key></keyseq>"
 msgstr ""
-"Basculer entre les niveaux de verbosité bavard et concis : "
+"Basculer entre les niveaux de verbosité bavard et court : "
 "<keyseq><key>Touche de modification d’Orca</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
@@ -1747,57 +1816,57 @@ msgstr ""
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
 "Activer/désactiver la lecture de l’indentation et de la justification : (non "
-"lié)"
+"liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
 msgid "Change the spoken number style: (Unbound)"
-msgstr "Modifier le style de lecture des nombres : (non lié)"
+msgstr "Modifier le style de lecture des nombres : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
-msgstr "Activer le niveau de lecture de ponctuation suivant : (non lié)"
+msgstr "Activer le niveau de lecture de ponctuation suivant : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:57
 msgid "Cycle to the next key echo level: (Unbound)"
-msgstr "Activer le niveau d’écho des touches suivant : (non lié)"
+msgstr "Activer le niveau d’écho des touches suivant : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
-msgstr "Activer le style de mise en majuscule suivant : (non lié)"
+msgstr "Activer le style de mise en majuscule suivant : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:63
 msgid "Decrease the rate: (Unbound)"
-msgstr "Diminuer le débit : (non lié)"
+msgstr "Diminuer le débit : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:66
 msgid "Increase the rate: (Unbound)"
-msgstr "Augmenter le débit : (non lié)"
+msgstr "Augmenter le débit : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:69
 msgid "Decrease the pitch: (Unbound)"
-msgstr "Diminuer la hauteur : (non lié)"
+msgstr "Diminuer la hauteur : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:72
 msgid "Increase the pitch: (Unbound)"
-msgstr "Augmenter la hauteur : (non lié)"
+msgstr "Augmenter la hauteur : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:75
 msgid "Decrease the volume: (Unbound)"
-msgstr "Diminuer le son : (non lié)"
+msgstr "Diminuer le son : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
-msgstr "Monter le son : (non lié)"
+msgstr "Monter le son : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -2031,7 +2100,7 @@ msgid ""
 "key></keyseq>"
 msgstr ""
 "Afficher une liste de listes déroulantes : <keyseq><key>Alt</key><key>Maj</"
-"key><key>Flèche haut</key></keyseq>"
+"key><key>C</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:172
@@ -2235,7 +2304,7 @@ msgstr ""
 msgid ""
 "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr ""
-"Cellule au dessus : <keyseq><key>Alt</key><key>Maj</key><key>Flèche haut</"
+"Cellule au-dessus : <keyseq><key>Alt</key><key>Maj</key><key>Flèche haut</"
 "key></keyseq>"
 
 #. (itstool) path: item/p
@@ -2293,7 +2362,7 @@ msgid ""
 "Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
 "<keyseq><key>Shift</key><key>Q</key></keyseq>"
 msgstr ""
-"Bloc de citation précédente et suivante : <keyseq><key>Q</key></keyseq> et "
+"Bloc de citation précédent et suivant : <keyseq><key>Q</key></keyseq> et "
 "<keyseq><key>Maj</key><key>Q</key></keyseq>"
 
 #. (itstool) path: item/p
@@ -2397,8 +2466,8 @@ msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
 "key></keyseq> and <keyseq><key>comma</key></keyseq>"
 msgstr ""
-"Début et fin du conteneur actuel : <keyseq><key>Maj</key><key>virgule</"
-"key></keyseq> et <keyseq><key>virgule</key></keyseq>"
+"Début et fin du conteneur actuel : <keyseq><key>Maj</key><key>virgule</key></"
+"keyseq> et <keyseq><key>virgule</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -2459,7 +2528,7 @@ msgid ""
 "keyseq> (double-clicked)"
 msgstr ""
 "Effacer les en-têtes de ligne dynamiques : <keyseq><key>Touche de "
-"modification d’Orca</key><key>C</key></keyseq> (double clic)"
+"modification d’Orca</key><key>C</key></keyseq> (double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:45
@@ -2468,7 +2537,7 @@ msgid ""
 "keyseq> (double-clicked)"
 msgstr ""
 "Effacer les en-têtes de colonne dynamiques : <keyseq><key>Touche de "
-"modification d’Orca</key><key>R</key></keyseq> (double clic)"
+"modification d’Orca</key><key>R</key></keyseq> (double-clic)"
 
 #. (itstool) path: info/title
 #: C/commands_time_date_notifications.page:6
@@ -2522,7 +2591,7 @@ msgid ""
 "(double-clicked)"
 msgstr ""
 "Lire la date : <keyseq><key>Touche de modification d’Orca</key><key>T</key></"
-"keyseq> (double clic)"
+"keyseq> (double-clic)"
 
 #. (itstool) path: section/title
 #: C/commands_time_date_notifications.page:41
@@ -2547,17 +2616,17 @@ msgstr ""
 #: C/commands_time_date_notifications.page:50
 msgid "Present the last (most recent) notification message: (Unbound)"
 msgstr ""
-"Présenter le dernier (le plus récent) message de notification : (non lié)"
+"Présenter le dernier (le plus récent) message de notification : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:53
 msgid "Present the previous notification message: (Unbound)"
-msgstr "Présenter le message de notification précédent : (non lié)"
+msgstr "Présenter le message de notification précédent : (non liée)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
 msgid "Present list of all notification messages: (Unbound)"
-msgstr "Présenter la liste de tous les messages de notification : (non lié)"
+msgstr "Présenter la liste de tous les messages de notification : (non liée)"
 
 #. (itstool) path: info/title
 #: C/commands_where_am_i.page:6
@@ -2606,12 +2675,17 @@ msgstr "<app>Orca</app> fournit les commandes « où suis-je » suivantes :"
 
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
+#| msgid ""
+#| "In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
+#| "additional commands related to obtaining your present location:"
 msgid ""
-"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-"additional commands related to obtaining your present location:"
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has "
+"additional commands related to obtaining information about your present "
+"location:"
 msgstr ""
 "En plus des commandes « où suis-je » dédiées, <app>Orca</app> dispose de "
-"deux commandes liées supplémentaires pour obtenir votre emplacement actuel :"
+"deux commandes liées supplémentaires pour obtenir des informations "
+"concernant votre emplacement actuel :"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
@@ -2644,7 +2718,7 @@ msgid ""
 "(double-clicked)"
 msgstr ""
 "Ordinateur de bureau : <keyseq><key>Touche de modification d’Orca</"
-"key><key>PN Entrée</key></keyseq>(double clic)"
+"key><key>PN Entrée</key></keyseq>(double-clic)"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:86
@@ -2653,7 +2727,14 @@ msgid ""
 "clicked)"
 msgstr ""
 "Ordinateur portable : <keyseq><key>Touche de modification d’Orca</"
-"key><key>Barre oblique (/)</key></keyseq> (double clic)"
+"key><key>Barre oblique (/)</key></keyseq> (double-clic)"
+
+#. (itstool) path: item/p
+#: C/commands_where_am_i.page:92
+#| msgid "Present the last (most recent) notification message: (Unbound)"
+msgid "Present size and location of current object in pixels: (Unbound)"
+msgstr ""
+"Présenter la taille et l’emplacement de l’objet actuel en pixels : (non liée)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
@@ -2677,8 +2758,8 @@ msgid ""
 "<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
 "of interest. It includes the following features:"
 msgstr ""
-"La prise en charge des signet d’<app>Orca</app> vous permet d’indiquer qu’un "
-"objet vous intéresse. Cela comprend les fonctions suivantes :"
+"La prise en charge des signets d’<app>Orca</app> vous permet d’indiquer "
+"qu’un objet vous intéresse. Cela comprend les fonctions suivantes :"
 
 #. (itstool) path: item/p
 #: C/howto_bookmarks.page:21
@@ -2839,7 +2920,7 @@ msgid ""
 "guide."
 msgstr ""
 "Finalement, pour que <app>Orca</app> lise le document en entier à partir de "
-"votre emplacement actuel, utilisez la commande « Lire tout ». Celle-ci, "
+"votre emplacement actuel, utilisez la commande « Tout lire ». Celle-ci, "
 "ainsi qu’une liste plus complète des commandes <app>Orca</app> pour l’accès "
 "au texte des documents, se trouve dans le guide <link xref=\"commands_reading"
 "\">Commandes de lecture</link>."
@@ -2941,7 +3022,7 @@ msgstr "Accéder aux éléments graphiques intégrés dans les documents"
 #. (itstool) path: page/title
 #: C/howto_forms.page:17
 msgid "Filling out forms"
-msgstr "Remplir des formulaires"
+msgstr "Remplissage des formulaires"
 
 #. (itstool) path: page/p
 #: C/howto_forms.page:18
@@ -3181,7 +3262,7 @@ msgstr "Restauration des raccourcis originaux"
 #: C/howto_key_bindings.page:101
 msgid "Arrow to the modified column associated with the key binding."
 msgstr ""
-"Déplacez-vous à l’aide des flèches dans la colonne modifié associée à la "
+"Déplacez-vous à l’aide des flèches dans la colonne modifiée associée à la "
 "combinaison de touches."
 
 #. (itstool) path: item/p
@@ -3263,8 +3344,8 @@ msgid ""
 "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
 "key as <key>KeyPad 0</key>."
 msgstr ""
-"Si vous utilisez l’agencement ordinateur de bureau, les Touches de "
-"modifications d’Orca par défaut sont à la fois les touches <key>Inser</key> "
+"Si vous utilisez l’agencement ordinateur de bureau, les touches de "
+"modification d’Orca par défaut sont à la fois les touches <key>Inser</key> "
 "et <key>Inser du pavé numérique</key>, cette dernière étant la même touche "
 "que le <key>0 du pavé numérique</key>."
 
@@ -3277,7 +3358,7 @@ msgid ""
 msgstr ""
 "L’agencement détermine aussi les combinaisons de touches associées à un "
 "certain nombre de commandes d’<app>Orca</app>, plus particulièrement en ce "
-"qui concerne l’« Examen global », « Où suis-je » et « Lire tout »."
+"qui concerne l’« Examen global », « Où suis-je » et « Tout lire »."
 
 #. (itstool) path: steps/title
 #: C/howto_keyboard_layout.page:41
@@ -3300,7 +3381,7 @@ msgstr "Sélectionnez l’agencement de clavier désiré."
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
 msgid "5. \"Learn\" Mode"
-msgstr "5. Mode \"Apprentissage\""
+msgstr "5. Mode « Apprentissage »"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -3310,7 +3391,7 @@ msgstr "Découvrir les commandes d’<app>Orca</app>"
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
 msgid "\"Learn\" Mode"
-msgstr "Mode \"Apprentissage\""
+msgstr "Mode « Apprentissage »"
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:25
@@ -3499,7 +3580,7 @@ msgstr ""
 "l’<link xref=\"howto_flat_review\">Examen global</link> d’<app>Orca</app>, "
 "l’examen à la souris n’est pas limité à la fenêtre actuelle ; <app>Orca</"
 "app> essaye d’identifier l’objet accessible, s’il existe, sous le pointeur "
-"quand vous déplacez la souris. Si vous avez déplacé la souris au dessus d’un "
+"quand vous déplacez la souris. Si vous avez déplacé la souris au-dessus d’un "
 "objet accessible qui contient des informations à présenter, <app>Orca</app> "
 "vous lit alors cet objet et ses informations."
 
@@ -3518,7 +3599,7 @@ msgid ""
 "enable and disable Mouse Review on an as-needed basis."
 msgstr ""
 "Après avoir activé l’« Examen à la souris », <app>Orca</app> surveille et "
-"traite tous les changements de position de la souris ; cette fonction est "
+"traite tous les changements de position de la souris ; cette fonction est "
 "par conséquent désactivée par défaut. Pour l’activer de façon permanente, "
 "cochez la case <gui>Lire l’objet sous la souris</gui> dans <link xref="
 "\"preferences_general\">l’onglet Général de la boîte de dialogue des "
@@ -3545,7 +3626,7 @@ msgid ""
 "mode</gui> command. It is not necessary to enable it in order to toggle it "
 "because settings and keybindings are independent of one another."
 msgstr ""
-"Remarque : Bien que l’examen à la souris puisse être activé/désactivé en "
+"Remarque : bien que l’examen à la souris puisse être activé/désactivé en "
 "permanence, il est toujours possible de l’activer ou de le désactiver en "
 "liant et en utilisant la commande <gui>Active ou désactive le mode de "
 "lecture à la souris</gui>. Il n’est pas nécessaire d’activer la fonction "
@@ -3577,11 +3658,11 @@ msgid ""
 "media player is starting to play, and warnings that your battery level is "
 "getting low."
 msgstr ""
-"Le bureau de GNOME contient une « zone de notification » qui peut être "
-"utilisée par les applications pour afficher des informations pour "
-"l’utilisateur. Par exemple : l’arrivée de messages instantanés, des "
-"informations sur la chanson que votre lecteur multimédia commence à lire et "
-"des avertissements sur la charge de votre batterie."
+"Le bureau GNOME contient une « zone de notification » qui peut être utilisée "
+"par les applications pour afficher des informations pour l’utilisateur. Par "
+"exemple : l’arrivée de messages instantanés, des informations sur la chanson "
+"que votre lecteur multimédia commence à lire et des avertissements sur la "
+"charge de votre batterie."
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:23
@@ -3599,9 +3680,9 @@ msgstr ""
 "généralement rapidement. Il n’est pas possible de leur donner le focus. "
 "Comme <app>Orca</app> lit ces informations au moment où elles apparaissent, "
 "il est beaucoup trop facile d’interrompre leur lecture accidentellement en "
-"continuant votre saisie ou en changeant le focus. Pour cette raison "
+"continuant votre saisie ou en changeant le focus. Pour cette raison, "
 "<app>Orca</app> dispose de trois commandes qui vous permettent d’accéder aux "
-"messages de notifications affichés auparavant :"
+"messages de notification affichés auparavant :"
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:35
@@ -3646,7 +3727,9 @@ msgstr "Appuyez sur H pour obtenir de l’aide."
 #. (itstool) path: item/p
 #: C/howto_notifications.page:55
 msgid "Use Up, Down, Home or End to navigate in the list."
-msgstr "Utilisez les flèches haut, bas, début et fin pour parcourir la liste."
+msgstr ""
+"Utilisez les touches : flèches haut, bas, origine et fin pour parcourir la "
+"liste."
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:56
@@ -3719,7 +3802,7 @@ msgid ""
 "To open the Orca <gui>Find</gui> dialog, use the following command based on "
 "your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
 msgstr ""
-"Pour ouvrir la boîte de dialogue <gui>Recherche</gui> Orca, utilisez la "
+"Pour ouvrir la boîte de dialogue <gui>Recherche</gui> d’Orca, utilisez la "
 "commande suivante en fonction de <link xref=\"howto_keyboard_layout"
 "\">l’agencement de votre clavier</link> :"
 
@@ -3889,13 +3972,13 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_profiles.page:28
 msgid "Change whatever settings you wish."
-msgstr "Modifier les paramètres que vous souhaitez."
+msgstr "Modifiez les paramètres que vous souhaitez."
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:31
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
 msgstr ""
-"Sur l’onglet <gui>Général</gui>, cliquez sur le bouton <gui>Enregistrer "
+"Dans l’onglet <gui>Général</gui>, cliquez sur le bouton <gui>Enregistrer "
 "sous</gui>."
 
 #. (itstool) path: item/p
@@ -4040,11 +4123,11 @@ msgid ""
 msgstr ""
 "Si vous souhaitez configurer <app>Orca</app>, allez dans la boîte de "
 "dialogue des <link xref=\"preferences\">préférences</link> en appuyant sur "
-"<keyseq><key>Touche de modification d’Orca</key><key>Espace</key></keyseq> à "
-"partir de n’importe quelle application avec accessibilité. Il est aussi "
-"possible de taper <cmd>orca</cmd> suivi par <cmd>-s</cmd> ou <cmd>--setup</"
-"cmd> dans une fenêtre de terminal ou dans la boîte de dialogue de lancement "
-"d’application, puis de presser sur <key>Retour</key>."
+"<keyseq><key>Touche de modification d’Orca</key><key>Barre d’espace</key></"
+"keyseq> à partir de n’importe quelle application avec accessibilité. Il est "
+"aussi possible de taper <cmd>orca</cmd> suivi par <cmd>-s</cmd> ou <cmd>--"
+"setup</cmd> dans une fenêtre de terminal ou dans la boîte de dialogue de "
+"lancement d’application, puis de presser sur <key>Entrée</key>."
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
@@ -4092,7 +4175,7 @@ msgstr "Listes et éléments de liste"
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:30
 msgid "Landmarks, separators, and anchors"
-msgstr "Point de repère, séparateurs et ancres"
+msgstr "Points de repère, séparateurs et ancres"
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:31
@@ -4133,7 +4216,7 @@ msgstr ""
 "tableau est aussi mise en place pour <app>OpenOffice Writer</app> et "
 "<app>LibreOffice Writer</app>. La mise en place de la navigation par "
 "structure pour les autres objets de ces suites logicielles nécessite des "
-"modifications qui doivent être effectuées par leur développeurs respectifs. "
+"modifications qui doivent être effectuées par leurs développeurs respectifs. "
 "La mise en place des fonctionnalités de la navigation par structure dans "
 "<app>Evince</app> nécessite un effort similaire de la part de ses "
 "développeurs."
@@ -4234,9 +4317,9 @@ msgid ""
 "Modifier</key><key>Space</key> </keyseq>."
 msgstr ""
 "Pour accéder à la boîte de dialogue <link xref=\"preferences\">Préférences "
-"d’Orca</link> pour l’application actuelle, appuyez sur : <keyseq><key>Ctrl</"
+"d’Orca</link> pour l’application actuelle, appuyez sur <keyseq><key>Ctrl</"
 "key><key>Touche de modification d’Orca</key><key>Barre d’espace</key></"
-"keyseq>"
+"keyseq>."
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:106
@@ -4398,9 +4481,9 @@ msgid ""
 msgstr ""
 "En fonction de votre emplacement, il peut être nécessaire d’activer "
 "explicitement la navigation par structure avant de pouvoir l’utiliser. Pour "
-"en savoir plus, lisez <link xref=\"howto_structural_navigation#"
-"toggling_required\">Quand est-il nécessaire d’activer la navigation par "
-"structure</link>."
+"en savoir plus, lisez <link xref="
+"\"howto_structural_navigation#toggling_required\">Quand est-il nécessaire "
+"d’activer la navigation par structure</link>."
 
 #. (itstool) path: section/title
 #: C/howto_tables.page:89
@@ -4503,9 +4586,9 @@ msgid ""
 "there are no row headers."
 msgstr ""
 "Pour effacer les en-têtes, exécutez simplement deux fois de suite la "
-"commande que vous avez utilisée pour les définir. Exécutez deux fois de "
+"commande que vous avez utilisée pour les définir. Exécuter deux fois de "
 "suite <keyseq><key>Touche de modification d’Orca</key><key>R</key></keyseq> "
-"indique à <app>Orca</app> qu’il n’y a pas d’en-tête de colonne. Exécutez "
+"indique à <app>Orca</app> qu’il n’y a pas d’en-tête de colonne. Exécuter "
 "deux fois de suite <keyseq><key>Touche de modification d’Orca</key><key>C</"
 "key></keyseq> indique à <app>Orca</app> qu’il n’y a pas d’en-tête de ligne."
 
@@ -4539,7 +4622,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_text_attributes.page:24
 msgid "Obtaining Formatting Information"
-msgstr "Obtenir des informations sur la mise en forme"
+msgstr "Obtention d’informations sur la mise en forme"
 
 #. (itstool) path: section/p
 #: C/howto_text_attributes.page:25
@@ -4605,7 +4688,7 @@ msgstr ""
 "cette ligne est en général présentée par les technologies d’assistance comme "
 "un attribut de texte. Vous trouvez donc les fautes d’orthographe parmi les "
 "attributs de texte que vous pouvez choisir. Par défaut, l’attribut faute "
-"d’orthographe est activé pour la lecture et l’afficheur braille et est donc "
+"d’orthographe est activé pour la lecture et l’afficheur braille, et est donc "
 "présenté parmi tous les autres attributs que vous avez activés."
 
 # Annonce à vérifier
@@ -4690,7 +4773,7 @@ msgstr ""
 #. (itstool) path: steps/title
 #: C/howto_the_orca_modifier.page:51
 msgid "Changing the Orca Modifier"
-msgstr "Modification du Touche de modification d’Orca"
+msgstr "Modification de la Touche de modification d’Orca"
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
@@ -4746,12 +4829,20 @@ msgstr "Verr. maj. pour l’agencement ordinateur portable"
 
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
+#| msgid ""
+#| "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+#| "impacts which key is used as the Orca Modifier. If you are using the "
+#| "Laptop layout, the default Orca Modifier will be <key>CapsLock</key>. If "
+#| "you are using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
+#| "<key>CapsLock</key>, you can do so by performing the following steps:"
 msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by performing the following steps:"
+"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"twice (requires at-spi2 version 2.32 or later), or by performing the "
+"following steps:"
 msgstr ""
 "Orca dispose de deux agencements de clavier : ordinateur de bureau ou "
 "portable. L’agencement que vous choisissez modifie la touche utilisée comme "
@@ -4759,16 +4850,17 @@ msgstr ""
 "Touche de modification d’Orca est la touche <key>Verr. maj.</key>. Si vous "
 "utilisez l’agencement portable d’<app>Orca</app> et que vous voulez activer "
 "ou désactiver la touche <key>Verr. maj.</key>, vous pouvez le faire en "
-"suivant les instructions suivantes :"
+"appuyant deux fois sur la touche <key>Verr. maj.</key> (nécessite at-spi2 "
+"version 2.32 ou ultérieure), ou en suivant les instructions suivantes :"
 
 #. (itstool) path: steps/title
-#: C/howto_toggling_caps_lock.page:24
+#: C/howto_toggling_caps_lock.page:26
 msgid "Toggling CapsLock in Laptop Layout"
 msgstr ""
 "Utilisation de la touche Verr. maj. avec un agencement d’ordinateur portable"
 
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:26
+#: C/howto_toggling_caps_lock.page:28
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key> </keyseq>, to tell <app>Orca</app> that the next command should be "
@@ -4779,7 +4871,7 @@ msgstr ""
 "app> que la commande suivante doit être ignorée."
 
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:32
+#: C/howto_toggling_caps_lock.page:34
 msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr ""
 "Appuyez sur <key>Verr. maj.</key> pour modifier son état de verrouillage."
@@ -4940,10 +5032,10 @@ msgid ""
 "present the full details of the error."
 msgstr ""
 "Si vous êtes dans le correcteur orthographique d’une application où "
-"<app>Orca</app> offre une gestion améliorée, un Où suis-je basique répète "
-"l’erreur en respectant vos <link xref=\"preferences_spellcheck\">préférences "
-"de correcteur orthographique</link>. Un Où suis-je détaillé conduit "
-"<app>Orca</app> à présenter tous les détails de l’erreur."
+"<app>Orca</app> offre une gestion améliorée, un « Où suis-je » basique "
+"répète l’erreur en respectant vos <link xref=\"preferences_spellcheck"
+"\">préférences de correcteur orthographique</link>. Un « Où suis-je » "
+"détaillé conduit <app>Orca</app> à présenter tous les détails de l’erreur."
 
 #. (itstool) path: page/p
 #: C/howto_whereami.page:104
@@ -5081,10 +5173,10 @@ msgid ""
 msgstr ""
 "La méthode pour configurer le lancement automatique d’<app>Orca</app> comme "
 "lecteur d’écran favori, dépend de l’environnement de bureau que vous "
-"utilisez. Par exemple, dans GNOME 3.x cette option se trouve dans le panneau "
-"du centre de contrôle Accès universel dans l’onglet <gui>Vision</gui>. Ndt : "
-"avec Gnome 3.2, il s’agit de l’icône en forme de personne dans la barre du "
-"haut."
+"utilisez. Par exemple, dans GNOME 3.x, cette option se trouve dans le "
+"panneau du centre de contrôle Accès universel dans l’onglet <gui>Vision</"
+"gui>. Ndt : avec Gnome 3.2, il s’agit de l’icône en forme de personne dans "
+"la barre du haut."
 
 #. (itstool) path: item/p
 #: C/introduction.page:46
@@ -5093,7 +5185,7 @@ msgid ""
 "key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
 "Pour activer/désactiver <app>Orca</app> dans GNOME, appuyez sur "
-"<keyseq><key>Logo</key><key>Alt</key><key>S</key></keyseq>."
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/introduction.page:52
@@ -5118,7 +5210,7 @@ msgid ""
 msgstr ""
 "Les options suivantes peuvent être spécifiées lors du lancement d’<app>Orca</"
 "app> dans une fenêtre de terminal ou à l’intérieur de la boîte de dialogue "
-"<gui>Démarrer</gui>"
+"<gui>Démarrer</gui> :"
 
 #. (itstool) path: item/p
 #: C/introduction.page:68
@@ -5348,8 +5440,8 @@ msgid ""
 msgstr ""
 "Cette case à cocher détermine la façon dont sont affichés les noms de rôles "
 "et elle peut être utilisée pour conserver de la place sur l’afficheur "
-"braille. Par exemple, si une glissière a le focus, le mot « Glissière » "
-"s’affiche si les rôles abrégés ne sont pas activés sinon « glis » est "
+"braille. Par exemple, si une glissière a le focus, le mot « glissière » "
+"s’affiche si les rôles abrégés ne sont pas activés, sinon « glis » est "
 "affiché à la place."
 
 #. (itstool) path: section/title
@@ -5510,7 +5602,7 @@ msgstr ""
 "Si <gui>Les messages sont détaillés</gui> est coché, <app>Orca</app> "
 "présentera des messages détaillés en braille. Par exemple, si vous utilisez "
 "la commande d’<app>Orca</app> pour modifier l’écho des touches, <app>Orca</"
-"app> pourrait afficher « écho de touche défini par mot. » Si vous préférez "
+"app> pourrait afficher « écho de touche défini par mot ». Si vous préférez "
 "des messages plus courts, comme par exemple « mot », vous devriez décocher "
 "cette case."
 
@@ -5582,7 +5674,7 @@ msgid ""
 msgstr ""
 "Les options suivantes vous permettent de personnaliser le comportement "
 "d’<app>Orca</app> pendant l’utilisation de messagerie instantanée et de "
-"clients IRC (discussion relayée par internet)."
+"clients IRC (discussion relayée par Internet)."
 
 #. (itstool) path: section/title
 #: C/preferences_chat.page:25
@@ -5603,7 +5695,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_chat.page:36
 msgid "Announce when your buddies are typing"
-msgstr "Indique si vos contacts saisissent un message"
+msgstr "Indiquer si vos contacts saisissent un message"
 
 #. (itstool) path: section/p
 #: C/preferences_chat.page:37
@@ -5619,7 +5711,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_chat.page:47
 msgid "Provide chat room specific message histories"
-msgstr "Donner les historiques de messages par salon de discussion."
+msgstr "Donner les historiques de messages par salon de discussion"
 
 #. (itstool) path: section/p
 #: C/preferences_chat.page:48
@@ -5851,7 +5943,7 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
 msgstr ""
-"Si cette case est cochée, <app>Orca</app> effectue un « Lire tout » sur la "
+"Si cette case est cochée, <app>Orca</app> effectue un « Tout lire » sur la "
 "page Web ou le courriel qui viennent d’être ouverts."
 
 #. (itstool) path: section/p
@@ -5863,7 +5955,7 @@ msgstr "Valeur par défaut : cochée pour Firefox, non cochée pour Thunderbird
 #: C/preferences_gecko.page:123
 msgid "Present summary of a page when it is first loaded"
 msgstr ""
-"Présente le résumé d’une page lorsqu’elle est chargée pour la première fois"
+"Présenter le résumé d’une page lorsqu’elle est chargée pour la première fois"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:124
@@ -5879,7 +5971,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:134
 msgid "Enable layout mode for content"
-msgstr "Activer le mode disposition pour le contenu"
+msgstr "Activer le mode mise en page pour le contenu"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:135
@@ -5969,9 +6061,15 @@ msgstr "Longueur minimale du texte correspondant"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:188
+#| msgid ""
+#| "This editable spin button is where you can specify the number of "
+#| "characters which much match before <app>Orca</app> announces the matching "
+#| "line. This option is also designed to prevent \"chattiness\" as there are "
+#| "many matches when you first begin typing the string for which you are "
+#| "searching."
 msgid ""
 "This editable spin button is where you can specify the number of characters "
-"which much match before <app>Orca</app> announces the matching line. This "
+"which must match before <app>Orca</app> announces the matching line. This "
 "option is also designed to prevent \"chattiness\" as there are many matches "
 "when you first begin typing the string for which you are searching."
 msgstr ""
@@ -6027,10 +6125,10 @@ msgid ""
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
 "<app>Orca</app> commands."
 msgstr ""
-"Le groupement de boutons radio <gui>Agencement de clavier</gui> vous permet "
+"Le groupement de boutons radio <gui>Agencement du clavier</gui> vous permet "
 "d’indiquer si vous utilisez un clavier d’ordinateur de bureau (c.-à-d. avec "
 "pavé numérique) ou un clavier de portable. L’agencement que vous choisissez "
-"détermine le <key>Touche de modification d’Orca</key> ainsi qu’un grand "
+"détermine la <key>Touche de modification d’Orca</key> ainsi qu’un grand "
 "nombre de raccourcis clavier pour réaliser les commandes <app>Orca</app>."
 
 #. (itstool) path: section/p
@@ -6044,8 +6142,8 @@ msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
-"Option de la boîte de dialogue de préférences pour activer la prononciation "
-"des infobulles qui apparaissent lors du survol par la souris. "
+"Option de la boîte de dialogue des préférences pour activer la prononciation "
+"des infobulles qui apparaissent lors du survol par la souris."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:44
@@ -6063,7 +6161,7 @@ msgid ""
 msgstr ""
 "Si elle est cochée, cette option demande à <app>Orca</app> de présenter les "
 "informations des infobulles lorsqu’elles apparaissent quand le pointeur de "
-"la souris reste immobile au dessus d’un élément. Des actions spécifiques "
+"la souris reste immobile au-dessus d’un élément. Des actions spécifiques "
 "pour forcer les infobulles à apparaître, comme l’appui sur "
 "<keyseq><key>Ctrl</key><key>F1</key></keyseq> lorsqu’un objet a le focus, "
 "provoquera toujours la présentation des infobulles, quel que soit le réglage "
@@ -6075,7 +6173,7 @@ msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
 msgstr ""
-"Option de la boîte de dialogue de préférences pour activer la présentation "
+"Option de la boîte de dialogue des préférences pour activer la présentation "
 "de l’objet survolé par la souris."
 
 #. (itstool) path: section/title
@@ -6102,8 +6200,8 @@ msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
 msgstr ""
-"Option de la boîte de dialogue de préférences pour personnaliser les formats "
-"de l’heure et de la date utilisés par <app>Orca</app>."
+"Option de la boîte de dialogue des préférences pour personnaliser les "
+"formats de l’heure et de la date utilisés par <app>Orca</app>."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:81
@@ -6156,10 +6254,10 @@ msgstr ""
 "depuis l’emplacement actuel jusqu’à la fin du document. Par défaut, l’appui "
 "sur une touche interrompt la présentation en mode tout lire. Cependant, si "
 "vous cochez la case <gui>Activer le retour et l’avance rapide en mode tout "
-"lire</gui>, les touches <key>Haut</key> et <key>Bas</key> peuvent être "
-"utilisées en mode tout lire pour se déplacer rapidement dans le document "
-"afin de réécouter quelque chose qui vient d’être lu ou pour sauter du texte "
-"sans intérêt sans devoir redémarrer le mode tout lire."
+"lire</gui>, les touches <key>Flèche haut</key> et <key>Flèche bas</key> "
+"peuvent être utilisées en mode tout lire pour se déplacer rapidement dans le "
+"document afin de réécouter quelque chose qui vient d’être lu ou pour sauter "
+"du texte sans intérêt sans devoir redémarrer le mode tout lire."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:108
@@ -6178,12 +6276,12 @@ msgstr ""
 "navigation par structure et que vous avez coché la case <gui>Activer la "
 "navigation par structure en mode tout lire</gui>, vous pouvez utiliser les "
 "commandes de navigation par structure disponibles d’une manière semblable : "
-"<key>H</key>/<keyseq><key>Maj</key> <key>H</key></keyseq> continue la "
-"lecture à partir de l’en-tête suivant ou précédent, <key>P</key>/"
+"<key>H</key> ou <keyseq><key>Maj</key><key>H</key></keyseq> continue la "
+"lecture à partir de l’en-tête suivant ou précédent, <key>P</key> ou "
 "<keyseq><key>Maj</key><key>P</key></keyseq> continue la lecture à partir du "
-"paragraphe suivant ou précédent, <key>T</key>/<keyseq><key>Maj</key> <key>T</"
-"key></keyseq> continue la lecture à partir du tableau suivant ou précédent, "
-"et ainsi de suite."
+"paragraphe suivant ou précédent, <key>T</key> ou <keyseq><key>Maj</"
+"key><key>T</key></keyseq> continue la lecture à partir du tableau suivant ou "
+"précédent, et ainsi de suite."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:124
@@ -6199,11 +6297,12 @@ msgid ""
 "announcements are made can be configured independently through the following "
 "checkboxes:"
 msgstr ""
-"<app>Orca</app> peut fournir sur demande davantage d’informations à propos du "
-"contenu du document en cours de lecture, telles que les annonces du moment où "
-"vous entrez ou sortez d’un bloc de citation, d’une liste, d’un tableau ou d’un "
-"autre conteneur. Ces différentes annonces peuvent être configurées indépendamment "
-"les unes des autres par le moyen des cases à cocher suivantes :"
+"<app>Orca</app> peut fournir sur demande davantage d’informations à propos "
+"du contenu du document en cours de lecture, telles que les annonces du "
+"moment où vous entrez ou sortez d’un bloc de citation, d’une liste, d’un "
+"tableau ou d’un autre conteneur. Ces différentes annonces peuvent être "
+"configurées indépendamment les unes des autres par le moyen des cases à "
+"cocher suivantes :"
 
 #. (itstool) path: item/p
 #: C/preferences_general.page:133
@@ -6246,7 +6345,7 @@ msgstr ""
 "Il est aussi possible de configurer si <app>Orca</app> doit faire ces "
 "annonces durant la navigation. Vous trouverez des cases à cocher similaires "
 "sur la page <gui>Synthèse vocale</gui>. Pour plus d’informations, voir <link "
-"xref=\"preferences_speech#spoken_context\">Contexte de lecture à haute voix</link>."
+"xref=\"preferences_speech#spoken_context\">Contexte parlé</link>."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:154
@@ -6254,13 +6353,13 @@ msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
 msgstr ""
-"Option de la boîte de dialogue de préférences pour personnaliser la "
+"Option de la boîte de dialogue des préférences pour personnaliser la "
 "présentation en mode tout lire d’<app>Orca</app>."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:159
 msgid "Say All By"
-msgstr "Lire tout par"
+msgstr "Tout lire par"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:160
@@ -6269,9 +6368,9 @@ msgid ""
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
 "\" of a document."
 msgstr ""
-"La liste déroulante <gui>Lire tout par</gui> vous permet de spécifier si "
+"La liste déroulante <gui>Tout lire par</gui> vous permet de spécifier si "
 "<app>Orca</app> lit une phrase à la fois ou une ligne à la fois quand une "
-"commande « Lire tout » est effectuée sur un document."
+"commande « Tout lire » est effectuée sur un document."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:165
@@ -6497,11 +6596,11 @@ msgid ""
 "app> would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
 "Remarque : les préférences d’Orca peuvent être personnalisées pour chaque "
-"application individuellement. Par exemple vous pouvez configurer l’écho des "
+"application individuellement. Par exemple, vous pouvez configurer l’écho des "
 "touches par défaut à « écho par mot » et configurer l’écho des touches dans "
-"Pidgin à « aucun écho ». Une fois que vous avez effectué cette configuration "
-"<app>Orca</app> effectue toujours l’écho des touches par mot saisi, sauf "
-"dans Pidgin."
+"Pidgin à « aucun écho ». Une fois que vous avez effectué cette "
+"configuration, <app>Orca</app> effectue toujours l’écho des touches par mot "
+"saisi, sauf dans Pidgin."
 
 #. (itstool) path: note/title
 #: C/preferences_introduction.page:30
@@ -6546,10 +6645,10 @@ msgstr ""
 "En supplément des préférences d’Orca, il existe des préférences spécifiques "
 "aux applications. Ces préférences vous permettent de personnaliser les "
 "fonctions d’<app>Orca</app> qui ne s’appliquent qu’à certains "
-"environnements, tel que des pages Web ou des applications de discussion. Ces "
-"options ne sont disponibles que dans la boîte de dialogue des préférences "
-"spécifiques de l’application et seulement pour les applications auxquelles "
-"elles s’appliquent."
+"environnements, tels que des pages Web ou des applications de discussion. "
+"Ces options ne sont disponibles que dans la boîte de dialogue des "
+"préférences spécifiques de l’application et seulement pour les applications "
+"auxquelles elles s’appliquent."
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:6
@@ -6586,7 +6685,7 @@ msgid ""
 msgstr ""
 "La liste déroulante <gui>Touches de modification du lecteur d’écran</gui> "
 "vous permet de sélectionner quelles touches sont utilisées comme Touche de "
-"modification Orca. Les options suivantes sont disponibles :"
+"modification d’Orca. Les options suivantes sont disponibles :"
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:28
@@ -6599,7 +6698,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:32
 msgid "<gui>Insert</gui>"
-msgstr "<gui>Insérer</gui>"
+msgstr "<gui>Inser</gui>"
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:33
@@ -6642,7 +6741,7 @@ msgid ""
 "column by pressing <key>Return</key>, pressing the keys for the new binding, "
 "and pressing <key>Return</key> again."
 msgstr ""
-"La colonne <gui>raccourci</gui> contient le raccourci actuellement assigné à "
+"La colonne <gui>Raccourci</gui> contient le raccourci actuellement assigné à "
 "cette fonction. Pour modifier la valeur de cette colonne, appuyez sur la "
 "touche <key>Entrée</key> et pressez ensuite les touches pour le nouveau "
 "raccourci puis, appuyez sur <key>Entrée</key> à nouveau."
@@ -6668,7 +6767,7 @@ msgid ""
 "display."
 msgstr ""
 "Sous la liste des raccourcis d’<app>Orca</app>, se trouve un groupe de "
-"commande « non liées ». Ce sont des commandes qui doivent certainement être "
+"commandes « non liées ». Ce sont des commandes qui doivent certainement être "
 "très utiles pour certains utilisateurs, mais qui ne le sont pas pour "
 "d’autres. Plutôt que d’utiliser un raccourci pour ces commandes, elles ne "
 "sont pas assignées par défaut. À la fin de cette liste se trouvent les "
@@ -6709,7 +6808,7 @@ msgid ""
 "additional checkboxes to become available through which you can choose "
 "exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
-"Les paramètres de « Écho des touches » contrôlent ce qui se passe à chaque "
+"Les paramètres de « Écho de touche » contrôlent ce qui se passe à chaque "
 "fois que vous appuyez sur une touche du clavier. Pour activer l’écho des "
 "touches, cochez la case « Activer l’écho des touches ». Plusieurs autres "
 "cases à cocher sont alors activées ; à l’aide de celles-ci, vous pouvez "
@@ -6783,13 +6882,13 @@ msgid ""
 "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgstr ""
 "Cette option contrôle si les touches <key>Maj</key>, <key>Ctrl</key>, "
-"<key>Alt</key> et <key>Meta</key> doivent être lues quand elles sont "
+"<key>Alt</key> et <key>Méta</key> doivent être lues quand elles sont "
 "pressées."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:82
 msgid "Enable function keys"
-msgstr "Activer les touches de fonctions"
+msgstr "Activer les touches de fonction"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:83
@@ -6841,7 +6940,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:117
 msgid "Enable non-spacing diacritical keys"
-msgstr "Activer les touches diacritiques de non espacement"
+msgstr "Activer les touches diacritiques de non-espacement"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:118
@@ -6980,10 +7079,10 @@ msgid ""
 "\"LOL,\" or \"accessibility\" rather than \"a11y\". Or there may be a name "
 "or a technical term which the synthesizer mispronounces."
 msgstr ""
-"Parfois le synthétiseur vocal ne prononce pas correctement certaines chaînes "
-"de caractères. Vous pouvez préférer entendre « mort de rire » plutôt que "
-"« mdr » ou « accessibilité » plutôt que « a11y ». Il se peut aussi qu’un nom "
-"propre ou un terme technique soit mal prononcé par le synthétiseur."
+"Parfois, le synthétiseur vocal ne prononce pas correctement certaines "
+"chaînes de caractères. Vous pouvez préférer entendre « mort de rire » plutôt "
+"que « mdr » ou « accessibilité » plutôt que « a11y ». Il se peut aussi qu’un "
+"nom propre ou un terme technique soit mal prononcé par le synthétiseur."
 
 #. (itstool) path: page/p
 #: C/preferences_pronunciation.page:26
@@ -6992,7 +7091,7 @@ msgid ""
 "allows you to add, edit, and delete entries in <app>Orca</app>'s "
 "pronunciation dictionary."
 msgstr ""
-"L’onglet <gui>Prononciation</gui> de la boîte de dialogue préférences "
+"L’onglet <gui>Prononciation</gui> de la boîte de dialogue des préférences "
 "d’<app>Orca</app> vous permet d’ajouter, de modifier et de supprimer des "
 "entrées dans le dictionnaire de prononciation d’<app>Orca</app>."
 
@@ -7017,8 +7116,8 @@ msgstr "Ajout d’une nouvelle entrée de dictionnaire"
 msgid ""
 "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgstr ""
-"Cliquez sur le bouton Nouvelle entrée (<keyseq><key>Alt</key><key>N</key></"
-"keyseq>)"
+"Cliquez sur le bouton Nouvelle zone de saisie (<keyseq><key>Alt</key><key>N</"
+"key></keyseq>)"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:44
@@ -7099,7 +7198,7 @@ msgstr "Configurer ce qui est lu à haute voix"
 #. (itstool) path: page/title
 #: C/preferences_speech.page:18
 msgid "Speech Preferences"
-msgstr "Préférence de la synthèse vocale"
+msgstr "Préférences de la synthèse vocale"
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:20
@@ -7115,7 +7214,7 @@ msgid ""
 msgstr ""
 "La case à cocher <gui>Activer la synthèse vocale</gui> contrôle si "
 "<app>Orca</app> utilise la synthèse vocale. Les utilisateurs qui utilisent "
-"uniquement le braille préfèreront sûrement décocher cette case."
+"uniquement le braille préféreront sûrement décocher cette case."
 
 # note verbeux
 #. (itstool) path: section/p
@@ -7147,8 +7246,8 @@ msgid ""
 msgstr ""
 "Le groupement de boutons radio <gui>Niveau de ponctuation</gui> permet "
 "d’ajuster le taux de ponctuation lu par le synthétiseur. Les niveaux "
-"disponibles sont <gui>Aucun</gui>, <gui>Quelques-uns</gui>, <gui>La plupart</"
-"gui> et <gui>Tous</gui>."
+"disponibles sont <gui>Aucun</gui>, <gui>Quelques</gui>, <gui>La plupart</"
+"gui> et <gui>Tout</gui>."
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:51
@@ -7178,7 +7277,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:65
 msgid "Some"
-msgstr "Quelques-uns"
+msgstr "Quelques"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:66
@@ -7188,10 +7287,10 @@ msgid ""
 "known mathematical symbols, currency symbols, and \"^\", \"@\", \"/\", "
 "\"&amp;\", \"#\"."
 msgstr ""
-"Le choix du niveau de ponctuation <gui>Quelques-uns</gui> va faire en sorte "
-"que les symboles nommés précédemment soit prononcés. <app>Orca</app> "
-"prononce de plus certains symboles mathématiques, symboles monétaires et "
-"« ^ », « @ », « / », « &amp; », « # »."
+"Le choix du niveau de ponctuation <gui>Quelques</gui> va faire en sorte que "
+"les symboles nommés précédemment soit prononcés. <app>Orca</app> prononce de "
+"plus certains symboles mathématiques, symboles monétaires et « ^ », « @ », "
+"« / », « &amp; », « # »."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:74
@@ -7214,7 +7313,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:83
 msgid "All"
-msgstr "Tous"
+msgstr "Tout"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:84
@@ -7222,13 +7321,13 @@ msgid ""
 "Choosing a punctuation level of <gui>All</gui>, as expected, causes "
 "<app>Orca</app> to speak all known punctuation symbols."
 msgstr ""
-"Le choix du niveau de punctuation <gui>Tous</gui> va, comme vous l’attendez, "
+"Le choix du niveau de ponctuation <gui>Tout</gui> va, comme vous l’attendez, "
 "faire en sorte que <app>Orca</app> prononce tous les signes de ponctuation."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:91
 msgid "Spoken Context"
-msgstr "Contexte de lecture à haute voix"
+msgstr "Contexte parlé"
 
 # note variété
 #. (itstool) path: section/p
@@ -7345,7 +7444,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:165
 msgid "Speak child position"
-msgstr "Lire la position fille"
+msgstr "Lire le rang d’un élément dans une liste"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:166
@@ -7354,9 +7453,9 @@ msgid ""
 "app> to announce the position of the focused item in menus, lists, and trees "
 "(e.g. \"9 of 16\")."
 msgstr ""
-"Lorsque la case <gui>Lire la positon fille</gui> est cochée, <app>Orca</app> "
-"lit la position de l’objet qui possède le focus dans les menus, les listes "
-"et les arborescences (par exemple « neuf sur seize »)."
+"Lorsque la case <gui>Lire le rang d’un élément dans une liste</gui> est "
+"cochée, <app>Orca</app> lit la position de l’objet qui possède le focus dans "
+"les menus, les listes et les arborescences (par exemple « neuf sur seize »)."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:176
@@ -7371,7 +7470,7 @@ msgid ""
 "information, such as how to interact with the currently-focused object."
 msgstr ""
 "Si la case <gui>Lire les messages du tutoriel</gui> est cochée, quand vous "
-"vous déplacez parmi les objets de l’interface <app>Orca</app> fournit des "
+"vous déplacez parmi les objets de l’interface, <app>Orca</app> fournit des "
 "informations supplémentaires, comme par exemple comment utiliser l’objet qui "
 "possède actuellement le focus."
 
@@ -7387,9 +7486,9 @@ msgid ""
 "objects in an interface, <app>Orca</app> will speak the accessible "
 "description in addition to the accessible name of the object."
 msgstr ""
-"Si la case <gui>Lire la description</gui> est cochée, quand vous "
-"vous déplacez parmi les objets de l’interface, <app>Orca</app> lira la "
-"description accessible en plus du nom accessible de l’objet."
+"Si la case <gui>Lire la description</gui> est cochée, quand vous vous "
+"déplacez parmi les objets de l’interface, <app>Orca</app> lit la description "
+"accessible en plus du nom accessible de l’objet."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:200
@@ -7406,7 +7505,7 @@ msgid ""
 "simply \"word,\" you should uncheck this checkbox."
 msgstr ""
 "Si la case <gui>Les messages systèmes sont détaillés</gui> est cochée, "
-"<app>Orca</app> annoncera des messages détaillés en synthèse vocale. Par "
+"<app>Orca</app> annonce des messages détaillés en synthèse vocale. Par "
 "exemple, si vous utilisez la commande d’<app>Orca</app> pour changer l’écho "
 "des touches, <app>Orca</app> pourrait annoncer « écho des touches définit "
 "par mot ». Si vous préférez des messages plus courts, tels que simplement "
@@ -7445,12 +7544,12 @@ msgid ""
 "during Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
-"Si la case <gui>Annoncer les blocs de citation durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit losrque vous naviguez et entrez ou sortez "
-"d’un bloc de citation. Notez que ce réglage ne dépend pas du fait que "
-"l’annonce a lieu en mode tout lire. Voir <link xref=\"preferences_general#"
-"say_all_announce_context\">Annonce des informations contextuelles en mode tout "
-"lire</link> pour plus d’informations." 
+"Si la case <gui>Annoncer les blocs de citation durant la navigation</gui> "
+"est cochée, <app>Orca</app> vous informe lorsque vous naviguez et entrez ou "
+"sortez d’un bloc de citation. Notez que ce réglage ne dépend pas du fait que "
+"l’annonce a lieu en mode tout lire. Voir <link xref="
+"\"preferences_general#say_all_announce_context\">Annonce des informations "
+"contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:239
@@ -7470,14 +7569,14 @@ msgid ""
 "Contextual Information in Say All</link> for more information."
 msgstr ""
 "Si la case <gui>Annoncer les formulaires durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit lorsque vous naviguez et entrez ou sortez "
-"d’un formulaire. Notez que ce réglage est spécifique aux formulaires qui ne "
-"sont pas des points de repère ARIA. Vous pouvez configurer la présentation "
-"des points de repère ARIA au moyen de la case à cocher <gui>Annoncer les "
-"points de repère durant la navigation</gui>. De plus, ce réglage ne dépend "
-"pas du fait que l’annonce a lieu en mode tout lire. Voir <link xref=\""
-"preferences_general#say_all_announce_context\"> Annonce des informations "
-"contextuelles en mode tout lire</link> pour plus d’informations."
+"cochée, <app>Orca</app> vous informe lorsque vous naviguez et entrez ou "
+"sortez d’un formulaire. Notez que ce réglage est spécifique aux formulaires "
+"qui ne sont pas des points de repère ARIA. Vous pouvez configurer la "
+"présentation des points de repère ARIA au moyen de la case à cocher "
+"<gui>Annoncer les points de repère durant la navigation</gui>. De plus, ce "
+"réglage ne dépend pas du fait que l’annonce a lieu en mode tout lire. Voir "
+"<link xref=\"preferences_general#say_all_announce_context\"> Annonce des "
+"informations contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:256
@@ -7494,11 +7593,11 @@ msgid ""
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
 "Si la case <gui>Annoncer les points de repère durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit lorsque vous naviguez et entrez ou sortez "
-"d’un point de repère ARIA. Notez que ce réglage ne dépend pas du fait que "
-"l’annonce a lieu en mode tout lire. Voir <link xref=\"preferences_general#"
-"say_all_announce_context\">Annonce des informations contextuelles en mode tout "
-"lire</link> pour plus d’informations." 
+"cochée, <app>Orca</app> vous informe lorsque vous naviguez et entrez ou "
+"sortez d’un point de repère ARIA. Notez que ce réglage ne dépend pas du fait "
+"que l’annonce a lieu en mode tout lire. Voir <link xref="
+"\"preferences_general#say_all_announce_context\">Annonce des informations "
+"contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:270
@@ -7514,12 +7613,12 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
-"Si la case <gui>Annoncer les listes durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit lorsque vous naviguez et entrez ou sortez "
-"d’une liste. Notez que ce réglage ne dépend pas du fait que "
-"l’annonce a lieu en mode tout lire. Voir <link xref=\"preferences_general#"
-"say_all_announce_context\">Annonce des informations contextuelles en mode tout "
-"lire</link> pour plus d’informations." 
+"Si la case <gui>Annoncer les listes durant la navigation</gui> est cochée, "
+"<app>Orca</app> vous informe lorsque vous naviguez et entrez ou sortez d’une "
+"liste. Notez que ce réglage ne dépend pas du fait que l’annonce a lieu en "
+"mode tout lire. Voir <link xref="
+"\"preferences_general#say_all_announce_context\">Annonce des informations "
+"contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:284
@@ -7535,12 +7634,12 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
-"Si la case <gui>Annoncer les panneaux durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit lorsque vous naviguez et entrez ou sortez "
-"d’un panneau. Notez que ce réglage ne dépend pas du fait que "
-"l’annonce a lieu en mode tout lire. Voir <link xref=\"preferences_general#"
-"say_all_announce_context\">Annonce des informations contextuelles en mode tout "
-"lire</link> pour plus d’informations." 
+"Si la case <gui>Annoncer les panneaux durant la navigation</gui> est cochée, "
+"<app>Orca</app> vous informe lorsque vous naviguez et entrez ou sortez d’un "
+"panneau. Notez que ce réglage ne dépend pas du fait que l’annonce a lieu en "
+"mode tout lire. Voir <link xref="
+"\"preferences_general#say_all_announce_context\">Annonce des informations "
+"contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:298
@@ -7556,12 +7655,12 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
-"Si la case <gui>Annoncer les tableaux durant la navigation</gui> est "
-"cochée, <app>Orca</app> vous dit lorsque vous naviguez et entrez ou sortez "
-"d’un tableau. Notez que ce réglage ne dépend pas du fait que "
-"l’annonce a lieu en mode tout lire. Voir <link xref=\"preferences_general#"
-"say_all_announce_context\">Annonce des informations contextuelles en mode tout "
-"lire</link> pour plus d’informations." 
+"Si la case <gui>Annoncer les tableaux durant la navigation</gui> est cochée, "
+"<app>Orca</app> vous informe lorsque vous naviguez et entrez ou sortez d’un "
+"tableau. Notez que ce réglage ne dépend pas du fait que l’annonce a lieu en "
+"mode tout lire. Voir <link xref="
+"\"preferences_general#say_all_announce_context\">Annonce des informations "
+"contextuelles en mode tout lire</link> pour plus d’informations."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
@@ -7694,7 +7793,7 @@ msgid ""
 "word after speaking it."
 msgstr ""
 "Si cette case est cochée, <app>Orca</app> épelle le mot mal orthographié "
-"après l’avoir prononcé ."
+"après l’avoir prononcé."
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
@@ -7722,7 +7821,7 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will speak the sentence or line "
 "from the document in which the error is found."
 msgstr ""
-"Si cette case est cochée, <app>Orca</app> lit là haute voix la phrase ou la "
+"Si cette case est cochée, <app>Orca</app> lit à haute voix la phrase ou la "
 "ligne où se trouve l’erreur."
 
 #. (itstool) path: info/title
@@ -7750,8 +7849,8 @@ msgid ""
 msgstr ""
 "Les options suivantes vous permettent de personnaliser le comportement "
 "d’<app>Orca</app> quand il parcourt un tableau dans les applications qui "
-"prennent en charge la <link xref=\"howto_structural_navigation\">Navigation par "
-"structure</link>."
+"prennent en charge la <link xref=\"howto_structural_navigation\">Navigation "
+"par structure</link>."
 
 #. (itstool) path: section/title
 #: C/preferences_table_navigation.page:29
@@ -8002,8 +8101,8 @@ msgid ""
 "which has at least one of the specified attributes."
 msgstr ""
 "En dessous des boutons de déplacement se trouve le groupement de boutons "
-"radio <gui>Indicateur de braille</gui>. Vous pouvez sélectionner ici la ou les "
-"cellules à utiliser pour indiquer si le texte possède l’un des attributs "
+"radio <gui>Indicateur de braille</gui>. Vous pouvez sélectionner ici la ou "
+"les cellules à utiliser pour indiquer si le texte possède l’un des attributs "
 "spécifiés."
 
 #. (itstool) path: item/p
@@ -8052,7 +8151,7 @@ msgstr "Voix"
 #. (itstool) path: info/desc
 #: C/preferences_voice.page:7
 msgid "Configuring the voice used by <app>Orca</app>"
-msgstr "Configuration de la voix utilisée par <app>Orca</app>"
+msgstr "Configurer la voix utilisée par <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/preferences_voice.page:18
@@ -8276,3 +8375,6 @@ msgstr ""
 "Si vous cochez la case <gui>Lire les nombres comme des chiffres</gui>, "
 "<app>Orca</app> va diviser un nombre comme « 123 » en chiffres séparés (1, 2 "
 "et 3) avant de le transmettre au synthétiseur vocal."
+
+#~ msgid "Speak the selected text: (Unbound)"
+#~ msgstr "Lire le texte sélectionné : (non lié)"
