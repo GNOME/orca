@@ -257,13 +257,13 @@
       </item>
       <item>
         <p>
-          Enable "sticky" focus mode:
+          Enable sticky focus mode:
           <keyseq><key>Orca Modifier</key><key>A</key></keyseq> (double-clicked)
         </p>
       </item>
       <item>
         <p>
-          Enable "sticky" browse mode:
+          Enable sticky browse mode:
           <keyseq><key>Orca Modifier</key><key>A</key></keyseq> (triple-clicked)
         </p>
       </item>
