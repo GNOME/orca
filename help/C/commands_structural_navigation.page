@@ -434,8 +434,8 @@
         <item>
           <p>
             Start and end of current container:
-            <keyseq><key>Shift</key><key>comma</key></keyseq> and
-            <keyseq><key>comma</key></keyseq>
+            <keyseq><key>Shift</key><key>Comma</key></keyseq> and
+            <keyseq><key>Comma</key></keyseq>
           </p>
         </item>
       </list>

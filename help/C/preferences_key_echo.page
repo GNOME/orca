@@ -61,7 +61,7 @@
     <section id="keyecho_enable_space">
       <title>Enable space</title>
       <p>
-        This option controls whether or not <key>space</key> should be
+        This option controls whether or not <key>Space</key> should be
         spoken when pressed.
       </p>
       <p>
@@ -92,7 +92,7 @@
       <title>Enable action keys</title>
       <p>
         This option controls whether or not <key>BackSpace</key>, <key>Delete
-        </key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page
+        </key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page
         Up</key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key>
         should be spoken when pressed.
       </p>
