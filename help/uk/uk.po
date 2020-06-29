@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-12 15:11+0000\n"
-"PO-Revision-Date: 2020-06-12 18:51+0300\n"
+"POT-Creation-Date: 2020-06-29 07:06+0000\n"
+"PO-Revision-Date: 2020-06-29 16:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1610,8 +1610,11 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
+#| msgid ""
+#| "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</"
+#| "key></keyseq> (double-clicked)"
 msgid ""
-"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
 "Увімкнути режим «липкого» фокусування: <keyseq><key>Модифікатор Orca</"
@@ -1619,8 +1622,11 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
+#| msgid ""
+#| "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</"
+#| "key></keyseq> (triple-clicked)"
 msgid ""
-"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
 "Увімкнути режим «липкої» навігації: <keyseq><key>Модифікатор Orca</"
@@ -6600,9 +6606,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
-#| msgid ""
-#| "The <gui>Function</gui> column contains a description of the <app>Orca</"
-#| "app> command to be performed."
 msgid ""
 "The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
@@ -6625,10 +6628,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:59
-#| msgid ""
-#| "The <gui>Modified</gui> column serves both as an indicator to what has "
-#| "been changed and as a way to restore the default bindings associated with "
-#| "that function."
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
