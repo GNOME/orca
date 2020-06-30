@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2020-06-30 15:04+0000\n"
-"PO-Revision-Date: 2020-06-30 18:45+0300\n"
+"PO-Revision-Date: 2020-06-30 19:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -641,7 +641,7 @@ msgstr "знак оклику"
 #.
 #: src/orca/chnames.py:57
 msgid "quote"
-msgstr "дужка"
+msgstr "лапки"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
@@ -1646,91 +1646,91 @@ msgstr "верхній індекс n"
 #.
 #: src/orca/chnames.py:719
 msgid "subscript 0"
-msgstr "верхній індекс 0"
+msgstr "нижній індекс 0"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: src/orca/chnames.py:723
 msgid "subscript 1"
-msgstr "верхній індекс 1"
+msgstr "нижній індекс 1"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: src/orca/chnames.py:727
 msgid "subscript 2"
-msgstr "верхній індекс 2"
+msgstr "нижній індекс 2"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: src/orca/chnames.py:731
 msgid "subscript 3"
-msgstr "верхній індекс 3"
+msgstr "нижній індекс 3"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: src/orca/chnames.py:735
 msgid "subscript 4"
-msgstr "верхній індекс 4"
+msgstr "нижній індекс 4"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: src/orca/chnames.py:739
 msgid "subscript 5"
-msgstr "верхній індекс 5"
+msgstr "нижній індекс 5"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: src/orca/chnames.py:743
 msgid "subscript 6"
-msgstr "верхній індекс 6"
+msgstr "нижній індекс 6"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: src/orca/chnames.py:747
 msgid "subscript 7"
-msgstr "верхній індекс 7"
+msgstr "нижній індекс 7"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: src/orca/chnames.py:751
 msgid "subscript 8"
-msgstr "верхній індекс 8"
+msgstr "нижній індекс 8"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: src/orca/chnames.py:755
 msgid "subscript 9"
-msgstr "верхній індекс 9"
+msgstr "нижній індекс 9"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: src/orca/chnames.py:759
 msgid "subscript plus"
-msgstr "верхній індекс плюс"
+msgstr "нижній індекс плюс"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: src/orca/chnames.py:763
 msgid "subscript minus"
-msgstr "верхній індекс мінус"
+msgstr "нижній індекс мінус"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: src/orca/chnames.py:767
 msgid "subscript equals"
-msgstr "верхній індекс дорівнює"
+msgstr "нижній індекс дорівнює"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: src/orca/chnames.py:771
 msgid "subscript left paren"
-msgstr "верхній індекс ліва дужка"
+msgstr "нижній індекс ліва дужка"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: src/orca/chnames.py:775
 msgid "subscript right paren"
-msgstr "верхній індекс права дужка"
+msgstr "нижній індекс права дужка"
 
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
@@ -8462,7 +8462,7 @@ msgstr "Типова кнопка %s"
 #: src/orca/messages.py:483
 #, python-format
 msgid " subscript %s"
-msgstr " верхній індекс %s"
+msgstr "нижній індекс %s"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consecutive superscripted characters. For example, 'X' followed
