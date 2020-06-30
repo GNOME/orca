@@ -215,7 +215,7 @@ class KeyboardEvent(InputEvent):
         self.id = event.id
         self.type = event.type
         self.hw_code = event.hw_code
-        self.modifiers = event.modifiers
+        self.modifiers = event.modifiers & Gdk.ModifierType.MODIFIER_MASK
         self.event_string = event.event_string
         self.keyval_name = Gdk.keyval_name(event.id)
         self.timestamp = event.timestamp
