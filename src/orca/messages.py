@@ -409,12 +409,12 @@ DATE_FORMAT_FULL_DM = "%A, %-d %B"
 DATE_FORMAT_FULL_MD = "%A, %B %-d"
 DATE_FORMAT_FULL_DMY = "%A, %-d %B, %Y"
 DATE_FORMAT_FULL_MDY = "%A, %B %-d, %Y"
-DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A."
+DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A"
 DATE_FORMAT_ABBREVIATED_DM = "%a, %-d %b"
 DATE_FORMAT_ABBREVIATED_MD = "%a, %b %-d"
 DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
 DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
-DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a."
+DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a"
 
 # Translators: This phrase is spoken to inform the user that what is about to
 # be said is content marked for deletion in a document, such as content which
@@ -2405,12 +2405,12 @@ TIME_FORMAT_12_HMS = "%I:%M:%S %p"
 # Translators: Orca has a feature to speak the time when the user presses a
 # shortcut key. This is one of the alternative formats that the user may wish
 # it to be presented with.
-TIME_FORMAT_24_HMS_WITH_WORDS = _("%H hours, %M minutes and %S seconds.")
+TIME_FORMAT_24_HMS_WITH_WORDS = _("%H hours, %M minutes and %S seconds")
 
 # Translators: Orca has a feature to speak the time when the user presses a
 # shortcut key. This is one of the alternative formats that the user may wish
 # it to be presented with.
-TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes.")
+TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes")
 
 # Translators: this is information about a unicode character reported to the
 # user.  The value is the unicode number value of this character in hex.
