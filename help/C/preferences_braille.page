@@ -168,11 +168,11 @@
       </p>
     </section>
     <section id="flashMessageSettings_duration">
-      <title>Message duration (secs)</title>
+      <title>Duration (secs)</title>
       <p>
         The amount of time <app>Orca</app> will wait before removing the message and
         restoring the original contents of your display can be set in the <gui>
-        Message duration (secs)</gui> spin button. Note that the value of this
+        Duration (secs)</gui> spin button. Note that the value of this
         setting will be ignored if you have enabled persistent flash messages.
       </p>
       <p>
