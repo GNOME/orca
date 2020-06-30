@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-30 13:19+0000\n"
-"PO-Revision-Date: 2020-06-30 17:23+0300\n"
+"POT-Creation-Date: 2020-06-30 14:49+0000\n"
+"PO-Revision-Date: 2020-06-30 17:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -8172,7 +8172,6 @@ msgstr "КАТ"
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
 #: src/orca/messages.py:258
-#| msgid "Print the known running applications"
 msgid "Version of this application"
 msgstr "Версія цієї програми"
 
@@ -11120,7 +11119,6 @@ msgstr "не виділений"
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2408
-#| msgid "%H hours, %M minutes and %S seconds."
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H годин, %M хвилин і %S секунд"
 
@@ -11128,7 +11126,6 @@ msgstr "%H годин, %M хвилин і %S секунд"
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2413
-#| msgid "%H hours and %M minutes."
 msgid "%H hours and %M minutes"
 msgstr "%H годин і %M хвилин"
 
@@ -12544,8 +12541,9 @@ msgstr "Частота (сек):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: src/orca/orca-setup.ui:714
-msgid "Restrict to:"
-msgstr "Обмежити до: "
+#| msgid "Application"
+msgid "Applies to:"
+msgstr "Застосовується до:"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
@@ -14107,6 +14105,9 @@ msgstr ""
 "Для зменшення значення натисніть стрілку ліворуч, для збільшення - праворуч. "
 "Для встановлення мінімального значення натисніть Home, для максимального - "
 "End."
+
+#~ msgid "Restrict to:"
+#~ msgstr "Обмежити до: "
 
 #~ msgid "Function"
 #~ msgstr "Функція"
