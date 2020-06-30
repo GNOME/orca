@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-06-30 08:21+0000\n"
-"PO-Revision-Date: 2020-06-30 17:20+0300\n"
+"POT-Creation-Date: 2020-06-30 15:06+0000\n"
+"PO-Revision-Date: 2020-06-30 20:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2385,9 +2385,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#| msgid ""
-#| "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
-#| "key></keyseq> and <keyseq><key>comma</key></keyseq>"
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
 "key></keyseq> and <keyseq><key>Comma</key></keyseq>"
@@ -3252,10 +3249,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
-#| msgid ""
-#| "If you are using the Desktop layout, the Orca Modifier will be both "
-#| "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
-#| "key as <key>KeyPad 0</key>."
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
 "<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
@@ -5511,20 +5504,27 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-msgid "Message duration (secs)"
-msgstr "Тривалість повідомлення (в секундах)"
+#| msgid "Message duration (secs)"
+msgid "Duration (secs)"
+msgstr "Тривалість (у секундах)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
+#| msgid ""
+#| "The amount of time <app>Orca</app> will wait before removing the message "
+#| "and restoring the original contents of your display can be set in the "
+#| "<gui> Message duration (secs)</gui> spin button. Note that the value of "
+#| "this setting will be ignored if you have enabled persistent flash "
+#| "messages."
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
-"Message duration (secs)</gui> spin button. Note that the value of this "
-"setting will be ignored if you have enabled persistent flash messages."
+"Duration (secs)</gui> spin button. Note that the value of this setting will "
+"be ignored if you have enabled persistent flash messages."
 msgstr ""
 "Проміжок часу, протягом якого <app>Orca</app> очікуватиме, перш ніж вилучити "
 "повідомлення і відновити початковий вміст вашого дисплея, можна встановити "
-"за допомогою кнопки-лічильника <gui>Тривалість повідомлення (в секундах)</"
+"за допомогою кнопки-лічильника <gui>Тривалість (у секундах)</"
 "gui>. Зауважте, що значення цього параметра буде проігноровано, якщо ви "
 "увімкнете постійний показ вигулькних повідомлень."
 
@@ -6745,9 +6745,6 @@ msgstr "Увімкнути пробіл"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
-#| msgid ""
-#| "This option controls whether or not <key>space</key> should be spoken "
-#| "when pressed."
 msgid ""
 "This option controls whether or not <key>Space</key> should be spoken when "
 "pressed."
@@ -6791,11 +6788,6 @@ msgstr "Увімкнути клавіші дій"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:93
-#| msgid ""
-#| "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
-#| "key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
-#| "key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
-#| "spoken when pressed."
 msgid ""
 "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
 "key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
@@ -6803,9 +6795,9 @@ msgid ""
 "when pressed."
 msgstr ""
 "За допомогою цього пункту можна визначити, чи буде озвучено клавіші "
-"<key>BackSpace</key>, <key>Delete</key>, <key>Enter</key>, <key>Esc</"
-"key>, <key>Tab</key>, <key>Page Up</key>, <key>Page Down</key>, <key>Home</"
-"key> і <key>End</key> після натискання."
+"<key>BackSpace</key>, <key>Delete</key>, <key>Enter</key>, <key>Esc</key>, "
+"<key>Tab</key>, <key>Page Up</key>, <key>Page Down</key>, <key>Home</key> і "
+"<key>End</key> після натискання."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:104
