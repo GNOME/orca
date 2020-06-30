@@ -38,8 +38,8 @@
     <item>
       <p>
         If you are using the Desktop layout, the Orca Modifier will
-        be both <key>Insert</key> and <key>KeyPad Insert</key>, the
-        latter being the same key as <key>KeyPad 0</key>.
+        be both <key>Insert</key> and <key>KP_Insert</key>, the
+        latter being the same key as <key>KP_0</key>.
       </p>
     </item>
   </list>
