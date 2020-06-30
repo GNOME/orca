@@ -253,6 +253,10 @@ CLI_LOAD_PREFS = _("Use alternate directory for user preferences")
 # using the '-u, --user-prefs' command line option.
 CLI_PREFS_DIR = _("DIR")
 
+# Translators: This is the description of command line option '-v, --version'
+# which prints the version of Orca. E.g. '1.23.4'.
+CLI_VERSION = _("Version of this application")
+
 # Translators: This is the description of command line option '-r, --replace'
 # which tells Orca to replace any existing Orca process that might be running.
 CLI_REPLACE = _("Replace a currently running instance of this screen reader")

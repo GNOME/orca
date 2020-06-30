@@ -106,7 +106,7 @@ class Parser(argparse.ArgumentParser):
         self.add_argument(
             "-h", "--help", action="help", help=messages.CLI_HELP)
         self.add_argument(
-            "-v", "--version", action="version", version=version, help=version)
+            "-v", "--version", action="version", help=messages.CLI_VERSION)
         self.add_argument(
             "-r", "--replace", action="store_true", help=messages.CLI_REPLACE)
         self.add_argument(
