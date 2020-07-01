@@ -250,7 +250,7 @@
       </p>
     </section>
     <section id="progress_bar_updates_restrict">
-      <title>Restrict to</title>
+      <title>Applies to</title>
       <p>
          This combo box allows you to control which progress bars should be
          presented, assuming the presentation of progress bar updates has been
