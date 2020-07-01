@@ -770,10 +770,11 @@ class Script(script.Script):
         # gains focus, even though the caret has not actually moved.
         try:
             text = obj.queryText()
+            caretOffset = text.caretOffset
         except:
             pass
         else:
-            self._saveLastCursorPosition(obj, max(0, text.caretOffset))
+            self._saveLastCursorPosition(obj, max(0, caretOffset))
             self.utilities.updateCachedTextSelection(obj)
 
         # We want to save the current row and column of a newly focused

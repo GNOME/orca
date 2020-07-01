@@ -936,6 +936,9 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)) or self._script.browseModeIsSticky():
             return super().queryNonEmptyText(obj)
 
+        if self.isDead(obj):
+            return None
+
         if hash(obj) in self._text:
             return self._text.get(hash(obj))
 
@@ -2538,7 +2541,7 @@ class Utilities(script_utilities.Utilities):
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
             obj, start, end, string = x
-            if not obj:
+            if not obj or self.isDead(obj):
                 return False
 
             rv = self._shouldFilter.get(hash(obj))

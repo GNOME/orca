@@ -952,6 +952,8 @@ class StructuralNavigation:
             matches.reverse()
 
         def _isValidMatch(obj):
+            if self._script.utilities.isDead(obj):
+                return False
             if self._script.utilities.isHidden(obj) or self._script.utilities.isEmpty(obj):
                 return False
             if not criteria.applyPredicate:

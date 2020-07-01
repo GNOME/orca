@@ -237,7 +237,7 @@ def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
     except:
-        msg = "ERROR: Exception scrolling %s (%i,%i) to %s." % \
+        msg = "ERROR: Exception scrolling %s (%s,%s) to %s." % \
             (obj, startOffset, endOffset, location)
         debug.println(debug.LEVEL_INFO, msg, True)
         return False

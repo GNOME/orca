@@ -797,6 +797,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if prevObj and self.utilities.isDead(prevObj):
+            prevObj = None
+
         if not _settingsManager.getSetting('caretNavTriggersFocusMode') \
            and self._lastCommandWasCaretNav:
             msg = "WEB: Not using focus mode due to caret nav settings"
