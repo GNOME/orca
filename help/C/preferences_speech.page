@@ -201,8 +201,8 @@
       <p>
         If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will
         present detailed messages to you in speech. For instance, if you use
-        <app>Orca</app>'s command to change key echo, <app>Orca</app> might
-        speak "Key echo set to word." If you would prefer shorter messages,
+        <app>Orca</app>'s command to change echo, <app>Orca</app> might
+        speak "Echo set to word." If you would prefer shorter messages,
         such as simply "word," you should uncheck this checkbox.
       </p>
       <p>
