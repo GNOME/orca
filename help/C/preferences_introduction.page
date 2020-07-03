@@ -18,12 +18,12 @@
     <p>
       Orca preferences allow you to customize functionality in <app>Orca</app>
       which applies to all applications. An example of an Orca preference is
-      key echo because key echo is something that applies to all applications.
+      echo because echo is something that applies to all applications.
     </p>
     <p>
       Note that Orca preferences can be customized on an application-by-application
-      basis. For instance you can set the default key echo to words and then
-      set the key echo for Pidgin to be none. Having done so, <app>Orca</app>
+      basis. For instance you can set the default echo to words and then
+      set the echo for Pidgin to be none. Having done so, <app>Orca</app>
       would always echo each word that you typed, unless you were in Pidgin.
     </p>
     <note style="tip">
