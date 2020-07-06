@@ -147,8 +147,8 @@
       <p>
         If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will
         present detailed messages to you in braille. For instance, if you
-        use <app>Orca</app>'s command to change key echo, <app>Orca</app> might
-        display "Key echo set to word." If you would prefer shorter messages,
+        use <app>Orca</app>'s command to change echo, <app>Orca</app> might
+        display "Echo set to word." If you would prefer shorter messages,
         such as simply "word," you should uncheck this checkbox.
       </p>
       <p>

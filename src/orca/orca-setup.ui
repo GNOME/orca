@@ -2858,7 +2858,7 @@
               <object class="GtkLabel" id="keyEchoTabLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Key Echo</property>
+                <property name="label" translatable="yes">Echo</property>
               </object>
               <packing>
                 <property name="position">4</property>

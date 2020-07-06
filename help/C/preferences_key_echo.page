@@ -1,7 +1,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_key_echo">
   <info>
-    <title type="link">Key Echo</title>
-    <title type="sort">4. Key Echo</title>
+    <title type="link">Echo</title>
+    <title type="sort">4. Echo</title>
     <desc>
       Configuring what is spoken as you type
     </desc>
@@ -15,7 +15,7 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Key Echo Preferences</title>
+  <title>Echo Preferences</title>
   <section id="keyecho">
     <title>Enable key echo</title>
     <p>
