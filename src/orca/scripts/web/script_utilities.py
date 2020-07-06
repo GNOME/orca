@@ -4996,6 +4996,9 @@ class Utilities(script_utilities.Utilities):
         return self._statusBar
 
     def getOnScreenObjects(self, root, extents=None):
+        if root and root.getRole() == pyatspi.ROLE_EMBEDDED:
+            return super().getOnScreenObjects(root, extents)
+
         if self._treatObjectAsWhole(root):
             return [root]
 
