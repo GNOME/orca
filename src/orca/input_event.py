@@ -232,6 +232,8 @@ class KeyboardEvent(InputEvent):
         self.type = event.type
         self.hw_code = event.hw_code
         self.modifiers = event.modifiers & Gdk.ModifierType.MODIFIER_MASK
+        if event.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
+            self.modifiers |= (1 << pyatspi.MODIFIER_NUMLOCK)
         self.event_string = event.event_string
         self.keyval_name = Gdk.keyval_name(event.id)
         self.timestamp = event.timestamp
