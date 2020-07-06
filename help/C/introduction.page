@@ -37,9 +37,7 @@
         <p>
           The method for configuring <app>Orca</app> to be launched
           automatically as your preferred screen reader will depend upon
-          which desktop environment you use. For instance, in GNOME 3.x
-          this option can be found in the Universal Access Control Center
-          panel on the <gui>Seeing</gui> page.
+          which desktop environment you use.
         </p>
       </item>
       <item>
