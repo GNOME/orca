@@ -248,6 +248,7 @@ class KeyboardEvent(InputEvent):
         self._did_consume = None
         self._result_reason = None
         self._bypassOrca = None
+        self._is_kp_with_numlock = False
 
         # Some implementors don't populate this field at all. More often than not,
         # the event_string and the keyval_name coincide for input events.
@@ -260,6 +261,13 @@ class KeyboardEvent(InputEvent):
            and (self.id in KeyboardEvent.GDK_PUNCTUATION_KEYS or \
                 self.id in KeyboardEvent.GDK_ACCENTED_LETTER_KEYS):
             self.event_string = chr(self.id)
+
+        # Some implementors don't include numlock in the modifiers.
+        if self.keyval_name.startswith("KP"):
+            if event.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
+                self._is_kp_with_numlock = True
+            else:
+                self._is_kp_with_numlock = self.isPrintableKey()
 
         if self._script:
             self._app = self._script.app
@@ -614,6 +622,11 @@ class KeyboardEvent(InputEvent):
             return False
 
         return self.modifiers & keybindings.ORCA_MODIFIER_MASK
+
+    def isKeyPadKeyWithNumlockOn(self):
+        """Return True if this is a key pad key with numlock on."""
+
+        return self._is_kp_with_numlock
 
     def isPrintableKey(self):
         """Return True if this is a printable key."""
