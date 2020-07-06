@@ -264,12 +264,12 @@ class KeyboardEvent(InputEvent):
                 self.id in KeyboardEvent.GDK_ACCENTED_LETTER_KEYS):
             self.event_string = chr(self.id)
 
-        # Some implementors don't include numlock in the modifiers.
+        # Some implementors don't include numlock in the modifiers. Unfortunately,
+        # trying to heuristically hack around this just by looking at the event
+        # is not reliable. Ditto regarding asking Gdk for the numlock state.
         if self.keyval_name.startswith("KP"):
             if event.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
                 self._is_kp_with_numlock = True
-            else:
-                self._is_kp_with_numlock = self.isPrintableKey()
 
         if self._script:
             self._app = self._script.app
