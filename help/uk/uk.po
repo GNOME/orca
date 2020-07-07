@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-07-02 09:30+0000\n"
-"PO-Revision-Date: 2020-07-03 17:02+0300\n"
+"POT-Creation-Date: 2020-07-07 09:02+0000\n"
+"PO-Revision-Date: 2020-07-07 20:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5046,19 +5046,23 @@ msgstr "Щоб запустити <app>Orca</app>, виконайте такі �
 
 #. (itstool) path: item/p
 #: C/introduction.page:37
+#| msgid ""
+#| "The method for configuring <app>Orca</app> to be launched automatically "
+#| "as your preferred screen reader will depend upon which desktop "
+#| "environment you use. For instance, in GNOME 3.x this option can be found "
+#| "in the Universal Access Control Center panel on the <gui>Seeing</gui> "
+#| "page."
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
-"use. For instance, in GNOME 3.x this option can be found in the Universal "
-"Access Control Center panel on the <gui>Seeing</gui> page."
+"use."
 msgstr ""
 "Метод налаштовування <app>Orca</app> на автоматичний запуск як основного "
 "засобу для читання з екрана залежить від того, яким стільничним середовищем "
-"ви користуєтеся. Наприклад, у GNOME 3.x відповідний пункт можна знайти на "
-"панелі «Універсальний доступ» Центру керування, сторінка <gui>Бачення</gui>."
+"ви користуєтеся."
 
 #. (itstool) path: item/p
-#: C/introduction.page:46
+#: C/introduction.page:44
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5067,7 +5071,7 @@ msgstr ""
 "клавіш <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:52
+#: C/introduction.page:50
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -5077,12 +5081,12 @@ msgstr ""
 "<key>Enter</key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:61
+#: C/introduction.page:59
 msgid "Load-Time Options"
 msgstr "Параметри завантаження"
 
 #. (itstool) path: section/p
-#: C/introduction.page:62
+#: C/introduction.page:60
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5091,24 +5095,24 @@ msgstr ""
 "термінала або у діалоговому вікні <gui>Запустити</gui>:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:68
+#: C/introduction.page:66
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: вивести довідкове повідомлення"
 
 #. (itstool) path: item/p
-#: C/introduction.page:71
+#: C/introduction.page:69
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: вивести дані щодо версії <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:75
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: встановити налаштування користувача"
 
 #. (itstool) path: item/p
-#: C/introduction.page:82
+#: C/introduction.page:80
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5118,7 +5122,7 @@ msgstr ""
 "користувача"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:87
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5127,22 +5131,22 @@ msgstr ""
 "параметр, де <em>параметром</em> може бути одне з таких значень:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:95 C/introduction.page:107
+#: C/introduction.page:93 C/introduction.page:105
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96 C/introduction.page:108
+#: C/introduction.page:94 C/introduction.page:106
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:100
+#: C/introduction.page:98
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5152,7 +5156,7 @@ msgstr ""
 "значень:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:112
+#: C/introduction.page:110
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5161,7 +5165,7 @@ msgstr ""
 "профіль з вказаного файла профілю <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:118
+#: C/introduction.page:116
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5169,7 +5173,7 @@ msgstr ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: замінити наявний процес <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:123
+#: C/introduction.page:121
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
@@ -5177,14 +5181,14 @@ msgstr ""
 "програм"
 
 #. (itstool) path: item/p
-#: C/introduction.page:129
+#: C/introduction.page:127
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: надіслати діагностичні дані до файла debug-РРРР-ММ-ДД-ГГ:"
 "ХХ:СС.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:134
+#: C/introduction.page:132
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -8243,6 +8247,3 @@ msgstr ""
 "Якщо буде позначено пункт <gui>Вимовляти числа як цифри</gui>, <app>Orca</"
 "app> розбиватиме числа, наприклад «123», на окремі цифри («1», «2» і «3»), "
 "перш ніж передавати їх синтезатору мовлення."
-
-#~ msgid "Restrict to"
-#~ msgstr "Обмежити до"
