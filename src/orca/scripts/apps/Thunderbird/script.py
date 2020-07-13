@@ -385,19 +385,6 @@ class Script(Gecko.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
 
-    def sayWord(self, obj):
-        """Speaks the word at the current caret position."""
-
-        contextObj, offset = self.utilities.getCaretContext(documentFrame=None)
-        if contextObj != obj:
-            super().sayWord(obj)
-            return
-
-        wordContents = self.utilities.getWordContentsAtOffset(obj, offset)
-        textObj, startOffset, endOffset, word = wordContents[0]
-        self.speakMisspelledIndicator(textObj, startOffset)
-        self.speakContents(wordContents)
-
     def toggleFlatReviewMode(self, inputEvent=None):
         """Toggles between flat review mode and focus tracking mode."""
 

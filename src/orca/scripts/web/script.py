@@ -887,8 +887,8 @@ class Script(default.Script):
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
-        if not self._lastCommandWasCaretNav \
-           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
+        isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
+        if not self._lastCommandWasCaretNav and not isEditable:
             super().sayWord(obj)
             return
 
@@ -897,7 +897,7 @@ class Script(default.Script):
         if keyString == "Right":
             offset -= 1
 
-        wordContents = self.utilities.getWordContentsAtOffset(obj, offset)
+        wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=not isEditable)
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
         self.speakContents(wordContents)
