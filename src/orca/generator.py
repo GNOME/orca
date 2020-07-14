@@ -369,6 +369,10 @@ class Generator:
         if placeholder:
             return [placeholder]
 
+        placeholder = attrs.get('placeholder')
+        if placeholder:
+            return [placeholder]
+
         return []
 
     def _generateLabelAndName(self, obj, **args):
