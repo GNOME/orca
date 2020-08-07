@@ -1399,11 +1399,30 @@ class Utilities:
 
         return _settingsManager.getSetting('readFullRowInDocumentTable')
 
+    def isSorted(self, obj):
+        return False
+
     def isAscending(self, obj):
         return False
 
     def isDescending(self, obj):
         return False
+
+    def getSortOrderDescription(self, obj, includeName=False):
+        if not (obj and self.isSorted(obj)):
+            return ""
+
+        if self.isAscending(obj):
+            result = object_properties.SORT_ORDER_ASCENDING
+        elif self.isDescending(obj):
+            result = object_properties.SORT_ORDER_DESCENDING
+        else:
+            result = object_properties.SORT_ORDER_OTHER
+
+        if includeName and obj.name:
+            result = "%s. %s" % (obj.name, result)
+
+        return result
 
     def isFocusableLabel(self, obj):
         try:
@@ -4189,6 +4208,20 @@ class Utilities:
                 return True
 
         return False
+
+    def containingTableHeader(self, obj):
+        if not obj:
+            return None
+
+        roles = [pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER]
+        isHeader = lambda x: x and x.getRole() in roles
+        if isHeader(obj):
+            return obj
+
+        return pyatspi.findAncestor(obj, isHeader)
 
     def columnHeadersForCell(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):

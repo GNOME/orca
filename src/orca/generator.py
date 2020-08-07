@@ -809,16 +809,11 @@ class Generator:
         return result
 
     def _generateSortOrder(self, obj, **args):
-        if not self._script.utilities.isSorted(obj):
+        description = self._script.utilities.getSortOrderDescription(obj)
+        if not description:
             return []
 
-        if self._script.utilities.isAscending(obj):
-            return [object_properties.SORT_ORDER_ASCENDING]
-
-        if self._script.utilities.isDescending(obj):
-            return [object_properties.SORT_ORDER_DESCENDING]
-
-        return [object_properties.SORT_ORDER_OTHER]
+        return [description]
 
     def _generateTableCell2ChildLabel(self, obj, **args):
         """Returns an array of strings for use by speech and braille for the

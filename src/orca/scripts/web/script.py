@@ -1807,6 +1807,10 @@ class Script(default.Script):
 
         self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
+        header = self.utilities.containingTableHeader(orca_state.locusOfFocus)
+        if header:
+            self.presentMessage(self.utilities.getSortOrderDescription(header, True))
+
         return True
 
     def onDocumentLoadComplete(self, event):
@@ -2038,6 +2042,10 @@ class Script(default.Script):
 
         self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
+        header = self.utilities.containingTableHeader(orca_state.locusOfFocus)
+        if header:
+            self.presentMessage(self.utilities.getSortOrderDescription(header, True))
+
         return True
 
     def onSelectedChanged(self, event):
