@@ -1792,6 +1792,23 @@ class Script(default.Script):
 
         return False
 
+    def onColumnReordered(self, event):
+        """Callback for object:column-reordered accessibility events."""
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
+            msg = "WEB: locusOfFocus (%s) is not in this table" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        self.pointOfReference['last-table-sort-time'] = time.time()
+        self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
+        return True
+
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
@@ -2004,6 +2021,23 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        return True
+
+    def onRowReordered(self, event):
+        """Callback for object:row-reordered accessibility events."""
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
+            msg = "WEB: locusOfFocus (%s) is not in this table" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        self.pointOfReference['last-table-sort-time'] = time.time()
+        self.presentMessage(messages.TABLE_REORDERED_ROWS)
         return True
 
     def onSelectedChanged(self, event):

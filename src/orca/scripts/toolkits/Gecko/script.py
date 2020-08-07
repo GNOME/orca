@@ -131,6 +131,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onCheckedChanged(self, event)
 
+    def onColumnReordered(self, event):
+        """Callback for object:column-reordered accessibility events."""
+
+        if super().onColumnReordered(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onColumnReordered(self, event)
+
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
@@ -254,6 +264,16 @@ class Script(web.Script):
         msg = "GECKO: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onNameChanged(self, event)
+
+    def onRowReordered(self, event):
+        """Callback for object:row-reordered accessibility events."""
+
+        if super().onRowReordered(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onRowReordered(self, event)
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
