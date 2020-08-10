@@ -1,3 +1,34 @@
+3.36.4 - 10 August 2020
+
+Web:
+
+ * Fix false positive causing us to not present self-referential labels
+
+ * Fix crash caused by author using aria-labelledby pointing to itself
+
+ * Always speak the current line when caret moves due to mouse click
+   so that presentation is consistent regardless of the element
+
+ * Fix bug causing events from Google Docs to be ignored when a dialog
+   appears but lacks focus
+
+Thunderbird:
+
+ * Fix bug causing us to incorrectly update our location within settings
+
+General:
+
+ * Fix bug causing learn mode to not work in (at least) gnome-shell
+   controls
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   fr            French                Charles Monzat
+   kk            Kazakh                Baurzhan Muftakhidinov
+   uk            Ukrainian             Yuri Chornoivan
+
+=========
+
 3.36.3 - 1 June 20202
 
 General:
