@@ -1,3 +1,61 @@
+3.37.90 - 10 August 2020
+
+Web:
+
+ * Announce when rows, columns get reordered due to aria-sort changing
+
+ * Fix bug causing some web content to not be presented in flat review
+
+ * Fall back on "placeholder" when "placeholder-text" is not used by
+   browsers
+
+ * Fix bug causing presentation of stale content when navigating by word
+
+ * Skip over clickable images during line nav if the author has set alt
+   to ""
+
+ * Fix bug causing events from Google Docs to be ignored when a dialog
+   appears but lacks focus
+
+ * Fix false positive causing us to not present self-referential labels
+
+ * Fix crash caused by author using aria-labelledby pointing to itself
+
+ * Always speak the current line when caret moves due to mouse click
+   so that presentation is consistent regardless of the element
+
+General:
+
+ * Fix bug causing learn mode to not work in (at least) gnome-shell
+   controls
+
+ * Emit mode-changed notifications to inform other tools (magnifiers,
+   highlighting tools) what mode Orca is in when presenting content
+
+ * Miscellaneous tweaks to GUI labels and documentation
+
+ * Attempt to reconnect to speech-dispatcher when setting capitalization
+   style fails due to SSIPCommunicationError
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   ca            Catalan               Gil Forcada, Jordi Mas
+   de            German                Tim Sabsch
+   el            Greek                 Efstathios Iosifidis
+   es            Spanish               Daniel Mustieles
+   eu            Basque                Asier Sarasua Garmendia
+   fr            French                Charles Monzat
+   gb            British English       Zander Brown
+   gl            Galician              Fran Diéguez
+   kk            Kazakh                Baurzhan Muftakhidinov
+   lt            Lithuanian            Aurimas Černius
+   ro            Romanian              Daniel Șerbănescu, Florentina Mușat
+   sl            Slovenian             Matej Urbančič
+   sv            Swedish               Anders Jonsson
+   uk            Ukrainian             Yuri Chornoivan
+
+=========
+
 3.37.2 - 1 June 2020
 
 Web:
