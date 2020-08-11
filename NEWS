@@ -1,3 +1,11 @@
+3.36.5 - 11 August 2020
+
+Web + Thunderbird:
+
+ * Fix regression breaking access to content (incomplete cherry-pick)
+
+=========
+
 3.36.4 - 10 August 2020
 
 Web:
