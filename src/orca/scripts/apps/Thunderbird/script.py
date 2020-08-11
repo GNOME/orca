@@ -130,7 +130,7 @@ class Script(Gecko.Script):
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
-    def useFocusMode(self, obj):
+    def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
             msg = "THUNDERBIRD: Using focus mode for editable message %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

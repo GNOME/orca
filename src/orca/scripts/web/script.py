@@ -778,7 +778,7 @@ class Script(default.Script):
 
         return self._browseModeIsSticky
 
-    def useFocusMode(self, obj):
+    def useFocusMode(self, obj, prevObj=None):
         """Returns True if we should use focus mode in obj."""
 
         if self._focusModeIsSticky:

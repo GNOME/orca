@@ -104,7 +104,7 @@ class Script(Gecko.Script):
 
         super().onFocus(event)
 
-    def useFocusMode(self, obj):
+    def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
             msg = "SEAMONKEY: Using focus mode for editable message %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
