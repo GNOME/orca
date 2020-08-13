@@ -580,7 +580,8 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
-        if self._script.utilities.isReadOnlyTextArea(obj):
+        if obj.getState().contains(pyatspi.STATE_READ_ONLY) \
+           or self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 

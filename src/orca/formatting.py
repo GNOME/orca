@@ -153,8 +153,8 @@ formatting = {
             },
         pyatspi.ROLE_CHECK_BOX: {
             'focused': 'checkedState',
-            'unfocused': 'labelOrName + roleName + checkedState + required + pause + invalid + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'namedContainingPanel + labelOrName + roleName + checkedState + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
+            'unfocused': 'labelOrName + readOnly + roleName + checkedState + required + pause + invalid + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'namedContainingPanel + labelOrName + readOnly + roleName + checkedState + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
             'focused': 'checkedState',
