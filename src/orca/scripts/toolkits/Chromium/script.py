@@ -357,6 +357,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onShowingChanged(self, event)
 
+    def onTextAttributesChanged(self, event):
+        """Callback for object:text-attributes-changed accessibility events."""
+
+        if super().onTextAttributesChanged(event):
+            return
+
+        msg = "Chromium: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onTextAttributesChanged(self, event)
+
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 

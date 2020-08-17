@@ -351,3 +351,7 @@ class Utilities(web.Utilities):
         self._lastAutoTextInputEvent = orca_state.lastInputEvent
         self._lastAutoTextEventTime = time.time()
         return True
+
+    def localizeTextAttribute(self, key, value):
+        value = value.replace("-moz-", "")
+        return super().localizeTextAttribute(key, value)

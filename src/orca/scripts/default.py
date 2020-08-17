@@ -1300,13 +1300,11 @@ class Script(script.Script):
         [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
             _settingsManager.getSetting('enabledSpokenTextAttributes'))
 
-        # Because some implementors make up their own attribute names,
-        # we need to convert.
-        userAttrList = list(map(self.utilities.getAppNameForAttribute, userAttrList))
         nullValues = ['0', '0mm', 'none', 'false']
-
         for key in userAttrList:
-            value = attrs.get(key)
+            # Convert the standard key into the non-standard implementor variant.
+            appKey = self.utilities.getAppNameForAttribute(key)
+            value = attrs.get(appKey)
             ignoreIfValue = userAttrDict.get(key)
             if value in nullValues and ignoreIfValue in nullValues:
                 continue

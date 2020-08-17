@@ -42,15 +42,6 @@ class Script(web.Script):
     def __init__(self, app):
         super().__init__(app)
 
-        # This can be removed once this Mozilla bug is fixed:
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=1174204
-        self.attributeNamesDict = {
-            "background-color"        : "bg-color",
-            "color"                   : "fg-color"}
-
-        # This one needs some more consideration for all toolkits.
-        self.attributeNamesDict["invalid"] = "text-spelling"
-
     def getUtilities(self):
         """Returns the utilites for this script."""
 
@@ -304,6 +295,16 @@ class Script(web.Script):
         msg = "GECKO: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onShowingChanged(self, event)
+
+    def onTextAttributesChanged(self, event):
+        """Callback for object:text-attributes-changed accessibility events."""
+
+        if super().onTextAttributesChanged(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onTextAttributesChanged(self, event)
 
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""

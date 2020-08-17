@@ -105,6 +105,10 @@ class Script(default.Script):
         self._autoFocusModeCaretNavCheckButton = None
         self._layoutModeCheckButton = None
 
+        self.attributeNamesDict["invalid"] = "text-spelling"
+        self.attributeNamesDict["text-align"] = "justification"
+        self.attributeNamesDict["text-indent"] = "indent"
+
     def deactivate(self):
         """Called when this script is deactivated."""
 
@@ -2138,6 +2142,14 @@ class Script(default.Script):
             return False
 
         return True
+
+    def onTextAttributesChanged(self, event):
+        """Callback for object:text-attributes-changed accessibility events."""
+
+        msg = "WEB: Clearing cached text attributes"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self._currentTextAttrs = {}
+        return False
 
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""

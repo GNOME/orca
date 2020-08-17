@@ -878,9 +878,20 @@ class Utilities(script_utilities.Utilities):
             return attrsForObj.get(offset)
 
         attrs = super().textAttributes(acc, offset, get_defaults)
-        self._currentTextAttrs[hash(acc)] = {offset:attrs}
+        objAttributes = self.objectAttributes(acc, False)
+        for key in self._script.attributeNamesDict.keys():
+            value = objAttributes.get(key)
+            if value is not None:
+                attrs[0][key] = value
 
+        self._currentTextAttrs[hash(acc)] = {offset:attrs}
         return attrs
+
+    def localizeTextAttribute(self, key, value):
+        if key == "justification" and value == "justify":
+            value = "fill"
+
+        return super().localizeTextAttribute(key, value)
 
     def findObjectInContents(self, obj, offset, contents, usingCache=False):
         if not obj or not contents:
