@@ -832,9 +832,9 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('nativeNavTriggersFocusMode') \
            and not (self._lastCommandWasStructNav or self._lastCommandWasCaretNav):
-            msg = "WEB: Not using focus mode due to native nav settings"
+            msg = "WEB: Not changing focus/browse mode due to native nav settings"
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            return self._inFocusMode
 
         if self.utilities.isFocusModeWidget(obj):
             msg = "WEB: Using focus mode because %s is a focus mode widget" % obj
