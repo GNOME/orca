@@ -24,10 +24,8 @@
     <app>Orca</app> works with applications and toolkits that support
     the Assistive Technology Service Provider Interface (AT-SPI), which
     is the primary assistive technology infrastructure for Linux and
-    Solaris. Applications and toolkits supporting the AT-SPI include the
-    GNOME Gtk+ toolkit, the Java platform's Swing toolkit, LibreOffice,
-    Gecko, and WebKitGtk. AT-SPI support for the KDE Qt toolkit is being
-    pursued.
+    Solaris. Applications and toolkits supporting the AT-SPI include
+    Gtk+, Qt, Java Swing, LibreOffice, Gecko, WebKitGtk, and Chrome/Chromium.
   </p>
   <section id="launching">
     <title>Launching <app>Orca</app></title>

@@ -45,7 +45,7 @@ HELP_FILES = \
 	introduction.page \
 	preferences_braille.page \
 	preferences_chat.page \
-	preferences_gecko.page \
+	preferences_web.page \
 	preferences_general.page \
 	preferences_introduction.page \
 	preferences_key_bindings.page \

@@ -1,12 +1,12 @@
-<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_gecko">
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_web">
   <info>
     <link type="guide" xref="preferences#application" />
     <link type="next" xref="preferences_table_navigation" />
-    <title type="sort">1. Gecko Navigation</title>
-    <title type="link">Gecko Navigation</title>
+    <title type="sort">1. Web Navigation</title>
+    <title type="link">Web Navigation</title>
     <desc>
-      Configuring <app>Orca</app>'s support for <app>Firefox</app> and
-      <app>Thunderbird</app>
+      Configuring <app>Orca</app>'s support for <app>Firefox</app>,
+      <app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -16,7 +16,7 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Gecko Navigation Preferences</title>
+  <title>Web Navigation Preferences</title>
   <section id="page_navigation">
     <title>Page Navigation</title>
     <p>
@@ -29,7 +29,7 @@
       <p>
         This checkbox toggles <app>Orca</app>'s caret navigation on and off.
         When it is on, <app>Orca</app> takes control of the caret as you arrow
-        around within a page; when it is off, Gecko's native caret navigation is
+        around within a page; when it is off, the browser's native caret navigation is
         active.
       </p>
       <p>
@@ -99,6 +99,29 @@
       </p>
       <p>
         Default value: not checked
+      </p>
+      <note style="tip">
+        <title>Manually switching between browse mode and focus mode</title>
+        <p>
+          In order to start or stop interacting with the focused form field,
+          use <keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch
+          between browse mode and focus mode.
+        </p>
+       </note>
+    </section>
+    <section id="page_navigation_focus_native">
+      <title>Automatic focus mode during native navigation</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app> will automatically turn on
+        focus mode when you use native browser navigation commands to navigate to a
+        form field. For example, pressing <key>Tab</key> to move to the next entry
+        would move focus there and also turn focus mode on so that your next press
+        of <key>E</key> would type an "e" into that entry. If this checkbox is not
+        checked, then <app>Orca</app> will leave you in browse mode and your next
+        press of <key>E</key> would move you to the next entry on the page.
+      </p>
+      <p>
+        Default value: checked
       </p>
       <note style="tip">
         <title>Manually switching between browse mode and focus mode</title>

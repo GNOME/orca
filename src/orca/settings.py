@@ -128,6 +128,7 @@ userCustomizableSettings = [
     "structNavTriggersFocusMode",
     "caretNavTriggersFocusMode",
     "layoutMode",
+    "nativeNavTriggersFocusMode",
     "rewindAndFastForwardInSayAll",
     "structNavInSayAll",
     "speakDescription",
@@ -391,6 +392,7 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 
 structNavTriggersFocusMode = False
 caretNavTriggersFocusMode = False
+nativeNavTriggersFocusMode = True
 
 layoutMode = True
 

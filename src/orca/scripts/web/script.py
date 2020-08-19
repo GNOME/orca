@@ -103,6 +103,7 @@ class Script(default.Script):
         self._structuralNavigationCheckButton = None
         self._autoFocusModeStructNavCheckButton = None
         self._autoFocusModeCaretNavCheckButton = None
+        self._autoFocusModeNativeNavCheckButton = None
         self._layoutModeCheckButton = None
 
         self.attributeNamesDict["invalid"] = "text-spelling"
@@ -359,23 +360,29 @@ class Script(default.Script):
         self._autoFocusModeStructNavCheckButton.set_active(value)
         generalGrid.attach(self._autoFocusModeStructNavCheckButton, 0, 3, 1, 1)
 
+        label = guilabels.AUTO_FOCUS_MODE_NATIVE_NAV
+        value = _settingsManager.getSetting('nativeNavTriggersFocusMode')
+        self._autoFocusModeNativeNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self._autoFocusModeNativeNavCheckButton.set_active(value)
+        generalGrid.attach(self._autoFocusModeNativeNavCheckButton, 0, 4, 1, 1)
+
         label = guilabels.READ_PAGE_UPON_LOAD
         value = _settingsManager.getSetting('sayAllOnLoad')
         self._sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._sayAllOnLoadCheckButton.set_active(value)
-        generalGrid.attach(self._sayAllOnLoadCheckButton, 0, 4, 1, 1)
+        generalGrid.attach(self._sayAllOnLoadCheckButton, 0, 5, 1, 1)
 
         label = guilabels.PAGE_SUMMARY_UPON_LOAD
         value = _settingsManager.getSetting('pageSummaryOnLoad')
         self._pageSummaryOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._pageSummaryOnLoadCheckButton.set_active(value)
-        generalGrid.attach(self._pageSummaryOnLoadCheckButton, 0, 5, 1, 1)
+        generalGrid.attach(self._pageSummaryOnLoadCheckButton, 0, 6, 1, 1)
 
         label = guilabels.CONTENT_LAYOUT_MODE
         value = _settingsManager.getSetting('layoutMode')
         self._layoutModeCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._layoutModeCheckButton.set_active(value)
-        generalGrid.attach(self._layoutModeCheckButton, 0, 6, 1, 1)
+        generalGrid.attach(self._layoutModeCheckButton, 0, 7, 1, 1)
 
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 1, 1, 1)
@@ -487,6 +494,7 @@ class Script(default.Script):
             'structNavTriggersFocusMode': self._autoFocusModeStructNavCheckButton.get_active(),
             'caretNavigationEnabled': self._controlCaretNavigationCheckButton.get_active(),
             'caretNavTriggersFocusMode': self._autoFocusModeCaretNavCheckButton.get_active(),
+            'nativeNavTriggersFocusMode': self._autoFocusModeNativeNavCheckButton.get_active(),
             'speakCellCoordinates': self._speakCellCoordinatesCheckButton.get_active(),
             'layoutMode': self._layoutModeCheckButton.get_active(),
             'speakCellSpan': self._speakCellSpanCheckButton.get_active(),
@@ -819,6 +827,12 @@ class Script(default.Script):
            and self._lastCommandWasCaretNav \
            and not self.utilities.isNavigableToolTipDescendant(prevObj):
             msg = "WEB: Not using focus mode due to caret nav settings"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not _settingsManager.getSetting('nativeNavTriggersFocusMode') \
+           and not (self._lastCommandWasStructNav or self._lastCommandWasCaretNav):
+            msg = "WEB: Not using focus mode due to native nav settings"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
