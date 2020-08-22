@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2019-01-07 20:33+0000\n"
-"PO-Revision-Date: 2019-01-08 11:23+0100\n"
+"POT-Creation-Date: 2020-08-22 11:20+0000\n"
+"PO-Revision-Date: 2020-08-22 13:28+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -423,14 +423,14 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Gå in i inlärningsläge: <keyseq><key>Orca-modifierare</key><key>H</key></"
 "keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
+msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Gå ur inlärningsläge: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
@@ -1046,8 +1046,8 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
-msgid "1. Live Region"
-msgstr "1. Levande region"
+msgid "1. Live Regions"
+msgstr "1. Levande regioner"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:7
@@ -1163,23 +1163,21 @@ msgstr ""
 "information om hur du kan binda detta kommando till en tangenttryckning."
 
 #. (itstool) path: note/p
-#: C/commands_mouse.page:29
+#: C/commands_mouse.page:29 C/commands_reading.page:28
 msgid ""
-"In the list that follows, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
+"Below you will see several references to \"KP\". All \"KP\" keys are located "
+"on the numeric keypad. You will also notice that there are different "
+"keystrokes depending upon whether you are using a desktop or a laptop -- or "
+"more accurately, whether you are using <app>Orca</app>'s Desktop keyboard "
+"layout or its Laptop keyboard layout. For additional information, please see "
+"the <link xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgstr ""
-"I listan som följer kommer du se flera referenser till ”KP”. Alla \"KP\"-"
-"tangenter finns på det numeriska tangentbordet (keypad). Du kommer också se "
-"att det finns olika tangenttryckningar beroende på om du använder en "
-"stationär eller en bärbar dator -- eller mer korrekt, huruvida du använder "
-"<app>Orca</app>s tangentbordslayout för stationär eller bärbar dator. För "
-"mer information se ämnet <link xref=\"howto_keyboard_layout"
-"\">Tangentbordslayout</link>."
+"Nedan kommer du se flera referenser till ”KP”. Alla ”KP”-tangenter finns på "
+"det numeriska tangentbordet (keypad). Du kommer också se att det finns olika "
+"tangenttryckningar beroende på om du använder en stationär eller en bärbar "
+"dator -- eller mer korrekt, huruvida du använder <app>Orca</app>s "
+"tangentbordslayout för stationär eller bärbar dator. För mer information se "
+"ämnet <link xref=\"howto_keyboard_layout\">Tangentbordslayout</link>."
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:41
@@ -1379,25 +1377,6 @@ msgstr ""
 "<app>Orca</app> ett antal kommandon som du kan använda för att läsa ett "
 "dokument."
 
-#. (itstool) path: note/p
-#: C/commands_reading.page:28
-msgid ""
-"In the lists that follow, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
-msgstr ""
-"I listorna som följer kommer du se flera referenser till ”KP”. Alla \"KP\"-"
-"tangenter finns på det numeriska tangentbordet (keypad). Du kommer också se "
-"att det finns olika tangenttryckningar beroende på om du använder en "
-"stationär eller en bärbar dator -- eller mer korrekt, huruvida du använder "
-"<app>Orca</app>s tangentbordslayout för stationär eller bärbar dator. För "
-"mer information se ämnet <link xref=\"howto_keyboard_layout"
-"\">Tangentbordslayout</link>."
-
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
 msgid "Reading Your Current Location"
@@ -1506,7 +1485,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-msgid "Perform basic where am I:"
+msgid "Perform basic Where Am I:"
 msgstr "Utför grundläggande ”Var är jag”:"
 
 #. (itstool) path: item/p
@@ -1522,7 +1501,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-msgid "Perform detailed where am I:"
+msgid "Perform detailed Where Am I:"
 msgstr "Utför detaljerad ”Var är jag”:"
 
 #. (itstool) path: item/p
@@ -1553,6 +1532,7 @@ msgstr ""
 msgid "Link Details"
 msgstr "Länkdetaljer"
 
+# TODO: Speak Link Details
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
 msgid ""
@@ -1560,7 +1540,7 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speak Link Details command to a keystroke. Please see <link xref="
+"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -1603,19 +1583,19 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
 msgid ""
-"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Aktivera ”klistrigt” fokusläge: <keyseq><key>Orca-modifierare</key><key>A</"
+"Aktivera klistrigt fokusläge: <keyseq><key>Orca-modifierare</key><key>A</"
 "key></keyseq> (dubbelklickat)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
 msgid ""
-"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
-"Aktivera ”klistrigt” bläddringsläge: <keyseq><key>Orca-modifierare</"
+"Aktivera klistrigt bläddringsläge: <keyseq><key>Orca-modifierare</"
 "key><key>A</key></keyseq> (trippelklickat)"
 
 #. (itstool) path: section/title
@@ -2368,11 +2348,11 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
 msgid ""
-"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
-"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+"Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
+"key></keyseq> and <keyseq><key>Comma</key></keyseq>"
 msgstr ""
-"Början och slut på aktuell behållare: <keyseq><key>Skift</key><key>komma</"
-"key></keyseq> och <keyseq><key>komma</key></keyseq>"
+"Början och slut på aktuell behållare: <keyseq><key>Skift</key><key>Komma</"
+"key></keyseq> och <keyseq><key>Komma</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -3225,12 +3205,12 @@ msgstr ""
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
-"<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
-"key as <key>KeyPad 0</key>."
+"<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
+"<key>KP_0</key>."
 msgstr ""
 "Om du använder layouten för stationär dator kommer Orca-modifieraren vara "
-"både <key>Insert</key> och <key>KeyPad Insert</key>, där den senare är samma "
-"tangent som <key>KeyPad 0</key>."
+"både <key>Insert</key> och <key>KP_Insert</key>, där den senare är samma "
+"tangent som <key>KP_0</key>."
 
 #. (itstool) path: page/p
 #: C/howto_keyboard_layout.page:35
@@ -3261,8 +3241,8 @@ msgstr "Pila till den önskade layouten."
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
-msgid "5. \"Learn\" Mode"
-msgstr "5. ”Inlärnings”-läge"
+msgid "5. Learn Mode"
+msgstr "5. Inlärningsläge"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -3271,8 +3251,8 @@ msgstr "Upptäcka <app>Orca</app>s kommandon"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-msgid "\"Learn\" Mode"
-msgstr "”Inlärnings”-läge"
+msgid "Learn Mode"
+msgstr "Inlärningsläge"
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:25
@@ -4658,7 +4638,6 @@ msgstr "Växla den då den är <key>Orca-modifieraren</key>"
 msgid "CapsLock in Laptop Layout"
 msgstr "CapsLock vid bärbar dator-layout"
 
-# TODO: Typing? Not pressing, pushing or some other choise of word?
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
 msgid ""
@@ -4666,7 +4645,7 @@ msgid ""
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"<key>CapsLock</key>, you can do so by either pressing <key>CapsLock</key> "
 "twice (requires at-spi2 version 2.32 or later), or by performing the "
 "following steps:"
 msgstr ""
@@ -4702,8 +4681,8 @@ msgstr "Tryck <key>CapsLock</key> för att växla dess låsningsläge."
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
 msgctxt "sort"
-msgid "1. WhereAmI"
-msgstr "1. VarÄrJag"
+msgid "1. Where Am I"
+msgstr "3. Var är jag"
 
 #. (itstool) path: info/desc
 #: C/howto_whereami.page:6
@@ -4712,8 +4691,8 @@ msgstr "Få reda på din position"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-msgid "WhereAmI"
-msgstr "VarÄrJag"
+msgid "Where Am I"
+msgstr "Var är jag"
 
 #. (itstool) path: page/p
 #: C/howto_whereami.page:18
@@ -4988,16 +4967,13 @@ msgstr "För att starta <app>Orca</app>:"
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
-"use. For instance, in GNOME 3.x this option can be found in the Universal "
-"Access Control Center panel on the <gui>Seeing</gui> page."
+"use."
 msgstr ""
 "Metoden för att ställa in <app>Orca</app> att startas automatiskt som din "
-"föredragna skärmläsare beror på vilken skrivbordsmiljö du använder. I GNOME "
-"3.x kan till exempel detta alternativ hittas i kontrollpanelen för allmän "
-"åtkomst på sidan <gui>Se</gui>."
+"föredragna skärmläsare beror på vilken skrivbordsmiljö du använder."
 
 #. (itstool) path: item/p
-#: C/introduction.page:46
+#: C/introduction.page:44
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5006,7 +4982,7 @@ msgstr ""
 "key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:52
+#: C/introduction.page:50
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -5016,12 +4992,12 @@ msgstr ""
 "key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:61
+#: C/introduction.page:59
 msgid "Load-Time Options"
 msgstr "Flaggor vid inläsning"
 
 #. (itstool) path: section/p
-#: C/introduction.page:62
+#: C/introduction.page:60
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5030,23 +5006,23 @@ msgstr ""
 "eller från <gui>Kör</gui>-dialogen:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:68
+#: C/introduction.page:66
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Visa hjälpmeddelandet"
 
 #. (itstool) path: item/p
-#: C/introduction.page:71
+#: C/introduction.page:69
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr "<cmd>-v</cmd>, <cmd>--version</cmd>: Visa versionen av <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:75
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: Konfigurera användarinställningar"
 
 #. (itstool) path: item/p
-#: C/introduction.page:82
+#: C/introduction.page:80
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5055,7 +5031,7 @@ msgstr ""
 "em> som alternativ katalog för användarinställningar"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:87
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5064,22 +5040,22 @@ msgstr ""
 "flagga, där <em>flagga</em> kan vara en av följande:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:95 C/introduction.page:107
+#: C/introduction.page:93 C/introduction.page:105
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96 C/introduction.page:108
+#: C/introduction.page:94 C/introduction.page:106
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:100
+#: C/introduction.page:98
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5088,7 +5064,7 @@ msgstr ""
 "av en flagga, där <em>flagga</em> kan vara en av följande:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:112
+#: C/introduction.page:110
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5097,7 +5073,7 @@ msgstr ""
 "från en given <app>Orca</app>-profilfil"
 
 #. (itstool) path: item/p
-#: C/introduction.page:118
+#: C/introduction.page:116
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5106,21 +5082,21 @@ msgstr ""
 "körs"
 
 #. (itstool) path: item/p
-#: C/introduction.page:123
+#: C/introduction.page:121
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Skriv ut de kända körande programmen"
 
 #. (itstool) path: item/p
-#: C/introduction.page:129
+#: C/introduction.page:127
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Skicka felsökningsutdata till debug-ÅÅÅÅ-MM-DD-TT:MM:SS."
 "out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:134
+#: C/introduction.page:132
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5435,21 +5411,21 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-msgid "Message duration (secs)"
-msgstr "Meddelandelängd (sek)"
+msgid "Duration (secs)"
+msgstr "Längd (sek)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
-"Message duration (secs)</gui> spin button. Note that the value of this "
-"setting will be ignored if you have enabled persistent flash messages."
+"Duration (secs)</gui> spin button. Note that the value of this setting will "
+"be ignored if you have enabled persistent flash messages."
 msgstr ""
 "Tidsperioden som <app>Orca</app> kommer vänta innan meddelandet tas bort och "
 "det ursprungliga innehållet på din skärm återställs kan ställas in i "
-"snurrknappen <gui>Meddelandelängd (sek)</gui>. Notera att värdet på denna "
-"inställning kommer ignoreras om du har aktiverat beständiga blixtmeddelanden."
+"snurrknappen <gui>Längd (sek)</gui>. Notera att värdet på denna inställning "
+"kommer ignoreras om du har aktiverat beständiga blixtmeddelanden."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:178
@@ -5912,7 +5888,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_general.page:27
 msgid ""
-"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"The <gui>Keyboard Layout</gui> radio button group allows you to specify if "
 "you will be working on a desktop (i.e. with a numeric keypad) or laptop "
 "keyboard. Which layout you choose will determine both the <key>Orca "
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
@@ -6285,8 +6261,8 @@ msgstr "Standardvärde: 10"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:253
-msgid "Restrict to"
-msgstr "Begränsa till"
+msgid "Applies to"
+msgstr "Gäller för"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:254
@@ -6457,10 +6433,10 @@ msgstr "Orca-modifierartangenter"
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
 msgid ""
-"The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
+"The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
-"Kombinationsrutan <gui>Modifierartangenter för skärmläsare</gui> låter dig "
+"Kombinationsrutan <gui>Modifierartangent(er) för skärmläsare</gui> låter dig "
 "välja vilken tangent eller vilka tangenter som kommer att tjäna som Orca-"
 "modifieraren. De tillgängliga alternativen är:"
 
@@ -6504,10 +6480,10 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
 msgid ""
-"The <gui>Function</gui> column contains a description of the <app>Orca</app> "
+"The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
 msgstr ""
-"Kolumnen <gui>Funktion</gui> innehåller en beskrivning av <app>Orca</app>-"
+"Kolumnen <gui>Kommando</gui> innehåller en beskrivning av <app>Orca</app>-"
 "kommandot som ska utföras."
 
 #. (itstool) path: item/p
@@ -6528,11 +6504,11 @@ msgstr ""
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
-"function."
+"command."
 msgstr ""
 "Kolumnen <gui>Ändrad</gui> tjänar både som en indikator på vad som ändrats "
-"och som ett sätt att återställa standardbindningarna associerade med den "
-"funktionen."
+"och som ett sätt att återställa standardbindningarna associerade med det "
+"kommandot."
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:66
@@ -6643,10 +6619,10 @@ msgstr "Aktivera blanksteg"
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
 msgid ""
-"This option controls whether or not <key>space</key> should be spoken when "
+"This option controls whether or not <key>Space</key> should be spoken when "
 "pressed."
 msgstr ""
-"Detta alternativ styr huruvida <key>blanksteg</key> ska läsas upp då det "
+"Detta alternativ styr huruvida <key>Blanksteg</key> ska läsas upp då det "
 "trycks ned."
 
 #. (itstool) path: section/title
@@ -6686,12 +6662,12 @@ msgstr "Aktivera åtgärdstangenter"
 #: C/preferences_key_echo.page:93
 msgid ""
 "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
-"key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
-"key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
-"spoken when pressed."
+"key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
+"when pressed."
 msgstr ""
 "Detta alternativ styr huruvida <key>Backsteg</key>, <key>Delete </key>, "
-"<key>Retur</key>, <key>Escape</key>, <key>Tabb</key>, <key>Page Up</key>, "
+"<key>Retur</key>, <key>Esc</key>, <key>Tabb</key>, <key>Page Up</key>, "
 "<key>Page Down</key>, <key>Home</key> och <key>End</key> ska läsas upp då de "
 "trycks ned."
 
@@ -6887,9 +6863,11 @@ msgstr "Lägga till en ny ordbokspost"
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
 msgid ""
-"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 msgstr ""
-"Tryck ned knappen Ny post (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Tryck ned knappen <gui>Ny post</gui> (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:44
@@ -6950,9 +6928,12 @@ msgstr "Flytta till posten som du vill ta bort."
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+msgid ""
+"Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
+"keyseq>."
 msgstr ""
-"Tryck på Ta bort-knappen eller <keyseq><key>Alt</key><key>D</key></keyseq>."
+"Tryck på knappen <gui>Ta bort</gui> eller <keyseq><key>Alt</key><key>D</"
+"key></keyseq>."
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
@@ -7423,17 +7404,15 @@ msgstr ""
 "\"preferences_general#say_all_announce_context\">Annonsera "
 "sammanhangsberoende information i Läs upp allt</link> för mer information."
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
-msgid "Read full row in GUI tables"
+msgid "Speak full row in GUI tables"
 msgstr "Läs upp hel rad i gränssnittstabeller"
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
 msgid ""
-"If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
 "<app>Orca</app> will speak the entire row. If you would prefer to hear only "
 "the cell with focus, you should uncheck this checkbox."
@@ -7443,16 +7422,15 @@ msgstr ""
 "programtabeller som meddelandelistan i din inkorg. Om du föredrar att endast "
 "höra cellen som har fokus bör du avmarkera denna kryssruta."
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
-msgid "Read full row in document tables"
+msgid "Speak full row in document tables"
 msgstr "Läs upp hel rad i dokumenttabeller"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
 msgid ""
-"If <gui>Read full row in document tables</gui> is checked, as you arrow up "
+"If <gui>Speak full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
 "documents, <app>Orca</app> will speak the entire row. If you would prefer to "
 "hear only the cell with focus, you should uncheck this checkbox."
@@ -7462,16 +7440,15 @@ msgstr ""
 "de i <app>Writer</app> och webbdokument. Om du föredrar att endast höra "
 "cellen som har fokus bör du avmarkera denna kryssruta."
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
-msgid "Read full row in spreadsheets"
+msgid "Speak full row in spreadsheets"
 msgstr "Läs upp hel rad i kalkylblad"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
 msgid ""
-"If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
 "would prefer to hear only the cell with focus, you should uncheck this "
 "checkbox."
@@ -7780,13 +7757,13 @@ msgstr "Ångra ändringar"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
 msgid ""
-"Beneath the list of text attributes, there is a Reset button "
+"Beneath the list of text attributes, there is a <gui>Reset</gui> button "
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
 "of the table to what they were when the dialog was first displayed."
 msgstr ""
-"Under listan med textattribut finns en Återställ-knapp (<keyseq><key>Alt</"
-"key><key>R</key></keyseq>) som återställer värdena i tabellen till vad de "
-"var då dialogen först visades."
+"Under listan med textattribut finns en <gui>Återställ</gui>-knapp "
+"(<keyseq><key>Alt</key><key>R</key></keyseq>) som återställer värdena i "
+"tabellen till vad de var då dialogen först visades."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:83
@@ -7796,14 +7773,14 @@ msgstr "Arrangera om presentationsordning"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
 msgid ""
-"When you initially display the text attribute page, all of your enabled "
-"attributes are placed at the top of the table in the order in which they "
-"will be spoken. There are four buttons which can be used to rearrange the "
-"order of presentation."
+"When you initially display the <gui>Text Attributes</gui> page, all of your "
+"enabled attributes are placed at the top of the table in the order in which "
+"they will be spoken. There are four buttons which can be used to rearrange "
+"the order of presentation."
 msgstr ""
-"Då du först visar sidan för textattribut så är alla dina aktiverade attribut "
-"högst upp i tabellen i den ordning som de kommer läsas upp. Det finns fyra "
-"knappar som kan användas för att ändra presentationsordningen."
+"Då du först visar sidan <gui>Textattribut</gui> så är alla dina aktiverade "
+"attribut högst upp i tabellen i den ordning som de kommer läsas upp. Det "
+"finns fyra knappar som kan användas för att ändra presentationsordningen."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:92
@@ -7817,19 +7794,19 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
 msgid ""
-"<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
-"the selected attribute up one row."
+"<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
+"selected attribute up one row."
 msgstr ""
-"<gui>Flytta en uppåt</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): "
+"<gui>Flytta uppåt</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): "
 "flyttar det markerade attributet en rad uppåt."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
 msgid ""
-"<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-"moves the selected attribute down one row."
+"<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
+"the selected attribute down one row."
 msgstr ""
-"<gui>Flytta en nedåt</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
+"<gui>Flytta nedåt</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
 "flyttar det markerade attributet en rad nedåt."
 
 #. (itstool) path: item/p
@@ -8013,18 +7990,18 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-msgid "<gui>icon</gui>: Plays a tone"
-msgstr "<gui>ikon</gui>: Spelar en ton"
+msgid "<gui>Icon</gui>: Plays a tone"
+msgstr "<gui>Ikon</gui>: Spelar en ton"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-msgid "<gui>spell</gui>: Speaks the word \"capital\""
-msgstr "<gui>uppläsning</gui>: Läser upp ordet ”capital”"
+msgid "<gui>Spell</gui>: Speaks the word \"capital\""
+msgstr "<gui>Bokstavering</gui>: Läser upp ordet ”capital”"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-msgid "<gui>none</gui>"
-msgstr "<gui>ingen</gui>"
+msgid "<gui>None</gui>"
+msgstr "<gui>Ingen</gui>"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
@@ -8120,6 +8097,80 @@ msgstr ""
 "Att kryssa i kryssrutan <gui>Läs upp nummer som siffror</gui> får <app>Orca</"
 "app> att dela upp ett nummer som ”123” till enstaka siffror (”1”, ”2” och "
 "”3”) innan det skickas vidare till talsyntesen."
+
+#, fuzzy
+#~| msgctxt "sort"
+#~| msgid "1. Gecko Navigation"
+#~ msgctxt "sort"
+#~ msgid "1. Web Navigation"
+#~ msgstr "1. Gecko-navigering"
+
+#, fuzzy
+#~| msgid "Page Navigation"
+#~ msgctxt "link"
+#~ msgid "Web Navigation"
+#~ msgstr "Sidnavigering"
+
+#, fuzzy
+#~| msgid "Automatic focus mode during caret navigation"
+#~ msgid "Automatic focus mode during native navigation"
+#~ msgstr "Automatiskt fokusläge under markörnavigering"
+
+#, fuzzy
+#~| msgid ""
+#~| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
+#~| "focus mode when you use structural navigation commands to navigate to a "
+#~| "form field. For example, pressing <key>E</key> to move to the next entry "
+#~| "would move focus there and also turn focus mode on so that your next "
+#~| "press of <key>E</key> would type an \"e\" into that entry. If this "
+#~| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
+#~| "mode and your next press of <key>E</key> would move you to the next "
+#~| "entry on the page."
+#~ msgid ""
+#~ "If this checkbox is checked, <app>Orca</app> will automatically turn on "
+#~ "focus mode when you use native browser navigation commands to navigate to "
+#~ "a form field. For example, pressing <key>Tab</key> to move to the next "
+#~ "entry would move focus there and also turn focus mode on so that your "
+#~ "next press of <key>E</key> would type an \"e\" into that entry. If this "
+#~ "checkbox is not checked, then <app>Orca</app> will leave you in browse "
+#~ "mode and your next press of <key>E</key> would move you to the next entry "
+#~ "on the page."
+#~ msgstr ""
+#~ "Om denna kryssruta är ikryssad kommer <app>Orca</app> automatiskt slå på "
+#~ "fokusläge när du använder kommandon för strukturell navigering för att "
+#~ "navigera till ett formulärfält. Till exempel så skulle att trycka <key>E</"
+#~ "key> för att flytta till nästa post flytta fokus dit och även slå på "
+#~ "fokusläge så att ditt nästa tryck på <key>E</key> skulle skriva in ett "
+#~ "”e” i den posten. Om denna kryssruta inte är ikryssad skulle <app>Orca</"
+#~ "app> lämna dig i bläddringsläge och ditt nästa tryck på <key>E</key> "
+#~ "skulle flytta dig till nästa post på sidan."
+
+#~ msgid ""
+#~ "In the lists that follow, you will see several references to \"KP\". All "
+#~ "\"KP\" keys are located on the numeric keypad. You will also notice that "
+#~ "there are different keystrokes depending upon whether you are using a "
+#~ "desktop or a laptop -- or more accurately, whether you are using "
+#~ "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
+#~ "For additional information, please see the <link xref="
+#~ "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
+#~ msgstr ""
+#~ "I listorna som följer kommer du se flera referenser till ”KP”. Alla \"KP"
+#~ "\"-tangenter finns på det numeriska tangentbordet (keypad). Du kommer "
+#~ "också se att det finns olika tangenttryckningar beroende på om du "
+#~ "använder en stationär eller en bärbar dator -- eller mer korrekt, "
+#~ "huruvida du använder <app>Orca</app>s tangentbordslayout för stationär "
+#~ "eller bärbar dator. För mer information se ämnet <link xref="
+#~ "\"howto_keyboard_layout\">Tangentbordslayout</link>."
+
+#~ msgctxt "sort"
+#~ msgid "1. WhereAmI"
+#~ msgstr "1. VarÄrJag"
+
+#~ msgid "WhereAmI"
+#~ msgstr "VarÄrJag"
+
+#~ msgid "Restrict to"
+#~ msgstr "Begränsa till"
 
 #~ msgid "Speak the selected text: (Unbound)"
 #~ msgstr "Läs upp den markerade texten: (Inte bunden)"
