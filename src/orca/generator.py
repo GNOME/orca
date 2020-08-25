@@ -366,11 +366,11 @@ class Generator:
         """
         attrs = self._script.utilities.objectAttributes(obj)
         placeholder = attrs.get('placeholder-text')
-        if placeholder:
+        if placeholder and placeholder != obj.name:
             return [placeholder]
 
         placeholder = attrs.get('placeholder')
-        if placeholder:
+        if placeholder and placeholder != obj.name:
             return [placeholder]
 
         return []
