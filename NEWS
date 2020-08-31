@@ -1,3 +1,11 @@
+3.36.6 - 31 August 2020
+
+General:
+
+ * Add some sanity checks to prevent crashing due to GStreamer failure
+
+=========
+
 3.36.5 - 11 August 2020
 
 Web + Thunderbird:
