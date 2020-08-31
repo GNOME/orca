@@ -46,6 +46,8 @@ class Player:
         self._initialized = False
         self._source = None
         self._sink = None
+        self._player = None
+        self._pipeline = None
 
         if not _gstreamerAvailable:
             msg = 'SOUND ERROR: Gstreamer is not available'
@@ -108,6 +110,11 @@ class Player:
             return
 
         self._player = Gst.ElementFactory.make('playbin', 'player')
+        if self._player is None:
+            msg = 'SOUND ERROR: Gstreamer is available, but player is None'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         bus = self._player.get_bus()
         bus.add_signal_watch()
         bus.connect("message", self._onPlayerMessage)
@@ -149,8 +156,11 @@ class Player:
             element.set_state(Gst.State.NULL)
             return
 
-        self._player.set_state(Gst.State.NULL)
-        self._pipeline.set_state(Gst.State.NULL)
+        if self._player:
+            self._player.set_state(Gst.State.NULL)
+
+        if self._pipeline:
+            self._pipeline.set_state(Gst.State.NULL)
 
     def shutdown(self):
         """Shuts down the sound utilities."""
