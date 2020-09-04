@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-06-30 15:04+0000\n"
+"POT-Creation-Date: 2020-08-31 15:11+0000\n"
 "PO-Revision-Date: 2020-07-01 09:20+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
@@ -8190,7 +8190,6 @@ msgstr "DIR"
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
 #: src/orca/messages.py:258
-#| msgid "Print the known running applications"
 msgid "Version of this application"
 msgstr "Versión de esta aplicación"
 
@@ -11140,7 +11139,6 @@ msgstr "no seleccionado"
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2408
-#| msgid "%H hours, %M minutes and %S seconds."
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H horas, %M minutos y %S segundos"
 
@@ -11148,7 +11146,6 @@ msgstr "%H horas, %M minutos y %S segundos"
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2413
-#| msgid "%H hours and %M minutes."
 msgid "%H hours and %M minutes"
 msgstr "%H horas y %M minutos"
 
@@ -12532,7 +12529,6 @@ msgstr "Frecuencia (segs):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: src/orca/orca-setup.ui:714
-#| msgid "Application"
 msgid "Applies to:"
 msgstr "Aplica a:"
 
@@ -12831,7 +12827,6 @@ msgstr "Activar _mensajes temporales"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
 #: src/orca/orca-setup.ui:2514
-#| msgid "Messa_ge duration (secs):"
 msgid "D_uration (secs):"
 msgstr "D_uración (segs):"
 
@@ -14367,7 +14362,7 @@ msgstr ""
 #~ msgstr "Versión %s de Orca."
 
 #~ msgid "Welcome to Orca setup."
-#~ msgstr "Bienvenido a la configuración de Orca."
+#~ msgstr "Bienvenido/a a la configuración de Orca."
 
 #~ msgid "Enable Braille Monitor?  Enter y or n: "
 #~ msgstr "¿Activar monitor braille? Introduzca s o n: "
@@ -14395,7 +14390,7 @@ msgstr ""
 #~ msgstr "Activar _monitor Braille"
 
 #~ msgid "Welcome to Orca."
-#~ msgstr "Bienvenido a Orca."
+#~ msgstr "Bienvenido/a a Orca."
 
 #~ msgid "Goodbye."
 #~ msgstr "Adiós."
@@ -14422,7 +14417,7 @@ msgstr ""
 #~ msgstr "Notificación %s"
 
 #~ msgid "Welcome to StarOffice"
-#~ msgstr "Bienvenido a StarOffice"
+#~ msgstr "Bienvenido/a a StarOffice"
 
 #~ msgid "Available fields"
 #~ msgstr "Campos disponibles"
