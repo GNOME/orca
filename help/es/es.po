@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2020-08-19 10:12+0000\n"
+"POT-Creation-Date: 2020-09-03 09:30+0000\n"
 "PO-Revision-Date: 2020-08-26 09:23+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
@@ -438,8 +438,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-#| msgid ""
-#| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Entrar en modo de aprendizaje: <keyseq><key>Modificador de Orca</key><key>H</"
@@ -447,7 +445,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-#| msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Salir del modo de aprendizaje: <keyseq><key>Esc</key></keyseq>"
 
@@ -1054,8 +1051,6 @@ msgstr "Añadir el contenido en revisión al portapapeles: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
-#| msgctxt "sort"
-#| msgid "1. Live Region"
 msgctxt "sort"
 msgid "1. Live Regions"
 msgstr "1. Regiones activas"
@@ -1177,14 +1172,6 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/commands_mouse.page:29 C/commands_reading.page:28
-#| msgid ""
-#| "In the list that follows, you will see several references to \"KP\". All "
-#| "\"KP\" keys are located on the numeric keypad. You will also notice that "
-#| "there are different keystrokes depending upon whether you are using a "
-#| "desktop or a laptop -- or more accurately, whether you are using "
-#| "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
-#| "For additional information, please see the <link xref="
-#| "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgid ""
 "Below you will see several references to \"KP\". All \"KP\" keys are located "
 "on the numeric keypad. You will also notice that there are different "
@@ -1504,7 +1491,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-#| msgid "Perform basic where am I:"
 msgid "Perform basic Where Am I:"
 msgstr "Realizar el «dónde estoy» básico:"
 
@@ -1521,7 +1507,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-#| msgid "Perform detailed where am I:"
 msgid "Perform detailed Where Am I:"
 msgstr "Realizar el «dónde estoy» detallado:"
 
@@ -1555,14 +1540,6 @@ msgstr "Detalles del enlace"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
-#| msgid ""
-#| "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be "
-#| "used to announce the details associated with the link such as the link "
-#| "type, if the link is visited, the site description, and file size. If you "
-#| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speak Link Details command to a keystroke. Please see "
-#| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
-#| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1610,9 +1587,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
-#| msgid ""
-#| "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</"
-#| "key></keyseq> (double-clicked)"
 msgid ""
 "Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
@@ -1622,9 +1596,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
-#| msgid ""
-#| "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</"
-#| "key></keyseq> (triple-clicked)"
 msgid ""
 "Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
@@ -2385,9 +2356,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#| msgid ""
-#| "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
-#| "key></keyseq> and <keyseq><key>comma</key></keyseq>"
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
 "key></keyseq> and <keyseq><key>Comma</key></keyseq>"
@@ -3245,10 +3213,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
-#| msgid ""
-#| "If you are using the Desktop layout, the Orca Modifier will be both "
-#| "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
-#| "key as <key>KeyPad 0</key>."
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
 "<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
@@ -3286,8 +3250,6 @@ msgstr "Seleccione la distribución que quiere."
 
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
-#| msgctxt "sort"
-#| msgid "5. \"Learn\" Mode"
 msgctxt "sort"
 msgid "5. Learn Mode"
 msgstr "5. Modo de aprendizaje"
@@ -3299,7 +3261,6 @@ msgstr "Descubrir los comandos de <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-#| msgid "\"Learn\" Mode"
 msgid "Learn Mode"
 msgstr "Modos de aprendizaje"
 
@@ -4729,14 +4690,6 @@ msgstr "Bloq Mayús en distribución de portátil"
 
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
-#| msgid ""
-#| "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
-#| "impacts which key is used as the Orca Modifier. If you are using the "
-#| "Laptop layout, the default Orca Modifier will be <key>CapsLock</key>. If "
-#| "you are using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-#| "<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
-#| "twice (requires at-spi2 version 2.32 or later), or by performing the "
-#| "following steps:"
 msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
@@ -4777,8 +4730,6 @@ msgstr "Pulse <key>Bloq Mayús</key> para cambiar su estado de bloqueo."
 
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
-#| msgctxt "sort"
-#| msgid "3. Where Am I"
 msgctxt "sort"
 msgid "1. Where Am I"
 msgstr "1. ¿Dónde estoy?"
@@ -4790,8 +4741,6 @@ msgstr "Aprender sobre su ubicación"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-#| msgctxt "link"
-#| msgid "Where Am I"
 msgid "Where Am I"
 msgstr "¿Dónde estoy?"
 
@@ -5013,7 +4962,7 @@ msgstr "Referencia rápida"
 #: C/introduction.page:5
 msgctxt "sort"
 msgid "1. Welcome to Orca"
-msgstr "1. Bienvenido a Orca"
+msgstr "1. Bienvenido/a a Orca"
 
 #. (itstool) path: info/desc
 #: C/introduction.page:6
@@ -5023,7 +4972,7 @@ msgstr "Introducción al lector de la pantalla <app>Orca</app>"
 #. (itstool) path: page/title
 #: C/introduction.page:17
 msgid "Welcome to Orca"
-msgstr "Bienvenido a Orca"
+msgstr "Bienvenido/a a Orca"
 
 #. (itstool) path: page/p
 #: C/introduction.page:18
@@ -5066,12 +5015,6 @@ msgstr "Para lanzar <app>Orca</app>:"
 
 #. (itstool) path: item/p
 #: C/introduction.page:37
-#| msgid ""
-#| "The method for configuring <app>Orca</app> to be launched automatically "
-#| "as your preferred screen reader will depend upon which desktop "
-#| "environment you use. For instance, in GNOME 3.x this option can be found "
-#| "in the Universal Access Control Center panel on the <gui>Seeing</gui> "
-#| "page."
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
@@ -5523,18 +5466,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-#| msgid "Message duration (secs)"
 msgid "Duration (secs)"
 msgstr "Duración (segs)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
-#| msgid ""
-#| "The amount of time <app>Orca</app> will wait before removing the message "
-#| "and restoring the original contents of your display can be set in the "
-#| "<gui> Message duration (secs)</gui> spin button. Note that the value of "
-#| "this setting will be ignored if you have enabled persistent flash "
-#| "messages."
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
@@ -6010,12 +5946,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:27
-#| msgid ""
-#| "The <gui>keyboard layout</gui> radio button group allows you to specify "
-#| "if you will be working on a desktop (i.e. with a numeric keypad) or "
-#| "laptop keyboard. Which layout you choose will determine both the "
-#| "<key>Orca Modifier</key> as well as a number of keyboard shortcuts for "
-#| "performing <app>Orca</app> commands."
 msgid ""
 "The <gui>Keyboard Layout</gui> radio button group allows you to specify if "
 "you will be working on a desktop (i.e. with a numeric keypad) or laptop "
@@ -6569,10 +6499,6 @@ msgstr "Teclas modificadoras de Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
-#| msgid ""
-#| "The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
-#| "which key or keys will serve as the Orca Modifier. The available options "
-#| "are:"
 msgid ""
 "The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
@@ -6620,9 +6546,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
-#| msgid ""
-#| "The <gui>Function</gui> column contains a description of the <app>Orca</"
-#| "app> command to be performed."
 msgid ""
 "The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
@@ -6645,10 +6568,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:59
-#| msgid ""
-#| "The <gui>Modified</gui> column serves both as an indicator to what has "
-#| "been changed and as a way to restore the default bindings associated with "
-#| "that function."
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
@@ -6765,9 +6684,6 @@ msgstr "Activar espacio"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
-#| msgid ""
-#| "This option controls whether or not <key>space</key> should be spoken "
-#| "when pressed."
 msgid ""
 "This option controls whether or not <key>Space</key> should be spoken when "
 "pressed."
@@ -6811,11 +6727,6 @@ msgstr "Activar teclas de acción"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:93
-#| msgid ""
-#| "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
-#| "key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
-#| "key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
-#| "spoken when pressed."
 msgid ""
 "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
 "key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
@@ -7022,8 +6933,6 @@ msgstr "Añadir una entrada nueva de diccionario"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
-#| msgid ""
-#| "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgid ""
 "Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
 "keyseq>)"
@@ -7090,8 +6999,6 @@ msgstr "Desplácese hasta la entrada que quiere eliminar."
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-#| msgid ""
-#| "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
 msgid ""
 "Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
 "keyseq>."
@@ -7574,17 +7481,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
-#| msgid "Read full row in GUI tables"
 msgid "Speak full row in GUI tables"
 msgstr "Leer la fila completa en tablas de la IGU"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
-#| msgid ""
-#| "If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
-#| "down in application tables such as the list of messages in your Inbox, "
-#| "<app>Orca</app> will speak the entire row. If you would prefer to hear "
-#| "only the cell with focus, you should uncheck this checkbox."
 msgid ""
 "If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
@@ -7599,17 +7500,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
-#| msgid "Read full row in document tables"
 msgid "Speak full row in document tables"
 msgstr "Leer la fila completa en tablas del documento"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
-#| msgid ""
-#| "If <gui>Read full row in document tables</gui> is checked, as you arrow "
-#| "up and down in tables such as those found in <app>Writer</app> and web "
-#| "documents, <app>Orca</app> will speak the entire row. If you would prefer "
-#| "to hear only the cell with focus, you should uncheck this checkbox."
 msgid ""
 "If <gui>Speak full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7623,17 +7518,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
-#| msgid "Read full row in spreadsheets"
 msgid "Speak full row in spreadsheets"
 msgstr "Leer la fila completa en hojas de cálculo"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
-#| msgid ""
-#| "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up "
-#| "and down in spreadsheets, <app>Orca</app> will speak the entire row. If "
-#| "you would prefer to hear only the cell with focus, you should uncheck "
-#| "this checkbox."
 msgid ""
 "If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
@@ -7945,10 +7834,6 @@ msgstr "Deshaciendo cambios"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
-#| msgid ""
-#| "Beneath the list of text attributes, there is a Reset button "
-#| "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the "
-#| "values of the table to what they were when the dialog was first displayed."
 msgid ""
 "Beneath the list of text attributes, there is a <gui>Reset</gui> button "
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
@@ -7965,11 +7850,6 @@ msgstr "Reorganizando el orden de presentación"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
-#| msgid ""
-#| "When you initially display the text attribute page, all of your enabled "
-#| "attributes are placed at the top of the table in the order in which they "
-#| "will be spoken. There are four buttons which can be used to rearrange the "
-#| "order of presentation."
 msgid ""
 "When you initially display the <gui>Text Attributes</gui> page, all of your "
 "enabled attributes are placed at the top of the table in the order in which "
@@ -7992,9 +7872,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
-#| msgid ""
-#| "<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): "
-#| "moves the selected attribute up one row."
 msgid ""
 "<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
 "selected attribute up one row."
@@ -8004,9 +7881,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
-#| msgid ""
-#| "<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-#| "moves the selected attribute down one row."
 msgid ""
 "<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
 "the selected attribute down one row."
@@ -8195,19 +8069,16 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-#| msgid "<gui>icon</gui>: Plays a tone"
 msgid "<gui>Icon</gui>: Plays a tone"
 msgstr "<gui>Icono</gui>: reproduce un tono"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-#| msgid "<gui>spell</gui>: Speaks the word \"capital\""
 msgid "<gui>Spell</gui>: Speaks the word \"capital\""
 msgstr "<gui>Deletrear</gui>: habla la palabra «mayúscula»"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-#| msgid "<gui>none</gui>"
 msgid "<gui>None</gui>"
 msgstr "<gui>Ninguno</gui>"
 
