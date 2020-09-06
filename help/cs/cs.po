@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca\n"
-"POT-Creation-Date: 2019-01-07 20:33+0000\n"
-"PO-Revision-Date: 2019-03-13 10:05+0100\n"
+"Project-Id-Version: orca gnome-3.38\n"
+"POT-Creation-Date: 2020-08-19 10:12+0000\n"
+"PO-Revision-Date: 2020-09-06 10:08+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -424,14 +424,14 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Vstoupit do výukového režimu: <keyseq><key>Modifikátor Orca</key><key>H</"
 "key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
+msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Ukončit výukový režim: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
@@ -1094,8 +1094,8 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
-msgid "1. Live Region"
-msgstr "1. Živá oblast"
+msgid "1. Live Regions"
+msgstr "1. Živé oblasti"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:7
@@ -1208,24 +1208,22 @@ msgstr ""
 "<link xref=\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: note/p
-#: C/commands_mouse.page:29
+#: C/commands_mouse.page:29 C/commands_reading.page:28
 msgid ""
-"In the list that follows, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
+"Below you will see several references to \"KP\". All \"KP\" keys are located "
+"on the numeric keypad. You will also notice that there are different "
+"keystrokes depending upon whether you are using a desktop or a laptop -- or "
+"more accurately, whether you are using <app>Orca</app>'s Desktop keyboard "
+"layout or its Laptop keyboard layout. For additional information, please see "
+"the <link xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgstr ""
-"V seznamu níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, "
-"což je anglické označení pro numerickou (číselnou) klávesnici a všechny "
-"klávesy s touto zkratkou jsou umístěné na ní. Upozorňujeme také, že "
-"zmáčknutí klávesy se liší podle toho, jestli používáte stolní nebo přenosný "
-"počítač – respektive přesněji, jestli používáte rozložení klávesnice "
-"stolního nebo přenosného počítače podle čtečky <app>Orca</app>. Více "
-"informací najdete u tématu <link xref=\"howto_keyboard_layout\">rozložení "
-"klávesnice</link>."
+"Níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, což je "
+"anglické označení pro numerickou (číselnou) klávesnici a všechny klávesy s "
+"touto zkratkou jsou umístěné na ní. Upozorňujeme také, že zmáčknutí klávesy "
+"se liší podle toho, jestli používáte stolní nebo přenosný počítač – "
+"respektive přesněji, jestli používáte rozložení klávesnice stolního nebo "
+"přenosného počítače podle čtečky <app>Orca</app>. Více informací najdete u "
+"tématu <link xref=\"howto_keyboard_layout\">rozložení klávesnice</link>."
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:41
@@ -1433,26 +1431,6 @@ msgstr ""
 "Mimo příkazů kurzorové navigace, která je součástí GNOME, poskytuje "
 "<app>Orca</app> i několik příkazů, které můžete použít ke čtení dokumentů."
 
-#. (itstool) path: note/p
-#: C/commands_reading.page:28
-msgid ""
-"In the lists that follow, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
-msgstr ""
-"V seznamu níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, "
-"což je anglické označení pro numerickou (číselnou) klávesnici a všechny "
-"klávesy s touto zkratkou jsou umístěné na ní. Upozorňujeme také, že "
-"zmáčknutí klávesy se liší podle toho, jestli používáte stolní nebo přenosný "
-"počítač – respektive přesněji, jestli používáte rozložení klávesnice "
-"stolního nebo přenosného počítače podle čtečky <app>Orca</app>. Více "
-"informací najdete u tématu <link xref=\"howto_keyboard_layout\">rozložení "
-"klávesnice</link>."
-
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
 msgid "Reading Your Current Location"
@@ -1559,7 +1537,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-msgid "Perform basic where am I:"
+msgid "Perform basic Where Am I:"
 msgstr "Zjištění základních informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
@@ -1576,7 +1554,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-msgid "Perform detailed where am I:"
+msgid "Perform detailed Where Am I:"
 msgstr "Zjištění podrobných informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
@@ -1616,7 +1594,7 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speak Link Details command to a keystroke. Please see <link xref="
+"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -1658,19 +1636,19 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
 msgid ""
-"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
+"Zapnout přichytávací režim zaměřování: <keyseq><key>Modifikátor Orca</"
 "key><key>A</key></keyseq> (dvojité zmáčknutí)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
 msgid ""
-"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
-"Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
+"Zapnout přichytávací režim procházení: <keyseq><key>Modifikátor Orca</"
 "key><key>A</key></keyseq> (trojité zmáčknutí)"
 
 #. (itstool) path: section/title
@@ -1703,9 +1681,9 @@ msgid ""
 "to bind unbound commands."
 msgstr ""
 "<app>Orca</app> poskytuje příkaz pro přepínání mezi režimem rozvržení a "
-"objektovým režimem. Tento příkaz ve výchozím stavu nemá přiřazenou klávesovou "
-"zkratku. Jak mu ji přidělit, najdete v kapitole <link xref=\"howto_key_bindings"
-"\">Změna klávesových zkratek</link>."
+"objektovým režimem. Tento příkaz ve výchozím stavu nemá přiřazenou "
+"klávesovou zkratku. Jak mu ji přidělit, najdete v kapitole <link xref="
+"\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
@@ -2424,8 +2402,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
 msgid ""
-"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
-"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+"Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
+"key></keyseq> and <keyseq><key>Comma</key></keyseq>"
 msgstr ""
 "Začátek a konec aktuálního kentejneru: <keyseq><key>Shift</key><key>,</key></"
 "keyseq> a <keyseq><key>,</key></keyseq>"
@@ -2686,8 +2664,8 @@ msgstr ""
 #: C/commands_where_am_i.page:92
 msgid "Present size and location of current object in pixels: (Unbound)"
 msgstr ""
-"Prezentovat velikost a umístění aktuálního objektu v pixelech: (bez klávesové "
-"zkratky)"
+"Prezentovat velikost a umístění aktuálního objektu v pixelech: (bez "
+"klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
@@ -3277,8 +3255,8 @@ msgstr ""
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
-"<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
-"key as <key>KeyPad 0</key>."
+"<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
+"<key>KP_0</key>."
 msgstr ""
 "Pokud používáte rozložení Stolní počítač, výchozími modifikátory Orca budou "
 "<key>Insert</key> a <key>Ins</key> na numerické klávesnici, což je stejná "
@@ -3313,8 +3291,8 @@ msgstr "Zvolte požadované rozložení."
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
-msgid "5. \"Learn\" Mode"
-msgstr "5. „Výukový“ režim"
+msgid "5. Learn Mode"
+msgstr "5. Výukový režim"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -3323,8 +3301,8 @@ msgstr "Jak prozkoumat příkazy čtečky <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-msgid "\"Learn\" Mode"
-msgstr "„Výukový“ režim"
+msgid "Learn Mode"
+msgstr "Výukový režim"
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:25
@@ -4718,7 +4696,7 @@ msgid ""
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"<key>CapsLock</key>, you can do so by either pressing <key>CapsLock</key> "
 "twice (requires at-spi2 version 2.32 or later), or by performing the "
 "following steps:"
 msgstr ""
@@ -4728,7 +4706,7 @@ msgstr ""
 "modifikátorem Orca bude <key>CapsLock</key>. Pokud používáte ve čtečce "
 "<app>Orca</app> rozložení Notebook a chcete zamknout nebo odemknout "
 "<key>CapsLock</key>, můžete tak učinit buďto zmáčknutím <key>CapsLock</key> "
-"dvakrát po sobě (vyžaduje at-spi2 verze 2.32 nebo novější) nebo provedením "
+"dvakrát po sobě (vyžaduje at-spi2 verze 2.32 nebo novější) nebo pomocí "
 "následujících kroků:"
 
 #. (itstool) path: steps/title
@@ -4755,7 +4733,7 @@ msgstr "Přepněte stav zámku zmáčknutím <key>CapsLock</key>."
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
 msgctxt "sort"
-msgid "1. WhereAmI"
+msgid "1. Where Am I"
 msgstr "1. Kde se nacházím"
 
 #. (itstool) path: info/desc
@@ -4765,7 +4743,7 @@ msgstr "Jak zjistit svoji polohu"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-msgid "WhereAmI"
+msgid "Where Am I"
 msgstr "Kde se nacházím"
 
 #. (itstool) path: page/p
@@ -5038,16 +5016,14 @@ msgstr "Když chcete spustit aplikaci <app>Orca</app>:"
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
-"use. For instance, in GNOME 3.x this option can be found in the Universal "
-"Access Control Center panel on the <gui>Seeing</gui> page."
+"use."
 msgstr ""
 "Způsob, jak nastavit čtečku <app>Orca</app>, aby se spouštěla automticky "
 "jako vaše upřednostňovaná čtečka obrazovky, závisí na pracovním prostředí, "
-"které používáte. Například, v GNOME 3.x můžete tuto volbu najít v části "
-"<gui>Zrak</gui> na panelu <gui>Univerzální přístup</gui> v Centru nastavení."
+"které používáte."
 
 #. (itstool) path: item/p
-#: C/introduction.page:46
+#: C/introduction.page:44
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5056,7 +5032,7 @@ msgstr ""
 "<keyseq><key>Super</key> <key>Alt</key> <key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:52
+#: C/introduction.page:50
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -5066,12 +5042,12 @@ msgstr ""
 "<key>Enter</key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:61
+#: C/introduction.page:59
 msgid "Load-Time Options"
 msgstr "Volby při načítání"
 
 #. (itstool) path: section/p
-#: C/introduction.page:62
+#: C/introduction.page:60
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5080,24 +5056,24 @@ msgstr ""
 "dialogovém okně <app>Spuštění</app> zadat následující přepínače:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:68
+#: C/introduction.page:66
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Zobrazit zprávu s nápovědou"
 
 #. (itstool) path: item/p
-#: C/introduction.page:71
+#: C/introduction.page:69
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Zobrazit verzi aplikace<app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:75
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: Nastavit uživatelské předvolby"
 
 #. (itstool) path: item/p
-#: C/introduction.page:82
+#: C/introduction.page:80
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5106,7 +5082,7 @@ msgstr ""
 "<em>název_složky</em> jako alternativní složku pro uživatelské předvolby"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:87
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5115,22 +5091,22 @@ msgstr ""
 "kde <em>volba</em> může být něco z následujícího:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:95 C/introduction.page:107
+#: C/introduction.page:93 C/introduction.page:105
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96 C/introduction.page:108
+#: C/introduction.page:94 C/introduction.page:106
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:100
+#: C/introduction.page:98
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5139,7 +5115,7 @@ msgstr ""
 "kde <em>volba</em> může být něco z následujícího:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:112
+#: C/introduction.page:110
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5148,7 +5124,7 @@ msgstr ""
 "profil ze zadaného souboru s profilem <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:118
+#: C/introduction.page:116
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5157,19 +5133,19 @@ msgstr ""
 "aplikaci<app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:123
+#: C/introduction.page:121
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Vypsat známé běžící aplikace"
 
 #. (itstool) path: item/p
-#: C/introduction.page:129
+#: C/introduction.page:127
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Poslat ladicí výstup do debug-RRRR-MM-DD-HH:MM:SS.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:134
+#: C/introduction.page:132
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5483,21 +5459,21 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-msgid "Message duration (secs)"
-msgstr "Doba prezentování zprávy (v sekundách)"
+msgid "Duration (secs)"
+msgstr "Doba (v sekundách)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
-"Message duration (secs)</gui> spin button. Note that the value of this "
-"setting will be ignored if you have enabled persistent flash messages."
+"Duration (secs)</gui> spin button. Note that the value of this setting will "
+"be ignored if you have enabled persistent flash messages."
 msgstr ""
 "Dobu, po kterou bude <app>Orca</app> čekat, než zprávu odstraní a obnoví "
-"původní obsah řádku, můžete nastavit pomocí číselníku <gui>Doba prezentování "
-"zprávy (v sekundách)</gui>. Uvědomte si, že pokud máte zapnuté trvalé "
-"bleskové zprávy, bude hodnota tohoto nastavení ignorována."
+"původní obsah řádku, můžete nastavit pomocí číselníku <gui>Doba (v sekundách)"
+"</gui>. Uvědomte si, že pokud máte zapnuté trvalé bleskové zprávy, bude "
+"hodnota tohoto nastavení ignorována."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:178
@@ -5960,7 +5936,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_general.page:27
 msgid ""
-"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"The <gui>Keyboard Layout</gui> radio button group allows you to specify if "
 "you will be working on a desktop (i.e. with a numeric keypad) or laptop "
 "keyboard. Which layout you choose will determine both the <key>Orca "
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
@@ -6333,8 +6309,8 @@ msgstr "Výchozí hodnota: 10"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:253
-msgid "Restrict to"
-msgstr "Omezit na"
+msgid "Applies to"
+msgstr "Použít na"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:254
@@ -6505,7 +6481,7 @@ msgstr "Modifikační klávesy Orca"
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
 msgid ""
-"The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
+"The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
 "Rozbalovací seznam <gui>Modifikační klávesy Orca</gui> vám umožňuje si "
@@ -6552,10 +6528,10 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
 msgid ""
-"The <gui>Function</gui> column contains a description of the <app>Orca</app> "
+"The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
 msgstr ""
-"Sloupec <gui>Funkce</gui> obsahuje popis příkazu <app>Orca</app>, který se "
+"Sloupec <gui>Příkaz</gui> obsahuje popis příkazu <app>Orca</app>, který se "
 "má provést."
 
 #. (itstool) path: item/p
@@ -6576,11 +6552,11 @@ msgstr ""
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
-"function."
+"command."
 msgstr ""
 "Sloupec <gui>Změněno</gui> slouží jednak jako signalizace, že klávesová "
 "zkratka byla změněna a zároveň je způsobem, jak obnovit výchozí zkratku "
-"přiřazenou k této funkci."
+"přiřazenou k tomuto příkazu."
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:66
@@ -6691,7 +6667,7 @@ msgstr "Oznamovat mezerník"
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
 msgid ""
-"This option controls whether or not <key>space</key> should be spoken when "
+"This option controls whether or not <key>Space</key> should be spoken when "
 "pressed."
 msgstr ""
 "Tato volba ovládá, jestli klávesa <key>mezerník</key> má či nemá být "
@@ -6734,12 +6710,12 @@ msgstr "Oznamovat akční klávesy"
 #: C/preferences_key_echo.page:93
 msgid ""
 "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
-"key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
-"key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
-"spoken when pressed."
+"key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
+"when pressed."
 msgstr ""
 "Tato volba ovládá, jestli klávesy <key>BackSpace</key>, <key>Delete </key>, "
-"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Enter</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
 "<key>Page Down</key>, <key>Home</key> a <key>End</key> mají či nemají být "
 "vysloveny při zmáčknutí."
 
@@ -6938,7 +6914,8 @@ msgstr "Přidání nové položky do slovníku"
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
 msgid ""
-"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 msgstr ""
 "Zmáčkněte tlačítko <gui>Nová položka</gui> nebo kombinaci kláves "
 "<keyseq><key>Alt</key> <key>N</key></keyseq>"
@@ -7002,7 +6979,9 @@ msgstr "Přesuňte se na položku, kterou si přejete smazat."
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+msgid ""
+"Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
+"keyseq>."
 msgstr ""
 "Zmáčkněte tlačítko <gui>Vymazat</gui> nebo kombinaci kláves "
 "<keyseq><key>Alt</key> <key>D</key></keyseq>."
@@ -7480,13 +7459,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
-msgid "Read full row in GUI tables"
+msgid "Speak full row in GUI tables"
 msgstr "Číst celé řádky tabulek v uživatelském rozhraní"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
 msgid ""
-"If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
 "<app>Orca</app> will speak the entire row. If you would prefer to hear only "
 "the cell with focus, you should uncheck this checkbox."
@@ -7499,13 +7478,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
-msgid "Read full row in document tables"
+msgid "Speak full row in document tables"
 msgstr "Číst celé řádky tabulek v dokumentech"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
 msgid ""
-"If <gui>Read full row in document tables</gui> is checked, as you arrow up "
+"If <gui>Speak full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
 "documents, <app>Orca</app> will speak the entire row. If you would prefer to "
 "hear only the cell with focus, you should uncheck this checkbox."
@@ -7518,13 +7497,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
-msgid "Read full row in spreadsheets"
+msgid "Speak full row in spreadsheets"
 msgstr "Číst celé řádky tabulek v tabulkových kalkulátorech"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
 msgid ""
-"If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
 "would prefer to hear only the cell with focus, you should uncheck this "
 "checkbox."
@@ -7831,13 +7810,13 @@ msgstr "Vracení změn"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
 msgid ""
-"Beneath the list of text attributes, there is a Reset button "
+"Beneath the list of text attributes, there is a <gui>Reset</gui> button "
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
 "of the table to what they were when the dialog was first displayed."
 msgstr ""
-"Pod seznamem vlastností textu najdete tlačítko Obnovit (<keyseq><key>Alt</"
-"key><key>R</key></keyseq>), které obnoví v tabulce hodnoty do stavu, jako "
-"když bylo dialogové okno zobrazeno poprvé."
+"Pod seznamem vlastností textu najdete tlačítko <gui>Obnovit</gui> (<keyseq>"
+"<key>Alt</key><key>R</key></keyseq>), které obnoví v tabulce hodnoty do "
+"stavu, jako když bylo dialogové okno zobrazeno poprvé."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:83
@@ -7847,13 +7826,13 @@ msgstr "Změna pořadí prezentování"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
 msgid ""
-"When you initially display the text attribute page, all of your enabled "
-"attributes are placed at the top of the table in the order in which they "
-"will be spoken. There are four buttons which can be used to rearrange the "
-"order of presentation."
+"When you initially display the <gui>Text Attributes</gui> page, all of your "
+"enabled attributes are placed at the top of the table in the order in which "
+"they will be spoken. There are four buttons which can be used to rearrange "
+"the order of presentation."
 msgstr ""
-"Když poprvé zobrazíte stránku s vlastnostmi textu, jsou všechny povolené "
-"vlastnosti umístěné v horní části tabulky v pořadí, v jakém budou "
+"Když poprvé zobrazíte stránku <gui>Vlastnosti textu</gui>, jsou všechny "
+"povolené vlastnosti umístěné v horní části tabulky v pořadí, v jakém budou "
 "oznamovány. K dispozici máte čtyři tlačítka, která můžete použít ke změně "
 "pořadí prezentování."
 
@@ -7869,8 +7848,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
 msgid ""
-"<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
-"the selected attribute up one row."
+"<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
+"selected attribute up one row."
 msgstr ""
 "<gui>Posunout o jedno výš</gui> (<keyseq><key>Alt</key><key>U</key></"
 "keyseq>): přesune vybranou vlasnost o jeden řádek výš."
@@ -7878,8 +7857,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
 msgid ""
-"<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-"moves the selected attribute down one row."
+"<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
+"the selected attribute down one row."
 msgstr ""
 "<gui>Posunout o jedno níž</gui> (<keyseq><key>Alt</key><key>D</key></"
 "keyseq>): přesune vybrané vlastnosti o jeden řádek níž."
@@ -8060,17 +8039,17 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-msgid "<gui>icon</gui>: Plays a tone"
-msgstr "<gui>icon</gui>: Přehrát tón"
+msgid "<gui>Icon</gui>: Plays a tone"
+msgstr "<gui>ikona</gui>: Přehrát tón"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-msgid "<gui>spell</gui>: Speaks the word \"capital\""
-msgstr "<gui>spell</gui>: Říci slovo „capital“"
+msgid "<gui>Spell</gui>: Speaks the word \"capital\""
+msgstr "<gui>říct</gui>: Říci slovo „capital“"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-msgid "<gui>none</gui>"
+msgid "<gui>None</gui>"
 msgstr "<gui>nic</gui>"
 
 #. (itstool) path: note/p
