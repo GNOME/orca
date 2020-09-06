@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2019-01-07 20:33+0000\n"
-"PO-Revision-Date: 2019-03-13 10:05+0100\n"
+"POT-Creation-Date: 2020-08-19 10:26+0000\n"
+"PO-Revision-Date: 2020-09-06 10:08+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -58,7 +58,7 @@ msgstr "Příkazy pro vytváření záložek a získávání objektů podle nich
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
 #: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
 #: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_gecko.page:12
+#: C/preferences_chat.page:11 C/preferences_web.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
 #: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
 #: C/preferences.page:7 C/preferences_pronunciation.page:12
@@ -88,7 +88,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
 #: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_gecko.page:16 C/preferences_general.page:15
+#: C/preferences_web.page:16 C/preferences_general.page:15
 #: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
 #: C/preferences_key_echo.page:15 C/preferences.page:11
 #: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
@@ -424,14 +424,14 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Vstoupit do výukového režimu: <keyseq><key>Modifikátor Orca</key><key>H</"
 "key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
+msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Ukončit výukový režim: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
@@ -1094,8 +1094,8 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
-msgid "1. Live Region"
-msgstr "1. Živá oblast"
+msgid "1. Live Regions"
+msgstr "1. Živé oblasti"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:7
@@ -1208,24 +1208,22 @@ msgstr ""
 "<link xref=\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: note/p
-#: C/commands_mouse.page:29
+#: C/commands_mouse.page:29 C/commands_reading.page:28
 msgid ""
-"In the list that follows, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
+"Below you will see several references to \"KP\". All \"KP\" keys are located "
+"on the numeric keypad. You will also notice that there are different "
+"keystrokes depending upon whether you are using a desktop or a laptop -- or "
+"more accurately, whether you are using <app>Orca</app>'s Desktop keyboard "
+"layout or its Laptop keyboard layout. For additional information, please see "
+"the <link xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 msgstr ""
-"V seznamu níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, "
-"což je anglické označení pro numerickou (číselnou) klávesnici a všechny "
-"klávesy s touto zkratkou jsou umístěné na ní. Upozorňujeme také, že "
-"zmáčknutí klávesy se liší podle toho, jestli používáte stolní nebo přenosný "
-"počítač – respektive přesněji, jestli používáte rozložení klávesnice "
-"stolního nebo přenosného počítače podle čtečky <app>Orca</app>. Více "
-"informací najdete u tématu <link xref=\"howto_keyboard_layout\">rozložení "
-"klávesnice</link>."
+"Níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, což je "
+"anglické označení pro numerickou (číselnou) klávesnici a všechny klávesy s "
+"touto zkratkou jsou umístěné na ní. Upozorňujeme také, že zmáčknutí klávesy "
+"se liší podle toho, jestli používáte stolní nebo přenosný počítač – "
+"respektive přesněji, jestli používáte rozložení klávesnice stolního nebo "
+"přenosného počítače podle čtečky <app>Orca</app>. Více informací najdete u "
+"tématu <link xref=\"howto_keyboard_layout\">rozložení klávesnice</link>."
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:41
@@ -1433,26 +1431,6 @@ msgstr ""
 "Mimo příkazů kurzorové navigace, která je součástí GNOME, poskytuje "
 "<app>Orca</app> i několik příkazů, které můžete použít ke čtení dokumentů."
 
-#. (itstool) path: note/p
-#: C/commands_reading.page:28
-msgid ""
-"In the lists that follow, you will see several references to \"KP\". All \"KP"
-"\" keys are located on the numeric keypad. You will also notice that there "
-"are different keystrokes depending upon whether you are using a desktop or a "
-"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
-"Desktop keyboard layout or its Laptop keyboard layout. For additional "
-"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
-"Layout</link> topic."
-msgstr ""
-"V seznamu níže můžete několikrát narazit na zkatku „KP“. Znamená „key pad“, "
-"což je anglické označení pro numerickou (číselnou) klávesnici a všechny "
-"klávesy s touto zkratkou jsou umístěné na ní. Upozorňujeme také, že "
-"zmáčknutí klávesy se liší podle toho, jestli používáte stolní nebo přenosný "
-"počítač – respektive přesněji, jestli používáte rozložení klávesnice "
-"stolního nebo přenosného počítače podle čtečky <app>Orca</app>. Více "
-"informací najdete u tématu <link xref=\"howto_keyboard_layout\">rozložení "
-"klávesnice</link>."
-
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
 msgid "Reading Your Current Location"
@@ -1559,7 +1537,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-msgid "Perform basic where am I:"
+msgid "Perform basic Where Am I:"
 msgstr "Zjištění základních informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
@@ -1576,7 +1554,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-msgid "Perform detailed where am I:"
+msgid "Perform detailed Where Am I:"
 msgstr "Zjištění podrobných informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
@@ -1616,7 +1594,7 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speak Link Details command to a keystroke. Please see <link xref="
+"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -1658,19 +1636,19 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
 msgid ""
-"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
+"Zapnout přichytávací režim zaměřování: <keyseq><key>Modifikátor Orca</"
 "key><key>A</key></keyseq> (dvojité zmáčknutí)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
 msgid ""
-"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
-"Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
+"Zapnout přichytávací režim procházení: <keyseq><key>Modifikátor Orca</"
 "key><key>A</key></keyseq> (trojité zmáčknutí)"
 
 #. (itstool) path: section/title
@@ -1703,9 +1681,9 @@ msgid ""
 "to bind unbound commands."
 msgstr ""
 "<app>Orca</app> poskytuje příkaz pro přepínání mezi režimem rozvržení a "
-"objektovým režimem. Tento příkaz ve výchozím stavu nemá přiřazenou klávesovou "
-"zkratku. Jak mu ji přidělit, najdete v kapitole <link xref=\"howto_key_bindings"
-"\">Změna klávesových zkratek</link>."
+"objektovým režimem. Tento příkaz ve výchozím stavu nemá přiřazenou "
+"klávesovou zkratku. Jak mu ji přidělit, najdete v kapitole <link xref="
+"\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
@@ -2424,8 +2402,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
 msgid ""
-"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
-"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+"Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
+"key></keyseq> and <keyseq><key>Comma</key></keyseq>"
 msgstr ""
 "Začátek a konec aktuálního kentejneru: <keyseq><key>Shift</key><key>,</key></"
 "keyseq> a <keyseq><key>,</key></keyseq>"
@@ -2686,8 +2664,8 @@ msgstr ""
 #: C/commands_where_am_i.page:92
 msgid "Present size and location of current object in pixels: (Unbound)"
 msgstr ""
-"Prezentovat velikost a umístění aktuálního objektu v pixelech: (bez klávesové "
-"zkratky)"
+"Prezentovat velikost a umístění aktuálního objektu v pixelech: (bez "
+"klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
@@ -3277,8 +3255,8 @@ msgstr ""
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
-"<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
-"key as <key>KeyPad 0</key>."
+"<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
+"<key>KP_0</key>."
 msgstr ""
 "Pokud používáte rozložení Stolní počítač, výchozími modifikátory Orca budou "
 "<key>Insert</key> a <key>Ins</key> na numerické klávesnici, což je stejná "
@@ -3313,8 +3291,8 @@ msgstr "Zvolte požadované rozložení."
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
-msgid "5. \"Learn\" Mode"
-msgstr "5. „Výukový“ režim"
+msgid "5. Learn Mode"
+msgstr "5. Výukový režim"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -3323,8 +3301,8 @@ msgstr "Jak prozkoumat příkazy čtečky <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-msgid "\"Learn\" Mode"
-msgstr "„Výukový“ režim"
+msgid "Learn Mode"
+msgstr "Výukový režim"
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:25
@@ -4718,7 +4696,7 @@ msgid ""
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"<key>CapsLock</key>, you can do so by either pressing <key>CapsLock</key> "
 "twice (requires at-spi2 version 2.32 or later), or by performing the "
 "following steps:"
 msgstr ""
@@ -4728,7 +4706,7 @@ msgstr ""
 "modifikátorem Orca bude <key>CapsLock</key>. Pokud používáte ve čtečce "
 "<app>Orca</app> rozložení Notebook a chcete zamknout nebo odemknout "
 "<key>CapsLock</key>, můžete tak učinit buďto zmáčknutím <key>CapsLock</key> "
-"dvakrát po sobě (vyžaduje at-spi2 verze 2.32 nebo novější) nebo provedením "
+"dvakrát po sobě (vyžaduje at-spi2 verze 2.32 nebo novější) nebo pomocí "
 "následujících kroků:"
 
 #. (itstool) path: steps/title
@@ -4755,7 +4733,7 @@ msgstr "Přepněte stav zámku zmáčknutím <key>CapsLock</key>."
 #. (itstool) path: info/title
 #: C/howto_whereami.page:5
 msgctxt "sort"
-msgid "1. WhereAmI"
+msgid "1. Where Am I"
 msgstr "1. Kde se nacházím"
 
 #. (itstool) path: info/desc
@@ -4765,7 +4743,7 @@ msgstr "Jak zjistit svoji polohu"
 
 #. (itstool) path: page/title
 #: C/howto_whereami.page:17
-msgid "WhereAmI"
+msgid "Where Am I"
 msgstr "Kde se nacházím"
 
 #. (itstool) path: page/p
@@ -5012,42 +4990,39 @@ msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
 "primary assistive technology infrastructure for Linux and Solaris. "
-"Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-"toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-"WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
+"Applications and toolkits supporting the AT-SPI include Gtk+, Qt, Java "
+"Swing, LibreOffice, Gecko, WebKitGtk, and Chrome/Chromium."
 msgstr ""
 "<app>Orca</app> spolupracuje s aplikacemi a nástrojovými sadami, které "
 "podporují AT-SPI (Assistive Technology Service Provider Interface – rozhraní "
 "poskytovatelů služeb asistenčních technologií), což je hlavní infrastruktura "
 "asistenční technologie pro Linux a Solaris. Mezi aplikace a nástrojové sady "
 "podporující AT-SPI patří GNOME Gtk+, Javovská platforma Swing, LibreOffice, "
-"Gecko a WebKitGtk. Podpora AT-SPI pro KDE Qt je ve vývoji."
+"Gecko, WebKitGtk a Chrome/Chromium."
 
 #. (itstool) path: section/title
-#: C/introduction.page:33
+#: C/introduction.page:31
 msgid "Launching <app>Orca</app>"
 msgstr "Spouštění čtečky <app>Orca</app>"
 
 #. (itstool) path: section/p
-#: C/introduction.page:34
+#: C/introduction.page:32
 msgid "To launch <app>Orca</app>:"
 msgstr "Když chcete spustit aplikaci <app>Orca</app>:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:37
+#: C/introduction.page:35
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
-"use. For instance, in GNOME 3.x this option can be found in the Universal "
-"Access Control Center panel on the <gui>Seeing</gui> page."
+"use."
 msgstr ""
 "Způsob, jak nastavit čtečku <app>Orca</app>, aby se spouštěla automticky "
 "jako vaše upřednostňovaná čtečka obrazovky, závisí na pracovním prostředí, "
-"které používáte. Například, v GNOME 3.x můžete tuto volbu najít v části "
-"<gui>Zrak</gui> na panelu <gui>Univerzální přístup</gui> v Centru nastavení."
+"které používáte."
 
 #. (itstool) path: item/p
-#: C/introduction.page:46
+#: C/introduction.page:42
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5056,7 +5031,7 @@ msgstr ""
 "<keyseq><key>Super</key> <key>Alt</key> <key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:52
+#: C/introduction.page:48
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -5066,12 +5041,12 @@ msgstr ""
 "<key>Enter</key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:61
+#: C/introduction.page:57
 msgid "Load-Time Options"
 msgstr "Volby při načítání"
 
 #. (itstool) path: section/p
-#: C/introduction.page:62
+#: C/introduction.page:58
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5080,24 +5055,24 @@ msgstr ""
 "dialogovém okně <app>Spuštění</app> zadat následující přepínače:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:68
+#: C/introduction.page:64
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Zobrazit zprávu s nápovědou"
 
 #. (itstool) path: item/p
-#: C/introduction.page:71
+#: C/introduction.page:67
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Zobrazit verzi aplikace<app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:73
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: Nastavit uživatelské předvolby"
 
 #. (itstool) path: item/p
-#: C/introduction.page:82
+#: C/introduction.page:78
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5106,7 +5081,7 @@ msgstr ""
 "<em>název_složky</em> jako alternativní složku pro uživatelské předvolby"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:85
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5115,22 +5090,22 @@ msgstr ""
 "kde <em>volba</em> může být něco z následujícího:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:90 C/introduction.page:102
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:95 C/introduction.page:107
+#: C/introduction.page:91 C/introduction.page:103
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96 C/introduction.page:108
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:100
+#: C/introduction.page:96
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5139,7 +5114,7 @@ msgstr ""
 "kde <em>volba</em> může být něco z následujícího:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:112
+#: C/introduction.page:108
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5148,7 +5123,7 @@ msgstr ""
 "profil ze zadaného souboru s profilem <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:118
+#: C/introduction.page:114
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5157,19 +5132,19 @@ msgstr ""
 "aplikaci<app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:123
+#: C/introduction.page:119
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Vypsat známé běžící aplikace"
 
 #. (itstool) path: item/p
-#: C/introduction.page:129
+#: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Poslat ladicí výstup do debug-RRRR-MM-DD-HH:MM:SS.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:134
+#: C/introduction.page:130
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5214,8 +5189,8 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:58
-#: C/preferences_gecko.page:100 C/preferences_gecko.page:182
+#: C/preferences_chat.page:54 C/preferences_web.page:58
+#: C/preferences_web.page:100 C/preferences_web.page:205
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_general.page:119 C/preferences_general.page:228
 #: C/preferences_general.page:239 C/preferences_key_echo.page:112
@@ -5422,22 +5397,23 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
-#: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:140 C/preferences_general.page:217
-#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
-#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
-#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
-#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
-#: C/preferences_speech.page:26 C/preferences_speech.page:123
-#: C/preferences_speech.page:148 C/preferences_speech.page:195
-#: C/preferences_speech.page:208 C/preferences_speech.page:220
-#: C/preferences_speech.page:234 C/preferences_speech.page:251
-#: C/preferences_speech.page:265 C/preferences_speech.page:279
-#: C/preferences_speech.page:293 C/preferences_speech.page:307
-#: C/preferences_speech.page:319 C/preferences_speech.page:331
-#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
-#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193 C/preferences_general.page:140
+#: C/preferences_general.page:217 C/preferences_key_echo.page:28
+#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
+#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
+#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
+#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
+#: C/preferences_speech.page:123 C/preferences_speech.page:148
+#: C/preferences_speech.page:195 C/preferences_speech.page:208
+#: C/preferences_speech.page:220 C/preferences_speech.page:234
+#: C/preferences_speech.page:251 C/preferences_speech.page:265
+#: C/preferences_speech.page:279 C/preferences_speech.page:293
+#: C/preferences_speech.page:307 C/preferences_speech.page:319
+#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
+#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
+#: C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
@@ -5483,21 +5459,21 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-msgid "Message duration (secs)"
-msgstr "Doba prezentování zprávy (v sekundách)"
+msgid "Duration (secs)"
+msgstr "Doba (v sekundách)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
-"Message duration (secs)</gui> spin button. Note that the value of this "
-"setting will be ignored if you have enabled persistent flash messages."
+"Duration (secs)</gui> spin button. Note that the value of this setting will "
+"be ignored if you have enabled persistent flash messages."
 msgstr ""
 "Dobu, po kterou bude <app>Orca</app> čekat, než zprávu odstraní a obnoví "
-"původní obsah řádku, můžete nastavit pomocí číselníku <gui>Doba prezentování "
-"zprávy (v sekundách)</gui>. Uvědomte si, že pokud máte zapnuté trvalé "
-"bleskové zprávy, bude hodnota tohoto nastavení ignorována."
+"původní obsah řádku, můžete nastavit pomocí číselníku <gui>Doba (v "
+"sekundách)</gui>. Uvědomte si, že pokud máte zapnuté trvalé bleskové zprávy, "
+"bude hodnota tohoto nastavení ignorována."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:178
@@ -5614,38 +5590,38 @@ msgid "Default value: all channels"
 msgstr "Výchozí hodnota: všechny kanály"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:5
+#: C/preferences_web.page:5
 msgctxt "sort"
-msgid "1. Gecko Navigation"
-msgstr "1. Pohyb v prohlížečích Gecko"
+msgid "1. Web Navigation"
+msgstr "1. Pohyb po webové stránce"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:6
+#: C/preferences_web.page:6
 msgctxt "link"
-msgid "Gecko Navigation"
-msgstr "Pohlyb v prohlížečích Gecko"
+msgid "Web Navigation"
+msgstr "Pohyb po webové stránce"
 
 #. (itstool) path: info/desc
-#: C/preferences_gecko.page:7
+#: C/preferences_web.page:7
 msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-"<app>Thunderbird</app>"
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
 msgstr ""
-"Jak nastavit ve čtečce <app>Orca</app> podporu pro <app>Firefox</app> a "
-"<app>Thunderbird</app>"
+"Jak nastavit ve čtečce <app>Orca</app> podporu pro <app>Firefox</app>, "
+"<app>Thunderbird</app> <app>Chrome</app>/<app>Chromium</app>."
 
 #. (itstool) path: page/title
-#: C/preferences_gecko.page:19
-msgid "Gecko Navigation Preferences"
-msgstr "Předvolby pro pohyb v prohlížečích Gecko"
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Předvolby pro pohyb po webové stránce"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:21
+#: C/preferences_web.page:21
 msgid "Page Navigation"
 msgstr "Pohyb po stránce"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:22
+#: C/preferences_web.page:22
 msgid ""
 "The <gui>Page Navigation</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents, and allow you to interact with, text "
@@ -5656,30 +5632,30 @@ msgstr ""
 "webové stránce a umožňuje vám s ním pracovat."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:28
+#: C/preferences_web.page:28
 msgid "Control caret navigation"
 msgstr "Ovládat pohyb kurzoru"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:29
+#: C/preferences_web.page:29
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, Gecko's native caret navigation is active."
+"a page; when it is off, the browser's native caret navigation is active."
 msgstr ""
 "Toto zaškrtávací políčko zapíná a vypíná ovládání pohybu kurzoru čtečkou "
 "<app>Orca</app>. Když je zapnuto, převezme <app>Orca</app> řízení nad "
 "kurzorem při pohybu po stránce, když je vypnuto, je aktivní vestavěná práce "
-"s kurzorem v jádře Gecko."
+"s kurzorem ve webovém prohlížeči."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
+#: C/preferences_web.page:39 C/preferences_web.page:82
 #: C/preferences_voice.page:76
 msgid "This setting can be toggled on the fly"
 msgstr "Toto nastavení je možné přepínat za běhu"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:40
+#: C/preferences_web.page:40
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>F12</key></keyseq>."
@@ -5688,12 +5664,12 @@ msgstr ""
 "<keyseq><key>Modifikátor Orca</key> <key>F12</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:47
+#: C/preferences_web.page:47
 msgid "Automatic focus mode during caret navigation"
 msgstr "Režim automatického zaměřování během pohybu kurzoru"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_web.page:48
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use caret navigation commands to navigate to a form "
@@ -5715,12 +5691,14 @@ msgstr ""
 "vstupního pole vyjet ven a pokračovat ve čtení."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
 msgid "Manually switching between browse mode and focus mode"
 msgstr "Ruční přepínání mezi režimy procházení a zaměřování"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
 msgid ""
 "In order to start or stop interacting with the focused form field, use "
 "<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
@@ -5731,12 +5709,12 @@ msgstr ""
 "mezi režimem procházení a zaměřování."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:71
+#: C/preferences_web.page:71
 msgid "Enable structural navigation"
 msgstr "Povolit strukturovanou navigaci"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:72
+#: C/preferences_web.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5749,7 +5727,7 @@ msgstr ""
 "jsou záhlaví, odkazy a pole formuláře."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:83
+#: C/preferences_web.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5758,12 +5736,12 @@ msgstr ""
 "<keyseq><key>Modifikátor Orca</key> <key>Z</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_web.page:90
 msgid "Automatic focus mode during structural navigation"
 msgstr "Režim automatického zaměřování během strukturované navigace"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:91
+#: C/preferences_web.page:91
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use structural navigation commands to navigate to a form "
@@ -5783,12 +5761,37 @@ msgstr ""
 "vstupního pole na stránce."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:113
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr "Režim automatického zaměřování během nativní navigace"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Když je toto políčko zaškrtnuté, bude <app>Orca</app> automaticky zapínat "
+"režim zaměřování, když použijte příkazy nativní navigace k najetí do "
+"formulářového pole. Například, zmáčknutí klávesy <key>Tab</key> pro přesun do "
+"následujícího vstupního pole by toto pole zaměřilo a zároveň zapnulo režim "
+"zaměřování, takže následující zmáčknutí <key>E</key> by napsalo „e“ do "
+"tohoto pole. Když políčko zaškrtnuté není, <app>Orca</app> ponechá režim "
+"procházení a následující zmáčknutí <key>E</key> by vás přesunulo do dalšího "
+"vstupního pole na stránce."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr "Automaticky číst stránku po jejím prvním načtení"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:114
+#: C/preferences_web.page:137
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5797,17 +5800,17 @@ msgstr ""
 "otevřenou webovou stránku nebo e-mail."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118 C/preferences_gecko.page:129
+#: C/preferences_web.page:141 C/preferences_web.page:152
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr "Výchozí hodnota: zaškrtnuto pro Firefox, nezaškrtnuto pro Thunderbird"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:123
+#: C/preferences_web.page:146
 msgid "Present summary of a page when it is first loaded"
 msgstr "Prezentovat souhrnné informace o stránce po jejím prvním načtení"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:124
+#: C/preferences_web.page:147
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will summarize details about "
 "the newly opened web page or email, such as the number of headings, "
@@ -5818,12 +5821,12 @@ msgstr ""
 "počet nadpisů, záchytných bodů a odkazů."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:134
+#: C/preferences_web.page:157
 msgid "Enable layout mode for content"
 msgstr "Zapnout režim rozvržení pro obsah"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:135
+#: C/preferences_web.page:158
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
 "the on-screen layout of the content and present the full line, including any "
@@ -5839,12 +5842,12 @@ msgstr ""
 "prezentování, tak při navigaci."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:148
+#: C/preferences_web.page:171
 msgid "Table Options"
 msgstr "Volby pro tabulky"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:150
+#: C/preferences_web.page:173
 msgid ""
 "To learn more about <app>Orca</app>'s options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -5855,12 +5858,12 @@ msgstr ""
 "\">Předvolby pro pohyb v tabulkách</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:158
+#: C/preferences_web.page:181
 msgid "Find Options"
 msgstr "Volby hledání"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:159
+#: C/preferences_web.page:182
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -5871,12 +5874,12 @@ msgstr ""
 "vyhledávacích funkcí vestavěných v aplikaci."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:165
+#: C/preferences_web.page:188
 msgid "Speak results during find"
 msgstr "Číst výsledky v průběhu hledání"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:166
+#: C/preferences_web.page:189
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -5885,12 +5888,12 @@ msgstr ""
 "vyhovují vašemu aktuálnímu vyhledávacímu dotazu."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:175
+#: C/preferences_web.page:198
 msgid "Only speak changed lines during find"
 msgstr "V průběhu hledání číst jen změněné řádky"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:176
+#: C/preferences_web.page:199
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -5903,12 +5906,12 @@ msgstr ""
 "hledáte."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:187
+#: C/preferences_web.page:210
 msgid "Minimum length of matched text"
 msgstr "Minimální délka nalezeného textu"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:188
+#: C/preferences_web.page:211
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which must match before <app>Orca</app> announces the matching line. This "
@@ -5921,7 +5924,7 @@ msgstr ""
 "bývá výskytů opravdu hodně."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:195
+#: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Výchozí hodnota: 4"
 
@@ -5960,7 +5963,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_general.page:27
 msgid ""
-"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"The <gui>Keyboard Layout</gui> radio button group allows you to specify if "
 "you will be working on a desktop (i.e. with a numeric keypad) or laptop "
 "keyboard. Which layout you choose will determine both the <key>Orca "
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
@@ -6333,8 +6336,8 @@ msgstr "Výchozí hodnota: 10"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:253
-msgid "Restrict to"
-msgstr "Omezit na"
+msgid "Applies to"
+msgstr "Použít na"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:254
@@ -6505,7 +6508,7 @@ msgstr "Modifikační klávesy Orca"
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
 msgid ""
-"The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
+"The <gui>Screen Reader Modifier Key(s)</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
 "Rozbalovací seznam <gui>Modifikační klávesy Orca</gui> vám umožňuje si "
@@ -6552,10 +6555,10 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
 msgid ""
-"The <gui>Function</gui> column contains a description of the <app>Orca</app> "
+"The <gui>Command</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
 msgstr ""
-"Sloupec <gui>Funkce</gui> obsahuje popis příkazu <app>Orca</app>, který se "
+"Sloupec <gui>Příkaz</gui> obsahuje popis příkazu <app>Orca</app>, který se "
 "má provést."
 
 #. (itstool) path: item/p
@@ -6576,11 +6579,11 @@ msgstr ""
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
-"function."
+"command."
 msgstr ""
 "Sloupec <gui>Změněno</gui> slouží jednak jako signalizace, že klávesová "
 "zkratka byla změněna a zároveň je způsobem, jak obnovit výchozí zkratku "
-"přiřazenou k této funkci."
+"přiřazenou k tomuto příkazu."
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:66
@@ -6691,7 +6694,7 @@ msgstr "Oznamovat mezerník"
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
 msgid ""
-"This option controls whether or not <key>space</key> should be spoken when "
+"This option controls whether or not <key>Space</key> should be spoken when "
 "pressed."
 msgstr ""
 "Tato volba ovládá, jestli klávesa <key>mezerník</key> má či nemá být "
@@ -6734,12 +6737,12 @@ msgstr "Oznamovat akční klávesy"
 #: C/preferences_key_echo.page:93
 msgid ""
 "This option controls whether or not <key>BackSpace</key>, <key>Delete </"
-"key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
-"key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
-"spoken when pressed."
+"key>, <key>Return</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
+"when pressed."
 msgstr ""
 "Tato volba ovládá, jestli klávesy <key>BackSpace</key>, <key>Delete </key>, "
-"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Enter</key>, <key>Esc</key>, <key>Tab</key>, <key>Page Up</key>, "
 "<key>Page Down</key>, <key>Home</key> a <key>End</key> mají či nemají být "
 "vysloveny při zmáčknutí."
 
@@ -6938,7 +6941,8 @@ msgstr "Přidání nové položky do slovníku"
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
 msgid ""
-"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+"Press the <gui>New Entry</gui> button (<keyseq><key>Alt</key><key>N</key></"
+"keyseq>)"
 msgstr ""
 "Zmáčkněte tlačítko <gui>Nová položka</gui> nebo kombinaci kláves "
 "<keyseq><key>Alt</key> <key>N</key></keyseq>"
@@ -7002,7 +7006,9 @@ msgstr "Přesuňte se na položku, kterou si přejete smazat."
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
-msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+msgid ""
+"Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
+"keyseq>."
 msgstr ""
 "Zmáčkněte tlačítko <gui>Vymazat</gui> nebo kombinaci kláves "
 "<keyseq><key>Alt</key> <key>D</key></keyseq>."
@@ -7480,13 +7486,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
-msgid "Read full row in GUI tables"
+msgid "Speak full row in GUI tables"
 msgstr "Číst celé řádky tabulek v uživatelském rozhraní"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
 msgid ""
-"If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
 "<app>Orca</app> will speak the entire row. If you would prefer to hear only "
 "the cell with focus, you should uncheck this checkbox."
@@ -7499,13 +7505,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
-msgid "Read full row in document tables"
+msgid "Speak full row in document tables"
 msgstr "Číst celé řádky tabulek v dokumentech"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
 msgid ""
-"If <gui>Read full row in document tables</gui> is checked, as you arrow up "
+"If <gui>Speak full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
 "documents, <app>Orca</app> will speak the entire row. If you would prefer to "
 "hear only the cell with focus, you should uncheck this checkbox."
@@ -7518,13 +7524,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
-msgid "Read full row in spreadsheets"
+msgid "Speak full row in spreadsheets"
 msgstr "Číst celé řádky tabulek v tabulkových kalkulátorech"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
 msgid ""
-"If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
+"If <gui>Speak full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
 "would prefer to hear only the cell with focus, you should uncheck this "
 "checkbox."
@@ -7831,13 +7837,13 @@ msgstr "Vracení změn"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
 msgid ""
-"Beneath the list of text attributes, there is a Reset button "
+"Beneath the list of text attributes, there is a <gui>Reset</gui> button "
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
 "of the table to what they were when the dialog was first displayed."
 msgstr ""
-"Pod seznamem vlastností textu najdete tlačítko Obnovit (<keyseq><key>Alt</"
-"key><key>R</key></keyseq>), které obnoví v tabulce hodnoty do stavu, jako "
-"když bylo dialogové okno zobrazeno poprvé."
+"Pod seznamem vlastností textu najdete tlačítko <gui>Obnovit</gui> "
+"(<keyseq><key>Alt</key><key>R</key></keyseq>), které obnoví v tabulce "
+"hodnoty do stavu, jako když bylo dialogové okno zobrazeno poprvé."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:83
@@ -7847,13 +7853,13 @@ msgstr "Změna pořadí prezentování"
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
 msgid ""
-"When you initially display the text attribute page, all of your enabled "
-"attributes are placed at the top of the table in the order in which they "
-"will be spoken. There are four buttons which can be used to rearrange the "
-"order of presentation."
+"When you initially display the <gui>Text Attributes</gui> page, all of your "
+"enabled attributes are placed at the top of the table in the order in which "
+"they will be spoken. There are four buttons which can be used to rearrange "
+"the order of presentation."
 msgstr ""
-"Když poprvé zobrazíte stránku s vlastnostmi textu, jsou všechny povolené "
-"vlastnosti umístěné v horní části tabulky v pořadí, v jakém budou "
+"Když poprvé zobrazíte stránku <gui>Vlastnosti textu</gui>, jsou všechny "
+"povolené vlastnosti umístěné v horní části tabulky v pořadí, v jakém budou "
 "oznamovány. K dispozici máte čtyři tlačítka, která můžete použít ke změně "
 "pořadí prezentování."
 
@@ -7869,8 +7875,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
 msgid ""
-"<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
-"the selected attribute up one row."
+"<gui>Move up</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves the "
+"selected attribute up one row."
 msgstr ""
 "<gui>Posunout o jedno výš</gui> (<keyseq><key>Alt</key><key>U</key></"
 "keyseq>): přesune vybranou vlasnost o jeden řádek výš."
@@ -7878,8 +7884,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:104
 msgid ""
-"<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
-"moves the selected attribute down one row."
+"<gui>Move down</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): moves "
+"the selected attribute down one row."
 msgstr ""
 "<gui>Posunout o jedno níž</gui> (<keyseq><key>Alt</key><key>D</key></"
 "keyseq>): přesune vybrané vlastnosti o jeden řádek níž."
@@ -8060,17 +8066,17 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-msgid "<gui>icon</gui>: Plays a tone"
-msgstr "<gui>icon</gui>: Přehrát tón"
+msgid "<gui>Icon</gui>: Plays a tone"
+msgstr "<gui>ikona</gui>: Přehrát tón"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-msgid "<gui>spell</gui>: Speaks the word \"capital\""
-msgstr "<gui>spell</gui>: Říci slovo „capital“"
+msgid "<gui>Spell</gui>: Speaks the word \"capital\""
+msgstr "<gui>říct</gui>: Říci slovo „capital“"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-msgid "<gui>none</gui>"
+msgid "<gui>None</gui>"
 msgstr "<gui>nic</gui>"
 
 #. (itstool) path: note/p
@@ -8166,3 +8172,6 @@ msgstr ""
 "Zaškrtnutí <gui>Číst čísla po číslicích</gui> způsobí, že <app>Orca</app> "
 "rozdělí číslo, například „123“, před jeho odesláním do hlasového výstupu na "
 "jednotlivé číslice („1“, „2“ a „3“)."
+
+msgid "Restrict to"
+msgstr "Omezit na"
