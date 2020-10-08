@@ -47,16 +47,6 @@ class Script(web.Script):
 
         self.presentIfInactive = False
 
-        # Chromium doesn't always emit parent-change events. While we don't listen
-        # for those ourselves, those events tell AT-SPI2 to update the cached parent.
-        # If we cache the parent, then we can wind up getting stuck. Example page is
-        # the Github issue page when the issue search field gets focus.
-        app.setCacheMask(pyatspi.cache.DEFAULT ^
-                         pyatspi.cache.CHILDREN ^
-                         pyatspi.cache.PARENT ^
-                         pyatspi.cache.NAME ^
-                         pyatspi.cache.DESCRIPTION)
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
 
