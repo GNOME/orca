@@ -192,7 +192,7 @@ def inGraphicalDesktop():
 def otherOrcas():
     """Returns the pid of any other instances of Orca owned by this user."""
 
-    openFile = subprocess.Popen('pgrep -u %s orca' % os.getuid(),
+    openFile = subprocess.Popen('pgrep -u %s -x orca' % os.getuid(),
                                 shell=True,
                                 stdout=subprocess.PIPE).stdout
     pids = openFile.read()
