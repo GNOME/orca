@@ -902,6 +902,8 @@ class Script(default.Script):
         else:
             self.speakContents(contents)
 
+        self.pointOfReference["lastTextUnitSpoken"] = "char"
+
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
@@ -919,6 +921,7 @@ class Script(default.Script):
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
         self.speakContents(wordContents)
+        self.pointOfReference["lastTextUnitSpoken"] = "word"
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -935,6 +938,7 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=not isEditable)
         self.speakContents(contents, priorObj=priorObj)
+        self.pointOfReference["lastTextUnitSpoken"] = "line"
 
     def presentObject(self, obj, **args):
         if not self.utilities.inDocumentContent(obj):

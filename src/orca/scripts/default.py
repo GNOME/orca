@@ -30,6 +30,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+import re
 import time
 
 import pyatspi
@@ -116,7 +117,6 @@ class Script(script.Script):
         #
         self.currentReviewContents = ""
 
-        self._lastWord = ""
         self._lastWordCheckedForSpelling = ""
 
         self._inSayAll = False
@@ -3321,6 +3321,8 @@ class Script(script.Script):
             self.speakMisspelledIndicator(obj, offset)
             self.speakCharacter(character)
 
+        self.pointOfReference["lastTextUnitSpoken"] = "char"
+
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
         caret, unless the line is empty in which case it's ignored.
@@ -3352,6 +3354,8 @@ class Script(script.Script):
             # Speak blank line if appropriate.
             #
             self.sayCharacter(obj)
+
+        self.pointOfReference["lastTextUnitSpoken"] = "line"
 
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the start and
@@ -3386,57 +3390,44 @@ class Script(script.Script):
         else:
             self.speakCharacter(phrase)
 
+        self.pointOfReference["lastTextUnitSpoken"] = "phrase"
+
     def sayWord(self, obj):
-        """Speaks the word at the caret.
+        """Speaks the word at the caret, taking into account the previous caret position."""
 
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
-        """
-
-        text = obj.queryText()
-        offset = text.caretOffset
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        lastWord = self._lastWord
-
-        [word, startOffset, endOffset] = \
-            text.getTextAtOffset(offset,
-                                 pyatspi.TEXT_BOUNDARY_WORD_START)
-
-        msg = "DEFAULT: Word at offset %i is '%s' (%i-%i)" % (offset, word, startOffset, endOffset)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-        if not word:
+        try:
+            text = obj.queryText()
+            offset = text.caretOffset
+        except:
             self.sayCharacter(obj)
             return
 
-        # Speak a newline if a control-right-arrow or control-left-arrow
-        # was used to cross a line boundary. Handling is different for
-        # the two keys since control-right-arrow places the cursor after
-        # the last character in a word, but control-left-arrow places
-        # the cursor at the beginning of a word.
-        #
-        if lastKey == "Right" and len(lastWord) > 0:
-            lastChar = lastWord[len(lastWord) - 1]
-            if lastChar == "\n" and lastWord != word:
-                self.speakCharacter("\n")
+        word, startOffset, endOffset = self.utilities.getWordAtOffsetAdjustedForNavigation(obj, offset)
 
-        if lastKey == "Left" and len(word) > 0:
-            lastChar = word[len(word) - 1]
-            if lastChar == "\n" and lastWord != word:
-                self.speakCharacter("\n")
+        # Announce when we cross a hard line boundary.
+        if "\n" in word:
+            self.speakCharacter("\n")
+            if word.startswith("\n"):
+                startOffset += 1
+            elif word.endswith("\n"):
+                endOffset -= 1
+            word = text.getText(startOffset, endOffset)
 
-        orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
+        # sayPhrase is useful because it handles punctuation verbalization, but we don't want
+        # to trigger its whitespace presentation.
+        matches = list(re.finditer(r"\S+", word))
+        if matches:
+            startOffset += matches[0].start()
+            endOffset -= len(word) - matches[-1].end()
+            word = text.getText(startOffset, endOffset)
 
-        self.speakMisspelledIndicator(obj, startOffset)
-        voice = self.speechGenerator.voice(string=word)
-        word = self.utilities.adjustForRepeats(word)
-
-        msg = "DEFAULT: Word adjusted for repeats: '%s'" % word
+        msg = "DEFAULT: Final word at offset %i is '%s' (%i-%i)" \
+            % (offset, word.replace("\n", "\\n"), startOffset, endOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        self._lastWord = word
-        speech.speak(word, voice)
+        self.speakMisspelledIndicator(obj, startOffset)
+        self.sayPhrase(obj, startOffset, endOffset)
+        self.pointOfReference["lastTextUnitSpoken"] = "word"
 
     def presentObject(self, obj, **args):
         interrupt = args.get("interrupt", False)
@@ -3814,7 +3805,9 @@ class Script(script.Script):
         - caretOffset: the cursor position within this object
         """
 
-        self.pointOfReference["lastCursorPosition"] = [obj, caretOffset]
+        prevObj, prevOffset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+        self.pointOfReference["penultimateCursorPosition"] = prevObj, prevOffset
+        self.pointOfReference["lastCursorPosition"] = obj, caretOffset
 
     def systemBeep(self):
         """Rings the system bell. This is really a hack. Ideally, we want

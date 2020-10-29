@@ -293,6 +293,8 @@ class Script(default.Script):
             else:
                 speech.speak(self.speechGenerator.generateSpeech(obj))
 
+        self.pointOfReference["lastTextUnitSpoken"] = "char"
+
     def sayWord(self, obj):
         """Speaks the word at the caret.
 
@@ -308,6 +310,8 @@ class Script(default.Script):
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
+
+        self.pointOfReference["lastTextUnitSpoken"] = "word"
 
     def sayLine(self, obj):
         """Speaks the line at the caret.
@@ -334,6 +338,8 @@ class Script(default.Script):
             if obj.getRole() in rolesToSpeak:
                 speech.speak(self.speechGenerator.getRoleName(obj))
 
+        self.pointOfReference["lastTextUnitSpoken"] = "line"
+
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the given offsets.
 
@@ -359,6 +365,8 @@ class Script(default.Script):
             # Speak blank line if appropriate.
             #
             self.sayCharacter(obj)
+
+        self.pointOfReference["lastTextUnitSpoken"] = "phrase"
 
     def skipObjectEvent(self, event):
         """Gives us, and scripts, the ability to decide an event isn't

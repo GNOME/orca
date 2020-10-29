@@ -740,6 +740,9 @@ class Utilities(script_utilities.Utilities):
 
         return obj, 0
 
+    def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
+        return self.getWordAtOffset(obj, offset)
+
     def shouldReadFullRow(self, obj):
         if self._script._lastCommandWasStructNav:
             return False
