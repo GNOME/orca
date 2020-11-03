@@ -3406,7 +3406,8 @@ class Script(script.Script):
 
         # Announce when we cross a hard line boundary.
         if "\n" in word:
-            self.speakCharacter("\n")
+            if _settingsManager.getSetting('enableSpeechIndentation'):
+                self.speakCharacter("\n")
             if word.startswith("\n"):
                 startOffset += 1
             elif word.endswith("\n"):
