@@ -396,7 +396,7 @@ formatting = {
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
-            'unfocused': '(name or label) + pause + radioState + roleName + availability + lineBreak + ' + MNEMONIC + ' + accelerator + pause + positionInList + pause',
+            'unfocused': 'newRadioButtonGroup + pause + (name or label) + pause + radioState + roleName + availability + lineBreak + ' + MNEMONIC + ' + accelerator + pause + positionInList + pause',
             'basicWhereAmI': 'radioButtonGroup + pause + (name or label) + roleName + pause + radioState + pause + positionInGroup + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_RADIO_MENU_ITEM: {
