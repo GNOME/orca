@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-08-19 10:24+0000\n"
-"PO-Revision-Date: 2020-08-21 09:07+0300\n"
+"POT-Creation-Date: 2020-11-06 10:29+0000\n"
+"PO-Revision-Date: 2020-11-07 20:46+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1813,16 +1813,18 @@ msgstr "Виголосити ціле вікно при плоскому пер�
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-msgid "Performs the basic Where Am I operation."
-msgstr "Повідомити про поточне положення."
+#| msgid "Performs the basic Where Am I operation."
+msgid "Perform the basic Where Am I operation"
+msgstr "Повідомити про поточне положення"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-msgid "Performs the detailed Where Am I operation."
-msgstr "Докладно оголосити поточне положення."
+#| msgid "Performs the detailed Where Am I operation."
+msgid "Perform the detailed Where Am I operation"
+msgstr "Докладно оголосити поточне положення"
 
 #. Translators: This is the description of a dedicated command to speak the
 #. current selection / highlighted object(s). For instance, in a text object,
@@ -4377,7 +4379,6 @@ msgstr "Автоматичний режим фокусування під час
 #. as the Tab key, or it might be a web page behavior, such as the search field
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Автоматичний режим фокусування під час природної навігації"
 
