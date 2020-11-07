@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-07-07 09:02+0000\n"
-"PO-Revision-Date: 2020-07-07 20:58+0300\n"
+"POT-Creation-Date: 2020-08-31 15:12+0000\n"
+"PO-Revision-Date: 2020-11-07 20:49+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -59,7 +59,7 @@ msgstr "Команди для встановлення закладок і от�
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
 #: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
 #: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_gecko.page:12
+#: C/preferences_chat.page:11 C/preferences_web.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
 #: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
 #: C/preferences.page:7 C/preferences_pronunciation.page:12
@@ -89,7 +89,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
 #: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_gecko.page:16 C/preferences_general.page:15
+#: C/preferences_web.page:16 C/preferences_general.page:15
 #: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
 #: C/preferences_key_echo.page:15 C/preferences.page:11
 #: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
@@ -5018,40 +5018,39 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
+#| msgid ""
+#| "<app>Orca</app> works with applications and toolkits that support the "
+#| "Assistive Technology Service Provider Interface (AT-SPI), which is the "
+#| "primary assistive technology infrastructure for Linux and Solaris. "
+#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
+#| "toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
+#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
 "primary assistive technology infrastructure for Linux and Solaris. "
-"Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-"toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-"WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
+"Applications and toolkits supporting the AT-SPI include Gtk+, Qt, Java "
+"Swing, LibreOffice, Gecko, WebKitGtk, and Chrome/Chromium."
 msgstr ""
 "<app>Orca</app> працює із програмами та бібліотеками, у яких передбачено "
 "підтримку Assistive Technology Service Provider Interface (AT-SPI). Цей "
 "інтерфейс є основною допоміжною технологічною інфраструктурою для Linux і "
 "Solaris. Серед програм та бібліотек, у яких передбачено підтримку AT-SPI, "
-"набір бібліотек GNOME Gtk+, набір бібліотек Swing для платформи Java, "
-"LibreOffice, Gecko, та WebKitGtk. Триває робота над забезпеченням повної "
-"підтримки AT-SPI у наборі бібліотек Qt та KDE."
+"набір бібліотек GNOME Gtk+, Qt, Java Swing, LibreOffice, Gecko, WebKitGtk та"
+" Chrome/Chromium."
 
 #. (itstool) path: section/title
-#: C/introduction.page:33
+#: C/introduction.page:31
 msgid "Launching <app>Orca</app>"
 msgstr "Запуск <app>Orca</app>"
 
 #. (itstool) path: section/p
-#: C/introduction.page:34
+#: C/introduction.page:32
 msgid "To launch <app>Orca</app>:"
 msgstr "Щоб запустити <app>Orca</app>, виконайте такі дії:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:37
-#| msgid ""
-#| "The method for configuring <app>Orca</app> to be launched automatically "
-#| "as your preferred screen reader will depend upon which desktop "
-#| "environment you use. For instance, in GNOME 3.x this option can be found "
-#| "in the Universal Access Control Center panel on the <gui>Seeing</gui> "
-#| "page."
+#: C/introduction.page:35
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
@@ -5062,7 +5061,7 @@ msgstr ""
 "ви користуєтеся."
 
 #. (itstool) path: item/p
-#: C/introduction.page:44
+#: C/introduction.page:42
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5071,7 +5070,7 @@ msgstr ""
 "клавіш <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:50
+#: C/introduction.page:48
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -5081,12 +5080,12 @@ msgstr ""
 "<key>Enter</key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:59
+#: C/introduction.page:57
 msgid "Load-Time Options"
 msgstr "Параметри завантаження"
 
 #. (itstool) path: section/p
-#: C/introduction.page:60
+#: C/introduction.page:58
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5095,24 +5094,24 @@ msgstr ""
 "термінала або у діалоговому вікні <gui>Запустити</gui>:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:66
+#: C/introduction.page:64
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: вивести довідкове повідомлення"
 
 #. (itstool) path: item/p
-#: C/introduction.page:69
+#: C/introduction.page:67
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: вивести дані щодо версії <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:75
+#: C/introduction.page:73
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: встановити налаштування користувача"
 
 #. (itstool) path: item/p
-#: C/introduction.page:80
+#: C/introduction.page:78
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5122,7 +5121,7 @@ msgstr ""
 "користувача"
 
 #. (itstool) path: item/p
-#: C/introduction.page:87
+#: C/introduction.page:85
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5131,22 +5130,22 @@ msgstr ""
 "параметр, де <em>параметром</em> може бути одне з таких значень:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:92 C/introduction.page:104
+#: C/introduction.page:90 C/introduction.page:102
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:93 C/introduction.page:105
+#: C/introduction.page:91 C/introduction.page:103
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:98
+#: C/introduction.page:96
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5156,7 +5155,7 @@ msgstr ""
 "значень:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:110
+#: C/introduction.page:108
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5165,7 +5164,7 @@ msgstr ""
 "профіль з вказаного файла профілю <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:116
+#: C/introduction.page:114
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5173,7 +5172,7 @@ msgstr ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: замінити наявний процес <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:121
+#: C/introduction.page:119
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
@@ -5181,14 +5180,14 @@ msgstr ""
 "програм"
 
 #. (itstool) path: item/p
-#: C/introduction.page:127
+#: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: надіслати діагностичні дані до файла debug-РРРР-ММ-ДД-ГГ:"
 "ХХ:СС.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:132
+#: C/introduction.page:130
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5234,8 +5233,8 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:58
-#: C/preferences_gecko.page:100 C/preferences_gecko.page:182
+#: C/preferences_chat.page:54 C/preferences_web.page:58
+#: C/preferences_web.page:100 C/preferences_web.page:205
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_general.page:119 C/preferences_general.page:228
 #: C/preferences_general.page:239 C/preferences_key_echo.page:112
@@ -5446,22 +5445,23 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
-#: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:140 C/preferences_general.page:217
-#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
-#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
-#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
-#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
-#: C/preferences_speech.page:26 C/preferences_speech.page:123
-#: C/preferences_speech.page:148 C/preferences_speech.page:195
-#: C/preferences_speech.page:208 C/preferences_speech.page:220
-#: C/preferences_speech.page:234 C/preferences_speech.page:251
-#: C/preferences_speech.page:265 C/preferences_speech.page:279
-#: C/preferences_speech.page:293 C/preferences_speech.page:307
-#: C/preferences_speech.page:319 C/preferences_speech.page:331
-#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
-#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193 C/preferences_general.page:140
+#: C/preferences_general.page:217 C/preferences_key_echo.page:28
+#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
+#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
+#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
+#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
+#: C/preferences_speech.page:123 C/preferences_speech.page:148
+#: C/preferences_speech.page:195 C/preferences_speech.page:208
+#: C/preferences_speech.page:220 C/preferences_speech.page:234
+#: C/preferences_speech.page:251 C/preferences_speech.page:265
+#: C/preferences_speech.page:279 C/preferences_speech.page:293
+#: C/preferences_speech.page:307 C/preferences_speech.page:319
+#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
+#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
+#: C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
@@ -5646,38 +5646,45 @@ msgid "Default value: all channels"
 msgstr "Типове значення: всі канали"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:5
+#: C/preferences_web.page:5
+#| msgctxt "sort"
+#| msgid "1. Gecko Navigation"
 msgctxt "sort"
-msgid "1. Gecko Navigation"
-msgstr "1. Навігація Gecko"
+msgid "1. Web Navigation"
+msgstr "1. Вебнавігація"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:6
+#: C/preferences_web.page:6
+#| msgid "Page Navigation"
 msgctxt "link"
-msgid "Gecko Navigation"
-msgstr "Навігація Gecko"
+msgid "Web Navigation"
+msgstr "Вебнавігація"
 
 #. (itstool) path: info/desc
-#: C/preferences_gecko.page:7
+#: C/preferences_web.page:7
+#| msgid ""
+#| "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
+#| "<app>Thunderbird</app>"
 msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-"<app>Thunderbird</app>"
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
 msgstr ""
-"Налаштовування підтримки <app>Orca</app> для <app>Firefox</app> і "
-"<app>Thunderbird</app>"
+"Налаштовування підтримки <app>Orca</app> для <app>Firefox</app>, "
+"<app>Thunderbird</app> і <app>Chrome</app>/<app>Chromium</app>"
 
 #. (itstool) path: page/title
-#: C/preferences_gecko.page:19
-msgid "Gecko Navigation Preferences"
-msgstr "Параметри навігації Gecko"
+#: C/preferences_web.page:19
+#| msgid "Gecko Navigation Preferences"
+msgid "Web Navigation Preferences"
+msgstr "Параметри вебнавігації"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:21
+#: C/preferences_web.page:21
 msgid "Page Navigation"
 msgstr "Переміщення на сторінці"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:22
+#: C/preferences_web.page:22
 msgid ""
 "The <gui>Page Navigation</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents, and allow you to interact with, text "
@@ -5688,31 +5695,35 @@ msgstr ""
 "взаємодіяти із текстовими та іншими даними."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:28
+#: C/preferences_web.page:28
 msgid "Control caret navigation"
 msgstr "Керування курсорною навігацією"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:29
+#: C/preferences_web.page:29
+#| msgid ""
+#| "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When "
+#| "it is on, <app>Orca</app> takes control of the caret as you arrow around "
+#| "within a page; when it is off, Gecko's native caret navigation is active."
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, Gecko's native caret navigation is active."
+"a page; when it is off, the browser's native caret navigation is active."
 msgstr ""
 "За допомогою цього пункту можна увімкнути або вимкнути навігацію за "
 "допомогою курсора в <app>Orca</app>. Якщо пункт позначено, <app>Orca</app> "
 "перехопить керування курсором, коли ви пересуватиметеся сторінкою за "
 "допомогою клавіш зі стрілками. Якщо пункт не буде позначено, "
-"використовуватиметься вбудована навігація за допомогою курсора Gecko."
+"використовуватиметься вбудована навігація за допомогою курсора браузера."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
+#: C/preferences_web.page:39 C/preferences_web.page:82
 #: C/preferences_voice.page:76
 msgid "This setting can be toggled on the fly"
 msgstr "Цей параметр можна перемикати «на льоту»"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:40
+#: C/preferences_web.page:40
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>F12</key></keyseq>."
@@ -5722,12 +5733,12 @@ msgstr ""
 "key><key>F12</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:47
+#: C/preferences_web.page:47
 msgid "Automatic focus mode during caret navigation"
 msgstr "Автоматичний режим фокусування під час курсорної навігації"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_web.page:48
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use caret navigation commands to navigate to a form "
@@ -5750,12 +5761,14 @@ msgstr ""
 "клавіш зі стрілками і продовжити читання."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
 msgid "Manually switching between browse mode and focus mode"
 msgstr "Перемикання між режимом читання та фокусування вручну"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
 msgid ""
 "In order to start or stop interacting with the focused form field, use "
 "<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
@@ -5766,12 +5779,12 @@ msgstr ""
 "key></keyseq> для перемикання між режимами навігації і фокусування."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:71
+#: C/preferences_web.page:71
 msgid "Enable structural navigation"
 msgstr "Увімкнути структурну навігацію"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:72
+#: C/preferences_web.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5784,7 +5797,7 @@ msgstr ""
 "зокрема заголовками, посиланням та полями форм."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:83
+#: C/preferences_web.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5794,12 +5807,12 @@ msgstr ""
 "key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_web.page:90
 msgid "Automatic focus mode during structural navigation"
 msgstr "Автоматичний режим фокусування під час навігації структурою"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:91
+#: C/preferences_web.page:91
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use structural navigation commands to navigate to a form "
@@ -5820,12 +5833,48 @@ msgstr ""
 "сторінці."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:113
+#: C/preferences_web.page:113
+#| msgid "Automatic focus mode during caret navigation"
+msgid "Automatic focus mode during native navigation"
+msgstr "Автоматичний режим фокусування під час природної навігації"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+#| msgid ""
+#| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
+#| "focus mode when you use structural navigation commands to navigate to a "
+#| "form field. For example, pressing <key>E</key> to move to the next entry "
+#| "would move focus there and also turn focus mode on so that your next "
+#| "press of <key>E</key> would type an \"e\" into that entry. If this "
+#| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
+#| "mode and your next press of <key>E</key> would move you to the next entry "
+#| "on the page."
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Якщо позначено цей пункт, <app>Orca</app> автоматично вмикатиме режим "
+"фокусування, коли ви використовуватимете команди природної навігації для "
+"переходу до поля форми. Наприклад, натискання <key>Tab</key> для переходу до "
+"наступного поля введення пересуне фокус до поля і увімкне режим фокусування, "
+"отже ваше наступне натискання клавіші <key>E</key> призведе до введення "
+"літери «e» до поля. Якщо цей пункт не буде позначено, <app>Orca</app> "
+"продовжуватиме працювати у режимі навігації, і наступне натискання клавіші "
+"<key>E</key> призведе до переходу до наступного поля для введення тексту на "
+"сторінці."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr "Вимовляти початок сторінки, коли вона завантажена вперше"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:114
+#: C/preferences_web.page:137
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5834,17 +5883,17 @@ msgstr ""
 "все» для нової відкритої вебсторінки або повідомлення електронної пошти."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118 C/preferences_gecko.page:129
+#: C/preferences_web.page:141 C/preferences_web.page:152
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr "Типове значення: позначено для Firefox; не позначено для Thunderbird"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:123
+#: C/preferences_web.page:146
 msgid "Present summary of a page when it is first loaded"
 msgstr "Подавати підсумок сторінки, коли вона завантажена вперше"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:124
+#: C/preferences_web.page:147
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will summarize details about "
 "the newly opened web page or email, such as the number of headings, "
@@ -5855,12 +5904,12 @@ msgstr ""
 "повідомлятиме про кількість заголовків, орієнтири та посилання."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:134
+#: C/preferences_web.page:157
 msgid "Enable layout mode for content"
 msgstr "Увімкнути режим компонування для вмісту"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:135
+#: C/preferences_web.page:158
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
 "the on-screen layout of the content and present the full line, including any "
@@ -5876,12 +5925,12 @@ msgstr ""
 "режимах, презентації та навігації."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:148
+#: C/preferences_web.page:171
 msgid "Table Options"
 msgstr "Параметри таблиці"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:150
+#: C/preferences_web.page:173
 msgid ""
 "To learn more about <app>Orca</app>'s options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -5892,12 +5941,12 @@ msgstr ""
 "\"preferences_table_navigation\">параметрів навігації таблицями</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:158
+#: C/preferences_web.page:181
 msgid "Find Options"
 msgstr "Параметри пошуку"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:159
+#: C/preferences_web.page:182
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -5909,12 +5958,12 @@ msgstr ""
 "програми."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:165
+#: C/preferences_web.page:188
 msgid "Speak results during find"
 msgstr "Вимовляти результати під час пошуку"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:166
+#: C/preferences_web.page:189
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -5923,12 +5972,12 @@ msgstr ""
 "відповідає поточному запиту щодо пошуку."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:175
+#: C/preferences_web.page:198
 msgid "Only speak changed lines during find"
 msgstr "Під час пошуку озвучувати зміни рядка"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:176
+#: C/preferences_web.page:199
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -5941,12 +5990,12 @@ msgstr ""
 "шукаєте."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:187
+#: C/preferences_web.page:210
 msgid "Minimum length of matched text"
 msgstr "Мінімальна довжина тексту, що відповідає"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:188
+#: C/preferences_web.page:211
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which must match before <app>Orca</app> announces the matching line. This "
@@ -5960,7 +6009,7 @@ msgstr ""
 "багато відповідників."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:195
+#: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Типове значення: 4"
 
@@ -8247,3 +8296,7 @@ msgstr ""
 "Якщо буде позначено пункт <gui>Вимовляти числа як цифри</gui>, <app>Orca</"
 "app> розбиватиме числа, наприклад «123», на окремі цифри («1», «2» і «3»), "
 "перш ніж передавати їх синтезатору мовлення."
+
+#~ msgctxt "link"
+#~ msgid "Gecko Navigation"
+#~ msgstr "Навігація Gecko"
