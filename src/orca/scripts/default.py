@@ -686,10 +686,14 @@ class Script(script.Script):
         """
         brailleBindings = script.Script.getBrailleBindings(self)
         try:
+            brailleBindings[braille.brlapi.KEY_CMD_HWINLT]     = \
+                self.inputEventHandlers["panBrailleLeftHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_FWINLT]     = \
                 self.inputEventHandlers["panBrailleLeftHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_FWINLTSKIP] = \
                 self.inputEventHandlers["panBrailleLeftHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_HWINRT]     = \
+                self.inputEventHandlers["panBrailleRightHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_FWINRT]     = \
                 self.inputEventHandlers["panBrailleRightHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \

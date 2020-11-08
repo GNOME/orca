@@ -106,7 +106,9 @@ _monitor = None
 #
 dontInteruptSpeechKeys = []
 if _brlAPIAvailable:
-    dontInteruptSpeechKeys = [brlapi.KEY_CMD_FWINLT, brlapi.KEY_CMD_FWINRT, \
+    dontInteruptSpeechKeys = [ \
+        brlapi.KEY_CMD_HWINLT, brlapi.KEY_CMD_HWINRT, \
+        brlapi.KEY_CMD_FWINLT, brlapi.KEY_CMD_FWINRT, \
         brlapi.KEY_CMD_FWINLTSKIP, brlapi.KEY_CMD_FWINRTSKIP, \
         brlapi.KEY_CMD_LNUP, brlapi.KEY_CMD_LNDN]
 
@@ -116,8 +118,10 @@ if _brlAPIAvailable:
 command_name = {}
 
 if _brlAPIAvailable:
+    command_name[brlapi.KEY_CMD_HWINLT]     = cmdnames.BRAILLE_LINE_LEFT
     command_name[brlapi.KEY_CMD_FWINLT]     = cmdnames.BRAILLE_LINE_LEFT
     command_name[brlapi.KEY_CMD_FWINLTSKIP] = cmdnames.BRAILLE_LINE_LEFT
+    command_name[brlapi.KEY_CMD_HWINRT]     = cmdnames.BRAILLE_LINE_RIGHT
     command_name[brlapi.KEY_CMD_FWINRT]     = cmdnames.BRAILLE_LINE_RIGHT
     command_name[brlapi.KEY_CMD_FWINRTSKIP] = cmdnames.BRAILLE_LINE_RIGHT
     command_name[brlapi.KEY_CMD_LNUP]       = cmdnames.BRAILLE_LINE_UP
