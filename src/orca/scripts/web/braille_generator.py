@@ -46,7 +46,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super().getLocalizedRoleName(obj, **args)
 
-        roledescription = self._script.utilities.getRoleDescription(obj)
+        roledescription = self._script.utilities.getRoleDescription(obj, True)
         if roledescription:
             return roledescription
 
@@ -58,7 +58,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
-        roledescription = self._script.utilities.getRoleDescription(obj)
+        roledescription = self._script.utilities.getRoleDescription(obj, True)
         if roledescription:
             return [roledescription]
 
@@ -164,6 +164,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateName(obj, **args)
+
+        brailleLabel = self._script.utilities.objectAttributes(obj).get("braillelabel")
+        if brailleLabel:
+            return [brailleLabel]
 
         if self._script.utilities.preferDescriptionOverName(obj):
             return [obj.description]

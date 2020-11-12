@@ -5008,7 +5008,7 @@ class Utilities:
         setSize = len(siblings)
         return position, setSize
 
-    def getRoleDescription(self, obj):
+    def getRoleDescription(self, obj, isBraille=False):
         return ""
 
     def getCachedTextSelection(self, obj):

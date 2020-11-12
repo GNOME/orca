@@ -523,9 +523,13 @@ class Utilities(script_utilities.Utilities):
         self._objectAttributes[hash(obj)] = rv
         return rv
 
-    def getRoleDescription(self, obj):
+    def getRoleDescription(self, obj, isBraille=False):
         attrs = self.objectAttributes(obj)
-        return attrs.get('roledescription', '')
+        rv = attrs.get('roledescription', '')
+        if isBraille:
+            rv = attrs.get('brailleroledescription', rv)
+
+        return rv
 
     def nodeLevel(self, obj):
         if not (obj and self.inDocumentContent(obj)):
