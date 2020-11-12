@@ -121,13 +121,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
            and self._script.utilities.isCodeDescendant(obj):
             return []
 
-        if obj.name:
-            name = obj.name
-            if not self._script.utilities.hasExplicitName(obj):
-                name = name.strip()
-            return [name]
-
-        return super()._generateLabelOrName(obj, **args)
+        return self._generateName(obj, **args)
 
     def _generateLabel(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
