@@ -688,7 +688,7 @@ KEY_ECHO_KEY_BRIEF = C_("key echo", "key")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_KEY_FULL = _("Key echo set to key.")
+KEY_ECHO_KEY_FULL = _("Echo set to key.")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -714,7 +714,7 @@ KEY_ECHO_NONE_BRIEF = C_("key echo", "None")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_NONE_FULL = _("Key echo set to None.")
+KEY_ECHO_NONE_FULL = _("Echo set to None.")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -740,7 +740,7 @@ KEY_ECHO_KEY_AND_WORD_BRIEF = C_("key echo", "key and word")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_KEY_AND_WORD_FULL = _("Key echo set to key and word.")
+KEY_ECHO_KEY_AND_WORD_FULL = _("Echo set to key and word.")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -766,7 +766,7 @@ KEY_ECHO_SENTENCE_BRIEF = C_("key echo", "sentence")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_SENTENCE_FULL = _("Key echo set to sentence.")
+KEY_ECHO_SENTENCE_FULL = _("Echo set to sentence.")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -792,7 +792,7 @@ KEY_ECHO_WORD_BRIEF = C_("key echo", "word")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_WORD_FULL = _("Key echo set to word.")
+KEY_ECHO_WORD_FULL = _("Echo set to word.")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -818,7 +818,7 @@ KEY_ECHO_WORD_AND_SENTENCE_BRIEF = C_("key echo", "word and sentence")
 #   is pressed.
 # A user can choose to have no echo, one type of echo, or multiple types of
 # echo and can cycle through the various levels quickly via a command.
-KEY_ECHO_WORD_AND_SENTENCE_FULL = _("Key echo set to word and sentence.")
+KEY_ECHO_WORD_AND_SENTENCE_FULL = _("Echo set to word and sentence.")
 
 # Translators: This phrase is spoken to inform the user of all of the MathML
 # enclosure notations associated with a given mathematical expression. For
