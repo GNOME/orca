@@ -519,6 +519,10 @@ formatting = {
             'unfocused': 'roleName + labelAndName',
             'basicWhereAmI': 'roleName + labelAndName'
             },
+        pyatspi.ROLE_TREE: {
+            'focused': 'labelAndName + roleName',
+            'unfocused': 'labelAndName + roleName',
+            },
         pyatspi.ROLE_TREE_ITEM: {
             'focused': 'expandableState',
             'unfocused': '(labelOrName or displayedText) + pause + expandableState + pause + positionInList',
@@ -819,6 +823,9 @@ formatting = {
                                      indicator=asString(toggleState))]'
             },
         pyatspi.ROLE_TOOL_BAR: {
+            'unfocused': '[Component(obj, asString(labelOrName + roleName))]',
+            },
+        pyatspi.ROLE_TREE: {
             'unfocused': '[Component(obj, asString(labelOrName + roleName))]',
             },
         pyatspi.ROLE_TREE_ITEM: {
