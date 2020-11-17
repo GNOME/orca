@@ -401,11 +401,10 @@ class Generator:
         If the label cannot be found, the name will be used instead.
         If the name cannot be found, an empty array will be returned.
         """
-        result = []
-        result.extend(self._generateLabel(obj, **args))
+        result = self._generateLabel(obj, **args)
         if not result:
-            if obj.name and (len(obj.name)):
-                result.append(obj.name)
+            result = self._generateName(obj, **args)
+
         return result
 
     def _generateDescription(self, obj, **args):
