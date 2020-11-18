@@ -831,7 +831,7 @@ formatting = {
         pyatspi.ROLE_TREE_ITEM: {
             'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
                           or ([Component(obj, asString(labelOrName + expandableState))]\
-                              + (nestingLevel and [Region(" " + asString(nestingLevel))])))',
+                              + (nodeLevel and [Region(" " + asString(nodeLevel))])))',
             },
         #pyatspi.ROLE_TREE: 'default'
         #pyatspi.ROLE_TREE_TABLE: 'default'
