@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-11-06 10:29+0000\n"
-"PO-Revision-Date: 2020-11-07 20:46+0200\n"
+"POT-Creation-Date: 2020-11-12 13:14+0000\n"
+"PO-Revision-Date: 2020-11-23 10:40+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1813,7 +1813,6 @@ msgstr "Виголосити ціле вікно при плоскому пер�
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-#| msgid "Performs the basic Where Am I operation."
 msgid "Perform the basic Where Am I operation"
 msgstr "Повідомити про поточне положення"
 
@@ -1822,7 +1821,6 @@ msgstr "Повідомити про поточне положення"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-#| msgid "Performs the detailed Where Am I operation."
 msgid "Perform the detailed Where Am I operation"
 msgstr "Докладно оголосити поточне положення"
 
@@ -8767,7 +8765,8 @@ msgstr "клавіша"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:691
-msgid "Key echo set to key."
+#| msgid "Key echo set to key."
+msgid "Echo set to key."
 msgstr "Встановлено озвучування для клавіш."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
@@ -8798,8 +8797,9 @@ msgstr "Немає"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:717
-msgid "Key echo set to None."
-msgstr "Клавішу не вказано."
+#| msgid "Key echo set to None."
+msgid "Echo set to None."
+msgstr "Озвучення немає."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8829,8 +8829,9 @@ msgstr "клавіша та слово"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
-msgid "Key echo set to key and word."
-msgstr "Встановлено озвучування для клавіші і слів."
+#| msgid "Key echo set to key and word."
+msgid "Echo set to key and word."
+msgstr "Встановлено озвучування для клавіш і слів."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8860,7 +8861,8 @@ msgstr "речення"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
-msgid "Key echo set to sentence."
+#| msgid "Key echo set to sentence."
+msgid "Echo set to sentence."
 msgstr "Встановлено озвучування для речень."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
@@ -8891,7 +8893,8 @@ msgstr "слово"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
-msgid "Key echo set to word."
+#| msgid "Key echo set to word."
+msgid "Echo set to word."
 msgstr "Встановлено озвучування для слів."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
@@ -8922,7 +8925,8 @@ msgstr "слово та речення"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
-msgid "Key echo set to word and sentence."
+#| msgid "Key echo set to word and sentence."
+msgid "Echo set to word and sentence."
 msgstr "Встановлено озвучування для слів і речень."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
@@ -12925,8 +12929,9 @@ msgid "Enable echo by _sentence"
 msgstr "Увімкнути озвучення _реченнями"
 
 #: src/orca/orca-setup.ui:2861
-msgid "Key Echo"
-msgstr "Озвучення клавіш"
+#| msgid "Key Echo"
+msgid "Echo"
+msgstr "Озвучення"
 
 #: src/orca/orca-setup.ui:2885
 msgid "Screen Reader _Modifier Key(s):"
