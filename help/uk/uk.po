@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-08-31 15:12+0000\n"
-"PO-Revision-Date: 2020-11-07 20:49+0200\n"
+"POT-Creation-Date: 2020-11-12 13:15+0000\n"
+"PO-Revision-Date: 2020-11-23 10:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5018,13 +5018,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
-#| msgid ""
-#| "<app>Orca</app> works with applications and toolkits that support the "
-#| "Assistive Technology Service Provider Interface (AT-SPI), which is the "
-#| "primary assistive technology infrastructure for Linux and Solaris. "
-#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-#| "toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
@@ -5036,8 +5029,8 @@ msgstr ""
 "підтримку Assistive Technology Service Provider Interface (AT-SPI). Цей "
 "інтерфейс є основною допоміжною технологічною інфраструктурою для Linux і "
 "Solaris. Серед програм та бібліотек, у яких передбачено підтримку AT-SPI, "
-"набір бібліотек GNOME Gtk+, Qt, Java Swing, LibreOffice, Gecko, WebKitGtk та"
-" Chrome/Chromium."
+"набір бібліотек GNOME Gtk+, Qt, Java Swing, LibreOffice, Gecko, WebKitGtk та "
+"Chrome/Chromium."
 
 #. (itstool) path: section/title
 #: C/introduction.page:31
@@ -5474,12 +5467,18 @@ msgstr "Повідомлення є докладними"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:147
+#| msgid ""
+#| "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will "
+#| "present detailed messages to you in braille. For instance, if you use "
+#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might "
+#| "display \"Key echo set to word.\" If you would prefer shorter messages, "
+#| "such as simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
-"app>'s command to change key echo, <app>Orca</app> might display \"Key echo "
-"set to word.\" If you would prefer shorter messages, such as simply \"word,"
-"\" you should uncheck this checkbox."
+"app>'s command to change echo, <app>Orca</app> might display \"Echo set to "
+"word.\" If you would prefer shorter messages, such as simply \"word,\" you "
+"should uncheck this checkbox."
 msgstr ""
 "Якщо позначено пункт <gui>Повідомлення є докладними</gui>, <app>Orca</app> "
 "показуватиме вам докладні повідомлення на дисплеї Брайля. Наприклад, якщо ви "
@@ -5647,24 +5646,18 @@ msgstr "Типове значення: всі канали"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:5
-#| msgctxt "sort"
-#| msgid "1. Gecko Navigation"
 msgctxt "sort"
 msgid "1. Web Navigation"
 msgstr "1. Вебнавігація"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:6
-#| msgid "Page Navigation"
 msgctxt "link"
 msgid "Web Navigation"
 msgstr "Вебнавігація"
 
 #. (itstool) path: info/desc
 #: C/preferences_web.page:7
-#| msgid ""
-#| "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-#| "<app>Thunderbird</app>"
 msgid ""
 "Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
 "<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
@@ -5674,7 +5667,6 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/preferences_web.page:19
-#| msgid "Gecko Navigation Preferences"
 msgid "Web Navigation Preferences"
 msgstr "Параметри вебнавігації"
 
@@ -5701,10 +5693,6 @@ msgstr "Керування курсорною навігацією"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:29
-#| msgid ""
-#| "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When "
-#| "it is on, <app>Orca</app> takes control of the caret as you arrow around "
-#| "within a page; when it is off, Gecko's native caret navigation is active."
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
@@ -5834,21 +5822,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:113
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Автоматичний режим фокусування під час природної навігації"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:114
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
-#| "focus mode when you use structural navigation commands to navigate to a "
-#| "form field. For example, pressing <key>E</key> to move to the next entry "
-#| "would move focus there and also turn focus mode on so that your next "
-#| "press of <key>E</key> would type an \"e\" into that entry. If this "
-#| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
-#| "mode and your next press of <key>E</key> would move you to the next entry "
-#| "on the page."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use native browser navigation commands to navigate to a "
@@ -6508,10 +6486,14 @@ msgstr "Налаштування Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:18
+#| msgid ""
+#| "Orca preferences allow you to customize functionality in <app>Orca</app> "
+#| "which applies to all applications. An example of an Orca preference is "
+#| "key echo because key echo is something that applies to all applications."
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
-"which applies to all applications. An example of an Orca preference is key "
-"echo because key echo is something that applies to all applications."
+"which applies to all applications. An example of an Orca preference is echo "
+"because echo is something that applies to all applications."
 msgstr ""
 "За допомогою вікна налаштувань Orca ви можете визначити параметри роботи "
 "<app>Orca</app>, які стосуватимуться усіх програм. Прикладом налаштування "
@@ -6520,11 +6502,17 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
+#| msgid ""
+#| "Note that Orca preferences can be customized on an application-by-"
+#| "application basis. For instance you can set the default key echo to words "
+#| "and then set the key echo for Pidgin to be none. Having done so, "
+#| "<app>Orca</app> would always echo each word that you typed, unless you "
+#| "were in Pidgin."
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
-"application basis. For instance you can set the default key echo to words "
-"and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
-"app> would always echo each word that you typed, unless you were in Pidgin."
+"application basis. For instance you can set the default echo to words and "
+"then set the echo for Pidgin to be none. Having done so, <app>Orca</app> "
+"would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
 "Зауважте, що параметри Orca можна налаштувати на рівні окремої програми. "
 "Наприклад, ви можете налаштувати типове озвучування набраного на клавіатурі "
@@ -6703,15 +6691,19 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
+#| msgctxt "link"
+#| msgid "Key Echo"
 msgctxt "link"
-msgid "Key Echo"
-msgstr "Озвучення клавіш"
+msgid "Echo"
+msgstr "Озвучення"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
+#| msgctxt "sort"
+#| msgid "4. Key Echo"
 msgctxt "sort"
-msgid "4. Key Echo"
-msgstr "4. Озвучення клавіш"
+msgid "4. Echo"
+msgstr "4. Озвучення"
 
 #. (itstool) path: info/desc
 #: C/preferences_key_echo.page:5
@@ -6720,8 +6712,9 @@ msgstr "Налаштовування озвучення під час друку
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-msgid "Key Echo Preferences"
-msgstr "Параметри озвучення клавіш"
+#| msgid "Key Echo Preferences"
+msgid "Echo Preferences"
+msgstr "Параметри озвучення"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:20
@@ -7423,12 +7416,18 @@ msgstr "Системні повідомлення — докладні"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
+#| msgid ""
+#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
+#| "will present detailed messages to you in speech. For instance, if you use "
+#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
+#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
+#| "simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
-"<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-"\"Key echo set to word.\" If you would prefer shorter messages, such as "
-"simply \"word,\" you should uncheck this checkbox."
+"<app>Orca</app>'s command to change echo, <app>Orca</app> might speak \"Echo "
+"set to word.\" If you would prefer shorter messages, such as simply \"word,"
+"\" you should uncheck this checkbox."
 msgstr ""
 "Якщо позначено пункт <gui>Системні повідомлення є докладними</gui>, "
 "<app>Orca</app> вимовлятиме вам докладні повідомлення. Наприклад, якщо ви "
