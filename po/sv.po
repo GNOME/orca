@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-08-19 10:24+0000\n"
-"PO-Revision-Date: 2020-07-31 00:44+0200\n"
+"POT-Creation-Date: 2020-11-12 13:14+0000\n"
+"PO-Revision-Date: 2020-11-28 23:05+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -1811,16 +1811,16 @@ msgstr "Läs upp hela fönstret med platt granskning"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-msgid "Performs the basic Where Am I operation."
-msgstr "Genomför den grundläggande Var är jag-åtgärden."
+msgid "Perform the basic Where Am I operation"
+msgstr "Genomför den grundläggande Var är jag-åtgärden"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-msgid "Performs the detailed Where Am I operation."
-msgstr "Genomför den detaljerade Var är jag-åtgärden."
+msgid "Perform the detailed Where Am I operation"
+msgstr "Genomför den detaljerade Var är jag-åtgärden"
 
 #. Translators: This is the description of a dedicated command to speak the
 #. current selection / highlighted object(s). For instance, in a text object,
@@ -4376,10 +4376,8 @@ msgstr "Automatiskt fokusläge under markörnavigering"
 #. as the Tab key, or it might be a web page behavior, such as the search field
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
-msgstr "Automatiskt fokusläge under markörnavigering"
+msgstr "Automatiskt fokusläge under programmets egen navigering"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -8782,8 +8780,8 @@ msgstr "tangent"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:691
-msgid "Key echo set to key."
-msgstr "Tangenteko inställt till tangent."
+msgid "Echo set to key."
+msgstr "Eko inställt till tangent."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8813,8 +8811,8 @@ msgstr "Ingen"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:717
-msgid "Key echo set to None."
-msgstr "Tangenteko inställt till inget."
+msgid "Echo set to None."
+msgstr "Eko inställt till inget."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8844,8 +8842,8 @@ msgstr "tangent och ord"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
-msgid "Key echo set to key and word."
-msgstr "Tangenteko inställt till tangent och ord."
+msgid "Echo set to key and word."
+msgstr "Eko inställt till tangent och ord."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8875,8 +8873,8 @@ msgstr "mening"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
-msgid "Key echo set to sentence."
-msgstr "Tangenteko inställt till mening."
+msgid "Echo set to sentence."
+msgstr "Eko inställt till mening."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8906,8 +8904,8 @@ msgstr "ord"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
-msgid "Key echo set to word."
-msgstr "Tangenteko inställt till ord."
+msgid "Echo set to word."
+msgstr "Eko inställt till ord."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8937,8 +8935,8 @@ msgstr "ord och mening"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
-msgid "Key echo set to word and sentence."
-msgstr "Tangenteko inställt till ord och mening."
+msgid "Echo set to word and sentence."
+msgstr "Eko inställt till ord och mening."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -12906,8 +12904,8 @@ msgid "Enable echo by _sentence"
 msgstr "Aktivera eko efter _mening"
 
 #: src/orca/orca-setup.ui:2861
-msgid "Key Echo"
-msgstr "Tangenteko"
+msgid "Echo"
+msgstr "Eko"
 
 #: src/orca/orca-setup.ui:2885
 msgid "Screen Reader _Modifier Key(s):"
