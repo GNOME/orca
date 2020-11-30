@@ -341,6 +341,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
 
+        if obj.getRole() == pyatspi.ROLE_CHECK_BOX:
+            gridCell = pyatspi.findAncestor(obj, self._script.utilities.isGridCell)
+            return super()._generateLabelOrName(gridCell, **args)
+
         return super()._generateLabelOrName(obj, **args)
 
     def _generateName(self, obj, **args):
