@@ -2175,6 +2175,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = False
+        elif self.isGridCell(obj):
+            rv = False
         elif role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
             rv = True
         elif not state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED):
@@ -2957,6 +2959,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isFigure(obj):
             rv = False
+        elif self.isGrid(obj):
+            rv = False
         elif role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER]:
             rv = False
         elif role == pyatspi.ROLE_SEPARATOR:
@@ -3556,6 +3560,12 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return pyatspi.findDescendant(obj, _isMatch) is not None
+
+    def isGrid(self, obj):
+        return 'grid' in self._getXMLRoles(obj)
+
+    def isGridCell(self, obj):
+        return 'gridcell' in self._getXMLRoles(obj)
 
     def isInlineListItem(self, obj):
         if not (obj and self.inDocumentContent(obj)):

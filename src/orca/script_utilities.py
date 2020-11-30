@@ -937,6 +937,12 @@ class Utilities:
     def isFigure(self, obj):
         return False
 
+    def isGrid(self, obj):
+        return False
+
+    def isGridCell(self, obj):
+        return False
+
     def supportsLandmarkRole(self):
         return False
 
