@@ -2510,7 +2510,10 @@ class SpeechGenerator(generator.Generator):
 
     def _generateMath(self, obj, **args):
         result = []
-        children = [child for child in obj] or [obj]
+        children = [child for child in obj]
+        if not children and not self._script.utilities.isMathTopLevel(obj):
+            children = [obj]
+
         for child in children:
             if self._script.utilities.isMathLayoutOnly(child) and child.childCount:
                 result.extend(self._generateMath(child))
