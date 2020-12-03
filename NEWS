@@ -1,3 +1,21 @@
+3.38.1 - 3 December 2020
+
+Web:
+
+ * Fix crash when generating speech for childless math element
+
+General:
+
+ * Fix bug causing the new radio button group to not be presented
+   when the group was first entered
+
+New and updated translations (THANKS EVERYONE!!!):
+
+   pt            Portuguese              Juliano de Souza Camargo
+   pt_BR         Brazilian Portuguese    Henrique Machado Campos
+
+=========
+
 3.38.0 - 11 September 2020
 
 Web:
