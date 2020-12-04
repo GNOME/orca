@@ -99,7 +99,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._actualLabels = {}
+        self._labelsForObject = {}
         self._labelTargets = {}
         self._displayedLabelText = {}
         self._mimeType = {}
@@ -172,7 +172,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._actualLabels = {}
+        self._labelsForObject = {}
         self._labelTargets = {}
         self._displayedLabelText = {}
         self._mimeType = {}
@@ -4092,7 +4092,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        rv = self._actualLabels.get(hash(obj))
+        rv = self._labelsForObject.get(hash(obj))
         if rv is not None:
             return rv
 
@@ -4100,8 +4100,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return rv
 
-        rv = list(filter(lambda x: x and x.getRole() == pyatspi.ROLE_LABEL, rv))
-        self._actualLabels[hash(obj)] = rv
+        self._labelsForObject[hash(obj)] = rv
         return rv
 
     def isSpinnerEntry(self, obj):
