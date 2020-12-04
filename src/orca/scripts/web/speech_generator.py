@@ -317,7 +317,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isContentSuggestion(obj):
             return []
 
-        if self._script.inSayAll() and obj == args.get('priorObj'):
+        priorObj = args.get("priorObj")
+        if obj == priorObj:
             return []
 
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
@@ -325,7 +326,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 return []
 
-        priorObj = args.get("priorObj")
         if priorObj and priorObj.getRole() == pyatspi.ROLE_PAGE_TAB and priorObj.name == obj.name:
             return []
 
@@ -478,7 +478,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
-        if self._script.inSayAll() and obj == args.get('priorObj'):
+        if obj == args.get('priorObj'):
             return []
 
         result = []
