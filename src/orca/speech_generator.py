@@ -1817,6 +1817,7 @@ class SpeechGenerator(generator.Generator):
                     pyatspi.ROLE_LANDMARK,
                     pyatspi.ROLE_LIST,
                     pyatspi.ROLE_PANEL,
+                    'ROLE_REGION',
                     pyatspi.ROLE_TABLE,
                     pyatspi.ROLE_TOOL_TIP]
 
@@ -1844,7 +1845,7 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('speakContextBlockquote'):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
             if _settingsManager.getSetting('speakContextLandmark'):
-                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK'])
+                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK', 'ROLE_REGION'])
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
@@ -2132,6 +2133,7 @@ class SpeechGenerator(generator.Generator):
                                'ROLE_DPUB_SECTION',
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
+                               'ROLE_REGION',
                                pyatspi.ROLE_TABLE,
                                pyatspi.ROLE_TOOL_TIP]
 

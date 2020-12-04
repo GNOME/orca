@@ -411,6 +411,10 @@ formatting = {
             'unfocused': 'labelOrName + radioState + roleName + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': 'ancestors + labelOrName + roleName + radioState + accelerator + positionInList + ' + MNEMONIC
             },
+        'ROLE_REGION': {
+            'focused': 'leaving or (roleName + labelOrName)',
+            'unfocused': 'labelOrName + roleName + currentLineText + allTextSelection'
+            },
         pyatspi.ROLE_ROW_HEADER: {
             'focused': 'labelAndName + roleName + pause + sortOrder',
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder'

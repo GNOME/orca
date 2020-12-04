@@ -1280,6 +1280,8 @@ class Generator:
         if self._script.utilities.isContentSuggestion(obj):
             return 'ROLE_CONTENT_SUGGESTION'
         if self._script.utilities.isLandmark(obj):
+            if self._script.utilities.isLandmarkRegion(obj):
+                return 'ROLE_REGION'
             return pyatspi.ROLE_LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
             return pyatspi.ROLE_LIST_ITEM
