@@ -1974,7 +1974,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if box.x < 0 and box.y < 0:
+        if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
             msg = "INFO: %s has negative coordinates" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
