@@ -106,7 +106,7 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
-        self._text = {}
+        self._treatAsTextObject = {}
         self._treatAsDiv = {}
         self._currentObjectContents = None
         self._currentSentenceContents = None
@@ -179,6 +179,7 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
+        self._treatAsTextObject = {}
         self._treatAsDiv = {}
         self._paths = {}
         self._contextPathsRolesAndNames = {}
@@ -195,7 +196,6 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
         self._currentTextAttrs = {}
-        self._text = {}
 
     def isDocument(self, obj):
         if not obj:
@@ -981,65 +981,62 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget[hash(obj)] = rv
         return rv
 
-    def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
-        if not (obj and self.inDocumentContent(obj)) or self._script.browseModeIsSticky():
-            return super().queryNonEmptyText(obj)
+    def treatAsTextObject(self, obj, excludeNonEntryTextWidgets=True):
+        if not obj or self.isDead(obj):
+            return False
 
-        if self.isDead(obj):
-            return None
+        rv = self._treatAsTextObject.get(hash(obj))
+        if rv is not None:
+            return rv
 
-        if hash(obj) in self._text:
-            return self._text.get(hash(obj))
-
-        try:
-            rv = obj.queryText()
-            characterCount = rv.characterCount
-        except NotImplementedError:
-            msg = "WEB: %s doesn't implement text interface" % obj
+        rv = "Text" in pyatspi.listInterfaces(obj)
+        if not rv:
+            msg = "WEB: %s does not implement text interface" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            rv = None
-        except:
-            msg = "WEB: Exception getting character count for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv = None
-        else:
-            if not characterCount:
-                msg = "WEB: %s reports 0 characters" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
 
-        if self.isCellWithNameFromHeader(obj):
-            pass
-        elif self._treatObjectAsWhole(obj) and obj.name:
+        if not self.inDocumentContent(obj):
+            return rv
+
+        if rv and self._treatObjectAsWhole(obj) and obj.name and not self.isCellWithNameFromHeader(obj):
             msg = "WEB: Treating %s as non-text: named object treated as whole." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            rv = None
-        elif not self.isLiveRegion(obj):
+            rv = False
+
+        elif rv and not self.isLiveRegion(obj):
             doNotQuery = [pyatspi.ROLE_LIST_BOX]
             role = obj.getRole()
             if rv and role in doNotQuery:
                 msg = "WEB: Treating %s as non-text due to role." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
+                rv = False
             if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
                 msg = "WEB: Treating %s as non-text: is non-entry text widget." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
+                rv = False
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
                 msg = "WEB: Treating %s as non-text: is hidden or off-screen label." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
+                rv = False
             if rv and self.isNonNavigableEmbeddedDocument(obj):
                 msg = "WEB: Treating %s as non-text: is non-navigable embedded document." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
+                rv = False
             if rv and self.isFakePlaceholderForEntry(obj):
                 msg = "WEB: Treating %s as non-text: is fake placeholder for entry." % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                rv = None
+                rv = False
 
-        self._text[hash(obj)] = rv
+        self._treatAsTextObject[hash(obj)] = rv
         return rv
+
+    def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
+        if self._script.browseModeIsSticky():
+            return super().queryNonEmptyText(obj)
+
+        if not self.treatAsTextObject(obj, excludeNonEntryTextWidgets):
+            return None
+
+        return super().queryNonEmptyText(obj)
 
     def hasNameAndActionAndNoUsefulChildren(self, obj):
         if not (obj and self.inDocumentContent(obj)):
