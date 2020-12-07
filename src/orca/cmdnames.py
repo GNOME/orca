@@ -118,7 +118,7 @@ FIND_PREVIOUS = _("Search for the previous instance of a string")
 # the text from all objects in a window (e.g., buttons, labels, etc.) as a
 # sequence of words in a sequence of lines.  The flat review feature allows
 # the user to explore this text by the {previous,next} {line,word,character}.
-TOGGLE_FLAT_REVIEW = _("Enter and exits flat review mode")
+TOGGLE_FLAT_REVIEW = _("Enter and exit flat review mode")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
