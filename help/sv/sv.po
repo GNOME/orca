@@ -1,13 +1,13 @@
 # Swedish translation for orca.
-# Copyright © 2015, 2016, 2017, 2018 orca's COPYRIGHT HOLDER
+# Copyright © 2015-2020 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-08-22 11:20+0000\n"
-"PO-Revision-Date: 2020-08-22 13:28+0200\n"
+"POT-Creation-Date: 2020-12-08 09:12+0000\n"
+"PO-Revision-Date: 2020-12-08 22:06+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -59,7 +59,7 @@ msgstr "Kommandon för att bokmärka och återkalla objekt"
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
 #: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
 #: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_gecko.page:12
+#: C/preferences_chat.page:11 C/preferences_web.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
 #: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
 #: C/preferences.page:7 C/preferences_pronunciation.page:12
@@ -89,7 +89,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
 #: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_gecko.page:16 C/preferences_general.page:15
+#: C/preferences_web.page:16 C/preferences_general.page:15
 #: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
 #: C/preferences_key_echo.page:15 C/preferences.page:11
 #: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
@@ -1532,7 +1532,6 @@ msgstr ""
 msgid "Link Details"
 msgstr "Länkdetaljer"
 
-# TODO: Speak Link Details
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
 msgid ""
@@ -1540,7 +1539,7 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
+"app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -4941,29 +4940,27 @@ msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
 "primary assistive technology infrastructure for Linux and Solaris. "
-"Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-"toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-"WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
+"Applications and toolkits supporting the AT-SPI include Gtk+, Qt, Java "
+"Swing, LibreOffice, Gecko, WebKitGtk, and Chrome/Chromium."
 msgstr ""
 "<app>Orca</app> fungerar med program och verktygslådor som stöder "
 "gränssnittet Assistive Technology Service Provider Interface (AT-SPI), som "
 "är den primära infrastrukturen för hjälpmedelsteknik för Linux och Solaris. "
-"Program och verktygslådor som stöder AT-SPI inkluderar verktygslådan Gtk+ "
-"för GNOME, verktygslådan Swing för Java-plattformen, LibreOffice, Gecko och "
-"WebKitGtk. AT-SPI-stöd är ett mål för KDE:s Qt-verktygslåda."
+"Program och verktygslådor som stöder AT-SPI inkluderar Gtk+, Qt, Java Swing, "
+"LibreOffice, Gecko, WebKitGtk och Chrome/Chromium."
 
 #. (itstool) path: section/title
-#: C/introduction.page:33
+#: C/introduction.page:31
 msgid "Launching <app>Orca</app>"
 msgstr "Starta <app>Orca</app>"
 
 #. (itstool) path: section/p
-#: C/introduction.page:34
+#: C/introduction.page:32
 msgid "To launch <app>Orca</app>:"
 msgstr "För att starta <app>Orca</app>:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:37
+#: C/introduction.page:35
 msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
@@ -4973,7 +4970,7 @@ msgstr ""
 "föredragna skärmläsare beror på vilken skrivbordsmiljö du använder."
 
 #. (itstool) path: item/p
-#: C/introduction.page:44
+#: C/introduction.page:42
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -4982,7 +4979,7 @@ msgstr ""
 "key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:50
+#: C/introduction.page:48
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -4992,12 +4989,12 @@ msgstr ""
 "key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:59
+#: C/introduction.page:57
 msgid "Load-Time Options"
 msgstr "Flaggor vid inläsning"
 
 #. (itstool) path: section/p
-#: C/introduction.page:60
+#: C/introduction.page:58
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5006,23 +5003,23 @@ msgstr ""
 "eller från <gui>Kör</gui>-dialogen:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:66
+#: C/introduction.page:64
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Visa hjälpmeddelandet"
 
 #. (itstool) path: item/p
-#: C/introduction.page:69
+#: C/introduction.page:67
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr "<cmd>-v</cmd>, <cmd>--version</cmd>: Visa versionen av <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:75
+#: C/introduction.page:73
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: Konfigurera användarinställningar"
 
 #. (itstool) path: item/p
-#: C/introduction.page:80
+#: C/introduction.page:78
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5031,7 +5028,7 @@ msgstr ""
 "em> som alternativ katalog för användarinställningar"
 
 #. (itstool) path: item/p
-#: C/introduction.page:87
+#: C/introduction.page:85
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5040,22 +5037,22 @@ msgstr ""
 "flagga, där <em>flagga</em> kan vara en av följande:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:92 C/introduction.page:104
+#: C/introduction.page:90 C/introduction.page:102
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:93 C/introduction.page:105
+#: C/introduction.page:91 C/introduction.page:103
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:94 C/introduction.page:106
+#: C/introduction.page:92 C/introduction.page:104
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:98
+#: C/introduction.page:96
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5064,7 +5061,7 @@ msgstr ""
 "av en flagga, där <em>flagga</em> kan vara en av följande:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:110
+#: C/introduction.page:108
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5073,7 +5070,7 @@ msgstr ""
 "från en given <app>Orca</app>-profilfil"
 
 #. (itstool) path: item/p
-#: C/introduction.page:116
+#: C/introduction.page:114
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5082,21 +5079,21 @@ msgstr ""
 "körs"
 
 #. (itstool) path: item/p
-#: C/introduction.page:121
+#: C/introduction.page:119
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Skriv ut de kända körande programmen"
 
 #. (itstool) path: item/p
-#: C/introduction.page:127
+#: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Skicka felsökningsutdata till debug-ÅÅÅÅ-MM-DD-TT:MM:SS."
 "out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:132
+#: C/introduction.page:130
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5141,8 +5138,8 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:58
-#: C/preferences_gecko.page:100 C/preferences_gecko.page:182
+#: C/preferences_chat.page:54 C/preferences_web.page:58
+#: C/preferences_web.page:100 C/preferences_web.page:205
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_general.page:119 C/preferences_general.page:228
 #: C/preferences_general.page:239 C/preferences_key_echo.page:112
@@ -5350,22 +5347,23 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
-#: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:140 C/preferences_general.page:217
-#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
-#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
-#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
-#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
-#: C/preferences_speech.page:26 C/preferences_speech.page:123
-#: C/preferences_speech.page:148 C/preferences_speech.page:195
-#: C/preferences_speech.page:208 C/preferences_speech.page:220
-#: C/preferences_speech.page:234 C/preferences_speech.page:251
-#: C/preferences_speech.page:265 C/preferences_speech.page:279
-#: C/preferences_speech.page:293 C/preferences_speech.page:307
-#: C/preferences_speech.page:319 C/preferences_speech.page:331
-#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
-#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193 C/preferences_general.page:140
+#: C/preferences_general.page:217 C/preferences_key_echo.page:28
+#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
+#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
+#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
+#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
+#: C/preferences_speech.page:123 C/preferences_speech.page:148
+#: C/preferences_speech.page:195 C/preferences_speech.page:208
+#: C/preferences_speech.page:220 C/preferences_speech.page:234
+#: C/preferences_speech.page:251 C/preferences_speech.page:265
+#: C/preferences_speech.page:279 C/preferences_speech.page:293
+#: C/preferences_speech.page:307 C/preferences_speech.page:319
+#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
+#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
+#: C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
@@ -5381,15 +5379,15 @@ msgstr "Meddelanden är detaljerade"
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
-"app>'s command to change key echo, <app>Orca</app> might display \"Key echo "
-"set to word.\" If you would prefer shorter messages, such as simply \"word,"
-"\" you should uncheck this checkbox."
+"app>'s command to change echo, <app>Orca</app> might display \"Echo set to "
+"word.\" If you would prefer shorter messages, such as simply \"word,\" you "
+"should uncheck this checkbox."
 msgstr ""
 "Om <gui>Meddelanden är detaljerade</gui> är ikryssad kommer <app>Orca</app> "
 "presentera detaljerade meddelanden till dig i punktskrift. Till exempel, om "
-"du använder <app>Orca</app>s kommando för att ändra tangenteko kan "
-"<app>Orca</app> visa ”Tangenteko satt till ord”. Om du föredrar kortare "
-"meddelanden, som exempelvis bara ”ord”, ska du avmarkera denna kryssruta."
+"du använder <app>Orca</app>s kommando för att ändra eko kan <app>Orca</app> "
+"visa ”Eko satt till ord”. Om du föredrar kortare meddelanden, som exempelvis "
+"bara ”ord”, ska du avmarkera denna kryssruta."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
@@ -5544,38 +5542,38 @@ msgid "Default value: all channels"
 msgstr "Standardvärde: alla kanaler"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:5
+#: C/preferences_web.page:5
 msgctxt "sort"
-msgid "1. Gecko Navigation"
-msgstr "1. Gecko-navigering"
+msgid "1. Web Navigation"
+msgstr "1. Webbnavigering"
 
 #. (itstool) path: info/title
-#: C/preferences_gecko.page:6
+#: C/preferences_web.page:6
 msgctxt "link"
-msgid "Gecko Navigation"
-msgstr "Gecko-navigering"
+msgid "Web Navigation"
+msgstr "Webbnavigering"
 
 #. (itstool) path: info/desc
-#: C/preferences_gecko.page:7
+#: C/preferences_web.page:7
 msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-"<app>Thunderbird</app>"
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
 msgstr ""
-"Konfigurera <app>Orca</app>s stöd för <app>Firefox</app> och "
-"<app>Thunderbird</app>"
+"Konfigurera <app>Orca</app>s stöd för <app>Firefox</app>, <app>Thunderbird</"
+"app> och <app>Chrome</app>/<app>Chromium</app>"
 
 #. (itstool) path: page/title
-#: C/preferences_gecko.page:19
-msgid "Gecko Navigation Preferences"
-msgstr "Inställningar för Gecko-navigering"
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Inställningar för webbnavigering"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:21
+#: C/preferences_web.page:21
 msgid "Page Navigation"
 msgstr "Sidnavigering"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:22
+#: C/preferences_web.page:22
 msgid ""
 "The <gui>Page Navigation</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents, and allow you to interact with, text "
@@ -5586,29 +5584,29 @@ msgstr ""
 "annat innehåll."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:28
+#: C/preferences_web.page:28
 msgid "Control caret navigation"
 msgstr "Kontrollera markörnavigering"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:29
+#: C/preferences_web.page:29
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, Gecko's native caret navigation is active."
+"a page; when it is off, the browser's native caret navigation is active."
 msgstr ""
 "Denna kryssruta slår på och av <app>Orca</app>s markörnavigering. När den är "
 "på tar <app>Orca</app> kontroll över markören då du pilar runt i en sida; då "
-"den är avslagen är Geckos inbyggda markörnavigering aktiv."
+"den är avslagen är webbläsarens inbyggda markörnavigering aktiv."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
+#: C/preferences_web.page:39 C/preferences_web.page:82
 #: C/preferences_voice.page:76
 msgid "This setting can be toggled on the fly"
 msgstr "Denna inställning kan växlas direkt"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:40
+#: C/preferences_web.page:40
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>F12</key></keyseq>."
@@ -5617,12 +5615,12 @@ msgstr ""
 "<keyseq><key>Orca-modifierare</key><key>F12</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:47
+#: C/preferences_web.page:47
 msgid "Automatic focus mode during caret navigation"
 msgstr "Automatiskt fokusläge under markörnavigering"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_web.page:48
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use caret navigation commands to navigate to a form "
@@ -5636,19 +5634,21 @@ msgstr ""
 "Om denna kryssruta är ikryssad kommer <app>Orca</app> automatiskt slå på "
 "fokusläge då du använder markörnavigeringskommandon för att navigera till "
 "ett formulärfält. Till exempel skulle <key>Ned</key> kunna låta dig flytta "
-"in i en post men då du har gjort det så skulle Orca växla till fokusläge och "
-"följande tryck på <key>Ned</key> skulle kontrolleras av webbläsaren och inte "
-"av Orca. Om denna kryssruta inte är ikryssad så skulle <app>Orca</app> "
+"in i ett fält men då du har gjort det så skulle Orca växla till fokusläge "
+"och följande tryck på <key>Ned</key> skulle kontrolleras av webbläsaren och "
+"inte av Orca. Om denna kryssruta inte är ikryssad så skulle <app>Orca</app> "
 "fortsätta kontrollera vad som händer då du trycker <key>Ned</key>, och "
-"därmed göra det möjligt att pila ut ur posten och fortsätta läsa."
+"därmed göra det möjligt att pila ut ur fältet och fortsätta läsa."
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
 msgid "Manually switching between browse mode and focus mode"
 msgstr "Växla manuellt mellan bläddringsläge och fokusläge"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
 msgid ""
 "In order to start or stop interacting with the focused form field, use "
 "<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
@@ -5659,12 +5659,12 @@ msgstr ""
 "växla mellan bläddringsläge och fokusläge."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:71
+#: C/preferences_web.page:71
 msgid "Enable structural navigation"
 msgstr "Aktivera strukturell navigering"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:72
+#: C/preferences_web.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5677,7 +5677,7 @@ msgstr ""
 "formulärfält."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:83
+#: C/preferences_web.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5686,12 +5686,12 @@ msgstr ""
 "<keyseq><key>Orca-modifierare</key><key>Z</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_web.page:90
 msgid "Automatic focus mode during structural navigation"
 msgstr "Automatiskt fokusläge under strukturell navigering"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:91
+#: C/preferences_web.page:91
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use structural navigation commands to navigate to a form "
@@ -5704,19 +5704,44 @@ msgstr ""
 "Om denna kryssruta är ikryssad kommer <app>Orca</app> automatiskt slå på "
 "fokusläge när du använder kommandon för strukturell navigering för att "
 "navigera till ett formulärfält. Till exempel så skulle att trycka <key>E</"
-"key> för att flytta till nästa post flytta fokus dit och även slå på "
+"key> för att flytta till nästa fält flytta fokus dit och även slå på "
 "fokusläge så att ditt nästa tryck på <key>E</key> skulle skriva in ett ”e” i "
-"den posten. Om denna kryssruta inte är ikryssad skulle <app>Orca</app> lämna "
+"det fältet. Om denna kryssruta inte är ikryssad skulle <app>Orca</app> lämna "
 "dig i bläddringsläge och ditt nästa tryck på <key>E</key> skulle flytta dig "
-"till nästa post på sidan."
+"till nästa fält på sidan."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:113
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr "Automatiskt fokusläge under programmets egen navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Om denna kryssruta är ikryssad kommer <app>Orca</app> automatiskt slå på "
+"fokusläge när du använder inbyggda webbläsarnavigeringskommandon för att "
+"navigera till ett formulärfält. Till exempel så skulle att trycka <key>Tabb</"
+"key> för att flytta till nästa fält flytta fokus dit och även slå på "
+"fokusläge så att ditt nästa tryck på <key>E</key> skulle skriva in ett ”e” i "
+"det fältet. Om denna kryssruta inte är ikryssad skulle <app>Orca</app> lämna "
+"dig i bläddringsläge och ditt nästa tryck på <key>E</key> skulle flytta dig "
+"till nästa fält på sidan."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr "Börja automatiskt läsa upp en sida när den först läses in"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:114
+#: C/preferences_web.page:137
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5725,17 +5750,17 @@ msgstr ""
 "på den nyöppnade webbplatsen eller e-posten."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118 C/preferences_gecko.page:129
+#: C/preferences_web.page:141 C/preferences_web.page:152
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr "Standardvärde: ikryssad för Firefox, inte ikryssad för Thunderbird"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:123
+#: C/preferences_web.page:146
 msgid "Present summary of a page when it is first loaded"
 msgstr "Presentera sammanfattning för en sida när den först läses in"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:124
+#: C/preferences_web.page:147
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will summarize details about "
 "the newly opened web page or email, such as the number of headings, "
@@ -5746,12 +5771,12 @@ msgstr ""
 "antalet rubriker, landmärken och länkar."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:134
+#: C/preferences_web.page:157
 msgid "Enable layout mode for content"
 msgstr "Aktivera layoutläge för innehåll"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:135
+#: C/preferences_web.page:158
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
 "the on-screen layout of the content and present the full line, including any "
@@ -5767,12 +5792,12 @@ msgstr ""
 "presentation och navigering."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:148
+#: C/preferences_web.page:171
 msgid "Table Options"
 msgstr "Tabellalternativ"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:150
+#: C/preferences_web.page:173
 msgid ""
 "To learn more about <app>Orca</app>'s options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -5783,12 +5808,12 @@ msgstr ""
 "tabellnavigering</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:158
+#: C/preferences_web.page:181
 msgid "Find Options"
 msgstr "Sökalternativ"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:159
+#: C/preferences_web.page:182
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -5799,12 +5824,12 @@ msgstr ""
 "programmets inbyggda sökfunktionalitet."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:165
+#: C/preferences_web.page:188
 msgid "Speak results during find"
 msgstr "Läs upp resultat under sökning"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:166
+#: C/preferences_web.page:189
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -5813,12 +5838,12 @@ msgstr ""
 "som matchar din aktuella sökning."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:175
+#: C/preferences_web.page:198
 msgid "Only speak changed lines during find"
 msgstr "Läs endast upp ändrade rader under sökning"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:176
+#: C/preferences_web.page:199
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -5831,12 +5856,12 @@ msgstr ""
 "förekomster av strängen du söker."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:187
+#: C/preferences_web.page:210
 msgid "Minimum length of matched text"
 msgstr "Minimal längd på matchande text"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:188
+#: C/preferences_web.page:211
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which must match before <app>Orca</app> announces the matching line. This "
@@ -5849,7 +5874,7 @@ msgstr ""
 "matchningar då du först börjar skriva strängen som du söker efter."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:195
+#: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Standardvärde: 4"
 
@@ -6338,25 +6363,25 @@ msgstr "Orca-inställningar"
 #: C/preferences_introduction.page:18
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
-"which applies to all applications. An example of an Orca preference is key "
-"echo because key echo is something that applies to all applications."
+"which applies to all applications. An example of an Orca preference is echo "
+"because echo is something that applies to all applications."
 msgstr ""
 "Orca-inställningar låter dig anpassa funktionalitet i <app>Orca</app> som "
-"gäller för alla program. Ett exempel på en Orca-inställning är tangenteko "
-"eftersom tangenteko är något som gäller för alla program."
+"gäller för alla program. Ett exempel på en Orca-inställning är eko eftersom "
+"eko är något som gäller för alla program."
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
-"application basis. For instance you can set the default key echo to words "
-"and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
-"app> would always echo each word that you typed, unless you were in Pidgin."
+"application basis. For instance you can set the default echo to words and "
+"then set the echo for Pidgin to be none. Having done so, <app>Orca</app> "
+"would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
 "Notera att Orca-inställningar kan anpassas program för program. Till exempel "
-"kan du ställa in tangenteko till ord som standard och sedan ställa in "
-"tangenteko för Pidgin till inget. Då du gjort detta kommer <app>Orca</app> "
-"alltid upprepa varje ord du skriver, förutom om du är i Pidgin."
+"kan du ställa in eko till ord som standard och sedan ställa in eko för "
+"Pidgin till inget. Då du gjort detta kommer <app>Orca</app> alltid upprepa "
+"varje ord du skriver, förutom om du är i Pidgin."
 
 #. (itstool) path: note/title
 #: C/preferences_introduction.page:30
@@ -6531,14 +6556,14 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
 msgctxt "link"
-msgid "Key Echo"
-msgstr "Tangenteko"
+msgid "Echo"
+msgstr "Eko"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
 msgctxt "sort"
-msgid "4. Key Echo"
-msgstr "4. Tangenteko"
+msgid "4. Echo"
+msgstr "4. Eko"
 
 #. (itstool) path: info/desc
 #: C/preferences_key_echo.page:5
@@ -6547,8 +6572,8 @@ msgstr "Konfigurera vad som ska läsas upp då du skriver"
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-msgid "Key Echo Preferences"
-msgstr "Inställningar för tangenteko"
+msgid "Echo Preferences"
+msgstr "Inställningar för eko"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:20
@@ -7244,15 +7269,15 @@ msgstr "Systemmeddelanden är detaljerade"
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
-"<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-"\"Key echo set to word.\" If you would prefer shorter messages, such as "
-"simply \"word,\" you should uncheck this checkbox."
+"<app>Orca</app>'s command to change echo, <app>Orca</app> might speak \"Echo "
+"set to word.\" If you would prefer shorter messages, such as simply \"word,"
+"\" you should uncheck this checkbox."
 msgstr ""
 "Om <gui>Systemmeddelanden är detaljerade</gui> är ikryssad kommer <app>Orca</"
 "app> läsa upp detaljerade meddelanden för dig. Till exempel, om du använder "
-"<app>Orca</app>s kommando för att ändra tangenteko kan <app>Orca</app> säga "
-"”Tangenteko inställt till tangent”. Om du skulle föredra kortare "
-"meddelanden, som bara ”ord”, ska du avmarkera denna kryssruta."
+"<app>Orca</app>s kommando för att ändra eko kan <app>Orca</app> säga ”Eko "
+"inställt till ord”. Om du skulle föredra kortare meddelanden, som bara "
+"”ord”, ska du avmarkera denna kryssruta."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:213
@@ -8098,52 +8123,13 @@ msgstr ""
 "app> att dela upp ett nummer som ”123” till enstaka siffror (”1”, ”2” och "
 "”3”) innan det skickas vidare till talsyntesen."
 
-#, fuzzy
-#~| msgctxt "sort"
-#~| msgid "1. Gecko Navigation"
 #~ msgctxt "sort"
-#~ msgid "1. Web Navigation"
+#~ msgid "1. Gecko Navigation"
 #~ msgstr "1. Gecko-navigering"
 
-#, fuzzy
-#~| msgid "Page Navigation"
 #~ msgctxt "link"
-#~ msgid "Web Navigation"
-#~ msgstr "Sidnavigering"
-
-#, fuzzy
-#~| msgid "Automatic focus mode during caret navigation"
-#~ msgid "Automatic focus mode during native navigation"
-#~ msgstr "Automatiskt fokusläge under markörnavigering"
-
-#, fuzzy
-#~| msgid ""
-#~| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
-#~| "focus mode when you use structural navigation commands to navigate to a "
-#~| "form field. For example, pressing <key>E</key> to move to the next entry "
-#~| "would move focus there and also turn focus mode on so that your next "
-#~| "press of <key>E</key> would type an \"e\" into that entry. If this "
-#~| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
-#~| "mode and your next press of <key>E</key> would move you to the next "
-#~| "entry on the page."
-#~ msgid ""
-#~ "If this checkbox is checked, <app>Orca</app> will automatically turn on "
-#~ "focus mode when you use native browser navigation commands to navigate to "
-#~ "a form field. For example, pressing <key>Tab</key> to move to the next "
-#~ "entry would move focus there and also turn focus mode on so that your "
-#~ "next press of <key>E</key> would type an \"e\" into that entry. If this "
-#~ "checkbox is not checked, then <app>Orca</app> will leave you in browse "
-#~ "mode and your next press of <key>E</key> would move you to the next entry "
-#~ "on the page."
-#~ msgstr ""
-#~ "Om denna kryssruta är ikryssad kommer <app>Orca</app> automatiskt slå på "
-#~ "fokusläge när du använder kommandon för strukturell navigering för att "
-#~ "navigera till ett formulärfält. Till exempel så skulle att trycka <key>E</"
-#~ "key> för att flytta till nästa post flytta fokus dit och även slå på "
-#~ "fokusläge så att ditt nästa tryck på <key>E</key> skulle skriva in ett "
-#~ "”e” i den posten. Om denna kryssruta inte är ikryssad skulle <app>Orca</"
-#~ "app> lämna dig i bläddringsläge och ditt nästa tryck på <key>E</key> "
-#~ "skulle flytta dig till nästa post på sidan."
+#~ msgid "Gecko Navigation"
+#~ msgstr "Gecko-navigering"
 
 #~ msgid ""
 #~ "In the lists that follow, you will see several references to \"KP\". All "
