@@ -174,7 +174,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result[0] = result[0].strip()
         elif not result and obj.getRole() == pyatspi.ROLE_CHECK_BOX:
             gridCell = pyatspi.findAncestor(obj, self._script.utilities.isGridCell)
-            return super()._generateName(gridCell, **args)
+            if gridCell:
+                return super()._generateName(gridCell, **args)
 
         return result
 
