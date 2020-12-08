@@ -1994,7 +1994,7 @@ class Utilities:
         if boundingbox is None or not self._boundsIncludeChildren(obj.parent):
             return True
 
-        if not self.containsRegion(box, boundingbox):
+        if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
             msg = "INFO: %s %s not in %s" % (obj, box, boundingbox)
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
