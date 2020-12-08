@@ -1968,7 +1968,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if box.x < 0 and box.y < 0:
+        if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
             msg = "INFO: %s has negative coordinates" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -1988,7 +1988,7 @@ class Utilities:
         if boundingbox is None or not self._boundsIncludeChildren(obj.parent):
             return True
 
-        if not self.containsRegion(box, boundingbox):
+        if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
             msg = "INFO: %s %s not in %s" % (obj, box, boundingbox)
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
