@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-11-12 13:14+0000\n"
-"PO-Revision-Date: 2020-11-23 10:40+0200\n"
+"POT-Creation-Date: 2020-12-08 09:11+0000\n"
+"PO-Revision-Date: 2020-12-08 22:25+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1879,7 +1879,8 @@ msgstr "Шукати попередній екземпляр рядка"
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:121
-msgid "Enter and exits flat review mode"
+#| msgid "Enter and exits flat review mode"
+msgid "Enter and exit flat review mode"
 msgstr "Вхід та вихід у режим плоского перегляду"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
@@ -8765,7 +8766,6 @@ msgstr "клавіша"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:691
-#| msgid "Key echo set to key."
 msgid "Echo set to key."
 msgstr "Встановлено озвучування для клавіш."
 
@@ -8797,7 +8797,6 @@ msgstr "Немає"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:717
-#| msgid "Key echo set to None."
 msgid "Echo set to None."
 msgstr "Озвучення немає."
 
@@ -8829,7 +8828,6 @@ msgstr "клавіша та слово"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
-#| msgid "Key echo set to key and word."
 msgid "Echo set to key and word."
 msgstr "Встановлено озвучування для клавіш і слів."
 
@@ -8861,7 +8859,6 @@ msgstr "речення"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
-#| msgid "Key echo set to sentence."
 msgid "Echo set to sentence."
 msgstr "Встановлено озвучування для речень."
 
@@ -8893,7 +8890,6 @@ msgstr "слово"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
-#| msgid "Key echo set to word."
 msgid "Echo set to word."
 msgstr "Встановлено озвучування для слів."
 
@@ -8925,7 +8921,6 @@ msgstr "слово та речення"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
-#| msgid "Key echo set to word and sentence."
 msgid "Echo set to word and sentence."
 msgstr "Встановлено озвучування для слів і речень."
 
@@ -12929,7 +12924,6 @@ msgid "Enable echo by _sentence"
 msgstr "Увімкнути озвучення _реченнями"
 
 #: src/orca/orca-setup.ui:2861
-#| msgid "Key Echo"
 msgid "Echo"
 msgstr "Озвучення"
 
