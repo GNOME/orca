@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-11-12 13:15+0000\n"
-"PO-Revision-Date: 2020-11-23 10:42+0200\n"
+"POT-Creation-Date: 2020-12-08 09:12+0000\n"
+"PO-Revision-Date: 2020-12-08 22:27+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1562,12 +1562,20 @@ msgstr "Параметри посилання"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
+#| msgid ""
+#| "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be "
+#| "used to announce the details associated with the link such as the link "
+#| "type, if the link is visited, the site description, and file size. If you "
+#| "would instead prefer dedicated command for this purpose, you can bind "
+#| "<app>Orca</app>'s Speaks Link Details command to a keystroke. Please see "
+#| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
+#| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
+"app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -5467,12 +5475,6 @@ msgstr "Повідомлення є докладними"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:147
-#| msgid ""
-#| "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will "
-#| "present detailed messages to you in braille. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might "
-#| "display \"Key echo set to word.\" If you would prefer shorter messages, "
-#| "such as simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
@@ -6486,10 +6488,6 @@ msgstr "Налаштування Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:18
-#| msgid ""
-#| "Orca preferences allow you to customize functionality in <app>Orca</app> "
-#| "which applies to all applications. An example of an Orca preference is "
-#| "key echo because key echo is something that applies to all applications."
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
 "which applies to all applications. An example of an Orca preference is echo "
@@ -6502,12 +6500,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
-#| msgid ""
-#| "Note that Orca preferences can be customized on an application-by-"
-#| "application basis. For instance you can set the default key echo to words "
-#| "and then set the key echo for Pidgin to be none. Having done so, "
-#| "<app>Orca</app> would always echo each word that you typed, unless you "
-#| "were in Pidgin."
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
 "application basis. For instance you can set the default echo to words and "
@@ -6691,16 +6683,12 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
-#| msgctxt "link"
-#| msgid "Key Echo"
 msgctxt "link"
 msgid "Echo"
 msgstr "Озвучення"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
-#| msgctxt "sort"
-#| msgid "4. Key Echo"
 msgctxt "sort"
 msgid "4. Echo"
 msgstr "4. Озвучення"
@@ -6712,7 +6700,6 @@ msgstr "Налаштовування озвучення під час друку
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-#| msgid "Key Echo Preferences"
 msgid "Echo Preferences"
 msgstr "Параметри озвучення"
 
@@ -7416,12 +7403,6 @@ msgstr "Системні повідомлення — докладні"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
-#| msgid ""
-#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
-#| "will present detailed messages to you in speech. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
-#| "simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
