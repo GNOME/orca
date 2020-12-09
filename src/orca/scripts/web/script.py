@@ -1646,7 +1646,7 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.setCaretContext(obj, offset)
         orca.setLocusOfFocus(event, obj, notify, force)
-        return False
+        return handled
 
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
