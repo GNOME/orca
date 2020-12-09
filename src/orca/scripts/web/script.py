@@ -1687,25 +1687,27 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getDocumentForObject(event.source)
-        if document:
-            msg = "WEB: Clearing structural navigation cache for %s" % document
+        if document and not isLiveRegion:
+            msg = "WEB: Clearing all cached info for %s" % document
             debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)
+            self.utilities.clearCaretContext(document)
+            self.utilities.clearCachedObjects()
         else:
             msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.handleAsLiveRegion(event):
-            msg = "WEB: Event to be handled as live region"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.liveRegionManager.handleEvent(event)
-            return True
-
-        if self.utilities.isLiveRegion(event.source):
-            msg = "WEB: Ignoring because live region event not to be handled."
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if isLiveRegion:
+            if self.utilities.handleAsLiveRegion(event):
+                msg = "WEB: Event to be handled as live region"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.liveRegionManager.handleEvent(event)
+            else:
+                msg = "WEB: Ignoring because live region event not to be handled."
+                debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._loadingDocumentContent:
@@ -1738,19 +1740,6 @@ class Script(default.Script):
             msg = "WEB: Event handled by updating locusOfFocus and context to child."
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
-
-        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
-        msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-        if self.utilities.isZombie(obj):
-            obj, offset = self.utilities.searchForCaretContext(event.source)
-            if obj:
-                msg = "WEB: Event handled by updating locusOfFocus and context"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, obj, False)
-                self.utilities.setCaretContext(obj, offset)
-                return True
 
         childRole = event.any_data.getRole()
         if childRole == pyatspi.ROLE_ALERT:
@@ -1796,19 +1785,21 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.handleEventForRemovedChild(event):
-            msg = "WEB: Event handled for removed child."
+        if self.utilities.isLiveRegion(event.source):
+            msg = "WEB: Ignoring removal from live region."
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        # TODO - JD: Handle this case.
-        if event.source == orca_state.locusOfFocus:
-            msg = "WEB: Parent is locusOfFocus."
+        document = self.utilities.getDocumentForObject(event.source)
+        if document:
+            msg = "WEB: Clearing all cached info for %s" % document
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            self.structuralNavigation.clearCache(document)
+            self.utilities.clearCaretContext(document)
+            self.utilities.clearCachedObjects()
 
-        if self.utilities.isLiveRegion(event.source):
-            msg = "WEB: Ignoring removal from live region."
+        if self.utilities.handleEventForRemovedChild(event):
+            msg = "WEB: Event handled for removed child."
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
