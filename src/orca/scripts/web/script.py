@@ -1578,6 +1578,11 @@ class Script(default.Script):
                 self.updateBraille(event.source)
             return True
 
+        if self.utilities.lastInputEventWasTab() and self.utilities.isDocument(event.source):
+            msg = "WEB: Event ignored: Caret moved in document due to Tab."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
             debug.println(debug.LEVEL_INFO, msg, True)

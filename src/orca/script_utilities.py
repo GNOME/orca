@@ -5309,6 +5309,13 @@ class Utilities:
 
         return mods & keybindings.CTRL_MODIFIER_MASK
 
+    def lastInputEventWasTab(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if keyString not in ["Tab", "ISO_Left_Tab"]:
+            return False
+
+        return not mods or mods & keybindings.SHIFT_MODIFIER_MASK
+
     def lastInputEventWasPrimaryMouseClick(self):
         event = orca_state.lastInputEvent
         if isinstance(event, input_event.MouseButtonEvent):
