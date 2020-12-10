@@ -1540,18 +1540,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False, searchIfNeeded=False)
         msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
-
-        if not obj or self.utilities.isZombie(obj):
-            obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
-            if obj:
-                msg = "WEB: Event handled by updating locusOfFocus and context"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, obj, True)
-                self.utilities.setCaretContext(obj, offset)
-                return True
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
@@ -1564,7 +1555,7 @@ class Script(default.Script):
             return True
 
         if self._lastCommandWasMouseButton:
-            if (event.source, event.detail1) == self.utilities.getCaretContext():
+            if (event.source, event.detail1) == (obj, offset):
                 msg = "WEB: Event is for current caret context."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True

@@ -4546,15 +4546,19 @@ class Utilities(script_utilities.Utilities):
 
         return obj, offset
 
-    def getCaretContext(self, documentFrame=None, getZombieReplicant=False):
+    def getCaretContext(self, documentFrame=None, getZombieReplicant=False, searchIfNeeded=True):
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
 
         if not documentFrame:
+            if not searchIfNeeded:
+                return None, -1
             return self._getCaretContextViaLocusOfFocus()
 
         context = self._caretContexts.get(hash(documentFrame.parent))
         if not context or documentFrame != self.getTopLevelDocumentForObject(context[0]):
+            if not searchIfNeeded:
+                return None, -1
             obj, offset = self.searchForCaretContext(documentFrame)
         elif not getZombieReplicant:
             return context
