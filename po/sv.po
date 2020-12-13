@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-11-12 13:14+0000\n"
-"PO-Revision-Date: 2020-11-28 23:05+0100\n"
+"POT-Creation-Date: 2020-12-08 09:11+0000\n"
+"PO-Revision-Date: 2020-12-13 17:12+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1871,14 +1871,13 @@ msgstr "Sök efter nästa instans av en sträng"
 msgid "Search for the previous instance of a string"
 msgstr "Sök efter föregående instans av en sträng"
 
-# https://gitlab.gnome.org/GNOME/orca/-/issues/160
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:121
-msgid "Enter and exits flat review mode"
+msgid "Enter and exit flat review mode"
 msgstr "Gå in i och lämna platt granskningsläge"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
