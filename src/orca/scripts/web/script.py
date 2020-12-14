@@ -74,6 +74,7 @@ class Script(default.Script):
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
+        self._lastMouseButtonContext = None, -1
         self._lastMouseOverObject = None
         self._preMouseOverContext = None, -1
         self._inMouseOverObject = False
@@ -121,6 +122,7 @@ class Script(default.Script):
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
+        self._lastMouseButtonContext = None, -1
         self._lastMouseOverObject = None
         self._preMouseOverContext = None, -1
         self._inMouseOverObject = False
@@ -535,6 +537,8 @@ class Script(default.Script):
         # a corresponding AT-SPI event. Without an AT-SPI event, script.py
         # won't know to dump the generator cache. See bgo#618827.
         self.generatorCache = {}
+
+        self._lastMouseButtonContext = None, -1
 
         handler = self.keyBindings.getInputHandler(keyboardEvent)
         if handler and self.caretNavigation.handles_navigation(handler):
@@ -1560,6 +1564,13 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
+            if (event.source, event.detail1) == self._lastMouseButtonContext:
+                msg = "WEB: Event is for last mouse button context."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
+            self._lastMouseButtonContext = event.source, event.detail1
+
             msg = "WEB: Event handled: Last command was mouse button"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
@@ -2405,6 +2416,7 @@ class Script(default.Script):
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
+        self._lastMouseButtonContext = None, -1
         return False
 
     def getTransferableAttributes(self):
