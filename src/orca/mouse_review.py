@@ -342,6 +342,10 @@ class MouseReviewer:
             msg = "MOUSE REVIEW ERROR: Gtk+ 3.20 is not available"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
+        except:
+            msg = "MOUSE REVIEW ERROR: Exception getting pointer for default seat."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         if not self._active:
             return
