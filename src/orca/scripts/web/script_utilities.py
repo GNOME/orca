@@ -127,7 +127,7 @@ class Utilities(script_utilities.Utilities):
         for key in toRemove:
             self._caretContexts.pop(key, None)
 
-    def dumpCache(self, documentFrame, preserveContext=True):
+    def dumpCache(self, documentFrame=None, preserveContext=True):
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
 
