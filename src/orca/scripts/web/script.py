@@ -1697,7 +1697,9 @@ class Script(default.Script):
         isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getDocumentForObject(event.source)
         if document and not isLiveRegion:
-            self.utilities.dumpCache(document)
+            # Issues in Firefox are leading to our not relocating our position.
+            inTable = self.utilities.getTable(orca_state.locusOfFocus) is not None
+            self.utilities.dumpCache(document, preserveContext=inTable)
         else:
             msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1795,7 +1797,9 @@ class Script(default.Script):
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
-            self.utilities.dumpCache(document)
+            # Issues in Firefox are leading to our not relocating our position.
+            inTable = self.utilities.getTable(orca_state.locusOfFocus) is not None
+            self.utilities.dumpCache(document, preserveContext=inTable)
 
         if self.utilities.handleEventForRemovedChild(event):
             msg = "WEB: Event handled for removed child."
