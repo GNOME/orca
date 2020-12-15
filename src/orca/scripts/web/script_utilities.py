@@ -127,6 +127,24 @@ class Utilities(script_utilities.Utilities):
         for key in toRemove:
             self._caretContexts.pop(key, None)
 
+    def dumpCache(self, documentFrame, preserveContext=True):
+        if not documentFrame or self.isZombie(documentFrame):
+            documentFrame = self.documentFrame()
+
+        context = self._caretContexts.get(hash(documentFrame.parent))
+
+        msg = "WEB: Clearing all cached info for %s" % documentFrame
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._script.structuralNavigation.clearCache(documentFrame)
+        self.clearCaretContext(documentFrame)
+        self.clearCachedObjects()
+
+        if preserveContext and context:
+            msg = "WEB: Preserving context of %s, %i" % (context[0], context[1])
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._caretContexts[documentFrame.parent] = context
+
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._objectAttributes = {}

@@ -1697,11 +1697,7 @@ class Script(default.Script):
         isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getDocumentForObject(event.source)
         if document and not isLiveRegion:
-            msg = "WEB: Clearing all cached info for %s" % document
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.structuralNavigation.clearCache(document)
-            self.utilities.clearCaretContext(document)
-            self.utilities.clearCachedObjects()
+            self.utilities.dumpCache(document)
         else:
             msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1799,11 +1795,7 @@ class Script(default.Script):
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
-            msg = "WEB: Clearing all cached info for %s" % document
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.structuralNavigation.clearCache(document)
-            self.utilities.clearCaretContext(document)
-            self.utilities.clearCachedObjects()
+            self.utilities.dumpCache(document)
 
         if self.utilities.handleEventForRemovedChild(event):
             msg = "WEB: Event handled for removed child."
