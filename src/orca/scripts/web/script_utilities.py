@@ -1555,6 +1555,7 @@ class Utilities(script_utilities.Utilities):
 
         if useCache:
             if self.findObjectInContents(obj, offset, self._currentObjectContents, usingCache=True) != -1:
+                self._debugContentsInfo(obj, offset, self._currentObjectContents, "Object (cached)")
                 return self._currentObjectContents
 
         objIsLandmark = self.isLandmark(obj)
@@ -1595,6 +1596,7 @@ class Utilities(script_utilities.Utilities):
         if useCache:
             self._currentObjectContents = objects
 
+        self._debugContentsInfo(obj, offset, objects, "Object (not cached)")
         return objects
 
     def _contentIsSubsetOf(self, contentA, contentB):
@@ -1614,18 +1616,14 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: %s for %s at offset %i:" % (contentsMsg, obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        indent = " " * 8
         for i, (acc, start, end, string) in enumerate(contents):
-            indent = " " * 8
             try:
-                description = acc.description
                 extents = self.getExtents(acc, start, end)
             except:
-                description = "(exception)"
                 extents = "(exception)"
-            states = debug.statesToString(acc, indent)
-            attrs = debug.attributesToString(acc, indent)
-            msg = "     %i. %s (chars: %i-%i) '%s' extents=%s description=%s\n%s\n%s" % \
-                (i, acc, start, end, string, extents, description, states, attrs)
+            msg = "     %i. chars: %i-%i: '%s' extents=%s\n" % (i, start, end, string, extents)
+            msg += debug.getAccessibleDetails(debug.LEVEL_INFO, acc, indent)
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def treatAsEndOfLine(self, obj, offset):

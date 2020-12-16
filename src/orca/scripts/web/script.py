@@ -1697,9 +1697,17 @@ class Script(default.Script):
         isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getDocumentForObject(event.source)
         if document and not isLiveRegion:
-            # Issues in Firefox are leading to our not relocating our position.
-            inTable = self.utilities.getTable(orca_state.locusOfFocus) is not None
-            self.utilities.dumpCache(document, preserveContext=inTable)
+            if event.source == orca_state.locusOfFocus:
+                msg = "WEB: Dumping cache and context: source is focus %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.dumpCache(document, preserveContext=False)
+            elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+                msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.dumpCache(document, preserveContext=True)
+            else:
+                msg = "WEB: Not dumping cache. Focus is %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
         else:
             msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1797,9 +1805,17 @@ class Script(default.Script):
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
-            # Issues in Firefox are leading to our not relocating our position.
-            inTable = self.utilities.getTable(orca_state.locusOfFocus) is not None
-            self.utilities.dumpCache(document, preserveContext=inTable)
+            if event.source == orca_state.locusOfFocus:
+                msg = "WEB: Dumping cache and context: source is focus %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.dumpCache(document, preserveContext=False)
+            elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+                msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.dumpCache(document, preserveContext=True)
+            else:
+                msg = "WEB: Not dumping cache. Focus is %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.utilities.handleEventForRemovedChild(event):
             msg = "WEB: Event handled for removed child."

@@ -754,7 +754,11 @@ class EventManager:
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
-            debug.printDetails(debug.LEVEL_INFO, ' ' * 18, event.source)
+            indent = " " * 32
+            debug.printDetails(debug.LEVEL_INFO, indent, event.source)
+            if isinstance(event.any_data, pyatspi.Accessible):
+                debug.println(debug.LEVEL_INFO, '%sANY DATA:' % indent)
+                debug.printDetails(debug.LEVEL_INFO, indent, event.any_data, includeApp=False)
 
         script = self._getScriptForEvent(event)
         if not script:
