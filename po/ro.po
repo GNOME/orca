@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2020-12-08 09:11+0000\n"
-"PO-Revision-Date: 2020-12-08 19:29+0200\n"
+"POT-Creation-Date: 2020-12-16 10:07+0000\n"
+"PO-Revision-Date: 2020-12-16 16:09+0200\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
@@ -12260,39 +12260,46 @@ msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "neapăsat"
 
+#. Translators: This is a state which applies to an item or option
+#. in a selectable list.
+#: src/orca/object_properties.py:532
+msgctxt "listitem"
+msgid "not selected"
+msgstr "nu este selectat"
+
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:531
+#: src/orca/object_properties.py:535
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "selectat"
 
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:534
+#: src/orca/object_properties.py:538
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "neselectat"
 
 #. Translators: This is a state which applies to a table cell.
-#: src/orca/object_properties.py:537
+#: src/orca/object_properties.py:541
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "neselectat"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:540
+#: src/orca/object_properties.py:544
 msgctxt "link state"
 msgid "visited"
 msgstr "vizitată"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:543
+#: src/orca/object_properties.py:547
 msgctxt "link state"
 msgid "unvisited"
 msgstr "nevizitată"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: src/orca/object_properties.py:547 src/orca/object_properties.py:551
+#: src/orca/object_properties.py:551 src/orca/object_properties.py:555
 msgid "grayed"
 msgstr "decolorat"
 
@@ -12301,7 +12308,7 @@ msgstr "decolorat"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: src/orca/object_properties.py:558
+#: src/orca/object_properties.py:562
 msgctxt "text"
 msgid "read only"
 msgstr "protejat ca scriere"
@@ -12311,27 +12318,27 @@ msgstr "protejat ca scriere"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: src/orca/object_properties.py:565
+#: src/orca/object_properties.py:569
 msgctxt "text"
 msgid "rdonly"
 msgstr "prtjtscr"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: src/orca/object_properties.py:569 src/orca/object_properties.py:573
+#: src/orca/object_properties.py:573 src/orca/object_properties.py:577
 msgid "required"
 msgstr "necesar"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: src/orca/object_properties.py:577
+#: src/orca/object_properties.py:581
 msgid "multi-select"
 msgstr "selecție-multiplă"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: src/orca/object_properties.py:582
+#: src/orca/object_properties.py:586
 msgctxt "error"
 msgid "invalid entry"
 msgstr "intrare nevalidă"
@@ -12341,7 +12348,7 @@ msgstr "intrare nevalidă"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: src/orca/object_properties.py:589
+#: src/orca/object_properties.py:593
 msgctxt "error"
 msgid "invalid"
 msgstr "nevalidă"
@@ -12349,7 +12356,7 @@ msgstr "nevalidă"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: src/orca/object_properties.py:594
+#: src/orca/object_properties.py:598
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "ortografie nevalidă"
@@ -12358,7 +12365,7 @@ msgstr "ortografie nevalidă"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:600
+#: src/orca/object_properties.py:604
 msgctxt "error"
 msgid "spelling"
 msgstr "ortografie"
@@ -12366,7 +12373,7 @@ msgstr "ortografie"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: src/orca/object_properties.py:605
+#: src/orca/object_properties.py:609
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "gramatică nevalidă"
@@ -12375,7 +12382,7 @@ msgstr "gramatică nevalidă"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:611
+#: src/orca/object_properties.py:615
 msgctxt "error"
 msgid "grammar"
 msgstr "gramatică"
