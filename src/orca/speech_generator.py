@@ -1058,6 +1058,28 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _generateUnselectedStateIfSelectable(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if args.get('inMouseReview'):
+            return []
+
+        if not obj:
+            return []
+
+        if not (obj.parent and 'Selection' in pyatspi.listInterfaces(obj.parent)):
+            return []
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_SELECTED):
+            return []
+
+        result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
+        result.extend(self.voice(STATE))
+
+        return result
+
     def _generateUnselectedCell(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) if this is an icon within an layered pane or a

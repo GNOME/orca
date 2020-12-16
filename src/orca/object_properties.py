@@ -527,6 +527,10 @@ STATE_PRESSED = C_("togglebutton", "pressed")
 # Translators: This is a state which applies to a toggle button.
 STATE_NOT_PRESSED = C_("togglebutton", "not pressed")
 
+# Translators: This is a state which applies to an item or option
+# in a selectable list.
+STATE_UNSELECTED_LIST_ITEM = C_("listitem", "not selected")
+
 # Translators: This is a state which applies to a radio button.
 STATE_SELECTED_RADIO_BUTTON = C_("radiobutton", "selected")
 
