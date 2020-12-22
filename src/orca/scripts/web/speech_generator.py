@@ -324,7 +324,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if priorObj and priorObj in self._script.utilities.labelsForObject(obj):
             return []
 
-        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
+        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
+           or self._script.utilities.isDocument(obj):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 return []
