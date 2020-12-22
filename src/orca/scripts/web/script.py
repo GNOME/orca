@@ -1280,7 +1280,13 @@ class Script(default.Script):
         self.updateBraille(newFocus)
         orca.emitRegionChanged(newFocus, caretOffset)
 
-        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
+        if self._lastCommandWasMouseButton and event \
+             and event.type.startswith("object:text-caret-moved"):
+            msg = "WEB: Last input event was mouse button. Generating line contents."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents, priorObj=oldFocus)
+        elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1319,12 +1325,6 @@ class Script(default.Script):
         elif self.utilities.lastInputEventWasLineNav() and event \
              and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line contents."
-            debug.println(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
-        elif self._lastCommandWasMouseButton and event \
-             and event.type.startswith("object:text-caret-moved"):
-            msg = "WEB: Last input event was mouse button. Generating line contents."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             utterances = self.speechGenerator.generateContents(contents)
