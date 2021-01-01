@@ -390,14 +390,6 @@ PROFILE_NAME_LABEL = _("_Profile Name:")
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
 # text written in English using an English-language speech synthesizer and
 # braille rules, and a similar 'Spanish' profile for reading Spanish text.
-# The following is a title in a dialog informing the user that he/she
-# is about to remove a user profile, and action that cannot be undone.
-PROFILE_REMOVE_TITLE = _("Remove User Profile")
-
-# Translators: Profiles in Orca make it possible for users to quickly switch
-# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
-# text written in English using an English-language speech synthesizer and
-# braille rules, and a similar 'Spanish' profile for reading Spanish text.
 # The following is a label in a dialog informing the user that he/she
 # is about to remove a user profile, and action that cannot be undone.
 PROFILE_REMOVE_LABEL = _("Remove user profile")

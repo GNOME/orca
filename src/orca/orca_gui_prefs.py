@@ -3402,7 +3402,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                    buttons=Gtk.ButtonsType.YES_NO)
         dialog.set_markup("<b>%s</b>" % guilabels.PROFILE_REMOVE_LABEL)
         dialog.format_secondary_markup(message)
-        dialog.set_title(guilabels.PROFILE_REMOVE_TITLE)
         if dialog.run() == Gtk.ResponseType.YES:
             # If we remove the currently used starting profile, fallback on
             # the first listed profile, or the default one if there's
