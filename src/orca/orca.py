@@ -574,6 +574,7 @@ def init(registry):
     global _initialized
 
     if _initialized and _settingsManager.isScreenReaderServiceEnabled():
+        debug.println(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
         return False
 
     # Do not hang on initialization if we can help it.

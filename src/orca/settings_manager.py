@@ -318,27 +318,49 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
-        if not _proxy:
-            return False
+        msg = 'SETTINGS MANAGER: Is accessibility enabled? '
 
-        return _proxy.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
+        if not _proxy:
+            rv = False
+            msg += 'Error (no proxy)'
+        else:
+            rv = _proxy.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
+            msg += str(rv)
+
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
 
     def setAccessibility(self, enable):
+        msg = 'SETTINGS MANAGER: Attempting to set accessibility to %s.' % enable
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if not _proxy:
+            msg = 'SETTINGS MANAGER: Error (no proxy)'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         vEnable = GLib.Variant('b', enable)
-        _proxy.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)            
+        _proxy.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
+
+        msg = 'SETTINGS MANAGER: Finished setting accessibility to %s.' % enable
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def isScreenReaderServiceEnabled(self):
         """Returns True if the screen reader service is enabled. Note that
         this does not necessarily mean that Orca (or any other screen reader)
         is running at the moment."""
 
-        if not _proxy:
-            return False
+        msg = 'SETTINGS MANAGER: Is screen reader service enabled? '
 
-        return _proxy.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
+        if not _proxy:
+            rv = False
+            msg += 'Error (no proxy)'
+        else:
+            rv = _proxy.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
+            msg += str(rv)
+
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
 
     def setStartingProfile(self, profile=None):
         if profile is None:
