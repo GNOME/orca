@@ -114,7 +114,13 @@ class SpeechGenerator(generator.Generator):
         globalsDict['voice'] = self.voice
 
     def generateSpeech(self, obj, **args):
-        return self.generate(obj, **args)
+        rv = self.generate(obj, **args)
+        if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
+            msg = 'SPEECH GENERATOR: Results for %s are pauses only' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = []
+
+        return rv
 
     def _resultElementToString(self, element, includeAll=True):
         if debug.LEVEL_ALL < debug.debugLevel:
