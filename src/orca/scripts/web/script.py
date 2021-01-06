@@ -551,9 +551,11 @@ class Script(default.Script):
             self._lastCommandWasMouseButton = False
             return consumes
 
-        self._lastCommandWasCaretNav = False
-        self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
+        if not keyboardEvent.isModifierKey():
+            self._lastCommandWasCaretNav = False
+            self._lastCommandWasStructNav = False
+            self._lastCommandWasMouseButton = False
+
         return super().consumesKeyboardEvent(keyboardEvent)
 
     def consumesBrailleEvent(self, brailleEvent):
