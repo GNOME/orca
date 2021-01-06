@@ -4826,6 +4826,13 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset
 
+        if self.isDocument(obj):
+            while self.isUselessEmptyElement(child):
+                msg = "WEB: Child %s of %s at offset %i cannot be context." % (child, obj, offset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                offset += 1
+                child = self.getChildAtOffset(obj, offset)
+
         if self.isListItemMarker(child):
             msg = "WEB: First caret context for %s, %i is %s, %i (skip list item marker child)" % \
                 (obj, offset, obj, offset + 1)
@@ -4841,7 +4848,7 @@ class Utilities(script_utilities.Utilities):
                 return nextObj, nextOffset
 
         if not self._canHaveCaretContext(child):
-            msg = "WEB: Child cannot be context. Returning %s, %i unchanged." % (obj, offset)
+            msg = "WEB: Child cannot be context. Returning %s, %i." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset
 
