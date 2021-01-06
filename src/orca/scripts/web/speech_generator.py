@@ -798,7 +798,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 args['priorObj'] = obj
 
         if not result:
-            if self._script.inSayAll():
+            if self._script.inSayAll(treatInterruptedAsIn=False):
                 string = ""
             else:
                 string = messages.BLANK

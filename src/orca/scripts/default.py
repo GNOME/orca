@@ -3114,7 +3114,7 @@ class Script(script.Script):
         if text.getNSelections() > 0:
             text.setSelection(0, context.currentOffset, context.currentOffset)
 
-    def inSayAll(self):
+    def inSayAll(self, treatInterruptedAsIn=True):
         if self._inSayAll:
             msg = "DEFAULT: In SayAll"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -3123,7 +3123,7 @@ class Script(script.Script):
         if self._sayAllIsInterrupted:
             msg = "DEFAULT: SayAll is interrupted"
             debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+            return treatInterruptedAsIn
 
         msg = "DEFAULT: Not in SayAll"
         debug.println(debug.LEVEL_INFO, msg, True)
