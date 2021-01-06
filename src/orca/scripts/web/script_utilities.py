@@ -1814,12 +1814,13 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: First context on line is: %s, %i" % (firstObj, firstOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        obj, offset = self.previousContext(firstObj, firstOffset, True)
+        skipSpace = not self.elementIsPreformattedText(firstObj)
+        obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
         if not obj and firstObj:
             msg = "WEB: Previous context is: %s, %i. Trying again." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
-            obj, offset = self.previousContext(firstObj, firstOffset, True)
+            obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
 
         msg = "WEB: Previous context is: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -1861,12 +1862,13 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: Last context on line is: %s, %i" % (lastObj, lastOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        obj, offset = self.nextContext(lastObj, lastOffset, True)
+        skipSpace = not self.elementIsPreformattedText(lastObj)
+        obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
         if not obj and lastObj:
             msg = "WEB: Next context is: %s, %i. Trying again." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
-            obj, offset = self.nextContext(lastObj, lastOffset, True)
+            obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
 
         msg = "WEB: Next context is: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
