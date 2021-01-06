@@ -869,6 +869,12 @@ class KeyboardEvent(InputEvent):
             msg = 'CONSUMED: %s (%s)' % (self._did_consume, self._result_reason)
             debug.println(debug.LEVEL_INFO, msg, True)
 
+        if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
+            attributes = orca_state.activeScript.getTransferableAttributes()
+            for key, value in attributes.items():
+                msg = 'INPUT EVENT: %s: %s' % (key, value)
+                debug.println(debug.LEVEL_INFO, msg, True)
+
         msg = 'TOTAL PROCESSING TIME: %.4f' % (time.time() - startTime)
         debug.println(debug.LEVEL_INFO, msg, True)
 
