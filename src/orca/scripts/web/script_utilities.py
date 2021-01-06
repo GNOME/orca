@@ -4800,6 +4800,14 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset + 1
 
+        if self.isEmptyAnchor(child):
+            nextObj, nextOffset = self.nextContext(obj, offset)
+            if nextObj:
+                msg = "WEB: First caret context at end of empty anchor %s is next context %s, %i" % \
+                    (obj, nextObj, nextOffset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return nextObj, nextOffset
+
         if not self._canHaveCaretContext(child):
             msg = "WEB: Child cannot be context. Returning %s, %i unchanged." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
