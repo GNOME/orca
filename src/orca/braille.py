@@ -31,6 +31,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import locale
 import signal
 import os
 import re
@@ -241,19 +242,59 @@ def listTables():
     return tables
 
 def getDefaultTable():
-    # TODO: Why aren't we using the default for the locale??
-    try:
-        for fname in os.listdir(tablesdir):
-            if fname[-4:] in (".utb", ".ctb"):
-                if fname.startswith("en-us"):
-                    return os.path.join(tablesdir, fname)
-    except OSError:
-        pass
+    userLocale = locale.getlocale(locale.LC_MESSAGES)[0]
+    msg = "BRAILLE: User locale is %s" % userLocale
+    debug.println(debug.LEVEL_INFO, msg, True)
 
-    return ""
+    if userLocale in (None, "C"):
+        userLocale = locale.getdefaultlocale()[0]
+        msg = "BRAILLE: Default locale is %s" % userLocale
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    if userLocale in (None, "C"):
+        msg = "BRAILLE: Locale cannot be determined. Falling back on 'en-us'"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        language = "en-us"
+    else:
+        language = "-".join(userLocale.split("_")).lower()
+
+    try:
+        tables = [x for x in os.listdir(tablesdir) if x[-4:] in (".utb", ".ctb")]
+    except OSError:
+        msg = "BRAILLE: Exception calling os.listdir for %s" % tablesdir
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return ""
+
+    # Some of the tables are probably not a good choice for default table....
+    exclude = ["interline", "mathtext"]
+
+    # Some of the tables might be a better default than others. For instance, someone who
+    # can read grade 2 braille presumably can read grade 1; the reverse is not necessarily
+    # true. Literary braille might be easier for some users to read than computer braille.
+    # We can adjust this based on user feedback, but in general the goal is a sane default
+    # for the largest group of users; not the perfect default for all users.
+    prefer = ["g1", "g2", "comp6", "comp8"]
+
+    isCandidate = lambda t: t.startswith(language) and not any(e in t for e in exclude)
+    tables = list(filter(isCandidate, tables))
+    msg = "BRAILLE: %i candidate tables for locale found: %s" % (len(tables), ", ".join(tables))
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+    if not tables:
+        return ""
+
+    for p in prefer:
+        for table in tables:
+            if p in table:
+                return os.path.join(tablesdir, table)
+
+    # If we couldn't find a preferred match, just go with the first match for the locale.
+    return tables[0]
 
 if louis:
     _defaultContractionTable = getDefaultTable()
+    msg = "BRAILLE: Default contraction table is: %s" % _defaultContractionTable
+    debug.println(debug.LEVEL_INFO, msg, True)
 
 def _printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
