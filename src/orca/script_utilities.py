@@ -5316,6 +5316,9 @@ class Utilities:
 
         return not mods or mods & keybindings.SHIFT_MODIFIER_MASK
 
+    def lastInputEventWasMouseButton(self):
+        return isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent)
+
     def lastInputEventWasPrimaryMouseClick(self):
         event = orca_state.lastInputEvent
         if isinstance(event, input_event.MouseButtonEvent):

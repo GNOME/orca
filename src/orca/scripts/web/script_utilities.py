@@ -2848,6 +2848,9 @@ class Utilities(script_utilities.Utilities):
         if self.lastInputEventWasLineNav():
             return False
 
+        if self.lastInputEventWasMouseButton():
+            return False
+
         return True
 
     def isEntryDescendant(self, obj):
