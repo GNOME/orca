@@ -289,7 +289,7 @@ def getDefaultTable():
                 return os.path.join(tablesdir, table)
 
     # If we couldn't find a preferred match, just go with the first match for the locale.
-    return tables[0]
+    return os.path.join(tablesdir, tables[0])
 
 if louis:
     _defaultContractionTable = getDefaultTable()
