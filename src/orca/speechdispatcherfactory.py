@@ -585,9 +585,9 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
-    def speak(self, text=None, acss=None, interrupt=False):
-        if interrupt:
-            self._cancel()
+    def speak(self, text=None, acss=None, interrupt=True):
+        #if interrupt:
+        #    self._cancel()
 
         # "We will not interrupt a key echo in progress." (Said the comment in
         # speech.py where these next two lines used to live. But the code here
@@ -599,10 +599,9 @@ class SpeechServer(speechserver.SpeechServer):
         if text:
             self._speak(text, acss)
 
-    def speakUtterances(self, utteranceList, acss=None, interrupt=False):
-        if interrupt:
-            self._cancel()
-
+    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
+        #if interrupt:
+        #    self._cancel()
         for utterance in utteranceList:
             if utterance:
                 self._speak(utterance, acss)
