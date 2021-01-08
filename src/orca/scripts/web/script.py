@@ -820,6 +820,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self.inSayAll():
+            msg = "WEB: Not using focus mode because we're in SayAll."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if not _settingsManager.getSetting('structNavTriggersFocusMode') \
            and self._lastCommandWasStructNav:
             msg = "WEB: Not using focus mode due to struct nav settings"
