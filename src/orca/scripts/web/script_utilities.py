@@ -4634,21 +4634,35 @@ class Utilities(script_utilities.Utilities):
 
     def handleEventFromContextReplicant(self, event, replicant):
         if self.isDead(replicant):
+            msg = "WEB: Context replicant is dead."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.isDead(orca_state.locusOfFocus):
+            msg = "WEB: Not event from context replicant. locusOfFocus %s is not dead." \
+                % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         path, role, name = self.getCaretContextPathRoleAndName()
-        if path != pyatspi.getPath(replicant):
+        replicantPath = pyatspi.getPath(replicant)
+        if path != replicantPath:
+            msg = "WEB: Not event from context replicant. Path %s != replicant path %s." \
+                % (path, replicantPath)
             return False
 
-        if role != replicant.getRole():
+        replicantRole = replicant.getRole()
+        if role != replicantRole:
+            msg = "WEB: Not event from context replicant. Role %s != replicant role %s." \
+                % (role, replicantRole)
             return False
 
         notify = replicant.name != name
         documentFrame = self.documentFrame()
         obj, offset = self._caretContexts.get(hash(documentFrame.parent))
+
+        msg = "WEB: Is event from context replicant. Notify: %s" % notify
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         orca.setLocusOfFocus(event, replicant, notify)
         self.setCaretContext(replicant, offset, documentFrame)
