@@ -4343,7 +4343,7 @@ msgstr "_Cancel·la"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:115
 msgid "_Jump to"
-msgstr "_Vés a"
+msgstr "_Ves a"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:118 src/orca/orca-setup.ui:192
@@ -9789,7 +9789,7 @@ msgid ""
 "shortcuts for the current application, press F3. To exit learn mode, press "
 "the escape key."
 msgstr ""
-"S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per sentir-ne "
+"S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per a sentir-ne "
 "la seva funció. Per a veure la documentació del lector de pantalla, premeu "
 "F1. Per a obtenir la llista de dreceres per defecte del lector de pantalla, "
 "premeu F2. Per a obtenir la llista de dreceres del lector de pantalla per "
@@ -14874,7 +14874,7 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
-"Per retrocedir premeu la tecla cap a l'esquerra, per avançar premeu la tecla "
+"Per a retrocedir premeu la tecla cap a l'esquerra, per a avançar premeu la tecla "
 "cap a la dreta. Per a anar a l'inici premeu la tecla d'inici i per a anar al "
 "final premeu la tecla de final."
 
