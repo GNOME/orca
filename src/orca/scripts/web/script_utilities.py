@@ -3029,6 +3029,16 @@ class Utilities(script_utilities.Utilities):
         if not nChars:
             return False
 
+        # If we have a series of embedded object characters, there's a reasonable chance
+        # they'll look like the one-word-per-line CSSified text we're trying to detect.
+        # We don't want that false positive. By the same token, the one-word-per-line
+        # CSSified text we're trying to detect can have embedded object characters. So
+        # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
+        # testing with problematic text.)
+        eocs = re.findall(self.EMBEDDED_OBJECT_CHARACTER, text.getText(0, -1))
+        if len(eocs)/nChars > 0.3:
+            return False
+
         try:
             obj.clearCache()
             state = obj.getState()
