@@ -41,7 +41,7 @@ msgstr "???"
 #. other rolenames, and they typically act like an abbreviation.
 #: src/orca/braille_rolenames.py:43
 msgid "alrt"
-msgstr "výz"
+msgstr "výstr"
 
 #. Translators: short braille for the rolename of an animation widget.
 #: src/orca/braille_rolenames.py:46
