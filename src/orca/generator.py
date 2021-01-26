@@ -342,8 +342,8 @@ class Generator:
                 elif obj.parent and obj.parent.getRole() == pyatspi.ROLE_LINK:
                     link = obj.parent
                 if link:
-                    basename = self._script.utilities.linkBasename(link)
-                    if basename and basename.isalpha():
+                    basename = self._script.utilities.linkBasenameToName(link)
+                    if basename:
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
         try:

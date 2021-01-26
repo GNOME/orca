@@ -1766,6 +1766,19 @@ class Utilities:
 
         return list(filter(isNotAncestor, result))
 
+    def linkBasenameToName(self, obj):
+        basename = self.linkBasename(obj)
+        if not basename:
+            return ""
+
+        basename = re.sub(r"[-_]", " ", basename)
+        tokens = basename.split()
+        for token in tokens:
+            if not token.isalpha():
+                return ""
+
+        return basename
+
     @staticmethod
     def linkBasename(obj):
         """Returns the relevant information from the URI.  The idea is
