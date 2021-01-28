@@ -648,6 +648,8 @@ class Script(default.Script):
                 for i, element in enumerate(elements):
                     context = speechserver.SayAllContext(
                         obj, element, startOffset, endOffset)
+                    msg = "WEB %s" % context
+                    debug.println(debug.LEVEL_INFO, msg, True)
                     self._sayAllContexts.append(context)
                     eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
                     yield [context, voices[i]]

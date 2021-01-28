@@ -86,6 +86,10 @@ class SayAllContext:
         self.currentOffset = startOffset
         self.currentEndOffset = None
 
+    def __str__(self):
+        return "SAY ALL: %s '%s' (%i-%i, current: %i)" % \
+            (self.obj, self.utterance, self.startOffset, self.endOffset, self.currentOffset)
+
 
 class SpeechServer(object):
     """Provides speech server abstraction."""

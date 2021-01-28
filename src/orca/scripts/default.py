@@ -3692,6 +3692,8 @@ class Script(script.Script):
 
                 context = speechserver.SayAllContext(
                     obj, lineString, startOffset, endOffset)
+                msg = "DEFAULT %s" % context
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self._sayAllContexts.append(context)
                 eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
                 yield [context, voice]
