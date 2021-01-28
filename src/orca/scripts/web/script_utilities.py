@@ -2874,7 +2874,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isLabel = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
+        isLabel = lambda x: x and x.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_CAPTION]
         rv = pyatspi.findAncestor(obj, isLabel) is not None
         self._isLabelDescendant[hash(obj)] = rv
         return rv
@@ -3280,7 +3280,7 @@ class Utilities(script_utilities.Utilities):
 
         targets = self.labelTargets(obj)
         if not contents:
-            return bool(targets)
+            return bool(targets) or self.isLabelDescendant(obj)
 
         for acc, start, end, string in contents:
             if hash(acc) in targets:
@@ -3297,7 +3297,7 @@ class Utilities(script_utilities.Utilities):
                 continue
 
             ancestor = self.commonAncestor(acc, obj)
-            if ancestor and ancestor.getRole() == pyatspi.ROLE_LABEL:
+            if ancestor and ancestor.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_CAPTION]:
                 return True
 
         return False
