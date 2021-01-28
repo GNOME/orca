@@ -3218,13 +3218,13 @@ class Utilities(script_utilities.Utilities):
 
     def labelTargets(self, obj):
         if not (obj and self.inDocumentContent(obj)):
-            return False
+            return []
 
         rv = self._labelTargets.get(hash(obj))
         if rv is not None:
             return rv
 
-        rv = False
+        rv = []
 
         isLabel = lambda r: r.getRelationType() == pyatspi.RELATION_LABEL_FOR
         try:
