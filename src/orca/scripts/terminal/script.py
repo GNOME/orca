@@ -150,7 +150,7 @@ class Script(default.Script):
             if self.utilities.isBackSpaceCommandTextDeletionEvent(event):
                 return False
 
-            newEvent, newTime = self.eventCache.get("object:text-changed:insert")
+            newEvent, newTime = self.eventCache.get("object:text-changed:insert", [None, 0])
 
         if newEvent is None or newEvent.source != event.source:
             return super().skipObjectEvent(event)
