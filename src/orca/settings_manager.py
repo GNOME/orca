@@ -145,8 +145,14 @@ class SettingsManager(object):
         debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
         # Set the active profile and load its stored settings
+        msg = 'SETTINGS MANAGER: Current profile is %s' % self.profile
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if self.profile is None:
             self.profile = self.general.get('startingProfile')[1]
+            msg = 'SETTINGS MANAGER: Current profile is now %s' % self.profile
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         self.setProfile(self.profile)
 
     def _loadBackend(self):
@@ -318,8 +324,10 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
-        msg = 'SETTINGS MANAGER: Is accessibility enabled? '
+        msg = 'SETTINGS MANAGER: Checking if accessibility is enabled.'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
+        msg = 'SETTINGS MANAGER: Accessibility enabled: '
         if not _proxy:
             rv = False
             msg += 'Error (no proxy)'
@@ -374,6 +382,9 @@ class SettingsManager(object):
         """Set a specific profile as the active one.
         Also the settings from that profile will be loading
         and updated the current settings with them."""
+
+        msg = 'SETTINGS MANAGER: Setting profile to: %s' % profile
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         oldVoiceLocale = self.getVoiceLocale('default')
 
