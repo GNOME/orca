@@ -64,7 +64,7 @@ COMMIT RELEASE CHANGES AND TAG THE RELEASE:
 
 git commit -a
 git push
-git tag -a ORCA_2_29_92
+git tag -a -s ORCA_2_29_92
 git push origin ORCA_2_29_92
 
 
