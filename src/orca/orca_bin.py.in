@@ -243,11 +243,14 @@ def main():
         print(messages.CLI_NO_DESKTOP_ERROR)
         return 1
 
+    debug.println(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     manager = orca.getSettingsManager()
+
     if not manager:
         print(messages.CLI_SETTINGS_MANAGER_ERROR)
         return 1
 
+    debug.println(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
     manager.activate(args.user_prefs, settingsDict)
     sys.path.insert(0, manager.getPrefsDir())
 
@@ -266,6 +269,7 @@ def main():
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
+    debug.println(debug.LEVEL_INFO, "INFO: About to launch Orca,", True)
     return orca.main()
 
 if __name__ == "__main__":

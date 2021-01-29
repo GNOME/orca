@@ -600,8 +600,7 @@ def init(registry):
     return True
 
 def start(registry, cacheValues):
-    """Starts Orca.
-    """
+    """Starts Orca."""
 
     debug.println(debug.LEVEL_INFO, 'ORCA: Starting', True)
 
@@ -755,6 +754,8 @@ def main(cacheValues=True):
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
 
+    debug.println(debug.LEVEL_INFO, "ORCA: Launching (main).", True)
+
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=False)
     else:
@@ -772,10 +773,13 @@ def main(cacheValues=True):
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, crashOnSignal)
 
+    debug.println(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
+    debug.println(debug.LEVEL_INFO, "ORCA: Initializing ATSPI registry.", True)
     init(pyatspi.Registry)
+    debug.println(debug.LEVEL_INFO, "ORCA: ATSPI registry initialized.", True)
 
     try:
         message = messages.START_ORCA
@@ -805,8 +809,10 @@ def main(cacheValues=True):
                 _scriptManager.setActiveScript(script, "Found focused object.")
 
     try:
+        debug.println(debug.LEVEL_INFO, "ORCA: Starting ATSPI registry.", True)
         start(pyatspi.Registry, cacheValues) # waits until we stop the registry
     except:
+        debug.println(debug.LEVEL_SEVERE, "ORCA: Exception starting ATSPI registry.", True)
         die(EXIT_CODE_HANG)
     return 0
 

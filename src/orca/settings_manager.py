@@ -292,15 +292,26 @@ class SettingsManager(object):
         profile and store them in the object's attributes.
         A profile can be passed as a parameter. This could be useful for
         change from one profile to another."""
+
+        msg = 'SETTINGS MANAGER: Loading settings for %s profile' % profile
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if profile is None:
             profile = self.profile
         self.profileGeneral = self.getGeneralSettings(profile) or {}
         self.profilePronunciations = self.getPronunciations(profile) or {}
         self.profileKeybindings = self.getKeybindings(profile) or {}
 
+        msg = 'SETTINGS MANAGER: Settings for %s profile loaded' % profile
+        debug.println(debug.LEVEL_INFO, msg, True)
+
     def _mergeSettings(self):
         """Update the changed values on the profile settings
         over the current and active settings"""
+
+        msg = 'SETTINGS MANAGER: Merging settings.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self.profileGeneral.update(self._appGeneral)
         self.profilePronunciations.update(self._appPronunciations)
         self.profileKeybindings.update(self._appKeybindings)
@@ -308,6 +319,9 @@ class SettingsManager(object):
         self.general.update(self.profileGeneral)
         self.pronunciations.update(self.profilePronunciations)
         self.keybindings.update(self.profileKeybindings)
+
+        msg = 'SETTINGS MANAGER: Settings merged.'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _enableAccessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and
@@ -402,15 +416,24 @@ class SettingsManager(object):
             orca_i18n.setLocaleForMessages(newVoiceLocale)
             orca_i18n.setLocaleForGUI(newVoiceLocale)
 
+        msg = 'SETTINGS MANAGER: Profile set to: %s' % profile
+        debug.println(debug.LEVEL_INFO, msg, True)
+
     def removeProfile(self, profile):
         self._backend.removeProfile(profile)
 
     def _setSettingsRuntime(self, settingsDict):
+        msg = 'SETTINGS MANAGER: Setting runtime settings.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         for key, value in settingsDict.items():
             setattr(settings, str(key), value)
         self._getCustomizedSettings()
         for key, value in self.customizedSettings.items():
             setattr(settings, str(key), value)
+
+        msg = 'SETTINGS MANAGER: Runtime settings set.'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _setPronunciationsRuntime(self, pronunciationsDict):
         pronunciation_dict.pronunciation_dict = {}
@@ -439,6 +462,10 @@ class SettingsManager(object):
     def _setProfileGeneral(self, general):
         """Set the changed general settings from the defaults' ones
         as the profile's."""
+
+        msg = 'SETTINGS MANAGER: Setting general settings for profile'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self.profileGeneral = {}
 
         for key, value in general.items():
@@ -451,17 +478,34 @@ class SettingsManager(object):
             elif self.general.get(key) != value:
                 self.profileGeneral[key] = value
 
+        msg = 'SETTINGS MANAGER: General settings for profile set'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
     def _setProfilePronunciations(self, pronunciations):
         """Set the changed pronunciations settings from the defaults' ones
         as the profile's."""
+
+        msg = 'SETTINGS MANAGER: Setting pronunciation settings for profile.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self.profilePronunciations = self.defaultPronunciations.copy()
         self.profilePronunciations.update(pronunciations)
+
+        msg = 'SETTINGS MANAGER: Pronunciation settings for profile set.'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _setProfileKeybindings(self, keybindings):
         """Set the changed keybindings settings from the defaults' ones
         as the profile's."""
+
+        msg = 'SETTINGS MANAGER: Setting keybindings settings for profile.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self.profileKeybindings = self.defaultKeybindings.copy()
         self.profileKeybindings.update(keybindings)
+
+        msg = 'SETTINGS MANAGER: Keybindings settings for profile set.'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _saveAppSettings(self, appName, general, pronunciations, keybindings):
         appGeneral = {}
@@ -491,6 +535,9 @@ class SettingsManager(object):
     def saveSettings(self, script, general, pronunciations, keybindings):
         """Save the settings provided for the script provided."""
 
+        msg = 'SETTINGS MANAGER: Saving settings for %s (app: %s)' % (script, script.app)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         app = script.app
         if app:
             self._saveAppSettings(app.name, general, pronunciations, keybindings)
@@ -510,10 +557,17 @@ class SettingsManager(object):
         self._setProfilePronunciations(pronunciations)
         self._setProfileKeybindings(keybindings)
 
+        msg = 'SETTINGS MANAGER: Saving for backend %s' % self._backend
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self._backend.saveProfileSettings(self.profile,
                                           self.profileGeneral,
                                           self.profilePronunciations,
                                           self.profileKeybindings)
+
+        msg = 'SETTINGS MANAGER: Settings for %s (app: %s) saved' % (script, script.app)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         return self._enableAccessibility()
 
     def _adjustBindingTupleValues(self, bindingTuple):
