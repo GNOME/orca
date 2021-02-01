@@ -39,9 +39,12 @@ sys.prefix = '@prefix@'
 pythondir = '@pythondir@'.replace('${prefix}', '@prefix@')
 sys.path.insert(1, pythondir)
 
+# Do not import Orca here. It is imported in main(). The reason why is that
+# start-up failures due to imports in orca.py are not getting output, making
+# them challenging to debug when they cannot be reproduced locally.
+
 from orca import debug
 from orca import messages
-from orca import orca
 from orca import settings
 from orca.orca_platform import version
 
@@ -244,6 +247,8 @@ def main():
         return 1
 
     debug.println(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
+
+    from orca import orca
     manager = orca.getSettingsManager()
 
     if not manager:
@@ -269,7 +274,7 @@ def main():
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
-    debug.println(debug.LEVEL_INFO, "INFO: About to launch Orca,", True)
+    debug.println(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
     return orca.main()
 
 if __name__ == "__main__":

@@ -425,6 +425,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _settingsManager.loadAppSettings(script)
 
     if _settingsManager.getSetting('enableSpeech'):
+        msg = 'ORCA: About to enable speech'
+        debug.println(debug.LEVEL_INFO, msg, True)
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
@@ -436,12 +438,18 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         debug.println(debug.LEVEL_INFO, msg, True)
 
     if _settingsManager.getSetting('enableBraille'):
+        msg = 'ORCA: About to enable braille'
+        debug.println(debug.LEVEL_INFO, msg, True)
         try:
             braille.init(_processBrailleEvent)
         except:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
             debug.println(debug.LEVEL_WARNING, msg, True)
+    else:
+        msg = 'ORCA: Braille is not enabled in settings'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
 
     if _settingsManager.getSetting('enableMouseReview'):
         mouse_review.reviewer.activate()
@@ -650,8 +658,8 @@ def die(exitCode=1):
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
     debug.println(debug.LEVEL_SEVERE, msg, True)
-    debug.printStack(debug.LEVEL_ALL)
-    debug.examineProcesses()
+    debug.printStack(debug.LEVEL_SEVERE)
+    debug.examineProcesses(force=True)
     die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):

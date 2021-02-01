@@ -527,9 +527,14 @@ def pidOf(procName):
     openFile.close()
     return [int(p) for p in pids.split()]
 
-def examineProcesses():
+def examineProcesses(force=False):
+    if force:
+        level = LEVEL_OFF
+    else:
+        level = LEVEL_ALL
+
     desktop = pyatspi.Registry.getDesktop(0)
-    println(LEVEL_ALL, 'INFO: Desktop has %i apps:' % desktop.childCount)
+    println(level, 'INFO: Desktop has %i apps:' % desktop.childCount, True)
     for i, app in enumerate(desktop):
         pid = app.get_process_id()
         cmd = getCmdline(pid)
@@ -541,19 +546,19 @@ def examineProcesses():
         else:
             if name == '':
                 name = 'WARNING: Possible hang'
-        println(LEVEL_ALL, '%3i. %s (pid: %s) %s file descriptors: %i' \
-                    % (i+1, name, pid, cmd, fds))
+        println(level, '%3i. %s (pid: %s) %s file descriptors: %i' \
+                    % (i+1, name, pid, cmd, fds), True)
 
     # Other 'suspect' processes which might not show up as accessible apps.
     otherApps = ['apport']
     for app in otherApps:
         pids = pidOf(app)
         if not pids:
-            println(LEVEL_ALL, 'INFO: no pid for %s' % app)
+            println(level, 'INFO: no pid for %s' % app, True)
             continue
 
         for pid in pids:
             cmd = getCmdline(pid)
             fds = getOpenFDCount(pid)
-            println(LEVEL_ALL, 'INFO: %s (pid: %s) %s file descriptors: %i' \
-                        % (app, pid, cmd, fds))
+            println(level, 'INFO: %s (pid: %s) %s file descriptors: %i' \
+                        % (app, pid, cmd, fds), True)

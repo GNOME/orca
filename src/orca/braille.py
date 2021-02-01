@@ -55,13 +55,16 @@ _monitor = None
 _settingsManager = settings_manager.getManager()
 
 try:
+    msg = "BRAILLE: About to import brlapi."
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     import brlapi
     _brlAPI = None
     _brlAPIAvailable = True
     _brlAPIRunning = False
     _brlAPISourceId = 0
 except:
-    msg = "BRAILLE: Could not import brlapi"
+    msg = "BRAILLE: Could not import brlapi."
     debug.println(debug.LEVEL_INFO, msg, True)
     _brlAPIAvailable = False
     _brlAPIRunning = False
@@ -70,6 +73,8 @@ else:
     debug.println(debug.LEVEL_INFO, msg, True)
 
 try:
+    msg = "BRAILLE: About to import louis."
+    debug.println(debug.LEVEL_INFO, msg, True)
     import louis
 except:
     msg = "BRAILLE: Could not import liblouis"
@@ -1127,15 +1132,22 @@ def setFocus(region, panToFocus=True, getLinkMask=True):
 def _idleBraille():
     """Try to hand off control to other screen readers without completely
     shutting down the BrlAPI connection"""
+
     global idle
 
     if not idle:
         try:
+            msg = "BRAILLE: Attempting to idle braille."
+            debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 0)
             idle = True
         except:
-            # BrlAPI before 0.8
+            msg = "BRAILLE: Idling braille failled. This requires BrlAPI >= 0.8."
+            debug.println(debug.LEVEL_INFO, msg, True)
             pass
+        else:
+            msg = "BRAILLE: Idling braille succeeded."
+            debug.println(debug.LEVEL_INFO, msg, True)
 
     return idle
 
@@ -1160,27 +1172,45 @@ def _enableBraille():
     """Re-enable Braille output after making it idle or clearing it"""
     global idle
 
+    msg = "BRAILLE: Enabling braille. BrlAPI running: %s" % _brlAPIRunning
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if not _brlAPIRunning:
+        msg = "BRAILLE: Need to initialize first."
+        debug.println(debug.LEVEL_INFO, msg, True)
         init(_callback)
 
     if _brlAPIRunning:
         if idle:
+            msg = "BRAILLE: Is running, but idling."
+            debug.println(debug.LEVEL_INFO, msg, True)
             try:
                 # Restore default priority
+                msg = "BRAILLE: Attempting to de-idle braille."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 50)
                 idle = False
             except:
                 msg = "BRAILLE: could not restore priority"
                 debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                msg = "BRAILLE: De-idle succeeded."
+                debug.println(debug.LEVEL_INFO, msg, True)
 
 def disableBraille():
     """Hand off control to other screen readers, shutting down the BrlAPI
     connection if needed"""
+
     global idle
 
+    msg = "BRAILLE: Disabling braille. BrlAPI running: %s" % _brlAPIRunning
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if _brlAPIRunning and not idle:
-        if not _idleBraille() and \
-            not _settingsManager.getSetting('enableBraille'):
+        msg = "BRAILLE: BrlApi running and not idle."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if not _idleBraille() and not _settingsManager.getSetting('enableBraille'):
             # BrlAPI before 0.8 and we really want to shut down
             msg = "BRAILLE: could not go idle, completely shut down"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1188,6 +1218,10 @@ def disableBraille():
 
 def checkBrailleSetting():
     """Disable Braille if it got disabled in the preferences"""
+
+    msg = "BRAILLE: Checking braille setting."
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if not _settingsManager.getSetting('enableBraille'):
         disableBraille()
 
@@ -1771,25 +1805,36 @@ def setupKeyRanges(keys):
     Arguments:
     -keys: a list of BrlAPI commands.
     """
+
+    msg = "BRAILLE: Setting up key ranges."
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if not _brlAPIRunning:
         init(_callback)
+
     if not _brlAPIRunning:
+        msg = "BRAILLE: Not setting up key ranges: BrlAPI not running."
+        debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    # First, start by ignoring everything.
-    #
+    msg = "BRAILLE: Ignoring all key ranges."
+    debug.println(debug.LEVEL_INFO, msg, True)
     _brlAPI.ignoreKeys(brlapi.rangeType_all, [0])
 
-    # Next, enable cursor routing keys.
-    #
     keySet = [brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE]
 
-    # Finally, enable the commands we care about.
-    #
+    msg = "BRAILLE: Enabling commands:"
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     for key in keys:
         keySet.append(brlapi.KEY_TYPE_CMD | key)
 
+    msg = "BRAILLE: Sending keys to BrlAPI."
+    debug.println(debug.LEVEL_INFO, msg, True)
     _brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
+
+    msg = "BRAILLE: Key ranges set up."
+    debug.println(debug.LEVEL_INFO, msg, True)
 
 def init(callback=None):
     """Initializes the braille module, connecting to the BrlTTY driver.
@@ -1914,6 +1959,9 @@ def shutdown():
     was run.
     """
 
+    msg = "BRAILLE: Attempting braille shutdown."
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     global _brlAPI
     global _brlAPIRunning
     global _brlAPISourceId
@@ -1922,22 +1970,46 @@ def shutdown():
 
     if _brlAPIRunning:
         _brlAPIRunning = False
+
+        msg = "BRAILLE: Removing BrlAPI Source ID."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         GLib.source_remove(_brlAPISourceId)
         _brlAPISourceId = 0
+
         try:
+            msg = "BRAILLE: Attempting to leave TTY mode."
+            debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.leaveTtyMode()
         except:
-            pass
+            msg = "BRAILLE: Exception leaving TTY mode."
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            msg = "BRAILLE: Leaving TTY mode succeeded."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         try:
+            msg = "BRAILLE: Attempting to close connection."
+            debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.closeConnection()
         except:
-            pass
+            msg = "BRAILLE: Exception closing connection."
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            msg = "BRAILLE: Closing connection succeeded."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         _brlAPI = None
+
         if _monitor:
             _monitor.destroy()
             _monitor = None
         _displaySize = [DEFAULT_DISPLAY_SIZE, 1]
     else:
+        msg = "BRAILLE: Braille was not running."
+        debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
+    msg = "BRAILLE: Braille shutdown complete."
+    debug.println(debug.LEVEL_INFO, msg, True)
     return True

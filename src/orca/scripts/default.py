@@ -30,10 +30,10 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+import pyatspi
 import re
 import time
 
-import pyatspi
 import orca.braille as braille
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -683,6 +683,10 @@ class Script(script.Script):
         Returns a dictionary where the keys are BrlTTY commands and the
         values are InputEventHandler instances.
         """
+
+        msg = 'DEFAULT: Getting braille bindings.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         brailleBindings = script.Script.getBrailleBindings(self)
         try:
             brailleBindings[braille.brlapi.KEY_CMD_HWINLT]     = \
@@ -724,6 +728,10 @@ class Script(script.Script):
             msg = 'ERROR: Exception getting braille bindings in %s' % self
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_CONFIGURATION)
+
+        msg = 'DEFAULT: Finished getting braille bindings.'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         return brailleBindings
 
     def deactivate(self):
@@ -855,11 +863,17 @@ class Script(script.Script):
     def activate(self):
         """Called when this script is activated."""
 
+        msg = 'DEFAULT: activating script for %s' % self.app
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         _settingsManager.loadAppSettings(self)
         braille.checkBrailleSetting()
         braille.setupKeyRanges(self.brailleBindings.keys())
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
+
+        msg = 'DEFAULT: Script for %s activated' % self.app
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object.
