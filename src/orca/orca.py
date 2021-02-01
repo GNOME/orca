@@ -682,7 +682,7 @@ def shutdown(script=None, inputEvent=None):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    orca_state.activeScript.presentMessage(messages.STOP_ORCA)
+    orca_state.activeScript.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
     _scriptManager.deactivate()
     _eventManager.deactivate()
