@@ -714,7 +714,8 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    msg = 'ORCA: Shutting down and exiting due to signal=%d' % signum
+    msg = 'ORCA: Shutting down and exiting due to signal=%d (%s)' % \
+        (signum, signal.strsignal(signum))
     debug.println(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
@@ -765,7 +766,7 @@ def main(cacheValues=True):
     debug.println(debug.LEVEL_INFO, "ORCA: Launching (main).", True)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
-        faulthandler.enable(file=debug.debugFile, all_threads=False)
+        faulthandler.enable(file=debug.debugFile, all_threads=True)
     else:
         faulthandler.enable(all_threads=False)
 
