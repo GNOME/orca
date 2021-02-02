@@ -561,6 +561,15 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
+    def getPositionAndSetSize(self, obj, **args):
+        posinset = self.getPositionInSet(obj)
+        setsize = self.getSetSize(obj)
+        if posinset is not None and setsize is not None:
+            # ARIA posinset is 1-based
+            return posinset - 1, setsize
+
+        return super().getPositionAndSetSize(obj, **args)
+
     def getPositionInSet(self, obj):
         attrs = self.objectAttributes(obj, False)
         position = attrs.get('posinset')
