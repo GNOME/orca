@@ -1589,10 +1589,18 @@ class Script(default.Script):
                 self.updateBraille(event.source)
             return True
 
-        if self.utilities.lastInputEventWasTab() and self.utilities.isDocument(event.source):
-            msg = "WEB: Event ignored: Caret moved in document due to Tab."
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+        if self.utilities.lastInputEventWasTab():
+            if self.utilities.isDocument(event.source):
+                msg = "WEB: Event ignored: Caret moved in document due to Tab."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
+            if event.source.getRole() == pyatspi.ROLE_ENTRY \
+               and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+               and event.source != orca_state.locusOfFocus:
+                msg = "WEB: Event ignored: Entry is not (yet) the locus of focus. Waiting for focus event."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
 
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
