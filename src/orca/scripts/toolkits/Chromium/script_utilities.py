@@ -145,23 +145,16 @@ class Utilities(web.Utilities):
             return []
 
         result = super().selectedChildren(obj)
-        if result or "Selection" in pyatspi.listInterfaces(obj):
-            return result
-
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "CHROMIUM: Exception getting child count of %s" % obj
+        if obj.getRole() == pyatspi.ROLE_MENU and not self.inDocumentContent(obj) and len(result) > 1:
+            msg = "CHROMIUM: Browser menu %s claims more than one state-selected child." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return result
 
-        # HACK: Ideally, we'd use the selection interface to get the selected
-        # children. But that interface is not implemented yet. This hackaround
-        # is extremely non-performant.
-        for i in range(childCount):
-            child = obj[i]
-            if child and child.getState().contains(pyatspi.STATE_SELECTED):
-                result.append(child)
+            isFocused = lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
+            focused = list(filter(isFocused, result))
+            if len(focused) == 1:
+                msg = "CHROMIUM: Suspecting %s is the only actually-selected child" % focused[0]
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return focused
 
         return result
 
