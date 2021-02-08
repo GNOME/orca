@@ -714,8 +714,14 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    msg = 'ORCA: Shutting down and exiting due to signal=%d (%s)' % \
-        (signum, signal.strsignal(signum))
+    try:
+        # Requires python 3.8
+        signalString = '(%s)' % signal.strsignal(signum)
+    except:
+        signalString = ''
+
+    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % \
+        (signum, signalString)
     debug.println(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
