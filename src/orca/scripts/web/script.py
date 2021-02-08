@@ -623,15 +623,18 @@ class Script(default.Script):
             else:
                 contents = self.utilities.getLineContentsAtOffset(obj, characterOffset)
             self._sayAllContents = contents
-            for content in contents:
+            for i, content in enumerate(contents):
+                obj, startOffset, endOffset, text = content
+                msg = "WEB SAY ALL CONTENT: %i. %s '%s' (%i-%i)" % (i, obj, text, startOffset, endOffset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+
                 if self.utilities.isInferredLabelForContents(content, contents):
                     continue
 
-                obj, startOffset, endOffset, text = content
                 if startOffset == endOffset:
                     continue
 
-                if self.utilities.isLabellingContents(obj):
+                if self.utilities.isLabellingInteractiveElement(obj):
                     continue
 
                 if self.utilities.isLinkAncestorOfImageInContents(obj, contents):

@@ -362,6 +362,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not args.get('inFlatReview'):
             return []
 
+        if self._script.utilities.isFigure(obj) and args.get('ancestorOf'):
+            caption = args.get('ancestorOf')
+            if caption.getRole() != pyatspi.ROLE_CAPTION:
+                isCaption = lambda x: x and x.getRole() == pyatspi.ROLE_CAPTION
+                caption = pyatspi.findAncestor(caption, isCaption)
+            if caption and hash(obj) in self._script.utilities.labelTargets(caption):
+                return []
+
         role = args.get('role', obj.getRole())
 
         # TODO - JD: Once the formatting strings are vastly cleaned up
@@ -762,9 +770,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not 'priorObj' in args:
             args['priorObj'] = self._script.utilities.getPriorContext()[0]
-
-        if self._script.utilities.isLabellingContents(obj):
-            result = list(filter(lambda x: x, self.generateContext(obj, **args)))
 
         if not result:
             result = list(filter(lambda x: x, super().generateSpeech(obj, **args)))

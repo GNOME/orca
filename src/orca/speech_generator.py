@@ -2116,7 +2116,8 @@ class SpeechGenerator(generator.Generator):
             presentedRoles.append(altRole)
             count = ancestorRoles.count(altRole)
             self._overrideRole(altRole, args)
-            result.append(self.generate(x, formatType='focused', role=altRole, leaving=leaving, count=count))
+            result.append(self.generate(x, formatType='focused', role=altRole, leaving=leaving, count=count,
+                                        ancestorOf=obj))
             self._restoreRole(altRole, args)
 
         if not leaving:

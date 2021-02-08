@@ -3225,16 +3225,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def labelTargets(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return []
-
-        rv = self._labelTargets.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = []
-
+    def targetsForLabel(self, obj):
         isLabel = lambda r: r.getRelationType() == pyatspi.RELATION_LABEL_FOR
         try:
             relations = list(filter(isLabel, obj.getRelationSet()))
@@ -3254,7 +3245,17 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             rv.remove(obj)
 
-        rv = [hash(x) for x in rv if x is not None]
+        return list(filter(lambda x: x is not None, rv))
+
+    def labelTargets(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return []
+
+        rv = self._labelTargets.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = [hash(t) for t in self.targetsForLabel(obj)]
         self._labelTargets[hash(obj)] = rv
         return rv
 
@@ -3282,6 +3283,17 @@ class Utilities(script_utilities.Utilities):
                 return o
 
         return None
+
+    def isLabellingInteractiveElement(self, obj):
+        if self._labelTargets.get(hash(obj)) == []:
+            return False
+
+        targets = self.targetsForLabel(obj)
+        for target in targets:
+            if target.getState().contains(pyatspi.STATE_FOCUSABLE):
+                return True
+
+        return False
 
     def isLabellingContents(self, obj, contents=[]):
         if self.isFocusModeWidget(obj):
@@ -3670,7 +3682,7 @@ class Utilities(script_utilities.Utilities):
         return 'feed' in self._getXMLRoles(obj)
 
     def isFigure(self, obj):
-        return 'figure' in self._getXMLRoles(obj)
+        return 'figure' in self._getXMLRoles(obj) or self._getTag(obj) == 'figure'
 
     def isLandmark(self, obj):
         if not (obj and self.inDocumentContent(obj)):
