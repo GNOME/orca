@@ -3873,14 +3873,20 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        msg = "INFO: %s reports %i selected children" % (obj, count)
+        msg = "INFO: %s reports %i selected child(ren)" % (obj, count)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         children = []
         for x in range(count):
             child = selection.getSelectedChild(x)
+            msg = "INFO: Child %i: %s" % (x, child)
+            debug.println(debug.LEVEL_INFO, msg, True)
             if not self.isZombie(child):
                 children.append(child)
+
+        if count and not children:
+            msg = "INFO: Selected children not retrieved via selection interface."
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         role = obj.getRole()
         if role == pyatspi.ROLE_MENU and not children:
@@ -5015,6 +5021,7 @@ class Utilities:
             layoutRoles = [pyatspi.ROLE_SEPARATOR, pyatspi.ROLE_TEAROFF_MENU_ITEM]
             isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
             siblings = list(filter(isNotLayoutOnly, siblings))
+
         if not (siblings and obj in siblings):
             return -1, -1
 

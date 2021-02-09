@@ -145,6 +145,8 @@ class Utilities(web.Utilities):
             return []
 
         result = super().selectedChildren(obj)
+
+        # The fix for this issue landed in 90.0.4413.0.
         if obj.getRole() == pyatspi.ROLE_MENU and not self.inDocumentContent(obj) and len(result) > 1:
             msg = "CHROMIUM: Browser menu %s claims more than one state-selected child." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -539,3 +541,19 @@ class Utilities(web.Utilities):
             return True
 
         return False
+
+    def _shouldCalculatePositionAndSetSize(self, obj):
+        # Chromium has accessible menu items which are not focusable and therefore do not
+        # have a posinset and setsize calculated. But they may claim to be the selected
+        # item when an accessible child is selected (e.g. "zoom" when "+" or "-" gains focus.
+        # Normally we calculate posinset and setsize when the application hasn't provided it.
+        # We don't want to do that in the case of menu items like "zoom" because our result
+        # will not jibe with the values of its siblings. Thus if a sibling has a value,
+        # assume that the missing attributes are missing on purpose.
+        for sibling in obj.parent:
+            if self.getPositionInSet(sibling) is not None:
+                msg = "CHROMIUM: %s's sibling %s has posinset." % (obj, sibling)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
+        return True
