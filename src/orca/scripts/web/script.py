@@ -1551,6 +1551,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)

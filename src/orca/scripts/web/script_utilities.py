@@ -4238,6 +4238,12 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(event.source):
             return False
 
+        if self._eventIsBrowserUIAutocompleteTextNoise(event):
+            return True
+
+        return self._eventIsBrowserUIAutocompleteSelectionNoise(event)
+
+    def _eventIsBrowserUIAutocompleteSelectionNoise(self, event):
         selection = ["object:selection-changed", "object:state-changed:selected"]
         if not event.type in selection:
             return False
@@ -4263,6 +4269,24 @@ class Utilities(script_utilities.Utilities):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey not in ["Down", "Up"]:
                 return True
+
+        return False
+
+    def _eventIsBrowserUIAutocompleteTextNoise(self, event):
+        if not event.type.startswith("object:text-") \
+           or not orca_state.locusOfFocus \
+           or not self.isSingleLineAutocompleteEntry(event.source):
+            return False
+
+        roles = [pyatspi.ROLE_MENU_ITEM,
+                 pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_MENU_ITEM,
+                 pyatspi.ROLE_LIST_ITEM]
+
+        if orca_state.locusOfFocus.getRole() in roles \
+           and orca_state.locusOfFocus.getState().contains(pyatspi.STATE_SELECTABLE):
+            lastKey, mods = self.lastKeyAndModifiers()
+            return lastKey in ["Down", "Up"]
 
         return False
 
