@@ -1,4 +1,4 @@
-# Orca v3.39.1pre
+# Orca v40.beta
 
 ## Introduction
 
@@ -22,13 +22,13 @@ requests.
 
 ## Dependencies
 
-Orca v3.39.x is supported on GNOME 3.39.x only.  We highly suggest you
+Orca v40.x is supported on GNOME 40.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
 Orca also has the following dependencies:
 
-* Python           - Python platform (minimum version 3.3)
+* Python 3         - Python platform
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - GTK+ toolkit
 * json-py          - a JSON (<https://json.org/>) reader and writer in Python
@@ -39,8 +39,9 @@ Orca also has the following dependencies:
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.39.x
-RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
+You are strongly encouraged to also have the latest stable versions
+of AT-SPI2 and ATK for the GNOME 40.x release.
+
 
 ## NOTE FOR BRLTTY USERS:
 

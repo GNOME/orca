@@ -3,8 +3,11 @@ maintainers how to make a release.
 
 The general instructions for a release are here:
 
-  http://wiki.gnome.org/MaintainersCorner/Releasing
-  http://developer.gnome.org/dotplan/for_maintainers.html
+  https://wiki.gnome.org/MaintainersCorner/Releasing
+
+See also:
+
+  https://discourse.gnome.org/t/new-gnome-versioning-scheme/4235
 
 Here's a summary for Orca:
 
@@ -13,28 +16,23 @@ PREPARE SOURCES FOR THE RELEASE:
 
 Make sure you are up to date:
 
-git pull
-git status
+  git pull
+  git status
 
-Modify these lines in ./configure.ac:
+Update ./NEWS with changes from the last tagged release. You can use
+commands like the following:
 
-m4_define([orca_major_version], [2])
-m4_define([orca_minor_version], [29])
-m4_define([orca_micro_version], [92])
+Detailed commits since the ORCA_40_ALPHA tag:
 
-Modify ./README to make sure it has the right Orca version.
+  git log ORCA_40_ALPHA..
 
-Update ./NEWS based upon entries in ./ChangeLog, or based upon git output
-from a git command like the following (the tag string followed by ".." gives
-you changes made since that tag was created):
+Short list of translation changes with author names and files:
 
-git log --pretty=format:"%ai %an <%ae>%n%n        %s%n" --name-status ORCA_2_29_91..
+  git log ORCA_40_ALPHA.. --grep translation --pretty=format:"%s - %an" --name-only
 
-NOTE about giving credit to translators:
+Short list of non-translation commits:
 
-You should get the translator name from the "Last Translator" field in
-the .po file, not from po/Changelog. Sometimes the translator is not the
-same person as who commits the file.
+  git log ORCA_40_ALPHA.. --grep translation --invert-grep --pretty=format:" * %s%n"
 
 NOTE: You should also make sure the external dependencies listed in
 configure.ac and README are accurate.
@@ -43,84 +41,36 @@ configure.ac and README are accurate.
 BUILD THE RELEASE:
 -----------------
 
-./autogen.sh --prefix=`pwd`/bld && make && make install &&  make distcheck
-
-For sanity, you should run pylint (http://wiki.gnome.org/Projects/Orca/Pylint).
-
-
-TEST THE CANDIDATE:
-------------------
-
-cd /tmp
-gunzip -c orca-2.29.92.tar.gz | tar xvf -
-cd orca-2.29.92
-./configure --prefix=`pwd`/bld
-make all install
-./bld/bin/orca
-
+./autogen.sh --prefix=`pwd`/bld && make && make install && make distcheck
 
 COMMIT RELEASE CHANGES AND TAG THE RELEASE:
 -------------------------------------------
 
 git commit -a
 git push
-git tag -a -s ORCA_2_29_92
-git push origin ORCA_2_29_92
+git tag -a -s ORCA_40_BETA
+git push origin ORCA_40_BETA
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-2.29.92.tar.gz wwalker@master.gnome.org:
+scp orca-40.beta.tar.xz yourusername@master.gnome.org:
 ssh master.gnome.org
-ftpadmin install orca-2.29.92.tar.gz
+ftpadmin install orca-40.beta.tar.xz
 
 
-IDENTIFY TRUNK AS "PRE":
-------------------------
+BUMP THE VERSION:
+-----------------
 
-Modify these lines in ./configure.ac:
+Modify this line in ./configure.ac:
 
-  ORCA_MAJOR_VERSION=2
-  ORCA_MINOR_VERSION=30
-  ORCA_MICRO_VERSION=0pre
+    m4_define([orca_version], [40.beta])
 
-Modify ./README to make sure it has the right "pre" version.
+The major version (40) increments by 1 each new GNOME release cycle.
+The minor version proceeds as follows: alpha, beta, rc, 0, 1, 2, 3, etc.
+
+Modify ./README.md to make sure it has the right Orca version.
 
 git commit -a
 git push
-
-ANNOUNCE THE RELEASE
---------------------
-
-To: gnome-announce-list@gnome.org:
-Subject: Announcing Orca v2.29.92
-
-===============
-* What is Orca?
-===============
-
-Orca is a free, open source, flexible, and extensible screen reader
-that provides access to the graphical desktop via user-customizable
-combinations of speech, braille, and/or magnification. 
-
-You can read more about Orca at http://wiki.gnome.org/Projects/Orca.
-
-===================================
-* What's changed for Orca v2.29.92?
-===================================
-
-<<<INSERT NEWS HERE>>>
-
-======================
-* Where can I get it ?
-======================
-
-You can obtain Orca v2.29.92 in source code form at the following:
-
-http://download.gnome.org/sources/orca/2.29/orca-2.29.92.tar.gz
-http://download.gnome.org/sources/orca/2.29/orca-2.29.92.tar.bz2
-
-Enjoy!
-
-The Orca Team
