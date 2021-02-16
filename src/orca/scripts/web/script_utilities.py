@@ -1846,6 +1846,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
+        if line == contents:
+            obj, offset = self.previousContext(obj, offset, True)
+            msg = "WEB: Got same line. Trying again with %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+
         return contents
 
     def getNextLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
