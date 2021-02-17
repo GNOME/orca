@@ -726,7 +726,7 @@ class Utilities(script_utilities.Utilities):
 
         if skipSpace:
             text = self.queryNonEmptyText(nextobj)
-            while text and text.getText(nextoffset, nextoffset + 1).isspace():
+            while text and text.getText(nextoffset, nextoffset + 1) in [" ", "\xa0"]:
                 nextobj, nextoffset = self.findNextCaretInOrder(nextobj, nextoffset)
                 text = self.queryNonEmptyText(nextobj)
 
@@ -742,7 +742,7 @@ class Utilities(script_utilities.Utilities):
 
         if skipSpace:
             text = self.queryNonEmptyText(prevobj)
-            while text and text.getText(prevoffset, prevoffset + 1).isspace():
+            while text and text.getText(prevoffset, prevoffset + 1) in [" ", "\xa0"]:
                 prevobj, prevoffset = self.findPreviousCaretInOrder(prevobj, prevoffset)
                 text = self.queryNonEmptyText(prevobj)
 
@@ -1760,6 +1760,9 @@ class Utilities(script_utilities.Utilities):
             if text and text.getText(pOffset, pOffset + 1) in [" ", "\xa0"]:
                 prevObj, pOffset = self.findPreviousCaretInOrder(prevObj, pOffset)
 
+            if text and text.getText(pOffset, pOffset + 1) == "\n" and firstObj == prevObj:
+                break
+
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
@@ -1777,6 +1780,9 @@ class Utilities(script_utilities.Utilities):
             text = self.queryNonEmptyText(nextObj)
             if text and text.getText(nOffset, nOffset + 1) in [" ", "\xa0"]:
                 nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
+
+            if text and text.getText(nOffset, nOffset + 1) == "\n" and lastObj == nextObj:
+                break
 
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
