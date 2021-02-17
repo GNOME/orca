@@ -803,7 +803,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 args['priorObj'] = obj
 
         if not result:
-            if self._script.inSayAll(treatInterruptedAsIn=False):
+            if self._script.inSayAll(treatInterruptedAsIn=False) \
+               or not _settingsManager.getSetting('speakBlankLines'):
                 string = ""
             else:
                 string = messages.BLANK
