@@ -1294,7 +1294,7 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary, s1, start, end, text.characterCount, s2)
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
-        elif not (start <= offset < end) and not self.isPlainText():
+        elif not (start <= offset < end) and not (self.isPlainText() or self.elementIsPreformattedText(obj)):
             s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
