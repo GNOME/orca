@@ -769,7 +769,10 @@ def main(cacheValues=True):
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
 
-    debug.println(debug.LEVEL_INFO, "ORCA: Launching (main).", True)
+    msg = "ORCA: Launching version %s" % orca_platform.version
+    if orca_platform.revision:
+        msg += " (rev %s)" % orca_platform.revision
+    debug.println(debug.LEVEL_INFO, msg, True)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=True)

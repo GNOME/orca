@@ -30,6 +30,10 @@ __license__   = "LGPL"
 #
 version     = "@VERSION@"
 
+# The revision if built from git; otherwise an empty string
+#
+revision = "@REVISION@"
+
 # "--prefix" parameter used when configuring the build.
 #
 prefix      = "@prefix@"

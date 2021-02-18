@@ -64,6 +64,9 @@ if test x$louis_available = "xyes"; then
 fi
 AC_SUBST(LOUIS_TABLE_DIR)
 
+REVISION=`git rev-parse --short HEAD 2> /dev/null`
+AC_SUBST(REVISION)
+
 dnl Check for the OS. On *Solaris systems the PATH must be set
 PLATFORM=`uname -a`
 case "${PLATFORM}" in

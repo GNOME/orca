@@ -1576,6 +1576,9 @@ class Script(default.Script):
             return True
 
         if self._lastCommandWasMouseButton:
+            msg = "WEB: Last command was mouse button"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             if (event.source, event.detail1) == (obj, offset):
                 msg = "WEB: Event is for current caret context."
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1598,6 +1601,9 @@ class Script(default.Script):
             return True
 
         if self.utilities.lastInputEventWasTab():
+            msg = "WEB: Last input event was Tab."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             if self.utilities.isDocument(event.source):
                 msg = "WEB: Event ignored: Caret moved in document due to Tab."
                 debug.println(debug.LEVEL_INFO, msg, True)
