@@ -5334,7 +5334,12 @@ class Utilities:
         if keyString not in ["Tab", "ISO_Left_Tab"]:
             return False
 
-        return not mods or mods & keybindings.SHIFT_MODIFIER_MASK
+        if mods & keybindings.CTRL_MODIFIER_MASK \
+           or mods & keybindings.ALT_MODIFIER_MASK \
+           or mods & keybindings.ORCA_MODIFIER_MASK:
+            return False
+
+        return True
 
     def lastInputEventWasMouseButton(self):
         return isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent)
