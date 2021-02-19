@@ -1095,24 +1095,28 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _treatObjectAsWhole(self, obj):
-        roles = [pyatspi.ROLE_CHECK_BOX,
-                 pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_LIST_BOX,
-                 pyatspi.ROLE_MENU,
-                 pyatspi.ROLE_MENU_BAR,
-                 pyatspi.ROLE_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_BUTTON,
-                 pyatspi.ROLE_PUSH_BUTTON,
-                 pyatspi.ROLE_TOGGLE_BUTTON,
-                 pyatspi.ROLE_TOOL_BAR,
-                 pyatspi.ROLE_TREE,
-                 pyatspi.ROLE_TREE_ITEM,
-                 pyatspi.ROLE_TREE_TABLE]
+        always = [pyatspi.ROLE_CHECK_BOX,
+                  pyatspi.ROLE_CHECK_MENU_ITEM,
+                  pyatspi.ROLE_LIST_BOX,
+                  pyatspi.ROLE_MENU_ITEM,
+                  pyatspi.ROLE_RADIO_MENU_ITEM,
+                  pyatspi.ROLE_RADIO_BUTTON,
+                  pyatspi.ROLE_PUSH_BUTTON,
+                  pyatspi.ROLE_TOGGLE_BUTTON,
+                  pyatspi.ROLE_TREE_ITEM]
+
+        descendable = [pyatspi.ROLE_MENU,
+                       pyatspi.ROLE_MENU_BAR,
+                       pyatspi.ROLE_TOOL_BAR,
+                       pyatspi.ROLE_TREE,
+                       pyatspi.ROLE_TREE_TABLE]
 
         role = obj.getRole()
-        if role in roles:
+        if role in always:
             return True
+
+        if role in descendable:
+            return self._script.inFocusMode()
 
         if role == pyatspi.ROLE_ENTRY:
             if obj.childCount == 1 and self.isFakePlaceholderForEntry(obj[0]):
