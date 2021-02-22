@@ -1,4 +1,4 @@
-# Orca v40.beta
+# Orca v40.rc
 
 ## Introduction
 
