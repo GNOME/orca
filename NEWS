@@ -1,3 +1,113 @@
+40.beta - 22 February 2021
+
+Web:
+
+ * Add initial support for aria-braillelabel and aria-brailleroledescription
+
+ * Add option to control automatic focus mode during native navigation
+
+ * Improve presentation of, and fix bugs related to, offscreen text
+   which is exposed to us as one or two characters per line
+
+ * Make more roles descendable in browse mode to improve content in
+   which use ARIA widget roles are applied without any associated
+   keyboard navigation
+
+ * Fix bugs in which we get stuck or skip an element due to stale cache
+
+ * Prevent getting stuck when up arrowing with multiple newline chars
+
+ * Don't collapse newlines from a single text object into one line
+
+ * Respect speakBlankLines setting
+
+ * Ensure figcaptions and descendants are presented only once
+
+ * Fix issue in which caret-moved events preceding focus events cause
+   Orca to not present a newly-focused entry
+
+ * Use posinset and setsize attributes for menus, even in browser gui
+
+ * Eliminate double-presentation of caption children in SayAll
+
+ * Work harder to turn inaccessible links into something presentable
+
+ * Prevent focus mode from being entered if we're in SayAll
+
+ * Fix presentation of table row when caret moves due to mouse click
+
+ * Ensure we say something when using caret nav to interrupt SayAll
+
+ * Skip useless empty elements when seeking first context in document
+
+ * Fall back on gridcell name when generating name for nameless checkboxes
+
+ * Miscellaneous chattiness fixes
+
+Chromium:
+
+ * Work around bogus/misleading selected state in browser menus
+
+ * Fix chattiness issue arrowing up/down in Omnibox popup
+
+ * Fix bogus presentation of posinset and setsize in popup menus
+
+Braille:
+
+ * Attempt to be smarter about the default contraction table, prefering
+   the current locale and literary braille tables
+
+ * Fix bug in presentation of tree items
+
+General:
+
+ * Fix Orca not launching due to braille-related timeout
+
+ * Use AT-SPI2's cache for children (improves performance)
+
+ * Improve presentation of native-app navigation by word
+
+ * Fix issue preventing us from recognizing a Tab input event
+
+ * Announce "non selected" when focus does not follow selected in a listbox
+
+ * Only speak newline during word nav if spoken indentation is enabled
+
+ * Handle exception initializing mouse review with null display
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                        Jordi Mas
+  ca              Catalan                        Jordi Mas i Hernandez
+  cs              Czech                          Marek Černocký
+  de              German                         Christian Kirbach
+  de              German                         Tim Sabsch
+  en_GB           British English                Stephan Woidowski
+  es              Spanish                        Daniel Mustieles
+  fi              Finnish                        Timo Jyrinki
+  fr              French                         Charles Monzat
+  fr              French                         Claude Paroz
+  gl              Galician                       Fran Dieguez
+  hr              Croatian                       Goran Vidović
+  hu              Hungarian                      Attila Hammer
+  it              Italian                        Milo Casagrande
+  lt              Lithuanian                     Aurimas Černius
+  nb              Norwegian Bokmål               Kjartan Maraas
+  pl              Polish                         Piotr Drąg
+  pt_BR           Brazilian Portuguese           Henrique Machado Campos
+  pt_BR           Brazilian Portuguese           Rafael Fontenelle
+  pt              Portuguese                     Juliano Camargo
+  ro              Romanian                       Florentina Mușat
+  sl              Slovenian                      Matej Urbančič
+  sr              Serbian                        Марко Костић
+  sr              Serbian                        Мирослав Николић
+  sv              Swedish                        Anders Jonsson
+  tr              Turkish                        Emin Tufan Çetin
+  uk              Ukrainian                      Yuri Chornoivan
+  zh_CN           Chinese (China)                Boyuan Yang
+
+=========
+
 3.38.2 - 22 December 2020
 
 General:
