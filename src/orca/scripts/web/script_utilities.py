@@ -3140,7 +3140,8 @@ class Utilities(script_utilities.Utilities):
         if rv:
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
             for i in range(nChars):
-                if text.getText(i, i + 1) == self.EMBEDDED_OBJECT_CHARACTER:
+                char = text.getText(i, i + 1)
+                if char.isspace() or char in ["\ufffc", "\ufffd"]:
                     continue
 
                 string, start, end = text.getTextAtOffset(i, boundary)
