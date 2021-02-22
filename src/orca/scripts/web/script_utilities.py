@@ -4869,6 +4869,9 @@ class Utilities(script_utilities.Utilities):
         self._contextPathsRolesAndNames[hash(parent)] = path, role, name
 
     def findFirstCaretContext(self, obj, offset):
+        msg = "WEB: Looking for first caret context for %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         try:
             role = obj.getRole()
         except:
@@ -4915,6 +4918,12 @@ class Utilities(script_utilities.Utilities):
             allText = text.getText(0, -1)
             if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == pyatspi.ROLE_ENTRY:
                 msg = "WEB: First caret context for %s, %i is unchanged" % (obj, offset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return obj, offset
+
+            # Descending an element that we're treating as a whole can lead to looping/getting stuck.
+            if self.elementLinesAreSingleChars(obj):
+                msg = "WEB: EOC in single-char-lines element. Returning %s, %i unchanged." % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
