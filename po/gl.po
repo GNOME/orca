@@ -2,6 +2,7 @@
 # Copyright (C) 2010 Fran Diéguez
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
+#
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2006.
 # Ignacio Casal Quinteiro <icq@svn.gnome.org>, 2007, 2008.
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2008.
@@ -11,15 +12,14 @@
 # Fran Diéguez <frandieguez@gnome.org>, 2010, 2011, 2018.
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
 # Fran Dieguez <frandieguez@gnome.org>, 2010-2021.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-01-06 16:03+0000\n"
-"PO-Revision-Date: 2021-01-07 00:35+0100\n"
+"POT-Creation-Date: 2021-02-20 21:22+0000\n"
+"PO-Revision-Date: 2021-02-23 15:56+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1817,7 +1817,6 @@ msgstr "Le a xanela enteira usando unha revisión plana"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-#| msgid "Performs the basic Where Am I operation."
 msgid "Perform the basic Where Am I operation"
 msgstr "Realiza a operación básica «onde estou»"
 
@@ -1826,7 +1825,6 @@ msgstr "Realiza a operación básica «onde estou»"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-#| msgid "Performs the detailed Where Am I operation."
 msgid "Perform the detailed Where Am I operation"
 msgstr "Realiza a operación detallada «onde estou»"
 
@@ -1885,7 +1883,6 @@ msgstr "Busca a instancia anterior dunha cadea"
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:121
-#| msgid "Enter and exits flat review mode"
 msgid "Enter and exit flat review mode"
 msgstr "Entra e sae do modo de revisión plana"
 
@@ -2192,7 +2189,7 @@ msgstr "Volve ao obxecto co foco de teclado"
 #. and uncontracted.
 #: src/orca/cmdnames.py:374
 msgid "Turn contracted braille on and off"
-msgstr "Commuta entre un braille compactado activado ou desactivado"
+msgstr "Conmuta entre un braille compactado activado ou desactivado"
 
 #. Translators: hardware braille displays often have buttons near each braille
 #. cell. These are called cursor routing keys and are a way for a user to tell
@@ -2302,7 +2299,7 @@ msgstr "Alterna a redacción da indentación e xustificación"
 #. toggling between the two options.
 #: src/orca/cmdnames.py:450
 msgid "Change spoken number style"
-msgstr "CAmbia o estilo dos número lidos"
+msgstr "Cambia o estilo dos número lidos"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -2829,14 +2826,14 @@ msgstr "Vai á seguinte caixa de combinación"
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:831
 msgid "Go to start of container"
-msgstr "Vai ao principio do contenedor"
+msgstr "Vai ao principio do contedor"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:836
 msgid "Go to end of container"
-msgstr "Vai ao final do contenedor"
+msgstr "Vai ao final do contedor"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:839
@@ -3230,7 +3227,7 @@ msgstr "branco antigo"
 #: src/orca/colornames.py:45
 msgctxt "color name"
 msgid "aquamarine"
-msgstr "auga marina"
+msgstr "auga mariña"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4384,7 +4381,6 @@ msgstr "Modo de enfoque automático na navegación con cursor"
 #. as the Tab key, or it might be a web page behavior, such as the search field
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Modo de enfoque automático na navegación nativa"
 
@@ -8765,7 +8761,6 @@ msgstr "chave"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:691
-#| msgid "Key echo set to key."
 msgid "Echo set to key."
 msgstr "Eco estabelecido á tecla."
 
@@ -8797,7 +8792,6 @@ msgstr "Ningunha"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:717
-#| msgid "Key echo set to None."
 msgid "Echo set to None."
 msgstr "Eco estabelecido a Ningún."
 
@@ -8829,7 +8823,6 @@ msgstr "chave e palabra"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
-#| msgid "Key echo set to key and word."
 msgid "Echo set to key and word."
 msgstr "Eco estabelecido a tecla e palabra."
 
@@ -8861,7 +8854,6 @@ msgstr "frase"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
-#| msgid "Key echo set to sentence."
 msgid "Echo set to sentence."
 msgstr "Eco estabelecido a frase."
 
@@ -8893,7 +8885,6 @@ msgstr "palabra"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
-#| msgid "Key echo set to word."
 msgid "Echo set to word."
 msgstr "Eco estabelecido a palabra."
 
@@ -8925,7 +8916,6 @@ msgstr "palabra e sentenza"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
-#| msgid "Key echo set to word and sentence."
 msgid "Echo set to word and sentence."
 msgstr "Eco estabelecido a palabra e frase."
 
@@ -12231,8 +12221,6 @@ msgstr "non premido"
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
 #: src/orca/object_properties.py:532
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgctxt "listitem"
 msgid "not selected"
 msgstr "non seleccionado"
@@ -12903,7 +12891,6 @@ msgid "Enable echo by _sentence"
 msgstr "Activar o eco por _frases"
 
 #: src/orca/orca-setup.ui:2861
-#| msgid "Key Echo"
 msgid "Echo"
 msgstr "Eco"
 
