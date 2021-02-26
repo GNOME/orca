@@ -2217,8 +2217,6 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif not "Text" in interfaces:
             rv = False
-        elif not obj.queryText().characterCount:
-            rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = False
         elif self.isGridCell(obj):
