@@ -1299,7 +1299,7 @@ class Script(default.Script):
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             utterances = self.speechGenerator.generateContents(contents, priorObj=oldFocus)
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
-           and not self.utilities.lastInputEventWasTab() \
+           and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
            and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
