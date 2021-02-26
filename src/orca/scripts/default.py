@@ -2544,7 +2544,8 @@ class Script(script.Script):
         state = obj.getState()
 
         if self.utilities.handlePasteLocusOfFocusChange():
-            orca.setLocusOfFocus(event, event.source, False)
+            if self.utilities.topLevelObjectIsActiveAndCurrent(event.source):
+                orca.setLocusOfFocus(event, event.source, False)
         elif self.utilities.handleContainerSelectionChange(event.source):
             return
         else:
