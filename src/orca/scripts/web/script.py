@@ -1734,7 +1734,7 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
             elif self.utilities.isDead(orca_state.locusOfFocus):
-                msg = "WEB: Dumping cache and context: dead focus %s" % orca_state.locusOfFocus
+                msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
@@ -1846,7 +1846,7 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
             elif self.utilities.isDead(orca_state.locusOfFocus):
-                msg = "WEB: Dumping cache and context: dead focus %s" % orca_state.locusOfFocus
+                msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
@@ -2366,7 +2366,11 @@ class Script(default.Script):
         self.utilities.clearContentCache()
 
         document = self.utilities.getDocumentForObject(event.source)
-        if document:
+        if self.utilities.isDead(orca_state.locusOfFocus):
+            msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.utilities.dumpCache(document, preserveContext=True)
+        else:
             msg = "WEB: Clearing structural navigation cache for %s" % document
             debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)

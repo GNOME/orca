@@ -4647,13 +4647,22 @@ class Utilities(script_utilities.Utilities):
         return obj, offset
 
     def getCaretContext(self, documentFrame=None, getZombieReplicant=False, searchIfNeeded=True):
+        msg = "WEB: Getting caret context"
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
 
         if not documentFrame:
             if not searchIfNeeded:
+                msg = "WEB: Returning None, -1: No document and no search requested."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return None, -1
-            return self._getCaretContextViaLocusOfFocus()
+
+            obj, offset = self._getCaretContextViaLocusOfFocus()
+            msg = "WEB: Returning %s, %i (from locusOfFocus)" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return obj, offset
 
         context = self._caretContexts.get(hash(documentFrame.parent))
         if not context or documentFrame != self.getTopLevelDocumentForObject(context[0]):
@@ -4663,6 +4672,8 @@ class Utilities(script_utilities.Utilities):
         elif not getZombieReplicant:
             return context
         elif self.isZombie(context[0]):
+            msg = "WEB: Context is Zombie. Searching for replicant."
+            debug.println(debug.LEVEL_INFO, msg, True)
             obj, offset = self.findContextReplicant()
             if obj:
                 caretObj, caretOffset = self.searchForCaretContext(obj.parent)
@@ -5002,6 +5013,8 @@ class Utilities(script_utilities.Utilities):
 
             parent = obj.parent
             if self.isZombie(parent):
+                msg = "WEB: Finding next caret in order. Parent is Zombie."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
@@ -5066,6 +5079,8 @@ class Utilities(script_utilities.Utilities):
 
             parent = obj.parent
             if self.isZombie(parent):
+                msg = "WEB: Finding previous caret in order. Parent is Zombie."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant

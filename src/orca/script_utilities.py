@@ -4934,6 +4934,8 @@ class Utilities:
         return False
 
     def findReplicant(self, root, obj):
+        msg = "INFO: Searching for replicant for %s in %s" % (obj, root)
+        debug.println(debug.LEVEL_INFO, msg, True)
         if not (root and obj):
             return None
 
