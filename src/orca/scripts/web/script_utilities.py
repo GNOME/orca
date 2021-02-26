@@ -4760,6 +4760,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         obj, offset = None, -1
+        notify = True
         keyString, mods = self.lastKeyAndModifiers()
         if keyString == "Up":
             if event.detail1 >= event.source.childCount:
@@ -4793,9 +4794,13 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(nextObj, -1)
 
+        else:
+            notify = False
+            obj, offset = self.searchForCaretContext(event.source)
+
         if obj:
             msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
-            orca.setLocusOfFocus(event, obj, True)
+            orca.setLocusOfFocus(event, obj, notify)
             self.setCaretContext(obj, offset)
             return True
 

@@ -1735,7 +1735,7 @@ class Script(default.Script):
             elif self.utilities.isDead(orca_state.locusOfFocus):
                 msg = "WEB: Dumping cache and context: dead focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
-                self.utilities.dumpCache(document, preserveContext=False)
+                self.utilities.dumpCache(document, preserveContext=True)
             elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1844,6 +1844,10 @@ class Script(default.Script):
                 msg = "WEB: Dumping cache and context: source is focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
+            elif self.utilities.isDead(orca_state.locusOfFocus):
+                msg = "WEB: Dumping cache and context: dead focus %s" % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.dumpCache(document, preserveContext=True)
             elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
