@@ -247,22 +247,26 @@ class EventManager:
                 msg = 'EVENT MANAGER: Locus of focus is being destroyed'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
+
             try:
                 childState = event.any_data.getState()
                 childRole = event.any_data.getRole()
                 name = event.any_data.name
+                defunct = False
             except:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
-                return True
+                defunct = True
+            else:
+                defunct = childState.contains(pyatspi.STATE_DEFUNCT)
+                if defunct:
+                    msg = 'ERROR: Event any_data contains defunct child/descendant'
+                    debug.println(debug.LEVEL_INFO, msg, True)
 
-            if childState.contains(pyatspi.STATE_DEFUNCT):
+            if defunct:
                 if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
                    and event.source not in self._parentsOfDefunctDescendants:
                     self._parentsOfDefunctDescendants.append(event.source)
-
-                msg = 'ERROR: Event any_data contains defunct child/descendant'
-                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
             if event.source in self._parentsOfDefunctDescendants:
