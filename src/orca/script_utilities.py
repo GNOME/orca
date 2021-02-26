@@ -2114,6 +2114,13 @@ class Utilities:
            and not self.isInOpenMenuBarMenu(root):
             return [root]
 
+        if role == pyatspi.ROLE_FILLER and not root.childCount:
+            msg = "INFO: %s is empty filler. Clearing cache." % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            root.clearCache()
+            msg = "INFO: %s reports %i children" % (root, root.childCount)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         if extents is None:
             try:
                 component = root.queryComponent()
