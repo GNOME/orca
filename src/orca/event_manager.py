@@ -243,6 +243,10 @@ class EventManager:
                 msg = 'ERROR: Event any_data lacks child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+            if event.type.endswith('remove') and event.any_data == orca_state.locusOfFocus:
+                msg = 'EVENT MANAGER: Locus of focus is being destroyed'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
             try:
                 childState = event.any_data.getState()
                 childRole = event.any_data.getRole()
