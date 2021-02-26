@@ -199,7 +199,9 @@ class EventManager:
             return True
         elif event.type.startswith('object:state-changed:sensitive'):
             if role in [pyatspi.ROLE_MENU_ITEM,
+                        pyatspi.ROLE_MENU,
                         pyatspi.ROLE_FILLER,
+                        pyatspi.ROLE_PANEL,
                         pyatspi.ROLE_CHECK_MENU_ITEM,
                         pyatspi.ROLE_RADIO_MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
