@@ -1570,6 +1570,11 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
+        if self.isDead(obj):
+            msg = "ERROR: Cannot get object contents at offset for dead object."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         offset = max(0, offset)
 
         if useCache:
@@ -1681,6 +1686,11 @@ class Utilities(script_utilities.Utilities):
 
     def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
         if not obj:
+            return []
+
+        if self.isDead(obj):
+            msg = "ERROR: Cannot get line contents at offset for dead object."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
         text = self.queryNonEmptyText(obj)
