@@ -1021,7 +1021,7 @@ class Script(default.Script):
             super().updateBraille(obj, **args)
             return
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        obj, offset = self.utilities.getCaretContext(documentFrame=None, getZombieReplicant=True)
         if offset > 0 and isContentEditable:
             text = self.utilities.queryNonEmptyText(obj)
             if text:
