@@ -3744,12 +3744,18 @@ class Script(script.Script):
 
         try:
             text = obj.queryText()
+            offset = text.caretOffset
+            characterCount = text.characterCount
         except NotImplementedError:
+            return ["", 0, 0]
+        except:
+            msg = "DEFAULT: Exception getting offset and length for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return ["", 0, 0]
 
         targetOffset = startOffset
         if targetOffset is None:
-            targetOffset = max(0, text.caretOffset)
+            targetOffset = max(0, offset)
 
         # The offset might be positioned at the very end of the text area.
         # In these cases, calling text.getTextAtOffset on an offset that's
@@ -3765,14 +3771,14 @@ class Script(script.Script):
         # to see if that character is a newline - if it is, we'll treat it
         # as the line.
         #
-        if targetOffset == text.characterCount:
+        if targetOffset == characterCount:
             fixedTargetOffset = max(0, targetOffset - 1)
             character = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
         else:
             fixedTargetOffset = targetOffset
             character = None
 
-        if (targetOffset == text.characterCount) \
+        if (targetOffset == characterCount) \
             and (character == "\n"):
             lineString = ""
             startOffset = fixedTargetOffset
@@ -3782,12 +3788,12 @@ class Script(script.Script):
             # do this because Gecko's implementation of getTextAtOffset
             # is broken if there is just one character in the string.]]]
             #
-            if (text.characterCount == 1):
+            if (characterCount == 1):
                 lineString = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
                 startOffset = fixedTargetOffset
             else:
                 if fixedTargetOffset == -1:
-                    fixedTargetOffset = text.characterCount
+                    fixedTargetOffset = characterCount
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
                         fixedTargetOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
