@@ -2257,7 +2257,8 @@ class Utilities:
         start = time.time()
         items = self._script.pointOfReference.get('statusBarItems')
         if not items:
-            items = self.getOnScreenObjects(obj)
+            include = lambda x: x and x.getRole() != pyatspi.ROLE_STATUS_BAR
+            items = list(filter(include, self.getOnScreenObjects(obj)))
             self._script.pointOfReference['statusBarItems'] = items
 
         end = time.time()

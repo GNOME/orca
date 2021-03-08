@@ -2399,6 +2399,9 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         for child in items:
+            if child == statusBar:
+                continue
+
             childResult = self.generate(child, includeContext=False)
             if childResult:
                 result.extend(childResult)
