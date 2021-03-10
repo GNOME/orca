@@ -2341,7 +2341,7 @@ class Utilities:
 
         stopAtRoles = self._topLevelRoles()
 
-        while obj and obj.parent \
+        while obj and obj.parent and obj != obj.parent \
               and not obj.getRole() in stopAtRoles \
               and not obj.parent.getRole() == pyatspi.ROLE_APPLICATION:
             obj = obj.parent
