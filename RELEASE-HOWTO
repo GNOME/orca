@@ -22,17 +22,25 @@ Make sure you are up to date:
 Update ./NEWS with changes from the last tagged release. You can use
 commands like the following:
 
-Detailed commits since the ORCA_40_ALPHA tag:
+Detailed commits since the ORCA_40_BETA tag:
 
-  git log ORCA_40_ALPHA..
+  git log ORCA_40_BETA..
 
 Short list of translation changes with author names and files:
 
-  git log ORCA_40_ALPHA.. --grep translation --pretty=format:"%s - %an" --name-only
+  git log ORCA_40_BETA.. --grep translation --pretty=format:"%s - %an" --name-only
+
+Quick-and-dirty formatted list of translation changes:
+
+  git log ORCA_40_BETA.. --grep translation --pretty=format:"%s,%an" --name-only |
+    awk -F/ '/\.(po|am)/ {gsub("(\.po|Makefile.am)", "", $NF); printf(",%s",$NF); next;}
+    {gsub("(Updated* |Add(ed)* | translation| help)", "", $0); printf("\n%s",$0);}' |
+    awk -F, '!seen[$0]++ {if (NF == 3) printf("  %-15s %-25s %s\n", $3, $1, $2);}' |
+    sort
 
 Short list of non-translation commits:
 
-  git log ORCA_40_ALPHA.. --grep translation --invert-grep --pretty=format:" * %s%n"
+  git log ORCA_40_BETA.. --grep translation --invert-grep --pretty=format:" * %s%n"
 
 NOTE: You should also make sure the external dependencies listed in
 configure.ac and README are accurate.
@@ -48,16 +56,16 @@ COMMIT RELEASE CHANGES AND TAG THE RELEASE:
 
 git commit -a
 git push
-git tag -a -s ORCA_40_BETA
-git push origin ORCA_40_BETA
+git tag -a -s ORCA_40_RC
+git push origin ORCA_40_RC
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-40.beta.tar.xz yourusername@master.gnome.org:
+scp orca-40.rc.tar.xz yourusername@master.gnome.org:
 ssh master.gnome.org
-ftpadmin install orca-40.beta.tar.xz
+ftpadmin install orca-40.rc.tar.xz
 
 
 BUMP THE VERSION:
@@ -65,7 +73,7 @@ BUMP THE VERSION:
 
 Modify this line in ./configure.ac:
 
-    m4_define([orca_version], [40.beta])
+    m4_define([orca_version], [40.rc])
 
 The major version (40) increments by 1 each new GNOME release cycle.
 The minor version proceeds as follows: alpha, beta, rc, 0, 1, 2, 3, etc.

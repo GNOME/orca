@@ -1,3 +1,38 @@
+40.rc - 11 March 2021
+
+Web:
+
+* Improve handling of, and recovery from, element destruction, e.g.
+  to find the new location and contents more accurately and quickly
+
+* Don't generate line contents when tabbing into editable with
+  descendants (chattiness)
+
+General:
+
+* Prevent hang generating statusbar content
+
+* Prevent hang resulting from accessible objects which claim to be
+  their own parent
+
+* Try to detect and avoid selection-changed event flood from apps
+  like Caja which can make Orca not responsive
+
+* Work around lack of children-changed accessibility events from
+  fillers which report 0 children
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  de              German                    Mario Blättermann
+  eu              Basque                    Asier Sarasua Garmendia
+  fi              Finnish                   Jiri Grönroos
+  gl              Galician                  Fran Dieguez
+  id              Indonesian                Kukuh Syafaat
+  pl              Polish                    Piotr Drąg
+  pt              Portuguese                Hugo Carvalho
+
+=========
+
 40.beta - 22 February 2021
 
 Web:
