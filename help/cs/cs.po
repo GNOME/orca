@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019, 2020.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2020-08-19 10:26+0000\n"
-"PO-Revision-Date: 2020-09-06 10:08+0200\n"
+"POT-Creation-Date: 2021-02-20 21:22+0000\n"
+"PO-Revision-Date: 2021-03-13 12:01+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1594,7 +1594,7 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speaks Link Details command to a keystroke. Please see <link xref="
+"app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
@@ -5429,15 +5429,15 @@ msgstr "Zprávy jsou podrobné"
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
-"app>'s command to change key echo, <app>Orca</app> might display \"Key echo "
-"set to word.\" If you would prefer shorter messages, such as simply \"word,"
-"\" you should uncheck this checkbox."
+"app>'s command to change echo, <app>Orca</app> might display \"Echo set to "
+"word.\" If you would prefer shorter messages, such as simply \"word,\" you "
+"should uncheck this checkbox."
 msgstr ""
 "Když je zaškrtnuté <gui>Zprávy jsou podrobné</gui>, bude <app>Orca</app> "
 "prezentovat podrobné zprávy na braillském řádku. Například, když použijete "
-"příkaz <app>Orca</app> ke změně oznamování kláves, může vám oznámit "
-"„Oznamování kláves je nastavené na slova.“ Jestli dáváte přednost kratším "
-"zprávám, jako je prosté „slovo“, neměli byste mít toto políčko zaškrtnuté."
+"příkaz <app>Orca</app> ke změně oznamování, může vám oznámit „Oznamování je "
+"nastavené na slova.“ Jestli dáváte přednost kratším zprávám, jako je prostá "
+"zpráva „slovo“, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
@@ -5778,9 +5778,9 @@ msgid ""
 msgstr ""
 "Když je toto políčko zaškrtnuté, bude <app>Orca</app> automaticky zapínat "
 "režim zaměřování, když použijte příkazy nativní navigace k najetí do "
-"formulářového pole. Například, zmáčknutí klávesy <key>Tab</key> pro přesun do "
-"následujícího vstupního pole by toto pole zaměřilo a zároveň zapnulo režim "
-"zaměřování, takže následující zmáčknutí <key>E</key> by napsalo „e“ do "
+"formulářového pole. Například, zmáčknutí klávesy <key>Tab</key> pro přesun "
+"do následujícího vstupního pole by toto pole zaměřilo a zároveň zapnulo "
+"režim zaměřování, takže následující zmáčknutí <key>E</key> by napsalo „e“ do "
 "tohoto pole. Když políčko zaškrtnuté není, <app>Orca</app> ponechá režim "
 "procházení a následující zmáčknutí <key>E</key> by vás přesunulo do dalšího "
 "vstupního pole na stránce."
@@ -6412,26 +6412,26 @@ msgstr "Předvolby Orca"
 #: C/preferences_introduction.page:18
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
-"which applies to all applications. An example of an Orca preference is key "
-"echo because key echo is something that applies to all applications."
+"which applies to all applications. An example of an Orca preference is echo "
+"because echo is something that applies to all applications."
 msgstr ""
 "Předvolby Orca vám umožňují přizpůsobit si funkcionalitu čtečky <app>Orca</"
 "app>, která se použije pro všechny aplikace. Příkladem předvolby je "
-"oznamování kláves, protože to se použije u všech aplikací."
+"oznamování, protože to se použije u všech aplikací."
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
-"application basis. For instance you can set the default key echo to words "
-"and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
-"app> would always echo each word that you typed, unless you were in Pidgin."
+"application basis. For instance you can set the default echo to words and "
+"then set the echo for Pidgin to be none. Having done so, <app>Orca</app> "
+"would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
 "Všimněte si, že předvolby Orca lze přizpůsobit i pro jednotlivé aplikace. "
-"Například můžete nastavit odezvu pro oznamování kláves na celá slova a pro "
-"aplikaci Pidgin pak oznamování kláves vypnout. Když tak učiníte, bude "
-"<app>Orca</app> vždy po dopsání slova hlásit jednotlivé klávesy, vyjma "
-"situace, kdy budete v komunikátoru Pidgin."
+"Například můžete nastavit odezvu pro oznamování na celá slova a pro aplikaci "
+"Pidgin pak oznamování vypnout. Když tak učiníte, bude <app>Orca</app> vždy po "
+"dopsání slova hlásit slovo, které jste napsali, vyjma situace, kdy budete v "
+"komunikátoru Pidgin."
 
 #. (itstool) path: note/title
 #: C/preferences_introduction.page:30
@@ -6606,14 +6606,14 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
 msgctxt "link"
-msgid "Key Echo"
-msgstr "Oznamování kláves"
+msgid "Echo"
+msgstr "Oznamování"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
 msgctxt "sort"
-msgid "4. Key Echo"
-msgstr "4. Oznamování kláves"
+msgid "4. Echo"
+msgstr "4. Oznamování"
 
 #. (itstool) path: info/desc
 #: C/preferences_key_echo.page:5
@@ -6622,8 +6622,8 @@ msgstr "Jak nastavit, co se má číst, když píšete"
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-msgid "Key Echo Preferences"
-msgstr "Předvolby pro oznamování kláves"
+msgid "Echo Preferences"
+msgstr "Předvolby oznamování"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:20
@@ -7323,16 +7323,15 @@ msgstr "Systémové zprávy jsou podrobné"
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
-"<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-"\"Key echo set to word.\" If you would prefer shorter messages, such as "
-"simply \"word,\" you should uncheck this checkbox."
+"<app>Orca</app>'s command to change echo, <app>Orca</app> might speak \"Echo "
+"set to word.\" If you would prefer shorter messages, such as simply \"word,"
+"\" you should uncheck this checkbox."
 msgstr ""
 "Když je zaškrtnuté <gui>Systémové zprávy jsou podrobné</gui>, bude "
 "<app>Orca</app> prezentovat podrobné zprávy na hlasovém výstupu. Například, "
-"když použijete příkaz <app>Orca</app> ke změně oznamování kláves, může vám "
-"říci „Oznamování kláves je nastavené na slova.“ Jestli dáváte přednost "
-"kratším zprávám, jako je prosté „slovo“, neměli byste mít toto políčko "
-"zaškrtnuté."
+"když použijete příkaz <app>Orca</app> ke změně oznamování, může vám říci "
+"„Oznamování je nastavené na slova.“ Jestli dáváte přednost kratším zprávám, "
+"jako je prostá zpráva „slovo“, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:213
@@ -8173,5 +8172,3 @@ msgstr ""
 "rozdělí číslo, například „123“, před jeho odesláním do hlasového výstupu na "
 "jednotlivé číslice („1“, „2“ a „3“)."
 
-msgid "Restrict to"
-msgstr "Omezit na"
