@@ -4623,11 +4623,14 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def searchForCaretContext(self, obj):
+        container = obj
         contextObj, contextOffset = None, -1
         while obj:
             try:
                 offset = obj.queryText().caretOffset
             except:
+                msg = "WEB: Exception getting caret offset of %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 obj = None
             else:
                 contextObj, contextOffset = obj, offset
@@ -4639,6 +4642,9 @@ class Utilities(script_utilities.Utilities):
 
         if contextObj:
             return self.findNextCaretInOrder(contextObj, max(-1, contextOffset - 1))
+
+        if self.isDocument(container):
+            return container, 0
 
         return None, -1
 
