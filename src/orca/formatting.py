@@ -129,7 +129,7 @@ formatting = {
             'detailedWhereAmI' : 'pageSummary'
             },
         pyatspi.ROLE_ALERT: {
-            'unfocused': 'roleName + labelOrName + pause + (expandedEOCs or unrelatedLabels or description)'
+            'unfocused': 'roleName + labelOrName + pause + alertText'
             },
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'

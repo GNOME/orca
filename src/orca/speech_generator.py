@@ -231,15 +231,40 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateAlertText(self, obj, **args):
+        result = self._generateExpandedEOCs(obj, **args) or self._generateUnrelatedLabels(obj, **args)
+        if result:
+            self._script.pointOfReference['usedDescriptionForAlert'] = False
+            return result
+
+        args['alerttext'] = True
+        result = self._generateDescription(obj, **args)
+        if result:
+            self._script.pointOfReference['usedDescriptionForAlert'] = True
+
+        return result
+
     def _generateDescription(self, obj, **args):
         """Returns an array of strings fo use by speech and braille that
         represent the description of the object, if that description
         is different from that of the name and label.
         """
+
+        alreadyUsed = False
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_ALERT:
+            try:
+                alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
+            except:
+                pass
+
+        if alreadyUsed:
+            return []
+
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        if not _settingsManager.getSetting('speakDescription'):
+        if not _settingsManager.getSetting('speakDescription') and not args.get('alerttext'):
             return []
 
         if args.get('inMouseReview') and not _settingsManager.getSetting('presentToolTips'):
