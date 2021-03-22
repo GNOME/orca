@@ -362,6 +362,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not args.get('inFlatReview'):
             return []
 
+        if self._script.utilities.hasVisibleCaption(obj):
+            return []
+
         if self._script.utilities.isFigure(obj) and args.get('ancestorOf'):
             caption = args.get('ancestorOf')
             if caption.getRole() != pyatspi.ROLE_CAPTION:

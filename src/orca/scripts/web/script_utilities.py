@@ -77,6 +77,7 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleWords= {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasVisibleCaption = {}
         self._hasDetails = {}
         self._isDetails = {}
         self._hasUselessCanvasDescendant = {}
@@ -168,6 +169,7 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleWords= {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasVisibleCaption = {}
         self._hasDetails = {}
         self._isDetails = {}
         self._hasUselessCanvasDescendant = {}
@@ -4014,6 +4016,23 @@ class Utilities(script_utilities.Utilities):
         rv = "showlongdesc" in names
 
         self._hasLongDesc[hash(obj)] = rv
+        return rv
+
+    def hasVisibleCaption(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().hasVisibleCaption(obj)
+
+        if not (self.isFigure(obj) or "Table" in pyatspi.listInterfaces(obj)):
+            return False
+
+        rv = self._hasVisibleCaption.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        labels = self.labelsForObject(obj)
+        pred = lambda x: x and x.getRole() == pyatspi.ROLE_CAPTION and self.isShowingAndVisible(x)
+        rv = bool(list(filter(pred, labels)))
+        self._hasVisibleCaption[hash(obj)] = rv
         return rv
 
     def hasDetails(self, obj):

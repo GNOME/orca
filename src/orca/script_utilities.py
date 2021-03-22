@@ -4211,6 +4211,9 @@ class Utilities:
     def detailsFor(self, obj):
         return []
 
+    def hasVisibleCaption(self, obj):
+        return False
+
     def popupType(self, obj):
         return ''
 
