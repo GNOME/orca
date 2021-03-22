@@ -797,6 +797,13 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
+        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH \
+           and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            event.source.clearCache()
+            if event.source.getState().contains(pyatspi.STATE_FOCUSED):
+                msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
+                debug.println(debug.LEVEL_INFO, msg, True)
+
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
