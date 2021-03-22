@@ -627,7 +627,9 @@ class StructuralNavigation:
                        pyatspi.ROLE_MARQUEE,
                        pyatspi.ROLE_PANEL,
                        pyatspi.ROLE_SECTION,
-                       pyatspi.ROLE_TABLE]
+                       pyatspi.ROLE_TABLE,
+                       pyatspi.ROLE_TREE,
+                       pyatspi.ROLE_TREE_TABLE]
 
     IMAGE_ROLES = [pyatspi.ROLE_IMAGE,
                    pyatspi.ROLE_IMAGE_MAP]
