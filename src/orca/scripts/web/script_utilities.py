@@ -1094,7 +1094,7 @@ class Utilities(script_utilities.Utilities):
         self._hasNameAndActionAndNoUsefulChildren[hash(obj)] = rv
         return rv
 
-    def _treatObjectAsWhole(self, obj):
+    def _treatObjectAsWhole(self, obj, offset=None):
         always = [pyatspi.ROLE_CHECK_BOX,
                   pyatspi.ROLE_CHECK_MENU_ITEM,
                   pyatspi.ROLE_LIST_BOX,
@@ -1116,7 +1116,12 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role in descendable:
-            return self._script.inFocusMode()
+            if self._script.inFocusMode():
+                return True
+
+            # This should cause us to initially stop at the large containers before
+            # allowing the user to drill down into them in browse mode.
+            return offset == -1
 
         if role == pyatspi.ROLE_ENTRY:
             if obj.childCount == 1 and self.isFakePlaceholderForEntry(obj[0]):
@@ -5007,12 +5012,12 @@ class Utilities(script_utilities.Utilities):
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
                     if self._canHaveCaretContext(child):
-                        if self._treatObjectAsWhole(child):
+                        if self._treatObjectAsWhole(child, 0):
                             return child, 0
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif obj.childCount and not self._treatObjectAsWhole(obj):
+            elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
                 return self.findNextCaretInOrder(obj[0], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
@@ -5073,12 +5078,12 @@ class Utilities(script_utilities.Utilities):
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
                     if self._canHaveCaretContext(child):
-                        if self._treatObjectAsWhole(child):
+                        if self._treatObjectAsWhole(child, 0):
                             return child, 0
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif obj.childCount and not self._treatObjectAsWhole(obj):
+            elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
