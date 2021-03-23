@@ -1032,7 +1032,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return rv
 
-        if rv and self._treatObjectAsWhole(obj) and obj.name and not self.isCellWithNameFromHeader(obj):
+        if rv and self._treatObjectAsWhole(obj, -1) and obj.name and not self.isCellWithNameFromHeader(obj):
             msg = "WEB: Treating %s as non-text: named object treated as whole." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
@@ -1745,6 +1745,9 @@ class Utilities(script_utilities.Utilities):
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
                 elif self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
+                    return False
+                elif obj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM] \
+                     and xObj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM]:
                     return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
@@ -5031,7 +5034,7 @@ class Utilities(script_utilities.Utilities):
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
                     if self._canHaveCaretContext(child):
-                        if self._treatObjectAsWhole(child, 0):
+                        if self._treatObjectAsWhole(child, -1):
                             return child, 0
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
@@ -5097,7 +5100,7 @@ class Utilities(script_utilities.Utilities):
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
                     if self._canHaveCaretContext(child):
-                        if self._treatObjectAsWhole(child, 0):
+                        if self._treatObjectAsWhole(child, -1):
                             return child, 0
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
