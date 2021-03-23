@@ -80,6 +80,7 @@ class Utilities(script_utilities.Utilities):
         self._hasVisibleCaption = {}
         self._hasDetails = {}
         self._isDetails = {}
+        self._isNonInteractiveDescendantOfControl = {}
         self._hasUselessCanvasDescendant = {}
         self._isClickableElement = {}
         self._isAnchor = {}
@@ -173,6 +174,7 @@ class Utilities(script_utilities.Utilities):
         self._hasDetails = {}
         self._isDetails = {}
         self._hasUselessCanvasDescendant = {}
+        self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
@@ -1096,6 +1098,40 @@ class Utilities(script_utilities.Utilities):
         self._hasNameAndActionAndNoUsefulChildren[hash(obj)] = rv
         return rv
 
+    def isNonInteractiveDescendantOfControl(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isNonInteractiveDescendantOfControl.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "WEB: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = False
+        roles = self._textBlockElementRoles()
+        roles.extend([pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS])
+        if role in roles and not state.contains(pyatspi.STATE_FOCUSABLE):
+            controls = [pyatspi.ROLE_CHECK_BOX,
+                        pyatspi.ROLE_CHECK_MENU_ITEM,
+                        pyatspi.ROLE_LIST_BOX,
+                        pyatspi.ROLE_MENU_ITEM,
+                        pyatspi.ROLE_RADIO_MENU_ITEM,
+                        pyatspi.ROLE_RADIO_BUTTON,
+                        pyatspi.ROLE_PUSH_BUTTON,
+                        pyatspi.ROLE_TOGGLE_BUTTON,
+                        pyatspi.ROLE_TREE_ITEM]
+            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in controls)
+
+        self._isNonInteractiveDescendantOfControl[hash(obj)] = rv
+        return rv
+
     def _treatObjectAsWhole(self, obj, offset=None):
         always = [pyatspi.ROLE_CHECK_BOX,
                   pyatspi.ROLE_CHECK_MENU_ITEM,
@@ -1104,13 +1140,13 @@ class Utilities(script_utilities.Utilities):
                   pyatspi.ROLE_RADIO_MENU_ITEM,
                   pyatspi.ROLE_RADIO_BUTTON,
                   pyatspi.ROLE_PUSH_BUTTON,
-                  pyatspi.ROLE_TOGGLE_BUTTON,
-                  pyatspi.ROLE_TREE_ITEM]
+                  pyatspi.ROLE_TOGGLE_BUTTON]
 
         descendable = [pyatspi.ROLE_MENU,
                        pyatspi.ROLE_MENU_BAR,
                        pyatspi.ROLE_TOOL_BAR,
                        pyatspi.ROLE_TREE,
+                       pyatspi.ROLE_TREE_ITEM,
                        pyatspi.ROLE_TREE_TABLE]
 
         role = obj.getRole()
@@ -4641,6 +4677,10 @@ class Utilities(script_utilities.Utilities):
             return False
         if self.isFakePlaceholderForEntry(obj):
             msg = "WEB: Fake placeholder for entry cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isNonInteractiveDescendantOfControl(obj):
+            msg = "WEB: Non interactive descendant of control cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
