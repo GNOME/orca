@@ -1938,6 +1938,15 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
+        msg = "WEB: Caret context is %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if not obj or self.utilities.isZombie(obj) and event.source == orca_state.locusOfFocus:
+            msg = "WEB: Setting caret context to event source"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.utilities.setCaretContext(event.source, 0)
+
         return False
 
     def onFocus(self, event):
