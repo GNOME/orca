@@ -1145,9 +1145,7 @@ class Utilities(script_utilities.Utilities):
         descendable = [pyatspi.ROLE_MENU,
                        pyatspi.ROLE_MENU_BAR,
                        pyatspi.ROLE_TOOL_BAR,
-                       pyatspi.ROLE_TREE,
-                       pyatspi.ROLE_TREE_ITEM,
-                       pyatspi.ROLE_TREE_TABLE]
+                       pyatspi.ROLE_TREE_ITEM]
 
         role = obj.getRole()
         if role in always:
@@ -1183,7 +1181,7 @@ class Utilities(script_utilities.Utilities):
         if role == pyatspi.ROLE_COMBO_BOX:
             return True
 
-        if role == pyatspi.ROLE_EMBEDDED:
+        if role in [pyatspi.ROLE_EMBEDDED, pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE]:
             return not self._script.browseModeIsSticky()
 
         if role == pyatspi.ROLE_LINK:
