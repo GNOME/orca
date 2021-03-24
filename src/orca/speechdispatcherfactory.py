@@ -248,10 +248,11 @@ class SpeechServer(speechserver.SpeechServer):
 
     def _set_family(self, acss_family):
         lang, dialect = self._get_language_and_dialect(acss_family)
-        self._send_command(self._client.set_language, lang)
-        if dialect:
-            # Try to set precise dialect
-            self._send_command(self._client.set_language, lang + '-' + dialect)
+        if lang:
+            self._send_command(self._client.set_language, lang)
+            if dialect:
+                # Try to set precise dialect
+                self._send_command(self._client.set_language, lang + '-' + dialect)
 
         try:
             # This command is not available with older SD versions.
