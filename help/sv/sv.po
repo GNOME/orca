@@ -1,13 +1,13 @@
 # Swedish translation for orca.
-# Copyright © 2015-2020 orca's COPYRIGHT HOLDER
+# Copyright © 2015-2021 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "POT-Creation-Date: 2021-02-20 21:22+0000\n"
-"PO-Revision-Date: 2021-03-18 22:01+0100\n"
+"PO-Revision-Date: 2021-03-27 21:25+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -5422,8 +5422,8 @@ msgid ""
 msgstr ""
 "Tidsperioden som <app>Orca</app> kommer vänta innan meddelandet tas bort och "
 "det ursprungliga innehållet på din skärm återställs kan ställas in i "
-"snurrknappen <gui>Längd (sek)</gui>. Notera att värdet på denna inställning "
-"kommer ignoreras om du har aktiverat beständiga blixtmeddelanden."
+"stegningsrutan <gui>Längd (sek)</gui>. Notera att värdet på denna "
+"inställning kommer ignoreras om du har aktiverat beständiga blixtmeddelanden."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:178
@@ -5868,10 +5868,11 @@ msgid ""
 "option is also designed to prevent \"chattiness\" as there are many matches "
 "when you first begin typing the string for which you are searching."
 msgstr ""
-"I denna redigerbara snurrknapp kan du ange antalet tecken som måste matcha "
-"innan <app>Orca</app> annonserar den matchande raden. Detta alternativ är "
-"också designat för att förhindra ”pratsamhet” eftersom det finns många "
-"matchningar då du först börjar skriva strängen som du söker efter."
+"I denna redigerbara stegningsruta kan du ange antalet tecken som måste "
+"matcha innan <app>Orca</app> annonserar den matchande raden. Detta "
+"alternativ är också designat för att förhindra ”pratsamhet” eftersom det "
+"finns många matchningar då du först börjar skriva strängen som du söker "
+"efter."
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:218
@@ -6277,7 +6278,7 @@ msgstr "Frekvens (sekunder)"
 #. (itstool) path: section/p
 #: C/preferences_general.page:245
 msgid "This spin button determines how often updates are presented."
-msgstr "Denna snurrknapp avgör hur ofta uppdateringar presenteras."
+msgstr "Denna stegningsruta avgör hur ofta uppdateringar presenteras."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:248
