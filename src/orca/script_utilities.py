@@ -3919,6 +3919,8 @@ class Utilities:
             return obj
 
         rolemap = {
+            pyatspi.ROLE_CANVAS: [pyatspi.ROLE_LAYERED_PANE],
+            pyatspi.ROLE_ICON: [pyatspi.ROLE_LAYERED_PANE],
             pyatspi.ROLE_LIST_ITEM: [pyatspi.ROLE_LIST_BOX],
             pyatspi.ROLE_TREE_ITEM: [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE],
             pyatspi.ROLE_TABLE_CELL: [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE],
