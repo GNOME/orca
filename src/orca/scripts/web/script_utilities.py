@@ -4688,6 +4688,9 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def searchForCaretContext(self, obj):
+        msg = "WEB: Searching for caret context in %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         container = obj
         contextObj, contextOffset = None, -1
         while obj:
@@ -4705,7 +4708,7 @@ class Utilities(script_utilities.Utilities):
                 else:
                     break
 
-        if contextObj:
+        if contextObj and not self.isHidden(contextObj):
             return self.findNextCaretInOrder(contextObj, max(-1, contextOffset - 1))
 
         if self.isDocument(container):
@@ -4896,6 +4899,8 @@ class Utilities(script_utilities.Utilities):
             self.setCaretContext(obj, offset)
             return True
 
+        msg = "WEB: Unable to find context for child removed from %s" % event.source
+        debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
     def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
