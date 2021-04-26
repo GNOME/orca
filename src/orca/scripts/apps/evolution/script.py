@@ -81,6 +81,9 @@ class Script(WebKitGtk.Script, gtk.Script):
         to say it shouldn't.
         """
 
+        if event.type.startswith("focus:") and event.source.getRole() == pyatspi.ROLE_MENU:
+            return True
+
         window = self.utilities.topLevelObject(event.source)
         if window and not window.getState().contains(pyatspi.STATE_ACTIVE):
             return False
