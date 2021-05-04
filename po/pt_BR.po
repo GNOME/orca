@@ -21,24 +21,24 @@
 # Rafael Gazoni <rafael.moreira@ifms.edu.br>, 2016.
 # Enrico Nicoletto <liverig@gmail.com>, 2013-2016, 2018.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
-# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2020.
 # Henrique Machado Campos <henriquecamposrj@gmail.com>, 2020.
+# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2021.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-01-06 16:03+0000\n"
-"PO-Revision-Date: 2021-01-30 17:44-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2021-02-20 21:22+0000\n"
+"PO-Revision-Date: 2021-03-17 20:32-0300\n"
+"Last-Translator: Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:4
@@ -338,7 +338,7 @@ msgstr "sç"
 #. Translators: short braille for the rolename of a separator.
 #: src/orca/braille_rolenames.py:209
 msgid "seprtr"
-msgstr "spdr"
+msgstr "seprdr"
 
 #. Translators: short braille for the rolename of a slider.
 #: src/orca/braille_rolenames.py:212
@@ -923,7 +923,7 @@ msgstr "iene"
 #.
 #: src/orca/chnames.py:206
 msgid "broken bar"
-msgstr "barra vertical separada"
+msgstr "barra vertical cortada"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
@@ -969,7 +969,7 @@ msgstr "não lógico"
 #.
 #: src/orca/chnames.py:234
 msgid "soft hyphen"
-msgstr "hífen opcional"
+msgstr "hífen discricionário"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
@@ -1579,13 +1579,13 @@ msgstr "plica dupla"
 #.
 #: src/orca/chnames.py:632
 msgid "triple prime"
-msgstr "plica triplo"
+msgstr "plica tripla"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: src/orca/chnames.py:636
 msgid "hyphen bullet"
-msgstr "marcador traço"
+msgstr "marcador hífen"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -1875,7 +1875,6 @@ msgstr "Lê a tela inteira usando revisão plana"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:73
-#| msgid "Performs the basic Where Am I operation."
 msgid "Perform the basic Where Am I operation"
 msgstr "Executa a operação básica de Onde Eu Estou"
 
@@ -1884,7 +1883,6 @@ msgstr "Executa a operação básica de Onde Eu Estou"
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:79
-#| msgid "Performs the detailed Where Am I operation."
 msgid "Perform the detailed Where Am I operation"
 msgstr "Executa a operação detalhada de Onde Eu Estou"
 
@@ -1945,7 +1943,6 @@ msgstr "Pesquisa pela ocorrência anterior de um trecho de texto"
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:121
-#| msgid "Enter and exits flat review mode"
 msgid "Enter and exit flat review mode"
 msgstr "Entra e sai do modo de revisão plana"
 
@@ -2223,7 +2220,7 @@ msgstr "Lê os atributos associados ao caractere de texto atual"
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:351
 msgid "Pan the braille display to the left"
-msgstr "Varre o monitor Braille para a esquerda"
+msgstr "Varre a linha braille para a esquerda"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2232,7 +2229,7 @@ msgstr "Varre o monitor Braille para a esquerda"
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:358
 msgid "Pan the braille display to the right"
-msgstr "Varre o monitor Braille para a direita"
+msgstr "Varre a linha braille para a direita"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2259,7 +2256,7 @@ msgstr "Ativa ou desativa o Braille contraído"
 #. the machine they are interested in a particular character on the display.
 #: src/orca/cmdnames.py:379
 msgid "Process a cursor routing key"
-msgstr "Processa uma tecla de roteamento de cursor"
+msgstr "Processa uma tecla de encaminhamento do cursor"
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: src/orca/cmdnames.py:382
@@ -2401,7 +2398,7 @@ msgstr "Circula para o próximo estilo de letras maiúsculas"
 #. choose which type of echo is being used.
 #: src/orca/cmdnames.py:483
 msgid "Cycle to the next key echo level"
-msgstr "Circula para o próximo nível de tecla eco"
+msgstr "Circula para o próximo nível de eco de tecla"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -2451,7 +2448,7 @@ msgstr "Adiciona marcador"
 #. to disk.
 #: src/orca/cmdnames.py:520
 msgid "Save bookmarks"
-msgstr "Salva marcador"
+msgstr "Salva marcadores"
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
@@ -2600,7 +2597,7 @@ msgstr "Seis pontos"
 #. display.
 #: src/orca/cmdnames.py:631
 msgid "Cursor Routing"
-msgstr "Roteamento do cursor"
+msgstr "Encaminhamento do cursor"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -3124,13 +3121,13 @@ msgstr "Exibe uma lista de botões de opção"
 #. document.
 #: src/orca/cmdnames.py:981
 msgid "Go to previous separator"
-msgstr "Vai para a divisa anterior"
+msgstr "Vai para o separador anterior"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:985
 msgid "Go to next separator"
-msgstr "Vai para a próxima divisa"
+msgstr "Vai para o próximo separador"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:988
@@ -4444,7 +4441,6 @@ msgstr "Modo de foco automático durante a navegação por cursor"
 #. as the Tab key, or it might be a web page behavior, such as the search field
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Modo de foco automático durante a navegação nativa"
 
@@ -8835,7 +8831,6 @@ msgstr "tecla"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:691
-#| msgid "Key echo set to key."
 msgid "Echo set to key."
 msgstr "Eco definido para tecla."
 
@@ -8867,7 +8862,6 @@ msgstr "Nenhum"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:717
-#| msgid "Key echo set to None."
 msgid "Echo set to None."
 msgstr "Eco definido para nenhum."
 
@@ -8899,7 +8893,6 @@ msgstr "tecla e palavra"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
-#| msgid "Key echo set to key and word."
 msgid "Echo set to key and word."
 msgstr "Eco definido para tecla e palavra."
 
@@ -8931,7 +8924,6 @@ msgstr "sentença"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
-#| msgid "Key echo set to sentence."
 msgid "Echo set to sentence."
 msgstr "Eco definido para sentença."
 
@@ -8963,7 +8955,6 @@ msgstr "palavra"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
-#| msgid "Key echo set to word."
 msgid "Echo set to word."
 msgstr "Eco definido para palavra."
 
@@ -8995,7 +8986,6 @@ msgstr "palavra e sentença"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
-#| msgid "Key echo set to word and sentence."
 msgid "Echo set to word and sentence."
 msgstr "Eco definido para palavra e sentença."
 
@@ -9583,7 +9573,7 @@ msgstr "deixando a dica."
 #: src/orca/messages.py:1246
 msgctxt "role"
 msgid "leaving abstract."
-msgstr "deixando o abstrato."
+msgstr "deixando o resumo."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9637,7 +9627,7 @@ msgstr "deixando o capítulo."
 #: src/orca/messages.py:1282
 msgctxt "role"
 msgid "leaving colophon."
-msgstr "deixando o cólofon."
+msgstr "deixando o colofão."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9691,7 +9681,7 @@ msgstr "deixando as notas finais."
 #: src/orca/messages.py:1318
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr "deixando o epígrafo."
+msgstr "deixando a epígrafe."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -10433,7 +10423,7 @@ msgstr "Não há mais botões de opção."
 #. presented to the user if no more separators can be found.
 #: src/orca/messages.py:1870
 msgid "No more separators."
-msgstr "Não há mais parágrafos."
+msgstr "Não há mais separadores."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
@@ -11724,7 +11714,7 @@ msgstr "figura"
 #: src/orca/object_properties.py:135
 msgctxt "role"
 msgid "abstract"
-msgstr "abstrato"
+msgstr "resumo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11787,7 +11777,7 @@ msgstr "capítulo"
 #: src/orca/object_properties.py:177
 msgctxt "role"
 msgid "colophon"
-msgstr "cólofon"
+msgstr "colofão"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11859,7 +11849,7 @@ msgstr "notas finais"
 #: src/orca/object_properties.py:225
 msgctxt "role"
 msgid "epigraph"
-msgstr "epígrafo"
+msgstr "epígrafe"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12016,7 +12006,7 @@ msgstr "tabela de conteúdo"
 #: src/orca/object_properties.py:330
 #, python-format
 msgid "h%d"
-msgstr "h%d"
+msgstr "t%d"
 
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
@@ -12303,8 +12293,6 @@ msgstr "não pressionado"
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
 #: src/orca/object_properties.py:532
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgctxt "listitem"
 msgid "not selected"
 msgstr "não selecionado"
@@ -12435,7 +12423,7 @@ msgstr "Localizar"
 
 #: src/orca/orca-find.ui:13
 msgid "Screen Reader Find Dialog"
-msgstr "Diálogo de localização do leitor de tela"
+msgstr "Diálogo localizar do leitor de tela"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-find.ui:29
@@ -12862,7 +12850,7 @@ msgstr "Habilitar o _suporte a Braille"
 
 #: src/orca/orca-setup.ui:2089
 msgid "_Abbreviated role names"
-msgstr "Nomes de regras _abreviados"
+msgstr "Nomes _abreviados de funções"
 
 #: src/orca/orca-setup.ui:2104
 msgid "Disable _end of line symbol"
@@ -12975,7 +12963,6 @@ msgid "Enable echo by _sentence"
 msgstr "Habilitar eco por _sentença"
 
 #: src/orca/orca-setup.ui:2861
-#| msgid "Key Echo"
 msgid "Echo"
 msgstr "Eco"
 
