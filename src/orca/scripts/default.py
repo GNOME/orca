@@ -869,6 +869,7 @@ class Script(script.Script):
         _settingsManager.loadAppSettings(self)
         braille.checkBrailleSetting()
         braille.setupKeyRanges(self.brailleBindings.keys())
+        speech.checkSpeechSetting()
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 

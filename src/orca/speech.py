@@ -124,6 +124,15 @@ def init():
 
     debug.println(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
+def checkSpeechSetting():
+    msg = "SPEECH: Checking speech setting."
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+    if not settings.enableSpeech:
+        shutdown()
+    else:
+        init()
+
 def __resolveACSS(acss=None):
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
@@ -340,6 +349,7 @@ def decreaseSpeechVolume(script=None, inputEvent=None):
     return True
 
 def shutdown():
+    debug.println(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
     global _speechserver
     if _speechserver:
         _speechserver.shutdownActiveServers()
