@@ -710,6 +710,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
+    def _generateUnselectedCell(self, obj, **args):
+        if not self._script.inFocusMode():
+            return []
+
+        return super()._generateUnselectedCell(obj, **args)
+
     def _generateRealTableCell(self, obj, **args):
         result = super()._generateRealTableCell(obj, **args)
         if not self._script.inFocusMode():
