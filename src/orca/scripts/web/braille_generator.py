@@ -204,9 +204,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateTableCellRow(obj, **args)
 
-        if not self._script.inFocusMode():
-            return super()._generateTableCellRow(obj, **args)
-
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
