@@ -1138,14 +1138,14 @@ class SpeechGenerator(generator.Generator):
         if obj.getRole() == pyatspi.ROLE_TEXT:
             return []
 
-        parentRole = obj.parent.getRole()
-        if parentRole in [pyatspi.ROLE_TREE_TABLE, pyatspi.ROLE_TABLE]:
+        table = self._script.utilities.getTable(obj)
+        if table:
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
             if lastKey in ["Left", "Right"]:
                 return []
-            if self._script.utilities.isLayoutOnly(obj.parent):
+            if self._script.utilities.isLayoutOnly(table):
                 return []
-        elif parentRole == pyatspi.ROLE_LAYERED_PANE:
+        elif obj.parent.getRole() == pyatspi.ROLE_LAYERED_PANE:
             if obj in self._script.utilities.selectedChildren(obj.parent):
                 return []
         else:
