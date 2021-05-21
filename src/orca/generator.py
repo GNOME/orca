@@ -920,8 +920,16 @@ class Generator:
             return []
 
         rows, cols = self._script.utilities.rowAndColumnCount(obj)
+
+        # This suggests broken or missing table interface.
         if rows < 0 or cols < 0:
             return []
+
+        # This can happen if an author uses ARIA incorrectly, e.g. a grid whose
+        # immediate child is a gridcell rather than a row. In that case, just
+        # announce the role name.
+        if rows == 0 and cols == 0:
+            return self._generateRoleName(obj, **args)
 
         return [messages.tableSize(rows, cols)]
 
