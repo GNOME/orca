@@ -1237,15 +1237,11 @@ class Utilities:
     def activeDocument(self, window=None):
         return self.getTopLevelDocumentForObject(orca_state.locusOfFocus)
 
-    def getTopLevelDocumentForObject(self, obj):
-        document = self.getDocumentForObject(obj)
-        while document:
-            ancestor = pyatspi.findAncestor(document, self.isDocument)
-            if not ancestor or ancestor == document:
-                break
-            document = ancestor
+    def isTopLevelDocument(self, obj):
+        return self.isDocument(obj) and not pyatspi.findAncestor(obj, self.isDocument)
 
-        return document
+    def getTopLevelDocumentForObject(self, obj):
+        return pyatspi.findAncestor(obj, self.isTopLevelDocument)
 
     def getDocumentForObject(self, obj):
         if not obj:

@@ -4302,8 +4302,9 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def eventIsAutocompleteNoise(self, event):
-        if not self.inDocumentContent(event.source):
+    def eventIsAutocompleteNoise(self, event, documentFrame=None):
+        inContent = documentFrame or self.inDocumentContent(event.source)
+        if not inContent:
             return False
 
         isListBoxItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_LIST_BOX
@@ -4312,7 +4313,7 @@ class Utilities(script_utilities.Utilities):
 
         if event.source.getState().contains(pyatspi.STATE_EDITABLE) \
            and event.type.startswith("object:text-"):
-            obj, offset = self.getCaretContext()
+            obj, offset = self.getCaretContext(documentFrame)
             if isListBoxItem(obj) or isMenuItem(obj):
                 return True
 
@@ -4731,7 +4732,7 @@ class Utilities(script_utilities.Utilities):
         return obj, offset
 
     def getCaretContext(self, documentFrame=None, getZombieReplicant=False, searchIfNeeded=True):
-        msg = "WEB: Getting caret context"
+        msg = "WEB: Getting caret context for %s" % documentFrame
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not documentFrame or self.isZombie(documentFrame):
@@ -4749,7 +4750,7 @@ class Utilities(script_utilities.Utilities):
             return obj, offset
 
         context = self._caretContexts.get(hash(documentFrame.parent))
-        if not context or documentFrame != self.getTopLevelDocumentForObject(context[0]):
+        if not context or not self.isTopLevelDocument(documentFrame):
             if not searchIfNeeded:
                 return None, -1
             obj, offset = self.searchForCaretContext(documentFrame)

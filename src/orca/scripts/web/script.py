@@ -1547,22 +1547,23 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsBrowserUINoise(event):
-            msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+        document = self.utilities.getTopLevelDocumentForObject(event.source)
+        if not document:
+            if self.utilities.eventIsBrowserUINoise(event):
+                msg = "WEB: Ignoring event believed to be browser UI noise"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
 
-        if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
-            msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+            if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
+                msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
 
-        if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False, searchIfNeeded=False)
+        obj, offset = self.utilities.getCaretContext(document, False, False)
         msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -1641,7 +1642,7 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
-        if self.utilities.eventIsAutocompleteNoise(event):
+        if self.utilities.eventIsAutocompleteNoise(event, document):
             msg = "WEB: Event ignored: Autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1678,12 +1679,12 @@ class Script(default.Script):
             notify = force = handled = True
 
         elif self.utilities.lastInputEventWasCaretNav():
-            msg = "WEB: Caret moved to due native caret navigation."
+            msg = "WEB: Caret moved due to native caret navigation."
             debug.println(debug.LEVEL_INFO, msg, True)
 
         msg = "WEB: Setting context and focus to: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
-        self.utilities.setCaretContext(obj, offset)
+        self.utilities.setCaretContext(obj, offset, document)
         orca.setLocusOfFocus(event, obj, notify, force)
         return handled
 
