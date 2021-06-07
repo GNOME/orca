@@ -933,7 +933,7 @@ class Script(default.Script):
         if keyString == "Right":
             offset -= 1
 
-        wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=not isEditable)
+        wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
         self.speakContents(wordContents)
@@ -952,7 +952,7 @@ class Script(default.Script):
             priorObj, priorOffset = self.utilities.getPriorContext()
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
-        contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=not isEditable)
+        contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         self.speakContents(contents, priorObj=priorObj)
         self.pointOfReference["lastTextUnitSpoken"] = "line"
 
@@ -2256,16 +2256,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.textEventIsDueToDeletion(event):
-            msg = "WEB: Event believed to be due to editable text deletion"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self.utilities.textEventIsDueToInsertion(event):
-            msg = "WEB: Ignoring event believed to be due to text insertion"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2273,6 +2263,20 @@ class Script(default.Script):
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = "WEB: Clearing content cache due to text deletion"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self.utilities.clearContentCache()
+
+        if self.utilities.textEventIsDueToDeletion(event):
+            msg = "WEB: Event believed to be due to editable text deletion"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if self.utilities.textEventIsDueToInsertion(event):
+            msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2296,10 +2300,6 @@ class Script(default.Script):
         if self.utilities.isZombie(obj):
             msg = "WEB: Unable to get non-null, non-zombie context object"
             debug.println(debug.LEVEL_INFO, msg, True)
-
-        msg = "WEB: Clearing content cache due to text deletion"
-        debug.println(debug.LEVEL_INFO, msg, True)
-        self.utilities.clearContentCache()
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
