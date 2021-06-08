@@ -892,7 +892,8 @@ class Script(default.Script):
             super().sayCharacter(obj)
             return
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        document = self.utilities.getTopLevelDocumentForObject(obj)
+        obj, offset = self.utilities.getCaretContext(documentFrame=document)
         if not obj:
             return
 
@@ -928,7 +929,8 @@ class Script(default.Script):
             super().sayWord(obj)
             return
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        document = self.utilities.getTopLevelDocumentForObject(obj)
+        obj, offset = self.utilities.getCaretContext(documentFrame=document)
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "Right":
             offset -= 1
@@ -947,11 +949,12 @@ class Script(default.Script):
             super().sayLine(obj)
             return
 
+        document = self.utilities.getTopLevelDocumentForObject(obj)
         priorObj = None
         if self._lastCommandWasCaretNav or isEditable:
-            priorObj, priorOffset = self.utilities.getPriorContext()
+            priorObj, priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        obj, offset = self.utilities.getCaretContext(documentFrame=document)
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         self.speakContents(contents, priorObj=priorObj)
         self.pointOfReference["lastTextUnitSpoken"] = "line"
@@ -1003,7 +1006,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
-        if not self.utilities.inDocumentContent(obj):
+        document = args.get("documentFrame", self.utilities.getTopLevelDocumentForObject(obj))
+        if not document:
             msg = "WEB: updating braille for non-document object %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             super().updateBraille(obj, **args)
@@ -1021,16 +1025,16 @@ class Script(default.Script):
             super().updateBraille(obj, **args)
             return
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=None, getZombieReplicant=True)
+        obj, offset = self.utilities.getCaretContext(documentFrame=document, getZombieReplicant=True)
         if offset > 0 and isContentEditable:
             text = self.utilities.queryNonEmptyText(obj)
             if text:
                 offset = min(offset, text.characterCount)
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
-        self.displayContents(contents)
+        self.displayContents(contents, documentFrame=document)
 
-    def displayContents(self, contents):
+    def displayContents(self, contents, **args):
         """Displays contents in braille."""
 
         if not _settingsManager.getSetting('enableBraille') \
@@ -1039,7 +1043,8 @@ class Script(default.Script):
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
-        contents = self.brailleGenerator.generateContents(contents)
+        document = args.get("documentFrame")
+        contents = self.brailleGenerator.generateContents(contents, documentFrame=document)
         if not contents:
             return
 
@@ -1229,8 +1234,8 @@ class Script(default.Script):
             self.presentMessage(messages.MODE_OBJECT)
         _settingsManager.setSetting('layoutMode', layoutMode)
 
-    def togglePresentationMode(self, inputEvent):
-        [obj, characterOffset] = self.utilities.getCaretContext()
+    def togglePresentationMode(self, inputEvent, documentFrame=None):
+        [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
         if self._inFocusMode:
             try:
                 parentRole = obj.parent.getRole()
@@ -1262,7 +1267,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not self.utilities.inDocumentContent(newFocus):
+        document = self.utilities.getTopLevelDocumentForObject(newFocus)
+        if not document and self.utilities.isDocument(newFocus):
+            document = newFocus
+
+        if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
             self._madeFindAnnouncement = False
             self._inFocusMode = False
@@ -1275,7 +1284,7 @@ class Script(default.Script):
         caretOffset = 0
         if self.utilities.inFindContainer(oldFocus) \
            or (self.utilities.isDocument(newFocus) and oldFocus == orca_state.activeWindow):
-            contextObj, contextOffset = self.utilities.getCaretContext()
+            contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
             if contextObj and not self.utilities.isZombie(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
 
@@ -1288,8 +1297,8 @@ class Script(default.Script):
         if text and (0 <= text.caretOffset <= text.characterCount):
             caretOffset = text.caretOffset
 
-        self.utilities.setCaretContext(newFocus, caretOffset)
-        self.updateBraille(newFocus)
+        self.utilities.setCaretContext(newFocus, caretOffset, document)
+        self.updateBraille(newFocus, documentFrame=document)
         orca.emitRegionChanged(newFocus, caretOffset)
 
         if self._lastCommandWasMouseButton and event \
@@ -1357,7 +1366,7 @@ class Script(default.Script):
         if not self._focusModeIsSticky \
            and not self._browseModeIsSticky \
            and self.useFocusMode(newFocus, oldFocus) != self._inFocusMode:
-            self.togglePresentationMode(None)
+            self.togglePresentationMode(None, document)
 
         return True
 

@@ -5089,8 +5089,7 @@ class Utilities(script_utilities.Utilities):
                 return obj, 0
 
         # If we're here, start looking up the tree, up to the document.
-        documentFrame = self.documentFrame()
-        if self.isSameObject(obj, documentFrame):
+        if self.isTopLevelDocument(obj):
             return None, -1
 
         while obj and obj.parent:
@@ -5155,8 +5154,7 @@ class Utilities(script_utilities.Utilities):
                 return obj, 0
 
         # If we're here, start looking up the tree, up to the document.
-        documentFrame = self.documentFrame()
-        if self.isSameObject(obj, documentFrame):
+        if self.isTopLevelDocument(obj):
             return None, -1
 
         while obj and obj.parent:
