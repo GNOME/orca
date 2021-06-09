@@ -153,11 +153,11 @@ class Script(Gecko.Script):
 
         super().enableStickyFocusMode(inputEvent, forceMessage)
 
-    def togglePresentationMode(self, inputEvent):
+    def togglePresentationMode(self, inputEvent, documentFrame=None):
         if self._inFocusMode and self.utilities.isEditableMessage(orca_state.locusOfFocus):
             return
 
-        super().togglePresentationMode(inputEvent)
+        super().togglePresentationMode(inputEvent, documentFrame)
 
     def useStructuralNavigationModel(self):
         """Returns True if structural navigation should be enabled here."""
