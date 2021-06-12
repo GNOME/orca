@@ -4398,8 +4398,16 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def eventIsFromLocusOfFocusDocument(self, event):
-        source = self.getDocumentForObject(event.source)
-        focus = self.getDocumentForObject(orca_state.locusOfFocus)
+        if orca_state.locusOfFocus == orca_state.activeWindow:
+            focus = self.activeDocument()
+            source = self.getTopLevelDocumentForObject(event.source)
+        else:
+            focus = self.getDocumentForObject(orca_state.locusOfFocus)
+            source = self.getDocumentForObject(event.source)
+
+        msg = "WEB: Event doc: %s. Focus doc: %s." % (source, focus)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if not (source and focus):
             return False
 
