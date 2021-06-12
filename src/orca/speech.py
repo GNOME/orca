@@ -45,6 +45,9 @@ log = _logger.newLog("speech")
 #
 _speechserver = None
 
+# The last time something was spoken.
+_timestamp = 0
+
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
     of modules that implement the getSpeechServers method, which
@@ -197,6 +200,12 @@ def speak(content, acss=None, interrupt=True):
         debug.printStack(debug.LEVEL_WARNING)
         debug.println(debug.LEVEL_WARNING, error % content, True)
         return
+
+    global _timestamp
+    if _timestamp:
+        msg = "SPEECH: Last spoke %.4f seconds ago" % (time.time() - _timestamp)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    _timestamp = time.time()
 
     if isinstance(content, str):
         _speak(content, acss, interrupt)
