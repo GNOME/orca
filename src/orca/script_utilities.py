@@ -1241,6 +1241,9 @@ class Utilities:
         return self.isDocument(obj) and not pyatspi.findAncestor(obj, self.isDocument)
 
     def getTopLevelDocumentForObject(self, obj):
+        if self.isTopLevelDocument(obj):
+            return obj
+
         return pyatspi.findAncestor(obj, self.isTopLevelDocument)
 
     def getDocumentForObject(self, obj):
