@@ -693,6 +693,10 @@ class EventManager:
         if eType.startswith('window:activate'):
             return True, "window:activate event"
 
+        if eType.startswith('object:state-changed:active') and event.detail1 \
+           and role == pyatspi.ROLE_FRAME:
+            return True, "Window is becoming active."
+
         if eType.startswith('focus') \
            or (eType.startswith('object:state-changed:focused')
                and event.detail1):
