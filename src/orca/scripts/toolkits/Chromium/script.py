@@ -353,7 +353,7 @@ class Script(web.Script):
         if super().onTextAttributesChanged(event):
             return
 
-        msg = "Chromium: Passing along event to default script"
+        msg = "CHROMIUM: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onTextAttributesChanged(self, event)
 
@@ -429,6 +429,11 @@ class Script(web.Script):
         # already showing at the time of window activation. If that changes,
         # we should store presented alerts so we don't double-present them.
         for child in event.source:
+            if not child:
+                msg = "CHROMIUM: Event source claims null child"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                continue
+
             if child.getRole() == pyatspi.ROLE_ALERT:
                 self.presentObject(child)
 
