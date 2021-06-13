@@ -733,7 +733,8 @@ class EventManager:
         """Returns true if this event should be ignored during a deluge."""
 
         ignore = ["object:text-changed:delete",
-                  "object:text-changed:insert"]
+                  "object:text-changed:insert",
+                  "object:state-changed:sensitive"]
 
         if event.type not in ignore:
             return False
@@ -753,7 +754,8 @@ class EventManager:
         """Returns true if this event should be processed during a flood."""
 
         ignore = ["object:text-changed:delete",
-                  "object:text-changed:insert"]
+                  "object:text-changed:insert",
+                  "object:state-changed:sensitive"]
 
         if event.type not in ignore:
             return True
