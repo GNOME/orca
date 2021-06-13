@@ -130,6 +130,11 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self._inDeluge() and self._ignoreDuringDeluge(event):
+            msg = 'EVENT MANAGER: Ignoring event type due to deluge'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         script = orca_state.activeScript
         if event.type.startswith('object:children-changed'):
             if not script:
@@ -715,6 +720,46 @@ class EventManager:
 
         return False, "No reason found to activate a different script."
 
+    def _ignoreDuringDeluge(self, event):
+        """Returns true if this event should be ignored during a deluge."""
+
+        ignore = ["object:text-changed:delete",
+                  "object:text-changed:insert"]
+
+        if event.type not in ignore:
+            return False
+
+        return event.source != orca_state.locusOfFocus
+
+    def _inDeluge(self):
+        size = self._eventQueue.qsize()
+        if size > 250:
+            msg = 'EVENT MANAGER: DELUGE! Queue size is %i' % size
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
+    def _processDuringFlood(self, event):
+        """Returns true if this event should be processed during a flood."""
+
+        ignore = ["object:text-changed:delete",
+                  "object:text-changed:insert"]
+
+        if event.type not in ignore:
+            return True
+
+        return event.source == orca_state.locusOfFocus
+
+    def _inFlood(self):
+        size = self._eventQueue.qsize()
+        if size > 100:
+            msg = 'EVENT MANAGER: FLOOD? Queue size is %i' % size
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
     def _processObjectEvent(self, event):
         """Handles all object events destined for scripts.
 
@@ -768,6 +813,11 @@ class EventManager:
 
         if state and state.contains(pyatspi.STATE_ICONIFIED):
             msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self._inFlood() and not self._processDuringFlood(event):
+            msg = 'EVENT MANAGER: Not processing this event due to flood.'
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
