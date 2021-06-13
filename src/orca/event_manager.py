@@ -331,7 +331,7 @@ class EventManager:
         if debug.debugEventQueue:
             debug.println(debug.LEVEL_ALL, "           ...released")
 
-    def _queuePrintln(self, e, isEnqueue=True):
+    def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
         """Convenience method to output queue-related debugging info."""
 
         if isinstance(e, input_event.KeyboardEvent):
@@ -347,7 +347,11 @@ class EventManager:
         else:
             return
 
-        if isEnqueue:
+        if isPrune:
+            string = "EVENT MANAGER: Pruning %s %s" % (e.type, data)
+        elif isPrune is not None:
+            string = "EVENT MANAGER: Not pruning %s %s" % (e.type, data)
+        elif isEnqueue:
             string = "EVENT MANAGER: Queueing %s %s" % (e.type, data)
         else:
             string = "EVENT MANAGER: Dequeued %s %s" % (e.type, data)
@@ -383,6 +387,11 @@ class EventManager:
             return
 
         self._queuePrintln(e)
+
+        if self._inFlood() and self._prioritizeDuringFlood(e):
+            msg = 'EVENT MANAGER: Pruning event queue due to flood.'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._pruneEventsDuringFlood()
 
         asyncMode = self._asyncMode
         if isObjectEvent:
@@ -750,6 +759,37 @@ class EventManager:
             return True
 
         return event.source == orca_state.locusOfFocus
+
+    def _prioritizeDuringFlood(self, event):
+        """Returns true if this event should be processed immediately during a flood."""
+
+        if event.type.startswith("object:state-changed:focused"):
+            return event.detail1
+
+        return False
+
+    def _pruneEventsDuringFlood(self):
+        """Gets rid of events we don't care about during a flood."""
+
+        oldSize = self._eventQueue.qsize()
+
+        newQueue = queue.Queue(0)
+        while not self._eventQueue.empty():
+            try:
+                event = self._eventQueue.get()
+            except Empty:
+                continue
+
+            if self._processDuringFlood(event):
+                newQueue.put(event)
+                self._queuePrintln(event, isPrune=False)
+            self._eventQueue.task_done()
+
+        self._eventQueue = newQueue
+        newSize = self._eventQueue.qsize()
+
+        msg = 'EVENT MANAGER: %i events pruned. New size: %i' % ((oldSize - newSize), newSize)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _inFlood(self):
         size = self._eventQueue.qsize()
