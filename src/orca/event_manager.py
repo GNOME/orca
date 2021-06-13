@@ -742,7 +742,7 @@ class EventManager:
 
     def _inDeluge(self):
         size = self._eventQueue.qsize()
-        if size > 150:
+        if size > 100:
             msg = 'EVENT MANAGER: DELUGE! Queue size is %i' % size
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -796,7 +796,7 @@ class EventManager:
 
     def _inFlood(self):
         size = self._eventQueue.qsize()
-        if size > 75:
+        if size > 50:
             msg = 'EVENT MANAGER: FLOOD? Queue size is %i' % size
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
