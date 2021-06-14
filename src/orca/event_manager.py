@@ -771,13 +771,19 @@ class EventManager:
         return event.source == orca_state.locusOfFocus
 
     def _prioritizeDuringFlood(self, event):
-        """Returns true if this event should be processed immediately during a flood."""
+        """Returns true if this event should be prioritized during a flood."""
 
         if event.type.startswith("object:state-changed:focused"):
             return event.detail1
 
         if event.type.startswith("window:activate"):
             return True
+
+        if event.type.startswith("window:deactivate"):
+            return True
+
+        if event.type.startswith("object:state-changed:active"):
+            return event.source.getRole() in [pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]
 
         return False
 
