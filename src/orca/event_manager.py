@@ -776,6 +776,9 @@ class EventManager:
         if event.type.startswith("object:state-changed:focused"):
             return event.detail1
 
+        if event.type.startswith("object:state-changed:selected"):
+            return event.detail1
+
         if event.type.startswith("window:activate"):
             return True
 
