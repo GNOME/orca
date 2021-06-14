@@ -82,6 +82,8 @@ class Script(default.Script):
         """Callback for object:text-changed:insert accessibility events."""
 
         if not self.utilities.treatEventAsCommand(event):
+            msg = "TERMINAL: Passing along event to default script."
+            debug.println(debug.LEVEL_INFO, msg, True)
             super().onTextInserted(event)
             return
 

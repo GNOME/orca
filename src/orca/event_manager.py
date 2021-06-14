@@ -704,12 +704,18 @@ class EventManager:
             return True, "The script insists it should be activated for this event."
 
         eType = event.type
-        if eType.startswith('window:activate'):
-            return True, "window:activate event"
 
-        if eType.startswith('object:state-changed:active') and event.detail1 \
-           and role == pyatspi.ROLE_FRAME:
-            return True, "Window is becoming active."
+        if eType.startswith('window:activate'):
+            windowActivation = True
+        else:
+            windowActivation = eType.startswith('object:state-changed:active') \
+                and event.detail1 and role == pyatspi.ROLE_FRAME
+
+        if windowActivation:
+            if event.source != orca_state.activeWindow:
+                return True, "Window activation"
+            else:
+                return False, "Window activation for already-active window"
 
         if eType.startswith('focus') \
            or (eType.startswith('object:state-changed:focused')
