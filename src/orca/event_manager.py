@@ -740,6 +740,7 @@ class EventManager:
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
+                  "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
         if event.type not in ignore:
@@ -761,6 +762,7 @@ class EventManager:
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
+                  "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
         if event.type not in ignore:
