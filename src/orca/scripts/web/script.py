@@ -1754,12 +1754,7 @@ class Script(default.Script):
             else:
                 msg = "WEB: Not dumping cache. Focus is %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            msg = "WEB: Could not get document for event source"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if isLiveRegion:
+        elif isLiveRegion:
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1768,6 +1763,10 @@ class Script(default.Script):
                 msg = "WEB: Ignoring because live region event not to be handled."
                 debug.println(debug.LEVEL_INFO, msg, True)
             return True
+        else:
+            msg = "WEB: Could not get document for event source"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         if self._loadingDocumentContent:
             msg = "WEB: Ignoring because document content is being loaded."
