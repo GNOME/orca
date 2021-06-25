@@ -4852,11 +4852,14 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def handleEventForRemovedChild(self, event):
-        if event.any_data != orca_state.locusOfFocus:
+        if event.any_data == orca_state.locusOfFocus:
+            msg = "WEB: Removed child is locusOfFocus."
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.any_data):
+            msg = "WEB: Removed child is ancestor of locusOfFocus."
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
             return False
-
-        msg = "WEB: Removed child is locusOfFocus."
-        debug.println(debug.LEVEL_INFO, msg, True)
 
         if event.detail1 == -1:
             msg = "WEB: Event detail1 is useless."
