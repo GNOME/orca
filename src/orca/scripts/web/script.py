@@ -1844,8 +1844,12 @@ class Script(default.Script):
             return True
 
         if self.utilities.isLiveRegion(event.source):
-            msg = "WEB: Ignoring removal from live region."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            if self.utilities.handleEventForRemovedChild(event):
+                msg = "WEB: Event handled for removed live-region child."
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                msg = "WEB: Ignoring removal from live region."
+                debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
