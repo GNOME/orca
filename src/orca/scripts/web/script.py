@@ -1737,7 +1737,7 @@ class Script(default.Script):
             return True
 
         isLiveRegion = self.utilities.isLiveRegion(event.source)
-        document = self.utilities.getDocumentForObject(event.source)
+        document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document and not isLiveRegion:
             if event.source == orca_state.locusOfFocus:
                 msg = "WEB: Dumping cache and context: source is focus %s" % orca_state.locusOfFocus
@@ -1848,7 +1848,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        document = self.utilities.getDocumentForObject(event.source)
+        document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document:
             if event.source == orca_state.locusOfFocus:
                 msg = "WEB: Dumping cache and context: source is focus %s" % orca_state.locusOfFocus
@@ -2383,7 +2383,7 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
-        document = self.utilities.getDocumentForObject(event.source)
+        document = self.utilities.getTopLevelDocumentForObject(event.source)
         if self.utilities.isDead(orca_state.locusOfFocus):
             msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
