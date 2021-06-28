@@ -1734,8 +1734,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        text = self.queryNonEmptyText(obj)
         offset = max(0, offset)
+        if obj.getRole() == pyatspi.ROLE_TOOL_BAR and not self._treatObjectAsWhole(obj):
+            child = self.getChildAtOffset(obj, offset)
+            if child:
+                obj = child
+                offset = 0
 
         if useCache:
             if self.findObjectInContents(obj, offset, self._currentLineContents, usingCache=True) != -1:
