@@ -347,6 +347,11 @@ class MouseReviewer:
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if not self._pointer:
+            msg = "MOUSE REVIEW ERROR: No pointer for default seat."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if not self._active:
             return
 
