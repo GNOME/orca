@@ -92,14 +92,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
                                pyatspi.ROLE_MATH,
-                               pyatspi.ROLE_MENU_BAR,
-                               pyatspi.ROLE_TOOL_BAR]
+                               pyatspi.ROLE_MENU_BAR]
         args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_HEADING,
                              pyatspi.ROLE_LABEL,
                              pyatspi.ROLE_LINK,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TEXT]
+        args['stopAfterRoles'] = [pyatspi.ROLE_TOOL_BAR]
 
         if self._script.utilities.isEditableDescendantOfComboBox(obj):
             args['skipRoles'].append(pyatspi.ROLE_COMBO_BOX)
