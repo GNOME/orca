@@ -365,6 +365,11 @@ class MouseReviewer:
     def activate(self):
         """Activates mouse review."""
 
+        if not _mouseReviewCapable:
+            msg = "MOUSE REVIEW ERROR: Wnck is not available"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         # Set up the initial object as the one with the focus to avoid
         # presenting irrelevant info the first time.
         obj = orca_state.locusOfFocus
