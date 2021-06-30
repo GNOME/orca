@@ -740,6 +740,8 @@ class EventManager:
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
+                  "object:text-changed:delete:system",
+                  "object:text-changed:insert:system",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
@@ -762,6 +764,8 @@ class EventManager:
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
+                  "object:text-changed:delete:system",
+                  "object:text-changed:insert:system",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
