@@ -742,6 +742,8 @@ class EventManager:
                   "object:text-changed:insert",
                   "object:text-changed:delete:system",
                   "object:text-changed:insert:system",
+                  "object:children-changed:add",
+                  "object:children-changed:add:system",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
@@ -766,6 +768,8 @@ class EventManager:
                   "object:text-changed:insert",
                   "object:text-changed:delete:system",
                   "object:text-changed:insert:system",
+                  "object:children-changed:add",
+                  "object:children-changed:add:system",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
