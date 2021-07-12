@@ -1,4 +1,4 @@
-# Orca v40.1
+# Orca v41.alpha
 
 ## Introduction
 
@@ -14,15 +14,13 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also <http://wiki.gnome.org/Projects/Orca> for detailed English and Spanish
-information on Orca, including how to run Orca, how to communicate
-with the Orca user community, and where to log bugs and feature
-requests.
-
+See also <http://wiki.gnome.org/Projects/Orca> for detailed information
+on Orca, including how to run Orca, how to communicate with the Orca user
+community, and where to log bugs and feature requests.
 
 ## Dependencies
 
-Orca v40.x is supported on GNOME 40.x only.  We highly suggest you
+Orca v41.x is supported on GNOME 41.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -40,7 +38,7 @@ Orca also has the following dependencies:
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
 You are strongly encouraged to also have the latest stable versions
-of AT-SPI2 and ATK for the GNOME 40.x release.
+of AT-SPI2 and ATK for the GNOME 41.x release.
 
 
 ## NOTE FOR BRLTTY USERS:

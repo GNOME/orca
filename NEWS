@@ -1,3 +1,85 @@
+41.alpha - 12 July 2021
+
+General:
+
+ * Improve handling of accessible-event floods from apps
+
+ * Fix bug in announcing selected items in icon views
+
+Web:
+
+ * Improve recovery from destruction of current object
+
+ * Improve performance in response to caret-moved events
+
+ * Fix crash resulting from subtree becoming hidden
+
+ * Fix bug in toolbar browse-mode navigation
+
+ * Fix bug causing a live region event to be ignored
+
+ * Fix bug causing us to incorrectly switch to browse mode in VSCode
+
+ * Ensure we present caret-moved events after Alt+Tabbing into web app
+
+ * Don't repeat posinset and setsize for multi-line list items
+
+ * Don't announce unselected state of grid cells/rows in browse mode
+
+ * Don't announce row and column count when they are both 0
+
+ * Fix braille presentation of grid cell in browse mode
+
+ * Improve browse-mode navigation of trees and tree tables
+
+ * Eliminate some chattiness entering elements with a caption
+
+ * Prevent double-presentation of description for alerts
+
+Email:
+
+ * Fix regression presenting plain-text messages in Thunderbird
+
+ * Work around missing events from Evolution Add Accounts
+
+LibreOffice:
+
+ * Work around missing state-changed:focused event that caused
+   caret-moved events in documents to be ignored
+
+Speech:
+
+ * Ensure we enable/disable speech based on app-specific settings
+
+ * punctuation: Spell left/right_double_angle at level "most"
+
+ * Do not add mark within numbers (some synthesizers present numbers
+   incorrectly otherwise)
+
+ * Do not set language if it is empty (breaks output in older versions
+   of speech-dispatcher)
+
+Mouse Review:
+
+ * Check if we have Wnck in activate() so we don't spew errors
+
+ * Gracefully handle lack of pointer
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  es              Spanish                   Daniel Mustieles
+  es              Spanish                   Francisco Javier Dorado
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Charles Monzat
+  he              Hebrew                    Yaron Shahrabani
+  ne              Nepali                    Pawan Chitrakar
+  nl              Dutch                     Nathan Follens
+  oc              Occitan                   Quentin PAGÈS
+  pt_BR           Brazilian Portuguese      Tiago Casal
+  sv              Swedish                   Anders Jonsson
+
+=========
+
 40.0 - 19 March 2021
 
 New and updated translations (THANKS EVERYONE!!!):
