@@ -28,11 +28,16 @@ __license__   = "LGPL"
 
 from gi.repository import Gdk
 
+import gi
+gi.require_version('Atspi', '2.0') 
+from gi.repository import Atspi
+
 import functools
 import pyatspi
 
 from . import debug
 from . import settings
+from . import orca_state
 
 from .orca_i18n import _
 
@@ -264,6 +269,42 @@ class KeyBinding:
         string = '%s%s %s' % (mods, keysym, clickCount)
 
         return string.strip()
+
+    def keyDefs(self):
+        """ return a list of Atspi key definitions for the given binding.
+            This may return more than one binding if the Orca modifier is bound
+            to more than one key.
+            If AT-SPI is older than 2.40, then this function will not work and
+            will return an empty set.
+        """
+        ret = []
+        if not self.keycode:
+            self.keycode = getKeycode(self.keysymstring)
+
+        if self.modifiers & ORCA_MODIFIER_MASK:
+            device = orca_state.device
+            if device is None:
+                return ret
+            modList = []
+            otherMods = self.modifiers & ~ORCA_MODIFIER_MASK
+            numLockMod = device.get_modifier(getKeycode("Num_Lock"))
+            lockedMods = device.get_locked_modifiers()
+            numLockOn = lockedMods & numLockMod
+            for key in settings.orcaModifierKeys:
+                keycode = getKeycode(key)
+                if keycode == 0 and key == "Shift_Lock":
+                    keycode = getKeycode("Caps_Lock")
+                mod = device.map_modifier(keycode)
+                if key != "KP_Insert" or not numLockOn:
+                    modList.append(mod | otherMods)
+        else:
+            modList = [self.modifiers]
+        for mod in modList:
+            kd = Atspi.KeyDefinition()
+            kd.keycode = self.keycode
+            kd.modifiers = mod
+            ret.append(kd)
+        return ret
 
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.

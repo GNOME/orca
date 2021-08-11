@@ -25,6 +25,9 @@ __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
 from gi.repository import GLib
+import gi
+gi.require_version('Atspi', '2.0') 
+from gi.repository import Atspi
 import pyatspi
 import queue
 import threading
@@ -62,15 +65,47 @@ class EventManager:
                                'object:state-changed:defunct',
                                'object:property-change:accessible-parent']
         self._parentsOfDefunctDescendants = []
+
+        orca_state.device = None
+        self.newKeyHandlingActive = False
+        self.legacyKeyHandlingActive = False
+        self.forceLegacyKeyHandling = False
+
         debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
         """Called when this event manager is activated."""
 
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
-        self.registerKeystrokeListener(self._processKeyboardEvent)
+        self.setKeyHandling(False)
+
         self._active = True
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
+
+    def activateNewKeyHandling(self):
+        if not self.newKeyHandlingActive:
+            try:
+                orca_state.device = Atspi.Device.new()
+            except:
+                self.forceLegacyKeyHandling = True
+                activateLegacyKeyHandling(self)
+                return
+            orca_state.device.event_count = 0
+            orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processNewKeyboardEvent)
+            self.newKeyHandlingActive = True
+
+    def activateLegacyKeyHandling(self):
+        if not self.legacyKeyHandlingActive:
+            self.registerKeystrokeListener(self._processKeyboardEvent)
+            self.legacyKeyHandlingActive = True
+
+    def setKeyHandling(self, new):
+        if new and not self.forceLegacyKeyHandling:
+            self.deactivateLegacyKeyHandling()
+            self.activateNewKeyHandling()
+        else:
+            self.deactivateNewKeyHandling()
+            self.activateLegacyKeyHandling()
 
     def deactivate(self):
         """Called when this event manager is deactivated."""
@@ -80,8 +115,18 @@ class EventManager:
         for eventType in self._scriptListenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
-        self.deregisterKeystrokeListener(self._processKeyboardEvent)
+        self.deactivateLegacyKeyHandling()
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
+
+    def deactivateNewKeyHandling(self):
+        if self.newKeyHandlingActive:
+            orca_state.device = None
+            self.newKeyHandlingActive = False;
+
+    def deactivateLegacyKeyHandling(self):
+        if self.legacyKeyHandlingActive:
+            self.deregisterKeystrokeListener(self._processKeyboardEvent)
+            self.legacyKeyHandlingActive = False;
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
@@ -953,6 +998,29 @@ class EventManager:
         for key, value in attributes.items():
             msg = 'EVENT MANAGER: %s: %s' % (key, value)
             debug.println(debug.LEVEL_INFO, msg, True)
+
+    def _processNewKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
+        event = Atspi.DeviceEvent()
+        if pressed:
+            event.type = pyatspi.KEY_PRESSED_EVENT
+        else:
+            event.type = pyatspi.KEY_RELEASED_EVENT
+        event.hw_code = keycode
+        event.id = keysym
+        event.modifiers = state
+        event.event_string = text
+        if event.event_string is None:
+            event.event_string = ""
+        event.timestamp = device.event_count
+        device.event_count = device.event_count + 1
+
+        if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys and orca_state.activeSWcript is not None:
+            orca_state.activeScript.refreshKeyGrabs()
+
+        if pressed:
+            orca_state.openingDialog = (text == "space" and (state & ~(1 << pyatspi.MODIFIER_NUMLOCK)))
+
+        self._processKeyboardEvent(event)
 
     def _processKeyboardEvent(self, event):
         keyboardEvent = input_event.KeyboardEvent(event)

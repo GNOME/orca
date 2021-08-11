@@ -236,6 +236,8 @@ class KeyboardEvent(InputEvent):
             self.modifiers |= (1 << pyatspi.MODIFIER_NUMLOCK)
         self.event_string = event.event_string
         self.keyval_name = Gdk.keyval_name(event.id)
+        if self.event_string  == "":
+            self.event_string = self.keyval_name
         self.timestamp = event.timestamp
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
@@ -919,6 +921,7 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand:
             if not self.isModifierKey():
                 orca_state.bypassNextCommand = False
+            self._script.addKeyGrabs()
             return False, 'Bypass next command'
 
         if not self._should_consume:

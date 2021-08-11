@@ -127,6 +127,7 @@ class Script(default.Script):
         self._preMouseOverContext = None, -1
         self._inMouseOverObject = False
         self.utilities.clearCachedObjects()
+        self.removeKeyGrabs()
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
@@ -569,6 +570,24 @@ class Script(default.Script):
             self._lastCommandWasMouseButton = False
 
         return super().consumesKeyboardEvent(keyboardEvent)
+
+    def getEnabledKeyBindings(self):
+        all = super().getEnabledKeyBindings()
+        ret = []
+        for b in all:
+            if b.handler and self.caretNavigation.handles_navigation(b.handler):
+                if self.useCaretNavigationModel(None):
+                    ret.append(b)
+            elif b.handler and b.handler.function in self.structuralNavigation.functions:
+                if self.useStructuralNavigationModel():
+                    ret.append(b)
+            elif b.handler and b.handler.function in self.liveRegionManager.functions:
+                # This is temporary.
+                if self.useStructuralNavigationModel():
+                    ret.append(b)
+            else:
+                ret.append(b)
+        return ret
 
     def consumesBrailleEvent(self, brailleEvent):
         """Returns True if the script will consume this braille event."""
@@ -1120,7 +1139,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent():
             return False
 
-        if keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
+        if keyboardEvent and keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             return False
 
         return True
@@ -1217,6 +1236,7 @@ class Script(default.Script):
         self._inFocusMode = False
         self._focusModeIsSticky = False
         self._browseModeIsSticky = True
+        self.refreshKeyGrabs()
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
@@ -1225,6 +1245,7 @@ class Script(default.Script):
         self._inFocusMode = True
         self._focusModeIsSticky = True
         self._browseModeIsSticky = False
+        self.refreshKeyGrabs()
 
     def toggleLayoutMode(self, inputEvent):
         layoutMode = not _settingsManager.getSetting('layoutMode')
@@ -1258,6 +1279,7 @@ class Script(default.Script):
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
+        self.refreshKeyGrabs()
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
@@ -1276,6 +1298,7 @@ class Script(default.Script):
             self._madeFindAnnouncement = False
             self._inFocusMode = False
             debug.println(debug.LEVEL_INFO, msg, True)
+            self.refreshKeyGrabs()
             return False
 
         if self.flatReviewContext:
@@ -1367,6 +1390,9 @@ class Script(default.Script):
            and not self._browseModeIsSticky \
            and self.useFocusMode(newFocus, oldFocus) != self._inFocusMode:
             self.togglePresentationMode(None, document)
+
+        if not self.utilities.inDocumentContent(oldFocus):
+            self.refreshKeyGrabs()
 
         return True
 
@@ -2495,6 +2521,7 @@ class Script(default.Script):
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
+        self.removeKeyGrabs()
         return False
 
     def getTransferableAttributes(self):

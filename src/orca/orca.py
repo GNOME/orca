@@ -379,6 +379,11 @@ def _restoreXmodmap(keyList=[]):
         stdin=subprocess.PIPE, stdout=None, stderr=None)
     p.communicate(_originalXmodmap)
 
+def setKeyHandling(new):
+    """Toggle use of the new vs. legacy key handling mode.
+    """
+    _eventManager.setKeyHandling(new)
+
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -540,6 +545,20 @@ def helpForOrca(script=None, inputEvent=None, page=""):
                  uri,
                  Gtk.get_current_event_time())
     return True
+
+def addKeyGrab(binding):
+    """ Add a key grab for the given key binding. """
+    ret = []
+    for kd in binding.keyDefs():
+        ret.append(orca_state.device.add_key_grab(kd, None))
+    return ret
+
+def removeKeyGrab(id):
+    """ Remove the key grab for the given key binding. """
+    orca_state.device.remove_key_grab(id)
+
+def mapModifier(keycode):
+    return orca_state.device.map_modifier(keycode)
 
 def quitOrca(script=None, inputEvent=None):
     """Quit Orca. Check if the user wants to confirm this action.

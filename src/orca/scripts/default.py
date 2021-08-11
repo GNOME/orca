@@ -34,6 +34,9 @@ import pyatspi
 import re
 import time
 
+import gi
+gi.require_version('Atspi', '2.0') 
+from gi.repository import Atspi
 import orca.braille as braille
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -122,6 +125,7 @@ class Script(script.Script):
         self._inSayAll = False
         self._sayAllIsInterrupted = False
         self._sayAllContexts = []
+        self.grab_ids = []
 
         if app:
             app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.NAME ^ pyatspi.cache.DESCRIPTION)
@@ -741,6 +745,39 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
+        self.removeKeyGrabs()
+
+    def getEnabledKeyBindings(self):
+        """ Returns the key bindings that are currently active. """
+        return self.getKeyBindings().getBoundBindings()
+
+    def addKeyGrabs(self):
+        """ Sets up the key grabs currently needed by this script. """
+        if orca_state.device is None:
+            return
+        msg = "INFO: adding key grabs"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        bound = self.getEnabledKeyBindings()
+        for b in bound:
+            for id in orca.addKeyGrab(b):
+                self.grab_ids.append(id)
+
+    def removeKeyGrabs(self):
+        """ Removes this script's AT-SPI key grabs. """
+        msg = "INFO: removing key grabs"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        for id in self.grab_ids:
+            orca.removeKeyGrab(id)
+        self.grab_ids = []
+
+    def refreshKeyGrabs(self):
+        """ Refreshes the enabled key grabs for this script. """
+        # TODO: Should probably avoid removing key grabs and re-adding them.
+        # Otherwise, a key could conceivably leak through while the script is
+        # in the process of updating the bindings.
+        self.removeKeyGrabs()
+        self.addKeyGrabs()
+
     def registerEventListeners(self):
         super().registerEventListeners()
         self.utilities.connectToClipboard()
@@ -873,6 +910,15 @@ class Script(script.Script):
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 
+        # Gtk 4 requrns "GTK", while older versions return "gtk"
+        # TODO: move this to a toolkit-specific script
+        if self.app is not None and self.app.toolkitName == "GTK" and self.app.toolkitVersion > "4":
+            orca.setKeyHandling(True)
+        else:
+            orca.setKeyHandling(False)
+
+        self.addKeyGrabs()
+
         msg = 'DEFAULT: Script for %s activated' % self.app
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -924,6 +970,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.BYPASS_MODE_ENABLED)
         orca_state.bypassNextCommand = True
+        self.removeKeyGrabs()
         return True
 
     def enterLearnMode(self, inputEvent=None):
@@ -940,6 +987,8 @@ class Script(script.Script):
         self.speakMessage(messages.LEARN_MODE_START_SPEECH)
         self.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
         orca_state.learnModeEnabled = True
+        if orca_state.device is not None:
+            Atspi.Device.grab_keyboard(orca_state.device)
         return True
 
     def exitLearnMode(self, inputEvent=None):
@@ -957,6 +1006,8 @@ class Script(script.Script):
 
         self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
+        if orca_state.device is not None:
+            Atspi.Device.ungrab_keyboard(orca_state.device)
         return True
 
     def showHelp(self, inputEvent=None):
@@ -2903,6 +2954,11 @@ class Script(script.Script):
         self.windowActivateTime = time.time()
         orca_state.activeWindow = event.source
 
+        if self.utilities.isKeyGrabEvent(event):
+            msg = "DEFAULT: Ignoring event. Likely from key grab."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         try:
             childCount = event.source.childCount
             childRole = event.source[0].getRole()
@@ -2939,6 +2995,11 @@ class Script(script.Script):
 
         if event.source != orca_state.activeWindow:
             msg = "DEFAULT: Ignoring event. Not for active window %s." % orca_state.activeWindow
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self.utilities.isKeyGrabEvent(event):
+            msg = "DEFAULT: Ignoring event. Likely from key grab."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
