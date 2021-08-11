@@ -5733,6 +5733,8 @@ class Utilities:
     def isKeyGrabEvent(self, event):
         """ Returns True if this event appears to be a side-effect of an
         X11 key grab. """
+        if not isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            return False
         return orca_state.lastInputEvent.didConsume() and not orca_state.openingDialog
 
     def presentFocusChangeReason(self):
