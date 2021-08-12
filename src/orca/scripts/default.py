@@ -2285,6 +2285,8 @@ class Script(script.Script):
 
         if not event.source.getState().contains(pyatspi.STATE_FOCUSED) \
            and not event.any_data.getState().contains(pyatspi.STATE_FOCUSED):
+            msg = "DEFAULT: Ignoring event. Neither source nor child have focused state."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if self.stopSpeechOnActiveDescendantChanged(event):

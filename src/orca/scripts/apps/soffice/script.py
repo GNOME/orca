@@ -641,6 +641,13 @@ class Script(default.Script):
                 self.spellcheck.presentErrorDetails()
             return
 
+        if self.utilities.isSpreadSheetCell(event.any_data) \
+           and not event.any_data.getState().contains(pyatspi.STATE_FOCUSED) \
+           and not event.source.getState().contains(pyatspi.STATE_FOCUSED) :
+            msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            event.source.clearCache()
+
         default.Script.onActiveDescendantChanged(self, event)
 
     def onChildrenAdded(self, event):
