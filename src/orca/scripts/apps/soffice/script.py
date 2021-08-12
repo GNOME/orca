@@ -915,6 +915,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if self.utilities.isDead(event.source):
+            msg = "SOFFICE: Ignoring event from dead source."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if event.source != orca_state.locusOfFocus \
            and event.source.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
