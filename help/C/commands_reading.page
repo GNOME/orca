@@ -232,7 +232,7 @@
       If you are on a link, <app>Orca</app>'s Basic Where Am I command can be
       used to announce the details associated with the link such as the link type,
       if the link is visited, the site description, and file size. If you would
-      instead prefer dedicated command for this purpose, you can bind <app>Orca</app>'s
+      instead prefer a dedicated command for this purpose, you can bind <app>Orca</app>'s
       Speak Link Details command to a keystroke. Please see <link xref="howto_key_bindings">
       Modifying Keybindings</link> for information on how to do so.
     </p>
