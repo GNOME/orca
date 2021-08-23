@@ -6,7 +6,7 @@ m4_define(atkbridge_required_version, 2.26)
 
 AC_INIT([orca],
         [orca_version],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=orca],
+        [https://gitlab.gnome.org/GNOME/orca/-/issues/],
         [orca])
 
 AC_CONFIG_MACRO_DIR([m4])
