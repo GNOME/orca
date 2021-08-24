@@ -88,7 +88,7 @@ class EventManager:
                 orca_state.device = Atspi.Device.new()
             except:
                 self.forceLegacyKeyHandling = True
-                activateLegacyKeyHandling(self)
+                self.activateLegacyKeyHandling()
                 return
             orca_state.device.event_count = 0
             orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processNewKeyboardEvent)
