@@ -1,3 +1,23 @@
+41.beta - 24 August 2021
+
+General:
+
+* Use new AT-SPI device API for keyboard monitoring when available
+
+LibreOffice:
+
+* Fix bug causing Orca to become silent due to setting locusOfFocus
+  to a defunct object
+
+* Work around missing focus event for Calc spreadsheet which causes
+  Orca to ignore subsequent events
+
+Speech:
+
+* Do not set voice name when it is the default
+
+=========
+
 41.alpha - 12 July 2021
 
 General:
