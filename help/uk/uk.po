@@ -2,21 +2,20 @@
 # Copyright (C) 2020 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-12-08 09:12+0000\n"
-"PO-Revision-Date: 2020-12-08 22:27+0200\n"
+"POT-Creation-Date: 2021-08-25 11:17+0000\n"
+"PO-Revision-Date: 2021-08-26 13:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.11.70\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1567,14 +1566,14 @@ msgstr "Параметри посилання"
 #| "used to announce the details associated with the link such as the link "
 #| "type, if the link is visited, the site description, and file size. If you "
 #| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speaks Link Details command to a keystroke. Please see "
+#| "<app>Orca</app>'s Speak Link Details command to a keystroke. Please see "
 #| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
 #| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
-"instead prefer dedicated command for this purpose, you can bind <app>Orca</"
+"instead prefer a dedicated command for this purpose, you can bind <app>Orca</"
 "app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
