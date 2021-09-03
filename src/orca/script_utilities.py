@@ -2813,6 +2813,12 @@ class Utilities:
         child = hyperlink.getObject(0)
         msg = "INFO: Hyperlink object at index %i for %s is %s" % (index, obj, child)
         debug.println(debug.LEVEL_INFO, msg, True)
+
+        if offset != hyperlink.startIndex:
+            msg = "ERROR: The hyperlink start index (%i) should match the offset (%i)" \
+                % (hyperlink.startIndex, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         return child
 
     def characterOffsetInParent(self, obj):
