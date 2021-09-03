@@ -3429,6 +3429,10 @@ class Utilities(script_utilities.Utilities):
 
         return self.queryNonEmptyText(obj) is None
 
+    def isEmptyToolTip(self, obj):
+        return obj and obj.getRole() == pyatspi.ROLE_TOOL_TIP \
+            and self.queryNonEmptyText(obj) is None
+
     def isBrowserUIAlert(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_ALERT):
             return False
@@ -3955,7 +3959,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def hasValidName(self, obj):
-        if not obj.name:
+        if not (obj and obj.name):
             return False
 
         if len(obj.name.split()) > 1:
@@ -4668,6 +4672,10 @@ class Utilities(script_utilities.Utilities):
             return False
         if self.isEmptyAnchor(obj):
             msg = "WEB: Empty anchor cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isEmptyToolTip(obj):
+            msg = "WEB: Empty tool tip cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.hasNoSize(obj):
