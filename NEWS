@@ -1,3 +1,25 @@
+41.rc - 4 September 2021
+
+Web:
+
+* Fix several issues related to empty but "focusable" ARIA
+  tooltips
+
+* Identify and work around (when possible) mismatched text and
+  hypertext implementations that can lead to looping inside
+  content
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  cs              Czech                     Marek Černocký
+  es              Spanish                   Francisco Javier Dorado
+  hu              Hungarian                 Attila Hammer
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  sv              Swedish                   Anders Jonsson
+  uk              Ukrainian                 Yuri Chornoivan
+
+=========
+
 41.beta - 24 August 2021
 
 General:
