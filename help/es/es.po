@@ -3,13 +3,9 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# 
-# 
-# 
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
-# 
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010-2021.
 #
 msgid ""
@@ -5618,7 +5614,7 @@ msgid ""
 "<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
 msgstr ""
 "Configurar el soporte de <app>Orca</app> para <app>Firefox,</app> "
-"<app>Thunderbird,</app>< y <app>Chrome</app> <app>Chromium</app>"
+"<app>Thunderbird,</app> y <app>Chrome</app> <app>Chromium</app>"
 
 #. (itstool) path: page/title
 #: C/preferences_web.page:19
