@@ -24,16 +24,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca help master\n"
-"POT-Creation-Date: 2020-12-13 16:13+0000\n"
-"PO-Revision-Date: 2021-03-04 18:31+0100\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2021-08-25 11:17+0000\n"
+"PO-Revision-Date: 2021-09-14 20:16+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.12.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Bookmarks: 562,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -1564,19 +1564,11 @@ msgstr "Details zum Link"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
-#| msgid ""
-#| "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be "
-#| "used to announce the details associated with the link such as the link "
-#| "type, if the link is visited, the site description, and file size. If you "
-#| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speaks Link Details command to a keystroke. Please see "
-#| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
-#| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
-"instead prefer dedicated command for this purpose, you can bind <app>Orca</"
+"instead prefer a dedicated command for this purpose, you can bind <app>Orca</"
 "app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
@@ -5064,13 +5056,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
-#| msgid ""
-#| "<app>Orca</app> works with applications and toolkits that support the "
-#| "Assistive Technology Service Provider Interface (AT-SPI), which is the "
-#| "primary assistive technology infrastructure for Linux and Solaris. "
-#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-#| "toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
@@ -5082,8 +5067,8 @@ msgstr ""
 "»Assistive Technology Service Provider Interface« (AT-SPI) unterstützen, das "
 "die wichtigste Infrastruktur für Hilfstechnologien in Linux und Solaris "
 "darstellt. Zu den Anwendungen und Toolkits, die das AT-SPI unterstützen, "
-"gehören GTK+, Qt, Java Swing, "
-"LibreOffice, Gecko, WebKitGTK und Chrome/Chromium."
+"gehören GTK+, Qt, Java Swing, LibreOffice, Gecko, WebKitGTK und Chrome/"
+"Chromium."
 
 #. (itstool) path: section/title
 #: C/introduction.page:31
@@ -5521,12 +5506,6 @@ msgstr "Meldungen sind detailliert"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:147
-#| msgid ""
-#| "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will "
-#| "present detailed messages to you in braille. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might "
-#| "display \"Key echo set to word.\" If you would prefer shorter messages, "
-#| "such as simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
@@ -5537,9 +5516,9 @@ msgstr ""
 "Ist <gui>Meldungen sind detailliert</gui> angekreuzt, wird <app>Orca</app> "
 "Ihnen ausführliche Meldungen in Braille anzeigen. Falls Sie zum Beispiel den "
 "<app>Orca</app>-Befehl zur Änderung des Echos verwendet haben, wird "
-"<app>Orca</app> »Echo auf Taste gesetzt.« anzeigen. Sollten Sie "
-"kürzere Meldungen bevorzugen, wie zum Beispiel »Wort«, sollten Sie dieses "
-"Feld nicht ankreuzen."
+"<app>Orca</app> »Echo auf Taste gesetzt.« anzeigen. Sollten Sie kürzere "
+"Meldungen bevorzugen, wie zum Beispiel »Wort«, sollten Sie dieses Feld nicht "
+"ankreuzen."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
@@ -5696,24 +5675,18 @@ msgstr "Vorgabewert: alle Kanäle"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:5
-#| msgctxt "sort"
-#| msgid "1. Gecko Navigation"
 msgctxt "sort"
 msgid "1. Web Navigation"
 msgstr "1. Web-Navigation"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:6
-#| msgid "Page Navigation"
 msgctxt "link"
 msgid "Web Navigation"
 msgstr "Web-Navigation"
 
 #. (itstool) path: info/desc
 #: C/preferences_web.page:7
-#| msgid ""
-#| "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-#| "<app>Thunderbird</app>"
 msgid ""
 "Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
 "<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
@@ -5723,7 +5696,6 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/preferences_web.page:19
-#| msgid "Gecko Navigation Preferences"
 msgid "Web Navigation Preferences"
 msgstr "Einstellungen für Web-Navigation"
 
@@ -5750,10 +5722,6 @@ msgstr "Caret-Navigation verwenden"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:29
-#| msgid ""
-#| "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When "
-#| "it is on, <app>Orca</app> takes control of the caret as you arrow around "
-#| "within a page; when it is off, Gecko's native caret navigation is active."
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
@@ -5879,21 +5847,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:113
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Automatischer Fokus-Modus während der nativen Navigation"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:114
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
-#| "focus mode when you use structural navigation commands to navigate to a "
-#| "form field. For example, pressing <key>E</key> to move to the next entry "
-#| "would move focus there and also turn focus mode on so that your next "
-#| "press of <key>E</key> would type an \"e\" into that entry. If this "
-#| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
-#| "mode and your next press of <key>E</key> would move you to the next entry "
-#| "on the page."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use native browser navigation commands to navigate to a "
@@ -5904,15 +5862,14 @@ msgid ""
 "press of <key>E</key> would move you to the next entry on the page."
 msgstr ""
 "Ist dieses Feld angekreuzt, wird <app>Orca</app> automatisch den Fokus-Modus "
-"einschalten, wenn Sie sich mittels nativer Navigation des Browsers in ein"
-" Formularfeld "
-"bewegen. Durch Drücken der <key>Tabulatortaste</key> könnten Sie"
-" beispielsweise einen "
-"Eintrag betreten und den Fokus dorthin bewegen; dadurch würden Sie in den "
-"Fokus-Modus wechseln, sodass nachfolgendes Drücken von <key>E</key> ein »e« "
-"in den Eintrag einfügen würde. Ist dieses Feld nicht angekreuzt, würde "
-"<app>Orca</app> Sie im Stöbern-Modus verbleiben lassen, und der nächste "
-"Druck von <key>E</key> würde Sie zum nächsten Eintrag führen."
+"einschalten, wenn Sie sich mittels nativer Navigation des Browsers in ein "
+"Formularfeld bewegen. Durch Drücken der <key>Tabulatortaste</key> könnten "
+"Sie beispielsweise einen Eintrag betreten und den Fokus dorthin bewegen; "
+"dadurch würden Sie in den Fokus-Modus wechseln, sodass nachfolgendes Drücken "
+"von <key>E</key> ein »e« in den Eintrag einfügen würde. Ist dieses Feld "
+"nicht angekreuzt, würde <app>Orca</app> Sie im Stöbern-Modus verbleiben "
+"lassen, und der nächste Druck von <key>E</key> würde Sie zum nächsten "
+"Eintrag führen."
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:136
@@ -6542,10 +6499,6 @@ msgstr "Orca-Einstellungen"
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:18
-#| msgid ""
-#| "Orca preferences allow you to customize functionality in <app>Orca</app> "
-#| "which applies to all applications. An example of an Orca preference is "
-#| "key echo because key echo is something that applies to all applications."
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
 "which applies to all applications. An example of an Orca preference is echo "
@@ -6557,12 +6510,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
-#| msgid ""
-#| "Note that Orca preferences can be customized on an application-by-"
-#| "application basis. For instance you can set the default key echo to words "
-#| "and then set the key echo for Pidgin to be none. Having done so, "
-#| "<app>Orca</app> would always echo each word that you typed, unless you "
-#| "were in Pidgin."
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
 "application basis. For instance you can set the default echo to words and "
@@ -6570,8 +6517,8 @@ msgid ""
 "would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
 "Beachten Sie. dass Orca-Einstellungen von Anwendung zu Anwendung angepasst "
-"werden können. Beispielweise können Sie den Vorgabewert für das Echo "
-"auf wortweises Echo setzen, und in Pidgin auf »kein« setzen. In diesem Fall "
+"werden können. Beispielweise können Sie den Vorgabewert für das Echo auf "
+"wortweises Echo setzen, und in Pidgin auf »kein« setzen. In diesem Fall "
 "würde <app>Orca</app> jedes eingetippte Wort vorlesen, außer, Sie befänden "
 "sich in Pidgin."
 
@@ -6747,16 +6694,12 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
-#| msgctxt "link"
-#| msgid "Key Echo"
 msgctxt "link"
 msgid "Echo"
 msgstr "Echo"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
-#| msgctxt "sort"
-#| msgid "4. Key Echo"
 msgctxt "sort"
 msgid "4. Echo"
 msgstr "4. Echo"
@@ -6768,7 +6711,6 @@ msgstr "So legen Sie fest, was vorgelesen wird, während Sie tippen"
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-#| msgid "Key Echo Preferences"
 msgid "Echo Preferences"
 msgstr "Echo-Einstellungen"
 
@@ -7482,12 +7424,6 @@ msgstr "Systemmeldungen sind detailliert"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
-#| msgid ""
-#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
-#| "will present detailed messages to you in speech. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
-#| "simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
