@@ -1,3 +1,17 @@
+41.0 - 16 September 2021
+
+General:
+
+* Fix compatibility with Python 3.10
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  da              Danish                    Alan Mortensen
+  de              German                    Tim Sabsch
+  es              Spanish (markup fix)      Andre Klapper
+
+=========
+
 41.rc - 4 September 2021
 
 Web:
