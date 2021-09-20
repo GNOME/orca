@@ -1646,7 +1646,7 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-            if event.source.getRole() == pyatspi.ROLE_ENTRY \
+            if event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
                and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
                and event.source != orca_state.locusOfFocus:
                 msg = "WEB: Event ignored: Entry is not (yet) the locus of focus. Waiting for focus event."
