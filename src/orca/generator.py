@@ -236,6 +236,9 @@ class Generator:
             msg = '%s GENERATOR: Starting generation for %s' % (self._mode.upper(), obj)
             debug.println(debug.LEVEL_INFO, msg, True)
 
+            # Reset 'usedDescriptionForName' if a previous generator used it.
+            self._script.pointOfReference['usedDescriptionForName'] = False
+
             debuginfo = lambda x: self._resultElementToString(x, False)
             assert(formatting)
             while True:
