@@ -2125,13 +2125,19 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if role == pyatspi.ROLE_LIST_ITEM:
+            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX)
+            if rv:
+                msg = "WEB: %s is focus mode widget because it's a listbox descendant" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            return rv
+
         if self.isButtonWithPopup(obj):
             msg = "WEB: %s is focus mode widget because it's a button with popup" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         focusModeRoles = [pyatspi.ROLE_EMBEDDED,
-                          pyatspi.ROLE_LIST_ITEM,
                           pyatspi.ROLE_TABLE_CELL,
                           pyatspi.ROLE_TABLE]
 
