@@ -1173,6 +1173,11 @@ class Utilities:
         return True, "Not handled by any other case"
 
     def getValueAsPercent(self, obj):
+        if obj.getState().contains(pyatspi.STATE_INDETERMINATE):
+            msg = "INFO: Not calculating value: %s has state indeterminate" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
         try:
             value = obj.queryValue()
             minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue

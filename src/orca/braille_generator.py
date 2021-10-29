@@ -397,7 +397,11 @@ class BrailleGenerator(generator.Generator):
            and not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
-        return self._generatePercentage(obj, **args)
+        result = self._generatePercentage(obj, **args)
+        if obj == orca_state.locusOfFocus and not result:
+            return ['']
+
+        return result
 
     def _generatePercentage(self, obj, **args):
         percent = self._script.utilities.getValueAsPercent(obj)
