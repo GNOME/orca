@@ -1778,8 +1778,10 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
-                msg = "WEB: Not dumping cache. Focus is %s" % orca_state.locusOfFocus
+                msg = "WEB: Not dumping full cache. Focus is %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.clearCachedObjects()
+
         elif isLiveRegion:
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
@@ -1893,8 +1895,9 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
-                msg = "WEB: Not dumping cache. Focus is %s" % orca_state.locusOfFocus
+                msg = "WEB: Not dumping full cache. Focus is %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
+                self.utilities.clearCachedObjects()
 
         if self.utilities.handleEventForRemovedChild(event):
             msg = "WEB: Event handled for removed child."
