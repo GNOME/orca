@@ -270,7 +270,7 @@ class Generator:
         duration = "%.4f" % (time.time() - startTime)
         debug.println(debug.LEVEL_ALL, "%sCOMPLETION TIME: %s" % (' ' * 18, duration))
         self._debugResultInfo(result)
-        if args.get('isProgressBarUpdate') and result:
+        if args.get('isProgressBarUpdate') and result and result[0]:
             self.setProgressBarUpdateTimeAndValue(obj)
 
         return result
@@ -1209,6 +1209,8 @@ class Generator:
         percent = self._script.utilities.getValueAsPercent(obj)
         lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj, type=self)
         if percent == lastValue:
+            msg = "GENERATOR: Not presenting update for %s. Value still %s" % (obj, percent)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if percent == 100:

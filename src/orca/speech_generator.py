@@ -2364,7 +2364,7 @@ class SpeechGenerator(generator.Generator):
     def _generateProgressBarValue(self, obj, **args):
         if args.get('isProgressBarUpdate') \
            and not self._shouldPresentProgressBarUpdate(obj, **args):
-            return []
+            return ['']
 
         result = []
         percent = self._script.utilities.getValueAsPercent(obj)
