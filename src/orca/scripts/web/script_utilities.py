@@ -1450,9 +1450,11 @@ class Utilities(script_utilities.Utilities):
         boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE) \
-           and state.contains(pyatspi.STATE_FOCUSED):
-            return objects
+        if state.contains(pyatspi.STATE_EDITABLE):
+            if state.contains(pyatspi.STATE_FOCUSED):
+                return objects
+            if self.isContentEditableWithEmbeddedObjects(obj):
+                return objects
 
         def _treatAsSentenceEnd(x):
             xObj, xStart, xEnd, xString = x
