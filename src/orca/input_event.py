@@ -942,10 +942,10 @@ class KeyboardEvent(InputEvent):
                 try:
                     if modifiers & modifier:
                         lock = pyatspi.KEY_UNLOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Locking capslock", True)
+                        debug.println(debug.LEVEL_INFO, "Unlocking capslock", True)
                     else:
                         lock = pyatspi.KEY_LOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Unlocking capslock", True)
+                        debug.println(debug.LEVEL_INFO, "Locking capslock", True)
                     pyatspi.Registry.generateKeyboardEvent(modifier, None, lock)
                     debug.println(debug.LEVEL_INFO, "Done with capslock", True)
                 except:
