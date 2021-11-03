@@ -1791,6 +1791,8 @@ class Utilities(script_utilities.Utilities):
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
+            elif self.isTextSubscriptOrSuperscript(xObj):
+                onSameLine = self.extentsAreOnSameLine(extents, xExtents, xExtents[3])
             else:
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents)
             return onSameLine
@@ -3908,6 +3910,12 @@ class Utilities(script_utilities.Utilities):
 
         self._hasUselessCanvasDescendant[hash(obj)] = rv
         return rv
+
+    def isTextSubscriptOrSuperscript(self, obj):
+        if self.isMath(obj):
+            return False
+
+        return obj.getRole() in [pyatspi.ROLE_SUBSCRIPT, pyatspi.ROLE_SUPERSCRIPT]
 
     def isSwitch(self, obj):
         if not (obj and self.inDocumentContent(obj)):
