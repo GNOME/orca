@@ -776,6 +776,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             oldRole = self._overrideRole('default', args)
         elif self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        elif self._script.utilities.isCustomImage(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_IMAGE, args)
         elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
             oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
         else:

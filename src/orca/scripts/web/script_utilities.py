@@ -94,6 +94,7 @@ class Utilities(script_utilities.Utilities):
         self._isListDescendant = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isCustomImage = {}
         self._isUselessImage = {}
         self._isRedundantSVG = {}
         self._isUselessEmptyElement = {}
@@ -187,6 +188,7 @@ class Utilities(script_utilities.Utilities):
         self._isListDescendant = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isCustomImage = {}
         self._isUselessImage = {}
         self._isRedundantSVG = {}
         self._isUselessEmptyElement = {}
@@ -1185,6 +1187,9 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if self.isFakePlaceholderForEntry(obj):
+            return True
+
+        if self.isCustomImage(obj):
             return True
 
         return False
@@ -2303,6 +2308,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
             rv = True
+        elif self.isCustomImage(obj):
+            rv = False
         elif not state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED):
             rv = not self.hasNameAndActionAndNoUsefulChildren(obj)
         else:
@@ -2453,6 +2460,10 @@ class Utilities(script_utilities.Utilities):
             pass
 
         return 'suggestion' in self._getXMLRoles(obj)
+
+    def isCustomElement(self, obj):
+        tag = self._getTag(obj)
+        return tag and '-' in tag
 
     def isInlineIframe(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_INTERNAL_FRAME):
@@ -3096,6 +3107,8 @@ class Utilities(script_utilities.Utilities):
             rv = not self.hasExplicitName(obj)
         elif role == pyatspi.ROLE_TABLE_ROW and not state.contains(pyatspi.STATE_EXPANDABLE):
             rv = not self.hasExplicitName(obj)
+        elif self.isCustomImage(obj):
+            rv = False
         else:
             rv = super().isLayoutOnly(obj)
 
@@ -3937,6 +3950,28 @@ class Utilities(script_utilities.Utilities):
                 rv = self.intersection(objExtents, largestExtents) == tuple(objExtents)
 
         self._isRedundantSVG[hash(obj)] = rv
+        return rv
+
+    def isCustomImage(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isCustomImage.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if self.isCustomElement(obj) and self.hasExplicitName(obj) \
+           and 'Text' in pyatspi.listInterfaces(obj) \
+           and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
+            for child in obj:
+                if child.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
+                   and self._getTag(child) != 'svg':
+                    break
+            else:
+                rv = True
+
+        self._isCustomImage[hash(obj)] = rv
         return rv
 
     def isUselessImage(self, obj):

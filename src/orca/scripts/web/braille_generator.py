@@ -230,6 +230,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        elif self._script.utilities.isCustomImage(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_IMAGE, args)
         elif self._script.utilities.isAnchor(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_STATIC, args)
         elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
