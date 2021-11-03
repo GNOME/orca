@@ -2784,6 +2784,7 @@ class Script(script.Script):
             self.speakCharacter(string)
         else:
             voice = self.speechGenerator.voice(string=string)
+            string = self.utilities.adjustForRepeats(string)
             speech.speak(string, voice)
 
     def onTextInserted(self, event):
@@ -2848,6 +2849,7 @@ class Script(script.Script):
                 self.speakCharacter(string)
             else:
                 voice = self.speechGenerator.voice(string=string)
+                string = self.utilities.adjustForRepeats(string)
                 speech.speak(string, voice)
 
         if len(string) != 1:
