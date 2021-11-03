@@ -457,6 +457,12 @@ formatting = {
             'focused': 'labelAndName + roleName',
             'unfocused': 'labelAndName + roleName + pause + statusBar',
             },
+        pyatspi.ROLE_SUBSCRIPT: {
+            'unfocused': 'roleName + currentLineText + allTextSelection',
+            },
+        pyatspi.ROLE_SUPERSCRIPT: {
+            'unfocused': 'roleName + currentLineText + allTextSelection',
+            },
         'ROLE_SWITCH': {
             'focused': 'switchState',
             'unfocused': 'labelOrName + roleName + switchState + availability + ' + MNEMONIC + ' + accelerator',
