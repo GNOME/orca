@@ -789,6 +789,8 @@ class EventManager:
                   "object:text-changed:insert:system",
                   "object:children-changed:add",
                   "object:children-changed:add:system",
+                  "object:property-change:accessible-name",
+                  "object:property-change:accessible-description",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
@@ -815,6 +817,8 @@ class EventManager:
                   "object:text-changed:insert:system",
                   "object:children-changed:add",
                   "object:children-changed:add:system",
+                  "object:property-change:accessible-name",
+                  "object:property-change:accessible-description",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
@@ -845,7 +849,7 @@ class EventManager:
             return True
 
         if event.type.startswith("object:state-changed:busy"):
-            return not event.detail1
+            return True
 
         return False
 
@@ -937,10 +941,15 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if self._inFlood() and not self._processDuringFlood(event):
-            msg = 'EVENT MANAGER: Not processing this event due to flood.'
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
+        if self._inFlood():
+            if not self._processDuringFlood(event):
+                msg = 'EVENT MANAGER: Not processing this event due to flood.'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+            if self._prioritizeDuringFlood(event):
+                msg = 'EVENT MANAGER: Pruning event queue due to flood.'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self._pruneEventsDuringFlood()
 
         if eType.startswith('object:selection-changed') \
            and event.source in self._parentsOfDefunctDescendants:
