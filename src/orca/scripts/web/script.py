@@ -1492,6 +1492,15 @@ class Script(default.Script):
             return True
 
         self.utilities.clearCachedObjects()
+        if self.utilities.isDead(obj):
+            obj = None
+
+        if not self.utilities.isDead(orca_state.locusOfFocus) \
+           and not self.utilities.inDocumentContent(orca_state.locusOfFocus) \
+           and orca_state.locusOfFocus.getState().contains(pyatspi.STATE_FOCUSED):
+            msg = "WEB: Not presenting content, focus is outside of document"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
         if _settingsManager.getSetting('pageSummaryOnLoad') and shouldPresent:
             obj = obj or event.source
