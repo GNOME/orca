@@ -1788,6 +1788,10 @@ class Utilities(script_utilities.Utilities):
                 elif obj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM] \
                      and xObj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM]:
                     return False
+                elif obj.getRole() == pyatspi.ROLE_HEADING and self.hasNoSize(obj):
+                    return False
+                elif xObj.getRole() == pyatspi.ROLE_HEADING and self.hasNoSize(xObj):
+                    return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
