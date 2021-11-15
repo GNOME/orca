@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-01-06 16:03+0000\n"
+"POT-Creation-Date: 2021-10-21 09:21+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 #: orca-autostart.desktop.in:4
 #, fuzzy
@@ -162,57 +162,57 @@ msgstr ""
 #. Translators: short braille for the rolename of a heading.
 #: src/orca/braille_rolenames.py:125
 msgid "hdng"
-msgstr ""
+msgstr "כתרת"
 
 #. Translators: short braille for the rolename of a image.
 #: src/orca/braille_rolenames.py:134
 msgid "img"
-msgstr ""
+msgstr "תמנ"
 
 #. Translators: short braille for the rolename of an internal frame.
 #: src/orca/braille_rolenames.py:137
 msgid "ifrm"
-msgstr ""
+msgstr "מסגר"
 
 #. Translators: short braille for the rolename of a label.
 #: src/orca/braille_rolenames.py:140
 msgid "lbl"
-msgstr ""
+msgstr "תות"
 
 #. Translators: short braille for the rolename of a layered pane.
 #: src/orca/braille_rolenames.py:143
 msgid "lyrdpn"
-msgstr ""
+msgstr "חלשכב"
 
 #. Translators: short braille for the rolename of a link.
 #: src/orca/braille_rolenames.py:146
 msgid "lnk"
-msgstr ""
+msgstr "קשר"
 
 #. Translators: short braille for the rolename of a list.
 #: src/orca/braille_rolenames.py:149
 msgid "lst"
-msgstr ""
+msgstr "רשמ"
 
 #. Translators: short braille for the rolename of a list item.
 #: src/orca/braille_rolenames.py:152
 msgid "lstitm"
-msgstr ""
+msgstr "פרטאחר"
 
 #. Translators: short braille for the rolename of a menu.
 #: src/orca/braille_rolenames.py:155
 msgid "mnu"
-msgstr ""
+msgstr "תפר"
 
 #. Translators: short braille for the rolename of a menu bar.
 #: src/orca/braille_rolenames.py:158
 msgid "mnubr"
-msgstr ""
+msgstr "סרתפר"
 
 #. Translators: short braille for the rolename of a menu item.
 #: src/orca/braille_rolenames.py:161
 msgid "mnuitm"
-msgstr ""
+msgstr "פרטתפרט"
 
 #. Translators: short braille for the rolename of an option pane.
 #: src/orca/braille_rolenames.py:164
@@ -1473,25 +1473,25 @@ msgstr ""
 #.
 #: src/orca/chnames.py:604
 msgid "dagger"
-msgstr ""
+msgstr "פגיון"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: src/orca/chnames.py:608
 msgid "double dagger"
-msgstr ""
+msgstr "פגיון כפול"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: src/orca/chnames.py:612
 msgid "bullet"
-msgstr ""
+msgstr "תבליט"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
 #: src/orca/chnames.py:616
 msgid "triangular bullet"
-msgstr ""
+msgstr "תבליט משולש"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
@@ -1560,7 +1560,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:663
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "תבליט בצורת איקס"
 
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
@@ -1644,91 +1644,91 @@ msgstr ""
 #.
 #: src/orca/chnames.py:719
 msgid "subscript 0"
-msgstr ""
+msgstr "0 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: src/orca/chnames.py:723
 msgid "subscript 1"
-msgstr ""
+msgstr "1 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: src/orca/chnames.py:727
 msgid "subscript 2"
-msgstr ""
+msgstr "2 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: src/orca/chnames.py:731
 msgid "subscript 3"
-msgstr ""
+msgstr "3 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: src/orca/chnames.py:735
 msgid "subscript 4"
-msgstr ""
+msgstr "4 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: src/orca/chnames.py:739
 msgid "subscript 5"
-msgstr ""
+msgstr "5 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: src/orca/chnames.py:743
 msgid "subscript 6"
-msgstr ""
+msgstr "6 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: src/orca/chnames.py:747
 msgid "subscript 7"
-msgstr ""
+msgstr "7 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: src/orca/chnames.py:751
 msgid "subscript 8"
-msgstr ""
+msgstr "8 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: src/orca/chnames.py:755
 msgid "subscript 9"
-msgstr ""
+msgstr "9 בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: src/orca/chnames.py:759
 msgid "subscript plus"
-msgstr ""
+msgstr "פלוס בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: src/orca/chnames.py:763
 msgid "subscript minus"
-msgstr ""
+msgstr "מינוס בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: src/orca/chnames.py:767
 msgid "subscript equals"
-msgstr ""
+msgstr "שווה בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: src/orca/chnames.py:771
 msgid "subscript left paren"
-msgstr ""
+msgstr "סוגריים שמאליים בכתב תחתון"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: src/orca/chnames.py:775
 msgid "subscript right paren"
-msgstr ""
+msgstr "סוגריים ימניים בכתב תחתון"
 
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
@@ -2929,10 +2929,8 @@ msgstr "עובר לכפתור הבא."
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:799
-#, fuzzy
-#| msgid "Display more options"
 msgid "Display a list of buttons"
-msgstr "הצג עוד אפשרויות"
+msgstr "הצגת רשימת כפתורים"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:802
@@ -3170,31 +3168,23 @@ msgstr "עובר לשורה הקודמת."
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:923
-#, fuzzy
-#| msgid "Goes to next line."
 msgid "Go to next link"
-msgstr "עובר לשורה הבאה."
+msgstr "מעבר לקישור הבא"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:926
-#, fuzzy
-#| msgid "Display more options"
 msgid "Display a list of links"
-msgstr "הצג עוד אפשרויות"
+msgstr "הצגת רשימת קישורים"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:929
-#, fuzzy
-#| msgid "Goes to previous list."
 msgid "Go to previous list"
-msgstr "עובר לרשימה קודמת."
+msgstr "מעבר לרשימה הקודמת"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:932
-#, fuzzy
-#| msgid "Goes to next list."
 msgid "Go to next list"
-msgstr "עובר לרשימה הבאה."
+msgstr "מעבר לרשימה הבאה"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:935
@@ -3203,17 +3193,13 @@ msgstr ""
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:938
-#, fuzzy
-#| msgid "Goes to previous list."
 msgid "Go to previous list item"
-msgstr "עובר לרשימה קודמת."
+msgstr "מעבר לפריט הקודם ברשימה"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:941
-#, fuzzy
-#| msgid "Goes to next list."
 msgid "Go to next list item"
-msgstr "עובר לרשימה הבאה."
+msgstr "מעבר לפריט הבא ברשימה"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:944
@@ -4678,17 +4664,17 @@ msgstr "נקודות 7 _ו־8"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:112 src/orca/orca-setup.ui:176
 msgid "_Cancel"
-msgstr ""
+msgstr "_ביטול"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:115
 msgid "_Jump to"
-msgstr ""
+msgstr "ל_קפוץ אל"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:118 src/orca/orca-setup.ui:192
 msgid "_OK"
-msgstr ""
+msgstr "_אישור"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4794,7 +4780,7 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:194 src/orca/keybindings.py:195
+#: src/orca/guilabels.py:194 src/orca/keybindings.py:200
 #, fuzzy
 #| msgid "(double click)"
 msgid "double click"
@@ -4807,7 +4793,7 @@ msgstr "(לחיצה כפולה)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:199 src/orca/keybindings.py:201
+#: src/orca/guilabels.py:199 src/orca/keybindings.py:206
 #, fuzzy
 #| msgid "(triple click)"
 msgid "triple click"
@@ -4903,7 +4889,7 @@ msgstr ""
 #. the user invokes that keyboard command.
 #: src/orca/guilabels.py:265
 msgid "Command"
-msgstr ""
+msgstr "פקודה"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
@@ -5030,7 +5016,7 @@ msgstr ""
 #. reading Spanish content.
 #: src/orca/guilabels.py:359
 msgid "Load user profile"
-msgstr ""
+msgstr "טעינת פרופיל משתמש"
 
 #. Translators: This text is displayed in a message dialog when a user indicates
 #. he/she wants to switch to a new user profile which will cause him/her to lose
@@ -5055,7 +5041,7 @@ msgstr ""
 #. defined profile.
 #: src/orca/guilabels.py:379
 msgid "Save Profile As"
-msgstr ""
+msgstr "שמירת פרופיל בשם"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -5065,7 +5051,7 @@ msgstr ""
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
 #: src/orca/guilabels.py:387
 msgid "_Profile Name:"
-msgstr ""
+msgstr "שם ה_פרופיל:"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -5075,7 +5061,7 @@ msgstr ""
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:395
 msgid "Remove user profile"
-msgstr ""
+msgstr "הסרת פרופיל משתמש"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -5680,7 +5666,7 @@ msgstr ""
 #. how to navigate tables in document content.
 #: src/orca/guilabels.py:798
 msgid "Table Navigation"
-msgstr ""
+msgstr "ניווט בטבלה"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
@@ -6008,7 +5994,7 @@ msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
-#: src/orca/keybindings.py:140
+#: src/orca/keybindings.py:145
 msgid "Insert"
 msgstr ""
 
@@ -6017,49 +6003,49 @@ msgstr ""
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: src/orca/keybindings.py:144 src/orca/keybindings.py:149
+#: src/orca/keybindings.py:149 src/orca/keybindings.py:154
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: src/orca/keybindings.py:156
+#: src/orca/keybindings.py:161
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: src/orca/keybindings.py:161
+#: src/orca/keybindings.py:166
 msgid "Super"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: src/orca/keybindings.py:166
+#: src/orca/keybindings.py:171
 msgid "Meta2"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: src/orca/keybindings.py:173
+#: src/orca/keybindings.py:178
 msgid "Alt_L"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: src/orca/keybindings.py:178
+#: src/orca/keybindings.py:183
 msgid "Ctrl"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: src/orca/keybindings.py:183
+#: src/orca/keybindings.py:188
 msgid "Shift"
 msgstr ""
 
@@ -9748,7 +9734,7 @@ msgstr "אמור את ההזחה ואת הכיוון."
 #. entering Learn Mode.
 #: src/orca/messages.py:1136
 msgid "Learn mode.  Press escape to exit."
-msgstr "מצב למידה. לחץ escape ליציאה."
+msgstr "מצב למידה. escape ליציאה."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -10696,13 +10682,13 @@ msgstr ""
 #. no accessible component has keyboard focus.
 #: src/orca/messages.py:1766
 msgid "No focus"
-msgstr ""
+msgstr "אין מיקוד"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
 #: src/orca/messages.py:1770
 msgid "No application has focus."
-msgstr ""
+msgstr "אין יישום במיקוד."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -10731,7 +10717,7 @@ msgstr "אין יותר תיבות סימון."
 #. will be presented to the user if no more check boxes can be found.
 #: src/orca/messages.py:1791
 msgid "No more large objects."
-msgstr "אין יותר אובייקטים גדולים."
+msgstr "אין יותר פריטים גדולים."
 
 #. Translators: This is for navigating document content by moving amongst web
 #. elements which have an "onClick" action. This is a detailed message which
@@ -10754,7 +10740,7 @@ msgstr "אין עוד תיבות משולבות."
 #. if no more entries can be found.
 #: src/orca/messages.py:1806
 msgid "No more entries."
-msgstr ""
+msgstr "אין יותר רשומות."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
@@ -10777,7 +10763,7 @@ msgstr "אין עוד כותרות."
 #: src/orca/messages.py:1822
 #, python-format
 msgid "No more headings at level %d."
-msgstr ""
+msgstr "אין עוד כותרות ברמה %d."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
@@ -10909,7 +10895,7 @@ msgstr "ראש"
 #. Translators: This is a tutorial message for the notification list mode.
 #: src/orca/messages.py:1914
 msgid "Press h for help.\n"
-msgstr ""
+msgstr "‫h לעזרה.\n"
 
 #. Translators: The following string instructs the user how to navigate within
 #. the list notifications mode.
@@ -10944,7 +10930,7 @@ msgstr ""
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:1940
 msgid "Speak numbers as digits."
-msgstr ""
+msgstr "להגיד מספרים כספרות."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10970,14 +10956,14 @@ msgstr "להקריא מספרים כמילים."
 #. with text formatting (bold, italics, underlining, justification, etc.).
 #: src/orca/messages.py:1959
 msgid "off"
-msgstr ""
+msgstr "כבוי"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
 #: src/orca/messages.py:1964
 msgid "on"
-msgstr ""
+msgstr "פעיל"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
@@ -11115,7 +11101,7 @@ msgstr "עמודה %(index)d מתוך %(total)d"
 #: src/orca/messages.py:2052
 #, python-format
 msgid "Profile set to %s."
-msgstr ""
+msgstr "הפרופיל הוגדר לכדי %s."
 
 #. Translators: This is an error message presented when the user attempts to
 #. cycle among his/her saved profiles, but no profiles can be found. A profile
@@ -11230,7 +11216,7 @@ msgstr ""
 #: src/orca/messages.py:2129
 #, python-format
 msgid "Selected text is: %s"
-msgstr ""
+msgstr "הטקסט הנבחר הוא: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -11239,7 +11225,7 @@ msgstr ""
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2136
 msgid "Selection deleted."
-msgstr ""
+msgstr "הבחירה נמחקה."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -11262,7 +11248,7 @@ msgstr "Select desired voice:"
 #: src/orca/messages.py:2152
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "גודל: %d, %d. מיקום: %d, %d."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -11271,7 +11257,7 @@ msgstr ""
 #: src/orca/messages.py:2158
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "רוחב: %d. גובה: %d. %d משמאל. %d מלמעלה."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -11308,7 +11294,7 @@ msgstr "נמוך יותר."
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2181
 msgid "louder."
-msgstr ""
+msgstr "בקול רם יותר."
 
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2184
@@ -11325,7 +11311,7 @@ msgstr "מהיר יותר."
 #: src/orca/messages.py:2191
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr ""
+msgstr "רמת פירוט: מתומצת"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -11335,7 +11321,7 @@ msgstr ""
 #: src/orca/messages.py:2198
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
-msgstr ""
+msgstr "רמת פירוט: מפורט"
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
@@ -11343,17 +11329,17 @@ msgstr ""
 #. turns into "Open dot dot dot".
 #: src/orca/messages.py:2204
 msgid " dot dot dot"
-msgstr ""
+msgstr "נקודה נקודה נקודה"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2207
 msgid "Screen reader on."
-msgstr ""
+msgstr "מקריא מסך פעיל."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: src/orca/messages.py:2210
 msgid "Screen reader off."
-msgstr ""
+msgstr "מקריא מסך כבוי."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: src/orca/messages.py:2213
@@ -11487,14 +11473,14 @@ msgstr "עמודה %(index)d מתוך %(total)d"
 #. the cell below the current cell and is already in the last row.
 #: src/orca/messages.py:2301
 msgid "Bottom of column."
-msgstr ""
+msgstr "תחתית עמודה."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
 #: src/orca/messages.py:2306
 msgid "Top of column."
-msgstr ""
+msgstr "ראש עמודה."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
@@ -11514,7 +11500,7 @@ msgstr "בחירה בוטלה"
 #: src/orca/messages.py:2318
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "נבחרו עמודות %s עד %s"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11568,19 +11554,19 @@ msgstr "סוף השורה."
 #. deleted a table row.
 #: src/orca/messages.py:2352
 msgid "Row deleted."
-msgstr ""
+msgstr "שורה נמחקה."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
 #: src/orca/messages.py:2356
 msgid "Last row deleted."
-msgstr ""
+msgstr "השורה האחרונה נמחקה."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
 #: src/orca/messages.py:2360
 msgid "Row inserted."
-msgstr ""
+msgstr "נוספה שורה."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
@@ -11657,14 +11643,14 @@ msgstr ""
 #. it to be presented with.
 #: src/orca/messages.py:2413
 msgid "%H hours and %M minutes"
-msgstr ""
+msgstr "‫%H שעות ו־%M דקות"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
 #: src/orca/messages.py:2417
 #, python-format
 msgid "Unicode %s"
-msgstr ""
+msgstr "יוניקוד %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
@@ -11684,13 +11670,13 @@ msgstr "שחזור"
 #: src/orca/messages.py:2428
 #, python-format
 msgid "Screen reader version %s."
-msgstr ""
+msgstr "מקריא מסך בגרסה %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
 #: src/orca/messages.py:2432
 msgid "white space"
-msgstr ""
+msgstr "רווח לבן"
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. top of a page or list is reached without that object being found, we "wrap" to
@@ -12413,7 +12399,7 @@ msgstr ""
 #: src/orca/object_properties.py:243
 msgctxt "role"
 msgid "example"
-msgstr ""
+msgstr "דוגמה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12434,7 +12420,7 @@ msgstr "מילה"
 #: src/orca/object_properties.py:255
 msgctxt "role"
 msgid "glossary"
-msgstr ""
+msgstr "מונחון"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12467,7 +12453,7 @@ msgstr "סעיף"
 #: src/orca/object_properties.py:273
 msgctxt "role"
 msgid "page break"
-msgstr ""
+msgstr "מעבר עמוד"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12494,7 +12480,7 @@ msgstr ""
 #: src/orca/object_properties.py:291
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "הקדמה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12533,7 +12519,7 @@ msgstr ""
 #: src/orca/object_properties.py:318
 msgctxt "role"
 msgid "subtitle"
-msgstr ""
+msgstr "כתובית"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12542,7 +12528,7 @@ msgstr ""
 #: src/orca/object_properties.py:324
 msgctxt "role"
 msgid "table of contents"
-msgstr ""
+msgstr "תוכן עניינים"
 
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
@@ -12551,7 +12537,7 @@ msgstr ""
 #: src/orca/object_properties.py:330
 #, python-format
 msgid "h%d"
-msgstr ""
+msgstr "h%d"
 
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
@@ -12651,7 +12637,7 @@ msgstr "יישור אנכי"
 #: src/orca/object_properties.py:397
 msgctxt "role"
 msgid "switch"
-msgstr ""
+msgstr "בורר"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
@@ -12667,7 +12653,7 @@ msgstr "סמל בלוח"
 #: src/orca/object_properties.py:408
 msgctxt "role"
 msgid "banner"
-msgstr ""
+msgstr "כרזה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12678,7 +12664,7 @@ msgstr ""
 #: src/orca/object_properties.py:416
 msgctxt "role"
 msgid "complementary content"
-msgstr ""
+msgstr "תוכן משלים"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12720,7 +12706,7 @@ msgstr "ניווט"
 #: src/orca/object_properties.py:446
 msgctxt "role"
 msgid "region"
-msgstr ""
+msgstr "אזור"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12947,7 +12933,7 @@ msgstr "נדרש"
 #. one item can be selected at a time.
 #: src/orca/object_properties.py:581
 msgid "multi-select"
-msgstr ""
+msgstr "בחירת מגוון"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
@@ -13089,7 +13075,7 @@ msgstr "קישור"
 
 #: src/orca/orca-setup.ui:38
 msgid "System"
-msgstr ""
+msgstr "מערכת"
 
 #: src/orca/orca-setup.ui:66
 msgid "Application"
@@ -13106,12 +13092,12 @@ msgstr "העדפות מקריא המסך"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:144
 msgid "_Help"
-msgstr ""
+msgstr "ע_זרה"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:160
 msgid "_Apply"
-msgstr ""
+msgstr "ה_חלה"
 
 #: src/orca/orca-setup.ui:258
 msgid "_Laptop"
@@ -13125,7 +13111,7 @@ msgstr "<b>פריסת מקלדת</b>"
 
 #: src/orca/orca-setup.ui:314
 msgid "Active _Profile:"
-msgstr ""
+msgstr "_פרופיל פעיל:"
 
 #: src/orca/orca-setup.ui:331
 #, fuzzy
@@ -13136,21 +13122,21 @@ msgstr "התחל מ:"
 #. This button will load the selected settings profile in the application.
 #: src/orca/orca-setup.ui:379
 msgid "_Load"
-msgstr ""
+msgstr "_טעינה"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:393
 msgid "Save _As"
-msgstr ""
+msgstr "_שמירה בשם"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:407
 msgid "_Remove"
-msgstr ""
+msgstr "ה_סרה"
 
 #: src/orca/orca-setup.ui:436
 msgid "Profiles"
-msgstr ""
+msgstr "פרופילים"
 
 #: src/orca/orca-setup.ui:465
 msgid "_Present tooltips"
@@ -13158,23 +13144,23 @@ msgstr "_הצג רמזים צצים"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
-msgstr ""
+msgstr "להגיד את הפריט ש_תחת סמן העכבר"
 
 #: src/orca/orca-setup.ui:504
 msgid "Mouse"
-msgstr ""
+msgstr "עכבר"
 
 #: src/orca/orca-setup.ui:538
 msgid "_Time format:"
-msgstr ""
+msgstr "תבנית _זמן:"
 
 #: src/orca/orca-setup.ui:555
 msgid "Dat_e format:"
-msgstr ""
+msgstr "תבנית ת_אריך:"
 
 #: src/orca/orca-setup.ui:611
 msgid "Time and Date"
-msgstr ""
+msgstr "שעה ותאריך"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: src/orca/orca-setup.ui:640
@@ -13956,7 +13942,7 @@ msgstr "טבלה"
 #: src/orca/text_attribute_names.py:228
 msgctxt "textattr"
 msgid "size"
-msgstr ""
+msgstr "גודל"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
 #. Values are "ultra_condensed", "extra_condensed", "condensed",
@@ -13968,7 +13954,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:237
 msgctxt "textattr"
 msgid "stretch"
-msgstr ""
+msgstr "מתיחה"
 
 #. Translators: this attribute specifies whether the text is strike though
 #. (in other words, whether there is a line drawn through it). Values are
@@ -13989,7 +13975,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:252
 msgctxt "textattr"
 msgid "style"
-msgstr ""
+msgstr "סגנון"
 
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
@@ -14041,7 +14027,7 @@ msgstr "קו תחתי"
 #: src/orca/text_attribute_names.py:289
 msgctxt "textattr"
 msgid "variant"
-msgstr ""
+msgstr "הגוון"
 
 #. Translators: this attributes specifies what vertical alignment property
 #. has been applied to the text.
@@ -14071,7 +14057,7 @@ msgstr "משקל"
 #: src/orca/text_attribute_names.py:310
 msgctxt "textattr"
 msgid "wrap mode"
-msgstr ""
+msgstr "מצב גלישה"
 
 #. Translators: this attribute specifies the way the text is written.
 #. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
@@ -14100,7 +14086,7 @@ msgstr "מצב כתיבה"
 #: src/orca/text_attribute_names.py:335
 msgctxt "textattr"
 msgid "true"
-msgstr ""
+msgstr "אמת"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
@@ -14111,7 +14097,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:343
 msgctxt "textattr"
 msgid "false"
-msgstr ""
+msgstr "שרק"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
@@ -14686,7 +14672,7 @@ msgstr "איות"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: src/orca/tutorialgenerator.py:161
 msgid "Press space to toggle."
-msgstr "לחץ על רווח כדי לסמן או לבטל סימון."
+msgstr "רווח להחלפת מצב."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
@@ -14736,7 +14722,7 @@ msgstr ""
 #. Translators: this is the tutorial string for activating a menu item
 #: src/orca/tutorialgenerator.py:394
 msgid "To activate press return."
-msgstr "אנטר להפעלה."
+msgstr "‫Enter להפעלה."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
@@ -14754,7 +14740,7 @@ msgstr ""
 #. Translators: this is the tutorial string for activating a push button.
 #: src/orca/tutorialgenerator.py:477
 msgid "To activate press space."
-msgstr "לחיצה על רווח להפעלה."
+msgstr "רווח להפעלה."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
@@ -14781,7 +14767,7 @@ msgstr ""
 #. navigate into sub menus.
 #: src/orca/tutorialgenerator.py:698
 msgid "To enter sub menu, press right arrow."
-msgstr "כדי להיכנס לתת־תפריט, י ללחוץ על החץ ימינה."
+msgstr "כדי להיכנס לתת־תפריט, יש ללחוץ על החץ ימינה."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
