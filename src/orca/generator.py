@@ -27,7 +27,6 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc." \
                 "Copyright (c) 2015-2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import collections
 import pyatspi
 import sys
 import time
@@ -40,6 +39,12 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
+
+# Python 3.10 compatibility:
+try:
+    import collections.abc as collections_abc
+except ImportError:
+    import collections as collections_abc
 
 def _formatExceptionInfo(maxTBlevel=5):
     cla, exc, trbk = sys.exc_info()
@@ -78,7 +83,7 @@ class Generator:
         self._activeProgressBars = {}
         self._methodsDict = {}
         for method in \
-            [z for z in [getattr(self, y).__get__(self, self.__class__) for y in [x for x in dir(self) if x.startswith(METHOD_PREFIX)]] if isinstance(z, collections.abc.Callable)]:
+            [z for z in [getattr(self, y).__get__(self, self.__class__) for y in [x for x in dir(self) if x.startswith(METHOD_PREFIX)]] if isinstance(z, collections_abc.Callable)]:
             name = method.__name__[len(METHOD_PREFIX):]
             name = name[0].lower() + name[1:]
             self._methodsDict[name] = method
