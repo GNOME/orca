@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2021-08-27 07:33+0000\n"
-"PO-Revision-Date: 2021-08-30 07:59+0200\n"
+"POT-Creation-Date: 2021-10-21 09:21+0000\n"
+"PO-Revision-Date: 2021-11-16 15:55+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Gtranslator 41.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -3092,7 +3092,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:44 C/howto_key_bindings.page:75
 msgid "Press the desired key combination."
-msgstr "Pulse la combinación de teclas que quiere."
+msgstr "Pulse el atajo del teclado que quiere."
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:46 C/howto_key_bindings.page:78
@@ -3101,10 +3101,9 @@ msgid ""
 "will be saved and the check box in the last column (the <gui>Modified</gui> "
 "column) will indicate that the key binding has been modified."
 msgstr ""
-"Pulse <key>Intro</key> para confirmar la nueva combinación. La nueva "
-"pulsación de tecla se guardará y la casilla de verificación en la última "
-"columna (la columna <gui>Modificado</gui>) indicará que se ha modificado la "
-"asociación de teclas."
+"Pulse <key>Intro</key> para confirmar el nuevo atajo. La nueva pulsación de "
+"tecla se guardará y la casilla de verificación en la última columna (la "
+"columna <gui>Modificado</gui>) indicará que se ha modificado el atajo."
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:54 C/howto_key_bindings.page:86
@@ -6777,9 +6776,9 @@ msgid ""
 msgstr ""
 "Esta opción controla si se deben leer las teclas <key>Izquierda</key>, "
 "<key>Derecha</key>, <key>Arriba</key>, y <key>Abajo</key> cuando al "
-"pulsarlas. Esta opción también se aplica a cualquier combinación de teclas "
-"en la que se pulse el <key>Modificador de Orca</key>, por ejemplo cuando se "
-"usa la revisión."
+"pulsarlas. Esta opción también se aplica a cualquier atajo del teclado en la "
+"que se pulse el <key>Modificador de Orca</key>, por ejemplo cuando se usa la "
+"revisión."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:117
