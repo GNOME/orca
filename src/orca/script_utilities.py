@@ -5770,7 +5770,17 @@ class Utilities:
         if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
             return False
 
+        selection = obj.querySelection()
+        if not selection.nSelectedChildren:
+            return False
+
         if self.selectedChildCount(obj) == obj.childCount:
+            # The selection interface gives us access to what is selected, which might
+            # not actually be a direct child.
+            child = selection.getSelectedChild(0)
+            if child not in obj:
+                return False
+
             msg = "INFO: All %i children believed to be selected" % obj.childCount
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
