@@ -1,3 +1,54 @@
+41.1 - 1 December 2021
+
+Web:
+
+* Fix presentation of selected items in datalist
+
+* Fix issue causing non-rendered headings being combined with
+  other, rendered elements when presenting line contents
+
+* Improve behavior when focused back/forward button is pressed
+
+* Improve presentation of subscript and superscript elements
+  (requires implementations exposing the associated AT-SPI2
+  roles)
+
+* Attempt to identify and present custom-element images
+
+* Fix SayAll for rich-text editors
+
+* Treat all list items inside listboxes as focus mode widgets
+  regardless of authoring
+
+* Clear cached objects when not dumping full cache for child change
+  to prevent skipping over newly-added content
+
+* Fix speech generator for browser alerts
+
+* Fix issues causing certain spin buttons to not be presented correctly
+
+General:
+
+* Modify collections module import for Python3.10 compatibility
+
+* Event Manager: Handle name/description change floods
+
+* Adjust string for repeats when presenting text changes
+
+* Clear flat review context when page tab lists emit selection-changed
+  to eliminate stale context (e.g. in a wizard)
+
+* Improve presentation of indeterminate progress bars (busy indicators)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  es              Spanish                   Daniel Mustieles
+  he              Hebrew                    Yaron Shahrabani
+  lv              Latvian                   Rūdolfs Mazurs
+  ru              Russian                   Aleksandr Melman
+
+=========
+
 41.0 - 16 September 2021
 
 General:
