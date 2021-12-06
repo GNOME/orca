@@ -5911,6 +5911,12 @@ class Utilities:
         if self._speakTextSelectionState(len(newString)):
             return True
 
+        # Even though we present a message, treat it as unhandled so the new location is
+        # still presented.
+        if not self.lastInputEventWasCaretNavWithSelection() and oldString and not newString:
+            self._script.speakMessage(messages.SELECTION_REMOVED)
+            return False
+
         changes = []
         oldChars = set(range(oldStart, oldEnd))
         newChars = set(range(newStart, newEnd))
