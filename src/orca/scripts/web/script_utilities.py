@@ -73,6 +73,7 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
         self._hasNoSize = {}
@@ -167,6 +168,7 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
         self._hasNoSize = {}
@@ -3249,6 +3251,23 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleChars[hash(obj)] = rv
         return rv
 
+    def labelIsAncestorOfLabelled(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._labelIsAncestorOfLabelled.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        for target in self.targetsForLabel(obj):
+            if pyatspi.findAncestor(target, lambda x: x == obj):
+                rv = True
+                break
+
+        self._labelIsAncestorOfLabelled[hash(obj)] = rv
+        return rv
+
     def isOffScreenLabel(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3256,6 +3275,9 @@ class Utilities(script_utilities.Utilities):
         rv = self._isOffScreenLabel.get(hash(obj))
         if rv is not None:
             return rv
+
+        if self.labelIsAncestorOfLabelled(obj):
+            return False
 
         rv = False
         targets = self.labelTargets(obj)
@@ -3513,6 +3535,9 @@ class Utilities(script_utilities.Utilities):
         rv = self._isClickableElement.get(hash(obj))
         if rv is not None:
             return rv
+
+        if self.labelIsAncestorOfLabelled(obj):
+            return False
 
         rv = False
         if not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
