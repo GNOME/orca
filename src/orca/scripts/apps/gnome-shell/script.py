@@ -49,6 +49,12 @@ class Script(clutter.Script):
     def getUtilities(self):
         return Utilities(self)
 
+    def deactivate(self):
+        """Called when this script is deactivated."""
+
+        self.utilities.clearCachedObjects()
+        super().deactivate()
+
     def skipObjectEvent(self, event):
         """Determines whether or not this event should be skipped due to
         being redundant, part of an event flood, etc."""

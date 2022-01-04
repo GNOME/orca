@@ -35,6 +35,10 @@ class Utilities(script_utilities.Utilities):
 
     def __init__(self, script):
         script_utilities.Utilities.__init__(self, script)
+        self._isLayoutOnly = {}
+
+    def clearCachedObjects(self):
+        self._isLayoutOnly = {}
 
     def selectedChildren(self, obj):
         try:
@@ -106,17 +110,21 @@ class Utilities(script_utilities.Utilities):
         return super().unrelatedLabels(root, onlyShowing, minimumWords)
 
     def isLayoutOnly(self, obj):
-        if super().isLayoutOnly(obj):
-            return True
+        rv = self._isLayoutOnly.get(hash(obj))
+        if rv is not None:
+            return rv
 
-        if obj.getRole() == pyatspi.ROLE_PANEL and obj.childCount == 1:
+        rv = super().isLayoutOnly(obj)
+        if not rv and  obj.getRole() == pyatspi.ROLE_PANEL and obj.childCount == 1:
             displayedLabel = self.displayedLabel(obj)
             if displayedLabel == obj[0].name and obj[0].getRole() != pyatspi.ROLE_LABEL:
+                rv = True
                 msg = "GNOME SHELL: %s is deemed to be layout only" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-                return True
 
-        return False
+        self._isLayoutOnly[hash(obj)] = rv
+        return rv
+
 
     def isBogusWindowFocusClaim(self, event):
         if event.type.startswith('object:state-changed:focused') and event.detail1 \
