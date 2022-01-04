@@ -1660,6 +1660,21 @@ class Utilities:
     def isSwitch(self, obj):
         return False
 
+    def getObjectFromPath(self, path):
+        start = self._script.app
+        rv = None
+        for p in path:
+            if p == -1:
+                continue
+            try:
+                start = start[p]
+            except:
+                break
+        else:
+            rv = start
+
+        return rv
+
     def _hasSamePath(self, obj1, obj2):
         path1 = pyatspi.utils.getPath(obj1)
         path2 = pyatspi.utils.getPath(obj2)

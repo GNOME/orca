@@ -1217,7 +1217,33 @@ class StructuralNavigation:
     def _setCaretPosition(self, obj, characterOffset):
         """Sets the caret at the specified offset within obj."""
 
+        try:
+            objPath = pyatspi.getPath(obj)
+            objRole = obj.getRole()
+        except:
+            return obj, characterOffset
+
         self._script.utilities.setCaretPosition(obj, characterOffset)
+
+        try:
+            obj.clearCache()
+            isDefunct = obj.getState().contains(pyatspi.STATE_DEFUNCT)
+        except:
+            isDefunct = True
+
+        if not isDefunct:
+            return obj, characterOffset
+
+        msg = "STRUCTURAL NAVIGATION: %s became defunct after setting caret position" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        replicant = self._script.utilities.getObjectFromPath(objPath)
+        if replicant and replicant.getRole() == objRole:
+            msg = "STRUCTURAL NAVIGATION: Updating obj to replicant %s" % replicant
+            debug.println(debug.LEVEL_INFO, msg, True)
+            obj = replicant
+
+        return obj, characterOffset
 
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user.
@@ -1439,7 +1465,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BLOCKQUOTES
@@ -1522,7 +1548,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BUTTONS
@@ -1606,7 +1632,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_CHECK_BOXES
@@ -1788,7 +1814,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_COMBO_BOXES
@@ -1871,7 +1897,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_ENTRIES
@@ -1971,7 +1997,7 @@ class StructuralNavigation:
             if obj.getRole() == pyatspi.ROLE_TEXT and obj.childCount:
                 obj = obj[0]
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_FORM_FIELDS
@@ -2093,7 +2119,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         elif not arg:
             full = messages.NO_MORE_HEADINGS
@@ -2269,7 +2295,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._script.presentMessage(obj.name)
             self._presentLine(obj, characterOffset)
         else:
@@ -2356,7 +2382,7 @@ class StructuralNavigation:
         if obj:
             self._script.speakMessage(self._getListDescription(obj))
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
         else:
             full = messages.NO_MORE_LISTS
@@ -2440,7 +2466,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
         else:
             full = messages.NO_MORE_LIST_ITEMS
@@ -2522,7 +2548,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_LIVE_REGIONS
@@ -2695,7 +2721,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_RADIO_BUTTONS
@@ -2950,7 +2976,7 @@ class StructuralNavigation:
             self._presentCellHeaders(cell, arg)
 
         [obj, characterOffset] = self._getCaretPosition(cell)
-        self._setCaretPosition(obj, characterOffset)
+        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
         self._script.updateBraille(obj)
 
         blank = self._isBlankCell(cell)
@@ -3042,7 +3068,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_UNVISITED_LINKS
@@ -3130,7 +3156,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_VISITED_LINKS
@@ -3213,7 +3239,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_LINKS
@@ -3298,7 +3324,7 @@ class StructuralNavigation:
 
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
+            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         elif not arg:
             full = messages.NO_MORE_CLICKABLES
@@ -3348,5 +3374,5 @@ class StructuralNavigation:
         if characterOffset is None:
             obj, characterOffset = self._getCaretPosition(obj)
 
-        self._setCaretPosition(obj, characterOffset)
+        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
         self._presentLine(obj, characterOffset)

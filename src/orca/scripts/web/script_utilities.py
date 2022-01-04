@@ -4896,21 +4896,6 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
-    def getObjectFromPath(self, path):
-        start = self._script.app
-        rv = None
-        for p in path:
-            if p == -1:
-                continue
-            try:
-                start = start[p]
-            except:
-                break
-        else:
-            rv = start
-
-        return rv
-
     def clearCaretContext(self, documentFrame=None):
         self.clearContentCache()
         documentFrame = documentFrame or self.documentFrame()
