@@ -53,6 +53,8 @@ class Utilities(script_utilities.Utilities):
 
         self._objectAttributes = {}
         self._currentTextAttrs = {}
+        self._allTextAttrs = {}
+        self._languageAndDialects = {}
         self._caretContexts = {}
         self._priorContexts = {}
         self._contextPathsRolesAndNames = {}
@@ -152,6 +154,8 @@ class Utilities(script_utilities.Utilities):
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._objectAttributes = {}
+        self._allTextAttrs = {}
+        self._languageAndDialects = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -932,6 +936,69 @@ class Utilities(script_utilities.Utilities):
 
         return super().localizeTextAttribute(key, value)
 
+    def getAllTextAttributesForObject(self, obj):
+        """Returns a list of (start, end, attrsDict) tuples for obj."""
+
+        if not (obj and self.inDocumentContent(obj)):
+            return super().getAllTextAttributesForObject(obj)
+
+        rv = self._allTextAttrs.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = super().getAllTextAttributesForObject(obj)
+        self._allTextAttrs[hash(obj)] = rv
+        return rv
+
+    def adjustContentsForLanguage(self, contents):
+        rv = []
+        for content in contents:
+            rv.extend(self.splitSubstringByLanguage(*content[0:3]))
+
+        return rv
+
+    def splitSubstringByLanguage(self, obj, start, end):
+        rv = []
+        allSubstrings = self.getLanguageAndDialectForObject(obj)
+        for startOffset, endOffset, language, dialect in allSubstrings:
+            if start > endOffset:
+                continue
+            if end <= startOffset:
+                break
+            string = self.substring(obj, startOffset, endOffset)
+            rv.append([obj, startOffset, endOffset, string])
+
+        return rv
+
+    def getLanguageAndDialectForObject(self, obj):
+        """Returns a list of (start, end, language, dialect) tuples for obj."""
+
+        if not self.inDocumentContent(obj):
+            return super().getLanguageAndDialectForObject(obj)
+
+        rv = self._languageAndDialects.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = []
+        attributeSet = self.getAllTextAttributesForObject(obj)
+        for (start, end, attrs) in attributeSet:
+            language = attrs.get("language", "")
+            dialect = ""
+            if "-" in language:
+                language, dialect = language.split("-")
+            rv.append((start, end, language, dialect))
+
+        # Embedded objects such as images and certain widgets won't implement the text interface
+        # and thus won't expose text attributes. Therefore try to get the info from the parent.
+        if not attributeSet:
+            start, end = self.getHyperlinkRange(obj)
+            language, dialect = self.getLanguageAndDialectForSubstring(obj.parent, start, end)
+            rv.append((0, 1, language, dialect))
+
+        self._languageAndDialects[hash(obj)] = rv
+        return rv
+
     def findObjectInContents(self, obj, offset, contents, usingCache=False):
         if not obj or not contents:
             return -1
@@ -1442,7 +1509,7 @@ class Utilities(script_utilities.Utilities):
             string = string[rangeStart:rangeEnd]
             end = start + len(string)
 
-        return [[obj, start, end, string]]
+        return self.adjustContentsForLanguage([[obj, start, end, string]])
 
     def getSentenceContentsAtOffset(self, obj, offset, useCache=True):
         if not obj:
@@ -1690,7 +1757,9 @@ class Utilities(script_utilities.Utilities):
                 extents = self.getExtents(acc, start, end)
             except:
                 extents = "(exception)"
-            msg = "     %i. chars: %i-%i: '%s' extents=%s\n" % (i, start, end, string, extents)
+            language, dialect = self.getLanguageAndDialectForSubstring(acc, start, end)
+            msg = "     %i. chars: %i-%i: '%s' extents=%s language='%s' dialect='%s'\n" % \
+                (i, start, end, string, extents, language, dialect)
             msg += debug.getAccessibleDetails(debug.LEVEL_INFO, acc, indent)
             debug.println(debug.LEVEL_INFO, msg, True)
 

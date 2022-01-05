@@ -3146,6 +3146,38 @@ class Utilities:
 
         return self._script.attributeNamesDict.get(attribName, attribName)
 
+    def getAllTextAttributesForObject(self, obj):
+        """Returns a list of (start, end, attrsDict) tuples for obj."""
+        try:
+            text = obj.queryText()
+        except:
+            return []
+
+        msg = "INFO: Getting all text attributes for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        rv = []
+        offset = 0
+        while offset < text.characterCount:
+            attrList, start, end = text.getAttributeRun(offset)
+            if start == end:
+                msg = "INFO: start and end offsets should not be equal in attribute run"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                break
+
+            if start < offset:
+                msg = "INFO: Unexpected start offset less than offset in attribute run"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                break
+
+            attrDict = dict([attr.split(':', 1) for attr in attrList])
+            rv.append((start, end, attrDict))
+            offset = end
+
+        msg = "INFO: Result: %s" % rv
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
     def textAttributes(self, acc, offset=None, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
 
@@ -3210,6 +3242,33 @@ class Utilities:
             localizedValue = text_attribute_names.getTextAttributeName(value, self._script)
 
         return "%s: %s" % (localizedKey, localizedValue)
+
+    def getLanguageAndDialectForSubstring(self, obj, start, end):
+        """Returns a (language, dialect) tuple. If multiple languages apply to
+        the substring, language and dialect will be empty strings. Callers must
+        do any preprocessing to avoid that condition."""
+
+        allSubstrings = self.getLanguageAndDialectForObject(obj)
+        for startOffset, endOffset, language, dialect in allSubstrings:
+            if startOffset <= start and endOffset >= end:
+                return language, dialect
+
+        return "", ""
+
+    def getLanguageAndDialectForObject(self, obj):
+        """Returns a list of (start, end, language, dialect) tuples for obj.
+        This default implementation assumes there can be exactly one language
+        plus dialect that applies to the entire object. Support for apps in
+        which that assumption is not valid must override this method.
+        """
+
+        locale, encoding = obj.objectLocale.split(".")
+        if not locale:
+            locale, encoding = local.getdefaultlocale()
+
+        language, dialect = locale.split("_")
+        start, end = 0, -1
+        return [(start, end, language, dialect)]
 
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,
