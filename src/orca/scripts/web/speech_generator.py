@@ -147,7 +147,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result = [messages.HAS_POPUP_TREE]
 
         if result:
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         return result
 
@@ -164,7 +164,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         args['stringType'] = 'clickable'
         if self._script.utilities.isClickableElement(obj):
             result = [self._script.formatting.getString(**args)]
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         return []
@@ -215,7 +215,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         args['stringType'] = 'haslongdesc'
         if self._script.utilities.hasLongDesc(obj):
             result = [self._script.formatting.getString(**args)]
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         return []
@@ -236,7 +236,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'hasdetails'
         result = [self._script.formatting.getString(**args) % toPresent]
-        result.extend(self.voice(speech_generator.SYSTEM))
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateAllDetails(self, obj, **args):
@@ -253,19 +253,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'hasdetails'
         result = [self._script.formatting.getString(**args) % ""]
-        result.extend(self.voice(speech_generator.SYSTEM))
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         result = []
         for o in objs:
             result.append(self.getLocalizedRoleName(o))
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
             string = self._script.utilities.expandEOCs(o)
             if not string.strip():
                 continue
 
             result.append(string)
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             result.extend(self._generatePause(o))
 
         return result
@@ -301,7 +301,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 words = words[0:5] + ['...']
 
             result.append(self._script.formatting.getString(**objArgs) % " ".join(words))
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             result.extend(self._generatePause(o, **objArgs))
 
         return result
@@ -342,7 +342,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 name = self._script.utilities.verbalizeAllPunctuation(name)
 
             result = [name]
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
         if obj.getRole() == pyatspi.ROLE_CHECK_BOX:
@@ -392,7 +392,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     name = name.strip()
                 result = [name]
 
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
         return super()._generateName(obj, **args)
@@ -407,7 +407,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         label, objects = self._script.utilities.inferLabelFor(obj)
         if label:
             result = [label]
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
         return super()._generateLabel(obj, **args)
@@ -432,7 +432,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.inDocumentContent(obj) \
            and not self._script.utilities.inDocumentContent(orca_state.locusOfFocus):
             result = ['']
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         return super()._generateLeaving(obj, **args)
@@ -464,7 +464,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = [messages.listItemCount(setsize)]
-        result.extend(self.voice(speech_generator.SYSTEM))
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     # TODO - JD: Yet another dumb generator method we should kill.
@@ -498,7 +498,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
 
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
@@ -619,7 +619,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = [string]
-        result.extend(self.voice(speech_generator.SYSTEM))
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateSiteDescription(self, obj, **args):
@@ -653,7 +653,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(messages.LINK_DIFFERENT_SITE)
 
         if result:
-            result.extend(self.voice(speech_generator.HYPERLINK))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         return result
 
@@ -711,7 +711,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             stringType='groupindex') \
             % {"index" : position,
                "total" : total})
-        result.extend(self.voice(speech_generator.SYSTEM))
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateUnselectedCell(self, obj, **args):
@@ -729,16 +729,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             label = self._script.utilities.labelForCellCoordinates(obj)
             if label:
                 result.append(label)
-                result.extend(self.voice(speech_generator.SYSTEM))
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 return result
 
             row, col = self._script.utilities.coordinatesForCell(obj)
             if self._script.utilities.cellRowChanged(obj):
                 result.append(messages.TABLE_ROW % (row + 1))
-                result.extend(self.voice(speech_generator.SYSTEM))
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             if self._script.utilities.cellColumnChanged(obj):
                 result.append(messages.TABLE_COLUMN % (col + 1))
-                result.extend(self.voice(speech_generator.SYSTEM))
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         return result
 
@@ -787,6 +787,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             document = self._script.utilities.getTopLevelDocumentForObject(obj)
             args['priorObj'] = self._script.utilities.getPriorContext(document)[0]
 
+        start = args.get("startOffset", 0)
+        end = args.get("endOffset", -1)
+        args["language"], args["dialect"] = \
+            self._script.utilities.getLanguageAndDialectForSubstring(obj, start, end)
+
         if not result:
             result = list(filter(lambda x: x, super().generateSpeech(obj, **args)))
 
@@ -824,6 +829,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 string = ""
             else:
                 string = messages.BLANK
-            result = [string, self.voice(speech_generator.DEFAULT)]
+            result = [string, self.voice(speech_generator.DEFAULT, **args)]
 
         return result

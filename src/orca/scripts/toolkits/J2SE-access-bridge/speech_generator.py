@@ -91,7 +91,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         if obj and obj.getState().contains(pyatspi.STATE_EXPANDED) \
            and obj.getRole() == pyatspi.ROLE_LABEL and obj.childCount:
             result.append(messages.itemCount(obj.childCount))
@@ -123,7 +123,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 self, obj, **args)
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         name = self._generateName(obj)
         position = -1
         index = total = 0

@@ -74,7 +74,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         label, objects = self._script.labelInference.infer(obj)
         if label:
             result.append(label)
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         return result
 
@@ -96,7 +96,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
@@ -132,7 +132,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #
-                acss = self.voice(speech_generator.HYPERLINK)
                 result.append(self.getLocalizedRoleName(obj[0]))
                 result.extend(acss)
 
@@ -186,7 +185,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 self, obj, **args)
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         mnemonic, shortcut, accelerator = \
             self._script.utilities.mnemonicShortcutAccelerator(obj)
         if shortcut:

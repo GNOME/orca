@@ -92,7 +92,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         and an empty array will be returned if no label can be found.
         """
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
+        acss = self.voice(speech_generator.DEFAULT, obj=obj, **args)
         override = self.__overrideParagraph(obj, **args)
         label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
@@ -117,7 +117,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # can be removed.
         if obj.name:
             result = [obj.name]
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
         return super()._generateName(obj, **args)
@@ -132,7 +132,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         label = self._script.utilities.displayedLabel(obj) or obj.name
         if label:
             result.append(label)
-            result.extend(self.voice(speech_generator.DEFAULT))           
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         name = obj.name
         if label == name or not name:
@@ -142,7 +142,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if name:
             result.append(name)
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         return result
 
@@ -150,7 +150,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Gets the label or the name if the label is not preset."""
 
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
+        acss = self.voice(speech_generator.DEFAULT, obj=obj, **args)
         override = self.__overrideParagraph(obj, **args)
         # Treat a paragraph which is serving as a text entry in a dialog
         # as a text object.
@@ -214,7 +214,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         if obj.description:
             # The description of some OOo paragraphs consists of the name
             # and the displayed text, with punctuation added. Try to spot
@@ -249,7 +249,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # together in the scripts. In addition, the voice crap needs to go
         # here. Then it needs to be removed from the scripts.
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        voice = self.voice(string=text)
+        voice = self.voice(string=text, obj=obj, **args)
         text = self._script.utilities.adjustForLinks(obj, text, startOffset)
         text = self._script.utilities.adjustForRepeats(text)
         if not text:
@@ -263,7 +263,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_TOGGLE_BUTTON \
@@ -299,7 +299,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         text = self._script.utilities.displayedText(rowHeader)
         if text:
             result.append(text)
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         return result
 
@@ -321,7 +321,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         text = self._script.utilities.displayedText(columnHeader)
         if text:
             result.append(text)
-            result.extend(self.voice(speech_generator.DEFAULT))
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         return result
 
@@ -337,7 +337,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM)
+        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         try:
             text = obj.queryText()
             objectText = \
@@ -368,7 +368,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         text = self._script.utilities.displayedText(inputLine)
         if text and text.startswith("="):
             result = [messages.HAS_FORMULA]
-            result.extend(self.voice(speech_generator.SYSTEM))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         return []
