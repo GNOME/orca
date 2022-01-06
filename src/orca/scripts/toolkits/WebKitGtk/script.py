@@ -355,7 +355,7 @@ class Script(default.Script):
 
         phrase = self.utilities.substring(obj, startOffset, endOffset)
         if len(phrase) and phrase != "\n":
-            voice = self.speechGenerator.voice(string=phrase)
+            voice = self.speechGenerator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
             links = [x for x in obj if x.getRole() == pyatspi.ROLE_LINK]
             if links:

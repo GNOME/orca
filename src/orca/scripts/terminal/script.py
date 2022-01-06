@@ -96,7 +96,7 @@ class Script(default.Script):
         if len(newString) == 1:
             self.speakCharacter(newString)
         else:
-            voice = self.speechGenerator.voice(string=newString)
+            voice = self.speechGenerator.voice(obj=event.source, string=newString)
             speech.speak(newString, voice)
 
         if self.flatReviewContext:
