@@ -965,6 +965,8 @@ class Utilities(script_utilities.Utilities):
                 continue
             if end <= startOffset:
                 break
+            startOffset = max(start, startOffset)
+            endOffset = min(end, endOffset)
             string = self.substring(obj, startOffset, endOffset)
             rv.append([obj, startOffset, endOffset, string])
 
