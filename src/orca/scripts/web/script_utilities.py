@@ -1509,6 +1509,9 @@ class Utilities(script_utilities.Utilities):
             string = string[rangeStart:rangeEnd]
             end = start + len(string)
 
+        if boundary in [pyatspi.TEXT_BOUNDARY_WORD_START, pyatspi.TEXT_BOUNDARY_CHAR]:
+            return [[obj, start, end, string]]
+
         return self.adjustContentsForLanguage([[obj, start, end, string]])
 
     def getSentenceContentsAtOffset(self, obj, offset, useCache=True):
