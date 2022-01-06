@@ -282,7 +282,7 @@ class Generator:
 
     def _resultElementToString(self, element, includeAll=True):
         if not includeAll:
-            return str(element)
+            return str(element).replace("\n", "\\n")
 
         return "\n%s'%s'" % (" " * 18, element)
 

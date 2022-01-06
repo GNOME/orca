@@ -111,25 +111,14 @@ class SpeechGenerator(generator.Generator):
         return rv
 
     def _resultElementToString(self, element, includeAll=True):
-        if debug.LEVEL_ALL < debug.debugLevel:
-            return str(element)
-
-        if isinstance(element, str):
-            return super()._resultElementToString(element, includeAll)
-
-        if not isinstance(element, acss.ACSS):
-            return str(element)
-
-        if not includeAll:
+        if isinstance(element, acss.ACSS) and not includeAll:
             return ""
 
-        voices = {"default": self.voice(DEFAULT)[0],
-                  "system": self.voice(SYSTEM)[0],
-                  "hyperlink": self.voice(HYPERLINK)[0],
-                  "uppercase": self.voice(UPPERCASE)[0]}
+        if isinstance(element, list):
+            rv = [self._resultElementToString(x, includeAll) for x in element]
+            return " ".join(filter(lambda x: x, rv))
 
-        voicetypes = [k for k in voices if voices.get(k) == element]
-        return "Voice(s): (%s)" % ", ".join(voicetypes)
+        return super()._resultElementToString(element, includeAll)
 
     #####################################################################
     #                                                                   #
@@ -2870,10 +2859,6 @@ class SpeechGenerator(generator.Generator):
         decision making.
         """
 
-        msg = "SPEECH GENERATOR: Getting '%s' voice for obj=%s, language='%s', dialect='%s'" \
-            % (key, args.get("obj"), args.get("language"), args.get("dialect"))
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         voicename = voiceType.get(key) or voiceType.get(DEFAULT)
         voices = _settingsManager.getSetting('voices')
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT)))
@@ -2890,8 +2875,6 @@ class SpeechGenerator(generator.Generator):
             if override and override.get('established', True):
                 voice.update(override)
 
-        msg = "SPEECH GENERATOR: Voice is %s" % voice
-        debug.println(debug.LEVEL_INFO, msg, True)
         return [voice]
 
     def utterancesToString(self, utterances):
