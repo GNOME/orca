@@ -9,13 +9,13 @@
 # Daniel Korostil <ted.korostiled@gmail.com>, 2012.
 # Mykola Tkach <Stuartlittle1970@gmail.com>, 2013.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014, 2017.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-12-06 12:34+0000\n"
-"PO-Revision-Date: 2021-12-06 23:31+0200\n"
+"POT-Creation-Date: 2022-01-06 12:21+0000\n"
+"PO-Revision-Date: 2022-01-07 00:06+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -10722,7 +10722,7 @@ msgstr "Параметри програми читання з екрана пе�
 #: src/orca/messages.py:2129
 #, python-format
 msgid "Selected text is: %s"
-msgstr "Обраний текст: %s"
+msgstr "Позначений текст: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -10731,7 +10731,7 @@ msgstr "Обраний текст: %s"
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2136
 msgid "Selection deleted."
-msgstr "Обране вилучено."
+msgstr "Позначене вилучено."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -10743,15 +10743,16 @@ msgstr "Обране вилучено."
 #. which was just inserted.
 #: src/orca/messages.py:2146
 msgid "Selection restored."
-msgstr "Обране відновлено."
+msgstr "Позначення відновлено."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-#| msgid "Selection restored."
-msgid "Selection removed."
-msgstr "Обране вилучено."
+#| msgctxt "text"
+#| msgid "unselected"
+msgid "Text unselected."
+msgstr "Позначення тексту скасовано."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14125,6 +14126,10 @@ msgstr ""
 "Для зменшення значення натисніть стрілку ліворуч, для збільшення - праворуч. "
 "Для встановлення мінімального значення натисніть Home, для максимального - "
 "End."
+
+#~| msgid "Selection restored."
+#~ msgid "Selection removed."
+#~ msgstr "Обране вилучено."
 
 #~ msgid "Remove User Profile"
 #~ msgstr "Вилучення профілю користувача"
