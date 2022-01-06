@@ -2148,7 +2148,7 @@ SELECTION_RESTORED = _("Selection restored.")
 # Translators: This message is presented to the user when text had been
 # selected in a document and no longer is, e.g. as the result of navigating
 # without holding down the shift key.
-SELECTION_REMOVED = _("Selection removed.")
+SELECTION_REMOVED = _("Text unselected.")
 
 # Translators: Orca has a command which presents the size and position of the
 # current object in pixels. This string refers to the brief/non-verbose output
