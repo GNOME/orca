@@ -92,14 +92,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         and an empty array will be returned if no label can be found.
         """
         result = []
-        acss = self.voice(speech_generator.DEFAULT, obj=obj, **args)
         override = self.__overrideParagraph(obj, **args)
         label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
             label = self._script.utilities.displayedLabel(obj.parent) or ""
         if label:
             result.append(label.strip())
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
         return result
 
     def _generateName(self, obj, **args):
@@ -150,7 +149,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Gets the label or the name if the label is not preset."""
 
         result = []
-        acss = self.voice(speech_generator.DEFAULT, obj=obj, **args)
         override = self.__overrideParagraph(obj, **args)
         # Treat a paragraph which is serving as a text entry in a dialog
         # as a text object.
@@ -171,7 +169,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if not parentLabel and obj.name and len(obj.name):
                     result.append(obj.name)
                 if result:
-                    result.extend(acss)
+                    result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
         else:
             result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
                 self, obj, **args))
@@ -214,7 +212,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         if obj.description:
             # The description of some OOo paragraphs consists of the name
             # and the displayed text, with punctuation added. Try to spot
@@ -230,7 +227,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     break
 
         if result:
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateCurrentLineText(self, obj, **args):
@@ -263,7 +260,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_TOGGLE_BUTTON \
@@ -272,7 +268,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(messages.ON)
             else:
                 result.append(messages.OFF)
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
             result.extend(speech_generator.SpeechGenerator._generateToggleState(
                 self, obj, **args))
@@ -337,7 +333,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         try:
             text = obj.queryText()
             objectText = \
@@ -357,7 +352,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if tooLongCount > 0:
                 result = [messages.charactersTooLong(tooLongCount)]
         if result:
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateHasFormula(self, obj, **args):

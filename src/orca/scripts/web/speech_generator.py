@@ -498,12 +498,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
-
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
             result = [roledescription]
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         role = args.get('role', obj.getRole())
@@ -561,13 +559,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     return []
             if role not in doNotSpeak:
                 result.append(self.getLocalizedRoleName(obj, **args))
-                result.extend(acss)
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif isEditable and self._script.utilities.isDocument(obj):
             if obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE) \
                and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
-                result.extend(acss)
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif role == pyatspi.ROLE_HEADING:
             if index == total - 1 or not self._script.utilities.isFocusableWithMathChild(obj):
@@ -576,26 +574,26 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
                         'role': self.getLocalizedRoleName(obj, **args),
                         'level': level})
-                    result.extend(acss)
+                    result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 else:
                     result.append(self.getLocalizedRoleName(obj, **args))
-                    result.extend(acss)
+                    result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif self._script.utilities.isLink(obj):
             if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
-                result.extend(acss)
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             else:
                 if self._script.utilities.hasUselessCanvasDescendant(obj):
                     result.append(self.getLocalizedRoleName(obj, role=pyatspi.ROLE_IMAGE))
-                    result.extend(acss)
+                    result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 if index == total - 1 or not self._script.utilities.isFocusableWithMathChild(obj):
                     result.append(self.getLocalizedRoleName(obj, **args))
-                    result.extend(acss)
+                    result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif role not in doNotSpeak and args.get('priorObj') != obj:
             result.append(self.getLocalizedRoleName(obj, **args))
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         if self._script.utilities.isMath(obj) and not self._script.utilities.isMathTopLevel(obj):
             return result

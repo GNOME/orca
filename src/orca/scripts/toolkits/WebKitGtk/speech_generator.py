@@ -96,7 +96,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
@@ -125,7 +124,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.extend(self.__generateHeadingRole(obj.parent))
 
             if result:
-                result.extend(acss)
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
             if role == pyatspi.ROLE_LINK \
                and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
@@ -133,7 +132,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 # want to indicate that.
                 #
                 result.append(self.getLocalizedRoleName(obj[0]))
-                result.extend(acss)
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         return result
 
@@ -185,7 +184,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 self, obj, **args)
 
         result = []
-        acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
         mnemonic, shortcut, accelerator = \
             self._script.utilities.mnemonicShortcutAccelerator(obj)
         if shortcut:
@@ -193,6 +191,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                settings.VERBOSITY_LEVEL_VERBOSE:
                 shortcut = 'Alt Shift %s' % shortcut
             result = [keynames.localizeKeySequence(shortcut)]
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         return result

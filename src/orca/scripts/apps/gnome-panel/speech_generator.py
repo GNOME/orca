@@ -47,18 +47,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if nothing can be found.
         """
 
-        acss = self.voice(speech_generator.DEFAULT, obj=obj, **args)
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_FRAME:
-            if _settingsManager.getSetting('onlySpeakDisplayedText'):
-                return []
-            else:
-                acss = self.voice(speech_generator.SYSTEM, obj=obj, **args)
+        if role == pyatspi.ROLE_FRAME and _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
 
-        result = speech_generator.SpeechGenerator.\
-            _generateName(self, obj, **args)
-
+        result = speech_generator.SpeechGenerator._generateName(self, obj, **args)
         if result:
-            result.extend(acss)
-
+            if role == pyatspi.ROLE_FRAME:
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+            else:
+                result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
         return result
