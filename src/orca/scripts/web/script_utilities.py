@@ -53,8 +53,6 @@ class Utilities(script_utilities.Utilities):
 
         self._objectAttributes = {}
         self._currentTextAttrs = {}
-        self._allTextAttrs = {}
-        self._languageAndDialects = {}
         self._caretContexts = {}
         self._priorContexts = {}
         self._contextPathsRolesAndNames = {}
@@ -154,8 +152,6 @@ class Utilities(script_utilities.Utilities):
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._objectAttributes = {}
-        self._allTextAttrs = {}
-        self._languageAndDialects = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -226,8 +222,6 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
         self._currentTextAttrs = {}
-        self._allTextAttrs = {}
-        self._languageAndDialects = {}
 
     def isDocument(self, obj):
         if not obj:
@@ -938,20 +932,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().localizeTextAttribute(key, value)
 
-    def getAllTextAttributesForObject(self, obj):
-        """Returns a list of (start, end, attrsDict) tuples for obj."""
-
-        if not (obj and self.inDocumentContent(obj)):
-            return super().getAllTextAttributesForObject(obj)
-
-        rv = self._allTextAttrs.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().getAllTextAttributesForObject(obj)
-        self._allTextAttrs[hash(obj)] = rv
-        return rv
-
     def adjustContentsForLanguage(self, contents):
         rv = []
         for content in contents:
@@ -961,15 +941,8 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
-    def getLanguageAndDialectFromTextAttributes(self, obj):
-        if not self.inDocumentContent(obj):
-            return super().getLanguageAndDialectFromTextAttributes(obj)
-
-        rv = self._languageAndDialects.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().getLanguageAndDialectFromTextAttributes(obj)
+    def getLanguageAndDialectFromTextAttributes(self, obj, startOffset=0, endOffset=-1):
+        rv = super().getLanguageAndDialectFromTextAttributes(obj, startOffset, endOffset)
 
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
@@ -978,7 +951,6 @@ class Utilities(script_utilities.Utilities):
             language, dialect = self.getLanguageAndDialectForSubstring(obj.parent, start, end)
             rv.append((0, 1, language, dialect))
 
-        self._languageAndDialects[hash(obj)] = rv
         return rv
 
     def findObjectInContents(self, obj, offset, contents, usingCache=False):
@@ -1742,9 +1714,7 @@ class Utilities(script_utilities.Utilities):
                 extents = self.getExtents(acc, start, end)
             except:
                 extents = "(exception)"
-            language, dialect = self.getLanguageAndDialectForSubstring(acc, start, end)
-            msg = "     %i. chars: %i-%i: '%s' extents=%s language='%s' dialect='%s'\n" % \
-                (i, start, end, string, extents, language, dialect)
+            msg = "     %i. chars: %i-%i: '%s' extents=%s\n" % (i, start, end, string, extents)
             msg += debug.getAccessibleDetails(debug.LEVEL_INFO, acc, indent)
             debug.println(debug.LEVEL_INFO, msg, True)
 

@@ -3146,19 +3146,22 @@ class Utilities:
 
         return self._script.attributeNamesDict.get(attribName, attribName)
 
-    def getAllTextAttributesForObject(self, obj):
+    def getAllTextAttributesForObject(self, obj, startOffset=0, endOffset=-1):
         """Returns a list of (start, end, attrsDict) tuples for obj."""
         try:
             text = obj.queryText()
         except:
             return []
 
-        msg = "INFO: Getting all text attributes for %s" % obj
+        if endOffset == -1:
+            endOffset = text.characterCount
+
+        msg = "INFO: Getting text attributes for %s (chars: %i-%i)" % (obj, startOffset, endOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rv = []
-        offset = 0
-        while offset < text.characterCount:
+        offset = startOffset
+        while offset < endOffset:
             attrList, start, end = text.getAttributeRun(offset)
             msg = "INFO: Attributes at %i: %s (%i-%i)" % (offset, attrList, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -3167,8 +3170,6 @@ class Utilities:
             rv.append((max(start, offset), end, attrDict))
             offset = max(end, offset + 1)
 
-        msg = "INFO: Result: %s" % rv
-        debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
@@ -3250,7 +3251,7 @@ class Utilities:
         """Returns a list of (start, end, string, language, dialect) tuples."""
 
         rv = []
-        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj)
+        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj, start, end)
         for startOffset, endOffset, language, dialect in allSubstrings:
             if start >= endOffset:
                 continue
@@ -3268,19 +3269,19 @@ class Utilities:
         the substring, language and dialect will be empty strings. Callers must
         do any preprocessing to avoid that condition."""
 
-        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj)
+        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj, start, end)
         for startOffset, endOffset, language, dialect in allSubstrings:
             if startOffset <= start and endOffset >= end:
                 return language, dialect
 
         return "", ""
 
-    def getLanguageAndDialectFromTextAttributes(self, obj):
+    def getLanguageAndDialectFromTextAttributes(self, obj, startOffset=0, endOffset=-1):
         """Returns a list of (start, end, language, dialect) tuples for obj
         based on what is exposed via text attributes."""
 
         rv = []
-        attributeSet = self.getAllTextAttributesForObject(obj)
+        attributeSet = self.getAllTextAttributesForObject(obj, startOffset, endOffset)
         lastLanguage = lastDialect = ""
         for (start, end, attrs) in attributeSet:
             language = attrs.get("language", "")
