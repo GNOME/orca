@@ -961,7 +961,7 @@ class Utilities(script_utilities.Utilities):
         rv = []
         allSubstrings = self.getLanguageAndDialectForObject(obj)
         for startOffset, endOffset, language, dialect in allSubstrings:
-            if start > endOffset:
+            if start >= endOffset:
                 continue
             if end <= startOffset:
                 break
