@@ -984,12 +984,17 @@ class Utilities(script_utilities.Utilities):
 
         rv = []
         attributeSet = self.getAllTextAttributesForObject(obj)
+        lastLanguage = lastDialect = ""
         for (start, end, attrs) in attributeSet:
             language = attrs.get("language", "")
             dialect = ""
             if "-" in language:
                 language, dialect = language.split("-")
-            rv.append((start, end, language, dialect))
+            if rv and lastLanguage == language and lastDialect == dialect:
+                rv[-1] = rv[-1][0], end, language, dialect
+            else:
+                rv.append((start, end, language, dialect))
+            lastLanguage, lastDialect = language, dialect
 
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
