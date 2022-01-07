@@ -3160,19 +3160,12 @@ class Utilities:
         offset = 0
         while offset < text.characterCount:
             attrList, start, end = text.getAttributeRun(offset)
-            if start == end:
-                msg = "INFO: start and end offsets should not be equal in attribute run"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                break
-
-            if start < offset:
-                msg = "INFO: Unexpected start offset less than offset in attribute run"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                break
+            msg = "INFO: Attributes at %i: %s (%i-%i)" % (offset, attrList, start, end)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
             attrDict = dict([attr.split(':', 1) for attr in attrList])
-            rv.append((start, end, attrDict))
-            offset = end
+            rv.append((max(start, offset), end, attrDict))
+            offset = max(end, offset + 1)
 
         msg = "INFO: Result: %s" % rv
         debug.println(debug.LEVEL_INFO, msg, True)
