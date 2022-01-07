@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-12-06 12:34+0000\n"
-"PO-Revision-Date: 2021-12-07 14:32+0300\n"
+"POT-Creation-Date: 2022-01-06 12:21+0000\n"
+"PO-Revision-Date: 2022-01-06 16:08+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -10747,8 +10747,8 @@ msgstr "Выбранное восстановлено."
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-msgid "Selection removed."
-msgstr "Выбранное удалено."
+msgid "Text unselected."
+msgstr "Текст не выделен."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14124,3 +14124,4 @@ msgstr ""
 "Для уменьшения значения нажмите клавишу со стрелкой влево, для увеличения — "
 "вправо. Для установки минимального значения нажмите Home, для максимального "
 "— End."
+
