@@ -3236,32 +3236,64 @@ class Utilities:
 
         return "%s: %s" % (localizedKey, localizedValue)
 
-    def getLanguageAndDialectForSubstring(self, obj, start, end):
-        """Returns a (language, dialect) tuple. If multiple languages apply to
-        the substring, language and dialect will be empty strings. Callers must
-        do any preprocessing to avoid that condition."""
-
-        allSubstrings = self.getLanguageAndDialectForObject(obj)
-        for startOffset, endOffset, language, dialect in allSubstrings:
-            if startOffset <= start and endOffset >= end:
-                return language, dialect
-
-        return "", ""
-
     def getLanguageAndDialectForObject(self, obj):
-        """Returns a list of (start, end, language, dialect) tuples for obj.
-        This default implementation assumes there can be exactly one language
-        plus dialect that applies to the entire object. Support for apps in
-        which that assumption is not valid must override this method.
-        """
+        """Returns a (language, dialect) tuple for obj."""
 
         locale, encoding = obj.objectLocale.split(".")
         if not locale:
             locale, encoding = local.getdefaultlocale()
 
         language, dialect = locale.split("_")
-        start, end = 0, -1
-        return [(start, end, language, dialect)]
+        return language, dialect
+
+    def splitSubstringByLanguage(self, obj, start, end):
+        """Returns a list of (start, end, string, language, dialect) tuples."""
+
+        rv = []
+        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj)
+        for startOffset, endOffset, language, dialect in allSubstrings:
+            if start >= endOffset:
+                continue
+            if end <= startOffset:
+                break
+            startOffset = max(start, startOffset)
+            endOffset = min(end, endOffset)
+            string = self.substring(obj, startOffset, endOffset)
+            rv.append([startOffset, endOffset, string, language, dialect])
+
+        return rv
+
+    def getLanguageAndDialectForSubstring(self, obj, start, end):
+        """Returns a (language, dialect) tuple. If multiple languages apply to
+        the substring, language and dialect will be empty strings. Callers must
+        do any preprocessing to avoid that condition."""
+
+        allSubstrings = self.getLanguageAndDialectFromTextAttributes(obj)
+        for startOffset, endOffset, language, dialect in allSubstrings:
+            if startOffset <= start and endOffset >= end:
+                return language, dialect
+
+        return "", ""
+
+    def getLanguageAndDialectFromTextAttributes(self, obj):
+        """Returns a list of (start, end, language, dialect) tuples for obj
+        based on what is exposed via text attributes."""
+
+        rv = []
+        attributeSet = self.getAllTextAttributesForObject(obj)
+        lastLanguage = lastDialect = ""
+        for (start, end, attrs) in attributeSet:
+            language = attrs.get("language", "")
+            dialect = ""
+            if "-" in language:
+                language, dialect = language.split("-")
+            if rv and lastLanguage == language and lastDialect == dialect:
+                rv[-1] = rv[-1][0], end, language, dialect
+            else:
+                rv.append((start, end, language, dialect))
+            lastLanguage, lastDialect = language, dialect
+
+        return rv
 
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,

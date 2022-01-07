@@ -953,52 +953,25 @@ class Utilities(script_utilities.Utilities):
     def adjustContentsForLanguage(self, contents):
         rv = []
         for content in contents:
-            rv.extend(self.splitSubstringByLanguage(*content[0:3]))
+            split = self.splitSubstringByLanguage(*content[0:3])
+            for start, end, string, language, dialect in split:
+                rv.append([content[0], start, end, string])
 
         return rv
 
-    def splitSubstringByLanguage(self, obj, start, end):
-        rv = []
-        allSubstrings = self.getLanguageAndDialectForObject(obj)
-        for startOffset, endOffset, language, dialect in allSubstrings:
-            if start >= endOffset:
-                continue
-            if end <= startOffset:
-                break
-            startOffset = max(start, startOffset)
-            endOffset = min(end, endOffset)
-            string = self.substring(obj, startOffset, endOffset)
-            rv.append([obj, startOffset, endOffset, string])
-
-        return rv
-
-    def getLanguageAndDialectForObject(self, obj):
-        """Returns a list of (start, end, language, dialect) tuples for obj."""
-
+    def getLanguageAndDialectFromTextAttributes(self, obj):
         if not self.inDocumentContent(obj):
-            return super().getLanguageAndDialectForObject(obj)
+            return super().getLanguageAndDialectFromTextAttributes(obj)
 
         rv = self._languageAndDialects.get(hash(obj))
         if rv is not None:
             return rv
 
-        rv = []
-        attributeSet = self.getAllTextAttributesForObject(obj)
-        lastLanguage = lastDialect = ""
-        for (start, end, attrs) in attributeSet:
-            language = attrs.get("language", "")
-            dialect = ""
-            if "-" in language:
-                language, dialect = language.split("-")
-            if rv and lastLanguage == language and lastDialect == dialect:
-                rv[-1] = rv[-1][0], end, language, dialect
-            else:
-                rv.append((start, end, language, dialect))
-            lastLanguage, lastDialect = language, dialect
+        rv = super().getLanguageAndDialectFromTextAttributes(obj)
 
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
-        if not attributeSet:
+        if not rv:
             start, end = self.getHyperlinkRange(obj)
             language, dialect = self.getLanguageAndDialectForSubstring(obj.parent, start, end)
             rv.append((0, 1, language, dialect))
