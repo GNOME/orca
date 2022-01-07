@@ -246,14 +246,22 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # together in the scripts. In addition, the voice crap needs to go
         # here. Then it needs to be removed from the scripts.
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        voice = self.voice(string=text, obj=obj, **args)
-        text = self._script.utilities.adjustForLinks(obj, text, startOffset)
-        text = self._script.utilities.adjustForRepeats(text)
         if not text:
             result = [messages.BLANK]
-        else:
-            result = [text]
-        result.extend(voice)
+            result.extend(self.voice(string=text, obj=obj, **args))
+            return result
+
+        result = []
+        endOffset = startOffset + len(text)
+        split = self._script.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
+        for start, end, string, language, dialect in split:
+            if not string:
+                continue
+            voice = self.voice(string=string, obj=obj, **args)
+            string = self._script.utilities.adjustForLinks(obj, string, start)
+            rv = [self._script.utilities.adjustForRepeats(string)]
+            rv.extend(voice)
+            result.append(rv)
 
         return result
 
