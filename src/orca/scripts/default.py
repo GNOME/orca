@@ -3431,14 +3431,20 @@ class Script(script.Script):
             endOffset = startOffset + len(line)
             orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
 
-            voice = self.speechGenerator.voice(obj=obj, string=line)
-            line = self.utilities.adjustForLinks(obj, line, startOffset)
-            line = self.utilities.adjustForRepeats(line)
-            if self.utilities.shouldVerbalizeAllPunctuation(obj):
-                line = self.utilities.verbalizeAllPunctuation(line)
+            utterance = []
+            split = self.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
+            for start, end, string, language, dialect in split:
+                if not string:
+                    continue
 
-            utterance = [line]
-            utterance.extend(voice)
+                voice = self.speechGenerator.voice(obj=obj, string=string)
+                string = self.utilities.adjustForLinks(obj, string, start)
+                string = self.utilities.adjustForRepeats(string)
+                if self.utilities.shouldVerbalizeAllPunctuation(obj):
+                    string = self.utilities.verbalizeAllPunctuation(string)
+                result = [string]
+                result.extend(voice)
+                utterance.append(result)
             speech.speak(utterance)
         else:
             # Speak blank line if appropriate.

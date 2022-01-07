@@ -3158,6 +3158,7 @@ class Utilities:
 
         msg = "INFO: Getting text attributes for %s (chars: %i-%i)" % (obj, startOffset, endOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
+        startTime = time.time()
 
         rv = []
         offset = startOffset
@@ -3170,6 +3171,9 @@ class Utilities:
             rv.append((max(start, offset), end, attrDict))
             offset = max(end, offset + 1)
 
+        endTime = time.time()
+        msg = "INFO: %i attribute ranges found in %.4fs" % (len(rv), endTime - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
