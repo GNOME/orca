@@ -3437,7 +3437,8 @@ class Script(script.Script):
                 if not string:
                     continue
 
-                voice = self.speechGenerator.voice(obj=obj, string=string)
+                voice = self.speechGenerator.voice(
+                    obj=obj, string=string, language=language, dialect=dialect)
                 string = self.utilities.adjustForLinks(obj, string, start)
                 string = self.utilities.adjustForRepeats(string)
                 if self.utilities.shouldVerbalizeAllPunctuation(obj):

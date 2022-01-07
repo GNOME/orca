@@ -257,6 +257,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         for start, end, string, language, dialect in split:
             if not string:
                 continue
+            args["language"], args["dialect"] = language, dialect
             voice = self.voice(string=string, obj=obj, **args)
             string = self._script.utilities.adjustForLinks(obj, string, start)
             rv = [self._script.utilities.adjustForRepeats(string)]

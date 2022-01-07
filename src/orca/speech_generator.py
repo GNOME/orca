@@ -2863,6 +2863,12 @@ class SpeechGenerator(generator.Generator):
         voices = _settingsManager.getSetting('voices')
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT)))
 
+        language = args.get('language')
+        dialect = args.get('dialect')
+        msg = "SPEECH GENERATOR: %s voice requested with language='%s', dialect='%s'" % \
+            (key, language, dialect)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if key in [None, DEFAULT]:
             string = args.get('string', '')
             obj = args.get('obj')
