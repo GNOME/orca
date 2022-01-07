@@ -226,6 +226,8 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
         self._currentTextAttrs = {}
+        self._allTextAttrs = {}
+        self._languageAndDialects = {}
 
     def isDocument(self, obj):
         if not obj:
