@@ -1249,7 +1249,12 @@ class SpeechGenerator(generator.Generator):
             string = self._script.utilities.adjustForLinks(obj, string, start)
             rv = [self._script.utilities.adjustForRepeats(string)]
             rv.extend(voice)
-            result.append(rv)
+
+            # TODO - JD: speech.speak() has a bug which causes a list of utterances to
+            # be presented before a string+voice pair that comes first. Until we can
+            # fix speak() properly, we'll avoid triggering it here.
+            # result.append(rv)
+            result.extend(rv)
 
         return result
 
