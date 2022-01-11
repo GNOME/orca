@@ -287,6 +287,22 @@ class SettingsManager(object):
             lang = "%s_%s" % (lang, dialect.upper())
         return lang
 
+    def getSpeechServerFactories(self):
+        """Imports all known SpeechServer factory modules."""
+
+        factories = []
+        for moduleName in self.getSetting('speechFactoryModules'):
+            try:
+                module = importlib.import_module('orca.%s' % moduleName)
+                factories.append(module)
+                msg = "SETTINGS MANAGER: Valid speech server factory: %s" % moduleName
+                debug.println(debug.LEVEL_INFO, msg, True)
+            except:
+                msg = "SETTINGS MANAGER: Invalid speech server factory: %s" % moduleName
+                debug.println(debug.LEVEL_INFO, msg, True)
+
+        return factories
+
     def _loadProfileSettings(self, profile=None):
         """Get from the active backend all the settings for the current
         profile and store them in the object's attributes.

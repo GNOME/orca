@@ -986,7 +986,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         # Where * = speechSystems, speechServers, speechLanguages, speechFamilies
         #
-        factories = speech.getSpeechServerFactories()
+        factories = _settingsManager.getSpeechServerFactories()
         if len(factories) == 0 or not self.prefsDict.get('enableSpeech', True):
             self.workingFactories = []
             self.speechSystemsChoice = None

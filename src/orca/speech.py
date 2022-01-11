@@ -48,24 +48,6 @@ _speechserver = None
 # The last time something was spoken.
 _timestamp = 0
 
-def getSpeechServerFactories():
-    """Imports all known SpeechServer factory modules.  Returns a list
-    of modules that implement the getSpeechServers method, which
-    returns a list of speechserver.SpeechServer instances.
-    """
-
-    factories = []
-
-    moduleNames = settings.speechFactoryModules
-    for moduleName in moduleNames:
-        try:
-            module = importlib.import_module('orca.%s' % moduleName)
-            factories.append(module)
-        except:
-            debug.printException(debug.LEVEL_CONFIGURATION)
-
-    return factories
-
 def _initSpeechServer(moduleName, speechServerInfo):
 
     global _speechserver
