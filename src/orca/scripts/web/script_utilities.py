@@ -946,7 +946,7 @@ class Utilities(script_utilities.Utilities):
 
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
-        if not rv:
+        if not rv and obj and obj.parent:
             start, end = self.getHyperlinkRange(obj)
             language, dialect = self.getLanguageAndDialectForSubstring(obj.parent, start, end)
             rv.append((0, 1, language, dialect))
