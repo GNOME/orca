@@ -367,32 +367,3 @@ def shutdown():
 def reset(text=None, acss=None):
     if _speechserver:
         _speechserver.reset(text, acss)
-
-def testNoSettingsInit():
-    init()
-    speak("testing")
-    speak("this is higher", ACSS({'average-pitch' : 7}))
-    speak("this is slower", ACSS({'rate' : 3}))
-    speak("this is faster", ACSS({'rate' : 80}))
-    speak("this is quiet",  ACSS({'gain' : 2}))
-    speak("this is loud",   ACSS({'gain' : 10}))
-    speak("this is normal")
-
-def test():
-    from . import speechserver
-    factories = getSpeechServerFactories()
-    for factory in factories:
-        print(factory.__name__)
-        servers = factory.SpeechServer.getSpeechServers()
-        for server in servers:
-            try:
-                print("    ", server.getInfo())
-                for family in server.getVoiceFamilies():
-                    name = family[speechserver.VoiceFamily.NAME]
-                    print("      ", name)
-                    acss = ACSS({ACSS.FAMILY : family})
-                    server.speak(name, acss)
-                    server.speak("testing")
-                server.shutdown()
-            except:
-                debug.printException(debug.LEVEL_OFF)
