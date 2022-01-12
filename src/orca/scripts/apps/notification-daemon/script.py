@@ -30,7 +30,6 @@ import pyatspi
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
-import orca.speech as speech
 import orca.notification_messages as notification_messages
 
 ########################################################################
@@ -48,6 +47,8 @@ class Script(default.Script):
         allLabels = pyatspi.findAllDescendants(event.source, hasRole)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
-        speech.speak(text, None, True)
+
+        voice = self.speechGenerator.voice(obj=event.source, string=text)
+        self.speakMessage(text, voice=voice)
         self.displayBrailleMessage(text, flashTime=settings.brailleFlashTime)
         notification_messages.saveMessage(text)

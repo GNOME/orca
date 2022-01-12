@@ -993,9 +993,7 @@ class Script(default.Script):
             args["priorObj"] = priorObj
 
         if obj.getRole() == pyatspi.ROLE_ENTRY:
-            utterances = self.speechGenerator.generateSpeech(obj, **args)
-            speech.speak(utterances)
-            self.updateBraille(obj)
+            super().presentObject(obj, **args)
             return
 
         # We shouldn't use cache in this method, because if the last thing we presented
@@ -1324,61 +1322,60 @@ class Script(default.Script):
         self.updateBraille(newFocus, documentFrame=document)
         orca.emitRegionChanged(newFocus, caretOffset)
 
+        contents = None
+        args = {}
         if self._lastCommandWasMouseButton and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line contents."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents, priorObj=oldFocus)
+            args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
            and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.isAnchor(newFocus):
             msg = "WEB: New focus %s is anchor. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.lastInputEventWasPageNav() and not self.utilities.getTable(newFocus):
             msg = "WEB: New focus %s was scrolled to. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.isFocusedWithMathChild(newFocus):
             msg = "WEB: New focus %s has math child. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
         elif newFocus.getRole() == pyatspi.ROLE_HEADING:
             msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.caretMovedToSamePageFragment(event, oldFocus):
             msg = "WEB: Event source %s is same page fragment. Generating line contents." % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.lastInputEventWasLineNav() and self.utilities.isZombie(oldFocus):
             msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line contents."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
         elif self.utilities.lastInputEventWasLineNav() and event \
              and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line contents."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            utterances = self.speechGenerator.generateContents(contents)
         else:
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
-            utterances = self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus)
+            args['priorObj'] = oldFocus
 
-        speech.speak(utterances)
+        if contents:
+            self.speakContents(contents, **args)
+        else:
+            utterances = self.speechGenerator.generateSpeech(newFocus, **args)
+            speech.speak(utterances)
+
         self._saveFocusedObjectInfo(newFocus)
 
         if self.utilities.inTopLevelWebApp(newFocus) and not self._browseModeIsSticky:
@@ -1758,8 +1755,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True)
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
         return True
 

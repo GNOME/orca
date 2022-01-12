@@ -47,7 +47,6 @@ from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings_manager
-from . import speech
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()

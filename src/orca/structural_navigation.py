@@ -42,7 +42,6 @@ from . import orca_gui_navlist
 from . import orca_state
 from . import settings
 from . import settings_manager
-from . import speech
 
 _settingsManager = settings_manager.getManager()
 #############################################################################
@@ -1162,14 +1161,16 @@ class StructuralNavigation:
             for header in rowHeaders:
                 if not header in oldRowHeaders:
                     text = self._getCellText(header)
-                    speech.speak(text)
+                    voice = self._script.speechGenerator.voice(string=text)
+                    self._script.speakMessage(text, voice=voice, force=True)
 
         if colDiff:
             colHeaders = self._script.utilities.columnHeadersForCell(cell)
             for header in colHeaders:
                 if not header in oldColHeaders:
                     text = self._getCellText(header)
-                    speech.speak(text)
+                    voice = self._script.speechGenerator.voice(string=text)
+                    self._script.speakMessage(text, voice=voice, force=True)
 
     def getCellCoordinates(self, obj, preferAttribute=True):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
@@ -2983,7 +2984,7 @@ class StructuralNavigation:
         if not blank:
             self._presentObject(cell, 0)
         else:
-            speech.speak(messages.BLANK)
+            self._script.speakMessage(messages.BLANK)
 
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)

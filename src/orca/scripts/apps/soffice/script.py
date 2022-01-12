@@ -39,7 +39,6 @@ import orca.input_event as input_event
 import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
-import orca.speech as speech
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
@@ -304,14 +303,6 @@ class Script(default.Script):
         prefs.update(self.spellcheck.getPreferencesFromGUI())
         return prefs
 
-    def presentObject(self, obj, **args):
-        if not self._lastCommandWasStructNav:
-            super().presentObject(obj, **args)
-            return
-
-        utterances = self.speechGenerator.generateSpeech(obj, **args)
-        speech.speak(utterances)
-
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
@@ -531,9 +522,7 @@ class Script(default.Script):
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(pyatspi.STATE_SELECTED):
-                            utterances = \
-                                self.speechGenerator.generateSpeech(tab)
-                            speech.speak(utterances)
+                            self.presentObject(tab)
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
@@ -553,8 +542,10 @@ class Script(default.Script):
             isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
             isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
             if event_string in ["Up", "Down"] and isControlKey and not isShiftKey:
-                if self.utilities.displayedText(newLocusOfFocus):
-                    speech.speak(self.utilities.displayedText(newLocusOfFocus))
+                string = self.utilities.displayedText(newLocusOfFocus)
+                if string:
+                    voice = self.speechGenerator.voice(obj=newLocusOfFocus, string=string)
+                    self.speakMessage(string, voice=voice)
                     self.updateBraille(newLocusOfFocus)
                     try:
                         text = newLocusOfFocus.queryText()
@@ -860,7 +851,7 @@ class Script(default.Script):
             wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
             weToggledIt = wasCommand and keyString not in navKeys
         if weToggledIt:
-            speech.speak(self.speechGenerator.generateSpeech(obj))
+            self.presentObject(obj, alreadyFocused=True)
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""

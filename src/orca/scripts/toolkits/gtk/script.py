@@ -33,7 +33,6 @@ import orca.mouse_review as mouse_review
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
-import orca.speech as speech
 
 from .script_utilities import Utilities
 
@@ -91,8 +90,7 @@ class Script(default.Script):
         if not pyatspi.findAncestor(obj, isListBox):
             return
 
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True)
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""

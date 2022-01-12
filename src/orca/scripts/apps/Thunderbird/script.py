@@ -34,7 +34,6 @@ import orca.input_event as input_event
 import orca.scripts.default as default
 import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
-import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 
 from .spellcheck import SpellCheck
@@ -321,7 +320,8 @@ class Script(Gecko.Script):
             else:
                 hasSelection = text.getNSelections() > 0
             if hasSelection or isSystemEvent:
-                speech.speak(event.any_data)
+                voice = self.speechGenerator.voice(obj=event.source, string=event.any_data)
+                self.speakMessage(event.any_data, voice=voice)
                 self._lastAutoComplete = event.any_data
                 return
 
@@ -354,9 +354,7 @@ class Script(Gecko.Script):
            or not self.utilities.isDocument(event.source):
             return
 
-        speech.speak(obj.name)
-        [obj, offset] = self.utilities.findFirstCaretContext(obj, 0)
-        self.utilities.setCaretPosition(obj, offset)
+        super().onNameChanged(event)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,

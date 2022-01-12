@@ -32,7 +32,6 @@ import orca.debug as debug
 import orca.messages as messages
 import orca.scripts.toolkits.GAIL as GAIL
 import orca.settings as settings
-import orca.speech as speech
 
 from .chat import Chat
 from .script_utilities import Utilities
@@ -133,7 +132,8 @@ class Script(GAIL.Script):
                     child = event.source[-1]
                     if child.name:
                         line = messages.CHAT_NEW_TAB % child.name
-                        speech.speak(line)
+                        voice = self.speechGenerator.voice(obj=child, string=line)
+                        self.speakMessage(line, voice=voice)
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -208,8 +208,7 @@ class Script(GAIL.Script):
         obj = event.source
         if self.chat.isInBuddyList(obj):
             obj = obj.parent[obj.getIndexInParent() + 1]
-            self.updateBraille(obj)
-            speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+            self.presentObject(obj, alreadyFocused=True)
             return
             
         GAIL.Script.onExpandedChanged(self, event)

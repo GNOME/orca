@@ -28,25 +28,27 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.toolkits.gtk as gtk
-import orca.speech as speech
 
 class Script(gtk.Script):
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        obj = event.source
+        if event.source.getRole() != pyatspi.ROLE_PASSWORD_TEXT:
+            gtk.Script.onFocusedChanged(self, event)
+            return
 
         # If we are focused in a password text area, we need to check if
         # there are any useful messages displayed in a couple of labels that
         # are visually below that password area. If there are, then speak
         # them for the user. See bug #529655 for more details.
         #
-        if obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT:
-            obj = obj.parent.parent.parent
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_LABEL and child.name:
-                    speech.speak(child.name)
-                return
+        strings = []
+        for child in event.source.parent.parent.parent:
+            if child.getRole() == pyatspi.ROLE_LABEL and child.name:
+                strings.append(child.name)
 
-        gtk.Script.onFocusedChanged(self, event)
+        string = " ".join(strings)
+        voice = self.speechGenerator.voice(obj=event.source, string=string)
+        self.speakMessage(string, voice=voice)
+        self.updateBraille(event.source)

@@ -2322,8 +2322,7 @@ class Script(script.Script):
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
  
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True)
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
 
     def onChildrenAdded(self, event):
@@ -4011,15 +4010,9 @@ class Script(script.Script):
                 self.phoneticSpellCurrentItem(event.event_string)
                 return True
 
-        string = None
-        if event.isPrintableKey():
-            string = event.event_string
-
         msg = "DEFAULT: Presenting keyboard event"
         debug.println(debug.LEVEL_INFO, msg, True)
-
-        voice = self.speechGenerator.voice(string=string)
-        speech.speakKeyEvent(event, voice)
+        self.speakKeyEvent(event)
         return True
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True, force=False):
@@ -4437,6 +4430,17 @@ class Script(script.Script):
     # (scripts should not call methods in speech.py directly)              #
     #                                                                      #
     ########################################################################
+
+    def speakKeyEvent(self, event):
+        """Method to speak a keyboard event. Scripts should use this method
+        rather than calling speech.speakKeyEvent directly."""
+
+        string = None
+        if event.isPrintableKey():
+            string = event.event_string
+
+        voice = self.speechGenerator.voice(string=string)
+        speech.speakKeyEvent(event, voice)
 
     def speakCharacter(self, character):
         """Method to speak a single character. Scripts should use this

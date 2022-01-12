@@ -29,7 +29,6 @@ import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
 import orca.settings_manager as settings_manager
-import orca.speech as speech
 import orca.notification_messages as notification_messages
 
 _settingsManager = settings_manager.getManager()
@@ -49,8 +48,10 @@ class Script(default.Script):
             value = -1
 
         if value >= 0:
-            speech.speak(str(value), None, True)
-            self.displayBrailleMessage("%s" % value,
+            string = str(value)
+            voice = self.speechGenerator.voice(obj=event.source, string=string)
+            self.speakMessage(string, voice=voice)
+            self.displayBrailleMessage(string,
                                        flashTime=settings.brailleFlashTime)
 
     def onNameChanged(self, event):
@@ -66,19 +67,16 @@ class Script(default.Script):
         message = ""
         voices = _settingsManager.getSetting('voices')
         if value < 0:
-            utterances.append(messages.NOTIFICATION)
-            utterances.append(voices.get(settings.SYSTEM_VOICE))
+            self.speakMessage(messages.NOTIFICATION)
             message = '%s %s' % (event.source.name, event.source.description)
-            utterances.append(message)
-            utterances.append(voices.get(settings.DEFAULT_VOICE))
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.
             #
             message = '%s %d' % (event.source.name, value)
-            utterances.append(message)
-            utterances.append(voices.get(settings.SYSTEM_VOICE))
+            self.speakMessage(message)
 
-        speech.speak(utterances, None, True)
+        voice = self.speechGenerator.voice(obj=event.source, string=message)
+        self.speakMessage(message, voice=voice)
         self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
         notification_messages.saveMessage(message)
