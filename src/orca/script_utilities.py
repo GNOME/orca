@@ -3291,7 +3291,7 @@ class Utilities:
             language = attrs.get("language", "")
             dialect = ""
             if "-" in language:
-                language, dialect = language.split("-")
+                language, dialect = language.split("-", 1)
             if rv and lastLanguage == language and lastDialect == dialect:
                 rv[-1] = rv[-1][0], end, language, dialect
             else:
