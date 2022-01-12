@@ -129,6 +129,8 @@ def __resolveACSS(acss=None):
         return acss
     elif isinstance(acss, list) and len(acss) == 1:
         return ACSS(acss[0])
+    elif isinstance(acss, dict):
+        return ACSS(acss)
     else:
         voices = settings.voices
         return ACSS(voices[settings.DEFAULT_VOICE])
