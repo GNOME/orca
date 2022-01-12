@@ -154,20 +154,6 @@ class SpeechServer(object):
         """
         pass
 
-    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
-        """Speaks the given list of utterances immediately.
-
-        Arguments:
-        - utteranceList: list of strings to be spoken
-        - acss:      acss.ACSS instance; if None,
-                     the default voice settings will be used.
-                     Otherwise, the acss settings will be
-                     used to augment/override the default
-                     voice settings.
-        - interrupt: if True, stop any speech currently in progress.
-        """
-        pass
-
     def speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
@@ -183,10 +169,6 @@ class SpeechServer(object):
                      speaking the text
         """
         pass
-
-    def isSpeaking(self):
-        """"Returns True if the system is currently speaking."""
-        return False
 
     def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking

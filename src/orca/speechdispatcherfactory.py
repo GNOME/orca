@@ -629,19 +629,6 @@ class SpeechServer(speechserver.SpeechServer):
         if text:
             self._speak(text, acss)
 
-    def speakUtterances(self, utteranceList, acss=None, interrupt=True):
-        # In order to re-enable this, a potentially non-trivial amount of work
-        # will be needed to ensure multiple utterances sent to speech.speak
-        # do not result in the intial utterances getting cut off before they
-        # can be heard by the user. Anyone needing to interrupt speech can
-        # do so via speech.stop -- or better yet, by using the default script
-        # method's presentationInterrupt.
-        #if interrupt:
-        #    self._cancel()
-        for utterance in utteranceList:
-            if utterance:
-                self._speak(utterance, acss)
-
     def sayAll(self, utteranceIterator, progressCallback):
         GLib.idle_add(self._say_all, utteranceIterator, progressCallback)
 

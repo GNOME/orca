@@ -269,13 +269,6 @@ def speakCharacter(character, acss=None):
     if _speechserver:
         _speechserver.speakCharacter(character, acss=acss)
 
-def isSpeaking():
-    """Returns True if the system is currently speaking."""
-    if _speechserver:
-        return _speechserver.isSpeaking()
-    else:
-        return False
-
 def getInfo():
     info = None
     if _speechserver:
