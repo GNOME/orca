@@ -18,16 +18,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-12-06 12:34+0000\n"
-"PO-Revision-Date: 2022-01-01 12:25+0800\n"
+"POT-Creation-Date: 2022-01-06 22:34+0000\n"
+"PO-Revision-Date: 2022-01-12 18:37-0500\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -10738,9 +10738,8 @@ msgstr "选定已恢复。"
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-#| msgid "Selection restored."
-msgid "Selection removed."
-msgstr "选定已移除。"
+msgid "Text unselected."
+msgstr "文本已取消选中。"
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14029,6 +14028,10 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr "要减少按左箭头，要增加按右箭头。要转到最小按 home，最大按 end。"
+
+#~| msgid "Selection restored."
+#~ msgid "Selection removed."
+#~ msgstr "选定已移除。"
 
 #~ msgid "Remove User Profile"
 #~ msgstr "移除用户配置"
