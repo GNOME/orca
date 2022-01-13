@@ -191,13 +191,14 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-        if event.type.startswith('object:text-changed') and event.type.endswith('system'):
+        if event.type.startswith('object:text-changed') \
+           and self.EMBEDDED_OBJECT_CHARACTER in event.any_data \
+           and not event.any_data.replace(self.EMBEDDED_OBJECT_CHARACTER, ""):
             # We should also get children-changed events telling us the same thing.
             # Getting a bunch of both can result in a flood that grinds us to a halt.
-            if event.any_data == self.EMBEDDED_OBJECT_CHARACTER:
-                msg = 'EVENT MANAGER: Ignoring because changed text is embedded object'
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return True
+            msg = 'EVENT MANAGER: Ignoring because changed text is only embedded objects'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
         try:
             # TODO - JD: For now we won't ask for the name. Simply asking for the name should
