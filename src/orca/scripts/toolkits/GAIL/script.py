@@ -64,7 +64,7 @@ class Script(default.Script):
 
         msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
         debug.println(debug.LEVEL_INFO, msg, True)
-        self.presentObject(event.any_data)
+        self.presentObject(event.any_data, interrupt=True)
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""

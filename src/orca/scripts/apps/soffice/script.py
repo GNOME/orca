@@ -851,7 +851,7 @@ class Script(default.Script):
             wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
             weToggledIt = wasCommand and keyString not in navKeys
         if weToggledIt:
-            self.presentObject(obj, alreadyFocused=True)
+            self.presentObject(obj, alreadyFocused=True, interrupt=True)
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""

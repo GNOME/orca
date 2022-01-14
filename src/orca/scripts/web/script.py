@@ -996,6 +996,10 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
+        interrupt = args.get("interrupt", False)
+        msg = "WEB: Presenting object %s. Interrupt: %s" % (obj, interrupt)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         # We shouldn't use cache in this method, because if the last thing we presented
         # included this object and offset (e.g. a Say All or Mouse Review), we're in
         # danger of presented irrelevant context.
@@ -1755,7 +1759,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.presentObject(obj, alreadyFocused=True)
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
         return True
 
@@ -1841,7 +1845,7 @@ class Script(default.Script):
 
             msg = "WEB: Presenting event.any_data"
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.presentObject(event.any_data)
+            self.presentObject(event.any_data, interrupt=True)
 
             focused = self.utilities.focusedObject(event.any_data)
             if focused:
@@ -2188,7 +2192,7 @@ class Script(default.Script):
             msg = "WEB: Event believed to be browser UI page switch"
             debug.println(debug.LEVEL_INFO, msg, True)
             if event.detail1:
-                self.presentObject(event.source, priorObj=orca_state.locusOfFocus)
+                self.presentObject(event.source, priorObj=orca_state.locusOfFocus, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
@@ -2257,7 +2261,7 @@ class Script(default.Script):
         if event.detail1 and self.utilities.isTopLevelBrowserUIAlert(event.source):
             msg = "WEB: Event handled: Presenting event source"
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.presentObject(event.source)
+            self.presentObject(event.source, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):

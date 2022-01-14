@@ -1325,7 +1325,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             if statusbar:
                 self.pointOfReference['statusBarItems'] = None
-                self.presentObject(statusbar)
+                self.presentObject(statusbar, interrupt=True)
                 self.pointOfReference['statusBarItems'] = None
             else:
                 full = messages.STATUS_BAR_NOT_FOUND_FULL
@@ -1460,26 +1460,24 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not wordString) \
-               or (not len(wordString)) \
-               or (wordString == "\n"):
-                speech.speak(messages.BLANK)
+            if not wordString or wordString == "\n":
+                self.speakMessage(messages.BLANK)
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    speech.speak(messages.BLANK)
+                    self.speakMessage(messages.BLANK)
                 elif wordString.isspace():
-                    speech.speak(messages.WHITE_SPACE)
+                    self.speakMessage(messages.WHITE_SPACE)
                 elif wordString.isupper() and speechType == 1:
-                    speech.speak(wordString, voice)
+                    self.speakMessage(wordString, voice)
                 elif speechType == 2:
                     self.spellCurrentItem(wordString)
                 elif speechType == 3:
                     self.phoneticSpellCurrentItem(wordString)
                 elif speechType == 1:
                     wordString = self.utilities.adjustForRepeats(wordString)
-                    speech.speak(wordString, voice)
+                    self.speakMessage(wordString, voice)
 
         self.updateBrailleReview(targetCursorCell)
         self.currentReviewContents = wordString
@@ -1578,12 +1576,12 @@ class Script(script.Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (not charString) or (not len(charString)):
-                speech.speak(messages.BLANK)
+                self.speakMessage(messages.BLANK)
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n" and speechType != 3:
-                    speech.speak(messages.BLANK)
+                    self.speakMessage(messages.BLANK)
                 elif speechType == 3:
                     self.speakUnicodeCharacter(charString)
                 elif speechType == 2:
@@ -1709,21 +1707,19 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not lineString) \
-               or (not len(lineString)) \
-               or (lineString == "\n"):
-                speech.speak(messages.BLANK)
+            if not lineString or lineString == "\n":
+                self.speakMessage(messages.BLANK)
             elif lineString.isspace():
-                speech.speak(messages.WHITE_SPACE)
+                self.speakMessage(messages.WHITE_SPACE)
             elif lineString.isupper() and (speechType < 2 or speechType > 3):
-                speech.speak(lineString, voice)
+                self.speakMessage(lineString, voice)
             elif speechType == 2:
                 self.spellCurrentItem(lineString)
             elif speechType == 3:
                 self.phoneticSpellCurrentItem(lineString)
             else:
                 lineString = self.utilities.adjustForRepeats(lineString)
-                speech.speak(lineString, voice)
+                self.speakMessage(lineString, voice)
 
         self.updateBrailleReview()
         self.currentReviewContents = lineString
@@ -2322,7 +2318,7 @@ class Script(script.Script):
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
  
-        self.presentObject(obj, alreadyFocused=True)
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['checkedChange'] = hash(obj), event.detail1
 
     def onChildrenAdded(self, event):
@@ -2445,8 +2441,7 @@ class Script(script.Script):
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['expandedChange'] = hash(obj), event.detail1
 
         details = self.utilities.detailsContentForObject(obj)
@@ -2471,8 +2466,7 @@ class Script(script.Script):
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['indeterminateChange'] = hash(obj), event.detail1
 
     def onMouseButton(self, event):
@@ -2522,8 +2516,7 @@ class Script(script.Script):
 
         names[hash(obj)] = event.any_data
         self.pointOfReference['names'] = names
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
 
     def onPressedChanged(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
@@ -2536,8 +2529,7 @@ class Script(script.Script):
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['pressedChange'] = hash(obj), event.detail1
 
     def onSelectedChanged(self, event):
@@ -2711,13 +2703,12 @@ class Script(script.Script):
                and not _settingsManager.getSetting('presentToolTips'):
                 return
             if event.detail1:
-                self.presentObject(obj)
+                self.presentObject(obj, interrupt=True)
                 return
  
             if orca_state.locusOfFocus and keyString == "F1":
                 obj = orca_state.locusOfFocus
-                self.updateBraille(obj)
-                speech.speak(self.speechGenerator.generateSpeech(obj, priorObj=event.source))
+                self.presentObject(obj, priorObj=event.source, interrupt=True)
                 return
 
     def onTextAttributesChanged(self, event):
@@ -2784,7 +2775,7 @@ class Script(script.Script):
         else:
             voice = self.speechGenerator.voice(string=string)
             string = self.utilities.adjustForRepeats(string)
-            speech.speak(string, voice)
+            self.speakMessage(string, voice)
 
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
@@ -2849,7 +2840,7 @@ class Script(script.Script):
             else:
                 voice = self.speechGenerator.voice(obj=event.source, string=string)
                 string = self.utilities.adjustForRepeats(string)
-                speech.speak(string, voice)
+                self.speakMessage(string, voice)
 
         if len(string) != 1:
             return
@@ -3284,7 +3275,7 @@ class Script(script.Script):
 
         voice = self.speechGenerator.voice(obj=obj, string=sentence)
         sentence = self.utilities.adjustForRepeats(sentence)
-        speech.speak(sentence, voice)
+        self.speakMessage(sentence, voice)
         return True
 
     def echoPreviousWord(self, obj, offset=None):
@@ -3360,7 +3351,7 @@ class Script(script.Script):
 
         voice = self.speechGenerator.voice(obj=obj, string=word)
         word = self.utilities.adjustForRepeats(word)
-        speech.speak(word, voice)
+        self.speakMessage(word, voice)
         return True
 
     def sayCharacter(self, obj):
@@ -3528,6 +3519,9 @@ class Script(script.Script):
 
     def presentObject(self, obj, **args):
         interrupt = args.get("interrupt", False)
+        msg = "DEFAULT: Presenting object %s. Interrupt: %s" % (obj, interrupt)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         self.updateBraille(obj, **args)
         utterances = self.speechGenerator.generateSpeech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
@@ -3900,7 +3894,7 @@ class Script(script.Script):
         for (charIndex, character) in enumerate(itemString):
             voice = self.speechGenerator.voice(string=character)
             phoneticString = phonnames.getPhoneticName(character.lower())
-            speech.speak(phoneticString, voice)
+            self.speakMessage(phoneticString, voice)
 
     def _saveLastCursorPosition(self, obj, caretOffset):
         """Save away the current text cursor position for next time.

@@ -289,7 +289,7 @@ class _ItemContext:
             self._script.presentationInterrupt()
 
         if self._frame and self._frame != prior._frame:
-            self._script.presentObject(self._frame, alreadyFocused=True, inMouseReview=True)
+            self._script.presentObject(self._frame, alreadyFocused=True, inMouseReview=True, interrupt=True)
 
         if self._script.utilities.containsOnlyEOCs(self._obj):
             msg = "MOUSE REVIEW: Not presenting object which contains only EOCs"

@@ -1278,7 +1278,7 @@ class StructuralNavigation:
             return
 
         eventsynthesizer.scrollToTopEdge(obj)
-        self._script.presentObject(obj, offset=offset, priorObj=priorObj)
+        self._script.presentObject(obj, offset=offset, priorObj=priorObj, interrupt=True)
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
