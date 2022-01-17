@@ -44,7 +44,7 @@ class Script(default.Script):
         """Callback for window:create accessibility events."""
 
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
-        allLabels = pyatspi.findAllDescendants(event.source, hasRole)
+        allLabels = self.utilities.findAllDescendants(event.source, hasRole)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
 
