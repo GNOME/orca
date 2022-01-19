@@ -340,7 +340,10 @@ class ScriptManager:
 
         def _pid(app):
             try:
-                return app.get_process_id()
+                result = app.get_process_id()
+                msg = "SCRIPT MANAGER: %s is has pid: %s" % (app, result)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return result
             except:
                 msg = "SCRIPT MANAGER: Exception getting pid for %s" % app
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -348,7 +351,10 @@ class ScriptManager:
 
         def _isValidApp(app):
             try:
-                return a in self._desktop
+                result = app in self._desktop
+                msg = "SCRIPT MANAGER: %s is in desktop: %s" % (app, result)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return result
             except:
                 msg = "SCRIPT MANAGER: Exception seeing if %s is in desktop" % app
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -381,7 +387,16 @@ class ScriptManager:
             msg = "SCRIPT MANAGER: %s is no longer in registry's desktop" % app
             debug.println(debug.LEVEL_INFO, msg, True)
 
-            appScript = self.appScripts.pop(app)
+            try:
+                appScript = self.appScripts.pop(app)
+            except KeyError:
+                msg = "SCRIPT MANAGER: %s not found in appScripts" % app
+                debug.println(debug.LEVEL_INFO, msg, True)
+                continue
+
+            msg = "SCRIPT MANAGER: Old script for app found: %s" % appScript
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             newScript = self._getScriptForAppReplicant(app)
             if newScript:
                 msg = "SCRIPT MANAGER: Script for app replicant found: %s" % newScript
