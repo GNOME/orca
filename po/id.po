@@ -2,15 +2,15 @@
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013, 2014.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018-2021.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018-2022.
 # Sucipto <sucipto@pm.me>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-12-06 12:34+0000\n"
-"PO-Revision-Date: 2021-12-24 14:02+0700\n"
+"POT-Creation-Date: 2022-01-14 16:40+0000\n"
+"PO-Revision-Date: 2022-01-19 16:16+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -10733,8 +10733,8 @@ msgstr "Pilihan dipulihkan."
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-msgid "Selection removed."
-msgstr "Pilihan dihapus."
+msgid "Text unselected."
+msgstr "Teks tak dipilih."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14031,6 +14031,9 @@ msgid ""
 msgstr ""
 "Untuk menurunkan tekan panah kiri, untuk menaikkan tekan panah kanan. Untuk "
 "ke minimum tekan home, dan untuk maksimum tekan end."
+
+#~ msgid "Selection removed."
+#~ msgstr "Pilihan dihapus."
 
 #~ msgid "Function"
 #~ msgstr "Fungsi"
