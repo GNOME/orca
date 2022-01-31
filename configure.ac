@@ -1,4 +1,4 @@
-m4_define([orca_version], [40.1])
+m4_define([orca_version], [40.2])
 
 m4_define(pygobject_required_version, 3.18)
 m4_define(atspi_required_version, 2.26)
