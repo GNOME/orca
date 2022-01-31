@@ -251,20 +251,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(string=text, obj=obj, **args))
             return result
 
-        result = []
-        endOffset = startOffset + len(text)
-        split = self._script.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
-        for start, end, string, language, dialect in split:
-            if not string:
-                continue
-            args["language"], args["dialect"] = language, dialect
-            voice = self.voice(string=string, obj=obj, **args)
-            string = self._script.utilities.adjustForLinks(obj, string, start)
-            rv = [self._script.utilities.adjustForRepeats(string)]
-            rv.extend(voice)
-            result.append(rv)
-
-        return result
+        return super()._generateCurrentLineText(obj, **args)
 
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
