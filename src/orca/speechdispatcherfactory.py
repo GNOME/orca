@@ -564,7 +564,7 @@ class SpeechServer(speechserver.SpeechServer):
         # set according to the current locale.
         from locale import getlocale, LC_MESSAGES
         locale = getlocale(LC_MESSAGES)[0]
-        if locale is None or locale == 'C':
+        if locale is None or not '_' in locale:
             locale_language = None
         else:
             locale_lang, locale_dialect = locale.split('_')
