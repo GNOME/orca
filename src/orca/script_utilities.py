@@ -3246,16 +3246,6 @@ class Utilities:
 
         return "%s: %s" % (localizedKey, localizedValue)
 
-    def getLanguageAndDialectForObject(self, obj):
-        """Returns a (language, dialect) tuple for obj."""
-
-        locale, encoding = obj.objectLocale.split(".")
-        if not locale:
-            locale, encoding = local.getdefaultlocale()
-
-        language, dialect = locale.split("_")
-        return language, dialect
-
     def splitSubstringByLanguage(self, obj, start, end):
         """Returns a list of (start, end, string, language, dialect) tuples."""
 
