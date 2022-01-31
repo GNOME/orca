@@ -1,3 +1,18 @@
+41.2 - 31 January 2022
+
+Web:
+
+* Fix bug causing widgets descending from off-screen label elements
+  to be skipped over
+
+General:
+
+* Fix bug causing accessing preferences to fail for Esperanto
+
+* Add more event-flood detection and handling for improved performance
+
+=========
+
 41.1 - 1 December 2021
 
 Web:
