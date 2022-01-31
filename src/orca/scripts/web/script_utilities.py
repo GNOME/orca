@@ -5019,6 +5019,11 @@ class Utilities(script_utilities.Utilities):
         else:
             notify = False
             obj, offset = self.searchForCaretContext(event.source)
+            # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
+            # focused.
+            if obj and self.isDead(orca_state.locusOfFocus) \
+               and obj.getState().contains(pyatspi.STATE_FOCUSED):
+                notify = True
 
         if obj:
             msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
