@@ -1656,13 +1656,6 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-            if event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
-               and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
-               and event.source != orca_state.locusOfFocus:
-                msg = "WEB: Event ignored: Entry is not (yet) the locus of focus. Waiting for focus event."
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return True
-
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1726,6 +1719,13 @@ class Script(default.Script):
         elif self.utilities.lastInputEventWasCaretNav():
             msg = "WEB: Caret moved due to native caret navigation."
             debug.println(debug.LEVEL_INFO, msg, True)
+
+        elif event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
+           and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+           and event.source != orca_state.locusOfFocus:
+            msg = "WEB: Focused entry is not (yet) the locus of focus."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            notify = force = handled = True
 
         msg = "WEB: Setting context and focus to: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
