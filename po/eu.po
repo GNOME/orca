@@ -4,13 +4,13 @@
 #
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2008, 2009, 2010, 2011.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2012, 2013, 2014, 2015.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2021.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2021, 2022.
 #
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-12-06 12:34+0000\n"
-"PO-Revision-Date: 2021-12-25 10:00+0100\n"
+"POT-Creation-Date: 2022-01-31 15:38+0000\n"
+"PO-Revision-Date: 2022-02-13 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -10714,8 +10714,8 @@ msgstr "Hautapena berregin da."
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-msgid "Selection removed."
-msgstr "Hautapena kendu da."
+msgid "Text unselected."
+msgstr "Testua desautatu da."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14033,6 +14033,9 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr "Sakatu ezkerrera gezia gutxiagotzeko, eskuinera gezi handiagotzeko. Sakatu Hasiera tekla minimora joateko, eta  Amaiera maximora joateko."
+
+#~ msgid "Selection removed."
+#~ msgstr "Hautapena kendu da."
 
 #~ msgid "Remove User Profile"
 #~ msgstr "Kendu erabiltzaile-profila"
