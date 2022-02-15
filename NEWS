@@ -1,3 +1,68 @@
+42.beta - 15 February 2022
+
+Web:
+
+* Fix several bugs in which we update our location silently when we
+  should instead announce it
+
+* Improve behavior during event flood of text-related events from
+  web apps
+
+* Attempt to work around object destruction during structural nav
+
+* Improve behavior of label ancestors of widgets
+
+General:
+
+* Fix bug causing accessing preferences to fail for esperanto
+
+* Handle apps going defunct during cleanup; more debugging
+
+* Handle exception when object is destroyed while getting text attributes
+
+* Try to handle error from mate-notification-daemon during window:create
+
+* Improve performance in gnome-shell
+
+* Improve presentation of all text becoming unselected during caret
+  navigation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 Alexander Shopov
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Marek Černocký
+  da              Danish                    Alan Mortensen
+  da              Danish                    Ask Hjorth Larsen
+  de              German                    Mario Blättermann
+  de              German                    Tim Sabsch
+  es              Spanish                   Daniel Mustieles
+  es              Spanish                   Francisco Javier Dorado
+  eu              Basque                    Asier Sarasua Garmendia
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Charles Monzat
+  gl              Galician                  Fran Dieguez
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Kukuh Syafaat
+  it              Italian                   Milo Casagrande
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lv              Latvian                   Rūdolfs Mazurs
+  ne              Nepali                    Pawan Chitrakar
+  nl              Dutch                     Nathan Follens
+  oc              Occitan                   Quentin PAGÈS
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Leônidas Araújo
+  pt_BR           Brazilian Portuguese      Tiago Casal
+  pt              Portuguese                Hugo Carvalho
+  ru              Russian                   Aleksandr Melman
+  sl              Slovenian                 Matej Urbančič
+  sv              Swedish                   Anders Jonsson
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Boyuan Yang
+
+=========
+
 41.1 - 1 December 2021
 
 Web:
