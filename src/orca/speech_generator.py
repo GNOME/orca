@@ -1229,9 +1229,6 @@ class SpeechGenerator(generator.Generator):
             return result
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        if self._script.EMBEDDED_OBJECT_CHARACTER in text:
-            return []
-
         if text == '\n' and _settingsManager.getSetting('speakBlankLines') \
            and not self._script.inSayAll() and args.get('total', 1) == 1:
             result = [messages.BLANK]
@@ -1242,6 +1239,7 @@ class SpeechGenerator(generator.Generator):
         endOffset = startOffset + len(text)
         split = self._script.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
         for start, end, string, language, dialect in split:
+            string = string.replace(self._script.EMBEDDED_OBJECT_CHARACTER, "")
             if not string:
                 continue
             args["language"], args["dialect"] = language, dialect
