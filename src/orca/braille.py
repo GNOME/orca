@@ -230,6 +230,7 @@ TABLE_NAMES = {"Cz-Cz-g1": brltablenames.CZ_CZ_G1,
                "hi-in-g1": brltablenames.HI_IN_G1,
                "hu-hu-comp8": brltablenames.HU_HU_8DOT,
                "hu-hu-g1": brltablenames.HU_HU_G1,
+               "hu-hu-g2": brltablenames.HU_HU_G2,
                "it-it-g1": brltablenames.IT_IT_G1,
                "nl-be-g1": brltablenames.NL_BE_G1}
 

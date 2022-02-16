@@ -149,6 +149,10 @@ HU_HU_G1   = _("Hungarian Grade 1")
 
 # Translators: These is the name of a braille translation table. To learn more
 # about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+HU_HU_G2   = _("Hungarian Grade 2")
+
+# Translators: These is the name of a braille translation table. To learn more
+# about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 IT_IT_G1   = _("Italian Grade 1")
 
 # Translators: These is the name of a braille translation table. To learn more
