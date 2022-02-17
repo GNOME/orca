@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-01-06 12:21+0000\n"
-"PO-Revision-Date: 2022-01-07 00:06+0200\n"
+"POT-Creation-Date: 2022-02-16 14:18+0000\n"
+"PO-Revision-Date: 2022-02-17 17:40+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -601,12 +601,19 @@ msgstr "Угорська, рівень 1"
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+#| msgid "Hungarian Grade 1"
+msgid "Hungarian Grade 2"
+msgstr "Угорська, рівень 2"
+
+#. Translators: These is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Італійська, рівень 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Бельгійська голландська, рівень 1"
 
@@ -10749,8 +10756,6 @@ msgstr "Позначення відновлено."
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Text unselected."
 msgstr "Позначення тексту скасовано."
 
