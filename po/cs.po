@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-01-06 12:21+0000\n"
-"PO-Revision-Date: 2022-01-12 18:38+0100\n"
+"POT-Creation-Date: 2022-02-16 14:18+0000\n"
+"PO-Revision-Date: 2022-02-21 10:15+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -600,12 +600,20 @@ msgstr "Maďarština, Grade 1"
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+#, fuzzy
+#| msgid "Hungarian Grade 1"
+msgid "Hungarian Grade 2"
+msgstr "Maďarština, Grade 2"
+
+#. Translators: These is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italština, Grade 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Vlámština, Grade 1"
 
