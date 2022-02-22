@@ -337,7 +337,7 @@ class Utilities(script_utilities.Utilities):
 
     def documentFrameURI(self, documentFrame=None):
         documentFrame = documentFrame or self.documentFrame()
-        if documentFrame and not self.isZombie(documentFrame):
+        if documentFrame:
             try:
                 document = documentFrame.queryDocument()
             except NotImplementedError:
