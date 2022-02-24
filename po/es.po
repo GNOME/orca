@@ -12,20 +12,21 @@
 # 
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010-2021.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007-2022.
+# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-01-14 16:40+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35+0100\n"
-"Last-Translator: Francisco Javier Dorado Martínez <javier@tiflolinux.org>\n"
+"POT-Creation-Date: 2022-02-16 14:18+0000\n"
+"PO-Revision-Date: 2022-02-24 12:49+0100\n"
+"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 41.0\n"
 
 #: orca-autostart.desktop.in:4
@@ -604,12 +605,19 @@ msgstr "Húngaro grado 1"
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+#| msgid "Hungarian Grade 1"
+msgid "Hungarian Grade 2"
+msgstr "Húngaro grado 2"
+
+#. Translators: These is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italiano grado 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Holandés de Bélgica grado 1"
 
@@ -10770,8 +10778,6 @@ msgstr "Selección restaurada."
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Text unselected."
 msgstr "Texto no seleccionado."
 
