@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-01-26 19:00+0000\n"
-"PO-Revision-Date: 2022-01-26 21:14+0100\n"
+"POT-Creation-Date: 2022-02-25 00:11+0000\n"
+"PO-Revision-Date: 2022-02-25 19:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@src.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -421,189 +421,195 @@ msgstr "urvrs"
 msgid "emb"
 msgstr "vgr"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
 msgstr "Češčina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
 msgstr "Španščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
 msgstr "Kanadska francoščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:48
 msgid "France French Grade 2"
 msgstr "Francoska francoščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
 msgstr "Latvijščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
 msgstr "Nizozemščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
 msgstr "Norveščina, 0. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
 msgstr "Norveščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
 msgstr "Norveščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
 msgstr "Norveščina, 3. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
 msgstr "Poljščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
 msgstr "Portugalščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
 msgstr "Švedščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
 msgstr "Arabščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
 msgstr "Valižanščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
 msgstr "Valižanščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "German Grade 0"
 msgstr "Nemščina, 0. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:104
 msgid "German Grade 1"
 msgstr "Nemščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:108
 msgid "German Grade 2"
 msgstr "Nemščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
 msgstr "Angleška angleščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
 msgstr "Angleška angleščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
 msgstr "Ameriška angleščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
 msgstr "Ameriška angleščina, 2. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
 msgstr "Kanadska francoščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:132
 msgid "France French Grade 1"
 msgstr "Francoska francoščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
 msgstr "Grščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
 msgstr "Hindujščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
 msgstr "Madžarščina, 8 pik, računalniški"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
 msgstr "Madžarščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+msgid "Hungarian Grade 2"
+msgstr "Madžarščina, 2. razred"
+
+#. Translators: This is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italijanščina, 1. razred"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Belgijska nizozemščina, 1. razred"
 
