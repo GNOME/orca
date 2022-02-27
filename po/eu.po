@@ -9,8 +9,8 @@
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-01-31 15:38+0000\n"
-"PO-Revision-Date: 2022-02-13 10:00+0100\n"
+"POT-Creation-Date: 2022-02-16 14:18+0000\n"
+"PO-Revision-Date: 2022-02-27 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -595,12 +595,18 @@ msgstr "Hungariera 1. maila"
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+msgid "Hungarian Grade 2"
+msgstr "Hungariera 2. maila"
+
+#. Translators: These is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italiera 1. maila"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Belgikako nederlandera 1. maila"
 
