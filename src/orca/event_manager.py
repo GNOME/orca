@@ -447,9 +447,13 @@ class EventManager:
             except:
                 toolkitName = None
             if toolkitName in self._synchronousToolkits \
-               or isinstance(e, input_event.MouseButtonEvent) \
-               or e.type.startswith("object:children-changed"):
+               or isinstance(e, input_event.MouseButtonEvent):
                 asyncMode = False
+            elif e.type.startswith("object:children-changed"):
+                try:
+                    asyncMode = e.source.getRole() == pyatspi.ROLE_TABLE
+                except:
+                    asyncMode = True
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
 
