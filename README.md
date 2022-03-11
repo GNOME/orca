@@ -1,4 +1,4 @@
-# Orca v42.rc
+# Orca v42.0
 
 ## Introduction
 
