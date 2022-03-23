@@ -5610,7 +5610,7 @@ class Utilities:
             return True
 
         if self.isDead(orca_state.locusOfFocus):
-            return True
+            return state.contains(pyatspi.STATE_FOCUSED)
 
         msg = "INFO: Event is not being presented due to lack of cause"
         debug.println(debug.LEVEL_INFO, msg, True)
