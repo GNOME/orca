@@ -845,6 +845,8 @@ class Script(script.Script):
             hash(obj), state.contains(pyatspi.STATE_CHECKED)
         self.pointOfReference['selectedChange'] = \
             hash(obj), state.contains(pyatspi.STATE_SELECTED)
+        self.pointOfReference['expandedChange'] = \
+            hash(obj), state.contains(pyatspi.STATE_EXPANDED)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
