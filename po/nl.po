@@ -13,14 +13,14 @@
 # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011, 2016.
 # Redmar <redmar@ubuntu.com>, 2011, 2014.
 # Justin van Steijn <jvs@fsfe.org>, 2016, 2017.
-# Nathan Follens <nthn@unseen.is>, 2017-2021.
+# Nathan Follens <nfollens@gnome.org>, 2017-2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-01-06 16:03+0000\n"
-"PO-Revision-Date: 2021-04-02 12:08+0200\n"
-"Last-Translator: Nathan Follens <nthn@unseen.is>\n"
+"POT-Creation-Date: 2022-03-23 13:30+0000\n"
+"PO-Revision-Date: 2022-03-25 10:45+0100\n"
+"Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-03-17 08:36+0000\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 # vergrootglas/loep
 #: orca-autostart.desktop.in:4
@@ -430,189 +430,195 @@ msgstr "bwblk"
 msgid "emb"
 msgstr "inb"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
 msgstr "Tsjechisch klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
 msgstr "Spaans klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
 msgstr "Canadees Frans klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:48
 msgid "France French Grade 2"
 msgstr "Frans klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
 msgstr "Lets klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
 msgstr "Nederlands klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
 msgstr "Noors klasse 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
 msgstr "Noors klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
 msgstr "Noors klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
 msgstr "Noors klasse 3"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
 msgstr "Pools klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
 msgstr "Portugees klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
 msgstr "Zweeds klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
 msgstr "Arabisch klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
 msgstr "Welsh klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
 msgstr "Welsh klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "German Grade 0"
 msgstr "Duits klasse 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:104
 msgid "German Grade 1"
 msgstr "Duits klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:108
 msgid "German Grade 2"
 msgstr "Duits klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
 msgstr "Brits Engels klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
 msgstr "Brits Engels klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
 msgstr "Amerikaans Engels klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
 msgstr "Amerikaans Engels klasse 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
 msgstr "Canadees Frans klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:132
 msgid "France French Grade 1"
 msgstr "Frans klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
 msgstr "Grieks klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
 msgstr "Hindi klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
 msgstr "Hongaarse 8-punt computer"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
 msgstr "Hongaars klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
+msgid "Hungarian Grade 2"
+msgstr "Hongaars klasse 2"
+
+#. Translators: This is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italiaans klasse 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:156
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
 msgstr "Vlaams klasse 1"
 
@@ -4569,7 +4575,7 @@ msgstr "Schakelt layoutmodus in voor inhoud"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:194 src/orca/keybindings.py:195
+#: src/orca/guilabels.py:194 src/orca/keybindings.py:200
 msgid "double click"
 msgstr "dubbelklik"
 
@@ -4580,7 +4586,7 @@ msgstr "dubbelklik"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:199 src/orca/keybindings.py:201
+#: src/orca/guilabels.py:199 src/orca/keybindings.py:206
 msgid "triple click"
 msgstr "driemaal klikken"
 
@@ -5786,7 +5792,7 @@ msgstr "minus"
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
-#: src/orca/keybindings.py:140
+#: src/orca/keybindings.py:145
 msgid "Insert"
 msgstr "Insert"
 
@@ -5795,28 +5801,28 @@ msgstr "Insert"
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: src/orca/keybindings.py:144 src/orca/keybindings.py:149
+#: src/orca/keybindings.py:149 src/orca/keybindings.py:154
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: src/orca/keybindings.py:156
+#: src/orca/keybindings.py:161
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: src/orca/keybindings.py:161
+#: src/orca/keybindings.py:166
 msgid "Super"
 msgstr "Super"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: src/orca/keybindings.py:166
+#: src/orca/keybindings.py:171
 msgid "Meta2"
 msgstr "Meta2"
 
@@ -5824,21 +5830,21 @@ msgstr "Meta2"
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: src/orca/keybindings.py:173
+#: src/orca/keybindings.py:178
 msgid "Alt_L"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: src/orca/keybindings.py:178
+#: src/orca/keybindings.py:183
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: src/orca/keybindings.py:183
+#: src/orca/keybindings.py:188
 msgid "Shift"
 msgstr "Shift"
 
@@ -10853,11 +10859,18 @@ msgstr "Selectie verwijderd."
 msgid "Selection restored."
 msgstr "Selectie hersteld."
 
+#. Translators: This message is presented to the user when text had been
+#. selected in a document and no longer is, e.g. as the result of navigating
+#. without holding down the shift key.
+#: src/orca/messages.py:2151
+msgid "Text unselected."
+msgstr "Tekst niet geselecteerd."
+
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2152
+#: src/orca/messages.py:2157
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
 msgstr "Grootte: %d, %d. Locatie: %d, %d."
@@ -10866,50 +10879,50 @@ msgstr "Grootte: %d, %d. Locatie: %d, %d."
 #. current object in pixels. This string refers to the full/verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2158
+#: src/orca/messages.py:2163
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
 msgstr "Breedte: %d. Hoogte: %d. %d van de linkerkant. %d van de bovenkant."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: src/orca/messages.py:2162
+#: src/orca/messages.py:2167
 msgid "Speech disabled."
 msgstr "Oplezen uitgezet."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: src/orca/messages.py:2166
+#: src/orca/messages.py:2171
 msgid "Speech enabled."
 msgstr "Oplezen aangezet."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2169
+#: src/orca/messages.py:2174
 msgid "faster."
 msgstr "sneller."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2172
+#: src/orca/messages.py:2177
 msgid "slower."
 msgstr "langzamer."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2175
+#: src/orca/messages.py:2180
 msgid "higher."
 msgstr "hoger."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2178
+#: src/orca/messages.py:2183
 msgid "lower."
 msgstr "lager."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2181
+#: src/orca/messages.py:2186
 msgid "louder."
 msgstr "luider."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2184
+#: src/orca/messages.py:2189
 msgid "softer."
 msgstr "zachter."
 
@@ -10918,7 +10931,7 @@ msgstr "zachter."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2191
+#: src/orca/messages.py:2196
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "Detailniveau: beknopt"
@@ -10928,7 +10941,7 @@ msgstr "Detailniveau: beknopt"
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2198
+#: src/orca/messages.py:2203
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Detailniveau: gedetaillerd"
@@ -10938,30 +10951,30 @@ msgstr "Detailniveau: gedetaillerd"
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: src/orca/messages.py:2204
+#: src/orca/messages.py:2209
 msgid " dot dot dot"
 msgstr " punt punt punt"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2207
+#: src/orca/messages.py:2212
 msgid "Screen reader on."
 msgstr "Schermlezer aan."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2210
+#: src/orca/messages.py:2215
 msgid "Screen reader off."
 msgstr "Schermlezer uit."
 
 # zie ook: speech is not available
 #. Translators: This message means speech synthesis is not installed or working.
-#: src/orca/messages.py:2213
+#: src/orca/messages.py:2218
 msgid "Speech is unavailable."
 msgstr "Spraak is niet beschikbaar."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2218
+#: src/orca/messages.py:2223
 msgctxt "status bar"
 msgid "Not found"
 msgstr "Niet gevonden"
@@ -10969,7 +10982,7 @@ msgstr "Niet gevonden"
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2223
+#: src/orca/messages.py:2228
 msgid "Status bar not found"
 msgstr "Statusbalk niet gevonden"
 
@@ -10977,7 +10990,7 @@ msgstr "Statusbalk niet gevonden"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2229
+#: src/orca/messages.py:2234
 msgid "string not found"
 msgstr "tekenreeks niet gevonden"
 
@@ -10987,7 +11000,7 @@ msgstr "tekenreeks niet gevonden"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2237
+#: src/orca/messages.py:2242
 msgid "Structural navigation keys off."
 msgstr "Structurele navigatietoetsen uitgezet."
 
@@ -10997,7 +11010,7 @@ msgstr "Structurele navigatietoetsen uitgezet."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2245
+#: src/orca/messages.py:2250
 msgid "Structural navigation keys on."
 msgstr "Structurele navigatietoetsen aangezet."
 
@@ -11007,73 +11020,73 @@ msgstr "Structurele navigatietoetsen aangezet."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2253
+#: src/orca/messages.py:2258
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Niet gevonden"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2256
+#: src/orca/messages.py:2261
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Rij %(row)d, kolom %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: src/orca/messages.py:2260
+#: src/orca/messages.py:2265
 msgid "End of table"
 msgstr "Einde tabel"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2265
+#: src/orca/messages.py:2270
 msgid "Speak cell"
 msgstr "Cel uitspreken"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2270
+#: src/orca/messages.py:2275
 msgid "Speak row"
 msgstr "Rij uitspreken"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2275
+#: src/orca/messages.py:2280
 msgid "Non-uniform"
 msgstr "Niet-uniform"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2280
+#: src/orca/messages.py:2285
 msgid "Not in a table."
 msgstr "Niet in een tabel."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2284
+#: src/orca/messages.py:2289
 msgid "Columns reordered"
 msgstr "Volgorde kolommen aangepast"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2288
+#: src/orca/messages.py:2293
 msgid "Rows reordered"
 msgstr "Volgorde rijen aangepast"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2292
+#: src/orca/messages.py:2297
 #, python-format
 msgid "column %d"
 msgstr "kolom %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2296
+#: src/orca/messages.py:2301
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "kolom %(index)d van %(total)d"
@@ -11081,21 +11094,21 @@ msgstr "kolom %(index)d van %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2301
+#: src/orca/messages.py:2306
 msgid "Bottom of column."
 msgstr "Onderkant van kolom."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2306
+#: src/orca/messages.py:2311
 msgid "Top of column."
 msgstr "Bovenkant van kolom."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2311
+#: src/orca/messages.py:2316
 #, python-format
 msgid "Column %s selected"
 msgstr "Kolom %s geselecteerd"
@@ -11105,7 +11118,7 @@ msgstr "Kolom %s geselecteerd"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2318
+#: src/orca/messages.py:2323
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "Kolommen %s tot en met %s geselecteerd"
@@ -11115,7 +11128,7 @@ msgstr "Kolommen %s tot en met %s geselecteerd"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2325
+#: src/orca/messages.py:2330
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "Kolommen %s tot en met %s niet geselecteerd"
@@ -11123,21 +11136,21 @@ msgstr "Kolommen %s tot en met %s niet geselecteerd"
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2330
+#: src/orca/messages.py:2335
 #, python-format
 msgid "Column %s unselected"
 msgstr "Kolom %s niet geselecteerd"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2334
+#: src/orca/messages.py:2339
 #, python-format
 msgid "row %d"
 msgstr "rij %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2338
+#: src/orca/messages.py:2343
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "rij %(index)d van %(total)d"
@@ -11145,46 +11158,46 @@ msgstr "rij %(index)d van %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2343
+#: src/orca/messages.py:2348
 msgid "Beginning of row."
 msgstr "Begin van rij."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2348
+#: src/orca/messages.py:2353
 msgid "End of row."
 msgstr "Einde van rij."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2352
+#: src/orca/messages.py:2357
 msgid "Row deleted."
 msgstr "Rij verwijderd."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2356
+#: src/orca/messages.py:2361
 msgid "Last row deleted."
 msgstr "Laatste rij verwijderd."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2360
+#: src/orca/messages.py:2365
 msgid "Row inserted."
 msgstr "Rij ingevoegd."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2365
+#: src/orca/messages.py:2370
 msgid "Row inserted at the end of the table."
 msgstr "Rij toegevoegd aan het eind van de tabel."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2370
+#: src/orca/messages.py:2375
 #, python-format
 msgid "Row %s selected"
 msgstr "Rij %s geselecteerd"
@@ -11194,7 +11207,7 @@ msgstr "Rij %s geselecteerd"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2377
+#: src/orca/messages.py:2382
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "Rijen %s tot en met %s geselecteerd"
@@ -11204,7 +11217,7 @@ msgstr "Rijen %s tot en met %s geselecteerd"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2384
+#: src/orca/messages.py:2389
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "Rijen %s tot en met %s niet geselecteerd"
@@ -11212,21 +11225,21 @@ msgstr "Rijen %s tot en met %s niet geselecteerd"
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2389
+#: src/orca/messages.py:2394
 #, python-format
 msgid "Row %s unselected"
 msgstr "Rij %s niet geselecteerd"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2393
+#: src/orca/messages.py:2398
 msgctxt "text"
 msgid "selected"
 msgstr "geselecteerd"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2397
+#: src/orca/messages.py:2402
 msgctxt "text"
 msgid "unselected"
 msgstr "niet geselecteerd"
@@ -11234,47 +11247,47 @@ msgstr "niet geselecteerd"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2408
+#: src/orca/messages.py:2413
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H uur, %M minuten en %S seconden"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2413
+#: src/orca/messages.py:2418
 msgid "%H hours and %M minutes"
 msgstr "%H uur en %M minuten"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2417
+#: src/orca/messages.py:2422
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2421
+#: src/orca/messages.py:2426
 msgctxt "command"
 msgid "undo"
 msgstr "ongedaan maken"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2425
+#: src/orca/messages.py:2430
 msgctxt "command"
 msgid "redo"
 msgstr "opnieuw"
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2428
+#: src/orca/messages.py:2433
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Schermlezer versie %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2432
+#: src/orca/messages.py:2437
 msgid "white space"
 msgstr "witruimte"
 
@@ -11282,7 +11295,7 @@ msgstr "witruimte"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2438
+#: src/orca/messages.py:2443
 msgid "Wrapping to bottom."
 msgstr "Vanaf onderzijde voortzetten."
 
@@ -11290,21 +11303,21 @@ msgstr "Vanaf onderzijde voortzetten."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2444
+#: src/orca/messages.py:2449
 msgid "Wrapping to top."
 msgstr "Vanaf bovenzijde voortzetten."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2449
+#: src/orca/messages.py:2454
 msgid "0 items"
 msgstr "0 items"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2457 src/orca/messages.py:2476
+#: src/orca/messages.py:2462 src/orca/messages.py:2481
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -11312,7 +11325,7 @@ msgstr[0] "Cel beslaat %d rij"
 msgstr[1] "Cel beslaat %d rijen"
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2462
+#: src/orca/messages.py:2467
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -11322,7 +11335,7 @@ msgstr[1] " %d kolommen"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2469
+#: src/orca/messages.py:2474
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -11332,7 +11345,7 @@ msgstr[1] "Cel beslaat %d kolommen"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2486
+#: src/orca/messages.py:2491
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -11342,7 +11355,7 @@ msgstr[1] "%d tekens te lang"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2494
+#: src/orca/messages.py:2499
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -11352,7 +11365,7 @@ msgstr[1] "(%d dialoogvensters)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2500
+#: src/orca/messages.py:2505
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -11360,7 +11373,7 @@ msgstr[0] "%d dialoogvenster zonder focus"
 msgstr[1] "%d dialoogvensters zonder focus"
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2504
+#: src/orca/messages.py:2509
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -11369,7 +11382,7 @@ msgstr[1] "%d bytes"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2509
+#: src/orca/messages.py:2514
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -11377,7 +11390,7 @@ msgstr[0] "%d bestand gevonden"
 msgstr[1] "%d bestanden gevonden"
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2516
+#: src/orca/messages.py:2521
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -11385,7 +11398,7 @@ msgstr[0] "%d formulier"
 msgstr[1] "%d formulieren"
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2523
+#: src/orca/messages.py:2528
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -11394,7 +11407,7 @@ msgstr[1] "%d kopteksten"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2528
+#: src/orca/messages.py:2533
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -11404,7 +11417,7 @@ msgstr[1] "%d items"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2537
+#: src/orca/messages.py:2542
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -11414,7 +11427,7 @@ msgstr[1] "%d mijlpalen"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2543
+#: src/orca/messages.py:2548
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -11424,7 +11437,7 @@ msgstr[1] "%d items gevonden"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2549
+#: src/orca/messages.py:2554
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -11433,7 +11446,7 @@ msgstr[1] "%d citaten verlaten."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2554
+#: src/orca/messages.py:2559
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -11441,7 +11454,7 @@ msgstr[0] "%d lijst verlaten."
 msgstr[1] "%d lijsten verlaten."
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2558
+#: src/orca/messages.py:2563
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11450,7 +11463,7 @@ msgstr[1] "Lijst met %d items"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2568
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11463,8 +11476,8 @@ msgstr[1] "wiskundetabel met %d rijen"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2568 src/orca/messages.py:2584
-#: src/orca/messages.py:2668
+#: src/orca/messages.py:2573 src/orca/messages.py:2589
+#: src/orca/messages.py:2673
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11474,7 +11487,7 @@ msgstr[1] "Tabel met %d kolommen"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2578
+#: src/orca/messages.py:2583
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11483,7 +11496,7 @@ msgstr[1] "geneste wiskundetabel met %d rijen"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2593
+#: src/orca/messages.py:2598
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11492,7 +11505,7 @@ msgstr[1] "%d berichten.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2603
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11502,7 +11515,7 @@ msgstr[1] "%d procent."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2604
+#: src/orca/messages.py:2609
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11511,7 +11524,7 @@ msgstr[1] "%d procent van document gelezen"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2611
+#: src/orca/messages.py:2616
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11521,7 +11534,7 @@ msgstr[1] "%d beeldpunten"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2617
+#: src/orca/messages.py:2622
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11530,7 +11543,7 @@ msgstr[1] "%(count)d %(repeatChar)s tekens"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2624
+#: src/orca/messages.py:2629
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11541,7 +11554,7 @@ msgstr[1] "%(index)d van %(total)d items geselecteerd"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2638
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11551,7 +11564,7 @@ msgstr[1] "%d Standaard schermlezer-snelkoppelingen gevonden."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2641
+#: src/orca/messages.py:2646
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11561,7 +11574,7 @@ msgstr[1] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2648
+#: src/orca/messages.py:2653
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11570,7 +11583,7 @@ msgstr[1] "%d spaties"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2653
+#: src/orca/messages.py:2658
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11578,7 +11591,7 @@ msgstr[0] "%d tab"
 msgstr[1] "%d tabs"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2660
+#: src/orca/messages.py:2665
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11586,7 +11599,7 @@ msgstr[0] "%d tabel"
 msgstr[1] "%d tabellen"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2664
+#: src/orca/messages.py:2669
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11595,7 +11608,7 @@ msgstr[1] "tabel met %d rijen"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2680
+#: src/orca/messages.py:2685
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11604,7 +11617,7 @@ msgstr[1] "%d niet-bezochte verwijzingen"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2688
+#: src/orca/messages.py:2693
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
