@@ -2131,7 +2131,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if state.contains(pyatspi.STATE_EXPANDABLE) and state.contains(pyatspi.STATE_FOCUSABLE):
+        if state.contains(pyatspi.STATE_EXPANDABLE) and state.contains(pyatspi.STATE_FOCUSABLE) \
+           and role != pyatspi.ROLE_LINK:
             msg = "WEB: %s is focus mode widget because it's expandable and focusable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
