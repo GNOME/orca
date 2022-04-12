@@ -5972,6 +5972,11 @@ class Utilities:
         if not (startObj and endObj):
             return []
 
+        if self.isDead(startObj):
+            msg = "INFO: Cannot get subtree: Start object is dead."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         _include = lambda x: x
         _exclude = self.isStaticTextLeaf
 
