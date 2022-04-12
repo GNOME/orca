@@ -2501,6 +2501,13 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
+           and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+           and event.source != orca_state.locusOfFocus:
+            msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
