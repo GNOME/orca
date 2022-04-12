@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import pyatspi
+import re
 import sys
 import time
 import traceback
@@ -396,12 +397,26 @@ class Generator:
             descendant = self._script.utilities.realActiveDescendant(obj)
             name = self._generateName(descendant)
 
+        # If we don't have a label, always use the name.
+        if not label:
+            return name
+
         result.extend(label)
-        if not len(label):
-            result.extend(name)
-        elif len(name) and name[0].split() != label[0].split() \
-             and not label[0].startswith(name[0]):
-            result.extend(name)
+        if not name:
+            return result
+
+        # Try to eliminate names which are redundant to the label.
+        # Convert all non-alphanumeric characters to space and get the words.
+        nameWords = re.sub(r"[\W_]", " ", name[0]).split()
+        labelWords = re.sub(r"[\W_]", " ", label[0]).split()
+
+        # If all of the words in the name are in the label, the name is redundant.
+        if set(nameWords).issubset(set(labelWords)):
+            msg = "GENERATOR: name '%s' is redundant to label '%s'" % (name[0], label[0])
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return result
+
+        result.extend(name)
         return result
 
     def _generateLabelOrName(self, obj, **args):
