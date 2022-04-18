@@ -17,17 +17,12 @@
 # oversat til "start af brøk" men til "brøk start", med start og slut til
 # sidst. Det er gjort for at det skal være nemmere at skelne hvornår man rent
 # faktisk starter på det omtalte objekt.
-#
-# scootergrisen: venter på gennemlæsning af orca-help så jeg kan komme videre med orca
-# scootergrisen: speak speaking spoken er indtil videre oversat til sig sige
-# scootergrisen: tjek til sidst om sig skal ændres til oplæs - læs ... op
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-02-16 14:18+0000\n"
-"PO-Revision-Date: 2022-02-27 12:16+0100\n"
+"POT-Creation-Date: 2022-03-23 13:30+0000\n"
+"PO-Revision-Date: 2022-04-14 14:47+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -436,193 +431,193 @@ msgstr "regl"
 msgid "emb"
 msgstr "inl"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
 msgstr "Tjekkisk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
 msgstr "Spansk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
 msgstr "Fransk (Canada) niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:48
 msgid "France French Grade 2"
 msgstr "Fransk (Frankrig) niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
 msgstr "Lettisk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
 msgstr "Hollandsk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
 msgstr "Norsk niveau 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
 msgstr "Norsk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
 msgstr "Norsk niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
 msgstr "Norsk niveau 3"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
 msgstr "Polsk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
 msgstr "Portugisisk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
 msgstr "Svensk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
 msgstr "Arabisk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
 msgstr "Walisisk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
 msgstr "Walisisk niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "German Grade 0"
 msgstr "Tysk niveau 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:104
 msgid "German Grade 1"
 msgstr "Tysk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:108
 msgid "German Grade 2"
 msgstr "Tysk niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
 msgstr "Engelsk (Storbritannien) niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
 msgstr "Engelsk (Storbritannien) niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
 msgstr "Engelsk (USA) niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
 msgstr "Engelsk (USA) niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
 msgstr "Fransk (Canada) niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:132
 msgid "France French Grade 1"
 msgstr "Fransk (Frankrig) niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
 msgstr "Græsk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
 msgstr "Hindi niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
 msgstr "Ungarsk 8-punktscomputer"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
 msgstr "Ungarsk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
 msgid "Hungarian Grade 2"
 msgstr "Ungarsk niveau 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Italiensk niveau 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
@@ -1819,7 +1814,7 @@ msgstr "Udfør højreklik på det nuværende element i flad gennemgang"
 #. and the cursor will be positioned at the point where the speech was interrupted.
 #: src/orca/cmdnames.py:59
 msgid "Speak entire document"
-msgstr "Sig hele dokumentet"
+msgstr "Oplæs hele dokumentet"
 
 #. Translators: the 'flat review' feature of Orca allows the user to explore the
 #. text in a window in a 2D fashion. That is, Orca treats all the text from all
@@ -1829,7 +1824,7 @@ msgstr "Sig hele dokumentet"
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: src/orca/cmdnames.py:67
 msgid "Speak entire window using flat review"
-msgstr "Sig hele vinduet vha. flad gennemgang"
+msgstr "Oplæs hele vinduet vha. flad gennemgang"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1854,24 +1849,24 @@ msgstr "Udfør den detaljerede operation “hvor er jeg”"
 #. the selected/highlighted icons. Etc.
 #: src/orca/cmdnames.py:86
 msgid "Speak the current selection"
-msgstr "Sig den nuværende markering"
+msgstr "Oplæs den nuværende markering"
 
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: src/orca/cmdnames.py:90
 msgid "Speak link details"
-msgstr "Sig linkdetaljer"
+msgstr "Oplæs linkdetaljer"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken.
 #: src/orca/cmdnames.py:94
 msgid "Speak the status bar"
-msgstr "Sig statuslinjen"
+msgstr "Oplæs statuslinjen"
 
 #. Translators: This command will cause the window's title to be spoken.
 #: src/orca/cmdnames.py:97
 msgid "Speak the title bar"
-msgstr "Sig titellinjen"
+msgstr "Oplæs titellinjen"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -1941,7 +1936,7 @@ msgstr "Flyt flad gennemgang til begyndelsen af den forrige linje"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:152
 msgid "Speak the current flat review line"
-msgstr "Sig den nuværende linje i flad gennemgang"
+msgstr "Oplæs den nuværende linje i flad gennemgang"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1993,7 +1988,7 @@ msgstr "Flyt flad gennemgang til det forrige element eller ord"
 #. This command will speak the current word or item.
 #: src/orca/cmdnames.py:195
 msgid "Speak the current flat review item or word"
-msgstr "Sig det nuværende element eller ord i flad gennemgang"
+msgstr "Oplæs det nuværende element eller ord i flad gennemgang"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2050,7 +2045,7 @@ msgstr "Flyt flad gennemgang til ordet over det nuværende ord"
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:243
 msgid "Speak the current flat review object"
-msgstr "Sig det nuværende element i flad gennemgang"
+msgstr "Oplæs det nuværende element i flad gennemgang"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2082,7 +2077,7 @@ msgstr "Flyt flad gennemgang til det forrige tegn"
 #. This command will speak the current character
 #: src/orca/cmdnames.py:269
 msgid "Speak the current flat review character"
-msgstr "Sig det nuværende tegn i flad gennemgang"
+msgstr "Oplæs det nuværende tegn i flad gennemgang"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2093,7 +2088,7 @@ msgstr "Sig det nuværende tegn i flad gennemgang"
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:279
 msgid "Phonetically speak the current flat review character"
-msgstr "Sig det nuværende tegn i flad gennemgang fonetisk"
+msgstr "Oplæs det nuværende tegn i flad gennemgang fonetisk"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2104,7 +2099,7 @@ msgstr "Sig det nuværende tegn i flad gennemgang fonetisk"
 #. value.
 #: src/orca/cmdnames.py:289
 msgid "Speak unicode value of the current flat review character"
-msgstr "Sig unicodeværdien for det nuværende tegn i flad gennemgang"
+msgstr "Oplæs unicodeværdien for det nuværende tegn i flad gennemgang"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2317,7 +2312,7 @@ msgstr "Vis indstillingsdialogen for et program"
 #. and justification.
 #: src/orca/cmdnames.py:444
 msgid "Toggle the speaking of indentation and justification"
-msgstr "Indrykning og justering siges til/fra"
+msgstr "Slå oplæsning af indrykning og justering til/fra"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -2325,13 +2320,13 @@ msgstr "Indrykning og justering siges til/fra"
 #. toggling between the two options.
 #: src/orca/cmdnames.py:450
 msgid "Change spoken number style"
-msgstr "Ændr stilen for tal som siges"
+msgstr "Ændr stilen for tal som oplæses"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
 #: src/orca/cmdnames.py:454
 msgid "Cycle to the next speaking of punctuation level"
-msgstr "Skift til det næste tegnsætningsniveau som siges"
+msgstr "Skift til det næste niveau for oplæsning af tegnsætning"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2457,7 +2452,7 @@ msgstr ""
 #. keyboard commands used to review those previous messages.
 #: src/orca/cmdnames.py:549
 msgid "Speak and braille a previous chat room message"
-msgstr "Sig og vis med punktskrift en tidligere meddelelse fra chatrum"
+msgstr "Oplæs og vis med punktskrift en tidligere meddelelse fra chatrum"
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -4502,7 +4497,7 @@ msgstr "Giv _meddelelseshistorik som er chatrumsspecifik"
 #. any channel, but only if the chat application has focus.
 #: src/orca/guilabels.py:158
 msgid "Speak messages from"
-msgstr "Sig meddelelser fra"
+msgstr "Oplæs meddelelser fra"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
@@ -4530,7 +4525,7 @@ msgstr "Kun én kanal, hvis dens _vindue er aktivt"
 #. chat room prior to presenting an incoming message.
 #: src/orca/guilabels.py:177
 msgid "_Speak Chat Room name"
-msgstr "Sig navnet på chatrummet"
+msgstr "Oplæ_s navnet på chatrummet"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -4641,7 +4636,7 @@ msgstr "Indstillinger for Find"
 #. which contained the last match.
 #: src/orca/guilabels.py:254
 msgid "Onl_y speak changed lines during find"
-msgstr "Sig kun _ændrede linjer under find"
+msgstr "Oplæs kun _ændrede linjer under find"
 
 #. Translators: This is the label for a checkbox. This option controls whether or
 #. not Orca will automatically speak the line that contains the match while the
@@ -4649,7 +4644,7 @@ msgstr "Sig kun _ændrede linjer under find"
 #. Firefox.
 #: src/orca/guilabels.py:260
 msgid "Speak results during _find"
-msgstr "Sig resultater under _find"
+msgstr "Oplæs resultater under _find"
 
 #. Translators: Command is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
@@ -4749,7 +4744,7 @@ msgstr "Præsenter med mindre"
 #. the current text).
 #: src/orca/guilabels.py:328
 msgid "Speak"
-msgstr "Sig"
+msgstr "Oplæs"
 
 #. Translators: This is the title of a message dialog informing the user that
 #. he/she attempted to save a new user profile under a name which already exists.
@@ -5320,14 +5315,14 @@ msgstr "Sidenavigation"
 #. of a checkbox in which users can indicate their preference.
 #: src/orca/guilabels.py:709
 msgid "Automatically start speaking a page when it is first _loaded"
-msgstr "Start automatisk på at sige første gang den _indlæses"
+msgstr "Start automatisk oplæsning af side, når den først _indlæses"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically summarize details about the page, such as the number of elements
 #. (landmarks, forms, links, tables, etc.).
 #: src/orca/guilabels.py:714
 msgid "_Present summary of a page when it is first loaded"
-msgstr "Præsenter o_psummering af en side første gang den indlæses"
+msgstr "Præsenter o_psummering af en side når den først indlæses"
 
 #. Translators: Different speech systems and speech engines work differently when
 #. it comes to handling pauses (e.g. sentence boundaries). This property allows
@@ -5425,7 +5420,7 @@ msgstr "Præsenter fejlens kontekst"
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
 #: src/orca/guilabels.py:781
 msgid "Speak spreadsheet cell coordinates"
-msgstr "Sig regnearkscellekoordinater"
+msgstr "Oplæs regnearkscellekoordinater"
 
 #. Translators: This is a label for an option which controls what Orca speaks when
 #. presenting selection changes in a spreadsheet. By default, Orca will speak just
@@ -5436,7 +5431,7 @@ msgstr "Sig regnearkscellekoordinater"
 #. this option.
 #: src/orca/guilabels.py:790
 msgid "Always speak selected spreadsheet range"
-msgstr "Sig altid valgte regnearksområde"
+msgstr "Oplæs altid valgte regnearksområde"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
@@ -5461,20 +5456,20 @@ msgstr "Spring _tomme celler over"
 #. them. This label is associated with the default presentation to be used.
 #: src/orca/guilabels.py:807
 msgid "Speak _cell"
-msgstr "Sig _celle"
+msgstr "Oplæs _celle"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
 #: src/orca/guilabels.py:811
 msgid "Speak _cell coordinates"
-msgstr "Sig _cellekoordinater"
+msgstr "Oplæs _cellekoordinater"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
 #: src/orca/guilabels.py:816
 msgid "Speak _multiple cell spans"
-msgstr "Sig udstrækning over _flere celler"
+msgstr "Oplæs udstrækning over _flere celler"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
@@ -8379,7 +8374,7 @@ msgstr "Nyt chatfaneblad %s"
 #. the value of the setting is toggled.
 #: src/orca/messages.py:374
 msgid "Do not speak chat room name."
-msgstr "Sig ikke navnet på chatrummet."
+msgstr "Oplæs ikke navnet på chatrummet."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -8390,7 +8385,7 @@ msgstr "Sig ikke navnet på chatrummet."
 #. the value of the setting is toggled.
 #: src/orca/messages.py:383
 msgid "speak chat room name."
-msgstr "sig navnet på chatrummet."
+msgstr "oplæs navnet på chatrummet."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -9367,7 +9362,7 @@ msgstr "Deaktiveret"
 #. justification will not be spoken.
 #: src/orca/messages.py:1118
 msgid "Speaking of indentation and justification disabled."
-msgstr "Indrykning og justering siges er deaktiveret."
+msgstr "Oplæsning af indrykning og justering er deaktiveret."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
@@ -9380,7 +9375,7 @@ msgstr "Aktiveret"
 #. justification will be spoken.
 #: src/orca/messages.py:1128
 msgid "Speaking of indentation and justification enabled."
-msgstr "Indrykning og justering siges er aktiveret."
+msgstr "Oplæsning af indrykning og justering er aktiveret."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -10084,7 +10079,7 @@ msgstr "stavet forkert"
 #: src/orca/messages.py:1626
 #, python-format
 msgid "Misspelled word: %s"
-msgstr "Ord som er stavet forkert: %s"
+msgstr "Stavefejl: %s"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
@@ -10507,7 +10502,7 @@ msgstr "cifre"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:1940
 msgid "Speak numbers as digits."
-msgstr "Sig tal som cifre."
+msgstr "Oplæs tal som cifre."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10526,7 +10521,7 @@ msgstr "ord"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:1954
 msgid "Speak numbers as words."
-msgstr "Sig tal som ord."
+msgstr "Oplæs tal som ord."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10681,7 +10676,7 @@ msgstr "Ingen profiler fundet."
 #: src/orca/messages.py:2064
 #, python-format
 msgid "Progress bar %d."
-msgstr "Forløbslinje %d."
+msgstr "Statuslinje %d."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10979,14 +10974,14 @@ msgstr "Slutning af tabel"
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2270
 msgid "Speak cell"
-msgstr "Sig celle"
+msgstr "Oplæs celle"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2275
 msgid "Speak row"
-msgstr "Sig række"
+msgstr "Oplæs række"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
@@ -12543,7 +12538,7 @@ msgstr "Præsenter _værktøjstips"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
-msgstr "Sig objekt _under mus"
+msgstr "Oplæs objekt _under mus"
 
 #: src/orca/orca-setup.ui:504
 msgid "Mouse"
@@ -12564,7 +12559,7 @@ msgstr "Klokkeslæt og dato"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: src/orca/orca-setup.ui:640
 msgid "_Speak updates"
-msgstr "Sig o_pdateringer"
+msgstr "Oplæs o_pdateringer"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: src/orca/orca-setup.ui:659
@@ -12594,56 +12589,56 @@ msgstr "Bi_p ved opdateringer"
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: src/orca/orca-setup.ui:775
 msgid "Progress Bar Updates"
-msgstr "Opdateringer af forløbslinjer"
+msgstr "Opdateringer af statuslinjer"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: src/orca/orca-setup.ui:805
 msgid "Enable _rewind and fast forward in Say All"
-msgstr "Aktivér spol tilbage og spol fremad i Sig a_lt"
+msgstr "Aktivér spo_l tilbage og spol fremad i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: src/orca/orca-setup.ui:821
 msgid "Enable _structural navigation in Say All"
-msgstr "Aktivér strukturel navigation i Sig A_lt"
+msgstr "Aktivér _strukturel navigation i Oplæs Alt"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: src/orca/orca-setup.ui:847
 msgid "Say All B_y:"
-msgstr "Sig A_lt:"
+msgstr "Oplæs A_lt:"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: src/orca/orca-setup.ui:886
 msgid "Announce block_quotes in Say All"
-msgstr "Bekendtgør blokcitater i Sig A_lt"
+msgstr "Bekendtgør blok_citater i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a list with x items has been entered before speaking the content of that list. At the end of the list content, Orca will announce that the list is being exited.
 #: src/orca/orca-setup.ui:903
 msgid "Announce li_sts in Say All"
-msgstr "Bekendtgør lister i Sig A_lt"
+msgstr "Bekendtgør l_ister i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: src/orca/orca-setup.ui:920
 msgid "Announce _tables in Say All"
-msgstr "Bekendtgør tabeller i Sig A_lt"
+msgstr "Bekendtgør _tabeller i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:937
 msgid "Announce _panels in Say All"
-msgstr "Bekendtgør paneler i Sig A_lt"
+msgstr "Bekendtgør _paneler i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
 msgid "Announce _forms in Say All"
-msgstr "Bekendtgør formularer i Sig A_lt"
+msgstr "Bekendtgør _formularer i Oplæs Alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
-msgstr "Bekendtgør kendemærker i Sig A_lt"
+msgstr "Bekendtgør kendem_ærker i Oplæs Alt"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
-msgstr "Sig Alt"
+msgstr "Oplæs Alt"
 
 #: src/orca/orca-setup.ui:1013
 msgid "General"
@@ -12695,12 +12690,12 @@ msgstr "Indstillinger for stemmetype"
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: src/orca/orca-setup.ui:1358
 msgid "Speak multicase strings as wor_ds"
-msgstr "Sig strenge med en _blanding af store og små bogstaver som ord"
+msgstr "Oplæs strenge med en _blanding af store og små bogstaver som ord"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: src/orca/orca-setup.ui:1374
 msgid "Speak _numbers as digits"
-msgstr "Sig tal som _cifre"
+msgstr "Oplæs tal som _cifre"
 
 #: src/orca/orca-setup.ui:1399
 msgid "Global Voice Settings"
@@ -12733,28 +12728,28 @@ msgstr "Tegnsætningsniveau"
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
 msgid "Only speak displayed text"
-msgstr "Sig kun viste tekst"
+msgstr "Oplæs kun viste tekst"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
-msgstr "Sig tomme linjer"
+msgstr "Oplæs tomme linjer"
 
 #: src/orca/orca-setup.ui:1694
 msgid "Speak _indentation and justification"
-msgstr "_Sig indrykning og justering"
+msgstr "Oplæs _indrykning og justering"
 
 #: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
-msgstr "_Sig objektets genvejstaster"
+msgstr "Oplæs ob_jektets genvejstaster"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1725
 msgid "Speak child p_osition"
-msgstr "_Sig placeringen af underpunkt"
+msgstr "Oplæs placeringen af _underpunkt"
 
 #: src/orca/orca-setup.ui:1741
 msgid "Speak tutorial messages"
-msgstr "Sig vejledende meddelelser"
+msgstr "Oplæs vejledende meddelelser"
 
 #. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
 #: src/orca/orca-setup.ui:1757
@@ -12764,7 +12759,7 @@ msgstr "_Systemmeddelelser er detaljerede"
 #. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
 #: src/orca/orca-setup.ui:1774
 msgid "S_peak colors as names"
-msgstr "_Sig farver som navne"
+msgstr "Oplæs fa_rver som navne"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1791
@@ -12784,7 +12779,7 @@ msgstr "_Bekendtgør tabeller under navigation"
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: src/orca/orca-setup.ui:1842
 msgid "Speak _misspelled-word indicator"
-msgstr "Indikator for sig ord som er _stavet forkert"
+msgstr "Oplæs markør for _stavefejl"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:1859
@@ -12804,26 +12799,26 @@ msgstr "_Bekendtgør formularer under navigation"
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: src/orca/orca-setup.ui:1910
 msgid "Speak _description"
-msgstr "_Sig beskrivelse"
+msgstr "Oplæs _beskrivelse"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1933
 msgid "Speak full row in sp_readsheets"
-msgstr "Sig hele rækken i _regneark"
+msgstr "Oplæs hele rækker i _regneark"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1950
 msgid "Speak full row in _document tables"
-msgstr "Sig hele rækken i _dokumentets tabeller"
+msgstr "Oplæs hele rækker i tabeller i _dokumenter"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a GUI table, such as a GtkTreeView. Document tables, such as those found in Writer and web content, and spreadsheet tables such as those found in Calc are not considered GUI tables. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1967
 msgid "Speak full row in _GUI tables"
-msgstr "Sig hele rækken i _brugerfladens tabeller"
+msgstr "Oplæs hele rækker i tabeller i _brugerflade"
 
 #: src/orca/orca-setup.ui:1990
 msgid "Spoken Context"
-msgstr "Kontekst for det der siges"
+msgstr "Kontekst for oplæsning"
 
 #: src/orca/orca-setup.ui:2026
 msgid "Speech"
@@ -12977,11 +12972,11 @@ msgstr "Udtale"
 
 #: src/orca/orca-setup.ui:3102
 msgid "_Speak all"
-msgstr "_Sig alt"
+msgstr "_Oplæs alt"
 
 #: src/orca/orca-setup.ui:3116
 msgid "Speak _none"
-msgstr "Sig _intet"
+msgstr "Oplæs _intet"
 
 #: src/orca/orca-setup.ui:3130
 msgid "_Reset"
