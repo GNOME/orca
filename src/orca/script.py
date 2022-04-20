@@ -333,6 +333,40 @@ class Script:
             if event.type.startswith(key):
                 self.listeners[key](event)
 
+    def _getQueuedEvent(self, eventType, detail1=None, detail2=None, any_data=None):
+        cachedEvent, eventTime = self.eventCache.get(eventType, [None, 0])
+        if not cachedEvent:
+            msg = "SCRIPT: No queued event of type %s" % eventType
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if detail1 is not None and detail1 != cachedEvent.detail1:
+            msg = "SCRIPT: Queued event's detail1 (%s) doesn't match %s" \
+                % (cachedEvent.detail1, detail1)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if detail2 is not None and detail2 != cachedEvent.detail2:
+            msg = "SCRIPT: Queued event's detail2 (%s) doesn't match %s" \
+                % (cachedEvent.detail2, detail2)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if any_data is not None and any_data != cachedEvent.any_data:
+            msg = "SCRIPT: Queued event's any_data (%s) doesn't match %s" \
+                % (cachedEvent.any_data, any_data)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        msg = "SCRIPT: Found matching queued event: %s (%s,%s,%s) on %s" \
+            % (cachedEvent.type,
+               cachedEvent.detail1,
+               cachedEvent.detail2,
+               cachedEvent.any_data,
+               cachedEvent.source)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return cachedEvent
+
     def skipObjectEvent(self, event):
         """Gives us, and scripts, the ability to decide an event isn't
         worth taking the time to process under the current circumstances.
