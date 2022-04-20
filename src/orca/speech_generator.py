@@ -1243,6 +1243,11 @@ class SpeechGenerator(generator.Generator):
             if not string:
                 continue
             args["language"], args["dialect"] = language, dialect
+            if "string" in args:
+                msg = "INFO: Found existing string '%s'; using '%s'" % (args.get("string"), string)
+                debug.println(debug.LEVEL_INFO, msg)
+                args.pop("string")
+
             voice = self.voice(string=string, obj=obj, **args)
             string = self._script.utilities.adjustForLinks(obj, string, start)
             rv = [self._script.utilities.adjustForRepeats(string)]
