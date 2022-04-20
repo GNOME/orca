@@ -686,6 +686,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj.getRole() in menuRoles:
             return super()._generatePositionInList(obj, **args)
 
+        if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+            thisObjIndex = args.get('index', 0)
+            objCount = args.get('total', 1)
+            if thisObjIndex + 1 < objCount:
+                return []
+
         if self._script.utilities.isEditableComboBox(obj):
             return []
 
