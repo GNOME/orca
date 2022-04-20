@@ -204,7 +204,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-    msg = "ORCA: Changing locusOfFocus from %s to %s" % (oldFocus, obj)
+    msg = "ORCA: Changing locusOfFocus from %s to %s. Notify: %s" % (oldFocus, obj, notifyScript)
     debug.println(debug.LEVEL_INFO, msg, True)
     orca_state.locusOfFocus = obj
 
