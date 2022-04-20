@@ -1291,6 +1291,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if newFocus and self.utilities.isDead(newFocus):
+            msg = "WEB: New focus is dead: %s" % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         document = self.utilities.getTopLevelDocumentForObject(newFocus)
         if not document and self.utilities.isDocument(newFocus):
             document = newFocus
@@ -1373,6 +1378,14 @@ class Script(default.Script):
             msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             args['priorObj'] = oldFocus
+
+        if newFocus and self.utilities.isDead(newFocus):
+            msg = "WEB: New focus has since died: %s" % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            if self._getQueuedEvent("object:state-changed:focused", True):
+                msg = "WEB: Have matching focused event. Not speaking contents"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
 
         if contents:
             self.speakContents(contents, **args)
