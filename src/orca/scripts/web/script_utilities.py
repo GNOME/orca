@@ -4344,6 +4344,8 @@ class Utilities(script_utilities.Utilities):
         else:
             if name:
                 rv = False
+            elif self._getXMLRoles(obj):
+                rv = False
             elif not rv:
                 roles =  [pyatspi.ROLE_CHECK_BOX,
                           pyatspi.ROLE_COMBO_BOX,
