@@ -181,7 +181,8 @@ class EventManager:
             return True
 
         script = orca_state.activeScript
-        if event.type.startswith('object:children-changed'):
+        if event.type.startswith('object:children-changed') \
+           or event.type.startswith('object:state-changed:sensitive'):
             if not script:
                 msg = 'EVENT MANAGER: Ignoring because there is no active script'
                 debug.println(debug.LEVEL_INFO, msg, True)
