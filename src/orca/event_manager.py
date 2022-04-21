@@ -272,10 +272,21 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
-            if role == pyatspi.ROLE_PANEL and not event.detail1:
-                msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return True
+            if role == pyatspi.ROLE_PANEL:
+                if not event.detail1:
+                    msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return True
+                try:
+                    if not event.source.name:
+                        msg = 'EVENT MANAGER: Ignoring event type due to role and lack of name'
+                        debug.println(debug.LEVEL_INFO, msg, True)
+                        return True
+                except:
+                    msg = 'EVENT MANAGER: Ignoring event from dead source'
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return True
+
         elif event.type.startswith('object:selection-changed'):
             if event.source in self._parentsOfDefunctDescendants:
                 msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
