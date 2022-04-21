@@ -259,6 +259,11 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+        elif event.type.startswith('object:state-changed:selected'):
+            if not event.detail1 and role in [pyatspi.ROLE_PUSH_BUTTON]:
+                msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
         elif event.type.startswith('object:state-changed:showing'):
             if role not in [pyatspi.ROLE_ALERT,
                             pyatspi.ROLE_ANIMATION,
