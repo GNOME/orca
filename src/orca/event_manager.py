@@ -367,6 +367,14 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
+            # In normal apps we would have caught this from the parent role.
+            # But gnome-shell has panel parents adding/removing menu items.
+            if event.type.startswith('object:children-changed'):
+                if childRole == pyatspi.ROLE_MENU_ITEM:
+                    msg = 'EVENT MANAGER: Ignoring event type due to child role'
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return True
+
         msg = 'EVENT MANAGER: Not ignoring due to lack of cause'
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
