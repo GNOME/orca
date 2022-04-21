@@ -785,8 +785,21 @@ class EventManager:
 
         return False, "No reason found to activate a different script."
 
+    def _eventSourceIsDead(self, event):
+        try:
+            name = event.source.name
+        except:
+            msg = "EVENT MANAGER: source of %s is dead" % event.type
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
     def _ignoreDuringDeluge(self, event):
         """Returns true if this event should be ignored during a deluge."""
+
+        if self._eventSourceIsDead(event):
+            return True
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
@@ -816,6 +829,9 @@ class EventManager:
 
     def _processDuringFlood(self, event):
         """Returns true if this event should be processed during a flood."""
+
+        if self._eventSourceIsDead(event):
+            return False
 
         ignore = ["object:text-changed:delete",
                   "object:text-changed:insert",
