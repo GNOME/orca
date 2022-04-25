@@ -4,10 +4,7 @@ m4_define(pygobject_required_version, 3.18)
 m4_define(atspi_required_version, 2.26)
 m4_define(atkbridge_required_version, 2.26)
 
-AC_INIT([orca],
-        [orca_version],
-        [https://gitlab.gnome.org/GNOME/orca/-/issues/],
-        [orca])
+AC_INIT([orca],[orca_version],[https://gitlab.gnome.org/GNOME/orca/-/issues/],[orca])
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -79,7 +76,7 @@ case "${PLATFORM}" in
 esac
 AC_SUBST(PLATFORM_PATH)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 run_pylint.sh
 Makefile
 docs/Makefile
@@ -136,7 +133,9 @@ src/orca/backends/Makefile
 src/orca/orca_bin.py
 src/orca/orca_i18n.py
 src/orca/orca_platform.py
-],[chmod +x run_pylint.sh ; cp src/orca/orca_bin.py src/orca/orca])
+])
+AC_CONFIG_COMMANDS([default],[chmod +x run_pylint.sh ; cp src/orca/orca_bin.py src/orca/orca],[])
+AC_OUTPUT
 
 if test "x$brlapi_available" = "xno" ; then
 echo
