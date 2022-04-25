@@ -341,6 +341,17 @@ def attributesToString(acc, indent=""):
 
     return "%sattributes='%s'" % (indent, re.sub("\s+", " ", ", ".join(attributes)))
 
+def actionsToString(acc, indent=""):
+    try:
+        action = acc.queryAction()
+        names = [action.getName(i).lower() for i in range(action.nActions)]
+    except NotImplementedError:
+        return "%sactions=(not implemented)" % indent
+    except:
+        return "%sactions=(exception)" % indent
+
+    return "%sactions='%s'" % (indent, " ".join(names))
+
 def getAccessibleDetails(level, acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
@@ -393,13 +404,14 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
 
     state_string = statesToString(acc, indent)
     rel_string = relationsToString(acc, indent)
+    actions_string = actionsToString(acc, indent)
     iface_string = interfacesToString(acc, indent)
     attr_string = attributesToString(acc, indent)
 
     try:
-        string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
+        string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
                   % (name_string, role_string, desc_string, state_string, rel_string,
-                     iface_string, attr_string, path_string)
+                     actions_string, iface_string, attr_string, path_string)
     except:
         string += "(exception fetching data)"
 
