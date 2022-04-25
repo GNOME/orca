@@ -3565,10 +3565,12 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and not self.isFocusModeWidget(obj):
+        if not self.isFocusModeWidget(obj):
             names = self._getActionNames(obj)
-            rv = "click" in names
+            if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                rv = "click" in names
+            else:
+                rv = "clickancestor" in names
 
         if rv and not obj.name and "Text" in pyatspi.listInterfaces(obj):
             string = obj.queryText().getText(0, -1)
