@@ -3226,7 +3226,7 @@ class StructuralNavigation:
         isMatch = False
         if obj and obj.getRole() == pyatspi.ROLE_LINK:
             state = obj.getState()
-            isMatch = not state.contains(pyatspi.STATE_FOCUSABLE)
+            isMatch = state.contains(pyatspi.STATE_FOCUSABLE)
         return isMatch
 
     def _linkPresentation(self, obj, arg=None):
