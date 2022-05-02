@@ -55,6 +55,7 @@ class Utilities(script_utilities.Utilities):
         self._currentTextAttrs = {}
         self._caretContexts = {}
         self._priorContexts = {}
+        self._canHaveCaretContextDecision = {}
         self._contextPathsRolesAndNames = {}
         self._paths = {}
         self._inDocumentContent = {}
@@ -209,6 +210,7 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv = {}
         self._paths = {}
         self._contextPathsRolesAndNames = {}
+        self._canHaveCaretContextDecision = {}
         self._cleanupContexts()
         self._priorContexts = {}
         self._lastQueuedLiveRegionEvent = None
@@ -4772,6 +4774,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _canHaveCaretContext(self, obj):
+        rv = self._canHaveCaretContextDecision.get(hash(obj))
+        if rv is not None:
+            return rv
+
         startTime = time.time()
         if not obj:
             return False
@@ -4838,6 +4844,7 @@ class Utilities(script_utilities.Utilities):
 
         msg = "INFO: Verified %s can have caret context. (%.4fs)" % (obj, time.time() - startTime)
         debug.println(debug.LEVEL_INFO, msg, True)
+        self._canHaveCaretContextDecision[hash(obj)] = True
         return True
 
     def isPseudoElement(self, obj):
