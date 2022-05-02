@@ -1753,6 +1753,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
+        startTime = time.time()
         if not obj:
             return []
 
@@ -1850,6 +1851,7 @@ class Utilities(script_utilities.Utilities):
         nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
         # Check for things on the same line to the left of this object.
+        prevStartTime = time.time()
         while prevObj and self.getDocumentForObject(prevObj) == document:
             text = self.queryNonEmptyText(prevObj)
             if text and text.getText(pOffset, pOffset + 1) in [" ", "\xa0"]:
@@ -1870,7 +1872,12 @@ class Utilities(script_utilities.Utilities):
             firstObj, firstStart = objects[0][0], objects[0][1]
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
 
+        prevEndTime = time.time()
+        msg = "INFO: Time needed to get line contents on left: %.4fs" % (prevEndTime - prevStartTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         # Check for things on the same line to the right of this object.
+        nextStartTime = time.time()
         while nextObj and self.getDocumentForObject(nextObj) == document:
             text = self.queryNonEmptyText(nextObj)
             if text and text.getText(nOffset, nOffset + 1) in [" ", "\xa0"]:
@@ -1895,12 +1902,19 @@ class Utilities(script_utilities.Utilities):
 
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
+        nextEndTime = time.time()
+        msg = "INFO: Time needed to get line contents on right: %.4fs" % (nextEndTime - nextStartTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         firstObj, firstStart, firstEnd, firstString = objects[0]
         if firstString == "\n" and len(objects) > 1:
             objects.pop(0)
 
         if useCache:
             self._currentLineContents = objects
+
+        msg = "INFO: Time needed to get line contents: %.4fs" % (time.time() - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         self._debugContentsInfo(obj, offset, objects, "Line (layout mode)")
         return objects
@@ -4763,6 +4777,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _canHaveCaretContext(self, obj):
+        startTime = time.time()
         if not obj:
             return False
         if self.isDead(obj):
@@ -4826,6 +4841,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        msg = "INFO: Verified %s can have caret context. (%.4fs)" % (obj, time.time() - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
     def isPseudoElement(self, obj):
@@ -5201,6 +5218,14 @@ class Utilities(script_utilities.Utilities):
         return self.findFirstCaretContext(child, 0)
 
     def findNextCaretInOrder(self, obj=None, offset=-1):
+        startTime = time.time()
+        rv = self._findNextCaretInOrder(obj, offset)
+        msg = "INFO: Next caret in order for %s, %i: %s, %i (%.4fs)" % \
+            (obj, offset, rv[0], rv[1], time.time() - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
+    def _findNextCaretInOrder(self, obj=None, offset=-1):
         if not obj:
             obj, offset = self.getCaretContext()
 
@@ -5220,11 +5245,11 @@ class Utilities(script_utilities.Utilities):
                     if self._canHaveCaretContext(child):
                         if self._treatObjectAsWhole(child, -1):
                             return child, 0
-                        return self.findNextCaretInOrder(child, -1)
+                        return self._findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
-                return self.findNextCaretInOrder(obj[0], -1)
+                return self._findNextCaretInOrder(obj[0], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
@@ -5252,7 +5277,7 @@ class Utilities(script_utilities.Utilities):
 
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
-                return self.findNextCaretInOrder(parent, start)
+                return self._findNextCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() + 1
             try:
@@ -5262,12 +5287,20 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if 0 < index < parentChildCount:
-                    return self.findNextCaretInOrder(parent[index], -1)
+                    return self._findNextCaretInOrder(parent[index], -1)
             obj = parent
 
         return None, -1
 
     def findPreviousCaretInOrder(self, obj=None, offset=-1):
+        startTime = time.time()
+        rv = self._findPreviousCaretInOrder(obj, offset)
+        msg = "INFO: Previous caret in order for %s, %i: %s, %i (%.4fs)" % \
+            (obj, offset, rv[0], rv[1], time.time() - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
+    def _findPreviousCaretInOrder(self, obj=None, offset=-1):
         if not obj:
             obj, offset = self.getCaretContext()
 
@@ -5289,11 +5322,11 @@ class Utilities(script_utilities.Utilities):
                     if self._canHaveCaretContext(child):
                         if self._treatObjectAsWhole(child, -1):
                             return child, 0
-                        return self.findPreviousCaretInOrder(child, -1)
+                        return self._findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
-                return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
+                return self._findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
@@ -5321,7 +5354,7 @@ class Utilities(script_utilities.Utilities):
 
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
-                return self.findPreviousCaretInOrder(parent, start)
+                return self._findPreviousCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() - 1
             try:
@@ -5331,7 +5364,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if 0 <= index < parentChildCount:
-                    return self.findPreviousCaretInOrder(parent[index], -1)
+                    return self._findPreviousCaretInOrder(parent[index], -1)
             obj = parent
 
         return None, -1
