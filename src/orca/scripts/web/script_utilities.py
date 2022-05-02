@@ -3785,6 +3785,9 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj) and obj.parent):
             return False
 
+        if obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
         entry = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY)
         if not (entry and entry.name):
             return False
