@@ -30,6 +30,7 @@ __license__   = "LGPL"
 from gi.repository import GObject, Gdk, Gtk
 
 from . import debug
+from . import eventsynthesizer
 from . import guilabels
 from . import orca_state
 
@@ -159,11 +160,25 @@ class OrcaNavListGUI:
         except NotImplementedError:
             msg = "ERROR: Action interface not implemented for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
+            return
         except:
             msg = "ERROR: Exception getting action interface for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-        else:
+            return
+
+        # Chromium exposes the clickAncestor action and then expects us to do the work.
+        # Invoking the action appears to do nothing. Other actions should work as expected.
+        if action.nActions and action.getName(0).lower() != "clickancestor":
             action.doAction(0)
+            return
+
+        if not action.nActions:
+            msg = "INFO: Action interface for %s has 0 actions" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        msg = "INFO: Attempting a synthesized click on %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        eventsynthesizer.clickObject(obj)
 
     def _getSelectedAccessibleAndOffset(self):
         if not self._tree:
