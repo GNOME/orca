@@ -1698,6 +1698,13 @@ class Utilities:
         path1 = path1[1:]
         path2 = path2[1:]
 
+        # If the object is being destroyed and the replacement is too, which
+        # sadly can happen in at least Firefox, both will have an index of -1.
+        # If the rest of the paths are valid and match, it's probably ok.
+        if path1[-1] == -1 and path2[-1] == -1:
+            path1 = path1[:-1]
+            path2 = path2[:-1]
+
         # If both have invalid child indices, all bets are off.
         if path1.count(-1) and path2.count(-1):
             return False

@@ -5005,6 +5005,9 @@ class Utilities(script_utilities.Utilities):
         elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locusOfFocus."
             debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.isSameObject(event.any_data, orca_state.locusOfFocus, True, True):
+            msg = "WEB: Removed child appears to be replicant oflocusOfFocus."
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
             return False
 
