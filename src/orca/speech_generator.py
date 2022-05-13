@@ -234,6 +234,11 @@ class SpeechGenerator(generator.Generator):
                 alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
             except:
                 pass
+        else:
+            try:
+                alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForUnrelatedLabels')
+            except:
+                pass
 
         if alreadyUsed:
             return []

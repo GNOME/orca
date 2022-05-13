@@ -242,8 +242,10 @@ class Generator:
             msg = '%s GENERATOR: Starting generation for %s' % (self._mode.upper(), obj)
             debug.println(debug.LEVEL_INFO, msg, True)
 
-            # Reset 'usedDescriptionForName' if a previous generator used it.
+            # Reset 'usedDescriptionFor*' if a previous generator used it.
             self._script.pointOfReference['usedDescriptionForName'] = False
+            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = False
+            self._script.pointOfReference['usedDescriptionForAlert'] = False
 
             debuginfo = lambda x: self._resultElementToString(x, False)
             assert(formatting)
@@ -430,6 +432,18 @@ class Generator:
 
         return result
 
+    def _generateUnrelatedLabelsOrDescription(self, obj, **args):
+        result = self._generateUnrelatedLabels(obj, **args)
+        if result:
+            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = False
+            return result
+
+        result = self._generateDescription(obj, **args)
+        if result:
+            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = True
+
+        return result
+
     def _generateDescription(self, obj, **args):
         """Returns an array of strings fo use by speech and braille that
         represent the description of the object, if that description
@@ -437,6 +451,12 @@ class Generator:
         """
 
         if self._script.pointOfReference.get('usedDescriptionForName'):
+            return []
+
+        if self._script.pointOfReference.get('usedDescriptionForAlert'):
+            return []
+
+        if self._script.pointOfReference.get('usedDescriptionForUnrelatedLabels'):
             return []
 
         role = args.get('role', obj.getRole())

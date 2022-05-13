@@ -212,8 +212,8 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_DIALOG: {
-            'focused': 'labelOrName + roleName + (unrelatedLabels or description)',
-            'unfocused': '(expandedEOCs or (labelOrName + roleName + (unrelatedLabels or description)))'
+            'focused': 'labelOrName + roleName + (unrelatedLabelsOrDescription)',
+            'unfocused': '(expandedEOCs or (labelOrName + roleName + (unrelatedLabelsOrDescription)))'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
@@ -356,7 +356,7 @@ formatting = {
             'basicWhereAmI': 'ancestors + pause + labelOrName + checkedStateIfCheckable + pause + accelerator + pause + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_NOTIFICATION: {
-            'unfocused': 'roleName + labelOrName + pause + (expandedEOCs or unrelatedLabels or description)'
+            'unfocused': 'roleName + labelOrName + pause + (expandedEOCs or unrelatedLabelsOrDescription)'
             },
         pyatspi.ROLE_PAGE: {
             'focused': 'label + readOnly + currentLineText + anyTextSelection',
@@ -632,7 +632,7 @@ formatting = {
                                      asString(labelOrName + value + roleName + required))]'
             },
         pyatspi.ROLE_DIALOG: {
-            'unfocused': '[Component(obj, asString(labelOrName + roleName + (unrelatedLabels or description)))]'
+            'unfocused': '[Component(obj, asString(labelOrName + roleName + (unrelatedLabelsOrDescription)))]'
             },
         #pyatspi.ROLE_DIRECTORY_PANE: 'default'
         pyatspi.ROLE_DOCUMENT_FRAME: {
