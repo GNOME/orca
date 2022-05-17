@@ -870,7 +870,17 @@ class StructuralNavigation:
         if matches:
             return matches.copy(), criteria
 
-        col = document.queryCollection()
+        try:
+            col = document.queryCollection()
+        except NotImplementedError:
+            msg = "STRUCTURAL NAVIGATION: %s does not implement collection" % document
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return [], None
+        except:
+            msg = "STRUCTURAL NAVIGATION: Exception querying collection on %s" % document
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return [], None
+
         criteria = structuralNavigationObject.criteria(col, arg)
         rule = col.createMatchRule(criteria.states.raw(),
                                    criteria.matchStates,
