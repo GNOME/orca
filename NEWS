@@ -1,3 +1,13 @@
+40.3 - 17 May 2022:
+
+WebKitGtk:
+
+ * Handle WebKitGtk's change in toolkit name casing so that
+   older versions of Orca continue to work with newer versions
+   of WebKitGtk.
+
+=========
+
 40.2 - 31 January 2022:
 
 General:
