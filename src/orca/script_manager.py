@@ -58,6 +58,8 @@ class ScriptManager:
              'metacity': 'switcher',
              'pluma': 'gedit',
             }
+        self._toolkitNames = \
+            {'WebKitGTK': 'WebKitGtk'}
 
         self.setActiveScript(None, "__init__")
         self._desktop = pyatspi.Registry.getDesktop(0)
@@ -134,6 +136,7 @@ class ScriptManager:
             else:
                 attrs = dict([attr.split(':', 1) for attr in attributes])
                 name = attrs.get('toolkit', '')
+                name = self._toolkitNames.get(name, name)
 
         return name
 

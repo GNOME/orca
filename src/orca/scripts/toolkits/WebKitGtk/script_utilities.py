@@ -58,7 +58,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         attrs = self.objectAttributes(obj)
-        return attrs.get('toolkit', '') == 'WebKitGtk'
+        return attrs.get('toolkit', '') in ['WebKitGtk', 'WebKitGTK']
 
     def getCaretContext(self):
         # TODO - JD: This is private, but it's only here temporarily until we
