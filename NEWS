@@ -1,3 +1,24 @@
+42.1 - 17 May 2022
+
+Web (Chromium + Gecko):
+
+ * Fix several performance issues impacting Google Docs.
+
+ * Fix bug in which Orca failed to speak when clicking on a line.
+
+WebKitGtk:
+
+ * Handle WebKitGtk's change in toolkit name casing so that
+   older versions of Orca continue to work with newer versions
+   of WebKitGtk.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  da              Danish                    Ask Hjorth Larsen
+  nl              Dutch                     Nathan Follens
+
+=========
+
 42.0 - 22 March 2022
 
 New and updated translations (THANKS EVERYONE!!!):
