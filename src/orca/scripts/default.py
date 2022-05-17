@@ -3103,10 +3103,11 @@ class Script(script.Script):
             self.sayLine(obj)
             return
 
-        if self.utilities.lastInputEventWasPrimaryMouseRelease():
+        if self.utilities.lastInputEventWasPrimaryMouseClick() \
+           or self.utilities.lastInputEventWasPrimaryMouseRelease():
             start, end, string = self.utilities.getCachedTextSelection(event.source)
             if not string:
-                msg = "DEFAULT: Presenting result of primary mouse button release"
+                msg = "DEFAULT: Presenting result of primary mouse button event"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.sayLine(obj)
                 return
