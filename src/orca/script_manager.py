@@ -248,6 +248,32 @@ class ScriptManager:
         debug.println(debug.LEVEL_INFO, msg, True)
         return script
 
+    def getScriptForMouseButtonEvent(self, event):
+        try:
+            state = orca_state.activeWindow.getState()
+            isActive = state.contains(pyatspi.STATE_ACTIVE)
+        except:
+            msg = "SCRIPT MANAGER: Exception checking state of %s" % orca_state.activeWindow
+            debug.println(debug.LEVEL_INFO, msg, True)
+            isActive = False
+        else:
+            msg = "SCRIPT MANAGER: %s is active: %s" % (orca_state.activeWindow, isActive)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        if isActive and orca_state.activeScript:
+            return orca_state.activeScript
+
+        script = self.getDefaultScript()
+        activeWindow = script.utilities.activeWindow()
+        if not activeWindow:
+            return script
+
+        focusedObject = script.utilities.focusedObject(activeWindow)
+        if focusedObject:
+            return self.getScript(focusedObject.getApplication(), focusedObject)
+
+        return self.getScript(activeWindow.getApplication(), activeWindow)
+
     def getScript(self, app, obj=None, sanityCheck=False):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.

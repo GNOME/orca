@@ -708,7 +708,7 @@ class EventManager:
         """Returns the script associated with event."""
 
         if event.type.startswith("mouse:"):
-            return orca_state.activeScript
+            return _scriptManager.getScriptForMouseButtonEvent(event)
 
         script = None
         app = None
