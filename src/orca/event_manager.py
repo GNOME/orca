@@ -475,8 +475,9 @@ class EventManager:
                 toolkitName = app.toolkitName
             except:
                 toolkitName = None
-            if toolkitName in self._synchronousToolkits \
-               or isinstance(e, input_event.MouseButtonEvent):
+            if isinstance(e, input_event.MouseButtonEvent):
+                asyncMode = True
+            elif toolkitName in self._synchronousToolkits:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
                 try:
