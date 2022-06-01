@@ -1,22 +1,22 @@
 # Persian translation for orca.
-# Copyright (C) 2021 orca's COPYRIGHT HOLDER
+# Copyright (C) 2022 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Sina Carnelious <sinacarnelious@protonmail.com>, 2021.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2021-05-12 20:41+0000\n"
-"PO-Revision-Date: 2021-05-28 21:34+0430\n"
+"POT-Creation-Date: 2022-05-17 14:15+0000\n"
+"PO-Revision-Date: 2022-06-01 14:57+0430\n"
+"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Last-Translator: \n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -417,191 +417,197 @@ msgstr ""
 msgid "emb"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
 msgstr "چکی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
 msgstr "اسپانیایی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
 msgstr "فرانسوی کانادا سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:48
 msgid "France French Grade 2"
 msgstr "فرانسوی فرانسه سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
 msgstr "نروژی سطح ۰"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
 msgstr "نروژی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
 msgstr "نروژی سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
 msgstr "نروژی سطح ۳"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
 msgstr "لهستانی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
 msgstr "پرتغالی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
 msgstr "سوئدی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
 msgstr "عربی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "German Grade 0"
 msgstr "آلمانی سطح ۰"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:104
 msgid "German Grade 1"
 msgstr "آلمانی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:108
 msgid "German Grade 2"
 msgstr "آلمانی سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
 msgstr "انگلیسی بریتانیایی سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
 msgstr "انگلیسی بریتانیایی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
 msgstr "انگلیسی آمریکایی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
 msgstr "انگلیسی آمریکایی سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
 msgstr "فرانسوی کانادا سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:132
 msgid "France French Grade 1"
 msgstr "فرانسوی فرانسه سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
 msgstr "یونانی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
 msgstr "هندی سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
 msgstr ""
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
-msgstr ""
+msgstr "مجاری سطح ۱"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
-msgid "Italian Grade 1"
-msgstr ""
+msgid "Hungarian Grade 2"
+msgstr "مجاری سطح ۲"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:156
+msgid "Italian Grade 1"
+msgstr "ایتالیایی سطح ۱"
+
+#. Translators: This is the name of a braille translation table. To learn more
+#. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
-msgstr ""
+msgstr "آلمانی بلژیکی سطح ۱"
 
 #. Translators: this is the spoken word for the space character
 #.
@@ -613,7 +619,7 @@ msgstr "فاصله"
 #.
 #: src/orca/chnames.py:45
 msgid "newline"
-msgstr ""
+msgstr "خط جدید"
 
 #. Translators: this is the spoken word for the tab character
 #.
@@ -621,7 +627,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:49 src/orca/keynames.py:135
 msgid "tab"
-msgstr ""
+msgstr "جهش"
 
 #. Translators: this is the spoken word for the character '!' (U+0021)
 #.
@@ -633,37 +639,37 @@ msgstr ""
 #.
 #: src/orca/chnames.py:57
 msgid "quote"
-msgstr ""
+msgstr "نقل‌قول"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
 #: src/orca/chnames.py:61
 msgid "number"
-msgstr ""
+msgstr "شماره"
 
 #. Translators: this is the spoken word for the character '$' (U+0024)
 #.
 #: src/orca/chnames.py:65
 msgid "dollar"
-msgstr ""
+msgstr "دلار"
 
 #. Translators: this is the spoken word for the character '%' (U+0025)
 #.
 #: src/orca/chnames.py:69
 msgid "percent"
-msgstr ""
+msgstr "درصد"
 
 #. Translators: this is the spoken word for the character '&' (U+0026)
 #.
 #: src/orca/chnames.py:73
 msgid "and"
-msgstr ""
+msgstr "و"
 
 #. Translators: this is the spoken word for the character ''' (U+0027)
 #.
 #: src/orca/chnames.py:77
 msgid "apostrophe"
-msgstr ""
+msgstr "آپاستروف"
 
 #. Translators: this is the spoken word for the character '(' (U+0028)
 #.
@@ -681,7 +687,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:89
 msgid "star"
-msgstr ""
+msgstr "ستاره"
 
 #. Translators: this is the spoken word for the character '+' (U+002b)
 #.
@@ -689,103 +695,103 @@ msgstr ""
 #.
 #: src/orca/chnames.py:93 src/orca/keynames.py:303
 msgid "plus"
-msgstr ""
+msgstr "مثبت"
 
 #. Translators: this is the spoken word for the character ',' (U+002c)
 #.
 #: src/orca/chnames.py:97
 msgid "comma"
-msgstr ""
+msgstr "کاما"
 
 #. Translators: this is the spoken word for the character '-' (U+002d)
 #.
 #: src/orca/chnames.py:101
 msgid "dash"
-msgstr ""
+msgstr "خط تیره"
 
 #. Translators: this is the spoken word for the character '.' (U+002e)
 #.
 #: src/orca/chnames.py:105
 msgid "dot"
-msgstr ""
+msgstr "نقطه"
 
 #. Translators: this is the spoken word for the character '/' (U+002f)
 #.
 #: src/orca/chnames.py:109
 msgid "slash"
-msgstr ""
+msgstr "اسلش"
 
 #. Translators: this is the spoken word for the character ':' (U+003a)
 #.
 #: src/orca/chnames.py:113
 msgid "colon"
-msgstr ""
+msgstr "دونقطه"
 
 #. Translators: this is the spoken word for the character ';' (U+003b)
 #.
 #: src/orca/chnames.py:117
 msgid "semicolon"
-msgstr ""
+msgstr "نقطه‌ویرگول"
 
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: src/orca/chnames.py:121
 msgid "less"
-msgstr ""
+msgstr "کوچک‌تر"
 
 #. Translators: this is the spoken word for the character '=' (U+003d)
 #.
 #: src/orca/chnames.py:125
 msgid "equals"
-msgstr ""
+msgstr "مساوی"
 
 #. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: src/orca/chnames.py:129
 msgid "greater"
-msgstr ""
+msgstr "بزرگ‌تر"
 
 #. Translators: this is the spoken word for the character '?' (U+003f)
 #.
 #: src/orca/chnames.py:133
 msgid "question"
-msgstr ""
+msgstr "پرسش"
 
 #. Translators: this is the spoken word for the character '@' (U+0040)
 #.
 #: src/orca/chnames.py:137
 msgid "at"
-msgstr ""
+msgstr "در"
 
 #. Translators: this is the spoken word for the character '[' (U+005b)
 #.
 #: src/orca/chnames.py:141
 msgid "left bracket"
-msgstr ""
+msgstr "قلاب چپ"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
 #: src/orca/chnames.py:145
 msgid "backslash"
-msgstr ""
+msgstr "اسلش معکوس"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: src/orca/chnames.py:149
 msgid "right bracket"
-msgstr ""
+msgstr "قلاب راست"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
 #: src/orca/chnames.py:153
 msgid "caret"
-msgstr ""
+msgstr "هشتی"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
 #: src/orca/chnames.py:157
 msgid "underline"
-msgstr ""
+msgstr "زیرخط"
 
 #. Translators: this is the spoken word for the character '`' (U+0060)
 #.
@@ -800,19 +806,19 @@ msgstr ""
 #.
 #: src/orca/chnames.py:165
 msgid "left brace"
-msgstr ""
+msgstr "آکولاد چپ"
 
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
 #: src/orca/chnames.py:169
 msgid "vertical bar"
-msgstr ""
+msgstr "خط عمودی"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
 #: src/orca/chnames.py:173
 msgid "right brace"
-msgstr ""
+msgstr "آکولاد راست"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -821,14 +827,14 @@ msgstr ""
 #.
 #: src/orca/chnames.py:177 src/orca/keynames.py:275
 msgid "tilde"
-msgstr ""
+msgstr "مد"
 
 #. Translators: this is the spoken character for the no break space
 #. character (e.g., "&nbsp;" in HTML -- U+00a0)
 #.
 #: src/orca/chnames.py:182
 msgid "no break space"
-msgstr ""
+msgstr "فاصلهٔ نشکن"
 
 #. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
@@ -840,37 +846,37 @@ msgstr ""
 #.
 #: src/orca/chnames.py:190
 msgid "cents"
-msgstr ""
+msgstr "سنت"
 
 #. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: src/orca/chnames.py:194
 msgid "pounds"
-msgstr ""
+msgstr "پوند"
 
 #. Translators: this is the spoken word for the character '¤' (U+00a4)
 #.
 #: src/orca/chnames.py:198
 msgid "currency sign"
-msgstr ""
+msgstr "علامت ارز"
 
 #. Translators: this is the spoken word for the character '¥' (U+00a5)
 #.
 #: src/orca/chnames.py:202
 msgid "yen"
-msgstr ""
+msgstr "ین"
 
 #. Translators: this is the spoken word for the character '¦' (U+00a6)
 #.
 #: src/orca/chnames.py:206
 msgid "broken bar"
-msgstr ""
+msgstr "خط شکسته"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
 #: src/orca/chnames.py:210
 msgid "section"
-msgstr ""
+msgstr "بخش"
 
 #. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
@@ -885,13 +891,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:218
 msgid "copyright"
-msgstr ""
+msgstr "حق رونوشت"
 
 #. Translators: this is the spoken word for the character 'ª' (U+00aa)
 #.
 #: src/orca/chnames.py:222
 msgid "superscript a"
-msgstr ""
+msgstr "a بالانویس"
 
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
@@ -915,7 +921,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:238
 msgid "registered"
-msgstr ""
+msgstr "ثبت شده"
 
 #. Translators: this is the spoken word for the character '¯' (U+00af)
 #.
@@ -927,25 +933,25 @@ msgstr ""
 #.
 #: src/orca/chnames.py:246
 msgid "degrees"
-msgstr ""
+msgstr "درجه"
 
 #. Translators: this is the spoken word for the character '±' (U+00b1)
 #.
 #: src/orca/chnames.py:250
 msgid "plus or minus"
-msgstr ""
+msgstr "مثبت یا منفی"
 
 #. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
 #: src/orca/chnames.py:254
 msgid "superscript 2"
-msgstr ""
+msgstr "2 بالانویس"
 
 #. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: src/orca/chnames.py:258
 msgid "superscript 3"
-msgstr ""
+msgstr "3 بالانویس"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
@@ -960,19 +966,19 @@ msgstr ""
 #.
 #: src/orca/chnames.py:266
 msgid "mu"
-msgstr ""
+msgstr "مو"
 
 #. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
 #: src/orca/chnames.py:270
 msgid "paragraph marker"
-msgstr ""
+msgstr "علامت‌گذار بند"
 
 #. Translators: this is the spoken word for the character '·' (U+00b7)
 #.
 #: src/orca/chnames.py:274
 msgid "middle dot"
-msgstr ""
+msgstr "نقطهٔ میانی"
 
 #. Translators: this is the spoken word for the character '¸' (U+00b8)
 #.
@@ -987,7 +993,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:282
 msgid "superscript 1"
-msgstr ""
+msgstr "1 بالانویس"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
@@ -1005,25 +1011,25 @@ msgstr ""
 #.
 #: src/orca/chnames.py:294
 msgid "one fourth"
-msgstr ""
+msgstr "یک‌چهارم"
 
 #. Translators: this is the spoken word for the character '½' (U+00bd)
 #.
 #: src/orca/chnames.py:298
 msgid "one half"
-msgstr ""
+msgstr "یک‌دوم"
 
 #. Translators: this is the spoken word for the character '¾' (U+00be)
 #.
 #: src/orca/chnames.py:302
 msgid "three fourths"
-msgstr ""
+msgstr "سه‌چهارم"
 
 #. Translators: this is the spoken word for the character '¿' (U+00bf)
 #.
 #: src/orca/chnames.py:306
 msgid "inverted question mark"
-msgstr ""
+msgstr "علامت سوال معکوس"
 
 #. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
@@ -1173,7 +1179,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:406
 msgid "times"
-msgstr ""
+msgstr "ضرب در"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
@@ -1359,7 +1365,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:530
 msgid "divided by"
-msgstr ""
+msgstr "تقسیم بر"
 
 #. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
@@ -1419,7 +1425,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:570
 msgid "florin"
-msgstr ""
+msgstr "فلورین"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
@@ -1469,31 +1475,31 @@ msgstr ""
 #.
 #: src/orca/chnames.py:604
 msgid "dagger"
-msgstr ""
+msgstr "چلیپا"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: src/orca/chnames.py:608
 msgid "double dagger"
-msgstr ""
+msgstr "چلیپای جفت"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: src/orca/chnames.py:612
 msgid "bullet"
-msgstr ""
+msgstr "گلوله"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
 #: src/orca/chnames.py:616
 msgid "triangular bullet"
-msgstr ""
+msgstr "گلولهٔ سه‌گوش"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: src/orca/chnames.py:620
 msgid "per mille"
-msgstr ""
+msgstr "بر مایل"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
@@ -1523,27 +1529,27 @@ msgstr ""
 #.
 #: src/orca/chnames.py:640
 msgid "euro"
-msgstr ""
+msgstr "یورو"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
 #: src/orca/chnames.py:644
 msgid "trademark"
-msgstr ""
+msgstr "علامت ثبت شده"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: src/orca/chnames.py:649
 msgid "check mark"
-msgstr ""
+msgstr "تیک"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: src/orca/chnames.py:654
 msgid "heavy check mark"
-msgstr ""
+msgstr "تیک قوی"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1560,61 +1566,61 @@ msgstr ""
 #.
 #: src/orca/chnames.py:667
 msgid "superscript 0"
-msgstr ""
+msgstr "0 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: src/orca/chnames.py:671
 msgid "superscript 4"
-msgstr ""
+msgstr "4 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: src/orca/chnames.py:675
 msgid "superscript 5"
-msgstr ""
+msgstr "5 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: src/orca/chnames.py:679
 msgid "superscript 6"
-msgstr ""
+msgstr "6 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: src/orca/chnames.py:683
 msgid "superscript 7"
-msgstr ""
+msgstr "7 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: src/orca/chnames.py:687
 msgid "superscript 8"
-msgstr ""
+msgstr "8 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: src/orca/chnames.py:691
 msgid "superscript 9"
-msgstr ""
+msgstr "9 بالانویس"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #: src/orca/chnames.py:695
 msgid "superscript plus"
-msgstr ""
+msgstr "مثبت بالانویس"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: src/orca/chnames.py:699
 msgid "superscript minus"
-msgstr ""
+msgstr "منفی بالانویس"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: src/orca/chnames.py:703
 msgid "superscript equals"
-msgstr ""
+msgstr "مساوی بالانویس"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
@@ -1632,85 +1638,85 @@ msgstr ""
 #.
 #: src/orca/chnames.py:715
 msgid "superscript n"
-msgstr ""
+msgstr "n بالانویس"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
 #: src/orca/chnames.py:719
 msgid "subscript 0"
-msgstr ""
+msgstr "0 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: src/orca/chnames.py:723
 msgid "subscript 1"
-msgstr ""
+msgstr "1 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: src/orca/chnames.py:727
 msgid "subscript 2"
-msgstr ""
+msgstr "2 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: src/orca/chnames.py:731
 msgid "subscript 3"
-msgstr ""
+msgstr "3 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: src/orca/chnames.py:735
 msgid "subscript 4"
-msgstr ""
+msgstr "4 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: src/orca/chnames.py:739
 msgid "subscript 5"
-msgstr ""
+msgstr "5 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: src/orca/chnames.py:743
 msgid "subscript 6"
-msgstr ""
+msgstr "6 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: src/orca/chnames.py:747
 msgid "subscript 7"
-msgstr ""
+msgstr "7 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: src/orca/chnames.py:751
 msgid "subscript 8"
-msgstr ""
+msgstr "8 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: src/orca/chnames.py:755
 msgid "subscript 9"
-msgstr ""
+msgstr "9 پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: src/orca/chnames.py:759
 msgid "subscript plus"
-msgstr ""
+msgstr "مثبت پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: src/orca/chnames.py:763
 msgid "subscript minus"
-msgstr ""
+msgstr "منفی پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: src/orca/chnames.py:767
 msgid "subscript equals"
-msgstr ""
+msgstr "مساوی پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
@@ -2349,14 +2355,14 @@ msgstr ""
 #. a web page.
 #: src/orca/cmdnames.py:501
 msgid "Go to previous bookmark location"
-msgstr ""
+msgstr "رفتن به مکان نشانک پیشین"
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
 #: src/orca/cmdnames.py:506
 msgid "Go to bookmark"
-msgstr ""
+msgstr "رفتن به نشانک"
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the next bookmark location. Note that in this context, the
@@ -2364,19 +2370,19 @@ msgstr ""
 #. page.
 #: src/orca/cmdnames.py:512
 msgid "Go to next bookmark location"
-msgstr ""
+msgstr "رفتن به مکان نشانک بعدی"
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
 #: src/orca/cmdnames.py:516
 msgid "Add bookmark"
-msgstr ""
+msgstr "افزودن نشانک"
 
 #. Translators: this event handler saves all bookmarks for the current application
 #. to disk.
 #: src/orca/cmdnames.py:520
 msgid "Save bookmarks"
-msgstr ""
+msgstr "ذخیرهٔ نشانک‌ها"
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
@@ -3240,7 +3246,7 @@ msgstr ""
 #: src/orca/colornames.py:65
 msgctxt "color name"
 msgid "black"
-msgstr ""
+msgstr "سیاه"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3256,7 +3262,7 @@ msgstr ""
 #: src/orca/colornames.py:75
 msgctxt "color name"
 msgid "blue"
-msgstr ""
+msgstr "آبی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3272,7 +3278,7 @@ msgstr ""
 #: src/orca/colornames.py:85
 msgctxt "color name"
 msgid "brown"
-msgstr ""
+msgstr "قهوه‌ای"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3304,7 +3310,7 @@ msgstr ""
 #: src/orca/colornames.py:105
 msgctxt "color name"
 msgid "chocolate"
-msgstr ""
+msgstr "شکلاتی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3344,7 +3350,7 @@ msgstr ""
 #: src/orca/colornames.py:130
 msgctxt "color name"
 msgid "cyan"
-msgstr ""
+msgstr "فیروزه‌ای"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3352,7 +3358,7 @@ msgstr ""
 #: src/orca/colornames.py:135
 msgctxt "color name"
 msgid "dark blue"
-msgstr ""
+msgstr "آبی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3360,7 +3366,7 @@ msgstr ""
 #: src/orca/colornames.py:140
 msgctxt "color name"
 msgid "dark cyan"
-msgstr ""
+msgstr "فیروزه‌ای تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3376,7 +3382,7 @@ msgstr ""
 #: src/orca/colornames.py:150
 msgctxt "color name"
 msgid "dark gray"
-msgstr ""
+msgstr "خاکستری تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3384,7 +3390,7 @@ msgstr ""
 #: src/orca/colornames.py:155
 msgctxt "color name"
 msgid "dark green"
-msgstr ""
+msgstr "سبز تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3392,7 +3398,7 @@ msgstr ""
 #: src/orca/colornames.py:160
 msgctxt "color name"
 msgid "dark khaki"
-msgstr ""
+msgstr "خاکی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3408,7 +3414,7 @@ msgstr ""
 #: src/orca/colornames.py:170
 msgctxt "color name"
 msgid "dark olive green"
-msgstr ""
+msgstr "زیتونی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3416,7 +3422,7 @@ msgstr ""
 #: src/orca/colornames.py:175
 msgctxt "color name"
 msgid "dark orange"
-msgstr ""
+msgstr "نارنجی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3432,7 +3438,7 @@ msgstr ""
 #: src/orca/colornames.py:185
 msgctxt "color name"
 msgid "dark red"
-msgstr ""
+msgstr "قرمز تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3488,7 +3494,7 @@ msgstr ""
 #: src/orca/colornames.py:220
 msgctxt "color name"
 msgid "deep pink"
-msgstr ""
+msgstr "صورتی عمیق"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3496,7 +3502,7 @@ msgstr ""
 #: src/orca/colornames.py:225
 msgctxt "color name"
 msgid "deep sky blue"
-msgstr ""
+msgstr "آبی آسمانی عمیق"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3568,7 +3574,7 @@ msgstr ""
 #: src/orca/colornames.py:270
 msgctxt "color name"
 msgid "gold"
-msgstr ""
+msgstr "طلایی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3584,7 +3590,7 @@ msgstr ""
 #: src/orca/colornames.py:280
 msgctxt "color name"
 msgid "gray"
-msgstr ""
+msgstr "خاکستری"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3592,7 +3598,7 @@ msgstr ""
 #: src/orca/colornames.py:285
 msgctxt "color name"
 msgid "green"
-msgstr ""
+msgstr "سبز"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3600,7 +3606,7 @@ msgstr ""
 #: src/orca/colornames.py:290
 msgctxt "color name"
 msgid "green yellow"
-msgstr ""
+msgstr "زرد سبز"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3624,7 +3630,7 @@ msgstr ""
 #: src/orca/colornames.py:305
 msgctxt "color name"
 msgid "indian red"
-msgstr ""
+msgstr "قرمز هندی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3648,7 +3654,7 @@ msgstr ""
 #: src/orca/colornames.py:320
 msgctxt "color name"
 msgid "khaki"
-msgstr ""
+msgstr "خامی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3656,7 +3662,7 @@ msgstr ""
 #: src/orca/colornames.py:325
 msgctxt "color name"
 msgid "lavender"
-msgstr ""
+msgstr "اسطخودوسی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3688,7 +3694,7 @@ msgstr ""
 #: src/orca/colornames.py:345
 msgctxt "color name"
 msgid "light blue"
-msgstr ""
+msgstr "آبی روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3704,7 +3710,7 @@ msgstr ""
 #: src/orca/colornames.py:355
 msgctxt "color name"
 msgid "light cyan"
-msgstr ""
+msgstr "فیروزه‌ای روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3720,7 +3726,7 @@ msgstr ""
 #: src/orca/colornames.py:365
 msgctxt "color name"
 msgid "light gray"
-msgstr ""
+msgstr "خاکستری روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3728,7 +3734,7 @@ msgstr ""
 #: src/orca/colornames.py:370
 msgctxt "color name"
 msgid "light green"
-msgstr ""
+msgstr "سبز روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3736,7 +3742,7 @@ msgstr ""
 #: src/orca/colornames.py:375
 msgctxt "color name"
 msgid "light pink"
-msgstr ""
+msgstr "صورتی روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3760,7 +3766,7 @@ msgstr ""
 #: src/orca/colornames.py:390
 msgctxt "color name"
 msgid "light sky blue"
-msgstr ""
+msgstr "آبی آسمانی روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3784,7 +3790,7 @@ msgstr ""
 #: src/orca/colornames.py:405
 msgctxt "color name"
 msgid "light yellow"
-msgstr ""
+msgstr "زرد روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3792,7 +3798,7 @@ msgstr ""
 #: src/orca/colornames.py:410
 msgctxt "color name"
 msgid "lime"
-msgstr ""
+msgstr "لیمویی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3800,7 +3806,7 @@ msgstr ""
 #: src/orca/colornames.py:415
 msgctxt "color name"
 msgid "lime green"
-msgstr ""
+msgstr "سبز لیمویی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3944,7 +3950,7 @@ msgstr ""
 #: src/orca/colornames.py:505
 msgctxt "color name"
 msgid "navy"
-msgstr ""
+msgstr "دریایی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3960,7 +3966,7 @@ msgstr ""
 #: src/orca/colornames.py:515
 msgctxt "color name"
 msgid "olive"
-msgstr ""
+msgstr "زیتونی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3976,7 +3982,7 @@ msgstr ""
 #: src/orca/colornames.py:525
 msgctxt "color name"
 msgid "orange"
-msgstr ""
+msgstr "نارنجی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3984,7 +3990,7 @@ msgstr ""
 #: src/orca/colornames.py:530
 msgctxt "color name"
 msgid "orange red"
-msgstr ""
+msgstr "قرمز نارنجی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4056,7 +4062,7 @@ msgstr ""
 #: src/orca/colornames.py:575
 msgctxt "color name"
 msgid "pink"
-msgstr ""
+msgstr "صورتی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4080,7 +4086,7 @@ msgstr ""
 #: src/orca/colornames.py:590
 msgctxt "color name"
 msgid "purple"
-msgstr ""
+msgstr "بنفش"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4088,7 +4094,7 @@ msgstr ""
 #: src/orca/colornames.py:595
 msgctxt "color name"
 msgid "red"
-msgstr ""
+msgstr "قرمز"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4192,7 +4198,7 @@ msgstr ""
 #: src/orca/colornames.py:660
 msgctxt "color name"
 msgid "snow"
-msgstr ""
+msgstr "برفی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4200,7 +4206,7 @@ msgstr ""
 #: src/orca/colornames.py:665
 msgctxt "color name"
 msgid "spring green"
-msgstr ""
+msgstr "سبز بهاری"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4208,7 +4214,7 @@ msgstr ""
 #: src/orca/colornames.py:670
 msgctxt "color name"
 msgid "steel blue"
-msgstr ""
+msgstr "آبی فولادی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4216,7 +4222,7 @@ msgstr ""
 #: src/orca/colornames.py:675
 msgctxt "color name"
 msgid "tan"
-msgstr ""
+msgstr "برنزی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4264,7 +4270,7 @@ msgstr ""
 #: src/orca/colornames.py:705
 msgctxt "color name"
 msgid "wheat"
-msgstr ""
+msgstr "گندمی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4272,7 +4278,7 @@ msgstr ""
 #: src/orca/colornames.py:710
 msgctxt "color name"
 msgid "white"
-msgstr ""
+msgstr "سفید"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4280,7 +4286,7 @@ msgstr ""
 #: src/orca/colornames.py:715
 msgctxt "color name"
 msgid "white smoke"
-msgstr ""
+msgstr "دودی سفید"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4288,7 +4294,7 @@ msgstr ""
 #: src/orca/colornames.py:720
 msgctxt "color name"
 msgid "yellow"
-msgstr ""
+msgstr "زرد"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4296,7 +4302,7 @@ msgstr ""
 #: src/orca/colornames.py:725
 msgctxt "color name"
 msgid "yellow green"
-msgstr ""
+msgstr "سبز زرد"
 
 #. Translators: This string appears on a button in a dialog. "Activating" the
 #. selected item will perform the action that one would expect to occur if the
@@ -4306,7 +4312,7 @@ msgstr ""
 #. it to show all of its contents. And so on.
 #: src/orca/guilabels.py:40
 msgid "_Activate"
-msgstr ""
+msgstr "_فعّال‌سازی"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, on a web page Orca's Structural Navigation
@@ -4395,17 +4401,17 @@ msgstr ""
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:112 src/orca/orca-setup.ui:176
 msgid "_Cancel"
-msgstr ""
+msgstr "_لغو"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:115
 msgid "_Jump to"
-msgstr ""
+msgstr "_پرش به"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:118 src/orca/orca-setup.ui:192
 msgid "_OK"
-msgstr ""
+msgstr "_تأیید"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4416,7 +4422,7 @@ msgstr ""
 #: src/orca/guilabels.py:126
 msgctxt "capitalization style"
 msgid "Icon"
-msgstr ""
+msgstr "نقشک"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4427,7 +4433,7 @@ msgstr ""
 #: src/orca/guilabels.py:134
 msgctxt "capitalization style"
 msgid "None"
-msgstr ""
+msgstr "هیچ"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4438,7 +4444,7 @@ msgstr ""
 #: src/orca/guilabels.py:142
 msgctxt "capitalization style"
 msgid "Spell"
-msgstr ""
+msgstr "تلفّظ"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
@@ -4511,9 +4517,9 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:194 src/orca/keybindings.py:195
+#: src/orca/guilabels.py:194 src/orca/keybindings.py:200
 msgid "double click"
-msgstr ""
+msgstr "دوبار کلیک"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -4522,9 +4528,9 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: src/orca/guilabels.py:199 src/orca/keybindings.py:201
+#: src/orca/guilabels.py:199 src/orca/keybindings.py:206
 msgid "triple click"
-msgstr ""
+msgstr "سه‌بار کلیک"
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -4591,7 +4597,7 @@ msgstr ""
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
 #: src/orca/guilabels.py:248
 msgid "Find Options"
-msgstr ""
+msgstr "گزینه‌های یافتن"
 
 #. Translators: This is the label for a checkbox. This option controls whether
 #. the line that contains the match from an application's Find toolbar should
@@ -4614,7 +4620,7 @@ msgstr ""
 #. the user invokes that keyboard command.
 #: src/orca/guilabels.py:265
 msgid "Command"
-msgstr ""
+msgstr "فرمان"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
@@ -4629,7 +4635,7 @@ msgstr ""
 #: src/orca/guilabels.py:275
 msgctxt "keybindings"
 msgid "Default"
-msgstr ""
+msgstr "پیش‌گزیده"
 
 #. Translators: An external braille device has buttons on it that permit the
 #. user to create input gestures from the braille device. The braille bindings
@@ -4657,7 +4663,7 @@ msgstr ""
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
 #: src/orca/guilabels.py:294 src/orca/orca-setup.ui:242
 msgid "_Desktop"
-msgstr ""
+msgstr "_میزکار"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -4808,7 +4814,7 @@ msgstr ""
 #: src/orca/guilabels.py:411 src/orca/orca-setup.ui:63
 msgctxt "ProgressBar"
 msgid "All"
-msgstr ""
+msgstr "همه"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Application" means that Orca will present
@@ -4852,7 +4858,7 @@ msgstr ""
 #. document, Orca will pause at the end of each line.
 #: src/orca/guilabels.py:439 src/orca/orca-setup.ui:49
 msgid "Line"
-msgstr ""
+msgstr "خط"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
@@ -5708,7 +5714,7 @@ msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
-#: src/orca/keybindings.py:140
+#: src/orca/keybindings.py:145
 msgid "Insert"
 msgstr ""
 
@@ -5717,49 +5723,49 @@ msgstr ""
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: src/orca/keybindings.py:144 src/orca/keybindings.py:149
+#: src/orca/keybindings.py:149 src/orca/keybindings.py:154
 msgid "Caps_Lock"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: src/orca/keybindings.py:156
+#: src/orca/keybindings.py:161
 msgid "Alt_R"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: src/orca/keybindings.py:161
+#: src/orca/keybindings.py:166
 msgid "Super"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: src/orca/keybindings.py:166
+#: src/orca/keybindings.py:171
 msgid "Meta2"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: src/orca/keybindings.py:173
+#: src/orca/keybindings.py:178
 msgid "Alt_L"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: src/orca/keybindings.py:178
+#: src/orca/keybindings.py:183
 msgid "Ctrl"
 msgstr ""
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: src/orca/keybindings.py:183
+#: src/orca/keybindings.py:188
 msgid "Shift"
 msgstr ""
 
@@ -10700,11 +10706,18 @@ msgstr ""
 msgid "Selection restored."
 msgstr ""
 
+#. Translators: This message is presented to the user when text had been
+#. selected in a document and no longer is, e.g. as the result of navigating
+#. without holding down the shift key.
+#: src/orca/messages.py:2151
+msgid "Text unselected."
+msgstr ""
+
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2152
+#: src/orca/messages.py:2157
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
 msgstr ""
@@ -10713,50 +10726,50 @@ msgstr ""
 #. current object in pixels. This string refers to the full/verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2158
+#: src/orca/messages.py:2163
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
 msgstr ""
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: src/orca/messages.py:2162
+#: src/orca/messages.py:2167
 msgid "Speech disabled."
 msgstr ""
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: src/orca/messages.py:2166
+#: src/orca/messages.py:2171
 msgid "Speech enabled."
 msgstr ""
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2169
+#: src/orca/messages.py:2174
 msgid "faster."
 msgstr ""
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2172
+#: src/orca/messages.py:2177
 msgid "slower."
 msgstr ""
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2175
+#: src/orca/messages.py:2180
 msgid "higher."
 msgstr ""
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2178
+#: src/orca/messages.py:2183
 msgid "lower."
 msgstr ""
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2181
+#: src/orca/messages.py:2186
 msgid "louder."
 msgstr ""
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2184
+#: src/orca/messages.py:2189
 msgid "softer."
 msgstr ""
 
@@ -10765,7 +10778,7 @@ msgstr ""
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2191
+#: src/orca/messages.py:2196
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr ""
@@ -10775,7 +10788,7 @@ msgstr ""
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2198
+#: src/orca/messages.py:2203
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr ""
@@ -10784,29 +10797,29 @@ msgstr ""
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: src/orca/messages.py:2204
+#: src/orca/messages.py:2209
 msgid " dot dot dot"
 msgstr ""
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2207
+#: src/orca/messages.py:2212
 msgid "Screen reader on."
 msgstr ""
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2210
+#: src/orca/messages.py:2215
 msgid "Screen reader off."
 msgstr ""
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: src/orca/messages.py:2213
+#: src/orca/messages.py:2218
 msgid "Speech is unavailable."
 msgstr ""
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2218
+#: src/orca/messages.py:2223
 msgctxt "status bar"
 msgid "Not found"
 msgstr ""
@@ -10814,7 +10827,7 @@ msgstr ""
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2223
+#: src/orca/messages.py:2228
 msgid "Status bar not found"
 msgstr ""
 
@@ -10822,7 +10835,7 @@ msgstr ""
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2229
+#: src/orca/messages.py:2234
 msgid "string not found"
 msgstr ""
 
@@ -10832,7 +10845,7 @@ msgstr ""
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2237
+#: src/orca/messages.py:2242
 msgid "Structural navigation keys off."
 msgstr ""
 
@@ -10842,7 +10855,7 @@ msgstr ""
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2245
+#: src/orca/messages.py:2250
 msgid "Structural navigation keys on."
 msgstr ""
 
@@ -10852,73 +10865,73 @@ msgstr ""
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2253
+#: src/orca/messages.py:2258
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr ""
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2256
+#: src/orca/messages.py:2261
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr ""
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: src/orca/messages.py:2260
+#: src/orca/messages.py:2265
 msgid "End of table"
 msgstr ""
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2265
+#: src/orca/messages.py:2270
 msgid "Speak cell"
 msgstr ""
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2270
+#: src/orca/messages.py:2275
 msgid "Speak row"
 msgstr ""
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2275
+#: src/orca/messages.py:2280
 msgid "Non-uniform"
 msgstr ""
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2280
+#: src/orca/messages.py:2285
 msgid "Not in a table."
 msgstr ""
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2284
+#: src/orca/messages.py:2289
 msgid "Columns reordered"
 msgstr ""
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2288
+#: src/orca/messages.py:2293
 msgid "Rows reordered"
 msgstr ""
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2292
+#: src/orca/messages.py:2297
 #, python-format
 msgid "column %d"
 msgstr ""
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2296
+#: src/orca/messages.py:2301
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr ""
@@ -10926,21 +10939,21 @@ msgstr ""
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2301
+#: src/orca/messages.py:2306
 msgid "Bottom of column."
 msgstr ""
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2306
+#: src/orca/messages.py:2311
 msgid "Top of column."
 msgstr ""
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2311
+#: src/orca/messages.py:2316
 #, python-format
 msgid "Column %s selected"
 msgstr ""
@@ -10950,7 +10963,7 @@ msgstr ""
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2318
+#: src/orca/messages.py:2323
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr ""
@@ -10960,7 +10973,7 @@ msgstr ""
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2325
+#: src/orca/messages.py:2330
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr ""
@@ -10968,21 +10981,21 @@ msgstr ""
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2330
+#: src/orca/messages.py:2335
 #, python-format
 msgid "Column %s unselected"
 msgstr ""
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2334
+#: src/orca/messages.py:2339
 #, python-format
 msgid "row %d"
 msgstr ""
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2338
+#: src/orca/messages.py:2343
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr ""
@@ -10990,46 +11003,46 @@ msgstr ""
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2343
+#: src/orca/messages.py:2348
 msgid "Beginning of row."
 msgstr ""
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2348
+#: src/orca/messages.py:2353
 msgid "End of row."
 msgstr ""
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2352
+#: src/orca/messages.py:2357
 msgid "Row deleted."
 msgstr ""
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2356
+#: src/orca/messages.py:2361
 msgid "Last row deleted."
 msgstr ""
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2360
+#: src/orca/messages.py:2365
 msgid "Row inserted."
 msgstr ""
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2365
+#: src/orca/messages.py:2370
 msgid "Row inserted at the end of the table."
 msgstr ""
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2370
+#: src/orca/messages.py:2375
 #, python-format
 msgid "Row %s selected"
 msgstr ""
@@ -11039,7 +11052,7 @@ msgstr ""
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2377
+#: src/orca/messages.py:2382
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr ""
@@ -11049,7 +11062,7 @@ msgstr ""
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2384
+#: src/orca/messages.py:2389
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr ""
@@ -11057,21 +11070,21 @@ msgstr ""
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2389
+#: src/orca/messages.py:2394
 #, python-format
 msgid "Row %s unselected"
 msgstr ""
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2393
+#: src/orca/messages.py:2398
 msgctxt "text"
 msgid "selected"
 msgstr ""
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2397
+#: src/orca/messages.py:2402
 msgctxt "text"
 msgid "unselected"
 msgstr ""
@@ -11079,47 +11092,47 @@ msgstr ""
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2408
+#: src/orca/messages.py:2413
 msgid "%H hours, %M minutes and %S seconds"
 msgstr ""
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2413
+#: src/orca/messages.py:2418
 msgid "%H hours and %M minutes"
 msgstr ""
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2417
+#: src/orca/messages.py:2422
 #, python-format
 msgid "Unicode %s"
 msgstr ""
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2421
+#: src/orca/messages.py:2426
 msgctxt "command"
 msgid "undo"
 msgstr ""
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2425
+#: src/orca/messages.py:2430
 msgctxt "command"
 msgid "redo"
 msgstr ""
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2428
+#: src/orca/messages.py:2433
 #, python-format
 msgid "Screen reader version %s."
 msgstr ""
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2432
+#: src/orca/messages.py:2437
 msgid "white space"
 msgstr ""
 
@@ -11127,7 +11140,7 @@ msgstr ""
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2438
+#: src/orca/messages.py:2443
 msgid "Wrapping to bottom."
 msgstr ""
 
@@ -11135,28 +11148,28 @@ msgstr ""
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2444
+#: src/orca/messages.py:2449
 msgid "Wrapping to top."
 msgstr ""
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2449
+#: src/orca/messages.py:2454
 msgid "0 items"
 msgstr ""
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2457 src/orca/messages.py:2476
+#: src/orca/messages.py:2462 src/orca/messages.py:2481
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
 msgstr[0] ""
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2462
+#: src/orca/messages.py:2467
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -11165,7 +11178,7 @@ msgstr[0] ""
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2469
+#: src/orca/messages.py:2474
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -11174,7 +11187,7 @@ msgstr[0] ""
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2486
+#: src/orca/messages.py:2491
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -11183,7 +11196,7 @@ msgstr[0] ""
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2494
+#: src/orca/messages.py:2499
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -11192,14 +11205,14 @@ msgstr[0] ""
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2500
+#: src/orca/messages.py:2505
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
 msgstr[0] ""
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2504
+#: src/orca/messages.py:2509
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -11207,21 +11220,21 @@ msgstr[0] ""
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2509
+#: src/orca/messages.py:2514
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] ""
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2516
+#: src/orca/messages.py:2521
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] ""
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2523
+#: src/orca/messages.py:2528
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -11229,7 +11242,7 @@ msgstr[0] ""
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2528
+#: src/orca/messages.py:2533
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -11238,7 +11251,7 @@ msgstr[0] ""
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2537
+#: src/orca/messages.py:2542
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -11247,7 +11260,7 @@ msgstr[0] ""
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2543
+#: src/orca/messages.py:2548
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -11256,7 +11269,7 @@ msgstr[0] ""
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2549
+#: src/orca/messages.py:2554
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -11264,14 +11277,14 @@ msgstr[0] ""
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2554
+#: src/orca/messages.py:2559
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
 msgstr[0] ""
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2558
+#: src/orca/messages.py:2563
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11279,7 +11292,7 @@ msgstr[0] ""
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2568
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11291,8 +11304,8 @@ msgstr[0] ""
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2568 src/orca/messages.py:2584
-#: src/orca/messages.py:2668
+#: src/orca/messages.py:2573 src/orca/messages.py:2589
+#: src/orca/messages.py:2673
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11301,7 +11314,7 @@ msgstr[0] ""
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2578
+#: src/orca/messages.py:2583
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11309,7 +11322,7 @@ msgstr[0] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2593
+#: src/orca/messages.py:2598
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11317,7 +11330,7 @@ msgstr[0] ""
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2603
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11326,7 +11339,7 @@ msgstr[0] ""
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2604
+#: src/orca/messages.py:2609
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11334,7 +11347,7 @@ msgstr[0] ""
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2611
+#: src/orca/messages.py:2616
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11343,7 +11356,7 @@ msgstr[0] ""
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2617
+#: src/orca/messages.py:2622
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11351,7 +11364,7 @@ msgstr[0] ""
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2624
+#: src/orca/messages.py:2629
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11361,7 +11374,7 @@ msgstr[0] ""
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2638
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11370,7 +11383,7 @@ msgstr[0] ""
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2641
+#: src/orca/messages.py:2646
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11378,7 +11391,7 @@ msgstr[0] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2648
+#: src/orca/messages.py:2653
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11386,21 +11399,21 @@ msgstr[0] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2653
+#: src/orca/messages.py:2658
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] ""
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2660
+#: src/orca/messages.py:2665
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] ""
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2664
+#: src/orca/messages.py:2669
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11408,7 +11421,7 @@ msgstr[0] ""
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2680
+#: src/orca/messages.py:2685
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11416,7 +11429,7 @@ msgstr[0] ""
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2688
+#: src/orca/messages.py:2693
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
