@@ -87,8 +87,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            or obj.getRole() in [pyatspi.ROLE_TOOL_TIP, pyatspi.ROLE_STATUS_BAR]:
             return result
 
-        args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
-                               pyatspi.ROLE_DOCUMENT_WEB,
+        args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_WEB,
                                pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
                                pyatspi.ROLE_MATH,
