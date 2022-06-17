@@ -5188,6 +5188,26 @@ class Utilities:
         setSize = len(siblings)
         return position, setSize
 
+    def getValueCountForTerm(self, obj):
+        if not self.isDescriptionListTerm(obj):
+            return -1
+
+        try:
+            index = obj.getIndexInParent()
+            total = obj.parent.childCount
+        except:
+            msg = "ERROR: Exception getting index and sibling count for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1
+
+        count = 0
+        for i in range(index + 1, total):
+            if not self.isDescriptionListDescription(obj.parent[i]):
+                break
+            count += 1
+
+        return count
+
     def getRoleDescription(self, obj, isBraille=False):
         return ""
 

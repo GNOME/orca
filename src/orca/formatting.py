@@ -205,7 +205,7 @@ formatting = {
             'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
             },
         pyatspi.ROLE_DESCRIPTION_TERM: {
-            'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName)',
+            'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName + pause + termValueCount)',
             },
         pyatspi.ROLE_DESCRIPTION_VALUE: {
             'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName)',
@@ -629,6 +629,9 @@ formatting = {
         pyatspi.ROLE_COMBO_BOX: {
             'unfocused': '[Component(obj, asString(labelOrName + value + roleName), \
                                      labelOrName and (len(asString(labelOrName)) + 1) or 0)]'
+            },
+        pyatspi.ROLE_DESCRIPTION_TERM: {
+            'unfocused': BRAILLE_TEXT + ' + ([Region(" " + asString(termValueCount))])',
             },
         #pyatspi.ROLE_DESKTOP_ICON: 'default'
         pyatspi.ROLE_DIAL: {

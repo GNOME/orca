@@ -510,6 +510,9 @@ class Generator:
 
         return self._generateStatusBar(obj, **args)
 
+    def _generateTermValueCount(self, obj, **args):
+        return []
+
     #####################################################################
     #                                                                   #
     # Image information                                                 #

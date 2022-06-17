@@ -2569,6 +2569,13 @@ def descriptionListTermCount(count):
     return ngettext("Description list with %d term",
                     "Description list with %d terms", count) % count
 
+def valueCountForTerm(count):
+    # Translators: This message describes a description list.
+    # A given term ("dt" element) can have 0 or more values ("dd" elements).
+    # This message presents the number values a particular term has.
+    # See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+    return ngettext("%d value", "%d values", count) % count
+
 def mathTableSize(nRows, nColumns):
     # Translators: this represents the number of rows in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable

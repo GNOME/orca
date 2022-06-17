@@ -1646,6 +1646,16 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
+    def _generateTermValueCount(self, obj, **args):
+        count = self._script.utilities.getValueCountForTerm(obj)
+        # If we have a simple 1-term, 1-value situation, this announcment is chatty.
+        if count in (-1, 1):
+            return []
+
+        result = [messages.valueCountForTerm(count)]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        return result
+
     def _generateNumberOfChildren(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represents the number of children the
