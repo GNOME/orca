@@ -661,12 +661,15 @@ class Utilities:
         if obj.getRole() == pyatspi.ROLE_FRAME:
             results[0] = obj
 
+        dialog_roles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_FILE_CHOOSER]
+        if self._treatAlertsAsDialogs():
+            dialog_roles.append(pyatspi.ROLE_ALERT)
+
         parent = obj.parent
         while parent and (parent.parent != parent):
             if parent.getRole() == pyatspi.ROLE_FRAME:
                 results[0] = parent
-            if parent.getRole() in [pyatspi.ROLE_DIALOG,
-                                    pyatspi.ROLE_FILE_CHOOSER]:
+            if parent.getRole() in dialog_roles:
                 results[1] = parent
             parent = parent.parent
 
