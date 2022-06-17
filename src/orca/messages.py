@@ -2562,6 +2562,13 @@ def listItemCount(count):
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count
 
+def descriptionListTermCount(count):
+    # Translators: This message describes a description list.
+    # See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+    # Note that the "term" here corresponds to the "dt" element
+    return ngettext("Description list with %d term",
+                    "Description list with %d terms", count) % count
+
 def mathTableSize(nRows, nColumns):
     # Translators: this represents the number of rows in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable

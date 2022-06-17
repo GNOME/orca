@@ -465,7 +465,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not setsize:
             return []
 
-        result = [messages.listItemCount(setsize)]
+        if self._script.utilities.isDescriptionList(obj):
+            result = [messages.descriptionListTermCount(setsize)]
+        else:
+            result = [messages.listItemCount(setsize)]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
