@@ -14,15 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-02-16 14:18+0000\n"
-"PO-Revision-Date: 2022-02-17 17:40+0200\n"
+"POT-Creation-Date: 2022-06-17 15:42+0000\n"
+"PO-Revision-Date: 2022-06-17 20:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: orca-autostart.desktop.in:4
@@ -424,194 +425,193 @@ msgstr "рдктр"
 msgid "emb"
 msgstr "вбуд"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
 msgstr "Чеська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
 msgstr "Іспанська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
 msgstr "Канадська французька, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:48
 msgid "France French Grade 2"
 msgstr "Французька, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
 msgstr "Латвійська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
 msgstr "Голландська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
 msgstr "Норвезька, рівень 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
 msgstr "Норвезька, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
 msgstr "Норвезька, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
 msgstr "Норвезька, рівень 3"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
 msgstr "Польська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
 msgstr "Португальська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
 msgstr "Шведська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
 msgstr "Арабська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
 msgstr "Валлійська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
 msgstr "Валлійська, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "German Grade 0"
 msgstr "Німецька, рівень 0"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:104
 msgid "German Grade 1"
 msgstr "Німецька, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:108
 msgid "German Grade 2"
 msgstr "Німецька, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
 msgstr "Британська англійська, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
 msgstr "Британська англійська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
 msgstr "Англійська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
 msgstr "Англійська, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
 msgstr "Канадська французька, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:132
 msgid "France French Grade 1"
 msgstr "Французька, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
 msgstr "Грецька, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
 msgstr "Гінді, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
 msgstr "Угорська 8-ми точковий комп'ютер"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
 msgstr "Угорська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian Grade 2"
 msgstr "Угорська, рівень 2"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:156
 msgid "Italian Grade 1"
 msgstr "Італійська, рівень 1"
 
-#. Translators: These is the name of a braille translation table. To learn more
+#. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
@@ -11368,9 +11368,36 @@ msgstr[0] "Список з %d елементом"
 msgstr[1] "Список з %d елементами"
 msgstr[2] "Список з %d елементами"
 
+#. Translators: This message describes a description list.
+#. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+#. Note that the "term" here corresponds to the "dt" element
+#: src/orca/messages.py:2569
+#, python-format
+#| msgid "List with %d item"
+#| msgid_plural "List with %d items"
+msgid "Description list with %d term"
+msgid_plural "Description list with %d terms"
+msgstr[0] "Список описів із %d терміном"
+msgstr[1] "Список описів із %d термінами"
+msgstr[2] "Список описів із %d термінами"
+
+#. Translators: This message describes a description list.
+#. A given term ("dt" element) can have 0 or more values ("dd" elements).
+#. This message presents the number values a particular term has.
+#. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+#: src/orca/messages.py:2577
+#, python-format
+#| msgctxt "structural navigation"
+#| msgid "Value"
+msgid "%d value"
+msgid_plural "%d values"
+msgstr[0] "%d значення"
+msgstr[1] "%d значення"
+msgstr[2] "%d значень"
+
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2568
+#: src/orca/messages.py:2582
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11384,8 +11411,8 @@ msgstr[2] "математична таблиця з %d рядками"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2573 src/orca/messages.py:2589
-#: src/orca/messages.py:2673
+#: src/orca/messages.py:2587 src/orca/messages.py:2603
+#: src/orca/messages.py:2687
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11396,7 +11423,7 @@ msgstr[2] "%d стовпчиків"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2583
+#: src/orca/messages.py:2597
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11406,7 +11433,7 @@ msgstr[2] "вкладена математична таблиця з %d рядк
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2612
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11416,7 +11443,7 @@ msgstr[2] "%d повідомлень.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2603
+#: src/orca/messages.py:2617
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11427,7 +11454,7 @@ msgstr[2] "%d відсотків."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2609
+#: src/orca/messages.py:2623
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11437,7 +11464,7 @@ msgstr[2] "%d відсотків документа прочитано"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2616
+#: src/orca/messages.py:2630
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11448,7 +11475,7 @@ msgstr[2] "%d точок"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2622
+#: src/orca/messages.py:2636
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11458,7 +11485,7 @@ msgstr[2] "%(count)d символів %(repeatChar)s "
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2629
+#: src/orca/messages.py:2643
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11470,7 +11497,7 @@ msgstr[2] "%(index)d з %(total)d елементів виділено"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2638
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11481,7 +11508,7 @@ msgstr[2] "%d типових клавіатурних скорочень зна�
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2646
+#: src/orca/messages.py:2660
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11494,7 +11521,7 @@ msgstr[2] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2653
+#: src/orca/messages.py:2667
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11504,7 +11531,7 @@ msgstr[2] "%d пробілів"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2658
+#: src/orca/messages.py:2672
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11513,7 +11540,7 @@ msgstr[1] "%d табуляції"
 msgstr[2] "%d табуляцій"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2665
+#: src/orca/messages.py:2679
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11522,7 +11549,7 @@ msgstr[1] "%d таблиці"
 msgstr[2] "%d таблиць"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2669
+#: src/orca/messages.py:2683
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11532,7 +11559,7 @@ msgstr[2] "таблиця з %d рядками"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2685
+#: src/orca/messages.py:2699
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11542,7 +11569,7 @@ msgstr[2] "%d невідвіданих посилання"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2693
+#: src/orca/messages.py:2707
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
