@@ -1201,8 +1201,17 @@ class Utilities:
     def isBlockquote(self, obj):
         return obj and obj.getRole() == pyatspi.ROLE_BLOCK_QUOTE
 
+    def isDescriptionList(self, obj):
+        return obj.getRole() == pyatspi.ROLE_DESCRIPTION_LIST
+
+    def isDescriptionListTerm(self, obj):
+        return obj.getRole() == pyatspi.ROLE_DESCRIPTION_TERM
+
+    def isDescriptionListDescription(self, obj):
+        return obj.getRole() == pyatspi.ROLE_DESCRIPTION_VALUE
+
     def isDocumentList(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_LIST):
+        if not (obj and obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_DESCRIPTION_LIST]):
             return False
 
         try:

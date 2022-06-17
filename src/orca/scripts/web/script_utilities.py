@@ -2395,6 +2395,9 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
+        if self.isDescriptionList(obj):
+            return False
+
         try:
             role = obj.getRole()
             childCount = obj.childCount
@@ -3127,6 +3130,12 @@ class Utilities(script_utilities.Utilities):
 
         if role == pyatspi.ROLE_LIST:
             rv = self.treatAsDiv(obj)
+        elif self.isDescriptionList(obj):
+            rv = False
+        elif self.isDescriptionListTerm(obj):
+            rv = False
+        elif self.isDescriptionListDescription(obj):
+            rv = False
         elif self.isMath(obj):
             rv = False
         elif self.isLandmark(obj):
@@ -3610,6 +3619,24 @@ class Utilities(script_utilities.Utilities):
             return super().isCode(obj)
 
         return self._getTag(obj) == "code" or "code" in self._getXMLRoles(obj)
+
+    def isDescriptionList(self, obj):
+        if super().isDescriptionList(obj):
+            return True
+
+        return self._getTag(obj) == "dl"
+
+    def isDescriptionListTerm(self, obj):
+        if super().isDescriptionListTerm(obj):
+            return True
+
+        return self._getTag(obj) == "dt"
+
+    def isDescriptionListDescription(self, obj):
+        if super().isDescriptionListDescription(obj):
+            return True
+
+        return self._getTag(obj) == "dd"
 
     def getComboBoxValue(self, obj):
         attrs = self.objectAttributes(obj, False)
