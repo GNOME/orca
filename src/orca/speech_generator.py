@@ -1819,6 +1819,7 @@ class SpeechGenerator(generator.Generator):
                     'ROLE_CONTENT_SUGGESTION',
                     'ROLE_DPUB_LANDMARK',
                     'ROLE_DPUB_SECTION',
+                    pyatspi.ROLE_DESCRIPTION_LIST,
                     pyatspi.ROLE_FORM,
                     pyatspi.ROLE_LANDMARK,
                     pyatspi.ROLE_LIST,
@@ -1835,6 +1836,7 @@ class SpeechGenerator(generator.Generator):
                 enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK'])
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
+                enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
             if _settingsManager.getSetting('sayAllContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
                                 pyatspi.ROLE_TOOL_TIP,
@@ -1854,6 +1856,7 @@ class SpeechGenerator(generator.Generator):
                 enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK', 'ROLE_REGION'])
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
+                enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
                                 pyatspi.ROLE_TOOL_TIP,
@@ -1889,7 +1892,8 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.leavingNBlockquotes(count))
             else:
                 result.append(messages.LEAVING_BLOCKQUOTE)
-        elif role == pyatspi.ROLE_LIST and self._script.utilities.isDocumentList(obj):
+        elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_DESCRIPTION_LIST] \
+            and self._script.utilities.isDocumentList(obj):
             if count > 1:
                 result.append(messages.leavingNLists(count))
             else:
@@ -2130,6 +2134,7 @@ class SpeechGenerator(generator.Generator):
 
         args['leaving'] = True
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
+                               pyatspi.ROLE_DESCRIPTION_LIST,
                                pyatspi.ROLE_FORM,
                                pyatspi.ROLE_LANDMARK,
                                'ROLE_CONTENT_DELETION',

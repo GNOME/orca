@@ -1332,6 +1332,12 @@ class Generator:
             return 'ROLE_CONTENT_MARK'
         if self._script.utilities.isContentSuggestion(obj):
             return 'ROLE_CONTENT_SUGGESTION'
+        if self._script.utilities.isDescriptionList(obj):
+            return pyatspi.ROLE_DESCRIPTION_LIST
+        if self._script.utilities.isDescriptionListTerm(obj):
+            return pyatspi.ROLE_DESCRIPTION_TERM
+        if self._script.utilities.isDescriptionListDescription(obj):
+            return pyatspi.ROLE_DESCRIPTION_VALUE
         if self._script.utilities.isLandmark(obj):
             if self._script.utilities.isLandmarkRegion(obj):
                 return 'ROLE_REGION'

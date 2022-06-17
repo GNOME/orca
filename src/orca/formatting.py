@@ -200,11 +200,15 @@ formatting = {
         'ROLE_CONTENT_SUGGESTION': {
             'focused': 'leaving or roleName',
             },
+        pyatspi.ROLE_DESCRIPTION_LIST: {
+            'focused' : 'leaving or (labelOrName + pause + (numberOfChildren or roleName) + pause + nestingLevel)',
+            'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
+            },
         pyatspi.ROLE_DESCRIPTION_TERM: {
-            'unfocused': '(labelOrName or (displayedText + allTextSelection))',
+            'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName)',
             },
         pyatspi.ROLE_DESCRIPTION_VALUE: {
-            'unfocused': '(labelOrName or (displayedText + allTextSelection))',
+            'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName)',
             },
         pyatspi.ROLE_DIAL: {
             'focused': 'value',

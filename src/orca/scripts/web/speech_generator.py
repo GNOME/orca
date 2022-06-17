@@ -451,12 +451,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # other toolkits (e.g. exposing list items to us that are not
         # exposed to sighted users)
         role = args.get('role', obj.getRole())
-        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_DESCRIPTION_LIST]:
             return super()._generateNumberOfChildren(obj, **args)
 
         setsize = self._script.utilities.getSetSize(obj[0])
         if setsize is None:
-            children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+            if self._script.utilities.isDescriptionList(obj):
+                children = [x for x in obj if self._script.utilities.isDescriptionListTerm(x)]
+            else:
+                children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
             setsize = len(children)
 
         if not setsize:
