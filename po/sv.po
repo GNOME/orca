@@ -2,15 +2,15 @@
 # Copyright © 2004-2022 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2004.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
 # Luna Jernberg <droidbittin@gmail.com>, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-02-17 11:07+0000\n"
-"PO-Revision-Date: 2022-02-28 17:42+0100\n"
+"POT-Creation-Date: 2022-06-17 15:42+0000\n"
+"PO-Revision-Date: 2022-06-19 18:55+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -11369,9 +11369,30 @@ msgid_plural "List with %d items"
 msgstr[0] "Lista med %d objekt"
 msgstr[1] "Lista med %d objekt"
 
+#. Translators: This message describes a description list.
+#. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+#. Note that the "term" here corresponds to the "dt" element
+#: src/orca/messages.py:2569
+#, python-format
+msgid "Description list with %d term"
+msgid_plural "Description list with %d terms"
+msgstr[0] "Beskrivningslista med %d term"
+msgstr[1] "Beskrivningslista med %d termer"
+
+#. Translators: This message describes a description list.
+#. A given term ("dt" element) can have 0 or more values ("dd" elements).
+#. This message presents the number values a particular term has.
+#. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+#: src/orca/messages.py:2577
+#, python-format
+msgid "%d value"
+msgid_plural "%d values"
+msgstr[0] "%d värde"
+msgstr[1] "%d värden"
+
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2568
+#: src/orca/messages.py:2582
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11384,8 +11405,8 @@ msgstr[1] "matematisk tabell med %d rader"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2573 src/orca/messages.py:2589
-#: src/orca/messages.py:2673
+#: src/orca/messages.py:2587 src/orca/messages.py:2603
+#: src/orca/messages.py:2687
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11395,7 +11416,7 @@ msgstr[1] "%d kolumner"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2583
+#: src/orca/messages.py:2597
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11404,7 +11425,7 @@ msgstr[1] "nästlad matematisk tabell med %d rader"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2612
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11413,7 +11434,7 @@ msgstr[1] "%d meddelanden.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2603
+#: src/orca/messages.py:2617
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11423,7 +11444,7 @@ msgstr[1] "%d procent."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2609
+#: src/orca/messages.py:2623
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11432,7 +11453,7 @@ msgstr[1] "%d procent av dokumentet har lästs"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2616
+#: src/orca/messages.py:2630
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11442,7 +11463,7 @@ msgstr[1] "%d bildpunkter"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2622
+#: src/orca/messages.py:2636
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11451,7 +11472,7 @@ msgstr[1] "%(count)d %(repeatChar)s tecken"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2629
+#: src/orca/messages.py:2643
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11462,7 +11483,7 @@ msgstr[1] "%(index)d av %(total)d objekt markerade"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2638
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11472,7 +11493,7 @@ msgstr[1] "%d standardgenvägar för skärmläsare hittades."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2646
+#: src/orca/messages.py:2660
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11481,7 +11502,7 @@ msgstr[1] "%(count)d skärmläsargenvägar för %(application)s hittades."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2653
+#: src/orca/messages.py:2667
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11490,7 +11511,7 @@ msgstr[1] "%d blanksteg"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2658
+#: src/orca/messages.py:2672
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11498,7 +11519,7 @@ msgstr[0] "%d flik"
 msgstr[1] "%d flikar"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2665
+#: src/orca/messages.py:2679
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11506,7 +11527,7 @@ msgstr[0] "%d tabell"
 msgstr[1] "%d tabeller"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2669
+#: src/orca/messages.py:2683
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11515,7 +11536,7 @@ msgstr[1] "tabell med %d rader"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2685
+#: src/orca/messages.py:2699
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11524,7 +11545,7 @@ msgstr[1] "%d obesökta länkar"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2693
+#: src/orca/messages.py:2707
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
