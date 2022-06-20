@@ -2559,6 +2559,15 @@ def leavingNLists(count):
     return ngettext("Leaving %d list.", "Leaving %d lists.", count) % count
 
 def listItemCount(count):
+    if count == -1:
+        # Translators: This message describes a list in web content for which the
+        # size is unknown. Examples include unlimited scrolling news/article feeds
+        # on social media sites, and message lists on services such as gmail where
+        # you're currently viewing messages 1-100 out of some huge, unspecified
+        # number. Normally Orca announces "list with n items" when the count is
+        # known. This is the corresponding message for the unknown-count scenario.
+        return _("List of unknown size")
+
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count
 
@@ -2679,10 +2688,34 @@ def tableCount(count, onlyIfFound=True):
     return ngettext("%d table", "%d tables", count) % count
 
 def tableSize(nRows, nColumns):
+    if nRows == -1:
+        if nColumns == -1:
+            # Translators: This message describes a table for which both the
+            # number of rows and the number of columns are unknown. Normally
+            # Orca announces the table dimensions (e.g. "table with 100 rows
+            # 15 columns"). When both counts are unknown, it presents this.
+            return _("table of unknown size")
+
+        # Translators: This message describes a table for which the number of
+        # rows is unknown, but the number of columns is known. This might occur
+        # in a vertically infinitely scrollable table or grid on the web.
+        return ngettext("table with %d column, row count unknown",
+                        "table with %d columns, row count unknown",
+                        nColumns) % nColumns
+
+    if nColumns == -1:
+        # Translators: This message describes a table for which the number of
+        # columns is unknown, but the number of rows is known. This might occur
+        # in a horizontally infinitely scrollable table or grid on the web.
+        return ngettext("table with %d row, column count unknown",
+                        "table with %d rows, column count unknown",
+                        nRows) % nRows
+
     # Translators: this represents the number of rows in a table.
     rowString = ngettext("table with %d row",
                          "table with %d rows",
                          nRows) % nRows
+
     # Translators: this represents the number of columns in a table.
     colString = ngettext("%d column",
                          "%d columns",

@@ -2997,6 +2997,20 @@ class Utilities(script_utilities.Utilities):
 
         return super().coordinatesForCell(obj, preferAttribute)
 
+    def setSizeUnknown(self, obj):
+        if super().setSizeUnknown(obj):
+            return True
+
+        attrs = self.objectAttributes(obj)
+        return attrs.get('setsize') == '-1'
+
+    def rowOrColumnCountUnknown(self, obj):
+        if super().rowOrColumnCountUnknown(obj):
+            return True
+
+        attrs = self.objectAttributes(obj)
+        return attrs.get('rowcount') == '-1' or attrs.get('colcount') == '-1'
+
     def rowAndColumnCount(self, obj, preferAttribute=True):
         rows, cols = super().rowAndColumnCount(obj)
         if not preferAttribute:

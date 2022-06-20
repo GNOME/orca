@@ -4509,6 +4509,12 @@ class Utilities:
         row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
+    def setSizeUnknown(self, obj):
+        return obj.getState().contains(pyatspi.STATE_INDETERMINATE)
+
+    def rowOrColumnCountUnknown(self, obj):
+        return obj.getState().contains(pyatspi.STATE_INDETERMINATE)
+
     def rowAndColumnCount(self, obj, preferAttribute=True):
         try:
             table = obj.queryTable()

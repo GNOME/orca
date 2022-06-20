@@ -968,7 +968,8 @@ class Generator:
         rows, cols = self._script.utilities.rowAndColumnCount(obj)
 
         # This suggests broken or missing table interface.
-        if rows < 0 or cols < 0:
+        if (rows < 0 or cols < 0) \
+           and not self._script.utilities.rowOrColumnCountUnknown(obj):
             return []
 
         # This can happen if an author uses ARIA incorrectly, e.g. a grid whose

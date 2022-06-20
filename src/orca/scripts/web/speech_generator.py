@@ -711,13 +711,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         position = int(position)
         total = int(total)
-        if position < 0 or total < 0:
+        if position < 0:
             return []
+
+        stringType = 'groupindex'
+        if total < 0:
+            if not self._script.utilities.setSizeUnknown(obj):
+                return []
+            stringType += 'totalunknown'
 
         result = []
         result.append(self._script.formatting.getString(
             mode='speech',
-            stringType='groupindex') \
+            stringType=stringType) \
             % {"index" : position,
                "total" : total})
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))

@@ -67,6 +67,7 @@ formatting = {
             'multiselect': object_properties.STATE_MULTISELECT_SPEECH,
             'iconindex': object_properties.ICON_INDEX_SPEECH,
             'groupindex': object_properties.GROUP_INDEX_SPEECH,
+            'groupindextotalunknown':object_properties.GROUP_INDEX_TOTAL_UNKNOWN_SPEECH,
             'clickable': object_properties.STATE_CLICKABLE,
             'haslongdesc': object_properties.STATE_HAS_LONGDESC,
             'hasdetails': object_properties.RELATION_HAS_DETAILS,

@@ -45,6 +45,15 @@ ICON_INDEX_SPEECH = _("on %(index)d of %(total)d")
 # combobox item in a combobox, etc.
 GROUP_INDEX_SPEECH = _("%(index)d of %(total)d")
 
+# Translators: this refers to the position of an item in a list for which the
+# size is unknown. Examples include unlimited scrolling news/article feeds
+# on social media sites, and message lists on services such as gmail where
+# you're currently viewing messages 1-100 out of some huge, unspecified
+# number. Normally Orca announces both the position of the item and the
+# total number (e.g. "3 of 5"). This is the corresponding message for the
+# unknown-count scenario.
+GROUP_INDEX_TOTAL_UNKNOWN_SPEECH = _("item %(index)d")
+
 # Translators: This message describes a list item in a document. Nesting level
 # is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 # list that's inside another list).
