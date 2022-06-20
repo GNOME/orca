@@ -2990,12 +2990,23 @@ class Utilities(script_utilities.Utilities):
         if not (obj and obj.getRole() in roles):
             return -1, -1
 
-        if preferAttribute:
-            rowindex, colindex = self._rowAndColumnIndices(obj)
-            if rowindex is not None and colindex is not None:
-                return int(rowindex) - 1, int(colindex) - 1
+        if not preferAttribute:
+            return super().coordinatesForCell(obj, preferAttribute)
 
-        return super().coordinatesForCell(obj, preferAttribute)
+        rvRow = rvCol = None
+        rowindex, colindex = self._rowAndColumnIndices(obj)
+        if rowindex is None or colindex is None:
+            nativeRowindex, nativeColindex = super().coordinatesForCell(obj, False)
+            if rowindex is not None:
+                rvRow = int(rowindex) - 1
+            else:
+                rvRow = nativeRowindex
+            if colindex is not None:
+                rvCol = int(colindex) - 1
+            else:
+                rvCol = nativeColindex
+
+        return rvRow, rvCol
 
     def setSizeUnknown(self, obj):
         if super().setSizeUnknown(obj):
