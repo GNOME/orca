@@ -2571,6 +2571,19 @@ def listItemCount(count):
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count
 
+def feedArticleCount(count):
+    if count == -1:
+        # Translators: This message describes a news/article feed whose size is
+        # unknown, such as can be found on social media sites that have unlimited
+        # scrolling, adding and/or removing items as the user moves up or down.
+        # Normally Orca announces "feed with n articles" when the count is known.
+        # This is the corresponding message for the unknown-count scenario.
+        return _("Feed of unknown size")
+
+    # Translators: This message describes the number of articles (news items,
+    # social media posts, etc.) in a feed.
+    return ngettext("Feed with %d article", "Feed with %d articles", count) % count
+
 def descriptionListTermCount(count):
     # Translators: This message describes a description list.
     # See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl

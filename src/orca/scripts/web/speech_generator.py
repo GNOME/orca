@@ -157,6 +157,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
+        if self._script.utilities.isFeedArticle(obj):
+            return []
+
         if not args.get('mode', None):
             args['mode'] = self._mode
 
@@ -450,15 +453,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # We handle things even for non-document content due to issues in
         # other toolkits (e.g. exposing list items to us that are not
         # exposed to sighted users)
+        roles = [pyatspi.ROLE_DESCRIPTION_LIST,
+                 pyatspi.ROLE_LIST,
+                 pyatspi.ROLE_LIST_BOX,
+                 'ROLE_FEED']
         role = args.get('role', obj.getRole())
-        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_DESCRIPTION_LIST]:
+        if role not in roles:
             return super()._generateNumberOfChildren(obj, **args)
 
         setsize = self._script.utilities.getSetSize(obj[0])
         if setsize is None:
             if self._script.utilities.isDescriptionList(obj):
                 children = [x for x in obj if self._script.utilities.isDescriptionListTerm(x)]
-            else:
+            elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
                 children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
             setsize = len(children)
 
@@ -467,6 +474,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if self._script.utilities.isDescriptionList(obj):
             result = [messages.descriptionListTermCount(setsize)]
+        elif role == 'ROLE_FEED':
+            result = [messages.feedArticleCount(setsize)]
         else:
             result = [messages.listItemCount(setsize)]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))

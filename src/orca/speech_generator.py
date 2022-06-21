@@ -1830,6 +1830,7 @@ class SpeechGenerator(generator.Generator):
                     'ROLE_DPUB_LANDMARK',
                     'ROLE_DPUB_SECTION',
                     pyatspi.ROLE_DESCRIPTION_LIST,
+                    'ROLE_FEED',
                     pyatspi.ROLE_FORM,
                     pyatspi.ROLE_LANDMARK,
                     pyatspi.ROLE_LIST,
@@ -1847,6 +1848,7 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
                 enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
+                enabled.append('ROLE_FEED')
             if _settingsManager.getSetting('sayAllContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
                                 pyatspi.ROLE_TOOL_TIP,
@@ -1867,6 +1869,7 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
                 enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
+                enabled.append('ROLE_FEED')
             if _settingsManager.getSetting('speakContextPanel'):
                 enabled.extend([pyatspi.ROLE_PANEL,
                                 pyatspi.ROLE_TOOL_TIP,
@@ -1908,10 +1911,10 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.leavingNLists(count))
             else:
                 result.append(messages.LEAVING_LIST)
+        elif role == 'ROLE_FEED':
+            result.append(messages.LEAVING_FEED)
         elif role == pyatspi.ROLE_PANEL:
-            if self._script.utilities.isFeed(obj):
-                result.append(messages.LEAVING_FEED)
-            elif self._script.utilities.isFigure(obj):
+            if self._script.utilities.isFigure(obj):
                 result.append(messages.LEAVING_FIGURE)
             elif self._script.utilities.isDocumentPanel(obj):
                 result.append(messages.LEAVING_PANEL)
@@ -2153,6 +2156,7 @@ class SpeechGenerator(generator.Generator):
                                'ROLE_CONTENT_SUGGESTION',
                                'ROLE_DPUB_LANDMARK',
                                'ROLE_DPUB_SECTION',
+                               'ROLE_FEED',
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
                                'ROLE_REGION',

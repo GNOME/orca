@@ -1349,7 +1349,9 @@ class Script(default.Script):
             msg = "WEB: New focus %s is anchor. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
-        elif self.utilities.lastInputEventWasPageNav() and not self.utilities.getTable(newFocus):
+        elif self.utilities.lastInputEventWasPageNav() \
+             and not self.utilities.getTable(newFocus) \
+             and not self.utilities.isFeedArticle(newFocus):
             msg = "WEB: New focus %s was scrolled to. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)

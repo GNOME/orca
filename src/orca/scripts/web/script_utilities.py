@@ -3931,6 +3931,15 @@ class Utilities(script_utilities.Utilities):
     def isFeed(self, obj):
         return 'feed' in self._getXMLRoles(obj)
 
+    def isFeedArticle(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        if obj.getRole() != pyatspi.ROLE_ARTICLE:
+            return False
+
+        return pyatspi.findAncestor(obj, self.isFeed) is not None
+
     def isFigure(self, obj):
         return 'figure' in self._getXMLRoles(obj) or self._getTag(obj) == 'figure'
 

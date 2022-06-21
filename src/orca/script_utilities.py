@@ -950,6 +950,9 @@ class Utilities:
     def isFeed(self, obj):
         return False
 
+    def isFeedArticle(self, obj):
+        return False
+
     def isFigure(self, obj):
         return False
 
