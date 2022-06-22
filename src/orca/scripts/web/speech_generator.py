@@ -471,7 +471,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         setsize = self._script.utilities.getSetSize(obj[0])
         if setsize is None:
             if self._script.utilities.isDescriptionList(obj):
-                children = [x for x in obj if self._script.utilities.isDescriptionListTerm(x)]
+                children = self._script.utilities.descriptionListTerms(obj)
             elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
                 children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
             setsize = len(children)

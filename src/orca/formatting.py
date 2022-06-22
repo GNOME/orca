@@ -209,7 +209,7 @@ formatting = {
             'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
             },
         pyatspi.ROLE_DESCRIPTION_TERM: {
-            'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName + pause + termValueCount)',
+            'unfocused': '(labelOrName or (displayedText + allTextSelection)) + roleName + pause + termValueCount + pause + positionInList',
             },
         pyatspi.ROLE_DESCRIPTION_VALUE: {
             'unfocused': '(labelOrName or (displayedText + allTextSelection) + roleName)',
