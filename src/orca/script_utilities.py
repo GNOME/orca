@@ -1233,7 +1233,9 @@ class Utilities:
         if not self.isDescriptionList(obj):
             return []
 
-        return [x for x in obj if self.isDescriptionListTerm(x)]
+        _include = self.isDescriptionListTerm
+        _exclude = self.isDescriptionList
+        return self.findAllDescendants(obj, _include, _exclude)
 
     def isDocumentList(self, obj):
         if not (obj and obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_DESCRIPTION_LIST]):
