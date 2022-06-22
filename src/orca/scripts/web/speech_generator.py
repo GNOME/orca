@@ -326,6 +326,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if priorObj and priorObj in self._script.utilities.labelsForObject(obj):
             return []
 
+        descendant = args.get("ancestorOf")
+        if descendant and priorObj and obj.name and obj.name == priorObj.name:
+            msg = "WEB: %s's ancestor %s has same name as priorObj %s. Not generating labelOrName." \
+                % (descendant, obj, priorObj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
            or self._script.utilities.isDocument(obj):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
