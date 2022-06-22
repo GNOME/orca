@@ -543,6 +543,12 @@ class Utilities(web.Utilities):
         return False
 
     def _shouldCalculatePositionAndSetSize(self, obj):
+        # Chromium calculates posinset and setsize for description lists based on the
+        # number of terms present. If we want to present the number of values associated
+        # with a given term, we need to work those values out ourselves.
+        if self.isDescriptionListDescription(obj):
+            return True
+
         # Chromium has accessible menu items which are not focusable and therefore do not
         # have a posinset and setsize calculated. But they may claim to be the selected
         # item when an accessible child is selected (e.g. "zoom" when "+" or "-" gains focus.

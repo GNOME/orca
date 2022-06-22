@@ -5150,6 +5150,8 @@ class Utilities:
         if not result:
             if self.isDescriptionListTerm(sibling):
                 return self.descriptionListTerms(obj)
+            if self.isDescriptionListDescription(sibling):
+                return self.valuesForTerm(self.termForValue(sibling))
 
         return result or [child for child in obj]
 
@@ -5209,6 +5211,24 @@ class Utilities:
         position = siblings.index(obj)
         setSize = len(siblings)
         return position, setSize
+
+    def termForValue(self, obj):
+        if not self.isDescriptionListDescription(obj):
+            return None
+
+        try:
+            index = obj.getIndexInParent()
+        except:
+            msg = "ERROR: Exception getting index and sibling count for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        for i in range(index - 1, -1, -1):
+            child = obj.parent[i]
+            if self.isDescriptionListTerm(child):
+                return child
+
+        return None
 
     def valuesForTerm(self, obj):
         if not self.isDescriptionListTerm(obj):
