@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-06-17 15:42+0000\n"
-"PO-Revision-Date: 2022-06-17 19:47+0300\n"
+"POT-Creation-Date: 2022-06-22 06:02+0000\n"
+"PO-Revision-Date: 2022-06-22 12:04+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -10191,7 +10191,7 @@ msgstr "Ошибка: не удалось создать список объек
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
-#: src/orca/messages.py:1757 src/orca/object_properties.py:51
+#: src/orca/messages.py:1757 src/orca/object_properties.py:60
 #, python-format
 msgid "Nesting level %d"
 msgstr "Уровень вложенности %d"
@@ -11356,8 +11356,18 @@ msgstr[0] "Выход из %d списка."
 msgstr[1] "Выход из %d списков."
 msgstr[2] "Выход из %d списков."
 
+#. Translators: This message describes a list in web content for which the
+#. size is unknown. Examples include unlimited scrolling news/article feeds
+#. on social media sites, and message lists on services such as gmail where
+#. you're currently viewing messages 1-100 out of some huge, unspecified
+#. number. Normally Orca announces "list with n items" when the count is
+#. known. This is the corresponding message for the unknown-count scenario.
+#: src/orca/messages.py:2569
+msgid "List of unknown size"
+msgstr "Список неизвестного размера"
+
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2572
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11365,10 +11375,29 @@ msgstr[0] "Список с %d элементом"
 msgstr[1] "Список с %d элементами"
 msgstr[2] "Список с %d элементами"
 
+#. Translators: This message describes a news/article feed whose size is
+#. unknown, such as can be found on social media sites that have unlimited
+#. scrolling, adding and/or removing items as the user moves up or down.
+#. Normally Orca announces "feed with n articles" when the count is known.
+#. This is the corresponding message for the unknown-count scenario.
+#: src/orca/messages.py:2581
+msgid "Feed of unknown size"
+msgstr "Лента неизвестного размера"
+
+#. Translators: This message describes the number of articles (news items,
+#. social media posts, etc.) in a feed.
+#: src/orca/messages.py:2585
+#, python-format
+msgid "Feed with %d article"
+msgid_plural "Feed with %d articles"
+msgstr[0] "Лента с %d статьей"
+msgstr[1] "Лента с %d статьями"
+msgstr[2] "Лента с %d статьями"
+
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
-#: src/orca/messages.py:2569
+#: src/orca/messages.py:2591
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -11380,7 +11409,7 @@ msgstr[2] "Список описаний с %d элементами"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2577
+#: src/orca/messages.py:2599
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -11390,7 +11419,7 @@ msgstr[2] "%d значений"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2582
+#: src/orca/messages.py:2604
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11404,8 +11433,8 @@ msgstr[2] "математическая таблица с %d строками"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2587 src/orca/messages.py:2603
-#: src/orca/messages.py:2687
+#: src/orca/messages.py:2609 src/orca/messages.py:2625
+#: src/orca/messages.py:2733
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11416,7 +11445,7 @@ msgstr[2] "%d столбцов"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2597
+#: src/orca/messages.py:2619
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11426,7 +11455,7 @@ msgstr[2] "вложенная математическая таблица с %d 
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2612
+#: src/orca/messages.py:2634
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11436,7 +11465,7 @@ msgstr[2] "%d сообщений.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2617
+#: src/orca/messages.py:2639
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11447,7 +11476,7 @@ msgstr[2] "%d процентов."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2623
+#: src/orca/messages.py:2645
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11457,7 +11486,7 @@ msgstr[2] "Прочитано %d процентов документа"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2630
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11468,7 +11497,7 @@ msgstr[2] "%d пикселов"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2636
+#: src/orca/messages.py:2658
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11478,7 +11507,7 @@ msgstr[2] "%(count)d символов %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2643
+#: src/orca/messages.py:2665
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11490,7 +11519,7 @@ msgstr[2] "%(index)d из %(total)d элементов выделено"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2652
+#: src/orca/messages.py:2674
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11501,7 +11530,7 @@ msgstr[2] "Найдено %d клавиатурных сокращений по 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2660
+#: src/orca/messages.py:2682
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11514,7 +11543,7 @@ msgstr[2] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2667
+#: src/orca/messages.py:2689
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11524,7 +11553,7 @@ msgstr[2] "%d пробелов"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2672
+#: src/orca/messages.py:2694
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11533,7 +11562,7 @@ msgstr[1] "%d символа табуляции"
 msgstr[2] "%d символов табуляции"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2679
+#: src/orca/messages.py:2701
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11541,8 +11570,38 @@ msgstr[0] "%d таблица"
 msgstr[1] "%d таблицы"
 msgstr[2] "%d таблиц"
 
+#. Translators: This message describes a table for which both the
+#. number of rows and the number of columns are unknown. Normally
+#. Orca announces the table dimensions (e.g. "table with 100 rows
+#. 15 columns"). When both counts are unknown, it presents this.
+#: src/orca/messages.py:2710
+msgid "table of unknown size"
+msgstr "таблица неизвестного размера"
+
+#. Translators: This message describes a table for which the number of
+#. rows is unknown, but the number of columns is known. This might occur
+#. in a vertically infinitely scrollable table or grid on the web.
+#: src/orca/messages.py:2715
+#, python-format
+msgid "table with %d column, row count unknown"
+msgid_plural "table with %d columns, row count unknown"
+msgstr[0] "таблица с %d столбцом, количество строк неизвестно"
+msgstr[1] "таблица с %d столбцами, количество строк неизвестно"
+msgstr[2] "таблица с %d столбцами, количество строк неизвестно"
+
+#. Translators: This message describes a table for which the number of
+#. columns is unknown, but the number of rows is known. This might occur
+#. in a horizontally infinitely scrollable table or grid on the web.
+#: src/orca/messages.py:2723
+#, python-format
+msgid "table with %d row, column count unknown"
+msgid_plural "table with %d rows, column count unknown"
+msgstr[0] "таблица с %d строкой, количество столбцов неизвестно"
+msgstr[1] "таблица с %d строками, количество столбцов неизвестно"
+msgstr[2] "таблица с %d строками, количество столбцов неизвестно"
+
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2683
+#: src/orca/messages.py:2728
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11552,7 +11611,7 @@ msgstr[2] "таблица с %d строками"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2699
+#: src/orca/messages.py:2745
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11562,7 +11621,7 @@ msgstr[2] "%d непосещённых ссылок"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2707
+#: src/orca/messages.py:2753
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -11592,26 +11651,38 @@ msgstr "на %(index)d в %(total)d"
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d в %(total)d"
 
+#. Translators: this refers to the position of an item in a list for which the
+#. size is unknown. Examples include unlimited scrolling news/article feeds
+#. on social media sites, and message lists on services such as gmail where
+#. you're currently viewing messages 1-100 out of some huge, unspecified
+#. number. Normally Orca announces both the position of the item and the
+#. total number (e.g. "3 of 5"). This is the corresponding message for the
+#. unknown-count scenario.
+#: src/orca/object_properties.py:55
+#, python-format
+msgid "item %(index)d"
+msgstr "элемент %(index)d"
+
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list). This string is specifically for braille.
 #. Because braille displays lack real estate, we're using a shorter string than
 #. we use for speech.
-#: src/orca/object_properties.py:58
+#: src/orca/object_properties.py:67
 #, python-format
 msgid "LEVEL %d"
 msgstr "УРОВЕНЬ %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the spoken version.
-#: src/orca/object_properties.py:62
+#: src/orca/object_properties.py:71
 #, python-format
 msgid "tree level %d"
 msgstr "уровень дерева %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the braille version.
-#: src/orca/object_properties.py:66
+#: src/orca/object_properties.py:75
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "УРОВЕНЬ ДЕРЕВА %d"
@@ -11628,7 +11699,7 @@ msgstr "УРОВЕНЬ ДЕРЕВА %d"
 #. the details for an image named Pythagorean Theorem, Orca would present:
 #. "details for Pythagorean Theorem image".
 #. See https://w3c.github.io/aria/#aria-details
-#: src/orca/object_properties.py:80
+#: src/orca/object_properties.py:89
 #, python-format
 msgid "details for %s"
 msgstr "детали для %s"
@@ -11646,7 +11717,7 @@ msgstr "детали для %s"
 #. a password field which has details in a list named "Requirements", Orca would
 #. present: "has details in Requirements list".
 #. See https://w3c.github.io/aria/#aria-details
-#: src/orca/object_properties.py:95
+#: src/orca/object_properties.py:104
 #, python-format
 msgid "has details in %s"
 msgstr "есть детали в %s"
@@ -11656,7 +11727,7 @@ msgstr "есть детали в %s"
 #. This role refers to a container with a proposed change. This change can
 #. include the insertion and/or deletion of content, and would typically be seen
 #. in a collaborative editor, such as in Google Docs.
-#: src/orca/object_properties.py:102
+#: src/orca/object_properties.py:111
 msgctxt "role"
 msgid "suggestion"
 msgstr "совет"
@@ -11666,7 +11737,7 @@ msgstr "совет"
 #. The reason for including the editable state as part of the role is to make it
 #. possible for users to quickly identify combo boxes in which a value can be
 #. typed or arrowed to.
-#: src/orca/object_properties.py:109
+#: src/orca/object_properties.py:118
 msgid "editable combo box"
 msgstr "редактируемое поле со списком"
 
@@ -11674,7 +11745,7 @@ msgstr "редактируемое поле со списком"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role is to describe elements in web content which have the contenteditable
 #. attribute set to true, indicating that the element can be edited by the user.
-#: src/orca/object_properties.py:115
+#: src/orca/object_properties.py:124
 msgid "editable content"
 msgstr "редактируемое содержимое"
 
@@ -11683,7 +11754,7 @@ msgstr "редактируемое содержимое"
 #. The feed role is a scrollable list of articles where scrolling may cause
 #. articles to be added to or removed from either end of the list.
 #. https://w3c.github.io/aria/#feed
-#: src/orca/object_properties.py:122
+#: src/orca/object_properties.py:131
 msgctxt "role"
 msgid "feed"
 msgstr "лента"
@@ -11693,7 +11764,7 @@ msgstr "лента"
 #. The figure role is a perceivable section of content that typically contains a
 #. graphical document, images, code snippets, or example text.
 #. https://w3c.github.io/aria/#figure
-#: src/orca/object_properties.py:129
+#: src/orca/object_properties.py:138
 msgctxt "role"
 msgid "figure"
 msgstr "рисунок"
@@ -11702,7 +11773,7 @@ msgstr "рисунок"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the abstract in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-abstract
-#: src/orca/object_properties.py:135
+#: src/orca/object_properties.py:144
 msgctxt "role"
 msgid "abstract"
 msgstr "аннотация"
@@ -11711,7 +11782,7 @@ msgstr "аннотация"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-acknowledgments
-#: src/orca/object_properties.py:141
+#: src/orca/object_properties.py:150
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "список благодарностей"
@@ -11720,7 +11791,7 @@ msgstr "список благодарностей"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-afterword
-#: src/orca/object_properties.py:147
+#: src/orca/object_properties.py:156
 msgctxt "role"
 msgid "afterword"
 msgstr "послесловие"
@@ -11729,7 +11800,7 @@ msgstr "послесловие"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the appendix in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-appendix
-#: src/orca/object_properties.py:153
+#: src/orca/object_properties.py:162
 msgctxt "role"
 msgid "appendix"
 msgstr "приложение"
@@ -11738,7 +11809,7 @@ msgstr "приложение"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a bibliography entry in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-biblioentry
-#: src/orca/object_properties.py:159
+#: src/orca/object_properties.py:168
 msgctxt "role"
 msgid "bibliography entry"
 msgstr "библиографическая запись"
@@ -11747,7 +11818,7 @@ msgstr "библиографическая запись"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the bibliography in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-bibliography
-#: src/orca/object_properties.py:165
+#: src/orca/object_properties.py:174
 msgctxt "role"
 msgid "bibliography"
 msgstr "библиография"
@@ -11756,7 +11827,7 @@ msgstr "библиография"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a chapter in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-chapter
-#: src/orca/object_properties.py:171
+#: src/orca/object_properties.py:180
 msgctxt "role"
 msgid "chapter"
 msgstr "глава"
@@ -11765,7 +11836,7 @@ msgstr "глава"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the colophon in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-colophon
-#: src/orca/object_properties.py:177
+#: src/orca/object_properties.py:186
 msgctxt "role"
 msgid "colophon"
 msgstr "выходные данные"
@@ -11774,7 +11845,7 @@ msgstr "выходные данные"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the conclusion in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-conclusion
-#: src/orca/object_properties.py:183
+#: src/orca/object_properties.py:192
 msgctxt "role"
 msgid "conclusion"
 msgstr "заключение"
@@ -11783,7 +11854,7 @@ msgstr "заключение"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the cover in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-cover
-#: src/orca/object_properties.py:189
+#: src/orca/object_properties.py:198
 msgctxt "role"
 msgid "cover"
 msgstr "обложка"
@@ -11792,7 +11863,7 @@ msgstr "обложка"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single credit in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-credit
-#: src/orca/object_properties.py:195
+#: src/orca/object_properties.py:204
 msgctxt "role"
 msgid "credit"
 msgstr "упоминание"
@@ -11801,7 +11872,7 @@ msgstr "упоминание"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the credits in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-credits
-#: src/orca/object_properties.py:201
+#: src/orca/object_properties.py:210
 msgctxt "role"
 msgid "credits"
 msgstr "упоминания"
@@ -11810,7 +11881,7 @@ msgstr "упоминания"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the dedication in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-dedication
-#: src/orca/object_properties.py:207
+#: src/orca/object_properties.py:216
 msgctxt "role"
 msgid "dedication"
 msgstr "посвящение"
@@ -11819,7 +11890,7 @@ msgstr "посвящение"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single endnote in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-endnote
-#: src/orca/object_properties.py:213
+#: src/orca/object_properties.py:222
 msgctxt "role"
 msgid "endnote"
 msgstr "концевая сноска"
@@ -11828,7 +11899,7 @@ msgstr "концевая сноска"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the endnotes in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-endnotes
-#: src/orca/object_properties.py:219
+#: src/orca/object_properties.py:228
 msgctxt "role"
 msgid "endnotes"
 msgstr "концевые сноски"
@@ -11837,7 +11908,7 @@ msgstr "концевые сноски"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epigraph in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-epigraph
-#: src/orca/object_properties.py:225
+#: src/orca/object_properties.py:234
 msgctxt "role"
 msgid "epigraph"
 msgstr "эпиграф"
@@ -11846,7 +11917,7 @@ msgstr "эпиграф"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epilogue in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-epilogue
-#: src/orca/object_properties.py:231
+#: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
 msgstr "эпилог"
@@ -11855,7 +11926,7 @@ msgstr "эпилог"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the errata in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-errata
-#: src/orca/object_properties.py:237
+#: src/orca/object_properties.py:246
 msgctxt "role"
 msgid "errata"
 msgstr "список опечаток"
@@ -11864,7 +11935,7 @@ msgstr "список опечаток"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to an example in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-example
-#: src/orca/object_properties.py:243
+#: src/orca/object_properties.py:252
 msgctxt "role"
 msgid "example"
 msgstr "пример"
@@ -11873,7 +11944,7 @@ msgstr "пример"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-foreword
-#: src/orca/object_properties.py:249
+#: src/orca/object_properties.py:258
 msgctxt "role"
 msgid "foreword"
 msgstr "предисловие"
@@ -11882,7 +11953,7 @@ msgstr "предисловие"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the glossary in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-glossary
-#: src/orca/object_properties.py:255
+#: src/orca/object_properties.py:264
 msgctxt "role"
 msgid "glossary"
 msgstr "глоссарий"
@@ -11891,7 +11962,7 @@ msgstr "глоссарий"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the index in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-index
-#: src/orca/object_properties.py:261
+#: src/orca/object_properties.py:270
 msgctxt "role"
 msgid "index"
 msgstr "указатель"
@@ -11900,7 +11971,7 @@ msgstr "указатель"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the introduction in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-introduction
-#: src/orca/object_properties.py:267
+#: src/orca/object_properties.py:276
 msgctxt "role"
 msgid "introduction"
 msgstr "введение"
@@ -11909,7 +11980,7 @@ msgstr "введение"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pagebreak in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pagebreak
-#: src/orca/object_properties.py:273
+#: src/orca/object_properties.py:282
 msgctxt "role"
 msgid "page break"
 msgstr "разрыв страницы"
@@ -11918,7 +11989,7 @@ msgstr "разрыв страницы"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a page list in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pagelist
-#: src/orca/object_properties.py:279
+#: src/orca/object_properties.py:288
 msgctxt "role"
 msgid "page list"
 msgstr "список страниц"
@@ -11927,7 +11998,7 @@ msgstr "список страниц"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a named part in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-part
-#: src/orca/object_properties.py:285
+#: src/orca/object_properties.py:294
 msgctxt "role"
 msgid "part"
 msgstr "часть"
@@ -11936,7 +12007,7 @@ msgstr "часть"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the preface in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-preface
-#: src/orca/object_properties.py:291
+#: src/orca/object_properties.py:300
 msgctxt "role"
 msgid "preface"
 msgstr "вступление"
@@ -11945,7 +12016,7 @@ msgstr "вступление"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the prologue in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-prologue
-#: src/orca/object_properties.py:297
+#: src/orca/object_properties.py:306
 msgctxt "role"
 msgid "prologue"
 msgstr "пролог"
@@ -11954,7 +12025,7 @@ msgstr "пролог"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pullquote in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pullquote
-#: src/orca/object_properties.py:303
+#: src/orca/object_properties.py:312
 msgctxt "role"
 msgid "pullquote"
 msgstr "цитата"
@@ -11966,7 +12037,7 @@ msgstr "цитата"
 #. In English, "QNA" is generally recognized by native speakers. If your language
 #. lacks the equivalent, please prefer the shortest phrase which clearly conveys
 #. the meaning.
-#: src/orca/object_properties.py:312
+#: src/orca/object_properties.py:321
 msgctxt "role"
 msgid "QNA"
 msgstr "Вопросы и ответы"
@@ -11975,7 +12046,7 @@ msgstr "Вопросы и ответы"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the subtitle in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-subtitle
-#: src/orca/object_properties.py:318
+#: src/orca/object_properties.py:327
 msgctxt "role"
 msgid "subtitle"
 msgstr "подзаголовок"
@@ -11984,7 +12055,7 @@ msgstr "подзаголовок"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the table of contents in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-toc
-#: src/orca/object_properties.py:324
+#: src/orca/object_properties.py:333
 msgctxt "role"
 msgid "table of contents"
 msgstr "содержание"
@@ -11993,7 +12064,7 @@ msgstr "содержание"
 #. content that you might find in something such as HTML content (e.g., <h1>).
 #. The translated form is meant to be a single character followed by a numeric
 #. heading level, where the single character is to indicate 'heading'.
-#: src/orca/object_properties.py:330
+#: src/orca/object_properties.py:339
 #, python-format
 msgid "h%d"
 msgstr "заг%d"
@@ -12001,7 +12072,7 @@ msgstr "заг%d"
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
-#: src/orca/object_properties.py:335
+#: src/orca/object_properties.py:344
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s уровень %(level)d"
@@ -12011,7 +12082,7 @@ msgstr "%(role)s уровень %(level)d"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: src/orca/object_properties.py:342
+#: src/orca/object_properties.py:351
 msgid "horizontal scroll bar"
 msgstr "горизонтальная полоса прокрутки"
 
@@ -12020,7 +12091,7 @@ msgstr "горизонтальная полоса прокрутки"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: src/orca/object_properties.py:349
+#: src/orca/object_properties.py:358
 msgid "vertical scroll bar"
 msgstr "вертикальная полоса прокрутки"
 
@@ -12031,7 +12102,7 @@ msgstr "вертикальная полоса прокрутки"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: src/orca/object_properties.py:358
+#: src/orca/object_properties.py:367
 msgid "horizontal slider"
 msgstr "горизонтальный ползунок"
 
@@ -12042,7 +12113,7 @@ msgstr "горизонтальный ползунок"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: src/orca/object_properties.py:367
+#: src/orca/object_properties.py:376
 msgid "vertical slider"
 msgstr "вертикальный ползунок"
 
@@ -12056,7 +12127,7 @@ msgstr "вертикальный ползунок"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: src/orca/object_properties.py:379
+#: src/orca/object_properties.py:388
 msgid "horizontal splitter"
 msgstr "горизонтальный разделитель"
 
@@ -12070,7 +12141,7 @@ msgstr "горизонтальный разделитель"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: src/orca/object_properties.py:391
+#: src/orca/object_properties.py:400
 msgid "vertical splitter"
 msgstr "вертикальный разделитель"
 
@@ -12078,14 +12149,14 @@ msgstr "вертикальный разделитель"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: src/orca/object_properties.py:397
+#: src/orca/object_properties.py:406
 msgctxt "role"
 msgid "switch"
 msgstr "переключатель"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
-#: src/orca/object_properties.py:401
+#: src/orca/object_properties.py:410
 msgid "Icon panel"
 msgstr "Область значков"
 
@@ -12094,7 +12165,7 @@ msgstr "Область значков"
 #. The "banner" role is defined in the ARIA specification as "A region that
 #. contains mostly site-oriented content, rather than page-specific content."
 #. See https://www.w3.org/TR/wai-aria-1.1/#banner
-#: src/orca/object_properties.py:408
+#: src/orca/object_properties.py:417
 msgctxt "role"
 msgid "banner"
 msgstr "баннер"
@@ -12105,7 +12176,7 @@ msgstr "баннер"
 #. section of the document, designed to be complementary to the main content at a
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
-#: src/orca/object_properties.py:416
+#: src/orca/object_properties.py:425
 msgctxt "role"
 msgid "complementary content"
 msgstr "дополнительное содержимое"
@@ -12116,7 +12187,7 @@ msgstr "дополнительное содержимое"
 #. perceivable region that contains information about the parent document.
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
-#: src/orca/object_properties.py:424
+#: src/orca/object_properties.py:433
 msgctxt "role"
 msgid "information"
 msgstr "сведения"
@@ -12125,7 +12196,7 @@ msgstr "сведения"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
-#: src/orca/object_properties.py:430
+#: src/orca/object_properties.py:439
 msgctxt "role"
 msgid "main content"
 msgstr "основное содержание"
@@ -12135,7 +12206,7 @@ msgstr "основное содержание"
 #. The "navigation" role is defined in the ARIA specification as "A collection of
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
-#: src/orca/object_properties.py:437
+#: src/orca/object_properties.py:446
 msgctxt "role"
 msgid "navigation"
 msgstr "навигация"
@@ -12147,7 +12218,7 @@ msgstr "навигация"
 #. purpose and sufficiently important that users will likely want to be able to
 #. navigate to the section easily and to have it listed in a summary of the page."
 #. See https://www.w3.org/TR/wai-aria-1.1/#region
-#: src/orca/object_properties.py:446
+#: src/orca/object_properties.py:455
 msgctxt "role"
 msgid "region"
 msgstr "область"
@@ -12157,7 +12228,7 @@ msgstr "область"
 #. The "search" role is defined in the ARIA specification as "A landmark region
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
-#: src/orca/object_properties.py:453
+#: src/orca/object_properties.py:462
 msgctxt "role"
 msgid "search"
 msgstr "поиск"
@@ -12167,7 +12238,7 @@ msgstr "поиск"
 #. The reason for including the visited state as part of the role is to make it
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
-#: src/orca/object_properties.py:460
+#: src/orca/object_properties.py:469
 msgid "visited link"
 msgstr "посещённая ссылка"
 
@@ -12175,151 +12246,151 @@ msgstr "посещённая ссылка"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
-#: src/orca/object_properties.py:466
+#: src/orca/object_properties.py:475
 msgid "menu button"
 msgstr "кнопка меню"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
-#: src/orca/object_properties.py:470
+#: src/orca/object_properties.py:479
 msgid "sorted ascending"
 msgstr "отсортировано по возрастанию"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to descending.
-#: src/orca/object_properties.py:474
+#: src/orca/object_properties.py:483
 msgid "sorted descending"
 msgstr "отсортировано по убыванию"
 
 #. Translators: This string refers to a row or column whose sort-order has been set,
 #. but the nature of the sort order is unknown or something other than ascending or
 #. descending.
-#: src/orca/object_properties.py:479
+#: src/orca/object_properties.py:488
 msgid "sorted"
 msgstr "отсортировано"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: src/orca/object_properties.py:483
+#: src/orca/object_properties.py:492
 msgid "clickable"
 msgstr "можно нажать"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: src/orca/object_properties.py:488
+#: src/orca/object_properties.py:497
 msgid "collapsed"
 msgstr "свёрнуто"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: src/orca/object_properties.py:493
+#: src/orca/object_properties.py:502
 msgid "expanded"
 msgstr "расширено"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: src/orca/object_properties.py:497
+#: src/orca/object_properties.py:506
 msgid "has long description"
 msgstr "есть подробное описание"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: src/orca/object_properties.py:501
+#: src/orca/object_properties.py:510
 msgid "horizontal"
 msgstr "горизонтальная"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: src/orca/object_properties.py:505
+#: src/orca/object_properties.py:514
 msgid "vertical"
 msgstr "вертикальная"
 
 #. Translators: This is a state which applies to a check box.
-#: src/orca/object_properties.py:508
+#: src/orca/object_properties.py:517
 msgctxt "checkbox"
 msgid "checked"
 msgstr "отмечено"
 
 #. Translators: This is a state which applies to a check box.
-#: src/orca/object_properties.py:511
+#: src/orca/object_properties.py:520
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "не отмечено"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: src/orca/object_properties.py:515
+#: src/orca/object_properties.py:524
 msgctxt "switch"
 msgid "on"
 msgstr "включено"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: src/orca/object_properties.py:519
+#: src/orca/object_properties.py:528
 msgctxt "switch"
 msgid "off"
 msgstr "отключено"
 
 #. Translators: This is a state which applies to a check box.
-#: src/orca/object_properties.py:522
+#: src/orca/object_properties.py:531
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "частично отмечено"
 
 #. Translators: This is a state which applies to a toggle button.
-#: src/orca/object_properties.py:525
+#: src/orca/object_properties.py:534
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "нажато"
 
 #. Translators: This is a state which applies to a toggle button.
-#: src/orca/object_properties.py:528
+#: src/orca/object_properties.py:537
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "не нажато"
 
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
-#: src/orca/object_properties.py:532
+#: src/orca/object_properties.py:541
 msgctxt "listitem"
 msgid "not selected"
 msgstr "не выбрано"
 
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:535
+#: src/orca/object_properties.py:544
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "выбрано"
 
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:538
+#: src/orca/object_properties.py:547
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "не выбрано"
 
 #. Translators: This is a state which applies to a table cell.
-#: src/orca/object_properties.py:541
+#: src/orca/object_properties.py:550
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "не выделено"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:544
+#: src/orca/object_properties.py:553
 msgctxt "link state"
 msgid "visited"
 msgstr "посещённая"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:547
+#: src/orca/object_properties.py:556
 msgctxt "link state"
 msgid "unvisited"
 msgstr "непосещённая"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: src/orca/object_properties.py:551 src/orca/object_properties.py:555
+#: src/orca/object_properties.py:560 src/orca/object_properties.py:564
 msgid "grayed"
 msgstr "неактивно"
 
@@ -12328,7 +12399,7 @@ msgstr "неактивно"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: src/orca/object_properties.py:562
+#: src/orca/object_properties.py:571
 msgctxt "text"
 msgid "read only"
 msgstr "только для чтения"
@@ -12338,27 +12409,27 @@ msgstr "только для чтения"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: src/orca/object_properties.py:569
+#: src/orca/object_properties.py:578
 msgctxt "text"
 msgid "rdonly"
 msgstr "только чтен"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: src/orca/object_properties.py:573 src/orca/object_properties.py:577
+#: src/orca/object_properties.py:582 src/orca/object_properties.py:586
 msgid "required"
 msgstr "необходимо заполнить"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: src/orca/object_properties.py:581
+#: src/orca/object_properties.py:590
 msgid "multi-select"
 msgstr "множественное выделение"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: src/orca/object_properties.py:586
+#: src/orca/object_properties.py:595
 msgctxt "error"
 msgid "invalid entry"
 msgstr "неверный ввод"
@@ -12368,7 +12439,7 @@ msgstr "неверный ввод"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: src/orca/object_properties.py:593
+#: src/orca/object_properties.py:602
 msgctxt "error"
 msgid "invalid"
 msgstr "неверный"
@@ -12376,7 +12447,7 @@ msgstr "неверный"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: src/orca/object_properties.py:598
+#: src/orca/object_properties.py:607
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "неверное написание"
@@ -12385,7 +12456,7 @@ msgstr "неверное написание"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:604
+#: src/orca/object_properties.py:613
 msgctxt "error"
 msgid "spelling"
 msgstr "правописание"
@@ -12393,7 +12464,7 @@ msgstr "правописание"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: src/orca/object_properties.py:609
+#: src/orca/object_properties.py:618
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "неверная грамматика"
@@ -12402,7 +12473,7 @@ msgstr "неверная грамматика"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:615
+#: src/orca/object_properties.py:624
 msgctxt "error"
 msgid "grammar"
 msgstr "грамматика"
