@@ -857,7 +857,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not result:
             if self._script.inSayAll(treatInterruptedAsIn=False) \
-               or not _settingsManager.getSetting('speakBlankLines'):
+               or not _settingsManager.getSetting('speakBlankLines') \
+               or args.get('formatType') == 'ancestor':
                 string = ""
             else:
                 string = messages.BLANK

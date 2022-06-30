@@ -489,6 +489,7 @@ formatting = {
             'basicWhereAmI': 'labelAndName + pause + table'
             },
         pyatspi.ROLE_TABLE_CELL: {
+            'ancestor': 'newRowHeader + newColumnHeader',
             'focused': '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))',
             'unfocused': 'tableCellRow + pause',
             'basicWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + expandableState + pause + nodeLevel + pause',

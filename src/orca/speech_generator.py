@@ -1037,7 +1037,8 @@ class SpeechGenerator(generator.Generator):
         self._restoreRole(oldRole, args)
         if not (result and result[0]) \
            and _settingsManager.getSetting('speakBlankLines') \
-           and not args.get('readingRow', False):
+           and not args.get('readingRow', False) \
+           and args.get('formatType') != 'ancestor':
             result.append(messages.BLANK)
             if result:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -1235,7 +1236,8 @@ class SpeechGenerator(generator.Generator):
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         if text == '\n' and _settingsManager.getSetting('speakBlankLines') \
-           and not self._script.inSayAll() and args.get('total', 1) == 1:
+           and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and args.get('formatType') != 'ancestor':
             result = [messages.BLANK]
             result.extend(self.voice(string=text, obj=obj, **args))
             return result
@@ -1512,7 +1514,8 @@ class SpeechGenerator(generator.Generator):
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines') \
-           and not self._script.inSayAll() and args.get('total', 1) == 1:
+           and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and args.get('formatType') != 'ancestor':
             result[0] = messages.BLANK
 
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
