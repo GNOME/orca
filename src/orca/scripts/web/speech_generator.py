@@ -81,10 +81,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if priorDoc != doc and not self._script.utilities.getDocumentForObject(doc):
                 result = [super()._generateName(doc)]
 
-        if self._script.utilities.isLink(obj) \
-           or self._script.utilities.isLandmark(obj) \
-           or self._script.utilities.isMath(obj) \
-           or obj.getRole() in [pyatspi.ROLE_TOOL_TIP, pyatspi.ROLE_STATUS_BAR]:
+        if not self._script.utilities.getTable(obj) \
+           and (self._script.utilities.isLink(obj) \
+                or self._script.utilities.isLandmark(obj) \
+                or self._script.utilities.isMath(obj) \
+                or obj.getRole() in [pyatspi.ROLE_TOOL_TIP, pyatspi.ROLE_STATUS_BAR]):
             return result
 
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_WEB,
