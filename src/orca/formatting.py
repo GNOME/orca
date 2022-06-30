@@ -111,18 +111,21 @@ formatting = {
 
     'speech': {
         'prefix': {
+            'ancestor': '[]',
             'focused': 'detailsFor',
             'unfocused': 'oldAncestors + newAncestors',
             'basicWhereAmI': 'toolbar',
             'detailedWhereAmI' : '[]'
             },
         'suffix': {
+            'ancestor': '[]',
             'focused': '[]',
             'unfocused': 'newNodeLevel + unselectedCell + clickable + pause + hasLongDesc + hasDetails + detailsFor +' + TUTORIAL + ' + description + pause + hasPopup',
             'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup + pause + detailsFor + pause + allDetails',
             'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description + pause + hasPopup + detailsFor + pause + allDetails'
             },
         'default': {
+            'ancestor': '[]',
             'focused': '[]',
             'unfocused': 'labelOrName + roleName + availability + ' + MNEMONIC + ' + accelerator + childWidget',
             'basicWhereAmI': 'labelOrName + roleName',
@@ -1056,6 +1059,12 @@ class Formatting(dict):
             return self[args['mode']][args['role']][args['formatType']]
         except:
             pass
+
+        if args.get('formatType') == 'ancestor':
+            try:
+                return self[args['mode']][args['role']]['focused']
+            except:
+                pass
 
         if args.get('formatType') == 'detailedWhereAmI':
             try:
