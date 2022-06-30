@@ -238,7 +238,8 @@ class Generator:
             else:
                 firstTimeCalled = False
 
-            msg = '%s GENERATOR: Starting generation for %s' % (self._mode.upper(), obj)
+            msg = '%s GENERATOR: Starting %s generation for %s (%s)' % \
+                (self._mode.upper(), args.get('formatType'), obj, args.get('role'))
             debug.println(debug.LEVEL_INFO, msg, True)
 
             # Reset 'usedDescriptionForName' if a previous generator used it.
