@@ -1112,6 +1112,15 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _generateNewColumn(self, obj, **args):
+        if not self._script.utilities.cellColumnChanged(obj):
+            return []
+
+        if args.get('readingRow'):
+            return []
+
+        return self._generateColumn(obj, **args)
+
     def _generateColumn(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the column number of a cell.
@@ -1123,7 +1132,7 @@ class SpeechGenerator(generator.Generator):
         col = -1
         if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
-        parent = obj.parent
+        parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
         except:
@@ -1138,6 +1147,15 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
+    def _generateNewRow(self, obj, **args):
+        if not self._script.utilities.cellRowChanged(obj):
+            return []
+
+        if args.get('readingRow'):
+            return []
+
+        return self._generateRow(obj, **args)
+
     def _generateRow(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the row number of a cell.
@@ -1149,7 +1167,7 @@ class SpeechGenerator(generator.Generator):
         row = -1
         if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
-        parent = obj.parent
+        parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
         except:
@@ -1176,7 +1194,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
-        parent = obj.parent
+        parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
         except:
