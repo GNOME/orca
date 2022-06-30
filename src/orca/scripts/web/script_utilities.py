@@ -2985,14 +2985,18 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def coordinatesForCell(self, obj, preferAttribute=True):
+    def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
         roles = [pyatspi.ROLE_TABLE_CELL,
                  pyatspi.ROLE_TABLE_COLUMN_HEADER,
                  pyatspi.ROLE_TABLE_ROW_HEADER,
                  pyatspi.ROLE_COLUMN_HEADER,
                  pyatspi.ROLE_ROW_HEADER]
         if not (obj and obj.getRole() in roles):
-            return -1, -1
+            if not findCellAncestor:
+                return -1, -1
+
+            cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
+            return self.coordinatesForCell(cell, preferAttribute, False)
 
         if not preferAttribute:
             return super().coordinatesForCell(obj, preferAttribute)

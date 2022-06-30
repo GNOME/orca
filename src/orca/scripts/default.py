@@ -837,7 +837,7 @@ class Script(script.Script):
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
         # we only present the changed location.
-        row, column = self.utilities.coordinatesForCell(obj)
+        row, column = self.utilities.coordinatesForCell(obj, findCellAncestor=True)
         self.pointOfReference['lastColumn'] = column
         self.pointOfReference['lastRow'] = row
 
