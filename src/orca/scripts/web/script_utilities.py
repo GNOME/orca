@@ -1412,6 +1412,11 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
+        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START and self.isTime(obj):
+            text = self.queryNonEmptyText(obj)
+            if text:
+                return [[obj, 0, text.characterCount, text.getText(0, -1)]]
+
         if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
             if self.isMath(obj):
                 if self.isMathTopLevel(obj):
@@ -3116,6 +3121,9 @@ class Utilities(script_utilities.Utilities):
         rv = ancestor and not self.isNonNavigablePopup(ancestor)
         self._isNavigableToolTipDescendant[hash(obj)] = rv
         return rv
+
+    def isTime(self, obj):
+        return 'time' in self._getXMLRoles(obj) or 'time' == self._getTag(obj)
 
     def isToolBarDescendant(self, obj):
         if not obj:
