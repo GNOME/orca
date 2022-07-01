@@ -1,3 +1,92 @@
+43.alpha - 1 July 2022
+
+Web:
+
+* Fix several issues relating to presentation of navigation among
+  focusable descendants within ARIA grids and tables
+
+* Improve support for description lists
+
+* Improve presentation of articles in feeds
+
+* Improve presentation of unknown setsize and row/column count
+
+* Fix several "chattiness" issues related to ARIA widgets
+
+* Fix SayAll presentation of time element inside link
+
+* Fix presentation of the FluentUI react dialog (and any other
+  dialog which has an ARIA document-role descendant
+
+* Improve performance in large rich-text editors
+
+* Include focusable elements with clickancestor action in the
+  list of "clickables"
+
+WebKitGtk:
+
+* Fix issue causing WebKitGtk 2.36 content to not be handled by Orca's
+  webkit support
+
+* Fail gracefully when structural navigation commands are used in
+  WebKitGtk 2.36.x (the collection interface won't be supported
+  until 2.26.4)
+
+General:
+
+* Add more event-flood handling to improve performance in general,
+  but especially for gnome-shell
+
+* Fix bug related to which script responded to a mouse-button event
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 Alexander Shopov
+  ca              Catalan                   Jordi Mas
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Marek Černocký
+  da              Danish                    Alan Mortensen
+  da              Danish                    Ask Hjorth Larsen
+  de              German                    Mario Blättermann
+  de              German                    Philipp Kiemle
+  de              German                    Tim Sabsch
+  es              Spanish                   Daniel Mustieles
+  es              Spanish                   Francisco Javier Dorado
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Charles Monzat
+  fr              French                    Claude Paroz
+  gl              Galician                  Fran Dieguez
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Kukuh Syafaat
+  it              Italian                   Milo Casagrande
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lt              Lithuanian                Aurimas Černius
+  lv              Latvian                   Rūdolfs Mazurs
+  nb              Norwegian Bokmål          Kjartan Maraas
+  ne              Nepali                    Pawan Chitrakar
+  nl              Dutch                     Nathan Follens
+  oc              Occitan                   Quentin PAGÈS
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Leônidas Araújo
+  pt_BR           Brazilian Portuguese      Matheus Barbosa
+  pt_BR           Brazilian Portuguese      Tiago Casal
+  pt              Portuguese                Hugo Carvalho
+  ro              Romanian                  Daniel Șerbănescu
+  ru              Russian                   Aleksandr Melman
+  sl              Slovenian                 Matej Urbančič
+  sr              Serbian                   Марко Костић
+  sv              Swedish                   Anders Jonsson
+  sv              Swedish                   Luna Jernberg
+  tr              Turkish                   Emin Tufan Çetin
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Boyuan Yang
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
 42.0 - 22 March 2022
 
 New and updated translations (THANKS EVERYONE!!!):
