@@ -984,6 +984,9 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
+        if not _settingsManager.getSetting('speakCellHeaders'):
+            return []
+
         if args.get('inMouseReview') and args.get('priorObj'):
             thisrow, thiscol = self._script.utilities.coordinatesForCell(obj)
             lastrow, lastcol = self._script.utilities.coordinatesForCell(args.get('priorObj'))
@@ -1008,6 +1011,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if args.get('readingRow'):
+            return []
+
+        if not _settingsManager.getSetting('speakCellHeaders'):
             return []
 
         if args.get('inMouseReview') and args.get('priorObj'):
@@ -1114,6 +1120,9 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
+        if not _settingsManager.getSetting('speakCellCoordinates'):
+            return []
+
         return self._generateColumn(obj, **args)
 
     def _generateColumn(self, obj, **args):
@@ -1147,6 +1156,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if args.get('readingRow'):
+            return []
+
+        if not _settingsManager.getSetting('speakCellCoordinates'):
             return []
 
         return self._generateRow(obj, **args)
