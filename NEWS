@@ -1,3 +1,30 @@
+42.3 - 7 July 2022 (The apology release)
+
+Web:
+
+* Make cell ancestor presentation optional
+
+  In issue #253, Orca's failure to present cell ancestor information
+  when tabbing among interactive descendants of a cell was reported
+  as a bug. The fix for that bug was included in the stable (42.2)
+  release. Multiple users have subsequently reported that this "fix"
+  introduced unexpected/unwanted chattiness and requested that the
+  presentation be configurable.
+
+  In order to accomplish configurability without introducing new
+  settings (and strings, and UI), this presentation now respects the
+  table-related options found on Orca's app-specific preferences for
+  web browsers. Those options had been intended just for structural
+  navigation within tables, but seem to be applicable here. Because
+  they are enabled by default, users who find the ancestor information
+  too chatty will need to opt out by disabling that presentation.
+
+  It is my hope that this solution meets everyone's needs. Feedback
+  on the Orca mailing list and/or in gitlab is encouraged. If need be,
+  a new stable release reverting the fix entirely will be done.
+
+=========
+
 42.2 - 1 July 2022
 
 Web:
