@@ -1304,6 +1304,43 @@ class Utilities:
 
         return doc
 
+    def isModalDialog(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT] \
+            and state.contains(pyatspi.STATE_MODAL)
+
+    def getModalDialog(self, obj):
+        if not obj:
+            return False
+
+        if self.isModalDialog(obj):
+            return obj
+
+        try:
+            dialog = pyatspi.findAncestor(obj, self.isModalDialog)
+        except:
+            msg = "ERROR: Exception finding ancestor of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return dialog
+
+    def isModalDialogDescendant(self, obj):
+        if not obj:
+            return False
+
+        return self.getModalDialog(obj) is not None
+
     def getTable(self, obj):
         if not obj:
             return None

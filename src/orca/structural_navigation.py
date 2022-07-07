@@ -673,6 +673,8 @@ class StructuralNavigation:
 
         self._objectCache = {}
 
+        self._inModalDialog = False
+
     def clearCache(self, document=None):
         if document:
             self._objectCache[hash(document)] = {}
@@ -862,6 +864,16 @@ class StructuralNavigation:
         if not structuralNavigationObject.criteria:
             return [], None
 
+        modalDialog = self._script.utilities.getModalDialog(orca_state.locusOfFocus)
+        inModalDialog = bool(modalDialog)
+        if self._inModalDialog != inModalDialog:
+            msg = "STRUCTURAL NAVIGATION: in modal dialog has changed from %s to %s" % \
+                (self._inModalDialog, inModalDialog)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            self.clearCache()
+            self._inModalDialog = inModalDialog
+
         document = self._script.utilities.documentFrame()
         cache = self._objectCache.get(hash(document), {})
         key = "%s:%s" % (structuralNavigationObject.objType, arg)
@@ -892,6 +904,13 @@ class StructuralNavigation:
                                    criteria.invert)
         matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
         col.freeMatchRule(rule)
+
+        if inModalDialog:
+            originalSize = len(matches)
+            matches = [m for m in matches if pyatspi.findAncestor(m, lambda x: x == modalDialog)]
+            msg = "STRUCTURAL NAVIGATION: Removed %i objects outside of modal dialog %s" % \
+                (originalSize - len(matches), modalDialog)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         rv = matches.copy(), criteria
         cache[key] = matches, criteria
