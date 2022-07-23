@@ -770,9 +770,8 @@ class EventManager:
         
         if not script:
             script = self._getScriptForEvent(event)
-
-        if not script:
-            return False, "There is no script for this event."
+            if not script:
+                return False, "There is no script for this event."
 
         if script == orca_state.activeScript:
             return False, "The script for this event is already active."
