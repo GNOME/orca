@@ -3828,6 +3828,9 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return ["", 0, 0]
 
+        if characterCount == 0:
+            return ["", 0, 0]
+
         targetOffset = startOffset
         if targetOffset is None:
             targetOffset = max(0, offset)
