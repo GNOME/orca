@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-06-20 15:52+0000\n"
-"PO-Revision-Date: 2022-06-20 21:59+0300\n"
+"POT-Creation-Date: 2022-07-14 19:12+0000\n"
+"PO-Revision-Date: 2022-08-22 23:01+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -11371,13 +11371,31 @@ msgstr[0] "Sąrašas su %d elementu"
 msgstr[1] "Sąrašas su %d elementais"
 msgstr[2] "Sąrašas su %d elementų"
 
+#. Translators: This message describes a news/article feed whose size is
+#. unknown, such as can be found on social media sites that have unlimited
+#. scrolling, adding and/or removing items as the user moves up or down.
+#. Normally Orca announces "feed with n articles" when the count is known.
+#. This is the corresponding message for the unknown-count scenario.
+#: src/orca/messages.py:2581
+#| msgid "table of unknown size"
+msgid "Feed of unknown size"
+msgstr "nežinomo dydžio sklaidos kanalas"
+
+#. Translators: This message describes the number of articles (news items,
+#. social media posts, etc.) in a feed.
+#: src/orca/messages.py:2585
+#, python-format
+msgid "Feed with %d article"
+msgid_plural "Feed with %d articles"
+msgstr[0] "Sklaidos kanalas su %d straipsniu"
+msgstr[1] "Sklaidos kanalas su %d straipsniais"
+msgstr[2] "Sklaidos kanalas su %d straipsnių"
+
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
-#: src/orca/messages.py:2578
+#: src/orca/messages.py:2591
 #, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
 msgstr[0] "Aprašymų sąrašas su %d terminu"
@@ -11388,10 +11406,8 @@ msgstr[2] "Aprašymų sąrašas su %d terminų"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2586
+#: src/orca/messages.py:2599
 #, python-format
-#| msgctxt "structural navigation"
-#| msgid "Value"
 msgid "%d value"
 msgid_plural "%d values"
 msgstr[0] "%d vertė"
@@ -11400,7 +11416,7 @@ msgstr[2] "%d verčių"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2591
+#: src/orca/messages.py:2604
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11414,8 +11430,8 @@ msgstr[2] "matematinė lentelė iš %d eilučių"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2596 src/orca/messages.py:2612
-#: src/orca/messages.py:2720
+#: src/orca/messages.py:2609 src/orca/messages.py:2625
+#: src/orca/messages.py:2733
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11426,7 +11442,7 @@ msgstr[2] "%d stulpelių"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2606
+#: src/orca/messages.py:2619
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11436,7 +11452,7 @@ msgstr[2] "vidinė matematinė lentelė iš %d eilučių"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2621
+#: src/orca/messages.py:2634
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11446,7 +11462,7 @@ msgstr[2] "%d pranešimų.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2626
+#: src/orca/messages.py:2639
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11457,7 +11473,7 @@ msgstr[2] "%d procentų."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2632
+#: src/orca/messages.py:2645
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11467,7 +11483,7 @@ msgstr[2] "perskaityta %d procentų dokumento"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2639
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11478,7 +11494,7 @@ msgstr[2] "%d pikselių"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2645
+#: src/orca/messages.py:2658
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11488,7 +11504,7 @@ msgstr[2] "%(count)d %(repeatChar)s simbolių"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2652
+#: src/orca/messages.py:2665
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11500,7 +11516,7 @@ msgstr[2] "Pasirinkta %(index)d elementas iš %(total)d"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2661
+#: src/orca/messages.py:2674
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11511,7 +11527,7 @@ msgstr[2] "Rasta %d ekrano skaityklės numatytųjų trumpinių"
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2669
+#: src/orca/messages.py:2682
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11521,7 +11537,7 @@ msgstr[2] "Rasta %(count)d ekrano skaityklės trumpinių %(application)s"
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2676
+#: src/orca/messages.py:2689
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11531,7 +11547,7 @@ msgstr[2] "%d tarpų "
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2681
+#: src/orca/messages.py:2694
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11540,7 +11556,7 @@ msgstr[1] "%d tabuliatoriai"
 msgstr[2] "%d tabuliatorių "
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2688
+#: src/orca/messages.py:2701
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11552,19 +11568,15 @@ msgstr[2] "%d lentelių"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2697
-#| msgctxt "role"
-#| msgid "table of contents"
+#: src/orca/messages.py:2710
 msgid "table of unknown size"
 msgstr "nežinomo dydžio lentelė"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2702
+#: src/orca/messages.py:2715
 #, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
 msgstr[0] "lentelė su %d stulpeliu, eilučių skaičius nežinomas"
@@ -11574,10 +11586,8 @@ msgstr[2] "lentelė su %d stulpelių, eilučių skaičius nežinomas"
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
 #. in a horizontally infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2710
+#: src/orca/messages.py:2723
 #, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
 msgstr[0] "lentelė su %d eilute, stulpelių skaičius nežinomas"
@@ -11585,7 +11595,7 @@ msgstr[1] "lentelė su %d eilutėmis, stulpelių skaičius nežinomas"
 msgstr[2] "lentelė su %d eilučių, stulpelių skaičius nežinomas"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2715
+#: src/orca/messages.py:2728
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11595,7 +11605,7 @@ msgstr[2] "lentelė iš %d eilučių"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2732
+#: src/orca/messages.py:2745
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11605,7 +11615,7 @@ msgstr[2] "%d neaplankytų nuorodų"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2740
+#: src/orca/messages.py:2753
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
