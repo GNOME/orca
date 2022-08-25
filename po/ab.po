@@ -3,7 +3,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2022-07-14 19:12+0000\n"
 "Last-Translator: Нанба Наала <naala-nanba@rambler.ru>\n"
-"Language-Team: Abkhazian <ab@li.org>\n"
+"Language-Team: Abkhazian <daniel.abzakh@gmail.com>\n"
 "Language: ab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -491,19 +491,19 @@ msgstr ""
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
-msgstr ""
+msgstr "Арабтә аҩаӡара"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
-msgstr ""
+msgstr "Валлиатә аҩаӡара 1"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
-msgstr ""
+msgstr "Валлиатә аҩаӡар 2"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -527,25 +527,25 @@ msgstr ""
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
-msgstr ""
+msgstr "Британиатәи англиски аҩаӡара 2"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
-msgstr ""
+msgstr "Британиатәи англиски аҩаӡара 1"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
-msgstr ""
+msgstr "Англызбызшәа аҩаӡара 1"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
-msgstr ""
+msgstr "Англызбызшәа аҩаӡара 2"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -575,19 +575,19 @@ msgstr ""
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "Венгриатәи 8- кәаԥкны иҟоу акомпиутер"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
-msgstr ""
+msgstr "Венгриатәи аҩаӡара 1"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
 msgid "Hungarian Grade 2"
-msgstr ""
+msgstr "Венгриатәи аҩаӡара 2"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -599,7 +599,7 @@ msgstr ""
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:160
 msgid "Belgium Dutch Grade 1"
-msgstr ""
+msgstr "Бельгиа голландиатәи аҩаӡара 1"
 
 #. Translators: this is the spoken word for the space character
 #.
@@ -655,13 +655,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:73
 msgid "and"
-msgstr ""
+msgstr "амперсанд"
 
 #. Translators: this is the spoken word for the character ''' (U+0027)
 #.
 #: src/orca/chnames.py:77
 msgid "apostrophe"
-msgstr ""
+msgstr "аиҟәыҭхага"
 
 #. Translators: this is the spoken word for the character '(' (U+0028)
 #.
@@ -741,7 +741,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:129
 msgid "greater"
-msgstr ""
+msgstr "еиҳаны"
 
 #. Translators: this is the spoken word for the character '?' (U+003f)
 #.
@@ -804,7 +804,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:169
 msgid "vertical bar"
-msgstr ""
+msgstr "агәҵәытә цәаҳәа"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
@@ -862,7 +862,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:206
 msgid "broken bar"
-msgstr ""
+msgstr "агәҵәытә цәаҳәа аиԥырҟьа аманы"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
@@ -889,7 +889,7 @@ msgstr "аԥҵаҩы изин"
 #.
 #: src/orca/chnames.py:222
 msgid "superscript a"
-msgstr ""
+msgstr "Хыхьтәи аиндекс а"
 
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
@@ -937,13 +937,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:254
 msgid "superscript 2"
-msgstr ""
+msgstr "Хыхьтәи аиндекс ҩба"
 
 #. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: src/orca/chnames.py:258
 msgid "superscript 3"
-msgstr ""
+msgstr "Хыхьтәи аиндекс хԥа"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
@@ -985,7 +985,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:282
 msgid "superscript 1"
-msgstr ""
+msgstr "Хыхьтәи аиндекс акы"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
@@ -1558,79 +1558,79 @@ msgstr ""
 #.
 #: src/orca/chnames.py:667
 msgid "superscript 0"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 0"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: src/orca/chnames.py:671
 msgid "superscript 4"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 4"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: src/orca/chnames.py:675
 msgid "superscript 5"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 5"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: src/orca/chnames.py:679
 msgid "superscript 6"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 6"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: src/orca/chnames.py:683
 msgid "superscript 7"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 7"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: src/orca/chnames.py:687
 msgid "superscript 8"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 8"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: src/orca/chnames.py:691
 msgid "superscript 9"
-msgstr ""
+msgstr "Хыхьтәи аиндекс 9"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #: src/orca/chnames.py:695
 msgid "superscript plus"
-msgstr ""
+msgstr "Хыхьтәи аиндекс плиус"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: src/orca/chnames.py:699
 msgid "superscript minus"
-msgstr ""
+msgstr "Хыхьтәи аиндекс минус"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: src/orca/chnames.py:703
 msgid "superscript equals"
-msgstr ""
+msgstr "Хыхьтәи аиндекс иҟалоит"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
 #: src/orca/chnames.py:707
 msgid "superscript left paren"
-msgstr ""
+msgstr "Хыхьтәи аиндекс ахыц аартра"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: src/orca/chnames.py:711
 msgid "superscript right paren"
-msgstr ""
+msgstr "Хыхьтәи аиндекс ахыц аркра"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
 #: src/orca/chnames.py:715
 msgid "superscript n"
-msgstr ""
+msgstr "Хыхьтәи аиндекс n"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
@@ -2243,7 +2243,7 @@ msgstr ""
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:420
 msgid "Toggle the silencing of speech"
-msgstr ""
+msgstr " Аамҭала ацәажәара аҿакра, мамзар аҿыхра"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -2488,7 +2488,7 @@ msgstr ""
 #. button, the display scrolls to the top left of the window.
 #: src/orca/cmdnames.py:609
 msgid "Top Left"
-msgstr ""
+msgstr "Хыхьтәи армаратәи"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -4844,7 +4844,7 @@ msgstr ""
 #. will be spoken as a user reads a document.
 #: src/orca/guilabels.py:435 src/orca/orca-setup.ui:1579
 msgid "M_ost"
-msgstr ""
+msgstr "_Еиҳарак"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
@@ -5597,7 +5597,7 @@ msgstr ""
 #.
 #: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
-msgstr ""
+msgstr "Арӷьарахь"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
@@ -8146,7 +8146,7 @@ msgstr ""
 #. which prints the version of Orca. E.g. '1.23.4'.
 #: src/orca/messages.py:258
 msgid "Version of this application"
-msgstr ""
+msgstr "Ари аԥшьы аверсиа"
 
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
@@ -8509,7 +8509,7 @@ msgstr ""
 #. contained column headers.
 #: src/orca/messages.py:537
 msgid "Dynamic column header cleared."
-msgstr ""
+msgstr "Аамҭалатәи аиҵаргыла ахы рыцқьоуп."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
@@ -8526,7 +8526,7 @@ msgstr ""
 #. treated as if it contained row headers.
 #: src/orca/messages.py:549
 msgid "Dynamic row header cleared."
-msgstr ""
+msgstr "Аамҭалатәи ацәаҳәа ахы рыцқьоуп."
 
 #. Translators: this is used to announce that the current input line in a
 #. spreadsheet is blank/empty.
@@ -9324,7 +9324,7 @@ msgstr ""
 #. blockquote and then navigates out of it.
 #: src/orca/messages.py:1154
 msgid "leaving blockquote."
-msgstr ""
+msgstr "ацитатаагара аидкыла аҟынтә аҭыҵра."
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -9361,7 +9361,7 @@ msgstr ""
 #. form and then navigates out of it.
 #: src/orca/messages.py:1181
 msgid "leaving form."
-msgstr ""
+msgstr "аформа аҟынтә аҭыҵра"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9430,20 +9430,20 @@ msgstr ""
 #. list and then navigates out of it.
 #: src/orca/messages.py:1227
 msgid "leaving list."
-msgstr ""
+msgstr "ахьӡынҵа аҟынтә аҭыҵра"
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: src/orca/messages.py:1232
 msgid "leaving panel."
-msgstr ""
+msgstr "апанель аҟынтә аҭыҵра"
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
 #: src/orca/messages.py:1236
 msgid "leaving table."
-msgstr ""
+msgstr "аҭаӡҩыра аҟынтә аҭыҵра"
 
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
@@ -9746,7 +9746,7 @@ msgstr ""
 #. exiting Learn Mode.
 #: src/orca/messages.py:1443
 msgid "Exiting learn mode."
-msgstr ""
+msgstr "Аҭҵаара арежим аҟынтә аҭыҵра "
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10362,7 +10362,7 @@ msgstr ""
 #. notifications mode is being exited.
 #: src/orca/messages.py:1907
 msgid "Exiting list notification messages mode."
-msgstr ""
+msgstr "Ардыррақәа рыхьӡынҵа аҟынтә аҭыҵра"
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -10442,7 +10442,7 @@ msgstr ""
 #. with text formatting (bold, italics, underlining, justification, etc.).
 #: src/orca/messages.py:1964
 msgid "on"
-msgstr "аҟны"
+msgstr "иаҿакуп"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
@@ -11278,8 +11278,8 @@ msgstr[1] ""
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Аҭыҵра %d ацитатаагара аидкыла аҟынтә."
+msgstr[1] "Аҭыҵра  %d ацитатаагара аидкыла аҟынтә."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
@@ -11287,8 +11287,8 @@ msgstr[1] ""
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ахьӡынҵақәа %d рҟынтә аҭыҵра."
+msgstr[1] "Ахьӡынҵақәа %d рҟынтә аҭыҵра."
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -12001,7 +12001,7 @@ msgstr ""
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:358
 msgid "vertical scroll bar"
-msgstr ""
+msgstr "Гәҵәылатәи аҭаргьежьга цәаҳәа"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12213,7 +12213,7 @@ msgstr ""
 #. such as sliders and scroll bars.
 #: src/orca/object_properties.py:514
 msgid "vertical"
-msgstr ""
+msgstr "агәҵәытә"
 
 #. Translators: This is a state which applies to a check box.
 #: src/orca/object_properties.py:517
@@ -12414,11 +12414,11 @@ msgstr ""
 
 #: src/orca/orca-find.ui:166
 msgid "_Top of window"
-msgstr ""
+msgstr "_Аԥенџьыр ақәцә"
 
 #: src/orca/orca-find.ui:175
 msgid "Top of window"
-msgstr ""
+msgstr "Аԥенџьыр ақәцә"
 
 #: src/orca/orca-find.ui:193 src/orca/orca-find.ui:196
 msgid "Start from:"
@@ -12708,7 +12708,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:1595
 msgid "_All"
-msgstr ""
+msgstr "_Зегьы"
 
 #: src/orca/orca-setup.ui:1617
 msgid "Punctuation Level"
@@ -12885,7 +12885,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:2625
 msgid "Braille"
-msgstr ""
+msgstr "Браиль"
 
 #: src/orca/orca-setup.ui:2639
 msgid "Enable _key echo"
@@ -12973,7 +12973,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:3181
 msgid "Text attributes"
-msgstr ""
+msgstr "Атекст аҟазшьарбагақәа"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3215
@@ -13005,7 +13005,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:3408
 msgid "Text Attributes"
-msgstr ""
+msgstr "Атекст аҟазшьарбагақәа"
 
 #. Translators: this is a structure to assist in the generation of
 #. spoken military-style spelling.  For example, 'abc' becomes 'alpha
