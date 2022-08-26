@@ -482,9 +482,24 @@ class Generator:
 
         result = []
         if description:
+            try:
+                tokens = self._script.formatting[self._mode][role][args.get('formatType')].split()
+                isLabelAndName = 'labelAndName' in tokens
+                isLabelOrName = 'labelOrName' in tokens
+            except:
+                isLabelAndName = False
+                isLabelOrName = False
+
             label = self._script.utilities.displayedLabel(obj) or ""
             desc = description.lower()
-            if not (desc in name.lower() or desc in label.lower()):
+            canUse = True
+            if isLabelAndName:
+                canUse = not desc in name.lower() and not desc in label.lower()
+            elif isLabelOrName and label:
+                canUse = not desc in label.lower()
+            elif isLabelOrName and name:
+                canUse = not desc in name.lower()
+            if canUse:
                 result.append(obj.description)
 
         if not result:
