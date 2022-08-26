@@ -355,3 +355,6 @@ class Utilities(web.Utilities):
     def localizeTextAttribute(self, key, value):
         value = value.replace("-moz-", "")
         return super().localizeTextAttribute(key, value)
+
+    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
+        return super().unrelatedLabels(root, onlyShowing, minimumWords=1)
