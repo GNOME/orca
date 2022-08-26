@@ -1735,10 +1735,10 @@ class Script(default.Script):
             msg = "WEB: Caret moved due to native caret navigation."
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        elif event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
+        elif self.utilities.isTextField(event.source) \
            and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
            and event.source != orca_state.locusOfFocus:
-            msg = "WEB: Focused entry is not (yet) the locus of focus."
+            msg = "WEB: Focused text field is not (yet) the locus of focus."
             debug.println(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 

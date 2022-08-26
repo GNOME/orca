@@ -2558,6 +2558,24 @@ class Utilities(script_utilities.Utilities):
         displayStyle = self._getDisplayStyle(obj)
         return "inline" in displayStyle
 
+    def isTextField(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role in [pyatspi.ROLE_ENTRY,
+                    pyatspi.ROLE_PASSWORD_TEXT,
+                    pyatspi.ROLE_SPIN_BUTTON]:
+            return True
+
+        if role == pyatspi.ROLE_COMBO_BOX:
+            return self.isEditableComboBox(obj)
+
+        return False
+
     def isFirstItemInInlineContentSuggestion(self, obj):
         suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
         if not (suggestion and suggestion.childCount):
