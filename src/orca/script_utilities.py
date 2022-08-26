@@ -4226,6 +4226,31 @@ class Utilities:
 
         return role == pyatspi.ROLE_PUSH_BUTTON and state.contains(pyatspi.STATE_HAS_POPUP)
 
+    def isPopupMenuForCurrentItem(self, obj):
+        if obj == orca_state.locusOfFocus:
+            return False
+
+        if obj.name and obj.name == orca_state.locusOfFocus.name:
+            return obj.getRole() == pyatspi.ROLE_MENU
+
+        return False
+
+    def isMenuWithNoSelectedChild(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_MENU:
+            return False
+
+        return not self.selectedChildCount(obj)
+
     def isMenuButton(self, obj):
         if not obj:
             return False

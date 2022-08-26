@@ -177,6 +177,13 @@ class SpeechGenerator(generator.Generator):
         If the label cannot be found, the name will be used instead.
         If the name cannot be found, an empty array will be returned.
         """
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
+            msg = 'SPEECH GENERATOR: %s is popup menu for current item.' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         result = []
         result.extend(self._generateLabel(obj, **args))
         if not result:
@@ -2339,6 +2346,9 @@ class SpeechGenerator(generator.Generator):
         result = []
         position, total = self._script.utilities.getPositionAndSetSize(obj, **args)
         if position < 0 or total < 0:
+            return []
+
+        if obj.getRole() == pyatspi.ROLE_MENU and total == 1:
             return []
 
         position += 1

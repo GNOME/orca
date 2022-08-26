@@ -336,8 +336,8 @@ class Script(web.Script):
             topLevel = self.utilities.topLevelObject(event.source)
             if self.utilities.canBeActiveWindow(topLevel):
                 orca_state.activeWindow = topLevel
-                notify = not self.utilities.isPopupMenuForCurrentItem(event.source)
-                orca.setLocusOfFocus(event, event.source, notify)
+                self.presentObject(event.source)
+                orca.setLocusOfFocus(event, event.source, False)
             return
 
         if super().onShowingChanged(event):
@@ -406,17 +406,29 @@ class Script(web.Script):
         # If this is a frame for a popup menu, we don't want to treat
         # it like a proper window:activate event because it's not as
         # far as the end-user experience is concerned.
-        activeItem = self.utilities.popupMenuForFrame(event.source)
-        if activeItem:
-            selected = self.utilities.selectedChildren(activeItem)
+        menu = self.utilities.popupMenuForFrame(event.source)
+        if menu:
+            orca_state.activeWindow = event.source
+
+            activeItem = None
+            selected = self.utilities.selectedChildren(menu)
             if len(selected) == 1:
                 activeItem = selected[0]
 
-            msg = "CHROMIUM: Setting locusOfFocus to %s" % activeItem
-            orca_state.activeWindow = event.source
-            orca.setLocusOfFocus(event, activeItem)
+            if activeItem:
+                # If this is the popup menu for the locusOfFocus, we don't want to
+                # present the popup menu as part of the new ancestry of activeItem.
+                if self.utilities.isPopupMenuForCurrentItem(menu):
+                    orca.setLocusOfFocus(event, menu, False)
+
+                msg = "CHROMIUM: Setting locusOfFocus to active item %s" % activeItem
+                orca.setLocusOfFocus(event, activeItem)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
+            msg = "CHROMIUM: Setting locusOfFocus to popup menu %s" % menu
+            orca.setLocusOfFocus(event, menu)
             debug.println(debug.LEVEL_INFO, msg, True)
-            return
 
         if super().onWindowActivated(event):
             return

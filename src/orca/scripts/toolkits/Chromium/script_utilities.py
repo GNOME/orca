@@ -160,22 +160,6 @@ class Utilities(web.Utilities):
 
         return result
 
-    def isMenuWithNoSelectedChild(self, obj):
-        if not obj:
-            return False
-
-        try:
-            role = obj.getRole()
-        except:
-            msg = "CHROMIUM: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if role != pyatspi.ROLE_MENU:
-            return False
-
-        return not self.selectedChildCount(obj)
-
     def isMenuInCollapsedSelectElement(self, obj):
         try:
             role = obj.getRole()
@@ -224,10 +208,7 @@ class Utilities(web.Utilities):
         if not self.treatAsMenu(orca_state.locusOfFocus):
             return False
 
-        if obj.name and obj.name == orca_state.locusOfFocus.name:
-            return obj.getRole() == pyatspi.ROLE_MENU
-
-        return False
+        return super().isPopupMenuForCurrentItem(obj)
 
     def isFrameForPopupMenu(self, obj):
         try:

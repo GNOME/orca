@@ -255,6 +255,12 @@ class Script(Gecko.Script):
         # right now just to prevent the Gecko script from presenting non-
         # existent browsery autocompletes for Thunderbird.
 
+        if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source) \
+           and orca_state.activeWindow == self.utilities.topLevelObject(event.source):
+            self.presentObject(event.source)
+            orca.setLocusOfFocus(event, event.source, False)
+            return
+
         default.Script.onShowingChanged(self, event)
 
     def onTextDeleted(self, event):

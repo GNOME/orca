@@ -334,6 +334,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
+            msg = "WEB: %s is popup menu for current item." % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
            or self._script.utilities.isDocument(obj):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
