@@ -1,3 +1,39 @@
+43.beta - 29 August 2022
+
+Web:
+
+* Fix issue causing Orca to remain silent with autofocused inputs
+
+* Prevent structural navigation exiting current modal dialog
+
+* Make cell ancestor presentation optional
+
+General:
+
+* Fix issue causing the description to not be presented
+
+* Fix several popup menu-related issues
+
+* Fix issue causing certain static text in dialogs to not be presented
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ab              Abkhazian                 Nart Tlisha
+  ca              Catalan                   Jordi Mas
+  cs              Czech                     Marek Černocký
+  de              German                    Jürgen Benvenuti
+  eu              Basque                    Asier Sarasua Garmendia
+  fr              French                    Claude Paroz
+  gl              Galician                  Fran Dieguez
+  hu              Hungarian                 Attila Hammer
+  lt              Lithuanian                Aurimas Černius
+  pl              Polish                    Piotr Drąg
+  sr              Serbian                   Марко Костић
+  tr              Turkish                   Emin Tufan Çetin
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
 43.alpha - 1 July 2022
 
 Web:
