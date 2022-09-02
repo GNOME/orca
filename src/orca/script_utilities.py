@@ -4561,6 +4561,12 @@ class Utilities:
             cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
+        if 'TableCell' in pyatspi.listInterfaces(obj):
+            tableCell = obj.queryTableCell()
+            successful, row, col = tableCell.position
+            if successful:
+                return row, col
+
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
         try:
