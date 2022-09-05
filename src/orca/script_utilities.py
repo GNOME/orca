@@ -4563,9 +4563,14 @@ class Utilities:
 
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
-            successful, row, col = tableCell.position
-            if successful:
-                return row, col
+            try:
+                successful, row, col = tableCell.position
+            except:
+                msg = "INFO: Exception getting table cell position of %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                if successful:
+                    return row, col
 
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
