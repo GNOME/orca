@@ -1223,7 +1223,10 @@ class Generator:
             return self._generateDisplayedText(rad, **args)
 
         content = set([self._script.utilities.displayedText(x).strip() for x in rad])
-        return [" ".join(filter(lambda x: x, content))]
+        rv = " ".join(filter(lambda x: x, content))
+        if not rv:
+            return self._generateDisplayedText(rad, **args)
+        return [rv]
 
     def _generateRealActiveDescendantRoleName(self, obj, **args ):
         """Objects, such as tables and trees, can represent individual cells
