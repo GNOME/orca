@@ -314,9 +314,7 @@ class Utilities:
         except:
             pass
 
-        index = self.cellIndex(obj)
-        row = table.getRowAtIndex(index)
-        col = table.getColumnAtIndex(index)
+        row, col = self.coordinatesForCell(obj)
         nodeLevel = self.nodeLevel(obj)
         done = False
 
@@ -4487,8 +4485,7 @@ class Utilities:
         except:
             return []
 
-        index = self.cellIndex(obj)
-        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        row, col = self.coordinatesForCell(obj)
         colspan = table.getColumnExtentAt(row, col)
 
         headers = []
@@ -4508,8 +4505,7 @@ class Utilities:
         except:
             return []
 
-        index = self.cellIndex(obj)
-        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        row, col = self.coordinatesForCell(obj)
         rowspan = table.getRowExtentAt(row, col)
 
         headers = []
@@ -4529,8 +4525,7 @@ class Utilities:
         except:
             return None
 
-        index = self.cellIndex(obj)
-        columnIndex = table.getColumnAtIndex(index)
+        rowIndex, columnIndex = self.coordinatesForCell(obj)
         return table.getColumnHeader(columnIndex)
 
     def rowHeaderForCell(self, obj):
@@ -4544,8 +4539,7 @@ class Utilities:
         except:
             return None
 
-        index = self.cellIndex(obj)
-        rowIndex = table.getRowAtIndex(index)
+        rowIndex, columnIndex = self.coordinatesForCell(obj)
         return table.getRowHeader(rowIndex)
 
     def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
@@ -4593,8 +4587,7 @@ class Utilities:
         except:
             return -1, -1
 
-        index = self.cellIndex(obj)
-        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        row, col = self.coordinatesForCell(obj)
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
     def setSizeUnknown(self, obj):
@@ -5074,8 +5067,7 @@ class Utilities:
         except:
             return False
 
-        index = self.cellIndex(obj)
-        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        row, col = self.coordinatesForCell(obj)
         return row + 1 == table.nRows and col + 1 == table.nColumns
 
     def isNonUniformTable(self, obj):
