@@ -4174,6 +4174,10 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None, None
 
+        msg = "INFO: %s reports %i selected children" % (obj, count)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if count < 1:
+            return None, None
         return selection.getSelectedChild(0), selection.getSelectedChild(count-1)
 
     def focusedChild(self, obj):
