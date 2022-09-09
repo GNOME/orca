@@ -2691,6 +2691,8 @@ class Script(script.Script):
         obj = event.source
         role = obj.getRole()
         if role == pyatspi.ROLE_NOTIFICATION:
+            if not event.detail1:
+                return
             speech.speak(self.speechGenerator.generateSpeech(obj))
             visibleOnly = not self.utilities.isStatusBarNotification(obj)
             labels = self.utilities.unrelatedLabels(obj, visibleOnly, 1)
