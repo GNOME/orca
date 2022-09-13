@@ -261,7 +261,7 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             name = acss_family.get(speechserver.VoiceFamily.NAME)
-            if name != self._default_voice_name:
+            if name is not None and name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
 
     def _debug_sd_values(self, prefix=""):
