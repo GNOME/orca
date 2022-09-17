@@ -1,7 +1,6 @@
 # Orca screen reader
-# Copyright (C) 2008
+# Copyright (C) 2008-2022
 # This file is distributed under the same license as the orca package.
-#
 #
 # Baris Cicek <baris@teamforce.name.tr>, 2008, 2009.
 # Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2015.
@@ -16,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-07-14 19:12+0000\n"
+"POT-Creation-Date: 2022-07-22 22:06+0000\n"
 "PO-Revision-Date: 2022-07-23 00:49+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -14137,139 +14136,3 @@ msgid ""
 msgstr ""
 "Azaltmak için sol, artırmak için sağ ok tuşlarını kullanın. Değeri en az ve "
 "en çok olarak ayarlamak için, home ve end tuşlarını kullanın."
-
-#~ msgid "Remove User Profile"
-#~ msgstr "Kullanıcı Profilini Kaldır"
-
-#~ msgid "Function"
-#~ msgstr "İşlevi"
-
-#~ msgid "Results must:"
-#~ msgstr "Sonuçlar şuna göre:"
-
-#~ msgid "Restrict to:"
-#~ msgstr "Şununla sınırlandır:"
-
-#~ msgctxt "role"
-#~ msgid "footnote"
-#~ msgstr "dipnot"
-
-#~ msgid "Speaks the selected text."
-#~ msgstr "Seçili metni seslendirir."
-
-#~ msgid "Read the latest n messages in the incoming messages text area."
-#~ msgstr "Gelen mesajlar metin alanında en son n tane mesajı oku."
-
-#~ msgid "Work online / offline"
-#~ msgstr "Çevrimiçi / çevrimdışı çalış"
-
-#~ msgid "Display more options"
-#~ msgstr "Daha fazla seçenek göster"
-
-#~ msgid "Screen Reader"
-#~ msgstr "Ekran Okuyucusu"
-
-#~ msgid ""
-#~ "Provide access to graphical desktop environments via synthesized speech "
-#~ "and/or refreshable braille"
-#~ msgstr ""
-#~ "Grafik masaüstü ortamlarına yapay konuşma ve/veya yenilenebilir braille "
-#~ "üzerinden erişim sağlar"
-
-#~ msgid "screen reader;speech;braille;"
-#~ msgstr "ekran okuyucu;konuşma;braille;"
-
-#~ msgid "^[Yy1]"
-#~ msgstr "^[Ee1]"
-
-#~ msgid "^[Nn0]"
-#~ msgstr "^[Hh0]"
-
-#~ msgid "Enable Braille?  Enter y or n: "
-#~ msgstr "Braille etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable key echo?  Enter y or n: "
-#~ msgstr "Tuş yankısı etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable alphabetic keys?  Enter y or n: "
-#~ msgstr "Alfabetik tuşlar etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable numeric keys?  Enter y or n: "
-#~ msgstr "Sayısal tuşlar etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable punctuation keys?  Enter y or n: "
-#~ msgstr "Noktalama tuşları etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable space?  Enter y or n: "
-#~ msgstr "Boşluk tuşu etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable modifier keys?  Enter y or n: "
-#~ msgstr "Düzenleyici tuşlar etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable function keys?  Enter y or n: "
-#~ msgstr "Fonksiyon tuşları etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable action keys?  Enter y or n: "
-#~ msgstr "Eylem tuşları etkinleştirilsin mi? e veya h girin:"
-
-#~ msgid "Enable echo by word?  Enter y or n: "
-#~ msgstr "Kelime ile yankıyı etkinleştir? e veya h girin."
-
-#~ msgid "Enter choice: "
-#~ msgstr "Seçimi girin:"
-
-#~ msgid "Please enter a valid number."
-#~ msgstr "Lütfen geçerli bir sayı girin."
-
-#~ msgid "Please enter y or n."
-#~ msgstr "Lütfen e veya h girin."
-
-#~ msgid "Select desired keyboard layout."
-#~ msgstr "İstenilen klavye düzenini seçin."
-
-#~ msgid "1. Desktop"
-#~ msgstr "1. Masaüstü"
-
-#~ msgid "2. Laptop"
-#~ msgstr "2. Dizüstü"
-
-#~ msgid "Select desired speech server."
-#~ msgstr "İstenilen konuşma sunucusunu seçin."
-
-#~ msgid "Select desired speech system:"
-#~ msgstr "İstenilen konuşma sistemini seçin:"
-
-#~ msgid "Select desired voice:"
-#~ msgstr "İstenilen sesi seçin:"
-
-#~ msgid "No servers available.\n"
-#~ msgstr "Erişilebilir sunucu yok.\n"
-
-#~ msgid "No voices available.\n"
-#~ msgstr "Ulaşılabilir ses yok.\n"
-
-#~ msgid "Speech will not be used.\n"
-#~ msgstr "Konuşma kullanılmayacak.\n"
-
-#~ msgid "Screen reader setup."
-#~ msgstr "Ekran okuyucu ayarı."
-
-#~ msgid "Setup complete.  Press Return to continue."
-#~ msgstr "Kurulum tamamlandı.  Devam etmek için geri tuşuna basın."
-
-#~ msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-#~ msgstr ""
-#~ "Abecesayısal ve noktalama tuşları etkinleştirilsin mi? e veya h girin: "
-
-#~ msgid "Speak ro_w"
-#~ msgstr "_Satır seslendir"
-
-#~ msgid "Table Rows"
-#~ msgstr "Tablo Satırları"
-
-#~ msgctxt "ProgressBarUpdates"
-#~ msgid "Enable_d"
-#~ msgstr "Etkinleştiril_di"
-
-#~ msgid "Enable _alphanumeric and punctuation keys"
-#~ msgstr "_Abecesayısal ve noktalama tuşlarını etkinleştir"
