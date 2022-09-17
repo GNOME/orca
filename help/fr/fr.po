@@ -7,13 +7,13 @@
 # Julien Hardelin <jhardlin@orange.fr>, 2011, 2013, 2015.
 # Mickael Albertus <mickael.albertus@gmail.com>, 2013.
 # Claude Paroz <claude@2xlibre.net>, 2016-2020.
-# Charles Monzat <charles.monzat@free.fr>, 2020-2021.
+# Charles Monzat <charles.monzat@free.fr>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2020-12-13 16:13+0000\n"
-"PO-Revision-Date: 2021-03-09 16:24+0100\n"
+"POT-Creation-Date: 2022-03-23 13:31+0000\n"
+"PO-Revision-Date: 2022-04-10 21:31+0200\n"
 "Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -107,7 +107,7 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
 #: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
 msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Partage des Conditions Initiales à l’Identique 3.0"
+msgstr "Creative Commons Paternité - Partage dans les Mêmes Conditions 3.0"
 
 #. (itstool) path: page/title
 #: C/commands_bookmarks.page:19
@@ -1107,7 +1107,7 @@ msgstr "Zones dynamiques"
 #. (itstool) path: info/desc
 #: C/commands_live_regions.page:8
 msgid "Commands for accessing web live regions"
-msgstr "Commandes d’accès aux zones Web dynamiques"
+msgstr "Commandes d’accès aux zones web dynamiques"
 
 #. (itstool) path: page/title
 #: C/commands_live_regions.page:20
@@ -1121,7 +1121,7 @@ msgid ""
 "web pages which have been made accessible through ARIA."
 msgstr ""
 "Les commandes suivantes peuvent être utilisées pour accéder à du contenu mis "
-"à jour dynamiquement sur des pages Web rendues accessibles grâce à ARIA."
+"à jour dynamiquement sur des pages web rendues accessibles grâce à ARIA."
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
@@ -1342,7 +1342,7 @@ msgstr "Synthèse vocale et braille"
 #. (itstool) path: section/title
 #: C/commands.page:23
 msgid "Reading Web Pages and Other Documents"
-msgstr "Lecture de pages Web ou d’autres documents"
+msgstr "Lecture de pages web ou d’autres documents"
 
 #. (itstool) path: section/title
 #: C/commands.page:26 C/index.page:42
@@ -1604,14 +1604,14 @@ msgstr "Détails du lien"
 #| "used to announce the details associated with the link such as the link "
 #| "type, if the link is visited, the site description, and file size. If you "
 #| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speaks Link Details command to a keystroke. Please see "
+#| "<app>Orca</app>'s Speak Link Details command to a keystroke. Please see "
 #| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
 #| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
-"instead prefer dedicated command for this purpose, you can bind <app>Orca</"
+"instead prefer a dedicated command for this purpose, you can bind <app>Orca</"
 "app>'s Speak Link Details command to a keystroke. Please see <link xref="
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
@@ -1642,7 +1642,7 @@ msgid ""
 "interacting with web content."
 msgstr ""
 "Les modes de navigation et de focus d’<app>Orca</app> permettent de basculer "
-"entre la lecture et l’interaction avec du contenu Web."
+"entre la lecture et l’interaction avec du contenu web."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:253
@@ -2760,10 +2760,10 @@ msgid ""
 "activated with the bookmark becoming the current review item."
 msgstr ""
 "Les éléments auxquels vous pouvez attribuer un signet sont les éléments "
-"graphiques d’une application ou les objets sur la page Web que vous lisez. "
+"graphiques d’une application ou les objets sur la page web que vous lisez. "
 "Le type d’environnement où vous vous trouvez, détermine le comportement de "
 "la navigation parmi les signets : si vous êtes dans le contenu d’une page "
-"Web, le curseur se déplace sur le signet pour que vous puissiez continuer à "
+"web, le curseur se déplace sur le signet pour que vous puissiez continuer à "
 "lire ; sinon l’<link xref=\"howto_flat_review\">Examen global</link> est "
 "activé et le signet devient l’élément en cours d’examen."
 
@@ -2991,7 +2991,7 @@ msgid ""
 "document. <app>Orca</app>'s browse and focus modes let you switch between "
 "reading and filling out forms."
 msgstr ""
-"Lorsque vous interagissez avec des pages Web et d’autres documents en "
+"Lorsque vous interagissez avec des pages web et d’autres documents en "
 "utilisant <app>Orca</app>, vous interagissez directement avec le document ; "
 "pas avec une copie intermédiaire en cache. Les modes navigation et focus "
 "d’<app>Orca</app> permettent de basculer entre la lecture et le remplissage "
@@ -3419,7 +3419,7 @@ msgstr "6. Zones dynamiques"
 #. (itstool) path: info/desc
 #: C/howto_live_regions.page:6
 msgid "Interacting with dynamic web content"
-msgstr "Interagir avec du contenu Web dynamique"
+msgstr "Interagir avec du contenu web dynamique"
 
 #. (itstool) path: page/title
 #: C/howto_live_regions.page:17
@@ -3436,10 +3436,10 @@ msgid ""
 "encountered less often. This problem is actively being addressed by a number "
 "of organizations."
 msgstr ""
-"Une zone dynamique est une portion de page Web mise à jour dynamiquement, "
+"Une zone dynamique est une portion de page web mise à jour dynamiquement, "
 "comme un tableau de statistiques sportives, une liste d’actions courantes, "
 "le journal d’une discussion ou un avertissement affiché par la page que vous "
-"lisez. Bien que les zones dynamiques soient assez fréquentes, les pages Web "
+"lisez. Bien que les zones dynamiques soient assez fréquentes, les pages web "
 "possédant des zones dynamiques complètement accessibles sont rencontrées "
 "beaucoup moins souvent. De nombreuses organisations s’occupent activement de "
 "ce problème."
@@ -4170,7 +4170,7 @@ msgid ""
 "similar effort on the part of its developers."
 msgstr ""
 "Actuellement, la navigation par structure est entièrement fonctionnelle pour "
-"les contenus Web, ainsi que l’aide que vous lisez en ce moment. La prise en "
+"les contenus web, ainsi que l’aide que vous lisez en ce moment. La prise en "
 "charge par <app>Orca</app> de la navigation par structure des cellules de "
 "tableau est aussi mise en place pour <app>OpenOffice Writer</app> et "
 "<app>LibreOffice Writer</app>. La mise en place de la navigation par "
@@ -4207,7 +4207,7 @@ msgid ""
 "reading its content. Thus there is no question as to whether the 'H' you "
 "just pressed was meant to be a writing command or a navigation command."
 msgstr ""
-"Dans les page Web, l’activation de la navigation par structure de façon "
+"Dans les page web, l’activation de la navigation par structure de façon "
 "explicite n’est généralement pas nécessaire car votre interaction avec le "
 "document est généralement limitée à de la lecture. Il n’est pas la peine de "
 "se poser la question : le « H » que vous venez de saisir est-il une commande "
@@ -4314,7 +4314,7 @@ msgid ""
 "Navigation</link> and Dynamic Headers."
 msgstr ""
 "<app>Orca </app> propose plusieurs fonctionnalités conçues spécialement pour "
-"améliorer l’accès aux tableaux trouvés dans les pages Web et autres "
+"améliorer l’accès aux tableaux trouvés dans les pages web et autres "
 "documents : configuration de la lecture par cellule ou par ligne, <link xref="
 "\"howto_structural_navigation\">Navigation par structure</link> et en-têtes "
 "dynamiques."
@@ -5053,7 +5053,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/index.page:39
 msgid "Reading Documents and Web Pages"
-msgstr "Lecture de documents ou de pages Web"
+msgstr "Lecture de documents ou de pages web"
 
 #. (itstool) path: section/title
 #: C/index.page:45
@@ -5089,13 +5089,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
-#| msgid ""
-#| "<app>Orca</app> works with applications and toolkits that support the "
-#| "Assistive Technology Service Provider Interface (AT-SPI), which is the "
-#| "primary assistive technology infrastructure for Linux and Solaris. "
-#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-#| "toolkit, the Java platform's Swing toolkit, LibreOffice, Gecko, and "
-#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
@@ -5546,12 +5539,6 @@ msgstr "Les messages sont détaillés"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:147
-#| msgid ""
-#| "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will "
-#| "present detailed messages to you in braille. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might "
-#| "display \"Key echo set to word.\" If you would prefer shorter messages, "
-#| "such as simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
@@ -5720,24 +5707,18 @@ msgstr "Valeur par défaut : tous les canaux"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:5
-#| msgctxt "sort"
-#| msgid "1. Gecko Navigation"
 msgctxt "sort"
 msgid "1. Web Navigation"
-msgstr "1. Navigation Web"
+msgstr "1. Navigation web"
 
 #. (itstool) path: info/title
 #: C/preferences_web.page:6
-#| msgid "Page Navigation"
 msgctxt "link"
 msgid "Web Navigation"
-msgstr "Navigation Web"
+msgstr "Navigation web"
 
 #. (itstool) path: info/desc
 #: C/preferences_web.page:7
-#| msgid ""
-#| "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
-#| "<app>Thunderbird</app>"
 msgid ""
 "Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
 "<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
@@ -5747,9 +5728,8 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/preferences_web.page:19
-#| msgid "Gecko Navigation Preferences"
 msgid "Web Navigation Preferences"
-msgstr "Préférences de navigation Web"
+msgstr "Préférences de navigation web"
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:21
@@ -5774,10 +5754,6 @@ msgstr "Contrôler la navigation au curseur d’Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:29
-#| msgid ""
-#| "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When "
-#| "it is on, <app>Orca</app> takes control of the caret as you arrow around "
-#| "within a page; when it is off, Gecko's native caret navigation is active."
 msgid ""
 "This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
@@ -5825,7 +5801,7 @@ msgstr ""
 "naviguer vers un champ de formulaire. Par exemple, un appui sur <key>Flèche "
 "bas</key> vous permettrait de passer dans la zone de saisie, mais après "
 "cela, Orca passerait en mode focus et les pressions suivantes sur la touche "
-"<key>Flèche bas</key> seraient contrôlées par le navigateur Web et plus par "
+"<key>Flèche bas</key> seraient contrôlées par le navigateur web et plus par "
 "Orca. Si cette case n’est pas cochée, <app>Orca</app> continue de contrôler "
 "ce qui se passe lorsque vous pressez à nouveau sur <key>Flèche bas</key>, ce "
 "qui permet de sortir de la zone avec les touches fléchées et de continuer "
@@ -5903,21 +5879,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:113
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
 msgstr "Mode focus automatique durant la navigation native"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:114
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will automatically turn on "
-#| "focus mode when you use structural navigation commands to navigate to a "
-#| "form field. For example, pressing <key>E</key> to move to the next entry "
-#| "would move focus there and also turn focus mode on so that your next "
-#| "press of <key>E</key> would type an \"e\" into that entry. If this "
-#| "checkbox is not checked, then <app>Orca</app> will leave you in browse "
-#| "mode and your next press of <key>E</key> would move you to the next entry "
-#| "on the page."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will automatically turn on "
 "focus mode when you use native browser navigation commands to navigate to a "
@@ -5951,7 +5917,7 @@ msgid ""
 "newly opened web page or email."
 msgstr ""
 "Si cette case est cochée, <app>Orca</app> effectue un « Tout lire » sur la "
-"page Web ou le courriel qui viennent d’être ouverts."
+"page web ou le courriel qui viennent d’être ouverts."
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:141 C/preferences_web.page:152
@@ -5971,7 +5937,7 @@ msgid ""
 "the newly opened web page or email, such as the number of headings, "
 "landmarks, and links."
 msgstr ""
-"Si cette case est cochée, <app>Orca</app> résume les détails de la page Web "
+"Si cette case est cochée, <app>Orca</app> résume les détails de la page web "
 "ou du courriel que vous venez d’ouvrir, tels que le nombre d’en-têtes, de "
 "points de repère et de liens."
 
@@ -6578,10 +6544,6 @@ msgstr "Préférences d’Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:18
-#| msgid ""
-#| "Orca preferences allow you to customize functionality in <app>Orca</app> "
-#| "which applies to all applications. An example of an Orca preference is "
-#| "key echo because key echo is something that applies to all applications."
 msgid ""
 "Orca preferences allow you to customize functionality in <app>Orca</app> "
 "which applies to all applications. An example of an Orca preference is echo "
@@ -6593,12 +6555,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_introduction.page:23
-#| msgid ""
-#| "Note that Orca preferences can be customized on an application-by-"
-#| "application basis. For instance you can set the default key echo to words "
-#| "and then set the key echo for Pidgin to be none. Having done so, "
-#| "<app>Orca</app> would always echo each word that you typed, unless you "
-#| "were in Pidgin."
 msgid ""
 "Note that Orca preferences can be customized on an application-by-"
 "application basis. For instance you can set the default echo to words and "
@@ -6654,7 +6610,7 @@ msgstr ""
 "En supplément des préférences d’Orca, il existe des préférences spécifiques "
 "aux applications. Ces préférences vous permettent de personnaliser les "
 "fonctions d’<app>Orca</app> qui ne s’appliquent qu’à certains "
-"environnements, tels que des pages Web ou des applications de discussion. "
+"environnements, tels que des pages web ou des applications de discussion. "
 "Ces options ne sont disponibles que dans la boîte de dialogue des "
 "préférences spécifiques de l’application et seulement pour les applications "
 "auxquelles elles s’appliquent."
@@ -6784,16 +6740,12 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
-#| msgctxt "link"
-#| msgid "Key Echo"
 msgctxt "link"
 msgid "Echo"
 msgstr "Écho"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
-#| msgctxt "sort"
-#| msgid "4. Key Echo"
 msgctxt "sort"
 msgid "4. Echo"
 msgstr "4. Écho"
@@ -6805,7 +6757,6 @@ msgstr "Configurer ce qui est dit lors de la saisie"
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-#| msgid "Key Echo Preferences"
 msgid "Echo Preferences"
 msgstr "Préférences de « Écho »"
 
@@ -7514,12 +7465,6 @@ msgstr "Les messages systèmes sont détaillés"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
-#| msgid ""
-#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
-#| "will present detailed messages to you in speech. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
-#| "simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
@@ -7720,7 +7665,7 @@ msgstr ""
 "Si la case <gui>Lire la ligne complète dans les tableaux de documents</gui> "
 "est cochée, lorsque vous montez et descendez avec les flèches dans les "
 "tableaux tels que ceux dans le traitement de texte <app>Writer</app> ou dans "
-"les documents Web, <app>Orca</app> va lire la ligne entière. Si vous "
+"les documents web, <app>Orca</app> va lire la ligne entière. Si vous "
 "préférez n’entendre que la cellule ayant le focus, vous devriez décocher "
 "cette case."
 
