@@ -802,7 +802,7 @@ class Context:
         current = zone
         if flatReviewType == Context.LINE:
             current = zone.line
-        elif zone.words:
+        elif flatReviewType != Context.ZONE and zone.words:
             current = zone.words[self.wordIndex]
             if flatReviewType == Context.CHAR and current.chars:
                 try:

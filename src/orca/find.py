@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2022 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2022 Igalia, S.L."
 __license__   = "LGPL"
 
 
@@ -30,9 +32,36 @@ import copy
 import re
 
 from . import debug
-from . import flat_review
 from . import messages
 from . import orca_state
+
+from .flat_review import Context
+
+
+class _SearchQueryMatch:
+    """Represents a SearchQuery match."""
+
+    def __init__(self, context, pattern):
+        self._line = context.lineIndex
+        self._zone = context.zoneIndex
+        self._word = context.wordIndex
+        self._char = context.charIndex
+        self._pattern = pattern
+        self._lineString = context.getCurrent(Context.LINE)[0]
+
+    def __str__(self):
+        return "SEARCH QUERY MATCH: '%s' (line %i, zone %i, word %i, char %i) for '%s'" % \
+                (self._lineString, self._line, self._zone, self._word, self._char, self._pattern)
+
+    def __eq__(self, other):
+        if not other:
+            return False
+
+        return self._lineString == other._lineString and \
+               self._line == other._line and \
+               self._zone == other._zone and \
+               self._word == other._word and \
+               self._char == other._char
 
 class SearchQuery:
     """Represents a search that the user wants to perform."""
@@ -59,68 +88,146 @@ class SearchQuery:
         self.matchEntireWord = False
         self.windowWrap = False
         self.startAtTop = False
+        self.debugLevel = debug.LEVEL_INFO
+        self._contextLocation = [0, 0, 0, 0]
+        self._match = None
+        self._wrapped = False
 
-        self.debugLevel = debug.LEVEL_FINEST
+    def __str__(self):
+        string = "FIND QUERY: '%s'." % self.searchString
+        options = []
+        if self.searchBackwards:
+            options.append("search backwards")
+        if self.caseSensitive:
+            options.append("case sensitive")
+        if self.matchEntireWord:
+            options.append("match entire word")
+        if self.windowWrap:
+            options.append("wrap")
+        if self.startAtTop:
+            options.append("start at top")
+        if options:
+            string += " Options: %s" % ", ".join(options)
+        if self._match:
+            string += " Last match: %s" % self._match
+        return string
 
-    def debugContext(self, context, string):
-        """Prints out the context and the string to find to debug.out"""
-        debug.println(self.debugLevel, \
-            "------------------------------------------------------------")
-        debug.println(self.debugLevel, \
-                      "findQuery: %s line=%d zone=%d word=%d char=%d" \
-                      % (string, context.lineIndex, context.zoneIndex, \
-                                 context.wordIndex, context.charIndex))
+    def previousMatch(self):
+        if not orca_state.searchQuery:
+            return None
+        return orca_state.searchQuery._match
 
-        debug.println(self.debugLevel, \
-                      "Number of lines: %d" % len(context.lines))
-        debug.println(self.debugLevel, \
-                      "Number of zones in current line: %d" % \
-                      len(context.lines[context.lineIndex].zones))
-        debug.println(self.debugLevel, \
-                      "Number of words in current zone: %d" % \
-           len(context.lines[context.lineIndex].zones[context.zoneIndex].words))
+    def _saveContextLocation(self, context):
+        self._contextLocation = [context.lineIndex,
+                                 context.zoneIndex,
+                                 context.wordIndex,
+                                 context.charIndex]
 
-        debug.println(self.debugLevel, \
-            "==========================================================\n\n")
+    def _restoreContextLocation(self, context):
+        context.setCurrent(*self._contextLocation)
+        self._contextLocation = [0, 0, 0, 0]
 
-    def dumpContext(self, context):
-        """Debug utility which prints out the context."""
-        print("DUMP")
-        for i in range(0, len(context.lines)):
-            print("  Line %d" % i)
-            for j in range(0, len(context.lines[i].zones)):
-                print("    Zone: %d" % j)
-                for k in range(0, len(context.lines[i].zones[j].words)):
-                    print("      Word %d = `%s` len(word): %d" % \
-                        (k, context.lines[i].zones[j].words[k].string, \
-                         len(context.lines[i].zones[j].words[k].string)))
+    def _currentContextMatches(self, context, pattern, contextType):
+        if contextType == Context.LINE:
+            typeString = "LINE"
+        elif contextType == Context.ZONE:
+            typeString = "ZONE"
+        elif contextType == Context.WORD:
+            typeString = "WORD"
+        else:
+            return False
 
-    def findQuery(self, context, justEnteredFlatReview):
+        string = context.getCurrent(contextType)[0]
+        match = re.search(pattern, string)
+        msg = "FIND: %s='%s'. Match: %s" % (typeString, string.replace("\n", "\\n"), match)
+        debug.println(self.debugLevel, msg, True)
+        return bool(match)
+
+    def _move(self, context, contextType):
+        if contextType == Context.WORD:
+            if self.searchBackwards:
+                return context.goPrevious(Context.WORD, Context.WRAP_LINE)
+            return context.goNext(Context.WORD, Context.WRAP_LINE)
+
+        if contextType == Context.ZONE:
+            if self.searchBackwards:
+                moved = context.goPrevious(Context.ZONE, Context.WRAP_LINE)
+                context.goEnd(Context.ZONE)
+                return moved
+            return context.goNext(Context.ZONE, Context.WRAP_LINE)
+
+        if contextType == Context.LINE:
+            if self.searchBackwards:
+                moved = context.goPrevious(Context.LINE, Context.WRAP_LINE)
+                context.goEnd(Context.LINE)
+            else:
+                moved = context.goNext(Context.LINE, Context.WRAP_LINE)
+            if moved:
+                return True
+            if not self.windowWrap or self._wrapped:
+                return False
+            self._wrapped = True
+            if self.searchBackwards:
+                orca_state.activeScript.presentMessage(messages.WRAPPING_TO_BOTTOM)
+                moved = context.goPrevious(Context.LINE, Context.WRAP_ALL)
+            else:
+                orca_state.activeScript.presentMessage(messages.WRAPPING_TO_TOP)
+                moved = context.goNext(Context.LINE, Context.WRAP_ALL)
+            return moved
+
+        return False
+
+    def _findMatchIn(self, context, pattern, contextType):
+        found = self._currentContextMatches(context, pattern, contextType)
+        while not found:
+            if not self._move(context, contextType):
+                break
+            found = self._currentContextMatches(context, pattern, contextType)
+
+        return found
+
+    def _findMatch(self, context, pattern):
+        if not self._findMatchIn(context, pattern, Context.LINE):
+            return False
+
+        if not self._findMatchIn(context, pattern, Context.ZONE):
+            return False
+
+        if not self._findMatchIn(context, pattern, Context.WORD):
+            return False
+
+        if not self.previousMatch():
+            return True
+
+        candidateMatch = _SearchQueryMatch(context, pattern)
+        if candidateMatch != self.previousMatch():
+            return True
+
+        if self._move(context, Context.WORD) \
+            and self._findMatchIn(context, pattern, Context.WORD):
+            return True
+
+        if self._move(context, Context.ZONE) \
+            and self._findMatchIn(context, pattern, Context.ZONE):
+            return True
+
+        if self._move(context, Context.LINE):
+            return self._findMatch(context, pattern)
+
+        return False
+
+    def findQuery(self, context):
         """Performs a search on the string specified in searchQuery.
 
            Arguments:
            - context: The context from active script
-           - justEnteredFlatReview: If true, we began the search in focus
-             tracking mode.
 
            Returns:
            - The context of the match, if found
         """
 
-        # Get the starting context so that we can restore it at the end.
-        #
-        originalLineIndex = context.lineIndex
-        originalZoneIndex = context.zoneIndex
-        originalWordIndex = context.wordIndex
-        originalCharIndex = context.charIndex
-
-        debug.println(self.debugLevel, \
-            "findQuery: original context line=%d zone=%d word=%d char=%d" \
-                % (originalLineIndex, originalZoneIndex, \
-                   originalWordIndex, originalCharIndex))
-        # self.dumpContext(context)
-
-        flags = re.LOCALE
+        debug.println(self.debugLevel, str(self), True)
+        flags = re.U
         if not self.caseSensitive:
             flags = flags | re.IGNORECASE
         if self.matchEntireWord:
@@ -129,161 +236,19 @@ class SearchQuery:
             regexp = self.searchString
         pattern = re.compile(regexp, flags)
 
-        debug.println(self.debugLevel, \
-            "findQuery: startAtTop: %d  regexp: `%s`" \
-                % (self.startAtTop, regexp))
-
+        self._saveContextLocation(context)
         if self.startAtTop:
-            context.goBegin(flat_review.Context.WINDOW)
-            self.debugContext(context, "go begin")
+            context.goBegin(Context.WINDOW)
 
         location = None
-        found = False
-        wrappedYet = False
-
-        doneWithLine = False
-        while not found:
-            # Check the current line for the string.
-            #
-            [currentLine, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.LINE)
-            debug.println(self.debugLevel, \
-                "findQuery: current line=`%s` x=%d y=%d width=%d height=%d" \
-                    % (currentLine, x, y, width, height))
-
-            if re.search(pattern, currentLine) and not doneWithLine:
-                # It's on this line. Check the current zone for the string.
-                #
-                while not found:
-                    [currentZone, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.ZONE)
-                    debug.println(self.debugLevel, \
-                        "findQuery: current zone=`%s` x=%d y=%d " % \
-                        (currentZone, x, y))
-                    debug.println(self.debugLevel, \
-                        "width=%d height=%d" % (width, height))
-
-                    if re.search(pattern, currentZone):
-                        # It's in this zone at least once.
-                        #
-                        theZone = context.lines[context.lineIndex] \
-                                         .zones[context.zoneIndex]
-                        startedInThisZone = \
-                              (originalLineIndex == context.lineIndex) and \
-                              (originalZoneIndex == context.zoneIndex)
-                        try:
-                            theZone.accessible.queryText()
-                        except:
-                            pass
-                        else:
-                            # Make a list of the character offsets for the
-                            # matches in this zone.
-                            #
-                            allMatches = re.finditer(pattern, currentZone)
-                            offsets = []
-                            for m in allMatches:
-                                offsets.append(m.start(0))
-                            if self.searchBackwards:
-                                offsets.reverse()
-
-                            i = 0
-                            while not found and (i < len(offsets)):
-                                [nextInstance, offset] = \
-                                   theZone.getWordAtOffset(offsets[i])
-                                if nextInstance:
-                                    offsetDiff = \
-                                        nextInstance.index - context.wordIndex
-                                    if self.searchBackwards \
-                                       and (offsetDiff < 0) \
-                                       or (not self.searchBackwards \
-                                           and offsetDiff > 0):
-                                        context.wordIndex = nextInstance.index
-                                        context.charIndex = 0
-                                        found = True
-                                    elif not offsetDiff and \
-                                        (not startedInThisZone or \
-                                         justEnteredFlatReview):
-                                        # We landed on a match by happenstance.
-                                        # This can occur when the nextInstance
-                                        # is the first thing we come across.
-                                        #
-                                        found = True
-                                    else:
-                                        i += 1
-                                else:
-                                    break
-                    if not found:
-                        # Locate the next zone to try again.
-                        #
-                        if self.searchBackwards:
-                            moved = context.goPrevious( \
-                                        flat_review.Context.ZONE, \
-                                        flat_review.Context.WRAP_LINE)
-                            self.debugContext(context, "[1] go previous")
-                            context.goEnd(flat_review.Context.ZONE)
-                            self.debugContext(context, "[1] go end")
-                        else:
-                            moved = context.goNext( \
-                                        flat_review.Context.ZONE, \
-                                        flat_review.Context.WRAP_LINE)
-                            self.debugContext(context, "[1] go next")
-                        if not moved:
-                            doneWithLine = True
-                            break
-            else:
-                # Locate the next line to try again.
-                #
-                if self.searchBackwards:
-                    moved = context.goPrevious(flat_review.Context.LINE, \
-                                               flat_review.Context.WRAP_LINE)
-                    self.debugContext(context, "[2] go previous")
-                else:
-                    moved = context.goNext(flat_review.Context.LINE, \
-                                           flat_review.Context.WRAP_LINE)
-                    self.debugContext(context, "[2] go next")
-                if moved:
-                    if self.searchBackwards:
-                        moved = context.goEnd(flat_review.Context.LINE)
-                        self.debugContext(context, "[2] go end")
-                else:
-                    # Then we're at the screen's edge.
-                    #
-                    if self.windowWrap and not wrappedYet:
-                        script = orca_state.activeScript
-                        doneWithLine = False
-                        wrappedYet = True
-                        if self.searchBackwards:
-                            script.presentMessage(messages.WRAPPING_TO_BOTTOM)
-                            moved = context.goPrevious( \
-                                    flat_review.Context.LINE, \
-                                    flat_review.Context.WRAP_ALL)
-                            self.debugContext(context, "[3] go previous")
-                        else:
-                            script.presentMessage(messages.WRAPPING_TO_TOP)
-                            moved = context.goNext( \
-                                    flat_review.Context.LINE, \
-                                    flat_review.Context.WRAP_ALL)
-                            self.debugContext(context, "[3] go next")
-                        if not moved:
-                            debug.println(self.debugLevel, \
-                                          "findQuery: cannot wrap")
-                            break
-                    else:
-                        break
-        if found:
+        if self._findMatch(context, pattern):
+            self._saveContextLocation(context)
+            self._match = _SearchQueryMatch(context, pattern)
+            self._wrapped = False
             location = copy.copy(context)
-
-        self.debugContext(context, "before setting original")
-        context.setCurrent(originalLineIndex, originalZoneIndex, \
-                           originalWordIndex, originalCharIndex)
-        self.debugContext(context, "after setting original")
-
-        if location:
-            debug.println(self.debugLevel, \
-                "findQuery: returning line=%d zone=%d word=%d char=%d" \
-                    % (location.lineIndex, location.zoneIndex, \
-                       location.wordIndex, location.charIndex))
-
+        else:
+            self._restoreContextLocation(context)
+        orca_state.searchQuery = copy.copy(self)
         return location
 
 def getLastQuery():
