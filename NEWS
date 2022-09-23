@@ -1,3 +1,30 @@
+43.0 - 23 September 2022
+
+General:
+
+* Prevent double-presentation of notifications
+
+* Fix presentation of Nautilus items for Gtk 4
+
+* Fix bug causing the wrong voice to be used
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 Alexander Shopov
+  ca              Catalan                   Jordi Mas
+  da              Danish                    Alan Mortensen
+  fr              French                    Charles Monzat
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lv              Latvian                   Rūdolfs Mazurs
+  ne              Nepali                    Pawan Chitrakar
+  pt_BR           Brazilian Portuguese      Leônidas Araújo
+  sl              Slovenian                 Matej Urbančič
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+  zh_CN           Chinese (China)           Boyuan Yang
+
+=========
+
 43.beta - 29 August 2022
 
 Web:
