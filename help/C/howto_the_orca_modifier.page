@@ -52,7 +52,7 @@
     <item>
       <p>
         Get into the <link xref="preferences">Orca Preferences</link> dialog by
-        pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
+        pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>. Alternatively, you can start Orca with the preferences dialog open from a terminal: type <cmd>orca -s</cmd> and press <key>Return</key>.
       </p>
     </item>
     <item>
