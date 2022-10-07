@@ -507,7 +507,7 @@ class SpeechServer(speechserver.SpeechServer):
                 elif t == speechserver.SayAllContext.COMPLETED:
                     context.currentOffset = context.endOffset
                     context.currentEndOffset = None
-                GLib.idle_add(orca_callback, context, t)
+                GLib.idle_add(orca_callback, context.copy(), t)
                 if t == speechserver.SayAllContext.COMPLETED:
                     GLib.idle_add(self._say_all, iterator, orca_callback)
             self._speak(context.utterance, acss, callback=callback,

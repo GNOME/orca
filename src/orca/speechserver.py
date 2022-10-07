@@ -90,6 +90,13 @@ class SayAllContext:
         return "SAY ALL: %s '%s' (%i-%i, current: %i)" % \
             (self.obj, self.utterance, self.startOffset, self.endOffset, self.currentOffset)
 
+    def copy(self):
+        new = SayAllContext(self.obj, self.utterance,
+                            self.startOffset, self.endOffset)
+        new.currentOffset = self.currentOffset
+        new.currentEndOffset = self.currentEndOffset
+        return new
+
 
 class SpeechServer(object):
     """Provides speech server abstraction."""
