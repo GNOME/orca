@@ -4479,6 +4479,19 @@ class Utilities:
         return pyatspi.findAncestor(obj, isHeader)
 
     def columnHeadersForCell(self, obj):
+        result = self._columnHeadersForCell(obj)
+        # There either are no headers, or we got all of them.
+        if len(result) != 1:
+            return result
+
+        others = self._columnHeadersForCell(result[0])
+        while len(others) == 1 and others[0] not in result:
+            result.insert(0, others[0])
+            others = self._columnHeadersForCell(result[0])
+
+        return result
+
+    def _columnHeadersForCell(self, obj):
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
@@ -4506,6 +4519,19 @@ class Utilities:
         return headers
 
     def rowHeadersForCell(self, obj):
+        result = self._rowHeadersForCell(obj)
+        # There either are no headers, or we got all of them.
+        if len(result) != 1:
+            return result
+
+        others = self._rowHeadersForCell(result[0])
+        while len(others) == 1 and others[0] not in result:
+            result.insert(0, others[0])
+            others = self._rowHeadersForCell(result[0])
+
+        return result
+
+    def _rowHeadersForCell(self, obj):
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
