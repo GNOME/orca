@@ -4482,6 +4482,16 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
             return []
 
+        if 'TableCell' in pyatspi.listInterfaces(obj):
+            tableCell = obj.queryTableCell()
+            try:
+                headers = tableCell.columnHeaderCells
+            except:
+                msg = "INFO: Exception getting column headers for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return headers
+
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
         try:
@@ -4490,7 +4500,7 @@ class Utilities:
             return []
 
         row, col = self.coordinatesForCell(obj)
-        colspan = table.getColumnExtentAt(row, col)
+        rowspan, colspan = self.rowAndColumnSpan(obj)
 
         headers = []
         for c in range(col, col+colspan):
@@ -4502,6 +4512,16 @@ class Utilities:
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
             return []
 
+        if 'TableCell' in pyatspi.listInterfaces(obj):
+            tableCell = obj.queryTableCell()
+            try:
+                headers = tableCell.rowHeaderCells
+            except:
+                msg = "INFO: Exception getting row headers for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return headers
+
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
         try:
@@ -4510,7 +4530,7 @@ class Utilities:
             return []
 
         row, col = self.coordinatesForCell(obj)
-        rowspan = table.getRowExtentAt(row, col)
+        rowspan, colspan = self.rowAndColumnSpan(obj)
 
         headers = []
         for r in range(row, row+rowspan):
@@ -4519,32 +4539,18 @@ class Utilities:
         return headers
 
     def columnHeaderForCell(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
-            return None
+        headers = self.columnHeadersForCell(obj)
+        if headers:
+            return headers[0]
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
-        try:
-            table = parent.queryTable()
-        except:
-            return None
-
-        rowIndex, columnIndex = self.coordinatesForCell(obj)
-        return table.getColumnHeader(columnIndex)
+        return None
 
     def rowHeaderForCell(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
-            return None
+        headers = self.rowHeadersForCell(obj)
+        if headers:
+            return headers[0]
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
-        try:
-            table = parent.queryTable()
-        except:
-            return None
-
-        rowIndex, columnIndex = self.coordinatesForCell(obj)
-        return table.getRowHeader(rowIndex)
+        return None
 
     def _shouldUseTableCellInterfaceForCoordinates(self):
         return True
