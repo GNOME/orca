@@ -4479,9 +4479,6 @@ class Utilities:
         return pyatspi.findAncestor(obj, isHeader)
 
     def columnHeadersForCell(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
-            return []
-
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
@@ -4509,9 +4506,6 @@ class Utilities:
         return headers
 
     def rowHeadersForCell(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
-            return []
-
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
