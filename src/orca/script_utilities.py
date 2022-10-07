@@ -4585,8 +4585,23 @@ class Utilities:
         return table.getRowAtIndex(index), table.getColumnAtIndex(index)
 
     def rowAndColumnSpan(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+        roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER,
+                 pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER]
+        if not (obj and obj.getRole() in roles):
             return -1, -1
+
+        if 'TableCell' in pyatspi.listInterfaces(obj):
+            tableCell = obj.queryTableCell()
+            try:
+                rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
+            except:
+                msg = "INFO: Exception getting table row and col span of %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return rowSpan, colSpan
 
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
