@@ -358,3 +358,7 @@ class Utilities(web.Utilities):
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         return super().unrelatedLabels(root, onlyShowing, minimumWords=1)
+
+    def _shouldUseTableCellInterfaceForCoordinates(self):
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1794100
+        return False

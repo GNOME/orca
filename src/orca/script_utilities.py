@@ -4546,6 +4546,9 @@ class Utilities:
         rowIndex, columnIndex = self.coordinatesForCell(obj)
         return table.getRowHeader(rowIndex)
 
+    def _shouldUseTableCellInterfaceForCoordinates(self):
+        return True
+
     def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
         roles = [pyatspi.ROLE_TABLE_CELL,
                  pyatspi.ROLE_TABLE_COLUMN_HEADER,
@@ -4559,7 +4562,8 @@ class Utilities:
             cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
-        if 'TableCell' in pyatspi.listInterfaces(obj):
+        if 'TableCell' in pyatspi.listInterfaces(obj) \
+           and self._shouldUseTableCellInterfaceForCoordinates():
             tableCell = obj.queryTableCell()
             try:
                 successful, row, col = tableCell.position
