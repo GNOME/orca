@@ -838,7 +838,8 @@ class StructuralNavigation:
                 elif desiredRow > nRows - 1:
                     self._script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
                     desiredRow = nRows - 1
-            elif thisCell == cell or (settings.skipBlankCells and self._isBlankCell(cell)):
+            elif (thisCell == cell and (colDiff or rowDiff)) \
+                 or (settings.skipBlankCells and self._isBlankCell(cell)):
                 if colDiff < 0:
                     desiredCol -= 1
                 elif colDiff > 0:
@@ -847,8 +848,6 @@ class StructuralNavigation:
                     desiredRow -= 1
                 elif rowDiff > 0:
                     desiredRow += 1
-                else:
-                    break
             else:
                 break
 
