@@ -4492,6 +4492,11 @@ class Utilities:
         return result
 
     def _columnHeadersForCell(self, obj):
+        if not obj:
+            msg = "INFO: Attempted to get column headers for null cell"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
@@ -4532,6 +4537,11 @@ class Utilities:
         return result
 
     def _rowHeadersForCell(self, obj):
+        if not obj:
+            msg = "INFO: Attempted to get row headers for null cell"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if 'TableCell' in pyatspi.listInterfaces(obj):
             tableCell = obj.queryTableCell()
             try:
