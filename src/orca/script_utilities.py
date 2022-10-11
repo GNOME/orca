@@ -4608,17 +4608,36 @@ class Utilities:
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if successful:
+                    msg = "INFO: table cell position of %s is row: %i, col: %i" % (obj, row, col)
+                    debug.println(debug.LEVEL_INFO, msg, True)
                     return row, col
+                msg = "INFO: Failed to get table cell position of %s via table cell" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
+        if not parent:
+            msg = "INFO: Couldn't find table-implementing ancestor for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1
+
         try:
             table = parent.queryTable()
         except:
+            msg = "INFO: Exception querying table interface %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         index = self.cellIndex(obj)
-        return table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        try:
+            row = table.getRowAtIndex(index)
+            col = table.getColumnAtIndex(index)
+        except:
+            msg = "INFO: Exception getting row and column at index from %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1
+
+        return row, col
 
     def rowAndColumnSpan(self, obj):
         roles = [pyatspi.ROLE_TABLE_CELL,
@@ -4634,7 +4653,7 @@ class Utilities:
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
             except:
-                msg = "INFO: Exception getting table row and col span of %s" % obj
+                msg = "INFO: Exception getting table row and col span of %s via table cell" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 return rowSpan, colSpan
@@ -4647,6 +4666,9 @@ class Utilities:
             return -1, -1
 
         row, col = self.coordinatesForCell(obj)
+        if (row < 0 or col < 0):
+            return -1, -1
+
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
     def setSizeUnknown(self, obj):
