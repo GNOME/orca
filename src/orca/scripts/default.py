@@ -2518,7 +2518,8 @@ class Script(script.Script):
 
         names[hash(obj)] = event.any_data
         self.pointOfReference['names'] = names
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
+        if event.any_data:
+            self.presentMessage(event.any_data)
 
     def onPressedChanged(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
