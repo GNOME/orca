@@ -2045,6 +2045,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        prevDocument = self.utilities.getDocumentForObject(orca_state.locusOfFocus)
+        if prevDocument != document:
+            msg = "WEB: document changed from %s to %s" % (prevDocument, document)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         role = event.source.getRole()
         if self.utilities.isWebAppDescendant(event.source):
             if self._browseModeIsSticky:
@@ -2083,8 +2088,8 @@ class Script(default.Script):
               % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        if not obj or self.utilities.isZombie(obj):
-            msg = "WEB: Clearing context - obj is null or zombie"
+        if not obj or self.utilities.isZombie(obj) or prevDocument != document:
+            msg = "WEB: Clearing context - obj %s is null or zombie or document changed" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.clearCaretContext()
 
