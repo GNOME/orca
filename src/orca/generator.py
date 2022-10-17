@@ -957,7 +957,8 @@ class Generator:
         label = self._script.utilities.displayedText(descendant)
         if not label and self._script.utilities.hasMeaningfulToggleAction(obj):
             accHeader = self._script.utilities.columnHeaderForCell(obj)
-            result.append(accHeader.name)
+            if (accHeader):
+                result.append(accHeader.name)
         return result
 
     def _generateRealTableCell(self, obj, **args):
