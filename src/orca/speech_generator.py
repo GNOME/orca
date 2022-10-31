@@ -2089,6 +2089,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isTypeahead(priorObj):
             return []
 
+        if obj and obj.getRole() == pyatspi.ROLE_PAGE_TAB:
+            return []
+
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
         if obj == commonAncestor:
             return []
