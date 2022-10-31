@@ -65,7 +65,7 @@ try:
     _brlAPISourceId = 0
 except:
     msg = "BRAILLE: Could not import brlapi."
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.println(debug.LEVEL_WARNING, msg, True)
     _brlAPIAvailable = False
     _brlAPIRunning = False
 else:
@@ -78,7 +78,7 @@ try:
     import louis
 except:
     msg = "BRAILLE: Could not import liblouis"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.println(debug.LEVEL_WARNING, msg, True)
     louis = None
 else:
     msg = "BRAILLE: liblouis imported %s" % louis
@@ -357,7 +357,7 @@ class Region:
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
                     msg = "BRAILLE: Not contracting '%s' due to problem with liblouis." % string
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    debug.println(debug.LEVEL_WARNING, msg, True)
 
             self.string = self.rawLine
             self.cursorOffset = cursorOffset
@@ -1193,7 +1193,7 @@ def _enableBraille():
                 idle = False
             except:
                 msg = "BRAILLE: could not restore priority"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.println(debug.LEVEL_WARNING, msg, True)
             else:
                 msg = "BRAILLE: De-idle succeeded."
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1895,7 +1895,7 @@ def init(callback=None):
 
         if x == 0:
             msg = "BRAILLE: Error - 0 cells suggests display is not yet plugged in."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.println(debug.LEVEL_WARNING, msg, True)
             raise Exception
 
         _brlAPISourceId = GLib.io_add_watch(_brlAPI.fileDescriptor,
@@ -1905,12 +1905,12 @@ def init(callback=None):
 
     except NameError:
         msg = "BRAILLE: Initialization failed: BrlApi is not defined."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.println(debug.LEVEL_WARNING, msg, True)
         return False
     except:
         msg = "BRAILLE: Initialization failed."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        debug.printException(debug.LEVEL_INFO)
+        debug.println(debug.LEVEL_WARNING, msg, True)
+        debug.printException(debug.LEVEL_WARNING)
 
         _brlAPIRunning = False
 
@@ -1984,7 +1984,7 @@ def shutdown():
             _brlAPI.leaveTtyMode()
         except:
             msg = "BRAILLE: Exception leaving TTY mode."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.println(debug.LEVEL_WARNING, msg, True)
         else:
             msg = "BRAILLE: Leaving TTY mode succeeded."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1995,7 +1995,7 @@ def shutdown():
             _brlAPI.closeConnection()
         except:
             msg = "BRAILLE: Exception closing connection."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.println(debug.LEVEL_WARNING, msg, True)
         else:
             msg = "BRAILLE: Closing connection succeeded."
             debug.println(debug.LEVEL_INFO, msg, True)
