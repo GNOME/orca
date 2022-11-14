@@ -5691,7 +5691,7 @@ class Utilities:
 
     def lastInputEventWasDelete(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if keyString == "Delete":
+        if keyString in ["Delete", "KP_Delete"]:
             return True
 
         keycode, mods = self._lastKeyCodeAndModifiers()
