@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-03-23 13:30+0000\n"
-"PO-Revision-Date: 2022-03-25 10:45+0100\n"
+"POT-Creation-Date: 2022-09-17 08:42+0000\n"
+"PO-Revision-Date: 2022-11-26 21:54+0100\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2014-03-17 08:36+0000\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.1\n"
 
 # vergrootglas/loep
 #: orca-autostart.desktop.in:4
@@ -788,7 +788,7 @@ msgstr "apenstaart"
 #.
 #: src/orca/chnames.py:141
 msgid "left bracket"
-msgstr "linker haakje"
+msgstr "rechte haak openen"
 
 # schuine streep/terugschrap (itt platte schrap)
 #. Translators: this is the spoken word for the character '\' (U+005c)
@@ -802,7 +802,7 @@ msgstr "backslash"
 #.
 #: src/orca/chnames.py:149
 msgid "right bracket"
-msgstr "rechter haakje"
+msgstr "rechte haak sluiten"
 
 # teken ^
 #. Translators: this is the spoken word for the character '^' (U+005e)
@@ -13022,7 +13022,7 @@ msgstr "Uitspraak per _zin gebruiken"
 
 #: src/orca/orca-setup.ui:2861
 msgid "Echo"
-msgstr "Uitspraak"
+msgstr "Toetsecho"
 
 #: src/orca/orca-setup.ui:2885
 msgid "Screen Reader _Modifier Key(s):"
