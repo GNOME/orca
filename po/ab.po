@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-09-29 15:13+0000\n"
+"POT-Creation-Date: 2022-10-31 09:46+0000\n"
 "Last-Translator: Нанба Наала <naala-nanba@rambler.ru>\n"
 "Language-Team: Abkhazian <daniel.abzakh@gmail.com>\n"
 "Language: ab\n"
@@ -252,7 +252,7 @@ msgstr ""
 #. Translators: short braille for the rolename of a radio button.
 #: src/orca/braille_rolenames.py:188
 msgid "radio"
-msgstr ""
+msgstr "арадио"
 
 #. Translators: short braille for the rolename of a radio menu item.
 #: src/orca/braille_rolenames.py:191
@@ -620,7 +620,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:49 src/orca/keynames.py:135
 msgid "tab"
-msgstr ""
+msgstr "аҭаӡҩырартәра"
 
 #. Translators: this is the spoken word for the character '!' (U+0021)
 #.
@@ -8533,7 +8533,7 @@ msgstr "Аамҭалатәи ацәаҳәа ахы рыцқьоуп."
 #. spreadsheet is blank/empty.
 #: src/orca/messages.py:553
 msgid "empty"
-msgstr ""
+msgstr "иҭацәуп"
 
 #. Translators: This is the size of a file in kilobytes
 #: src/orca/messages.py:556
@@ -10676,7 +10676,7 @@ msgstr "Аекрантә диктор ахышәарақәа  иеиҭаҿаку
 #: src/orca/messages.py:2129
 #, python-format
 msgid "Selected text is: %s"
-msgstr ""
+msgstr "Иалху атекст: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -10685,7 +10685,7 @@ msgstr ""
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2136
 msgid "Selection deleted."
-msgstr ""
+msgstr "Иалху аныхуп."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -10697,14 +10697,14 @@ msgstr ""
 #. which was just inserted.
 #: src/orca/messages.py:2146
 msgid "Selection restored."
-msgstr ""
+msgstr "Иалху еиҭашьақәыргылоуп."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2151
 msgid "Text unselected."
-msgstr ""
+msgstr "Атекст алкааӡам."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -10713,7 +10713,7 @@ msgstr ""
 #: src/orca/messages.py:2157
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "Ашәагаа: %d, %d. Аҭыҧ: %d, %d."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -10722,19 +10722,19 @@ msgstr ""
 #: src/orca/messages.py:2163
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "Аҭбаара: %d. Аҳаракыра: %d. %d арымарахь. %d арыӷьарахь."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
 #: src/orca/messages.py:2167
 msgid "Speech disabled."
-msgstr ""
+msgstr "Ацәажәара аҿыхуп."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
 #: src/orca/messages.py:2171
 msgid "Speech enabled."
-msgstr ""
+msgstr "Ацәажәара аҿакуп."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2174
@@ -10744,27 +10744,27 @@ msgstr "ирласны"
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2177
 msgid "slower."
-msgstr ""
+msgstr "имырццакӡакәа."
 
 #. Translators: This string announces speech pitch change.
 #: src/orca/messages.py:2180
 msgid "higher."
-msgstr ""
+msgstr "аҩада."
 
 #. Translators: This string announces speech pitch change.
 #: src/orca/messages.py:2183
 msgid "lower."
-msgstr ""
+msgstr "алада."
 
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2186
 msgid "louder."
-msgstr ""
+msgstr "абжьы рдуны."
 
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2189
 msgid "softer."
-msgstr ""
+msgstr "абжьы рхәыҷны."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -10797,17 +10797,17 @@ msgstr ""
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2212
 msgid "Screen reader on."
-msgstr ""
+msgstr "Аекран аҟынтә аҧхьара аҿакуп."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: src/orca/messages.py:2215
 msgid "Screen reader off."
-msgstr ""
+msgstr "Аекран аҟынтә аҧхьара аҿыхуп."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: src/orca/messages.py:2218
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "Ацәажәара ахь анеира залшахом."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
@@ -10822,7 +10822,7 @@ msgstr ""
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2228
 msgid "Status bar not found"
-msgstr ""
+msgstr "Астатус ацәаҳәа ҧшааӡам"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -10830,7 +10830,7 @@ msgstr ""
 #. for was not found.
 #: src/orca/messages.py:2234
 msgid "string not found"
-msgstr ""
+msgstr "ацәаҳәа ҧшааӡам"
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -10840,7 +10840,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2242
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "Еилаҵоу ахырхарҭарбара арыдқәа аҿыхуп."
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -10850,7 +10850,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2250
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "Еилаҵоу ахырхарҭарбара арыдқәа аҿакуп."
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -10867,81 +10867,81 @@ msgstr ""
 #: src/orca/messages.py:2261
 #, python-format
 msgid "Row %(row)d, column %(column)d."
-msgstr ""
+msgstr "Ацәаҳәа %(row)d, аиҵагыла %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
 #: src/orca/messages.py:2265
 msgid "End of table"
-msgstr ""
+msgstr "Аҭаӡҩыра анҵәамҭа"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2270
 msgid "Speak cell"
-msgstr ""
+msgstr "Абларҭа аҳәара"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2275
 msgid "Speak row"
-msgstr ""
+msgstr "Ацәаҳәа аҳәара"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
 #: src/orca/messages.py:2280
 msgid "Non-uniform"
-msgstr ""
+msgstr "Еиҧшӡам"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
 #: src/orca/messages.py:2285
 msgid "Not in a table."
-msgstr ""
+msgstr "Аҭаӡҩыра аҟны акәӡам."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
 #: src/orca/messages.py:2289
 msgid "Columns reordered"
-msgstr ""
+msgstr "Аиҵагылақәа реишьҭагылашьа ҧсахуп"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
 #: src/orca/messages.py:2293
 msgid "Rows reordered"
-msgstr ""
+msgstr "Ацәаҳәақәа реишьҭагылашьа ҧсахуп"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
 #: src/orca/messages.py:2297
 #, python-format
 msgid "column %d"
-msgstr ""
+msgstr "аиҵагыла %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
 #: src/orca/messages.py:2301
 #, python-format
 msgid "column %(index)d of %(total)d"
-msgstr ""
+msgstr "аиҵагыла %(index)d %(total)d аҟынтә"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
 #: src/orca/messages.py:2306
 msgid "Bottom of column."
-msgstr ""
+msgstr "Аиҵагыла алагамҭа."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
 #: src/orca/messages.py:2311
 msgid "Top of column."
-msgstr ""
+msgstr "Аиҵагыла анҵәамҭа ."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
@@ -10949,7 +10949,7 @@ msgstr ""
 #: src/orca/messages.py:2316
 #, python-format
 msgid "Column %s selected"
-msgstr ""
+msgstr "Иалкаауп аиҵагыла %s"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10959,7 +10959,7 @@ msgstr ""
 #: src/orca/messages.py:2323
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "Иалхуп аиҵагылақәа %s аҟынтә %s аҟынӡа"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10969,7 +10969,7 @@ msgstr ""
 #: src/orca/messages.py:2330
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr ""
+msgstr "Аиҵагылақәа алкаара рымхуп %s аҟынтә %s аҟынӡа"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
@@ -10977,60 +10977,60 @@ msgstr ""
 #: src/orca/messages.py:2335
 #, python-format
 msgid "Column %s unselected"
-msgstr ""
+msgstr "Аиҵагыла алкаар амхуп %s"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
 #: src/orca/messages.py:2339
 #, python-format
 msgid "row %d"
-msgstr ""
+msgstr "ацәаҳәа %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
 #: src/orca/messages.py:2343
 #, python-format
 msgid "row %(index)d of %(total)d"
-msgstr ""
+msgstr "ацәаҳәа %(index)d %(total)d аҟынтә"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
 #: src/orca/messages.py:2348
 msgid "Beginning of row."
-msgstr ""
+msgstr "Ацәаҳәа алагамҭа."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
 #: src/orca/messages.py:2353
 msgid "End of row."
-msgstr ""
+msgstr "Ацәаҳәа анҵәамҭа ."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
 #: src/orca/messages.py:2357
 msgid "Row deleted."
-msgstr ""
+msgstr "Ацәаҳәа аныхуп."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
 #: src/orca/messages.py:2361
 msgid "Last row deleted."
-msgstr ""
+msgstr "Аҵыхәтәантәи ацәаҳәа аныхуп."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
 #: src/orca/messages.py:2365
 msgid "Row inserted."
-msgstr ""
+msgstr "Ацәаҳәа ҭагалоуп."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
 #: src/orca/messages.py:2370
 msgid "Row inserted at the end of the table."
-msgstr ""
+msgstr "Ацәаҳәа ҭагалоуп аҭаӡҩыра наҵәамҭаҟны."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
@@ -11038,7 +11038,7 @@ msgstr ""
 #: src/orca/messages.py:2375
 #, python-format
 msgid "Row %s selected"
-msgstr ""
+msgstr "Иалкаау ацәаҳәа %s"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11048,7 +11048,7 @@ msgstr ""
 #: src/orca/messages.py:2382
 #, python-format
 msgid "Rows %s through %s selected"
-msgstr ""
+msgstr "Иалкаау ацәаҳәақәа %s аҟынтәи %s аҟынӡа"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11058,7 +11058,7 @@ msgstr ""
 #: src/orca/messages.py:2389
 #, python-format
 msgid "Rows %s through %s unselected"
-msgstr ""
+msgstr "Ацәаҳәақәа %s инаркны %s аҟынӡа ралкаара ықәгоуп"
 
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
@@ -11066,7 +11066,7 @@ msgstr ""
 #: src/orca/messages.py:2394
 #, python-format
 msgid "Row %s unselected"
-msgstr ""
+msgstr "Ацәаҳәа %s алкаара ықәгоуп"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -11101,7 +11101,7 @@ msgstr ""
 #: src/orca/messages.py:2422
 #, python-format
 msgid "Unicode %s"
-msgstr ""
+msgstr "Иуникод %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
@@ -11121,13 +11121,13 @@ msgstr ""
 #: src/orca/messages.py:2433
 #, python-format
 msgid "Screen reader version %s."
-msgstr ""
+msgstr "Аекрантә диктор аверсия %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
 #: src/orca/messages.py:2437
 msgid "white space"
-msgstr ""
+msgstr "абжьажь"
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. top of a page or list is reached without that object being found, we "wrap" to
@@ -11135,7 +11135,7 @@ msgstr ""
 #. is taking place.
 #: src/orca/messages.py:2443
 msgid "Wrapping to bottom."
-msgstr ""
+msgstr "Анҵәамҭаҟынтәи ацҵара."
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. bottom of a page or list is reached without that object being found, we "wrap"
@@ -11143,14 +11143,14 @@ msgstr ""
 #. this is taking place.
 #: src/orca/messages.py:2449
 msgid "Wrapping to top."
-msgstr ""
+msgstr "Алагамҭаҟынтәи ацҵара. ."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
 #: src/orca/messages.py:2454
 msgid "0 items"
-msgstr ""
+msgstr "0 аелементқәа"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -11299,7 +11299,7 @@ msgstr[1] "Ахьӡынҵақәа %d рҟынтә аҭыҵра."
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2569
 msgid "List of unknown size"
-msgstr ""
+msgstr "Еилкаам ашәагаа змоу ахьӡынҵа"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2572
@@ -11316,7 +11316,7 @@ msgstr[1] ""
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2581
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "Еилкаам ашәагаа змоу алента"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -11490,7 +11490,7 @@ msgstr[1] ""
 #. 15 columns"). When both counts are unknown, it presents this.
 #: src/orca/messages.py:2710
 msgid "table of unknown size"
-msgstr ""
+msgstr "Еилкаам ашәагаа змоу аҭаӡҩыра"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
@@ -11542,7 +11542,7 @@ msgstr[1] ""
 #. same string used in the *.po file for gail.
 #: src/orca/object_properties.py:36
 msgid "toggle"
-msgstr ""
+msgstr "аиагара"
 
 #. Translators: this is a indication of the focused icon and the count of the
 #. total number of icons within an icon panel. An example of an icon panel is
@@ -11570,7 +11570,7 @@ msgstr "%(index)d аҟны %(total)d"
 #: src/orca/object_properties.py:55
 #, python-format
 msgid "item %(index)d"
-msgstr ""
+msgstr "аелемент %(index)d"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -11580,21 +11580,21 @@ msgstr ""
 #: src/orca/object_properties.py:67
 #, python-format
 msgid "LEVEL %d"
-msgstr ""
+msgstr "Аҩаӡара %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the spoken version.
 #: src/orca/object_properties.py:71
 #, python-format
 msgid "tree level %d"
-msgstr ""
+msgstr "уровень дерева %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the braille version.
 #: src/orca/object_properties.py:75
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "АҴЛА АҨАӠАРА %d"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11611,7 +11611,7 @@ msgstr ""
 #: src/orca/object_properties.py:89
 #, python-format
 msgid "details for %s"
-msgstr ""
+msgstr "ахәҭаҷқәа %s"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11629,7 +11629,7 @@ msgstr ""
 #: src/orca/object_properties.py:104
 #, python-format
 msgid "has details in %s"
-msgstr ""
+msgstr "иҟоуп ахәҭаҷқәа %s аҟны"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11648,7 +11648,7 @@ msgstr ""
 #. typed or arrowed to.
 #: src/orca/object_properties.py:118
 msgid "editable combo box"
-msgstr ""
+msgstr "Аредакциа ззухо аҭыҧ ахьӡынҵа аманы"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11656,7 +11656,7 @@ msgstr ""
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:124
 msgid "editable content"
-msgstr ""
+msgstr "Аредакциа ззухо аҭаҵа"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12389,7 +12389,7 @@ msgstr ""
 
 #: src/orca/orca-find.ui:7
 msgid "Find"
-msgstr ""
+msgstr "Аҧшаара"
 
 #: src/orca/orca-find.ui:13
 msgid "Screen Reader Find Dialog"
@@ -12467,7 +12467,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:66
 msgid "Application"
-msgstr ""
+msgstr "Аҧшьы"
 
 #: src/orca/orca-setup.ui:69
 msgid "Window"
@@ -12511,7 +12511,7 @@ msgstr "_Аҭагалара"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:393
 msgid "Save _As"
-msgstr ""
+msgstr "Аиқәырхара абас еиԥш:"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:407
@@ -14127,847 +14127,3 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#, fuzzy
