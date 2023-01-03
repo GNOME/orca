@@ -1,3 +1,37 @@
+43.1 - 3 January 2023
+
+General:
+
+* Clean up and fix bugs in flat review find
+
+* Treat KP_Delete as Delete for the purpose of identifying text deletions
+
+* Fix several issues related to prefering the TableCell interface
+
+* Fix presentation of name-changed events for Qt push buttons
+
+Web:
+
+* Fix repetition of text elements during SayAll in web content
+
+* Fix structural navigation bug impacting columns spanning multiple cells
+
+* Fix chattiness issue with browser page tabs
+
+* Fix bug causing Orca to present a non-active page in Chrome
+
+Mouse Review:
+
+* Do not re-present the whole paragraph when leaving a link
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ab              Abkhazian                 Nart Tlisha
+  ka              Georgian                  Ekaterine Papava
+  nl              Dutch                     Nathan Follens
+
+=========
+
 43.0 - 23 September 2022
 
 General:
