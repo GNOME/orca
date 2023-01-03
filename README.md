@@ -1,4 +1,4 @@
-# Orca v43.2
+# Orca v44.alpha
 
 ## Introduction
 
@@ -20,7 +20,7 @@ community, and where to log bugs and feature requests.
 
 ## Dependencies
 
-Orca v43.x is supported on GNOME 43.x only.  We highly suggest you
+Orca v44.x is supported on GNOME 44.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -38,7 +38,7 @@ Orca also has the following dependencies:
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
 You are strongly encouraged to also have the latest stable versions
-of AT-SPI2 and ATK for the GNOME 43.x release.
+of AT-SPI2 and ATK for the GNOME 44.x release.
 
 
 ## NOTE FOR BRLTTY USERS:
