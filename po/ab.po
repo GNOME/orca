@@ -1244,7 +1244,7 @@ msgstr "тильда змоу"
 #.
 #: src/orca/chnames.py:454
 msgid "a umlaut"
-msgstr "умлиаут змоу "
+msgstr "умлиаут змоу"
 
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
@@ -2736,7 +2736,7 @@ msgstr "Иаҧхьааиуа ацитатақәа раагара реизга а
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:787
 msgid "Go to next blockquote"
-msgstr "Анаҩстәи ацитатақәа реидкыла ахь аиасра "
+msgstr "Анаҩстәи ацитатақәа реидкыла ахь аиасра"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:790
@@ -2843,7 +2843,7 @@ msgstr "Иаҧхьааиуа  аҭыҧ аформа ахь аиасра"
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:854
 msgid "Go to next form field"
-msgstr "Анаҩстәи аҭыҧ аформа ахь аиасра "
+msgstr "Анаҩстәи аҭыҧ аформа ахь аиасра"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:857
@@ -11087,14 +11087,14 @@ msgstr ""
 #. it to be presented with.
 #: src/orca/messages.py:2413
 msgid "%H hours, %M minutes and %S seconds"
-msgstr ""
+msgstr "%H сааҭ, %M минуҭ и %S секунд"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2418
 msgid "%H hours and %M minutes"
-msgstr ""
+msgstr "%H сааҭи %M минуҭи"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
