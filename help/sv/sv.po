@@ -1,13 +1,13 @@
 # Swedish translation for orca.
-# Copyright © 2015-2022 orca's COPYRIGHT HOLDER
+# Copyright © 2015-2023 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2022-07-14 19:13+0000\n"
-"PO-Revision-Date: 2022-08-20 15:22+0200\n"
+"POT-Creation-Date: 2023-01-10 16:42+0000\n"
+"PO-Revision-Date: 2023-01-10 17:45+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -3047,7 +3047,7 @@ msgstr "Binda ett obundet kommando"
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:23 C/howto_key_bindings.page:60
 #: C/howto_key_bindings.page:92 C/howto_key_bindings.page:113
-#: C/howto_keyboard_layout.page:45 C/howto_the_orca_modifier.page:53
+#: C/howto_keyboard_layout.page:45
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
@@ -4593,6 +4593,19 @@ msgstr ""
 #: C/howto_the_orca_modifier.page:51
 msgid "Changing the Orca Modifier"
 msgstr "Ändra Orca-modifieraren"
+
+#. (itstool) path: item/p
+#: C/howto_the_orca_modifier.page:53
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>. "
+"Alternatively, you can start Orca with the preferences dialog open from a "
+"terminal: type <cmd>orca -s</cmd> and press <key>Return</key>."
+msgstr ""
+"Gå till <link xref=\"preferences\">Orcas inställningsdialog</link> genom att "
+"trycka <keyseq><key>Orca-modifierare</key><key>Blanksteg</key></keyseq>. "
+"Alternativt kan du starta Orca med inställningsdialogen öppen från en "
+"terminal: skriv <cmd>orca -s</cmd> och tryck <key>Retur</key>."
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
@@ -8186,15 +8199,6 @@ msgstr ""
 #~ msgid ""
 #~ "If you want to configure <app>Orca</app>, you can do one of the following:"
 #~ msgstr "Om du vill konfigurera <app>Orca</app> kan du göra en av följande:"
-
-#~ msgid ""
-#~ "Get into the <link xref=\"preferences\">Preferences</link> dialog by "
-#~ "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
-#~ "within any accessible application."
-#~ msgstr ""
-#~ "Gå till dialogen <link xref=\"preferences\">inställningar</link> genom "
-#~ "att trycka <keyseq><key>Orca-modifierare</key><key>Blanksteg</key></"
-#~ "keyseq> från ett åtkomligt program."
 
 #~ msgid ""
 #~ "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
