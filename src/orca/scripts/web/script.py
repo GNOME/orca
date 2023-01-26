@@ -2099,6 +2099,8 @@ class Script(default.Script):
                 msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, obj, notify)
+                if not notify and prevDocument is None:
+                    self.refreshKeyGrabs()
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
