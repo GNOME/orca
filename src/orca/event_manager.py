@@ -90,7 +90,6 @@ class EventManager:
                 self.forceLegacyKeyHandling = True
                 self.activateLegacyKeyHandling()
                 return
-            orca_state.device.event_count = 0
             orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processNewKeyboardEvent)
             self.newKeyHandlingActive = True
 
@@ -1075,8 +1074,7 @@ class EventManager:
         event.event_string = text
         if event.event_string is None:
             event.event_string = ""
-        event.timestamp = device.event_count
-        device.event_count = device.event_count + 1
+        event.timestamp = time.time()
 
         if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys and orca_state.activeSWcript is not None:
             orca_state.activeScript.refreshKeyGrabs()
