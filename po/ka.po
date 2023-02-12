@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2022-09-17 08:43+0000\n"
-"PO-Revision-Date: 2022-12-28 00:03+0100\n"
+"POT-Creation-Date: 2023-01-25 21:42+0000\n"
+"PO-Revision-Date: 2023-02-12 22:33+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2587,12 +2587,12 @@ msgstr ""
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:672
 msgid "Go to next line"
-msgstr ""
+msgstr "შემდეგ ხაზზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:675
 msgid "Go to previous line"
-msgstr ""
+msgstr "წინა ხაზზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:678
@@ -2896,12 +2896,12 @@ msgstr ""
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:881
 msgid "Go to previous image"
-msgstr ""
+msgstr "წინა გამოსახულებაზე გადასვლა"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:884
 msgid "Go to next image"
-msgstr ""
+msgstr "შემდეგ გამოსახულებაზე გადასვლა"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:887
@@ -3310,7 +3310,7 @@ msgstr ""
 #: src/orca/colornames.py:105
 msgctxt "color name"
 msgid "chocolate"
-msgstr ""
+msgstr "შოკოლადი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3694,7 +3694,7 @@ msgstr ""
 #: src/orca/colornames.py:345
 msgctxt "color name"
 msgid "light blue"
-msgstr ""
+msgstr "ღია ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3710,7 +3710,7 @@ msgstr ""
 #: src/orca/colornames.py:355
 msgctxt "color name"
 msgid "light cyan"
-msgstr ""
+msgstr "ღია ცისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3734,7 +3734,7 @@ msgstr ""
 #: src/orca/colornames.py:370
 msgctxt "color name"
 msgid "light green"
-msgstr ""
+msgstr "ღია მწვანე"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3798,7 +3798,7 @@ msgstr ""
 #: src/orca/colornames.py:410
 msgctxt "color name"
 msgid "lime"
-msgstr ""
+msgstr "ლაიმი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3966,7 +3966,7 @@ msgstr ""
 #: src/orca/colornames.py:515
 msgctxt "color name"
 msgid "olive"
-msgstr ""
+msgstr "ზეთისხილი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3998,7 +3998,7 @@ msgstr ""
 #: src/orca/colornames.py:535
 msgctxt "color name"
 msgid "orchid"
-msgstr ""
+msgstr "ორქიდეა"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4070,7 +4070,7 @@ msgstr "ვარდისფერი"
 #: src/orca/colornames.py:580
 msgctxt "color name"
 msgid "plum"
-msgstr ""
+msgstr "ქლიავისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4086,7 +4086,7 @@ msgstr ""
 #: src/orca/colornames.py:590
 msgctxt "color name"
 msgid "purple"
-msgstr ""
+msgstr "იისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4126,7 +4126,7 @@ msgstr ""
 #: src/orca/colornames.py:615
 msgctxt "color name"
 msgid "salmon"
-msgstr ""
+msgstr "ორაგული"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4198,7 +4198,7 @@ msgstr ""
 #: src/orca/colornames.py:660
 msgctxt "color name"
 msgid "snow"
-msgstr ""
+msgstr "თოვლი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4222,7 +4222,7 @@ msgstr ""
 #: src/orca/colornames.py:675
 msgctxt "color name"
 msgid "tan"
-msgstr ""
+msgstr "tan"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4270,7 +4270,7 @@ msgstr ""
 #: src/orca/colornames.py:705
 msgctxt "color name"
 msgid "wheat"
-msgstr ""
+msgstr "ხორბალი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4473,7 +4473,7 @@ msgstr ""
 #. chat application currently has focus. This is the default behaviour.
 #: src/orca/guilabels.py:163
 msgid "All cha_nnels"
-msgstr ""
+msgstr "_ყველა არხი"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear if and only if the chat application
@@ -4519,7 +4519,7 @@ msgstr ""
 #.
 #: src/orca/guilabels.py:194 src/orca/keybindings.py:200
 msgid "double click"
-msgstr ""
+msgstr "ორმაგი წკაპი"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -4530,7 +4530,7 @@ msgstr ""
 #.
 #: src/orca/guilabels.py:199 src/orca/keybindings.py:206
 msgid "triple click"
-msgstr ""
+msgstr "სამმაგი წკაპი"
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -4548,7 +4548,7 @@ msgstr ""
 #. corrected as it would actually appear in text being read. Example: "LOL".
 #: src/orca/guilabels.py:213
 msgid "Actual String"
-msgstr ""
+msgstr "მიმდინარე სტრიქონი"
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -4559,7 +4559,7 @@ msgstr ""
 #. Example: "L O L" or "Laughing Out Loud" (for Actual String "LOL").
 #: src/orca/guilabels.py:222
 msgid "Replacement String"
-msgstr ""
+msgstr "ჩასანაცვლებელი სტრიქონი"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
@@ -4584,7 +4584,7 @@ msgstr ""
 #. from the top of the screen.
 #: src/orca/guilabels.py:239 src/orca/orca-find.ui:150
 msgid "C_urrent location"
-msgstr ""
+msgstr "_მიმდინარე მდებარეობა"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
@@ -4597,7 +4597,7 @@ msgstr ""
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
 #: src/orca/guilabels.py:248
 msgid "Find Options"
-msgstr ""
+msgstr "ძებნის მორგება"
 
 #. Translators: This is the label for a checkbox. This option controls whether
 #. the line that contains the match from an application's Find toolbar should
@@ -4663,7 +4663,7 @@ msgstr "შეცვლილია"
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
 #: src/orca/guilabels.py:294 src/orca/orca-setup.ui:242
 msgid "_Desktop"
-msgstr ""
+msgstr "_სამუშაო მაგიდა"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -4706,7 +4706,7 @@ msgstr ""
 #. the current text).
 #: src/orca/guilabels.py:328
 msgid "Speak"
-msgstr ""
+msgstr "ლაპარაკი"
 
 #. Translators: This is the title of a message dialog informing the user that
 #. he/she attempted to save a new user profile under a name which already exists.
@@ -4771,7 +4771,7 @@ msgstr ""
 #. defined profile.
 #: src/orca/guilabels.py:379
 msgid "Save Profile As"
-msgstr ""
+msgstr "პროფილის შენახვა, როგორც"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4781,7 +4781,7 @@ msgstr ""
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
 #: src/orca/guilabels.py:387
 msgid "_Profile Name:"
-msgstr ""
+msgstr "პროფილის _სახელი:"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4791,7 +4791,7 @@ msgstr ""
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:395
 msgid "Remove user profile"
-msgstr ""
+msgstr "მომხმარებლის პროფილის წაშლა"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4846,13 +4846,13 @@ msgstr "არ_ცერთი"
 #. but less common symbols (such as #, @, $) will.
 #: src/orca/guilabels.py:431 src/orca/orca-setup.ui:1563
 msgid "So_me"
-msgstr ""
+msgstr "_ზოგი"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
 #: src/orca/guilabels.py:435 src/orca/orca-setup.ui:1579
 msgid "M_ost"
-msgstr ""
+msgstr "_უმეტესი"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
@@ -4864,7 +4864,7 @@ msgstr "ხაზი"
 #. document, Orca will pause at the end of each sentence.
 #: src/orca/guilabels.py:443 src/orca/orca-setup.ui:52
 msgid "Sentence"
-msgstr ""
+msgstr "წინადადება"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4900,7 +4900,7 @@ msgstr "წარწერა"
 #: src/orca/guilabels.py:467
 msgctxt "structural navigation"
 msgid "Check Box"
-msgstr ""
+msgstr "ჩამრთველი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4909,7 +4909,7 @@ msgstr ""
 #: src/orca/guilabels.py:473
 msgctxt "structural navigation"
 msgid "Clickable"
-msgstr ""
+msgstr "დაწკაპუნებადი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4918,7 +4918,7 @@ msgstr ""
 #: src/orca/guilabels.py:479
 msgctxt "structural navigation"
 msgid "Combo Box"
-msgstr ""
+msgstr "ჩამოშლადი სია"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5002,7 +5002,7 @@ msgstr "სია"
 #: src/orca/guilabels.py:536
 msgctxt "structural navigation"
 msgid "List Item"
-msgstr ""
+msgstr "სიის პუნქტი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5204,7 +5204,7 @@ msgstr "ბმულები"
 #: src/orca/guilabels.py:668
 msgctxt "structural navigation"
 msgid "Lists"
-msgstr ""
+msgstr "სიები"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5220,7 +5220,7 @@ msgstr ""
 #: src/orca/guilabels.py:678
 msgctxt "structural navigation"
 msgid "Paragraphs"
-msgstr ""
+msgstr "პარაგრაფები"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5228,7 +5228,7 @@ msgstr ""
 #: src/orca/guilabels.py:683
 msgctxt "structural navigation"
 msgid "Radio Buttons"
-msgstr ""
+msgstr "რადიო ღილაკები"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5236,7 +5236,7 @@ msgstr ""
 #: src/orca/guilabels.py:688
 msgctxt "structural navigation"
 msgid "Tables"
-msgstr ""
+msgstr "ცხრილებ"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5309,7 +5309,7 @@ msgstr "ნაგულისხმევი"
 #: src/orca/guilabels.py:738
 msgctxt "VoiceType"
 msgid "Hyperlink"
-msgstr ""
+msgstr "ჰიპერბმული"
 
 #. Translators: This refers to the voice used by Orca when presenting information
 #. which is not displayed on the screen as text, but is still being communicated
@@ -6121,28 +6121,28 @@ msgstr ""
 #: src/orca/mathsymbols.py:1329 src/orca/mathsymbols.py:1417
 msgctxt "math symbol"
 msgid "minus"
-msgstr ""
+msgstr "minus"
 
 #. Translators: this is the spoken word for the character '<' (U+003c) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1333
 msgctxt "math symbol"
 msgid "less than"
-msgstr ""
+msgstr "ნაკლები, ვიდრე"
 
 #. Translators: this is the spoken word for the character '>' (U+003e) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1337
 msgctxt "math symbol"
 msgid "greater than"
-msgstr ""
+msgstr "მეტი ვიდრე"
 
 #. Translators: this is the spoken word for the character '^' (U+005e) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1341
 msgctxt "math symbol"
 msgid "circumflex"
-msgstr ""
+msgstr "circumflex"
 
 #. Translators: this is the spoken word for the character 'ˇ' (U+02c7) when used
 #. as a MathML operator.
@@ -6218,7 +6218,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1381
 msgctxt "math symbol"
 msgid "increment"
-msgstr ""
+msgstr "გაზრდა"
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
 #: src/orca/mathsymbols.py:1384
@@ -6284,7 +6284,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1414
 msgctxt "math symbol"
 msgid "sum"
-msgstr ""
+msgstr "ჯამი"
 
 #. Translators: this is the spoken representation for the character '∓' (U+2213)
 #: src/orca/mathsymbols.py:1420
@@ -6296,7 +6296,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1423
 msgctxt "math symbol"
 msgid "dot plus"
-msgstr ""
+msgstr "წერტილთან არ-მიბმული პლუსი"
 
 #. Translators: this is the spoken representation for the character '∕' (U+2215)
 #: src/orca/mathsymbols.py:1426
@@ -6432,7 +6432,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1489 src/orca/mathsymbols.py:1948
 msgctxt "math symbol"
 msgid "union"
-msgstr ""
+msgstr "გაერთიანება"
 
 #. Translators: this is the spoken representation for the character '∫' (U+222b)
 #: src/orca/mathsymbols.py:1492
@@ -6540,7 +6540,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1543
 msgctxt "math symbol"
 msgid "tilde"
-msgstr ""
+msgstr "ტილდა"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
 #: src/orca/mathsymbols.py:1546
@@ -7310,13 +7310,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1927
 msgctxt "math symbol"
 msgid "nand"
-msgstr ""
+msgstr "და-არა"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: src/orca/mathsymbols.py:1930
 msgctxt "math symbol"
 msgid "nor"
-msgstr ""
+msgstr "ან-არა"
 
 #. Translators: this is the spoken representation for the character '⊾' (U+22be)
 #: src/orca/mathsymbols.py:1933
@@ -7328,7 +7328,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1936
 msgctxt "math symbol"
 msgid "right triangle"
-msgstr ""
+msgstr "მართხკუთხა სამკუთხედი"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: src/orca/mathsymbols.py:1951
@@ -7773,7 +7773,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:2173
 msgctxt "math symbol"
 msgid "black square"
-msgstr ""
+msgstr "შავი კვადრატი"
 
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7787,7 +7787,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:2181
 msgctxt "math symbol"
 msgid "black diamond"
-msgstr ""
+msgstr "შავი ალმასი"
 
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7863,7 +7863,7 @@ msgstr ""
 #. Translators: This refers to font weight.
 #: src/orca/messages.py:46
 msgid "bold"
-msgstr ""
+msgstr "სქელი"
 
 #. Translators: Orca has a feature in which users can store/save a particular
 #. location in an application window and return to it later by pressing a
@@ -7967,7 +7967,7 @@ msgstr ""
 #: src/orca/messages.py:127
 msgctxt "capitalization style"
 msgid "spell"
-msgstr ""
+msgstr "მართლწერა"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8243,7 +8243,7 @@ msgstr ""
 #: src/orca/messages.py:321
 msgctxt "clipboard"
 msgid "copied"
-msgstr ""
+msgstr "კოპირებულია"
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -8716,7 +8716,7 @@ msgstr ""
 #: src/orca/messages.py:679
 msgctxt "key echo"
 msgid "key"
-msgstr ""
+msgstr "გასაღები"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8840,7 +8840,7 @@ msgstr ""
 #: src/orca/messages.py:783
 msgctxt "key echo"
 msgid "word"
-msgstr ""
+msgstr "სიტყვა"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9133,7 +9133,7 @@ msgstr ""
 #: src/orca/messages.py:1004
 msgctxt "math fraction"
 msgid "over"
-msgstr ""
+msgstr "ზემოთ"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
@@ -10023,7 +10023,7 @@ msgstr ""
 #. This string is the message presented when Orca switches to browse mode.
 #: src/orca/messages.py:1646
 msgid "Browse mode"
-msgstr ""
+msgstr "დათვალიერების რეჟიმი"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -10408,7 +10408,7 @@ msgstr ""
 #: src/orca/messages.py:1933
 msgctxt "number style"
 msgid "digits"
-msgstr ""
+msgstr "ციფრები"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10427,7 +10427,7 @@ msgstr ""
 #: src/orca/messages.py:1947
 msgctxt "number style"
 msgid "words"
-msgstr ""
+msgstr "სიტყვა"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10615,7 +10615,7 @@ msgstr ""
 #: src/orca/messages.py:2082
 msgctxt "spoken punctuation"
 msgid "Most"
-msgstr ""
+msgstr "თითქმის ყველა"
 
 #. Translators: This detailed message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10649,7 +10649,7 @@ msgstr ""
 #: src/orca/messages.py:2106
 msgctxt "spoken punctuation"
 msgid "Some"
-msgstr ""
+msgstr "ზოგი"
 
 #. Translators: This detailed message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10669,7 +10669,7 @@ msgstr ""
 #. user has been completed.
 #: src/orca/messages.py:2120
 msgid "Search complete."
-msgstr ""
+msgstr "ძებნა დასრულდა."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
@@ -11080,7 +11080,7 @@ msgstr ""
 #: src/orca/messages.py:2398
 msgctxt "text"
 msgid "selected"
-msgstr ""
+msgstr "მონიშნული"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
@@ -11608,7 +11608,7 @@ msgstr ""
 #: src/orca/object_properties.py:111
 msgctxt "role"
 msgid "suggestion"
-msgstr ""
+msgstr "მინიშნება"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11798,7 +11798,7 @@ msgstr ""
 #: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "ეპილოგი"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11843,7 +11843,7 @@ msgstr "სარჩევი"
 #: src/orca/object_properties.py:270
 msgctxt "role"
 msgid "index"
-msgstr ""
+msgstr "ინდექსი"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11927,7 +11927,7 @@ msgstr ""
 #: src/orca/object_properties.py:327
 msgctxt "role"
 msgid "subtitle"
-msgstr ""
+msgstr "ქვესათაური"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12126,7 +12126,7 @@ msgstr ""
 #. activates the button.
 #: src/orca/object_properties.py:475
 msgid "menu button"
-msgstr ""
+msgstr "მენიუს ღილაკი"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
@@ -12183,19 +12183,19 @@ msgstr "ჰორიზონტალური"
 #. such as sliders and scroll bars.
 #: src/orca/object_properties.py:514
 msgid "vertical"
-msgstr ""
+msgstr "ვერტიკალური"
 
 #. Translators: This is a state which applies to a check box.
 #: src/orca/object_properties.py:517
 msgctxt "checkbox"
 msgid "checked"
-msgstr ""
+msgstr "ჩართულია"
 
 #. Translators: This is a state which applies to a check box.
 #: src/orca/object_properties.py:520
 msgctxt "checkbox"
 msgid "not checked"
-msgstr ""
+msgstr "შემოწმებული არაა"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
@@ -12221,13 +12221,13 @@ msgstr ""
 #: src/orca/object_properties.py:534
 msgctxt "togglebutton"
 msgid "pressed"
-msgstr ""
+msgstr "დაწოლილი"
 
 #. Translators: This is a state which applies to a toggle button.
 #: src/orca/object_properties.py:537
 msgctxt "togglebutton"
 msgid "not pressed"
-msgstr ""
+msgstr "არ არის დაჭერილი"
 
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
@@ -12240,7 +12240,7 @@ msgstr ""
 #: src/orca/object_properties.py:544
 msgctxt "radiobutton"
 msgid "selected"
-msgstr ""
+msgstr "მონიშნული"
 
 #. Translators: This is a state which applies to a radio button.
 #: src/orca/object_properties.py:547
@@ -12310,7 +12310,7 @@ msgstr ""
 #: src/orca/object_properties.py:595
 msgctxt "error"
 msgid "invalid entry"
-msgstr ""
+msgstr "არასწორი ჩანაწერი"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -12400,11 +12400,11 @@ msgstr "_სიტყვების გადატანა"
 
 #: src/orca/orca-find.ui:242
 msgid "Search _backwards"
-msgstr ""
+msgstr "_უკან ძებნა"
 
 #: src/orca/orca-find.ui:263
 msgid "Search direction:"
-msgstr ""
+msgstr "ძებნის მიმართულება:"
 
 #: src/orca/orca-find.ui:291
 msgid "_Match case"
@@ -12428,7 +12428,7 @@ msgstr "დიდი სიმბოლოები"
 
 #: src/orca/orca-setup.ui:35
 msgid "Hyperlink"
-msgstr ""
+msgstr "ჰიპერბმული"
 
 #: src/orca/orca-setup.ui:38
 msgid "System"
@@ -12475,7 +12475,7 @@ msgstr ""
 #. This button will load the selected settings profile in the application.
 #: src/orca/orca-setup.ui:379
 msgid "_Load"
-msgstr ""
+msgstr "_ჩატვირთვა"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:393
@@ -12538,7 +12538,7 @@ msgstr ""
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: src/orca/orca-setup.ui:714
 msgid "Applies to:"
-msgstr ""
+msgstr "ეხება:"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
@@ -12927,7 +12927,7 @@ msgstr "_წაშლა"
 
 #: src/orca/orca-setup.ui:3063
 msgid "Pronunciation"
-msgstr ""
+msgstr "გამოთქმა"
 
 #: src/orca/orca-setup.ui:3102
 msgid "_Speak all"
@@ -13047,7 +13047,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:84
 msgctxt "textattr"
 msgid "direction"
-msgstr ""
+msgstr "მიმართულება"
 
 #. Translators: this attribute specifies whether the text is editable.
 #. It will be a "true" or "false" value.
@@ -13150,7 +13150,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:157
 msgctxt "textattr"
 msgid "language"
-msgstr ""
+msgstr "ენა"
 
 #. Translators: this attribute specifies the pixel width of the left margin.
 #. See:
@@ -13242,7 +13242,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:222
 msgctxt "textattr"
 msgid "scale"
-msgstr ""
+msgstr "სასწორი"
 
 #. Translators: this attribute specifies the size of the text.
 #. See:
@@ -13284,7 +13284,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:252
 msgctxt "textattr"
 msgid "style"
-msgstr ""
+msgstr "სტილი"
 
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
@@ -13326,7 +13326,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:282
 msgctxt "textattr"
 msgid "underline"
-msgstr ""
+msgstr "ხაზგასმული"
 
 #. Translators: this attribute specifies the capitalization variant of
 #. the text, if set. Values are "normal" or "small_caps".
@@ -13336,7 +13336,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:289
 msgctxt "textattr"
 msgid "variant"
-msgstr ""
+msgstr "variant"
 
 #. Translators: this attributes specifies what vertical alignment property
 #. has been applied to the text.
@@ -13458,7 +13458,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:380
 msgctxt "textattr"
 msgid "overline"
-msgstr ""
+msgstr "ხაზზემოდანგადასმული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -13498,7 +13498,7 @@ msgstr "შავი"
 #: src/orca/text_attribute_names.py:408
 msgctxt "textattr"
 msgid "single"
-msgstr ""
+msgstr "ერთი"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
@@ -13528,7 +13528,7 @@ msgstr "დაბალი"
 #: src/orca/text_attribute_names.py:429
 msgctxt "textattr"
 msgid "char"
-msgstr ""
+msgstr "სიმბ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
@@ -13538,7 +13538,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:436
 msgctxt "textattr"
 msgid "word"
-msgstr ""
+msgstr "სიტყვა"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
@@ -13601,7 +13601,7 @@ msgstr "მარჯვენა"
 #: src/orca/text_attribute_names.py:481
 msgctxt "textattr"
 msgid "center"
-msgstr ""
+msgstr "center"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification". In Gecko, when no justification has
@@ -13781,7 +13781,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:607
 msgctxt "textattr"
 msgid "baseline"
-msgstr ""
+msgstr "baseline"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13831,7 +13831,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:642
 msgctxt "textattr"
 msgid "middle"
-msgstr ""
+msgstr "შუა"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
