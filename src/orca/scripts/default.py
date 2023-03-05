@@ -3420,9 +3420,9 @@ class Script(script.Script):
 
         [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         if len(line) and line != "\n":
-            result = self.utilities.indentationDescription(line)
-            if result:
-                self.speakMessage(result)
+            indentationDescription = self.utilities.indentationDescription(line)
+            if indentationDescription:
+                self.speakMessage(indentationDescription)
 
             endOffset = startOffset + len(line)
             orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
@@ -3439,6 +3439,12 @@ class Script(script.Script):
                 string = self.utilities.adjustForRepeats(string)
                 if self.utilities.shouldVerbalizeAllPunctuation(obj):
                     string = self.utilities.verbalizeAllPunctuation(string)
+
+                # Some synthesizers will verbalize the whitespace, so if we've already
+                # described it, prevent double-presentation by stripping it off.
+                if not utterance and indentationDescription:
+                    string = string.lstrip()
+
                 result = [string]
                 result.extend(voice)
                 utterance.append(result)
