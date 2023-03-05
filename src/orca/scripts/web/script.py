@@ -1134,27 +1134,54 @@ class Script(default.Script):
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if caret navigation should be used."""
 
-        if not _settingsManager.getSetting('caretNavigationEnabled') \
-           or self._inFocusMode:
+        if not _settingsManager.getSetting('caretNavigationEnabled'):
+            msg = "WEB: Not using caret navigation because it's not enabled."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if self._inFocusMode:
+            msg = "WEB: Not using caret navigation because focus mode is active."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent():
+            msg = "WEB: Not using caret navigation because %s is not in document content." \
+                  % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if keyboardEvent and keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
+            msg = "WEB: Not using caret navigation because shift was used."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        msg = "WEB: Using caret navigation. In browse mode and %s is in document content." \
+              % orca_state.locusOfFocus
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
     def useStructuralNavigationModel(self):
         """Returns True if structural navigation should be used."""
 
-        if not self.structuralNavigation.enabled or self._inFocusMode:
+        if not self.structuralNavigation.enabled:
+            msg = "WEB: Not using structural navigation because it's not enabled."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if self._inFocusMode:
+            msg = "WEB: Not using structural navigation because focus mode is active."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent():
+            msg = "WEB: Not using structural navigation because %s is not in document content." \
+                  % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        msg = "WEB: Using structural navigation. In browse mode and %s is in document content." \
+              % orca_state.locusOfFocus
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
  
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):

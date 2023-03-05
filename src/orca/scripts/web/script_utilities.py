@@ -231,11 +231,13 @@ class Utilities(script_utilities.Utilities):
         self._currentCharacterContents = None
         self._currentTextAttrs = {}
 
-    def isDocument(self, obj):
+    def isDocument(self, obj, excludeDocumentFrame=True):
         if not obj:
             return False
 
-        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
+        roles = [pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
+        if not excludeDocumentFrame:
+            roles.append(pyastpi.ROLE_DOCUMENT_FRAME)
 
         try:
             rv = obj.getRole() in roles
