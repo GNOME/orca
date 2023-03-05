@@ -2295,6 +2295,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.eventIsIrrelevantSelectionChangedEvent(event):
+            msg = "WEB: Event ignored: Irrelevant"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         obj, offset = self.utilities.getCaretContext()
         ancestor = self.utilities.commonAncestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
