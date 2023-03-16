@@ -8,20 +8,26 @@
 # Mickael Albertus <mickael.albertus@gmail.com>, 2013.
 # Claude Paroz <claude@2xlibre.net>, 2016-2020.
 # Charles Monzat <charles.monzat@free.fr>, 2020-2022.
+# Irénée THIRION <irenee.thirion@e.email>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2022-03-23 13:31+0000\n"
-"PO-Revision-Date: 2022-04-10 21:31+0200\n"
-"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2023-01-10 16:42+0000\n"
+"PO-Revision-Date: 2023-01-12 11:48+0100\n"
+"Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
+"Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-DL-Team: fr\n"
+"X-DL-Module: orca\n"
+"X-DL-Branch: master\n"
+"X-DL-Domain: help\n"
+"X-DL-State: Translating\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1599,14 +1605,6 @@ msgstr "Détails du lien"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:231
-#| msgid ""
-#| "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be "
-#| "used to announce the details associated with the link such as the link "
-#| "type, if the link is visited, the site description, and file size. If you "
-#| "would instead prefer dedicated command for this purpose, you can bind "
-#| "<app>Orca</app>'s Speak Link Details command to a keystroke. Please see "
-#| "<link xref=\"howto_key_bindings\"> Modifying Keybindings</link> for "
-#| "information on how to do so."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -3139,7 +3137,7 @@ msgstr "Lier une commande non liée"
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:23 C/howto_key_bindings.page:60
 #: C/howto_key_bindings.page:92 C/howto_key_bindings.page:113
-#: C/howto_keyboard_layout.page:45 C/howto_the_orca_modifier.page:53
+#: C/howto_keyboard_layout.page:45
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
@@ -4733,6 +4731,20 @@ msgstr ""
 #: C/howto_the_orca_modifier.page:51
 msgid "Changing the Orca Modifier"
 msgstr "Modification de la Touche de modification d’Orca"
+
+#. (itstool) path: item/p
+#: C/howto_the_orca_modifier.page:53
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>. "
+"Alternatively, you can start Orca with the preferences dialog open from a "
+"terminal: type <cmd>orca -s</cmd> and press <key>Return</key>."
+msgstr ""
+"Appuyez sur <keyseq><key>Touche de modification d’Orca</key><key>Barre "
+"d’espace</key></keyseq> pour accéder à la boîte de dialogue <link xref="
+"\"preferences\">Préférences d’Orca</link>. Autrement vous pouvez lancer "
+"Orca avec la fenêtre des préférences ouverte depuis un terminal en tapant "
+"<cmd>orca -s</cmd> et en pressant la touche <key>Entrée</key>."
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
