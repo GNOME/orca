@@ -245,8 +245,8 @@ formatting = {
             'unfocused': 'labelOrName + currentLineText + allTextSelection'
             },
         pyatspi.ROLE_EMBEDDED: {
-            'focused': 'labelOrName + roleName',
-            'unfocused': '(expandedEOCs or (labelOrName + unrelatedLabels)) + roleName'
+            'focused': 'labelOrName + roleName + availability',
+            'unfocused': '(expandedEOCs or (labelOrName + unrelatedLabels)) + roleName + availability'
             },
         pyatspi.ROLE_ENTRY: {
             'focused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection',
@@ -380,13 +380,13 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_PAGE_TAB: {
-            'focused': 'labelOrName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator',
-            'unfocused': 'labelOrName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'parentRoleName + pause + labelOrName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
+            'focused': 'labelOrName + roleName + availability + pause + positionInList + ' + MNEMONIC + ' + accelerator',
+            'unfocused': 'labelOrName + roleName + availability + pause + positionInList + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'parentRoleName + pause + labelOrName + roleName + availability + pause + positionInList + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_PANEL: {
-            'focused': 'leaving or (labelAndName + roleName + pause + unrelatedLabels)',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
+            'focused': 'leaving or (labelAndName + roleName + availability + pause + unrelatedLabels)',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + availability + pause + unrelatedLabels'
             },
         pyatspi.ROLE_PARAGRAPH: {
             'focused': 'labelOrName + readOnly + textRole + textIndentation + currentLineText + allTextSelection',
@@ -457,8 +457,8 @@ formatting = {
             'basicWhereAmI': 'label + roleName + name + (displayedText or value) + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_SEPARATOR: {
-            'focused': 'roleName',
-            'unfocused': 'roleName + (labelOrName or displayedText or value) + ' + MNEMONIC,
+            'focused': 'roleName + availability',
+            'unfocused': 'roleName + availability + (labelOrName or displayedText or value) + ' + MNEMONIC,
             },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'value',
