@@ -1,14 +1,14 @@
 # Georgian translation for orca.
-# Copyright (C) 2022 orca authors
+# Copyright (C) 2023 orca authors
 # This file is distributed under the same license as the orca package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2022.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-01-25 21:42+0000\n"
-"PO-Revision-Date: 2023-02-12 22:33+0100\n"
+"POT-Creation-Date: 2023-03-05 10:44+0000\n"
+"PO-Revision-Date: 2023-03-28 14:22+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -3318,7 +3318,7 @@ msgstr "შოკოლადი"
 #: src/orca/colornames.py:110
 msgctxt "color name"
 msgid "coral"
-msgstr ""
+msgstr "მარჯნისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3486,7 +3486,7 @@ msgstr ""
 #: src/orca/colornames.py:215
 msgctxt "color name"
 msgid "dark violet"
-msgstr ""
+msgstr "მუქი იისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3494,7 +3494,7 @@ msgstr ""
 #: src/orca/colornames.py:220
 msgctxt "color name"
 msgid "deep pink"
-msgstr ""
+msgstr "ღრმა ვარდისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3502,7 +3502,7 @@ msgstr ""
 #: src/orca/colornames.py:225
 msgctxt "color name"
 msgid "deep sky blue"
-msgstr ""
+msgstr "ღრმა ცისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3510,7 +3510,7 @@ msgstr ""
 #: src/orca/colornames.py:230
 msgctxt "color name"
 msgid "dim gray"
-msgstr ""
+msgstr "მუქი ნაცრისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3550,7 +3550,7 @@ msgstr ""
 #: src/orca/colornames.py:255
 msgctxt "color name"
 msgid "fuchsia"
-msgstr ""
+msgstr "ფუქსიისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3654,7 +3654,7 @@ msgstr ""
 #: src/orca/colornames.py:320
 msgctxt "color name"
 msgid "khaki"
-msgstr ""
+msgstr "ხაკისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3662,7 +3662,7 @@ msgstr ""
 #: src/orca/colornames.py:325
 msgctxt "color name"
 msgid "lavender"
-msgstr ""
+msgstr "ღია ლილისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3670,7 +3670,7 @@ msgstr ""
 #: src/orca/colornames.py:330
 msgctxt "color name"
 msgid "lavender blush"
-msgstr ""
+msgstr "ღია ლილისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3726,7 +3726,7 @@ msgstr ""
 #: src/orca/colornames.py:365
 msgctxt "color name"
 msgid "light gray"
-msgstr ""
+msgstr "ღია ნაცრისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3742,7 +3742,7 @@ msgstr "ღია მწვანე"
 #: src/orca/colornames.py:375
 msgctxt "color name"
 msgid "light pink"
-msgstr ""
+msgstr "ღია ვარდისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3790,7 +3790,7 @@ msgstr ""
 #: src/orca/colornames.py:405
 msgctxt "color name"
 msgid "light yellow"
-msgstr ""
+msgstr "ღია ყვითელი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3830,7 +3830,7 @@ msgstr "ალისფერი"
 #: src/orca/colornames.py:430
 msgctxt "color name"
 msgid "maroon"
-msgstr ""
+msgstr "ბორდოსფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3846,7 +3846,7 @@ msgstr ""
 #: src/orca/colornames.py:440
 msgctxt "color name"
 msgid "medium blue"
-msgstr ""
+msgstr "საშუალო ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3934,7 +3934,7 @@ msgstr ""
 #: src/orca/colornames.py:495
 msgctxt "color name"
 msgid "moccasin"
-msgstr ""
+msgstr "მოკასინი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3950,7 +3950,7 @@ msgstr ""
 #: src/orca/colornames.py:505
 msgctxt "color name"
 msgid "navy"
-msgstr ""
+msgstr "მუქი ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4014,7 +4014,7 @@ msgstr ""
 #: src/orca/colornames.py:545
 msgctxt "color name"
 msgid "pale green"
-msgstr ""
+msgstr "ღია მწვანე"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4054,7 +4054,7 @@ msgstr ""
 #: src/orca/colornames.py:570
 msgctxt "color name"
 msgid "peru"
-msgstr ""
+msgstr "პერუ"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4110,7 +4110,7 @@ msgstr ""
 #: src/orca/colornames.py:605
 msgctxt "color name"
 msgid "royal blue"
-msgstr ""
+msgstr "სამეფო ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4158,7 +4158,7 @@ msgstr ""
 #: src/orca/colornames.py:635
 msgctxt "color name"
 msgid "sienna"
-msgstr ""
+msgstr "სიენისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4166,7 +4166,7 @@ msgstr ""
 #: src/orca/colornames.py:640
 msgctxt "color name"
 msgid "silver"
-msgstr ""
+msgstr "ვერცხლისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4174,7 +4174,7 @@ msgstr ""
 #: src/orca/colornames.py:645
 msgctxt "color name"
 msgid "sky blue"
-msgstr ""
+msgstr "ცისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4230,7 +4230,7 @@ msgstr "tan"
 #: src/orca/colornames.py:680
 msgctxt "color name"
 msgid "teal"
-msgstr ""
+msgstr "მომწვანო ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4238,7 +4238,7 @@ msgstr ""
 #: src/orca/colornames.py:685
 msgctxt "color name"
 msgid "thistle"
-msgstr ""
+msgstr "ნარშავი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4246,7 +4246,7 @@ msgstr ""
 #: src/orca/colornames.py:690
 msgctxt "color name"
 msgid "tomato"
-msgstr ""
+msgstr "პომიდორი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4254,7 +4254,7 @@ msgstr ""
 #: src/orca/colornames.py:695
 msgctxt "color name"
 msgid "turquoise"
-msgstr ""
+msgstr "ფირუზისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4262,7 +4262,7 @@ msgstr ""
 #: src/orca/colornames.py:700
 msgctxt "color name"
 msgid "violet"
-msgstr ""
+msgstr "იისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4312,7 +4312,7 @@ msgstr ""
 #. it to show all of its contents. And so on.
 #: src/orca/guilabels.py:40
 msgid "_Activate"
-msgstr ""
+msgstr "_აქტივაცია"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, on a web page Orca's Structural Navigation
@@ -4444,7 +4444,7 @@ msgstr "არც_ერთი"
 #: src/orca/guilabels.py:142
 msgctxt "capitalization style"
 msgid "Spell"
-msgstr ""
+msgstr "მართლწერა"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
@@ -4945,7 +4945,7 @@ msgstr ""
 #: src/orca/guilabels.py:497
 msgctxt "structural navigation"
 msgid "Image"
-msgstr ""
+msgstr "გამოსახულება"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5029,7 +5029,7 @@ msgstr "პარაგრაფი"
 #: src/orca/guilabels.py:554
 msgctxt "structural navigation"
 msgid "Radio Button"
-msgstr ""
+msgstr "რადიო ღილაკი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5048,7 +5048,7 @@ msgstr "როლი"
 #: src/orca/guilabels.py:567
 msgctxt "structural navigation"
 msgid "Selected Item"
-msgstr ""
+msgstr "მონიშნული ელემენტი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5969,25 +5969,25 @@ msgstr ""
 #: src/orca/mathsymbols.py:1253
 msgctxt "math symbol"
 msgid "left arrow"
-msgstr ""
+msgstr "მარცხენა ისარი"
 
 #. Translators: this is the spoken representation for the character '↑' (U+2191)
 #: src/orca/mathsymbols.py:1256
 msgctxt "math symbol"
 msgid "up arrow"
-msgstr ""
+msgstr "ზედა ისარი"
 
 #. Translators: this is the spoken representation for the character '→' (U+2192)
 #: src/orca/mathsymbols.py:1259
 msgctxt "math symbol"
 msgid "right arrow"
-msgstr ""
+msgstr "მარჯვენა ისარი"
 
 #. Translators: this is the spoken representation for the character '↓' (U+2193)
 #: src/orca/mathsymbols.py:1262
 msgctxt "math symbol"
 msgid "down arrow"
-msgstr ""
+msgstr "ქვედა ისარი"
 
 #. Translators: this is the spoken representation for the character '↔' (U+2194)
 #: src/orca/mathsymbols.py:1265
@@ -6332,13 +6332,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1441
 msgctxt "math symbol"
 msgid "square root"
-msgstr ""
+msgstr "კვადრატული ფესვი"
 
 #. Translators: this is the spoken representation for the character '∛' (U+221b)
 #: src/orca/mathsymbols.py:1444
 msgctxt "math symbol"
 msgid "cube root"
-msgstr ""
+msgstr "კუბური ფესვი"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
 #: src/orca/mathsymbols.py:1447
@@ -6425,7 +6425,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1486 src/orca/mathsymbols.py:1945
 msgctxt "math symbol"
 msgid "intersection"
-msgstr ""
+msgstr "კვეთა"
 
 #. Translators: this is the spoken representation for the character '∪' (U+222a)
 #. Translators: this is the spoken representation for the character '⋃' (U+22c3)
@@ -6438,25 +6438,25 @@ msgstr "გაერთიანება"
 #: src/orca/mathsymbols.py:1492
 msgctxt "math symbol"
 msgid "integral"
-msgstr ""
+msgstr "ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∬' (U+222c)
 #: src/orca/mathsymbols.py:1495
 msgctxt "math symbol"
 msgid "double integral"
-msgstr ""
+msgstr "ორმაგი ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∭' (U+222d)
 #: src/orca/mathsymbols.py:1498
 msgctxt "math symbol"
 msgid "triple integral"
-msgstr ""
+msgstr "სამმაგი ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∮' (U+222e)
 #: src/orca/mathsymbols.py:1501
 msgctxt "math symbol"
 msgid "contour integral"
-msgstr ""
+msgstr "კონტურის ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∯' (U+222f)
 #: src/orca/mathsymbols.py:1504
@@ -6498,7 +6498,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1522
 msgctxt "math symbol"
 msgid "because"
-msgstr ""
+msgstr "იმიტომ, რომ"
 
 #. Translators: this is the spoken representation for the character '∶' (U+2236)
 #: src/orca/mathsymbols.py:1525
@@ -6510,7 +6510,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1528
 msgctxt "math symbol"
 msgid "proportion"
-msgstr ""
+msgstr "პროპორცია"
 
 #. Translators: this is the spoken representation for the character '∸' (U+2238)
 #: src/orca/mathsymbols.py:1531
@@ -7304,7 +7304,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1924
 msgctxt "math symbol"
 msgid "xor"
-msgstr ""
+msgstr "არ-ან"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
 #: src/orca/mathsymbols.py:1927
@@ -7858,7 +7858,7 @@ msgstr "პროგრამა"
 #. Translators: This is presented when the user has navigated to an empty line.
 #: src/orca/messages.py:43
 msgid "blank"
-msgstr ""
+msgstr "ცარიელი"
 
 #. Translators: This refers to font weight.
 #: src/orca/messages.py:46
@@ -8135,7 +8135,7 @@ msgstr ""
 #. using the '-p, --profile' command line option.
 #: src/orca/messages.py:245
 msgid "NAME"
-msgstr ""
+msgstr "სახელი"
 
 #. Translators: This is the description of command line option '-u, --user-prefs'
 #. that allows you to specify an alternate location from which to load the user
@@ -8189,7 +8189,7 @@ msgstr ""
 #. using the '--debug-file' command line option.
 #: src/orca/messages.py:283
 msgid "FILE"
-msgstr ""
+msgstr "FILE"
 
 #. Translators: This is the description of command line option '-t, --text-setup'
 #. that will initially display a list of questions in text form, that the user
@@ -8230,7 +8230,7 @@ msgstr ""
 #: src/orca/messages.py:313
 msgctxt "clipboard"
 msgid "cut"
-msgstr ""
+msgstr "ამოჭრა"
 
 #. Translators: This message is the detailed message presented when the contents
 #. of the clipboard have changed and match the current selection.
@@ -8264,7 +8264,7 @@ msgstr ""
 #: src/orca/messages.py:337
 msgctxt "clipboard"
 msgid "pasted"
-msgstr ""
+msgstr "ჩასმულია"
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -8413,7 +8413,7 @@ msgstr ""
 #. exited as expected.
 #: src/orca/messages.py:463
 msgid "End of container."
-msgstr ""
+msgstr "კონტეინერის დასასრული."
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
@@ -11681,7 +11681,7 @@ msgstr ""
 #: src/orca/object_properties.py:162
 msgctxt "role"
 msgid "appendix"
-msgstr ""
+msgstr "დანართი"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11699,7 +11699,7 @@ msgstr ""
 #: src/orca/object_properties.py:174
 msgctxt "role"
 msgid "bibliography"
-msgstr ""
+msgstr "ბიბლიოგრაფია"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11888,7 +11888,7 @@ msgstr ""
 #: src/orca/object_properties.py:300
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "შესავალი"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13811,7 +13811,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:628
 msgctxt "textattr"
 msgid "top"
-msgstr ""
+msgstr "მწვერვალი"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
