@@ -137,6 +137,21 @@ class EventManager:
             if eventType in self._ignoredEvents:
                 self._ignoredEvents.remove(eventType)
 
+    def _isDuplicateEvent(self, event):
+        """Returns True if this event is already in the event queue."""
+
+        isSame = lambda x: x.type == event.type \
+            and x.source == event.source \
+            and x.detail1 == event.detail1 \
+            and x.detail2 == event.detail2 \
+            and x.any_data == event.any_data
+
+        for e in self._eventQueue.queue:
+            if isSame(e):
+                return True
+
+        return False
+
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
@@ -173,6 +188,11 @@ class EventManager:
             msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+
+        if self._isDuplicateEvent(event):
+            msg = 'EVENT MANAGER: Ignoring duplicate event'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
         if self._inDeluge() and self._ignoreDuringDeluge(event):
             msg = 'EVENT MANAGER: Ignoring event type due to deluge'
