@@ -493,7 +493,7 @@ class LabelInference:
 
     def _getCellFromTable(self, table, rowindex, colindex):
         if "Table" not in pyatspi.listInterfaces(table):
-            return NOne
+            return None
 
         if rowindex < 0 or colindex < 0:
             return None
