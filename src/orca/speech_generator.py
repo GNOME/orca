@@ -41,6 +41,7 @@ from . import settings
 from . import settings_manager
 from . import text_attribute_names
 from . import acss
+from .ax_object import AXObject
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -1072,7 +1073,7 @@ class SpeechGenerator(generator.Generator):
         if not obj:
             return []
 
-        if not (obj.parent and 'Selection' in pyatspi.listInterfaces(obj.parent)):
+        if not AXObject.supports_selection(obj.parent):
             return []
 
         state = obj.getState()
@@ -1101,7 +1102,7 @@ class SpeechGenerator(generator.Generator):
         if not obj:
             return []
 
-        if not (obj.parent and 'Selection' in pyatspi.listInterfaces(obj.parent)):
+        if not AXObject.supports_selection(obj.parent):
             return []
 
         state = obj.getState()
@@ -1775,7 +1776,7 @@ class SpeechGenerator(generator.Generator):
         if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
-        if 'Selection' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_selection(obj):
             items = self._script.utilities.selectedChildren(obj)
         else:
             items = [self._script.utilities.focusedChild(obj)]
@@ -1798,9 +1799,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         container = obj
-        if not 'Selection' in pyatspi.listInterfaces(container):
+        if not AXObject.supports_selection(container):
             container = obj.parent
-            if not 'Selection' in pyatspi.listInterfaces(container):
+            if not AXObject.supports_selection(container):
                 return []
 
         result = []
@@ -1826,9 +1827,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         container = obj
-        if not 'Selection' in pyatspi.listInterfaces(container):
+        if not AXObject.supports_selection(container):
             container = obj.parent
-            if not 'Selection' in pyatspi.listInterfaces(container):
+            if not AXObject.supports_selection(container):
                 return []
 
         selectedItems = self._script.utilities.selectedChildren(container)

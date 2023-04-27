@@ -38,6 +38,7 @@ import orca.script_utilities as script_utilities
 import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.orca_state as orca_state
+from orca.ax_object import AXObject
 
 #############################################################################
 #                                                                           #
@@ -248,7 +249,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if not obj.childCount:
-                return 'Text' in pyatspi.utils.listInterfaces(obj)
+                return AXObject.supports_text(obj)
 
             if obj.childCount == 1:
                 return False
@@ -279,7 +280,7 @@ class Utilities(script_utilities.Utilities):
         def implementsText(obj):
             if obj.getRole() == Atspi.Role.LIST:
                 return False
-            return 'Text' in pyatspi.utils.listInterfaces(obj)
+            return AXObject.supports_text(obj)
 
         child = obj
         if not implementsText(obj):

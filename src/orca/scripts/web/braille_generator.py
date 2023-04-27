@@ -39,6 +39,7 @@ from orca import debug
 from orca import messages
 from orca import object_properties
 from orca import orca_state
+from orca.ax_object import AXObject
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
@@ -145,7 +146,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         role = args.get('role', obj.getRole())
-        if role == Atspi.Role.LABEL and 'Text' in pyatspi.listInterfaces(obj):
+        if role == Atspi.Role.LABEL and AXObject.supports_text(obj):
             return []
 
         return super()._generateLabelAndName(obj, **args)

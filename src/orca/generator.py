@@ -46,6 +46,7 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
+from .ax_object import AXObject
 
 # Python 3.10 compatibility:
 try:
@@ -1378,7 +1379,7 @@ class Generator:
             return Atspi.Role.LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
             return Atspi.Role.LIST_ITEM
-        if self._script.utilities.isDocument(obj) and 'Image' in pyatspi.listInterfaces(obj):
+        if self._script.utilities.isDocument(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
 
         return args.get('role', obj.getRole())
@@ -1386,7 +1387,7 @@ class Generator:
     def getLocalizedRoleName(self, obj, **args):
         role = args.get('role', obj.getRole())
 
-        if "Value" in pyatspi.listInterfaces(obj):
+        if AXObject.supports_value(obj):
             state = obj.getState()
             isVertical = state.contains(Atspi.StateType.VERTICAL)
             isHorizontal = state.contains(Atspi.StateType.HORIZONTAL)

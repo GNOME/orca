@@ -57,6 +57,7 @@ from . import pronunciation_dict
 from . import settings
 from . import settings_manager
 from . import text_attribute_names
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -562,7 +563,7 @@ class Utilities:
         if role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LABEL] and name:
             return name
 
-        if 'Text' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_text(obj):
             # We should be able to use -1 for the final offset, but that crashes Nautilus.
             text = obj.queryText()
             displayedText = text.getText(0, text.characterCount)
@@ -1347,7 +1348,7 @@ class Utilities:
             return None
 
         tableRoles = [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE, Atspi.Role.TREE]
-        isTable = lambda x: x and x.getRole() in tableRoles and "Table" in pyatspi.listInterfaces(x)
+        isTable = lambda x: x and x.getRole() in tableRoles and AXObject.supports_table(x)
         if isTable(obj):
             return obj
 
@@ -2126,7 +2127,7 @@ class Utilities:
         if role != Atspi.Role.MENU_BAR:
             return None
 
-        if "Selection" in pyatspi.listInterfaces(menubar):
+        if AXObject.supports_selection(menubar):
             selected = self.selectedChildren(menubar)
             if selected:
                 return selected[0]
@@ -2231,8 +2232,7 @@ class Utilities:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 extents = 0, 0, 0, 0
 
-        interfaces = pyatspi.listInterfaces(root)
-        if 'Table' in interfaces and 'Selection' in interfaces:
+        if AXObject.supports_table(root) and AXObject.supports_selection(root):
             visibleCells = self.getVisibleTableCells(root)
             if visibleCells:
                 return visibleCells
@@ -4105,7 +4105,7 @@ class Utilities:
         if not obj:
             return None
 
-        isSelection = lambda x: x and "Selection" in pyatspi.listInterfaces(x)
+        isSelection = lambda x: x and AXObject.supports_selection(x)
         if isSelection(obj):
             return obj
 
@@ -4123,10 +4123,10 @@ class Utilities:
         return pyatspi.findAncestor(obj, isMatch)
 
     def selectableChildCount(self, obj):
-        if not (obj and "Selection" in pyatspi.listInterfaces(obj)):
+        if not AXObject.supports_selection(obj):
             return 0
 
-        if "Table" in pyatspi.listInterfaces(obj):
+        if AXObject.supports_table(obj):
             rows, cols = self.rowAndColumnCount(obj)
             return max(0, rows)
 
@@ -4143,7 +4143,7 @@ class Utilities:
         return len(self.findAllDescendants(obj, isMatch))
 
     def selectedChildCount(self, obj):
-        if "Table" in pyatspi.listInterfaces(obj):
+        if AXObject.supports_table(obj):
             table = obj.queryTable()
             if table.nSelectedRows:
                 return table.nSelectedRows
@@ -4500,7 +4500,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        if 'TableCell' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_table_cell(obj):
             tableCell = obj.queryTableCell()
             try:
                 headers = tableCell.columnHeaderCells
@@ -4510,8 +4510,7 @@ class Utilities:
             else:
                 return headers
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
+        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -4545,7 +4544,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        if 'TableCell' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_table_cell(obj):
             tableCell = obj.queryTableCell()
             try:
                 headers = tableCell.rowHeaderCells
@@ -4555,8 +4554,7 @@ class Utilities:
             else:
                 return headers
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
+        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -4601,7 +4599,7 @@ class Utilities:
             cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
-        if 'TableCell' in pyatspi.listInterfaces(obj) \
+        if AXObject.supports_table_cell(obj) \
            and self._shouldUseTableCellInterfaceForCoordinates():
             tableCell = obj.queryTableCell()
             try:
@@ -4617,8 +4615,7 @@ class Utilities:
                 msg = "INFO: Failed to get table cell position of %s via table cell" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
+        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
         if not parent:
             msg = "INFO: Couldn't find table-implementing ancestor for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4651,7 +4648,7 @@ class Utilities:
         if not (obj and obj.getRole() in roles):
             return -1, -1
 
-        if 'TableCell' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_table_cell(obj):
             tableCell = obj.queryTableCell()
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
@@ -4661,7 +4658,7 @@ class Utilities:
             else:
                 return rowSpan, colSpan
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        isTable = lambda x: x and AXObject.supports_table(x)
         parent = pyatspi.findAncestor(obj, isTable)
         try:
             table = parent.queryTable()
@@ -4797,7 +4794,7 @@ class Utilities:
         elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
             return None
 
-        if "Table" in pyatspi.listInterfaces(root):
+        if AXObject.supports_table(root):
             child = self.accessibleAtPoint(root, x, y, coordType)
             if child and child != root:
                 cell = self.descendantAtPoint(child, x, y, coordType)
@@ -4835,7 +4832,7 @@ class Utilities:
         if not obj:
             return False
 
-        if "Text" not in pyatspi.listInterfaces(obj):
+        if not AXObject.supports_text(obj):
             return False
 
         text = obj.queryText()
@@ -5144,8 +5141,7 @@ class Utilities:
         if not role == Atspi.Role.TABLE_CELL:
             return False
 
-        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
-        parent = pyatspi.findAncestor(obj, isTable)
+        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -6106,8 +6102,7 @@ class Utilities:
         return False
 
     def allItemsSelected(self, obj):
-        interfaces = pyatspi.listInterfaces(obj)
-        if "Selection" not in interfaces:
+        if not AXObject.supports_selection(obj):
             return False
 
         state = obj.getState()
@@ -6134,7 +6129,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if "Table" not in interfaces:
+        if not AXObject.supports_table(obj):
             return False
 
         table = obj.queryTable()
@@ -6255,7 +6250,7 @@ class Utilities:
         # to text selection will get eliminated once the new text-selection API
         # is added to ATK and implemented by the toolkits. (BGO 638378)
 
-        if not (obj and 'Text' in pyatspi.listInterfaces(obj)):
+        if not AXObject.supports_text(obj):
             return False
 
         oldStart, oldEnd, oldString = self.getCachedTextSelection(obj)

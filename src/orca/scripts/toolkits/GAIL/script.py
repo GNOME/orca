@@ -36,6 +36,7 @@ import orca.debug as debug
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
+from orca.ax_object import AXObject
 
 from .script_utilities import Utilities
 
@@ -80,7 +81,7 @@ class Script(default.Script):
             return
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
-           and "Table" in pyatspi.listInterfaces(event.source) \
+           and AXObject.supports_table(event.source) \
            and not event.source.getState().contains(Atspi.StateType.FOCUSED):
             return
 
@@ -89,7 +90,7 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if ancestor and "Table" in pyatspi.listInterfaces(ancestor):
+        if AXObject.supports_table(ancestor):
             return
 
         isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU

@@ -39,6 +39,8 @@ import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
+from orca.ax_object import AXObject
+
 
 #############################################################################
 #                                                                           #
@@ -706,7 +708,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         role = obj.getRole()
-        isSelection = lambda x: x and 'Selection' in pyatspi.listInterfaces(x)
+        isSelection = lambda x: AXObject.supports_selection(x)
         if not isSelection(obj) and role == Atspi.Role.COMBO_BOX:
             child = pyatspi.findDescendant(obj, isSelection)
             if child:
@@ -799,8 +801,7 @@ class Utilities(script_utilities.Utilities):
         return name.strip()
 
     def _getCoordinatesForSelectedRange(self, obj):
-        interfaces = pyatspi.listInterfaces(obj)
-        if not ("Table" in interfaces and "Selection" in interfaces):
+        if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             return (-1, -1), (-1, -1)
 
         first, last = self.firstAndLastSelectedChildren(obj)
@@ -873,8 +874,7 @@ class Utilities(script_utilities.Utilities):
         return bool(len(msgs))
 
     def handleRowAndColumnSelectionChange(self, obj):
-        interfaces = pyatspi.listInterfaces(obj)
-        if not ("Table" in interfaces and "Selection" in interfaces):
+        if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             return True
 
         table = obj.queryTable()

@@ -50,6 +50,7 @@ from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings_manager
+from .ax_object import AXObject
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
@@ -212,8 +213,7 @@ class _ItemContext:
         return True
 
     def _treatAsSingleObject(self):
-        interfaces = pyatspi.listInterfaces(self._obj)
-        if "Text" not in interfaces:
+        if not AXObject.supports_text(self._obj):
             return True
 
         if not self._obj.queryText().characterCount:

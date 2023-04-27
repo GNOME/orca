@@ -47,6 +47,7 @@ import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.structural_navigation as structural_navigation
+from orca.ax_object import AXObject
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -528,7 +529,7 @@ class Script(default.Script):
             return
 
         allTextObjs = pyatspi.findAllDescendants(
-            document, lambda x: x and 'Text' in pyatspi.listInterfaces(x))
+            document, lambda x: AXObject.supports_text(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
         textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]
         if not textObjs:

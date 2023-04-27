@@ -38,6 +38,7 @@ import time
 from orca import debug
 from orca import orca_state
 from orca.scripts import web
+from orca.ax_object import AXObject
 
 
 class Utilities(web.Utilities):
@@ -130,7 +131,7 @@ class Utilities(web.Utilities):
             return []
 
         count = super().selectedChildCount(obj)
-        if count or "Selection" in pyatspi.listInterfaces(obj):
+        if count or AXObject.supports_selection(obj):
             return count
 
         # HACK: Ideally, we'd use the selection interface to get the selected

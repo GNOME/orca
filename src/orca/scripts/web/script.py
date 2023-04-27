@@ -53,6 +53,7 @@ from orca import speechserver
 from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
+from orca.ax_object import AXObject
 
 from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
@@ -920,7 +921,7 @@ class Script(default.Script):
             return
 
         contents = None
-        if self.utilities.treatAsEndOfLine(obj, offset) and "Text" in pyatspi.listInterfaces(obj):
+        if self.utilities.treatAsEndOfLine(obj, offset) and AXObject.supports_text(obj):
             char = obj.queryText().getText(offset, offset + 1)
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 char = ""

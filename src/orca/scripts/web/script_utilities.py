@@ -45,6 +45,7 @@ from orca import script_utilities
 from orca import script_manager
 from orca import settings
 from orca import settings_manager
+from orca.ax_object import AXObject
 
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
@@ -441,7 +442,7 @@ class Utilities(script_utilities.Utilities):
             self.grabFocus(obj)
 
         # Don't use queryNonEmptyText() because we need to try to force-update focus.
-        if "Text" in pyatspi.listInterfaces(obj):
+        if AXObject.supports_text(obj):
             try:
                 obj.queryText().setCaretOffset(offset)
             except:
@@ -1059,7 +1060,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = "Text" in pyatspi.listInterfaces(obj)
+        rv = AXObject.supports_text(obj)
         if not rv:
             msg = "WEB: %s does not implement text interface" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1117,7 +1118,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if self.hasExplicitName(obj) and "Action" in pyatspi.listInterfaces(obj):
+        if self.hasExplicitName(obj) and AXObject.supports_action(obj):
             for child in obj:
                 if not self.isUselessEmptyElement(child) or self.isUselessImage(child):
                     break
@@ -1742,7 +1743,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isContentEditableWithEmbeddedObjects(obj):
             return False
 
-        if "Text" not in pyatspi.listInterfaces(obj):
+        if not AXObject.supports_text(obj):
             return False
 
         if self.isDocument(obj):
@@ -2358,7 +2359,6 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
             state = obj.getState()
-            interfaces = pyatspi.listInterfaces(obj)
         except:
             msg = "WEB: Exception getting role and state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2367,7 +2367,7 @@ class Utilities(script_utilities.Utilities):
         textBlockElements = self._textBlockElementRoles()
         if not role in textBlockElements:
             rv = False
-        elif not "Text" in interfaces:
+        elif not AXObject.supports_text(obj):
             rv = False
         elif state.contains(Atspi.StateType.EDITABLE):
             rv = False
@@ -2934,8 +2934,7 @@ class Utilities(script_utilities.Utilities):
         return lastChar.isalnum()
 
     def supportsSelectionAndTable(self, obj):
-        interfaces = pyatspi.listInterfaces(obj)
-        return 'Table' in interfaces and 'Selection' in interfaces
+        return AXObject.supports_table(obj) and AXObject.supports_selection(obj)
 
     def isGridDescendant(self, obj):
         if not obj:
@@ -3453,7 +3452,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super()._objectBoundsMightBeBogus(obj)
 
-        if obj.getRole() != Atspi.Role.LINK or "Text" not in pyatspi.listInterfaces(obj):
+        if obj.getRole() != Atspi.Role.LINK or not AXObject.supports_text(obj):
             return False
 
         text = obj.queryText()
@@ -3677,7 +3676,7 @@ class Utilities(script_utilities.Utilities):
             else:
                 rv = "clickancestor" in names
 
-        if rv and not obj.name and "Text" in pyatspi.listInterfaces(obj):
+        if rv and not obj.name and AXObject.supports_text(obj):
             string = obj.queryText().getText(0, -1)
             if not string.strip():
                 rv = obj.getRole() not in [Atspi.Role.STATIC, Atspi.Role.LINK]
@@ -4191,7 +4190,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if self.isCustomElement(obj) and self.hasExplicitName(obj) \
-           and 'Text' in pyatspi.listInterfaces(obj) \
+           and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in obj:
                 if child.getRole() not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
@@ -4225,7 +4224,7 @@ class Utilities(script_utilities.Utilities):
             uri = self.uri(obj.parent)
             if uri and not uri.startswith('javascript'):
                 rv = False
-        if rv and 'Image' in pyatspi.listInterfaces(obj):
+        if rv and AXObject.supports_image(obj):
             image = obj.queryImage()
             if image.imageDescription:
                 rv = False
@@ -4233,7 +4232,7 @@ class Utilities(script_utilities.Utilities):
                 width, height = image.getImageSize()
                 if width > 25 and height > 25:
                     rv = False
-        if rv and 'Text' in pyatspi.listInterfaces(obj):
+        if rv and AXObject.supports_text(obj):
             rv = self.queryNonEmptyText(obj) is None
         if rv and obj.childCount:
             for i in range(min(obj.childCount, 50)):
@@ -4275,7 +4274,6 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
             state = obj.getState()
-            interfaces = pyatspi.listInterfaces(obj)
         except:
             msg = "WEB: Exception getting role, state, and interfaces for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4294,10 +4292,10 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.hasValidName(obj) or obj.description or obj.childCount:
             rv = False
-        elif "Text" in interfaces and obj.queryText().characterCount \
+        elif AXObject.supports_text(obj) and obj.queryText().characterCount \
              and obj.queryText().getText(0, -1) != obj.name:
             rv = False
-        elif "Action" in interfaces and self._getActionNames(obj):
+        elif AXObject.supports_action(obj) and self._getActionNames(obj):
             rv = False
         else:
             rv = True
@@ -4353,7 +4351,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().hasVisibleCaption(obj)
 
-        if not (self.isFigure(obj) or "Table" in pyatspi.listInterfaces(obj)):
+        if not (self.isFigure(obj) or AXObject.supports_table(obj)):
             return False
 
         rv = self._hasVisibleCaption.get(hash(obj))
@@ -5736,7 +5734,7 @@ class Utilities(script_utilities.Utilities):
         if not self.topLevelObjectIsActiveAndCurrent():
             return False
 
-        if 'Action' in pyatspi.listInterfaces(orca_state.locusOfFocus):
+        if AXObject.supports_action(orca_state.locusOfFocus):
             msg = "WEB: Treating %s as source of copy" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             return True

@@ -40,6 +40,7 @@ from . import eventsynthesizer
 from . import messages
 from . import orca_state
 from . import settings
+from .ax_object import AXObject
 
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
@@ -589,7 +590,7 @@ class Context:
 
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
-        if "EditableText" in pyatspi.listInterfaces(accessible) \
+        if AXObject.supports_editable_text(accessible) \
            and accessible.getState().contains(Atspi.StateType.SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]

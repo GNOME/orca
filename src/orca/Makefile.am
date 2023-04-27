@@ -8,6 +8,7 @@ gfxdir=$(datadir)/orca/gfx
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
+	ax_object.py \
 	bookmarks.py \
 	braille.py \
 	braille_generator.py \

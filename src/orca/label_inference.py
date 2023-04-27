@@ -34,6 +34,7 @@ from gi.repository import Atspi
 import pyatspi
 
 from . import debug
+from .ax_object import AXObject
 
 class LabelInference:
 
@@ -496,7 +497,7 @@ class LabelInference:
         return self._getTag(obj) in ['td', 'th']
 
     def _getCellFromTable(self, table, rowindex, colindex):
-        if "Table" not in pyatspi.listInterfaces(table):
+        if not AXObject.supports_table(table):
             return None
 
         if rowindex < 0 or colindex < 0:

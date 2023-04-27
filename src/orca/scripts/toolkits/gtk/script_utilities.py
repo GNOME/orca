@@ -35,6 +35,8 @@ import re
 import orca.debug as debug
 import orca.script_utilities as script_utilities
 import orca.orca_state as orca_state
+from orca.ax_object import AXObject
+
 
 class Utilities(script_utilities.Utilities):
 
@@ -167,11 +169,10 @@ class Utilities(script_utilities.Utilities):
         try:
             name = obj.name
             childCount = obj.childCount
-            supportsText = "Text" in pyatspi.listInterfaces(obj)
         except:
             rv = True
         else:
-            rv = not (name or childCount or supportsText)
+            rv = not (name or childCount or AXObject.supports_text(obj))
 
         self._isUselessPanel[hash(obj)] = rv
         return rv
@@ -215,7 +216,7 @@ class Utilities(script_utilities.Utilities):
         except:
             singleLine = False
 
-        if not singleLine or "EditableText" not in pyatspi.listInterfaces(obj):
+        if not singleLine or not AXObject.supports_editable_text(obj):
             return x, y
 
         text = self.queryNonEmptyText(obj)

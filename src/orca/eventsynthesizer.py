@@ -37,6 +37,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import debug
+from .ax_object import AXObject
 
 try:
     _canScrollTo = pyatspi.Component.scrollTo is not None
@@ -409,7 +410,7 @@ def _obscuringBanner(obj):
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
 
-    if not "Component" in pyatspi.listInterfaces(document):
+    if not AXObject.supports_component(document):
         msg = "EVENT SYNTHESIZER: No obscuring banner found for %s. No doc iface." % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return None

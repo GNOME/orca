@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from . import braille
 from . import debug
 from . import generator
@@ -39,6 +37,7 @@ from . import object_properties
 from . import orca_state
 from . import settings
 from . import settings_manager
+from .ax_object import AXObject
 from .braille_rolenames import shortRoleNames
 
 _settingsManager = settings_manager.getManager()
@@ -337,7 +336,7 @@ class BrailleGenerator(generator.Generator):
         if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
-        if 'Selection' in pyatspi.listInterfaces(obj):
+        if AXObject.supports_selection(obj):
             items = self._script.utilities.selectedChildren(obj)
         else:
             items = [self._script.utilities.focusedChild(obj)]

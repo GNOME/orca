@@ -42,6 +42,8 @@ import sys
 
 from datetime import datetime
 
+from .ax_object import AXObject
+
 # Used to turn off all debugging.
 #
 LEVEL_OFF = 10000
@@ -330,12 +332,7 @@ def relationsToString(acc, indent=""):
     return "%srelations='%s'" % (indent, " ".join(map(pyatspi.relationToString, [r for r in relations])))
 
 def interfacesToString(acc, indent=""):
-    try:
-        interfaces = pyatspi.listInterfaces(acc)
-    except:
-        return "%sinterfaces=(exception)" % indent
-
-    return "%sinterfaces='%s'" % (indent, " ".join(interfaces))
+    return "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
 
 def attributesToString(acc, indent=""):
     try:

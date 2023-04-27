@@ -41,6 +41,7 @@ import time
 from orca import debug
 from orca import orca_state
 from orca.scripts import web
+from orca.ax_object import AXObject
 
 
 class Utilities(web.Utilities):
@@ -224,7 +225,7 @@ class Utilities(web.Utilities):
         if childCount:
             return False
 
-        if not "EditableText" in pyatspi.listInterfaces(obj):
+        if not AXObject.supports_editable_text(obj):
             return False
 
         msg = "GECKO: Treating %s as entry" % obj
