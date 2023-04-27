@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team"
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.scripts.toolkits.gtk as gtk
 import orca.orca_state as orca_state
@@ -62,7 +64,7 @@ class Script(gtk.Script):
             return
 
         # Present page changes in the previewer.
-        if eventRole == pyatspi.ROLE_LABEL \
+        if eventRole == Atspi.Role.LABEL \
            and self.utilities.isDocument(orca_state.locusOfFocus):
             self.presentMessage(event.any_data)
 

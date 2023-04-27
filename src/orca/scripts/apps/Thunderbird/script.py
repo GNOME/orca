@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.orca as orca
@@ -205,7 +209,7 @@ class Script(Gecko.Script):
             except:
                 pass
             else:
-                if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_PAGE_TAB] and name:
+                if role in [Atspi.Role.FRAME, Atspi.Role.PAGE_TAB] and name:
                     orca.setLocusOfFocus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
@@ -232,8 +236,8 @@ class Script(Gecko.Script):
             return
 
         parent = event.source.parent
-        if parent and parent.getRole() == pyatspi.ROLE_COMBO_BOX \
-           and not parent.getState().contains(pyatspi.STATE_FOCUSED):
+        if parent and parent.getRole() == Atspi.Role.COMBO_BOX \
+           and not parent.getState().contains(Atspi.StateType.FOCUSED):
             return
 
         super().onSelectionChanged(event)
@@ -279,7 +283,7 @@ class Script(Gecko.Script):
         except:
             return
 
-        if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
+        if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
             return
 
         super().onTextDeleted(event)
@@ -294,7 +298,7 @@ class Script(Gecko.Script):
         except:
             return
 
-        if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
+        if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
             return
 
         if len(event.any_data) > 1 and obj == self.spellcheck.getChangeToEntry():
@@ -309,7 +313,7 @@ class Script(Gecko.Script):
 
         # Speak the autocompleted text, but only if it is different
         # address so that we're not too "chatty." See bug #533042.
-        if parentRole == pyatspi.ROLE_AUTOCOMPLETE:
+        if parentRole == Atspi.Role.AUTOCOMPLETE:
             if len(event.any_data) == 1:
                 default.Script.onTextInserted(self, event)
                 return

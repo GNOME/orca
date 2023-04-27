@@ -28,7 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.script_utilities as script_utilities
 
@@ -71,7 +73,7 @@ class Utilities(script_utilities.Utilities):
         # script's method gives us false positives; other times false
         # negatives.
         #
-        if obj1.getRole() == obj2.getRole() == pyatspi.ROLE_LABEL:
+        if obj1.getRole() == obj2.getRole() == Atspi.Role.LABEL:
             try:
                 ext1 = obj1.queryComponent().getExtents(0)
                 ext2 = obj2.queryComponent().getExtents(0)
@@ -89,8 +91,8 @@ class Utilities(script_utilities.Utilities):
             parent1 = obj1
             parent2 = obj2
             while parent1 and parent2 and \
-                    parent1.getRole() == pyatspi.ROLE_LABEL and \
-                    parent2.getRole() == pyatspi.ROLE_LABEL:
+                    parent1.getRole() == Atspi.Role.LABEL and \
+                    parent2.getRole() == Atspi.Role.LABEL:
                 if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent
@@ -121,9 +123,9 @@ class Utilities(script_utilities.Utilities):
         count = 0
         while newObj:
             state = newObj.getState()
-            if state.contains(pyatspi.STATE_EXPANDABLE) \
-               or state.contains(pyatspi.STATE_COLLAPSED):
-                if state.contains(pyatspi.STATE_VISIBLE):
+            if state.contains(Atspi.StateType.EXPANDABLE) \
+               or state.contains(Atspi.StateType.COLLAPSED):
+                if state.contains(Atspi.StateType.VISIBLE):
                     count += 1
                 newObj = newObj.parent
             else:

@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.scripts.toolkits.gtk as gtk
@@ -36,38 +40,38 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         super().__init__(script)
 
     def isComposeMessageBody(self, obj):
-        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if not obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessage(self, obj):
-        if obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessageHeader(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+        if not (obj and obj.getRole() == Atspi.Role.TABLE):
             return False
 
         return self.isReceivedMessage(obj.parent)
 
     def isReceivedMessageContent(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_SECTION):
+        if not (obj and obj.getRole() == Atspi.Role.SECTION):
             return False
 
         return self.isReceivedMessage(obj.parent)
 
     def isComposeAutocomplete(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+        if not (obj and obj.getRole() == Atspi.Role.TABLE):
             return False
 
-        if not obj.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
+        if not obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS):
             return False
 
         topLevel = self.topLevelObject(obj)
-        return topLevel and topLevel.getRole() == pyatspi.ROLE_WINDOW
+        return topLevel and topLevel.getRole() == Atspi.Role.WINDOW
 
     def findMessageBodyChild(self, root):
         candidate = pyatspi.findDescendant(root, self.isDocument)
@@ -101,8 +105,8 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
-        if obj.getRole() == pyatspi.ROLE_LAYERED_PANE:
-            isTreeTable = lambda x: x and x.getRole() == pyatspi.ROLE_TREE_TABLE
+        if obj.getRole() == Atspi.Role.LAYERED_PANE:
+            isTreeTable = lambda x: x and x.getRole() == Atspi.Role.TREE_TABLE
             return pyatspi.utils.findDescendant(obj, isTreeTable) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
@@ -121,7 +125,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not self.isEmbeddedDocument(obj):
             return False
 
-        isSplitPane = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
         if pyatspi.utils.findAncestor(obj, isSplitPane):
             return False
 

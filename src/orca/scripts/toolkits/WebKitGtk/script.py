@@ -27,8 +27,11 @@ __copyright__ = "Copyright (C) 2010-2011 The Orca Team" \
                 "Copyright (C) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
-import pyatspi.utils as utils
 
 import orca.scripts.default as default
 import orca.cmdnames as cmdnames
@@ -189,7 +192,7 @@ class Script(default.Script):
         if lastKey == 'Down' \
            and orca_state.locusOfFocus == event.source.parent \
            and event.source.getIndexInParent() == 0 \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LINK:
+           and orca_state.locusOfFocus.getRole() == Atspi.Role.LINK:
             self.updateBraille(event.source)
             return
 
@@ -243,13 +246,13 @@ class Script(default.Script):
 
         obj = event.source
         role = obj.getRole()
-        textRoles = [pyatspi.ROLE_HEADING,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_PARAGRAPH,
-                     pyatspi.ROLE_SECTION,
-                     pyatspi.ROLE_TABLE_CELL]
+        textRoles = [Atspi.Role.HEADING,
+                     Atspi.Role.PANEL,
+                     Atspi.Role.PARAGRAPH,
+                     Atspi.Role.SECTION,
+                     Atspi.Role.TABLE_CELL]
         if role in textRoles \
-           or (role == pyatspi.ROLE_LIST_ITEM and obj.childCount):
+           or (role == Atspi.Role.LIST_ITEM and obj.childCount):
             return
 
         super().onFocusedChanged(event)
@@ -281,11 +284,11 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             default.Script.sayCharacter(self, obj)
             return
 
-        boundary = pyatspi.TEXT_BOUNDARY_CHAR
+        boundary = Atspi.TextBoundaryType.CHAR
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             if string:
@@ -302,11 +305,11 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             default.Script.sayWord(self, obj)
             return
 
-        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        boundary = Atspi.TextBoundaryType.WORD_START
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
@@ -320,21 +323,21 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             default.Script.sayLine(self, obj)
             return
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        boundary = Atspi.TextBoundaryType.LINE_START
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
 
             # TODO: Move these next items into the speech generator.
-            if obj.getRole() == pyatspi.ROLE_PANEL \
+            if obj.getRole() == Atspi.Role.PANEL \
                and obj.getIndexInParent() == 0:
                 obj = obj.parent
 
-            rolesToSpeak = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
+            rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]
             if obj.getRole() in rolesToSpeak:
                 speech.speak(self.speechGenerator.getRoleName(obj))
 
@@ -349,7 +352,7 @@ class Script(default.Script):
         - endOffset: the end text offset.
         """
 
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             default.Script.sayPhrase(self, obj, startOffset, endOffset)
             return
 
@@ -357,7 +360,7 @@ class Script(default.Script):
         if len(phrase) and phrase != "\n":
             voice = self.speechGenerator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
-            links = [x for x in obj if x.getRole() == pyatspi.ROLE_LINK]
+            links = [x for x in obj if x.getRole() == Atspi.Role.LINK]
             if links:
                 phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
@@ -380,7 +383,7 @@ class Script(default.Script):
 
         if event.type.startswith('object:state-changed:focused') \
            and event.detail1:
-            if event.source.getRole() == pyatspi.ROLE_LINK:
+            if event.source.getRole() == Atspi.Role.LINK:
                 return False
 
         return default.Script.skipObjectEvent(self, event)
@@ -391,12 +394,12 @@ class Script(default.Script):
         document content.
         """
 
-        doNotHandleRoles = [pyatspi.ROLE_ENTRY,
-                            pyatspi.ROLE_TEXT,
-                            pyatspi.ROLE_PASSWORD_TEXT,
-                            pyatspi.ROLE_LIST,
-                            pyatspi.ROLE_LIST_ITEM,
-                            pyatspi.ROLE_MENU_ITEM]
+        doNotHandleRoles = [Atspi.Role.ENTRY,
+                            Atspi.Role.TEXT,
+                            Atspi.Role.PASSWORD_TEXT,
+                            Atspi.Role.LIST,
+                            Atspi.Role.LIST_ITEM,
+                            Atspi.Role.MENU_ITEM]
 
         if not self.structuralNavigation.enabled:
             return False
@@ -405,15 +408,15 @@ class Script(default.Script):
             return False
 
         states = orca_state.locusOfFocus.getState()
-        if states.contains(pyatspi.STATE_EDITABLE):
+        if states.contains(Atspi.StateType.EDITABLE):
             return False
 
         role = orca_state.locusOfFocus.getRole()
         if role in doNotHandleRoles:
-            if role == pyatspi.ROLE_LIST_ITEM:
-                return not states.contains(pyatspi.STATE_SELECTABLE)
+            if role == Atspi.Role.LIST_ITEM:
+                return not states.contains(Atspi.StateType.SELECTABLE)
 
-            if states.contains(pyatspi.STATE_FOCUSED):
+            if states.contains(Atspi.StateType.FOCUSED):
                 return False
 
         return True
@@ -517,24 +520,24 @@ class Script(default.Script):
         if not obj:
             return
 
-        if obj.getRole() == pyatspi.ROLE_LINK:
+        if obj.getRole() == Atspi.Role.LINK:
             obj = obj.parent
 
         document = self.utilities.getDocumentForObject(obj)
-        if not document or document.getState().contains(pyatspi.STATE_BUSY):
+        if not document or document.getState().contains(Atspi.StateType.BUSY):
             return
 
-        allTextObjs = utils.findAllDescendants(
-            document, lambda x: x and 'Text' in utils.listInterfaces(x))
+        allTextObjs = pyatspi.findAllDescendants(
+            document, lambda x: x and 'Text' in pyatspi.listInterfaces(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
         textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]
         if not textObjs:
             return
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        boundary = Atspi.TextBoundaryType.LINE_START
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+            boundary = Atspi.TextBoundaryType.SENTENCE_START
 
         voices = _settingsManager.getSetting('voices')
         systemVoice = voices.get(settings.SYSTEM_VOICE)
@@ -609,7 +612,7 @@ class Script(default.Script):
         textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
         string = textLine[0]
         if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1 \
-           and obj.getState().contains(pyatspi.STATE_FOCUSED):
+           and obj.getState().contains(Atspi.StateType.FOCUSED):
             return textLine
 
         textLine[0] = self.utilities.displayedText(obj)
@@ -652,7 +655,7 @@ class Script(default.Script):
 
         if not brailleLine.regions:
             [regions, fRegion] = self.brailleGenerator.generateBraille(
-                obj, role=pyatspi.ROLE_PARAGRAPH)
+                obj, role=Atspi.Role.PARAGRAPH)
             self.addBrailleRegionsToLine(regions, brailleLine)
             self.setBrailleFocus(fRegion)
 

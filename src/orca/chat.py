@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from . import cmdnames
 from . import debug
@@ -739,8 +741,8 @@ class Chat:
         """
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE) \
-           and state.contains(pyatspi.STATE_SINGLE_LINE):
+        if state.contains(Atspi.StateType.EDITABLE) \
+           and state.contains(Atspi.StateType.SINGLE_LINE):
             return True
 
         return False
@@ -778,7 +780,7 @@ class Chat:
         for roleList in self._buddyListAncestries:
             buddyListRole = roleList[0]
             candidate = self._script.utilities.ancestorWithRole(
-                obj, [buddyListRole], [pyatspi.ROLE_FRAME])
+                obj, [buddyListRole], [Atspi.Role.FRAME])
             if self.isBuddyList(candidate):
                 return True
 
@@ -816,8 +818,8 @@ class Chat:
         # things working. And people should not be in multiple chat
         # rooms with identical names anyway. :-)
         #
-        if obj.getRole() in [pyatspi.ROLE_TEXT, pyatspi.ROLE_ENTRY] \
-           and obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if obj.getRole() in [Atspi.Role.TEXT, Atspi.Role.ENTRY] \
+           and obj.getState().contains(Atspi.StateType.EDITABLE):
             name = self.getChatRoomName(obj)
 
         for conversation in self._conversationList.conversations:
@@ -840,11 +842,11 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getRole() == pyatspi.ROLE_TEXT \
-           and obj.parent.getRole() == pyatspi.ROLE_SCROLL_PANE:
+        if obj and obj.getRole() == Atspi.Role.TEXT \
+           and obj.parent.getRole() == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
-            if not state.contains(pyatspi.STATE_EDITABLE) \
-               and state.contains(pyatspi.STATE_MULTI_LINE):
+            if not state.contains(Atspi.StateType.EDITABLE) \
+               and state.contains(Atspi.StateType.MULTI_LINE):
                 return True
 
         return False
@@ -858,7 +860,7 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getState().contains(pyatspi.STATE_SHOWING):
+        if obj and obj.getState().contains(Atspi.StateType.SHOWING):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
             msg = "INFO: %s's window is focused chat: %s" % (obj, active)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -884,8 +886,8 @@ class Chat:
         #
         ancestor = self._script.utilities.ancestorWithRole(
             obj,
-            [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_FRAME],
-            [pyatspi.ROLE_APPLICATION])
+            [Atspi.Role.PAGE_TAB, Atspi.Role.FRAME],
+            [Atspi.Role.APPLICATION])
         name = ""
         try:
             text = self._script.utilities.displayedText(ancestor)
@@ -900,7 +902,7 @@ class Chat:
         #
         if not name:
             ancestor = self._script.utilities.ancestorWithRole(
-                ancestor, [pyatspi.ROLE_FRAME], [pyatspi.ROLE_APPLICATION])
+                ancestor, [Atspi.Role.FRAME], [Atspi.Role.APPLICATION])
             try:
                 text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():
@@ -917,7 +919,7 @@ class Chat:
         - event: the accessible event being examined
         """
 
-        if event.source.getRole() != pyatspi.ROLE_TEXT:
+        if event.source.getRole() != Atspi.Role.TEXT:
             return False
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()

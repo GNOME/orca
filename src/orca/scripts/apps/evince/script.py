@@ -27,7 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.keybindings as keybindings
 import orca.orca as orca
@@ -105,7 +107,7 @@ class Script(gtk.Script):
             return False
 
         states = orca_state.locusOfFocus.getState()
-        if states.contains(pyatspi.STATE_EDITABLE):
+        if states.contains(Atspi.StateType.EDITABLE):
             return False
 
         return True
@@ -114,7 +116,7 @@ class Script(gtk.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         obj = event.source
-        if obj.getState().contains(pyatspi.STATE_FOCUSED):
+        if obj.getState().contains(Atspi.StateType.FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)

@@ -30,6 +30,9 @@ __license__   = "LGPL"
 import gi
 import pyatspi
 
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -96,7 +99,7 @@ def _extentsAtCaret(obj):
 
     try:
         text = obj.queryText()
-        extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
+        extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.SCREEN)
     except:
         msg = "ERROR: Exception getting character extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -108,7 +111,7 @@ def _objectExtents(obj):
     """Returns the bounding box associated with obj."""
 
     try:
-        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
     except:
         msg = "ERROR: Exception getting extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -275,12 +278,12 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    before = component.getExtents(pyatspi.DESKTOP_COORDS)
+    before = component.getExtents(Atspi.CoordType.SCREEN)
 
     if not _scrollSubstringToLocation(obj, location, startOffset, endOffset):
         _scrollObjectToLocation(obj, location)
 
-    after = component.getExtents(pyatspi.DESKTOP_COORDS)
+    after = component.getExtents(Atspi.CoordType.SCREEN)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
@@ -296,7 +299,7 @@ def _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
             startOffset = 0
         if endOffset is None:
             endOffset = text.characterCount - 1
-        result = text.scrollSubstringToPoint(startOffset, endOffset, pyatspi.DESKTOP_COORDS, x, y)
+        result = text.scrollSubstringToPoint(startOffset, endOffset, Atspi.CoordType.SCREEN, x, y)
     except NotImplementedError:
         msg = "ERROR: Text interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -316,7 +319,7 @@ def _scrollObjectToPoint(obj, x, y):
     """Attempts to scroll obj to the specified point."""
 
     try:
-        result = obj.queryComponent().scrollToPoint(pyatspi.DESKTOP_COORDS, x, y)
+        result = obj.queryComponent().scrollToPoint(Atspi.CoordType.SCREEN, x, y)
     except NotImplementedError:
         msg = "ERROR: Component interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -340,12 +343,12 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    before = component.getExtents(pyatspi.DESKTOP_COORDS)
+    before = component.getExtents(Atspi.CoordType.SCREEN)
 
     if not _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
         _scrollObjectToPoint(obj, x, y)
 
-    after = component.getExtents(pyatspi.DESKTOP_COORDS)
+    after = component.getExtents(Atspi.CoordType.SCREEN)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
@@ -356,15 +359,15 @@ def scrollIntoView(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_ANYWHERE, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.ANYWHERE, startOffset, endOffset)
 
 def _containingDocument(obj):
-    roles = [pyatspi.ROLE_DOCUMENT_EMAIL,
-             pyatspi.ROLE_DOCUMENT_FRAME,
-             pyatspi.ROLE_DOCUMENT_PRESENTATION,
-             pyatspi.ROLE_DOCUMENT_SPREADSHEET,
-             pyatspi.ROLE_DOCUMENT_TEXT,
-             pyatspi.ROLE_DOCUMENT_WEB]
+    roles = [Atspi.Role.DOCUMENT_EMAIL,
+             Atspi.Role.DOCUMENT_FRAME,
+             Atspi.Role.DOCUMENT_PRESENTATION,
+             Atspi.Role.DOCUMENT_SPREADSHEET,
+             Atspi.Role.DOCUMENT_TEXT,
+             Atspi.Role.DOCUMENT_WEB]
     isDocument = lambda x: x and x.getRole() in roles
     document = pyatspi.findAncestor(obj, isDocument)
     while document:
@@ -385,7 +388,7 @@ def _isDead(obj):
 
 def _getAccessibleAtPoint(root, x, y):
     try:
-        result = root.queryComponent().getAccessibleAtPoint(x, y, pyatspi.DESKTOP_COORDS)
+        result = root.queryComponent().getAccessibleAtPoint(x, y, Atspi.CoordType.SCREEN)
     except NotImplementedError:
         msg = "ERROR: Component interface not implemented for %s" % root
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -446,7 +449,7 @@ def scrollToTopEdge(obj, startOffset=None, endOffset=None):
         _scrollBelowBanner(obj, _banner, startOffset, endOffset)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_TOP_EDGE, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.TOP_EDGE, startOffset, endOffset)
 
     _banner = _obscuringBanner(obj)
     if _banner:
@@ -460,7 +463,7 @@ def scrollToTopLeft(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_TOP_LEFT, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.TOP_LEFT, startOffset, endOffset)
 
 def scrollToLeftEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
@@ -468,7 +471,7 @@ def scrollToLeftEdge(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_LEFT_EDGE, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.LEFT_EDGE, startOffset, endOffset)
 
 def scrollToBottomEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
@@ -476,7 +479,7 @@ def scrollToBottomEdge(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_EDGE, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.BOTTOM_EDGE, startOffset, endOffset)
 
 def scrollToBottomRight(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
@@ -484,7 +487,7 @@ def scrollToBottomRight(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_RIGHT, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.BOTTOM_RIGHT, startOffset, endOffset)
 
 def scrollToRightEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
@@ -492,7 +495,7 @@ def scrollToRightEdge(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE, startOffset, endOffset)
+    _scrollToLocation(obj, Atspi.ScrollType.RIGHT_EDGE, startOffset, endOffset)
 
 def _performNamedAction(obj, name):
     try:

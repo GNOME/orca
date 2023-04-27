@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.chat as chat
@@ -43,12 +47,12 @@ class Script(default.Script):
 
         # So we can take an educated guess at identifying the buddy list.
         #
-        self._buddyListAncestries = [[pyatspi.ROLE_TABLE,
-                                      pyatspi.ROLE_SCROLL_PANE,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_SPLIT_PANE,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_FRAME]]
+        self._buddyListAncestries = [[Atspi.Role.TABLE,
+                                      Atspi.Role.SCROLL_PANE,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.SPLIT_PANE,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.FRAME]]
 
         default.Script.__init__(self, app)
 
@@ -97,6 +101,6 @@ class Script(default.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
         default.Script.onWindowActivated(self, event)

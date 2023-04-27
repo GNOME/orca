@@ -27,6 +27,9 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 from gi.repository import Gtk
 import pyatspi
 import time
@@ -510,7 +513,7 @@ class Script(default.Script):
 
         if event.type.startswith('object:state-changed:focused') \
            and event.detail1:
-            if event.source.getRole() == pyatspi.ROLE_LINK:
+            if event.source.getRole() == Atspi.Role.LINK:
                 return False
 
         if event.type.startswith('object:children-changed'):
@@ -519,7 +522,7 @@ class Script(default.Script):
             except:
                 pass
             else:
-                if role == pyatspi.ROLE_DIALOG:
+                if role == Atspi.Role.DIALOG:
                     return False
 
         return super().skipObjectEvent(event)
@@ -876,7 +879,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        doNotToggle = [pyatspi.ROLE_LINK, pyatspi.ROLE_RADIO_BUTTON]
+        doNotToggle = [Atspi.Role.LINK, Atspi.Role.RADIO_BUTTON]
         if self._inFocusMode and obj and obj.getRole() in doNotToggle \
            and self.utilities.lastInputEventWasUnmodifiedArrow():
             msg = "WEB: Staying in focus mode due to arrowing in role of %s" % obj
@@ -983,7 +986,7 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
-        if obj.getRole() == pyatspi.ROLE_STATUS_BAR:
+        if obj.getRole() == Atspi.Role.STATUS_BAR:
             super().presentObject(obj, **args)
             return
 
@@ -992,7 +995,7 @@ class Script(default.Script):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             super().presentObject(obj, **args)
             return
 
@@ -1239,7 +1242,7 @@ class Script(default.Script):
         if not obj:
             return
 
-        if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        if obj.getState().contains(Atspi.StateType.FOCUSABLE):
             obj.queryComponent().grabFocus()
 
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
@@ -1291,9 +1294,9 @@ class Script(default.Script):
                 parentRole = obj.parent.getRole()
             except:
                 parentRole = None
-            if parentRole == pyatspi.ROLE_LIST_BOX:
+            if parentRole == Atspi.Role.LIST_BOX:
                 self.utilities.setCaretContext(obj.parent, -1)
-            elif parentRole == pyatspi.ROLE_MENU:
+            elif parentRole == Atspi.Role.MENU:
                 self.utilities.setCaretContext(obj.parent.parent, -1)
             if not self._loadingDocumentContent:
                 self.presentMessage(messages.MODE_BROWSE)
@@ -1345,7 +1348,7 @@ class Script(default.Script):
             if contextObj and not self.utilities.isZombie(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
 
-        if newFocus.getRole() in [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_REDUNDANT_OBJECT]:
+        if newFocus.getRole() in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT]:
             msg = "WEB: Event source has bogus role. Likely browser bug."
             debug.println(debug.LEVEL_INFO, msg, True)
             newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
@@ -1368,7 +1371,7 @@ class Script(default.Script):
             args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
-           and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):
+           and not (newFocus.getRole() == Atspi.Role.TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
@@ -1386,7 +1389,7 @@ class Script(default.Script):
             msg = "WEB: New focus %s has math child. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif newFocus.getRole() == pyatspi.ROLE_HEADING:
+        elif newFocus.getRole() == Atspi.Role.HEADING:
             msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
@@ -1453,7 +1456,7 @@ class Script(default.Script):
             return True
 
         role = event.source.getRole()
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+        if role in [Atspi.Role.DIALOG, Atspi.Role.ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
@@ -1484,7 +1487,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.source.getRole() != pyatspi.ROLE_DOCUMENT_WEB \
+        if event.source.getRole() != Atspi.Role.DOCUMENT_WEB \
            and not self.utilities.isOrDescendsFrom(orca_state.locusOfFocus, event.source):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1540,7 +1543,7 @@ class Script(default.Script):
 
         if not self.utilities.isDead(orca_state.locusOfFocus) \
            and not self.utilities.inDocumentContent(orca_state.locusOfFocus) \
-           and orca_state.locusOfFocus.getState().contains(pyatspi.STATE_FOCUSED):
+           and orca_state.locusOfFocus.getState().contains(Atspi.StateType.FOCUSED):
             msg = "WEB: Not presenting content, focus is outside of document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1556,7 +1559,7 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext()
 
         try:
-            sourceIsBusy = event.souce.getState().contains(pyatspi.STATE_BUSY)
+            sourceIsBusy = event.souce.getState().contains(Atspi.StateType.BUSY)
         except:
             sourceIsBusy = False
 
@@ -1582,7 +1585,7 @@ class Script(default.Script):
             return True
 
         state = obj.getState()
-        if self.utilities.isLink(obj) and state.contains(pyatspi.STATE_FOCUSED):
+        if self.utilities.isLink(obj) and state.contains(Atspi.StateType.FOCUSED):
             msg = "WEB: Setting locus of focus to focused link %s. No SayAll." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
@@ -1599,7 +1602,7 @@ class Script(default.Script):
         except:
             inFocusedObject = False
         else:
-            inFocusedObject = focusState.contains(pyatspi.STATE_FOCUSED)
+            inFocusedObject = focusState.contains(Atspi.StateType.FOCUSED)
 
         if not inFocusedObject:
             msg = "WEB: Setting locus of focus to context obj %s (no notification)" % obj
@@ -1740,7 +1743,7 @@ class Script(default.Script):
             return True
 
         if not self.utilities.queryNonEmptyText(event.source) \
-           and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+           and not event.source.getState().contains(Atspi.StateType.EDITABLE):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1763,7 +1766,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         elif self.utilities.isTextField(event.source) \
-           and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused text field is not (yet) the locus of focus."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1796,7 +1799,7 @@ class Script(default.Script):
             return True
 
         role = obj.getRole()
-        if not (self._lastCommandWasCaretNav and role == pyatspi.ROLE_RADIO_BUTTON):
+        if not (self._lastCommandWasCaretNav and role == Atspi.Role.RADIO_BUTTON):
             msg = "WEB: Event is something default can handle"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -1858,7 +1861,7 @@ class Script(default.Script):
             return True
 
         try:
-            docIsBusy = document.getState().contains(pyatspi.STATE_BUSY)
+            docIsBusy = document.getState().contains(Atspi.StateType.BUSY)
         except:
             docIsBusy = False
             msg = "WEB: Exception getting state of %s" % document
@@ -1879,7 +1882,7 @@ class Script(default.Script):
             return True
 
         childRole = event.any_data.getRole()
-        if childRole == pyatspi.ROLE_ALERT:
+        if childRole == Atspi.Role.ALERT:
             if event.any_data == self.utilities.lastQueuedLiveRegion():
                 msg = "WEB: Ignoring %s (is last queued live region)" % event.any_data
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2082,7 +2085,7 @@ class Script(default.Script):
             if self._browseModeIsSticky:
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
                 debug.println(debug.LEVEL_INFO, msg, True)
-            elif role == pyatspi.ROLE_TOOL_TIP \
+            elif role == Atspi.Role.TOOL_TIP \
                  and pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x and x == event.source):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2094,12 +2097,12 @@ class Script(default.Script):
                 return True
 
         state = event.source.getState()
-        if state.contains(pyatspi.STATE_EDITABLE):
+        if state.contains(Atspi.StateType.EDITABLE):
             msg = "WEB: Event source is editable"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+        if role in [Atspi.Role.DIALOG, Atspi.Role.ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
@@ -2143,13 +2146,13 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not state.contains(pyatspi.STATE_FOCUSABLE) \
-           and not state.contains(pyatspi.STATE_FOCUSED):
+        if not state.contains(Atspi.StateType.FOCUSABLE) \
+           and not state.contains(Atspi.StateType.FOCUSED):
             msg = "WEB: Event ignored: Source is not focusable or focused"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
+        if not role in [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]:
             msg = "WEB: Deferring to other scripts for handling non-document source"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -2166,9 +2169,9 @@ class Script(default.Script):
             self.utilities.setCaretContext(obj, offset)
             return True
 
-        wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+        wasFocused = obj.getState().contains(Atspi.StateType.FOCUSED)
         obj.clearCache()
-        isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+        isFocused = obj.getState().contains(Atspi.StateType.FOCUSED)
         if wasFocused != isFocused:
             msg = "WEB: Focused state of %s changed to %s" % (obj, isFocused)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2412,7 +2415,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)
 
-        if not event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+        if not event.source.getState().contains(Atspi.StateType.EDITABLE) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             if self._inMouseOverObject \
                and self.utilities.isZombie(self._lastMouseOverObject):
@@ -2487,7 +2490,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.dumpCache(document, preserveContext=True)
 
-            if state.contains(pyatspi.STATE_FOCUSED):
+            if state.contains(Atspi.StateType.FOCUSED):
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(None, event.source, force=True)
@@ -2504,7 +2507,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not state.contains(pyatspi.STATE_EDITABLE):
+        if not state.contains(Atspi.StateType.EDITABLE):
             if event.source != orca_state.locusOfFocus:
                 msg = "WEB: Done processing non-editable, non-locusOfFocus source"
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2516,8 +2519,8 @@ class Script(default.Script):
                 orca.setLocusOfFocus(None, event.source, force=True)
                 return True
 
-        if event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
-           and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+        if event.source.getRole() in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
+           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2570,8 +2573,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if event.source.getRole() in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_SPIN_BUTTON] \
-           and event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+        if event.source.getRole() in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
+           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.println(debug.LEVEL_INFO, msg, True)

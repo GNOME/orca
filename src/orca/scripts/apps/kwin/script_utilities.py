@@ -24,7 +24,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from orca.scripts import switcher
 
@@ -37,10 +39,10 @@ class Utilities(switcher.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        if not (obj and obj.getRole() == pyatspi.ROLE_FILLER):
+        if not (obj and obj.getRole() == Atspi.Role.FILLER):
             return False
 
-        return obj.getState().contains(pyatspi.STATE_FOCUSED)
+        return obj.getState().contains(Atspi.StateType.FOCUSED)
 
     def isSwitcherSelectionChangeEventType(self, event):
         """Returns True if this event is the one we use to present changes."""

@@ -28,6 +28,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.debug as debug
@@ -80,10 +84,10 @@ class Utilities(script_utilities.Utilities):
         except:
             return ""
 
-        if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
+        if role == Atspi.Role.PUSH_BUTTON and obj.name:
             return obj.name
 
-        if role == pyatspi.ROLE_TABLE_CELL:
+        if role == Atspi.Role.TABLE_CELL:
             strings = list(map(self.displayedText, [child for child in obj]))
             text = "\n".join(strings)
             if text.strip():
@@ -97,7 +101,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
-        if role == pyatspi.ROLE_TABLE_CELL and text == obj.name \
+        if role == Atspi.Role.TABLE_CELL and text == obj.name \
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
@@ -120,7 +124,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_EXTENDED, pyatspi.ROLE_PANEL]:
+        if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
             return self.spreadSheetCellName(parent)
 
         return False
@@ -137,16 +141,16 @@ class Utilities(script_utilities.Utilities):
     def getRowColumnAndTable(self, cell):
         """Returns the (row, column, table) tuple for cell."""
 
-        if not (cell and cell.getRole() == pyatspi.ROLE_TABLE_CELL):
+        if not (cell and cell.getRole() == Atspi.Role.TABLE_CELL):
             return -1, -1, None
 
         cellParent = cell.parent
-        if cellParent and cellParent.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if cellParent and cellParent.getRole() == Atspi.Role.TABLE_CELL:
             cell = cellParent
             cellParent = cell.parent
 
         table = cellParent
-        if table and table.getRole() != pyatspi.ROLE_TABLE:
+        if table and table.getRole() != Atspi.Role.TABLE:
             table = table.parent
 
         try:
@@ -215,7 +219,7 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
 
-        if role1 != role2 or role1 == pyatspi.ROLE_PARAGRAPH:
+        if role1 != role2 or role1 == Atspi.Role.PARAGRAPH:
             return False
 
         try:
@@ -225,9 +229,9 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if name1 == name2:
-            if role1 == pyatspi.ROLE_FRAME:
+            if role1 == Atspi.Role.FRAME:
                 return True
-            if role1 == pyatspi.ROLE_TABLE_CELL and not name1:
+            if role1 == Atspi.Role.TABLE_CELL and not name1:
                 if self.isZombie(obj1) and self.isZombie(obj2):
                     return False
 
@@ -246,7 +250,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if role == pyatspi.ROLE_PANEL and childCount == 1 and name:
+        if role == Atspi.Role.PANEL and childCount == 1 and name:
             try:
                 child = obj[0]
             except:
@@ -256,17 +260,17 @@ class Utilities(script_utilities.Utilities):
                 if child and child.name == name:
                     return True
 
-        if role == pyatspi.ROLE_LIST:
+        if role == Atspi.Role.LIST:
             try:
                 parentRole = obj.parent.getRole()
             except:
                 msg = "SOFFICE: Exception getting parent role of %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
-                if parentRole == pyatspi.ROLE_COMBO_BOX:
+                if parentRole == Atspi.Role.COMBO_BOX:
                     return True
 
-        if role == pyatspi.ROLE_FRAME and name:
+        if role == Atspi.Role.FRAME and name:
             try:
                 windowName = orca_state.activeWindow.name
             except:
@@ -291,7 +295,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_EXTENDED, pyatspi.ROLE_PANEL]:
+        if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
             if self.spreadSheetCellName(parent):
                 return False
 
@@ -303,7 +307,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_TEXT:
+        if role == Atspi.Role.TEXT:
             return True
 
         return False
@@ -333,14 +337,14 @@ class Utilities(script_utilities.Utilities):
                 if self.isSameObject(orca_state.activeWindow, topLevel):
                     return self._script.inputLineForCell
 
-        isScrollPane = lambda x: x and x.getRole() == pyatspi.ROLE_SCROLL_PANE
+        isScrollPane = lambda x: x and x.getRole() == Atspi.Role.SCROLL_PANE
         scrollPane = pyatspi.findAncestor(obj, isScrollPane)
         if not scrollPane:
             return None
 
         toolbar = None
         for child in scrollPane.parent:
-            if child and child.getRole() == pyatspi.ROLE_TOOL_BAR:
+            if child and child.getRole() == Atspi.Role.TOOL_BAR:
                 toolbar = child
                 break
 
@@ -349,7 +353,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
+        isParagraph = lambda x: x and x.getRole() == Atspi.Role.PARAGRAPH
         allParagraphs = self.findAllDescendants(toolbar, isParagraph)
         if len(allParagraphs) == 1:
             self._script.inputLineForCell = allParagraphs[0]
@@ -373,9 +377,9 @@ class Utilities(script_utilities.Utilities):
 
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if parent.getRole() == pyatspi.ROLE_FRAME:
+            if parent.getRole() == Atspi.Role.FRAME:
                 results[0] = parent
-            if parent.getRole() == pyatspi.ROLE_TABLE:
+            if parent.getRole() == Atspi.Role.TABLE:
                 results[1] = parent
             parent = parent.parent
 
@@ -434,13 +438,13 @@ class Utilities(script_utilities.Utilities):
         """
 
         parent = obj.parent
-        if parent and parent.getRole() in (pyatspi.ROLE_ROOT_PANE,
-                                           pyatspi.ROLE_DIALOG):
+        if parent and parent.getRole() in (Atspi.Role.ROOT_PANE,
+                                           Atspi.Role.DIALOG):
             app = obj.getApplication()
             for frame in app:
                 if frame.childCount < 1 \
-                   or frame[0].getRole() not in (pyatspi.ROLE_ROOT_PANE,
-                                                 pyatspi.ROLE_OPTION_PANE):
+                   or frame[0].getRole() not in (Atspi.Role.ROOT_PANE,
+                                                 Atspi.Role.OPTION_PANE):
                     continue
 
                 root_pane = frame[0]
@@ -456,7 +460,7 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
 
-        flows = [pyatspi.RELATION_FLOWS_FROM, pyatspi.RELATION_FLOWS_TO]
+        flows = [Atspi.RelationType.FLOWS_FROM, Atspi.RelationType.FLOWS_TO]
         relations = filter(lambda r: r.getRelationType() in flows, relationSet)
         targets = [r.getTarget(0) for r in relations]
         for target in targets:
@@ -538,7 +542,7 @@ class Utilities(script_utilities.Utilities):
         if not parent:
             return None, None
 
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
         panes = self.findAllDescendants(parent, hasRole)
         if not panes:
             return None, None
@@ -601,7 +605,7 @@ class Utilities(script_utilities.Utilities):
         - event: the accessible event being examined
         """
 
-        if event.source.getRole() != pyatspi.ROLE_PARAGRAPH:
+        if event.source.getRole() != Atspi.Role.PARAGRAPH:
             return False
 
         lastKey, mods = self.lastKeyAndModifiers()
@@ -626,7 +630,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def containingComboBox(self, obj):
-        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
         if isComboBox(obj):
             comboBox = obj
         else:
@@ -662,7 +666,7 @@ class Utilities(script_utilities.Utilities):
 
     def isComboBoxNoise(self, event):
         role = event.source.getRole()
-        if role == pyatspi.ROLE_TEXT and event.type.startswith("object:text-"):
+        if role == Atspi.Role.TEXT and event.type.startswith("object:text-"):
             return self.isComboBoxSelectionChange(event)
 
         return False
@@ -703,14 +707,14 @@ class Utilities(script_utilities.Utilities):
 
         role = obj.getRole()
         isSelection = lambda x: x and 'Selection' in pyatspi.listInterfaces(x)
-        if not isSelection(obj) and role == pyatspi.ROLE_COMBO_BOX:
+        if not isSelection(obj) and role == Atspi.Role.COMBO_BOX:
             child = pyatspi.findDescendant(obj, isSelection)
             if child:
                 return super().selectedChildren(child)
 
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
-        if role != pyatspi.ROLE_TABLE:
+        if role != Atspi.Role.TABLE:
             return super().selectedChildren(obj)
 
         # We will need to special case this due to the possibility of there

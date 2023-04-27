@@ -25,13 +25,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import os
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import Pango
-import pyatspi
 import time
 
 from . import acss
@@ -2944,9 +2947,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             clickCount = 1
 
         mods = mods & Gdk.ModifierType.MODIFIER_MASK
-        if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK) \
+        if mods & (1 << Atspi.ModifierType.SHIFTLOCK) \
            and mods & keybindings.ORCA_MODIFIER_MASK:
-            mods ^= (1 << pyatspi.MODIFIER_SHIFTLOCK)
+            mods ^= (1 << Atspi.ModifierType.SHIFTLOCK)
 
         treeModel.set(myiter,
                       modMask, str(keybindings.defaultModifierMask),

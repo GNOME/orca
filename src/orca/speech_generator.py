@@ -25,6 +25,10 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import urllib.parse, urllib.request, urllib.error, urllib.parse
 
@@ -147,13 +151,13 @@ class SpeechGenerator(generator.Generator):
             debug.println(debug.LEVEL_FINE, "Error getting role for: %s" % obj)
             role = None
 
-        if role == pyatspi.ROLE_LAYERED_PANE \
+        if role == Atspi.Role.LAYERED_PANE \
            and _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateName(self, obj, **args)
         if result:
-            if role == pyatspi.ROLE_LAYERED_PANE:
+            if role == Atspi.Role.LAYERED_PANE:
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
             else:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -179,7 +183,7 @@ class SpeechGenerator(generator.Generator):
         """
 
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
+        if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
             msg = 'SPEECH GENERATOR: %s is popup menu for current item.' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
@@ -196,7 +200,7 @@ class SpeechGenerator(generator.Generator):
             if name:
                 result.append(name)
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if not result and obj.parent and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+        if not result and obj.parent and obj.parent.getRole() == Atspi.Role.AUTOCOMPLETE:
             result = self._generateLabelOrName(obj.parent, **args)
 
         return result
@@ -236,7 +240,7 @@ class SpeechGenerator(generator.Generator):
 
         alreadyUsed = False
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_ALERT:
+        if role == Atspi.Role.ALERT:
             try:
                 alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
             except:
@@ -260,7 +264,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         priorObj = args.get('priorObj')
-        if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
+        if priorObj and priorObj.getRole() == Atspi.Role.TOOL_TIP:
             return []
 
         if priorObj == obj:
@@ -531,8 +535,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateTextRole(self, obj, **args):
-        """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
-        from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH
+        """A convenience method to prevent the Atspi.Role.PARAGRAPH role
+        from being spoken. In the case of a Atspi.Role.PARAGRAPH
         role, an empty array will be returned. In all other cases, the
         role name will be returned as an array of strings (and
         possibly voice and audio specifications).  Note that a 'role'
@@ -547,14 +551,14 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         role = args.get('role', obj.getRole())
-        if role != pyatspi.ROLE_PARAGRAPH:
+        if role != Atspi.Role.PARAGRAPH:
             result.extend(self._generateRoleName(obj, **args))
         return result
 
     def _generateRoleName(self, obj, **args):
         """Returns the role name for the object in an array of strings (and
         possibly voice and audio specifications), with the exception
-        that the pyatspi.ROLE_UNKNOWN role will yield an empty array.
+        that the Atspi.Role.UNKNOWN role will yield an empty array.
         Note that a 'role' attribute in args will override the
         accessible role of the obj.
         """
@@ -570,39 +574,39 @@ class SpeechGenerator(generator.Generator):
         result = []
         role = args.get('role', obj.getRole())
 
-        doNotPresent = [pyatspi.ROLE_UNKNOWN,
-                        pyatspi.ROLE_REDUNDANT_OBJECT,
-                        pyatspi.ROLE_FILLER,
-                        pyatspi.ROLE_EXTENDED]
+        doNotPresent = [Atspi.Role.UNKNOWN,
+                        Atspi.Role.REDUNDANT_OBJECT,
+                        Atspi.Role.FILLER,
+                        Atspi.Role.EXTENDED]
 
         try:
             parentRole = obj.parent.getRole()
         except:
             parentRole = None
 
-        if role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
+        if role == Atspi.Role.MENU and parentRole == Atspi.Role.COMBO_BOX:
             return self._generateRoleName(obj.parent)
 
         if self._script.utilities.isSingleLineAutocompleteEntry(obj):
-            result.append(self.getLocalizedRoleName(obj, role=pyatspi.ROLE_AUTOCOMPLETE))
+            result.append(self.getLocalizedRoleName(obj, role=Atspi.Role.AUTOCOMPLETE))
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        if role == pyatspi.ROLE_PANEL and obj.getState().contains(pyatspi.STATE_SELECTED):
+        if role == Atspi.Role.PANEL and obj.getState().contains(Atspi.StateType.SELECTED):
             return []
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if parentRole == pyatspi.ROLE_LIST_BOX:
+        if parentRole == Atspi.Role.LIST_BOX:
             doNotPresent.append(obj.getRole())
 
         if self._script.utilities.isStatusBarDescendant(obj):
-            doNotPresent.append(pyatspi.ROLE_LABEL)
+            doNotPresent.append(Atspi.Role.LABEL)
 
         if _settingsManager.getSetting('speechVerbosityLevel') \
                 == settings.VERBOSITY_LEVEL_BRIEF:
-            doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
+            doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
-        if role == pyatspi.ROLE_HEADING:
+        if role == Atspi.Role.HEADING:
             level = self._script.utilities.headingLevel(obj)
             if level:
                 result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
@@ -618,7 +622,7 @@ class SpeechGenerator(generator.Generator):
     def getRoleName(self, obj, **args):
         """Returns the role name for the object in an array of strings (and
         possibly voice and audio specifications), with the exception
-        that the pyatspi.ROLE_UNKNOWN role will yield an empty array.
+        that the Atspi.Role.UNKNOWN role will yield an empty array.
         Note that a 'role' attribute in args will override the
         accessible role of the obj.  This is provided mostly as a
         method for scripts to call.
@@ -650,7 +654,7 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', obj.getRole())
         state = obj.getState()
-        if role == pyatspi.ROLE_LINK and state.contains(pyatspi.STATE_VISITED):
+        if role == Atspi.Role.LINK and state.contains(Atspi.StateType.VISITED):
             return object_properties.ROLE_VISITED_LINK
 
         return super().getLocalizedRoleName(obj, **args)
@@ -666,7 +670,7 @@ class SpeechGenerator(generator.Generator):
 
         minimumWords = 1
         role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_PANEL]:
+        if role in [Atspi.Role.DIALOG, Atspi.Role.PANEL]:
             minimumWords = 3
 
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
@@ -837,7 +841,7 @@ class SpeechGenerator(generator.Generator):
                 linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 text = self._script.utilities.displayedText(obj)
                 try:
-                    isVisited = obj.getState().contains(pyatspi.STATE_VISITED)
+                    isVisited = obj.getState().contains(Atspi.StateType.VISITED)
                 except:
                     isVisited = False
                 if not isVisited:
@@ -852,7 +856,7 @@ class SpeechGenerator(generator.Generator):
                 if text:
                     linkOutput += " " + text
                 result.append(linkOutput)
-                if obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+                if obj.childCount and obj[0].getRole() == Atspi.Role.IMAGE:
                     result.extend(self._generateRoleName(obj[0]))
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -941,7 +945,7 @@ class SpeechGenerator(generator.Generator):
         except:
             pass
         else:
-            args['role'] = pyatspi.ROLE_IMAGE
+            args['role'] = Atspi.Role.IMAGE
             result.extend(self.generate(obj, **args))
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
@@ -1072,7 +1076,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_SELECTED):
+        if state.contains(Atspi.StateType.SELECTED):
             return []
 
         result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
@@ -1101,10 +1105,10 @@ class SpeechGenerator(generator.Generator):
             return []
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_SELECTED):
+        if state.contains(Atspi.StateType.SELECTED):
             return []
 
-        if obj.getRole() == pyatspi.ROLE_TEXT:
+        if obj.getRole() == Atspi.Role.TEXT:
             return []
 
         table = self._script.utilities.getTable(obj)
@@ -1114,7 +1118,7 @@ class SpeechGenerator(generator.Generator):
                 return []
             if self._script.utilities.isLayoutOnly(table):
                 return []
-        elif obj.parent.getRole() == pyatspi.ROLE_LAYERED_PANE:
+        elif obj.parent.getRole() == Atspi.Role.LAYERED_PANE:
             if obj in self._script.utilities.selectedChildren(obj.parent):
                 return []
         else:
@@ -1146,7 +1150,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         col = -1
-        if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.parent.getRole() == Atspi.Role.TABLE_CELL:
             obj = obj.parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1184,7 +1188,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         row = -1
-        if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.parent.getRole() == Atspi.Role.TABLE_CELL:
             obj = obj.parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1211,7 +1215,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.parent.getRole() == Atspi.Role.TABLE_CELL:
             obj = obj.parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1264,7 +1268,7 @@ class SpeechGenerator(generator.Generator):
         array if this is not a text object.]]]
         """
 
-        if args.get('inMouseReview') and obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if args.get('inMouseReview') and obj.getState().contains(Atspi.StateType.EDITABLE):
             return []
 
         result = self._generateSubstring(obj, **args)
@@ -1406,13 +1410,13 @@ class SpeechGenerator(generator.Generator):
             #
             [line, startOffset, endOffset] = textObj.getTextAtOffset(
                 textObj.caretOffset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
+                Atspi.TextBoundaryType.LINE_START)
             if len(line):
                 line = self._script.utilities.adjustForRepeats(line)
                 textContents = line
             else:
                 char = textObj.getTextAtOffset(caretOffset,
-                    pyatspi.TEXT_BOUNDARY_CHAR)
+                    Atspi.TextBoundaryType.CHAR)
                 if char[0] == "\n" and startOffset == caretOffset:
                     textContents = char[0]
 
@@ -1535,7 +1539,7 @@ class SpeechGenerator(generator.Generator):
             noOfSelections = textObj.getNSelections()
             if noOfSelections == 1:
                 [string, startOffset, endOffset] = \
-                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+                   textObj.getTextAtOffset(0, Atspi.TextBoundaryType.LINE_START)
                 if startOffset == 0 and endOffset == len(string):
                     result = [messages.TEXT_SELECTED]
                     result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1661,18 +1665,18 @@ class SpeechGenerator(generator.Generator):
         #
         result = []
         priorObj = args.get('priorObj', None)
-        if obj and obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+        if obj and obj.getRole() == Atspi.Role.RADIO_BUTTON:
             radioGroupLabel = None
             inSameGroup = False
             relations = obj.getRelationSet()
             for relation in relations:
                 if (not radioGroupLabel) \
                     and (relation.getRelationType() \
-                         == pyatspi.RELATION_LABELLED_BY):
+                         == Atspi.RelationType.LABELLED_BY):
                     radioGroupLabel = relation.getTarget(0)
                 if (not inSameGroup) \
                     and (relation.getRelationType() \
-                         == pyatspi.RELATION_MEMBER_OF):
+                         == Atspi.RelationType.MEMBER_OF):
                     for i in range(0, relation.getNTargets()):
                         target = relation.getTarget(i)
                         if target == priorObj:
@@ -1714,8 +1718,8 @@ class SpeechGenerator(generator.Generator):
             return result
 
         role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
-            children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+        if role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
+            children = [x for x in obj if x.getRole() == Atspi.Role.LIST_ITEM]
             setsize = len(children)
             if not setsize:
                 return []
@@ -1740,7 +1744,7 @@ class SpeechGenerator(generator.Generator):
         hasItems = False
         for child in obj:
             state = child.getState()
-            if state.contains(pyatspi.STATE_SHOWING):
+            if state.contains(Atspi.StateType.SHOWING):
                 hasItems = True
                 break
         if not hasItems:
@@ -1768,7 +1772,7 @@ class SpeechGenerator(generator.Generator):
     def _generateFocusedItem(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+        if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
         if 'Selection' in pyatspi.listInterfaces(obj):
@@ -1859,66 +1863,66 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _getEnabledAndDisabledContextRoles(self):
-        allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
+        allRoles = [Atspi.Role.BLOCK_QUOTE,
                     'ROLE_CONTENT_DELETION',
                     'ROLE_CONTENT_INSERTION',
                     'ROLE_CONTENT_MARK',
                     'ROLE_CONTENT_SUGGESTION',
                     'ROLE_DPUB_LANDMARK',
                     'ROLE_DPUB_SECTION',
-                    pyatspi.ROLE_DESCRIPTION_LIST,
+                    Atspi.Role.DESCRIPTION_LIST,
                     'ROLE_FEED',
-                    pyatspi.ROLE_FORM,
-                    pyatspi.ROLE_LANDMARK,
-                    pyatspi.ROLE_LIST,
-                    pyatspi.ROLE_PANEL,
+                    Atspi.Role.FORM,
+                    Atspi.Role.LANDMARK,
+                    Atspi.Role.LIST,
+                    Atspi.Role.PANEL,
                     'ROLE_REGION',
-                    pyatspi.ROLE_TABLE,
-                    pyatspi.ROLE_TOOL_TIP]
+                    Atspi.Role.TABLE,
+                    Atspi.Role.TOOL_TIP]
 
         enabled, disabled = [], []
         if self._script.inSayAll():
             if _settingsManager.getSetting('sayAllContextBlockquote'):
-                enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+                enabled.append(Atspi.Role.BLOCK_QUOTE)
             if _settingsManager.getSetting('sayAllContextLandmark'):
-                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK'])
+                enabled.extend([Atspi.Role.LANDMARK, 'ROLE_DPUB_LANDMARK'])
             if _settingsManager.getSetting('sayAllContextList'):
-                enabled.append(pyatspi.ROLE_LIST)
-                enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
+                enabled.append(Atspi.Role.LIST)
+                enabled.append(Atspi.Role.DESCRIPTION_LIST)
                 enabled.append('ROLE_FEED')
             if _settingsManager.getSetting('sayAllContextPanel'):
-                enabled.extend([pyatspi.ROLE_PANEL,
-                                pyatspi.ROLE_TOOL_TIP,
+                enabled.extend([Atspi.Role.PANEL,
+                                Atspi.Role.TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
                                 'ROLE_CONTENT_INSERTION',
                                 'ROLE_CONTENT_MARK',
                                 'ROLE_CONTENT_SUGGESTION',
                                 'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('sayAllContextNonLandmarkForm'):
-                enabled.append(pyatspi.ROLE_FORM)
+                enabled.append(Atspi.Role.FORM)
             if _settingsManager.getSetting('sayAllContextTable'):
-                enabled.append(pyatspi.ROLE_TABLE)
+                enabled.append(Atspi.Role.TABLE)
         else:
             if _settingsManager.getSetting('speakContextBlockquote'):
-                enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+                enabled.append(Atspi.Role.BLOCK_QUOTE)
             if _settingsManager.getSetting('speakContextLandmark'):
-                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK', 'ROLE_REGION'])
+                enabled.extend([Atspi.Role.LANDMARK, 'ROLE_DPUB_LANDMARK', 'ROLE_REGION'])
             if _settingsManager.getSetting('speakContextList'):
-                enabled.append(pyatspi.ROLE_LIST)
-                enabled.append(pyatspi.ROLE_DESCRIPTION_LIST)
+                enabled.append(Atspi.Role.LIST)
+                enabled.append(Atspi.Role.DESCRIPTION_LIST)
                 enabled.append('ROLE_FEED')
             if _settingsManager.getSetting('speakContextPanel'):
-                enabled.extend([pyatspi.ROLE_PANEL,
-                                pyatspi.ROLE_TOOL_TIP,
+                enabled.extend([Atspi.Role.PANEL,
+                                Atspi.Role.TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
                                 'ROLE_CONTENT_INSERTION',
                                 'ROLE_CONTENT_MARK',
                                 'ROLE_CONTENT_SUGGESTION',
                                 'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('speakContextNonLandmarkForm'):
-                enabled.append(pyatspi.ROLE_FORM)
+                enabled.append(Atspi.Role.FORM)
             if _settingsManager.getSetting('speakContextTable'):
-                enabled.append(pyatspi.ROLE_TABLE)
+                enabled.append(Atspi.Role.TABLE)
 
         disabled = list(set(allRoles).symmetric_difference(enabled))
         return enabled, disabled
@@ -1937,12 +1941,12 @@ class SpeechGenerator(generator.Generator):
         result = []
         if self._script.utilities.isDetails(obj):
             result.append(messages.LEAVING_DETAILS)
-        elif role == pyatspi.ROLE_BLOCK_QUOTE:
+        elif role == Atspi.Role.BLOCK_QUOTE:
             if count > 1:
                 result.append(messages.leavingNBlockquotes(count))
             else:
                 result.append(messages.LEAVING_BLOCKQUOTE)
-        elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_DESCRIPTION_LIST] \
+        elif role in [Atspi.Role.LIST, Atspi.Role.DESCRIPTION_LIST] \
             and self._script.utilities.isDocumentList(obj):
             if count > 1:
                 result.append(messages.leavingNLists(count))
@@ -1950,14 +1954,14 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.LEAVING_LIST)
         elif role == 'ROLE_FEED':
             result.append(messages.LEAVING_FEED)
-        elif role == pyatspi.ROLE_PANEL:
+        elif role == Atspi.Role.PANEL:
             if self._script.utilities.isFigure(obj):
                 result.append(messages.LEAVING_FIGURE)
             elif self._script.utilities.isDocumentPanel(obj):
                 result.append(messages.LEAVING_PANEL)
             else:
                 result = ['']
-        elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
+        elif role == Atspi.Role.TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
         elif role == 'ROLE_DPUB_LANDMARK':
             if self._script.utilities.isDPubAcknowledgments(obj):
@@ -2034,9 +2038,9 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.LEAVING_FORM)
             else:
                 result = ['']
-        elif role == pyatspi.ROLE_FORM:
+        elif role == Atspi.Role.FORM:
             result.append(messages.LEAVING_FORM)
-        elif role == pyatspi.ROLE_TOOL_TIP:
+        elif role == Atspi.Role.TOOL_TIP:
             result.append(messages.LEAVING_TOOL_TIP)
         elif role == 'ROLE_CONTENT_DELETION':
             result.append(messages.CONTENT_DELETION_END)
@@ -2077,7 +2081,7 @@ class SpeechGenerator(generator.Generator):
         if priorObj and self._script.utilities.isDead(priorObj):
             return []
 
-        if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
+        if priorObj and priorObj.getRole() == Atspi.Role.TOOL_TIP:
             return []
 
         if priorObj and priorObj.parent == obj.parent:
@@ -2086,7 +2090,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isTypeahead(priorObj):
             return []
 
-        if obj and obj.getRole() == pyatspi.ROLE_PAGE_TAB:
+        if obj and obj.getRole() == Atspi.Role.PAGE_TAB:
             return []
 
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
@@ -2096,17 +2100,17 @@ class SpeechGenerator(generator.Generator):
         includeOnly = args.get('includeOnly', [])
 
         skipRoles = args.get('skipRoles', [])
-        skipRoles.append(pyatspi.ROLE_TREE_ITEM)
+        skipRoles.append(Atspi.Role.TREE_ITEM)
         enabled, disabled = self._getEnabledAndDisabledContextRoles()
         skipRoles.extend(disabled)
 
         stopAtRoles = args.get('stopAtRoles', [])
-        stopAtRoles.extend([pyatspi.ROLE_APPLICATION, pyatspi.ROLE_MENU_BAR])
+        stopAtRoles.extend([Atspi.Role.APPLICATION, Atspi.Role.MENU_BAR])
 
         stopAfterRoles = args.get('stopAfterRoles', [])
-        stopAfterRoles.extend([pyatspi.ROLE_TOOL_TIP])
+        stopAfterRoles.extend([Atspi.Role.TOOL_TIP])
 
-        presentOnce = [pyatspi.ROLE_BLOCK_QUOTE, pyatspi.ROLE_LIST]
+        presentOnce = [Atspi.Role.BLOCK_QUOTE, Atspi.Role.LIST]
 
         presentCommonAncestor = False
         if commonAncestor and not leaving:
@@ -2174,7 +2178,7 @@ class SpeechGenerator(generator.Generator):
         if not priorObj or obj == priorObj or self._script.utilities.isZombie(priorObj):
             return []
 
-        if obj.getRole() == pyatspi.ROLE_PAGE_TAB:
+        if obj.getRole() == Atspi.Role.PAGE_TAB:
             return []
 
         if obj.getApplication() != priorObj.getApplication() \
@@ -2186,10 +2190,10 @@ class SpeechGenerator(generator.Generator):
             return []
 
         args['leaving'] = True
-        args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
-                               pyatspi.ROLE_DESCRIPTION_LIST,
-                               pyatspi.ROLE_FORM,
-                               pyatspi.ROLE_LANDMARK,
+        args['includeOnly'] = [Atspi.Role.BLOCK_QUOTE,
+                               Atspi.Role.DESCRIPTION_LIST,
+                               Atspi.Role.FORM,
+                               Atspi.Role.LANDMARK,
                                'ROLE_CONTENT_DELETION',
                                'ROLE_CONTENT_INSERTION',
                                'ROLE_CONTENT_MARK',
@@ -2197,11 +2201,11 @@ class SpeechGenerator(generator.Generator):
                                'ROLE_DPUB_LANDMARK',
                                'ROLE_DPUB_SECTION',
                                'ROLE_FEED',
-                               pyatspi.ROLE_LIST,
-                               pyatspi.ROLE_PANEL,
+                               Atspi.Role.LIST,
+                               Atspi.Role.PANEL,
                                'ROLE_REGION',
-                               pyatspi.ROLE_TABLE,
-                               pyatspi.ROLE_TOOL_TIP]
+                               Atspi.Role.TABLE,
+                               Atspi.Role.TOOL_TIP]
 
         result = []
         if self._script.utilities.isBlockquote(priorObj):
@@ -2241,17 +2245,17 @@ class SpeechGenerator(generator.Generator):
             return []
 
         role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]:
+        if role in [Atspi.Role.FRAME, Atspi.Role.WINDOW]:
             return []
 
         result = []
-        if role == pyatspi.ROLE_MENU_ITEM \
-           and (not priorObj or priorObj.getRole() == pyatspi.ROLE_WINDOW):
+        if role == Atspi.Role.MENU_ITEM \
+           and (not priorObj or priorObj.getRole() == Atspi.Role.WINDOW):
             return result
 
         topLevelObj = self._script.utilities.topLevelObject(obj)
         if priorObj \
-           or (topLevelObj and topLevelObj.getRole() == pyatspi.ROLE_DIALOG):
+           or (topLevelObj and topLevelObj.getRole() == Atspi.Role.DIALOG):
             result = self._generateAncestors(obj, **args)
         return result
 
@@ -2267,11 +2271,11 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings (and possibly voice and audio
         specifications) containing the role name of the parent of obj.
         """
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON \
+        if args.get('role', obj.getRole()) == Atspi.Role.ICON \
            and args.get('formatType', None) \
                in ['basicWhereAmI', 'detailedWhereAmI']:
             return [object_properties.ROLE_ICON_PANEL]
-        if obj.parent.getRole() in [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_MENU]:
+        if obj.parent.getRole() in [Atspi.Role.TABLE_CELL, Atspi.Role.MENU]:
             obj = obj.parent
         return self._generateRoleName(obj.parent)
 
@@ -2282,7 +2286,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         ancestor = self._script.utilities.ancestorWithRole(
-            obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME])
+            obj, [Atspi.Role.TOOL_BAR], [Atspi.Role.FRAME])
         if ancestor:
             result.extend(self._generateLabelAndName(ancestor))
             result.extend(self._generateRoleName(ancestor))
@@ -2305,11 +2309,11 @@ class SpeechGenerator(generator.Generator):
         except:
             relations = []
         for relation in relations:
-            if relation.getRelationType() == pyatspi.RELATION_MEMBER_OF:
+            if relation.getRelationType() == Atspi.RelationType.MEMBER_OF:
                 total = 0
                 for i in range(0, relation.getNTargets()):
                     target = relation.getTarget(i)
-                    if target.getState().contains(pyatspi.STATE_SHOWING):
+                    if target.getState().contains(Atspi.StateType.SHOWING):
                         total += 1
                         if target == obj:
                             position = total
@@ -2348,7 +2352,7 @@ class SpeechGenerator(generator.Generator):
         if position < 0 or total < 0:
             return []
 
-        if obj.getRole() == pyatspi.ROLE_MENU and total == 1:
+        if obj.getRole() == Atspi.Role.MENU and total == 1:
             return []
 
         position += 1
@@ -2407,7 +2411,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         button = self._script.utilities.defaultButton(obj)
-        if button and button.getState().contains(pyatspi.STATE_SENSITIVE):
+        if button and button.getState().contains(Atspi.StateType.SENSITIVE):
             name = self._generateName(button)
             if name:
                 result.append(messages.DEFAULT_BUTTON_IS % name[0])
@@ -2473,16 +2477,16 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateListBoxItemWidgets(self, obj, **args):
-        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
-                       pyatspi.ROLE_COMBO_BOX,
-                       pyatspi.ROLE_PUSH_BUTTON,
-                       pyatspi.ROLE_RADIO_BUTTON,
-                       pyatspi.ROLE_SLIDER,
-                       pyatspi.ROLE_TEXT,
-                       pyatspi.ROLE_TOGGLE_BUTTON]
+        widgetRoles = [Atspi.Role.CHECK_BOX,
+                       Atspi.Role.COMBO_BOX,
+                       Atspi.Role.PUSH_BUTTON,
+                       Atspi.Role.RADIO_BUTTON,
+                       Atspi.Role.SLIDER,
+                       Atspi.Role.TEXT,
+                       Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and x.getRole() in widgetRoles
         result = []
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 if self._script.utilities.isShowingAndVisible(widget):
@@ -2562,7 +2566,7 @@ class SpeechGenerator(generator.Generator):
                 alreadyFocused,
                 forceTutorial,
                 role))
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON \
+        if args.get('role', obj.getRole()) == Atspi.Role.ICON \
             and args.get('formatType', 'unfocused') == 'basicWhereAmI':
             frame, dialog = self._script.utilities.frameAndDialog(obj)
             if frame:
@@ -2958,7 +2962,7 @@ class SpeechGenerator(generator.Generator):
         if key in [None, DEFAULT]:
             string = args.get('string', '')
             obj = args.get('obj')
-            if obj and obj.getRole() == pyatspi.ROLE_LINK:
+            if obj and obj.getRole() == Atspi.Role.LINK:
                 voice.update(voices.get(voiceType.get(HYPERLINK)))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType.get(UPPERCASE)))

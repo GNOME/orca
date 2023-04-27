@@ -29,7 +29,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from . import debug
 from . import orca_state
 from . import settings
@@ -57,49 +60,49 @@ class TutorialGenerator:
         # that generate tutorial strings for objects that implement that role.
         #
         self.tutorialGenerators = {}
-        self.tutorialGenerators[pyatspi.ROLE_CHECK_BOX] = \
+        self.tutorialGenerators[Atspi.Role.CHECK_BOX] = \
             self._getTutorialForCheckBox
-        self.tutorialGenerators[pyatspi.ROLE_COMBO_BOX] = \
+        self.tutorialGenerators[Atspi.Role.COMBO_BOX] = \
             self._getTutorialForComboBox
-        self.tutorialGenerators[pyatspi.ROLE_FRAME] = \
+        self.tutorialGenerators[Atspi.Role.FRAME] = \
             self._getTutorialForFrame
-        self.tutorialGenerators[pyatspi.ROLE_ICON] = \
+        self.tutorialGenerators[Atspi.Role.ICON] = \
             self._getTutorialForIcon
-        self.tutorialGenerators[pyatspi.ROLE_LAYERED_PANE] = \
+        self.tutorialGenerators[Atspi.Role.LAYERED_PANE] = \
             self._getTutorialForLayeredPane
-        self.tutorialGenerators[pyatspi.ROLE_LIST] = \
+        self.tutorialGenerators[Atspi.Role.LIST] = \
             self._getTutorialForList
-        self.tutorialGenerators[pyatspi.ROLE_LIST_ITEM] = \
+        self.tutorialGenerators[Atspi.Role.LIST_ITEM] = \
             self._getTutorialForListItem
-        self.tutorialGenerators[pyatspi.ROLE_PAGE_TAB] = \
+        self.tutorialGenerators[Atspi.Role.PAGE_TAB] = \
             self._getTutorialForPageTab
-        self.tutorialGenerators[pyatspi.ROLE_PARAGRAPH] = \
+        self.tutorialGenerators[Atspi.Role.PARAGRAPH] = \
             self._getTutorialForText
-        self.tutorialGenerators[pyatspi.ROLE_PASSWORD_TEXT] = \
+        self.tutorialGenerators[Atspi.Role.PASSWORD_TEXT] = \
             self._getTutorialForText
-        self.tutorialGenerators[pyatspi.ROLE_ENTRY] = \
+        self.tutorialGenerators[Atspi.Role.ENTRY] = \
             self._getTutorialForText
-        self.tutorialGenerators[pyatspi.ROLE_PUSH_BUTTON] = \
+        self.tutorialGenerators[Atspi.Role.PUSH_BUTTON] = \
             self._getTutorialForPushButton
-        self.tutorialGenerators[pyatspi.ROLE_SPIN_BUTTON] = \
+        self.tutorialGenerators[Atspi.Role.SPIN_BUTTON] = \
             self._getTutorialForSpinButton
-        self.tutorialGenerators[pyatspi.ROLE_TABLE_CELL] = \
+        self.tutorialGenerators[Atspi.Role.TABLE_CELL] = \
             self._getTutorialForTableCellRow
-        self.tutorialGenerators[pyatspi.ROLE_TEXT] = \
+        self.tutorialGenerators[Atspi.Role.TEXT] = \
             self._getTutorialForText
-        self.tutorialGenerators[pyatspi.ROLE_TOGGLE_BUTTON] = \
+        self.tutorialGenerators[Atspi.Role.TOGGLE_BUTTON] = \
             self._getTutorialForCheckBox
-        self.tutorialGenerators[pyatspi.ROLE_RADIO_BUTTON] = \
+        self.tutorialGenerators[Atspi.Role.RADIO_BUTTON] = \
             self._getTutorialForRadioButton
-        self.tutorialGenerators[pyatspi.ROLE_MENU]                = \
+        self.tutorialGenerators[Atspi.Role.MENU]                = \
             self._getTutorialForMenu
-        self.tutorialGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
+        self.tutorialGenerators[Atspi.Role.CHECK_MENU_ITEM]     = \
             self._getTutorialForCheckBox
-        self.tutorialGenerators[pyatspi.ROLE_MENU_ITEM]           = \
+        self.tutorialGenerators[Atspi.Role.MENU_ITEM]           = \
             self._getTutorialForMenuItem
-        self.tutorialGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
+        self.tutorialGenerators[Atspi.Role.RADIO_MENU_ITEM]     = \
             self._getTutorialForCheckBox
-        self.tutorialGenerators[pyatspi.ROLE_SLIDER]              = \
+        self.tutorialGenerators[Atspi.Role.SLIDER]              = \
             self._getTutorialForSlider
 
     def _debugGenerator(self, generatorName, obj, alreadyFocused, utterances):
@@ -246,7 +249,7 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if obj.parent.getRole() == pyatspi.ROLE_LAYERED_PANE:
+        if obj.parent.getRole() == Atspi.Role.LAYERED_PANE:
             utterances = self._getTutorialForLayeredPane(obj.parent,
                                                          alreadyFocused,
                                                          forceTutorial)
@@ -364,8 +367,8 @@ class TutorialGenerator:
 
         # If already in focus then the tree probably collapsed or expanded
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contains(pyatspi.STATE_EXPANDED):
+        if state.contains(Atspi.StateType.EXPANDABLE):
+            if state.contains(Atspi.StateType.EXPANDED):
                 if (self.lastTutorial != [expandedMsg]) or forceTutorial:
                     utterances.append(expandedMsg)
             else:
@@ -415,7 +418,7 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if not obj.getState().contains(Atspi.StateType.EDITABLE):
             return []
 
         utterances = []
@@ -582,8 +585,8 @@ class TutorialGenerator:
                 obj, alreadyFocused, forceTutorial)
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contains(pyatspi.STATE_EXPANDED):
+        if state.contains(Atspi.StateType.EXPANDABLE):
+            if state.contains(Atspi.StateType.EXPANDED):
                 if self.lastTutorial != [expandedMsg] or forceTutorial:
                     utterances.append(expandedMsg)
             else:

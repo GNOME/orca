@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
@@ -48,12 +50,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """
 
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_FRAME and _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if role == Atspi.Role.FRAME and _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = speech_generator.SpeechGenerator._generateName(self, obj, **args)
         if result:
-            if role == pyatspi.ROLE_FRAME:
+            if role == Atspi.Role.FRAME:
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             else:
                 result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))

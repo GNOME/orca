@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.chat as chat
@@ -41,9 +45,9 @@ class Chat(chat.Chat):
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused."""
 
-        isPageTab = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        isPageTab = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         pageTab = pyatspi.findAncestor(obj, isPageTab)
         if pageTab is None:
             return super().isFocusedChat(obj)
 
-        return pageTab.getState().contains(pyatspi.STATE_SHOWING)
+        return pageTab.getState().contains(Atspi.StateType.SHOWING)

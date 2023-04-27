@@ -25,9 +25,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import orca.orca as orca
 import orca.scripts.toolkits.GAIL as GAIL
-import pyatspi
 
 ########################################################################
 #                                                                      #
@@ -58,7 +61,7 @@ class Script(GAIL.Script):
             return
 
         obj = otherObj or event.source
-        if obj.getState().contains(pyatspi.STATE_SINGLE_LINE):
+        if obj.getState().contains(Atspi.StateType.SINGLE_LINE):
             return
 
         # if Tab key is pressed and there is text selected, we must announce
@@ -84,11 +87,11 @@ class Script(GAIL.Script):
 
         role = event.source.getRole()
 
-        if role == pyatspi.ROLE_PANEL:
+        if role == Atspi.Role.PANEL:
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if role == pyatspi.ROLE_TEXT \
+        if role == Atspi.Role.TEXT \
            and self.utilities.lastInputEventWasUnmodifiedArrow() \
            and self.utilities.inMenu():
             msg = "ECLIPSE: Ignoring event. In menu."
@@ -143,9 +146,9 @@ class Script(GAIL.Script):
         # sometimes eclipse issues an object:selection-changed for objects not focused.
         # we do not want that orca announces this objects.
 
-        if not state.contains(pyatspi.STATE_FOCUSED):
+        if not state.contains(Atspi.StateType.FOCUSED):
             # the exception, at least for while, is the MenuBar
-            if obj.getRole() != pyatspi.ROLE_MENU_BAR:
+            if obj.getRole() != Atspi.Role.MENU_BAR:
                 return
         GAIL.Script.onSelectionChanged(self, event)
 

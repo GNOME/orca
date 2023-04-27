@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.scripts.toolkits.gtk as gtk
@@ -65,17 +69,17 @@ class Script(gtk.Script):
 
         obj = event.source
         role = obj.getRole()
-        if role != pyatspi.ROLE_FRAME:
+        if role != Atspi.Role.FRAME:
             gtk.Script.onWindowActivated(self, event)
             return
 
-        isEditbar = lambda x: x and x.getRole() == pyatspi.ROLE_EDITBAR
+        isEditbar = lambda x: x and x.getRole() == Atspi.Role.EDITBAR
         self._resultsDisplay = pyatspi.findDescendant(obj, isEditbar)
         if not self._resultsDisplay:
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
-        isStatusLine = lambda x: x and x.getRole() == pyatspi.ROLE_TEXT \
-                       and not x.getState().contains(pyatspi.STATE_EDITABLE)
+        isStatusLine = lambda x: x and x.getRole() == Atspi.Role.TEXT \
+                       and not x.getState().contains(Atspi.StateType.EDITABLE)
         self._statusLine = pyatspi.findDescendant(obj, isStatusLine)
 
         gtk.Script.onWindowActivated(self, event)

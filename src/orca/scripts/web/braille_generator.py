@@ -27,6 +27,10 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2011-2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 from orca import braille
@@ -62,34 +66,34 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if roledescription:
             return [roledescription]
 
-        doNotDisplay = [pyatspi.ROLE_FORM,
-                        pyatspi.ROLE_PARAGRAPH,
-                        pyatspi.ROLE_STATIC,
-                        pyatspi.ROLE_SECTION,
-                        pyatspi.ROLE_REDUNDANT_OBJECT,
-                        pyatspi.ROLE_UNKNOWN]
+        doNotDisplay = [Atspi.Role.FORM,
+                        Atspi.Role.PARAGRAPH,
+                        Atspi.Role.STATIC,
+                        Atspi.Role.SECTION,
+                        Atspi.Role.REDUNDANT_OBJECT,
+                        Atspi.Role.UNKNOWN]
 
         state = obj.getState()
-        if not state.contains(pyatspi.STATE_FOCUSABLE):
-            doNotDisplay.extend([pyatspi.ROLE_LIST,
-                                 pyatspi.ROLE_LIST_ITEM,
-                                 pyatspi.ROLE_COLUMN_HEADER,
-                                 pyatspi.ROLE_ROW_HEADER,
-                                 pyatspi.ROLE_TABLE_CELL,
-                                 pyatspi.ROLE_PANEL])
+        if not state.contains(Atspi.StateType.FOCUSABLE):
+            doNotDisplay.extend([Atspi.Role.LIST,
+                                 Atspi.Role.LIST_ITEM,
+                                 Atspi.Role.COLUMN_HEADER,
+                                 Atspi.Role.ROW_HEADER,
+                                 Atspi.Role.TABLE_CELL,
+                                 Atspi.Role.PANEL])
 
         if args.get('startOffset') is not None and args.get('endOffset') is not None:
-            doNotDisplay.append(pyatspi.ROLE_ALERT)
+            doNotDisplay.append(Atspi.Role.ALERT)
 
         result = []
         role = args.get('role', obj.getRole())
 
-        if role == pyatspi.ROLE_HEADING:
+        if role == Atspi.Role.HEADING:
             level = self._script.utilities.headingLevel(obj)
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         elif self._script.utilities.isLink(obj) and obj == orca_state.locusOfFocus:
-            if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
+            if obj.parent.getRole() == Atspi.Role.IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:
@@ -101,9 +105,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         index = args.get('index', 0)
         total = args.get('total', 1)
-        if index == total - 1 and role != pyatspi.ROLE_HEADING \
-           and (role == pyatspi.ROLE_IMAGE or self._script.utilities.queryNonEmptyText(obj)):
-            isHeading = lambda x: x and x.getRole() == pyatspi.ROLE_HEADING
+        if index == total - 1 and role != Atspi.Role.HEADING \
+           and (role == Atspi.Role.IMAGE or self._script.utilities.queryNonEmptyText(obj)):
+            isHeading = lambda x: x and x.getRole() == Atspi.Role.HEADING
             heading = pyatspi.findAncestor(obj, isHeading)
             if heading:
                 result.extend(self._generateRoleName(heading))
@@ -117,7 +121,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+        if obj.getState().contains(Atspi.StateType.EDITABLE) \
            and self._script.utilities.isCodeDescendant(obj):
             return []
 
@@ -141,7 +145,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LABEL and 'Text' in pyatspi.listInterfaces(obj):
+        if role == Atspi.Role.LABEL and 'Text' in pyatspi.listInterfaces(obj):
             return []
 
         return super()._generateLabelAndName(obj, **args)
@@ -172,7 +176,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = super()._generateName(obj, **args)
         if result and result[0] and not self._script.utilities.hasExplicitName(obj):
             result[0] = result[0].strip()
-        elif not result and obj.getRole() == pyatspi.ROLE_CHECK_BOX:
+        elif not result and obj.getRole() == Atspi.Role.CHECK_BOX:
             gridCell = pyatspi.findAncestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateName(gridCell, **args)
@@ -207,7 +211,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
-        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
         row = pyatspi.findAncestor(obj, isRow)
         if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
@@ -229,20 +233,20 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         oldRole = None
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+            oldRole = self._overrideRole(Atspi.Role.LINK, args)
         elif self._script.utilities.isCustomImage(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_IMAGE, args)
+            oldRole = self._overrideRole(Atspi.Role.IMAGE, args)
         elif self._script.utilities.isAnchor(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_STATIC, args)
+            oldRole = self._overrideRole(Atspi.Role.STATIC, args)
         elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
-            oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
+            oldRole = self._overrideRole(Atspi.Role.SECTION, args)
         elif self._script.utilities.treatAsEntry(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
+            oldRole = self._overrideRole(Atspi.Role.ENTRY, args)
 
-        if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
+        if obj.getRole() == Atspi.Role.MENU_ITEM:
             comboBox = self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_FRAME])
-            if comboBox and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
+                obj, [Atspi.Role.COMBO_BOX], [Atspi.Role.FRAME])
+            if comboBox and not comboBox.getState().contains(Atspi.StateType.EXPANDED):
                 obj = comboBox
         result.extend(super().generateBraille(obj, **args))
         del args['includeContext']
@@ -255,7 +259,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             return []
 
-        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+        if obj.getState().contains(Atspi.StateType.EDITABLE) \
            or not self._script.utilities.inDocumentContent(obj):
             return super()._generateEol(obj, **args)
 

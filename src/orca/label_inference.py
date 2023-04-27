@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (C) 2011-2013 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 from . import debug
@@ -59,7 +63,7 @@ class LabelInference:
         if not obj:
             return None, []
 
-        if focusedOnly and not obj.getState().contains(pyatspi.STATE_FOCUSED):
+        if focusedOnly and not obj.getState().contains(Atspi.StateType.FOCUSED):
             debug.println(debug.LEVEL_INFO, "INFER - object not focused", True)
             return None, []
 
@@ -110,16 +114,16 @@ class LabelInference:
         """Returns True if we should prefer text on the right, rather than the
         left, for the object obj."""
 
-        onRightRoles = [pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON]
+        onRightRoles = [Atspi.Role.CHECK_BOX, Atspi.Role.RADIO_BUTTON]
         return obj.getRole() in onRightRoles
 
     def _preventRight(self, obj):
         """Returns True if we should not permit inference based on text to
         the right for the object obj."""
 
-        roles = [pyatspi.ROLE_COMBO_BOX,
-                 pyatspi.ROLE_LIST,
-                 pyatspi.ROLE_LIST_BOX]
+        roles = [Atspi.Role.COMBO_BOX,
+                 Atspi.Role.LIST,
+                 Atspi.Role.LIST_BOX]
 
         return obj.getRole() in roles
 
@@ -127,9 +131,9 @@ class LabelInference:
         """Returns True if we should prefer text above, rather than below for
         the object obj."""
 
-        roles = [pyatspi.ROLE_COMBO_BOX,
-                 pyatspi.ROLE_LIST,
-                 pyatspi.ROLE_LIST_BOX]
+        roles = [Atspi.Role.COMBO_BOX,
+                 Atspi.Role.LIST,
+                 Atspi.Role.LIST_BOX]
 
         return obj.getRole() in roles
 
@@ -137,8 +141,8 @@ class LabelInference:
         """Returns True if we should not permit inference based on text below
         the object obj."""
 
-        roles = [pyatspi.ROLE_ENTRY,
-                 pyatspi.ROLE_PASSWORD_TEXT]
+        roles = [Atspi.Role.ENTRY,
+                 Atspi.Role.PASSWORD_TEXT]
 
         return obj.getRole() not in roles
 
@@ -157,7 +161,7 @@ class LabelInference:
             debug.println(debug.LEVEL_INFO, 'Dead Accessible in %s' % obj, True)
             return False
 
-        children = [x for x in children if x.getRole() != pyatspi.ROLE_LINK]
+        children = [x for x in children if x.getRole() != Atspi.Role.LINK]
         if len(children) > 1:
             return False
 
@@ -178,7 +182,7 @@ class LabelInference:
         if not obj:
             return True
 
-        nonLabelTextRoles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LIST_ITEM]
+        nonLabelTextRoles = [Atspi.Role.HEADING, Atspi.Role.LIST_ITEM]
         if obj.getRole() in nonLabelTextRoles:
             return True
 
@@ -194,20 +198,20 @@ class LabelInference:
         if rv is not None:
             return rv
 
-        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
-                       pyatspi.ROLE_RADIO_BUTTON,
-                       pyatspi.ROLE_TOGGLE_BUTTON,
-                       pyatspi.ROLE_COMBO_BOX,
-                       pyatspi.ROLE_LIST,
-                       pyatspi.ROLE_LIST_BOX,
-                       pyatspi.ROLE_MENU,
-                       pyatspi.ROLE_MENU_ITEM,
-                       pyatspi.ROLE_ENTRY,
-                       pyatspi.ROLE_PASSWORD_TEXT,
-                       pyatspi.ROLE_PUSH_BUTTON]
+        widgetRoles = [Atspi.Role.CHECK_BOX,
+                       Atspi.Role.RADIO_BUTTON,
+                       Atspi.Role.TOGGLE_BUTTON,
+                       Atspi.Role.COMBO_BOX,
+                       Atspi.Role.LIST,
+                       Atspi.Role.LIST_BOX,
+                       Atspi.Role.MENU,
+                       Atspi.Role.MENU_ITEM,
+                       Atspi.Role.ENTRY,
+                       Atspi.Role.PASSWORD_TEXT,
+                       Atspi.Role.PUSH_BUTTON]
 
         isWidget = obj.getRole() in widgetRoles
-        if not isWidget and obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if not isWidget and obj.getState().contains(Atspi.StateType.EDITABLE):
             isWidget = True
 
         self._isWidgetCache[hash(obj)] = isWidget
@@ -228,7 +232,7 @@ class LabelInference:
         extents = 0, 0, 0, 0
         text = self._script.utilities.queryNonEmptyText(obj)
         if text:
-            skipTextExtents = [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]
+            skipTextExtents = [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT]
             if not obj.getRole() in skipTextExtents:
                 if endOffset == -1:
                     try:
@@ -468,7 +472,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TABLE:
+        if obj.getRole() == Atspi.Role.TABLE:
             return True
 
         return self._getTag(obj) == 'table'
@@ -477,7 +481,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+        if obj.getRole() == Atspi.Role.TABLE_ROW:
             return True
 
         return self._getTag(obj) == 'tr'
@@ -486,7 +490,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.getRole() == Atspi.Role.TABLE_CELL:
             return True
 
         return self._getTag(obj) in ['td', 'th']

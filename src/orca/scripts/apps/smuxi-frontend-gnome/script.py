@@ -27,7 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.scripts.toolkits.GAIL as GAIL
 from .chat import Chat
@@ -38,12 +40,12 @@ class Script(GAIL.Script):
         """Creates a new script for the given application."""
 
         # So we can take an educated guess at identifying the buddy list.
-        self._buddyListAncestries = [[pyatspi.ROLE_TREE_TABLE,
-                                      pyatspi.ROLE_SCROLL_PANE,
-                                      pyatspi.ROLE_SPLIT_PANE,
-                                      pyatspi.ROLE_SPLIT_PANE,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_FRAME]]
+        self._buddyListAncestries = [[Atspi.Role.TREE_TABLE,
+                                      Atspi.Role.SCROLL_PANE,
+                                      Atspi.Role.SPLIT_PANE,
+                                      Atspi.Role.SPLIT_PANE,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.FRAME]]
 
         super().__init__(app)
 

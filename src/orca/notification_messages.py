@@ -163,7 +163,7 @@ def listNotificationMessages(script, event):
     consumed = True
     speak = True
 
-    if event.type != pyatspi.KEY_PRESSED_EVENT:
+    if event.type != Atspi.EventType.KEY_PRESSED_EVENT:
         return False
     script.presentationInterrupt()
     if event.event_string == "Escape":

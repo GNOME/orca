@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 from orca import debug
@@ -43,7 +47,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not root:
             return None
 
-        if root.getRole() == pyatspi.ROLE_DIALOG:
+        if root.getRole() == Atspi.Role.DIALOG:
             return root
 
         if root.childCount:
@@ -57,27 +61,27 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if window and window.childCount and window.getRole() == pyatspi.ROLE_FRAME:
+        if window and window.childCount and window.getRole() == Atspi.Role.FRAME:
             child = self._findChildDialog(window[0])
-            if child and child.getRole() == pyatspi.ROLE_DIALOG:
-                isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
+            if child and child.getRole() == Atspi.Role.DIALOG:
+                isPageTabList = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB_LIST
                 if pyatspi.findDescendant(child, isPageTabList):
                     return False
 
-                isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+                isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
                 return pyatspi.findDescendant(child, isComboBox)
 
         return False
 
     def _findErrorWidget(self, root):
-        isError = lambda x: x and x.getRole() == pyatspi.ROLE_TEXT and x.name \
-                  and x.parent.getRole() != pyatspi.ROLE_COMBO_BOX
+        isError = lambda x: x and x.getRole() == Atspi.Role.TEXT and x.name \
+                  and x.parent.getRole() != Atspi.Role.COMBO_BOX
         return pyatspi.findDescendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST and x.name \
+        isList = lambda x: x and x.getRole() == Atspi.Role.LIST and x.name \
                   and 'Selection' in x.get_interfaces() \
-                  and x.parent.getRole() != pyatspi.ROLE_COMBO_BOX
+                  and x.parent.getRole() != Atspi.Role.COMBO_BOX
         return pyatspi.findDescendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):

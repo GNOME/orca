@@ -1,3 +1,7 @@
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import bisect
 import copy
 import pyatspi
@@ -382,7 +386,7 @@ class LiveRegionManager:
         # get the description if there is one.
         for relation in obj.getRelationSet():
             relationtype = relation.getRelationType()
-            if relationtype == pyatspi.RELATION_DESCRIBED_BY:
+            if relationtype == Atspi.RelationType.DESCRIBED_BY:
                 targetobj = relation.getTarget(0)
                 try:
                     # We will add on descriptions if they don't duplicate

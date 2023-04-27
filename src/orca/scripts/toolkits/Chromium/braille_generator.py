@@ -27,7 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from orca import debug
 from orca import orca_state
@@ -40,7 +42,7 @@ class BrailleGenerator(web.BrailleGenerator):
         super().__init__(script)
 
     def _generateLabelOrName(self, obj, **args):
-        if obj.getRole() == pyatspi.ROLE_FRAME:
+        if obj.getRole() == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)
             if document and not self._script.utilities.documentFrameURI(document):
                 # Eliminates including "untitled" in the frame name.
@@ -56,7 +58,7 @@ class BrailleGenerator(web.BrailleGenerator):
         if self._script.utilities.treatAsMenu(obj):
             msg = "CHROMIUM: HACK? Displaying menu item as menu %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            oldRole = self._overrideRole(pyatspi.ROLE_MENU, args)
+            oldRole = self._overrideRole(Atspi.Role.MENU, args)
 
         result = super().generateBraille(obj, **args)
         if oldRole is not None:

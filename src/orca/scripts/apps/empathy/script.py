@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.chat as chat
@@ -45,10 +49,10 @@ class Script(gtk.Script):
 
         # So we can take an educated guess at identifying the buddy list.
         #
-        self._buddyListAncestries = [[pyatspi.ROLE_TREE_TABLE,
-                                      pyatspi.ROLE_SCROLL_PANE,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_FRAME]]
+        self._buddyListAncestries = [[Atspi.Role.TREE_TABLE,
+                                      Atspi.Role.SCROLL_PANE,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.FRAME]]
 
         gtk.Script.__init__(self, app)
 
@@ -106,7 +110,7 @@ class Script(gtk.Script):
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
-        if event.source.getRole() == pyatspi.ROLE_LABEL:
+        if event.source.getRole() == Atspi.Role.LABEL:
             # The is the timer of a call.
             #
             return
@@ -122,7 +126,7 @@ class Script(gtk.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
         gtk.Script.onWindowActivated(self, event)
 
@@ -134,7 +138,7 @@ class Script(gtk.Script):
         - event: the Event
         """
 
-        if event.source.getRole() == pyatspi.ROLE_WINDOW:
+        if event.source.getRole() == Atspi.Role.WINDOW:
             # The is the timer of a call.
             #
             return

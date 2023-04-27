@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from .orca_i18n import _
 from .orca_i18n import C_
@@ -33,256 +35,256 @@ from .orca_i18n import C_
 shortRoleNames = {
     # Translators: short braille for the rolename of an invalid GUI object.
     # We strive to keep it under three characters to preserve real estate.
-    pyatspi.ROLE_INVALID: _("???"),
+    Atspi.Role.INVALID: _("???"),
 
     # Translators: short braille for the rolename of an alert dialog.
     # NOTE for all the short braille words: they we strive to keep them
     # around three characters to preserve real estate on the braille
     # display.  The letters are chosen to make them unique across all
     # other rolenames, and they typically act like an abbreviation.
-    pyatspi.ROLE_ALERT: _("alrt"),
+    Atspi.Role.ALERT: _("alrt"),
 
     # Translators: short braille for the rolename of an animation widget.
-    pyatspi.ROLE_ANIMATION: _("anim"),
+    Atspi.Role.ANIMATION: _("anim"),
 
     # Translators: short braille for the rolename of an arrow widget.
-    pyatspi.ROLE_ARROW: _("arw"),
+    Atspi.Role.ARROW: _("arw"),
 
     # Translators: short braille for the rolename of a calendar widget.
-    pyatspi.ROLE_CALENDAR: _("cal"),
+    Atspi.Role.CALENDAR: _("cal"),
 
     # Translators: short braille for the rolename of a canvas widget.
-    pyatspi.ROLE_CANVAS: _("cnv"),
+    Atspi.Role.CANVAS: _("cnv"),
 
     # Translators: short braille for the rolename of a caption (e.g.,
     # table caption).
-    pyatspi.ROLE_CAPTION: _("cptn"),
+    Atspi.Role.CAPTION: _("cptn"),
 
     # Translators: short braille for the rolename of a checkbox.
-    pyatspi.ROLE_CHECK_BOX: _("chk"),
+    Atspi.Role.CHECK_BOX: _("chk"),
 
     # Translators: short braille for the rolename of a check menu item.
-    pyatspi.ROLE_CHECK_MENU_ITEM: _("chk"),
+    Atspi.Role.CHECK_MENU_ITEM: _("chk"),
 
     # Translators: short braille for the rolename of a color chooser.
-    pyatspi.ROLE_COLOR_CHOOSER: _("clrchsr"),
+    Atspi.Role.COLOR_CHOOSER: _("clrchsr"),
 
     # Translators: short braille for the rolename of a column header.
-    pyatspi.ROLE_COLUMN_HEADER: _("colhdr"),
+    Atspi.Role.COLUMN_HEADER: _("colhdr"),
 
     # Translators: short braille for the rolename of a combo box.
-    pyatspi.ROLE_COMBO_BOX: _("cbo"),
+    Atspi.Role.COMBO_BOX: _("cbo"),
 
     # Translators: short braille for the rolename of a date editor.
-    pyatspi.ROLE_DATE_EDITOR: _("dat"),
+    Atspi.Role.DATE_EDITOR: _("dat"),
 
     # Translators: short braille for the rolename of a desktop icon.
-    pyatspi.ROLE_DESKTOP_ICON: _("icn"),
+    Atspi.Role.DESKTOP_ICON: _("icn"),
 
     # Translators: short braille for the rolename of a desktop frame.
-    pyatspi.ROLE_DESKTOP_FRAME: _("frm"),
+    Atspi.Role.DESKTOP_FRAME: _("frm"),
 
     # Translators: short braille for the rolename of a dial.
     # You should attempt to treat it as an abbreviation of
     # the translated word for "dial".  It is OK to use an
     # unabbreviated word as long as it is relatively short.
-    pyatspi.ROLE_DIAL: C_("shortbraille", "dial"),
+    Atspi.Role.DIAL: C_("shortbraille", "dial"),
 
     # Translators: short braille for the rolename of a dialog.
-    pyatspi.ROLE_DIALOG: _("dlg"),
+    Atspi.Role.DIALOG: _("dlg"),
 
     # Translators: short braille for the rolename of a directory pane.
-    pyatspi.ROLE_DIRECTORY_PANE: _("dip"),
+    Atspi.Role.DIRECTORY_PANE: _("dip"),
 
     # Translators: short braille for the rolename of an HTML document frame.
-    pyatspi.ROLE_DOCUMENT_FRAME: _("html"),
+    Atspi.Role.DOCUMENT_FRAME: _("html"),
 
     # Translators: short braille for the rolename of a drawing area.
-    pyatspi.ROLE_DRAWING_AREA: _("draw"),
+    Atspi.Role.DRAWING_AREA: _("draw"),
 
     # Translators: short braille for the rolename of a file chooser.
-    pyatspi.ROLE_FILE_CHOOSER: _("fchsr"),
+    Atspi.Role.FILE_CHOOSER: _("fchsr"),
 
     # Translators: short braille for the rolename of a filler.
-    pyatspi.ROLE_FILLER: _("flr"),
+    Atspi.Role.FILLER: _("flr"),
 
     # Translators: short braille for the rolename of a font chooser.
-    pyatspi.ROLE_FONT_CHOOSER: _("fnt"),
+    Atspi.Role.FONT_CHOOSER: _("fnt"),
 
     # Translators: short braille for the rolename of a form.
     # You should attempt to treat it as an abbreviation of
     # the translated word for "form".  It is OK to use an
     # unabbreviated word as long as it is relatively short.
-    pyatspi.ROLE_FORM: C_("shortbraille", "form"),
+    Atspi.Role.FORM: C_("shortbraille", "form"),
 
     # Translators: short braille for the rolename of a frame.
-    pyatspi.ROLE_FRAME: _("frm"),
+    Atspi.Role.FRAME: _("frm"),
 
     # Translators: short braille for the rolename of a glass pane.
-    pyatspi.ROLE_GLASS_PANE: _("gpn"),
+    Atspi.Role.GLASS_PANE: _("gpn"),
 
     # Translators: short braille for the rolename of a heading.
-    pyatspi.ROLE_HEADING: _("hdng"),
+    Atspi.Role.HEADING: _("hdng"),
 
     # Translators: short braille for the rolename of an html container.
-    pyatspi.ROLE_HTML_CONTAINER: _("html"),
+    Atspi.Role.HTML_CONTAINER: _("html"),
 
     # Translators: short braille for the rolename of a icon.
-    pyatspi.ROLE_ICON: _("icn"),
+    Atspi.Role.ICON: _("icn"),
 
     # Translators: short braille for the rolename of a image.
-    pyatspi.ROLE_IMAGE: _("img"),
+    Atspi.Role.IMAGE: _("img"),
 
     # Translators: short braille for the rolename of an internal frame.
-    pyatspi.ROLE_INTERNAL_FRAME: _("ifrm"),
+    Atspi.Role.INTERNAL_FRAME: _("ifrm"),
 
     # Translators: short braille for the rolename of a label.
-    pyatspi.ROLE_LABEL: _("lbl"),
+    Atspi.Role.LABEL: _("lbl"),
 
     # Translators: short braille for the rolename of a layered pane.
-    pyatspi.ROLE_LAYERED_PANE: _("lyrdpn"),
+    Atspi.Role.LAYERED_PANE: _("lyrdpn"),
 
     # Translators: short braille for the rolename of a link.
-    pyatspi.ROLE_LINK: _("lnk"),
+    Atspi.Role.LINK: _("lnk"),
 
     # Translators: short braille for the rolename of a list.
-    pyatspi.ROLE_LIST: _("lst"),
+    Atspi.Role.LIST: _("lst"),
 
     # Translators: short braille for the rolename of a list item.
-    pyatspi.ROLE_LIST_ITEM: _("lstitm"),
+    Atspi.Role.LIST_ITEM: _("lstitm"),
 
     # Translators: short braille for the rolename of a menu.
-    pyatspi.ROLE_MENU: _("mnu"),
+    Atspi.Role.MENU: _("mnu"),
 
     # Translators: short braille for the rolename of a menu bar.
-    pyatspi.ROLE_MENU_BAR: _("mnubr"),
+    Atspi.Role.MENU_BAR: _("mnubr"),
 
     # Translators: short braille for the rolename of a menu item.
-    pyatspi.ROLE_MENU_ITEM: _("mnuitm"),
+    Atspi.Role.MENU_ITEM: _("mnuitm"),
 
     # Translators: short braille for the rolename of an option pane.
-    pyatspi.ROLE_OPTION_PANE: _("optnpn"),
+    Atspi.Role.OPTION_PANE: _("optnpn"),
 
     # Translators: short braille for the rolename of a page tab.
-    pyatspi.ROLE_PAGE_TAB: _("pgt"),
+    Atspi.Role.PAGE_TAB: _("pgt"),
 
     # Translators: short braille for the rolename of a page tab list.
-    pyatspi.ROLE_PAGE_TAB_LIST: _("tblst"),
+    Atspi.Role.PAGE_TAB_LIST: _("tblst"),
 
     # Translators: short braille for the rolename of a panel.
-    pyatspi.ROLE_PANEL: _("pnl"),
+    Atspi.Role.PANEL: _("pnl"),
 
     # Translators: short braille for the rolename of a password field.
-    pyatspi.ROLE_PASSWORD_TEXT: _("pwd"),
+    Atspi.Role.PASSWORD_TEXT: _("pwd"),
 
     # Translators: short braille for the rolename of a popup menu.
-    pyatspi.ROLE_POPUP_MENU: _("popmnu"),
+    Atspi.Role.POPUP_MENU: _("popmnu"),
 
     # Translators: short braille for the rolename of a progress bar.
-    pyatspi.ROLE_PROGRESS_BAR: _("pgbar"),
+    Atspi.Role.PROGRESS_BAR: _("pgbar"),
 
     # Translators: short braille for the rolename of a push button.
-    pyatspi.ROLE_PUSH_BUTTON: _("btn"),
+    Atspi.Role.PUSH_BUTTON: _("btn"),
 
     # Translators: short braille for the rolename of a radio button.
-    pyatspi.ROLE_RADIO_BUTTON: _("radio"),
+    Atspi.Role.RADIO_BUTTON: _("radio"),
 
     # Translators: short braille for the rolename of a radio menu item.
-    pyatspi.ROLE_RADIO_MENU_ITEM: _("rdmnuitm"),
+    Atspi.Role.RADIO_MENU_ITEM: _("rdmnuitm"),
 
     # Translators: short braille for the rolename of a root pane.
-    pyatspi.ROLE_ROOT_PANE: _("rtpn"),
+    Atspi.Role.ROOT_PANE: _("rtpn"),
 
     # Translators: short braille for the rolename of a row header.
-    pyatspi.ROLE_ROW_HEADER: _("rwhdr"),
+    Atspi.Role.ROW_HEADER: _("rwhdr"),
 
     # Translators: short braille for the rolename of a scroll bar.
-    pyatspi.ROLE_SCROLL_BAR: _("scbr"),
+    Atspi.Role.SCROLL_BAR: _("scbr"),
 
     # Translators: short braille for the rolename of a scroll pane.
-    pyatspi.ROLE_SCROLL_PANE: _("scpn"),
+    Atspi.Role.SCROLL_PANE: _("scpn"),
 
     # Translators: short braille for the rolename of a section (e.g., in html).
-    pyatspi.ROLE_SECTION: _("sctn"),
+    Atspi.Role.SECTION: _("sctn"),
 
     # Translators: short braille for the rolename of a separator.
-    pyatspi.ROLE_SEPARATOR: _("seprtr"),
+    Atspi.Role.SEPARATOR: _("seprtr"),
 
     # Translators: short braille for the rolename of a slider.
-    pyatspi.ROLE_SLIDER: _("sldr"),
+    Atspi.Role.SLIDER: _("sldr"),
 
     # Translators: short braille for the rolename of a split pane.
-    pyatspi.ROLE_SPLIT_PANE: _("spltpn"),
+    Atspi.Role.SPLIT_PANE: _("spltpn"),
 
     # Translators: short braille for the rolename of a spin button.
-    pyatspi.ROLE_SPIN_BUTTON: _("spin"),
+    Atspi.Role.SPIN_BUTTON: _("spin"),
 
     # Translators: short braille for the rolename of a statusbar.
-    pyatspi.ROLE_STATUS_BAR: _("statbr"),
+    Atspi.Role.STATUS_BAR: _("statbr"),
 
     # Translators: short braille for the rolename of a table.
-    pyatspi.ROLE_TABLE: _("tbl"),
+    Atspi.Role.TABLE: _("tbl"),
 
     # Translators: short braille for the rolename of a table cell.
-    pyatspi.ROLE_TABLE_CELL: _("cll"),
+    Atspi.Role.TABLE_CELL: _("cll"),
 
     # Translators: short braille for the rolename of a table column header.
-    pyatspi.ROLE_TABLE_COLUMN_HEADER: _("colhdr"),
+    Atspi.Role.TABLE_COLUMN_HEADER: _("colhdr"),
 
     # Translators: short braille for the rolename of a table row header.
-    pyatspi.ROLE_TABLE_ROW_HEADER: _("rwhdr"),
+    Atspi.Role.TABLE_ROW_HEADER: _("rwhdr"),
 
     # Translators: short braille for the rolename of a tear off menu item.
-    pyatspi.ROLE_TEAROFF_MENU_ITEM: _("tomnuitm"),
+    Atspi.Role.TEAROFF_MENU_ITEM: _("tomnuitm"),
 
     # Translators: short braille for the rolename of a terminal.
-    pyatspi.ROLE_TERMINAL: _("term"),
+    Atspi.Role.TERMINAL: _("term"),
 
     # Translators: short braille for the rolename of a text entry field.
-    pyatspi.ROLE_TEXT: _("txt"),
+    Atspi.Role.TEXT: _("txt"),
 
     # Translators: short braille for the rolename of a toggle button.
-    pyatspi.ROLE_TOGGLE_BUTTON: _("tglbtn"),
+    Atspi.Role.TOGGLE_BUTTON: _("tglbtn"),
 
     # Translators: short braille for the rolename of a toolbar.
-    pyatspi.ROLE_TOOL_BAR: _("tbar"),
+    Atspi.Role.TOOL_BAR: _("tbar"),
 
     # Translators: short braille for the rolename of a tooltip.
-    pyatspi.ROLE_TOOL_TIP: _("tip"),
+    Atspi.Role.TOOL_TIP: _("tip"),
 
     # Translators: short braille for the rolename of a tree.
-    pyatspi.ROLE_TREE: _("tre"),
+    Atspi.Role.TREE: _("tre"),
 
     # Translators: short braille for the rolename of a tree table.
-    pyatspi.ROLE_TREE_TABLE: _("trtbl"),
+    Atspi.Role.TREE_TABLE: _("trtbl"),
 
     # Translators: short braille for when the rolename of an object is unknown.
-    pyatspi.ROLE_UNKNOWN: _("unk"),
+    Atspi.Role.UNKNOWN: _("unk"),
 
     # Translators: short braille for the rolename of a viewport.
-    pyatspi.ROLE_VIEWPORT: _("vwprt"),
+    Atspi.Role.VIEWPORT: _("vwprt"),
 
     # Translators: short braille for the rolename of a window.
-    pyatspi.ROLE_WINDOW: _("wnd"),
+    Atspi.Role.WINDOW: _("wnd"),
 
     # Translators: short braille for the rolename of a header.
-    pyatspi.ROLE_HEADER: _("hdr"),
+    Atspi.Role.HEADER: _("hdr"),
 
     # Translators: short braille for the rolename of a footer.
-    pyatspi.ROLE_FOOTER: _("ftr"),
+    Atspi.Role.FOOTER: _("ftr"),
 
     # Translators: short braille for the rolename of a paragraph.
-    pyatspi.ROLE_PARAGRAPH: _("para"),
+    Atspi.Role.PARAGRAPH: _("para"),
 
     # Translators: short braille for the rolename of a application.
-    pyatspi.ROLE_APPLICATION: _("app"),
+    Atspi.Role.APPLICATION: _("app"),
 
     # Translators: short braille for the rolename of a autocomplete.
-    pyatspi.ROLE_AUTOCOMPLETE: _("auto"),
+    Atspi.Role.AUTOCOMPLETE: _("auto"),
 
     # Translators: short braille for the rolename of an editbar.
-    pyatspi.ROLE_EDITBAR: _("edtbr"),
+    Atspi.Role.EDITBAR: _("edtbr"),
 
     # Translators: short braille for the rolename of an embedded component.
-    pyatspi.ROLE_EMBEDDED: _("emb")
+    Atspi.Role.EMBEDDED: _("emb")
 }

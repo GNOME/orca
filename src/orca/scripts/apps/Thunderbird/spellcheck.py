@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.orca_state as orca_state
@@ -46,7 +50,7 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
 
         role = locusOfFocus.getRole()
-        if not role == pyatspi.ROLE_PUSH_BUTTON:
+        if not role == Atspi.Role.PUSH_BUTTON:
             return False
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()
@@ -58,10 +62,10 @@ class SpellCheck(spellcheck.SpellCheck):
         return False
 
     def _isCandidateWindow(self, window):
-        if not (window and window.getRole() == pyatspi.ROLE_DIALOG):
+        if not (window and window.getRole() == Atspi.Role.DIALOG):
             return False
 
-        roles = [pyatspi.ROLE_PAGE_TAB_LIST, pyatspi.ROLE_SPLIT_PANE]
+        roles = [Atspi.Role.PAGE_TAB_LIST, Atspi.Role.SPLIT_PANE]
         isNonSpellCheckChild = lambda x: x and x.getRole() in roles
         if pyatspi.findDescendant(window, isNonSpellCheckChild):
             return False
@@ -69,17 +73,17 @@ class SpellCheck(spellcheck.SpellCheck):
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY \
-                  and x.getState().contains(pyatspi.STATE_SINGLE_LINE)
+        isEntry = lambda x: x and x.getRole() == Atspi.Role.ENTRY \
+                  and x.getState().contains(Atspi.StateType.SINGLE_LINE)
         return pyatspi.findDescendant(root, isEntry)
 
     def _findErrorWidget(self, root):
-        isError = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL \
+        isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
         return pyatspi.findDescendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and x.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX] \
+        isList = lambda x: x and x.getRole() in [Atspi.Role.LIST, Atspi.Role.LIST_BOX] \
                   and 'Selection' in x.get_interfaces()
         return pyatspi.findDescendant(root, isList)
 

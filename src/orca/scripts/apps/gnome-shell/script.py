@@ -26,6 +26,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import time
 
@@ -66,10 +70,10 @@ class Script(clutter.Script):
             pass
         else:
             # We must handle all dialogs ourselves in this script.
-            if role == pyatspi.ROLE_DIALOG:
+            if role == Atspi.Role.DIALOG:
                 return False
 
-            if role == pyatspi.ROLE_WINDOW:
+            if role == Atspi.Role.WINDOW:
                 return self.utilities.isBogusWindowFocusClaim(event)
 
         return clutter.Script.skipObjectEvent(self, event)
@@ -92,14 +96,14 @@ class Script(clutter.Script):
             return False
 
         activeDialog, timestamp = self._activeDialog
-        if not activeDialog or role != pyatspi.ROLE_LABEL:
+        if not activeDialog or role != Atspi.Role.LABEL:
             return False
 
         obj = hash(event.source)
         if name == self._activeDialogLabels.get(obj):
             return True
 
-        isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+        isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
         parentDialog = pyatspi.utils.findAncestor(event.source, isDialog)
         if activeDialog == parentDialog:
             self.presentMessage(name)
@@ -133,7 +137,7 @@ class Script(clutter.Script):
         # act of processing these by the default script causes us to
         # present nothing, and introduces a significant delay before
         # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-        if role == pyatspi.ROLE_PANEL and not name:
+        if role == Atspi.Role.PANEL and not name:
             return
 
         # We cannot count on events or their order from dialog boxes.
@@ -146,7 +150,7 @@ class Script(clutter.Script):
             self._activeDialogLabels = {}
             return
 
-        if activeDialog and role == pyatspi.ROLE_LABEL and event.detail1:
+        if activeDialog and role == Atspi.Role.LABEL and event.detail1:
             if self._presentDialogLabel(event):
                 return
 
@@ -167,13 +171,13 @@ class Script(clutter.Script):
         # we'll stop doing so and hope we are right.
 
         if event.detail1:
-            if role == pyatspi.ROLE_PANEL:
+            if role == Atspi.Role.PANEL:
                 try:
                     event.source.clearCache()
                 except:
                     pass
 
-            if state.contains(pyatspi.STATE_SELECTED):
+            if state.contains(Atspi.StateType.SELECTED):
                 orca.setLocusOfFocus(event, event.source)
             return
 
@@ -193,17 +197,17 @@ class Script(clutter.Script):
             return
 
         # The dialog will get presented when its first child gets focus.
-        if role == pyatspi.ROLE_DIALOG:
+        if role == Atspi.Role.DIALOG:
             return
 
         # We're getting a spurious focus claim from the gnome-shell window after
         # the window switcher is used.
-        if role == pyatspi.ROLE_WINDOW:
+        if role == Atspi.Role.WINDOW:
             return
 
-        if role == pyatspi.ROLE_MENU_ITEM and not name \
+        if role == Atspi.Role.MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
-            isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
+            isRealFocus = lambda x: x and x.getRole() == Atspi.Role.SLIDER
             descendant = pyatspi.findDescendant(obj, isRealFocus)
             if descendant:
                 orca.setLocusOfFocus(event, descendant)
@@ -215,7 +219,7 @@ class Script(clutter.Script):
         # state regardless.
         activeDialog, timestamp = self._activeDialog
         if not activeDialog:
-            isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+            isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
             dialog = pyatspi.utils.findAncestor(obj, isDialog)
             self._activeDialog = (dialog, time.time())
             if dialog:

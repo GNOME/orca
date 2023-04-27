@@ -27,7 +27,9 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from orca import settings_manager
 from orca import sound_generator
@@ -92,9 +94,9 @@ class SoundGenerator(sound_generator.SoundGenerator):
         if args.get('formatType') == 'detailedWhereAmI':
             oldRole = self._overrideRole('default', args)
         elif self._script.utilities.isLink(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+            oldRole = self._overrideRole(Atspi.Role.LINK, args)
         elif self._script.utilities.treatAsDiv(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
+            oldRole = self._overrideRole(Atspi.Role.SECTION, args)
         else:
             oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
 

@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.debug as debug
@@ -45,10 +49,10 @@ class Utilities(script_utilities.Utilities):
             selection = obj.querySelection()
         except:
             # This is a workaround for bgo#738705.
-            if obj.getRole() != pyatspi.ROLE_PANEL:
+            if obj.getRole() != Atspi.Role.PANEL:
                 return []
 
-            isSelected = lambda x: x and x.getState().contains(pyatspi.STATE_SELECTED)
+            isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
             children = self.findAllDescendants(obj, isSelected)
         else:
             children = []
@@ -99,7 +103,7 @@ class Utilities(script_utilities.Utilities):
         if not root:
             return []
 
-        roles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_NOTIFICATION, pyatspi.ROLE_MENU_ITEM]
+        roles = [Atspi.Role.DIALOG, Atspi.Role.NOTIFICATION, Atspi.Role.MENU_ITEM]
 
         hasRole = lambda x: x and x.getRole() in roles
         if not hasRole(root) and pyatspi.findAncestor(root, hasRole) is None:
@@ -115,9 +119,9 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = super().isLayoutOnly(obj)
-        if not rv and  obj.getRole() == pyatspi.ROLE_PANEL and obj.childCount == 1:
+        if not rv and  obj.getRole() == Atspi.Role.PANEL and obj.childCount == 1:
             displayedLabel = self.displayedLabel(obj)
-            if displayedLabel == obj[0].name and obj[0].getRole() != pyatspi.ROLE_LABEL:
+            if displayedLabel == obj[0].name and obj[0].getRole() != Atspi.Role.LABEL:
                 rv = True
                 msg = "GNOME SHELL: %s is deemed to be layout only" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -128,7 +132,7 @@ class Utilities(script_utilities.Utilities):
 
     def isBogusWindowFocusClaim(self, event):
         if event.type.startswith('object:state-changed:focused') and event.detail1 \
-           and event.source.getRole() == pyatspi.ROLE_WINDOW \
+           and event.source.getRole() == Atspi.Role.WINDOW \
            and not self.canBeActiveWindow(event.source):
             msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
             debug.println(debug.LEVEL_INFO, msg, True)

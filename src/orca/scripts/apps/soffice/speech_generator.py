@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.messages as messages
 import orca.settings_manager as settings_manager
@@ -44,16 +46,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = args.get('role', obj.getRole())
         override = \
             role == "text frame" \
-            or (role == pyatspi.ROLE_PARAGRAPH \
+            or (role == Atspi.Role.PARAGRAPH \
                 and self._script.utilities.ancestorWithRole(
-                      obj, [pyatspi.ROLE_DIALOG], [pyatspi.ROLE_APPLICATION]))
+                      obj, [Atspi.Role.DIALOG], [Atspi.Role.APPLICATION]))
         return override
 
     def _generateRoleName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TOGGLE_BUTTON \
-           and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+        if role == Atspi.Role.TOGGLE_BUTTON \
+           and obj.parent.getRole() == Atspi.Role.TOOL_BAR:
             pass
         else:
             # Treat a paragraph which is serving as a text entry in a dialog
@@ -61,12 +63,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             #
             override = self.__overrideParagraph(obj, **args)
             if override:
-                oldRole = self._overrideRole(pyatspi.ROLE_TEXT, args)
+                oldRole = self._overrideRole(Atspi.Role.TEXT, args)
             # Treat a paragraph which is inside of a spreadsheet cell as
             # a spreadsheet cell.
             #
             elif role == 'ROLE_SPREADSHEET_CELL':
-                oldRole = self._overrideRole(pyatspi.ROLE_TABLE_CELL, args)
+                oldRole = self._overrideRole(Atspi.Role.TABLE_CELL, args)
                 override = True
             result.extend(speech_generator.SpeechGenerator._generateRoleName(
                           self, obj, **args))
@@ -77,10 +79,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateTextRole(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+        if role == Atspi.Role.TEXT and obj.parent.getRole() == Atspi.Role.COMBO_BOX:
             return []
 
-        if role != pyatspi.ROLE_PARAGRAPH \
+        if role != Atspi.Role.PARAGRAPH \
            or self.__overrideParagraph(obj, **args):
             result.extend(self._generateRoleName(obj, **args))
         return result
@@ -122,7 +124,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateName(obj, **args)
 
     def _generateLabelAndName(self, obj, **args):
-        if obj.getRole() != pyatspi.ROLE_COMBO_BOX:
+        if obj.getRole() != Atspi.Role.COMBO_BOX:
             return super()._generateLabelAndName(obj, **args)
 
         # TODO - JD: This should be the behavior by default because many
@@ -236,7 +238,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if priorObj and priorObj.parent != obj.parent:
                 return []
 
-        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+        if obj.getRole() == Atspi.Role.COMBO_BOX:
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
             if entry:
                 return super()._generateCurrentLineText(entry)
@@ -258,14 +260,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         have more natural sounding speech such as "bold on", "bold off", etc."""
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TOGGLE_BUTTON \
-           and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
-            if obj.getState().contains(pyatspi.STATE_CHECKED):
+        if role == Atspi.Role.TOGGLE_BUTTON \
+           and obj.parent.getRole() == Atspi.Role.TOOL_BAR:
+            if obj.getState().contains(Atspi.StateType.CHECKED):
                 result.append(messages.ON)
             else:
                 result.append(messages.OFF)
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        elif role == pyatspi.ROLE_TOGGLE_BUTTON:
+        elif role == Atspi.Role.TOGGLE_BUTTON:
             result.extend(speech_generator.SpeechGenerator._generateToggleState(
                 self, obj, **args))
         return result
@@ -333,7 +335,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             text = obj.queryText()
             objectText = \
                 self._script.utilities.substring(obj, 0, -1)
-            extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except NotImplementedError:
             pass
         else:
@@ -440,7 +442,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         topLevel = self._script.utilities.topLevelObject(obj)
-        if topLevel and topLevel.getRole() == pyatspi.ROLE_DIALOG:
+        if topLevel and topLevel.getRole() == Atspi.Role.DIALOG:
             return []
 
         return super()._generateEndOfTableIndicator(obj, **args)
@@ -492,7 +494,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # which we are editing, we have some pointOfReference info
             # we can use to guess the coordinates.
             #
-            args['guessCoordinates'] = obj.getRole() == pyatspi.ROLE_PARAGRAPH
+            args['guessCoordinates'] = obj.getRole() == Atspi.Role.PARAGRAPH
             result.extend(super().generateSpeech(obj, **args))
             del args['guessCoordinates']
             self._restoreRole(oldRole, args)

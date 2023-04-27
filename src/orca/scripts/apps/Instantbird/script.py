@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.bookmarks as bookmarks
@@ -52,8 +56,8 @@ class Script(Gecko.Script):
 
         # So we can take an educated guess at identifying the buddy list.
         #
-        self._buddyListAncestries = [[pyatspi.ROLE_LIST,
-                                      pyatspi.ROLE_FRAME]]
+        self._buddyListAncestries = [[Atspi.Role.LIST,
+                                      Atspi.Role.FRAME]]
 
         Gecko.Script.__init__(self, app)
 
@@ -177,8 +181,8 @@ class Script(Gecko.Script):
         # In this case, speak and flash braille the new room name.
         #
         if orca_state.locusOfFocus and event.source \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_ENTRY \
-           and event.source.getRole() == pyatspi.ROLE_ENTRY \
+           and orca_state.locusOfFocus.getRole() == Atspi.Role.ENTRY \
+           and event.source.getRole() == Atspi.Role.ENTRY \
            and orca_state.locusOfFocus != event.source:
             room1 = self.chat.getChatRoomName(orca_state.locusOfFocus)
             room2 = self.chat.getChatRoomName(event.source)
@@ -201,6 +205,6 @@ class Script(Gecko.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
         default.Script.onWindowActivated(self, event)

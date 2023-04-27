@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.scripts.toolkits.gtk as gtk
 
@@ -34,7 +36,7 @@ class Script(gtk.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        if event.source.getRole() != pyatspi.ROLE_PASSWORD_TEXT:
+        if event.source.getRole() != Atspi.Role.PASSWORD_TEXT:
             gtk.Script.onFocusedChanged(self, event)
             return
 
@@ -45,7 +47,7 @@ class Script(gtk.Script):
         #
         strings = []
         for child in event.source.parent.parent.parent:
-            if child.getRole() == pyatspi.ROLE_LABEL and child.name:
+            if child.getRole() == Atspi.Role.LABEL and child.name:
                 strings.append(child.name)
 
         string = " ".join(strings)

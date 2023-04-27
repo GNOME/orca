@@ -25,6 +25,10 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., " \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.messages as messages
@@ -71,7 +75,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         with focus.
         """
         result = []
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_MENU:
+        if args.get('role', obj.getRole()) == Atspi.Role.MENU:
             # We're way too chatty here -- at least with the Swing2
             # demo. Users entering a menu want to know they've gone
             # into a menu; not a huge ancestry.
@@ -91,8 +95,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        if obj and obj.getState().contains(pyatspi.STATE_EXPANDED) \
-           and obj.getRole() == pyatspi.ROLE_LABEL and obj.childCount:
+        if obj and obj.getState().contains(Atspi.StateType.EXPANDED) \
+           and obj.getRole() == Atspi.Role.LABEL and obj.childCount:
             result.append(messages.itemCount(obj.childCount))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         else:
@@ -111,8 +115,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         listObj = None
-        if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+        if obj and obj.getRole() == Atspi.Role.COMBO_BOX:
+            hasRole = lambda x: x and x.getRole() == Atspi.Role.LIST
             allLists = pyatspi.findAllDescendants(obj, hasRole)
             if len(allLists) == 1:
                 listObj = allLists[0]
@@ -129,7 +133,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         for child in listObj:
             nextName = self._generateName(child)
             if not nextName or nextName[0] in ["", "Empty", "separator"] \
-               or not child.getState().contains(pyatspi.STATE_VISIBLE):
+               or not child.getState().contains(Atspi.StateType.VISIBLE):
                 continue
 
             index += 1
@@ -149,17 +153,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         
     def generateSpeech(self, obj, **args):
         result = []
-        if obj.getRole() == pyatspi.ROLE_CHECK_BOX \
-           and obj.parent.getRole() == pyatspi.ROLE_MENU:
-            oldRole = self._overrideRole(pyatspi.ROLE_CHECK_MENU_ITEM, args)
+        if obj.getRole() == Atspi.Role.CHECK_BOX \
+           and obj.parent.getRole() == Atspi.Role.MENU:
+            oldRole = self._overrideRole(Atspi.Role.CHECK_MENU_ITEM, args)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
 
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
-           and obj.getRole() == pyatspi.ROLE_TEXT:
+           and obj.getRole() == Atspi.Role.TEXT:
             spinbox = self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_SPIN_BUTTON], None)
+                obj, [Atspi.Role.SPIN_BUTTON], None)
             if spinbox:
                 obj = spinbox
         result.extend(speech_generator.SpeechGenerator.\

@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -86,7 +88,7 @@ class Script(gtk.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         state = event.source.getState()
-        if state.contains(pyatspi.STATE_MULTI_LINE):
+        if state.contains(Atspi.StateType.MULTI_LINE):
             self.spellcheck.setDocumentPosition(event.source, event.detail1)
 
         gtk.Script.onCaretMoved(self, event)
@@ -113,7 +115,7 @@ class Script(gtk.Script):
 
         parent = event.source.parent
         if parent != self.spellcheck.getSuggestionsList() \
-           or not parent.getState().contains(pyatspi.STATE_FOCUSED):
+           or not parent.getState().contains(Atspi.StateType.FOCUSED):
             return
 
         entry = self.spellcheck.getChangeToEntry()

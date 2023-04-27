@@ -27,6 +27,10 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import re
 
@@ -113,7 +117,7 @@ class Word:
         for i, char in enumerate(self.string):
             start = i + self.startOffset
             if text:
-                extents = text.getRangeExtents(start, start+1, pyatspi.DESKTOP_COORDS)
+                extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
             chars.append(Char(self, i, start, char, *extents))
 
         return chars
@@ -182,14 +186,14 @@ class Zone:
     def _shouldFakeText(self):
         """Returns True if we should try to fake the text interface"""
 
-        textRoles = [pyatspi.ROLE_LABEL,
-                     pyatspi.ROLE_MENU,
-                     pyatspi.ROLE_MENU_ITEM,
-                     pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM,
-                     pyatspi.ROLE_PAGE_TAB,
-                     pyatspi.ROLE_PUSH_BUTTON,
-                     pyatspi.ROLE_TABLE_CELL]
+        textRoles = [Atspi.Role.LABEL,
+                     Atspi.Role.MENU,
+                     Atspi.Role.MENU_ITEM,
+                     Atspi.Role.CHECK_MENU_ITEM,
+                     Atspi.Role.RADIO_MENU_ITEM,
+                     Atspi.Role.PAGE_TAB,
+                     Atspi.Role.PUSH_BUTTON,
+                     Atspi.Role.TABLE_CELL]
 
         if self.role in textRoles:
             return True
@@ -220,7 +224,7 @@ class Zone:
     def onSameLine(self, zone):
         """Returns True if we treat this Zone and zone as being on one line."""
 
-        if pyatspi.ROLE_SCROLL_BAR in [self.role, zone.role]:
+        if Atspi.Role.SCROLL_BAR in [self.role, zone.role]:
             return self.accessible == zone.accessible
 
         try:
@@ -229,7 +233,7 @@ class Zone:
         except:
             pass
         else:
-            if pyatspi.ROLE_MENU_BAR in [thisParentRole, zoneParentRole]:
+            if Atspi.Role.MENU_BAR in [thisParentRole, zoneParentRole]:
                 return self.accessible.parent == zone.accessible.parent
 
         return self._extentsAreOnSameLine(zone)
@@ -282,7 +286,7 @@ class TextZone(Zone):
         words = []
         for i, word in enumerate(re.finditer(self.WORDS_RE, string)):
             start, end = map(lambda x: x + self.startOffset, word.span())
-            extents = self._itext.getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+            extents = self._itext.getRangeExtents(start, end, Atspi.CoordType.SCREEN)
             words.append(Word(self, i, start, word.group(), *extents))
 
         self._string = string
@@ -407,18 +411,18 @@ class Line:
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
                    ((zone.accessible.getRole() in \
-                         (pyatspi.ROLE_TEXT,  
-                          pyatspi.ROLE_PASSWORD_TEXT,
-                          pyatspi.ROLE_TERMINAL)) or \
+                         (Atspi.Role.TEXT,  
+                          Atspi.Role.PASSWORD_TEXT,
+                          Atspi.Role.TERMINAL)) or \
                     # [[[TODO: Eitan - HACK: 
                     # This is just to get FF3 cursor key routing support.
                     # We really should not be determining all this stuff here,
                     # it should be in the scripts. 
                     # Same applies to roles above.]]]
                     (zone.accessible.getRole() in \
-                         (pyatspi.ROLE_PARAGRAPH,
-                          pyatspi.ROLE_HEADING,
-                          pyatspi.ROLE_LINK))):
+                         (Atspi.Role.PARAGRAPH,
+                          Atspi.Role.HEADING,
+                          Atspi.Role.LINK))):
                     region = braille.ReviewText(zone.accessible,
                                                 zone.string,
                                                 zone.startOffset,
@@ -490,12 +494,12 @@ class Context:
 
         try:
             component = self.topLevel.queryComponent()
-            self.bounds = component.getExtents(pyatspi.DESKTOP_COORDS)
+            self.bounds = component.getExtents(Atspi.CoordType.SCREEN)
         except:
             msg = "ERROR: Exception getting extents of %s" % self.topLevel
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        containerRoles = [pyatspi.ROLE_MENU]
+        containerRoles = [Atspi.Role.MENU]
         isContainer = lambda x: x and x.getRole() in containerRoles
         container = pyatspi.findAncestor(self.focusObj, isContainer)
         if not container and isContainer(self.focusObj):
@@ -541,7 +545,7 @@ class Context:
         substrings = [(*m.span(), m.group(0))  for m in re.finditer(r"[^\ufffc]+", string)]
         substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
         for (start, end, substring) in substrings:
-            extents = accessible.queryText().getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+            extents = accessible.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
             if self.script.utilities.containsRegion(extents, cliprect):
                 clipping = self.script.utilities.intersection(extents, cliprect)
                 zones.append(TextZone(accessible, start, substring, *clipping))
@@ -559,7 +563,7 @@ class Context:
         lines = []
         offset = startOffset
         while offset < min(endOffset, text.characterCount):
-            result = text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+            result = text.getTextAtOffset(offset, Atspi.TextBoundaryType.LINE_START)
             if result[0] and result not in lines:
                 lines.append(result)
             offset = max(result[2], offset + 1)
@@ -586,7 +590,7 @@ class Context:
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
         if "EditableText" in pyatspi.listInterfaces(accessible) \
-           and accessible.getState().contains(pyatspi.STATE_SINGLE_LINE):
+           and accessible.getState().contains(Atspi.StateType.SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 
@@ -648,20 +652,20 @@ class Context:
 
         indicatorExtents = [extents.x, extents.y, 1, extents.height]
         role = accessible.getRole()
-        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+        if role == Atspi.Role.TOGGLE_BUTTON:
             zone = StateZone(accessible, *indicatorExtents, role=role)
             if zone:
                 zones.insert(0, zone)
             return
 
-        if role == pyatspi.ROLE_TABLE_CELL \
+        if role == Atspi.Role.TABLE_CELL \
            and self.script.utilities.hasMeaningfulToggleAction(accessible):
-            role = pyatspi.ROLE_CHECK_BOX
+            role = Atspi.Role.CHECK_BOX
 
-        if role not in [pyatspi.ROLE_CHECK_BOX,
-                        pyatspi.ROLE_CHECK_MENU_ITEM,
-                        pyatspi.ROLE_RADIO_BUTTON,
-                        pyatspi.ROLE_RADIO_MENU_ITEM]:
+        if role not in [Atspi.Role.CHECK_BOX,
+                        Atspi.Role.CHECK_MENU_ITEM,
+                        Atspi.Role.RADIO_BUTTON,
+                        Atspi.Role.RADIO_MENU_ITEM]:
             return
 
         zone = None
@@ -690,7 +694,7 @@ class Context:
 
         try:
             component = accessible.queryComponent()
-            extents = component.getExtents(pyatspi.DESKTOP_COORDS)
+            extents = component.getExtents(Atspi.CoordType.SCREEN)
         except:
             return []
 
@@ -700,17 +704,17 @@ class Context:
             return []
 
         zones = self.getZonesFromText(accessible, cliprect)
-        if not zones and role in [pyatspi.ROLE_SCROLL_BAR,
-                                  pyatspi.ROLE_SLIDER,
-                                  pyatspi.ROLE_PROGRESS_BAR]:
+        if not zones and role in [Atspi.Role.SCROLL_BAR,
+                                  Atspi.Role.SLIDER,
+                                  Atspi.Role.PROGRESS_BAR]:
             zones.append(ValueZone(accessible, *extents))
         elif not zones:
             string = ""
-            redundant = [pyatspi.ROLE_TABLE_ROW]
+            redundant = [Atspi.Role.TABLE_ROW]
             if role not in redundant:
                 string = self.script.speechGenerator.getName(accessible, inFlatReview=True)
 
-            useless = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LABEL]
+            useless = [Atspi.Role.TABLE_CELL, Atspi.Role.LABEL]
             if not string and role not in useless:
                 string = self.script.speechGenerator.getRoleName(accessible)
             if string:

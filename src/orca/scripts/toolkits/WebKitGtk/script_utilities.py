@@ -27,6 +27,10 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
                 "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import re
 
@@ -82,12 +86,12 @@ class Utilities(script_utilities.Utilities):
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
 
-        if not obj.getRole() == pyatspi.ROLE_ENTRY:
+        if not obj.getRole() == Atspi.Role.ENTRY:
             return False
 
         state = obj.getState()
-        readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
-                   and not state.contains(pyatspi.STATE_EDITABLE)
+        readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
+                   and not state.contains(Atspi.StateType.EDITABLE)
 
         return readOnly
 
@@ -105,7 +109,7 @@ class Utilities(script_utilities.Utilities):
         if text and text != self.EMBEDDED_OBJECT_CHARACTER:
             return text
 
-        if obj.getRole() in [pyatspi.ROLE_LINK, pyatspi.ROLE_LIST_ITEM]:
+        if obj.getRole() in [Atspi.Role.LINK, Atspi.Role.LIST_ITEM]:
             text = ' '.join(map(self.displayedText, (x for x in obj)))
             if not text:
                 text = self.linkBasename(obj)
@@ -114,7 +118,7 @@ class Utilities(script_utilities.Utilities):
 
     def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return self.getObjectsFromEOCs(
-            obj, offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+            obj, offset, Atspi.TextBoundaryType.LINE_START)
 
     def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
         return self.getObjectsFromEOCs(obj, offset)
@@ -147,7 +151,7 @@ class Utilities(script_utilities.Utilities):
             start = 0
             end = text.characterCount
         else:
-            if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+            if boundary == Atspi.TextBoundaryType.CHAR:
                 key, mods = self.lastKeyAndModifiers()
                 if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
                     offset -= 1
@@ -178,7 +182,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        if obj.getRole() == pyatspi.ROLE_LINK:
+        if obj.getRole() == Atspi.Role.LINK:
             obj = obj.parent
 
         index = obj.getIndexInParent() - 1
@@ -191,7 +195,7 @@ class Utilities(script_utilities.Utilities):
         except:
             prevObj = obj
         else:
-            if prevObj.getRole() == pyatspi.ROLE_LIST and prevObj.childCount:
+            if prevObj.getRole() == Atspi.Role.LIST and prevObj.childCount:
                 if self.isTextListItem(prevObj[0]):
                     prevObj = prevObj[-1]
 
@@ -203,7 +207,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        if obj.getRole() == pyatspi.ROLE_LINK:
+        if obj.getRole() == Atspi.Role.LINK:
             obj = obj.parent
 
         index = obj.getIndexInParent() + 1
@@ -216,7 +220,7 @@ class Utilities(script_utilities.Utilities):
         except:
             nextObj = None
         else:
-            if nextObj.getRole() == pyatspi.ROLE_LIST and nextObj.childCount:
+            if nextObj.getRole() == Atspi.Role.LIST and nextObj.childCount:
                 if self.isTextListItem(nextObj[0]):
                     nextObj = nextObj[0]
 
@@ -225,22 +229,22 @@ class Utilities(script_utilities.Utilities):
     def isTextListItem(self, obj):
         """Returns True if obj is an item in a non-selectable list."""
 
-        if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
+        if obj.getRole() != Atspi.Role.LIST_ITEM:
             return False
 
-        return not obj.parent.getState().contains(pyatspi.STATE_FOCUSABLE)
+        return not obj.parent.getState().contains(Atspi.StateType.FOCUSABLE)
 
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
 
-        if obj.getRole() == pyatspi.ROLE_SECTION:
+        if obj.getRole() == Atspi.Role.SECTION:
             if obj.childCount > 1:
                 return self.onSameLine(obj[1], obj[1])
 
             return False
 
-        if obj.getRole() == pyatspi.ROLE_LIST:
-            if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        if obj.getRole() == Atspi.Role.LIST:
+            if obj.getState().contains(Atspi.StateType.FOCUSABLE):
                 return False
 
             if not obj.childCount:
@@ -257,7 +261,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isWebKitGtk(obj):
             return False
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
         if not (obj and obj.getRole() in docRoles):
             return False
 
@@ -273,7 +277,7 @@ class Utilities(script_utilities.Utilities):
 
     def setCaretAtStart(self, obj):
         def implementsText(obj):
-            if obj.getRole() == pyatspi.ROLE_LIST:
+            if obj.getRole() == Atspi.Role.LIST:
                 return False
             return 'Text' in pyatspi.utils.listInterfaces(obj)
 

@@ -27,7 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import time
 
 from orca import debug
@@ -87,7 +90,7 @@ class Script(web.Script):
             return
 
         role = event.source.getRole()
-        if event.detail1 and role == pyatspi.ROLE_FRAME \
+        if event.detail1 and role == Atspi.Role.FRAME \
            and not self.utilities.canBeActiveWindow(event.source):
             return
 
@@ -446,7 +449,7 @@ class Script(web.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if child.getRole() == pyatspi.ROLE_ALERT:
+            if child.getRole() == Atspi.Role.ALERT:
                 self.presentObject(child)
 
     def onWindowDeactivated(self, event):

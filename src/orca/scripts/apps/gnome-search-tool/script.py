@@ -27,7 +27,9 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.event_manager as event_manager
 import orca.scripts.toolkits.gtk as gtk
@@ -57,7 +59,7 @@ class Script(gtk.Script):
         """Callback for object:state-changed:showing events."""
 
         obj = event.source
-        if obj.getRole() == pyatspi.ROLE_ANIMATION:
+        if obj.getRole() == Atspi.Role.ANIMATION:
             _manager = event_manager.getManager()
             if event.detail1:
                 _manager.ignoreEventTypes(self._floodEvents)

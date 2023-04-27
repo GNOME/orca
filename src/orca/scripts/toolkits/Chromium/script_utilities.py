@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import re
 import time
@@ -73,7 +77,7 @@ class Utilities(web.Utilities):
         if rv is not None:
             return rv
 
-        roles = [pyatspi.ROLE_STATIC, pyatspi.ROLE_TEXT]
+        roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
         rv = obj.getRole() in roles and self._getTag(obj) in (None, "br")
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
@@ -107,7 +111,7 @@ class Utilities(web.Utilities):
             return rv
 
         rv = False
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_ITEM:
             tag = self._getTag(obj)
             if tag == "::marker":
                 rv = True
@@ -133,7 +137,7 @@ class Utilities(web.Utilities):
         # child count. But that interface is not implemented yet. This hackaround
         # is extremely non-performant.
         for child in obj:
-            if child.getState().contains(pyatspi.STATE_SELECTED):
+            if child.getState().contains(Atspi.StateType.SELECTED):
                 count += 1
 
         msg = "CHROMIUM: NO SELECTION INTERFACE HACK: Selected children: %i" % count
@@ -147,11 +151,11 @@ class Utilities(web.Utilities):
         result = super().selectedChildren(obj)
 
         # The fix for this issue landed in 90.0.4413.0.
-        if obj.getRole() == pyatspi.ROLE_MENU and not self.inDocumentContent(obj) and len(result) > 1:
+        if obj.getRole() == Atspi.Role.MENU and not self.inDocumentContent(obj) and len(result) > 1:
             msg = "CHROMIUM: Browser menu %s claims more than one state-selected child." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-            isFocused = lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
+            isFocused = lambda x: x and x.getState().contains(Atspi.StateType.FOCUSED)
             focused = list(filter(isFocused, result))
             if len(focused) == 1:
                 msg = "CHROMIUM: Suspecting %s is the only actually-selected child" % focused[0]
@@ -168,7 +172,7 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role != pyatspi.ROLE_MENU or self._getTag(obj.parent) != 'select':
+        if role != Atspi.Role.MENU or self._getTag(obj.parent) != 'select':
             return False
 
         try:
@@ -178,7 +182,7 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        return not parentState.contains(pyatspi.STATE_EXPANDED)
+        return not parentState.contains(Atspi.StateType.EXPANDED)
 
     def treatAsMenu(self, obj):
         if not obj:
@@ -195,8 +199,8 @@ class Utilities(web.Utilities):
         # Unlike other apps and toolkits, submenus in Chromium have the menu item
         # role rather than the menu role, but we can identify them as submenus via
         # the has-popup state.
-        if role == pyatspi.ROLE_MENU_ITEM:
-            return state.contains(pyatspi.STATE_HAS_POPUP)
+        if role == Atspi.Role.MENU_ITEM:
+            return state.contains(Atspi.StateType.HAS_POPUP)
 
         return False
 
@@ -223,16 +227,16 @@ class Utilities(web.Utilities):
         # The ancestry of a popup menu appears to be a menu bar (even though
         # one is not actually showing) contained in a nameless frame. It would
         # be nice if these things were pruned from the accessibility tree....
-        if name or role != pyatspi.ROLE_FRAME or childCount != 1:
+        if name or role != Atspi.Role.FRAME or childCount != 1:
             return False
 
-        if obj[0].getRole() == pyatspi.ROLE_MENU_BAR:
+        if obj[0].getRole() == Atspi.Role.MENU_BAR:
             return True
 
         return False
 
     def isTopLevelMenu(self, obj):
-        if obj.getRole() == pyatspi.ROLE_MENU:
+        if obj.getRole() == Atspi.Role.MENU:
             return self.isFrameForPopupMenu(self.topLevelObject(obj))
 
         return False
@@ -242,7 +246,7 @@ class Utilities(web.Utilities):
             return None
 
         try:
-            menu = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == pyatspi.ROLE_MENU)
+            menu = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == Atspi.Role.MENU)
         except:
             msg = "CHROMIUM: Exception finding descendant of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -288,12 +292,12 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # The only (known) object giving us a broken ancestry is the omnibox popup.
-        roles = [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_LIST_BOX]
+        roles = [Atspi.Role.LIST_ITEM, Atspi.Role.LIST_BOX]
         if not (obj and obj.getRole() in roles):
             return result
 
         listbox = obj
-        if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+        if obj.getRole() == Atspi.Role.LIST_ITEM:
             listbox = listbox.parent
 
         if not listbox:
@@ -302,7 +306,7 @@ class Utilities(web.Utilities):
         # The listbox sometimes claims to be a redundant object rather than a listbox.
         # Clearing the AT-SPI2 cache seems to be the trigger.
         if not (listbox and listbox.getRole() in roles):
-            if listbox.getRole() == pyatspi.ROLE_REDUNDANT_OBJECT:
+            if listbox.getRole() == Atspi.Role.REDUNDANT_OBJECT:
                 msg = "CHROMIUM: WARNING: Suspected bogus role on listbox %s" % listbox
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -318,13 +322,13 @@ class Utilities(web.Utilities):
         return result
 
     def autocompleteForPopup(self, obj):
-        popupFor = lambda r: r.getRelationType() == pyatspi.RELATION_POPUP_FOR
+        popupFor = lambda r: r.getRelationType() == Atspi.RelationType.POPUP_FOR
         relations = list(filter(popupFor, obj.getRelationSet()))
         if not relations:
             return None
 
         target = relations[0].getTarget(0)
-        if target and target.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+        if target and target.getRole() == Atspi.Role.AUTOCOMPLETE:
             return target
 
         return None
@@ -336,7 +340,7 @@ class Utilities(web.Utilities):
         return self.autocompleteForPopup(obj) is not None
 
     def isRedundantAutocompleteEvent(self, event):
-        if event.source.getRole() != pyatspi.ROLE_AUTOCOMPLETE:
+        if event.source.getRole() != Atspi.Role.AUTOCOMPLETE:
             return False
 
         if event.type.startswith("object:text-caret-moved"):
@@ -349,7 +353,7 @@ class Utilities(web.Utilities):
     def setCaretPosition(self, obj, offset, documentFrame=None):
         super().setCaretPosition(obj, offset, documentFrame)
 
-        isLink = lambda x: x and x.getRole() == pyatspi.ROLE_LINK
+        isLink = lambda x: x and x.getRole() == Atspi.Role.LINK
         link = pyatspi.utils.findAncestor(obj, isLink)
         if link:
             msg = "CHROMIUM: HACK: Grabbing focus on %s's ancestor %s" % (obj, link)
@@ -370,7 +374,7 @@ class Utilities(web.Utilities):
         # the text changes appear to be. So most of the time, we can ignore the
         # children-changed events. Except for when we can't.
 
-        if event.any_data.getRole() == pyatspi.ROLE_TABLE:
+        if event.any_data.getRole() == Atspi.Role.TABLE:
             return True
 
         msg = "CHROMIUM: Event is believed to be redundant live region notification"
@@ -382,7 +386,7 @@ class Utilities(web.Utilities):
         if not root:
             return ""
 
-        isMatch = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
+        isMatch = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
         statusBars = self.findAllDescendants(root, isMatch)
         if len(statusBars) != 1:
             return ""
@@ -401,7 +405,7 @@ class Utilities(web.Utilities):
         if obj == self._findContainer:
             return True
 
-        if obj.getRole() != pyatspi.ROLE_DIALOG:
+        if obj.getRole() != Atspi.Role.DIALOG:
             return False
 
         result = self.getFindResultsCount(obj)
@@ -417,19 +421,19 @@ class Utilities(web.Utilities):
         # back on the widgets. TODO: This would be far easier if Chromium gave us an
         # object attribute we could look for....
 
-        isEntry = lambda x: x.getRole() == pyatspi.ROLE_ENTRY
+        isEntry = lambda x: x.getRole() == Atspi.Role.ENTRY
         if len(self.findAllDescendants(obj, isEntry)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isButton = lambda x: x.getRole() == pyatspi.ROLE_PUSH_BUTTON
+        isButton = lambda x: x.getRole() == Atspi.Role.PUSH_BUTTON
         if len(self.findAllDescendants(obj, isButton)) != 3:
             msg = "CHROMIUM: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isSeparator = lambda x: x.getRole() == pyatspi.ROLE_SEPARATOR
+        isSeparator = lambda x: x.getRole() == Atspi.Role.SEPARATOR
         if len(self.findAllDescendants(obj, isSeparator)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (separator count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -447,10 +451,10 @@ class Utilities(web.Utilities):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        if obj.getRole() not in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PUSH_BUTTON]:
+        if obj.getRole() not in [Atspi.Role.ENTRY, Atspi.Role.PUSH_BUTTON]:
             return False
 
-        isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+        isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
         result = self.isFindContainer(pyatspi.findAncestor(obj, isDialog))
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page widget" % obj

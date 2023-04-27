@@ -33,7 +33,6 @@ gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
 
 import functools
-import pyatspi
 
 from . import debug
 from . import settings
@@ -46,32 +45,32 @@ _keycodeCache = {}
 
 MODIFIER_ORCA = 8
 NO_MODIFIER_MASK              =  0
-ALT_MODIFIER_MASK             =  1 << pyatspi.MODIFIER_ALT
-CTRL_MODIFIER_MASK            =  1 << pyatspi.MODIFIER_CONTROL
+ALT_MODIFIER_MASK             =  1 << Atspi.ModifierType.ALT
+CTRL_MODIFIER_MASK            =  1 << Atspi.ModifierType.CONTROL
 ORCA_MODIFIER_MASK            =  1 << MODIFIER_ORCA
 ORCA_ALT_MODIFIER_MASK        = (1 << MODIFIER_ORCA |
-                                 1 << pyatspi.MODIFIER_ALT)
+                                 1 << Atspi.ModifierType.ALT)
 ORCA_CTRL_MODIFIER_MASK       = (1 << MODIFIER_ORCA |
-                                 1 << pyatspi.MODIFIER_CONTROL)
+                                 1 << Atspi.ModifierType.CONTROL)
 ORCA_CTRL_ALT_MODIFIER_MASK   = (1 << MODIFIER_ORCA |
-                                 1 << pyatspi.MODIFIER_CONTROL |
-                                 1 << pyatspi.MODIFIER_ALT)
+                                 1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.ALT)
 ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
-                                 1 << pyatspi.MODIFIER_SHIFT)
-SHIFT_MODIFIER_MASK           =  1 << pyatspi.MODIFIER_SHIFT
-SHIFT_ALT_MODIFIER_MASK       = (1 << pyatspi.MODIFIER_SHIFT |
-                                 1 << pyatspi.MODIFIER_ALT)
-CTRL_ALT_MODIFIER_MASK        = (1 << pyatspi.MODIFIER_CONTROL |
-                                 1 << pyatspi.MODIFIER_ALT)
-COMMAND_MODIFIER_MASK         = (1 << pyatspi.MODIFIER_ALT |
-                                 1 << pyatspi.MODIFIER_CONTROL |
-                                 1 << pyatspi.MODIFIER_META2 |
-                                 1 << pyatspi.MODIFIER_META3)
-NON_LOCKING_MODIFIER_MASK     = (1 << pyatspi.MODIFIER_SHIFT |
-                                 1 << pyatspi.MODIFIER_ALT |
-                                 1 << pyatspi.MODIFIER_CONTROL |
-                                 1 << pyatspi.MODIFIER_META2 |
-                                 1 << pyatspi.MODIFIER_META3 |
+                                 1 << Atspi.ModifierType.SHIFT)
+SHIFT_MODIFIER_MASK           =  1 << Atspi.ModifierType.SHIFT
+SHIFT_ALT_MODIFIER_MASK       = (1 << Atspi.ModifierType.SHIFT |
+                                 1 << Atspi.ModifierType.ALT)
+CTRL_ALT_MODIFIER_MASK        = (1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.ALT)
+COMMAND_MODIFIER_MASK         = (1 << Atspi.ModifierType.ALT |
+                                 1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.META2 |
+                                 1 << Atspi.ModifierType.META3)
+NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
+                                 1 << Atspi.ModifierType.ALT |
+                                 1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.META2 |
+                                 1 << Atspi.ModifierType.META3 |
                                  1 << MODIFIER_ORCA)
 defaultModifierMask = NON_LOCKING_MODIFIER_MASK
 
@@ -147,29 +146,29 @@ def getModifierNames(mods):
             # Translators: this is presented in a GUI to represent the
             # "caps lock" modifier.
             text += _("Caps_Lock") + "+"
-    elif mods & (1 << pyatspi.MODIFIER_SHIFTLOCK):
+    elif mods & (1 << Atspi.ModifierType.SHIFTLOCK):
         # Translators: this is presented in a GUI to represent the
         # "caps lock" modifier.
         #
         text += _("Caps_Lock") + "+"
-    #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
+    #if mods & (1 << Atspi.ModifierType.NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:
         # Translators: this is presented in a GUI to represent the
         # "right alt" modifier.
         #
         text += _("Alt_R") + "+"
-    if mods & (1 << pyatspi.MODIFIER_META3):
+    if mods & (1 << Atspi.ModifierType.META3):
         # Translators: this is presented in a GUI to represent the
         # "super" modifier.
         #
         text += _("Super") + "+"
-    if mods & (1 << pyatspi.MODIFIER_META2):
+    if mods & (1 << Atspi.ModifierType.META2):
         # Translators: this is presented in a GUI to represent the
         # "meta 2" modifier.
         #
         text += _("Meta2") + "+"
-    #if mods & (1 << pyatspi.MODIFIER_META):
+    #if mods & (1 << Atspi.ModifierType.META):
     #    text += _("Meta") + "+"
     if mods & ALT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
@@ -220,10 +219,10 @@ class KeyBinding:
           from /usr/include/X11/keysymdef.h with the preceding 'XK_'
           removed (e.g., XK_KP_Enter becomes the string 'KP_Enter').
         - modifier_mask: bit mask where a set bit tells us what modifiers
-          we care about (see pyatspi.MODIFIER_*)
+          we care about (see Atspi.ModifierType.*)
         - modifiers: the state the modifiers we care about must be in for
           this key binding to match an input event (see also
-          pyatspi.MODIFIER_*)
+          Atspi.ModifierType.*)
         - handler: the InputEventHandler for this key binding
         """
 

@@ -24,6 +24,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import importlib
 import pyatspi
 
@@ -146,7 +150,7 @@ class ScriptManager:
         except:
             return ''
 
-        if role == pyatspi.ROLE_TERMINAL:
+        if role == Atspi.Role.TERMINAL:
             return 'terminal'
 
         return ''
@@ -251,7 +255,7 @@ class ScriptManager:
     def getScriptForMouseButtonEvent(self, event):
         try:
             state = orca_state.activeWindow.getState()
-            isActive = state.contains(pyatspi.STATE_ACTIVE)
+            isActive = state.contains(Atspi.StateType.ACTIVE)
         except:
             msg = "SCRIPT MANAGER: Exception checking state of %s" % orca_state.activeWindow
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -328,7 +332,7 @@ class ScriptManager:
         except:
             forceAppScript = False
         else:
-            forceAppScript = role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_STATUS_BAR]
+            forceAppScript = role in [Atspi.Role.FRAME, Atspi.Role.STATUS_BAR]
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.

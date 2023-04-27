@@ -24,7 +24,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import re
 
 from orca import debug
@@ -72,7 +75,7 @@ class Utilities(script_utilities.Utilities):
             return event.any_data
 
         start, end = event.detail1, event.detail1 + len(event.any_data)
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        boundary = Atspi.TextBoundaryType.LINE_START
 
         firstLine = text.getTextAtOffset(start, boundary)
         msg = "TERMINAL: First line of insertion: '%s' (%i, %i)" % firstLine
@@ -124,13 +127,13 @@ class Utilities(script_utilities.Utilities):
         return text.caretOffset == event.detail1 + event.detail2
 
     def isEditableTextArea(self, obj):
-        if obj and obj.getRole() == pyatspi.ROLE_TERMINAL:
+        if obj and obj.getRole() == Atspi.Role.TERMINAL:
             return True
 
         return super().isEditableTextArea(obj)
 
     def isTextArea(self, obj):
-        if obj and obj.getRole() == pyatspi.ROLE_TERMINAL:
+        if obj and obj.getRole() == Atspi.Role.TERMINAL:
             return True
 
         return super().isTextArea(obj)

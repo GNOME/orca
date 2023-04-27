@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.scripts.default as default
@@ -54,11 +58,11 @@ class Script(default.Script):
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getRole() == pyatspi.ROLE_TEXT \
-           and obj.parent.getRole() == pyatspi.ROLE_SCROLL_PANE:
+        if obj and obj.getRole() == Atspi.Role.TEXT \
+           and obj.parent.getRole() == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
-            if not state.contains(pyatspi.STATE_EDITABLE) \
-               and state.contains(pyatspi.STATE_MULTI_LINE):
+            if not state.contains(Atspi.StateType.EDITABLE) \
+               and state.contains(Atspi.StateType.MULTI_LINE):
                 return True
 
         return False
@@ -88,8 +92,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() == pyatspi.ROLE_SPLIT_PANE:
-            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_TEXT
+        if event.source.getRole() == Atspi.Role.SPLIT_PANE:
+            hasRole = lambda x: x and x.getRole() == Atspi.Role.TEXT
             textObjects = pyatspi.findAllDescendants(event.source, hasRole)
             return
 

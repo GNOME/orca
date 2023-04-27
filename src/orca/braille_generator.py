@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 from . import braille
@@ -53,12 +57,12 @@ class BrailleGenerator(generator.Generator):
     primary entry point.  Subclasses can feel free to override/extend
     the brailleGenerators instance field as they see fit."""
 
-    SKIP_CONTEXT_ROLES = (pyatspi.ROLE_MENU,
-                          pyatspi.ROLE_MENU_BAR,
-                          pyatspi.ROLE_PAGE_TAB_LIST,
-                          pyatspi.ROLE_REDUNDANT_OBJECT,
-                          pyatspi.ROLE_UNKNOWN,
-                          pyatspi.ROLE_COMBO_BOX)
+    SKIP_CONTEXT_ROLES = (Atspi.Role.MENU,
+                          Atspi.Role.MENU_BAR,
+                          Atspi.Role.PAGE_TAB_LIST,
+                          Atspi.Role.REDUNDANT_OBJECT,
+                          Atspi.Role.UNKNOWN,
+                          Atspi.Role.COMBO_BOX)
 
     def __init__(self, script):
         generator.Generator.__init__(self, script, "braille")
@@ -122,12 +126,12 @@ class BrailleGenerator(generator.Generator):
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Text) \
-                 and role == pyatspi.ROLE_COMBO_BOX \
+                 and role == Atspi.Role.COMBO_BOX \
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Component) \
-                 and role == pyatspi.ROLE_TABLE_CELL \
+                 and role == Atspi.Role.TABLE_CELL \
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break
@@ -148,7 +152,7 @@ class BrailleGenerator(generator.Generator):
 
     def _generateRoleName(self, obj, **args):
         """Returns the role name for the object in an array of strings, with
-        the exception that the pyatspi.ROLE_UNKNOWN role will yield an
+        the exception that the Atspi.Role.UNKNOWN role will yield an
         empty array.  Note that a 'role' attribute in args will
         override the accessible role of the obj.
         """
@@ -161,20 +165,20 @@ class BrailleGenerator(generator.Generator):
         role = args.get('role', obj.getRole())
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
 
-        doNotPresent = [pyatspi.ROLE_UNKNOWN,
-                        pyatspi.ROLE_REDUNDANT_OBJECT,
-                        pyatspi.ROLE_FILLER,
-                        pyatspi.ROLE_EXTENDED,
-                        pyatspi.ROLE_LINK]
+        doNotPresent = [Atspi.Role.UNKNOWN,
+                        Atspi.Role.REDUNDANT_OBJECT,
+                        Atspi.Role.FILLER,
+                        Atspi.Role.EXTENDED,
+                        Atspi.Role.LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             doNotPresent.append(obj.getRole())
 
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
-            doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
+            doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
-        if role == pyatspi.ROLE_HEADING:
+        if role == Atspi.Role.HEADING:
             level = self._script.utilities.headingLevel(obj)
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
@@ -278,7 +282,7 @@ class BrailleGenerator(generator.Generator):
         # used to find the radio button group name.
         #
         role = args.get('role', obj.getRole())
-        excludeRadioButtonGroup = role == pyatspi.ROLE_RADIO_BUTTON
+        excludeRadioButtonGroup = role == Atspi.Role.RADIO_BUTTON
 
         parent = obj.parent
         if parent and (parent.getRole() in self.SKIP_CONTEXT_ROLES):
@@ -294,10 +298,10 @@ class BrailleGenerator(generator.Generator):
                 role = parent.getRole()
             except:
                 role = None
-            if role and role != pyatspi.ROLE_FILLER \
-                and role != pyatspi.ROLE_SECTION \
-                and role != pyatspi.ROLE_SPLIT_PANE \
-                and role != pyatspi.ROLE_DESKTOP_FRAME \
+            if role and role != Atspi.Role.FILLER \
+                and role != Atspi.Role.SECTION \
+                and role != Atspi.Role.SPLIT_PANE \
+                and role != Atspi.Role.DESKTOP_FRAME \
                 and not self._script.utilities.isLayoutOnly(parent):
                 args['role'] = role
                 parentResult = self.generate(parent, **args)
@@ -309,7 +313,7 @@ class BrailleGenerator(generator.Generator):
             # container for the grouped objects.  When we detect this,
             # we add the label to the overall context.]]]
             #
-            if role in [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]:
+            if role in [Atspi.Role.FILLER, Atspi.Role.PANEL]:
                 label = self._script.utilities.displayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     if not excludeRadioButtonGroup:
@@ -320,7 +324,7 @@ class BrailleGenerator(generator.Generator):
             if result and parentResult:
                 result.append(braille.Region(" "))
             result.extend(parentResult)
-            if role == pyatspi.ROLE_EMBEDDED:
+            if role == Atspi.Role.EMBEDDED:
                 break
 
             parent = parent.parent
@@ -330,7 +334,7 @@ class BrailleGenerator(generator.Generator):
     def _generateFocusedItem(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+        if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
         if 'Selection' in pyatspi.listInterfaces(obj):
@@ -371,15 +375,15 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _generateListBoxItemWidgets(self, obj, **args):
-        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
-                       pyatspi.ROLE_COMBO_BOX,
-                       pyatspi.ROLE_PUSH_BUTTON,
-                       pyatspi.ROLE_RADIO_BUTTON,
-                       pyatspi.ROLE_SLIDER,
-                       pyatspi.ROLE_TOGGLE_BUTTON]
+        widgetRoles = [Atspi.Role.CHECK_BOX,
+                       Atspi.Role.COMBO_BOX,
+                       Atspi.Role.PUSH_BUTTON,
+                       Atspi.Role.RADIO_BUTTON,
+                       Atspi.Role.SLIDER,
+                       Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and x.getRole() in widgetRoles
         result = []
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))
@@ -479,10 +483,10 @@ class BrailleGenerator(generator.Generator):
         except NotImplementedError:
             text = None
         if text and (self._script.utilities.isTextArea(obj) \
-                     or (obj.getRole() in [pyatspi.ROLE_LABEL])):
+                     or (obj.getRole() in [Atspi.Role.LABEL])):
             try:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                    text.caretOffset, Atspi.TextBoundaryType.LINE_START)
             except:
                 return include
 
@@ -490,7 +494,7 @@ class BrailleGenerator(generator.Generator):
             if include:
                 for relation in obj.getRelationSet():
                     if relation.getRelationType() \
-                            == pyatspi.RELATION_FLOWS_FROM:
+                            == Atspi.RelationType.FLOWS_FROM:
                         include = not self._script.utilities.\
                             isTextArea(relation.getTarget(0))
         return include

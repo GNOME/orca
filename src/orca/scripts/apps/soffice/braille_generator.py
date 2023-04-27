@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.braille as braille
 import orca.braille_generator as braille_generator
@@ -141,18 +143,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         current page tab. See bug #538056 for more details.
         """
         result = []
-        rolesList = [pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_ROOT_PANE, \
-                     pyatspi.ROLE_FRAME, \
-                     pyatspi.ROLE_APPLICATION]
+        rolesList = [Atspi.Role.SCROLL_PANE, \
+                     Atspi.Role.PANEL, \
+                     Atspi.Role.PANEL, \
+                     Atspi.Role.ROOT_PANE, \
+                     Atspi.Role.FRAME, \
+                     Atspi.Role.APPLICATION]
         if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
             for child in obj.parent:
-                if child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
+                if child.getRole() == Atspi.Role.PAGE_TAB_LIST:
                     for tab in child:
                         eventState = tab.getState()
-                        if eventState.contains(pyatspi.STATE_SELECTED):
+                        if eventState.contains(Atspi.StateType.SELECTED):
                             args['role'] = tab.getRole()
                             result.extend(self.generate(tab, **args))
         return result

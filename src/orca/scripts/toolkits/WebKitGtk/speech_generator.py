@@ -27,7 +27,9 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
                 "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.keynames as keynames
 import orca.object_properties as object_properties
@@ -62,12 +64,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         role = args.get('role', obj.getRole())
-        inferRoles = [pyatspi.ROLE_CHECK_BOX,
-                      pyatspi.ROLE_COMBO_BOX,
-                      pyatspi.ROLE_ENTRY,
-                      pyatspi.ROLE_LIST,
-                      pyatspi.ROLE_PASSWORD_TEXT,
-                      pyatspi.ROLE_RADIO_BUTTON]
+        inferRoles = [Atspi.Role.CHECK_BOX,
+                      Atspi.Role.COMBO_BOX,
+                      Atspi.Role.ENTRY,
+                      Atspi.Role.LIST,
+                      Atspi.Role.PASSWORD_TEXT,
+                      Atspi.Role.RADIO_BUTTON]
         if not role in inferRoles:
             return result
 
@@ -80,7 +82,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def __generateHeadingRole(self, obj):
         result = []
-        role = pyatspi.ROLE_HEADING
+        role = Atspi.Role.HEADING
         level = self._script.utilities.headingLevel(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
@@ -99,35 +101,35 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
-        doNotSpeak = [pyatspi.ROLE_UNKNOWN]
+        doNotSpeak = [Atspi.Role.UNKNOWN]
         if not force:
-            doNotSpeak.extend([pyatspi.ROLE_FORM,
-                               pyatspi.ROLE_LABEL,
-                               pyatspi.ROLE_MENU_ITEM,
-                               pyatspi.ROLE_LIST_ITEM,
-                               pyatspi.ROLE_PARAGRAPH,
-                               pyatspi.ROLE_SECTION,
-                               pyatspi.ROLE_TABLE_CELL])
+            doNotSpeak.extend([Atspi.Role.FORM,
+                               Atspi.Role.LABEL,
+                               Atspi.Role.MENU_ITEM,
+                               Atspi.Role.LIST_ITEM,
+                               Atspi.Role.PARAGRAPH,
+                               Atspi.Role.SECTION,
+                               Atspi.Role.TABLE_CELL])
 
         if not (role in doNotSpeak):
-            docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-            if role == pyatspi.ROLE_IMAGE:
+            docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
+            if role == Atspi.Role.IMAGE:
                 link = self._script.utilities.ancestorWithRole(
-                    obj, [pyatspi.ROLE_LINK], docRoles)
+                    obj, [Atspi.Role.LINK], docRoles)
                 if link:
                     result.append(self.getLocalizedRoleName(link))
-            elif role == pyatspi.ROLE_HEADING:
+            elif role == Atspi.Role.HEADING:
                 result.extend(self.__generateHeadingRole(obj))
             else:
                 result.append(self.getLocalizedRoleName(obj, role=role))
-                if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
+                if obj.parent and obj.parent.getRole() == Atspi.Role.HEADING:
                     result.extend(self.__generateHeadingRole(obj.parent))
 
             if result:
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-            if role == pyatspi.ROLE_LINK \
-               and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+            if role == Atspi.Role.LINK \
+               and obj.childCount and obj[0].getRole() == Atspi.Role.IMAGE:
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #
@@ -149,19 +151,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """
 
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LINK:
+        if role == Atspi.Role.LINK:
             return []
 
-        args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
-                               pyatspi.ROLE_DOCUMENT_WEB,
-                               pyatspi.ROLE_EMBEDDED,
-                               pyatspi.ROLE_INTERNAL_FRAME,
-                               pyatspi.ROLE_FORM,
-                               pyatspi.ROLE_MENU_BAR,
-                               pyatspi.ROLE_TOOL_BAR]
-        args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
-                             pyatspi.ROLE_LIST_ITEM,
-                             pyatspi.ROLE_TEXT]
+        args['stopAtRoles'] = [Atspi.Role.DOCUMENT_FRAME,
+                               Atspi.Role.DOCUMENT_WEB,
+                               Atspi.Role.EMBEDDED,
+                               Atspi.Role.INTERNAL_FRAME,
+                               Atspi.Role.FORM,
+                               Atspi.Role.MENU_BAR,
+                               Atspi.Role.TOOL_BAR]
+        args['skipRoles'] = [Atspi.Role.PARAGRAPH,
+                             Atspi.Role.LIST_ITEM,
+                             Atspi.Role.TEXT]
 
         return speech_generator.SpeechGenerator._generateAncestors(
             self, obj, **args)

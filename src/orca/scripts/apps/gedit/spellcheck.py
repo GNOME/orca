@@ -27,6 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import orca.spellcheck as spellcheck
 
@@ -40,34 +44,34 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
 
         role = window.getRole()
-        if role == pyatspi.ROLE_DIALOG:
+        if role == Atspi.Role.DIALOG:
             return True
-        if role != pyatspi.ROLE_FRAME:
+        if role != Atspi.Role.FRAME:
             return False
 
-        isSplitPane = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
         if pyatspi.findDescendant(window, isSplitPane):
             return False
 
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and x.getRole() == pyatspi.ROLE_TEXT \
-                  and x.getState().contains(pyatspi.STATE_SINGLE_LINE)
+        isEntry = lambda x: x and x.getRole() == Atspi.Role.TEXT \
+                  and x.getState().contains(Atspi.StateType.SINGLE_LINE)
         return pyatspi.findDescendant(root, isEntry)
 
     def _findErrorWidget(self, root):
-        isPanel = lambda x: x and x.getRole() == pyatspi.ROLE_PANEL
+        isPanel = lambda x: x and x.getRole() == Atspi.Role.PANEL
         panel = pyatspi.findAncestor(self._changeToEntry, isPanel)
         if not panel:
             return None
 
-        isError = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL \
+        isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
         return pyatspi.findDescendant(panel, isError)
 
     def _findSuggestionsList(self, root):
-        isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE \
+        isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE \
                   and 'Selection' in x.get_interfaces()
         return pyatspi.findDescendant(root, isTable)
 

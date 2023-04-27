@@ -28,6 +28,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import inspect
 import traceback
 import os
@@ -160,7 +164,7 @@ TRACE_EVENTS = []
 # default, we'll trace everything. An example of what you might wish
 # to do to narrow things down, if you know buttons trigger the problem:
 #
-# TRACE_ROLES = [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]
+# TRACE_ROLES = [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]
 #
 TRACE_ROLES = []
 

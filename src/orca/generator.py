@@ -27,12 +27,18 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc." \
                 "Copyright (c) 2015-2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
+gi.require_version('Atk', '1.0')
+from gi.repository import Atk
+
 import pyatspi
 import re
 import sys
 import time
 import traceback
-from gi.repository import Atspi, Atk
 
 from . import braille
 from . import debug
@@ -306,7 +312,7 @@ class Generator:
 
     def _generateRoleName(self, obj, **args):
         """Returns the role name for the object in an array of strings, with
-        the exception that the pyatspi.ROLE_UNKNOWN role will yield an
+        the exception that the Atspi.Role.UNKNOWN role will yield an
         empty array.  Note that a 'role' attribute in args will
         override the accessible role of the obj.
         """
@@ -315,7 +321,7 @@ class Generator:
 
     def _fallBackOnDescriptionForName(self, obj, **args):
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LABEL:
+        if role == Atspi.Role.LABEL:
             return False
 
         return True
@@ -349,9 +355,9 @@ class Generator:
                 self._script.pointOfReference['usedDescriptionForName'] = True
             else:
                 link = None
-                if obj.getRole() == pyatspi.ROLE_LINK:
+                if obj.getRole() == Atspi.Role.LINK:
                     link = obj
-                elif obj.parent and obj.parent.getRole() == pyatspi.ROLE_LINK:
+                elif obj.parent and obj.parent.getRole() == Atspi.Role.LINK:
                     link = obj.parent
                 if link:
                     basename = self._script.utilities.linkBasenameToName(link)
@@ -362,8 +368,8 @@ class Generator:
             role = args.get('role', obj.getRole())
         except (LookupError, RuntimeError):
             return result
-        if not result and obj.getRole() == pyatspi.ROLE_ICON \
-           and obj.parent.getRole() == pyatspi.ROLE_PANEL:
+        if not result and obj.getRole() == Atspi.Role.ICON \
+           and obj.parent.getRole() == Atspi.Role.PANEL:
             return self._generateName(obj.parent)
 
         return result
@@ -396,7 +402,7 @@ class Generator:
         label = self._generateLabel(obj, **args)
         name = self._generateName(obj, **args)
         role = args.get('role', obj.role)
-        if not (label or name) and role == pyatspi.ROLE_TABLE_CELL:
+        if not (label or name) and role == Atspi.Role.TABLE_CELL:
             descendant = self._script.utilities.realActiveDescendant(obj)
             name = self._generateName(descendant)
 
@@ -465,7 +471,7 @@ class Generator:
         # Unity Panel Service menubar items are labels which claim focus and
         # have an accessible description of the text + underscore symbol used
         # to create the mnemonic. We'll work around that here for now.
-        if role == pyatspi.ROLE_LABEL:
+        if role == Atspi.Role.LABEL:
             return []
 
         try:
@@ -477,7 +483,7 @@ class Generator:
             name = ""
             description = ""
 
-        if role == pyatspi.ROLE_ICON:
+        if role == Atspi.Role.ICON:
             name = self._script.utilities.displayedText(obj) or ""
 
         result = []
@@ -585,7 +591,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'insensitive'
-        if not obj.getState().contains(pyatspi.STATE_SENSITIVE):
+        if not obj.getState().contains(Atspi.StateType.SENSITIVE):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -626,9 +632,9 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'required'
-        if obj.getState().contains(pyatspi.STATE_REQUIRED) \
-           or (obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
-               and obj.parent.getState().contains(pyatspi.STATE_REQUIRED)):
+        if obj.getState().contains(Atspi.StateType.REQUIRED) \
+           or (obj.getRole() == Atspi.Role.RADIO_BUTTON \
+               and obj.parent.getState().contains(Atspi.StateType.REQUIRED)):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -641,7 +647,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
-        if obj.getState().contains(pyatspi.STATE_READ_ONLY) \
+        if obj.getState().contains(Atspi.StateType.READ_ONLY) \
            or self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
@@ -654,7 +660,7 @@ class Generator:
         """
         result = []
         if self._script.utilities.hasMeaningfulToggleAction(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_CHECK_BOX, args)
+            oldRole = self._overrideRole(Atspi.Role.CHECK_BOX, args)
             result.extend(self.generate(obj, **args))
             self._restoreRole(oldRole, args)
 
@@ -672,9 +678,9 @@ class Generator:
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(Atspi.StateType.CHECKED):
             result.append(indicators[1])
-        elif state.contains(pyatspi.STATE_INDETERMINATE):
+        elif state.contains(Atspi.StateType.INDETERMINATE):
             result.append(indicators[2])
         else:
             result.append(indicators[0])
@@ -692,23 +698,23 @@ class Generator:
         args['stringType'] = 'radiobutton'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(Atspi.StateType.CHECKED):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
         return result
 
     def _generateChildWidget(self, obj, **args):
-        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
-                       pyatspi.ROLE_COMBO_BOX,
-                       pyatspi.ROLE_PUSH_BUTTON,
-                       pyatspi.ROLE_RADIO_BUTTON,
-                       pyatspi.ROLE_SLIDER,
-                       pyatspi.ROLE_TOGGLE_BUTTON]
+        widgetRoles = [Atspi.Role.CHECK_BOX,
+                       Atspi.Role.COMBO_BOX,
+                       Atspi.Role.PUSH_BUTTON,
+                       Atspi.Role.RADIO_BUTTON,
+                       Atspi.Role.SLIDER,
+                       Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and x.getRole() in widgetRoles
 
         # For GtkListBox, such as those found in the control center
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             widget = pyatspi.findDescendant(obj, isWidget)
             if widget:
                 return self.generate(widget, includeContext=False)
@@ -722,8 +728,8 @@ class Generator:
         args['stringType'] = 'switch'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED) \
-           or state.contains(pyatspi.STATE_PRESSED):
+        if state.contains(Atspi.StateType.CHECKED) \
+           or state.contains(Atspi.StateType.PRESSED):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
@@ -741,19 +747,19 @@ class Generator:
         args['stringType'] = 'togglebutton'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED) \
-           or state.contains(pyatspi.STATE_PRESSED):
+        if state.contains(Atspi.StateType.CHECKED) \
+           or state.contains(Atspi.StateType.PRESSED):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
         return result
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
-        if obj.getState().contains(pyatspi.STATE_CHECKABLE) \
-           or obj.getRole() == pyatspi.ROLE_CHECK_MENU_ITEM:
+        if obj.getState().contains(Atspi.StateType.CHECKABLE) \
+           or obj.getRole() == Atspi.Role.CHECK_MENU_ITEM:
             return self._generateCheckedState(obj, **args)
 
-        if obj.getState().contains(pyatspi.STATE_CHECKED):
+        if obj.getState().contains(Atspi.StateType.CHECKED):
             return self._generateCheckedState(obj, **args)
 
         return []
@@ -768,7 +774,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
-        if obj.getState().contains(pyatspi.STATE_CHECKED):
+        if obj.getState().contains(Atspi.StateType.CHECKED):
             result.append(indicators[1])
         return result
 
@@ -784,11 +790,11 @@ class Generator:
         args['stringType'] = 'expansion'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_COLLAPSED):
+        if state.contains(Atspi.StateType.COLLAPSED):
             result.append(indicators[0])
-        elif state.contains(pyatspi.STATE_EXPANDED):
+        elif state.contains(Atspi.StateType.EXPANDED):
             result.append(indicators[1])
-        elif state.contains(pyatspi.STATE_EXPANDABLE):
+        elif state.contains(Atspi.StateType.EXPANDABLE):
             result.append(indicators[0])
 
         return result
@@ -804,7 +810,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'multiselect'
-        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE) \
+        if obj.getState().contains(Atspi.StateType.MULTISELECTABLE) \
            and obj.childCount:
             result.append(self._script.formatting.getString(**args))
         return result
@@ -833,7 +839,7 @@ class Generator:
         if not text:
             return result
 
-        roleString =  self.getLocalizedRoleName(obj, role=pyatspi.ROLE_ROW_HEADER)
+        roleString =  self.getLocalizedRoleName(obj, role=Atspi.Role.ROW_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
@@ -859,7 +865,7 @@ class Generator:
         if not text:
             return result
 
-        roleString =  self.getLocalizedRoleName(obj, role=pyatspi.ROLE_COLUMN_HEADER)
+        roleString =  self.getLocalizedRoleName(obj, role=Atspi.Role.COLUMN_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
@@ -1131,11 +1137,11 @@ class Generator:
         """
 
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_COMBO_BOX:
+        if role == Atspi.Role.COMBO_BOX:
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
 
-        if role == pyatspi.ROLE_SEPARATOR and not obj.getState().contains(pyatspi.STATE_FOCUSED):
+        if role == Atspi.Role.SEPARATOR and not obj.getState().contains(Atspi.StateType.FOCUSED):
             return []
 
         return [self._script.utilities.textForValue(obj)]
@@ -1186,13 +1192,13 @@ class Generator:
             role = obj.getRole()
         except:
             role = None
-        if role == pyatspi.ROLE_RADIO_BUTTON:
+        if role == Atspi.Role.RADIO_BUTTON:
             radioGroupLabel = None
             relations = obj.getRelationSet()
             for relation in relations:
                 if (not radioGroupLabel) \
                     and (relation.getRelationType() \
-                         == pyatspi.RELATION_LABELLED_BY):
+                         == Atspi.RelationType.LABELLED_BY):
                     radioGroupLabel = relation.getTarget(0)
                     break
             if radioGroupLabel:
@@ -1201,8 +1207,8 @@ class Generator:
             else:
                 parent = obj.parent
                 while parent and (parent.parent != parent):
-                    if parent.getRole() in [pyatspi.ROLE_PANEL,
-                                            pyatspi.ROLE_FILLER]:
+                    if parent.getRole() in [Atspi.Role.PANEL,
+                                            Atspi.Role.FILLER]:
                         label = self._generateLabelAndName(parent)
                         if label:
                             result.extend(label)
@@ -1220,7 +1226,7 @@ class Generator:
         result = []
         rad = self._script.utilities.realActiveDescendant(obj)
 
-        if not (rad.getRole() == pyatspi.ROLE_TABLE_CELL and rad.childCount):
+        if not (rad.getRole() == Atspi.Role.TABLE_CELL and rad.childCount):
             return self._generateDisplayedText(rad, **args)
 
         content = set([self._script.utilities.displayedText(x).strip() for x in rad])
@@ -1246,7 +1252,7 @@ class Generator:
         result = []
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if parent.getRole() == pyatspi.ROLE_PANEL:
+            if parent.getRole() == Atspi.Role.PANEL:
                 label = self._generateLabelAndName(parent)
                 if label:
                     result.extend(label)
@@ -1336,16 +1342,16 @@ class Generator:
         if self._script.utilities.isDPub(obj):
             if self._script.utilities.isLandmark(obj):
                 return 'ROLE_DPUB_LANDMARK'
-            if obj.getRole() == pyatspi.ROLE_SECTION:
+            if obj.getRole() == Atspi.Role.SECTION:
                 return 'ROLE_DPUB_SECTION'
         if self._script.utilities.isSwitch(obj):
             return 'ROLE_SWITCH'
         if self._script.utilities.isAnchor(obj):
-            return pyatspi.ROLE_STATIC
+            return Atspi.Role.STATIC
         if self._script.utilities.isBlockquote(obj):
-            return pyatspi.ROLE_BLOCK_QUOTE
+            return Atspi.Role.BLOCK_QUOTE
         if self._script.utilities.isComment(obj):
-            return pyatspi.ROLE_COMMENT
+            return Atspi.Role.COMMENT
         if self._script.utilities.isContentDeletion(obj):
             return 'ROLE_CONTENT_DELETION'
         if self._script.utilities.isContentError(obj):
@@ -1357,11 +1363,11 @@ class Generator:
         if self._script.utilities.isContentSuggestion(obj):
             return 'ROLE_CONTENT_SUGGESTION'
         if self._script.utilities.isDescriptionList(obj):
-            return pyatspi.ROLE_DESCRIPTION_LIST
+            return Atspi.Role.DESCRIPTION_LIST
         if self._script.utilities.isDescriptionListTerm(obj):
-            return pyatspi.ROLE_DESCRIPTION_TERM
+            return Atspi.Role.DESCRIPTION_TERM
         if self._script.utilities.isDescriptionListDescription(obj):
-            return pyatspi.ROLE_DESCRIPTION_VALUE
+            return Atspi.Role.DESCRIPTION_VALUE
         if self._script.utilities.isFeedArticle(obj):
             return 'ROLE_ARTICLE_IN_FEED'
         if self._script.utilities.isFeed(obj):
@@ -1369,11 +1375,11 @@ class Generator:
         if self._script.utilities.isLandmark(obj):
             if self._script.utilities.isLandmarkRegion(obj):
                 return 'ROLE_REGION'
-            return pyatspi.ROLE_LANDMARK
+            return Atspi.Role.LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
-            return pyatspi.ROLE_LIST_ITEM
+            return Atspi.Role.LIST_ITEM
         if self._script.utilities.isDocument(obj) and 'Image' in pyatspi.listInterfaces(obj):
-            return pyatspi.ROLE_IMAGE
+            return Atspi.Role.IMAGE
 
         return args.get('role', obj.getRole())
 
@@ -1382,27 +1388,27 @@ class Generator:
 
         if "Value" in pyatspi.listInterfaces(obj):
             state = obj.getState()
-            isVertical = state.contains(pyatspi.STATE_VERTICAL)
-            isHorizontal = state.contains(pyatspi.STATE_HORIZONTAL)
-            isFocused = state.contains(pyatspi.STATE_FOCUSED) \
+            isVertical = state.contains(Atspi.StateType.VERTICAL)
+            isHorizontal = state.contains(Atspi.StateType.HORIZONTAL)
+            isFocused = state.contains(Atspi.StateType.FOCUSED) \
                         or args.get('alreadyFocused', False)
 
-            if role == pyatspi.ROLE_SLIDER:
+            if role == Atspi.Role.SLIDER:
                 if isHorizontal:
                     return object_properties.ROLE_SLIDER_HORIZONTAL
                 if isVertical:
                     return object_properties.ROLE_SLIDER_VERTICAL
-            elif role == pyatspi.ROLE_SCROLL_BAR:
+            elif role == Atspi.Role.SCROLL_BAR:
                 if isHorizontal:
                     return object_properties.ROLE_SCROLL_BAR_HORIZONTAL
                 if isVertical:
                     return object_properties.ROLE_SCROLL_BAR_VERTICAL
-            elif role == pyatspi.ROLE_SEPARATOR:
+            elif role == Atspi.Role.SEPARATOR:
                 if isHorizontal:
                     return object_properties.ROLE_SPLITTER_HORIZONTAL
                 if isVertical:
                     return object_properties.ROLE_SPLITTER_VERTICAL
-            elif role == pyatspi.ROLE_SPLIT_PANE and isFocused:
+            elif role == Atspi.Role.SPLIT_PANE and isFocused:
                 # The splitter has the opposite orientation of the split pane.
                 if isHorizontal:
                     return object_properties.ROLE_SPLITTER_VERTICAL
@@ -1481,7 +1487,7 @@ class Generator:
                     return object_properties.ROLE_PULLQUOTE
                 if self._script.utilities.isDPubQna(obj):
                     return object_properties.ROLE_QNA
-            elif role == pyatspi.ROLE_LIST_ITEM:
+            elif role == Atspi.Role.LIST_ITEM:
                 if self._script.utilities.isDPubBiblioentry(obj):
                     return object_properties.ROLE_BIBLIOENTRY
                 if self._script.utilities.isDPubEndnote(obj):
@@ -1512,9 +1518,9 @@ class Generator:
             if self._script.utilities.isLandmarkSearch(obj):
                 return object_properties.ROLE_LANDMARK_SEARCH
             if self._script.utilities.isLandmarkForm(obj):
-                role = pyatspi.ROLE_FORM
+                role = Atspi.Role.FORM
         elif self._script.utilities.isComment(obj):
-            role = pyatspi.ROLE_COMMENT
+            role = Atspi.Role.COMMENT
 
         if not isinstance(role, (pyatspi.Role, Atspi.Role)):
             try:
@@ -1524,7 +1530,7 @@ class Generator:
 
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
-        if atkRole == Atk.Role.INVALID and role == pyatspi.ROLE_STATUS_BAR:
+        if atkRole == Atk.Role.INVALID and role == Atspi.Role.STATUS_BAR:
             atkRole = Atk.role_for_name("statusbar")
 
         return Atk.role_get_localized_name(atkRole)
@@ -1535,19 +1541,19 @@ class Generator:
 
         role = args.get('role', obj.getRole())
 
-        if role == pyatspi.ROLE_MENU_ITEM:
+        if role == Atspi.Role.MENU_ITEM:
             return self._generateMenuItemCheckedState(obj, **args)
 
-        if role in [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_RADIO_MENU_ITEM]:
+        if role in [Atspi.Role.RADIO_BUTTON, Atspi.Role.RADIO_MENU_ITEM]:
             return self._generateRadioState(obj, **args)
 
-        if role in [pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_CHECK_MENU_ITEM]:
+        if role in [Atspi.Role.CHECK_BOX, Atspi.Role.CHECK_MENU_ITEM]:
             return self._generateCheckedState(obj, **args)
 
-        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+        if role == Atspi.Role.TOGGLE_BUTTON:
             return self._generateToggleState(obj, **args)
 
-        if role == pyatspi.ROLE_TABLE_CELL:
+        if role == Atspi.Role.TABLE_CELL:
             return self._generateCellCheckedState(obj, **args)
 
         return []
@@ -1555,10 +1561,10 @@ class Generator:
     def getValue(self, obj, **args):
         role = args.get('role', obj.getRole())
 
-        if role == pyatspi.ROLE_PROGRESS_BAR:
+        if role == Atspi.Role.PROGRESS_BAR:
             return self._generateProgressBarValue(obj, **args)
 
-        if role in [pyatspi.ROLE_SCROLL_BAR, pyatspi.ROLE_SLIDER]:
+        if role in [Atspi.Role.SCROLL_BAR, Atspi.Role.SLIDER]:
             return self._generatePercentage(obj, **args)
 
         return []

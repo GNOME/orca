@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import time
 
@@ -77,7 +81,7 @@ class Script(default.Script):
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
            and "Table" in pyatspi.listInterfaces(event.source) \
-           and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+           and not event.source.getState().contains(Atspi.StateType.FOCUSED):
             return
 
         ancestor = pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source)
@@ -88,7 +92,7 @@ class Script(default.Script):
         if ancestor and "Table" in pyatspi.listInterfaces(ancestor):
             return
 
-        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
         if isMenu(ancestor) and not pyatspi.findAncestor(ancestor, isMenu):
             return
 
@@ -97,7 +101,7 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        isFocused = event.source.getState().contains(pyatspi.STATE_FOCUSED)
+        isFocused = event.source.getState().contains(Atspi.StateType.FOCUSED)
         role = event.source.getRole()
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
@@ -110,7 +114,7 @@ class Script(default.Script):
                     self.presentObject(child)
             return
 
-        if role == pyatspi.ROLE_LAYERED_PANE \
+        if role == Atspi.Role.LAYERED_PANE \
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 

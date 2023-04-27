@@ -27,7 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import re
 
 from orca import guilabels
@@ -119,7 +122,7 @@ class SpellCheck:
             state = self._changeToEntry.getState()
         except:
             return False
-        return not state.contains(pyatspi.STATE_SENSITIVE)
+        return not state.contains(Atspi.StateType.SENSITIVE)
 
     def isAutoFocusEvent(self, event):
         return False
@@ -144,11 +147,11 @@ class SpellCheck:
             return False
 
         # This should work, but some toolkits are broken.
-        boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+        boundary = Atspi.TextBoundaryType.SENTENCE_START
         string, start, end = text.getTextAtOffset(offset, boundary)
 
         if not string:
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
             string, start, end = text.getTextAtOffset(offset, boundary)
             sentences = re.split(r'(?:\.|\!|\?)', string)
             word = self.getMisspelledWord()

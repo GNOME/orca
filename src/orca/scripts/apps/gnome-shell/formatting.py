@@ -24,21 +24,23 @@ __copyright__ = "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
 import copy
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.formatting
 import orca.settings
 
 formatting = {
     'speech': {
-        pyatspi.ROLE_MENU_ITEM: {
+        Atspi.Role.MENU_ITEM: {
             'focused': 'expandableState',
             'unfocused': 'labelAndName + pause + unrelatedLabels + pause + menuItemCheckedState + expandableState + availability + ' + orca.formatting.MNEMONIC + ' + accelerator + pause + positionInList',
             'basicWhereAmI': 'ancestors + pause + labelAndName + pause + unrelatedLabels + pause + accelerator + pause + positionInList + ' + orca.formatting.MNEMONIC
             },
     },
     'braille': {
-        pyatspi.ROLE_MENU_ITEM: {
+        Atspi.Role.MENU_ITEM: {
             'unfocused': '[Component(obj,\
                                      asString(label + (displayedText or unrelatedLabels) + expandableState + availability) + asString(accelerator),\
                                      indicator=asString(menuItemCheckedState))]'

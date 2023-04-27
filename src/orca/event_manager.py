@@ -239,64 +239,64 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if state.contains(pyatspi.STATE_DEFUNCT):
+        if state.contains(Atspi.StateType.DEFUNCT):
             msg = 'ERROR: Event is from defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.type.startswith('object:property-change:accessible-name'):
-            if role in [pyatspi.ROLE_CANVAS,
-                        pyatspi.ROLE_ICON,
-                        pyatspi.ROLE_LABEL,      # gnome-shell spam
-                        pyatspi.ROLE_LIST_ITEM,  # Web app spam
-                        pyatspi.ROLE_LIST,       # Web app spam
-                        pyatspi.ROLE_SECTION,    # Web app spam
-                        pyatspi.ROLE_TABLE_ROW,  # Thunderbird spam
-                        pyatspi.ROLE_TABLE_CELL, # Thunderbird spam
-                        pyatspi.ROLE_MENU,
-                        pyatspi.ROLE_MENU_ITEM]:
+            if role in [Atspi.Role.CANVAS,
+                        Atspi.Role.ICON,
+                        Atspi.Role.LABEL,      # gnome-shell spam
+                        Atspi.Role.LIST_ITEM,  # Web app spam
+                        Atspi.Role.LIST,       # Web app spam
+                        Atspi.Role.SECTION,    # Web app spam
+                        Atspi.Role.TABLE_ROW,  # Thunderbird spam
+                        Atspi.Role.TABLE_CELL, # Thunderbird spam
+                        Atspi.Role.MENU,
+                        Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:property-change:accessible-value'):
-            if role == pyatspi.ROLE_SPLIT_PANE and not state.contains(pyatspi.STATE_FOCUSED):
+            if role == Atspi.Role.SPLIT_PANE and not state.contains(Atspi.StateType.FOCUSED):
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:text-changed:insert') and event.detail2 > 1000 \
-             and role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_STATIC]:
+             and role in [Atspi.Role.TEXT, Atspi.Role.STATIC]:
             msg = 'EVENT MANAGER: Ignoring because inserted text has more than 1000 chars'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
         elif event.type.startswith('object:state-changed:sensitive'):
-            if role in [pyatspi.ROLE_MENU_ITEM,
-                        pyatspi.ROLE_MENU,
-                        pyatspi.ROLE_FILLER,
-                        pyatspi.ROLE_PANEL,
-                        pyatspi.ROLE_CHECK_MENU_ITEM,
-                        pyatspi.ROLE_RADIO_MENU_ITEM]:
+            if role in [Atspi.Role.MENU_ITEM,
+                        Atspi.Role.MENU,
+                        Atspi.Role.FILLER,
+                        Atspi.Role.PANEL,
+                        Atspi.Role.CHECK_MENU_ITEM,
+                        Atspi.Role.RADIO_MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:state-changed:selected'):
-            if not event.detail1 and role in [pyatspi.ROLE_PUSH_BUTTON]:
+            if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:state-changed:showing'):
-            if role not in [pyatspi.ROLE_ALERT,
-                            pyatspi.ROLE_ANIMATION,
-                            pyatspi.ROLE_INFO_BAR,
-                            pyatspi.ROLE_MENU,
-                            pyatspi.ROLE_NOTIFICATION,
-                            pyatspi.ROLE_DIALOG,
-                            pyatspi.ROLE_PANEL,
-                            pyatspi.ROLE_STATUS_BAR,
-                            pyatspi.ROLE_TOOL_TIP]:
+            if role not in [Atspi.Role.ALERT,
+                            Atspi.Role.ANIMATION,
+                            Atspi.Role.INFO_BAR,
+                            Atspi.Role.MENU,
+                            Atspi.Role.NOTIFICATION,
+                            Atspi.Role.DIALOG,
+                            Atspi.Role.PANEL,
+                            Atspi.Role.STATUS_BAR,
+                            Atspi.Role.TOOL_TIP]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
-            if role == pyatspi.ROLE_PANEL:
+            if role == Atspi.Role.PANEL:
                 if not event.detail1:
                     msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
                     debug.println(debug.LEVEL_INFO, msg, True)
@@ -326,9 +326,9 @@ class EventManager:
 
         if event.type.startswith('object:children-changed') \
            or event.type.startswith('object:active-descendant-changed'):
-            if role in [pyatspi.ROLE_MENU,
-                        pyatspi.ROLE_LAYERED_PANE,
-                        pyatspi.ROLE_MENU_ITEM]:
+            if role in [Atspi.Role.MENU,
+                        Atspi.Role.LAYERED_PANE,
+                        Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -362,13 +362,13 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 defunct = True
             else:
-                defunct = childState.contains(pyatspi.STATE_DEFUNCT)
+                defunct = childState.contains(Atspi.StateType.DEFUNCT)
                 if defunct:
                     msg = 'ERROR: Event any_data contains defunct child/descendant'
                     debug.println(debug.LEVEL_INFO, msg, True)
 
             if defunct:
-                if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+                if state.contains(Atspi.StateType.MANAGES_DESCENDANTS) \
                    and event.source not in self._parentsOfDefunctDescendants:
                     self._parentsOfDefunctDescendants.append(event.source)
                 return True
@@ -381,7 +381,7 @@ class EventManager:
             # This is very likely a completely and utterly useless event for us. The
             # reason for ignoring it here rather than quickly processing it is the
             # potential for event floods like we're seeing from matrix.org.
-            if childRole == pyatspi.ROLE_IMAGE:
+            if childRole == Atspi.Role.IMAGE:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -389,7 +389,7 @@ class EventManager:
             # In normal apps we would have caught this from the parent role.
             # But gnome-shell has panel parents adding/removing menu items.
             if event.type.startswith('object:children-changed'):
-                if childRole == pyatspi.ROLE_MENU_ITEM:
+                if childRole == Atspi.Role.MENU_ITEM:
                     msg = 'EVENT MANAGER: Ignoring event type due to child role'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
@@ -500,7 +500,7 @@ class EventManager:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
                 try:
-                    asyncMode = e.source.getRole() == pyatspi.ROLE_TABLE
+                    asyncMode = e.source.getRole() == Atspi.Role.TABLE
                 except:
                     asyncMode = True
             script = _scriptManager.getScript(app, e.source)
@@ -671,7 +671,7 @@ class EventManager:
             mask = list(range(256))
 
         if kind is None:
-            kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
+            kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
 
         self.registry.registerKeystrokeListener(function, mask=mask, kind=kind)
 
@@ -685,7 +685,7 @@ class EventManager:
             mask = list(range(256))
 
         if kind is None:
-            kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
+            kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
 
         self.registry.deregisterKeystrokeListener(
             function, mask=mask, kind=kind)
@@ -733,7 +733,7 @@ class EventManager:
         app = None
         try:
             app = event.host_application or event.source.getApplication()
-            if app and app.getState().contains(pyatspi.STATE_DEFUNCT):
+            if app and app.getState().contains(Atspi.StateType.DEFUNCT):
                 msg = 'WARNING: App is defunct. Cannot get script for event.'
                 debug.println(debug.LEVEL_WARNING, msg, True)
                 return None
@@ -807,7 +807,7 @@ class EventManager:
             windowActivation = True
         else:
             windowActivation = eType.startswith('object:state-changed:active') \
-                and event.detail1 and role == pyatspi.ROLE_FRAME
+                and event.detail1 and role == Atspi.Role.FRAME
 
         if windowActivation:
             if event.source != orca_state.activeWindow:
@@ -821,14 +821,14 @@ class EventManager:
             return True, "Event source claimed focus."
 
         if eType.startswith('object:state-changed:selected') and event.detail1 \
-           and role == pyatspi.ROLE_MENU and state.contains(pyatspi.STATE_FOCUSED):
+           and role == Atspi.Role.MENU and state.contains(Atspi.StateType.FOCUSED):
             return True, "Selection change in focused menu"
 
         # This condition appears with gnome-screensave-dialog.
         # See bug 530368.
         if eType.startswith('object:state-changed:showing') \
-           and role == pyatspi.ROLE_PANEL \
-           and state.contains(pyatspi.STATE_MODAL):
+           and role == Atspi.Role.PANEL \
+           and state.contains(Atspi.StateType.MODAL):
             return True, "Modal panel is showing."
 
         return False, "No reason found to activate a different script."
@@ -917,7 +917,7 @@ class EventManager:
             return True
 
         if event.type.startswith("object:state-changed:active"):
-            return event.source.getRole() in [pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]
+            return event.source.getRole() in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
 
         if event.type.startswith("document:load-complete"):
             return True
@@ -986,7 +986,7 @@ class EventManager:
             except:
                 pass
             else:
-                if role == pyatspi.ROLE_FRAME:
+                if role == Atspi.Role.FRAME:
                     _scriptManager.reclaimScripts()
 
         try:
@@ -996,7 +996,7 @@ class EventManager:
             msg = 'ERROR: Exception getting state for event source'
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:
-            isDefunct = state.contains(pyatspi.STATE_DEFUNCT)
+            isDefunct = state.contains(Atspi.StateType.DEFUNCT)
 
         if isDefunct:
             msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
@@ -1010,7 +1010,7 @@ class EventManager:
                 orca_state.activeScript = None
             return
 
-        if state and state.contains(pyatspi.STATE_ICONIFIED):
+        if state and state.contains(Atspi.StateType.ICONIFIED):
             msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -1085,9 +1085,9 @@ class EventManager:
     def _processNewKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
         event = Atspi.DeviceEvent()
         if pressed:
-            event.type = pyatspi.KEY_PRESSED_EVENT
+            event.type = Atspi.EventType.KEY_PRESSED_EVENT
         else:
-            event.type = pyatspi.KEY_RELEASED_EVENT
+            event.type = Atspi.EventType.KEY_RELEASED_EVENT
         event.hw_code = keycode
         event.id = keysym
         event.modifiers = state
@@ -1100,7 +1100,7 @@ class EventManager:
             orca_state.activeScript.refreshKeyGrabs()
 
         if pressed:
-            orca_state.openingDialog = (text == "space" and (state & ~(1 << pyatspi.MODIFIER_NUMLOCK)))
+            orca_state.openingDialog = (text == "space" and (state & ~(1 << Atspi.ModifierType.NUMLOCK)))
 
         self._processKeyboardEvent(event)
 

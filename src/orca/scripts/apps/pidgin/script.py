@@ -26,6 +26,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.debug as debug
@@ -54,13 +58,13 @@ class Script(GAIL.Script):
 
         # So we can take an educated guess at identifying the buddy list.
         #
-        self._buddyListAncestries = [[pyatspi.ROLE_TREE_TABLE,
-                                      pyatspi.ROLE_SCROLL_PANE,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_PAGE_TAB,
-                                      pyatspi.ROLE_PAGE_TAB_LIST,
-                                      pyatspi.ROLE_FILLER,
-                                      pyatspi.ROLE_FRAME]]
+        self._buddyListAncestries = [[Atspi.Role.TREE_TABLE,
+                                      Atspi.Role.SCROLL_PANE,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.PAGE_TAB,
+                                      Atspi.Role.PAGE_TAB_LIST,
+                                      Atspi.Role.FILLER,
+                                      Atspi.Role.FRAME]]
 
         GAIL.Script.__init__(self, app)
 
@@ -112,9 +116,9 @@ class Script(GAIL.Script):
         # has, then announce its name. See bug #469098 for more details.
         #
         if event.type.startswith("object:children-changed:add"):
-            rolesList = [pyatspi.ROLE_PAGE_TAB_LIST,
-                         pyatspi.ROLE_FILLER,
-                         pyatspi.ROLE_FRAME]
+            rolesList = [Atspi.Role.PAGE_TAB_LIST,
+                         Atspi.Role.FILLER,
+                         Atspi.Role.FRAME]
             if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 # As it's possible to get this component hierarchy in other
                 # places than the chat room (i.e. the Preferences dialog),
@@ -195,7 +199,7 @@ class Script(GAIL.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
         msg = "PIDGIN: Hack to work around missing events complete"
         debug.println(debug.LEVEL_INFO, msg, True)

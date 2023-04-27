@@ -27,7 +27,9 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
                 "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.object_properties as object_properties
 import orca.braille_generator as braille_generator
@@ -54,22 +56,22 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
 
-        doNotDisplay = [pyatspi.ROLE_FORM,
-                        pyatspi.ROLE_SECTION,
-                        pyatspi.ROLE_UNKNOWN]
-        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            doNotDisplay.extend([pyatspi.ROLE_LIST,
-                                 pyatspi.ROLE_LIST_ITEM,
-                                 pyatspi.ROLE_PANEL])
+        doNotDisplay = [Atspi.Role.FORM,
+                        Atspi.Role.SECTION,
+                        Atspi.Role.UNKNOWN]
+        if not obj.getState().contains(Atspi.StateType.FOCUSABLE):
+            doNotDisplay.extend([Atspi.Role.LIST,
+                                 Atspi.Role.LIST_ITEM,
+                                 Atspi.Role.PANEL])
 
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_HEADING:
+        if role == Atspi.Role.HEADING:
             result.extend(self.__generateHeadingRole(obj))
         elif not role in doNotDisplay:
             result.extend(braille_generator.BrailleGenerator._generateRoleName(
                 self, obj, **args))
-            if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
+            if obj.parent and obj.parent.getRole() == Atspi.Role.HEADING:
                 result.extend(self.__generateHeadingRole(obj.parent))
 
         return result
@@ -94,8 +96,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def _generateEol(self, obj, **args):
         if self._script.utilities.isWebKitGtk(obj) \
-           and obj.getRole() == pyatspi.ROLE_PARAGRAPH \
-           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+           and obj.getRole() == Atspi.Role.PARAGRAPH \
+           and not obj.getState().contains(Atspi.StateType.EDITABLE):
             return []
 
         return braille_generator.BrailleGenerator._generateEol(

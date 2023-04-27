@@ -32,7 +32,6 @@ gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
 
 import os
-import pyatspi
 
 from . import generator
 from . import settings_manager
@@ -272,7 +271,7 @@ class SoundGenerator(generator.Generator):
             args['mode'] = self._mode
 
         args['stringType'] = 'visited'
-        if obj.getState().contains(pyatspi.STATE_VISITED):
+        if obj.getState().contains(Atspi.StateType.VISITED):
             filenames = [self._script.formatting.getString(**args)]
             result = list(map(self._convertFilenameToIcon, filenames))
             if result:

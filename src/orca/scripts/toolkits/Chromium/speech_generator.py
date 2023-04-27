@@ -31,6 +31,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 from orca import debug
@@ -57,7 +61,7 @@ class SpeechGenerator(web.SpeechGenerator):
     def _generateListBoxItemWidgets(self, obj, **args):
         # The list which descends from a combobox should be a menu, and its children
         # menuitems. We can remove this once that change is made in Chromium.
-        if pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX):
+        if pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX):
             msg = "CHROMIUM: Not generating listbox item widgets for combobox child %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
@@ -65,7 +69,7 @@ class SpeechGenerator(web.SpeechGenerator):
         return super()._generateListBoxItemWidgets(obj, **args)
 
     def _generateLabelOrName(self, obj, **args):
-        if obj.getRole() == pyatspi.ROLE_FRAME:
+        if obj.getRole() == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)
             if document and not self._script.utilities.documentFrameURI(document):
                 # Eliminates including "untitled" in the frame name.
@@ -87,7 +91,7 @@ class SpeechGenerator(web.SpeechGenerator):
         if self._script.utilities.treatAsMenu(obj):
             msg = "CHROMIUM: HACK? Speaking menu item as menu %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            oldRole = self._overrideRole(pyatspi.ROLE_MENU, args)
+            oldRole = self._overrideRole(Atspi.Role.MENU, args)
 
         result = super().generateSpeech(obj, **args)
         if oldRole is not None:

@@ -30,13 +30,14 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+import gi
+gi.require_version('Atspi', '2.0') 
+from gi.repository import Atspi
+
 import pyatspi
 import re
 import time
 
-import gi
-gi.require_version('Atspi', '2.0') 
-from gi.repository import Atspi
 import orca.braille as braille
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -128,7 +129,7 @@ class Script(script.Script):
         self.grab_ids = []
 
         if app:
-            app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.NAME ^ pyatspi.cache.DESCRIPTION)
+            app.setCacheMask(Atspi.Cache.DEFAULT ^ Atspi.Cache.NAME ^ Atspi.Cache.DESCRIPTION)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -842,11 +843,11 @@ class Script(script.Script):
         self.pointOfReference['lastRow'] = row
 
         self.pointOfReference['checkedChange'] = \
-            hash(obj), state.contains(pyatspi.STATE_CHECKED)
+            hash(obj), state.contains(Atspi.StateType.CHECKED)
         self.pointOfReference['selectedChange'] = \
-            hash(obj), state.contains(pyatspi.STATE_SELECTED)
+            hash(obj), state.contains(Atspi.StateType.SELECTED)
         self.pointOfReference['expandedChange'] = \
-            hash(obj), state.contains(pyatspi.STATE_EXPANDED)
+            hash(obj), state.contains(Atspi.StateType.EXPANDED)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -863,7 +864,7 @@ class Script(script.Script):
             orca_state.noFocusTimeStamp = time.time()
             return
 
-        if newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
+        if newLocusOfFocus.getState().contains(Atspi.StateType.DEFUNCT):
             return
 
         if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
@@ -1154,7 +1155,7 @@ class Script(script.Script):
             text = orca_state.locusOfFocus.queryText()
             [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
+                Atspi.TextBoundaryType.LINE_START)
             movedCaret = False
             if startOffset > 0:
                 movedCaret = text.setCaretOffset(startOffset - 1)
@@ -1165,7 +1166,7 @@ class Script(script.Script):
             #
             if (not movedCaret) \
                and (orca_state.locusOfFocus.getRole() \
-                    == pyatspi.ROLE_TERMINAL):
+                    == Atspi.Role.TERMINAL):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
                 self.reviewPreviousCharacter(inputEvent)
@@ -1219,7 +1220,7 @@ class Script(script.Script):
             text = orca_state.locusOfFocus.queryText()
             [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
+                Atspi.TextBoundaryType.LINE_START)
             if endOffset < text.characterCount:
                 text.setCaretOffset(endOffset)
         else:
@@ -2236,10 +2237,10 @@ class Script(script.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        frames = [pyatspi.ROLE_FRAME,
-                  pyatspi.ROLE_DIALOG,
-                  pyatspi.ROLE_FILE_CHOOSER,
-                  pyatspi.ROLE_COLOR_CHOOSER]
+        frames = [Atspi.Role.FRAME,
+                  Atspi.Role.DIALOG,
+                  Atspi.Role.FILE_CHOOSER,
+                  Atspi.Role.COLOR_CHOOSER]
 
         if event.source.getRole() in frames:
             if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
@@ -2281,8 +2282,8 @@ class Script(script.Script):
         if not event.any_data:
             return
 
-        if not event.source.getState().contains(pyatspi.STATE_FOCUSED) \
-           and not event.any_data.getState().contains(pyatspi.STATE_FOCUSED):
+        if not event.source.getState().contains(Atspi.StateType.FOCUSED) \
+           and not event.any_data.getState().contains(Atspi.StateType.FOCUSED):
             msg = "DEFAULT: Ignoring event. Neither source nor child have focused state."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -2304,14 +2305,14 @@ class Script(script.Script):
             return
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
+        if state.contains(Atspi.StateType.EXPANDABLE):
             return
  
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+        if obj.getRole() == Atspi.Role.RADIO_BUTTON:
             eventString, mods = self.utilities.lastKeyAndModifiers()
             if not eventString in [" ", "space"]:
                 return
@@ -2343,14 +2344,14 @@ class Script(script.Script):
             return
 
         state = event.source.getState()
-        if not state.contains(pyatspi.STATE_SHOWING):
+        if not state.contains(Atspi.StateType.SHOWING):
             msg = "DEFAULT: Event source is not showing"
             debug.println(debug.LEVEL_INFO, msg, True)
             if not self.utilities.presentEventFromNonShowingObject(event):
                 return
 
         if event.source != orca_state.locusOfFocus \
-           and state.contains(pyatspi.STATE_FOCUSED):
+           and state.contains(Atspi.StateType.FOCUSED):
             topLevelObject = self.utilities.topLevelObject(event.source)
             if self.utilities.isSameObject(orca_state.activeWindow, topLevelObject):
                 msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
@@ -2486,7 +2487,7 @@ class Script(script.Script):
 
         self.presentationInterrupt()
         obj = mouseEvent.obj
-        if obj and obj.getState().contains(pyatspi.STATE_FOCUSED):
+        if obj and obj.getState().contains(Atspi.StateType.FOCUSED):
             orca.setLocusOfFocus(None, obj, windowChanged)
 
     def onNameChanged(self, event):
@@ -2501,12 +2502,12 @@ class Script(script.Script):
             return
 
         role = obj.getRole()
-        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_TABLE_CELL]:
+        if role in [Atspi.Role.COMBO_BOX, Atspi.Role.TABLE_CELL]:
             msg = "DEFAULT: Event is redundant notification for this role"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if role == pyatspi.ROLE_FRAME:
+        if role == Atspi.Role.FRAME:
             if obj != orca_state.activeWindow:
                 msg = "DEFAULT: Event is for frame other than the active window"
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2541,7 +2542,7 @@ class Script(script.Script):
         obj = event.source
         obj.clearCache()
         state = obj.getState()
-        if not state.contains(pyatspi.STATE_FOCUSED):
+        if not state.contains(Atspi.StateType.FOCUSED):
             return
 
         if not self.utilities.isSameObject(orca_state.locusOfFocus, obj):
@@ -2550,7 +2551,7 @@ class Script(script.Script):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return
 
-        isSelected = state.contains(pyatspi.STATE_SELECTED)
+        isSelected = state.contains(Atspi.StateType.SELECTED)
         if isSelected != event.detail1:
             msg = "DEFAULT: Bogus event: detail1 doesn't match state"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2567,7 +2568,7 @@ class Script(script.Script):
         if keyString == "space":
             announceState = True
         elif keyString in ["Down", "Up"] \
-             and isSelected and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+             and isSelected and obj.getRole() == Atspi.Role.TABLE_CELL:
             announceState = True
 
         if not announceState:
@@ -2597,7 +2598,7 @@ class Script(script.Script):
         elif self.utilities.handleContainerSelectionChange(event.source):
             return
         else:
-            if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
+            if state.contains(Atspi.StateType.MANAGES_DESCENDANTS):
                 return
 
         # TODO - JD: We need to give more thought to where we look to this
@@ -2610,15 +2611,15 @@ class Script(script.Script):
             return
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_COMBO_BOX and not state.contains(pyatspi.STATE_EXPANDED):
+        if role == Atspi.Role.COMBO_BOX and not state.contains(Atspi.StateType.EXPANDED):
             entry = self.utilities.getEntryForEditableComboBox(event.source)
-            if entry and entry.getState().contains(pyatspi.STATE_FOCUSED):
+            if entry and entry.getState().contains(Atspi.StateType.FOCUSED):
                 return
 
         # If a wizard-like notebook page being reviewed changes, we might not get
         # any events to update the locusOfFocus. As a result, subsequent flat
         # review commands will continue to present the stale content.
-        if role == pyatspi.ROLE_PAGE_TAB_LIST and self.flatReviewContext:
+        if role == Atspi.Role.PAGE_TAB_LIST and self.flatReviewContext:
             self.flatReviewContext = None
  
         mouseReviewItem = mouse_review.reviewer.getCurrentItem()
@@ -2635,9 +2636,9 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if child.getRole() == pyatspi.ROLE_PAGE_TAB and orca_state.locusOfFocus \
+            if child.getRole() == Atspi.Role.PAGE_TAB and orca_state.locusOfFocus \
                and child.name == orca_state.locusOfFocus.name \
-               and not state.contains(pyatspi.STATE_FOCUSED):
+               and not state.contains(Atspi.StateType.FOCUSED):
                 msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 break
@@ -2663,7 +2664,7 @@ class Script(script.Script):
 
         obj = event.source
         state = obj.getState()
-        if not state.contains(pyatspi.STATE_FOCUSED):
+        if not state.contains(Atspi.StateType.FOCUSED):
             return
 
         window, dialog = self.utilities.frameAndDialog(obj)
@@ -2679,7 +2680,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if childCount and role != pyatspi.ROLE_COMBO_BOX:
+        if childCount and role != Atspi.Role.COMBO_BOX:
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
                 obj = selectedChildren[0]
@@ -2691,7 +2692,7 @@ class Script(script.Script):
 
         obj = event.source
         role = obj.getRole()
-        if role == pyatspi.ROLE_NOTIFICATION:
+        if role == Atspi.Role.NOTIFICATION:
             if not event.detail1:
                 return
             speech.speak(self.speechGenerator.generateSpeech(obj))
@@ -2702,7 +2703,7 @@ class Script(script.Script):
             notification_messages.saveMessage(msg)
             return
 
-        if role == pyatspi.ROLE_TOOL_TIP:
+        if role == Atspi.Role.TOOL_TIP:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString != "F1" \
                and not _settingsManager.getSetting('presentToolTips'):
@@ -2929,7 +2930,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if role == pyatspi.ROLE_SPIN_BUTTON:
+        if role == Atspi.Role.SPIN_BUTTON:
             self._saveFocusedObjectInfo(event.source)
 
         self.pointOfReference["oldValue"] = currentValue
@@ -2970,7 +2971,7 @@ class Script(script.Script):
         except:
             pass
         else:
-            if childCount == 1 and childRole == pyatspi.ROLE_MENU:
+            if childCount == 1 and childRole == Atspi.Role.MENU:
                 orca.setLocusOfFocus(event, event.source[0])
                 return
 
@@ -3053,7 +3054,7 @@ class Script(script.Script):
             msg = "ERROR: Exception getting state of %s" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
-            if state.contains(pyatspi.STATE_EDITABLE):
+            if state.contains(Atspi.StateType.EDITABLE):
                 return
 
         self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
@@ -3238,9 +3239,9 @@ class Script(script.Script):
             return False
 
         [currentChar, startOffset, endOffset] = \
-            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+            text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
         [previousChar, startOffset, endOffset] = \
-            text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
+            text.getTextAtOffset(previousOffset, Atspi.TextBoundaryType.CHAR)
         if not self.utilities.isSentenceDelimiter(currentChar, previousChar):
             return False
 
@@ -3255,10 +3256,10 @@ class Script(script.Script):
         while sentenceStartOffset >= 0:
             [currentChar, startOffset, endOffset] = \
                 text.getTextAtOffset(sentenceStartOffset,
-                                     pyatspi.TEXT_BOUNDARY_CHAR)
+                                     Atspi.TextBoundaryType.CHAR)
             [previousChar, startOffset, endOffset] = \
                 text.getTextAtOffset(sentenceStartOffset-1,
-                                     pyatspi.TEXT_BOUNDARY_CHAR)
+                                     Atspi.TextBoundaryType.CHAR)
             if self.utilities.isSentenceDelimiter(currentChar, previousChar):
                 break
             else:
@@ -3318,7 +3319,7 @@ class Script(script.Script):
         [char, startOffset, endOffset] = \
             text.getTextAtOffset( \
                 offset,
-                pyatspi.TEXT_BOUNDARY_CHAR)
+                Atspi.TextBoundaryType.CHAR)
         if not self.utilities.isWordDelimiter(char):
             return False
 
@@ -3334,7 +3335,7 @@ class Script(script.Script):
             [char, startOffset, endOffset] = \
                 text.getTextAtOffset( \
                     wordStartOffset,
-                    pyatspi.TEXT_BOUNDARY_CHAR)
+                    Atspi.TextBoundaryType.CHAR)
             if self.utilities.isWordDelimiter(char):
                 break
             else:
@@ -3380,7 +3381,7 @@ class Script(script.Script):
            and eventString in ["Right", "Down"]:
             offset -= 1
 
-        character, startOffset, endOffset = text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+        character, startOffset, endOffset = text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
         orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
 
         if not character or character == '\r':
@@ -3389,7 +3390,7 @@ class Script(script.Script):
         speakBlankLines = _settingsManager.getSetting('speakBlankLines')
         if character == "\n":
             line = text.getTextAtOffset(max(0, offset),
-                                        pyatspi.TEXT_BOUNDARY_LINE_START)
+                                        Atspi.TextBoundaryType.LINE_START)
             if not line[0] or line[0] == "\n":
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
@@ -3729,11 +3730,11 @@ class Script(script.Script):
         #
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+            mode = Atspi.TextBoundaryType.SENTENCE_START
         elif sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
+            mode = Atspi.TextBoundaryType.LINE_START
         else:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
+            mode = Atspi.TextBoundaryType.LINE_START
 
         priorObj = obj
 
@@ -3753,7 +3754,7 @@ class Script(script.Script):
                 # will return nothing.
                 #
                 if not lineString:
-                    mode = pyatspi.TEXT_BOUNDARY_LINE_START
+                    mode = Atspi.TextBoundaryType.LINE_START
                     [lineString, startOffset, endOffset] = \
                         text.getTextAtOffset(offset, mode)
 
@@ -3800,7 +3801,7 @@ class Script(script.Script):
             moreLines = False
             relations = obj.getRelationSet()
             for relation in relations:
-                if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+                if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
                     priorObj = obj
                     obj = relation.getTarget(0)
 
@@ -3883,7 +3884,7 @@ class Script(script.Script):
                     fixedTargetOffset = characterCount
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                        fixedTargetOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                        fixedTargetOffset, Atspi.TextBoundaryType.LINE_START)
                 except:
                     return ["", 0, 0]
 
@@ -3948,14 +3949,14 @@ class Script(script.Script):
             # If we're on whitespace, we cannot be on a misspelled word.
             #
             charAndOffsets = \
-                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+                text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
             if not charAndOffsets[0].strip() \
                or self.utilities.isWordDelimiter(charAndOffsets[0]):
                 self._lastWordCheckedForSpelling = charAndOffsets[0]
                 return
 
             wordAndOffsets = \
-                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_WORD_START)
+                text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
             if self.utilities.isWordMisspelled(obj, offset) \
                and wordAndOffsets[0] != self._lastWordCheckedForSpelling:
                 self.speakMessage(messages.MISSPELLED)
@@ -3998,13 +3999,13 @@ class Script(script.Script):
         except:
             return False
 
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]:
+        if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
             focusedObject = self.utilities.focusedObject(orca_state.activeWindow)
             if focusedObject:
                 orca.setLocusOfFocus(None, focusedObject, False)
                 role = focusedObject.getRole()
 
-        if role == pyatspi.ROLE_PASSWORD_TEXT and not event.isLockingKey():
+        if role == Atspi.Role.PASSWORD_TEXT and not event.isLockingKey():
             return False
 
         if not event.isPressedKey():

@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import re
 
@@ -48,21 +52,21 @@ class Utilities(script_utilities.Utilities):
         self._isUselessPanel = {}
 
     def infoBar(self, root):
-        isInfoBar = lambda x: x and x.getRole() == pyatspi.ROLE_INFO_BAR
+        isInfoBar = lambda x: x and x.getRole() == Atspi.Role.INFO_BAR
         return pyatspi.findDescendant(root, isInfoBar)
 
     def isComboBoxWithToggleDescendant(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX):
+        if not (obj and obj.getRole() == Atspi.Role.COMBO_BOX):
             return False
 
         rv = self._isComboBoxWithToggleDescendant.get(hash(obj))
         if rv is not None:
             return rv
 
-        isToggle = lambda x: x and x.getRole() == pyatspi.ROLE_TOGGLE_BUTTON
+        isToggle = lambda x: x and x.getRole() == Atspi.Role.TOGGLE_BUTTON
 
         for child in obj:
-            if child.getRole() != pyatspi.ROLE_FILLER:
+            if child.getRole() != Atspi.Role.FILLER:
                 continue
 
             toggle = pyatspi.findDescendant(child, isToggle)
@@ -75,14 +79,14 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isToggleDescendantOfComboBox(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON):
+        if not (obj and obj.getRole() == Atspi.Role.TOGGLE_BUTTON):
             return False
 
         rv = self._isToggleDescendantOfComboBox.get(hash(obj))
         if rv is not None:
             return rv
 
-        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
         comboBox = pyatspi.findAncestor(obj, isComboBox)
         if comboBox:
             self._isComboBoxWithToggleDescendant[hash(comboBox)] = True
@@ -95,7 +99,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or self.isDead(obj):
             return False
 
-        if obj.getRole() != pyatspi.ROLE_TEXT:
+        if obj.getRole() != Atspi.Role.TEXT:
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -106,7 +110,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = parent.parent
 
-        rv = parent and parent.getRole() == pyatspi.ROLE_WINDOW
+        rv = parent and parent.getRole() == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv
         return rv
 
@@ -118,13 +122,13 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
 
-        if not (name and state.contains(pyatspi.STATE_SINGLE_LINE)):
+        if not (name and state.contains(Atspi.StateType.SINGLE_LINE)):
             return False
 
-        if focusedOnly and not state.contains(pyatspi.STATE_FOCUSED):
+        if focusedOnly and not state.contains(Atspi.StateType.FOCUSED):
             return False
 
-        isIcon = lambda x: x and x.getRole() == pyatspi.ROLE_ICON
+        isIcon = lambda x: x and x.getRole() == Atspi.Role.ICON
         icons = list(filter(isIcon, [x for x in obj]))
         if icons:
             return True
@@ -132,8 +136,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isEntryCompletionPopupItem(self, obj):
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            isWindow = lambda x: x and x.getRole() == pyatspi.ROLE_WINDOW
+        if obj.getRole() == Atspi.Role.TABLE_CELL:
+            isWindow = lambda x: x and x.getRole() == Atspi.Role.WINDOW
             window = pyatspi.findAncestor(obj, isWindow)
             if window:
                 return True
@@ -147,13 +151,13 @@ class Utilities(script_utilities.Utilities):
             return False
 
         for relation in relations:
-            if relation.getRelationType() == pyatspi.RELATION_POPUP_FOR:
+            if relation.getRelationType() == Atspi.RelationType.POPUP_FOR:
                 return True
 
         return False
 
     def isUselessPanel(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_PANEL):
+        if not (obj and obj.getRole() == Atspi.Role.PANEL):
             return False
 
         rv = self._isUselessPanel.get(hash(obj))
@@ -189,7 +193,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def eventIsCanvasNoise(self, event):
-        if event.source.getRole() != pyatspi.ROLE_CANVAS:
+        if event.source.getRole() != Atspi.Role.CANVAS:
             return False
 
         if not orca_state.activeWindow:
@@ -207,7 +211,7 @@ class Utilities(script_utilities.Utilities):
 
     def _adjustPointForObj(self, obj, x, y, coordType):
         try:
-            singleLine = obj.getState().contains(pyatspi.STATE_SINGLE_LINE)
+            singleLine = obj.getState().contains(Atspi.StateType.SINGLE_LINE)
         except:
             singleLine = False
 
@@ -232,7 +236,7 @@ class Utilities(script_utilities.Utilities):
         # Window Coordinates should be relative to the window; not the widget.
         # But broken interface is broken, and this appears to be what is being
         # exposed. And we need this information to get the widget's x and y.
-        charExtents = text.getCharacterExtents(0, pyatspi.WINDOW_COORDS)
+        charExtents = text.getCharacterExtents(0, Atspi.CoordType.WINDOW)
         if 0 < charExtents[0] < charExtents[2]:
             boxX -= charExtents[0]
         if 0 < charExtents[1] < charExtents[3]:

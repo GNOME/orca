@@ -26,14 +26,15 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import copy
-
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.formatting
 
 formatting = {
     'speech': {
-        pyatspi.ROLE_ALERT: {
+        Atspi.Role.ALERT: {
             'unfocused': 'labelAndName + roleName'
             },
     }

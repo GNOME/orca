@@ -39,7 +39,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from . import braille_generator
 from . import debug
@@ -304,7 +306,7 @@ class Script:
         #
         processEvent = (orca_state.activeScript == self \
                         or self.presentIfInactive)
-        if role == pyatspi.ROLE_PROGRESS_BAR \
+        if role == Atspi.Role.PROGRESS_BAR \
            and not processEvent \
            and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
             processEvent = True

@@ -28,6 +28,9 @@ __copyright__ = "Copyright (c) 2008 Eitan Isaacson" \
 __license__   = "LGPL"
 
 import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import math
 import pyatspi
 import time
@@ -235,13 +238,13 @@ class _ItemContext:
         return _StringContext(self._obj, self._script, string, start, end)
 
     def _getContainer(self):
-        roles = [pyatspi.ROLE_DIALOG,
-                 pyatspi.ROLE_FRAME,
-                 pyatspi.ROLE_LAYERED_PANE,
-                 pyatspi.ROLE_MENU,
-                 pyatspi.ROLE_PAGE_TAB,
-                 pyatspi.ROLE_TOOL_BAR,
-                 pyatspi.ROLE_WINDOW]
+        roles = [Atspi.Role.DIALOG,
+                 Atspi.Role.FRAME,
+                 Atspi.Role.LAYERED_PANE,
+                 Atspi.Role.MENU,
+                 Atspi.Role.PAGE_TAB,
+                 Atspi.Role.TOOL_BAR,
+                 Atspi.Role.WINDOW]
         isContainer = lambda x: x and x.getRole() in roles
         return pyatspi.findAncestor(self._obj, isContainer)
 
@@ -285,7 +288,7 @@ class _ItemContext:
             return False
 
         role = prior._obj.getRole()
-        return role == pyatspi.ROLE_LINK
+        return role == Atspi.Role.LINK
 
     def present(self, prior):
         """Presents this context to the user."""
@@ -317,7 +320,7 @@ class _ItemContext:
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
-            if self._obj.getRole() == pyatspi.ROLE_TABLE_CELL \
+            if self._obj.getRole() == Atspi.Role.TABLE_CELL \
                and self._string.getString() == self._script.utilities.displayedText(self._obj):
                 return True
 
@@ -486,7 +489,7 @@ class MouseReviewer:
 
     def _contains_point(self, obj, x, y, coordType=None):
         if coordType is None:
-            coordType = pyatspi.DESKTOP_COORDS
+            coordType = Atspi.CoordType.SCREEN
 
         try:
             return obj.queryComponent().contains(x, y, coordType)
@@ -497,7 +500,7 @@ class MouseReviewer:
         """Returns True if the bounding box of obj is bounds."""
 
         if coordType is None:
-            coordType = pyatspi.DESKTOP_COORDS
+            coordType = Atspi.CoordType.SCREEN
 
         try:
             extents = obj.queryComponent().getExtents(coordType)
@@ -566,7 +569,7 @@ class MouseReviewer:
         if not script:
             return
 
-        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
         if script.utilities.isDead(orca_state.locusOfFocus):
             menu = None
         elif isMenu(orca_state.locusOfFocus):
@@ -614,13 +617,13 @@ class MouseReviewer:
         boundary = None
         x, y, width, height = self._currentMouseOver.getBoundingBox()
         if y <= pY <= y + height and self._currentMouseOver.getString():
-            boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+            boundary = Atspi.TextBoundaryType.WORD_START
         elif obj == self._currentMouseOver.getObject():
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        elif obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
+        elif obj and obj.getState().contains(Atspi.StateType.SELECTABLE):
+            boundary = Atspi.TextBoundaryType.LINE_START
         elif script.utilities.isMultiParagraphObject(obj):
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
 
         new = _ItemContext(pX, pY, obj, boundary, window, script)
         if new.present(self._currentMouseOver):

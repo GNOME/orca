@@ -28,7 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.debug as debug
 import orca.script_utilities as script_utilities
@@ -76,7 +78,7 @@ class Utilities(script_utilities.Utilities):
         except:
             return []
         else:
-            if not obj.getState().contains(pyatspi.STATE_EXPANDED):
+            if not obj.getState().contains(Atspi.StateType.EXPANDED):
                 return []
 
         nodes = []        
@@ -97,7 +99,7 @@ class Utilities(script_utilities.Utilities):
             relations = nodeCell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
-                       == pyatspi.RELATION_NODE_CHILD_OF:
+                       == Atspi.RelationType.NODE_CHILD_OF:
                     nodeOf = relation.getTarget(0)
                     if self.isSameObject(obj, nodeOf):
                         nodes.append(cell)
@@ -145,7 +147,7 @@ class Utilities(script_utilities.Utilities):
             node = None
             for relation in relations:
                 if relation.getRelationType() \
-                       == pyatspi.RELATION_NODE_CHILD_OF:
+                       == Atspi.RelationType.NODE_CHILD_OF:
                     node = relation.getTarget(0)
                     break
 
@@ -184,7 +186,7 @@ class Utilities(script_utilities.Utilities):
         if not super().isZombie(obj):
             return False
 
-        if obj.getRole() != pyatspi.ROLE_TOGGLE_BUTTON:
+        if obj.getRole() != Atspi.Role.TOGGLE_BUTTON:
             return True
 
         msg = 'INFO: Hacking around broken index in parent for %s' % obj

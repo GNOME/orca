@@ -25,7 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.debug as debug
 import orca.orca as orca
@@ -39,7 +41,7 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_ACCELERATOR_LABEL:
+        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -52,13 +54,13 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if event.source.getRole() == pyatspi.ROLE_ACCELERATOR_LABEL:
+        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         state = event.source.getState()
-        if state.contains(pyatspi.STATE_FOCUSED) and state.contains(pyatspi.STATE_FOCUSABLE):
+        if state.contains(Atspi.StateType.FOCUSED) and state.contains(Atspi.StateType.FOCUSABLE):
             super().onFocusedChanged(event)
             return
 

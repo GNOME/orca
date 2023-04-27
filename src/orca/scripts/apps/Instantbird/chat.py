@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 
 import orca.chat as chat
@@ -66,13 +70,13 @@ class Chat(chat.Chat):
         #
         if self._script.utilities.isDocument(event.source):
             bubble = event.source[event.detail1]
-            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
+            hasRole = lambda x: x and x.getRole() == Atspi.Role.PARAGRAPH
             paragraphs = pyatspi.findAllDescendants(bubble, hasRole)
 
             # If the user opted the non-default, "simple" appearance, then this
             # might not be a bubble at all, but a paragraph.
             #
-            if not paragraphs and bubble.getRole() == pyatspi.ROLE_PARAGRAPH:
+            if not paragraphs and bubble.getRole() == Atspi.Role.PARAGRAPH:
                 paragraphs.append(bubble)
 
             for paragraph in paragraphs:
@@ -90,9 +94,9 @@ class Chat(chat.Chat):
         # inserted: a separator, a paragraph with the desired text, and an
         # empty section.
         #
-        if event.source.getRole() == pyatspi.ROLE_SECTION:
+        if event.source.getRole() == Atspi.Role.SECTION:
             obj = event.source[event.detail1]
-            if obj and obj.getRole() == pyatspi.ROLE_PARAGRAPH:
+            if obj and obj.getRole() == Atspi.Role.PARAGRAPH:
                 try:
                     text = obj.queryText()
                 except:
@@ -122,7 +126,7 @@ class Chat(chat.Chat):
         if self._script.utilities.isDocument(obj):
             return True
 
-        return obj.getRole() in [pyatspi.ROLE_SECTION, pyatspi.ROLE_PARAGRAPH]
+        return obj.getRole() in [Atspi.Role.SECTION, Atspi.Role.PARAGRAPH]
 
     def getChatRoomName(self, obj):
         """Attempts to find the name of the current chat room.
@@ -136,10 +140,10 @@ class Chat(chat.Chat):
         name = ""
         ancestor = self._script.utilities.ancestorWithRole(
             obj,
-            [pyatspi.ROLE_SCROLL_PANE, pyatspi.ROLE_FRAME],
-            [pyatspi.ROLE_APPLICATION])
+            [Atspi.Role.SCROLL_PANE, Atspi.Role.FRAME],
+            [Atspi.Role.APPLICATION])
 
-        if ancestor and ancestor.getRole() == pyatspi.ROLE_SCROLL_PANE:
+        if ancestor and ancestor.getRole() == Atspi.Role.SCROLL_PANE:
             # The scroll pane has a proper labelled by relationship set.
             #
             name = self._script.utilities.displayedLabel(ancestor)
@@ -169,7 +173,7 @@ class Chat(chat.Chat):
         # this script. If so, the only other possibility is that
         # we're in the buddy list instead.
         #
-        if obj and obj.getState().contains(pyatspi.STATE_SHOWING) \
+        if obj and obj.getState().contains(Atspi.StateType.SHOWING) \
            and self._script.utilities.isInActiveApp(obj) \
            and not self.isInBuddyList(obj):
             return True

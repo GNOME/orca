@@ -1,3 +1,7 @@
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import pyatspi
 import orca.script_utilities as script_utilities
 
@@ -26,7 +30,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSeekSlider(self, obj):
         return bool(pyatspi.findAncestor(
-                obj, lambda x: x.getRole() == pyatspi.ROLE_TOOL_BAR))
+                obj, lambda x: x.getRole() == Atspi.Role.TOOL_BAR))
 
     def textForValue(self, obj):
         if not self.isSeekSlider(obj):

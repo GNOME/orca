@@ -25,6 +25,10 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import functools
 import pyatspi
 import re
@@ -124,7 +128,7 @@ class Utilities(script_utilities.Utilities):
         self._lastQueuedLiveRegionEvent = None
         self._findContainer = None
         self._statusBar = None
-        self._validChildRoles = {pyatspi.ROLE_LIST: [pyatspi.ROLE_LIST_ITEM]}
+        self._validChildRoles = {Atspi.Role.LIST: [Atspi.Role.LIST_ITEM]}
 
     def _cleanupContexts(self):
         toRemove = []
@@ -235,7 +239,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return False
 
-        roles = [pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
+        roles = [Atspi.Role.DOCUMENT_WEB, Atspi.Role.EMBEDDED]
         if not excludeDocumentFrame:
             roles.append(pyastpi.ROLE_DOCUMENT_FRAME)
 
@@ -268,7 +272,7 @@ class Utilities(script_utilities.Utilities):
         if not frame:
             return []
 
-        isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS
+        isEmbeds = lambda r: r.getRelationType() == Atspi.RelationType.EMBEDS
         try:
             relations = list(filter(isEmbeds, frame.getRelationSet()))
         except:
@@ -330,7 +334,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def activeDocument(self, window=None):
-        isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
+        isShowing = lambda x: x and x.getState().contains(Atspi.StateType.SHOWING)
         documents = self._getDocumentsEmbeddedBy(window or orca_state.activeWindow)
         documents = list(filter(isShowing, documents))
         if len(documents) == 1:
@@ -397,17 +401,17 @@ class Utilities(script_utilities.Utilities):
             return False
 
         # To avoid triggering popup lists.
-        if role == pyatspi.ROLE_ENTRY:
+        if role == Atspi.Role.ENTRY:
             return False
 
-        if role == pyatspi.ROLE_IMAGE:
-            isLink = lambda x: x and x.getRole() == pyatspi.ROLE_LINK
+        if role == Atspi.Role.IMAGE:
+            isLink = lambda x: x and x.getRole() == Atspi.Role.LINK
             return pyatspi.utils.findAncestor(obj, isLink) is not None
 
-        if role == pyatspi.ROLE_HEADING and childCount == 1:
+        if role == Atspi.Role.HEADING and childCount == 1:
             return self.isLink(obj[0])
 
-        return state.contains(pyatspi.STATE_FOCUSABLE)
+        return state.contains(Atspi.StateType.FOCUSABLE)
 
     def grabFocus(self, obj):
         try:
@@ -461,7 +465,7 @@ class Utilities(script_utilities.Utilities):
             return None
 
         for relation in obj.getRelationSet():
-            if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+            if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
                 return relation.getTarget(0)
 
         if obj == documentFrame:
@@ -490,7 +494,7 @@ class Utilities(script_utilities.Utilities):
             return None
 
         for relation in obj.getRelationSet():
-            if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
+            if relation.getRelationType() == Atspi.RelationType.FLOWS_FROM:
                 return relation.getTarget(0)
 
         if obj == documentFrame:
@@ -572,7 +576,7 @@ class Utilities(script_utilities.Utilities):
             return super().nodeLevel(obj)
 
         rv = -1
-        if not (self.inMenu(obj) or obj.getRole() == pyatspi.ROLE_HEADING):
+        if not (self.inMenu(obj) or obj.getRole() == Atspi.Role.HEADING):
             attrs = self.objectAttributes(obj)
             # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
             rv = int(attrs.get('level', 0)) -1
@@ -600,7 +604,7 @@ class Utilities(script_utilities.Utilities):
         if position is not None:
             return int(position)
 
-        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+        if obj.getRole() == Atspi.Role.TABLE_ROW:
             rowindex = attrs.get('rowindex')
             if rowindex is None and obj.childCount:
                 roles = self._cellRoles()
@@ -618,7 +622,7 @@ class Utilities(script_utilities.Utilities):
         if setsize is not None:
             return int(setsize)
 
-        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+        if obj.getRole() == Atspi.Role.TABLE_ROW:
             rows, cols = self.rowAndColumnCount(self.getTable(obj))
             if rows != -1:
                 return rows
@@ -707,26 +711,26 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_COMBO_BOX \
-           and state.contains(pyatspi.STATE_EDITABLE) \
+        if role == Atspi.Role.COMBO_BOX \
+           and state.contains(Atspi.StateType.EDITABLE) \
            and not obj.childCount:
             return True
 
         if role in self._textBlockElementRoles():
             document = self.getDocumentForObject(obj)
-            if document and document.getState().contains(pyatspi.STATE_EDITABLE):
+            if document and document.getState().contains(Atspi.StateType.EDITABLE):
                 return True
 
         return super().isTextArea(obj)
 
     def isReadOnlyTextArea(self, obj):
         # NOTE: This method is deliberately more conservative than isTextArea.
-        if obj.getRole() != pyatspi.ROLE_ENTRY:
+        if obj.getRole() != Atspi.Role.ENTRY:
             return False
 
         state = obj.getState()
-        readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
-                   and not state.contains(pyatspi.STATE_EDITABLE)
+        readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
+                   and not state.contains(Atspi.StateType.EDITABLE)
 
         return readOnly
 
@@ -846,8 +850,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             parentRole = None
 
-        if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_ITEM] \
-           and parentRole in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
+        if role in [Atspi.Role.MENU, Atspi.Role.LIST_ITEM] \
+           and parentRole in [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]:
             try:
                 ext = obj.parent.queryComponent().getExtents(0)
             except NotImplementedError:
@@ -874,7 +878,7 @@ class Utilities(script_utilities.Utilities):
 
     def descendantAtPoint(self, root, x, y, coordType=None):
         if coordType is None:
-            coordType = pyatspi.DESKTOP_COORDS
+            coordType = Atspi.CoordType.SCREEN
 
         result = None
         if self.isDocument(root):
@@ -1023,23 +1027,23 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        roles = [pyatspi.ROLE_CHECK_BOX,
-                 pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_MENU,
-                 pyatspi.ROLE_MENU_ITEM,
-                 pyatspi.ROLE_PAGE_TAB,
-                 pyatspi.ROLE_RADIO_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_BUTTON,
-                 pyatspi.ROLE_PUSH_BUTTON,
-                 pyatspi.ROLE_TOGGLE_BUTTON]
+        roles = [Atspi.Role.CHECK_BOX,
+                 Atspi.Role.CHECK_MENU_ITEM,
+                 Atspi.Role.MENU,
+                 Atspi.Role.MENU_ITEM,
+                 Atspi.Role.PAGE_TAB,
+                 Atspi.Role.RADIO_MENU_ITEM,
+                 Atspi.Role.RADIO_BUTTON,
+                 Atspi.Role.PUSH_BUTTON,
+                 Atspi.Role.TOGGLE_BUTTON]
 
         role = obj.getRole()
         if role in roles:
             rv = True
-        elif role == pyatspi.ROLE_LIST_ITEM:
-            rv = obj.parent.getRole() != pyatspi.ROLE_LIST
-        elif role == pyatspi.ROLE_TABLE_CELL:
-            if obj.getState().contains(pyatspi.STATE_EDITABLE):
+        elif role == Atspi.Role.LIST_ITEM:
+            rv = obj.parent.getRole() != Atspi.Role.LIST
+        elif role == Atspi.Role.TABLE_CELL:
+            if obj.getState().contains(Atspi.StateType.EDITABLE):
                 rv = False
             else:
                 rv = not self.isTextBlockElement(obj)
@@ -1069,7 +1073,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
 
         elif rv and not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_LIST_BOX]
+            doNotQuery = [Atspi.Role.LIST_BOX]
             role = obj.getRole()
             if rv and role in doNotQuery:
                 msg = "WEB: Treating %s as non-text due to role." % obj
@@ -1145,37 +1149,37 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         roles = self._textBlockElementRoles()
-        roles.extend([pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS])
-        if role in roles and not state.contains(pyatspi.STATE_FOCUSABLE):
-            controls = [pyatspi.ROLE_CHECK_BOX,
-                        pyatspi.ROLE_CHECK_MENU_ITEM,
-                        pyatspi.ROLE_LIST_BOX,
-                        pyatspi.ROLE_MENU_ITEM,
-                        pyatspi.ROLE_RADIO_MENU_ITEM,
-                        pyatspi.ROLE_RADIO_BUTTON,
-                        pyatspi.ROLE_PUSH_BUTTON,
-                        pyatspi.ROLE_TOGGLE_BUTTON,
-                        pyatspi.ROLE_TREE_ITEM]
+        roles.extend([Atspi.Role.IMAGE, Atspi.Role.CANVAS])
+        if role in roles and not state.contains(Atspi.StateType.FOCUSABLE):
+            controls = [Atspi.Role.CHECK_BOX,
+                        Atspi.Role.CHECK_MENU_ITEM,
+                        Atspi.Role.LIST_BOX,
+                        Atspi.Role.MENU_ITEM,
+                        Atspi.Role.RADIO_MENU_ITEM,
+                        Atspi.Role.RADIO_BUTTON,
+                        Atspi.Role.PUSH_BUTTON,
+                        Atspi.Role.TOGGLE_BUTTON,
+                        Atspi.Role.TREE_ITEM]
             rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in controls)
 
         self._isNonInteractiveDescendantOfControl[hash(obj)] = rv
         return rv
 
     def _treatObjectAsWhole(self, obj, offset=None):
-        always = [pyatspi.ROLE_CHECK_BOX,
-                  pyatspi.ROLE_CHECK_MENU_ITEM,
-                  pyatspi.ROLE_LIST_BOX,
-                  pyatspi.ROLE_MENU_ITEM,
-                  pyatspi.ROLE_PAGE_TAB,
-                  pyatspi.ROLE_RADIO_MENU_ITEM,
-                  pyatspi.ROLE_RADIO_BUTTON,
-                  pyatspi.ROLE_PUSH_BUTTON,
-                  pyatspi.ROLE_TOGGLE_BUTTON]
+        always = [Atspi.Role.CHECK_BOX,
+                  Atspi.Role.CHECK_MENU_ITEM,
+                  Atspi.Role.LIST_BOX,
+                  Atspi.Role.MENU_ITEM,
+                  Atspi.Role.PAGE_TAB,
+                  Atspi.Role.RADIO_MENU_ITEM,
+                  Atspi.Role.RADIO_BUTTON,
+                  Atspi.Role.PUSH_BUTTON,
+                  Atspi.Role.TOGGLE_BUTTON]
 
-        descendable = [pyatspi.ROLE_MENU,
-                       pyatspi.ROLE_MENU_BAR,
-                       pyatspi.ROLE_TOOL_BAR,
-                       pyatspi.ROLE_TREE_ITEM]
+        descendable = [Atspi.Role.MENU,
+                       Atspi.Role.MENU_BAR,
+                       Atspi.Role.TOOL_BAR,
+                       Atspi.Role.TREE_ITEM]
 
         role = obj.getRole()
         if role in always:
@@ -1189,32 +1193,32 @@ class Utilities(script_utilities.Utilities):
             # allowing the user to drill down into them in browse mode.
             return offset == -1
 
-        if role == pyatspi.ROLE_ENTRY:
+        if role == Atspi.Role.ENTRY:
             if obj.childCount == 1 and self.isFakePlaceholderForEntry(obj[0]):
                 return True
             return False
 
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE):
+        if state.contains(Atspi.StateType.EDITABLE):
             return False
 
-        if role == pyatspi.ROLE_TABLE_CELL:
+        if role == Atspi.Role.TABLE_CELL:
             if self.isFocusModeWidget(obj):
                 return not self._script.browseModeIsSticky()
             if self.hasNameAndActionAndNoUsefulChildren(obj):
                 return True
 
-        if role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER] \
+        if role in [Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER] \
            and self.hasExplicitName(obj):
             return True
 
-        if role == pyatspi.ROLE_COMBO_BOX:
+        if role == Atspi.Role.COMBO_BOX:
             return True
 
-        if role in [pyatspi.ROLE_EMBEDDED, pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE]:
+        if role in [Atspi.Role.EMBEDDED, Atspi.Role.TREE, Atspi.Role.TREE_TABLE]:
             return not self._script.browseModeIsSticky()
 
-        if role == pyatspi.ROLE_LINK:
+        if role == Atspi.Role.LINK:
             return self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)
 
         if self.isNonNavigableEmbeddedDocument(obj):
@@ -1233,7 +1237,7 @@ class Utilities(script_utilities.Utilities):
         # We can't have nice things.
 
         allText = text.getText(0, -1)
-        if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+        if boundary == Atspi.TextBoundaryType.CHAR:
             try:
                 string = allText[offset]
             except IndexError:
@@ -1261,7 +1265,7 @@ class Utilities(script_utilities.Utilities):
 
         spans = []
         charCount = text.characterCount
-        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
+        if boundary == Atspi.TextBoundaryType.SENTENCE_START:
             spans = [m.span() for m in re.finditer(r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
         elif boundary is not None:
             spans = [m.span() for m in re.finditer("[^\n\r]+", allText)]
@@ -1275,14 +1279,14 @@ class Utilities(script_utilities.Utilities):
                 break
 
         string = allText[rangeStart:rangeEnd]
-        if string and boundary in [pyatspi.TEXT_BOUNDARY_SENTENCE_START, None]:
+        if string and boundary in [Atspi.TextBoundaryType.SENTENCE_START, None]:
             return string, rangeStart, rangeEnd
 
         words = [m.span() for m in re.finditer("[^\\s\ufffc]+", string)]
         words = list(map(lambda x: (x[0] + rangeStart, x[1] + rangeStart), words))
-        if boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
+        if boundary == Atspi.TextBoundaryType.WORD_START:
             spans = list(filter(_inThisSpan, words))
-        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
+        if boundary == Atspi.TextBoundaryType.LINE_START:
             spans = list(filter(_onThisLine, words))
         if spans:
             rangeStart, rangeEnd = spans[0][0], spans[-1][1] + 1
@@ -1319,10 +1323,10 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return string, start, end
 
-        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START \
-            and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if boundary == Atspi.TextBoundaryType.SENTENCE_START \
+            and not obj.getState().contains(Atspi.StateType.EDITABLE):
             allText = text.getText(0, -1)
-            if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
+            if obj.getRole() in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
                 string, start, end = allText, 0, text.characterCount
                 s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
@@ -1331,7 +1335,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return string, start, end
 
-        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and self.treatAsEndOfLine(obj, offset):
+        if boundary == Atspi.TextBoundaryType.LINE_START and self.treatAsEndOfLine(obj, offset):
             offset -= 1
             msg = "WEB: Line sought for %s at end of text. Adjusting offset to %i." % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1390,7 +1394,7 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary, s1, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
-        elif boundary == pyatspi.TEXT_BOUNDARY_CHAR and string == "\ufffd":
+        elif boundary == Atspi.TextBoundaryType.CHAR and string == "\ufffd":
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is that we didn't seem to get a valid character.\n" \
@@ -1417,12 +1421,12 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START and self.isTime(obj):
+        if boundary == Atspi.TextBoundaryType.SENTENCE_START and self.isTime(obj):
             text = self.queryNonEmptyText(obj)
             if text:
                 return [[obj, 0, text.characterCount, text.getText(0, -1)]]
 
-        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
+        if boundary == Atspi.TextBoundaryType.LINE_START:
             if self.isMath(obj):
                 if self.isMathTopLevel(obj):
                     math = obj
@@ -1453,7 +1457,7 @@ class Utilities(script_utilities.Utilities):
                 boundary = None
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
+        if role == Atspi.Role.INTERNAL_FRAME and obj.childCount == 1:
             return self._getContentsForObj(obj[0], 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
@@ -1479,7 +1483,7 @@ class Utilities(script_utilities.Utilities):
             string = string[rangeStart:rangeEnd]
             end = start + len(string)
 
-        if boundary in [pyatspi.TEXT_BOUNDARY_WORD_START, pyatspi.TEXT_BOUNDARY_CHAR]:
+        if boundary in [Atspi.TextBoundaryType.WORD_START, Atspi.TextBoundaryType.CHAR]:
             return [[obj, start, end, string]]
 
         return self.adjustContentsForLanguage([[obj, start, end, string]])
@@ -1494,11 +1498,11 @@ class Utilities(script_utilities.Utilities):
             if self.findObjectInContents(obj, offset, self._currentSentenceContents, usingCache=True) != -1:
                 return self._currentSentenceContents
 
-        boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+        boundary = Atspi.TextBoundaryType.SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE):
-            if state.contains(pyatspi.STATE_FOCUSED):
+        if state.contains(Atspi.StateType.EDITABLE):
+            if state.contains(Atspi.StateType.FOCUSED):
                 return objects
             if self.isContentEditableWithEmbeddedObjects(obj):
                 return objects
@@ -1568,7 +1572,7 @@ class Utilities(script_utilities.Utilities):
             if self.findObjectInContents(obj, offset, self._currentCharacterContents, usingCache=True) != -1:
                 return self._currentCharacterContents
 
-        boundary = pyatspi.TEXT_BOUNDARY_CHAR
+        boundary = Atspi.TextBoundaryType.CHAR
         objects = self._getContentsForObj(obj, offset, boundary)
         if useCache:
             self._currentCharacterContents = objects
@@ -1586,7 +1590,7 @@ class Utilities(script_utilities.Utilities):
                 self._debugContentsInfo(obj, offset, self._currentWordContents, "Word (cached)")
                 return self._currentWordContents
 
-        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        boundary = Atspi.TextBoundaryType.WORD_START
         objects = self._getContentsForObj(obj, offset, boundary)
         extents = self.getExtents(obj, offset, offset + 1)
 
@@ -1641,7 +1645,7 @@ class Utilities(script_utilities.Utilities):
 
         # We want to treat the list item marker as its own word.
         firstObj, firstStart, firstEnd, firstString = objects[0]
-        if firstStart == 0 and firstObj.getRole() == pyatspi.ROLE_LIST_ITEM:
+        if firstStart == 0 and firstObj.getRole() == Atspi.Role.LIST_ITEM:
             objects = [objects[0]]
 
         if useCache:
@@ -1779,7 +1783,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         offset = max(0, offset)
-        if obj.getRole() == pyatspi.ROLE_TOOL_BAR and not self._treatObjectAsWhole(obj):
+        if obj.getRole() == Atspi.Role.TOOL_BAR and not self._treatObjectAsWhole(obj):
             child = self.getChildAtOffset(obj, offset)
             if child:
                 obj = child
@@ -1828,12 +1832,12 @@ class Utilities(script_utilities.Utilities):
                         return False
                 elif self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
                     return False
-                elif obj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM] \
-                     and xObj.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_ITEM]:
+                elif obj.getRole() in [Atspi.Role.TREE, Atspi.Role.TREE_ITEM] \
+                     and xObj.getRole() in [Atspi.Role.TREE, Atspi.Role.TREE_ITEM]:
                     return False
-                elif obj.getRole() == pyatspi.ROLE_HEADING and self.hasNoSize(obj):
+                elif obj.getRole() == Atspi.Role.HEADING and self.hasNoSize(obj):
                     return False
-                elif xObj.getRole() == pyatspi.ROLE_HEADING and self.hasNoSize(xObj):
+                elif xObj.getRole() == Atspi.Role.HEADING and self.hasNoSize(xObj):
                     return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
@@ -1844,7 +1848,7 @@ class Utilities(script_utilities.Utilities):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents)
             return onSameLine
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        boundary = Atspi.TextBoundaryType.LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
         if not layoutMode:
             if useCache:
@@ -2125,7 +2129,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_EMBEDDED and not self.getDocumentForObject(obj.parent):
+        if role == Atspi.Role.EMBEDDED and not self.getDocumentForObject(obj.parent):
             uri = self.documentFrameURI()
             rv = bool(uri and uri.startswith("http"))
             msg = "WEB: %s is top-level web application: %s (URI: %s)" % (obj, rv, uri)
@@ -2139,10 +2143,10 @@ class Utilities(script_utilities.Utilities):
             return False
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_TOOL_TIP:
-            return obj.getState().contains(pyatspi.STATE_FOCUSED)
+        if role == Atspi.Role.TOOL_TIP:
+            return obj.getState().contains(Atspi.StateType.FOCUSED)
 
-        if role == pyatspi.ROLE_DOCUMENT_WEB:
+        if role == Atspi.Role.DOCUMENT_WEB:
             return not self.isFocusModeWidget(obj)
 
         return False
@@ -2156,47 +2160,47 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if state.contains(pyatspi.STATE_EDITABLE):
+        if state.contains(Atspi.StateType.EDITABLE):
             msg = "WEB: %s is focus mode widget because it's editable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if state.contains(pyatspi.STATE_EXPANDABLE) and state.contains(pyatspi.STATE_FOCUSABLE) \
-           and role != pyatspi.ROLE_LINK:
+        if state.contains(Atspi.StateType.EXPANDABLE) and state.contains(Atspi.StateType.FOCUSABLE) \
+           and role != Atspi.Role.LINK:
             msg = "WEB: %s is focus mode widget because it's expandable and focusable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        alwaysFocusModeRoles = [pyatspi.ROLE_COMBO_BOX,
-                                pyatspi.ROLE_ENTRY,
-                                pyatspi.ROLE_LIST_BOX,
-                                pyatspi.ROLE_MENU,
-                                pyatspi.ROLE_MENU_ITEM,
-                                pyatspi.ROLE_CHECK_MENU_ITEM,
-                                pyatspi.ROLE_RADIO_MENU_ITEM,
-                                pyatspi.ROLE_PAGE_TAB,
-                                pyatspi.ROLE_PASSWORD_TEXT,
-                                pyatspi.ROLE_PROGRESS_BAR,
-                                pyatspi.ROLE_SLIDER,
-                                pyatspi.ROLE_SPIN_BUTTON,
-                                pyatspi.ROLE_TOOL_BAR,
-                                pyatspi.ROLE_TREE_ITEM,
-                                pyatspi.ROLE_TREE_TABLE,
-                                pyatspi.ROLE_TREE]
+        alwaysFocusModeRoles = [Atspi.Role.COMBO_BOX,
+                                Atspi.Role.ENTRY,
+                                Atspi.Role.LIST_BOX,
+                                Atspi.Role.MENU,
+                                Atspi.Role.MENU_ITEM,
+                                Atspi.Role.CHECK_MENU_ITEM,
+                                Atspi.Role.RADIO_MENU_ITEM,
+                                Atspi.Role.PAGE_TAB,
+                                Atspi.Role.PASSWORD_TEXT,
+                                Atspi.Role.PROGRESS_BAR,
+                                Atspi.Role.SLIDER,
+                                Atspi.Role.SPIN_BUTTON,
+                                Atspi.Role.TOOL_BAR,
+                                Atspi.Role.TREE_ITEM,
+                                Atspi.Role.TREE_TABLE,
+                                Atspi.Role.TREE]
 
         if role in alwaysFocusModeRoles:
             msg = "WEB: %s is focus mode widget due to its role" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if role in [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_TABLE] \
+        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] \
            and self.isLayoutOnly(self.getTable(obj)):
             msg = "WEB: %s is not focus mode widget because it's layout only" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_LIST_ITEM:
-            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX)
+        if role == Atspi.Role.LIST_ITEM:
+            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.LIST_BOX)
             if rv:
                 msg = "WEB: %s is focus mode widget because it's a listbox descendant" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2207,9 +2211,9 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        focusModeRoles = [pyatspi.ROLE_EMBEDDED,
-                          pyatspi.ROLE_TABLE_CELL,
-                          pyatspi.ROLE_TABLE]
+        focusModeRoles = [Atspi.Role.EMBEDDED,
+                          Atspi.Role.TABLE_CELL,
+                          Atspi.Role.TABLE]
 
         if role in focusModeRoles \
            and not self.isTextBlockElement(obj) \
@@ -2242,48 +2246,48 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _cellRoles(self):
-        roles = [pyatspi.ROLE_TABLE_CELL,
-                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                 pyatspi.ROLE_TABLE_ROW_HEADER,
-                 pyatspi.ROLE_ROW_HEADER,
-                 pyatspi.ROLE_COLUMN_HEADER]
+        roles = [Atspi.Role.TABLE_CELL,
+                 Atspi.Role.TABLE_COLUMN_HEADER,
+                 Atspi.Role.TABLE_ROW_HEADER,
+                 Atspi.Role.ROW_HEADER,
+                 Atspi.Role.COLUMN_HEADER]
 
         return roles
 
     def _textBlockElementRoles(self):
-        roles = [pyatspi.ROLE_ARTICLE,
-                 pyatspi.ROLE_CAPTION,
-                 pyatspi.ROLE_COLUMN_HEADER,
-                 pyatspi.ROLE_COMMENT,
-                 pyatspi.ROLE_DEFINITION,
-                 pyatspi.ROLE_DESCRIPTION_LIST,
-                 pyatspi.ROLE_DESCRIPTION_TERM,
-                 pyatspi.ROLE_DESCRIPTION_VALUE,
-                 pyatspi.ROLE_DOCUMENT_FRAME,
-                 pyatspi.ROLE_DOCUMENT_WEB,
-                 pyatspi.ROLE_FOOTER,
-                 pyatspi.ROLE_FORM,
-                 pyatspi.ROLE_HEADING,
-                 pyatspi.ROLE_LIST,
-                 pyatspi.ROLE_LIST_ITEM,
-                 pyatspi.ROLE_PARAGRAPH,
-                 pyatspi.ROLE_ROW_HEADER,
-                 pyatspi.ROLE_SECTION,
-                 pyatspi.ROLE_STATIC,
-                 pyatspi.ROLE_TEXT,
-                 pyatspi.ROLE_TABLE_CELL]
+        roles = [Atspi.Role.ARTICLE,
+                 Atspi.Role.CAPTION,
+                 Atspi.Role.COLUMN_HEADER,
+                 Atspi.Role.COMMENT,
+                 Atspi.Role.DEFINITION,
+                 Atspi.Role.DESCRIPTION_LIST,
+                 Atspi.Role.DESCRIPTION_TERM,
+                 Atspi.Role.DESCRIPTION_VALUE,
+                 Atspi.Role.DOCUMENT_FRAME,
+                 Atspi.Role.DOCUMENT_WEB,
+                 Atspi.Role.FOOTER,
+                 Atspi.Role.FORM,
+                 Atspi.Role.HEADING,
+                 Atspi.Role.LIST,
+                 Atspi.Role.LIST_ITEM,
+                 Atspi.Role.PARAGRAPH,
+                 Atspi.Role.ROW_HEADER,
+                 Atspi.Role.SECTION,
+                 Atspi.Role.STATIC,
+                 Atspi.Role.TEXT,
+                 Atspi.Role.TABLE_CELL]
 
         # Remove this check when we bump dependencies to 2.34
         try:
-            roles.append(pyatspi.ROLE_CONTENT_DELETION)
-            roles.append(pyatspi.ROLE_CONTENT_INSERTION)
+            roles.append(Atspi.Role.CONTENT_DELETION)
+            roles.append(Atspi.Role.CONTENT_INSERTION)
         except:
             pass
 
         # Remove this check when we bump dependencies to 2.36
         try:
-            roles.append(pyatspi.ROLE_MARK)
-            roles.append(pyatspi.ROLE_SUGGESTION)
+            roles.append(Atspi.Role.MARK)
+            roles.append(Atspi.Role.SUGGESTION)
         except:
             pass
 
@@ -2321,7 +2325,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        if state.contains(pyatspi.STATE_FOCUSABLE) and not self.isDocument(obj):
+        if state.contains(Atspi.StateType.FOCUSABLE) and not self.isDocument(obj):
             for child in obj:
                 if self.isMathTopLevel(child):
                     rv = True
@@ -2341,7 +2345,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        return state.contains(pyatspi.STATE_FOCUSED)
+        return state.contains(Atspi.StateType.FOCUSED)
 
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2365,15 +2369,15 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif not "Text" in interfaces:
             rv = False
-        elif state.contains(pyatspi.STATE_EDITABLE):
+        elif state.contains(Atspi.StateType.EDITABLE):
             rv = False
         elif self.isGridCell(obj):
             rv = False
-        elif role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
+        elif role in [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]:
             rv = True
         elif self.isCustomImage(obj):
             rv = False
-        elif not state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED):
+        elif not state.contains(Atspi.StateType.FOCUSABLE) and not state.contains(Atspi.StateType.FOCUSED):
             rv = not self.hasNameAndActionAndNoUsefulChildren(obj)
         else:
             rv = False
@@ -2383,17 +2387,17 @@ class Utilities(script_utilities.Utilities):
 
     def _advanceCaretInEmptyObject(self, obj):
         role = obj.getRole()
-        if role == pyatspi.ROLE_TABLE_CELL and not self.queryNonEmptyText(obj):
+        if role == Atspi.Role.TABLE_CELL and not self.queryNonEmptyText(obj):
             return not self._script._lastCommandWasStructNav
 
         return True
 
     def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
         if coordType is None:
-            coordType = pyatspi.DESKTOP_COORDS
+            coordType = Atspi.CoordType.SCREEN
 
         if boundary is None:
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
 
         string, start, end = super().textAtPoint(obj, x, y, coordType, boundary)
         if string == self.EMBEDDED_OBJECT_CHARACTER:
@@ -2421,12 +2425,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_LIST and offset is not None:
+        if role == Atspi.Role.LIST and offset is not None:
             string = self.substring(obj, offset, offset + 1)
             if string and string != self.EMBEDDED_OBJECT_CHARACTER:
                 return True
 
-        if role == pyatspi.ROLE_PANEL and not childCount:
+        if role == Atspi.Role.PANEL and not childCount:
             return True
 
         rv = self._treatAsDiv.get(hash(obj))
@@ -2461,7 +2465,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isComment(obj)
 
-        if obj.getRole() == pyatspi.ROLE_COMMENT:
+        if obj.getRole() == Atspi.Role.COMMENT:
             return True
 
         return 'comment' in self._getXMLRoles(obj)
@@ -2472,7 +2476,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this check when we bump dependencies to 2.34
         try:
-            if obj.getRole() == pyatspi.ROLE_CONTENT_DELETION:
+            if obj.getRole() == Atspi.Role.CONTENT_DELETION:
                 return True
         except:
             pass
@@ -2486,7 +2490,7 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() not in self._textBlockElementRoles():
             return False
 
-        return obj.getState().contains(pyatspi.STATE_INVALID_ENTRY)
+        return obj.getState().contains(Atspi.StateType.INVALID_ENTRY)
 
     def isContentInsertion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2494,7 +2498,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this check when we bump dependencies to 2.34
         try:
-            if obj.getRole() == pyatspi.ROLE_CONTENT_INSERTION:
+            if obj.getRole() == Atspi.Role.CONTENT_INSERTION:
                 return True
         except:
             pass
@@ -2507,7 +2511,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this check when we bump dependencies to 2.36
         try:
-            if obj.getRole() == pyatspi.ROLE_MARK:
+            if obj.getRole() == Atspi.Role.MARK:
                 return True
         except:
             pass
@@ -2520,7 +2524,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this check when we bump dependencies to 2.36
         try:
-            if obj.getRole() == pyatspi.ROLE_SUGGESTION:
+            if obj.getRole() == Atspi.Role.SUGGESTION:
                 return True
         except:
             pass
@@ -2532,7 +2536,7 @@ class Utilities(script_utilities.Utilities):
         return tag and '-' in tag
 
     def isInlineIframe(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_INTERNAL_FRAME):
+        if not (obj and obj.getRole() == Atspi.Role.INTERNAL_FRAME):
             return False
 
         displayStyle = self._getDisplayStyle(obj)
@@ -2569,12 +2573,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_ENTRY,
-                    pyatspi.ROLE_PASSWORD_TEXT,
-                    pyatspi.ROLE_SPIN_BUTTON]:
+        if role in [Atspi.Role.ENTRY,
+                    Atspi.Role.PASSWORD_TEXT,
+                    Atspi.Role.SPIN_BUTTON]:
             return True
 
-        if role == pyatspi.ROLE_COMBO_BOX:
+        if role == Atspi.Role.COMBO_BOX:
             return self.isEditableComboBox(obj)
 
         return False
@@ -2667,7 +2671,7 @@ class Utilities(script_utilities.Utilities):
             msg = "ERROR: Exception getting role for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        if role != pyatspi.ROLE_MATH_FRACTION:
+        if role != Atspi.Role.MATH_FRACTION:
             return False
 
         attrs = self.objectAttributes(obj)
@@ -2730,7 +2734,7 @@ class Utilities(script_utilities.Utilities):
         return self._getTag(obj) in ['mi', 'mn', 'mo', 'mtext', 'ms', 'mspace']
 
     def isMathTopLevel(self, obj):
-        return obj.getRole() == pyatspi.ROLE_MATH
+        return obj.getRole() == Atspi.Role.MATH
 
     def getMathAncestor(self, obj):
         if not self.isMath(obj):
@@ -2898,11 +2902,11 @@ class Utilities(script_utilities.Utilities):
                or self.isErrorForContents(obj, contents) \
                or self.isLabellingContents(obj, contents):
                 rv = False
-            elif obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            elif obj.getRole() == Atspi.Role.TABLE_ROW:
                 rv = self.hasExplicitName(obj)
             else:
                 widget = self.isInferredLabelForContents(x, contents)
-                alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
+                alwaysFilter = [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]
                 if widget and (inferLabels or widget.getRole() in alwaysFilter):
                     rv = False
 
@@ -2966,7 +2970,7 @@ class Utilities(script_utilities.Utilities):
         if rowindex is not None and colindex is not None:
             return rowindex, colindex
 
-        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
         row = pyatspi.findAncestor(obj, isRow)
         if not row:
             return rowindex, colindex
@@ -2978,7 +2982,7 @@ class Utilities(script_utilities.Utilities):
 
     def isCellWithNameFromHeader(self, obj):
         role = obj.getRole()
-        if role != pyatspi.ROLE_TABLE_CELL:
+        if role != Atspi.Role.TABLE_CELL:
             return False
 
         header = self.columnHeaderForCell(obj)
@@ -3000,7 +3004,7 @@ class Utilities(script_utilities.Utilities):
         if collabel is not None and rowlabel is not None:
             return '%s%s' % (collabel, rowlabel)
 
-        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
         row = pyatspi.findAncestor(obj, isRow)
         if not row:
             return ''
@@ -3014,11 +3018,11 @@ class Utilities(script_utilities.Utilities):
         return ''
 
     def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
-        roles = [pyatspi.ROLE_TABLE_CELL,
-                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                 pyatspi.ROLE_TABLE_ROW_HEADER,
-                 pyatspi.ROLE_COLUMN_HEADER,
-                 pyatspi.ROLE_ROW_HEADER]
+        roles = [Atspi.Role.TABLE_CELL,
+                 Atspi.Role.TABLE_COLUMN_HEADER,
+                 Atspi.Role.TABLE_ROW_HEADER,
+                 Atspi.Role.COLUMN_HEADER,
+                 Atspi.Role.ROW_HEADER]
         if not (obj and obj.getRole() in roles):
             if not findCellAncestor:
                 return -1, -1
@@ -3094,7 +3098,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isEntry = lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY
+        isEntry = lambda x: x and x.getRole() == Atspi.Role.ENTRY
         rv = pyatspi.findAncestor(obj, isEntry) is not None
         self._isEntryDescendant[hash(obj)] = rv
         return rv
@@ -3107,7 +3111,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isLabel = lambda x: x and x.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_CAPTION]
+        isLabel = lambda x: x and x.getRole() in [Atspi.Role.LABEL, Atspi.Role.CAPTION]
         rv = pyatspi.findAncestor(obj, isLabel) is not None
         self._isLabelDescendant[hash(obj)] = rv
         return rv
@@ -3123,7 +3127,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
         rv = pyatspi.findAncestor(obj, isMenu) is not None
         self._isMenuDescendant[hash(obj)] = rv
         return rv
@@ -3148,7 +3152,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isToolTip = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_TIP
+        isToolTip = lambda x: x and x.getRole() == Atspi.Role.TOOL_TIP
         if isToolTip(obj):
             ancestor = obj
         else:
@@ -3168,7 +3172,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isToolBar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
+        isToolBar = lambda x: x and x.getRole() == Atspi.Role.TOOL_BAR
         rv = pyatspi.findAncestor(obj, isToolBar) is not None
         self._isToolBarDescendant[hash(obj)] = rv
         return rv
@@ -3181,7 +3185,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isEmbedded = lambda x: x and x.getRole() == pyatspi.ROLE_EMBEDDED
+        isEmbedded = lambda x: x and x.getRole() == Atspi.Role.EMBEDDED
         rv = pyatspi.findAncestor(obj, isEmbedded) is not None
         self._isWebAppDescendant[hash(obj)] = rv
         return rv
@@ -3205,7 +3209,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == pyatspi.ROLE_LIST:
+        if role == Atspi.Role.LIST:
             rv = self.treatAsDiv(obj)
         elif self.isDescriptionList(obj):
             rv = False
@@ -3233,13 +3237,13 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isGrid(obj):
             rv = False
-        elif role in [pyatspi.ROLE_COLUMN_HEADER, pyatspi.ROLE_ROW_HEADER]:
+        elif role in [Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER]:
             rv = False
-        elif role == pyatspi.ROLE_SEPARATOR:
+        elif role == Atspi.Role.SEPARATOR:
             rv = False
-        elif role == pyatspi.ROLE_PANEL:
+        elif role == Atspi.Role.PANEL:
             rv = not self.hasExplicitName(obj)
-        elif role == pyatspi.ROLE_TABLE_ROW and not state.contains(pyatspi.STATE_EXPANDABLE):
+        elif role == Atspi.Role.TABLE_ROW and not state.contains(Atspi.StateType.EXPANDABLE):
             rv = not self.hasExplicitName(obj)
         elif self.isCustomImage(obj):
             rv = False
@@ -3307,9 +3311,9 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not state.contains(pyatspi.STATE_EDITABLE) and len(tokens) > 1
+        rv = not state.contains(Atspi.StateType.EDITABLE) and len(tokens) > 1
         if rv:
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
             i = 0
             while i < nChars:
                 string, start, end = text.getTextAtOffset(i, boundary)
@@ -3361,9 +3365,9 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not state.contains(pyatspi.STATE_EDITABLE)
+        rv = not state.contains(Atspi.StateType.EDITABLE)
         if rv:
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            boundary = Atspi.TextBoundaryType.LINE_START
             for i in range(nChars):
                 char = text.getText(i, i + 1)
                 if char.isspace() or char in ["\ufffc", "\ufffd"]:
@@ -3421,7 +3425,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isDetachedDocument(self, obj):
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
         if (obj and obj.getRole() in docRoles):
             if obj.parent is None or self.isZombie(obj.parent):
                 msg = "WEB: %s is a detached document" % obj
@@ -3432,7 +3436,7 @@ class Utilities(script_utilities.Utilities):
 
     def iframeForDetachedDocument(self, obj, root=None):
         root = root or self.documentFrame()
-        isIframe = lambda x: x and x.getRole() == pyatspi.ROLE_INTERNAL_FRAME
+        isIframe = lambda x: x and x.getRole() == Atspi.Role.INTERNAL_FRAME
         iframes = self.findAllDescendants(root, isIframe)
         for iframe in iframes:
             if obj in iframe:
@@ -3449,7 +3453,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super()._objectBoundsMightBeBogus(obj)
 
-        if obj.getRole() != pyatspi.ROLE_LINK or "Text" not in pyatspi.listInterfaces(obj):
+        if obj.getRole() != Atspi.Role.LINK or "Text" not in pyatspi.listInterfaces(obj):
             return False
 
         text = obj.queryText()
@@ -3497,7 +3501,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def targetsForLabel(self, obj):
-        isLabel = lambda r: r.getRelationType() == pyatspi.RELATION_LABEL_FOR
+        isLabel = lambda r: r.getRelationType() == Atspi.RelationType.LABEL_FOR
         try:
             relations = list(filter(isLabel, obj.getRelationSet()))
         except:
@@ -3535,7 +3539,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         for obj, start, end, string in contents:
-            if obj.getRole() != pyatspi.ROLE_IMAGE:
+            if obj.getRole() != Atspi.Role.IMAGE:
                 continue
             if pyatspi.findAncestor(obj, lambda x: x == link):
                 return True
@@ -3561,7 +3565,7 @@ class Utilities(script_utilities.Utilities):
 
         targets = self.targetsForLabel(obj)
         for target in targets:
-            if target.getState().contains(pyatspi.STATE_FOCUSABLE):
+            if target.getState().contains(Atspi.StateType.FOCUSABLE):
                 return True
 
         return False
@@ -3589,7 +3593,7 @@ class Utilities(script_utilities.Utilities):
                 continue
 
             ancestor = self.commonAncestor(acc, obj)
-            if ancestor and ancestor.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_CAPTION]:
+            if ancestor and ancestor.getRole() in [Atspi.Role.LABEL, Atspi.Role.CAPTION]:
                 return True
 
         return False
@@ -3603,8 +3607,8 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if obj.getRole() == pyatspi.ROLE_LINK \
-           and not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+        if obj.getRole() == Atspi.Role.LINK \
+           and not obj.getState().contains(Atspi.StateType.FOCUSABLE) \
            and not 'jump' in self._getActionNames(obj) \
            and not self._getXMLRoles(obj):
             rv = True
@@ -3619,11 +3623,11 @@ class Utilities(script_utilities.Utilities):
         return self.queryNonEmptyText(obj) is None
 
     def isEmptyToolTip(self, obj):
-        return obj and obj.getRole() == pyatspi.ROLE_TOOL_TIP \
+        return obj and obj.getRole() == Atspi.Role.TOOL_TIP \
             and self.queryNonEmptyText(obj) is None
 
     def isBrowserUIAlert(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_ALERT):
+        if not (obj and obj.getRole() == Atspi.Role.ALERT):
             return False
 
         if self.inDocumentContent(obj):
@@ -3639,7 +3643,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = parent.parent
 
-        return parent.getRole() == pyatspi.ROLE_FRAME
+        return parent.getRole() == Atspi.Role.FRAME
 
     def _getActionNames(self, obj):
         try:
@@ -3668,7 +3672,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if not self.isFocusModeWidget(obj):
             names = self._getActionNames(obj)
-            if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            if not obj.getState().contains(Atspi.StateType.FOCUSABLE):
                 rv = "click" in names
             else:
                 rv = "clickancestor" in names
@@ -3676,7 +3680,7 @@ class Utilities(script_utilities.Utilities):
         if rv and not obj.name and "Text" in pyatspi.listInterfaces(obj):
             string = obj.queryText().getText(0, -1)
             if not string.strip():
-                rv = obj.getRole() not in [pyatspi.ROLE_STATIC, pyatspi.ROLE_LINK]
+                rv = obj.getRole() not in [Atspi.Role.STATIC, Atspi.Role.LINK]
 
         self._isClickableElement[hash(obj)] = rv
         return rv
@@ -3768,8 +3772,8 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        if role == pyatspi.ROLE_COMBO_BOX:
-            rv = state.contains(pyatspi.STATE_EDITABLE)
+        if role == Atspi.Role.COMBO_BOX:
+            rv = state.contains(Atspi.StateType.EDITABLE)
 
         self._isEditableComboBox[hash(obj)] = rv
         return rv
@@ -3907,7 +3911,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this when we bump dependencies to 2.26
         try:
-            relationType = pyatspi.RELATION_ERROR_FOR
+            relationType = Atspi.RelationType.ERROR_FOR
         except:
             rv = False
         else:
@@ -3921,10 +3925,10 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj) and obj.parent):
             return False
 
-        if obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
-        entry = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY)
+        entry = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
         if not (entry and entry.name):
             return False
 
@@ -3934,7 +3938,7 @@ class Utilities(script_utilities.Utilities):
                 string = x.queryText().getText(0, -1).strip()
             except:
                 return False
-            return role in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC] and entry.name == string
+            return role in [Atspi.Role.SECTION, Atspi.Role.STATIC] and entry.name == string
 
         if _isMatch(obj):
             return True
@@ -3955,7 +3959,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
+        if obj.getRole() != Atspi.Role.LIST_ITEM:
             rv = False
         else:
             displayStyle = self._getDisplayStyle(obj)
@@ -3978,7 +3982,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+        isList = lambda x: x and x.getRole() == Atspi.Role.LIST
         ancestor = pyatspi.findAncestor(obj, isList)
         rv = ancestor is not None
 
@@ -4006,7 +4010,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isInlineListDescendant(obj):
             return None
 
-        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+        isList = lambda x: x and x.getRole() == Atspi.Role.LIST
         return pyatspi.findAncestor(obj, isList)
 
     def isFeed(self, obj):
@@ -4016,7 +4020,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        if obj.getRole() != pyatspi.ROLE_ARTICLE:
+        if obj.getRole() != Atspi.Role.ARTICLE:
             return False
 
         return pyatspi.findAncestor(obj, self.isFeed) is not None
@@ -4032,7 +4036,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if obj.getRole() == pyatspi.ROLE_LANDMARK:
+        if obj.getRole() == Atspi.Role.LANDMARK:
             rv = True
         elif self.isLandmarkRegion(obj):
             rv = bool(obj.name)
@@ -4087,10 +4091,10 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_LINK and not self.isAnchor(obj):
+        if role == Atspi.Role.LINK and not self.isAnchor(obj):
             rv = True
-        elif role == pyatspi.ROLE_STATIC \
-           and obj.parent.getRole() == pyatspi.ROLE_LINK \
+        elif role == Atspi.Role.STATIC \
+           and obj.parent.getRole() == Atspi.Role.LINK \
            and obj.name and obj.name == obj.parent.name:
             rv = True
         else:
@@ -4107,8 +4111,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = obj.getRole() == pyatspi.ROLE_TOOL_TIP \
-            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
+        rv = obj.getRole() == Atspi.Role.TOOL_TIP \
+            and not obj.getState().contains(Atspi.StateType.FOCUSABLE)
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
@@ -4121,7 +4125,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isCanvas = lambda x: x and x.getRole() == pyatspi.ROLE_CANVAS
+        isCanvas = lambda x: x and x.getRole() == Atspi.Role.CANVAS
         canvases = self.findAllDescendants(obj, isCanvas)
         rv = len(list(filter(self.isUselessImage, canvases))) > 0
 
@@ -4132,7 +4136,7 @@ class Utilities(script_utilities.Utilities):
         if self.isMath(obj):
             return False
 
-        return obj.getRole() in [pyatspi.ROLE_SUBSCRIPT, pyatspi.ROLE_SUPERSCRIPT]
+        return obj.getRole() in [Atspi.Role.SUBSCRIPT, Atspi.Role.SUPERSCRIPT]
 
     def isSwitch(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -4190,7 +4194,7 @@ class Utilities(script_utilities.Utilities):
            and 'Text' in pyatspi.listInterfaces(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in obj:
-                if child.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
+                if child.getRole() not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
                    and self._getTag(child) != 'svg':
                     break
             else:
@@ -4208,16 +4212,16 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
-        if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
+        if obj.getRole() not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
         if rv and (obj.name or obj.description or self.hasLongDesc(obj)):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
-        if rv and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        if rv and obj.getState().contains(Atspi.StateType.FOCUSABLE):
             rv = False
-        if rv and obj.parent.getRole() == pyatspi.ROLE_LINK and not self.hasExplicitName(obj):
+        if rv and obj.parent.getRole() == Atspi.Role.LINK and not self.hasExplicitName(obj):
             uri = self.uri(obj.parent)
             if uri and not uri.startswith('javascript'):
                 rv = False
@@ -4277,16 +4281,16 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        roles = [pyatspi.ROLE_PARAGRAPH,
-                 pyatspi.ROLE_SECTION,
-                 pyatspi.ROLE_STATIC,
-                 pyatspi.ROLE_TABLE_ROW]
+        roles = [Atspi.Role.PARAGRAPH,
+                 Atspi.Role.SECTION,
+                 Atspi.Role.STATIC,
+                 Atspi.Role.TABLE_ROW]
 
         if role not in roles and not self.isAriaAlert(obj):
             rv = False
-        elif state.contains(pyatspi.STATE_FOCUSABLE) or state.contains(pyatspi.STATE_FOCUSED):
+        elif state.contains(Atspi.StateType.FOCUSABLE) or state.contains(Atspi.StateType.FOCUSED):
             rv = False
-        elif state.contains(pyatspi.STATE_EDITABLE):
+        elif state.contains(Atspi.StateType.EDITABLE):
             rv = False
         elif self.hasValidName(obj) or obj.description or obj.childCount:
             rv = False
@@ -4357,7 +4361,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         labels = self.labelsForObject(obj)
-        pred = lambda x: x and x.getRole() == pyatspi.ROLE_CAPTION and self.isShowingAndVisible(x)
+        pred = lambda x: x and x.getRole() == Atspi.Role.CAPTION and self.isShowingAndVisible(x)
         rv = bool(list(filter(pred, labels)))
         self._hasVisibleCaption[hash(obj)] = rv
         return rv
@@ -4378,7 +4382,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        relation = filter(lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS, relations)
+        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS, relations)
         for r in relation:
             if r.getNTargets() > 0:
                 rv = True
@@ -4399,7 +4403,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         rv = []
-        relation = filter(lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS, relations)
+        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS, relations)
         for r in relation:
             for i in range(r.getNTargets()):
                 rv.append(r.getTarget(i))
@@ -4422,7 +4426,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        relation = filter(lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS_FOR, relations)
+        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS_FOR, relations)
         for r in relation:
             if r.getNTargets() > 0:
                 rv = True
@@ -4443,7 +4447,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         rv = []
-        relation = filter(lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS_FOR, relations)
+        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS_FOR, relations)
         for r in relation:
             for i in range(r.getNTargets()):
                 rv.append(r.getTarget(i))
@@ -4492,19 +4496,19 @@ class Utilities(script_utilities.Utilities):
             elif self._getXMLRoles(obj):
                 rv = False
             elif not rv:
-                roles =  [pyatspi.ROLE_CHECK_BOX,
-                          pyatspi.ROLE_COMBO_BOX,
-                          pyatspi.ROLE_ENTRY,
-                          pyatspi.ROLE_LIST_BOX,
-                          pyatspi.ROLE_PASSWORD_TEXT,
-                          pyatspi.ROLE_RADIO_BUTTON]
+                roles =  [Atspi.Role.CHECK_BOX,
+                          Atspi.Role.COMBO_BOX,
+                          Atspi.Role.ENTRY,
+                          Atspi.Role.LIST_BOX,
+                          Atspi.Role.PASSWORD_TEXT,
+                          Atspi.Role.RADIO_BUTTON]
                 rv = role in roles and not self.displayedLabel(obj)
 
         self._shouldInferLabelFor[hash(obj)] = rv
 
         # TODO - JD: This is private.
         if self._script._lastCommandWasCaretNav \
-           and role not in [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]:
+           and role not in [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]:
             return False
 
         return rv
@@ -4543,10 +4547,10 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return False
 
-        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+        if not obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
-        if pyatspi.ROLE_SPIN_BUTTON in [obj.getRole(), obj.parent.getRole()]:
+        if Atspi.Role.SPIN_BUTTON in [obj.getRole(), obj.parent.getRole()]:
             return True
 
         return False
@@ -4588,7 +4592,7 @@ class Utilities(script_utilities.Utilities):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey == "Return"
         if eType.startswith("object:text-") or eType.endswith("accessible-name"):
-            return role in [pyatspi.ROLE_STATUS_BAR, pyatspi.ROLE_LABEL]
+            return role in [Atspi.Role.STATUS_BAR, Atspi.Role.LABEL]
         if eType.startswith("object:children-changed"):
             return True
 
@@ -4599,11 +4603,11 @@ class Utilities(script_utilities.Utilities):
         if not inContent:
             return False
 
-        isListBoxItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_LIST_BOX
-        isMenuItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_MENU
-        isComboBoxItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_COMBO_BOX
+        isListBoxItem = lambda x: x and x.parent and x.parent.getRole() == Atspi.Role.LIST_BOX
+        isMenuItem = lambda x: x and x.parent and x.parent.getRole() == Atspi.Role.MENU
+        isComboBoxItem = lambda x: x and x.parent and x.parent.getRole() == Atspi.Role.COMBO_BOX
 
-        if event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+        if event.source.getState().contains(Atspi.StateType.EDITABLE) \
            and event.type.startswith("object:text-"):
             obj, offset = self.getCaretContext(documentFrame)
             if isListBoxItem(obj) or isMenuItem(obj):
@@ -4645,9 +4649,9 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM] \
-           and focusRole == pyatspi.ROLE_ENTRY \
-           and focusState.contains(pyatspi.STATE_FOCUSED):
+        if role in [Atspi.Role.MENU, Atspi.Role.MENU_ITEM] \
+           and focusRole == Atspi.Role.ENTRY \
+           and focusState.contains(Atspi.StateType.FOCUSED):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey not in ["Down", "Up"]:
                 return True
@@ -4660,13 +4664,13 @@ class Utilities(script_utilities.Utilities):
            or not self.isSingleLineAutocompleteEntry(event.source):
             return False
 
-        roles = [pyatspi.ROLE_MENU_ITEM,
-                 pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_MENU_ITEM,
-                 pyatspi.ROLE_LIST_ITEM]
+        roles = [Atspi.Role.MENU_ITEM,
+                 Atspi.Role.CHECK_MENU_ITEM,
+                 Atspi.Role.RADIO_MENU_ITEM,
+                 Atspi.Role.LIST_ITEM]
 
         if orca_state.locusOfFocus.getRole() in roles \
-           and orca_state.locusOfFocus.getState().contains(pyatspi.STATE_SELECTABLE):
+           and orca_state.locusOfFocus.getState().contains(Atspi.StateType.SELECTABLE):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey in ["Down", "Up"]
 
@@ -4677,7 +4681,7 @@ class Utilities(script_utilities.Utilities):
         if not event.type in selection:
             return False
 
-        roles = [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_PAGE_TAB_LIST]
+        roles = [Atspi.Role.PAGE_TAB, Atspi.Role.PAGE_TAB_LIST]
         if not event.source.getRole() in roles:
             return False
 
@@ -4731,7 +4735,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         # There may be other roles where we need to do this. For now, solve the known one.
-        if event.source.role in [pyatspi.ROLE_PAGE_TAB_LIST]:
+        if event.source.role in [Atspi.Role.PAGE_TAB_LIST]:
             msg = "WEB: Selection changed event is irrelevant (unrelated %s)" \
                 % event.source.getRoleName()
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4743,7 +4747,7 @@ class Utilities(script_utilities.Utilities):
 
     def textEventIsDueToDeletion(self, event):
         if not self.inDocumentContent(event.source) \
-           or not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+           or not event.source.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
         if self.isDeleteCommandTextDeletionEvent(event) \
@@ -4757,7 +4761,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not self.inDocumentContent(event.source) \
-           or not event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+           or not event.source.getState().contains(Atspi.StateType.EDITABLE) \
            or not event.source == orca_state.locusOfFocus:
             return False
 
@@ -4797,7 +4801,7 @@ class Utilities(script_utilities.Utilities):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        if event.source.getState().contains(pyatspi.STATE_EDITABLE):
+        if event.source.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
         docURI = self.documentFrameURI()
@@ -4851,9 +4855,9 @@ class Utilities(script_utilities.Utilities):
 
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
-        elif role == pyatspi.ROLE_ENTRY and state.contains(pyatspi.STATE_MULTI_LINE):
+        elif role == Atspi.Role.ENTRY and state.contains(Atspi.StateType.MULTI_LINE):
             rv = pyatspi.findDescendant(obj, hasTextBlockRole)
-        elif state.contains(pyatspi.STATE_EDITABLE):
+        elif state.contains(Atspi.StateType.EDITABLE):
             rv = hasTextBlockRole(obj) or self.isLink(obj)
         elif not self.isDocument(obj):
             document = self.getDocumentForObject(obj)
@@ -4888,7 +4892,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not state.contains(pyatspi.STATE_INVALID_ENTRY):
+        if not state.contains(Atspi.StateType.INVALID_ENTRY):
             return False
 
         try:
@@ -4914,7 +4918,7 @@ class Utilities(script_utilities.Utilities):
 
         # Remove this when we bump dependencies to 2.26
         try:
-            relationType = pyatspi.RELATION_ERROR_MESSAGE
+            relationType = Atspi.RelationType.ERROR_MESSAGE
         except:
             return None
 
@@ -5226,7 +5230,7 @@ class Utilities(script_utilities.Utilities):
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused.
             if obj and self.isDead(orca_state.locusOfFocus) \
-               and obj.getState().contains(pyatspi.STATE_FOCUSED):
+               and obj.getState().contains(Atspi.StateType.FOCUSED):
                 notify = True
 
         if obj:
@@ -5315,10 +5319,10 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return None, -1
 
-        lookInChild = [pyatspi.ROLE_LIST,
-                       pyatspi.ROLE_INTERNAL_FRAME,
-                       pyatspi.ROLE_TABLE,
-                       pyatspi.ROLE_TABLE_ROW]
+        lookInChild = [Atspi.Role.LIST,
+                       Atspi.Role.INTERNAL_FRAME,
+                       Atspi.Role.TABLE,
+                       Atspi.Role.TABLE_ROW]
         if role in lookInChild and obj.childCount and not self.treatAsDiv(obj, offset):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -5352,7 +5356,7 @@ class Utilities(script_utilities.Utilities):
         offset = max (0, offset)
         if text:
             allText = text.getText(0, -1)
-            if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == pyatspi.ROLE_ENTRY:
+            if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == Atspi.Role.ENTRY:
                 msg = "WEB: First caret context for %s, %i is unchanged" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return obj, offset
@@ -5598,7 +5602,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
-            if role in [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_REDUNDANT_OBJECT] \
+            if role in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT] \
                and self._getTag(event.any_data) in ["", None, "br"]:
                 msg = "WEB: Child has unknown role and no tag %s" % event.any_data
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5636,14 +5640,14 @@ class Utilities(script_utilities.Utilities):
 
         col = docframe.queryCollection()
         stateset = pyatspi.StateSet()
-        roles = [pyatspi.ROLE_HEADING,
-                 pyatspi.ROLE_LINK,
-                 pyatspi.ROLE_TABLE,
-                 pyatspi.ROLE_FORM,
-                 pyatspi.ROLE_LANDMARK]
+        roles = [Atspi.Role.HEADING,
+                 Atspi.Role.LINK,
+                 Atspi.Role.TABLE,
+                 Atspi.Role.FORM,
+                 Atspi.Role.LANDMARK]
 
         if not self.supportsLandmarkRole():
-            roles.append(pyatspi.ROLE_SECTION)
+            roles.append(Atspi.Role.SECTION)
 
         rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                                    "", col.MATCH_NONE,
@@ -5655,15 +5659,15 @@ class Utilities(script_utilities.Utilities):
         col.freeMatchRule(rule)
         for obj in matches:
             role = obj.getRole()
-            if role == pyatspi.ROLE_HEADING:
+            if role == Atspi.Role.HEADING:
                 result['headings'] += 1
-            elif role == pyatspi.ROLE_FORM:
+            elif role == Atspi.Role.FORM:
                 result['forms'] += 1
-            elif role == pyatspi.ROLE_TABLE and not self.isLayoutOnly(obj):
+            elif role == Atspi.Role.TABLE and not self.isLayoutOnly(obj):
                 result['tables'] += 1
-            elif role == pyatspi.ROLE_LINK:
+            elif role == Atspi.Role.LINK:
                 if self.isLink(obj):
-                    if obj.getState().contains(pyatspi.STATE_VISITED):
+                    if obj.getState().contains(Atspi.StateType.VISITED):
                         result['visitedLinks'] += 1
                     else:
                         result['unvisitedLinks'] += 1
@@ -5709,7 +5713,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = True
             else:
-                roles = [pyatspi.ROLE_PUSH_BUTTON]
+                roles = [Atspi.Role.PUSH_BUTTON]
                 rv = role in roles and len(name) == 1 and description
 
         self._preferDescriptionOverName[hash(obj)] = rv

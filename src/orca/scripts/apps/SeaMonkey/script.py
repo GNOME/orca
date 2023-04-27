@@ -27,7 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from orca import cmdnames
 from orca import debug
@@ -89,11 +91,11 @@ class Script(Gecko.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             focusRole = None
 
-        if focusRole != pyatspi.ROLE_ENTRY or not self.utilities.inDocumentContent():
+        if focusRole != Atspi.Role.ENTRY or not self.utilities.inDocumentContent():
             super().onFocus(event)
             return
 
-        if event.source.getRole() == pyatspi.ROLE_MENU:
+        if event.source.getRole() == Atspi.Role.MENU:
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.println(debug.LEVEL_INFO, msg, True)
 

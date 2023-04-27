@@ -26,8 +26,9 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import copy
-
-import pyatspi
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 import orca.formatting
 
@@ -40,7 +41,7 @@ formatting = {
         # want to speak the widget's name as it contains the number of
         # stars being displayed.
         #
-        pyatspi.ROLE_UNKNOWN: {
+        Atspi.Role.UNKNOWN: {
             'focused': 'labelAndName'
             },
     }
