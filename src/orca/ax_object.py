@@ -337,7 +337,25 @@ class AXObject:
 
         try:
             index = Atspi.Accessible.get_index_in_parent(obj)
+        except Exception as e:
+            msg = "ERROR: Exception getting index in parent for %s: %s" % (obj, e)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return parent
+
+        try:
             nchildren = Atspi.Accessible.get_child_count(parent)
+        except Exception as e:
+            msg = "ERROR: Exception getting child count for %s: %s" % (parent, e)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return parent
+
+        if index < 0 or index > nchildren:
+            msg = "ERROR: %s has index %i; parent %s has %i children" % \
+                (obj, index, parent, nchildren)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return parent
+
+        try:
             child = Atspi.Accessible.get_child_at_index(parent, index)
         except Exception as e:
             msg = "ERROR: Exception in get_parent_checked: %s" % e
