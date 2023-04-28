@@ -30,8 +30,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.debug as debug
 import orca.messages as messages
 import orca.scripts.toolkits.GAIL as GAIL
@@ -200,7 +198,7 @@ class Script(GAIL.Script):
         # events we need to present text added to the chatroom are
         # missing.
         hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
-        allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
+        allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
         msg = "PIDGIN: Hack to work around missing events complete"
         debug.println(debug.LEVEL_INFO, msg, True)
         GAIL.Script.onWindowActivated(self, event)

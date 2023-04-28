@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.chat as chat
 
 ########################################################################
@@ -71,7 +69,7 @@ class Chat(chat.Chat):
         if self._script.utilities.isDocument(event.source):
             bubble = event.source[event.detail1]
             hasRole = lambda x: x and x.getRole() == Atspi.Role.PARAGRAPH
-            paragraphs = pyatspi.findAllDescendants(bubble, hasRole)
+            paragraphs = self._script.utilities.findAllDescendants(bubble, hasRole)
 
             # If the user opted the non-default, "simple" appearance, then this
             # might not be a bubble at all, but a paragraph.

@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.messages as messages
 import orca.settings as settings
 import orca.settings_manager as settings_manager
@@ -117,7 +115,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         listObj = None
         if obj and obj.getRole() == Atspi.Role.COMBO_BOX:
             hasRole = lambda x: x and x.getRole() == Atspi.Role.LIST
-            allLists = pyatspi.findAllDescendants(obj, hasRole)
+            allLists = self._script.utilities.findAllDescendants(obj, hasRole)
             if len(allLists) == 1:
                 listObj = allLists[0]
 

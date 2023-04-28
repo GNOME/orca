@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.scripts.default as default
 
 ########################################################################
@@ -94,7 +92,7 @@ class Script(default.Script):
 
         if event.source.getRole() == Atspi.Role.SPLIT_PANE:
             hasRole = lambda x: x and x.getRole() == Atspi.Role.TEXT
-            textObjects = pyatspi.findAllDescendants(event.source, hasRole)
+            textObjects = self.utilities.findAllDescendants(event.source, hasRole)
             return
 
         default.Script.onValueChanged(self, event)

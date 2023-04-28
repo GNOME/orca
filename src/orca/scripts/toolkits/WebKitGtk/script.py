@@ -31,8 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.scripts.default as default
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -528,7 +526,7 @@ class Script(default.Script):
         if not document or document.getState().contains(Atspi.StateType.BUSY):
             return
 
-        allTextObjs = pyatspi.findAllDescendants(
+        allTextObjs = self.utilities.findAllDescendants(
             document, lambda x: AXObject.supports_text(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
         textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]

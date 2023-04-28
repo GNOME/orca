@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.chat as chat
 import orca.scripts.default as default
 
@@ -102,5 +100,5 @@ class Script(default.Script):
         # events we need to present text added to the chatroom are
         # missing.
         hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
-        allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
+        allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
         default.Script.onWindowActivated(self, event)
