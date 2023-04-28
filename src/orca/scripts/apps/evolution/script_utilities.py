@@ -33,6 +33,8 @@ import pyatspi
 
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
+from orca.ax_object import AXObject
+
 
 class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
@@ -126,7 +128,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
             return False
 
         isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
-        if pyatspi.utils.findAncestor(obj, isSplitPane):
+        if AXObject.find_ancestor(obj, isSplitPane):
             return False
 
         return True

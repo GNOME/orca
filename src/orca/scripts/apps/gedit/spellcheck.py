@@ -33,6 +33,8 @@ from gi.repository import Atspi
 
 import pyatspi
 import orca.spellcheck as spellcheck
+from orca.ax_object import AXObject
+
 
 class SpellCheck(spellcheck.SpellCheck):
 
@@ -62,7 +64,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
     def _findErrorWidget(self, root):
         isPanel = lambda x: x and x.getRole() == Atspi.Role.PANEL
-        panel = pyatspi.findAncestor(self._changeToEntry, isPanel)
+        panel = AXObject.find_ancestor(self._changeToEntry, isPanel)
         if not panel:
             return None
 
@@ -72,7 +74,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
     def _findSuggestionsList(self, root):
         isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE \
-                  and 'Selection' in x.get_interfaces()
+                  and AXObject.supports_selection(x)
         return pyatspi.findDescendant(root, isTable)
 
     def _getSuggestionIndexAndPosition(self, suggestion):

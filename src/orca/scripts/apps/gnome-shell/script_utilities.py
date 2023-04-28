@@ -29,11 +29,9 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.debug as debug
 import orca.script_utilities as script_utilities
-
+from orca.ax_object import AXObject
 
 class Utilities(script_utilities.Utilities):
 
@@ -106,7 +104,7 @@ class Utilities(script_utilities.Utilities):
         roles = [Atspi.Role.DIALOG, Atspi.Role.NOTIFICATION, Atspi.Role.MENU_ITEM]
 
         hasRole = lambda x: x and x.getRole() in roles
-        if not hasRole(root) and pyatspi.findAncestor(root, hasRole) is None:
+        if not hasRole(root) and AXObject.find_ancestor(root, hasRole) is None:
             msg = "GNOME SHELL: Not seeking unrelated labels for %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
             return []

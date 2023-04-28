@@ -31,7 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import Gtk
-import pyatspi
 import time
 
 from orca import caret_navigation
@@ -1828,7 +1827,7 @@ class Script(default.Script):
                 msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
-            elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+            elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
@@ -1945,7 +1944,7 @@ class Script(default.Script):
                 msg = "WEB: Dumping cache: dead focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
-            elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+            elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
@@ -2087,7 +2086,7 @@ class Script(default.Script):
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
                 debug.println(debug.LEVEL_INFO, msg, True)
             elif role == Atspi.Role.TOOL_TIP \
-                 and pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x and x == event.source):
+                 and AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x and x == event.source):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -2391,7 +2390,7 @@ class Script(default.Script):
 
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
         if obj and obj != event.source \
-           and not pyatspi.findAncestor(obj, lambda x: x == event.source):
+           and not AXObject.find_ancestor(obj, lambda x: x == event.source):
             msg = "WEB: Ignoring event because it isn't %s or its ancestor" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True

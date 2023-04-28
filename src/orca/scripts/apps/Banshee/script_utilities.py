@@ -2,8 +2,9 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import orca.script_utilities as script_utilities
+from orca.ax_object import AXObject
+
 
 class Utilities(script_utilities.Utilities):
 
@@ -29,7 +30,7 @@ class Utilities(script_utilities.Utilities):
         return ':'.join(duration)
 
     def isSeekSlider(self, obj):
-        return bool(pyatspi.findAncestor(
+        return bool(AXObject.find_ancestor(
                 obj, lambda x: x.getRole() == Atspi.Role.TOOL_BAR))
 
     def textForValue(self, obj):

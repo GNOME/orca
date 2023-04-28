@@ -407,7 +407,7 @@ class Utilities(script_utilities.Utilities):
 
         if role == Atspi.Role.IMAGE:
             isLink = lambda x: x and x.getRole() == Atspi.Role.LINK
-            return pyatspi.utils.findAncestor(obj, isLink) is not None
+            return AXObject.find_ancestor(obj, isLink) is not None
 
         if role == Atspi.Role.HEADING and childCount == 1:
             return self.isLink(obj[0])
@@ -675,7 +675,7 @@ class Utilities(script_utilities.Utilities):
         if child == parent:
             return True
 
-        return pyatspi.findAncestor(child, lambda x: x == parent)
+        return AXObject.find_ancestor(child, lambda x: x == parent)
 
     def isShowingAndVisible(self, obj):
         rv = super().isShowingAndVisible(obj)
@@ -772,7 +772,7 @@ class Utilities(script_utilities.Utilities):
             offset = text.characterCount - 1
 
         def _isInRoot(o):
-            return o == root or pyatspi.utils.findAncestor(o, lambda x: x == root)
+            return o == root or AXObject.find_ancestor(o, lambda x: x == root)
 
         obj = root
         while obj:
@@ -1161,7 +1161,7 @@ class Utilities(script_utilities.Utilities):
                         Atspi.Role.PUSH_BUTTON,
                         Atspi.Role.TOGGLE_BUTTON,
                         Atspi.Role.TREE_ITEM]
-            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in controls)
+            rv = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in controls)
 
         self._isNonInteractiveDescendantOfControl[hash(obj)] = rv
         return rv
@@ -1809,7 +1809,7 @@ class Utilities(script_utilities.Utilities):
             if container:
                 extents = self.getExtents(container, 0, 1)
 
-        objBanner = pyatspi.findAncestor(obj, self.isLandmarkBanner)
+        objBanner = AXObject.find_ancestor(obj, self.isLandmarkBanner)
 
         def _include(x):
             if x in objects:
@@ -1825,7 +1825,7 @@ class Utilities(script_utilities.Utilities):
                 if self.isLandmark(obj) and self.isLandmark(xObj):
                     return False
                 if self.isLink(obj) and self.isLink(xObj):
-                    xObjBanner =  pyatspi.findAncestor(xObj, self.isLandmarkBanner)
+                    xObjBanner = AXObject.find_ancestor(xObj, self.isLandmarkBanner)
                     if (objBanner or xObjBanner) and objBanner != xObjBanner:
                         return False
                     if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
@@ -2095,7 +2095,7 @@ class Utilities(script_utilities.Utilities):
 
         for descendant in descendants:
             if descendant not in (oldStart, oldEnd, start, end) \
-               and pyatspi.findAncestor(descendant, lambda x: x in descendants):
+               and AXObject.find_ancestor(descendant, lambda x: x in descendants):
                 super().updateCachedTextSelection(descendant)
             else:
                 super().handleTextSelectionChange(descendant, speakMessage)
@@ -2201,7 +2201,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if role == Atspi.Role.LIST_ITEM:
-            rv = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.LIST_BOX)
+            rv = AXObject.find_ancestor(obj, lambda x: x and x.getRole() == Atspi.Role.LIST_BOX)
             if rv:
                 msg = "WEB: %s is focus mode widget because it's a listbox descendant" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2553,7 +2553,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        ancestor = pyatspi.findAncestor(obj, self.isInlineIframe)
+        ancestor = AXObject.find_ancestor(obj, self.isInlineIframe)
         rv = ancestor is not None
         self._isInlineIframeDescendant[hash(obj)] = rv
         return rv
@@ -2584,14 +2584,14 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isFirstItemInInlineContentSuggestion(self, obj):
-        suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
+        suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
         if not (suggestion and suggestion.childCount):
             return False
 
         return suggestion[0] == obj
 
     def isLastItemInInlineContentSuggestion(self, obj):
-        suggestion = pyatspi.findAncestor(obj, self.isInlineSuggestion)
+        suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
         if not (suggestion and suggestion.childCount):
             return False
 
@@ -2743,7 +2743,7 @@ class Utilities(script_utilities.Utilities):
         if self.isMathTopLevel(obj):
             return obj
 
-        return pyatspi.findAncestor(obj, self.isMathTopLevel)
+        return AXObject.find_ancestor(obj, self.isMathTopLevel)
 
     def getMathDenominator(self, obj):
         try:
@@ -2874,7 +2874,7 @@ class Utilities(script_utilities.Utilities):
         rv = -1
         ancestor = obj
         while ancestor:
-            ancestor = pyatspi.findAncestor(ancestor, test)
+            ancestor = AXObject.find_ancestor(ancestor, test)
             rv += 1
 
         self._mathNestingLevel[hash(obj)] = rv
@@ -2944,7 +2944,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = pyatspi.findAncestor(obj, self.supportsSelectionAndTable) is not None
+        rv = AXObject.find_ancestor(obj, self.supportsSelectionAndTable) is not None
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
@@ -2970,7 +2970,7 @@ class Utilities(script_utilities.Utilities):
             return rowindex, colindex
 
         isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
-        row = pyatspi.findAncestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, isRow)
         if not row:
             return rowindex, colindex
 
@@ -3004,7 +3004,7 @@ class Utilities(script_utilities.Utilities):
             return '%s%s' % (collabel, rowlabel)
 
         isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
-        row = pyatspi.findAncestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, isRow)
         if not row:
             return ''
 
@@ -3026,7 +3026,7 @@ class Utilities(script_utilities.Utilities):
             if not findCellAncestor:
                 return -1, -1
 
-            cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
+            cell = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
         if not preferAttribute:
@@ -3098,7 +3098,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isEntry = lambda x: x and x.getRole() == Atspi.Role.ENTRY
-        rv = pyatspi.findAncestor(obj, isEntry) is not None
+        rv = AXObject.find_ancestor(obj, isEntry) is not None
         self._isEntryDescendant[hash(obj)] = rv
         return rv
 
@@ -3111,7 +3111,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isLabel = lambda x: x and x.getRole() in [Atspi.Role.LABEL, Atspi.Role.CAPTION]
-        rv = pyatspi.findAncestor(obj, isLabel) is not None
+        rv = AXObject.find_ancestor(obj, isLabel) is not None
         self._isLabelDescendant[hash(obj)] = rv
         return rv
 
@@ -3127,7 +3127,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
-        rv = pyatspi.findAncestor(obj, isMenu) is not None
+        rv = AXObject.find_ancestor(obj, isMenu) is not None
         self._isMenuDescendant[hash(obj)] = rv
         return rv
 
@@ -3155,7 +3155,7 @@ class Utilities(script_utilities.Utilities):
         if isToolTip(obj):
             ancestor = obj
         else:
-            ancestor = pyatspi.findAncestor(obj, isToolTip)
+            ancestor = AXObject.find_ancestor(obj, isToolTip)
         rv = ancestor and not self.isNonNavigablePopup(ancestor)
         self._isNavigableToolTipDescendant[hash(obj)] = rv
         return rv
@@ -3172,7 +3172,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isToolBar = lambda x: x and x.getRole() == Atspi.Role.TOOL_BAR
-        rv = pyatspi.findAncestor(obj, isToolBar) is not None
+        rv = AXObject.find_ancestor(obj, isToolBar) is not None
         self._isToolBarDescendant[hash(obj)] = rv
         return rv
 
@@ -3185,7 +3185,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isEmbedded = lambda x: x and x.getRole() == Atspi.Role.EMBEDDED
-        rv = pyatspi.findAncestor(obj, isEmbedded) is not None
+        rv = AXObject.find_ancestor(obj, isEmbedded) is not None
         self._isWebAppDescendant[hash(obj)] = rv
         return rv
 
@@ -3390,7 +3390,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         for target in self.targetsForLabel(obj):
-            if pyatspi.findAncestor(target, lambda x: x == obj):
+            if AXObject.find_ancestor(target, lambda x: x == obj):
                 rv = True
                 break
 
@@ -3540,7 +3540,7 @@ class Utilities(script_utilities.Utilities):
         for obj, start, end, string in contents:
             if obj.getRole() != Atspi.Role.IMAGE:
                 continue
-            if pyatspi.findAncestor(obj, lambda x: x == link):
+            if AXObject.find_ancestor(obj, lambda x: x == link):
                 return True
 
         return False
@@ -3692,7 +3692,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = pyatspi.findAncestor(obj, self.isCode) is not None
+        rv = AXObject.find_ancestor(obj, self.isCode) is not None
         self._isCodeDescendant[hash(obj)] = rv
         return rv
 
@@ -3927,7 +3927,7 @@ class Utilities(script_utilities.Utilities):
         if obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
-        entry = pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
+        entry = AXObject.find_ancestor(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
         if not (entry and entry.name):
             return False
 
@@ -3982,7 +3982,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isList = lambda x: x and x.getRole() == Atspi.Role.LIST
-        ancestor = pyatspi.findAncestor(obj, isList)
+        ancestor = AXObject.find_ancestor(obj, isList)
         rv = ancestor is not None
 
         self._isListDescendant[hash(obj)] = rv
@@ -3999,7 +3999,7 @@ class Utilities(script_utilities.Utilities):
         if self.isInlineListItem(obj):
             rv = True
         else:
-            ancestor = pyatspi.findAncestor(obj, self.isInlineListItem)
+            ancestor = AXObject.find_ancestor(obj, self.isInlineListItem)
             rv = ancestor is not None
 
         self._isInlineListDescendant[hash(obj)] = rv
@@ -4010,7 +4010,7 @@ class Utilities(script_utilities.Utilities):
             return None
 
         isList = lambda x: x and x.getRole() == Atspi.Role.LIST
-        return pyatspi.findAncestor(obj, isList)
+        return AXObject.find_ancestor(obj, isList)
 
     def isFeed(self, obj):
         return 'feed' in self._getXMLRoles(obj)
@@ -4022,7 +4022,7 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() != Atspi.Role.ARTICLE:
             return False
 
-        return pyatspi.findAncestor(obj, self.isFeed) is not None
+        return AXObject.find_ancestor(obj, self.isFeed) is not None
 
     def isFigure(self, obj):
         return 'figure' in self._getXMLRoles(obj) or self._getTag(obj) == 'figure'
@@ -4727,7 +4727,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Selection changed event is relevant (is locusOfFocus)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-        if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+        if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
             msg = "WEB: Selection changed event is relevant (ancestor of locusOfFocus)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -4815,7 +4815,7 @@ class Utilities(script_utilities.Utilities):
         if self.isLink(oldFocus):
             link = oldFocus
         else:
-            link = pyatspi.findAncestor(oldFocus, self.isLink)
+            link = AXObject.find_ancestor(oldFocus, self.isLink)
 
         return link and self.uri(link) == docURI
 
@@ -4825,7 +4825,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         isSameFragment = lambda x: self._getID(x) == parseResult.fragment
-        return pyatspi.findAncestor(obj, isSameFragment) is not None
+        return AXObject.find_ancestor(obj, isSameFragment) is not None
 
     def documentFragment(self, documentFrame):
         parseResult = urllib.parse.urlparse(self.documentFrameURI(documentFrame))
@@ -5173,7 +5173,7 @@ class Utilities(script_utilities.Utilities):
         if event.any_data == orca_state.locusOfFocus:
             msg = "WEB: Removed child is locusOfFocus."
             debug.println(debug.LEVEL_INFO, msg, True)
-        elif pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.any_data):
+        elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locusOfFocus."
             debug.println(debug.LEVEL_INFO, msg, True)
         elif self.isSameObject(event.any_data, orca_state.locusOfFocus, True, True):
@@ -5579,7 +5579,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if event.type.startswith("object:text-changed:insert"):
-            alert = pyatspi.findAncestor(event.source, self.isAriaAlert)
+            alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
             if alert and self.focusedObject(alert) == event.source:
                 msg = "WEB: Focused source will be presented as part of alert"
                 debug.println(debug.LEVEL_INFO, msg, True)

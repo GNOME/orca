@@ -29,7 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import time
 
 import orca.debug as debug
@@ -60,7 +59,7 @@ class Script(default.Script):
 
         if self.utilities.isToggleDescendantOfComboBox(newFocus):
             isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
-            newFocus = pyatspi.findAncestor(newFocus, isComboBox) or newFocus
+            newFocus = AXObject.find_ancestor(newFocus, isComboBox) or newFocus
             orca.setLocusOfFocus(event, newFocus, False)
         elif self.utilities.isInOpenMenuBarMenu(newFocus):
             window = self.utilities.topLevelObject(newFocus)
@@ -92,7 +91,7 @@ class Script(default.Script):
 
         # Present changes of child widgets of GtkListBox items
         isListBox = lambda x: x and x.getRole() == Atspi.Role.LIST_BOX
-        if not pyatspi.findAncestor(obj, isListBox):
+        if not AXObject.find_ancestor(obj, isListBox):
             return
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
@@ -126,7 +125,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, selectedChildren[0])
                 return
 
-        ancestor = pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source)
+        ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
         if not ancestor:
             orca.setLocusOfFocus(event, event.source)
             return
@@ -135,7 +134,7 @@ class Script(default.Script):
             return
 
         isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
-        if isMenu(ancestor) and not pyatspi.findAncestor(ancestor, isMenu):
+        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
             return
 
         orca.setLocusOfFocus(event, event.source)

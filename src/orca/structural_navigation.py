@@ -46,6 +46,7 @@ from . import orca_gui_navlist
 from . import orca_state
 from . import settings
 from . import settings_manager
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 #############################################################################
@@ -910,7 +911,7 @@ class StructuralNavigation:
 
         if inModalDialog:
             originalSize = len(matches)
-            matches = [m for m in matches if pyatspi.findAncestor(m, lambda x: x == modalDialog)]
+            matches = [m for m in matches if AXObject.find_ancestor(m, lambda x: x == modalDialog)]
             msg = "STRUCTURAL NAVIGATION: Removed %i objects outside of modal dialog %s" % \
                 (originalSize - len(matches), modalDialog)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1087,10 +1088,10 @@ class StructuralNavigation:
                      Atspi.Role.ROW_HEADER]
         isCell = lambda x: x and x.getRole() in cellRoles
         if obj and not isCell(obj):
-            obj = pyatspi.utils.findAncestor(obj, isCell)
+            obj = AXObject.find_ancestor(obj, isCell)
 
         while obj and self._script.utilities.isLayoutOnly(self.getTableForCell(obj)):
-            cell = pyatspi.utils.findAncestor(obj, isCell)
+            cell = AXObject.find_ancestor(obj, isCell)
             if not cell:
                 break
             obj = cell
@@ -1120,7 +1121,7 @@ class StructuralNavigation:
         if self._isContainer(obj):
             return obj
 
-        return pyatspi.utils.findAncestor(obj, self._isContainer)
+        return AXObject.find_ancestor(obj, self._isContainer)
 
     def getTableForCell(self, obj):
         """Looks for a table in the ancestry of obj, if obj is not a table.
@@ -1131,7 +1132,7 @@ class StructuralNavigation:
 
         isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE
         if obj and not isTable(obj):
-            obj = pyatspi.utils.findAncestor(obj, isTable)
+            obj = AXObject.find_ancestor(obj, isTable)
 
         return obj
 

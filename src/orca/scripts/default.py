@@ -34,7 +34,6 @@ import gi
 gi.require_version('Atspi', '2.0') 
 from gi.repository import Atspi
 
-import pyatspi
 import re
 import time
 
@@ -60,6 +59,7 @@ import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
 import orca.notification_messages as notification_messages
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -2625,7 +2625,7 @@ class Script(script.Script):
         mouseReviewItem = mouse_review.reviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
-            if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == child):
+            if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == child):
                 msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self._saveFocusedObjectInfo(orca_state.locusOfFocus)

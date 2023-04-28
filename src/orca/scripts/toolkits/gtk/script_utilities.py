@@ -89,7 +89,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
-        comboBox = pyatspi.findAncestor(obj, isComboBox)
+        comboBox = AXObject.find_ancestor(obj, isComboBox)
         if comboBox:
             self._isComboBoxWithToggleDescendant[hash(comboBox)] = True
 
@@ -140,7 +140,7 @@ class Utilities(script_utilities.Utilities):
     def isEntryCompletionPopupItem(self, obj):
         if obj.getRole() == Atspi.Role.TABLE_CELL:
             isWindow = lambda x: x and x.getRole() == Atspi.Role.WINDOW
-            window = pyatspi.findAncestor(obj, isWindow)
+            window = AXObject.find_ancestor(obj, isWindow)
             if window:
                 return True
 

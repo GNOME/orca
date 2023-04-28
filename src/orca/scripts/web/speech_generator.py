@@ -30,8 +30,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import urllib
 
 from orca import debug
@@ -41,6 +39,7 @@ from orca import orca_state
 from orca import settings
 from orca import settings_manager
 from orca import speech_generator
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -252,7 +251,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         objs = self._script.utilities.detailsIn(obj)
         if not objs:
-            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
             objs = self._script.utilities.detailsIn(container)
 
         if not objs:
@@ -366,7 +365,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         if obj.getRole() == Atspi.Role.CHECK_BOX:
-            gridCell = pyatspi.findAncestor(obj, self._script.utilities.isGridCell)
+            gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateLabelOrName(gridCell, **args)
 
@@ -389,7 +388,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             caption = args.get('ancestorOf')
             if caption.getRole() != Atspi.Role.CAPTION:
                 isCaption = lambda x: x and x.getRole() == Atspi.Role.CAPTION
-                caption = pyatspi.findAncestor(caption, isCaption)
+                caption = AXObject.find_ancestor(caption, isCaption)
             if caption and hash(obj) in self._script.utilities.labelTargets(caption):
                 return []
 
@@ -632,7 +631,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         ancestorRoles = [Atspi.Role.HEADING, Atspi.Role.LINK]
         speakRoles = lambda x: x and x.getRole() in ancestorRoles
-        ancestor = pyatspi.findAncestor(obj, speakRoles)
+        ancestor = AXObject.find_ancestor(obj, speakRoles)
         if ancestor and ancestor.getRole() != role and (index == total - 1 or obj.name == ancestor.name):
             result.extend(self._generateRoleName(ancestor))
 
@@ -792,7 +791,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return self._generateRealTableCell(obj, **args)
 
         isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
-        row = pyatspi.findAncestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, isRow)
         if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row)
 

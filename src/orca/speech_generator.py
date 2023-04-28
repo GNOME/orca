@@ -29,7 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import urllib.parse, urllib.request, urllib.error, urllib.parse
 
 from . import chnames
@@ -396,7 +395,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
             if self._script.utilities.isContentSuggestion(container):
                 result.extend(self._generatePause(obj, **args))
                 result.extend(self._generateHasDetails(container, mode=args.get('mode')))
@@ -439,7 +438,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = pyatspi.findAncestor(obj, self._script.utilities.hasDetails)
+            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
             if self._script.utilities.isContentSuggestion(container):
                 result.extend(self._generatePause(obj, **args))
                 result.extend(self._generateHasDetails(container, mode=args.get('mode')))
@@ -2118,8 +2117,8 @@ class SpeechGenerator(generator.Generator):
             commonRole = self._getAlternativeRole(commonAncestor)
             if commonRole in presentOnce:
                 pred = lambda x: x and self._getAlternativeRole(x) == commonRole
-                objAncestor = pyatspi.findAncestor(obj, pred)
-                priorAncestor = pyatspi.findAncestor(priorObj, pred)
+                objAncestor = AXObject.find_ancestor(obj, pred)
+                priorAncestor = AXObject.find_ancestor(priorObj, pred)
                 objLevel = self._script.utilities.nestingLevel(objAncestor)
                 priorLevel = self._script.utilities.nestingLevel(priorAncestor)
                 presentCommonAncestor = objLevel != priorLevel
@@ -2183,7 +2182,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if obj.getApplication() != priorObj.getApplication() \
-           or pyatspi.findAncestor(obj, lambda x: x == priorObj):
+           or AXObject.find_ancestor(obj, lambda x: x == priorObj):
             return []
 
         frame, dialog = self._script.utilities.frameAndDialog(obj)

@@ -355,7 +355,7 @@ class Utilities(web.Utilities):
         super().setCaretPosition(obj, offset, documentFrame)
 
         isLink = lambda x: x and x.getRole() == Atspi.Role.LINK
-        link = pyatspi.utils.findAncestor(obj, isLink)
+        link = AXObject.find_ancestor(obj, isLink)
         if link:
             msg = "CHROMIUM: HACK: Grabbing focus on %s's ancestor %s" % (obj, link)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -456,7 +456,7 @@ class Utilities(web.Utilities):
             return False
 
         isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
-        result = self.isFindContainer(pyatspi.findAncestor(obj, isDialog))
+        result = self.isFindContainer(AXObject.find_ancestor(obj, isDialog))
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page widget" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

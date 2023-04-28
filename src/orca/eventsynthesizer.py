@@ -370,9 +370,9 @@ def _containingDocument(obj):
              Atspi.Role.DOCUMENT_TEXT,
              Atspi.Role.DOCUMENT_WEB]
     isDocument = lambda x: x and x.getRole() in roles
-    document = pyatspi.findAncestor(obj, isDocument)
+    document = AXObject.find_ancestor(obj, isDocument)
     while document:
-        ancestor = pyatspi.findAncestor(document, isDocument)
+        ancestor = AXObject.find_ancestor(document, isDocument)
         if not ancestor or ancestor == document:
             break
         document = ancestor

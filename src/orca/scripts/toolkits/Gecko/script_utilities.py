@@ -34,7 +34,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import re
 import time
 
@@ -308,7 +307,7 @@ class Utilities(web.Utilities):
             return False
 
         isToolbar = lambda x: x and x.getRole() == Atspi.Role.TOOL_BAR
-        toolbar = pyatspi.findAncestor(obj, isToolbar)
+        toolbar = AXObject.find_ancestor(obj, isToolbar)
         result = self.isFindContainer(toolbar)
         if result:
             msg = "GECKO: %s believed to be find-in-page widget (toolbar)" % obj

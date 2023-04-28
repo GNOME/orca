@@ -246,7 +246,7 @@ class _ItemContext:
                  Atspi.Role.TOOL_BAR,
                  Atspi.Role.WINDOW]
         isContainer = lambda x: x and x.getRole() in roles
-        return pyatspi.findAncestor(self._obj, isContainer)
+        return AXObject.find_ancestor(self._obj, isContainer)
 
     def _isSubstringOf(self, other):
         """Returns True if this is a substring of other."""
@@ -576,7 +576,7 @@ class MouseReviewer:
             menu = orca_state.locusOfFocus
         else:
             try:
-                menu = pyatspi.findAncestor(orca_state.locusOfFocus, isMenu)
+                menu = AXObject.find_ancestor(orca_state.locusOfFocus, isMenu)
             except:
                 msg = "ERROR: Exception getting ancestor of %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -594,7 +594,7 @@ class MouseReviewer:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         script = _scriptManager.getScript(window.getApplication(), obj)
-        if menu and obj and not pyatspi.findAncestor(obj, isMenu):
+        if menu and obj and not AXObject.find_ancestor(obj, isMenu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
                 msg = "MOUSE REVIEW: %s believed to be under %s" % (obj, menu)
                 debug.println(debug.LEVEL_INFO, msg, True)

@@ -31,8 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from orca import braille
 from orca import braille_generator
 from orca import debug
@@ -109,7 +107,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if index == total - 1 and role != Atspi.Role.HEADING \
            and (role == Atspi.Role.IMAGE or self._script.utilities.queryNonEmptyText(obj)):
             isHeading = lambda x: x and x.getRole() == Atspi.Role.HEADING
-            heading = pyatspi.findAncestor(obj, isHeading)
+            heading = AXObject.find_ancestor(obj, isHeading)
             if heading:
                 result.extend(self._generateRoleName(heading))
 
@@ -178,7 +176,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if result and result[0] and not self._script.utilities.hasExplicitName(obj):
             result[0] = result[0].strip()
         elif not result and obj.getRole() == Atspi.Role.CHECK_BOX:
-            gridCell = pyatspi.findAncestor(obj, self._script.utilities.isGridCell)
+            gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateName(gridCell, **args)
 
@@ -213,7 +211,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return self._generateRealTableCell(obj, **args)
 
         isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
-        row = pyatspi.findAncestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, isRow)
         if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
 

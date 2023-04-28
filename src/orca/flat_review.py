@@ -30,8 +30,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import re
 
 from . import braille
@@ -502,7 +500,7 @@ class Context:
 
         containerRoles = [Atspi.Role.MENU]
         isContainer = lambda x: x and x.getRole() in containerRoles
-        container = pyatspi.findAncestor(self.focusObj, isContainer)
+        container = AXObject.find_ancestor(self.focusObj, isContainer)
         if not container and isContainer(self.focusObj):
             container = self.focusObj
 
@@ -732,7 +730,7 @@ class Context:
         if child == parent:
             return True
 
-        return pyatspi.findAncestor(child, lambda x: x == parent)
+        return AXObject.find_ancestor(child, lambda x: x == parent)
 
     def getShowingZones(self, root, boundingbox=None):
         """Returns an unsorted list of all the zones under root and the focusZone."""

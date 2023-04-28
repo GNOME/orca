@@ -4,7 +4,6 @@ from gi.repository import Atspi
 
 import bisect
 import copy
-import pyatspi
 import time
 from gi.repository import GLib
 
@@ -16,6 +15,7 @@ from . import messages
 from . import input_event
 from . import orca_state
 from . import settings_manager
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -424,7 +424,7 @@ class LiveRegionManager:
         if isContainer(obj):
             return obj
 
-        return pyatspi.findAncestor(obj, isContainer)
+        return AXObject.find_ancestor(obj, isContainer)
 
     def _getMessage(self, event):
         """Gets the message associated with a given live event."""

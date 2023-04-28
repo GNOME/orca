@@ -278,7 +278,7 @@ class Utilities:
             return int(index)
 
         isCell = lambda x: x and x.getRole() in self.getCellRoles()
-        obj = pyatspi.findAncestor(obj, isCell) or obj
+        obj = AXObject.find_ancestor(obj, isCell) or obj
         return obj.getIndexInParent()
 
     def childNodes(self, obj):
@@ -755,7 +755,7 @@ class Utilities:
             return False
 
         isToolbar = lambda x: x and x.getRole() == Atspi.Role.TOOL_BAR
-        toolbar = pyatspi.findAncestor(obj, isToolbar)
+        toolbar = AXObject.find_ancestor(obj, isToolbar)
 
         return toolbar is not None
 
@@ -798,7 +798,7 @@ class Utilities:
         if obj == ancestor:
             return True
 
-        return pyatspi.findAncestor(obj, lambda x: x and x == ancestor)
+        return AXObject.find_ancestor(obj, lambda x: x and x == ancestor)
 
     def isFunctionalDialog(self, obj):
         """Returns True if the window is a functioning as a dialog.
@@ -1169,7 +1169,7 @@ class Utilities:
 
         if _settingsManager.getSetting('ignoreStatusBarProgressBars'):
             isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
-            if pyatspi.findAncestor(obj, isStatusBar):
+            if AXObject.find_ancestor(obj, isStatusBar):
                 return False, "Is status bar descendant"
 
         verbosity = _settingsManager.getSetting('progressBarVerbosity')
@@ -1244,7 +1244,7 @@ class Utilities:
             return False
 
         try:
-            document = pyatspi.findAncestor(obj, self.isDocument)
+            document = AXObject.find_ancestor(obj, self.isDocument)
         except:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
@@ -1257,7 +1257,7 @@ class Utilities:
             return False
 
         try:
-            document = pyatspi.findAncestor(obj, self.isDocument)
+            document = AXObject.find_ancestor(obj, self.isDocument)
         except:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
@@ -1282,13 +1282,13 @@ class Utilities:
         return self.getTopLevelDocumentForObject(orca_state.locusOfFocus)
 
     def isTopLevelDocument(self, obj):
-        return self.isDocument(obj) and not pyatspi.findAncestor(obj, self.isDocument)
+        return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
 
     def getTopLevelDocumentForObject(self, obj):
         if self.isTopLevelDocument(obj):
             return obj
 
-        return pyatspi.findAncestor(obj, self.isTopLevelDocument)
+        return AXObject.find_ancestor(obj, self.isTopLevelDocument)
 
     def getDocumentForObject(self, obj):
         if not obj:
@@ -1298,7 +1298,7 @@ class Utilities:
             return obj
 
         try:
-            doc = pyatspi.findAncestor(obj, self.isDocument)
+            doc = AXObject.find_ancestor(obj, self.isDocument)
         except:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1329,7 +1329,7 @@ class Utilities:
             return obj
 
         try:
-            dialog = pyatspi.findAncestor(obj, self.isModalDialog)
+            dialog = AXObject.find_ancestor(obj, self.isModalDialog)
         except:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1353,7 +1353,7 @@ class Utilities:
             return obj
 
         try:
-            table = pyatspi.findAncestor(obj, isTable)
+            table = AXObject.find_ancestor(obj, isTable)
         except:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1432,7 +1432,7 @@ class Utilities:
         if not role in self.getCellRoles():
             return False
 
-        return pyatspi.findAncestor(obj, self.isTextDocumentTable)
+        return AXObject.find_ancestor(obj, self.isTextDocumentTable)
 
     def isSpreadSheetCell(self, obj):
         if not obj:
@@ -1448,7 +1448,7 @@ class Utilities:
         if not role in self.getCellRoles():
             return False
 
-        return pyatspi.findAncestor(obj, self.isSpreadSheetTable)
+        return AXObject.find_ancestor(obj, self.isSpreadSheetTable)
 
     def cellColumnChanged(self, cell):
         row, column = self.coordinatesForCell(cell)
@@ -1555,7 +1555,7 @@ class Utilities:
             return False
 
         isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
-        if pyatspi.findAncestor(obj, isStatusBar):
+        if AXObject.find_ancestor(obj, isStatusBar):
             return True
 
         return False
@@ -1573,7 +1573,7 @@ class Utilities:
             return True
 
         isTree = lambda x: x and x.getRole() in [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
-        if pyatspi.findAncestor(obj, isTree):
+        if AXObject.find_ancestor(obj, isTree):
             return True
 
         return False
@@ -1864,7 +1864,7 @@ class Utilities:
             result.remove(obj)
 
         def isNotAncestor(acc):
-            return not pyatspi.findAncestor(obj, lambda x: x == acc)
+            return not AXObject.find_ancestor(obj, lambda x: x == acc)
 
         return list(filter(isNotAncestor, result))
 
@@ -1999,10 +1999,10 @@ class Utilities:
             pred = lambda x: x and x.getRole() == role
 
         ancestors = []
-        ancestor = pyatspi.findAncestor(obj, pred)
+        ancestor = AXObject.find_ancestor(obj, pred)
         while ancestor:
             ancestors.append(ancestor)
-            ancestor = pyatspi.findAncestor(ancestor, pred)
+            ancestor = AXObject.find_ancestor(ancestor, pred)
 
         nestingLevel = len(ancestors)
         self._script.generatorCache[self.NESTING_LEVEL][obj] = nestingLevel
@@ -2153,7 +2153,7 @@ class Utilities:
             return False
 
         isMenuBar = lambda x: x and x.getRole() == Atspi.Role.MENU_BAR
-        menubar = pyatspi.findAncestor(obj, isMenuBar)
+        menubar = AXObject.find_ancestor(obj, isMenuBar)
         if menubar is None:
             return False
 
@@ -2168,7 +2168,7 @@ class Utilities:
         if inSelectedMenu(obj):
             return True
 
-        return pyatspi.findAncestor(obj, inSelectedMenu) is not None
+        return AXObject.find_ancestor(obj, inSelectedMenu) is not None
 
     def isStaticTextLeaf(self, obj):
         return False
@@ -2315,7 +2315,7 @@ class Utilities:
                  Atspi.Role.ROW_HEADER,
                  Atspi.Role.LIST_ITEM]
 
-        ancestor = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
+        ancestor = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in roles)
         if ancestor and not self._script.utilities.isLayoutOnly(ancestor.parent):
             obj = ancestor
 
@@ -2349,7 +2349,7 @@ class Utilities:
             return False
 
         isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
-        return pyatspi.findAncestor(obj, isStatusBar) is not None
+        return AXObject.find_ancestor(obj, isStatusBar) is not None
 
     def statusBarItems(self, obj):
         if not (obj and obj.getRole() == Atspi.Role.STATUS_BAR):
@@ -4120,7 +4120,7 @@ class Utilities:
 
         role = obj.getRole()
         isMatch = lambda x: isSelection(x) and x.getRole() in rolemap.get(role)
-        return pyatspi.findAncestor(obj, isMatch)
+        return AXObject.find_ancestor(obj, isMatch)
 
     def selectableChildCount(self, obj):
         if not AXObject.supports_selection(obj):
@@ -4302,7 +4302,7 @@ class Utilities:
         if not self.inMenu(obj):
             return False
 
-        return pyatspi.findAncestor(obj, self.isContextMenu) is not None
+        return AXObject.find_ancestor(obj, self.isContextMenu) is not None
 
     def _contextMenuParentRoles(self):
         return Atspi.Role.FRAME, Atspi.Role.WINDOW
@@ -4375,7 +4375,7 @@ class Utilities:
             return False
 
         isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
-        return pyatspi.findAncestor(obj, isComboBox) is not None
+        return AXObject.find_ancestor(obj, isComboBox) is not None
 
     def getComboBoxValue(self, obj):
         if not obj.childCount:
@@ -4479,7 +4479,7 @@ class Utilities:
         if isHeader(obj):
             return obj
 
-        return pyatspi.findAncestor(obj, isHeader)
+        return AXObject.find_ancestor(obj, isHeader)
 
     def columnHeadersForCell(self, obj):
         result = self._columnHeadersForCell(obj)
@@ -4510,7 +4510,7 @@ class Utilities:
             else:
                 return headers
 
-        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
+        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -4554,7 +4554,7 @@ class Utilities:
             else:
                 return headers
 
-        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
+        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -4596,7 +4596,7 @@ class Utilities:
             if not findCellAncestor:
                 return -1, -1
 
-            cell = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
+            cell = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
         if AXObject.supports_table_cell(obj) \
@@ -4615,7 +4615,7 @@ class Utilities:
                 msg = "INFO: Failed to get table cell position of %s via table cell" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
+        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         if not parent:
             msg = "INFO: Couldn't find table-implementing ancestor for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4659,7 +4659,7 @@ class Utilities:
                 return rowSpan, colSpan
 
         isTable = lambda x: x and AXObject.supports_table(x)
-        parent = pyatspi.findAncestor(obj, isTable)
+        parent = AXObject.find_ancestor(obj, isTable)
         try:
             table = parent.queryTable()
         except:
@@ -5141,7 +5141,7 @@ class Utilities:
         if not role == Atspi.Role.TABLE_CELL:
             return False
 
-        parent = pyatspi.findAncestor(obj, AXObject.supports_table)
+        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
         except:
@@ -5327,8 +5327,8 @@ class Utilities:
             rowcount, colcount = self.rowAndColumnCount(self.getTable(obj))
             return row, rowcount
 
-        isComboBox = obj.getRole() == Atspi.Role.COMBO_BOX
-        if isComboBox:
+        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
+        if isComboBox(obj):
             selected = self.selectedChildren(obj)
             if selected:
                 obj = selected[0]
@@ -5346,7 +5346,7 @@ class Utilities:
             return obj.getIndexInParent(), childCount
 
         siblings = self.getFunctionalChildren(parent, obj)
-        if len(siblings) < 100 and not pyatspi.utils.findAncestor(obj, isComboBox):
+        if len(siblings) < 100 and not AXObject.find_ancestor(obj, isComboBox):
             layoutRoles = [Atspi.Role.SEPARATOR, Atspi.Role.TEAROFF_MENU_ITEM]
             isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
             siblings = list(filter(isNotLayoutOnly, siblings))

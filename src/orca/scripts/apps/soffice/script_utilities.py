@@ -340,7 +340,7 @@ class Utilities(script_utilities.Utilities):
                     return self._script.inputLineForCell
 
         isScrollPane = lambda x: x and x.getRole() == Atspi.Role.SCROLL_PANE
-        scrollPane = pyatspi.findAncestor(obj, isScrollPane)
+        scrollPane = AXObject.find_ancestor(obj, isScrollPane)
         if not scrollPane:
             return None
 
@@ -636,7 +636,7 @@ class Utilities(script_utilities.Utilities):
         if isComboBox(obj):
             comboBox = obj
         else:
-            comboBox = pyatspi.findAncestor(obj, isComboBox)
+            comboBox = AXObject.find_ancestor(obj, isComboBox)
 
         if not comboBox:
             return None

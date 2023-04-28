@@ -36,6 +36,7 @@ import time
 import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.toolkits.clutter as clutter
+from orca.ax_object import AXObject
 
 from .formatting import Formatting
 from .script_utilities import Utilities
@@ -104,7 +105,7 @@ class Script(clutter.Script):
             return True
 
         isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
-        parentDialog = pyatspi.utils.findAncestor(event.source, isDialog)
+        parentDialog = AXObject.find_ancestor(event.source, isDialog)
         if activeDialog == parentDialog:
             self.presentMessage(name)
             self._activeDialogLabels[obj] = name
@@ -220,7 +221,7 @@ class Script(clutter.Script):
         activeDialog, timestamp = self._activeDialog
         if not activeDialog:
             isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
-            dialog = pyatspi.utils.findAncestor(obj, isDialog)
+            dialog = AXObject.find_ancestor(obj, isDialog)
             self._activeDialog = (dialog, time.time())
             if dialog:
                 orca.setLocusOfFocus(None, dialog)

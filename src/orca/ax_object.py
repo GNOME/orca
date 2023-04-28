@@ -312,3 +312,65 @@ class AXObject:
         if AXObject.supports_value(obj):
             ifaces.append("Value")
         return ", ".join(ifaces)
+
+    @staticmethod
+    def get_parent_checked(obj):
+        """Returns the parent of obj, doing checks for tree validity"""
+
+        if obj is None:
+            return None
+
+        if Atspi.Accessible.get_role(obj) == Atspi.Role.APPLICATION:
+            return None
+
+        parent = Atspi.Accessible.get_parent(obj)
+        if parent is None:
+            return None
+
+        if parent == obj:
+            msg = "ERROR: %s claims to be its own parent" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if debug.LEVEL_INFO < debug.debugLevel:
+            return parent
+
+        try:
+            index = Atspi.Accessible.get_index_in_parent(obj)
+            nchildren = Atspi.Accessible.get_child_count(parent)
+            child = Atspi.Accessible.get_child_at_index(parent, index)
+        except Exception as e:
+            msg = "ERROR: Exception in get_parent_checked: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return parent
+
+        if child != obj:
+           msg = "ERROR: %s's child at %i is %s; not obj %s" % (parent, index, child, obj)
+           debug.println(debug.LEVEL_INFO, msg, True)
+
+        return parent
+
+    @staticmethod
+    def find_ancestor(obj, pred):
+        """Returns the ancestor of obj if the function pred is true"""
+
+        if obj is None:
+            return None
+
+        # Keep track of objects we've encountered in order to handle broken trees.
+        objects = [obj]
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
+            if parent in objects:
+                msg = "ERROR: Circular tree suspected in find_ancestor. " \
+                      "%s already in: %s" % (parent, " ".join(map(str, objects)))
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return None
+
+            if pred(parent):
+                return parent
+
+            objects.append(parent)
+            parent = AXObject.get_parent_checked(parent)
+
+        return None

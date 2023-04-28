@@ -29,7 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import time
 
 import orca.debug as debug
@@ -85,7 +84,7 @@ class Script(default.Script):
            and not event.source.getState().contains(Atspi.StateType.FOCUSED):
             return
 
-        ancestor = pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source)
+        ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
         if not ancestor:
             orca.setLocusOfFocus(event, event.source)
             return
@@ -94,7 +93,7 @@ class Script(default.Script):
             return
 
         isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
-        if isMenu(ancestor) and not pyatspi.findAncestor(ancestor, isMenu):
+        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
             return
 
         orca.setLocusOfFocus(event, event.source)

@@ -31,8 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from . import debug
 from .ax_object import AXObject
 
@@ -531,19 +529,19 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
-        cell = pyatspi.findAncestor(obj, self._isCell)
+        cell = AXObject.find_ancestor(obj, self._isCell)
         if not self._isSimpleObject(cell):
             return None, []
 
         if not cell in [obj.parent, obj.parent.parent]:
             return None, []
 
-        grid = pyatspi.findAncestor(cell, self._isTable)
+        grid = AXObject.find_ancestor(cell, self._isTable)
         if not grid:
             return None, []
 
         cellLeft = cellRight = cellAbove = cellBelow = None
-        gridrow = pyatspi.findAncestor(cell, self._isRow)
+        gridrow = AXObject.find_ancestor(cell, self._isRow)
         rowindex, colindex = self._script.utilities.coordinatesForCell(cell)
         if colindex > -1:
             cellLeft = self._getCellFromTable(grid, rowindex, colindex - 1)

@@ -35,11 +35,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from orca import debug
 from orca import orca_state
 from orca.scripts import web
+from orca.ax_object import AXObject
 
 
 class SpeechGenerator(web.SpeechGenerator):
@@ -61,7 +60,7 @@ class SpeechGenerator(web.SpeechGenerator):
     def _generateListBoxItemWidgets(self, obj, **args):
         # The list which descends from a combobox should be a menu, and its children
         # menuitems. We can remove this once that change is made in Chromium.
-        if pyatspi.findAncestor(obj, lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX):
+        if AXObject.find_ancestor(obj, lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX):
             msg = "CHROMIUM: Not generating listbox item widgets for combobox child %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
