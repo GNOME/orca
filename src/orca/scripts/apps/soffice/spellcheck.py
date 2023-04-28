@@ -31,11 +31,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from orca import debug
 from orca import messages
 from orca import spellcheck
+from orca.ax_object import AXObject
 
 
 class SpellCheck(spellcheck.SpellCheck):
@@ -65,24 +64,24 @@ class SpellCheck(spellcheck.SpellCheck):
             child = self._findChildDialog(window[0])
             if child and child.getRole() == Atspi.Role.DIALOG:
                 isPageTabList = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB_LIST
-                if pyatspi.findDescendant(child, isPageTabList):
+                if AXObject.find_descendant(child, isPageTabList):
                     return False
 
                 isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
-                return pyatspi.findDescendant(child, isComboBox)
+                return AXObject.find_descendant(child, isComboBox)
 
         return False
 
     def _findErrorWidget(self, root):
         isError = lambda x: x and x.getRole() == Atspi.Role.TEXT and x.name \
                   and x.parent.getRole() != Atspi.Role.COMBO_BOX
-        return pyatspi.findDescendant(root, isError)
+        return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):
         isList = lambda x: x and x.getRole() == Atspi.Role.LIST and x.name \
-                  and 'Selection' in x.get_interfaces() \
+                  and AXObject.supports_selection(x) \
                   and x.parent.getRole() != Atspi.Role.COMBO_BOX
-        return pyatspi.findDescendant(root, isList)
+        return AXObject.find_descendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
         index, total = self._script.utilities.getPositionAndSetSize(suggestion)

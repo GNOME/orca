@@ -28,8 +28,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import re
 
 import orca.debug as debug
@@ -55,7 +53,7 @@ class Utilities(script_utilities.Utilities):
 
     def infoBar(self, root):
         isInfoBar = lambda x: x and x.getRole() == Atspi.Role.INFO_BAR
-        return pyatspi.findDescendant(root, isInfoBar)
+        return AXObject.find_descendant(root, isInfoBar)
 
     def isComboBoxWithToggleDescendant(self, obj):
         if not (obj and obj.getRole() == Atspi.Role.COMBO_BOX):
@@ -71,7 +69,7 @@ class Utilities(script_utilities.Utilities):
             if child.getRole() != Atspi.Role.FILLER:
                 continue
 
-            toggle = pyatspi.findDescendant(child, isToggle)
+            toggle = AXObject.find_descendant(child, isToggle)
             rv = toggle is not None
             if toggle:
                 self._isToggleDescendantOfComboBox[hash(toggle)] = True

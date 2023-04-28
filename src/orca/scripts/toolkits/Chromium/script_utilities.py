@@ -30,8 +30,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import re
 import time
 
@@ -246,13 +244,7 @@ class Utilities(web.Utilities):
         if not self.isFrameForPopupMenu(obj):
             return None
 
-        try:
-            menu = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == Atspi.Role.MENU)
-        except:
-            msg = "CHROMIUM: Exception finding descendant of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        menu = AXObject.find_descendant(obj, lambda x: x and x.getRole() == Atspi.Role.MENU)
         msg = "CHROMIUM: HACK: Popup menu for %s: %s" % (obj, menu)
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu

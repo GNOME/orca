@@ -392,3 +392,57 @@ class AXObject:
             parent = AXObject.get_parent_checked(parent)
 
         return None
+
+    @staticmethod
+    def get_child_checked(obj, index):
+        """Returns the nth child of obj, doing checks for tree validity"""
+
+        if obj is None:
+            return None
+
+        try:
+            child = Atspi.Accessible.get_child_at_index(obj, index)
+        except Exception as e:
+            msg = "ERROR: Exception in get_child_checked: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if child == obj:
+            msg = "ERROR: %s claims to be its own child" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if debug.LEVEL_INFO < debug.debugLevel:
+            return child
+
+        parent = Atspi.Accessible.get_parent(child)
+        if obj != parent:
+           msg = "ERROR: %s claims %s as child; child's parent is %s" % (obj, child, parent)
+           debug.println(debug.LEVEL_INFO, msg, True)
+
+        return child
+
+    @staticmethod
+    def find_descendant(obj, pred):
+        """Returns the ancestor of obj if the function pred is true"""
+
+        if obj is None:
+            return None
+
+        try:
+            nchildren = Atspi.Accessible.get_child_count(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in find_descendant: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        for i in range(nchildren):
+            child = AXObject.get_child_checked(obj, i)
+            if child and pred(child):
+                return child
+
+            child = AXObject.find_descendant(child, pred)
+            if child and pred(child):
+                return child
+
+        return None

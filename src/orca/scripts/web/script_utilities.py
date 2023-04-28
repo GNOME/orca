@@ -609,7 +609,7 @@ class Utilities(script_utilities.Utilities):
             rowindex = attrs.get('rowindex')
             if rowindex is None and obj.childCount:
                 roles = self._cellRoles()
-                cell = pyatspi.findDescendant(obj, lambda x: x and x.getRole() in roles)
+                cell = AXObject.find_descendant(obj, lambda x: x and x.getRole() in roles)
                 rowindex = self.objectAttributes(cell, False).get('rowindex')
 
             if rowindex is not None:
@@ -3942,7 +3942,7 @@ class Utilities(script_utilities.Utilities):
         if _isMatch(obj):
             return True
 
-        return pyatspi.findDescendant(obj, _isMatch) is not None
+        return AXObject.find_descendant(obj, _isMatch) is not None
 
     def isGrid(self, obj):
         return 'grid' in self._getXMLRoles(obj)
@@ -4854,7 +4854,7 @@ class Utilities(script_utilities.Utilities):
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
         elif role == Atspi.Role.ENTRY and state.contains(Atspi.StateType.MULTI_LINE):
-            rv = pyatspi.findDescendant(obj, hasTextBlockRole)
+            rv = AXObject.find_descendant(obj, hasTextBlockRole)
         elif state.contains(Atspi.StateType.EDITABLE):
             rv = hasTextBlockRole(obj) or self.isLink(obj)
         elif not self.isDocument(obj):

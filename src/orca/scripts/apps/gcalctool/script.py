@@ -29,10 +29,9 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.scripts.toolkits.gtk as gtk
 import orca.messages as messages
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -74,13 +73,13 @@ class Script(gtk.Script):
             return
 
         isEditbar = lambda x: x and x.getRole() == Atspi.Role.EDITBAR
-        self._resultsDisplay = pyatspi.findDescendant(obj, isEditbar)
+        self._resultsDisplay = AXObject.find_descendant(obj, isEditbar)
         if not self._resultsDisplay:
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
         isStatusLine = lambda x: x and x.getRole() == Atspi.Role.TEXT \
                        and not x.getState().contains(Atspi.StateType.EDITABLE)
-        self._statusLine = pyatspi.findDescendant(obj, isStatusLine)
+        self._statusLine = AXObject.find_descendant(obj, isStatusLine)
 
         gtk.Script.onWindowActivated(self, event)
 

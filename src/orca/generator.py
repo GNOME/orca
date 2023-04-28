@@ -716,7 +716,7 @@ class Generator:
 
         # For GtkListBox, such as those found in the control center
         if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
-            widget = pyatspi.findDescendant(obj, isWidget)
+            widget = AXObject.find_descendant(obj, isWidget)
             if widget:
                 return self.generate(widget, includeContext=False)
 

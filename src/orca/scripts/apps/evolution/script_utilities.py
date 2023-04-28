@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 from orca.ax_object import AXObject
@@ -76,7 +74,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         return topLevel and topLevel.getRole() == Atspi.Role.WINDOW
 
     def findMessageBodyChild(self, root):
-        candidate = pyatspi.findDescendant(root, self.isDocument)
+        candidate = AXObject.find_descendant(root, self.isDocument)
         if self.isEmbeddedDocument(candidate):
             return self.findMessageBodyChild(candidate)
 
@@ -109,7 +107,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         # up in the hierarchy or emit object:state-changed:focused events.
         if obj.getRole() == Atspi.Role.LAYERED_PANE:
             isTreeTable = lambda x: x and x.getRole() == Atspi.Role.TREE_TABLE
-            return pyatspi.utils.findDescendant(obj, isTreeTable) or obj
+            return AXObject.find_descendant(obj, isTreeTable) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
 

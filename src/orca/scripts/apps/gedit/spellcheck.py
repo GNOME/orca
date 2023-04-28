@@ -31,7 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
 import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
 
@@ -52,7 +51,7 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
 
         isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
-        if pyatspi.findDescendant(window, isSplitPane):
+        if AXObject.find_descendant(window, isSplitPane):
             return False
 
         return True
@@ -60,7 +59,7 @@ class SpellCheck(spellcheck.SpellCheck):
     def _findChangeToEntry(self, root):
         isEntry = lambda x: x and x.getRole() == Atspi.Role.TEXT \
                   and x.getState().contains(Atspi.StateType.SINGLE_LINE)
-        return pyatspi.findDescendant(root, isEntry)
+        return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):
         isPanel = lambda x: x and x.getRole() == Atspi.Role.PANEL
@@ -70,12 +69,12 @@ class SpellCheck(spellcheck.SpellCheck):
 
         isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
-        return pyatspi.findDescendant(panel, isError)
+        return AXObject.find_descendant(panel, isError)
 
     def _findSuggestionsList(self, root):
         isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE \
                   and AXObject.supports_selection(x)
-        return pyatspi.findDescendant(root, isTable)
+        return AXObject.find_descendant(root, isTable)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
         index, total = self._script.utilities.getPositionAndSetSize(suggestion)

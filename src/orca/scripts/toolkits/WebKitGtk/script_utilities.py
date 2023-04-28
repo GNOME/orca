@@ -30,8 +30,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import re
 
 import orca.script_utilities as script_utilities
@@ -131,7 +129,7 @@ class Utilities(script_utilities.Utilities):
         Arguments
         - obj: the object whose EOCs we need to expand into tuples
         - offset: the character offset. If None, use the current offset.
-        - boundary: the pyatspi text boundary type. If None, get all text.
+        - boundary: the text boundary type. If None, get all text.
 
         Returns a list of (obj, startOffset, endOffset, string) tuples.
         """
@@ -284,7 +282,7 @@ class Utilities(script_utilities.Utilities):
 
         child = obj
         if not implementsText(obj):
-            child = pyatspi.utils.findDescendant(obj, implementsText)
+            child = AXObject.find_descendant(obj, implementsText)
             if not child:
                 return None, -1
 

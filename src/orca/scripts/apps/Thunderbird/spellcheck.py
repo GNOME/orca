@@ -31,10 +31,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.orca_state as orca_state
 import orca.spellcheck as spellcheck
+from orca.ax_object import AXObject
+
 
 class SpellCheck(spellcheck.SpellCheck):
 
@@ -67,7 +67,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
         roles = [Atspi.Role.PAGE_TAB_LIST, Atspi.Role.SPLIT_PANE]
         isNonSpellCheckChild = lambda x: x and x.getRole() in roles
-        if pyatspi.findDescendant(window, isNonSpellCheckChild):
+        if AXObject.find_descendant(window, isNonSpellCheckChild):
             return False
 
         return True
@@ -75,17 +75,17 @@ class SpellCheck(spellcheck.SpellCheck):
     def _findChangeToEntry(self, root):
         isEntry = lambda x: x and x.getRole() == Atspi.Role.ENTRY \
                   and x.getState().contains(Atspi.StateType.SINGLE_LINE)
-        return pyatspi.findDescendant(root, isEntry)
+        return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):
         isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
-        return pyatspi.findDescendant(root, isError)
+        return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):
         isList = lambda x: x and x.getRole() in [Atspi.Role.LIST, Atspi.Role.LIST_BOX] \
                   and 'Selection' in x.get_interfaces()
-        return pyatspi.findDescendant(root, isList)
+        return AXObject.find_descendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
         attrs = self._script.utilities.objectAttributes(suggestion)

@@ -29,8 +29,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-import pyatspi
 import time
 
 import orca.debug as debug
@@ -209,7 +207,7 @@ class Script(clutter.Script):
         if role == Atspi.Role.MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
             isRealFocus = lambda x: x and x.getRole() == Atspi.Role.SLIDER
-            descendant = pyatspi.findDescendant(obj, isRealFocus)
+            descendant = AXObject.find_descendant(obj, isRealFocus)
             if descendant:
                 orca.setLocusOfFocus(event, descendant)
                 return

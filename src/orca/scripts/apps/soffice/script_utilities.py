@@ -32,8 +32,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.debug as debug
 import orca.keybindings as keybindings
 import orca.messages as messages
@@ -497,7 +495,7 @@ class Utilities(script_utilities.Utilities):
         """Attempts to locate the Impress drawing view, which is the
         area in which slide editing occurs."""
 
-        return pyatspi.findDescendant(self.topLevelObject(obj), self.isDrawingView)
+        return AXObject.find_descendant(self.topLevelObject(obj), self.isDrawingView)
 
     def isDrawingView(self, obj):
         """Returns True if obj is the Impress Drawing View."""
@@ -710,7 +708,7 @@ class Utilities(script_utilities.Utilities):
         role = obj.getRole()
         isSelection = lambda x: AXObject.supports_selection(x)
         if not isSelection(obj) and role == Atspi.Role.COMBO_BOX:
-            child = pyatspi.findDescendant(obj, isSelection)
+            child = AXObject.find_descendant(obj, isSelection)
             if child:
                 return super().selectedChildren(child)
 

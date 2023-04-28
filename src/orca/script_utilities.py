@@ -4185,7 +4185,7 @@ class Utilities:
 
     def focusedChild(self, obj):
         isFocused = lambda x: x and x.getState().contains(Atspi.StateType.FOCUSED)
-        child = pyatspi.findDescendant(obj, isFocused)
+        child = AXObject.find_descendant(obj, isFocused)
         if child == obj:
             msg = "ERROR: focused child of %s is %s" % (obj, child)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4747,7 +4747,7 @@ class Utilities:
             return False
 
         if role == Atspi.Role.COMBO_BOX:
-            entry = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
+            entry = AXObject.find_descendant(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
             return entry is None
 
         if role == Atspi.Role.LINK and obj.name:
@@ -5265,7 +5265,7 @@ class Utilities:
             replicant = root
         else:
             try:
-                replicant = pyatspi.findDescendant(root, isSame)
+                replicant = AXObject.find_descendant(root, isSame)
             except:
                 msg = "INFO: Exception from findDescendant for %s" % root
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5334,7 +5334,7 @@ class Utilities:
                 obj = selected[0]
             else:
                 isMenu = lambda x: x and x.getRole() in [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
-                selected = self.selectedChildren(pyatspi.findDescendant(obj, isMenu))
+                selected = self.selectedChildren(AXObject.find_descendant(obj, isMenu))
                 if selected:
                     obj = selected[0]
                 else:
