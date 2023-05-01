@@ -398,11 +398,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     except:
         role_string = "role=(exception)"
 
-    try:
-        path_string = "%spath=%s" % (indent, pyatspi.getPath(acc))
-    except:
-        path_string = "%spath=(exception)" % indent
-
+    path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
     state_string = statesToString(acc, indent)
     rel_string = relationsToString(acc, indent)
     actions_string = actionsToString(acc, indent)

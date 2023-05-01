@@ -2081,7 +2081,7 @@ class Utilities(script_utilities.Utilities):
         self._script.pointOfReference['selectionAnchorAndFocus'] = (start, end)
 
         def _cmp(obj1, obj2):
-            return self.pathComparison(pyatspi.getPath(obj1), pyatspi.getPath(obj2))
+            return self.pathComparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
 
         oldSubtree = self._getSubtree(oldStart, oldEnd)
         if start == oldStart and end == oldEnd:
@@ -5146,7 +5146,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         path, role, name = self.getCaretContextPathRoleAndName()
-        replicantPath = pyatspi.getPath(replicant)
+        replicantPath = AXObject.get_path(replicant)
         if path != replicantPath:
             msg = "WEB: Not event from context replicant. Path %s != replicant path %s." \
                 % (path, replicantPath)
@@ -5274,13 +5274,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            rv = pyatspi.getPath(obj)
-        except:
-            msg = "WEB: Exception getting path for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv = [-1]
-
+        rv = AXObject.get_path(obj) or [-1]
         self._paths[hash(obj)] = rv
         return rv
 

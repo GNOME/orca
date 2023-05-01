@@ -1751,8 +1751,8 @@ class Utilities:
         return rv
 
     def _hasSamePath(self, obj1, obj2):
-        path1 = pyatspi.utils.getPath(obj1)
-        path2 = pyatspi.utils.getPath(obj2)
+        path1 = AXObject.get_path(obj1)
+        path2 = AXObject.get_path(obj2)
         if len(path1) != len(path2):
             return False
 

@@ -1000,7 +1000,7 @@ class StructuralNavigation:
             matches = matches[index:]
             obj = thisObj
 
-        currentPath = pyatspi.utils.getPath(obj)
+        currentPath = AXObject.get_path(obj)
         for i, match in enumerate(matches):
             if not _isValidMatch(match):
                 continue
@@ -1008,7 +1008,7 @@ class StructuralNavigation:
             if match.parent == obj:
                 comparison = self._script.utilities.characterOffsetInParent(match) - offset
             else:
-                path = pyatspi.utils.getPath(match)
+                path = AXObject.get_path(match)
                 comparison = self._script.utilities.pathComparison(path, currentPath)
             if (comparison > 0 and isNext) or (comparison < 0 and not isNext):
                 structuralNavigationObject.present(match, arg)
@@ -1252,7 +1252,7 @@ class StructuralNavigation:
         """Sets the caret at the specified offset within obj."""
 
         try:
-            objPath = pyatspi.getPath(obj)
+            objPath = AXObject.get_path(obj)
             objRole = obj.getRole()
         except:
             return obj, characterOffset

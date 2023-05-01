@@ -314,13 +314,41 @@ class AXObject:
         return ", ".join(ifaces)
 
     @staticmethod
+    def get_path(obj):
+        """Retrns the path from application to obj as list of child indices"""
+
+        if obj is None:
+            return []
+
+        path = []
+        acc = obj
+        while acc:
+            try:
+                path.append(Atspi.Accessible.get_index_in_parent(acc))
+            except Exception as e:
+                msg = "ERROR: Exception getting index in parent for %s: %s" % (acc, e)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return []
+            acc = AXObject.get_parent_checked(acc)
+
+        path.reverse()
+        return path
+
+    @staticmethod
     def get_parent_checked(obj):
         """Returns the parent of obj, doing checks for tree validity"""
 
         if obj is None:
             return None
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.APPLICATION:
+        try:
+            role = Atspi.Accessible.get_role(obj)
+        except Exception as e:
+            msg = "ERROR: Exception getting role for %s: %s" % (obj, e)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if role == Atspi.Role.APPLICATION:
             return None
 
         parent = Atspi.Accessible.get_parent(obj)
