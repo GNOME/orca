@@ -28,6 +28,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.ax_object import AXObject
 from orca.scripts import switcher
 
 
@@ -39,7 +40,7 @@ class Utilities(switcher.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        if not (obj and obj.getRole() == Atspi.Role.FILLER):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.FILLER):
             return False
 
         return obj.getState().contains(Atspi.StateType.FOCUSED)

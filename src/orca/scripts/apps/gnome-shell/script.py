@@ -63,17 +63,13 @@ class Script(clutter.Script):
         """Determines whether or not this event should be skipped due to
         being redundant, part of an event flood, etc."""
 
-        try:
-            role = event.source.getRole()
-        except:
-            pass
-        else:
-            # We must handle all dialogs ourselves in this script.
-            if role == Atspi.Role.DIALOG:
-                return False
+        role = AXObject.get_role(event.source)
+        # We must handle all dialogs ourselves in this script.
+        if role == Atspi.Role.DIALOG:
+            return False
 
-            if role == Atspi.Role.WINDOW:
-                return self.utilities.isBogusWindowFocusClaim(event)
+        if role == Atspi.Role.WINDOW:
+            return self.utilities.isBogusWindowFocusClaim(event)
 
         return clutter.Script.skipObjectEvent(self, event)
 
@@ -89,11 +85,11 @@ class Script(clutter.Script):
 
     def _presentDialogLabel(self, event):
         try:
-            role = event.source.getRole()
             name = event.source.name
         except:
             return False
 
+        role = AXObject.get_role(event.source)
         activeDialog, timestamp = self._activeDialog
         if not activeDialog or role != Atspi.Role.LABEL:
             return False
@@ -102,7 +98,7 @@ class Script(clutter.Script):
         if name == self._activeDialogLabels.get(obj):
             return True
 
-        isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
+        isDialog = lambda x: x and AXObject.get_role(x) == Atspi.Role.DIALOG
         parentDialog = AXObject.find_ancestor(event.source, isDialog)
         if activeDialog == parentDialog:
             self.presentMessage(name)
@@ -126,7 +122,6 @@ class Script(clutter.Script):
             return
 
         try:
-            role = event.source.getRole()
             name = event.source.name
         except:
             return
@@ -136,6 +131,7 @@ class Script(clutter.Script):
         # act of processing these by the default script causes us to
         # present nothing, and introduces a significant delay before
         # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
+        role = AXObject.get_role(event.source)
         if role == Atspi.Role.PANEL and not name:
             return
 
@@ -159,7 +155,6 @@ class Script(clutter.Script):
         """Callback for object:state-changed:selected accessibility events."""
         try:
             state = event.source.getState()
-            role = event.source.getRole()
         except:
             return
 
@@ -170,7 +165,7 @@ class Script(clutter.Script):
         # we'll stop doing so and hope we are right.
 
         if event.detail1:
-            if role == Atspi.Role.PANEL:
+            if AXObject.get_role(event.source) == Atspi.Role.PANEL:
                 try:
                     event.source.clearCache()
                 except:
@@ -190,7 +185,7 @@ class Script(clutter.Script):
 
         obj = event.source
         try:
-            role = obj.getRole()
+            role = AXObject.get_role(obj)
             name = obj.name
         except:
             return
@@ -206,7 +201,7 @@ class Script(clutter.Script):
 
         if role == Atspi.Role.MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
-            isRealFocus = lambda x: x and x.getRole() == Atspi.Role.SLIDER
+            isRealFocus = lambda x: x and AXObject.get_role(x) == Atspi.Role.SLIDER
             descendant = AXObject.find_descendant(obj, isRealFocus)
             if descendant:
                 orca.setLocusOfFocus(event, descendant)
@@ -218,7 +213,7 @@ class Script(clutter.Script):
         # state regardless.
         activeDialog, timestamp = self._activeDialog
         if not activeDialog:
-            isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
+            isDialog = lambda x: x and AXObject.get_role(x) == Atspi.Role.DIALOG
             dialog = AXObject.find_ancestor(obj, isDialog)
             self._activeDialog = (dialog, time.time())
             if dialog:

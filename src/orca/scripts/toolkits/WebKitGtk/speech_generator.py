@@ -36,6 +36,7 @@ import orca.object_properties as object_properties
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -63,7 +64,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if result or not self._script.utilities.isWebKitGtk(obj):
             return result
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         inferRoles = [Atspi.Role.CHECK_BOX,
                       Atspi.Role.COMBO_BOX,
                       Atspi.Role.ENTRY,
@@ -98,7 +99,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         force = args.get('force', False)
 
         doNotSpeak = [Atspi.Role.UNKNOWN]
@@ -122,14 +123,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.__generateHeadingRole(obj))
             else:
                 result.append(self.getLocalizedRoleName(obj, role=role))
-                if obj.parent and obj.parent.getRole() == Atspi.Role.HEADING:
+                if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.HEADING:
                     result.extend(self.__generateHeadingRole(obj.parent))
 
             if result:
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
             if role == Atspi.Role.LINK \
-               and obj.childCount and obj[0].getRole() == Atspi.Role.IMAGE:
+               and obj.childCount and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #
@@ -150,7 +151,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         previous object with focus.
         """
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.LINK:
             return []
 

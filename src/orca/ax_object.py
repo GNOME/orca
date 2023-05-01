@@ -341,14 +341,8 @@ class AXObject:
         if obj is None:
             return None
 
-        try:
-            role = Atspi.Accessible.get_role(obj)
-        except Exception as e:
-            msg = "ERROR: Exception getting role for %s: %s" % (obj, e)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        if role == Atspi.Role.APPLICATION:
+        role = AXObject.get_role(obj)
+        if role in [Atspi.Role.INVALID, Atspi.Role.APPLICATION]:
             return None
 
         parent = Atspi.Accessible.get_parent(obj)
@@ -474,3 +468,19 @@ class AXObject:
                 return child
 
         return None
+
+    @staticmethod
+    def get_role(obj):
+        """Returns the accessible role of obj"""
+
+        if obj is None:
+            return Atspi.Role.INVALID
+
+        try:
+            role = Atspi.Accessible.get_role(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_role: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return Atspi.Role.INVALID
+
+        return role

@@ -35,6 +35,7 @@ import os
 
 from . import generator
 from . import settings_manager
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -363,7 +364,7 @@ class SoundGenerator(generator.Generator):
         if not _settingsManager.getSetting('playSoundForRole'):
             return []
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         filename = Atspi.role_get_name(role).replace(' ', '_')
         result = self._convertFilenameToIcon(filename)
         if result:

@@ -44,6 +44,7 @@ import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
+from orca.ax_object import AXObject
 
 from .braille_generator import BrailleGenerator
 from .formatting import Formatting
@@ -403,7 +404,7 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and cell.parent.getRole() == Atspi.Role.TABLE_CELL:
+        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
             cell = cell.parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
@@ -421,7 +422,7 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and cell.parent.getRole() == Atspi.Role.TABLE_CELL:
+        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
             cell = cell.parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
@@ -448,7 +449,7 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and cell.parent.getRole() == Atspi.Role.TABLE_CELL:
+        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
             cell = cell.parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
@@ -467,7 +468,7 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and cell.parent.getRole() == Atspi.Role.TABLE_CELL:
+        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
             cell = cell.parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
@@ -520,7 +521,7 @@ class Script(default.Script):
                      Atspi.Role.APPLICATION]
         if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
             for child in newLocusOfFocus.parent:
-                if child.getRole() == Atspi.Role.PAGE_TAB_LIST:
+                if AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST:
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(Atspi.StateType.SELECTED):
@@ -529,8 +530,8 @@ class Script(default.Script):
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
         elif newLocusOfFocus and oldLocusOfFocus \
-           and newLocusOfFocus.getRole() == Atspi.Role.PARAGRAPH \
-           and oldLocusOfFocus.getRole() == Atspi.Role.PARAGRAPH \
+           and AXObject.get_role(newLocusOfFocus) == Atspi.Role.PARAGRAPH \
+           and AXObject.get_role(oldLocusOfFocus) == Atspi.Role.PARAGRAPH \
            and newLocusOfFocus != oldLocusOfFocus:
             lastKey, mods = self.utilities.lastKeyAndModifiers()
             if lastKey == "Return" and _settingsManager.getSetting('enableEchoByWord'):
@@ -686,7 +687,7 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        role = event.source.getRole()
+        role = AXObject.get_role(event.source)
 
         if self.utilities.isZombie(event.source) \
            or role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
@@ -741,7 +742,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        role = event.source.getRole()
+        role = AXObject.get_role(event.source)
         if role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
@@ -749,7 +750,7 @@ class Script(default.Script):
                 return
 
         parent = event.source.parent
-        if parent and parent.getRole() == Atspi.Role.TOOL_BAR:
+        if parent and AXObject.get_role(parent) == Atspi.Role.TOOL_BAR:
             default.Script.onFocusedChanged(self, event)
             return
 
@@ -783,7 +784,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
-            if  orca_state.locusOfFocus.getRole() in [Atspi.Role.PARAGRAPH, Atspi.Role.TABLE_CELL]:
+            if  AXObject.get_role(orca_state.locusOfFocus) in [Atspi.Role.PARAGRAPH, Atspi.Role.TABLE_CELL]:
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
@@ -797,7 +798,7 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
-        if event.source.getRole() == Atspi.Role.PARAGRAPH \
+        if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
            and not event.source.getState().contains(Atspi.StateType.FOCUSED):
             event.source.clearCache()
             if event.source.getState().contains(Atspi.StateType.FOCUSED):
@@ -825,8 +826,8 @@ class Script(default.Script):
         """Callback for object:state-changed:checked accessibility events."""
 
         obj = event.source
-        role = obj.getRole()
-        parentRole = obj.parent.getRole()
+        role = AXObject.get_role(obj)
+        parentRole = AXObject.get_role(obj.parent)
         if not role in [Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON] \
            or not parentRole == Atspi.Role.TOOL_BAR:
             default.Script.onCheckedChanged(self, event)
@@ -922,7 +923,7 @@ class Script(default.Script):
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        if obj.parent.getRole() == Atspi.Role.COMBO_BOX:
+        if AXObject.get_role(obj.parent) == Atspi.Role.COMBO_BOX:
             try:
                 text = obj.queryText()
             except NotImplementedError:
@@ -952,7 +953,7 @@ class Script(default.Script):
         if not self.spellcheck.isCheckWindow(event.source):
             return
 
-        if event.source[0].getRole() == Atspi.Role.DIALOG:
+        if AXObject.get_role(event.source[0]) == Atspi.Role.DIALOG:
             orca.setLocusOfFocus(event, event.source[0], False)
 
         self.spellcheck.presentErrorDetails()

@@ -79,6 +79,7 @@ from . import settings
 from . import settings_manager
 from . import speech
 from . import sound
+from .ax_object import AXObject
 from .input_event import BrailleEvent
 
 _eventManager = event_manager.getManager()
@@ -180,7 +181,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
     oldFocus = orca_state.locusOfFocus
     try:
-        oldFocus.getRole()
+        oldFocus.name
     except:
         msg = "ORCA: Old locusOfFocus is null or defunct"
         debug.println(debug.LEVEL_INFO, msg, True)

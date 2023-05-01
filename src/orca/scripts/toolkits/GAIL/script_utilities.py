@@ -28,10 +28,11 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
 import re
 
 import orca.script_utilities as script_utilities
+from orca.ax_object import AXObject
+
 
 class Utilities(script_utilities.Utilities):
 
@@ -43,7 +44,7 @@ class Utilities(script_utilities.Utilities):
         self._isTypeahead = {}
 
     def isTypeahead(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.TEXT):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.TEXT):
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -54,7 +55,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = parent.parent
 
-        rv = parent and parent.getRole() == Atspi.Role.WINDOW
+        rv = parent and AXObject.get_role(parent) == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv
         return rv
 

@@ -35,6 +35,7 @@ from orca import cmdnames
 from orca import debug
 from orca import input_event
 from orca import orca_state
+from orca.ax_object import AXObject
 from orca.scripts.toolkits import Gecko
 
 
@@ -84,18 +85,12 @@ class Script(Gecko.Script):
         if self.utilities.inDocumentContent(event.source):
             return
 
-        try:
-            focusRole = orca_state.locusOfFocus.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            focusRole = None
-
+        focusRole = AXObject.get_role(orca_state.locusOfFocus)
         if focusRole != Atspi.Role.ENTRY or not self.utilities.inDocumentContent():
             super().onFocus(event)
             return
 
-        if event.source.getRole() == Atspi.Role.MENU:
+        if AXObject.get_role(event.source) == Atspi.Role.MENU:
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.println(debug.LEVEL_INFO, msg, True)
 

@@ -162,7 +162,7 @@ TRACE_APPS = []
 #
 TRACE_EVENTS = []
 
-# What pyatspi role(s) should be traced if traceit is being used. By
+# What role(s) should be traced if traceit is being used. By
 # default, we'll trace everything. An example of what you might wish
 # to do to narrow things down, if you know buttons trigger the problem:
 #
@@ -449,7 +449,7 @@ def _shouldTraceIt():
             if not app.name in TRACE_APPS:
                 return False
 
-    if TRACE_ROLES and not eventSource.getRole() in TRACE_ROLES:
+    if TRACE_ROLES and not AXObject.get_role(eventSource) in TRACE_ROLES:
         return False
 
     if TRACE_EVENTS and \

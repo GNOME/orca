@@ -36,6 +36,7 @@ import time
 from orca import debug
 from orca import orca
 from orca import orca_state
+from orca.ax_object import AXObject
 from orca.scripts import default
 from orca.scripts import web
 from .braille_generator import BrailleGenerator
@@ -89,7 +90,7 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
-        role = event.source.getRole()
+        role = AXObject.get_role(event.source)
         if event.detail1 and role == Atspi.Role.FRAME \
            and not self.utilities.canBeActiveWindow(event.source):
             return
@@ -449,7 +450,7 @@ class Script(web.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if child.getRole() == Atspi.Role.ALERT:
+            if AXObject.get_role(child) == Atspi.Role.ALERT:
                 self.presentObject(child)
 
     def onWindowDeactivated(self, event):

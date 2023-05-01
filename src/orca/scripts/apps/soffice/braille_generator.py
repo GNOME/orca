@@ -33,6 +33,7 @@ import orca.braille as braille
 import orca.braille_generator as braille_generator
 import orca.object_properties as object_properties
 import orca.settings_manager as settings_manager
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -151,11 +152,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                      Atspi.Role.APPLICATION]
         if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
             for child in obj.parent:
-                if child.getRole() == Atspi.Role.PAGE_TAB_LIST:
+                if AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST:
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(Atspi.StateType.SELECTED):
-                            args['role'] = tab.getRole()
+                            args['role'] = AXObject.get_role(tab)
                             result.extend(self.generate(tab, **args))
         return result
 

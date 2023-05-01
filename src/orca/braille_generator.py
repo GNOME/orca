@@ -82,13 +82,13 @@ class BrailleGenerator(generator.Generator):
             return False
 
         try:
-            sameRole = obj.getRole() == region.accessible.getRole()
             sameName = obj.name == region.accessible.name
         except:
-            msg = 'ERROR: Could not get names, roles for %s, %s' % (obj, region.accessible)
+            msg = 'ERROR: Could not get names for %s, %s' % (obj, region.accessible)
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
+        sameRole = AXObject.get_role(obj) == AXObject.get_role(region.accessible)
         return sameRole and sameName
 
     def generateBraille(self, obj, **args):
@@ -115,10 +115,8 @@ class BrailleGenerator(generator.Generator):
             focusedRegion = result[0]
         except:
             focusedRegion = None
-        try:
-            role = obj.getRole()
-        except:
-            role = None
+
+        role = AXObject.get_role(obj)
         for region in result:
             if isinstance(region, (braille.Component, braille.Text)) \
                and self._script.utilities.isSameObject(region.accessible, obj, True):
@@ -161,7 +159,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = []
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
 
         doNotPresent = [Atspi.Role.UNKNOWN,
@@ -171,8 +169,8 @@ class BrailleGenerator(generator.Generator):
                         Atspi.Role.LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
-            doNotPresent.append(obj.getRole())
+        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+            doNotPresent.append(AXObject.get_role(obj))
 
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
@@ -196,7 +194,7 @@ class BrailleGenerator(generator.Generator):
 
         if _settingsManager.getSetting('brailleRolenameStyle') \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:
-            role = args.get('role', obj.getRole())
+            role = args.get('role', AXObject.get_role(obj))
             rv = shortRoleNames.get(role)
             if rv:
                 return rv
@@ -280,11 +278,11 @@ class BrailleGenerator(generator.Generator):
         # generator.py:_generateRadioButtonGroup method that is
         # used to find the radio button group name.
         #
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         excludeRadioButtonGroup = role == Atspi.Role.RADIO_BUTTON
 
         parent = obj.parent
-        if parent and (parent.getRole() in self.SKIP_CONTEXT_ROLES):
+        if parent and (AXObject.get_role(parent) in self.SKIP_CONTEXT_ROLES):
             parent = parent.parent
         while parent and (parent.parent != parent):
             parentResult = []
@@ -293,11 +291,9 @@ class BrailleGenerator(generator.Generator):
             # page tab lists might be a nice thing to include. Logged
             # as bugzilla bug 319751.]]]
             #
-            try:
-                role = parent.getRole()
-            except:
-                role = None
-            if role and role != Atspi.Role.FILLER \
+            role = AXObject.get_role(parent)
+            if role != Atspi.Role.FILLER \
+                and role != Atspi.Role.INVALID \
                 and role != Atspi.Role.SECTION \
                 and role != Atspi.Role.SPLIT_PANE \
                 and role != Atspi.Role.DESKTOP_FRAME \
@@ -316,7 +312,7 @@ class BrailleGenerator(generator.Generator):
                 label = self._script.utilities.displayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     if not excludeRadioButtonGroup:
-                        args['role'] = parent.getRole()
+                        args['role'] = AXObject.get_role(parent)
                         parentResult = self.generate(parent, **args)
                     else:
                         excludeRadioButtonGroup = False
@@ -332,7 +328,7 @@ class BrailleGenerator(generator.Generator):
 
     def _generateFocusedItem(self, obj, **args):
         result = []
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
@@ -380,9 +376,9 @@ class BrailleGenerator(generator.Generator):
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.SLIDER,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and x.getRole() in widgetRoles
+        isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
         result = []
-        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
+        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))
@@ -482,7 +478,7 @@ class BrailleGenerator(generator.Generator):
         except NotImplementedError:
             text = None
         if text and (self._script.utilities.isTextArea(obj) \
-                     or (obj.getRole() in [Atspi.Role.LABEL])):
+                     or (AXObject.get_role(obj) in [Atspi.Role.LABEL])):
             try:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     text.caretOffset, Atspi.TextBoundaryType.LINE_START)

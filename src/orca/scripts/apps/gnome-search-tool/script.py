@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 import orca.event_manager as event_manager
 import orca.scripts.toolkits.gtk as gtk
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -58,8 +59,7 @@ class Script(gtk.Script):
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing events."""
 
-        obj = event.source
-        if obj.getRole() == Atspi.Role.ANIMATION:
+        if AXObject.get_role(event.source) == Atspi.Role.ANIMATION:
             _manager = event_manager.getManager()
             if event.detail1:
                 _manager.ignoreEventTypes(self._floodEvents)

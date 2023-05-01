@@ -114,7 +114,7 @@ class LabelInference:
         left, for the object obj."""
 
         onRightRoles = [Atspi.Role.CHECK_BOX, Atspi.Role.RADIO_BUTTON]
-        return obj.getRole() in onRightRoles
+        return AXObject.get_role(obj) in onRightRoles
 
     def _preventRight(self, obj):
         """Returns True if we should not permit inference based on text to
@@ -124,7 +124,7 @@ class LabelInference:
                  Atspi.Role.LIST,
                  Atspi.Role.LIST_BOX]
 
-        return obj.getRole() in roles
+        return AXObject.get_role(obj) in roles
 
     def _preferTop(self, obj):
         """Returns True if we should prefer text above, rather than below for
@@ -134,7 +134,7 @@ class LabelInference:
                  Atspi.Role.LIST,
                  Atspi.Role.LIST_BOX]
 
-        return obj.getRole() in roles
+        return AXObject.get_role(obj) in roles
 
     def _preventBelow(self, obj):
         """Returns True if we should not permit inference based on text below
@@ -143,7 +143,7 @@ class LabelInference:
         roles = [Atspi.Role.ENTRY,
                  Atspi.Role.PASSWORD_TEXT]
 
-        return obj.getRole() not in roles
+        return AXObject.get_role(obj) not in roles
 
     def _isSimpleObject(self, obj):
         """Returns True if the given object has 'simple' contents, such as text
@@ -160,7 +160,7 @@ class LabelInference:
             debug.println(debug.LEVEL_INFO, 'Dead Accessible in %s' % obj, True)
             return False
 
-        children = [x for x in children if x.getRole() != Atspi.Role.LINK]
+        children = [x for x in children if AXObject.get_role(x) != Atspi.Role.LINK]
         if len(children) > 1:
             return False
 
@@ -182,7 +182,7 @@ class LabelInference:
             return True
 
         nonLabelTextRoles = [Atspi.Role.HEADING, Atspi.Role.LIST_ITEM]
-        if obj.getRole() in nonLabelTextRoles:
+        if AXObject.get_role(obj) in nonLabelTextRoles:
             return True
 
         return self._isWidget(obj)
@@ -209,7 +209,7 @@ class LabelInference:
                        Atspi.Role.PASSWORD_TEXT,
                        Atspi.Role.PUSH_BUTTON]
 
-        isWidget = obj.getRole() in widgetRoles
+        isWidget = AXObject.get_role(obj) in widgetRoles
         if not isWidget and obj.getState().contains(Atspi.StateType.EDITABLE):
             isWidget = True
 
@@ -232,7 +232,7 @@ class LabelInference:
         text = self._script.utilities.queryNonEmptyText(obj)
         if text:
             skipTextExtents = [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT]
-            if not obj.getRole() in skipTextExtents:
+            if not AXObject.get_role(obj) in skipTextExtents:
                 if endOffset == -1:
                     try:
                         endOffset = text.characterCount
@@ -471,7 +471,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == Atspi.Role.TABLE:
+        if AXObject.get_role(obj) == Atspi.Role.TABLE:
             return True
 
         return self._getTag(obj) == 'table'
@@ -480,7 +480,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == Atspi.Role.TABLE_ROW:
+        if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
             return True
 
         return self._getTag(obj) == 'tr'
@@ -489,7 +489,7 @@ class LabelInference:
         if not obj:
             return False
 
-        if obj.getRole() == Atspi.Role.TABLE_CELL:
+        if AXObject.get_role(obj) == Atspi.Role.TABLE_CELL:
             return True
 
         return self._getTag(obj) in ['td', 'th']
@@ -614,7 +614,8 @@ class LabelInference:
 
         cells = [table.getAccessibleAt(i, colindex) for i in range(1, table.nRows)]
         cells = [x for x in cells if x is not None]
-        if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
+        if [x for x in cells if x.childCount \
+            and AXObject.get_role(x[0]) != AXObject.get_role(obj)]:
             return None, []
 
         label, sources = self._createLabelFromContents(firstRow[colindex])

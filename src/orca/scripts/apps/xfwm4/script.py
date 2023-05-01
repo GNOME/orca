@@ -30,6 +30,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.scripts.default as default
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -57,7 +58,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() != Atspi.Role.LABEL:
+        if AXObject.get_role(event.source) != Atspi.Role.LABEL:
             default.Script.onTextInserted(self, event)
             return
 
@@ -72,5 +73,5 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() != Atspi.Role.LABEL:
+        if AXObject.get_role(event.source) != Atspi.Role.LABEL:
             default.Script.onTextDeleted(self, event)

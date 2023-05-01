@@ -191,7 +191,7 @@ class Script(default.Script):
         if lastKey == 'Down' \
            and orca_state.locusOfFocus == event.source.parent \
            and event.source.getIndexInParent() == 0 \
-           and orca_state.locusOfFocus.getRole() == Atspi.Role.LINK:
+           and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.LINK:
             self.updateBraille(event.source)
             return
 
@@ -244,7 +244,7 @@ class Script(default.Script):
             return
 
         obj = event.source
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         textRoles = [Atspi.Role.HEADING,
                      Atspi.Role.PANEL,
                      Atspi.Role.PARAGRAPH,
@@ -261,7 +261,7 @@ class Script(default.Script):
 
         obj = event.source
         try:
-            role = obj.getRole()
+            role = AXObject.get_role(obj)
             name = obj.name
         except:
             return
@@ -283,7 +283,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == Atspi.Role.ENTRY:
+        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
             default.Script.sayCharacter(self, obj)
             return
 
@@ -304,7 +304,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == Atspi.Role.ENTRY:
+        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
             default.Script.sayWord(self, obj)
             return
 
@@ -322,7 +322,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == Atspi.Role.ENTRY:
+        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
             default.Script.sayLine(self, obj)
             return
 
@@ -332,12 +332,12 @@ class Script(default.Script):
             self.sayPhrase(obj, start, end)
 
             # TODO: Move these next items into the speech generator.
-            if obj.getRole() == Atspi.Role.PANEL \
+            if AXObject.get_role(obj) == Atspi.Role.PANEL \
                and obj.getIndexInParent() == 0:
                 obj = obj.parent
 
             rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]
-            if obj.getRole() in rolesToSpeak:
+            if AXObject.get_role(obj) in rolesToSpeak:
                 speech.speak(self.speechGenerator.getRoleName(obj))
 
         self.pointOfReference["lastTextUnitSpoken"] = "line"
@@ -351,7 +351,7 @@ class Script(default.Script):
         - endOffset: the end text offset.
         """
 
-        if obj.getRole() == Atspi.Role.ENTRY:
+        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
             default.Script.sayPhrase(self, obj, startOffset, endOffset)
             return
 
@@ -359,7 +359,7 @@ class Script(default.Script):
         if len(phrase) and phrase != "\n":
             voice = self.speechGenerator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
-            links = [x for x in obj if x.getRole() == Atspi.Role.LINK]
+            links = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LINK]
             if links:
                 phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
@@ -382,7 +382,7 @@ class Script(default.Script):
 
         if event.type.startswith('object:state-changed:focused') \
            and event.detail1:
-            if event.source.getRole() == Atspi.Role.LINK:
+            if AXObject.get_role(event.source) == Atspi.Role.LINK:
                 return False
 
         return default.Script.skipObjectEvent(self, event)
@@ -410,7 +410,7 @@ class Script(default.Script):
         if states.contains(Atspi.StateType.EDITABLE):
             return False
 
-        role = orca_state.locusOfFocus.getRole()
+        role = AXObject.get_role(orca_state.locusOfFocus)
         if role in doNotHandleRoles:
             if role == Atspi.Role.LIST_ITEM:
                 return not states.contains(Atspi.StateType.SELECTABLE)
@@ -519,7 +519,7 @@ class Script(default.Script):
         if not obj:
             return
 
-        if obj.getRole() == Atspi.Role.LINK:
+        if AXObject.get_role(obj) == Atspi.Role.LINK:
             obj = obj.parent
 
         document = self.utilities.getDocumentForObject(obj)

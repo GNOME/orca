@@ -30,6 +30,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.chat as chat
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -68,13 +69,13 @@ class Chat(chat.Chat):
         #
         if self._script.utilities.isDocument(event.source):
             bubble = event.source[event.detail1]
-            hasRole = lambda x: x and x.getRole() == Atspi.Role.PARAGRAPH
+            hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.PARAGRAPH
             paragraphs = self._script.utilities.findAllDescendants(bubble, hasRole)
 
             # If the user opted the non-default, "simple" appearance, then this
             # might not be a bubble at all, but a paragraph.
             #
-            if not paragraphs and bubble.getRole() == Atspi.Role.PARAGRAPH:
+            if not paragraphs and AXObject.get_role(bubble) == Atspi.Role.PARAGRAPH:
                 paragraphs.append(bubble)
 
             for paragraph in paragraphs:
@@ -92,9 +93,9 @@ class Chat(chat.Chat):
         # inserted: a separator, a paragraph with the desired text, and an
         # empty section.
         #
-        if event.source.getRole() == Atspi.Role.SECTION:
+        if AXObject.get_role(event.source) == Atspi.Role.SECTION:
             obj = event.source[event.detail1]
-            if obj and obj.getRole() == Atspi.Role.PARAGRAPH:
+            if obj and AXObject.get_role(obj) == Atspi.Role.PARAGRAPH:
                 try:
                     text = obj.queryText()
                 except:
@@ -124,7 +125,7 @@ class Chat(chat.Chat):
         if self._script.utilities.isDocument(obj):
             return True
 
-        return obj.getRole() in [Atspi.Role.SECTION, Atspi.Role.PARAGRAPH]
+        return AXObject.get_role(obj) in [Atspi.Role.SECTION, Atspi.Role.PARAGRAPH]
 
     def getChatRoomName(self, obj):
         """Attempts to find the name of the current chat room.
@@ -141,7 +142,7 @@ class Chat(chat.Chat):
             [Atspi.Role.SCROLL_PANE, Atspi.Role.FRAME],
             [Atspi.Role.APPLICATION])
 
-        if ancestor and ancestor.getRole() == Atspi.Role.SCROLL_PANE:
+        if ancestor and AXObject.get_role(ancestor) == Atspi.Role.SCROLL_PANE:
             # The scroll pane has a proper labelled by relationship set.
             #
             name = self._script.utilities.displayedLabel(ancestor)

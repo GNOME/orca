@@ -33,6 +33,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.script_utilities as script_utilities
+from orca.ax_object import AXObject
 
 #############################################################################
 #                                                                           #
@@ -73,7 +74,7 @@ class Utilities(script_utilities.Utilities):
         # script's method gives us false positives; other times false
         # negatives.
         #
-        if obj1.getRole() == obj2.getRole() == Atspi.Role.LABEL:
+        if AXObject.get_role(obj1) == AXObject.get_role(obj2) == Atspi.Role.LABEL:
             try:
                 ext1 = obj1.queryComponent().getExtents(0)
                 ext2 = obj2.queryComponent().getExtents(0)
@@ -91,8 +92,8 @@ class Utilities(script_utilities.Utilities):
             parent1 = obj1
             parent2 = obj2
             while parent1 and parent2 and \
-                    parent1.getRole() == Atspi.Role.LABEL and \
-                    parent2.getRole() == Atspi.Role.LABEL:
+                    AXObject.get_role(parent1) == Atspi.Role.LABEL and \
+                    AXObject.get_role(parent2) == Atspi.Role.LABEL:
                 if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent

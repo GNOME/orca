@@ -241,10 +241,7 @@ class Utilities:
 
         obj = obj.parent
         while obj and (obj != obj.parent):
-            try:
-                role = obj.getRole()
-            except:
-                break
+            role = AXObject.get_role(obj)
             if role in ancestorRoles:
                 ancestor = obj
                 break
@@ -277,7 +274,7 @@ class Utilities:
         if index:
             return int(index)
 
-        isCell = lambda x: x and x.getRole() in self.getCellRoles()
+        isCell = lambda x: x and AXObject.get_role(x) in self.getCellRoles()
         obj = AXObject.find_ancestor(obj, isCell) or obj
         return obj.getIndexInParent()
 
@@ -417,17 +414,17 @@ class Utilities:
                      Atspi.Role.TABLE]
 
         if obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS) \
-           or obj.getRole() in skipRoles:
+           or AXObject.get_role(obj) in skipRoles:
             return
 
         defaultButton = None
         # The default button is likely near the bottom of the window.
         #
         for i in range(obj.childCount - 1, -1, -1):
-            if obj[i].getRole() == Atspi.Role.PUSH_BUTTON \
+            if AXObject.get_role(obj[i]) == Atspi.Role.PUSH_BUTTON \
                 and obj[i].getState().contains(Atspi.StateType.IS_DEFAULT):
                 defaultButton = obj[i]
-            elif not obj[i].getRole() in skipRoles:
+            elif not AXObject.get_role(obj[i]) in skipRoles:
                 defaultButton = self.defaultButton(obj[i])
 
             if defaultButton:
@@ -501,13 +498,13 @@ class Utilities:
 
         try:
             relations = obj.getRelationSet()
-            role = obj.getRole()
             state = obj.getState()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting relationset, role, and state for %s' % obj
+        except:
+            msg = 'ERROR: Exception getting relationset and state for %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
+        role = AXObject.get_role(obj)
         hasDetails = lambda x: x.getRelationType() == Atspi.RelationType.DETAILS
         relation = filter(hasDetails, relations)
         details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
@@ -552,14 +549,14 @@ class Utilities:
             displayedText = None
 
         try:
-            role = obj.getRole()
             name = obj.name
         except:
-            msg = 'ERROR: Exception getting role and name of %s' % obj
+            msg = 'ERROR: Exception getting name of %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             role = None
             name = ''
 
+        role = AXObject.get_role(obj)
         if role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LABEL] and name:
             return name
 
@@ -606,7 +603,7 @@ class Utilities:
         stopRoles = [Atspi.Role.FRAME, Atspi.Role.SCROLL_PANE]
         document = self.ancestorWithRole(obj, docRoles, stopRoles)
         if not document and orca_state.locusOfFocus:
-            if orca_state.locusOfFocus.getRole() in docRoles:
+            if AXObject.get_role(orca_state.locusOfFocus) in docRoles:
                 return orca_state.locusOfFocus
 
         return document
@@ -660,7 +657,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return results
 
-        if obj.getRole() == Atspi.Role.FRAME:
+        if AXObject.get_role(obj) == Atspi.Role.FRAME:
             results[0] = obj
 
         dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
@@ -669,9 +666,9 @@ class Utilities:
 
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if parent.getRole() == Atspi.Role.FRAME:
+            if AXObject.get_role(parent) == Atspi.Role.FRAME:
                 results[0] = parent
-            if parent.getRole() in dialog_roles:
+            if AXObject.get_role(parent) in dialog_roles:
                 results[1] = parent
             parent = parent.parent
 
@@ -695,7 +692,7 @@ class Utilities:
         to routing the cursor.
         """
 
-        if obj and obj.getRole() == Atspi.Role.COMBO_BOX \
+        if obj and AXObject.get_role(obj) == Atspi.Role.COMBO_BOX \
            and not self.isSameObject(obj, orca_state.locusOfFocus):
             return True
 
@@ -731,7 +728,7 @@ class Utilities:
                 if isinstance(role[0], str):
                     current_role = current.getRoleName()
                 else:
-                    current_role = current.getRole()
+                    current_role = AXObject.get_role(current)
             except:
                 current_role = None
 
@@ -746,15 +743,11 @@ class Utilities:
         if not obj:
             obj = orca_state.locusOfFocus
 
-        try:
-            role = obj.getRole()
-        except:
-            return False
-
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.ENTRY:
             return False
 
-        isToolbar = lambda x: x and x.getRole() == Atspi.Role.TOOL_BAR
+        isToolbar = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOOL_BAR
         toolbar = AXObject.find_ancestor(obj, isToolbar)
 
         return toolbar is not None
@@ -772,13 +765,7 @@ class Utilities:
         return False
 
     def isDesktop(self, obj):
-        try:
-            role = obj.getRole()
-        except:
-            msg = 'ERROR: Exception getting role of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.FRAME:
             return False
 
@@ -1129,7 +1116,7 @@ class Utilities:
                 "search"]
 
     def isProgressBar(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.PROGRESS_BAR):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.PROGRESS_BAR):
             return False
 
         try:
@@ -1168,7 +1155,7 @@ class Utilities:
             return False, "Has no size"
 
         if _settingsManager.getSetting('ignoreStatusBarProgressBars'):
-            isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
+            isStatusBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.STATUS_BAR
             if AXObject.find_ancestor(obj, isStatusBar):
                 return False, "Is status bar descendant"
 
@@ -1220,16 +1207,16 @@ class Utilities:
         return int((val / (maxval - minval)) * 100)
 
     def isBlockquote(self, obj):
-        return obj and obj.getRole() == Atspi.Role.BLOCK_QUOTE
+        return obj and AXObject.get_role(obj) == Atspi.Role.BLOCK_QUOTE
 
     def isDescriptionList(self, obj):
-        return obj and obj.getRole() == Atspi.Role.DESCRIPTION_LIST
+        return obj and AXObject.get_role(obj) == Atspi.Role.DESCRIPTION_LIST
 
     def isDescriptionListTerm(self, obj):
-        return obj and obj.getRole() == Atspi.Role.DESCRIPTION_TERM
+        return obj and AXObject.get_role(obj) == Atspi.Role.DESCRIPTION_TERM
 
     def isDescriptionListDescription(self, obj):
-        return obj and obj.getRole() == Atspi.Role.DESCRIPTION_VALUE
+        return obj and AXObject.get_role(obj) == Atspi.Role.DESCRIPTION_VALUE
 
     def descriptionListTerms(self, obj):
         if not self.isDescriptionList(obj):
@@ -1240,7 +1227,7 @@ class Utilities:
         return self.findAllDescendants(obj, _include, _exclude)
 
     def isDocumentList(self, obj):
-        if not (obj and obj.getRole() in [Atspi.Role.LIST, Atspi.Role.DESCRIPTION_LIST]):
+        if not (obj and AXObject.get_role(obj) in [Atspi.Role.LIST, Atspi.Role.DESCRIPTION_LIST]):
             return False
 
         try:
@@ -1253,7 +1240,7 @@ class Utilities:
         return document is not None
 
     def isDocumentPanel(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.PANEL):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.PANEL):
             return False
 
         try:
@@ -1272,7 +1259,7 @@ class Utilities:
                          Atspi.Role.DOCUMENT_SPREADSHEET,
                          Atspi.Role.DOCUMENT_TEXT,
                          Atspi.Role.DOCUMENT_WEB]
-        return obj and obj.getRole() in documentRoles
+        return obj and AXObject.get_role(obj) in documentRoles
 
     def inDocumentContent(self, obj=None):
         obj = obj or orca_state.locusOfFocus
@@ -1311,13 +1298,13 @@ class Utilities:
             return False
 
         try:
-            role = obj.getRole()
             state = obj.getState()
         except:
-            msg = "ERROR: Exception getting role and state for %s" % obj
+            msg = "ERROR: Exception getting state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(obj)
         return role in [Atspi.Role.DIALOG, Atspi.Role.ALERT] \
             and state.contains(Atspi.StateType.MODAL)
 
@@ -1348,7 +1335,7 @@ class Utilities:
             return None
 
         tableRoles = [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE, Atspi.Role.TREE]
-        isTable = lambda x: x and x.getRole() in tableRoles and AXObject.supports_table(x)
+        isTable = lambda x: x and AXObject.get_role(x) in tableRoles and AXObject.supports_table(x)
         if isTable(obj):
             return obj
 
@@ -1362,17 +1349,17 @@ class Utilities:
         return table
 
     def isTextDocumentTable(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.TABLE):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         doc = self.getDocumentForObject(obj)
         if not doc:
             return False
 
-        return doc.getRole() != Atspi.Role.DOCUMENT_SPREADSHEET
+        return AXObject.get_role(doc) != Atspi.Role.DOCUMENT_SPREADSHEET
 
     def isGUITable(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.TABLE):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         return self.getDocumentForObject(obj) is None
@@ -1381,13 +1368,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = 'ERROR: Exception getting role of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if not role == Atspi.Role.TABLE:
             return False
 
@@ -1395,7 +1376,7 @@ class Utilities:
         if not doc:
             return False
 
-        if doc.getRole() == Atspi.Role.DOCUMENT_SPREADSHEET:
+        if AXObject.get_role(doc) == Atspi.Role.DOCUMENT_SPREADSHEET:
             return True
 
         try:
@@ -1422,13 +1403,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = 'ERROR: Exception getting role of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if not role in self.getCellRoles():
             return False
 
@@ -1438,13 +1413,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = 'ERROR: Exception getting role of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if not role in self.getCellRoles():
             return False
 
@@ -1512,7 +1481,7 @@ class Utilities:
 
     def isFocusableLabel(self, obj):
         try:
-            role = obj.getRole()
+            role = AXObject.get_role(obj)
             state = obj.getState()
         except:
             return False
@@ -1532,11 +1501,11 @@ class Utilities:
 
     def isNonFocusableList(self, obj):
         try:
-            role = obj.getRole()
             state = obj.getState()
         except:
             return False
 
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.LIST:
             return False
 
@@ -1551,10 +1520,10 @@ class Utilities:
         return True
 
     def isStatusBarNotification(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.NOTIFICATION):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.NOTIFICATION):
             return False
 
-        isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
+        isStatusBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.STATUS_BAR
         if AXObject.find_ancestor(obj, isStatusBar):
             return True
 
@@ -1564,15 +1533,11 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            return False
-
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.TREE_ITEM:
             return True
 
-        isTree = lambda x: x and x.getRole() in [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
+        isTree = lambda x: x and AXObject.get_role(x) in [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
         if AXObject.find_ancestor(obj, isTree):
             return True
 
@@ -1588,17 +1553,8 @@ class Utilities:
             return True
 
         attrs = self.objectAttributes(obj)
-
-        try:
-            role = obj.getRole()
-        except:
-            role = None
-
-        try:
-            parentRole = obj.parent.getRole()
-        except:
-            parentRole = None
-
+        role = AXObject.get_role(obj)
+        parentRole = AXObject.get_role(obj.parent)
         try:
             firstChild = obj[0]
         except:
@@ -1631,7 +1587,7 @@ class Utilities:
         elif role == Atspi.Role.TABLE_CELL and obj.childCount:
             if parentRole == Atspi.Role.TREE_TABLE:
                 layoutOnly = False
-            elif firstChild.getRole() == Atspi.Role.TABLE_CELL:
+            elif AXObject.get_role(firstChild) == Atspi.Role.TABLE_CELL:
                 layoutOnly = True
             elif parentRole == Atspi.Role.TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
@@ -1674,7 +1630,7 @@ class Utilities:
             layoutOnly = not (state.contains(Atspi.StateType.FOCUSABLE) \
                               or state.contains(Atspi.StateType.SELECTABLE))
         elif role == Atspi.Role.PANEL and obj.childCount and firstChild \
-             and firstChild.getRole() in ignorePanelParent:
+             and AXObject.get_role(firstChild) in ignorePanelParent:
             layoutOnly = True
         elif role == Atspi.Role.PANEL and obj.name == obj.getApplication().name:
             layoutOnly = True
@@ -1712,14 +1668,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting role for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return role == Atspi.Role.LINK
+        return AXObject.get_role(obj) == Atspi.Role.LINK
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
@@ -1787,9 +1736,10 @@ class Utilities:
         elif (not obj1) or (not obj2):
             return False
 
+        if AXObject.get_role(obj1) != AXObject.get_role(obj2):
+            return False
+
         try:
-            if obj1.getRole() != obj2.getRole():
-                return False
             if obj1.name != obj2.name and not ignoreNames:
                 return False
             if comparePaths and self._hasSamePath(obj1, obj2):
@@ -1829,7 +1779,7 @@ class Utilities:
         if self.isLink(obj):
             return False
 
-        return obj and obj.getRole() in (Atspi.Role.TEXT,
+        return obj and AXObject.get_role(obj) in (Atspi.Role.TEXT,
                                          Atspi.Role.ENTRY,
                                          Atspi.Role.PARAGRAPH)
 
@@ -1992,11 +1942,11 @@ class Utilities:
 
         if self.isBlockquote(obj):
             pred = lambda x: self.isBlockquote(x)
-        elif obj.getRole() == Atspi.Role.LIST_ITEM:
-            pred = lambda x: x and x.parent and x.parent.getRole() == Atspi.Role.LIST
+        elif AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
+            pred = lambda x: x and x.parent and AXObject.get_role(x.parent) == Atspi.Role.LIST
         else:
-            role = obj.getRole()
-            pred = lambda x: x and x.getRole() == role
+            role = AXObject.get_role(obj)
+            pred = lambda x: x and AXObject.get_role(x) == role
 
         ancestors = []
         ancestor = AXObject.find_ancestor(obj, pred)
@@ -2099,7 +2049,7 @@ class Utilities:
                 msg = "INFO: %s has no size and no children" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
-            if obj.getRole() == Atspi.Role.MENU:
+            if AXObject.get_role(obj) == Atspi.Role.MENU:
                 msg = "INFO: %s has no size" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
@@ -2117,13 +2067,7 @@ class Utilities:
         return True
 
     def selectedMenuBarMenu(self, menubar):
-        try:
-            role = menubar.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % menubar
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        role = AXObject.get_role(menubar)
         if role != Atspi.Role.MENU_BAR:
             return None
 
@@ -2152,7 +2096,7 @@ class Utilities:
         if not obj:
             return False
 
-        isMenuBar = lambda x: x and x.getRole() == Atspi.Role.MENU_BAR
+        isMenuBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU_BAR
         menubar = AXObject.find_ancestor(obj, isMenuBar)
         if menubar is None:
             return False
@@ -2190,13 +2134,7 @@ class Utilities:
         if not self.isOnScreen(root, extents):
             return []
 
-        try:
-            role = root.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % root
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
+        role = AXObject.get_role(root)
         if role == Atspi.Role.INVALID:
             return []
 
@@ -2212,7 +2150,7 @@ class Utilities:
         if role == Atspi.Role.MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
 
-        if root.parent and root.parent.getRole() == Atspi.Role.MENU_BAR \
+        if root.parent and AXObject.get_role(root.parent) == Atspi.Role.MENU_BAR \
            and not self.isInOpenMenuBarMenu(root):
             return [root]
 
@@ -2283,17 +2221,17 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.TABLE_ROW:
             return True
 
         if role == Atspi.Role.TABLE_CELL:
             return False
 
-        if not obj.parent.getRole() == Atspi.Role.TABLE:
+        if AXObject.get_role(obj.parent) != Atspi.Role.TABLE:
             return False
 
-        isCell = lambda x: x and x.getRole() in [Atspi.Role.TABLE_CELL,
+        isCell = lambda x: x and AXObject.get_role(x) in [Atspi.Role.TABLE_CELL,
                                                  Atspi.Role.TABLE_COLUMN_HEADER,
                                                  Atspi.Role.TABLE_ROW_HEADER,
                                                  Atspi.Role.ROW_HEADER,
@@ -2315,7 +2253,7 @@ class Utilities:
                  Atspi.Role.ROW_HEADER,
                  Atspi.Role.LIST_ITEM]
 
-        ancestor = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in roles)
+        ancestor = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) in roles)
         if ancestor and not self._script.utilities.isLayoutOnly(ancestor.parent):
             obj = ancestor
 
@@ -2334,7 +2272,7 @@ class Utilities:
         if self.isDead(obj):
             return None
 
-        if obj.getRole() != Atspi.Role.TABLE_CELL:
+        if AXObject.get_role(obj) != Atspi.Role.TABLE_CELL:
             return obj
 
         children = [x for x in obj if not self.isStaticTextLeaf(x)]
@@ -2348,17 +2286,17 @@ class Utilities:
         if not obj:
             return False
 
-        isStatusBar = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
+        isStatusBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.STATUS_BAR
         return AXObject.find_ancestor(obj, isStatusBar) is not None
 
     def statusBarItems(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.STATUS_BAR):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.STATUS_BAR):
             return []
 
         start = time.time()
         items = self._script.pointOfReference.get('statusBarItems')
         if not items:
-            include = lambda x: x and x.getRole() != Atspi.Role.STATUS_BAR
+            include = lambda x: x and AXObject.get_role(x) != Atspi.Role.STATUS_BAR
             items = list(filter(include, self.getOnScreenObjects(obj)))
             self._script.pointOfReference['statusBarItems'] = items
 
@@ -2376,7 +2314,7 @@ class Utilities:
           the status bar is sought.
         """
 
-        if obj.getRole() == Atspi.Role.STATUS_BAR:
+        if AXObject.get_role(obj) == Atspi.Role.STATUS_BAR:
             return obj
 
         # There are some objects which are not worth descending.
@@ -2386,16 +2324,16 @@ class Utilities:
                      Atspi.Role.TABLE]
 
         if obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS) \
-           or obj.getRole() in skipRoles:
+           or AXObject.get_role(obj) in skipRoles:
             return
 
         statusBar = None
         # The status bar is likely near the bottom of the window.
         #
         for i in range(obj.childCount - 1, -1, -1):
-            if obj[i].getRole() == Atspi.Role.STATUS_BAR:
+            if AXObject.get_role(obj[i]) == Atspi.Role.STATUS_BAR:
                 statusBar = obj[i]
-            elif not obj[i].getRole() in skipRoles:
+            elif not AXObject.get_role(obj[i]) in skipRoles:
                 statusBar = self.statusBar(obj[i])
 
             if statusBar and self.isShowingAndVisible(statusBar):
@@ -2416,13 +2354,7 @@ class Utilities:
         if not orca_state.locusOfFocus:
             return False
 
-        try:
-            role = orca_state.locusOfFocus.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(orca_state.locusOfFocus)
         rv = role in self._topLevelRoles()
         msg = "INFO: %s is top-level object: %s" % (orca_state.locusOfFocus, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -2443,8 +2375,8 @@ class Utilities:
         stopAtRoles = self._topLevelRoles()
 
         while obj and obj.parent and obj != obj.parent \
-              and not obj.getRole() in stopAtRoles \
-              and not obj.parent.getRole() == Atspi.Role.APPLICATION:
+              and not AXObject.get_role(obj) in stopAtRoles \
+              and not AXObject.get_role(obj.parent) == Atspi.Role.APPLICATION:
             obj = obj.parent
 
         return obj
@@ -2580,7 +2512,7 @@ class Utilities:
         if not obj:
             return False
 
-        if obj.getRole() == Atspi.Role.APPLICATION:
+        if AXObject.get_role(obj) == Atspi.Role.APPLICATION:
             return False
 
         try:
@@ -2650,7 +2582,7 @@ class Utilities:
                      Atspi.Role.TREE_TABLE]
 
         def _include(x):
-            if not (x and x.getRole() in labelRoles):
+            if not (x and AXObject.get_role(x) in labelRoles):
                 return False
             if x.getRelationSet():
                 return False
@@ -2659,13 +2591,13 @@ class Utilities:
             return True
 
         def _exclude(x):
-            if not x or x.getRole() in skipRoles:
+            if not x or AXObject.get_role(x) in skipRoles:
                 return True
             if onlyShowing and not x.getState().contains(Atspi.StateType.SHOWING):
                 return True
             return False
 
-        excludeIf = lambda x: x and x.getRole() in skipRoles
+        excludeIf = lambda x: x and AXObject.get_role(x) in skipRoles
         labels = self.findAllDescendants(root, _include, _exclude)
 
         rootName = root.name
@@ -2704,7 +2636,7 @@ class Utilities:
         if self._treatAlertsAsDialogs():
             roles.append(Atspi.Role.ALERT)
 
-        isDialog = lambda x: x and x.getRole() in roles or self.isFunctionalDialog(x)
+        isDialog = lambda x: x and AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
         dialogs = [x for x in obj.getApplication() if isDialog(x)]
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
 
@@ -3015,7 +2947,7 @@ class Utilities:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = self.getChildAtOffset(obj, i + startOffset)
                 result = self.expandEOCs(child)
-                if child and child.getRole() in blockRoles:
+                if child and AXObject.get_role(child) in blockRoles:
                     result += " "
                 toBuild[i] = result
 
@@ -3092,16 +3024,10 @@ class Utilities:
         if event.any_data:
             return event.any_data
 
-        try:
-            role = event.source.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            role = None
-
         msg = "ERROR: Broken text insertion event"
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        role = AXObject.get_role(event.source)
         if role == Atspi.Role.PASSWORD_TEXT:
             text = self.queryNonEmptyText(event.source)
             if text:
@@ -3389,7 +3315,7 @@ class Utilities:
             return False
 
         obj = orca_state.locusOfFocus
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.PASSWORD_TEXT:
             return False
 
@@ -4087,13 +4013,13 @@ class Utilities:
             msg = "INFO: Selected children not retrieved via selection interface."
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.MENU and not children:
             pred = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
             children = self.findAllDescendants(obj, pred)
 
         if role == Atspi.Role.COMBO_BOX \
-           and children and children[0].getRole() == Atspi.Role.MENU:
+           and children and AXObject.get_role(children[0]) == Atspi.Role.MENU:
             children = self.selectedChildren(children[0])
             if not children and obj.name:
                 pred = lambda x: x and x.name == obj.name
@@ -4118,8 +4044,8 @@ class Utilities:
             Atspi.Role.TABLE_ROW: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE],
         }
 
-        role = obj.getRole()
-        isMatch = lambda x: isSelection(x) and x.getRole() in rolemap.get(role)
+        role = AXObject.get_role(obj)
+        isMatch = lambda x: isSelection(x) and AXObject.get_role(x) in rolemap.get(role)
         return AXObject.find_ancestor(obj, isMatch)
 
     def selectableChildCount(self, obj):
@@ -4135,11 +4061,11 @@ class Utilities:
             Atspi.Role.TREE: [Atspi.Role.TREE_ITEM],
         }
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role not in rolemap:
             return obj.childCount
 
-        isMatch = lambda x: x.getRole() in rolemap.get(role)
+        isMatch = lambda x: AXObject.get_role(x) in rolemap.get(role)
         return len(self.findAllDescendants(obj, isMatch))
 
     def selectedChildCount(self, obj):
@@ -4204,7 +4130,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        menus = [child for child in obj if child.getRole() == Atspi.Role.MENU]
+        menus = [child for child in obj if AXObject.get_role(child) == Atspi.Role.MENU]
         for menu in menus:
             try:
                 state = menu.getState()
@@ -4222,13 +4148,13 @@ class Utilities:
             return False
 
         try:
-            role = obj.getRole()
             state = obj.getState()
         except:
-            msg = "ERROR: Exception getting role and state for %s" % obj
+            msg = "ERROR: Exception getting state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(obj)
         return role == Atspi.Role.PUSH_BUTTON and state.contains(Atspi.StateType.HAS_POPUP)
 
     def isPopupMenuForCurrentItem(self, obj):
@@ -4236,7 +4162,7 @@ class Utilities:
             return False
 
         if obj.name and obj.name == orca_state.locusOfFocus.name:
-            return obj.getRole() == Atspi.Role.MENU
+            return AXObject.get_role(obj) == Atspi.Role.MENU
 
         return False
 
@@ -4244,13 +4170,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.MENU:
             return False
 
@@ -4260,13 +4180,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if role not in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]:
             return False
 
@@ -4277,13 +4191,7 @@ class Utilities:
         if not obj:
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         menuRoles = [Atspi.Role.MENU,
                      Atspi.Role.MENU_ITEM,
                      Atspi.Role.CHECK_MENU_ITEM,
@@ -4293,7 +4201,7 @@ class Utilities:
             return True
 
         if role in [Atspi.Role.PANEL, Atspi.Role.SEPARATOR]:
-            return obj.parent and obj.parent.getRole() in menuRoles
+            return obj.parent and AXObject.get_role(obj.parent) in menuRoles
 
         return False
 
@@ -4308,26 +4216,26 @@ class Utilities:
         return Atspi.Role.FRAME, Atspi.Role.WINDOW
 
     def isContextMenu(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.MENU):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.MENU):
             return False
 
-        return obj.parent and obj.parent.getRole() in self._contextMenuParentRoles()
+        return obj.parent and AXObject.get_role(obj.parent) in self._contextMenuParentRoles()
 
     def isTopLevelMenu(self, obj):
-        if obj.getRole() == Atspi.Role.MENU:
+        if AXObject.get_role(obj) == Atspi.Role.MENU:
             return obj.parent == self.topLevelObject(obj)
 
         return False
 
     def isSingleLineAutocompleteEntry(self, obj):
         try:
-            role = obj.getRole()
             state = obj.getState()
         except:
-            msg = "ERROR: Exception getting role and state for %s" % obj
+            msg = "ERROR: Exception getting state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.ENTRY:
             return False
 
@@ -4341,13 +4249,7 @@ class Utilities:
         if not obj:
             return None
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.COMBO_BOX:
             return None
 
@@ -4374,7 +4276,7 @@ class Utilities:
         if not state.contains(Atspi.StateType.EDITABLE):
             return False
 
-        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
+        isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
         return AXObject.find_ancestor(obj, isComboBox) is not None
 
     def getComboBoxValue(self, obj):
@@ -4440,7 +4342,7 @@ class Utilities:
         return ''
 
     def headingLevel(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.HEADING):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.HEADING):
             return 0
 
         attrs = self.objectAttributes(obj)
@@ -4475,7 +4377,7 @@ class Utilities:
                  Atspi.Role.ROW_HEADER,
                  Atspi.Role.TABLE_COLUMN_HEADER,
                  Atspi.Role.TABLE_ROW_HEADER]
-        isHeader = lambda x: x and x.getRole() in roles
+        isHeader = lambda x: x and AXObject.get_role(x) in roles
         if isHeader(obj):
             return obj
 
@@ -4592,11 +4494,11 @@ class Utilities:
                  Atspi.Role.TABLE_ROW_HEADER,
                  Atspi.Role.COLUMN_HEADER,
                  Atspi.Role.ROW_HEADER]
-        if not (obj and obj.getRole() in roles):
+        if not (obj and AXObject.get_role(obj) in roles):
             if not findCellAncestor:
                 return -1, -1
 
-            cell = AXObject.find_ancestor(obj, lambda x: x and x.getRole() in roles)
+            cell = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) in roles)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
         if AXObject.supports_table_cell(obj) \
@@ -4645,7 +4547,7 @@ class Utilities:
                  Atspi.Role.TABLE_ROW_HEADER,
                  Atspi.Role.COLUMN_HEADER,
                  Atspi.Role.ROW_HEADER]
-        if not (obj and obj.getRole() in roles):
+        if not (obj and AXObject.get_role(obj) in roles):
             return -1, -1
 
         if AXObject.supports_table_cell(obj):
@@ -4728,7 +4630,7 @@ class Utilities:
         roles = [Atspi.Role.MENU,
                  Atspi.Role.PAGE_TAB]
 
-        return obj.getRole() not in roles
+        return AXObject.get_role(obj) not in roles
 
     def treatAsEntry(self, obj):
         return False
@@ -4740,14 +4642,14 @@ class Utilities:
         if not obj.childCount:
             return True
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         roles = [Atspi.Role.AUTOCOMPLETE,
                  Atspi.Role.TABLE_ROW]
         if role in roles:
             return False
 
         if role == Atspi.Role.COMBO_BOX:
-            entry = AXObject.find_descendant(obj, lambda x: x and x.getRole() == Atspi.Role.ENTRY)
+            entry = AXObject.find_descendant(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY)
             return entry is None
 
         if role == Atspi.Role.LINK and obj.name:
@@ -5131,13 +5033,7 @@ class Utilities:
         return cell
 
     def isLastCell(self, obj):
-        try:
-            role = obj.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if not role == Atspi.Role.TABLE_CELL:
             return False
 
@@ -5183,9 +5079,8 @@ class Utilities:
     def isShowingAndVisible(self, obj):
         try:
             state = obj.getState()
-            role = obj.getRole()
         except:
-            msg = "ERROR: Exception getting state and role of %s" % obj
+            msg = "ERROR: Exception getting state of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5203,6 +5098,7 @@ class Utilities:
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.SEPARATOR]
 
+        role = AXObject.get_role(obj)
         if role in menuRoles and self.isInOpenMenuBarMenu(obj):
             msg = "HACK: Treating %s as showing and visible" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -5223,7 +5119,6 @@ class Utilities:
         try:
             index = obj.getIndexInParent()
             state = obj.getState()
-            role = obj.getRole()
         except:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj, True)
             return True
@@ -5235,6 +5130,7 @@ class Utilities:
                          Atspi.Role.PAGE, # For Evince bug
                          Atspi.Role.WINDOW,
                          Atspi.Role.FRAME]
+        role = AXObject.get_role(obj)
         if index == -1 and role not in topLevelRoles:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj, True)
             return True
@@ -5256,7 +5152,7 @@ class Utilities:
         # Given an broken table hierarchy, findDescendant can hang. And the
         # reason we're here in the first place is to work around the app or
         # toolkit killing accessibles. There's only so much we can do....
-        if root.getRole() in [Atspi.Role.TABLE, Atspi.Role.EMBEDDED]:
+        if AXObject.get_role(root) in [Atspi.Role.TABLE, Atspi.Role.EMBEDDED]:
             return None
 
         isSame = lambda x: x and self.isSameObject(
@@ -5322,18 +5218,18 @@ class Utilities:
         if not obj:
             return -1, -1
 
-        if obj.getRole() == Atspi.Role.TABLE_CELL and args.get("readingRow"):
+        if AXObject.get_role(obj) == Atspi.Role.TABLE_CELL and args.get("readingRow"):
             row, col = self.coordinatesForCell(obj)
             rowcount, colcount = self.rowAndColumnCount(self.getTable(obj))
             return row, rowcount
 
-        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
+        isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
         if isComboBox(obj):
             selected = self.selectedChildren(obj)
             if selected:
                 obj = selected[0]
             else:
-                isMenu = lambda x: x and x.getRole() in [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
+                isMenu = lambda x: x and AXObject.get_role(x) in [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
                 selected = self.selectedChildren(AXObject.find_descendant(obj, isMenu))
                 if selected:
                     obj = selected[0]
@@ -5348,7 +5244,7 @@ class Utilities:
         siblings = self.getFunctionalChildren(parent, obj)
         if len(siblings) < 100 and not AXObject.find_ancestor(obj, isComboBox):
             layoutRoles = [Atspi.Role.SEPARATOR, Atspi.Role.TEAROFF_MENU_ITEM]
-            isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
+            isNotLayoutOnly = lambda x: not (self.isZombie(x) or AXObject.get_role(x) in layoutRoles)
             siblings = list(filter(isNotLayoutOnly, siblings))
 
         if not (siblings and obj in siblings):
@@ -5779,13 +5675,7 @@ class Utilities:
                 if keyString not in ["Return", "space", " "]:
                     return False
 
-        try:
-            role = orca_state.locusOfFocus.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(orca_state.locusOfFocus)
         roles = [Atspi.Role.COLUMN_HEADER,
                  Atspi.Role.ROW_HEADER,
                  Atspi.Role.TABLE_COLUMN_HEADER,
@@ -5798,13 +5688,13 @@ class Utilities:
             return True
 
         try:
-            role = event.source.getRole()
             state = event.source.getState()
         except:
-            msg = "ERROR: Exception getting role and state of %s" % event.source
+            msg = "ERROR: Exception getting state of %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(event.source)
         if role in [Atspi.Role.TABLE_ROW, Atspi.Role.LIST_BOX]:
             return True
 
@@ -5822,13 +5712,13 @@ class Utilities:
             return False
 
         try:
-            role = event.source.getRole()
             state = event.source.getState()
         except:
-            msg = "ERROR: Exception getting role and state of %s" % event.source
+            msg = "ERROR: Exception getting state of %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(event.source)
         ignoreRoles = [Atspi.Role.LABEL,
                        Atspi.Role.MENU,
                        Atspi.Role.MENU_ITEM,
@@ -5929,10 +5819,9 @@ class Utilities:
             return False
 
         try:
-            role = event.source.getRole()
             state = event.source.getState()
         except:
-            msg = "ERROR: Exception getting role and state of %s" % event.source
+            msg = "ERROR: Exception getting state of %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5942,6 +5831,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        role = AXObject.get_role(event.source)
         if role == Atspi.Role.PASSWORD_TEXT:
             return _settingsManager.getSetting("enableKeyEcho")
 
@@ -6110,7 +6000,7 @@ class Utilities:
            and not state.contains(Atspi.StateType.EXPANDED):
             return False
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role in [Atspi.Role.COMBO_BOX, Atspi.Role.MENU]:
             return False
 

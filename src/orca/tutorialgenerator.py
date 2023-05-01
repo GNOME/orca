@@ -37,6 +37,7 @@ from . import debug
 from . import orca_state
 from . import settings
 
+from .ax_object import AXObject
 from .orca_i18n import _         # for gettext support
 
 class TutorialGenerator:
@@ -249,7 +250,7 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if obj.parent.getRole() == Atspi.Role.LAYERED_PANE:
+        if AXObject.get_role(obj.parent) == Atspi.Role.LAYERED_PANE:
             utterances = self._getTutorialForLayeredPane(obj.parent,
                                                          alreadyFocused,
                                                          forceTutorial)
@@ -791,7 +792,7 @@ class TutorialGenerator:
             return []
 
         utterances = []
-        role = role or obj.getRole()
+        role = role or AXObject.get_role(obj)
         msg = self._getModeTutorial(obj, alreadyFocused, forceTutorial)
         if not msg:
             if role in self.tutorialGenerators:

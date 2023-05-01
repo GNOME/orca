@@ -34,6 +34,7 @@ from gi.repository import Atspi
 
 import orca.debug as debug
 import orca.script_utilities as script_utilities
+from orca.ax_object import AXObject
 
 #############################################################################
 #                                                                           #
@@ -186,7 +187,7 @@ class Utilities(script_utilities.Utilities):
         if not super().isZombie(obj):
             return False
 
-        if obj.getRole() != Atspi.Role.TOGGLE_BUTTON:
+        if AXObject.get_role(obj) != Atspi.Role.TOGGLE_BUTTON:
             return True
 
         msg = 'INFO: Hacking around broken index in parent for %s' % obj

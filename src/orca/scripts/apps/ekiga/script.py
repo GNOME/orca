@@ -30,6 +30,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.scripts.default as default
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -56,8 +57,8 @@ class Script(default.Script):
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getRole() == Atspi.Role.TEXT \
-           and obj.parent.getRole() == Atspi.Role.SCROLL_PANE:
+        if obj and AXObject.get_role(obj) == Atspi.Role.TEXT \
+           and AXObject.get_role(obj.parent) == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
             if not state.contains(Atspi.StateType.EDITABLE) \
                and state.contains(Atspi.StateType.MULTI_LINE):
@@ -90,8 +91,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() == Atspi.Role.SPLIT_PANE:
-            hasRole = lambda x: x and x.getRole() == Atspi.Role.TEXT
+        if AXObject.get_role(event.source) == Atspi.Role.SPLIT_PANE:
+            hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.TEXT
             textObjects = self.utilities.findAllDescendants(event.source, hasRole)
             return
 

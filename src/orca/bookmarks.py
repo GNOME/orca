@@ -20,7 +20,6 @@
 """Provides the default implementation for bookmarks in Orca."""
 
 import pickle
-import pyatspi
 import os
 import urllib.parse
 

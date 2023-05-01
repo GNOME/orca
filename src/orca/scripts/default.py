@@ -798,7 +798,7 @@ class Script(script.Script):
             return
 
         try:
-            role = obj.getRole()
+            role = AXObject.get_role(obj)
             state = obj.getState()
             name = obj.name
             description = obj.description
@@ -1165,7 +1165,7 @@ class Script(script.Script):
             # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
             #
             if (not movedCaret) \
-               and (orca_state.locusOfFocus.getRole() \
+               and (AXObject.get_role(orca_state.locusOfFocus) \
                     == Atspi.Role.TERMINAL):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
@@ -2242,7 +2242,7 @@ class Script(script.Script):
                   Atspi.Role.FILE_CHOOSER,
                   Atspi.Role.COLOR_CHOOSER]
 
-        if event.source.getRole() in frames:
+        if AXObject.get_role(event.source) in frames:
             if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
                 return
 
@@ -2312,7 +2312,7 @@ class Script(script.Script):
         # so we handle the announcement of their state changes in the focus
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
-        if obj.getRole() == Atspi.Role.RADIO_BUTTON:
+        if AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
             eventString, mods = self.utilities.lastKeyAndModifiers()
             if not eventString in [" ", "space"]:
                 return
@@ -2501,7 +2501,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role in [Atspi.Role.COMBO_BOX, Atspi.Role.TABLE_CELL]:
             msg = "DEFAULT: Event is redundant notification for this role"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2568,7 +2568,7 @@ class Script(script.Script):
         if keyString == "space":
             announceState = True
         elif keyString in ["Down", "Up"] \
-             and isSelected and obj.getRole() == Atspi.Role.TABLE_CELL:
+             and isSelected and AXObject.get_role(obj) == Atspi.Role.TABLE_CELL:
             announceState = True
 
         if not announceState:
@@ -2610,7 +2610,7 @@ class Script(script.Script):
         if keyString == "space":
             return
 
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.COMBO_BOX and not state.contains(Atspi.StateType.EXPANDED):
             entry = self.utilities.getEntryForEditableComboBox(event.source)
             if entry and entry.getState().contains(Atspi.StateType.FOCUSED):
@@ -2636,7 +2636,7 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if child.getRole() == Atspi.Role.PAGE_TAB and orca_state.locusOfFocus \
+            if AXObject.get_role(child) == Atspi.Role.PAGE_TAB and orca_state.locusOfFocus \
                and child.name == orca_state.locusOfFocus.name \
                and not state.contains(Atspi.StateType.FOCUSED):
                 msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
@@ -2674,12 +2674,12 @@ class Script(script.Script):
 
         try:
             childCount = obj.childCount
-            role = obj.getRole()
         except:
-            msg = "DEFAULT: Exception getting childCount and role for %s" % obj
+            msg = "DEFAULT: Exception getting childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        role = AXObject.get_role(obj)
         if childCount and role != Atspi.Role.COMBO_BOX:
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
@@ -2691,7 +2691,7 @@ class Script(script.Script):
         """Callback for object:state-changed:showing accessibility events."""
 
         obj = event.source
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.NOTIFICATION:
             if not event.detail1:
                 return
@@ -2903,7 +2903,7 @@ class Script(script.Script):
         """
 
         obj = event.source
-        role = obj.getRole()
+        role = AXObject.get_role(obj)
 
         try:
             value = obj.queryValue()
@@ -2967,7 +2967,7 @@ class Script(script.Script):
 
         try:
             childCount = event.source.childCount
-            childRole = event.source[0].getRole()
+            childRole = AXObject.get_role(event.source[0])
         except:
             pass
         else:
@@ -3995,7 +3995,7 @@ class Script(script.Script):
                 return False
 
         try:
-            role = orca_state.locusOfFocus.getRole()
+            role = AXObject.get_role(orca_state.locusOfFocus)
         except:
             return False
 
@@ -4003,7 +4003,7 @@ class Script(script.Script):
             focusedObject = self.utilities.focusedObject(orca_state.activeWindow)
             if focusedObject:
                 orca.setLocusOfFocus(None, focusedObject, False)
-                role = focusedObject.getRole()
+                role = AXObject.get_role(focusedObject)
 
         if role == Atspi.Role.PASSWORD_TEXT and not event.isLockingKey():
             return False

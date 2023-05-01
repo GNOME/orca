@@ -153,7 +153,7 @@ class Zone:
         self.y = y
         self.width = width
         self.height = height
-        self.role = role or accessible.getRole()
+        self.role = role or AXObject.get_role(accessible)
         self._words = []
 
     def __str__(self):
@@ -227,8 +227,8 @@ class Zone:
             return self.accessible == zone.accessible
 
         try:
-            thisParentRole = self.accessible.parent.getRole()
-            zoneParentRole = zone.accessible.parent.getRole()
+            thisParentRole = AXObject.get_role(self.accessible.parent)
+            zoneParentRole = AXObject.get_role(zone.accessible.parent)
         except:
             pass
         else:
@@ -409,7 +409,7 @@ class Line:
                 # The 'isinstance(zone, TextZone)' test is a sanity check
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
-                   ((zone.accessible.getRole() in \
+                   ((AXObject.get_role(zone.accessible) in \
                          (Atspi.Role.TEXT,  
                           Atspi.Role.PASSWORD_TEXT,
                           Atspi.Role.TERMINAL)) or \
@@ -418,7 +418,7 @@ class Line:
                     # We really should not be determining all this stuff here,
                     # it should be in the scripts. 
                     # Same applies to roles above.]]]
-                    (zone.accessible.getRole() in \
+                    (AXObject.get_role(zone.accessible) in \
                          (Atspi.Role.PARAGRAPH,
                           Atspi.Role.HEADING,
                           Atspi.Role.LINK))):
@@ -499,7 +499,7 @@ class Context:
             debug.println(debug.LEVEL_INFO, msg, True)
 
         containerRoles = [Atspi.Role.MENU]
-        isContainer = lambda x: x and x.getRole() in containerRoles
+        isContainer = lambda x: x and AXObject.get_role(x) in containerRoles
         container = AXObject.find_ancestor(self.focusObj, isContainer)
         if not container and isContainer(self.focusObj):
             container = self.focusObj
@@ -650,7 +650,7 @@ class Context:
         # right or nuke it.
 
         indicatorExtents = [extents.x, extents.y, 1, extents.height]
-        role = accessible.getRole()
+        role = AXObject.get_role(accessible)
         if role == Atspi.Role.TOGGLE_BUTTON:
             zone = StateZone(accessible, *indicatorExtents, role=role)
             if zone:
@@ -698,7 +698,7 @@ class Context:
             return []
 
         try:
-            role = accessible.getRole()
+            role = AXObject.get_role(accessible)
         except:
             return []
 

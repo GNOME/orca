@@ -52,26 +52,26 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessageHeader(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.TABLE):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         return self.isReceivedMessage(obj.parent)
 
     def isReceivedMessageContent(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.SECTION):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.SECTION):
             return False
 
         return self.isReceivedMessage(obj.parent)
 
     def isComposeAutocomplete(self, obj):
-        if not (obj and obj.getRole() == Atspi.Role.TABLE):
+        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         if not obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS):
             return False
 
         topLevel = self.topLevelObject(obj)
-        return topLevel and topLevel.getRole() == Atspi.Role.WINDOW
+        return topLevel and AXObject.get_role(topLevel) == Atspi.Role.WINDOW
 
     def findMessageBodyChild(self, root):
         candidate = AXObject.find_descendant(root, self.isDocument)
@@ -105,8 +105,8 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
-        if obj.getRole() == Atspi.Role.LAYERED_PANE:
-            isTreeTable = lambda x: x and x.getRole() == Atspi.Role.TREE_TABLE
+        if AXObject.get_role(obj) == Atspi.Role.LAYERED_PANE:
+            isTreeTable = lambda x: x and AXObject.get_role(x) == Atspi.Role.TREE_TABLE
             return AXObject.find_descendant(obj, isTreeTable) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
@@ -125,7 +125,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not self.isEmbeddedDocument(obj):
             return False
 
-        isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
+        isSplitPane = lambda x: x and AXObject.get_role(x) == Atspi.Role.SPLIT_PANE
         if AXObject.find_ancestor(obj, isSplitPane):
             return False
 

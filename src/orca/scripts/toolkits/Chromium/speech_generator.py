@@ -60,7 +60,7 @@ class SpeechGenerator(web.SpeechGenerator):
     def _generateListBoxItemWidgets(self, obj, **args):
         # The list which descends from a combobox should be a menu, and its children
         # menuitems. We can remove this once that change is made in Chromium.
-        if AXObject.find_ancestor(obj, lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX):
+        if AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX):
             msg = "CHROMIUM: Not generating listbox item widgets for combobox child %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
@@ -68,7 +68,7 @@ class SpeechGenerator(web.SpeechGenerator):
         return super()._generateListBoxItemWidgets(obj, **args)
 
     def _generateLabelOrName(self, obj, **args):
-        if obj.getRole() == Atspi.Role.FRAME:
+        if AXObject.get_role(obj) == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)
             if document and not self._script.utilities.documentFrameURI(document):
                 # Eliminates including "untitled" in the frame name.

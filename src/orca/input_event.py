@@ -44,6 +44,7 @@ from . import messages
 from . import orca_state
 from . import script_manager
 from . import settings
+from .ax_object import AXObject
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -298,11 +299,7 @@ class KeyboardEvent(InputEvent):
         self.keyType = None
 
         _isPressed = event.type == Atspi.EventType.KEY_PRESSED_EVENT
-
-        try:
-            role = self._obj.getRole()
-        except:
-            role = None
+        role = AXObject.get_role(self._obj)
         _mayEcho = _isPressed or role == Atspi.Role.TERMINAL
 
         if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
@@ -471,11 +468,7 @@ class KeyboardEvent(InputEvent):
              + ("                 shouldEcho=%s\n" % self.shouldEcho)
 
     def _shouldObscure(self):
-        try:
-            role = self._obj.getRole()
-        except:
-            return False
-
+        role = AXObject.get_role(self._obj)
         if role != Atspi.Role.PASSWORD_TEXT:
             return False
 

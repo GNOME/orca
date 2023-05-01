@@ -39,6 +39,7 @@ import orca.scripts.default as default
 import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
+from orca.ax_object import AXObject
 
 from .spellcheck import SpellCheck
 
@@ -204,11 +205,11 @@ class Script(Gecko.Script):
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
             try:
-                role = orca_state.locusOfFocus.getRole()
                 name = orca_state.locusOfFocus.name
             except:
                 pass
             else:
+                role = AXObject.get_role(orca_state.locusOfFocus)
                 if role in [Atspi.Role.FRAME, Atspi.Role.PAGE_TAB] and name:
                     orca.setLocusOfFocus(event, event.source, False)
 
@@ -236,7 +237,7 @@ class Script(Gecko.Script):
             return
 
         parent = event.source.parent
-        if parent and parent.getRole() == Atspi.Role.COMBO_BOX \
+        if parent and AXObject.get_role(parent) == Atspi.Role.COMBO_BOX \
            and not parent.getState().contains(Atspi.StateType.FOCUSED):
             return
 
@@ -274,16 +275,8 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        obj = event.source
-        parent = obj.parent
-
-        try:
-            role = event.source.getRole()
-            parentRole = parent.getRole()
-        except:
-            return
-
-        if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
+        if AXObject.get_role(event.source) == Atspi.Role.LABEL \
+            and AXObject.get_role(event.source.parent) == Atspi.Role.STATUS_BAR:
             return
 
         super().onTextDeleted(event)
@@ -292,12 +285,8 @@ class Script(Gecko.Script):
         """Callback for object:text-changed:insert accessibility events."""
 
         obj = event.source
-        try:
-            role = obj.getRole()
-            parentRole = obj.parent.getRole()
-        except:
-            return
-
+        role = AXObject.get_role(obj)
+        parentRole = AXObject.get_role(obj.parent)
         if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
             return
 

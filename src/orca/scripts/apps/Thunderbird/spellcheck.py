@@ -49,7 +49,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not locusOfFocus:
             return False
 
-        role = locusOfFocus.getRole()
+        role = AXObject.get_role(locusOfFocus)
         if not role == Atspi.Role.PUSH_BUTTON:
             return False
 
@@ -62,29 +62,29 @@ class SpellCheck(spellcheck.SpellCheck):
         return False
 
     def _isCandidateWindow(self, window):
-        if not (window and window.getRole() == Atspi.Role.DIALOG):
+        if not (window and AXObject.get_role(window) == Atspi.Role.DIALOG):
             return False
 
         roles = [Atspi.Role.PAGE_TAB_LIST, Atspi.Role.SPLIT_PANE]
-        isNonSpellCheckChild = lambda x: x and x.getRole() in roles
+        isNonSpellCheckChild = lambda x: x and AXObject.get_role(x) in roles
         if AXObject.find_descendant(window, isNonSpellCheckChild):
             return False
 
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and x.getRole() == Atspi.Role.ENTRY \
+        isEntry = lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY \
                   and x.getState().contains(Atspi.StateType.SINGLE_LINE)
         return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):
-        isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
+        isError = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
         return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and x.getRole() in [Atspi.Role.LIST, Atspi.Role.LIST_BOX] \
-                  and 'Selection' in x.get_interfaces()
+        isList = lambda x: AXObject.get_role(x) in [Atspi.Role.LIST, Atspi.Role.LIST_BOX] \
+                  and AXObject.supports_selection(x)
         return AXObject.find_descendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):

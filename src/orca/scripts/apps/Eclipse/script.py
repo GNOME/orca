@@ -31,6 +31,7 @@ from gi.repository import Atspi
 
 import orca.orca as orca
 import orca.scripts.toolkits.GAIL as GAIL
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -85,7 +86,7 @@ class Script(GAIL.Script):
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits.
 
-        role = event.source.getRole()
+        role = AXObject.get_role(event.source)
 
         if role == Atspi.Role.PANEL:
             orca.setLocusOfFocus(event, event.source)
@@ -148,7 +149,7 @@ class Script(GAIL.Script):
 
         if not state.contains(Atspi.StateType.FOCUSED):
             # the exception, at least for while, is the MenuBar
-            if obj.getRole() != Atspi.Role.MENU_BAR:
+            if AXObject.get_role(obj) != Atspi.Role.MENU_BAR:
                 return
         GAIL.Script.onSelectionChanged(self, event)
 

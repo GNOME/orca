@@ -31,6 +31,7 @@ from gi.repository import Atspi
 
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -49,7 +50,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if nothing can be found.
         """
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.FRAME and _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 

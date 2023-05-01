@@ -30,6 +30,7 @@ from gi.repository import Atspi
 
 from orca import debug
 from orca import script_utilities
+from orca.ax_object import AXObject
 
 
 class Utilities(script_utilities.Utilities):
@@ -40,7 +41,7 @@ class Utilities(script_utilities.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        return obj and obj.getRole() == Atspi.Role.STATUS_BAR
+        return obj and AXObject.get_role(obj) == Atspi.Role.STATUS_BAR
 
     def isSwitcherSelectionChangeEventType(self, event):
         """Returns True if this event is the one we use to present changes."""

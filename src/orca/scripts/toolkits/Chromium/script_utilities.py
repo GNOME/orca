@@ -77,7 +77,7 @@ class Utilities(web.Utilities):
             return rv
 
         roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
-        rv = obj.getRole() in roles and self._getTag(obj) in (None, "br")
+        rv = AXObject.get_role(obj) in roles and self._getTag(obj) in (None, "br")
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -110,7 +110,7 @@ class Utilities(web.Utilities):
             return rv
 
         rv = False
-        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_ITEM:
+        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_ITEM:
             tag = self._getTag(obj)
             if tag == "::marker":
                 rv = True
@@ -150,7 +150,7 @@ class Utilities(web.Utilities):
         result = super().selectedChildren(obj)
 
         # The fix for this issue landed in 90.0.4413.0.
-        if obj.getRole() == Atspi.Role.MENU and not self.inDocumentContent(obj) and len(result) > 1:
+        if AXObject.get_role(obj) == Atspi.Role.MENU and not self.inDocumentContent(obj) and len(result) > 1:
             msg = "CHROMIUM: Browser menu %s claims more than one state-selected child." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -164,13 +164,7 @@ class Utilities(web.Utilities):
         return result
 
     def isMenuInCollapsedSelectElement(self, obj):
-        try:
-            role = obj.getRole()
-        except:
-            msg = "CHROMIUM: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        role = AXObject.get_role(obj)
         if role != Atspi.Role.MENU or self._getTag(obj.parent) != 'select':
             return False
 
@@ -188,16 +182,16 @@ class Utilities(web.Utilities):
             return False
 
         try:
-            role = obj.getRole()
             state = obj.getState()
         except:
-            msg = "CHROMIUM: Exception getting role and state for %s" % obj
+            msg = "CHROMIUM: Exception getting state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         # Unlike other apps and toolkits, submenus in Chromium have the menu item
         # role rather than the menu role, but we can identify them as submenus via
         # the has-popup state.
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.MENU_ITEM:
             return state.contains(Atspi.StateType.HAS_POPUP)
 
@@ -216,7 +210,6 @@ class Utilities(web.Utilities):
     def isFrameForPopupMenu(self, obj):
         try:
             name = obj.name
-            role = obj.getRole()
             childCount = obj.childCount
         except:
             msg = "CHROMIUM: Exception getting properties of %s" % obj
@@ -226,16 +219,17 @@ class Utilities(web.Utilities):
         # The ancestry of a popup menu appears to be a menu bar (even though
         # one is not actually showing) contained in a nameless frame. It would
         # be nice if these things were pruned from the accessibility tree....
+        role = AXObject.get_role(obj)
         if name or role != Atspi.Role.FRAME or childCount != 1:
             return False
 
-        if obj[0].getRole() == Atspi.Role.MENU_BAR:
+        if AXObject.get_role(obj[0]) == Atspi.Role.MENU_BAR:
             return True
 
         return False
 
     def isTopLevelMenu(self, obj):
-        if obj.getRole() == Atspi.Role.MENU:
+        if AXObject.get_role(obj) == Atspi.Role.MENU:
             return self.isFrameForPopupMenu(self.topLevelObject(obj))
 
         return False
@@ -244,7 +238,7 @@ class Utilities(web.Utilities):
         if not self.isFrameForPopupMenu(obj):
             return None
 
-        menu = AXObject.find_descendant(obj, lambda x: x and x.getRole() == Atspi.Role.MENU)
+        menu = AXObject.find_descendant(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU)
         msg = "CHROMIUM: HACK: Popup menu for %s: %s" % (obj, menu)
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu
@@ -269,7 +263,7 @@ class Utilities(web.Utilities):
             return None
 
         result = super().topLevelObject(obj)
-        if result and result.getRole() in self._topLevelRoles():
+        if result and AXObject.get_role(result) in self._topLevelRoles():
             if not self.isFindContainer(result):
                 return result
             else:
@@ -286,11 +280,11 @@ class Utilities(web.Utilities):
 
         # The only (known) object giving us a broken ancestry is the omnibox popup.
         roles = [Atspi.Role.LIST_ITEM, Atspi.Role.LIST_BOX]
-        if not (obj and obj.getRole() in roles):
+        if not (obj and AXObject.get_role(obj) in roles):
             return result
 
         listbox = obj
-        if obj.getRole() == Atspi.Role.LIST_ITEM:
+        if AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
             listbox = listbox.parent
 
         if not listbox:
@@ -298,8 +292,8 @@ class Utilities(web.Utilities):
 
         # The listbox sometimes claims to be a redundant object rather than a listbox.
         # Clearing the AT-SPI2 cache seems to be the trigger.
-        if not (listbox and listbox.getRole() in roles):
-            if listbox.getRole() == Atspi.Role.REDUNDANT_OBJECT:
+        if not (listbox and AXObject.get_role(listbox) in roles):
+            if AXObject.get_role(listbox) == Atspi.Role.REDUNDANT_OBJECT:
                 msg = "CHROMIUM: WARNING: Suspected bogus role on listbox %s" % listbox
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -321,7 +315,7 @@ class Utilities(web.Utilities):
             return None
 
         target = relations[0].getTarget(0)
-        if target and target.getRole() == Atspi.Role.AUTOCOMPLETE:
+        if target and AXObject.get_role(target) == Atspi.Role.AUTOCOMPLETE:
             return target
 
         return None
@@ -333,7 +327,7 @@ class Utilities(web.Utilities):
         return self.autocompleteForPopup(obj) is not None
 
     def isRedundantAutocompleteEvent(self, event):
-        if event.source.getRole() != Atspi.Role.AUTOCOMPLETE:
+        if AXObject.get_role(event.source) != Atspi.Role.AUTOCOMPLETE:
             return False
 
         if event.type.startswith("object:text-caret-moved"):
@@ -346,7 +340,7 @@ class Utilities(web.Utilities):
     def setCaretPosition(self, obj, offset, documentFrame=None):
         super().setCaretPosition(obj, offset, documentFrame)
 
-        isLink = lambda x: x and x.getRole() == Atspi.Role.LINK
+        isLink = lambda x: x and AXObject.get_role(x) == Atspi.Role.LINK
         link = AXObject.find_ancestor(obj, isLink)
         if link:
             msg = "CHROMIUM: HACK: Grabbing focus on %s's ancestor %s" % (obj, link)
@@ -367,7 +361,7 @@ class Utilities(web.Utilities):
         # the text changes appear to be. So most of the time, we can ignore the
         # children-changed events. Except for when we can't.
 
-        if event.any_data.getRole() == Atspi.Role.TABLE:
+        if AXObject.get_role(event.any_data) == Atspi.Role.TABLE:
             return True
 
         msg = "CHROMIUM: Event is believed to be redundant live region notification"
@@ -379,7 +373,7 @@ class Utilities(web.Utilities):
         if not root:
             return ""
 
-        isMatch = lambda x: x and x.getRole() == Atspi.Role.STATUS_BAR
+        isMatch = lambda x: x and AXObject.get_role(x) == Atspi.Role.STATUS_BAR
         statusBars = self.findAllDescendants(root, isMatch)
         if len(statusBars) != 1:
             return ""
@@ -398,7 +392,7 @@ class Utilities(web.Utilities):
         if obj == self._findContainer:
             return True
 
-        if obj.getRole() != Atspi.Role.DIALOG:
+        if AXObject.get_role(obj) != Atspi.Role.DIALOG:
             return False
 
         result = self.getFindResultsCount(obj)
@@ -414,19 +408,19 @@ class Utilities(web.Utilities):
         # back on the widgets. TODO: This would be far easier if Chromium gave us an
         # object attribute we could look for....
 
-        isEntry = lambda x: x.getRole() == Atspi.Role.ENTRY
+        isEntry = lambda x: AXObject.get_role(x) == Atspi.Role.ENTRY
         if len(self.findAllDescendants(obj, isEntry)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isButton = lambda x: x.getRole() == Atspi.Role.PUSH_BUTTON
+        isButton = lambda x: AXObject.get_role(x) == Atspi.Role.PUSH_BUTTON
         if len(self.findAllDescendants(obj, isButton)) != 3:
             msg = "CHROMIUM: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isSeparator = lambda x: x.getRole() == Atspi.Role.SEPARATOR
+        isSeparator = lambda x: AXObject.get_role(x) == Atspi.Role.SEPARATOR
         if len(self.findAllDescendants(obj, isSeparator)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (separator count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -444,10 +438,10 @@ class Utilities(web.Utilities):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        if obj.getRole() not in [Atspi.Role.ENTRY, Atspi.Role.PUSH_BUTTON]:
+        if AXObject.get_role(obj) not in [Atspi.Role.ENTRY, Atspi.Role.PUSH_BUTTON]:
             return False
 
-        isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
+        isDialog = lambda x: x and AXObject.get_role(x) == Atspi.Role.DIALOG
         result = self.isFindContainer(AXObject.find_ancestor(obj, isDialog))
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page widget" % obj

@@ -59,6 +59,7 @@ from . import speech_generator
 from . import structural_navigation
 from . import bookmarks
 from . import tutorialgenerator
+from .ax_object import AXObject
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
@@ -295,10 +296,9 @@ class Script:
         - event: the Event
         """
 
-        try:
-            role = event.source.getRole()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting role for %s' % event.source
+        role = AXObject.get_role(event.source)
+        if role == Atspi.Role.INVALID:
+            msg = 'ERROR: Not processing object event for invalid object'
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 

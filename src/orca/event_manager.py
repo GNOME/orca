@@ -39,6 +39,7 @@ from . import messages
 from . import orca_state
 from . import script_manager
 from . import settings
+from .ax_object import AXObject
 
 _scriptManager = script_manager.getManager()
 
@@ -228,7 +229,6 @@ class EventManager:
             # issue, but until we know for certain....
             #name = event.source.name
             state = event.source.getState()
-            role = event.source.getRole()
         except:
             msg = 'ERROR: Event is from potentially-defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -244,6 +244,7 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        role = AXObject.get_role(event.source)
         if event.type.startswith('object:property-change:accessible-name'):
             if role in [Atspi.Role.CANVAS,
                         Atspi.Role.ICON,
@@ -352,9 +353,9 @@ class EventManager:
                     msg = 'EVENT MANAGER: Locus of focus: %s' % orca_state.locusOfFocus
                     debug.println(debug.LEVEL_INFO, msg, True)
 
+            childRole = AXObject.get_role(event.any_data)
             try:
                 childState = event.any_data.getState()
-                childRole = event.any_data.getRole()
                 name = event.any_data.name
                 defunct = False
             except:
@@ -499,10 +500,7 @@ class EventManager:
             elif toolkitName in self._synchronousToolkits:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
-                try:
-                    asyncMode = e.source.getRole() == Atspi.Role.TABLE
-                except:
-                    asyncMode = True
+                asyncMode = AXObject.get_role(e.source) == Atspi.Role.TABLE
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
 
@@ -777,11 +775,6 @@ class EventManager:
         if not event.source:
             return False, "event.source? What event.source??"
 
-        role = state = None
-        try:
-            role = event.source.getRole()
-        except (LookupError, RuntimeError):
-            return False, "Error getting event.source's role"
         try:
             state = event.source.getState()
         except (LookupError, RuntimeError):
@@ -801,6 +794,7 @@ class EventManager:
         if script.forceScriptActivation(event):
             return True, "The script insists it should be activated for this event."
 
+        role = AXObject.get_role(event.source)
         eType = event.type
 
         if eType.startswith('window:activate'):
@@ -917,7 +911,7 @@ class EventManager:
             return True
 
         if event.type.startswith("object:state-changed:active"):
-            return event.source.getRole() in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
+            return AXObject.get_role(event.source) in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
 
         if event.type.startswith("document:load-complete"):
             return True
@@ -982,7 +976,7 @@ class EventManager:
 
         if eType.startswith("object:state-changed:active"):
             try:
-                role = event.source.getRole()
+                role = AXObject.get_role(event.source)
             except:
                 pass
             else:

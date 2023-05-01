@@ -32,6 +32,8 @@ from gi.repository import Atspi
 import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.default as default
+from orca.ax_object import AXObject
+
 
 class Script(default.Script):
 
@@ -41,7 +43,7 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
+        if AXObject.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -54,7 +56,7 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
+        if AXObject.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return

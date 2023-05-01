@@ -33,6 +33,7 @@ import pyatspi
 
 from . import debug
 from . import orca_state
+from .ax_object import AXObject
 from .scripts import apps, toolkits
 
 class ScriptManager:
@@ -145,11 +146,7 @@ class ScriptManager:
         return name
 
     def _scriptForRole(self, obj):
-        try:
-            role = obj.getRole()
-        except:
-            return ''
-
+        role = AXObject.get_role(obj)
         if role == Atspi.Role.TERMINAL:
             return 'terminal'
 
@@ -327,12 +324,8 @@ class ScriptManager:
         if customScript:
             return customScript
 
-        try:
-            role = obj.getRole()
-        except:
-            forceAppScript = False
-        else:
-            forceAppScript = role in [Atspi.Role.FRAME, Atspi.Role.STATUS_BAR]
+        role = AXObject.get_role(obj)
+        forceAppScript = role in [Atspi.Role.FRAME, Atspi.Role.STATUS_BAR]
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
