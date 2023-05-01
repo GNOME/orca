@@ -179,8 +179,8 @@ class Script(Gecko.Script):
         # In this case, speak and flash braille the new room name.
         #
         if orca_state.locusOfFocus and event.source \
-           and orca_state.locusOfFocus.getRole() == Atspi.Role.ENTRY \
-           and event.source.getRole() == Atspi.Role.ENTRY \
+           and Atspi.Accessible.get_role(orca_state.locusOfFocus) == Atspi.Role.ENTRY \
+           and Atspi.Accessible.get_role(event.source) == Atspi.Role.ENTRY \
            and orca_state.locusOfFocus != event.source:
             room1 = self.chat.getChatRoomName(orca_state.locusOfFocus)
             room2 = self.chat.getChatRoomName(event.source)
@@ -203,6 +203,6 @@ class Script(Gecko.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
+        hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PAGE_TAB
         allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
         default.Script.onWindowActivated(self, event)

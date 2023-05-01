@@ -45,7 +45,7 @@ class Script(default.Script):
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
 
-        hasRole = lambda x: x and x.getRole() == Atspi.Role.LABEL
+        hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.LABEL
         allLabels = self.utilities.findAllDescendants(event.source, hasRole)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))

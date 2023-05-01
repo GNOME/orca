@@ -59,7 +59,7 @@ class Script(gtk.Script):
         """Callback for accessible name change events."""
 
         try:
-            eventRole = event.source.getRole()
+            eventRole = Atspi.Accessible.get_role(event.source)
         except:
             return
 

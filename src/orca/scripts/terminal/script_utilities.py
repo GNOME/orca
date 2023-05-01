@@ -127,13 +127,13 @@ class Utilities(script_utilities.Utilities):
         return text.caretOffset == event.detail1 + event.detail2
 
     def isEditableTextArea(self, obj):
-        if obj and obj.getRole() == Atspi.Role.TERMINAL:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TERMINAL:
             return True
 
         return super().isEditableTextArea(obj)
 
     def isTextArea(self, obj):
-        if obj and obj.getRole() == Atspi.Role.TERMINAL:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TERMINAL:
             return True
 
         return super().isTextArea(obj)

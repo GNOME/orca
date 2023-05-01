@@ -36,7 +36,7 @@ class Script(gtk.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        if event.source.getRole() != Atspi.Role.PASSWORD_TEXT:
+        if Atspi.Accessible.get_role(event.source) != Atspi.Role.PASSWORD_TEXT:
             gtk.Script.onFocusedChanged(self, event)
             return
 
@@ -47,7 +47,7 @@ class Script(gtk.Script):
         #
         strings = []
         for child in event.source.parent.parent.parent:
-            if child.getRole() == Atspi.Role.LABEL and child.name:
+            if Atspi.Accessible.get_role(child) == Atspi.Role.LABEL and child.name:
                 strings.append(child.name)
 
         string = " ".join(strings)

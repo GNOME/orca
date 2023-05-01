@@ -146,7 +146,7 @@ class ScriptManager:
 
     def _scriptForRole(self, obj):
         try:
-            role = obj.getRole()
+            role = Atspi.Accessible.get_role(obj)
         except:
             return ''
 
@@ -328,7 +328,7 @@ class ScriptManager:
             return customScript
 
         try:
-            role = obj.getRole()
+            role = Atspi.Accessible.get_role(obj)
         except:
             forceAppScript = False
         else:

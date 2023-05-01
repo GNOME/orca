@@ -89,7 +89,7 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
-        role = event.source.getRole()
+        role = Atspi.Accessible.get_role(event.source)
         if event.detail1 and role == Atspi.Role.FRAME \
            and not self.utilities.canBeActiveWindow(event.source):
             return
@@ -449,7 +449,7 @@ class Script(web.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if child.getRole() == Atspi.Role.ALERT:
+            if Atspi.Accessible.get_role(child) == Atspi.Role.ALERT:
                 self.presentObject(child)
 
     def onWindowDeactivated(self, event):

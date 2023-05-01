@@ -108,7 +108,7 @@ class Script(gtk.Script):
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
-        if event.source.getRole() == Atspi.Role.LABEL:
+        if Atspi.Accessible.get_role(event.source) == Atspi.Role.LABEL:
             # The is the timer of a call.
             #
             return
@@ -124,7 +124,7 @@ class Script(gtk.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
+        hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PAGE_TAB
         allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
         gtk.Script.onWindowActivated(self, event)
 
@@ -136,7 +136,7 @@ class Script(gtk.Script):
         - event: the Event
         """
 
-        if event.source.getRole() == Atspi.Role.WINDOW:
+        if Atspi.Accessible.get_role(event.source) == Atspi.Role.WINDOW:
             # The is the timer of a call.
             #
             return

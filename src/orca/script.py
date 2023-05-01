@@ -296,7 +296,7 @@ class Script:
         """
 
         try:
-            role = event.source.getRole()
+            role = Atspi.Accessible.get_role(event.source)
         except (LookupError, RuntimeError):
             msg = 'ERROR: Exception getting role for %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)

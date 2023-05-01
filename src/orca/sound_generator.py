@@ -363,7 +363,7 @@ class SoundGenerator(generator.Generator):
         if not _settingsManager.getSetting('playSoundForRole'):
             return []
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', Atspi.Accessible.get_role(obj))
         filename = Atspi.role_get_name(role).replace(' ', '_')
         result = self._convertFilenameToIcon(filename)
         if result:

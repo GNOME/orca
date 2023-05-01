@@ -58,7 +58,7 @@ class Script(default.Script):
         """Handles changes of focus of interest to the script."""
 
         if self.utilities.isToggleDescendantOfComboBox(newFocus):
-            isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
+            isComboBox = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.COMBO_BOX
             newFocus = AXObject.find_ancestor(newFocus, isComboBox) or newFocus
             orca.setLocusOfFocus(event, newFocus, False)
         elif self.utilities.isInOpenMenuBarMenu(newFocus):
@@ -90,7 +90,7 @@ class Script(default.Script):
             return
 
         # Present changes of child widgets of GtkListBox items
-        isListBox = lambda x: x and x.getRole() == Atspi.Role.LIST_BOX
+        isListBox = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.LIST_BOX
         if not AXObject.find_ancestor(obj, isListBox):
             return
 
@@ -133,7 +133,7 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
+        isMenu = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.MENU
         if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
             return
 
@@ -160,7 +160,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, None)
                 return
 
-        role = event.source.getRole()
+        role = Atspi.Accessible.get_role(event.source)
         if role in [Atspi.Role.CANVAS, Atspi.Role.ICON] \
            and self.utilities.handleContainerSelectionChange(event.source.parent):
             return
@@ -176,7 +176,7 @@ class Script(default.Script):
             return
 
         isFocused = event.source.getState().contains(Atspi.StateType.FOCUSED)
-        role = event.source.getRole()
+        role = Atspi.Accessible.get_role(event.source)
         if role == Atspi.Role.COMBO_BOX and not isFocused:
             return
 
@@ -205,8 +205,8 @@ class Script(default.Script):
 
         obj = event.source
         if self.utilities.isPopOver(obj) \
-           or obj.getRole() in [Atspi.Role.ALERT, Atspi.Role.INFO_BAR]:
-            if obj.parent and obj.parent.getRole() == Atspi.Role.APPLICATION:
+           or Atspi.Accessible.get_role(obj) in [Atspi.Role.ALERT, Atspi.Role.INFO_BAR]:
+            if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.APPLICATION:
                 return
             self.presentObject(event.source, interrupt=True)
             return

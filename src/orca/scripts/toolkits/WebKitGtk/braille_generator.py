@@ -65,13 +65,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                                  Atspi.Role.PANEL])
 
         result = []
-        role = args.get('role', obj.getRole())
+        role = args.get('role', Atspi.Accessible.get_role(obj))
         if role == Atspi.Role.HEADING:
             result.extend(self.__generateHeadingRole(obj))
         elif not role in doNotDisplay:
             result.extend(braille_generator.BrailleGenerator._generateRoleName(
                 self, obj, **args))
-            if obj.parent and obj.parent.getRole() == Atspi.Role.HEADING:
+            if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.HEADING:
                 result.extend(self.__generateHeadingRole(obj.parent))
 
         return result
@@ -96,7 +96,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def _generateEol(self, obj, **args):
         if self._script.utilities.isWebKitGtk(obj) \
-           and obj.getRole() == Atspi.Role.PARAGRAPH \
+           and Atspi.Accessible.get_role(obj) == Atspi.Role.PARAGRAPH \
            and not obj.getState().contains(Atspi.StateType.EDITABLE):
             return []
 

@@ -42,7 +42,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isTreeTableCell")
         if rv is None:
-            rv = obj.parent and obj.parent.getRole() == Atspi.Role.TREE_TABLE
+            rv = obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.TREE_TABLE
             cached["isTreeTableCell"] = rv
             self._cache[hash(obj)] = cached
 

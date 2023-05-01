@@ -71,7 +71,7 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
-        if event.detail1 and event.source.getRole() == Atspi.Role.FRAME \
+        if event.detail1 and Atspi.Accessible.get_role(event.source) == Atspi.Role.FRAME \
            and not self.utilities.canBeActiveWindow(event.source):
             return
 
@@ -228,7 +228,7 @@ class Script(web.Script):
         if super().onFocusedChanged(event):
             return
 
-        if event.source.getRole() == Atspi.Role.PANEL:
+        if Atspi.Accessible.get_role(event.source) == Atspi.Role.PANEL:
             if orca_state.locusOfFocus == orca_state.activeWindow:
                 msg = "GECKO: Ignoring event believed to be noise."
                 debug.println(debug.LEVEL_INFO, msg, True)

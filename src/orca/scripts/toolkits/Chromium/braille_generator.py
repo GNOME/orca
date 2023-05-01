@@ -42,7 +42,7 @@ class BrailleGenerator(web.BrailleGenerator):
         super().__init__(script)
 
     def _generateLabelOrName(self, obj, **args):
-        if obj.getRole() == Atspi.Role.FRAME:
+        if Atspi.Accessible.get_role(obj) == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)
             if document and not self._script.utilities.documentFrameURI(document):
                 # Eliminates including "untitled" in the frame name.

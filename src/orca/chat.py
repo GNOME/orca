@@ -291,7 +291,7 @@ class Chat:
 
         Arguments:
         - script: the script with which this instance is associated.
-        - buddyListAncestries: a list of lists of pyatspi roles beginning
+        - buddyListAncestries: a list of lists of roles beginning
           with the object serving as the actual buddy list (e.g.
           ROLE_TREE_TABLE) and ending with the top level object (e.g.
           ROLE_FRAME).
@@ -818,7 +818,7 @@ class Chat:
         # things working. And people should not be in multiple chat
         # rooms with identical names anyway. :-)
         #
-        if obj.getRole() in [Atspi.Role.TEXT, Atspi.Role.ENTRY] \
+        if Atspi.Accessible.get_role(obj) in [Atspi.Role.TEXT, Atspi.Role.ENTRY] \
            and obj.getState().contains(Atspi.StateType.EDITABLE):
             name = self.getChatRoomName(obj)
 
@@ -842,8 +842,8 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getRole() == Atspi.Role.TEXT \
-           and obj.parent.getRole() == Atspi.Role.SCROLL_PANE:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TEXT \
+           and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
             if not state.contains(Atspi.StateType.EDITABLE) \
                and state.contains(Atspi.StateType.MULTI_LINE):
@@ -919,7 +919,7 @@ class Chat:
         - event: the accessible event being examined
         """
 
-        if event.source.getRole() != Atspi.Role.TEXT:
+        if Atspi.Accessible.get_role(event.source) != Atspi.Role.TEXT:
             return False
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()

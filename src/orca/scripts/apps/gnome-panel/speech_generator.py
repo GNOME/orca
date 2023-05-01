@@ -49,7 +49,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if nothing can be found.
         """
 
-        role = args.get('role', obj.getRole())
+        role = args.get('role', Atspi.Accessible.get_role(obj))
         if role == Atspi.Role.FRAME and _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 

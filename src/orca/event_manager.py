@@ -228,7 +228,7 @@ class EventManager:
             # issue, but until we know for certain....
             #name = event.source.name
             state = event.source.getState()
-            role = event.source.getRole()
+            role = Atspi.Accessible.get_role(event.source)
         except:
             msg = 'ERROR: Event is from potentially-defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -354,7 +354,7 @@ class EventManager:
 
             try:
                 childState = event.any_data.getState()
-                childRole = event.any_data.getRole()
+                childRole = Atspi.Accessible.get_role(event.any_data)
                 name = event.any_data.name
                 defunct = False
             except:
@@ -500,7 +500,7 @@ class EventManager:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
                 try:
-                    asyncMode = e.source.getRole() == Atspi.Role.TABLE
+                    asyncMode = Atspi.Accessible.get_role(e.source) == Atspi.Role.TABLE
                 except:
                     asyncMode = True
             script = _scriptManager.getScript(app, e.source)
@@ -779,7 +779,7 @@ class EventManager:
 
         role = state = None
         try:
-            role = event.source.getRole()
+            role = Atspi.Accessible.get_role(event.source)
         except (LookupError, RuntimeError):
             return False, "Error getting event.source's role"
         try:
@@ -917,7 +917,7 @@ class EventManager:
             return True
 
         if event.type.startswith("object:state-changed:active"):
-            return event.source.getRole() in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
+            return Atspi.Accessible.get_role(event.source) in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
 
         if event.type.startswith("document:load-complete"):
             return True
@@ -982,7 +982,7 @@ class EventManager:
 
         if eType.startswith("object:state-changed:active"):
             try:
-                role = event.source.getRole()
+                role = Atspi.Accessible.get_role(event.source)
             except:
                 pass
             else:

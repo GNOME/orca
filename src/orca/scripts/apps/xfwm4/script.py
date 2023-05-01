@@ -57,7 +57,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() != Atspi.Role.LABEL:
+        if Atspi.Accessible.get_role(event.source) != Atspi.Role.LABEL:
             default.Script.onTextInserted(self, event)
             return
 
@@ -72,5 +72,5 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.source.getRole() != Atspi.Role.LABEL:
+        if Atspi.Accessible.get_role(event.source) != Atspi.Role.LABEL:
             default.Script.onTextDeleted(self, event)

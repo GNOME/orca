@@ -369,7 +369,7 @@ def _containingDocument(obj):
              Atspi.Role.DOCUMENT_SPREADSHEET,
              Atspi.Role.DOCUMENT_TEXT,
              Atspi.Role.DOCUMENT_WEB]
-    isDocument = lambda x: x and x.getRole() in roles
+    isDocument = lambda x: x and Atspi.Accessible.get_role(x) in roles
     document = AXObject.find_ancestor(obj, isDocument)
     while document:
         ancestor = AXObject.find_ancestor(document, isDocument)

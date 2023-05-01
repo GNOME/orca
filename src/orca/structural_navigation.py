@@ -1041,7 +1041,7 @@ class StructuralNavigation:
     #########################################################################
 
     def _getListDescription(self, obj):
-        children = [x for x in obj if x.getRole() == Atspi.Role.LIST_ITEM]
+        children = [x for x in obj if Atspi.Accessible.get_role(x) == Atspi.Role.LIST_ITEM]
         if not children:
             return ""
 
@@ -1086,7 +1086,7 @@ class StructuralNavigation:
         cellRoles = [Atspi.Role.TABLE_CELL,
                      Atspi.Role.COLUMN_HEADER,
                      Atspi.Role.ROW_HEADER]
-        isCell = lambda x: x and x.getRole() in cellRoles
+        isCell = lambda x: x and Atspi.Accessible.get_role(x) in cellRoles
         if obj and not isCell(obj):
             obj = AXObject.find_ancestor(obj, isCell)
 
@@ -1100,7 +1100,7 @@ class StructuralNavigation:
 
     def _isContainer(self, obj):
         try:
-            role = obj.getRole()
+            role = Atspi.Accessible.get_role(obj)
         except:
             return False
 
@@ -1130,7 +1130,7 @@ class StructuralNavigation:
         - obj: the accessible object of interest.
         """
 
-        isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE
+        isTable = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TABLE
         if obj and not isTable(obj):
             obj = AXObject.find_ancestor(obj, isTable)
 
@@ -1253,7 +1253,7 @@ class StructuralNavigation:
 
         try:
             objPath = AXObject.get_path(obj)
-            objRole = obj.getRole()
+            objRole = Atspi.Accessible.get_role(obj)
         except:
             return obj, characterOffset
 
@@ -1272,7 +1272,7 @@ class StructuralNavigation:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         replicant = self._script.utilities.getObjectFromPath(objPath)
-        if replicant and replicant.getRole() == objRole:
+        if replicant and Atspi.Accessible.get_role(replicant) == objRole:
             msg = "STRUCTURAL NAVIGATION: Updating obj to replicant %s" % replicant
             debug.println(debug.LEVEL_INFO, msg, True)
             obj = replicant
@@ -1329,7 +1329,7 @@ class StructuralNavigation:
     def _getSelectedItem(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        if obj.getRole() == Atspi.Role.COMBO_BOX:
+        if Atspi.Accessible.get_role(obj) == Atspi.Role.COMBO_BOX:
             obj = obj[0]
         try:
             selection = obj.querySelection()
@@ -1348,17 +1348,17 @@ class StructuralNavigation:
             item = self._getSelectedItem(obj)
             if item:
                 text = item.name
-        if not text and obj.getRole() == Atspi.Role.IMAGE:
+        if not text and Atspi.Accessible.get_role(obj) == Atspi.Role.IMAGE:
             try:
                 image = obj.queryImage()
             except:
                 text = obj.description
             else:
                 text = image.imageDescription or obj.description
-            if not text and obj.parent.getRole() == Atspi.Role.LINK:
+            if not text and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.LINK:
                 text = self._script.utilities.linkBasename(obj.parent)
-        if not text and obj.getRole() == Atspi.Role.LIST:
-            children = [x for x in obj if x.getRole() == Atspi.Role.LIST_ITEM]
+        if not text and Atspi.Accessible.get_role(obj) == Atspi.Role.LIST:
+            children = [x for x in obj if Atspi.Accessible.get_role(x) == Atspi.Role.LIST_ITEM]
             text = " ".join(list(map(self._getText, children)))
 
         return text
@@ -1378,7 +1378,7 @@ class StructuralNavigation:
         # object presentation is refactored.
         try:
             state = obj.getState()
-            role = obj.getRole()
+            role = Atspi.Accessible.get_role(obj)
         except RuntimeError:
             return ''
 
@@ -1565,7 +1565,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]:
+        if obj and Atspi.Accessible.get_role(obj) in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.SENSITIVE)
 
@@ -1648,7 +1648,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == Atspi.Role.CHECK_BOX:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.CHECK_BOX:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
@@ -1734,7 +1734,7 @@ class StructuralNavigation:
         if not obj:
             return False
 
-        role = obj.getRole()
+        role = Atspi.Accessible.get_role(obj)
         if role not in self.OBJECT_ROLES + self.CONTAINER_ROLES:
             return False
 
@@ -1830,7 +1830,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == Atspi.Role.COMBO_BOX:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.COMBO_BOX:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
@@ -2005,7 +2005,7 @@ class StructuralNavigation:
         if not obj:
             return False
 
-        role = obj.getRole()
+        role = Atspi.Accessible.get_role(obj)
         if not role in self.FORM_ROLES:
             return False
 
@@ -2028,7 +2028,7 @@ class StructuralNavigation:
         """
 
         if obj:
-            if obj.getRole() == Atspi.Role.TEXT and obj.childCount:
+            if Atspi.Accessible.get_role(obj) == Atspi.Role.TEXT and obj.childCount:
                 obj = obj[0]
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
@@ -2134,7 +2134,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == Atspi.Role.HEADING:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.HEADING:
             if arg:
                 isMatch = arg == self._script.utilities.headingLevel(obj)
             else:
@@ -2226,7 +2226,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return (obj and obj.getRole() in self.IMAGE_ROLES)
+        return (obj and Atspi.Accessible.get_role(obj) in self.IMAGE_ROLES)
 
     def _imagePresentation(self, obj, arg=None):
         """Presents the image/graphic or indicates that one was not found.
@@ -2398,7 +2398,7 @@ class StructuralNavigation:
 
         isMatch = False
 
-        if obj and obj.getRole() == Atspi.Role.LIST:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.LIST:
             isMatch = not obj.getState().contains(Atspi.StateType.FOCUSABLE)
 
         return isMatch
@@ -2483,7 +2483,7 @@ class StructuralNavigation:
 
         isMatch = False
 
-        if obj and obj.getRole() == Atspi.Role.LIST_ITEM:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.LIST_ITEM:
             isMatch = not obj.getState().contains(Atspi.StateType.FOCUSABLE)
 
         return isMatch
@@ -2641,7 +2641,7 @@ class StructuralNavigation:
         if not obj:
             return False
 
-        role = obj.getRole()
+        role = Atspi.Accessible.get_role(obj)
         if role == Atspi.Role.HEADING:
             return True
 
@@ -2737,7 +2737,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == Atspi.Role.RADIO_BUTTON:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.RADIO_BUTTON:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
@@ -2813,7 +2813,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return obj and obj.getRole() == Atspi.Role.SEPARATOR
+        return obj and Atspi.Accessible.get_role(obj) == Atspi.Role.SEPARATOR
 
     def _separatorPresentation(self, obj, arg=None):
         """Presents the separator or indicates that one was not found.
@@ -2878,7 +2878,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if not (obj and obj.childCount and obj.getRole() == Atspi.Role.TABLE):
+        if not (obj and obj.childCount and Atspi.Accessible.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         attrs = self._script.utilities.objectAttributes(obj)
@@ -2990,7 +2990,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return (obj and obj.getRole() in [Atspi.Role.COLUMN_HEADER,
+        return (obj and Atspi.Accessible.get_role(obj) in [Atspi.Role.COLUMN_HEADER,
                                           Atspi.Role.ROW_HEADER,
                                           Atspi.Role.TABLE_CELL])
 
@@ -3083,7 +3083,7 @@ class StructuralNavigation:
 
         isMatch = False
 
-        if obj and obj.getRole() == Atspi.Role.LINK:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
             state = obj.getState()
             isMatch = not state.contains(Atspi.StateType.VISITED) \
                 and state.contains(Atspi.StateType.FOCUSABLE)
@@ -3171,7 +3171,7 @@ class StructuralNavigation:
 
         isMatch = False
 
-        if obj and obj.getRole() == Atspi.Role.LINK:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.VISITED) \
                 and state.contains(Atspi.StateType.FOCUSABLE)
@@ -3257,7 +3257,7 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == Atspi.Role.LINK:
+        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
             state = obj.getState()
             isMatch = state.contains(Atspi.StateType.FOCUSABLE)
         return isMatch
