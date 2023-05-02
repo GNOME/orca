@@ -46,7 +46,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not root:
             return None
 
-        if Atspi.Accessible.get_role(root) == Atspi.Role.DIALOG:
+        if root.getRole() == Atspi.Role.DIALOG:
             return root
 
         if root.childCount:
@@ -60,27 +60,27 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if window and window.childCount and Atspi.Accessible.get_role(window) == Atspi.Role.FRAME:
+        if window and window.childCount and window.getRole() == Atspi.Role.FRAME:
             child = self._findChildDialog(window[0])
-            if child and Atspi.Accessible.get_role(child) == Atspi.Role.DIALOG:
-                isPageTabList = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PAGE_TAB_LIST
+            if child and child.getRole() == Atspi.Role.DIALOG:
+                isPageTabList = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB_LIST
                 if AXObject.find_descendant(child, isPageTabList):
                     return False
 
-                isComboBox = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.COMBO_BOX
+                isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
                 return AXObject.find_descendant(child, isComboBox)
 
         return False
 
     def _findErrorWidget(self, root):
-        isError = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TEXT and x.name \
-                  and Atspi.Accessible.get_role(x.parent) != Atspi.Role.COMBO_BOX
+        isError = lambda x: x and x.getRole() == Atspi.Role.TEXT and x.name \
+                  and x.parent.getRole() != Atspi.Role.COMBO_BOX
         return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.LIST and x.name \
+        isList = lambda x: x and x.getRole() == Atspi.Role.LIST and x.name \
                   and AXObject.supports_selection(x) \
-                  and Atspi.Accessible.get_role(x.parent) != Atspi.Role.COMBO_BOX
+                  and x.parent.getRole() != Atspi.Role.COMBO_BOX
         return AXObject.find_descendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):

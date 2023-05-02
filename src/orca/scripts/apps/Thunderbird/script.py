@@ -204,7 +204,7 @@ class Script(Gecko.Script):
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
             try:
-                role = Atspi.Accessible.get_role(orca_state.locusOfFocus)
+                role = orca_state.locusOfFocus.getRole()
                 name = orca_state.locusOfFocus.name
             except:
                 pass
@@ -236,7 +236,7 @@ class Script(Gecko.Script):
             return
 
         parent = event.source.parent
-        if parent and Atspi.Accessible.get_role(parent) == Atspi.Role.COMBO_BOX \
+        if parent and parent.getRole() == Atspi.Role.COMBO_BOX \
            and not parent.getState().contains(Atspi.StateType.FOCUSED):
             return
 
@@ -278,8 +278,8 @@ class Script(Gecko.Script):
         parent = obj.parent
 
         try:
-            role = Atspi.Accessible.get_role(event.source)
-            parentRole = Atspi.Accessible.get_role(parent)
+            role = event.source.getRole()
+            parentRole = parent.getRole()
         except:
             return
 
@@ -293,8 +293,8 @@ class Script(Gecko.Script):
 
         obj = event.source
         try:
-            role = Atspi.Accessible.get_role(obj)
-            parentRole = Atspi.Accessible.get_role(obj.parent)
+            role = obj.getRole()
+            parentRole = obj.parent.getRole()
         except:
             return
 

@@ -73,7 +73,7 @@ class Utilities(script_utilities.Utilities):
         # script's method gives us false positives; other times false
         # negatives.
         #
-        if Atspi.Accessible.get_role(obj1) == Atspi.Accessible.get_role(obj2) == Atspi.Role.LABEL:
+        if obj1.getRole() == obj2.getRole() == Atspi.Role.LABEL:
             try:
                 ext1 = obj1.queryComponent().getExtents(0)
                 ext2 = obj2.queryComponent().getExtents(0)
@@ -91,8 +91,8 @@ class Utilities(script_utilities.Utilities):
             parent1 = obj1
             parent2 = obj2
             while parent1 and parent2 and \
-                    Atspi.Accessible.get_role(parent1) == Atspi.Role.LABEL and \
-                    Atspi.Accessible.get_role(parent2) == Atspi.Role.LABEL:
+                    parent1.getRole() == Atspi.Role.LABEL and \
+                    parent2.getRole() == Atspi.Role.LABEL:
                 if parent1.getIndexInParent() != parent2.getIndexInParent():
                     return False
                 parent1 = parent1.parent

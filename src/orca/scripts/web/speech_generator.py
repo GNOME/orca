@@ -88,7 +88,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and (self._script.utilities.isLink(obj) \
                 or self._script.utilities.isLandmark(obj) \
                 or self._script.utilities.isMath(obj) \
-                or Atspi.Accessible.get_role(obj) in [Atspi.Role.TOOL_TIP, Atspi.Role.STATUS_BAR]):
+                or obj.getRole() in [Atspi.Role.TOOL_TIP, Atspi.Role.STATUS_BAR]):
             return result
 
         args['stopAtRoles'] = [Atspi.Role.DOCUMENT_WEB,
@@ -188,7 +188,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.preferDescriptionOverName(obj):
             return []
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if obj != orca_state.locusOfFocus:
             if role in [Atspi.Role.ALERT, Atspi.Role.DIALOG]:
                 return super()._generateDescription(obj, **args)
@@ -337,7 +337,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
             msg = "WEB: %s is popup menu for current item." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -349,8 +349,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 return []
 
-        if priorObj and Atspi.Accessible.get_role(priorObj) == Atspi.Role.PAGE_TAB \
-            and priorObj.name == obj.name:
+        if priorObj and priorObj.getRole() == Atspi.Role.PAGE_TAB and priorObj.name == obj.name:
             return []
 
         if obj.name:
@@ -365,7 +364,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.CHECK_BOX:
+        if obj.getRole() == Atspi.Role.CHECK_BOX:
             gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateLabelOrName(gridCell, **args)
@@ -387,13 +386,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if self._script.utilities.isFigure(obj) and args.get('ancestorOf'):
             caption = args.get('ancestorOf')
-            if Atspi.Accessible.get_role(caption) != Atspi.Role.CAPTION:
-                isCaption = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.CAPTION
+            if caption.getRole() != Atspi.Role.CAPTION:
+                isCaption = lambda x: x and x.getRole() == Atspi.Role.CAPTION
                 caption = AXObject.find_ancestor(caption, isCaption)
             if caption and hash(obj) in self._script.utilities.labelTargets(caption):
                 return []
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         # TODO - JD: Once the formatting strings are vastly cleaned up
         # or simply removed, hacks like this won't be needed.
@@ -475,7 +474,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                  Atspi.Role.LIST,
                  Atspi.Role.LIST_BOX,
                  'ROLE_FEED']
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role not in roles:
             return super()._generateNumberOfChildren(obj, **args)
 
@@ -484,7 +483,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isDescriptionList(obj):
                 children = self._script.utilities.descriptionListTerms(obj)
             elif role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-                children = [x for x in obj if Atspi.Accessible.get_role(x) == Atspi.Role.LIST_ITEM]
+                children = [x for x in obj if x.getRole() == Atspi.Role.LIST_ITEM]
             setsize = len(children)
 
         if not setsize:
@@ -536,7 +535,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         enabled, disabled = self._getEnabledAndDisabledContextRoles()
         if role in disabled:
             return []
@@ -573,7 +572,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(Atspi.Role.DOCUMENT_WEB)
                 doNotSpeak.append(Atspi.Role.ALERT)
             if self._script.utilities.isAnchor(obj):
-                doNotSpeak.append(Atspi.Accessible.get_role(obj))
+                doNotSpeak.append(obj.getRole())
             if total > 1:
                 doNotSpeak.append(Atspi.Role.ROW_HEADER)
             if self._script.utilities.isMenuInCollapsedSelectElement(obj):
@@ -612,7 +611,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif self._script.utilities.isLink(obj):
-            if Atspi.Accessible.get_role(obj.parent) == Atspi.Role.IMAGE:
+            if obj.parent.getRole() == Atspi.Role.IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             else:
@@ -631,10 +630,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         ancestorRoles = [Atspi.Role.HEADING, Atspi.Role.LINK]
-        speakRoles = lambda x: x and Atspi.Accessible.get_role(x) in ancestorRoles
+        speakRoles = lambda x: x and x.getRole() in ancestorRoles
         ancestor = AXObject.find_ancestor(obj, speakRoles)
-        if ancestor and Atspi.Accessible.get_role(ancestor) != role \
-            and (index == total - 1 or obj.name == ancestor.name):
+        if ancestor and ancestor.getRole() != role and (index == total - 1 or obj.name == ancestor.name):
             result.extend(self._generateRoleName(ancestor))
 
         return result
@@ -716,10 +714,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                      Atspi.Role.CHECK_MENU_ITEM,
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.MENU]
-        if Atspi.Accessible.get_role(obj) in menuRoles:
+        if obj.getRole() in menuRoles:
             return super()._generatePositionInList(obj, **args)
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.LIST_ITEM:
+        if obj.getRole() == Atspi.Role.LIST_ITEM:
             thisObjIndex = args.get('index', 0)
             objCount = args.get('total', 1)
             if thisObjIndex + 1 < objCount:
@@ -792,7 +790,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
-        isRow = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TABLE_ROW
+        isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
         row = AXObject.find_ancestor(obj, isRow)
         if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row)

@@ -43,7 +43,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # Treat a paragraph which is serving as a text entry in a dialog
         # as a text object.
         #
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         override = \
             role == "text frame" \
             or (role == Atspi.Role.PARAGRAPH \
@@ -53,9 +53,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateRoleName(self, obj, **args):
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.TOGGLE_BUTTON \
-           and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.TOOL_BAR:
+           and obj.parent.getRole() == Atspi.Role.TOOL_BAR:
             pass
         else:
             # Treat a paragraph which is serving as a text entry in a dialog
@@ -78,8 +78,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateTextRole(self, obj, **args):
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
-        if role == Atspi.Role.TEXT and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.COMBO_BOX:
+        role = args.get('role', obj.getRole())
+        if role == Atspi.Role.TEXT and obj.parent.getRole() == Atspi.Role.COMBO_BOX:
             return []
 
         if role != Atspi.Role.PARAGRAPH \
@@ -124,7 +124,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateName(obj, **args)
 
     def _generateLabelAndName(self, obj, **args):
-        if Atspi.Accessible.get_role(obj) != Atspi.Role.COMBO_BOX:
+        if obj.getRole() != Atspi.Role.COMBO_BOX:
             return super()._generateLabelAndName(obj, **args)
 
         # TODO - JD: This should be the behavior by default because many
@@ -238,7 +238,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if priorObj and priorObj.parent != obj.parent:
                 return []
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.COMBO_BOX:
+        if obj.getRole() == Atspi.Role.COMBO_BOX:
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
             if entry:
                 return super()._generateCurrentLineText(entry)
@@ -259,9 +259,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.TOGGLE_BUTTON \
-           and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.TOOL_BAR:
+           and obj.parent.getRole() == Atspi.Role.TOOL_BAR:
             if obj.getState().contains(Atspi.StateType.CHECKED):
                 result.append(messages.ON)
             else:
@@ -442,7 +442,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         topLevel = self._script.utilities.topLevelObject(obj)
-        if topLevel and Atspi.Accessible.get_role(topLevel) == Atspi.Role.DIALOG:
+        if topLevel and topLevel.getRole() == Atspi.Role.DIALOG:
             return []
 
         return super()._generateEndOfTableIndicator(obj, **args)
@@ -494,7 +494,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # which we are editing, we have some pointOfReference info
             # we can use to guess the coordinates.
             #
-            args['guessCoordinates'] = Atspi.Accessible.get_role(obj) == Atspi.Role.PARAGRAPH
+            args['guessCoordinates'] = obj.getRole() == Atspi.Role.PARAGRAPH
             result.extend(super().generateSpeech(obj, **args))
             del args['guessCoordinates']
             self._restoreRole(oldRole, args)

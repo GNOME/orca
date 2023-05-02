@@ -41,7 +41,7 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
+        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -54,7 +54,7 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
+        if event.source.getRole() == Atspi.Role.ACCELERATOR_LABEL:
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return

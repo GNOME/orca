@@ -82,7 +82,7 @@ class BrailleGenerator(generator.Generator):
             return False
 
         try:
-            sameRole = Atspi.Accessible.get_role(obj) == Atspi.Accessible.get_role(region.accessible)
+            sameRole = obj.getRole() == region.accessible.getRole()
             sameName = obj.name == region.accessible.name
         except:
             msg = 'ERROR: Could not get names, roles for %s, %s' % (obj, region.accessible)
@@ -116,7 +116,7 @@ class BrailleGenerator(generator.Generator):
         except:
             focusedRegion = None
         try:
-            role = Atspi.Accessible.get_role(obj)
+            role = obj.getRole()
         except:
             role = None
         for region in result:
@@ -161,7 +161,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
 
         doNotPresent = [Atspi.Role.UNKNOWN,
@@ -171,8 +171,8 @@ class BrailleGenerator(generator.Generator):
                         Atspi.Role.LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.LIST_BOX:
-            doNotPresent.append(Atspi.Accessible.get_role(obj))
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
+            doNotPresent.append(obj.getRole())
 
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
@@ -196,7 +196,7 @@ class BrailleGenerator(generator.Generator):
 
         if _settingsManager.getSetting('brailleRolenameStyle') \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:
-            role = args.get('role', Atspi.Accessible.get_role(obj))
+            role = args.get('role', obj.getRole())
             rv = shortRoleNames.get(role)
             if rv:
                 return rv
@@ -280,11 +280,11 @@ class BrailleGenerator(generator.Generator):
         # generator.py:_generateRadioButtonGroup method that is
         # used to find the radio button group name.
         #
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         excludeRadioButtonGroup = role == Atspi.Role.RADIO_BUTTON
 
         parent = obj.parent
-        if parent and (Atspi.Accessible.get_role(parent) in self.SKIP_CONTEXT_ROLES):
+        if parent and (parent.getRole() in self.SKIP_CONTEXT_ROLES):
             parent = parent.parent
         while parent and (parent.parent != parent):
             parentResult = []
@@ -294,7 +294,7 @@ class BrailleGenerator(generator.Generator):
             # as bugzilla bug 319751.]]]
             #
             try:
-                role = Atspi.Accessible.get_role(parent)
+                role = parent.getRole()
             except:
                 role = None
             if role and role != Atspi.Role.FILLER \
@@ -316,7 +316,7 @@ class BrailleGenerator(generator.Generator):
                 label = self._script.utilities.displayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     if not excludeRadioButtonGroup:
-                        args['role'] = Atspi.Accessible.get_role(parent)
+                        args['role'] = parent.getRole()
                         parentResult = self.generate(parent, **args)
                     else:
                         excludeRadioButtonGroup = False
@@ -332,7 +332,7 @@ class BrailleGenerator(generator.Generator):
 
     def _generateFocusedItem(self, obj, **args):
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
             return result
 
@@ -380,9 +380,9 @@ class BrailleGenerator(generator.Generator):
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.SLIDER,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and Atspi.Accessible.get_role(x) in widgetRoles
+        isWidget = lambda x: x and x.getRole() in widgetRoles
         result = []
-        if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))
@@ -482,7 +482,7 @@ class BrailleGenerator(generator.Generator):
         except NotImplementedError:
             text = None
         if text and (self._script.utilities.isTextArea(obj) \
-                     or (Atspi.Accessible.get_role(obj) in [Atspi.Role.LABEL])):
+                     or (obj.getRole() in [Atspi.Role.LABEL])):
             try:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     text.caretOffset, Atspi.TextBoundaryType.LINE_START)

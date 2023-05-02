@@ -31,7 +31,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSeekSlider(self, obj):
         return bool(AXObject.find_ancestor(
-                obj, lambda x: Atspi.Accessible.get_role(x) == Atspi.Role.TOOL_BAR))
+                obj, lambda x: x.getRole() == Atspi.Role.TOOL_BAR))
 
     def textForValue(self, obj):
         if not self.isSeekSlider(obj):

@@ -513,12 +513,12 @@ class Script(default.Script):
 
         if event.type.startswith('object:state-changed:focused') \
            and event.detail1:
-            if Atspi.Accessible.get_role(event.source) == Atspi.Role.LINK:
+            if event.source.getRole() == Atspi.Role.LINK:
                 return False
 
         if event.type.startswith('object:children-changed'):
             try:
-                role = Atspi.Accessible.get_role(event.any_data)
+                role = event.any_data.getRole()
             except:
                 pass
             else:
@@ -880,7 +880,7 @@ class Script(default.Script):
             return True
 
         doNotToggle = [Atspi.Role.LINK, Atspi.Role.RADIO_BUTTON]
-        if self._inFocusMode and obj and Atspi.Accessible.get_role(obj) in doNotToggle \
+        if self._inFocusMode and obj and obj.getRole() in doNotToggle \
            and self.utilities.lastInputEventWasUnmodifiedArrow():
             msg = "WEB: Staying in focus mode due to arrowing in role of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -986,7 +986,7 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.STATUS_BAR:
+        if obj.getRole() == Atspi.Role.STATUS_BAR:
             super().presentObject(obj, **args)
             return
 
@@ -995,7 +995,7 @@ class Script(default.Script):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.ENTRY:
+        if obj.getRole() == Atspi.Role.ENTRY:
             super().presentObject(obj, **args)
             return
 
@@ -1291,7 +1291,7 @@ class Script(default.Script):
         [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
         if self._inFocusMode:
             try:
-                parentRole = Atspi.Accessible.get_role(obj.parent)
+                parentRole = obj.parent.getRole()
             except:
                 parentRole = None
             if parentRole == Atspi.Role.LIST_BOX:
@@ -1348,7 +1348,7 @@ class Script(default.Script):
             if contextObj and not self.utilities.isZombie(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
 
-        if Atspi.Accessible.get_role(newFocus) in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT]:
+        if newFocus.getRole() in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT]:
             msg = "WEB: Event source has bogus role. Likely browser bug."
             debug.println(debug.LEVEL_INFO, msg, True)
             newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
@@ -1371,7 +1371,7 @@ class Script(default.Script):
             args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
-           and not (Atspi.Accessible.get_role(newFocus) == Atspi.Role.TABLE_CELL and newFocus.name):
+           and not (newFocus.getRole() == Atspi.Role.TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
@@ -1389,7 +1389,7 @@ class Script(default.Script):
             msg = "WEB: New focus %s has math child. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif Atspi.Accessible.get_role(newFocus) == Atspi.Role.HEADING:
+        elif newFocus.getRole() == Atspi.Role.HEADING:
             msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
@@ -1455,7 +1455,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        role = Atspi.Accessible.get_role(event.source)
+        role = event.source.getRole()
         if role in [Atspi.Role.DIALOG, Atspi.Role.ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1487,7 +1487,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if Atspi.Accessible.get_role(event.source) != Atspi.Role.DOCUMENT_WEB \
+        if event.source.getRole() != Atspi.Role.DOCUMENT_WEB \
            and not self.utilities.isOrDescendsFrom(orca_state.locusOfFocus, event.source):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1798,7 +1798,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        role = Atspi.Accessible.get_role(obj)
+        role = obj.getRole()
         if not (self._lastCommandWasCaretNav and role == Atspi.Role.RADIO_BUTTON):
             msg = "WEB: Event is something default can handle"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1881,7 +1881,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        childRole = Atspi.Accessible.get_role(event.any_data)
+        childRole = event.any_data.getRole()
         if childRole == Atspi.Role.ALERT:
             if event.any_data == self.utilities.lastQueuedLiveRegion():
                 msg = "WEB: Ignoring %s (is last queued live region)" % event.any_data
@@ -2080,7 +2080,7 @@ class Script(default.Script):
             msg = "WEB: document changed from %s to %s" % (prevDocument, document)
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        role = Atspi.Accessible.get_role(event.source)
+        role = event.source.getRole()
         if self.utilities.isWebAppDescendant(event.source):
             if self._browseModeIsSticky:
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
@@ -2519,7 +2519,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(None, event.source, force=True)
                 return True
 
-        if Atspi.Accessible.get_role(event.source) in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
+        if event.source.getRole() in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
            and event.source.getState().contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
@@ -2573,7 +2573,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if Atspi.Accessible.get_role(event.source) in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
+        if event.source.getRole() in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
            and event.source.getState().contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."

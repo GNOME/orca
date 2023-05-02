@@ -180,7 +180,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
     oldFocus = orca_state.locusOfFocus
     try:
-        Atspi.Accessible.get_role(oldFocus)
+        oldFocus.getRole()
     except:
         msg = "ORCA: Old locusOfFocus is null or defunct"
         debug.println(debug.LEVEL_INFO, msg, True)

@@ -47,7 +47,7 @@ class Utilities(script_utilities.Utilities):
             selection = obj.querySelection()
         except:
             # This is a workaround for bgo#738705.
-            if Atspi.Accessible.get_role(obj) != Atspi.Role.PANEL:
+            if obj.getRole() != Atspi.Role.PANEL:
                 return []
 
             isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
@@ -103,7 +103,7 @@ class Utilities(script_utilities.Utilities):
 
         roles = [Atspi.Role.DIALOG, Atspi.Role.NOTIFICATION, Atspi.Role.MENU_ITEM]
 
-        hasRole = lambda x: x and Atspi.Accessible.get_role(x) in roles
+        hasRole = lambda x: x and x.getRole() in roles
         if not hasRole(root) and AXObject.find_ancestor(root, hasRole) is None:
             msg = "GNOME SHELL: Not seeking unrelated labels for %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -117,9 +117,9 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = super().isLayoutOnly(obj)
-        if not rv and Atspi.Accessible.get_role(obj) == Atspi.Role.PANEL and obj.childCount == 1:
+        if not rv and  obj.getRole() == Atspi.Role.PANEL and obj.childCount == 1:
             displayedLabel = self.displayedLabel(obj)
-            if displayedLabel == obj[0].name and Atspi.Accessible.get_role(obj[0]) != Atspi.Role.LABEL:
+            if displayedLabel == obj[0].name and obj[0].getRole() != Atspi.Role.LABEL:
                 rv = True
                 msg = "GNOME SHELL: %s is deemed to be layout only" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -130,7 +130,7 @@ class Utilities(script_utilities.Utilities):
 
     def isBogusWindowFocusClaim(self, event):
         if event.type.startswith('object:state-changed:focused') and event.detail1 \
-           and Atspi.Accessible.get_role(event.source) == Atspi.Role.WINDOW \
+           and event.source.getRole() == Atspi.Role.WINDOW \
            and not self.canBeActiveWindow(event.source):
             msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
             debug.println(debug.LEVEL_INFO, msg, True)

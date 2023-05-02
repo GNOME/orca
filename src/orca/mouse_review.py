@@ -245,7 +245,7 @@ class _ItemContext:
                  Atspi.Role.PAGE_TAB,
                  Atspi.Role.TOOL_BAR,
                  Atspi.Role.WINDOW]
-        isContainer = lambda x: x and Atspi.Accessible.get_role(x) in roles
+        isContainer = lambda x: x and x.getRole() in roles
         return AXObject.find_ancestor(self._obj, isContainer)
 
     def _isSubstringOf(self, other):
@@ -287,7 +287,7 @@ class _ItemContext:
         if self._treatAsSingleObject():
             return False
 
-        role = prior._Atspi.Accessible.get_role(obj)
+        role = prior._obj.getRole()
         return role == Atspi.Role.LINK
 
     def present(self, prior):
@@ -320,7 +320,7 @@ class _ItemContext:
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
-            if self._Atspi.Accessible.get_role(obj) == Atspi.Role.TABLE_CELL \
+            if self._obj.getRole() == Atspi.Role.TABLE_CELL \
                and self._string.getString() == self._script.utilities.displayedText(self._obj):
                 return True
 
@@ -569,7 +569,7 @@ class MouseReviewer:
         if not script:
             return
 
-        isMenu = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.MENU
+        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
         if script.utilities.isDead(orca_state.locusOfFocus):
             menu = None
         elif isMenu(orca_state.locusOfFocus):

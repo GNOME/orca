@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
+import pyatspi
+
 from . import cmdnames
 from . import debug
 from . import input_event

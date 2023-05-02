@@ -99,6 +99,6 @@ class Script(default.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PAGE_TAB
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.PAGE_TAB
         allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
         default.Script.onWindowActivated(self, event)

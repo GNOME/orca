@@ -83,7 +83,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         to say it shouldn't.
         """
 
-        if event.type.startswith("focus:") and Atspi.Accessible.get_role(event.source) == Atspi.Role.MENU:
+        if event.type.startswith("focus:") and event.source.getRole() == Atspi.Role.MENU:
             return True
 
         window = self.utilities.topLevelObject(event.source)
@@ -137,7 +137,7 @@ class Script(WebKitGtk.Script, gtk.Script):
 
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.LAYERED_PANE:
+        if event.source.getRole() == Atspi.Role.LAYERED_PANE:
             obj = self.utilities.realActiveDescendant(event.source)
             orca.setLocusOfFocus(event, obj)
             return
@@ -156,7 +156,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         """Callback for object:selection-changed accessibility events."""
 
         obj = event.source
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.COMBO_BOX \
+        if obj.getRole() == Atspi.Role.COMBO_BOX \
            and not obj.getState().contains(Atspi.StateType.FOCUSED):
             return
 

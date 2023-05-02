@@ -206,7 +206,7 @@ class Generator:
         self._addGlobals(globalsDict)
         globalsDict['obj'] = obj
         try:
-            globalsDict['role'] = args.get('role', Atspi.Accessible.get_role(obj))
+            globalsDict['role'] = args.get('role', obj.getRole())
         except:
             msg = 'ERROR: Cannot generate presentation for: %s. Aborting' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -321,7 +321,7 @@ class Generator:
         return []
 
     def _fallBackOnDescriptionForName(self, obj, **args):
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.LABEL:
             return False
 
@@ -356,9 +356,9 @@ class Generator:
                 self._script.pointOfReference['usedDescriptionForName'] = True
             else:
                 link = None
-                if Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
+                if obj.getRole() == Atspi.Role.LINK:
                     link = obj
-                elif obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.LINK:
+                elif obj.parent and obj.parent.getRole() == Atspi.Role.LINK:
                     link = obj.parent
                 if link:
                     basename = self._script.utilities.linkBasenameToName(link)
@@ -366,11 +366,11 @@ class Generator:
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
         try:
-            role = args.get('role', Atspi.Accessible.get_role(obj))
+            role = args.get('role', obj.getRole())
         except (LookupError, RuntimeError):
             return result
-        if not result and Atspi.Accessible.get_role(obj) == Atspi.Role.ICON \
-           and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.PANEL:
+        if not result and obj.getRole() == Atspi.Role.ICON \
+           and obj.parent.getRole() == Atspi.Role.PANEL:
             return self._generateName(obj.parent)
 
         return result
@@ -467,7 +467,7 @@ class Generator:
         if self._script.pointOfReference.get('usedDescriptionForUnrelatedLabels'):
             return []
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         # Unity Panel Service menubar items are labels which claim focus and
         # have an accessible description of the text + underscore symbol used
@@ -634,7 +634,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'required'
         if obj.getState().contains(Atspi.StateType.REQUIRED) \
-           or (Atspi.Accessible.get_role(obj) == Atspi.Role.RADIO_BUTTON \
+           or (obj.getRole() == Atspi.Role.RADIO_BUTTON \
                and obj.parent.getState().contains(Atspi.StateType.REQUIRED)):
             result.append(self._script.formatting.getString(**args))
         return result
@@ -712,10 +712,10 @@ class Generator:
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.SLIDER,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and Atspi.Accessible.get_role(x) in widgetRoles
+        isWidget = lambda x: x and x.getRole() in widgetRoles
 
         # For GtkListBox, such as those found in the control center
-        if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if obj.parent and obj.parent.getRole() == Atspi.Role.LIST_BOX:
             widget = AXObject.find_descendant(obj, isWidget)
             if widget:
                 return self.generate(widget, includeContext=False)
@@ -757,7 +757,7 @@ class Generator:
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
         if obj.getState().contains(Atspi.StateType.CHECKABLE) \
-           or Atspi.Accessible.get_role(obj) == Atspi.Role.CHECK_MENU_ITEM:
+           or obj.getRole() == Atspi.Role.CHECK_MENU_ITEM:
             return self._generateCheckedState(obj, **args)
 
         if obj.getState().contains(Atspi.StateType.CHECKED):
@@ -1137,7 +1137,7 @@ class Generator:
         consider returning an empty array if there is no value.
         """
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.COMBO_BOX:
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
@@ -1190,7 +1190,7 @@ class Generator:
         """
         result = []
         try:
-            role = Atspi.Accessible.get_role(obj)
+            role = obj.getRole()
         except:
             role = None
         if role == Atspi.Role.RADIO_BUTTON:
@@ -1208,7 +1208,7 @@ class Generator:
             else:
                 parent = obj.parent
                 while parent and (parent.parent != parent):
-                    if Atspi.Accessible.get_role(parent) in [Atspi.Role.PANEL,
+                    if parent.getRole() in [Atspi.Role.PANEL,
                                             Atspi.Role.FILLER]:
                         label = self._generateLabelAndName(parent)
                         if label:
@@ -1227,7 +1227,7 @@ class Generator:
         result = []
         rad = self._script.utilities.realActiveDescendant(obj)
 
-        if not (Atspi.Accessible.get_role(rad) == Atspi.Role.TABLE_CELL and rad.childCount):
+        if not (rad.getRole() == Atspi.Role.TABLE_CELL and rad.childCount):
             return self._generateDisplayedText(rad, **args)
 
         content = set([self._script.utilities.displayedText(x).strip() for x in rad])
@@ -1243,7 +1243,7 @@ class Generator:
         the role of the object actually being painted in the cell.
         """
         rad = self._script.utilities.realActiveDescendant(obj)
-        args['role'] = Atspi.Accessible.get_role(rad)
+        args['role'] = rad.getRole()
         return self._generateRoleName(rad, **args)
 
     def _generateNamedContainingPanel(self, obj, **args):
@@ -1253,7 +1253,7 @@ class Generator:
         result = []
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if Atspi.Accessible.get_role(parent) == Atspi.Role.PANEL:
+            if parent.getRole() == Atspi.Role.PANEL:
                 label = self._generateLabelAndName(parent)
                 if label:
                     result.extend(label)
@@ -1343,7 +1343,7 @@ class Generator:
         if self._script.utilities.isDPub(obj):
             if self._script.utilities.isLandmark(obj):
                 return 'ROLE_DPUB_LANDMARK'
-            if Atspi.Accessible.get_role(obj) == Atspi.Role.SECTION:
+            if obj.getRole() == Atspi.Role.SECTION:
                 return 'ROLE_DPUB_SECTION'
         if self._script.utilities.isSwitch(obj):
             return 'ROLE_SWITCH'
@@ -1382,10 +1382,10 @@ class Generator:
         if self._script.utilities.isDocument(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
 
-        return args.get('role', Atspi.Accessible.get_role(obj))
+        return args.get('role', obj.getRole())
 
     def getLocalizedRoleName(self, obj, **args):
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         if AXObject.supports_value(obj):
             state = obj.getState()
@@ -1540,7 +1540,7 @@ class Generator:
         if self._script.utilities.isSwitch(obj):
             return self._generateSwitchState(obj, **args)
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         if role == Atspi.Role.MENU_ITEM:
             return self._generateMenuItemCheckedState(obj, **args)
@@ -1560,7 +1560,7 @@ class Generator:
         return []
 
     def getValue(self, obj, **args):
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         if role == Atspi.Role.PROGRESS_BAR:
             return self._generateProgressBarValue(obj, **args)

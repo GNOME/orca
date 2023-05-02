@@ -186,7 +186,7 @@ class Utilities(script_utilities.Utilities):
         if not super().isZombie(obj):
             return False
 
-        if Atspi.Accessible.get_role(obj) != Atspi.Role.TOGGLE_BUTTON:
+        if obj.getRole() != Atspi.Role.TOGGLE_BUTTON:
             return True
 
         msg = 'INFO: Hacking around broken index in parent for %s' % obj

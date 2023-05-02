@@ -43,7 +43,7 @@ class Utilities(script_utilities.Utilities):
         self._isTypeahead = {}
 
     def isTypeahead(self, obj):
-        if not (obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TEXT):
+        if not (obj and obj.getRole() == Atspi.Role.TEXT):
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -54,7 +54,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = parent.parent
 
-        rv = parent and Atspi.Accessible.get_role(parent) == Atspi.Role.WINDOW
+        rv = parent and parent.getRole() == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv
         return rv
 

@@ -52,21 +52,21 @@ class Utilities(script_utilities.Utilities):
         self._isUselessPanel = {}
 
     def infoBar(self, root):
-        isInfoBar = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.INFO_BAR
+        isInfoBar = lambda x: x and x.getRole() == Atspi.Role.INFO_BAR
         return AXObject.find_descendant(root, isInfoBar)
 
     def isComboBoxWithToggleDescendant(self, obj):
-        if not (obj and Atspi.Accessible.get_role(obj) == Atspi.Role.COMBO_BOX):
+        if not (obj and obj.getRole() == Atspi.Role.COMBO_BOX):
             return False
 
         rv = self._isComboBoxWithToggleDescendant.get(hash(obj))
         if rv is not None:
             return rv
 
-        isToggle = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TOGGLE_BUTTON
+        isToggle = lambda x: x and x.getRole() == Atspi.Role.TOGGLE_BUTTON
 
         for child in obj:
-            if Atspi.Accessible.get_role(child) != Atspi.Role.FILLER:
+            if child.getRole() != Atspi.Role.FILLER:
                 continue
 
             toggle = AXObject.find_descendant(child, isToggle)
@@ -79,14 +79,14 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isToggleDescendantOfComboBox(self, obj):
-        if not (obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TOGGLE_BUTTON):
+        if not (obj and obj.getRole() == Atspi.Role.TOGGLE_BUTTON):
             return False
 
         rv = self._isToggleDescendantOfComboBox.get(hash(obj))
         if rv is not None:
             return rv
 
-        isComboBox = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.COMBO_BOX
+        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
         comboBox = AXObject.find_ancestor(obj, isComboBox)
         if comboBox:
             self._isComboBoxWithToggleDescendant[hash(comboBox)] = True
@@ -99,7 +99,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or self.isDead(obj):
             return False
 
-        if Atspi.Accessible.get_role(obj) != Atspi.Role.TEXT:
+        if obj.getRole() != Atspi.Role.TEXT:
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -110,7 +110,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = parent.parent
 
-        rv = parent and Atspi.Accessible.get_role(parent) == Atspi.Role.WINDOW
+        rv = parent and parent.getRole() == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv
         return rv
 
@@ -128,7 +128,7 @@ class Utilities(script_utilities.Utilities):
         if focusedOnly and not state.contains(Atspi.StateType.FOCUSED):
             return False
 
-        isIcon = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.ICON
+        isIcon = lambda x: x and x.getRole() == Atspi.Role.ICON
         icons = list(filter(isIcon, [x for x in obj]))
         if icons:
             return True
@@ -136,8 +136,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isEntryCompletionPopupItem(self, obj):
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.TABLE_CELL:
-            isWindow = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.WINDOW
+        if obj.getRole() == Atspi.Role.TABLE_CELL:
+            isWindow = lambda x: x and x.getRole() == Atspi.Role.WINDOW
             window = AXObject.find_ancestor(obj, isWindow)
             if window:
                 return True
@@ -157,7 +157,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isUselessPanel(self, obj):
-        if not (obj and Atspi.Accessible.get_role(obj) == Atspi.Role.PANEL):
+        if not (obj and obj.getRole() == Atspi.Role.PANEL):
             return False
 
         rv = self._isUselessPanel.get(hash(obj))
@@ -192,7 +192,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def eventIsCanvasNoise(self, event):
-        if Atspi.Accessible.get_role(event.source) != Atspi.Role.CANVAS:
+        if event.source.getRole() != Atspi.Role.CANVAS:
             return False
 
         if not orca_state.activeWindow:

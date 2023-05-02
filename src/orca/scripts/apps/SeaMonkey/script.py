@@ -85,7 +85,7 @@ class Script(Gecko.Script):
             return
 
         try:
-            focusRole = Atspi.Accessible.get_role(orca_state.locusOfFocus)
+            focusRole = orca_state.locusOfFocus.getRole()
         except:
             msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -95,7 +95,7 @@ class Script(Gecko.Script):
             super().onFocus(event)
             return
 
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.MENU:
+        if event.source.getRole() == Atspi.Role.MENU:
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.println(debug.LEVEL_INFO, msg, True)
 

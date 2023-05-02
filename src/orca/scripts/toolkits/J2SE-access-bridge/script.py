@@ -118,7 +118,7 @@ class Script(default.Script):
         # focus. If there is no selection, we default the locus of
         # focus to the containing object.
         #
-        if (Atspi.Accessible.get_role(event.source) in [Atspi.Role.LIST,
+        if (event.source.getRole() in [Atspi.Role.LIST,
                                        Atspi.Role.PAGE_TAB_LIST,
                                        Atspi.Role.TREE]) \
             and event.source.getState().contains(Atspi.StateType.FOCUSED):
@@ -138,7 +138,7 @@ class Script(default.Script):
             return
 
         obj = event.source
-        role = Atspi.Accessible.get_role(obj)
+        role = obj.getRole()
 
         # Accessibility support for menus in Java is badly broken: Missing
         # events, missing states, bogus events from other objects, etc.
@@ -152,12 +152,12 @@ class Script(default.Script):
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.POPUP_MENU]
 
-        if role in menuRoles or Atspi.Accessible.get_role(obj.parent) in menuRoles:
+        if role in menuRoles or obj.parent.getRole() in menuRoles:
             orca.setLocusOfFocus(event, obj)
             return
 
         try:
-            focusRole = Atspi.Accessible.get_role(orca_state.locusOfFocus)
+            focusRole = orca_state.locusOfFocus.getRole()
         except:
             focusRole = None
 
@@ -179,7 +179,7 @@ class Script(default.Script):
         ignoreRoles = [Atspi.Role.TOGGLE_BUTTON,
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.CHECK_BOX]
-        if Atspi.Accessible.get_role(event.source) in ignoreRoles:
+        if event.source.getRole() in ignoreRoles:
             return
 
         # Java's SpinButtons are the most caret movement happy thing
@@ -191,7 +191,7 @@ class Script(default.Script):
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
         #
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.SPIN_BUTTON:
+        if event.source.getRole() == Atspi.Role.SPIN_BUTTON:
             try:
                 thisBox = orca_state.locusOfFocus.parent.parent == event.source
             except:
@@ -216,7 +216,7 @@ class Script(default.Script):
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.POPUP_MENU]
 
-        if Atspi.Accessible.get_role(event.source) in menuRoles:
+        if event.source.getRole() in menuRoles:
             return False
 
         return default.Script.skipObjectEvent(self, event)

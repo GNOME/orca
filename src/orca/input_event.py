@@ -300,7 +300,7 @@ class KeyboardEvent(InputEvent):
         _isPressed = event.type == Atspi.EventType.KEY_PRESSED_EVENT
 
         try:
-            role = self._Atspi.Accessible.get_role(obj)
+            role = self._obj.getRole()
         except:
             role = None
         _mayEcho = _isPressed or role == Atspi.Role.TERMINAL
@@ -472,7 +472,7 @@ class KeyboardEvent(InputEvent):
 
     def _shouldObscure(self):
         try:
-            role = self._Atspi.Accessible.get_role(obj)
+            role = self._obj.getRole()
         except:
             return False
 

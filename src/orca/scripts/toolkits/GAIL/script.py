@@ -92,7 +92,7 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        isMenu = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.MENU
+        isMenu = lambda x: x and x.getRole() == Atspi.Role.MENU
         if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
             return
 
@@ -102,7 +102,7 @@ class Script(default.Script):
         """Callback for object:selection-changed accessibility events."""
 
         isFocused = event.source.getState().contains(Atspi.StateType.FOCUSED)
-        role = Atspi.Accessible.get_role(event.source)
+        role = event.source.getRole()
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."

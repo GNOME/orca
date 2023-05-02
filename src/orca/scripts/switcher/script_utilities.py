@@ -40,7 +40,7 @@ class Utilities(script_utilities.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        return obj and Atspi.Accessible.get_role(obj) == Atspi.Role.STATUS_BAR
+        return obj and obj.getRole() == Atspi.Role.STATUS_BAR
 
     def isSwitcherSelectionChangeEventType(self, event):
         """Returns True if this event is the one we use to present changes."""

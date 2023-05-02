@@ -64,7 +64,7 @@ class Script(clutter.Script):
         being redundant, part of an event flood, etc."""
 
         try:
-            role = Atspi.Accessible.get_role(event.source)
+            role = event.source.getRole()
         except:
             pass
         else:
@@ -89,7 +89,7 @@ class Script(clutter.Script):
 
     def _presentDialogLabel(self, event):
         try:
-            role = Atspi.Accessible.get_role(event.source)
+            role = event.source.getRole()
             name = event.source.name
         except:
             return False
@@ -102,7 +102,7 @@ class Script(clutter.Script):
         if name == self._activeDialogLabels.get(obj):
             return True
 
-        isDialog = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.DIALOG
+        isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
         parentDialog = AXObject.find_ancestor(event.source, isDialog)
         if activeDialog == parentDialog:
             self.presentMessage(name)
@@ -126,7 +126,7 @@ class Script(clutter.Script):
             return
 
         try:
-            role = Atspi.Accessible.get_role(event.source)
+            role = event.source.getRole()
             name = event.source.name
         except:
             return
@@ -159,7 +159,7 @@ class Script(clutter.Script):
         """Callback for object:state-changed:selected accessibility events."""
         try:
             state = event.source.getState()
-            role = Atspi.Accessible.get_role(event.source)
+            role = event.source.getRole()
         except:
             return
 
@@ -190,7 +190,7 @@ class Script(clutter.Script):
 
         obj = event.source
         try:
-            role = Atspi.Accessible.get_role(obj)
+            role = obj.getRole()
             name = obj.name
         except:
             return
@@ -206,7 +206,7 @@ class Script(clutter.Script):
 
         if role == Atspi.Role.MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
-            isRealFocus = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.SLIDER
+            isRealFocus = lambda x: x and x.getRole() == Atspi.Role.SLIDER
             descendant = AXObject.find_descendant(obj, isRealFocus)
             if descendant:
                 orca.setLocusOfFocus(event, descendant)
@@ -218,7 +218,7 @@ class Script(clutter.Script):
         # state regardless.
         activeDialog, timestamp = self._activeDialog
         if not activeDialog:
-            isDialog = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.DIALOG
+            isDialog = lambda x: x and x.getRole() == Atspi.Role.DIALOG
             dialog = AXObject.find_ancestor(obj, isDialog)
             self._activeDialog = (dialog, time.time())
             if dialog:

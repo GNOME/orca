@@ -56,8 +56,8 @@ class Script(default.Script):
         - obj: the accessible object to examine.
         """
 
-        if obj and Atspi.Accessible.get_role(obj) == Atspi.Role.TEXT \
-           and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.SCROLL_PANE:
+        if obj and obj.getRole() == Atspi.Role.TEXT \
+           and obj.parent.getRole() == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
             if not state.contains(Atspi.StateType.EDITABLE) \
                and state.contains(Atspi.StateType.MULTI_LINE):
@@ -90,8 +90,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if Atspi.Accessible.get_role(event.source) == Atspi.Role.SPLIT_PANE:
-            hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TEXT
+        if event.source.getRole() == Atspi.Role.SPLIT_PANE:
+            hasRole = lambda x: x and x.getRole() == Atspi.Role.TEXT
             textObjects = self.utilities.findAllDescendants(event.source, hasRole)
             return
 

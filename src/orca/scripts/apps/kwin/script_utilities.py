@@ -39,7 +39,7 @@ class Utilities(switcher.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        if not (obj and Atspi.Accessible.get_role(obj) == Atspi.Role.FILLER):
+        if not (obj and obj.getRole() == Atspi.Role.FILLER):
             return False
 
         return obj.getState().contains(Atspi.StateType.FOCUSED)

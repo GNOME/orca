@@ -59,7 +59,7 @@ class Script(gtk.Script):
         """Callback for object:state-changed:showing events."""
 
         obj = event.source
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.ANIMATION:
+        if obj.getRole() == Atspi.Role.ANIMATION:
             _manager = event_manager.getManager()
             if event.detail1:
                 _manager.ignoreEventTypes(self._floodEvents)

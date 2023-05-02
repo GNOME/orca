@@ -80,7 +80,7 @@ class Utilities(script_utilities.Utilities):
         """
 
         try:
-            role = Atspi.Accessible.get_role(obj)
+            role = obj.getRole()
         except:
             return ""
 
@@ -118,7 +118,7 @@ class Utilities(script_utilities.Utilities):
 
         parent = obj.parent
         try:
-            role = Atspi.Accessible.get_role(parent)
+            role = parent.getRole()
         except:
             msg = "SOFFICE: Exception getting role of %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -141,16 +141,16 @@ class Utilities(script_utilities.Utilities):
     def getRowColumnAndTable(self, cell):
         """Returns the (row, column, table) tuple for cell."""
 
-        if not (cell and Atspi.Accessible.get_role(cell) == Atspi.Role.TABLE_CELL):
+        if not (cell and cell.getRole() == Atspi.Role.TABLE_CELL):
             return -1, -1, None
 
         cellParent = cell.parent
-        if cellParent and Atspi.Accessible.get_role(cellParent) == Atspi.Role.TABLE_CELL:
+        if cellParent and cellParent.getRole() == Atspi.Role.TABLE_CELL:
             cell = cellParent
             cellParent = cell.parent
 
         table = cellParent
-        if table and Atspi.Accessible.get_role(table) != Atspi.Role.TABLE:
+        if table and table.getRole() != Atspi.Role.TABLE:
             table = table.parent
 
         try:
@@ -214,8 +214,8 @@ class Utilities(script_utilities.Utilities):
             return True
 
         try:
-            role1 = Atspi.Accessible.get_role(obj1)
-            role2 = Atspi.Accessible.get_role(obj2)
+            role1 = obj1.getRole()
+            role2 = obj2.getRole()
         except:
             return False
 
@@ -242,7 +242,7 @@ class Utilities(script_utilities.Utilities):
         no presentable information (label, name, displayed text, etc.)."""
 
         try:
-            role = Atspi.Accessible.get_role(obj)
+            role = obj.getRole()
             childCount = obj.childCount
             name = obj.name
         except:
@@ -262,7 +262,7 @@ class Utilities(script_utilities.Utilities):
 
         if role == Atspi.Role.LIST:
             try:
-                parentRole = Atspi.Accessible.get_role(obj.parent)
+                parentRole = obj.parent.getRole()
             except:
                 msg = "SOFFICE: Exception getting parent role of %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -289,7 +289,7 @@ class Utilities(script_utilities.Utilities):
 
         parent = obj.parent
         try:
-            role = Atspi.Accessible.get_role(parent)
+            role = parent.getRole()
         except:
             msg = "SOFFICE: Exception getting role of %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -301,7 +301,7 @@ class Utilities(script_utilities.Utilities):
 
         parent = parent.parent
         try:
-            role = Atspi.Accessible.get_role(parent)
+            role = parent.getRole()
         except:
             msg = "SOFFICE: Exception getting role of %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -337,14 +337,14 @@ class Utilities(script_utilities.Utilities):
                 if self.isSameObject(orca_state.activeWindow, topLevel):
                     return self._script.inputLineForCell
 
-        isScrollPane = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.SCROLL_PANE
+        isScrollPane = lambda x: x and x.getRole() == Atspi.Role.SCROLL_PANE
         scrollPane = AXObject.find_ancestor(obj, isScrollPane)
         if not scrollPane:
             return None
 
         toolbar = None
         for child in scrollPane.parent:
-            if child and Atspi.Accessible.get_role(child) == Atspi.Role.TOOL_BAR:
+            if child and child.getRole() == Atspi.Role.TOOL_BAR:
                 toolbar = child
                 break
 
@@ -353,7 +353,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        isParagraph = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PARAGRAPH
+        isParagraph = lambda x: x and x.getRole() == Atspi.Role.PARAGRAPH
         allParagraphs = self.findAllDescendants(toolbar, isParagraph)
         if len(allParagraphs) == 1:
             self._script.inputLineForCell = allParagraphs[0]
@@ -377,9 +377,9 @@ class Utilities(script_utilities.Utilities):
 
         parent = obj.parent
         while parent and (parent.parent != parent):
-            if Atspi.Accessible.get_role(parent) == Atspi.Role.FRAME:
+            if parent.getRole() == Atspi.Role.FRAME:
                 results[0] = parent
-            if Atspi.Accessible.get_role(parent) == Atspi.Role.TABLE:
+            if parent.getRole() == Atspi.Role.TABLE:
                 results[1] = parent
             parent = parent.parent
 
@@ -438,12 +438,12 @@ class Utilities(script_utilities.Utilities):
         """
 
         parent = obj.parent
-        if parent and Atspi.Accessible.get_role(parent) in (Atspi.Role.ROOT_PANE,
+        if parent and parent.getRole() in (Atspi.Role.ROOT_PANE,
                                            Atspi.Role.DIALOG):
             app = obj.getApplication()
             for frame in app:
                 if frame.childCount < 1 \
-                   or Atspi.Accessible.get_role(frame[0]) not in (Atspi.Role.ROOT_PANE,
+                   or frame[0].getRole() not in (Atspi.Role.ROOT_PANE,
                                                  Atspi.Role.OPTION_PANE):
                     continue
 
@@ -542,7 +542,7 @@ class Utilities(script_utilities.Utilities):
         if not parent:
             return None, None
 
-        hasRole = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.SPLIT_PANE
+        hasRole = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
         panes = self.findAllDescendants(parent, hasRole)
         if not panes:
             return None, None
@@ -605,7 +605,7 @@ class Utilities(script_utilities.Utilities):
         - event: the accessible event being examined
         """
 
-        if Atspi.Accessible.get_role(event.source) != Atspi.Role.PARAGRAPH:
+        if event.source.getRole() != Atspi.Role.PARAGRAPH:
             return False
 
         lastKey, mods = self.lastKeyAndModifiers()
@@ -630,7 +630,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def containingComboBox(self, obj):
-        isComboBox = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.COMBO_BOX
+        isComboBox = lambda x: x and x.getRole() == Atspi.Role.COMBO_BOX
         if isComboBox(obj):
             comboBox = obj
         else:
@@ -665,7 +665,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def isComboBoxNoise(self, event):
-        role = Atspi.Accessible.get_role(event.source)
+        role = event.source.getRole()
         if role == Atspi.Role.TEXT and event.type.startswith("object:text-"):
             return self.isComboBoxSelectionChange(event)
 
@@ -705,7 +705,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        role = Atspi.Accessible.get_role(obj)
+        role = obj.getRole()
         isSelection = lambda x: AXObject.supports_selection(x)
         if not isSelection(obj) and role == Atspi.Role.COMBO_BOX:
             child = AXObject.find_descendant(obj, isSelection)

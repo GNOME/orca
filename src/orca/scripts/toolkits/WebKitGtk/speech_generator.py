@@ -63,7 +63,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if result or not self._script.utilities.isWebKitGtk(obj):
             return result
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         inferRoles = [Atspi.Role.CHECK_BOX,
                       Atspi.Role.COMBO_BOX,
                       Atspi.Role.ENTRY,
@@ -98,7 +98,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
         doNotSpeak = [Atspi.Role.UNKNOWN]
@@ -122,14 +122,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.__generateHeadingRole(obj))
             else:
                 result.append(self.getLocalizedRoleName(obj, role=role))
-                if obj.parent and Atspi.Accessible.get_role(obj.parent) == Atspi.Role.HEADING:
+                if obj.parent and obj.parent.getRole() == Atspi.Role.HEADING:
                     result.extend(self.__generateHeadingRole(obj.parent))
 
             if result:
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
             if role == Atspi.Role.LINK \
-               and obj.childCount and Atspi.Accessible.get_role(obj[0]) == Atspi.Role.IMAGE:
+               and obj.childCount and obj[0].getRole() == Atspi.Role.IMAGE:
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #
@@ -150,7 +150,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         previous object with focus.
         """
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.LINK:
             return []
 

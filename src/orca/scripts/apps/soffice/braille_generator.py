@@ -151,11 +151,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                      Atspi.Role.APPLICATION]
         if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
             for child in obj.parent:
-                if Atspi.Accessible.get_role(child) == Atspi.Role.PAGE_TAB_LIST:
+                if child.getRole() == Atspi.Role.PAGE_TAB_LIST:
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(Atspi.StateType.SELECTED):
-                            args['role'] = Atspi.Accessible.get_role(tab)
+                            args['role'] = tab.getRole()
                             result.extend(self.generate(tab, **args))
         return result
 

@@ -44,35 +44,35 @@ class SpellCheck(spellcheck.SpellCheck):
         if not window:
             return False
 
-        role = Atspi.Accessible.get_role(window)
+        role = window.getRole()
         if role == Atspi.Role.DIALOG:
             return True
         if role != Atspi.Role.FRAME:
             return False
 
-        isSplitPane = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.SPLIT_PANE
+        isSplitPane = lambda x: x and x.getRole() == Atspi.Role.SPLIT_PANE
         if AXObject.find_descendant(window, isSplitPane):
             return False
 
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TEXT \
+        isEntry = lambda x: x and x.getRole() == Atspi.Role.TEXT \
                   and x.getState().contains(Atspi.StateType.SINGLE_LINE)
         return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):
-        isPanel = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.PANEL
+        isPanel = lambda x: x and x.getRole() == Atspi.Role.PANEL
         panel = AXObject.find_ancestor(self._changeToEntry, isPanel)
         if not panel:
             return None
 
-        isError = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.LABEL \
+        isError = lambda x: x and x.getRole() == Atspi.Role.LABEL \
                   and not ":" in x.name and not x.getRelationSet()
         return AXObject.find_descendant(panel, isError)
 
     def _findSuggestionsList(self, root):
-        isTable = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TABLE \
+        isTable = lambda x: x and x.getRole() == Atspi.Role.TABLE \
                   and AXObject.supports_selection(x)
         return AXObject.find_descendant(root, isTable)
 

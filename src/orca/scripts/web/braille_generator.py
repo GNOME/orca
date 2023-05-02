@@ -85,14 +85,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             doNotDisplay.append(Atspi.Role.ALERT)
 
         result = []
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
 
         if role == Atspi.Role.HEADING:
             level = self._script.utilities.headingLevel(obj)
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         elif self._script.utilities.isLink(obj) and obj == orca_state.locusOfFocus:
-            if Atspi.Accessible.get_role(obj.parent) == Atspi.Role.IMAGE:
+            if obj.parent.getRole() == Atspi.Role.IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:
@@ -106,7 +106,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         total = args.get('total', 1)
         if index == total - 1 and role != Atspi.Role.HEADING \
            and (role == Atspi.Role.IMAGE or self._script.utilities.queryNonEmptyText(obj)):
-            isHeading = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.HEADING
+            isHeading = lambda x: x and x.getRole() == Atspi.Role.HEADING
             heading = AXObject.find_ancestor(obj, isHeading)
             if heading:
                 result.extend(self._generateRoleName(heading))
@@ -143,7 +143,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        role = args.get('role', Atspi.Accessible.get_role(obj))
+        role = args.get('role', obj.getRole())
         if role == Atspi.Role.LABEL and AXObject.supports_text(obj):
             return []
 
@@ -175,7 +175,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = super()._generateName(obj, **args)
         if result and result[0] and not self._script.utilities.hasExplicitName(obj):
             result[0] = result[0].strip()
-        elif not result and Atspi.Accessible.get_role(obj) == Atspi.Role.CHECK_BOX:
+        elif not result and obj.getRole() == Atspi.Role.CHECK_BOX:
             gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateName(gridCell, **args)
@@ -210,7 +210,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
-        isRow = lambda x: x and Atspi.Accessible.get_role(x) == Atspi.Role.TABLE_ROW
+        isRow = lambda x: x and x.getRole() == Atspi.Role.TABLE_ROW
         row = AXObject.find_ancestor(obj, isRow)
         if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
@@ -242,7 +242,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         elif self._script.utilities.treatAsEntry(obj):
             oldRole = self._overrideRole(Atspi.Role.ENTRY, args)
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.MENU_ITEM:
+        if obj.getRole() == Atspi.Role.MENU_ITEM:
             comboBox = self._script.utilities.ancestorWithRole(
                 obj, [Atspi.Role.COMBO_BOX], [Atspi.Role.FRAME])
             if comboBox and not comboBox.getState().contains(Atspi.StateType.EXPANDED):

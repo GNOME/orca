@@ -85,7 +85,7 @@ class Utilities(script_utilities.Utilities):
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
 
-        if not Atspi.Accessible.get_role(obj) == Atspi.Role.ENTRY:
+        if not obj.getRole() == Atspi.Role.ENTRY:
             return False
 
         state = obj.getState()
@@ -108,7 +108,7 @@ class Utilities(script_utilities.Utilities):
         if text and text != self.EMBEDDED_OBJECT_CHARACTER:
             return text
 
-        if Atspi.Accessible.get_role(obj) in [Atspi.Role.LINK, Atspi.Role.LIST_ITEM]:
+        if obj.getRole() in [Atspi.Role.LINK, Atspi.Role.LIST_ITEM]:
             text = ' '.join(map(self.displayedText, (x for x in obj)))
             if not text:
                 text = self.linkBasename(obj)
@@ -181,7 +181,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
+        if obj.getRole() == Atspi.Role.LINK:
             obj = obj.parent
 
         index = obj.getIndexInParent() - 1
@@ -194,7 +194,7 @@ class Utilities(script_utilities.Utilities):
         except:
             prevObj = obj
         else:
-            if Atspi.Accessible.get_role(prevObj) == Atspi.Role.LIST and prevObj.childCount:
+            if prevObj.getRole() == Atspi.Role.LIST and prevObj.childCount:
                 if self.isTextListItem(prevObj[0]):
                     prevObj = prevObj[-1]
 
@@ -206,7 +206,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.LINK:
+        if obj.getRole() == Atspi.Role.LINK:
             obj = obj.parent
 
         index = obj.getIndexInParent() + 1
@@ -219,7 +219,7 @@ class Utilities(script_utilities.Utilities):
         except:
             nextObj = None
         else:
-            if Atspi.Accessible.get_role(nextObj) == Atspi.Role.LIST and nextObj.childCount:
+            if nextObj.getRole() == Atspi.Role.LIST and nextObj.childCount:
                 if self.isTextListItem(nextObj[0]):
                     nextObj = nextObj[0]
 
@@ -228,7 +228,7 @@ class Utilities(script_utilities.Utilities):
     def isTextListItem(self, obj):
         """Returns True if obj is an item in a non-selectable list."""
 
-        if Atspi.Accessible.get_role(obj) != Atspi.Role.LIST_ITEM:
+        if obj.getRole() != Atspi.Role.LIST_ITEM:
             return False
 
         return not obj.parent.getState().contains(Atspi.StateType.FOCUSABLE)
@@ -236,13 +236,13 @@ class Utilities(script_utilities.Utilities):
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.SECTION:
+        if obj.getRole() == Atspi.Role.SECTION:
             if obj.childCount > 1:
                 return self.onSameLine(obj[1], obj[1])
 
             return False
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.LIST:
+        if obj.getRole() == Atspi.Role.LIST:
             if obj.getState().contains(Atspi.StateType.FOCUSABLE):
                 return False
 
@@ -261,7 +261,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if not (obj and Atspi.Accessible.get_role(obj) in docRoles):
+        if not (obj and obj.getRole() in docRoles):
             return False
 
         parent = obj.parent
@@ -276,7 +276,7 @@ class Utilities(script_utilities.Utilities):
 
     def setCaretAtStart(self, obj):
         def implementsText(obj):
-            if Atspi.Accessible.get_role(obj) == Atspi.Role.LIST:
+            if obj.getRole() == Atspi.Role.LIST:
                 return False
             return AXObject.supports_text(obj)
 
