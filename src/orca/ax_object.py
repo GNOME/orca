@@ -484,3 +484,29 @@ class AXObject:
             return Atspi.Role.INVALID
 
         return role
+
+    @staticmethod
+    def get_name(obj):
+        """Returns the accessible name of obj"""
+
+        if obj is None:
+            return ""
+
+        try:
+            name = Atspi.Accessible.get_name(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_name: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return name
+
+    @staticmethod
+    def has_same_non_empty_name(obj1, obj2):
+        """Returns true if obj1 and obj2 share the same non-empty name"""
+
+        name1 = AXObject.get_name(obj1)
+        if not name1:
+            return False
+
+        return name1 == AXObject.get_name(obj2)

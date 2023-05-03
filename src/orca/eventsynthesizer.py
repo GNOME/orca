@@ -380,9 +380,16 @@ def _containingDocument(obj):
     return document
 
 def _isDead(obj):
+    if not obj:
+        return True
+
     try:
-        obj.name
-    except:
+        # We use the Atspi function rather than the AXObject function because the
+        # latter intentionally handles exceptions.
+        name = Atspi.Accessible.get_name(obj)
+    except Exception as e:
+        msg = "ERROR: %s is dead: %s" % (obj, e)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
     return False

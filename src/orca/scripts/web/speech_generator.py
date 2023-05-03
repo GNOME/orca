@@ -237,7 +237,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        objString = lambda x: str.strip("%s %s" % (x.name, self.getLocalizedRoleName(x)))
+        objString = lambda x: str.strip("%s %s" % (AXObject.get_name(x), self.getLocalizedRoleName(x)))
         toPresent = ", ".join(set(map(objString, objs)))
 
         args['stringType'] = 'hasdetails'
@@ -330,8 +330,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if priorObj and priorObj in self._script.utilities.labelsForObject(obj):
             return []
 
+        objName = AXObject.get_name(obj)
         descendant = args.get("ancestorOf")
-        if descendant and priorObj and obj.name and obj.name == priorObj.name:
+        if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
             msg = "WEB: %s's ancestor %s has same name as priorObj %s. Not generating labelOrName." \
                 % (descendant, obj, priorObj)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -350,11 +351,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return []
 
         if priorObj and AXObject.get_role(priorObj) == Atspi.Role.PAGE_TAB \
-            and priorObj.name == obj.name:
+            and AXObject.get_name(priorObj) == objName:
             return []
 
-        if obj.name:
-            name = obj.name
+        if objName:
+            name = objName
             if not self._script.utilities.hasExplicitName(obj):
                 name = name.strip()
 
@@ -400,14 +401,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role in [Atspi.Role.COMBO_BOX, Atspi.Role.SPIN_BUTTON]:
             return super()._generateName(obj, **args)
 
-        if obj.name:
+        if AXObject.get_name(obj):
             if self._script.utilities.preferDescriptionOverName(obj):
                 result = [obj.description]
             elif self._script.utilities.isLink(obj) \
                  and not self._script.utilities.hasExplicitName(obj):
                 return []
             else:
-                name = obj.name
+                name = AXObject.get_name(obj)
                 if not self._script.utilities.hasExplicitName(obj):
                     name = name.strip()
                 result = [name]
@@ -634,7 +635,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         speakRoles = lambda x: x and AXObject.get_role(x) in ancestorRoles
         ancestor = AXObject.find_ancestor(obj, speakRoles)
         if ancestor and AXObject.get_role(ancestor) != role \
-            and (index == total - 1 or obj.name == ancestor.name):
+            and (index == total - 1 or AXObject.get_name(obj) == AXObject.get_name(ancestor)):
             result.extend(self._generateRoleName(ancestor))
 
         return result
@@ -794,7 +795,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
         row = AXObject.find_ancestor(obj, isRow)
-        if row and row.name and not self._script.utilities.isLayoutOnly(row):
+        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row)
 
         return super()._generateTableCellRow(obj, **args)

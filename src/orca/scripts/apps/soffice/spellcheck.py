@@ -73,12 +73,12 @@ class SpellCheck(spellcheck.SpellCheck):
         return False
 
     def _findErrorWidget(self, root):
-        isError = lambda x: x and AXObject.get_role(x) == Atspi.Role.TEXT and x.name \
+        isError = lambda x: x and AXObject.get_role(x) == Atspi.Role.TEXT and AXObject.get_name(x) \
                   and AXObject.get_role(x.parent) != Atspi.Role.COMBO_BOX
         return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST and x.name \
+        isList = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST and AXObject.get_name(x) \
                   and AXObject.supports_selection(x) \
                   and AXObject.get_role(x.parent) != Atspi.Role.COMBO_BOX
         return AXObject.find_descendant(root, isList)

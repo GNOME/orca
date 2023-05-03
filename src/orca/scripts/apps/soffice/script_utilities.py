@@ -81,8 +81,8 @@ class Utilities(script_utilities.Utilities):
 
         role = AXObject.get_role(obj)
 
-        if role == Atspi.Role.PUSH_BUTTON and obj.name:
-            return obj.name
+        if role == Atspi.Role.PUSH_BUTTON and AXObject.get_name(obj):
+            return AXObject.get_name(obj)
 
         if role == Atspi.Role.TABLE_CELL:
             strings = list(map(self.displayedText, [child for child in obj]))
@@ -98,13 +98,13 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
-        if role == Atspi.Role.TABLE_CELL and text == obj.name \
+        if role == Atspi.Role.TABLE_CELL and text == AXObject.get_name(obj) \
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
         # More bogusness from (at least) Calc combined with the aforementioned
         # fallback-to-name behavior....
-        if self.isDocument(obj) and text == obj.name and obj.name.startswith("file:///"):
+        if self.isDocument(obj) and text == AXObject.get_name(obj) and text.startswith("file:///"):
             return ""
 
         return text
@@ -122,7 +122,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def spreadSheetCellName(self, cell):
-        nameList = cell.name.split()
+        nameList = AXObject.get_name(cell).split()
         for name in nameList:
             name = name.replace('.', '')
             if not name.isalpha() and name.isalnum():
@@ -205,21 +205,13 @@ class Utilities(script_utilities.Utilities):
         if obj1 == obj2:
             return True
 
-        try:
-            role1 = AXObject.get_role(obj1)
-            role2 = AXObject.get_role(obj2)
-        except:
-            return False
-
+        role1 = AXObject.get_role(obj1)
+        role2 = AXObject.get_role(obj2)
         if role1 != role2 or role1 == Atspi.Role.PARAGRAPH:
             return False
 
-        try:
-            name1 = obj1.name
-            name2 = obj2.name
-        except:
-            return False
-
+        name1 = AXObject.get_name(obj1)
+        name2 = AXObject.get_name(obj2)
         if name1 == name2:
             if role1 == Atspi.Role.FRAME:
                 return True
@@ -236,12 +228,12 @@ class Utilities(script_utilities.Utilities):
         try:
             role = AXObject.get_role(obj)
             childCount = obj.childCount
-            name = obj.name
         except:
             msg = "SOFFICE: Exception getting properties of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        name = AXObject.get_name(obj)
         if role == Atspi.Role.PANEL and childCount == 1 and name:
             try:
                 child = obj[0]
@@ -249,7 +241,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "SOFFICE: Exception getting child of %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
-                if child and child.name == name:
+                if child and AXObject.get_name(child) == name:
                     return True
 
         if role == Atspi.Role.LIST:
@@ -258,13 +250,7 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         if role == Atspi.Role.FRAME and name:
-            try:
-                windowName = orca_state.activeWindow.name
-            except:
-                msg = "SOFFICE: Exception getting name of active window"
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                return name == windowName
+            return name == AXObject.get_name(orca_state.activeWindow)
 
         return super().isLayoutOnly(obj)
 
@@ -476,7 +462,8 @@ class Utilities(script_utilities.Utilities):
         """Returns True if obj is the Impress Drawing View."""
 
         if self.isDocument(obj):
-            return (":" in obj.name and "/" in obj.name)
+            name = AXObject.get_name(obj)
+            return ":" in name and "/" in name
 
         return False
 
@@ -499,7 +486,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "SOFFICE: Top level object %s is dead." % topLevel
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
-            if topLevel.name.endswith("Impress"):
+            if AXObject.get_name(topLevel).endswith("Impress"):
                 return True
 
         return False
@@ -545,7 +532,7 @@ class Utilities(script_utilities.Utilities):
         if not dv or not self.isDrawingView(dv):
             return "", 0, 0
 
-        positionAndCount = dv.name.split(":")[1]
+        positionAndCount = AXObject.get_name(dv).split(":")[1]
         position, count = positionAndCount.split("/")
         title = ""
         for child in dv:
@@ -553,14 +540,14 @@ class Utilities(script_utilities.Utilities):
                 continue
             # We want an actual Title.
             #
-            if child.name.startswith("ImpressTitle"):
+            if AXObject.get_name(child).startswith("ImpressTitle"):
                 title = self.displayedText(child[0])
                 break
             # But we'll live with a Subtitle if we can't find a title.
             # Unlike Titles, a single subtitle can be made up of multiple
             # accessibles.
             #
-            elif child.name.startswith("ImpressSubtitle"):
+            elif AXObject.get_name(child).startswith("ImpressSubtitle"):
                 for line in child:
                     title = self.appendString(title, self.displayedText(line))
 

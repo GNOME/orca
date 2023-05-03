@@ -32,6 +32,7 @@ from gi.repository import Atspi
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
+from orca.ax_object import AXObject
 from .spellcheck import SpellCheck
 
 class Script(gtk.Script):
@@ -108,7 +109,7 @@ class Script(gtk.Script):
             gtk.Script.onNameChanged(self, event)
             return
 
-        name = event.source.name
+        name = AXObject.get_name(event.source)
         if name == self.spellcheck.getMisspelledWord():
             self.spellcheck.presentErrorDetails()
             return

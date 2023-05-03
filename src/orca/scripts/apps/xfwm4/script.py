@@ -62,7 +62,7 @@ class Script(default.Script):
             default.Script.onTextInserted(self, event)
             return
 
-        self.presentMessage(event.source.name)
+        self.presentMessage(AXObject.get_name(event.source))
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object. Overridden

@@ -58,7 +58,7 @@ class Utilities(script_utilities.Utilities):
         """Returns the name of the currently-selected item."""
 
         if self.isSwitcherContainer(container):
-            return container.name
+            return AXObject.get_name(container)
 
         return ""
 

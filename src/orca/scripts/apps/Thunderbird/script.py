@@ -204,17 +204,13 @@ class Script(Gecko.Script):
 
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
-            try:
-                name = orca_state.locusOfFocus.name
-            except:
-                pass
-            else:
-                role = AXObject.get_role(orca_state.locusOfFocus)
-                if role in [Atspi.Role.FRAME, Atspi.Role.PAGE_TAB] and name:
-                    orca.setLocusOfFocus(event, event.source, False)
+            name = AXObject.get_name(orca_state.locusOfFocus)
+            role = AXObject.get_role(orca_state.locusOfFocus)
+            if role in [Atspi.Role.FRAME, Atspi.Role.PAGE_TAB] and name:
+                orca.setLocusOfFocus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
-                self.speakMessage(obj.name)
+                self.speakMessage(AXObject.get_name(obj))
                 self._presentMessage(obj)
 
     def onCaretMoved(self, event):
@@ -345,7 +341,7 @@ class Script(Gecko.Script):
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if event.source.name == self.spellcheck.getMisspelledWord():
+        if AXObject.get_name(event.source) == self.spellcheck.getMisspelledWord():
             self.spellcheck.presentErrorDetails()
             return
 

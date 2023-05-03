@@ -117,8 +117,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: This should be the behavior by default. But the default
         # generators call displayedText(). Once that is corrected, this method
         # can be removed.
-        if obj.name:
-            result = [obj.name]
+        if AXObject.get_name(obj):
+            result = [AXObject.get_name(obj)]
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
@@ -131,16 +131,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: This should be the behavior by default because many
         # toolkits use the label for the name.
         result = []
-        label = self._script.utilities.displayedLabel(obj) or obj.name
+        label = self._script.utilities.displayedLabel(obj) or AXObject.get_name(obj)
         if label:
             result.append(label)
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
-        name = obj.name
+        name = AXObject.get_name(obj)
         if label == name or not name:
             selected = self._script.utilities.selectedChildren(obj)
             if selected:
-                name = selected[0].name
+                name = AXObject.get_name(selected[0])
 
         if name:
             result.append(name)
@@ -169,8 +169,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.extend(parentLabel)
                 # If we still don't have a label, look to the name.
                 #
-                if not parentLabel and obj.name and len(obj.name):
-                    result.append(obj.name)
+                if not parentLabel:
+                    name = AXObject.get_name(obj)
+                    if name:
+                        result.append(name)
                 if result:
                     result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
         else:
@@ -222,7 +224,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             #
             text = self._script.utilities.displayedText(obj) or ""
             desc = obj.description.replace(text, "")
-            for item in obj.name.split():
+            for item in AXObject.get_name(obj).split():
                 desc = desc.replace(item, "")
             for char in desc.strip():
                 if char.isalnum():
@@ -388,7 +390,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return result
 
             if _settingsManager.getSetting('speakCellCoordinates'):
-                result.append(obj.name)
+                result.append(AXObject.get_name(obj))
             return result
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'

@@ -100,14 +100,8 @@ class Utilities(web.Utilities):
         if not (role1 in roles and role2 in roles):
             return False
 
-        try:
-            name1 = obj1.name
-            name2 = obj2.name
-        except:
-            msg = "GECKO: Exception getting name for %s and %s" % (obj1, obj2)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        name1 = AXObject.get_name(obj1)
+        name2 = AXObject.get_name(obj2)
         rv = name1 == name2
         msg = "GECKO: Treating %s and %s as same object: %s" % (obj1, obj2, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -156,13 +150,7 @@ class Utilities(web.Utilities):
         return False
 
     def isNotRealDocument(self, obj):
-        try:
-            name = obj.name
-        except:
-            msg = "GECKO: Exception getting name for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        name = AXObject.get_name(obj)
         if name.startswith("moz-extension"):
             return True
 
@@ -321,7 +309,7 @@ class Utilities(web.Utilities):
             return ""
 
         isMatch = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL \
-            and len(re.findall("\d+", x.name)) == 2
+            and len(re.findall("\d+", AXObject.get_name(x))) == 2
 
         labels = self.findAllDescendants(root, isMatch)
         if len(labels) != 1:
@@ -329,7 +317,7 @@ class Utilities(web.Utilities):
 
         label = labels[0]
         label.clearCache()
-        return label.name
+        return AXObject.get_name(label)
 
     def isAutoTextEvent(self, event):
         if not super().isAutoTextEvent(event):

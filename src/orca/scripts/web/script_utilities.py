@@ -653,7 +653,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isTextBlockElement(obj):
             return False
 
-        if obj.name:
+        if AXObject.get_name(obj):
             return False
 
         return self.queryNonEmptyText(obj, False) is None
@@ -1056,7 +1056,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return rv
 
-        if rv and self._treatObjectAsWhole(obj, -1) and obj.name and not self.isCellWithNameFromHeader(obj):
+        if rv and self._treatObjectAsWhole(obj, -1) and AXObject.get_name(obj) and not self.isCellWithNameFromHeader(obj):
             msg = "WEB: Treating %s as non-text: named object treated as whole." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
@@ -1426,20 +1426,20 @@ class Utilities(script_utilities.Utilities):
             text = self.queryNonEmptyText(obj)
 
             if self.elementLinesAreSingleChars(obj):
-                if obj.name and text:
+                if AXObject.get_name(obj) and text:
                     msg = "WEB: Returning name as contents for %s (single-char lines)" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
-                    return [[obj, 0, text.characterCount, obj.name]]
+                    return [[obj, 0, text.characterCount, AXObject.get_name(obj)]]
 
                 msg = "WEB: Returning all text as contents for %s (single-char lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 boundary = None
 
             if self.elementLinesAreSingleWords(obj):
-                if obj.name and text:
+                if AXObject.get_name(obj) and text:
                     msg = "WEB: Returning name as contents for %s (single-word lines)" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
-                    return [[obj, 0, text.characterCount, obj.name]]
+                    return [[obj, 0, text.characterCount, AXObject.get_name(obj)]]
 
                 msg = "WEB: Returning all text as contents for %s (single-word lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2845,7 +2845,7 @@ class Utilities(script_utilities.Utilities):
             if rv is not None:
                 return rv
 
-            displayedText = string or obj.name
+            displayedText = string or AXObject.get_name(obj)
             rv = True
             if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
                or (self.isContentEditableWithEmbeddedObjects(obj) and not string.strip()) \
@@ -2935,16 +2935,19 @@ class Utilities(script_utilities.Utilities):
         return rowindex, colindex
 
     def isCellWithNameFromHeader(self, obj):
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.TABLE_CELL:
+        if AXObject.get_role(obj) != Atspi.Role.TABLE_CELL:
+            return False
+
+        name = AXObject.get_name(obj)
+        if not name:
             return False
 
         header = self.columnHeaderForCell(obj)
-        if header and header.name and header.name == obj.name:
+        if header and AXObject.get_name(header) == name:
             return True
 
         header = self.rowHeaderForCell(obj)
-        if header and header.name and header.name == obj.name:
+        if header and AXObject.get_name(header) == name:
             return True
 
         return False
@@ -3631,7 +3634,7 @@ class Utilities(script_utilities.Utilities):
             else:
                 rv = "clickancestor" in names
 
-        if rv and not obj.name and AXObject.supports_text(obj):
+        if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
             string = obj.queryText().getText(0, -1)
             if not string.strip():
                 rv = AXObject.get_role(obj) not in [Atspi.Role.STATIC, Atspi.Role.LINK]
@@ -3883,7 +3886,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         entry = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY)
-        if not (entry and entry.name):
+        if not (entry and AXObject.get_name(entry)):
             return False
 
         def _isMatch(x):
@@ -3892,7 +3895,7 @@ class Utilities(script_utilities.Utilities):
             except:
                 return False
             role = AXObject.get_role(x)
-            return role in [Atspi.Role.SECTION, Atspi.Role.STATIC] and entry.name == string
+            return role in [Atspi.Role.SECTION, Atspi.Role.STATIC] and AXObject.get_name(entry) == string
 
         if _isMatch(obj):
             return True
@@ -3993,7 +3996,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) == Atspi.Role.LANDMARK:
             rv = True
         elif self.isLandmarkRegion(obj):
-            rv = bool(obj.name)
+            rv = bool(AXObject.get_name(obj))
         else:
             roles = self._getXMLRoles(obj)
             rv = bool(list(filter(lambda x: x in self.getLandmarkTypes(), roles)))
@@ -4049,7 +4052,7 @@ class Utilities(script_utilities.Utilities):
             rv = True
         elif role == Atspi.Role.STATIC \
            and AXObject.get_role(obj.parent) == Atspi.Role.LINK \
-           and obj.name and obj.name == obj.parent.name:
+           and AXObject.has_same_non_empty_name(obj, obj.parent):
             rv = True
         else:
             rv = False
@@ -4106,7 +4109,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if self.isDocument(obj) and self.getDocumentForObject(obj):
             try:
-                name = obj.name
+                name = AXObject.get_name(obj)
             except:
                 rv = True
             else:
@@ -4169,7 +4172,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
-        if rv and (obj.name or obj.description or self.hasLongDesc(obj)):
+        if rv and (AXObject.get_name(obj) or obj.description or self.hasLongDesc(obj)):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
@@ -4199,19 +4202,20 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def hasValidName(self, obj):
-        if not (obj and obj.name):
+        name = AXObject.get_name(obj)
+        if not name:
             return False
 
-        if len(obj.name.split()) > 1:
+        if len(name.split()) > 1:
             return True
 
-        parsed = urllib.parse.parse_qs(obj.name)
+        parsed = urllib.parse.parse_qs(name)
         if len(parsed) > 2:
             msg = "WEB: name of %s is suspected query string" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if len(obj.name) == 1 and ord(obj.name) in range(0xe000, 0xf8ff):
+        if len(name) == 1 and ord(name) in range(0xe000, 0xf8ff):
             msg = "WEB: name of %s is in unicode private use area" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -4247,7 +4251,7 @@ class Utilities(script_utilities.Utilities):
         elif self.hasValidName(obj) or obj.description or obj.childCount:
             rv = False
         elif AXObject.supports_text(obj) and obj.queryText().characterCount \
-             and obj.queryText().getText(0, -1) != obj.name:
+             and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
             rv = False
         elif AXObject.supports_action(obj) and self._getActionNames(obj):
             rv = False
@@ -4436,25 +4440,19 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         role = AXObject.get_role(obj)
-        try:
-            name = obj.name
-        except:
-            msg = "WEB: Exception getting name for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        name = AXObject.get_name(obj)
+        if name:
             rv = False
-        else:
-            if name:
-                rv = False
-            elif self._getXMLRoles(obj):
-                rv = False
-            elif not rv:
-                roles =  [Atspi.Role.CHECK_BOX,
-                          Atspi.Role.COMBO_BOX,
-                          Atspi.Role.ENTRY,
-                          Atspi.Role.LIST_BOX,
-                          Atspi.Role.PASSWORD_TEXT,
-                          Atspi.Role.RADIO_BUTTON]
-                rv = role in roles and not self.displayedLabel(obj)
+        elif self._getXMLRoles(obj):
+            rv = False
+        elif not rv:
+            roles = [Atspi.Role.CHECK_BOX,
+                     Atspi.Role.COMBO_BOX,
+                     Atspi.Role.ENTRY,
+                     Atspi.Role.LIST_BOX,
+                     Atspi.Role.PASSWORD_TEXT,
+                     Atspi.Role.RADIO_BUTTON]
+            rv = role in roles and not self.displayedLabel(obj)
 
         self._shouldInferLabelFor[hash(obj)] = rv
 
@@ -4474,7 +4472,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         labels = self.labelsForObject(obj)
-        strings = [l.name or self.displayedText(l) for l in labels if l is not None]
+        strings = [AXObject.get_name(l) or self.displayedText(l) for l in labels if l is not None]
         rv = " ".join(strings)
 
         self._displayedLabelText[hash(obj)] = rv
@@ -5100,7 +5098,7 @@ class Utilities(script_utilities.Utilities):
                 % (role, replicantRole)
             return False
 
-        notify = replicant.name != name
+        notify = AXObject.get_name(replicant) != name
         documentFrame = self.documentFrame()
         obj, offset = self._caretContexts.get(hash(documentFrame.parent))
 
@@ -5190,7 +5188,7 @@ class Utilities(script_utilities.Utilities):
             if AXObject.get_role(obj) != oldRole:
                 obj = None
         if obj and matchName:
-            if obj.name != oldName:
+            if AXObject.get_name(obj) != oldName:
                 obj = None
         if not obj:
             return None, -1
@@ -5232,13 +5230,7 @@ class Utilities(script_utilities.Utilities):
 
         path = self._getPath(obj)
         role = AXObject.get_role(obj)
-        try:
-            name = obj.name
-        except:
-            msg = "WEB: Exception getting name for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            name = None
-
+        name = AXObject.get_name(obj)
         self._contextPathsRolesAndNames[hash(parent)] = path, role, name
 
     def findFirstCaretContext(self, obj, offset):
@@ -5621,14 +5613,14 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         try:
-            name = obj.name
             description = obj.description
         except:
-            msg = "WEB: Exception getting name and description for %s" % obj
+            msg = "WEB: Exception getting description for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
         else:
-            if len(obj.name) == 1 and ord(obj.name) in range(0xe000, 0xf8ff):
+            name = AXObject.get_name(obj)
+            if len(name) == 1 and ord(name) in range(0xe000, 0xf8ff):
                 msg = "WEB: name of %s is in unicode private use area" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = True

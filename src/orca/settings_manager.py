@@ -28,6 +28,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import imp
 import importlib
 import os
@@ -39,6 +43,7 @@ from . import script_manager
 from . import settings
 from . import pronunciation_dict
 from .acss import ACSS
+from .ax_object import AXObject
 from .keybindings import KeyBinding
 
 try:
@@ -556,7 +561,7 @@ class SettingsManager(object):
 
         app = script.app
         if app:
-            self._saveAppSettings(app.name, general, pronunciations, keybindings)
+            self._saveAppSettings(AXObject.get_name(app), general, pronunciations, keybindings)
             return
 
         # Assign current profile
@@ -632,7 +637,7 @@ class SettingsManager(object):
         if not app:
             return None
 
-        appPrefs = self._backend.getAppSettings(app.name)
+        appPrefs = self._backend.getAppSettings(AXObject.get_name(app))
         profiles = appPrefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
         general = profilePrefs.get('general', {})
@@ -656,14 +661,14 @@ class SettingsManager(object):
         for key in self._appPronunciations.keys():
             self.pronunciations.pop(key)
 
-        prefs = self._backend.getAppSettings(script.app.name)
+        prefs = self._backend.getAppSettings(AXObject.get_name(script.app))
         profiles = prefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
 
         self._appGeneral = profilePrefs.get('general', {})
         self._appKeybindings = profilePrefs.get('keybindings', {})
         self._appPronunciations = profilePrefs.get('pronunciations', {})
-        self._activeApp = script.app.name
+        self._activeApp = AXObject.get_name(script.app)
 
         self._loadProfileSettings()
         self._mergeSettings()

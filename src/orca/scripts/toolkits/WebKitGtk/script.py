@@ -259,19 +259,15 @@ class Script(default.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
-        obj = event.source
-        try:
-            role = AXObject.get_role(obj)
-            name = obj.name
-        except:
-            return
-
-        if not self.utilities.treatAsBrowser(obj):
+        if not self.utilities.treatAsBrowser(event.source):
             return
 
         if event.detail1:
             self.presentMessage(messages.PAGE_LOADING_START)
-        elif name:
+            return
+
+        name = AXObject.get_name(event.source)
+        if name:
             self.presentMessage(messages.PAGE_LOADING_END_NAMED % name)
         else:
             self.presentMessage(messages.PAGE_LOADING_END)

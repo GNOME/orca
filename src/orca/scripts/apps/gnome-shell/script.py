@@ -74,7 +74,7 @@ class Script(clutter.Script):
         return clutter.Script.skipObjectEvent(self, event)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
-        if (event and event.type == "window:activate" and newFocus and not newFocus.name):
+        if (event and event.type == "window:activate" and newFocus and not AXObject.get_name(newFocus)):
             queuedEvent = self._getQueuedEvent("object:state-changed:focused", True)
             if queuedEvent and queuedEvent.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."
@@ -84,17 +84,13 @@ class Script(clutter.Script):
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
     def _presentDialogLabel(self, event):
-        try:
-            name = event.source.name
-        except:
-            return False
-
         role = AXObject.get_role(event.source)
         activeDialog, timestamp = self._activeDialog
         if not activeDialog or role != Atspi.Role.LABEL:
             return False
 
         obj = hash(event.source)
+        name = AXObject.get_name(event.source)
         if name == self._activeDialogLabels.get(obj):
             return True
 
@@ -121,18 +117,13 @@ class Script(clutter.Script):
         if not event.detail1:
             return
 
-        try:
-            name = event.source.name
-        except:
-            return
-
         # When entering overview with many open windows, we get quite
         # a few state-changed:showing events for nameless panels. The
         # act of processing these by the default script causes us to
         # present nothing, and introduces a significant delay before
         # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
         role = AXObject.get_role(event.source)
-        if role == Atspi.Role.PANEL and not name:
+        if role == Atspi.Role.PANEL and not AXObject.get_name(event.source):
             return
 
         # We cannot count on events or their order from dialog boxes.
@@ -184,11 +175,7 @@ class Script(clutter.Script):
             return
 
         obj = event.source
-        try:
-            role = AXObject.get_role(obj)
-            name = obj.name
-        except:
-            return
+        role = AXObject.get_role(obj)
 
         # The dialog will get presented when its first child gets focus.
         if role == Atspi.Role.DIALOG:
@@ -199,6 +186,7 @@ class Script(clutter.Script):
         if role == Atspi.Role.WINDOW:
             return
 
+        name = AXObject.get_name(obj)
         if role == Atspi.Role.MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
             isRealFocus = lambda x: x and AXObject.get_role(x) == Atspi.Role.SLIDER
@@ -220,7 +208,7 @@ class Script(clutter.Script):
                 orca.setLocusOfFocus(None, dialog)
                 labels = self.utilities.unrelatedLabels(dialog)
                 for label in labels:
-                    self._activeDialogLabels[hash(label)] = label.name
+                    self._activeDialogLabels[hash(label)] = AXObject.get_name(label)
 
         clutter.Script.onFocusedChanged(self, event)
 

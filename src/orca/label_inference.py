@@ -88,7 +88,7 @@ class LabelInference:
         # (i.e. the label is something on screen. Widget name and description
         # are each something other than a label.)
         if not result:
-            result, objects = obj.name, []
+            result, objects = AXObject.get_name(obj), []
             debug.println(debug.LEVEL_INFO, "INFER - Name: %s" % result, True)
         if result:
             result = result.strip()

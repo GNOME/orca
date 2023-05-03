@@ -98,17 +98,17 @@ class ScriptManager:
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
 
-        try:
-            appAndNameExist = app is not None and app.name != ''
-        except (LookupError, RuntimeError):
-            appAndNameExist = False
-            msg = 'ERROR: %s no longer exists' % app
+        if app is None:
+            msg = 'ERROR: Cannot get module name for null app'
             debug.println(debug.LEVEL_INFO, msg, True)
-
-        if not appAndNameExist:
             return None
 
-        name = app.name
+        name = AXObject.get_name(app)
+        if not name:
+            msg = 'ERROR: Cannot get module name for nameless app'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
         altNames = list(self._appNames.keys())
         if name.endswith(".py") or name.endswith(".bin"):
             name = name.split('.')[0]
@@ -125,7 +125,7 @@ class ScriptManager:
                     name = names[0]
                     break
 
-        msg = 'SCRIPT MANAGER: mapped %s to %s' % (app.name, name)
+        msg = 'SCRIPT MANAGER: mapped %s to %s' % (AXObject.get_name(app), name)
         debug.println(debug.LEVEL_INFO, msg, True)
         return name
 

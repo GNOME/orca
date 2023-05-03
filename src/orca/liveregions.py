@@ -462,7 +462,7 @@ class LiveRegionManager:
         # Proper live regions typically come with proper aria labels. These
         # labels are typically exposed as names. Failing that, descriptions.
         # Looking for actual labels seems a non-performant waste of time.
-        name = (event.source.name or event.source.description).strip()
+        name = (AXObject.get_name(event.source) or event.source.description).strip()
         if name and name != content:
             labels = name
 

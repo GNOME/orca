@@ -119,7 +119,7 @@ class Utilities(web.Utilities):
             elif obj.parent.childCount > 1:
                 rv = obj.parent[0] == obj
             else:
-                rv = obj.name != self.displayedText(obj.parent)
+                rv = AXObject.get_name(obj) != self.displayedText(obj.parent)
 
         self._isListItemMarker[hash(obj)] = rv
         return rv
@@ -208,19 +208,21 @@ class Utilities(web.Utilities):
         return super().isPopupMenuForCurrentItem(obj)
 
     def isFrameForPopupMenu(self, obj):
-        try:
-            name = obj.name
-            childCount = obj.childCount
-        except:
-            msg = "CHROMIUM: Exception getting properties of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         # The ancestry of a popup menu appears to be a menu bar (even though
         # one is not actually showing) contained in a nameless frame. It would
         # be nice if these things were pruned from the accessibility tree....
-        role = AXObject.get_role(obj)
-        if name or role != Atspi.Role.FRAME or childCount != 1:
+        if AXObject.get_role(obj) != Atspi.Role.FRAME:
+            return False
+        if AXObject.get_name(obj):
+            return False
+
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "CHROMIUM: Exception getting child count of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if childCount != 1:
             return False
 
         if AXObject.get_role(obj[0]) == Atspi.Role.MENU_BAR:
@@ -380,8 +382,8 @@ class Utilities(web.Utilities):
 
         bar = statusBars[0]
         bar.clearCache()
-        if len(re.findall("\d+", bar.name)) == 2:
-            return bar.name
+        if len(re.findall("\d+", AXObject.get_name(bar))) == 2:
+            return AXObject.get_name(bar)
 
         return ""
 

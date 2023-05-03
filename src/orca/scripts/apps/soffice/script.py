@@ -717,7 +717,7 @@ class Script(default.Script):
             return
 
         # Ditto.
-        if role == Atspi.Role.PANEL and event.source.name:
+        if role == Atspi.Role.PANEL and AXObject.get_name(event.source):
             orca.setLocusOfFocus(event, event.source)
             return
 

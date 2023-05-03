@@ -38,6 +38,7 @@ from orca import messages
 from orca import object_properties
 from orca import orca_state
 from orca import settings_manager
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -216,7 +217,7 @@ class SpellCheck:
         if not entry:
             return False
 
-        label = self._script.utilities.displayedLabel(entry) or entry.name
+        label = self._script.utilities.displayedLabel(entry) or AXObject.get_name(entry)
         string = self._script.utilities.substring(entry, 0, -1)
         msg = "%s %s" % (label, string)
         voice = self._script.speechGenerator.voice(string=msg)
@@ -239,10 +240,10 @@ class SpellCheck:
             return False
 
         if includeLabel:
-            label = self._script.utilities.displayedLabel(suggestions) or suggestions.name
+            label = self._script.utilities.displayedLabel(suggestions) or AXObject.get_name(suggestions)
         else:
             label = ""
-        string = items[0].name
+        string = AXObject.get_name(items[0])
 
         msg = "%s %s" % (label, string)
         voice = self._script.speechGenerator.voice(string=msg)

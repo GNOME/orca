@@ -81,15 +81,10 @@ class BrailleGenerator(generator.Generator):
         if not isinstance(region, (braille.Component, braille.Text)):
             return False
 
-        try:
-            sameName = obj.name == region.accessible.name
-        except:
-            msg = 'ERROR: Could not get names for %s, %s' % (obj, region.accessible)
-            debug.println(debug.LEVEL_INFO, msg)
+        if AXObject.get_role(obj) != AXObject.get_role(region.accessible):
             return False
 
-        sameRole = AXObject.get_role(obj) == AXObject.get_role(region.accessible)
-        return sameRole and sameName
+        return AXObject.get_name(obj) == AXObject.get_name(region.accessible)
 
     def generateBraille(self, obj, **args):
         if not _settingsManager.getSetting('enableBraille') \

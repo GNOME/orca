@@ -28,9 +28,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import orca.script_utilities as script_utilities
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
+import orca.script_utilities as script_utilities
 import orca.scripts.toolkits.gtk as gtk
+from orca.ax_object import AXObject
 
 #############################################################################
 #                                                                           #
@@ -69,7 +73,7 @@ class Utilities(gtk.Utilities):
         actualNodes = []
         for node in reportedNodes:
             child = self.realActiveDescendant(node)
-            if child and child.name:
+            if child and AXObject.get_name(child):
                 actualNodes.append(child)
 
         return actualNodes

@@ -80,12 +80,7 @@ class Script:
         self.app = app
 
         if app:
-            try:
-                self.name = self.app.name
-            except (LookupError, RuntimeError):
-                msg = 'ERROR: Could not get name of script app %s'
-                debug.println(debug.LEVEL_INFO, msg, True)
-                self.name = "default"
+            self.name = AXObject.get_name(self.app) or "default"
         else:
             self.name = "default"
 

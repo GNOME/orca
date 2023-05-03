@@ -1371,7 +1371,7 @@ class Script(default.Script):
             args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
-           and not (AXObject.get_role(newFocus) == Atspi.Role.TABLE_CELL and newFocus.name):
+           and not (AXObject.get_role(newFocus) == Atspi.Role.TABLE_CELL and AXObject.get_name(newFocus)):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
@@ -1521,8 +1521,8 @@ class Script(default.Script):
         if not _settingsManager.getSetting('onlySpeakDisplayedText') and shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
-            elif event.source.name:
-                msg = messages.PAGE_LOADING_END_NAMED % event.source.name
+            elif AXObject.get_name(event.source):
+                msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
                 self.presentMessage(msg, resetStyles=False)
             else:
                 self.presentMessage(messages.PAGE_LOADING_END)

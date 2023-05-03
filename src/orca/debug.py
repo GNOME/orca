@@ -374,10 +374,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
             app = None
         else:
             if app:
-                try:
-                    string = indent + "app.name='%s' " % app.name
-                except (LookupError, RuntimeError):
-                    string = indent + "app.name='(exception getting name)' "
+                string = indent + "app='%s' " % AXObject.get_name(app)
             else:
                 string = indent + "app=None "
     else:
@@ -446,7 +443,7 @@ def _shouldTraceIt():
         except:
             pass
         else:
-            if not app.name in TRACE_APPS:
+            if not AXObject.get_name(app) in TRACE_APPS:
                 return False
 
     if TRACE_ROLES and not AXObject.get_role(eventSource) in TRACE_ROLES:
@@ -548,13 +545,9 @@ def examineProcesses(force=False):
         pid = app.get_process_id()
         cmd = getCmdline(pid)
         fds = getOpenFDCount(pid)
-        try:
-            name = app.name
-        except:
-            name = 'ERROR: Could not get name'
-        else:
-            if name == '':
-                name = 'WARNING: Possible hang'
+        name = AXObject.get_name(app)
+        if name == '':
+            name = 'WARNING: Possible hang or dead app'
         println(level, '%3i. %s (pid: %s) %s file descriptors: %i' \
                     % (i+1, name, pid, cmd, fds), True)
 

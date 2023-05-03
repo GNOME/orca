@@ -1139,7 +1139,7 @@ class StructuralNavigation:
         - obj: the accessible table cell to examine
         """
 
-        if obj and (obj.name or obj.childCount):
+        if obj and (AXObject.get_name(obj) or obj.childCount):
             return False
 
         try:
@@ -1342,7 +1342,7 @@ class StructuralNavigation:
         if not text:
             item = self._getSelectedItem(obj)
             if item:
-                text = item.name
+                text = AXObject.get_name(item)
         if not text and AXObject.get_role(obj) == Atspi.Role.IMAGE:
             try:
                 image = obj.queryImage()
@@ -2326,7 +2326,7 @@ class StructuralNavigation:
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
-            self._script.presentMessage(obj.name)
+            self._script.presentMessage(AXObject.get_name(obj))
             self._presentLine(obj, characterOffset)
         else:
             full = messages.NO_LANDMARK_FOUND
@@ -2338,7 +2338,7 @@ class StructuralNavigation:
         columnHeaders.append(guilabels.SN_HEADER_ROLE)
 
         def rowData(obj):
-            return [obj.name, self._getRoleName(obj)]
+            return [AXObject.get_name(obj), self._getRoleName(obj)]
 
         return guilabels.SN_TITLE_LANDMARK, columnHeaders, rowData
 

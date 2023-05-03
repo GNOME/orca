@@ -55,6 +55,7 @@ from . import braille
 from . import speech
 from . import speechserver
 from . import text_attribute_names
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -358,7 +359,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         appPage = self.script.getAppPreferencesGUI()
         if appPage:
-            label = Gtk.Label(label=self.script.app.name)
+            label = Gtk.Label(label=AXObject.get_name(self.script.app))
             self.get_widget("notebook").append_page(appPage, label)
 
         self._initGUIState()
@@ -1954,7 +1955,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 True, True)
 
         if self.script.app:
-            title = guilabels.PREFERENCES_APPLICATION_TITLE % self.script.app.name
+            title = guilabels.PREFERENCES_APPLICATION_TITLE % AXObject.get_name(self.script.app)
             orcaSetupWindow.set_title(title)
 
         orcaSetupWindow.show()
@@ -2184,11 +2185,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.keyBindingsModel.clear()
             self.kbindings = None
 
-        try:
-            appName = self.script.app.name
-        except:
-            appName = ""
-
+        appName = AXObject.get_name(self.script.app)
         iterApp = self._createNode(appName)
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)

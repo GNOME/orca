@@ -227,7 +227,7 @@ class EventManager:
             # objects. But apparently the mere act of asking for the name causes Orca to stop
             # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
             # issue, but until we know for certain....
-            #name = event.source.name
+            #name = Atspi.Accessible.get_name(event.source)
             state = event.source.getState()
         except:
             msg = 'ERROR: Event is from potentially-defunct source'
@@ -302,13 +302,12 @@ class EventManager:
                     msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
-                try:
-                    if not event.source.name:
-                        msg = 'EVENT MANAGER: Ignoring event type due to role and lack of name'
-                        debug.println(debug.LEVEL_INFO, msg, True)
-                        return True
-                except:
+                if self._isDead(event.source):
                     msg = 'EVENT MANAGER: Ignoring event from dead source'
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return True
+                if not AXObject.get_name(event.source):
+                    msg = 'EVENT MANAGER: Ignoring event type due to role and lack of name'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
 
@@ -318,9 +317,7 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-            try:
-                _name = event.source.name
-            except:
+            if self._isDead(event.source):
                 msg = 'EVENT MANAGER: Ignoring event from dead source'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -343,27 +340,25 @@ class EventManager:
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
 
-                try:
-                    _name = orca_state.locusOfFocus.name
-                except:
+                if self._isDead(orca_state.locusOfFocus):
                     msg = 'EVENT MANAGER: Locus of focus is dead.'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
-                else:
-                    msg = 'EVENT MANAGER: Locus of focus: %s' % orca_state.locusOfFocus
-                    debug.println(debug.LEVEL_INFO, msg, True)
+
+                msg = 'EVENT MANAGER: Locus of focus: %s' % orca_state.locusOfFocus
+                debug.println(debug.LEVEL_INFO, msg, True)
 
             childRole = AXObject.get_role(event.any_data)
             try:
                 childState = event.any_data.getState()
-                name = event.any_data.name
                 defunct = False
             except:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 defunct = True
             else:
-                defunct = childState.contains(Atspi.StateType.DEFUNCT)
+                defunct = childState.contains(Atspi.StateType.DEFUNCT) \
+                    or self._isDead(event.any_data)
                 if defunct:
                     msg = 'ERROR: Event any_data contains defunct child/descendant'
                     debug.println(debug.LEVEL_INFO, msg, True)
@@ -827,10 +822,23 @@ class EventManager:
 
         return False, "No reason found to activate a different script."
 
-    def _eventSourceIsDead(self, event):
+    def _isDead(self, obj):
+        if not obj:
+            return True
+
         try:
-            name = event.source.name
-        except:
+            # We use the Atspi function rather than the AXObject function because the
+            # latter intentionally handles exceptions.
+            name = Atspi.Accessible.get_name(obj)
+        except Exception as e:
+            msg = "ERROR: %s is dead: %s" % (obj, e)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
+    def _eventSourceIsDead(self, event):
+        if self._isDead(event.source):
             msg = "EVENT MANAGER: source of %s is dead" % event.type
             debug.println(debug.LEVEL_INFO, msg, True)
             return True

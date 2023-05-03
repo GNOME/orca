@@ -25,11 +25,16 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2009 Eitan Isaacson"
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.notification_messages as notification_messages
+from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -68,12 +73,12 @@ class Script(default.Script):
         voices = _settingsManager.getSetting('voices')
         if value < 0:
             self.speakMessage(messages.NOTIFICATION)
-            message = '%s %s' % (event.source.name, event.source.description)
+            message = '%s %s' % (AXObject.get_name(event.source), event.source.description)
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.
             #
-            message = '%s %d' % (event.source.name, value)
+            message = '%s %d' % (AXObject.get_name(event.source), value)
             self.speakMessage(message)
 
         voice = self.speechGenerator.voice(obj=event.source, string=message)

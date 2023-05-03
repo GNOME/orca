@@ -117,11 +117,11 @@ class Utilities(script_utilities.Utilities):
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.
         try:
-            name = obj.name
             state = obj.getState()
         except:
             return False
 
+        name = AXObject.get_name(obj)
         if not (name and state.contains(Atspi.StateType.SINGLE_LINE)):
             return False
 
@@ -165,11 +165,11 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         try:
-            name = obj.name
             childCount = obj.childCount
         except:
             rv = True
         else:
+            name = AXObject.get_name(obj)
             rv = not (name or childCount or AXObject.supports_text(obj))
 
         self._isUselessPanel[hash(obj)] = rv

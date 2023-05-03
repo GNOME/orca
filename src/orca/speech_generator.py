@@ -186,12 +186,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         result.extend(self._generateLabel(obj, **args))
         if not result:
-            try:
-                name = obj.name
-            except:
-                msg = 'ERROR: Could not get name for %s' % obj
-                debug.println(debug.LEVEL_INFO, msg)
-                return result
+            name = AXObject.get_name(obj)
             if name:
                 result.append(name)
                 result.extend(self.voice(DEFAULT, obj=obj, **args))

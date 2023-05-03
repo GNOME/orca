@@ -85,7 +85,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
             return False
 
         header = self.columnHeaderForCell(obj)
-        return header and header.name != obj.name
+        return header and AXObject.get_name(header) != AXObject.get_name(obj)
 
     def isMessageListToggleCell(self, obj):
         if self.isWebKitGtk(obj):
@@ -94,7 +94,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not gtk.Utilities.hasMeaningfulToggleAction(self, obj):
             return False
 
-        if not obj.name:
+        if not AXObject.get_name(obj):
             return False
 
         return True

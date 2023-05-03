@@ -169,7 +169,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.preferDescriptionOverName(obj):
             return [obj.description]
 
-        if obj.name and not self._script.utilities.hasValidName(obj):
+        if AXObject.get_name(obj) and not self._script.utilities.hasValidName(obj):
             return []
 
         result = super()._generateName(obj, **args)
@@ -212,7 +212,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
         row = AXObject.find_ancestor(obj, isRow)
-        if row and row.name and not self._script.utilities.isLayoutOnly(row):
+        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
 
         return super()._generateTableCellRow(obj, **args)

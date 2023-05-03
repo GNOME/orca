@@ -49,8 +49,8 @@ class Script(gtk.Script):
         #
         strings = []
         for child in event.source.parent.parent.parent:
-            if AXObject.get_role(child) == Atspi.Role.LABEL and child.name:
-                strings.append(child.name)
+            if AXObject.get_role(child) == Atspi.Role.LABEL and AXObject.get_name(child):
+                strings.append(AXObject.get_name(child))
 
         string = " ".join(strings)
         voice = self.speechGenerator.voice(obj=event.source, string=string)

@@ -316,7 +316,7 @@ class _ItemContext:
             priorObj = prior._obj or self._getContainer()
             orca.emitRegionChanged(self._obj, mode=orca.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
-            if self._string.getString() == self._obj.name:
+            if self._string.getString() == AXObject.get_name(self._obj):
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
@@ -544,7 +544,7 @@ class MouseReviewer:
             return candidates[0]
 
         name = window.get_name()
-        matches = [o for o in candidates if o.name == name]
+        matches = [o for o in candidates if AXObject.get_name(o) == name]
         if len(matches) == 1:
             return matches[0]
 

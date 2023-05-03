@@ -548,14 +548,7 @@ class Utilities:
         except:
             displayedText = None
 
-        try:
-            name = obj.name
-        except:
-            msg = 'ERROR: Exception getting name of %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            role = None
-            name = ''
-
+        name = AXObject.get_name(obj)
         role = AXObject.get_role(obj)
         if role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LABEL] and name:
             return name
@@ -571,10 +564,7 @@ class Utilities:
             # TODO - JD: This should probably get nuked. But all sorts of
             # existing code might be relying upon this bogus hack. So it
             # will need thorough testing when removed.
-            try:
-                displayedText = obj.name
-            except (LookupError, RuntimeError):
-                pass
+            displayedText = name
 
         if not displayedText and role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LIST_ITEM]:
             labels = self.unrelatedLabels(obj, minimumWords=1)
@@ -1474,8 +1464,8 @@ class Utilities:
         else:
             result = object_properties.SORT_ORDER_OTHER
 
-        if includeName and obj.name:
-            result = "%s. %s" % (obj.name, result)
+        if includeName and AXObject.get_name(obj):
+            result = "%s. %s" % (AXObject.get_name(obj), result)
 
         return result
 
@@ -1582,7 +1572,7 @@ class Utilities:
                     layoutOnly = not obj.getState().contains(Atspi.StateType.FOCUSED)
                 elif attrs.get('xml-roles') == 'table' or attrs.get('tag') == 'table':
                     layoutOnly = False
-                elif not (obj.name or self.displayedLabel(obj)):
+                elif not (AXObject.get_name(obj) or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == Atspi.Role.TABLE_CELL and obj.childCount:
             if parentRole == Atspi.Role.TREE_TABLE:
@@ -1632,9 +1622,9 @@ class Utilities:
         elif role == Atspi.Role.PANEL and obj.childCount and firstChild \
              and AXObject.get_role(firstChild) in ignorePanelParent:
             layoutOnly = True
-        elif role == Atspi.Role.PANEL and obj.name == obj.getApplication().name:
+        elif role == Atspi.Role.PANEL and AXObject.has_same_non_empty_name(obj, obj.getApplication()):
             layoutOnly = True
-        elif obj.childCount == 1 and obj.name and obj.name == firstChild.name:
+        elif obj.childCount == 1 and AXObject.has_same_non_empty_name(obj, firstChild):
             layoutOnly = True
         elif self.isHidden(obj):
             layoutOnly = True
@@ -1705,6 +1695,9 @@ class Utilities:
         if len(path1) != len(path2):
             return False
 
+        if not (path1 and path2):
+            return False
+
         # The first item in all paths, even valid ones, is -1.
         path1 = path1[1:]
         path2 = path2[1:]
@@ -1739,33 +1732,35 @@ class Utilities:
         if AXObject.get_role(obj1) != AXObject.get_role(obj2):
             return False
 
+        if not ignoreNames and AXObject.get_name(obj1) != AXObject.get_name(obj2):
+            return False
+
+        if comparePaths and self._hasSamePath(obj1, obj2):
+            return True
+
         try:
-            if obj1.name != obj2.name and not ignoreNames:
+            # Comparing the extents of objects which claim to be different
+            # addresses both managed descendants and implementations which
+            # recreate accessibles for the same widget.
+            extents1 = \
+                obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents2 = \
+                obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+
+            # Objects which claim to be different and which are in different
+            # locations are almost certainly not recreated objects.
+            if extents1 != extents2:
                 return False
-            if comparePaths and self._hasSamePath(obj1, obj2):
+
+            # Objects which claim to have the same role, the same name, and
+            # the same size and position are highly likely to be the same
+            # functional object -- if they have valid, on-screen extents.
+            if extents1.x >= 0 and extents1.y >= 0 and extents1.width > 0 \
+                and extents1.height > 0:
                 return True
-            else:
-                # Comparing the extents of objects which claim to be different
-                # addresses both managed descendants and implementations which
-                # recreate accessibles for the same widget.
-                extents1 = \
-                    obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-                extents2 = \
-                    obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-
-                # Objects which claim to be different and which are in different
-                # locations are almost certainly not recreated objects.
-                if extents1 != extents2:
-                    return False
-
-                # Objects which claim to have the same role, the same name, and
-                # the same size and position are highly likely to be the same
-                # functional object -- if they have valid, on-screen extents.
-                if extents1.x >= 0 and extents1.y >= 0 and extents1.width > 0 \
-                   and extents1.height > 0:
-                    return True
-        except:
-            pass
+        except Exception as e:
+            msg = "ERROR: Exception in isSameObject (%s vs %s): %s" % (obj1, obj2, e)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         return False
 
@@ -2176,7 +2171,7 @@ class Utilities:
                 return visibleCells
 
         objects = []
-        hasNameOrDescription = (root.name or root.description)
+        hasNameOrDescription = (AXObject.get_name(root) or root.description)
         if role in [Atspi.Role.PAGE_TAB, Atspi.Role.IMAGE] and hasNameOrDescription:
             objects.append(root)
         elif self.hasPresentableText(root):
@@ -2192,7 +2187,7 @@ class Utilities:
         if objects:
             return objects
 
-        if role == Atspi.Role.LABEL and not (root.name or self.queryNonEmptyText(root)):
+        if role == Atspi.Role.LABEL and not (AXObject.get_name(root) or self.queryNonEmptyText(root)):
             return []
 
         containers = [Atspi.Role.CANVAS,
@@ -2600,13 +2595,13 @@ class Utilities:
         excludeIf = lambda x: x and AXObject.get_role(x) in skipRoles
         labels = self.findAllDescendants(root, _include, _exclude)
 
-        rootName = root.name
+        rootName = AXObject.get_name(root)
 
         # Eliminate duplicates and things suspected to be labels for widgets
         d = {}
         for label in labels:
-            name = label.name or self.displayedText(label)
-            if name and name in [rootName, label.parent.name]:
+            name = AXObject.get_name(label) or self.displayedText(label)
+            if name and name in [rootName, AXObject.get_name(label.parent)]:
                 continue
             if len(name.split()) < minimumWords:
                 continue
@@ -2640,7 +2635,7 @@ class Utilities:
         dialogs = [x for x in obj.getApplication() if isDialog(x)]
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
 
-        isPresentable = lambda x: self.isShowingAndVisible(x) and (x.name or x.childCount)
+        isPresentable = lambda x: self.isShowingAndVisible(x) and (AXObject.get_name(x) or x.childCount)
         presentable = list(filter(isPresentable, set(dialogs)))
 
         unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), presentable))
@@ -4021,8 +4016,9 @@ class Utilities:
         if role == Atspi.Role.COMBO_BOX \
            and children and AXObject.get_role(children[0]) == Atspi.Role.MENU:
             children = self.selectedChildren(children[0])
-            if not children and obj.name:
-                pred = lambda x: x and x.name == obj.name
+            name = AXObject.get_name(obj)
+            if not children and name:
+                pred = lambda x: x and AXObject.get_name(x) == name
                 children = self.findAllDescendants(obj, pred)
 
         return children
@@ -4161,10 +4157,14 @@ class Utilities:
         if obj == orca_state.locusOfFocus:
             return False
 
-        if obj.name and obj.name == orca_state.locusOfFocus.name:
-            return AXObject.get_role(obj) == Atspi.Role.MENU
+        if Atspi.Accessible.get_role(obj) != Atspi.Role.MENU:
+            return False
 
-        return False
+        name = AXObject.get_name(obj)
+        if not name:
+            return False
+
+        return name == AXObject.get_name(orca_state.locusOfFocus)
 
     def isMenuWithNoSelectedChild(self, obj):
         if not obj:
@@ -4652,7 +4652,7 @@ class Utilities:
             entry = AXObject.find_descendant(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY)
             return entry is None
 
-        if role == Atspi.Role.LINK and obj.name:
+        if role == Atspi.Role.LINK and AXObject.get_name(obj):
             return True
 
         state = obj.getState()
@@ -5108,7 +5108,9 @@ class Utilities:
 
     def isDead(self, obj):
         try:
-            name = obj.name
+            # We use the Atspi function rather than the AXObject function because the
+            # latter intentionally handles exceptions.
+            name = Atspi.Accessible.get_name(obj)
         except:
             debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj, True)
             return True
@@ -5902,7 +5904,7 @@ class Utilities:
         if self.isDead(obj):
             return False
 
-        return obj and obj.name in contents
+        return obj and AXObject.get_name(obj) in contents
 
     def clearCachedCommandState(self):
         self._script.pointOfReference['undo'] = False

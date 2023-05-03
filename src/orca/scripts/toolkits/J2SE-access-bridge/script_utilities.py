@@ -67,7 +67,8 @@ class Utilities(script_utilities.Utilities):
             return True
         elif (not obj1) or (not obj2):
             return False
-        elif (obj1.name != obj2.name) or (obj1.childCount != obj2.childCount):
+        elif (AXObject.get_name(obj1) != AXObject.get_name(obj2)) \
+              or (obj1.childCount != obj2.childCount):
             return False
 
         # This is to handle labels in trees. In some cases the default

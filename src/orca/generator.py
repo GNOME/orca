@@ -343,7 +343,7 @@ class Generator:
         """
         result = []
         self._script.pointOfReference['usedDescriptionForName'] = False
-        name = obj.name
+        name = AXObject.get_name(obj)
         if name:
             result.append(name)
         elif self._fallBackOnDescriptionForName(obj, **args):
@@ -385,11 +385,11 @@ class Generator:
         """
         attrs = self._script.utilities.objectAttributes(obj)
         placeholder = attrs.get('placeholder-text')
-        if placeholder and placeholder != obj.name:
+        if placeholder and placeholder != AXObject.get_name(obj):
             return [placeholder]
 
         placeholder = attrs.get('placeholder')
-        if placeholder and placeholder != obj.name:
+        if placeholder and placeholder != AXObject.get_name(obj):
             return [placeholder]
 
         return []
@@ -475,13 +475,12 @@ class Generator:
         if role == Atspi.Role.LABEL:
             return []
 
+        name = AXObject.get_name(obj)
         try:
-            name = obj.name
             description = obj.description
         except:
-            msg = "ERROR: Exception getting name and description for %s" % obj
+            msg = "ERROR: Exception getting description for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            name = ""
             description = ""
 
         if role == Atspi.Role.ICON:
@@ -965,7 +964,7 @@ class Generator:
         if not label and self._script.utilities.hasMeaningfulToggleAction(obj):
             accHeader = self._script.utilities.columnHeaderForCell(obj)
             if (accHeader):
-                result.append(accHeader.name)
+                result.append(AXObject.get_name(accHeader))
         return result
 
     def _generateRealTableCell(self, obj, **args):
@@ -1158,10 +1157,9 @@ class Generator:
         represents the name of the application for the object.
         """
         result = []
-        try:
-            result.append(obj.getApplication().name)
-        except:
-            pass
+        name = AXObject.get_name(obj.getApplication())
+        if name:
+            result.append(name)
         return result
 
     def _generateNestingLevel(self, obj, **args):

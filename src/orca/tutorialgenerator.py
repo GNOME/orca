@@ -120,7 +120,7 @@ class TutorialGenerator:
         debug.println(debug.LEVEL_FINER,
                       "GENERATOR: %s" % generatorName)
         debug.println(debug.LEVEL_FINER,
-                      "           obj             = %s" % obj.name)
+                      "           obj             = %s" % AXObject.get_name(obj))
         debug.println(debug.LEVEL_FINER,
                       "           role            = %s" % obj.getRoleName())
         debug.println(debug.LEVEL_FINER,
@@ -703,7 +703,7 @@ class TutorialGenerator:
 
         # Checking if we are a submenu,
         # we can't rely on our parent being just a menu.
-        if obj.parent.name != "" and obj.parent.__class__ == obj.__class__:
+        if AXObject.get_name(obj.parent) != "" and obj.parent.__class__ == obj.__class__:
             if (self.lastTutorial != [subMenuMsg]) or forceTutorial:
                 utterances.append(subMenuMsg)
         else:

@@ -798,9 +798,7 @@ class Script(script.Script):
             return
 
         try:
-            role = AXObject.get_role(obj)
             state = obj.getState()
-            name = obj.name
             description = obj.description
         except:
             return
@@ -808,15 +806,11 @@ class Script(script.Script):
         # We want to save the name because some apps and toolkits emit name
         # changes after the focus or selection has changed, even though the
         # name has not.
+        name = AXObject.get_name(obj)
         names = self.pointOfReference.get('names', {})
         names[hash(obj)] = name
         if orca_state.activeWindow:
-            try:
-                names[hash(orca_state.activeWindow)] = orca_state.activeWindow.name
-            except:
-                msg = "ERROR: Exception getting name for %s" % orca_state.activeWindow
-                debug.println(debug.LEVEL_INFO, msg, True)
-
+            names[hash(orca_state.activeWindow)] = AXObject.get_name(orca_state.activeWindow)
         self.pointOfReference['names'] = names
 
         descriptions = self.pointOfReference.get('descriptions', {})
@@ -1032,11 +1026,7 @@ class Script(script.Script):
             bound = self.getDefaultKeyBindings().getBoundBindings()
             title = messages.shortcutsFoundOrca(len(bound))
         else:
-            try:
-                appName = self.app.name
-            except AttributeError:
-                appName = messages.APPLICATION_NO_NAME
-
+            appName = AXObject.get_name(self.app) or messages.APPLICATION_NO_NAME
             bound = self.getAppKeyBindings().getBoundBindings()
             bound.extend(self.getToolkitKeyBindings().getBoundBindings())
             title = messages.shortcutsFoundApp(len(bound), appName)
@@ -2637,7 +2627,7 @@ class Script(script.Script):
                 continue
 
             if AXObject.get_role(child) == Atspi.Role.PAGE_TAB and orca_state.locusOfFocus \
-               and child.name == orca_state.locusOfFocus.name \
+               and AXObject.get_name(child) == AXObject.get_name(orca_state.locusOfFocus) \
                and not state.contains(Atspi.StateType.FOCUSED):
                 msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -3563,7 +3553,7 @@ class Script(script.Script):
         if orca_state.locusOfFocus == event.any_data:
             names = self.pointOfReference.get('names', {})
             oldName = names.get(hash(orca_state.locusOfFocus), '')
-            if not oldName or event.any_data.name == oldName:
+            if not oldName or AXObject.get_name(event.any_data) == oldName:
                 return False
 
         if event.source == orca_state.locusOfFocus == event.any_data.parent:
