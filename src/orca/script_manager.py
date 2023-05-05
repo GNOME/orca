@@ -64,7 +64,7 @@ class ScriptManager:
              'pluma': 'gedit',
             }
         self._toolkitNames = \
-            {'WebKitGTK': 'WebKitGtk'}
+            {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk'}
 
         self.setActiveScript(None, "__init__")
         self._desktop = pyatspi.Registry.getDesktop(0)
