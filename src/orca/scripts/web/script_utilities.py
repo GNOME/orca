@@ -2509,7 +2509,7 @@ class Utilities(script_utilities.Utilities):
         if "inline" not in displayStyle:
             return False
 
-        return self.documentForObject(obj) is not None
+        return self.getDocumentForObject(obj) is not None
 
     def isInlineIframeDescendant(self, obj):
         if not obj:
