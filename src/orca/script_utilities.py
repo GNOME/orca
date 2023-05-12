@@ -2368,17 +2368,10 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        if not obj:
-            return None
-
-        stopAtRoles = self._topLevelRoles()
-
-        while obj and obj.parent and obj != obj.parent \
-              and not AXObject.get_role(obj) in stopAtRoles \
-              and not AXObject.get_role(obj.parent) == Atspi.Role.APPLICATION:
-            obj = obj.parent
-
-        return obj
+        isTopLevel = lambda x: AXObject.get_role(x) in self._topLevelRoles()
+        if isTopLevel(obj):
+            return obj
+        return AXObject.find_ancestor(obj, isTopLevel)
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):
         obj = obj or orca_state.locusOfFocus
