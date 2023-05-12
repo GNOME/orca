@@ -546,7 +546,7 @@ class TutorialGenerator:
         # 2) we get the label from the other cell.
         # See Orca bug #376015 for more details.
         #
-        if obj.childCount == 2:
+        if AXObject.get_child_count(obj) == 2:
             cellOrder = []
             hasToggle = [ False, False ]
             for i, child in enumerate(obj):

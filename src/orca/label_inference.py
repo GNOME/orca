@@ -508,7 +508,7 @@ class LabelInference:
         return table.queryTable().getAccessibleAt(rowindex, colindex)
 
     def _getCellFromRow(self, row, colindex):
-        if 0 <= colindex < row.childCount:
+        if 0 <= colindex < AXObject.get_child_count(row):
             return row[colindex]
 
         return None
@@ -555,7 +555,7 @@ class LabelInference:
             rowindex = gridrow.getIndexInParent()
             if rowindex > 0:
                 cellAbove = self._getCellFromRow(gridrow.parent[rowindex - 1], cellindex)
-            if rowindex + 1 < grid.childCount:
+            if rowindex + 1 < AXObject.get_child_count(grid):
                 cellBelow = self._getCellFromRow(gridrow.parent[rowindex + 1], cellindex)
 
         if cellLeft and not self._preferRight(obj):
@@ -614,7 +614,7 @@ class LabelInference:
 
         cells = [table.getAccessibleAt(i, colindex) for i in range(1, table.nRows)]
         cells = [x for x in cells if x is not None]
-        if [x for x in cells if x.childCount \
+        if [x for x in cells if AXObject.get_child_count(x) \
             and AXObject.get_role(x[0]) != AXObject.get_role(obj)]:
             return None, []
 

@@ -165,7 +165,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         try:
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             rv = True
         else:

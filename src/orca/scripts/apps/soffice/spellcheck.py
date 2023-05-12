@@ -49,7 +49,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if AXObject.get_role(root) == Atspi.Role.DIALOG:
             return root
 
-        if root.childCount:
+        if AXObject.get_child_count(root):
             return self._findChildDialog(root[0])
 
         return None
@@ -60,7 +60,7 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if window and window.childCount and AXObject.get_role(window) == Atspi.Role.FRAME:
+        if window and AXObject.get_child_count(window) and AXObject.get_role(window) == Atspi.Role.FRAME:
             child = self._findChildDialog(window[0])
             if child and AXObject.get_role(child) == Atspi.Role.DIALOG:
                 isPageTabList = lambda x: x and AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST

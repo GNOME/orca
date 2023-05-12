@@ -803,7 +803,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'multiselect'
         if obj.getState().contains(Atspi.StateType.MULTISELECTABLE) \
-           and obj.childCount:
+           and AXObject.get_child_count(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -890,7 +890,7 @@ class Generator:
         # 2) we get the label from the other cell.
         # See Orca bug #376015 for more details.
         #
-        if obj.childCount == 2:
+        if AXObject.get_child_count(obj) == 2:
             cellOrder = []
             hasToggle = [False, False]
             for i, child in enumerate(obj):
@@ -922,7 +922,7 @@ class Generator:
         # 2) we get the label from the other cell.
         # See Orca bug #376015 for more details.
         #
-        if obj.childCount == 2:
+        if AXObject.get_child_count(obj) == 2:
             cellOrder = []
             hasToggle = [False, False]
             for i, child in enumerate(obj):
@@ -1217,7 +1217,7 @@ class Generator:
         result = []
         rad = self._script.utilities.realActiveDescendant(obj)
 
-        if not (AXObject.get_role(rad) == Atspi.Role.TABLE_CELL and rad.childCount):
+        if not (AXObject.get_role(rad) == Atspi.Role.TABLE_CELL and AXObject.get_child_count(rad)):
             return self._generateDisplayedText(rad, **args)
 
         content = set([self._script.utilities.displayedText(x).strip() for x in rad])

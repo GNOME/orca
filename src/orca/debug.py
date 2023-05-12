@@ -533,7 +533,7 @@ def examineProcesses(force=False):
         level = LEVEL_ALL
 
     desktop = pyatspi.Registry.getDesktop(0)
-    println(level, 'INFO: Desktop has %i apps:' % desktop.childCount, True)
+    println(level, 'INFO: Desktop has %i apps:' % AXObject.get_child_count(desktop), True)
     for i, app in enumerate(desktop):
         pid = app.get_process_id()
         cmd = getCmdline(pid)

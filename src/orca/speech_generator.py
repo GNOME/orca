@@ -846,7 +846,7 @@ class SpeechGenerator(generator.Generator):
                 if text:
                     linkOutput += " " + text
                 result.append(linkOutput)
-                if obj.childCount and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
+                if AXObject.get_child_count(obj) and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
                     result.extend(self._generateRoleName(obj[0]))
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1754,7 +1754,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if not obj.childCount:
+        if not AXObject.get_child_count(obj):
             result.append(messages.ZERO_ITEMS)
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
@@ -1794,7 +1794,7 @@ class SpeechGenerator(generator.Generator):
                 return []
 
         result = []
-        childCount = container.childCount
+        childCount = AXObject.get_child_count(container)
         selectedCount = len(self._script.utilities.selectedChildren(container))
         result.append(messages.selectedItemsCount(selectedCount, childCount))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -2577,7 +2577,7 @@ class SpeechGenerator(generator.Generator):
             children = [obj]
 
         for child in children:
-            if self._script.utilities.isMathLayoutOnly(child) and child.childCount:
+            if self._script.utilities.isMathLayoutOnly(child) and AXObject.get_child_count(child):
                 result.extend(self._generateMath(child))
                 continue
 
@@ -2657,7 +2657,7 @@ class SpeechGenerator(generator.Generator):
     def _generateFencedContents(self, obj, **args):
         result = []
         separators = self._script.utilities.getMathFencedSeparators(obj)
-        for x in range(len(separators), obj.childCount-1):
+        for x in range(len(separators), AXObject.get_child_count(obj)-1):
             separators.append(separators[-1])
         separators.append('')
 

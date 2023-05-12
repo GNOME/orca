@@ -364,13 +364,7 @@ class AXObject:
             debug.println(debug.LEVEL_INFO, msg, True)
             return parent
 
-        try:
-            nchildren = Atspi.Accessible.get_child_count(parent)
-        except Exception as e:
-            msg = "ERROR: Exception getting child count for %s: %s" % (parent, e)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return parent
-
+        nchildren = AXObject.get_child_count(parent)
         if index < 0 or index > nchildren:
             msg = "ERROR: %s has index %i; parent %s has %i children" % \
                 (obj, index, parent, nchildren)
@@ -451,13 +445,7 @@ class AXObject:
         if obj is None:
             return None
 
-        try:
-            nchildren = Atspi.Accessible.get_child_count(obj)
-        except Exception as e:
-            msg = "ERROR: Exception in find_descendant: %s" % e
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        nchildren = AXObject.get_child_count(obj)
         for i in range(nchildren):
             child = AXObject.get_child_checked(obj, i)
             if child and pred(child):
@@ -526,3 +514,19 @@ class AXObject:
             return ""
 
         return description
+
+    @staticmethod
+    def get_child_count(obj):
+        """Returns the child count of obj"""
+
+        if obj is None:
+            return 0
+
+        try:
+            count = Atspi.Accessible.get_child_count(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_child_count: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        return count

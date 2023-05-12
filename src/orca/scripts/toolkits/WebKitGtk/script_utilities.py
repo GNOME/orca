@@ -185,7 +185,7 @@ class Utilities(script_utilities.Utilities):
             obj = obj.parent
 
         index = obj.getIndexInParent() - 1
-        if not (0 <= index < obj.parent.childCount - 1):
+        if not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
@@ -194,7 +194,7 @@ class Utilities(script_utilities.Utilities):
         except:
             prevObj = obj
         else:
-            if AXObject.get_role(prevObj) == Atspi.Role.LIST and prevObj.childCount:
+            if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
                 if self.isTextListItem(prevObj[0]):
                     prevObj = prevObj[-1]
 
@@ -210,7 +210,7 @@ class Utilities(script_utilities.Utilities):
             obj = obj.parent
 
         index = obj.getIndexInParent() + 1
-        if not (0 < index < obj.parent.childCount):
+        if not (0 < index < AXObject.get_child_count(obj.parent)):
             obj = obj.parent
             index = obj.getIndexInParent() + 1
 
@@ -219,7 +219,7 @@ class Utilities(script_utilities.Utilities):
         except:
             nextObj = None
         else:
-            if AXObject.get_role(nextObj) == Atspi.Role.LIST and nextObj.childCount:
+            if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):
                 if self.isTextListItem(nextObj[0]):
                     nextObj = nextObj[0]
 
@@ -237,7 +237,7 @@ class Utilities(script_utilities.Utilities):
         """Returns True if obj is an inline/non-wrapped container."""
 
         if AXObject.get_role(obj) == Atspi.Role.SECTION:
-            if obj.childCount > 1:
+            if AXObject.get_child_count(obj) > 1:
                 return self.onSameLine(obj[1], obj[1])
 
             return False
@@ -246,10 +246,11 @@ class Utilities(script_utilities.Utilities):
             if obj.getState().contains(Atspi.StateType.FOCUSABLE):
                 return False
 
-            if not obj.childCount:
+            childCount = AXObject.get_child_count(obj)
+            if not childCount:
                 return AXObject.supports_text(obj)
 
-            if obj.childCount == 1:
+            if childCount == 1:
                 return False
 
             return self.onSameLine(obj[0], obj[1])

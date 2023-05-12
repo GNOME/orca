@@ -420,7 +420,7 @@ class Utilities:
         defaultButton = None
         # The default button is likely near the bottom of the window.
         #
-        for i in range(obj.childCount - 1, -1, -1):
+        for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
             if AXObject.get_role(obj[i]) == Atspi.Role.PUSH_BUTTON \
                 and obj[i].getState().contains(Atspi.StateType.IS_DEFAULT):
                 defaultButton = obj[i]
@@ -1574,7 +1574,7 @@ class Utilities:
                     layoutOnly = False
                 elif not (AXObject.get_name(obj) or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
-        elif role == Atspi.Role.TABLE_CELL and obj.childCount:
+        elif role == Atspi.Role.TABLE_CELL and AXObject.get_child_count(obj):
             if parentRole == Atspi.Role.TREE_TABLE:
                 layoutOnly = False
             elif AXObject.get_role(firstChild) == Atspi.Role.TABLE_CELL:
@@ -1619,12 +1619,12 @@ class Utilities:
             state = obj.getState()
             layoutOnly = not (state.contains(Atspi.StateType.FOCUSABLE) \
                               or state.contains(Atspi.StateType.SELECTABLE))
-        elif role == Atspi.Role.PANEL and obj.childCount and firstChild \
+        elif role == Atspi.Role.PANEL and AXObject.get_child_count(obj) and firstChild \
              and AXObject.get_role(firstChild) in ignorePanelParent:
             layoutOnly = True
         elif role == Atspi.Role.PANEL and AXObject.has_same_non_empty_name(obj, obj.getApplication()):
             layoutOnly = True
-        elif obj.childCount == 1 and AXObject.has_same_non_empty_name(obj, firstChild):
+        elif AXObject.get_child_count(obj) == 1 and AXObject.has_same_non_empty_name(obj, firstChild):
             layoutOnly = True
         elif self.isHidden(obj):
             layoutOnly = True
@@ -2040,7 +2040,7 @@ class Utilities:
             return False
 
         if not (box.width or box.height):
-            if not obj.childCount:
+            if not AXObject.get_child_count(obj):
                 msg = "INFO: %s has no size and no children" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
@@ -2149,11 +2149,11 @@ class Utilities:
            and not self.isInOpenMenuBarMenu(root):
             return [root]
 
-        if role == Atspi.Role.FILLER and not root.childCount:
+        if role == Atspi.Role.FILLER and not AXObject.get_child_count(root):
             msg = "INFO: %s is empty filler. Clearing cache." % root
             debug.println(debug.LEVEL_INFO, msg, True)
             root.clearCache()
-            msg = "INFO: %s reports %i children" % (root, root.childCount)
+            msg = "INFO: %s reports %i children" % (root, AXObject.get_child_count(root))
             debug.println(debug.LEVEL_INFO, msg, True)
 
         if extents is None:
@@ -2208,11 +2208,15 @@ class Utilities:
     def isTableRow(obj):
         """Determines if obj is a table row -- real or functionally."""
 
+        childCount = AXObject.get_child_count(obj)
+        if not childCount:
+            return False
+
         try:
-            if not (obj and obj.parent and obj.childCount):
+            if not obj.parent:
                 return False
         except:
-            msg = "ERROR: Exception getting parent and childCount for %s" % obj
+            msg = "ERROR: Exception getting parent for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -2232,7 +2236,7 @@ class Utilities:
                                                  Atspi.Role.ROW_HEADER,
                                                  Atspi.Role.COLUMN_HEADER]
         cellChildren = list(filter(isCell, [x for x in obj]))
-        if len(cellChildren) == obj.childCount:
+        if len(cellChildren) == childCount:
             return True        
 
         return False
@@ -2325,7 +2329,7 @@ class Utilities:
         statusBar = None
         # The status bar is likely near the bottom of the window.
         #
-        for i in range(obj.childCount - 1, -1, -1):
+        for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
             if AXObject.get_role(obj[i]) == Atspi.Role.STATUS_BAR:
                 statusBar = obj[i]
             elif not AXObject.get_role(obj[i]) in skipRoles:
@@ -2523,13 +2527,7 @@ class Utilities:
         if not root:
             return
 
-        try:
-            childCount = root.childCount
-        except:
-            msg = "ERROR: Exception getting childCount for %s" % root
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
+        childCount = AXObject.get_child_count(root)
         for i in range(childCount):
             try:
                 child = root[i]
@@ -2635,7 +2633,8 @@ class Utilities:
         dialogs = [x for x in obj.getApplication() if isDialog(x)]
         dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
 
-        isPresentable = lambda x: self.isShowingAndVisible(x) and (AXObject.get_name(x) or x.childCount)
+        isPresentable = lambda x: self.isShowingAndVisible(x) \
+            and (AXObject.get_name(x) or AXObject.get_child_count(x))
         presentable = list(filter(isPresentable, set(dialogs)))
 
         unfocused = list(filter(lambda x: not self.canBeActiveWindow(x), presentable))
@@ -2711,7 +2710,7 @@ class Utilities:
                 return relation.getTarget(0)
 
         index = obj.getIndexInParent() - 1
-        while obj.parent and not (0 <= index < obj.parent.childCount - 1):
+        while obj.parent and not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
@@ -2736,7 +2735,7 @@ class Utilities:
                 return relation.getTarget(0)
 
         index = obj.getIndexInParent() + 1
-        while obj.parent and not (0 < index < obj.parent.childCount):
+        while obj.parent and not (0 < index < AXObject.get_child_count(obj.parent)):
             obj = obj.parent
             index = obj.getIndexInParent() + 1
 
@@ -4059,7 +4058,7 @@ class Utilities:
 
         role = AXObject.get_role(obj)
         if role not in rolemap:
-            return obj.childCount
+            return AXObject.get_child_count(obj)
 
         isMatch = lambda x: AXObject.get_role(x) in rolemap.get(role)
         return len(self.findAllDescendants(obj, isMatch))
@@ -4119,13 +4118,7 @@ class Utilities:
         if not obj:
             return None
 
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "ERROR: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        childCount = AXObject.get_child_count(obj)
         menus = [child for child in obj if AXObject.get_role(child) == Atspi.Role.MENU]
         for menu in menus:
             try:
@@ -4280,7 +4273,7 @@ class Utilities:
         return AXObject.find_ancestor(obj, isComboBox) is not None
 
     def getComboBoxValue(self, obj):
-        if not obj.childCount:
+        if not AXObject.get_child_count(obj):
             return self.displayedText(obj)
 
         entry = self.getEntryForEditableComboBox(obj)
@@ -4639,7 +4632,7 @@ class Utilities:
         if not obj or self.isDead(obj):
             return False
 
-        if not obj.childCount:
+        if not AXObject.get_child_count(obj):
             return True
 
         role = AXObject.get_role(obj)
@@ -5183,7 +5176,7 @@ class Utilities:
         if relations:
             return relations[0].getNTargets()
 
-        return obj.childCount
+        return AXObject.get_child_count(obj)
 
     def getFunctionalChildren(self, obj, sibling=None):
         if not obj:
@@ -5285,12 +5278,12 @@ class Utilities:
 
         try:
             index = obj.getIndexInParent()
-            total = obj.parent.childCount
         except:
-            msg = "ERROR: Exception getting index and sibling count for %s" % obj
+            msg = "ERROR: Exception getting index in parent for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
+        total = AXObject.get_child_count(obj.parent)
         values = []
         for i in range(index + 1, total):
             child = obj.parent[i]
@@ -6010,14 +6003,15 @@ class Utilities:
         if not selection.nSelectedChildren:
             return False
 
-        if self.selectedChildCount(obj) == obj.childCount:
+        childCount = AXObject.get_child_count(obj)
+        if self.selectedChildCount(obj) == childCount:
             # The selection interface gives us access to what is selected, which might
             # not actually be a direct child.
             child = selection.getSelectedChild(0)
             if child not in obj:
                 return False
 
-            msg = "INFO: All %i children believed to be selected" % obj.childCount
+            msg = "INFO: All %i children believed to be selected" % childCount
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -6054,9 +6048,8 @@ class Utilities:
     def _findSelectionBoundaryObject(self, root, findStart=True):
         try:
             text = root.queryText()
-            childCount = root.childCount
         except:
-            msg = "ERROR: Exception querying text and getting childCount for %s" % root
+            msg = "ERROR: Exception querying text for %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -6074,7 +6067,7 @@ class Utilities:
         if not findStart and not string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
             return root
 
-        indices = list(range(childCount))
+        indices = list(range(AXObject.get_child_count(root)))
         if not findStart:
             indices.reverse()
 
@@ -6105,7 +6098,7 @@ class Utilities:
         _exclude = self.isStaticTextLeaf
 
         subtree = []
-        for i in range(startObj.getIndexInParent(), startObj.parent.childCount):
+        for i in range(startObj.getIndexInParent(), AXObject.get_child_count(startObj.parent)):
             child = startObj.parent[i]
             if self.isStaticTextLeaf(child):
                 continue

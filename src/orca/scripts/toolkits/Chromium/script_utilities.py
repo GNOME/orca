@@ -59,14 +59,7 @@ class Utilities(web.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "CHROMIUM: Exception getting child count of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if childCount:
+        if AXObject.get_child_count(obj):
             return False
 
         if self.isListItemMarker(obj):
@@ -116,7 +109,7 @@ class Utilities(web.Utilities):
                 rv = True
             elif tag is not None:
                 rv = False
-            elif obj.parent.childCount > 1:
+            elif AXObject.get_child_count(obj.parent) > 1:
                 rv = obj.parent[0] == obj
             else:
                 rv = AXObject.get_name(obj) != self.displayedText(obj.parent)
@@ -215,16 +208,8 @@ class Utilities(web.Utilities):
             return False
         if AXObject.get_name(obj):
             return False
-
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "CHROMIUM: Exception getting child count of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if AXObject.get_child_count(obj) != 1:
             return False
-        if childCount != 1:
-            return False
-
         if AXObject.get_role(obj[0]) == Atspi.Role.MENU_BAR:
             return True
 

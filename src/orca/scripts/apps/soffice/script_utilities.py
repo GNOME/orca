@@ -227,7 +227,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             role = AXObject.get_role(obj)
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             msg = "SOFFICE: Exception getting properties of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -403,7 +403,7 @@ class Utilities(script_utilities.Utilities):
                                            Atspi.Role.DIALOG):
             app = obj.getApplication()
             for frame in app:
-                if frame.childCount < 1 \
+                if AXObject.get_child_count(frame) < 1 \
                    or AXObject.get_role(frame[0]) not in (Atspi.Role.ROOT_PANE,
                                                  Atspi.Role.OPTION_PANE):
                     continue
@@ -536,7 +536,7 @@ class Utilities(script_utilities.Utilities):
         position, count = positionAndCount.split("/")
         title = ""
         for child in dv:
-            if not child.childCount:
+            if not AXObject.get_child_count(child):
                 continue
             # We want an actual Title.
             #
@@ -701,7 +701,7 @@ class Utilities(script_utilities.Utilities):
         try:
             text = obj.queryText()
         except:
-            if obj and obj.childCount:
+            if obj and AXObject.get_child_count(obj):
                 return self.getFirstCaretPosition(obj[0])
 
         return obj, 0

@@ -251,7 +251,7 @@ class Script(default.Script):
                      Atspi.Role.SECTION,
                      Atspi.Role.TABLE_CELL]
         if role in textRoles \
-           or (role == Atspi.Role.LIST_ITEM and obj.childCount):
+           or (role == Atspi.Role.LIST_ITEM and AXObject.get_child_count(obj)):
             return
 
         super().onFocusedChanged(event)

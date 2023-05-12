@@ -387,7 +387,7 @@ class Utilities(script_utilities.Utilities):
     def grabFocusWhenSettingCaret(self, obj):
         try:
             state = obj.getState()
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             msg = "WEB: Exception getting state, and childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -469,13 +469,13 @@ class Utilities(script_utilities.Utilities):
                 if self.characterOffsetInParent(child) > offset:
                     return child
 
-        if obj and obj.childCount:
+        if AXObject.get_child_count(obj):
             return obj[0]
 
         nextObj = None
         while obj and not nextObj:
             index = obj.getIndexInParent() + 1
-            if 0 < index < obj.parent.childCount:
+            if 0 < index < AXObject.get_child_count(obj.parent):
                 nextObj = obj.parent[index]
             elif obj.parent != documentFrame:
                 obj = obj.parent
@@ -499,13 +499,13 @@ class Utilities(script_utilities.Utilities):
                     return child
 
         index = obj.getIndexInParent() - 1
-        if not 0 <= index < obj.parent.childCount:
+        if not 0 <= index < AXObject.get_child_count(obj.parent):
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
         previousObj = obj.parent[index]
-        while previousObj and previousObj.childCount:
-            previousObj = previousObj[previousObj.childCount - 1]
+        while previousObj and AXObject.get_child_count(previousObj):
+            previousObj = previousObj[AXObject.get_child_count(previousObj) - 1]
 
         return previousObj
 
@@ -529,7 +529,7 @@ class Utilities(script_utilities.Utilities):
 
     def getLastObjectInDocument(self, documentFrame):
         try:
-            lastChild = documentFrame[documentFrame.childCount - 1]
+            lastChild = documentFrame[AXObject.get_child_count(documentFrame) - 1]
         except:
             lastChild = documentFrame
         while lastChild:
@@ -601,7 +601,7 @@ class Utilities(script_utilities.Utilities):
 
         if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
             rowindex = attrs.get('rowindex')
-            if rowindex is None and obj.childCount:
+            if rowindex is None and AXObject.get_child_count(obj):
                 roles = self._cellRoles()
                 cell = AXObject.find_descendant(obj, lambda x: x and AXObject.get_role(x) in roles)
                 rowindex = self.objectAttributes(cell, False).get('rowindex')
@@ -708,7 +708,7 @@ class Utilities(script_utilities.Utilities):
         role = AXObject.get_role(obj)
         if role == Atspi.Role.COMBO_BOX \
            and state.contains(Atspi.StateType.EDITABLE) \
-           and not obj.childCount:
+           and not AXObject.get_child_count(obj):
             return True
 
         if role in self._textBlockElementRoles():
@@ -882,7 +882,7 @@ class Utilities(script_utilities.Utilities):
         return result
 
     def _preserveTree(self, obj):
-        if not (obj and obj.childCount):
+        if not (obj and AXObject.get_child_count(obj)):
             return False
 
         if self.isMathTopLevel(obj):
@@ -1183,7 +1183,7 @@ class Utilities(script_utilities.Utilities):
             return offset == -1
 
         if role == Atspi.Role.ENTRY:
-            if obj.childCount == 1 and self.isFakePlaceholderForEntry(obj[0]):
+            if AXObject.get_child_count(obj) == 1 and self.isFakePlaceholderForEntry(obj[0]):
                 return True
             return False
 
@@ -1446,7 +1446,7 @@ class Utilities(script_utilities.Utilities):
                 boundary = None
 
         role = AXObject.get_role(obj)
-        if role == Atspi.Role.INTERNAL_FRAME and obj.childCount == 1:
+        if role == Atspi.Role.INTERNAL_FRAME and AXObject.get_child_count(obj) == 1:
             return self._getContentsForObj(obj[0], 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
@@ -2400,7 +2400,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         try:
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             msg = "WEB: Exception getting childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2545,14 +2545,14 @@ class Utilities(script_utilities.Utilities):
 
     def isFirstItemInInlineContentSuggestion(self, obj):
         suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
-        if not (suggestion and suggestion.childCount):
+        if not (suggestion and AXObject.get_child_count(suggestion)):
             return False
 
         return suggestion[0] == obj
 
     def isLastItemInInlineContentSuggestion(self, obj):
         suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
-        if not (suggestion and suggestion.childCount):
+        if not (suggestion and AXObject.get_child_count(suggestion)):
             return False
 
         return suggestion[-1] == obj
@@ -2786,14 +2786,14 @@ class Utilities(script_utilities.Utilities):
             return []
 
         index = separator.getIndexInParent()
-        return [obj[i] for i in range(index+1, obj.childCount)]
+        return [obj[i] for i in range(index+1, AXObject.get_child_count(obj))]
 
     def getMathPostscripts(self, obj):
         separator = self._getMathPrePostScriptSeparator(obj)
         if separator:
             index = separator.getIndexInParent()
         else:
-            index = obj.childCount
+            index = AXObject.get_child_count(obj)
 
         return [obj[i] for i in range(1, index)]
 
@@ -4119,7 +4119,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isRedundantSVG(self, obj):
-        if self._getTag(obj) != 'svg' or obj.parent.childCount == 1:
+        if self._getTag(obj) != 'svg' or AXObject.get_child_count(obj.parent) == 1:
             return False
 
         rv = self._isRedundantSVG.get(hash(obj))
@@ -4128,7 +4128,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         children = [x for x in obj.parent if self._getTag(x) == 'svg']
-        if len(children) == obj.parent.childCount:
+        if len(children) == AXObject.get_child_count(obj.parent):
             sortedChildren = sorted(children, key=functools.cmp_to_key(self.sizeComparison))
             if obj != sortedChildren[-1]:
                 objExtents = self.getExtents(obj, 0, -1)
@@ -4192,8 +4192,8 @@ class Utilities(script_utilities.Utilities):
                     rv = False
         if rv and AXObject.supports_text(obj):
             rv = self.queryNonEmptyText(obj) is None
-        if rv and obj.childCount:
-            for i in range(min(obj.childCount, 50)):
+        if rv and AXObject.get_child_count(obj):
+            for i in range(min(AXObject.get_child_count(obj), 50)):
                 if not self.isUselessImage(obj[i]):
                     rv = False
                     break
@@ -4248,7 +4248,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif state.contains(Atspi.StateType.EDITABLE):
             rv = False
-        elif self.hasValidName(obj) or AXObject.get_description(obj) or obj.childCount:
+        elif self.hasValidName(obj) or AXObject.get_description(obj) or AXObject.get_child_count(obj):
             rv = False
         elif AXObject.supports_text(obj) and obj.queryText().characterCount \
              and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
@@ -4271,7 +4271,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         try:
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             msg = "WEB: Exception getting childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -5130,12 +5130,13 @@ class Utilities(script_utilities.Utilities):
         obj, offset = None, -1
         notify = True
         keyString, mods = self.lastKeyAndModifiers()
+        childCount = AXObject.get_child_count(event.source)
         if keyString == "Up":
-            if event.detail1 >= event.source.childCount:
+            if event.detail1 >= childCount:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.previousContext(event.source, -1)
-            elif 0 <= event.detail1 - 1 < event.source.childCount:
+            elif 0 <= event.detail1 - 1 < childCount:
                 child = event.source[event.detail1 - 1]
                 msg = "WEB: Getting new location from end of previous child %s." % child
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5151,7 +5152,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: First child removed. Getting new location from start of parent."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(event.source, -1)
-            elif 0 < event.detail1 < event.source.childCount:
+            elif 0 < event.detail1 < childCount:
                 child = event.source[event.detail1]
                 msg = "WEB: Getting new location from start of child %i %s." % (event.detail1, child)
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5242,7 +5243,7 @@ class Utilities(script_utilities.Utilities):
                        Atspi.Role.INTERNAL_FRAME,
                        Atspi.Role.TABLE,
                        Atspi.Role.TABLE_ROW]
-        if role in lookInChild and obj.childCount and not self.treatAsDiv(obj, offset):
+        if role in lookInChild and AXObject.get_child_count(obj) and not self.treatAsDiv(obj, offset):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
             debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(obj[0], 0)
@@ -5353,7 +5354,7 @@ class Utilities(script_utilities.Utilities):
                         return self._findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
+            elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
                 return self._findNextCaretInOrder(obj[0], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
@@ -5386,7 +5387,7 @@ class Utilities(script_utilities.Utilities):
 
             index = obj.getIndexInParent() + 1
             try:
-                parentChildCount = parent.childCount
+                parentChildCount = AXObject.get_child_count(parent)
             except:
                 msg = "WEB: Exception getting childCount for %s" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5430,8 +5431,8 @@ class Utilities(script_utilities.Utilities):
                         return self._findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif obj.childCount and not self._treatObjectAsWhole(obj, offset):
-                return self._findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
+            elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
+                return self._findPreviousCaretInOrder(obj[AXObject.get_child_count(obj) - 1], -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
@@ -5463,7 +5464,7 @@ class Utilities(script_utilities.Utilities):
 
             index = obj.getIndexInParent() - 1
             try:
-                parentChildCount = parent.childCount
+                parentChildCount = AXObject.get_child_count(parent)
             except:
                 msg = "WEB: Exception getting childCount for %s" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)

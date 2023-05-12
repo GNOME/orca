@@ -2661,15 +2661,7 @@ class Script(script.Script):
         if window and not self.utilities.canBeActiveWindow(window, clearCache) and not dialog:
             return
 
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "DEFAULT: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        role = AXObject.get_role(obj)
-        if childCount and role != Atspi.Role.COMBO_BOX:
+        if AXObject.get_child_count(obj) and AXObject.get_role(obj) != Atspi.Role.COMBO_BOX:
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
                 obj = selectedChildren[0]
@@ -2954,15 +2946,10 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        try:
-            childCount = event.source.childCount
-            childRole = AXObject.get_role(event.source[0])
-        except:
-            pass
-        else:
-            if childCount == 1 and childRole == Atspi.Role.MENU:
-                orca.setLocusOfFocus(event, event.source[0])
-                return
+        if AXObject.get_child_count(event.source) == 1 \
+            and AXObject.get_role(event.source[0]) == Atspi.Role.MENU:
+            orca.setLocusOfFocus(event, event.source[0])
+            return
 
         orca.setLocusOfFocus(event, event.source)
 

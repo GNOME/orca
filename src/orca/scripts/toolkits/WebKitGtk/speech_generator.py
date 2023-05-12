@@ -130,7 +130,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
             if role == Atspi.Role.LINK \
-               and obj.childCount and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
+               and AXObject.get_child_count(obj) and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #

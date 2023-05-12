@@ -1139,7 +1139,7 @@ class StructuralNavigation:
         - obj: the accessible table cell to examine
         """
 
-        if obj and (AXObject.get_name(obj) or obj.childCount):
+        if obj and (AXObject.get_name(obj) or AXObject.get_child_count(obj)):
             return False
 
         try:
@@ -1160,7 +1160,7 @@ class StructuralNavigation:
         """
 
         text = ""
-        if obj and not obj.childCount:
+        if obj and not AXObject.get_child_count(obj):
             text = self._script.utilities.displayedText(obj)
         else:
             for child in obj:
@@ -2024,7 +2024,7 @@ class StructuralNavigation:
         """
 
         if obj:
-            if AXObject.get_role(obj) == Atspi.Role.TEXT and obj.childCount:
+            if AXObject.get_role(obj) == Atspi.Role.TEXT and AXObject.get_child_count(obj):
                 obj = obj[0]
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
@@ -2874,7 +2874,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if not (obj and obj.childCount and AXObject.get_role(obj) == Atspi.Role.TABLE):
+        if not (obj and AXObject.get_child_count(obj) and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
         attrs = self._script.utilities.objectAttributes(obj)

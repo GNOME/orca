@@ -117,7 +117,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = super().isLayoutOnly(obj)
-        if not rv and AXObject.get_role(obj) == Atspi.Role.PANEL and obj.childCount == 1:
+        if not rv and AXObject.get_role(obj) == Atspi.Role.PANEL and AXObject.get_child_count(obj) == 1:
             displayedLabel = self.displayedLabel(obj)
             if displayedLabel == AXObject.get_name(obj[0]) \
                 and AXObject.get_role(obj[0]) != Atspi.Role.LABEL:

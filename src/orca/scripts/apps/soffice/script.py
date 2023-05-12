@@ -737,7 +737,7 @@ class Script(default.Script):
             msg = "SOFFICE: Event ignored: spam from inputLine"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
-        if event.source.childCount and self.utilities.isAnInputLine(event.source[0]):
+        if AXObject.get_child_count(event.source) and self.utilities.isAnInputLine(event.source[0]):
             msg = "SOFFICE: Event ignored: spam from inputLine parent"
             debug.println(debug.LEVEL_INFO, msg, True)
             return

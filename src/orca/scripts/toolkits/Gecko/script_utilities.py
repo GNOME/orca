@@ -65,7 +65,7 @@ class Utilities(web.Utilities):
 
     def _treatAsLeafNode(self, obj):
         if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
-            return not obj.childCount
+            return not AXObject.get_child_count(obj)
 
         return super()._treatAsLeafNode(obj)
 
@@ -85,7 +85,7 @@ class Utilities(web.Utilities):
         if super().isLayoutOnly(obj):
             return True
 
-        if AXObject.get_role(obj) == Atspi.Role.TOOL_BAR and obj.childCount:
+        if AXObject.get_role(obj) == Atspi.Role.TOOL_BAR and AXObject.get_child_count(obj):
             return obj[0] and AXObject.get_role(obj[0]) == Atspi.Role.PAGE_TAB_LIST
 
         return False
@@ -124,7 +124,7 @@ class Utilities(web.Utilities):
         objects = super().getOnScreenObjects(root, extents)
 
         # For things like Thunderbird's "Select columns to display" button
-        if AXObject.get_role(root) == Atspi.Role.TREE_TABLE and root.childCount:
+        if AXObject.get_role(root) == Atspi.Role.TREE_TABLE and AXObject.get_child_count(root):
             isExtra = lambda x: x and AXObject.get_role(x) != Atspi.Role.COLUMN_HEADER
             objects.extend([x for x in root[0] if isExtra(x)])
 
@@ -194,7 +194,7 @@ class Utilities(web.Utilities):
 
         try:
             state = obj.getState()
-            childCount = obj.childCount
+            childCount = AXObject.get_child_count(obj)
         except:
             msg = "GECKO: Exception getting state and child count for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

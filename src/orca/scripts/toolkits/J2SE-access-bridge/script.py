@@ -124,7 +124,7 @@ class Script(default.Script):
                                        Atspi.Role.TREE]) \
             and event.source.getState().contains(Atspi.StateType.FOCUSED):
             newFocus = event.source
-            if event.source.childCount:
+            if AXObject.get_child_count(event.source):
                 selection = event.source.querySelection()
                 if selection.nSelectedChildren > 0:
                     newFocus = selection.getSelectedChild(0)
