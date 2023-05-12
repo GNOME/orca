@@ -640,20 +640,21 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return results
 
-        if AXObject.get_role(obj) == Atspi.Role.FRAME:
+        isFrame = lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
+        if isFrame(obj):
             results[0] = obj
+        else:
+            results[0] = AXObject.find_ancestor(obj, isFrame)
 
         dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
         if self._treatAlertsAsDialogs():
             dialog_roles.append(Atspi.Role.ALERT)
 
-        parent = obj.parent
-        while parent and (parent.parent != parent):
-            if AXObject.get_role(parent) == Atspi.Role.FRAME:
-                results[0] = parent
-            if AXObject.get_role(parent) in dialog_roles:
-                results[1] = parent
-            parent = parent.parent
+        isDialog = lambda x: AXObject.get_role(x) in dialog_roles
+        if isDialog(obj):
+            results[1] = obj
+        else:
+            results[1] = AXObject.find_ancestor(obj, isDialog)
 
         return results
 
