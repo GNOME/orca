@@ -26,6 +26,7 @@ import urllib.parse
 from . import messages
 from . import orca_state
 from . import settings_manager
+from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
 
@@ -202,10 +203,9 @@ class Bookmarks:
         document frame). """
         returnobj = self._script.utilities.documentFrame()
         for childnumber in path:
-            try:
-                returnobj = returnobj[childnumber]
-            except IndexError:
-                return None
+            returnobj = AXObject.get_child(returnobj, childnumber)
+            if not returnobj:
+                break
 
         return returnobj
 

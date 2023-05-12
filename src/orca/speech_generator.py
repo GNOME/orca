@@ -846,8 +846,9 @@ class SpeechGenerator(generator.Generator):
                 if text:
                     linkOutput += " " + text
                 result.append(linkOutput)
-                if AXObject.get_child_count(obj) and AXObject.get_role(obj[0]) == Atspi.Role.IMAGE:
-                    result.extend(self._generateRoleName(obj[0]))
+                child = AXObject.get_child(obj, 0)
+                if AXObject.get_role(child) == Atspi.Role.IMAGE:
+                    result.extend(self._generateRoleName(child))
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result

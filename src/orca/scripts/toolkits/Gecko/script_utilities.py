@@ -86,7 +86,8 @@ class Utilities(web.Utilities):
             return True
 
         if AXObject.get_role(obj) == Atspi.Role.TOOL_BAR and AXObject.get_child_count(obj):
-            return obj[0] and AXObject.get_role(obj[0]) == Atspi.Role.PAGE_TAB_LIST
+            child = AXObject.get_child(obj, 0)
+            return AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST
 
         return False
 

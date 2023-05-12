@@ -737,7 +737,9 @@ class Script(default.Script):
             msg = "SOFFICE: Event ignored: spam from inputLine"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
-        if AXObject.get_child_count(event.source) and self.utilities.isAnInputLine(event.source[0]):
+
+        if AXObject.get_child_count(event.source) \
+            and self.utilities.isAnInputLine(AXObject.get_child(event.source, 0)):
             msg = "SOFFICE: Event ignored: spam from inputLine parent"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -953,8 +955,9 @@ class Script(default.Script):
         if not self.spellcheck.isCheckWindow(event.source):
             return
 
-        if AXObject.get_role(event.source[0]) == Atspi.Role.DIALOG:
-            orca.setLocusOfFocus(event, event.source[0], False)
+        child = AXObject.get_child(event.source, 0)
+        if AXObject.get_role(child) == Atspi.Role.DIALOG:
+            orca.setLocusOfFocus(event, child, False)
 
         self.spellcheck.presentErrorDetails()
 

@@ -426,16 +426,23 @@ class AXObject:
         return None
 
     @staticmethod
-    def get_child_checked(obj, index):
-        """Returns the nth child of obj, doing checks for tree validity"""
+    def get_child(obj, index):
+        """Returns the nth child of obj. See also get_child_checked."""
 
         if obj is None:
             return None
 
+        n_children = AXObject.get_child_count(obj)
+        if n_children <= 0:
+            return None
+
+        if index == -1:
+            index = n_children - 1
+
         try:
             child = Atspi.Accessible.get_child_at_index(obj, index)
         except Exception as e:
-            msg = "ERROR: Exception in get_child_checked: %s" % e
+            msg = "ERROR: Exception in get_child: %s" % e
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -444,10 +451,17 @@ class AXObject:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
+        return child
+
+    @staticmethod
+    def get_child_checked(obj, index):
+        """Returns the nth child of obj, doing checks for tree validity"""
+
+        child = AXObject.get_child(obj, index)
         if debug.LEVEL_INFO < debug.debugLevel:
             return child
 
-        parent = Atspi.Accessible.get_parent(child)
+        parent = AXObject.get_parent(child)
         if obj != parent:
            msg = "ERROR: %s claims %s as child; child's parent is %s" % (obj, child, parent)
            debug.println(debug.LEVEL_INFO, msg, True)

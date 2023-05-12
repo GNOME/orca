@@ -68,7 +68,7 @@ class Chat(chat.Chat):
         # rest (usually just one) are the message itself.
         #
         if self._script.utilities.isDocument(event.source):
-            bubble = event.source[event.detail1]
+            bubble = AXObject.get_child(event.source, event.detail1)
             hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.PARAGRAPH
             paragraphs = self._script.utilities.findAllDescendants(bubble, hasRole)
 
@@ -94,7 +94,7 @@ class Chat(chat.Chat):
         # empty section.
         #
         if AXObject.get_role(event.source) == Atspi.Role.SECTION:
-            obj = event.source[event.detail1]
+            obj = AXObject.get_child(event.source, event.detail1)
             if obj and AXObject.get_role(obj) == Atspi.Role.PARAGRAPH:
                 try:
                     text = obj.queryText()

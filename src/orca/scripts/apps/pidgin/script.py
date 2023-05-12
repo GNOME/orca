@@ -132,7 +132,7 @@ class Script(GAIL.Script):
                     if frameName and (frameName == AXObject.get_name(child)):
                         nameFound = True
                 if nameFound:
-                    child = event.source[-1]
+                    child = AXObject.get_child(event.source, -1)
                     if AXObject.get_name(child):
                         line = messages.CHAT_NEW_TAB % AXObject.get_name(child)
                         voice = self.speechGenerator.voice(obj=child, string=line)

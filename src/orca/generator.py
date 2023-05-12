@@ -904,7 +904,7 @@ class Generator:
             if cellOrder:
                 for i in cellOrder:
                     if not hasToggle[i]:
-                        result.extend(self.generate(obj[i], **args))
+                        result.extend(self.generate(AXObject.get_child(obj, i), **args))
         return result
 
     def _generateTableCell2ChildToggle(self, obj, **args):
@@ -936,7 +936,7 @@ class Generator:
             if cellOrder:
                 for i in cellOrder:
                     if hasToggle[i]:
-                        result.extend(self.generate(obj[i], **args))
+                        result.extend(self.generate(AXObject.get_child(obj, i), **args))
         return result
 
     def _generateColumnHeaderIfToggleAndNoText(self, obj, **args):

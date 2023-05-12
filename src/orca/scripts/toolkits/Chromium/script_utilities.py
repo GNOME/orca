@@ -103,16 +103,17 @@ class Utilities(web.Utilities):
             return rv
 
         rv = False
-        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_ITEM:
+        parent = AXObject.get_parent(obj)
+        if parent and AXObject.get_role(parent) == Atspi.Role.LIST_ITEM:
             tag = self._getTag(obj)
             if tag == "::marker":
                 rv = True
             elif tag is not None:
                 rv = False
-            elif AXObject.get_child_count(obj.parent) > 1:
-                rv = obj.parent[0] == obj
+            elif AXObject.get_child_count(parent) > 1:
+                rv = AXObject.get_child(parent, 0) == obj
             else:
-                rv = AXObject.get_name(obj) != self.displayedText(obj.parent)
+                rv = AXObject.get_name(obj) != self.displayedText(parent)
 
         self._isListItemMarker[hash(obj)] = rv
         return rv
@@ -210,7 +211,7 @@ class Utilities(web.Utilities):
             return False
         if AXObject.get_child_count(obj) != 1:
             return False
-        if AXObject.get_role(obj[0]) == Atspi.Role.MENU_BAR:
+        if AXObject.get_role(AXObject.get_child(obj, 0)) == Atspi.Role.MENU_BAR:
             return True
 
         return False

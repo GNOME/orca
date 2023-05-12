@@ -364,6 +364,8 @@ class Utilities:
           which the status bar is sought.
         """
 
+        # TODO - JD: Consider using findAllDescendants
+
         # There are some objects which are not worth descending.
         #
         skipRoles = [Atspi.Role.TREE,
@@ -378,11 +380,13 @@ class Utilities:
         # The default button is likely near the bottom of the window.
         #
         for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
-            if AXObject.get_role(obj[i]) == Atspi.Role.PUSH_BUTTON \
-                and obj[i].getState().contains(Atspi.StateType.IS_DEFAULT):
-                defaultButton = obj[i]
-            elif not AXObject.get_role(obj[i]) in skipRoles:
-                defaultButton = self.defaultButton(obj[i])
+            child = AXObject.get_child(obj, i)
+            role = AXObject.get_role(child)
+            if role == Atspi.Role.PUSH_BUTTON \
+                and child.getState().contains(Atspi.StateType.IS_DEFAULT):
+                defaultButton = child
+            elif not role in skipRoles:
+                defaultButton = self.defaultButton(child)
 
             if defaultButton:
                 break
@@ -1482,10 +1486,7 @@ class Utilities:
         attrs = self.objectAttributes(obj)
         role = AXObject.get_role(obj)
         parentRole = AXObject.get_role(obj.parent)
-        try:
-            firstChild = obj[0]
-        except:
-            firstChild = None
+        firstChild = AXObject.get_child(obj, 0)
 
         topLevelRoles = self._topLevelRoles()
         ignorePanelParent = [Atspi.Role.MENU,
@@ -1556,8 +1557,7 @@ class Utilities:
             state = obj.getState()
             layoutOnly = not (state.contains(Atspi.StateType.FOCUSABLE) \
                               or state.contains(Atspi.StateType.SELECTABLE))
-        elif role == Atspi.Role.PANEL and AXObject.get_child_count(obj) and firstChild \
-             and AXObject.get_role(firstChild) in ignorePanelParent:
+        elif role == Atspi.Role.PANEL and AXObject.get_role(firstChild) in ignorePanelParent:
             layoutOnly = True
         elif role == Atspi.Role.PANEL and AXObject.has_same_non_empty_name(obj, obj.getApplication()):
             layoutOnly = True
@@ -1591,9 +1591,6 @@ class Utilities:
 
     def isLink(self, obj):
         """Returns True if obj is a link."""
-
-        if not obj:
-            return False
 
         return AXObject.get_role(obj) == Atspi.Role.LINK
 
@@ -2253,6 +2250,8 @@ class Utilities:
         if AXObject.get_role(obj) == Atspi.Role.STATUS_BAR:
             return obj
 
+        # TODO - JD: Consider using findAllDescendants
+
         # There are some objects which are not worth descending.
         #
         skipRoles = [Atspi.Role.TREE,
@@ -2267,11 +2266,12 @@ class Utilities:
         # The status bar is likely near the bottom of the window.
         #
         for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
-            if AXObject.get_role(obj[i]) == Atspi.Role.STATUS_BAR:
-                statusBar = obj[i]
-            elif not AXObject.get_role(obj[i]) in skipRoles:
-                statusBar = self.statusBar(obj[i])
-
+            child = AXObject.get_child(obj, i)
+            role = AXObject.get_role(child)
+            if role == Atspi.Role.STATUS_BAR:
+                statusBar = child
+            elif not role in skipRoles:
+                statusBar = self.statusBar(child)
             if statusBar and self.isShowingAndVisible(statusBar):
                 break
 
@@ -2459,13 +2459,7 @@ class Utilities:
 
         childCount = AXObject.get_child_count(root)
         for i in range(childCount):
-            try:
-                child = root[i]
-            except:
-                msg = "ERROR: Exception getting %i child for %s" % (i, root)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
-
+            child = AXObject.get_child(root, i)
             if excludeIf and excludeIf(child):
                 continue
             if includeIf and includeIf(child):
@@ -2631,11 +2625,7 @@ class Utilities:
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
-        try:
-            prevObj = obj.parent[index]
-        except:
-            prevObj = None
-
+        prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if prevObj == obj:
             prevObj = None
 
@@ -2656,11 +2646,7 @@ class Utilities:
             obj = obj.parent
             index = obj.getIndexInParent() + 1
 
-        try:
-            nextObj = obj.parent[index]
-        except:
-            nextObj = None
-
+        nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if nextObj == obj:
             nextObj = None
 
@@ -4198,7 +4184,7 @@ class Utilities:
             return self.displayedText(entry)
 
         selected = self._script.utilities.selectedChildren(obj)
-        selected = selected or self._script.utilities.selectedChildren(obj[0])
+        selected = selected or self._script.utilities.selectedChildren(AXObject.get_child(obj, 0))
         if len(selected) == 1:
             return selected[0].name or self.displayedText(selected[0])
 
@@ -5178,12 +5164,12 @@ class Utilities:
         try:
             index = obj.getIndexInParent()
         except:
-            msg = "ERROR: Exception getting index and sibling count for %s" % obj
+            msg = "ERROR: Exception getting index in parent for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         for i in range(index - 1, -1, -1):
-            child = obj.parent[i]
+            child = AXObject.get_child(AXObject.get_parent(obj), i)
             if self.isDescriptionListTerm(child):
                 return child
 
@@ -5203,7 +5189,7 @@ class Utilities:
         total = AXObject.get_child_count(obj.parent)
         values = []
         for i in range(index + 1, total):
-            child = obj.parent[i]
+            child = AXObject.get_child(AXObject.get_parent(obj), i)
             if not self.isDescriptionListDescription(child):
                 break
             values.append(child)
@@ -6015,8 +6001,9 @@ class Utilities:
         _exclude = self.isStaticTextLeaf
 
         subtree = []
-        for i in range(startObj.getIndexInParent(), AXObject.get_child_count(startObj.parent)):
-            child = startObj.parent[i]
+        startObjParent = AXObject.get_parent(startObj)
+        for i in range(startObj.getIndexInParent(), AXObject.get_child_count(startObjParent)):
+            child = AXObject.get_child(startObjParent, i)
             if self.isStaticTextLeaf(child):
                 continue
             subtree.append(child)
@@ -6031,10 +6018,9 @@ class Utilities:
             subtree.append(endObj)
             subtree.extend(self.findAllDescendants(endObj, _include, _exclude))
 
-        try:
-            lastObj = endObj.parent[endObj.getIndexInParent() + 1]
-        except:
-            lastObj = endObj
+        endObjParent = AXObject.get_parent(endObj)
+        endObjIndex = endObj.getIndexInParent()
+        lastObj = AXObject.get_child(endObjParent, endObjIndex + 1) or endObj
 
         try:
             endIndex = subtree.index(lastObj)

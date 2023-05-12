@@ -2946,10 +2946,11 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if AXObject.get_child_count(event.source) == 1 \
-            and AXObject.get_role(event.source[0]) == Atspi.Role.MENU:
-            orca.setLocusOfFocus(event, event.source[0])
-            return
+        if AXObject.get_child_count(event.source) == 1:
+            child = AXObject.get_child(event.source, 0)
+            if AXObject.get_role(child) == Atspi.Role.MENU:
+                orca.setLocusOfFocus(event, child)
+                return
 
         orca.setLocusOfFocus(event, event.source)
 

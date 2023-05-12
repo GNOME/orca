@@ -566,7 +566,7 @@ class TutorialGenerator:
                         pass
                     else:
                         utterances.extend( \
-                            self._getTutorialForTableCell(obj[i],
+                            self._getTutorialForTableCell(AXObject.get_child(obj, i),
                             alreadyFocused, forceTutorial))
                 return utterances
 

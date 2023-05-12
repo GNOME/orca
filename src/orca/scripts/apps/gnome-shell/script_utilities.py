@@ -118,9 +118,9 @@ class Utilities(script_utilities.Utilities):
 
         rv = super().isLayoutOnly(obj)
         if not rv and AXObject.get_role(obj) == Atspi.Role.PANEL and AXObject.get_child_count(obj) == 1:
-            displayedLabel = self.displayedLabel(obj)
-            if displayedLabel == AXObject.get_name(obj[0]) \
-                and AXObject.get_role(obj[0]) != Atspi.Role.LABEL:
+            child = AXObject.get_child(obj, 0)
+            if self.displayedLabel(obj) == AXObject.get_name(child) \
+                and AXObject.get_role(child) != Atspi.Role.LABEL:
                 rv = True
                 msg = "GNOME SHELL: %s is deemed to be layout only" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)

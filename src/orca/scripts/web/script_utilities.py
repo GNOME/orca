@@ -387,9 +387,8 @@ class Utilities(script_utilities.Utilities):
     def grabFocusWhenSettingCaret(self, obj):
         try:
             state = obj.getState()
-            childCount = AXObject.get_child_count(obj)
         except:
-            msg = "WEB: Exception getting state, and childCount for %s" % obj
+            msg = "WEB: Exception getting state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -403,8 +402,8 @@ class Utilities(script_utilities.Utilities):
             isLink = lambda x: x and AXObject.get_role(x) == Atspi.Role.LINK
             return AXObject.find_ancestor(obj, isLink) is not None
 
-        if role == Atspi.Role.HEADING and childCount == 1:
-            return self.isLink(obj[0])
+        if role == Atspi.Role.HEADING and AXObject.get_child_count(obj) == 1:
+            return self.isLink(AXObject.get_child(obj, 0))
 
         return state.contains(Atspi.StateType.FOCUSABLE)
 
@@ -470,15 +469,16 @@ class Utilities(script_utilities.Utilities):
                     return child
 
         if AXObject.get_child_count(obj):
-            return obj[0]
+            return AXObject.get_child(obj, 0)
 
         nextObj = None
         while obj and not nextObj:
             index = obj.getIndexInParent() + 1
-            if 0 < index < AXObject.get_child_count(obj.parent):
-                nextObj = obj.parent[index]
-            elif obj.parent != documentFrame:
-                obj = obj.parent
+            parent = AXObject.get_parent(obj)
+            if 0 < index < AXObject.get_child_count(parent):
+                nextObj = AXObject.get_child(parent, index)
+            elif parent != documentFrame:
+                obj = parent
             else:
                 break
 
@@ -499,13 +499,15 @@ class Utilities(script_utilities.Utilities):
                     return child
 
         index = obj.getIndexInParent() - 1
-        if not 0 <= index < AXObject.get_child_count(obj.parent):
-            obj = obj.parent
+        parent = AXObject.get_parent(obj)
+        if not 0 <= index < AXObject.get_child_count(parent):
+            obj = parent
             index = obj.getIndexInParent() - 1
 
-        previousObj = obj.parent[index]
+        previousObj = AXObject.get_child(AXObject.get_parent(obj), index)
         while previousObj and AXObject.get_child_count(previousObj):
-            previousObj = previousObj[AXObject.get_child_count(previousObj) - 1]
+            childCount = AXObject.get_child_count(previousObj)
+            previousObj = AXObject.get_child(previousObj, childCount - 1)
 
         return previousObj
 
@@ -1183,7 +1185,8 @@ class Utilities(script_utilities.Utilities):
             return offset == -1
 
         if role == Atspi.Role.ENTRY:
-            if AXObject.get_child_count(obj) == 1 and self.isFakePlaceholderForEntry(obj[0]):
+            if AXObject.get_child_count(obj) == 1 \
+              and self.isFakePlaceholderForEntry(AXObject.get_child(obj, 0)):
                 return True
             return False
 
@@ -1447,7 +1450,7 @@ class Utilities(script_utilities.Utilities):
 
         role = AXObject.get_role(obj)
         if role == Atspi.Role.INTERNAL_FRAME and AXObject.get_child_count(obj) == 1:
-            return self._getContentsForObj(obj[0], 0, boundary)
+            return self._getContentsForObj(AXObject.get_child(obj, 0), 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
         if not string:
@@ -2399,19 +2402,13 @@ class Utilities(script_utilities.Utilities):
         if self.isDescriptionList(obj):
             return False
 
-        try:
-            childCount = AXObject.get_child_count(obj)
-        except:
-            msg = "WEB: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(obj)
         if role == Atspi.Role.LIST and offset is not None:
             string = self.substring(obj, offset, offset + 1)
             if string and string != self.EMBEDDED_OBJECT_CHARACTER:
                 return True
 
+        childCount = AXObject.get_child_count(obj)
         if role == Atspi.Role.PANEL and not childCount:
             return True
 
@@ -2701,75 +2698,55 @@ class Utilities(script_utilities.Utilities):
         return AXObject.find_ancestor(obj, self.isMathTopLevel)
 
     def getMathDenominator(self, obj):
-        try:
-            return obj[1]
-        except:
-            pass
-
-        return None
+        return AXObject.get_child(obj, 1)
 
     def getMathNumerator(self, obj):
-        try:
-            return obj[0]
-        except:
-            pass
-
-        return None
+        return AXObject.get_child(obj, 0)
 
     def getMathRootBase(self, obj):
         if self.isMathSquareRoot(obj):
             return obj
 
-        try:
-            return obj[0]
-        except:
-            pass
-
-        return None
+        return AXObject.get_child(obj, 0)
 
     def getMathRootIndex(self, obj):
-        try:
-            return obj[1]
-        except:
-            pass
-
-        return None
+        return AXObject.get_child(obj, 1)
 
     def getMathScriptBase(self, obj):
         if self.isMathSubOrSuperScript(obj) \
            or self.isMathUnderOrOverScript(obj) \
            or self.isMathMultiScript(obj):
-            return obj[0]
+            return AXObject.get_child(obj, 0)
 
         return None
 
     def getMathScriptSubscript(self, obj):
         if self._isMathSubElement(obj) or self._isMathSubsupElement(obj):
-            return obj[1]
+            return AXObject.get_child(obj, 1)
 
         return None
 
     def getMathScriptSuperscript(self, obj):
         if self._isMathSupElement(obj):
-            return obj[1]
+            return AXObject.get_child(obj, 1)
 
         if self._isMathSubsupElement(obj):
-            return obj[2]
+            return AXObject.get_child(obj, 2)
 
         return None
 
     def getMathScriptUnderscript(self, obj):
         if self._isMathUnderElement(obj) or self._isMathUnderOverElement(obj):
-            return obj[1]
+            return AXObject.get_child(obj, 1)
 
         return None
 
     def getMathScriptOverscript(self, obj):
         if self._isMathOverElement(obj):
-            return obj[1]
+            return AXObject.get_child(obj, 1)
 
         if self._isMathUnderOverElement(obj):
-            return obj[2]
+            return AXObject.get_child(obj, 2)
 
         return None
 
@@ -2786,7 +2763,13 @@ class Utilities(script_utilities.Utilities):
             return []
 
         index = separator.getIndexInParent()
-        return [obj[i] for i in range(index+1, AXObject.get_child_count(obj))]
+        children = []
+        for i in range(index + 1, AXObject.get_child_count(obj)):
+            child = AXObject.get_child(obj, i)
+            if child is not None:
+                children.append(child)
+
+        return children
 
     def getMathPostscripts(self, obj):
         separator = self._getMathPrePostScriptSeparator(obj)
@@ -2795,7 +2778,13 @@ class Utilities(script_utilities.Utilities):
         else:
             index = AXObject.get_child_count(obj)
 
-        return [obj[i] for i in range(1, index)]
+        children = []
+        for i in range(1,index):
+            child = AXObject.get_child(obj, i)
+            if child is not None:
+                children.append(child)
+
+        return children
 
     def getMathEnclosures(self, obj):
         if not self.isMathEnclose(obj):
@@ -4194,7 +4183,7 @@ class Utilities(script_utilities.Utilities):
             rv = self.queryNonEmptyText(obj) is None
         if rv and AXObject.get_child_count(obj):
             for i in range(min(AXObject.get_child_count(obj), 50)):
-                if not self.isUselessImage(obj[i]):
+                if not self.isUselessImage(AXObject.get_child(obj, i)):
                     rv = False
                     break
 
@@ -4270,14 +4259,9 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        try:
-            childCount = AXObject.get_child_count(obj)
-        except:
-            msg = "WEB: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            childCount = 0
-        if childCount and obj[0] is None:
-            msg = "ERROR: %s reports %i children, but obj[0] is None" % (obj, childCount)
+        childCount = AXObject.get_child_count(obj)
+        if childCount and AXObject.get_child(obj, 0) is None:
+            msg = "ERROR: %s reports %i children, but AXObject.get_child(obj, 0) is None" % (obj, childCount)
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = True
 
@@ -5137,7 +5121,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.previousContext(event.source, -1)
             elif 0 <= event.detail1 - 1 < childCount:
-                child = event.source[event.detail1 - 1]
+                child = AXObject.get_child(event.source, event.detail1 - 1)
                 msg = "WEB: Getting new location from end of previous child %s." % child
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.previousContext(child, -1)
@@ -5153,7 +5137,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(event.source, -1)
             elif 0 < event.detail1 < childCount:
-                child = event.source[event.detail1]
+                child = AXObject.get_child(event.source, event.detail1)
                 msg = "WEB: Getting new location from start of child %i %s." % (event.detail1, child)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(child, -1)
@@ -5244,9 +5228,10 @@ class Utilities(script_utilities.Utilities):
                        Atspi.Role.TABLE,
                        Atspi.Role.TABLE_ROW]
         if role in lookInChild and AXObject.get_child_count(obj) and not self.treatAsDiv(obj, offset):
-            msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
+            firstChild = AXObject.get_child(obj, 0)
+            msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, firstChild)
             debug.println(debug.LEVEL_INFO, msg, True)
-            return self.findFirstCaretContext(obj[0], 0)
+            return self.findFirstCaretContext(firstChild, 0)
 
         text = self.queryNonEmptyText(obj)
         if not text and self._canHaveCaretContext(obj):
@@ -5355,7 +5340,7 @@ class Utilities(script_utilities.Utilities):
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
-                return self._findNextCaretInOrder(obj[0], -1)
+                return self._findNextCaretInOrder(AXObject.get_child(obj, 0), -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
@@ -5386,14 +5371,10 @@ class Utilities(script_utilities.Utilities):
                 return self._findNextCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() + 1
-            try:
-                parentChildCount = AXObject.get_child_count(parent)
-            except:
-                msg = "WEB: Exception getting childCount for %s" % parent
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                if 0 < index < parentChildCount:
-                    return self._findNextCaretInOrder(parent[index], -1)
+            parentChildCount = AXObject.get_child_count(parent)
+            if 0 < index < parentChildCount:
+                child = AXObject.get_child(parent, index)
+                return self._findNextCaretInOrder(child, -1)
             obj = parent
 
         return None, -1
@@ -5432,7 +5413,7 @@ class Utilities(script_utilities.Utilities):
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
-                return self._findPreviousCaretInOrder(obj[AXObject.get_child_count(obj) - 1], -1)
+                return self._findPreviousCaretInOrder(AXObject.get_child(obj, AXObject.get_child_count(obj) - 1), -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 
@@ -5463,14 +5444,10 @@ class Utilities(script_utilities.Utilities):
                 return self._findPreviousCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() - 1
-            try:
-                parentChildCount = AXObject.get_child_count(parent)
-            except:
-                msg = "WEB: Exception getting childCount for %s" % parent
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                if 0 <= index < parentChildCount:
-                    return self._findPreviousCaretInOrder(parent[index], -1)
+            parentChildCount = AXObject.get_child_count(parent)
+            if 0 <= index < parentChildCount:
+                child = AXObject.get_child(parent, index)
+                return self._findPreviousCaretInOrder(child, -1)
             obj = parent
 
         return None, -1

@@ -189,14 +189,11 @@ class Utilities(script_utilities.Utilities):
             obj = obj.parent
             index = obj.getIndexInParent() - 1
 
-        try:
-            prevObj = obj.parent[index]
-        except:
-            prevObj = obj
-        else:
-            if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
-                if self.isTextListItem(prevObj[0]):
-                    prevObj = prevObj[-1]
+        prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
+        if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
+            child = AXObject.get_child(prevObj, -1)
+            if self.isTextListItem(child):
+                prevObj = child
 
         return prevObj
 
@@ -214,14 +211,11 @@ class Utilities(script_utilities.Utilities):
             obj = obj.parent
             index = obj.getIndexInParent() + 1
 
-        try:
-            nextObj = obj.parent[index]
-        except:
-            nextObj = None
-        else:
-            if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):
-                if self.isTextListItem(nextObj[0]):
-                    nextObj = nextObj[0]
+        nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
+        if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):
+            child = AXObject.get_child(nextObj, 0)
+            if self.isTextListItem(child):
+                nextObj = child
 
         return nextObj
 
@@ -236,24 +230,21 @@ class Utilities(script_utilities.Utilities):
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
 
-        if AXObject.get_role(obj) == Atspi.Role.SECTION:
-            if AXObject.get_child_count(obj) > 1:
-                return self.onSameLine(obj[1], obj[1])
-
+        role = AXObject.get_role(obj)
+        childCount = AXObject.get_child_count(obj)
+        if role == Atspi.Role.SECTION:
+            if childCount > 1:
+                return self.onSameLine(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
             return False
 
         if AXObject.get_role(obj) == Atspi.Role.LIST:
             if obj.getState().contains(Atspi.StateType.FOCUSABLE):
                 return False
-
-            childCount = AXObject.get_child_count(obj)
             if not childCount:
                 return AXObject.supports_text(obj)
-
             if childCount == 1:
                 return False
-
-            return self.onSameLine(obj[0], obj[1])
+            return self.onSameLine(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
 
         return False
 

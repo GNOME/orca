@@ -225,32 +225,20 @@ class Utilities(script_utilities.Utilities):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
 
-        try:
-            role = AXObject.get_role(obj)
-            childCount = AXObject.get_child_count(obj)
-        except:
-            msg = "SOFFICE: Exception getting properties of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
+        role = AXObject.get_role(obj)
+        if role == Atspi.Role.LIST:
+            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
+                return True
+            return super().isLayoutOnly(obj)
 
         name = AXObject.get_name(obj)
-        if role == Atspi.Role.PANEL and childCount == 1 and name:
-            try:
-                child = obj[0]
-            except:
-                msg = "SOFFICE: Exception getting child of %s" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                if child and AXObject.get_name(child) == name:
-                    return True
-
-        if role == Atspi.Role.LIST:
-            parentRole = AXObject.get_role(obj.parent)
-            if parentRole == Atspi.Role.COMBO_BOX:
-                return True
-
         if role == Atspi.Role.FRAME and name:
             return name == AXObject.get_name(orca_state.activeWindow)
+
+        if role == Atspi.Role.PANEL and name and AXObject.get_child_count(obj):
+            child = AXObject.get_child(obj, 0)
+            if child and AXObject.get_name(child) == name:
+                return True
 
         return super().isLayoutOnly(obj)
 
@@ -508,19 +496,21 @@ class Utilities(script_utilities.Utilities):
         position, count = positionAndCount.split("/")
         title = ""
         for child in dv:
-            if not AXObject.get_child_count(child):
+            childCount = AXObject.get_child_count(child)
+            if not childCount:
                 continue
             # We want an actual Title.
             #
             if AXObject.get_name(child).startswith("ImpressTitle"):
-                title = self.displayedText(child[0])
+                title = self.displayedText(AXObject.get_child(child, 0))
                 break
             # But we'll live with a Subtitle if we can't find a title.
             # Unlike Titles, a single subtitle can be made up of multiple
             # accessibles.
             #
             elif AXObject.get_name(child).startswith("ImpressSubtitle"):
-                for line in child:
+                for i in range(childCount):
+                    line = AXObject.get_child(child, i)
                     title = self.appendString(title, self.displayedText(line))
 
         return title, int(position), int(count)
@@ -663,9 +653,9 @@ class Utilities(script_utilities.Utilities):
             return []
 
         children = []
-        for i, child in enumerate(obj):
+        for i in range(AXObject.get_child_count(obj)):
             if selection.isChildSelected(i):
-                children.append(obj[i])
+                children.append(AXObject.get_child(obj, i))
 
         return children
 
@@ -673,8 +663,8 @@ class Utilities(script_utilities.Utilities):
         try:
             text = obj.queryText()
         except:
-            if obj and AXObject.get_child_count(obj):
-                return self.getFirstCaretPosition(obj[0])
+            if AXObject.get_child_count(obj):
+                return self.getFirstCaretPosition(AXObject.get_child(obj, 0))
 
         return obj, 0
 

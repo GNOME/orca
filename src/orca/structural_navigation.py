@@ -947,7 +947,7 @@ class StructuralNavigation:
             return
 
         if obj == container:
-            obj = obj[-1]
+            obj = AXObject.get_child(obj, -1)
 
         structuralNavigationObject.present(obj, sameContainer=True)
 
@@ -1325,7 +1325,7 @@ class StructuralNavigation:
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
         if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
-            obj = obj[0]
+            obj = AXObject.get_child(obj, 0)
         try:
             selection = obj.querySelection()
         except NotImplementedError:
@@ -2025,7 +2025,7 @@ class StructuralNavigation:
 
         if obj:
             if AXObject.get_role(obj) == Atspi.Role.TEXT and AXObject.get_child_count(obj):
-                obj = obj[0]
+                obj = AXObject.get_child(obj, 0)
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)

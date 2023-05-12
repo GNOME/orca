@@ -480,7 +480,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role not in roles:
             return super()._generateNumberOfChildren(obj, **args)
 
-        setsize = self._script.utilities.getSetSize(obj[0])
+        setsize = self._script.utilities.getSetSize(AXObject.get_child(obj, 0))
         if setsize is None:
             if self._script.utilities.isDescriptionList(obj):
                 children = self._script.utilities.descriptionListTerms(obj)
