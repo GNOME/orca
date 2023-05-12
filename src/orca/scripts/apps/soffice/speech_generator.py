@@ -45,12 +45,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # as a text object.
         #
         role = args.get('role', AXObject.get_role(obj))
-        override = \
-            role == "text frame" \
-            or (role == Atspi.Role.PARAGRAPH \
-                and self._script.utilities.ancestorWithRole(
-                      obj, [Atspi.Role.DIALOG], [Atspi.Role.APPLICATION]))
-        return override
+        if role == "text frame":
+            return True
+        if role != Atspi.Role.PARAGRAPH:
+            return False
+        pred = lambda x: AXObject.get_role(x) == Atspi.Role.DIALOG
+        return AXObject.find_ancestor(obj, pred) is not None
 
     def _generateRoleName(self, obj, **args):
         result = []

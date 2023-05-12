@@ -216,42 +216,6 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg, True)
         return candidates[0]
 
-    @staticmethod
-    def ancestorWithRole(obj, ancestorRoles, stopRoles):
-        """Returns the object of the specified roles which contains the
-        given object, or None if the given object is not contained within
-        an object the specified roles.
-
-        Arguments:
-        - obj: the Accessible object
-        - ancestorRoles: the list of roles to look for
-        - stopRoles: the list of roles to stop the search at
-        """
-
-        if not obj:
-            return None
-
-        if not isinstance(ancestorRoles, [].__class__):
-            ancestorRoles = [ancestorRoles]
-
-        if not isinstance(stopRoles, [].__class__):
-            stopRoles = [stopRoles]
-
-        ancestor = None
-
-        obj = obj.parent
-        while obj and (obj != obj.parent):
-            role = AXObject.get_role(obj)
-            if role in ancestorRoles:
-                ancestor = obj
-                break
-            elif role in stopRoles:
-                break
-            else:
-                obj = obj.parent
-
-        return ancestor
-
     def objectAttributes(self, obj, useCache=True):
         try:
             rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
@@ -583,8 +547,8 @@ class Utilities:
                     Atspi.Role.DOCUMENT_SPREADSHEET,
                     Atspi.Role.DOCUMENT_TEXT,
                     Atspi.Role.DOCUMENT_WEB]
-        stopRoles = [Atspi.Role.FRAME, Atspi.Role.SCROLL_PANE]
-        document = self.ancestorWithRole(obj, docRoles, stopRoles)
+        pred = lambda x: AXObject.get_role(x) in docRoles
+        document = AXObject.find_ancestor(obj, pred)
         if not document and orca_state.locusOfFocus:
             if AXObject.get_role(orca_state.locusOfFocus) in docRoles:
                 return orca_state.locusOfFocus
@@ -1268,14 +1232,7 @@ class Utilities:
         if self.isDocument(obj):
             return obj
 
-        try:
-            doc = AXObject.find_ancestor(obj, self.isDocument)
-        except:
-            msg = "ERROR: Exception finding ancestor of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        return doc
+        return AXObject.find_ancestor(obj, self.isDocument)
 
     def isModalDialog(self, obj):
         if not obj:
@@ -1299,14 +1256,7 @@ class Utilities:
         if self.isModalDialog(obj):
             return obj
 
-        try:
-            dialog = AXObject.find_ancestor(obj, self.isModalDialog)
-        except:
-            msg = "ERROR: Exception finding ancestor of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        return dialog
+        return AXObject.find_ancestor(obj, self.isModalDialog)
 
     def isModalDialogDescendant(self, obj):
         if not obj:
@@ -1323,14 +1273,7 @@ class Utilities:
         if isTable(obj):
             return obj
 
-        try:
-            table = AXObject.find_ancestor(obj, isTable)
-        except:
-            msg = "ERROR: Exception finding ancestor of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        return table
+        return AXObject.find_ancestor(obj, isTable)
 
     def isTextDocumentTable(self, obj):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):

@@ -2275,8 +2275,8 @@ class SpeechGenerator(generator.Generator):
         which contains obj.
         """
         result = []
-        ancestor = self._script.utilities.ancestorWithRole(
-            obj, [Atspi.Role.TOOL_BAR], [Atspi.Role.FRAME])
+        pred = lambda x: AXObject.get_role(x) == Atspi.Role.TOOL_BAR
+        ancestor = AXObject.find_ancestor(obj, pred)
         if ancestor:
             result.extend(self._generateLabelAndName(ancestor))
             result.extend(self._generateRoleName(ancestor))

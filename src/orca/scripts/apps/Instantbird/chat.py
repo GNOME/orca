@@ -137,11 +137,9 @@ class Chat(chat.Chat):
         """
 
         name = ""
-        ancestor = self._script.utilities.ancestorWithRole(
-            obj,
-            [Atspi.Role.SCROLL_PANE, Atspi.Role.FRAME],
-            [Atspi.Role.APPLICATION])
 
+        pred = lambda x: AXObject.get_role(x) in [Atspi.Role.SCROLL_PANE, Atspi.Role.FRAME]
+        ancestor = AXObject.find_ancestor(obj, pred)
         if ancestor and AXObject.get_role(ancestor) == Atspi.Role.SCROLL_PANE:
             # The scroll pane has a proper labelled by relationship set.
             #

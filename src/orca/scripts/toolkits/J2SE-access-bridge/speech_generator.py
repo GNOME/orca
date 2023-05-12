@@ -162,8 +162,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
            and AXObject.get_role(obj) == Atspi.Role.TEXT:
-            spinbox = self._script.utilities.ancestorWithRole(
-                obj, [Atspi.Role.SPIN_BUTTON], None)
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.SPIN_BUTTON
+            spinbox = AXObject.find_ancestor(obj, pred)
             if spinbox:
                 obj = spinbox
         result.extend(speech_generator.SpeechGenerator.\

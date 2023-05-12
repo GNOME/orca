@@ -335,6 +335,22 @@ class AXObject:
         return path
 
     @staticmethod
+    def get_parent(obj):
+        """Returns the accessible parent of obj. See also get_parent_checked."""
+
+        if obj is None:
+            return None
+
+        try:
+            parent = Atspi.Accessible.get_parent(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_parent: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return parent
+
+    @staticmethod
     def get_parent_checked(obj):
         """Returns the parent of obj, doing checks for tree validity"""
 
@@ -345,7 +361,7 @@ class AXObject:
         if role in [Atspi.Role.INVALID, Atspi.Role.APPLICATION]:
             return None
 
-        parent = Atspi.Accessible.get_parent(obj)
+        parent = AXObject.get_parent(obj)
         if parent is None:
             return None
 

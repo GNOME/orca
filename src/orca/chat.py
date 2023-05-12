@@ -780,8 +780,8 @@ class Chat:
 
         for roleList in self._buddyListAncestries:
             buddyListRole = roleList[0]
-            candidate = self._script.utilities.ancestorWithRole(
-                obj, [buddyListRole], [Atspi.Role.FRAME])
+            pred = lambda x: AXObject.get_role(x) == buddyListRole
+            candidate = AXObject.find_ancestor(obj, pred)
             if self.isBuddyList(candidate):
                 return True
 
@@ -885,10 +885,8 @@ class Chat:
         # that, we'll look at the frame name. Failing that, scripts
         # should override this method. :-)
         #
-        ancestor = self._script.utilities.ancestorWithRole(
-            obj,
-            [Atspi.Role.PAGE_TAB, Atspi.Role.FRAME],
-            [Atspi.Role.APPLICATION])
+        pred = lambda x: AXObject.get_role(x) in [Atspi.Role.PAGE_TAB, Atspi.Role.FRAME]
+        ancestor = AXObject.find_ancestor(obj, pred)
         name = ""
         try:
             text = self._script.utilities.displayedText(ancestor)
@@ -902,8 +900,8 @@ class Chat:
         # the item. Therefore, we'll give it one more shot.
         #
         if not name:
-            ancestor = self._script.utilities.ancestorWithRole(
-                ancestor, [Atspi.Role.FRAME], [Atspi.Role.APPLICATION])
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
+            ancestor = AXObject.find_ancestor(obj, pred)
             try:
                 text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():

@@ -115,8 +115,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not (role in doNotSpeak):
             docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
             if role == Atspi.Role.IMAGE:
-                link = self._script.utilities.ancestorWithRole(
-                    obj, [Atspi.Role.LINK], docRoles)
+                pred = lambda x: AXObject.get_role(x) == Atspi.Role.LINK
+                link = AXObject.find_ancestor(obj, pred)
                 if link:
                     result.append(self.getLocalizedRoleName(link))
             elif role == Atspi.Role.HEADING:

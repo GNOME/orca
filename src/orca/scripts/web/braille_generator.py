@@ -243,8 +243,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             oldRole = self._overrideRole(Atspi.Role.ENTRY, args)
 
         if AXObject.get_role(obj) == Atspi.Role.MENU_ITEM:
-            comboBox = self._script.utilities.ancestorWithRole(
-                obj, [Atspi.Role.COMBO_BOX], [Atspi.Role.FRAME])
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.COMBO_BOX
+            comboBox = AXObject.find_ancestor(obj, pred)
             if comboBox and not comboBox.getState().contains(Atspi.StateType.EXPANDED):
                 obj = comboBox
         result.extend(super().generateBraille(obj, **args))
