@@ -365,27 +365,20 @@ class Utilities:
             return a
 
         aParents = [a]
-        try:
-            parent = a.parent
-            while parent and (parent.parent != parent):
-                aParents.append(parent)
-                parent = parent.parent
-            aParents.reverse()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
+        parent = AXObject.get_parent_checked(a)
+        while parent:
+            aParents.append(parent)
+            parent = AXObject.get_parent_checked(parent)
+        aParents.reverse()
 
         bParents = [b]
-        try:
-            parent = b.parent
-            while parent and (parent.parent != parent):
-                bParents.append(parent)
-                parent = parent.parent
-            bParents.reverse()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
+        parent = AXObject.get_parent_checked(b)
+        while parent:
+            bParents.append(parent)
+            parent = AXObject.get_parent_checked(parent)
+        bParents.reverse()
 
         commonAncestor = None
-
         maxSearch = min(len(aParents), len(bParents))
         i = 0
         while i < maxSearch:
