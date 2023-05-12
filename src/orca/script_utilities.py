@@ -725,7 +725,7 @@ class Utilities:
             if not current_role in role:
                 return False
 
-            current = self.validParent(current)
+            current = AXObject.get_parent_checked(current)
 
         return True
 
@@ -2651,19 +2651,6 @@ class Utilities:
             return obj.queryHyperlink().getURI(0)
         except:
             return None
-
-    def validParent(self, obj):
-        """Returns the first valid parent/ancestor of obj. We need to do
-        this in some applications and toolkits due to bogus hierarchies.
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        if not obj:
-            return None
-
-        return obj.parent
 
     #########################################################################
     #                                                                       #

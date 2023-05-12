@@ -386,34 +386,6 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return windowA
 
-    def validParent(self, obj):
-        """Returns the first valid parent/ancestor of obj. We need to do
-        this in some applications and toolkits due to bogus hierarchies.
-
-        See bugs:
-        http://www.openoffice.org/issues/show_bug.cgi?id=78117
-        http://bugzilla.gnome.org/show_bug.cgi?id=489490
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        parent = obj.parent
-        if parent and AXObject.get_role(parent) in (Atspi.Role.ROOT_PANE,
-                                           Atspi.Role.DIALOG):
-            app = obj.getApplication()
-            for frame in app:
-                if AXObject.get_child_count(frame) < 1 \
-                   or AXObject.get_role(frame[0]) not in (Atspi.Role.ROOT_PANE,
-                                                 Atspi.Role.OPTION_PANE):
-                    continue
-
-                root_pane = frame[0]
-                if obj in root_pane:
-                    return root_pane
-
-        return parent
-
     @staticmethod
     def _flowsFromOrToSelection(obj):
         try:
