@@ -403,7 +403,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if AXObject.get_name(obj):
             if self._script.utilities.preferDescriptionOverName(obj):
-                result = [obj.description]
+                result = [AXObject.get_description(obj)]
             elif self._script.utilities.isLink(obj) \
                  and not self._script.utilities.hasExplicitName(obj):
                 return []

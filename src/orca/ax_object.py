@@ -510,3 +510,19 @@ class AXObject:
             return False
 
         return name1 == AXObject.get_name(obj2)
+
+    @staticmethod
+    def get_description(obj):
+        """Returns the accessible description of obj"""
+
+        if obj is None:
+            return ""
+
+        try:
+            description = Atspi.Accessible.get_description(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_description: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return description

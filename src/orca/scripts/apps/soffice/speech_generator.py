@@ -217,18 +217,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        if obj.description:
+        description = AXObject.get_description(obj)
+        if description:
             # The description of some OOo paragraphs consists of the name
             # and the displayed text, with punctuation added. Try to spot
             # this and, if found, ignore the description.
             #
             text = self._script.utilities.displayedText(obj) or ""
-            desc = obj.description.replace(text, "")
+            desc = description.replace(text, "")
             for item in AXObject.get_name(obj).split():
                 desc = desc.replace(item, "")
             for char in desc.strip():
                 if char.isalnum():
-                    result.append(obj.description)
+                    result.append(description)
                     break
 
         if result:

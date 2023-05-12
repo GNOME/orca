@@ -347,10 +347,7 @@ class Generator:
         if name:
             result.append(name)
         elif self._fallBackOnDescriptionForName(obj, **args):
-            try:
-                description = obj.description
-            except (LookupError, RuntimeError):
-                return result
+            description = AXObject.get_description(obj)
             if description:
                 result.append(description)
                 self._script.pointOfReference['usedDescriptionForName'] = True
@@ -476,12 +473,7 @@ class Generator:
             return []
 
         name = AXObject.get_name(obj)
-        try:
-            description = obj.description
-        except:
-            msg = "ERROR: Exception getting description for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            description = ""
+        description = AXObject.get_description(obj)
 
         if role == Atspi.Role.ICON:
             name = self._script.utilities.displayedText(obj) or ""
@@ -506,7 +498,7 @@ class Generator:
             elif isLabelOrName and name:
                 canUse = not desc in name.lower()
             if canUse:
-                result.append(obj.description)
+                result.append(description)
 
         if not result:
             desc = self._script.utilities.displayedDescription(obj)

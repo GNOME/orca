@@ -395,7 +395,7 @@ class LiveRegionManager:
                     # for more information.
                     #
                     description = targetobj.queryText().getText(0, -1)
-                    if description.strip() != obj.description.strip():
+                    if description.strip() != AXObject.get_description(obj).strip():
                         results.append(description)
                 except NotImplemented:
                     pass
@@ -462,7 +462,7 @@ class LiveRegionManager:
         # Proper live regions typically come with proper aria labels. These
         # labels are typically exposed as names. Failing that, descriptions.
         # Looking for actual labels seems a non-performant waste of time.
-        name = (AXObject.get_name(event.source) or event.source.description).strip()
+        name = (AXObject.get_name(event.source) or AXObject.get_description(event.source)).strip()
         if name and name != content:
             labels = name
 

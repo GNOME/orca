@@ -799,7 +799,6 @@ class Script(script.Script):
 
         try:
             state = obj.getState()
-            description = obj.description
         except:
             return
 
@@ -814,7 +813,7 @@ class Script(script.Script):
         self.pointOfReference['names'] = names
 
         descriptions = self.pointOfReference.get('descriptions', {})
-        descriptions[hash(obj)] = description
+        descriptions[hash(obj)] = AXObject.get_description(obj)
         self.pointOfReference['descriptions'] = descriptions
 
         # We want to save the offset for text objects because some apps and

@@ -214,9 +214,6 @@ class TutorialGenerator:
         """
 
         utterances = []
-        name = self._script.utilities.displayedText(obj)
-        if not name and obj.description:
-            name = obj.description
 
         # Translators: If this application has more than one unfocused alert or
         # dialog window, inform user of how to refocus these.
@@ -278,9 +275,6 @@ class TutorialGenerator:
         """
 
         utterances = []
-        name = self._script.utilities.displayedText(obj)
-        if not name and obj.description:
-            name = obj.description
 
         # Translators: this gives tips on how to navigate items in a
         # layered pane.

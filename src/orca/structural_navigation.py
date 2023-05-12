@@ -1347,9 +1347,9 @@ class StructuralNavigation:
             try:
                 image = obj.queryImage()
             except:
-                text = obj.description
+                text = AXObject.get_description(obj)
             else:
-                text = image.imageDescription or obj.description
+                text = image.imageDescription or AXObject.get_description(obj)
             if not text and AXObject.get_role(obj.parent) == Atspi.Role.LINK:
                 text = self._script.utilities.linkBasename(obj.parent)
         if not text and AXObject.get_role(obj) == Atspi.Role.LIST:

@@ -167,7 +167,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return [brailleLabel]
 
         if self._script.utilities.preferDescriptionOverName(obj):
-            return [obj.description]
+            return [AXObject.get_description(obj)]
 
         if AXObject.get_name(obj) and not self._script.utilities.hasValidName(obj):
             return []

@@ -4172,7 +4172,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
-        if rv and (AXObject.get_name(obj) or obj.description or self.hasLongDesc(obj)):
+        if rv and (AXObject.get_name(obj) or AXObject.get_description(obj) or self.hasLongDesc(obj)):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
@@ -4248,7 +4248,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif state.contains(Atspi.StateType.EDITABLE):
             rv = False
-        elif self.hasValidName(obj) or obj.description or obj.childCount:
+        elif self.hasValidName(obj) or AXObject.get_description(obj) or obj.childCount:
             rv = False
         elif AXObject.supports_text(obj) and obj.queryText().characterCount \
              and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
@@ -5612,22 +5612,16 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            description = obj.description
-        except:
-            msg = "WEB: Exception getting description for %s" % obj
+        name = AXObject.get_name(obj)
+        if len(name) == 1 and ord(name) in range(0xe000, 0xf8ff):
+            msg = "WEB: name of %s is in unicode private use area" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            rv = False
+            rv = True
+        elif AXObject.get_description(obj):
+            roles = [Atspi.Role.PUSH_BUTTON]
+            rv = AXObject.get_role(obj) in roles and len(name) == 1
         else:
-            name = AXObject.get_name(obj)
-            if len(name) == 1 and ord(name) in range(0xe000, 0xf8ff):
-                msg = "WEB: name of %s is in unicode private use area" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = True
-            else:
-                role = AXObject.get_role(obj)
-                roles = [Atspi.Role.PUSH_BUTTON]
-                rv = role in roles and len(name) == 1 and description
+            rv = False
 
         self._preferDescriptionOverName[hash(obj)] = rv
         return rv

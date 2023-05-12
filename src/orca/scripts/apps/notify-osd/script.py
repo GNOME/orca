@@ -73,7 +73,7 @@ class Script(default.Script):
         voices = _settingsManager.getSetting('voices')
         if value < 0:
             self.speakMessage(messages.NOTIFICATION)
-            message = '%s %s' % (AXObject.get_name(event.source), event.source.description)
+            message = '%s %s' % (AXObject.get_name(event.source), AXObject.get_description(event.source))
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.

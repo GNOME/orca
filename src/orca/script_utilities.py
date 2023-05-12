@@ -2171,7 +2171,7 @@ class Utilities:
                 return visibleCells
 
         objects = []
-        hasNameOrDescription = (AXObject.get_name(root) or root.description)
+        hasNameOrDescription = AXObject.get_name(root) or AXObject.get_description(root)
         if role in [Atspi.Role.PAGE_TAB, Atspi.Role.IMAGE] and hasNameOrDescription:
             objects.append(root)
         elif self.hasPresentableText(root):

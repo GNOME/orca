@@ -380,15 +380,8 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     else:
         string = indent
 
-    try:
-        name_string = "name='%s'".replace("\n", "\\n") % acc.name
-    except:
-        name_string = "name=(exception)"
-
-    try:
-        desc_string = "%sdescription='%s'".replace("\n", "\\n") % (indent, acc.description)
-    except:
-        desc_string = "%sdescription=(exception)" % indent
+    name_string = "name='%s'".replace("\n", "\\n") % AXObject.get_name(acc)
+    desc_string = "%sdescription='%s'".replace("\n", "\\n") % (indent, AXObject.get_description(acc))
 
     try:
         role_string = "role='%s'" % acc.getRoleName()
