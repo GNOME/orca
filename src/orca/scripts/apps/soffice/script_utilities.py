@@ -336,13 +336,13 @@ class Utilities(script_utilities.Utilities):
 
         results = [None, None]
 
-        parent = obj.parent
-        while parent and (parent.parent != parent):
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
             if AXObject.get_role(parent) == Atspi.Role.FRAME:
                 results[0] = parent
             if AXObject.get_role(parent) == Atspi.Role.TABLE:
                 results[1] = parent
-            parent = parent.parent
+            parent = AXObject.get_parent_checked(parent)
 
         return results
 

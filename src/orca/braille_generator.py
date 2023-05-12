@@ -276,10 +276,10 @@ class BrailleGenerator(generator.Generator):
         role = args.get('role', AXObject.get_role(obj))
         excludeRadioButtonGroup = role == Atspi.Role.RADIO_BUTTON
 
-        parent = obj.parent
+        parent = AXObject.get_parent_checked(obj)
         if parent and (AXObject.get_role(parent) in self.SKIP_CONTEXT_ROLES):
-            parent = parent.parent
-        while parent and (parent.parent != parent):
+            parent = AXObject.get_parent_checked(parent)
+        while parent:
             parentResult = []
             # [[[TODO: WDW - we might want to include more things here
             # besides just those things that have labels.  For example,
@@ -317,7 +317,7 @@ class BrailleGenerator(generator.Generator):
             if role == Atspi.Role.EMBEDDED:
                 break
 
-            parent = parent.parent
+            parent = AXObject.get_parent_checked(parent)
         result.reverse()
         return result
 

@@ -2114,8 +2114,8 @@ class SpeechGenerator(generator.Generator):
                 presentCommonAncestor = objLevel != priorLevel
 
         ancestors, ancestorRoles = [], []
-        parent = obj.parent
-        while parent and parent != parent.parent:
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
             parentRole = self._getAlternativeRole(parent)
             if parentRole in stopAtRoles:
                 break
@@ -2134,7 +2134,7 @@ class SpeechGenerator(generator.Generator):
             if parent == commonAncestor or parentRole in stopAfterRoles:
                 break
 
-            parent = parent.parent
+            parent = AXObject.get_parent_checked(parent)
 
         presentedRoles = []
         for i, x in enumerate(ancestors):

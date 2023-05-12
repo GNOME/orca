@@ -1196,15 +1196,15 @@ class Generator:
                 result.append(self._script.utilities.\
                                   displayedText(radioGroupLabel))
             else:
-                parent = obj.parent
-                while parent and (parent.parent != parent):
+                parent = AXObject.get_parent_checked(obj)
+                while parent:
                     if AXObject.get_role(parent) in [Atspi.Role.PANEL,
                                             Atspi.Role.FILLER]:
                         label = self._generateLabelAndName(parent)
                         if label:
                             result.extend(label)
                             break
-                    parent = parent.parent
+                    parent = AXObject.get_parent_checked(parent)
         return result
 
     def _generateRealActiveDescendantDisplayedText(self, obj, **args ):
@@ -1241,14 +1241,14 @@ class Generator:
         represents the nearest ancestor of an object which is a named panel.
         """
         result = []
-        parent = obj.parent
-        while parent and (parent.parent != parent):
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
             if AXObject.get_role(parent) == Atspi.Role.PANEL:
                 label = self._generateLabelAndName(parent)
                 if label:
                     result.extend(label)
                     break
-            parent = parent.parent
+            parent = AXObject.get_parent_checked(parent)
         return result
 
     def _generatePageSummary(self, obj, **args):
