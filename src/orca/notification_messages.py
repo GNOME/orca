@@ -25,6 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from . import cmdnames
 from . import debug
 from . import input_event
