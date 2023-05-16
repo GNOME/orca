@@ -321,7 +321,7 @@ formatting = {
             'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + (numberOfChildren or roleName) + pause'
             },
         Atspi.Role.LIST_ITEM: {
-            'focused': 'expandableState',
+            'focused': 'checkedStateIfCheckable + pause + expandableState',
             'unfocused': '(labelOrName or (displayedText + allTextSelection)) + checkedStateIfCheckable + pause + unselectedStateIfSelectable + pause + expandableState + pause + positionInList + pause + listBoxItemWidgets',
             'basicWhereAmI': 'label + roleName + pause + (name or displayedText) + checkedStateIfCheckable + pause + unselectedStateIfSelectable + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
             },
