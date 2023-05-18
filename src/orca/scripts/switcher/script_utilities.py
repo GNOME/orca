@@ -66,14 +66,7 @@ class Utilities(script_utilities.Utilities):
         if not super().isZombie(obj):
             return False
 
-        try:
-            index = obj.getIndexInParent()
-        except:
-            msg = "SWITCHER: Exception getting index in parent for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if index >= 0:
+        if AXObject.get_index_in_parent(obj) >= 0:
             return True
 
         obj.clearCache()

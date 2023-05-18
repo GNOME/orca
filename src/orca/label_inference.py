@@ -549,10 +549,10 @@ class LabelInference:
             cellAbove = self._getCellFromTable(grid, rowindex - 1, colindex)
             cellBelow = self._getCellFromTable(grid, rowindex + 1, colindex)
         elif gridrow and cell.parent == gridrow:
-            cellindex = cell.getIndexInParent()
+            cellindex = AXObject.get_index_in_parent(cell)
             cellLeft = self._getCellFromRow(gridrow, cellindex - 1)
             cellRight = self._getCellFromRow(gridrow, cellindex + 1)
-            rowindex = gridrow.getIndexInParent()
+            rowindex = AXObject.get_index_in_parent(gridrow)
             if rowindex > 0:
                 cellAbove = self._getCellFromRow(gridrow.parent[rowindex - 1], cellindex)
             if rowindex + 1 < AXObject.get_child_count(grid):

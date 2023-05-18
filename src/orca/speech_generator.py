@@ -1802,7 +1802,7 @@ class SpeechGenerator(generator.Generator):
         result.append(self._script.formatting.getString(
                           mode='speech',
                           stringType='iconindex') \
-                      % {"index" : obj.getIndexInParent() + 1,
+                      % {"index" : AXObject.get_index_in_parent(obj) + 1,
                          "total" : childCount})
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
@@ -2894,7 +2894,7 @@ class SpeechGenerator(generator.Generator):
     def _generateMathRow(self, obj, **args):
         result = []
 
-        result.append(messages.TABLE_ROW % (obj.getIndexInParent() + 1))
+        result.append(messages.TABLE_ROW % (AXObject.get_index_in_parent(obj) + 1))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         result.extend(self._generatePause(obj, **args))
 

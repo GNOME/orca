@@ -184,10 +184,10 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) == Atspi.Role.LINK:
             obj = obj.parent
 
-        index = obj.getIndexInParent() - 1
+        index = AXObject.get_index_in_parent(obj) - 1
         if not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
             obj = obj.parent
-            index = obj.getIndexInParent() - 1
+            index = AXObject.get_index_in_parent(obj) - 1
 
         prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
@@ -206,10 +206,10 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) == Atspi.Role.LINK:
             obj = obj.parent
 
-        index = obj.getIndexInParent() + 1
+        index = AXObject.get_index_in_parent(obj) + 1
         if not (0 < index < AXObject.get_child_count(obj.parent)):
             obj = obj.parent
-            index = obj.getIndexInParent() + 1
+            index = AXObject.get_index_in_parent(obj) + 1
 
         nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):

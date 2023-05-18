@@ -473,7 +473,7 @@ class Utilities(script_utilities.Utilities):
 
         nextObj = None
         while obj and not nextObj:
-            index = obj.getIndexInParent() + 1
+            index = AXObject.get_index_in_parent(obj) + 1
             parent = AXObject.get_parent(obj)
             if 0 < index < AXObject.get_child_count(parent):
                 nextObj = AXObject.get_child(parent, index)
@@ -498,11 +498,11 @@ class Utilities(script_utilities.Utilities):
                 if self.characterOffsetInParent(child) < offset:
                     return child
 
-        index = obj.getIndexInParent() - 1
+        index = AXObject.get_index_in_parent(obj) - 1
         parent = AXObject.get_parent(obj)
         if not 0 <= index < AXObject.get_child_count(parent):
             obj = parent
-            index = obj.getIndexInParent() - 1
+            index = AXObject.get_index_in_parent(obj) - 1
 
         previousObj = AXObject.get_child(AXObject.get_parent(obj), index)
         while previousObj and AXObject.get_child_count(previousObj):
@@ -2762,7 +2762,7 @@ class Utilities(script_utilities.Utilities):
         if not separator:
             return []
 
-        index = separator.getIndexInParent()
+        index = AXObject.get_index_in_parent(separator)
         children = []
         for i in range(index + 1, AXObject.get_child_count(obj)):
             child = AXObject.get_child(obj, i)
@@ -2774,7 +2774,7 @@ class Utilities(script_utilities.Utilities):
     def getMathPostscripts(self, obj):
         separator = self._getMathPrePostScriptSeparator(obj)
         if separator:
-            index = separator.getIndexInParent()
+            index = AXObject.get_index_in_parent(separator)
         else:
             index = AXObject.get_child_count(obj)
 
@@ -5370,7 +5370,7 @@ class Utilities(script_utilities.Utilities):
             if start + 1 == end and 0 <= start < end <= length:
                 return self._findNextCaretInOrder(parent, start)
 
-            index = obj.getIndexInParent() + 1
+            index = AXObject.get_index_in_parent(obj) + 1
             parentChildCount = AXObject.get_child_count(parent)
             if 0 < index < parentChildCount:
                 child = AXObject.get_child(parent, index)
@@ -5443,7 +5443,7 @@ class Utilities(script_utilities.Utilities):
             if start + 1 == end and 0 <= start < end <= length:
                 return self._findPreviousCaretInOrder(parent, start)
 
-            index = obj.getIndexInParent() - 1
+            index = AXObject.get_index_in_parent(obj) - 1
             parentChildCount = AXObject.get_child_count(parent)
             if 0 <= index < parentChildCount:
                 child = AXObject.get_child(parent, index)

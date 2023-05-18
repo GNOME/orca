@@ -24,6 +24,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.speech_generator as speech_generator
+from orca.ax_object import AXObject
 
 ########################################################################
 #                                                                      #
@@ -51,7 +52,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # hidden object of interest seems to always immediately
             # precede the visible object.
             #
-            expanderCell = obj.parent[obj.getIndexInParent() - 1]
+            expanderCell = obj.parent[AXObject.get_index_in_parent(obj) - 1]
             if expanderCell:
                 result.extend(
                     speech_generator.SpeechGenerator._generateExpandableState(
@@ -76,7 +77,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # hidden object of interest seems to always immediately
             # precede the visible object.
             #
-            expanderCell = obj.parent[obj.getIndexInParent() - 1]
+            expanderCell = obj.parent[AXObject.get_index_in_parent(obj) - 1]
             if expanderCell:
                 result.extend(
                     speech_generator.SpeechGenerator._generateNumberOfChildren(

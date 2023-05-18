@@ -96,7 +96,7 @@ class Utilities(script_utilities.Utilities):
         #
         for i in range(row+1, table.nRows):
             cell = table.getAccessibleAt(i, col)
-            nodeCell = cell.parent[cell.getIndexInParent() - 1]
+            nodeCell = cell.parent[AXObject.get_index_in_parent(cell) - 1]
             relations = nodeCell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
@@ -131,7 +131,7 @@ class Utilities(script_utilities.Utilities):
             return script_utilities.Utilities.nodeLevel(self, obj)
 
         try:
-            obj = obj.parent[obj.getIndexInParent() - 1]
+            obj = obj.parent[AXObject.get_index_in_parent(obj) - 1]
         except:
             return -1
 
@@ -192,4 +192,4 @@ class Utilities(script_utilities.Utilities):
 
         msg = 'INFO: Hacking around broken index in parent for %s' % obj
         debug.println(debug.LEVEL_INFO, msg, True)
-        return obj.getIndexInParent() != -1
+        return AXObject.get_index_in_parent(obj) != -1

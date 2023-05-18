@@ -210,7 +210,7 @@ class Script(GAIL.Script):
         # Overridden here because the event.source is in a hidden column.
         obj = event.source
         if self.chat.isInBuddyList(obj):
-            obj = obj.parent[obj.getIndexInParent() + 1]
+            obj = obj.parent[AXObject.get_index_in_parent(obj) + 1]
             self.presentObject(obj, alreadyFocused=True)
             return
             

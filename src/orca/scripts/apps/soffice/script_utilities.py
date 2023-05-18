@@ -340,7 +340,7 @@ class Utilities(script_utilities.Utilities):
         # bug seems to be fixed in LO v5.3.0. When that version is released, this
         # and hopefully other hacks can be removed.
         window = super().topLevelObject(obj)
-        if not window or window.getIndexInParent() >= 0:
+        if not window or AXObject.get_index_in_parent(window) >= 0:
             return window
 
         msg = "SOFFICE: %s's window %s has -1 indexInParent" % (obj, window)
@@ -351,11 +351,7 @@ class Utilities(script_utilities.Utilities):
                 window = child
                 break
 
-        try:
-            index = window.getIndexInParent()
-        except:
-            index = -1
-
+        index = AXObject.get_index_in_parent(window)
         msg = "SOFFICE: Returning %s (index: %i)" % (window, index)
         debug.println(debug.LEVEL_INFO, msg, True)
         return window

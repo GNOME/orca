@@ -190,7 +190,7 @@ class Script(default.Script):
 
         if lastKey == 'Down' \
            and orca_state.locusOfFocus == event.source.parent \
-           and event.source.getIndexInParent() == 0 \
+           and AXObject.get_index_in_parent(event.source) == 0 \
            and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.LINK:
             self.updateBraille(event.source)
             return
@@ -329,7 +329,7 @@ class Script(default.Script):
 
             # TODO: Move these next items into the speech generator.
             if AXObject.get_role(obj) == Atspi.Role.PANEL \
-               and obj.getIndexInParent() == 0:
+               and AXObject.get_index_in_parent(obj) == 0:
                 obj = obj.parent
 
             rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]

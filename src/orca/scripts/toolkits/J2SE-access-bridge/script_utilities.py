@@ -95,7 +95,7 @@ class Utilities(script_utilities.Utilities):
             while parent1 and parent2 and \
                     AXObject.get_role(parent1) == Atspi.Role.LABEL and \
                     AXObject.get_role(parent2) == Atspi.Role.LABEL:
-                if parent1.getIndexInParent() != parent2.getIndexInParent():
+                if AXObject.get_index_in_parent(parent1) != AXObject.get_index_in_parent(parent2):
                     return False
                 parent1 = parent1.parent
                 parent2 = parent2.parent

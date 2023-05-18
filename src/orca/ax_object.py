@@ -335,6 +335,22 @@ class AXObject:
         return path
 
     @staticmethod
+    def get_index_in_parent(obj):
+        """Returns the child index of obj within its parent"""
+
+        if obj is None:
+            return -1
+
+        try:
+            index = Atspi.Accessible.get_index_in_parent(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_index_in_parent: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1
+
+        return index
+
+    @staticmethod
     def get_parent(obj):
         """Returns the accessible parent of obj. See also get_parent_checked."""
 
@@ -373,13 +389,7 @@ class AXObject:
         if debug.LEVEL_INFO < debug.debugLevel:
             return parent
 
-        try:
-            index = Atspi.Accessible.get_index_in_parent(obj)
-        except Exception as e:
-            msg = "ERROR: Exception getting index in parent for %s: %s" % (obj, e)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return parent
-
+        index = AXObject.get_index_in_parent(obj)
         nchildren = AXObject.get_child_count(parent)
         if index < 0 or index > nchildren:
             msg = "ERROR: %s has index %i; parent %s has %i children" % \

@@ -227,7 +227,7 @@ class Utilities:
     def cellIndex(self, obj):
         """Returns the index of the cell which should be used with the
         table interface.  This is necessary because in some apps we
-        cannot count on getIndexInParent() returning the index we need.
+        cannot count on the index in parent being the index we need.
 
         Arguments:
         -obj: the table cell whose index we need.
@@ -240,7 +240,7 @@ class Utilities:
 
         isCell = lambda x: x and AXObject.get_role(x) in self.getCellRoles()
         obj = AXObject.find_ancestor(obj, isCell) or obj
-        return obj.getIndexInParent()
+        return AXObject.get_index_in_parent(obj)
 
     def childNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
@@ -273,7 +273,7 @@ class Utilities:
                         Atspi.RelationType.NODE_PARENT_OF:
                     for target in range(relation.getNTargets()):
                         node = relation.getTarget(target)
-                        if node and node.getIndexInParent() != -1:
+                        if node and AXObject.get_index_in_parent(node) != -1:
                             nodes.append(node)
                     return nodes
         except:
@@ -2410,7 +2410,7 @@ class Utilities:
         # on the index in the parent. This is seen with GtkListBox items which
         # had been scrolled off-screen.
         if not rv and obj1.parent == obj2.parent:
-            rv = obj1.getIndexInParent() - obj2.getIndexInParent()
+            rv = AXObject.get_index_in_parent(obj1) - AXObject.get_index_in_parent(obj2)
 
         rv = max(rv, -1)
         rv = min(rv, 1)
@@ -2620,10 +2620,10 @@ class Utilities:
             if relation.getRelationType() == Atspi.RelationType.FLOWS_FROM:
                 return relation.getTarget(0)
 
-        index = obj.getIndexInParent() - 1
+        index = AXObject.get_index_in_parent(obj) - 1
         while obj.parent and not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
             obj = obj.parent
-            index = obj.getIndexInParent() - 1
+            index = AXObject.get_index_in_parent(obj) - 1
 
         prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if prevObj == obj:
@@ -2641,10 +2641,10 @@ class Utilities:
             if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
                 return relation.getTarget(0)
 
-        index = obj.getIndexInParent() + 1
+        index = AXObject.get_index_in_parent(obj) + 1
         while obj.parent and not (0 < index < AXObject.get_child_count(obj.parent)):
             obj = obj.parent
-            index = obj.getIndexInParent() + 1
+            index = AXObject.get_index_in_parent(obj) + 1
 
         nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
         if nextObj == obj:
@@ -5014,8 +5014,8 @@ class Utilities:
         return False
 
     def isZombie(self, obj):
+        index = AXObject.get_index_in_parent(obj)
         try:
-            index = obj.getIndexInParent()
             state = obj.getState()
         except:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj, True)
@@ -5137,7 +5137,7 @@ class Utilities:
         parent = self.getFunctionalParent(obj)
         childCount = self.getFunctionalChildCount(parent)
         if childCount > 100 and parent == obj.parent:
-            return obj.getIndexInParent(), childCount
+            return AXObject.get_index_in_parent(obj), childCount
 
         siblings = self.getFunctionalChildren(parent, obj)
         if len(siblings) < 100 and not AXObject.find_ancestor(obj, isComboBox):
@@ -5161,13 +5161,7 @@ class Utilities:
         if not self.isDescriptionListDescription(obj):
             return None
 
-        try:
-            index = obj.getIndexInParent()
-        except:
-            msg = "ERROR: Exception getting index in parent for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        index = AXObject.get_index_in_parent(obj)
         for i in range(index - 1, -1, -1):
             child = AXObject.get_child(AXObject.get_parent(obj), i)
             if self.isDescriptionListTerm(child):
@@ -5179,13 +5173,7 @@ class Utilities:
         if not self.isDescriptionListTerm(obj):
             return []
 
-        try:
-            index = obj.getIndexInParent()
-        except:
-            msg = "ERROR: Exception getting index in parent for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
+        index = AXObject.get_index_in_parent(obj)
         total = AXObject.get_child_count(obj.parent)
         values = []
         for i in range(index + 1, total):
@@ -6002,7 +5990,7 @@ class Utilities:
 
         subtree = []
         startObjParent = AXObject.get_parent(startObj)
-        for i in range(startObj.getIndexInParent(), AXObject.get_child_count(startObjParent)):
+        for i in range(AXObject.get_index_in_parent(startObj), AXObject.get_child_count(startObjParent)):
             child = AXObject.get_child(startObjParent, i)
             if self.isStaticTextLeaf(child):
                 continue
@@ -6019,7 +6007,7 @@ class Utilities:
             subtree.extend(self.findAllDescendants(endObj, _include, _exclude))
 
         endObjParent = AXObject.get_parent(endObj)
-        endObjIndex = endObj.getIndexInParent()
+        endObjIndex = AXObject.get_index_in_parent(endObj)
         lastObj = AXObject.get_child(endObjParent, endObjIndex + 1) or endObj
 
         try:

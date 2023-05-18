@@ -184,7 +184,7 @@ class Utilities(script_utilities.Utilities):
 
     def isZombie(self, obj):
         rv = super().isZombie(obj)
-        if rv and self.isLink(obj) and obj.getIndexInParent() == -1:
+        if rv and self.isLink(obj) and AXObject.get_index_in_parent(obj) == -1:
             msg = 'INFO: Hacking around bug 759736 for %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False

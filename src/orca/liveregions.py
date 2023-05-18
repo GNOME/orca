@@ -554,10 +554,7 @@ class LiveRegionManager:
             if obj.parent is None or obj == docframe:
                 path.reverse()
                 return tuple(path)
-            try:
-                path.append(obj.getIndexInParent())
-            except Exception:
-                raise LookupError
+            path.append(AXObject.get_index_in_parent(obj))
             obj = obj.parent
 
     def toggleMonitoring(self, script, inputEvent):
