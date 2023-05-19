@@ -484,51 +484,6 @@ class Utilities(script_utilities.Utilities):
 
         return nextObj
 
-    def getPreviousObjectInDocument(self, obj, documentFrame):
-        if not obj:
-            return None
-
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == Atspi.RelationType.FLOWS_FROM:
-                return relation.getTarget(0)
-
-        if obj == documentFrame:
-            obj, offset = self.getCaretContext(documentFrame)
-            for child in documentFrame:
-                if self.characterOffsetInParent(child) < offset:
-                    return child
-
-        index = AXObject.get_index_in_parent(obj) - 1
-        parent = AXObject.get_parent(obj)
-        if not 0 <= index < AXObject.get_child_count(parent):
-            obj = parent
-            index = AXObject.get_index_in_parent(obj) - 1
-
-        previousObj = AXObject.get_child(AXObject.get_parent(obj), index)
-        while previousObj and AXObject.get_child_count(previousObj):
-            childCount = AXObject.get_child_count(previousObj)
-            previousObj = AXObject.get_child(previousObj, childCount - 1)
-
-        return previousObj
-
-    def getTopOfFile(self):
-        return self.findFirstCaretContext(self.documentFrame(), 0)
-
-    def getBottomOfFile(self):
-        obj = self.getLastObjectInDocument(self.documentFrame())
-        offset = 0
-        text = self.queryNonEmptyText(obj)
-        if text:
-            offset = text.characterCount - 1
-
-        while obj:
-            lastobj, lastoffset = self.nextContext(obj, offset)
-            if not lastobj:
-                break
-            obj, offset = lastobj, lastoffset
-
-        return [obj, offset]
-
     def getLastObjectInDocument(self, documentFrame):
         try:
             lastChild = documentFrame[AXObject.get_child_count(documentFrame) - 1]
