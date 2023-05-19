@@ -101,7 +101,6 @@ src/orca/scripts/apps/gedit/Makefile
 src/orca/scripts/apps/gnome-documents/Makefile
 src/orca/scripts/apps/gnome-keyring-ask/Makefile
 src/orca/scripts/apps/gnome-panel/Makefile
-src/orca/scripts/apps/gnome-screensaver-dialog/Makefile
 src/orca/scripts/apps/gnome-search-tool/Makefile
 src/orca/scripts/apps/gnome-shell/Makefile
 src/orca/scripts/apps/gnome-window-properties/Makefile

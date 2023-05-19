@@ -12,7 +12,6 @@ SUBDIRS = \
 	gnome-documents \
 	gnome-keyring-ask \
 	gnome-panel \
-	gnome-screensaver-dialog \
 	gnome-shell \
 	gnome-search-tool \
 	gnome-window-properties \
