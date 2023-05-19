@@ -187,11 +187,7 @@ class Utilities:
         candidates = []
         apps = apps or self.knownApplications()
         for app in apps:
-            try:
-                candidates.extend([child for child in app if self.canBeActiveWindow(child)])
-            except:
-                msg = "ERROR: Exception examining children of %s" % app
-                debug.println(debug.LEVEL_INFO, msg, True)
+            candidates.extend([child for child in AXObject.iter_children(app, self.canBeActiveWindow)])
 
         if not candidates:
             msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
@@ -470,7 +466,7 @@ class Utilities:
         relation = filter(hasDetails, relations)
         details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
         if not details and role == Atspi.Role.TOGGLE_BUTTON and state.contains(Atspi.StateType.EXPANDED):
-            details = [child for child in obj]
+            details = [child for child in AXObject.iter_children(obj)]
 
         if not textOnly:
             return details
@@ -587,7 +583,7 @@ class Utilities:
         if root.getState().contains(Atspi.StateType.FOCUSED):
             return root
 
-        for child in root:
+        for child in AXObject.iter_children(root):
             try:
                 candidate = Utilities.focusedObject(child)
                 if candidate:
@@ -1718,7 +1714,7 @@ class Utilities:
         as a list of Accessible objects.
         """
 
-        return [x for x in Utilities._desktop if x is not None]
+        return [x for x in AXObject.iter_children(Utilities._desktop)]
 
     def labelsForObject(self, obj):
         """Return a list of the labels for this object."""
@@ -2111,9 +2107,9 @@ class Utilities:
         elif self.hasPresentableText(root):
             objects.append(root)
 
-        for child in root:
-            if not self.isStaticTextLeaf(child):
-                objects.extend(self.getOnScreenObjects(child, extents))
+        pred = lambda x: x and not self.isStaticTextLeaf(x)
+        for child in AXObject.iter_children(root, pred):
+            objects.extend(self.getOnScreenObjects(child, extents))
 
         if role == Atspi.Role.MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = None
@@ -2620,16 +2616,7 @@ class Utilities:
             if relation.getRelationType() == Atspi.RelationType.FLOWS_FROM:
                 return relation.getTarget(0)
 
-        index = AXObject.get_index_in_parent(obj) - 1
-        while obj.parent and not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
-            obj = obj.parent
-            index = AXObject.get_index_in_parent(obj) - 1
-
-        prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
-        if prevObj == obj:
-            prevObj = None
-
-        return prevObj
+        return AXObject.get_previous_object(obj)
 
     def findNextObject(self, obj):
         """Finds the object after this one."""
@@ -2641,16 +2628,7 @@ class Utilities:
             if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
                 return relation.getTarget(0)
 
-        index = AXObject.get_index_in_parent(obj) + 1
-        while obj.parent and not (0 < index < AXObject.get_child_count(obj.parent)):
-            obj = obj.parent
-            index = AXObject.get_index_in_parent(obj) + 1
-
-        nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
-        if nextObj == obj:
-            nextObj = None
-
-        return nextObj
+        return AXObject.get_next_object(obj)
 
     def allSelectedText(self, obj):
         """Get all the text applicable text selections for the given object.
@@ -4021,8 +3999,8 @@ class Utilities:
         if not obj:
             return None
 
-        childCount = AXObject.get_child_count(obj)
-        menus = [child for child in obj if AXObject.get_role(child) == Atspi.Role.MENU]
+        pred = lambda x: AXObject.get_role(x) == Atspi.Role.MENU
+        menus = [child for child in AXObject.iter_children(obj, pred)]
         for menu in menus:
             try:
                 state = menu.getState()
@@ -4602,7 +4580,7 @@ class Utilities:
 
         candidates_showing = []
         candidates = []
-        for child in root:
+        for child in AXObject.iter_children(root):
             obj = self.descendantAtPoint(child, x, y, coordType)
             if obj:
                 return obj
@@ -5161,26 +5139,20 @@ class Utilities:
         if not self.isDescriptionListDescription(obj):
             return None
 
-        index = AXObject.get_index_in_parent(obj)
-        for i in range(index - 1, -1, -1):
-            child = AXObject.get_child(AXObject.get_parent(obj), i)
-            if self.isDescriptionListTerm(child):
-                return child
+        while obj and not self.isDescriptionListTerm(obj):
+            obj = AXObject.get_previous_sibling(obj)
 
-        return None
+        return obj
 
     def valuesForTerm(self, obj):
         if not self.isDescriptionListTerm(obj):
             return []
 
-        index = AXObject.get_index_in_parent(obj)
-        total = AXObject.get_child_count(obj.parent)
         values = []
-        for i in range(index + 1, total):
-            child = AXObject.get_child(AXObject.get_parent(obj), i)
-            if not self.isDescriptionListDescription(child):
-                break
-            values.append(child)
+        obj = AXObject.get_next_sibling(obj)
+        while obj and self.isDescriptionListDescription(obj):
+            values.append(obj)
+            obj = AXObject.get_next_sibling(obj)
 
         return values
 

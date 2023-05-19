@@ -1163,7 +1163,7 @@ class StructuralNavigation:
         if obj and not AXObject.get_child_count(obj):
             text = self._script.utilities.displayedText(obj)
         else:
-            for child in obj:
+            for child in AXObject.iter_children(obj):
                 childText = self._script.utilities.displayedText(child)
                 text = self._script.utilities.appendString(text, childText)
 

@@ -444,12 +444,7 @@ class Script(web.Script):
         # Right now we don't get accessibility events for alerts which are
         # already showing at the time of window activation. If that changes,
         # we should store presented alerts so we don't double-present them.
-        for child in event.source:
-            if not child:
-                msg = "CHROMIUM: Event source claims null child"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                continue
-
+        for child in AXObject.iter_children(event.source):
             if AXObject.get_role(child) == Atspi.Role.ALERT:
                 self.presentObject(child)
 

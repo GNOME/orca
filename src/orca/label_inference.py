@@ -153,13 +153,7 @@ class LabelInference:
             return False
 
         isMatch = lambda x: x and not self._script.utilities.isStaticTextLeaf(x)
-
-        try:
-            children = [child for child in obj if isMatch(child)]
-        except (LookupError, RuntimeError):
-            debug.println(debug.LEVEL_INFO, 'Dead Accessible in %s' % obj, True)
-            return False
-
+        children = [child for child in AXObject.iter_children(obj, isMatch)]
         children = [x for x in children if AXObject.get_role(x) != Atspi.Role.LINK]
         if len(children) > 1:
             return False

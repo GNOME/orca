@@ -65,7 +65,7 @@ class Utilities(script_utilities.Utilities):
 
         isToggle = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOGGLE_BUTTON
 
-        for child in obj:
+        for child in AXObject.iter_children(obj):
             if AXObject.get_role(child) != Atspi.Role.FILLER:
                 continue
 

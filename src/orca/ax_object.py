@@ -364,6 +364,11 @@ class AXObject:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
+        if parent == obj:
+            msg = "ERROR: %s claims to be its own parent" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
         return parent
 
     @staticmethod
@@ -379,11 +384,6 @@ class AXObject:
 
         parent = AXObject.get_parent(obj)
         if parent is None:
-            return None
-
-        if parent == obj:
-            msg = "ERROR: %s claims to be its own parent" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if debug.LEVEL_INFO < debug.debugLevel:
@@ -449,6 +449,9 @@ class AXObject:
         if index == -1:
             index = n_children - 1
 
+        if not (0 <= index < n_children):
+            return None
+
         try:
             child = Atspi.Accessible.get_child_at_index(obj, index)
         except Exception as e:
@@ -480,7 +483,7 @@ class AXObject:
 
     @staticmethod
     def find_descendant(obj, pred):
-        """Returns the ancestor of obj if the function pred is true"""
+        """Returns the descendant of obj if the function pred is true"""
 
         if obj is None:
             return None
@@ -570,3 +573,113 @@ class AXObject:
             return 0
 
         return count
+
+    @staticmethod
+    def iter_children(obj, pred=None):
+        """Generator to iterate through obj's children. If the function pred is
+        specified, children for which pred is False will be skipped."""
+
+        if obj is None:
+            return
+
+        child_count = AXObject.get_child_count(obj)
+        for index in range(child_count):
+            child = AXObject.get_child(obj, index)
+            if child is not None and (pred is None or pred(child)):
+                yield child
+
+    @staticmethod
+    def get_previous_sibling(obj):
+        """Returns the previous sibling of obj, based on child indices"""
+
+        if obj is None:
+            return None
+
+        parent = AXObject.get_parent(obj)
+        if parent is None:
+            return None
+
+        index = AXObject.get_index_in_parent(obj)
+        if index <= 0:
+            return None
+
+        sibling = AXObject.get_child(parent, index - 1)
+        if sibling == obj:
+            msg = "ERROR: %s claims to be its own sibling" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return sibling
+
+    @staticmethod
+    def get_next_sibling(obj):
+        """Returns the next sibling of obj, based on child indices"""
+
+        if obj is None:
+            return None
+
+        parent = AXObject.get_parent(obj)
+        if parent is None:
+            return None
+
+        index = AXObject.get_index_in_parent(obj)
+        if index < 0:
+            return None
+
+        sibling = AXObject.get_child(parent, index + 1)
+        if sibling == obj:
+            msg = "ERROR: %s claims to be its own sibling" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return sibling
+
+    @staticmethod
+    def get_next_object(obj):
+        """Returns the next object (depth first) in the accessibility tree"""
+
+        if obj is None:
+            return None
+
+        index = AXObject.get_index_in_parent(obj) + 1
+        parent = AXObject.get_parent(obj)
+        while parent and not (0 < index < AXObject.get_child_count(parent)):
+            obj = parent
+            index = AXObject.get_index_in_parent(obj) + 1
+            parent = AXObject.get_parent(obj)
+
+        if parent is None:
+            return None
+
+        next_object = AXObject.get_child(parent, index)
+        if next_object == obj:
+            msg = "ERROR: %s claims to be its own next object" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return next_object
+
+    @staticmethod
+    def get_previous_object(obj):
+        """Returns the previous object (depth first) in the accessibility tree"""
+
+        if obj is None:
+            return None
+
+        index = AXObject.get_index_in_parent(obj) - 1
+        parent = AXObject.get_parent(obj)
+        while parent and not (0 <= index < AXObject.get_child_count(parent) - 1):
+            obj = parent
+            index = AXObject.get_index_in_parent(obj) - 1
+            parent = AXObject.get_parent(obj)
+
+        if parent is None:
+            return None
+
+        previous_object = AXObject.get_child(parent, index)
+        if previous_object == obj:
+            msg = "ERROR: %s claims to be its own previous object" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return previous_object

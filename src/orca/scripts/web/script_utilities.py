@@ -464,25 +464,20 @@ class Utilities(script_utilities.Utilities):
 
         if obj == documentFrame:
             obj, offset = self.getCaretContext(documentFrame)
-            for child in documentFrame:
+            for child in AXObject.iter_children(documentFrame):
                 if self.characterOffsetInParent(child) > offset:
                     return child
 
         if AXObject.get_child_count(obj):
             return AXObject.get_child(obj, 0)
 
-        nextObj = None
-        while obj and not nextObj:
-            index = AXObject.get_index_in_parent(obj) + 1
-            parent = AXObject.get_parent(obj)
-            if 0 < index < AXObject.get_child_count(parent):
-                nextObj = AXObject.get_child(parent, index)
-            elif parent != documentFrame:
-                obj = parent
-            else:
-                break
+        while obj and obj != documentFrame:
+            nextObj = AXObject.get_next_sibling(obj)
+            if nextObj:
+                return nextObj
+            obj = AXObject.get_parent(obj)
 
-        return nextObj
+        return None
 
     def getLastObjectInDocument(self, documentFrame):
         try:
@@ -1064,7 +1059,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if self.hasExplicitName(obj) and AXObject.supports_action(obj):
-            for child in obj:
+            for child in AXObject.iter_children(obj):
                 if not self.isUselessEmptyElement(child) or self.isUselessImage(child):
                     break
             else:
@@ -2267,7 +2262,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if state.contains(Atspi.StateType.FOCUSABLE) and not self.isDocument(obj):
-            for child in obj:
+            for child in AXObject.iter_children(obj):
                 if self.isMathTopLevel(child):
                     rv = True
                     break
@@ -2706,7 +2701,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def _getMathPrePostScriptSeparator(self, obj):
-        for child in obj:
+        for child in AXObject.iter_children(obj):
             if self._isMathPrePostScriptSeparator(child):
                 return child
 
@@ -2717,27 +2712,21 @@ class Utilities(script_utilities.Utilities):
         if not separator:
             return []
 
-        index = AXObject.get_index_in_parent(separator)
         children = []
-        for i in range(index + 1, AXObject.get_child_count(obj)):
-            child = AXObject.get_child(obj, i)
-            if child is not None:
-                children.append(child)
+        child = AXObject.get_next_sibling(separator)
+        while child:
+            children.append(child)
+            child = AXObject.get_next_sibling(child)
 
         return children
 
     def getMathPostscripts(self, obj):
         separator = self._getMathPrePostScriptSeparator(obj)
-        if separator:
-            index = AXObject.get_index_in_parent(separator)
-        else:
-            index = AXObject.get_child_count(obj)
-
         children = []
-        for i in range(1,index):
-            child = AXObject.get_child(obj, i)
-            if child is not None:
-                children.append(child)
+        child = AXObject.get_child(obj, 1)
+        while child and child != separator:
+            children.append(child)
+            child = AXObject.get_next_sibling(child)
 
         return children
 
@@ -4094,7 +4083,7 @@ class Utilities(script_utilities.Utilities):
         if self.isCustomElement(obj) and self.hasExplicitName(obj) \
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
-            for child in obj:
+            for child in AXObject.iter_children(obj):
                 if AXObject.get_role(child) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
                    and self._getTag(child) != 'svg':
                     break
@@ -5325,10 +5314,8 @@ class Utilities(script_utilities.Utilities):
             if start + 1 == end and 0 <= start < end <= length:
                 return self._findNextCaretInOrder(parent, start)
 
-            index = AXObject.get_index_in_parent(obj) + 1
-            parentChildCount = AXObject.get_child_count(parent)
-            if 0 < index < parentChildCount:
-                child = AXObject.get_child(parent, index)
+            child = AXObject.get_next_sibling(obj)
+            if child:
                 return self._findNextCaretInOrder(child, -1)
             obj = parent
 
@@ -5398,10 +5385,8 @@ class Utilities(script_utilities.Utilities):
             if start + 1 == end and 0 <= start < end <= length:
                 return self._findPreviousCaretInOrder(parent, start)
 
-            index = AXObject.get_index_in_parent(obj) - 1
-            parentChildCount = AXObject.get_child_count(parent)
-            if 0 <= index < parentChildCount:
-                child = AXObject.get_child(parent, index)
+            child = AXObject.get_previous_sibling(obj)
+            if child:
                 return self._findPreviousCaretInOrder(child, -1)
             obj = parent
 

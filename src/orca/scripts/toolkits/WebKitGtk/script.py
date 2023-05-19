@@ -642,7 +642,7 @@ class Script(default.Script):
             return
 
         brailleLine = self.getNewBrailleLine(clearBraille=True, addLine=True)
-        for child in obj:
+        for child in AXObject.iter_children(obj):
             if not self.utilities.onSameLine(child, AXObject.get_child(obj, 0)):
                 break
             [regions, fRegion] = self.brailleGenerator.generateBraille(child)

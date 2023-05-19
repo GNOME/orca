@@ -101,7 +101,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result = []
             formatType = args.get('formatType')
             args['formatType'] = 'focused'
-            for child in obj:
+            for child in AXObject.iter_children(obj):
                 result.extend(self.generate(child, **args))
             args['formatType'] = formatType
 

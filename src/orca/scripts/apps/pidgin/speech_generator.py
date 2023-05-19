@@ -52,7 +52,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # hidden object of interest seems to always immediately
             # precede the visible object.
             #
-            expanderCell = obj.parent[AXObject.get_index_in_parent(obj) - 1]
+            expanderCell = AXObject.get_previous_sibling(obj)
             if expanderCell:
                 result.extend(
                     speech_generator.SpeechGenerator._generateExpandableState(
@@ -77,7 +77,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # hidden object of interest seems to always immediately
             # precede the visible object.
             #
-            expanderCell = obj.parent[AXObject.get_index_in_parent(obj) - 1]
+            expanderCell = AXObject.get_previous_sibling(obj)
             if expanderCell:
                 result.extend(
                     speech_generator.SpeechGenerator._generateNumberOfChildren(

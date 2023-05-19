@@ -128,7 +128,7 @@ class Script(GAIL.Script):
                 #
                 nameFound = False
                 frameName = AXObject.get_name(event.source.parent.parent)
-                for child in event.source:
+                for child in AXObject.iter_children(event.source):
                     if frameName and (frameName == AXObject.get_name(child)):
                         nameFound = True
                 if nameFound:
@@ -210,7 +210,7 @@ class Script(GAIL.Script):
         # Overridden here because the event.source is in a hidden column.
         obj = event.source
         if self.chat.isInBuddyList(obj):
-            obj = obj.parent[AXObject.get_index_in_parent(obj) + 1]
+            obj = AXObject.get_next_sibling(obj)
             self.presentObject(obj, alreadyFocused=True)
             return
             

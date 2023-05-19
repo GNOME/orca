@@ -1733,7 +1733,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         hasItems = False
-        for child in obj:
+        for child in AXObject.iter_children(obj):
             state = child.getState()
             if state.contains(Atspi.StateType.SHOWING):
                 hasItems = True
@@ -2573,7 +2573,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateMath(self, obj, **args):
         result = []
-        children = [child for child in obj]
+        children = [child for child in AXObject.iter_children(obj)]
         if not children and not self._script.utilities.isMathTopLevel(obj):
             children = [obj]
 
@@ -2883,7 +2883,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateMathTableRows(self, obj, **args):
         result = []
-        for row in obj:
+        for row in AXObject.iter_children(obj):
             oldRole = self._getAlternativeRole(row)
             self._overrideRole(oldRole, args)
             result.extend(self.generate(row, role=oldRole))
@@ -2898,7 +2898,7 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         result.extend(self._generatePause(obj, **args))
 
-        for child in obj:
+        for child in AXObject.iter_children(obj):
             result.extend(self._generateMath(child))
             result.extend(self._generatePause(child, **args))
 

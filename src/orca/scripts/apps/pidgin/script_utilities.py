@@ -96,7 +96,7 @@ class Utilities(script_utilities.Utilities):
         #
         for i in range(row+1, table.nRows):
             cell = table.getAccessibleAt(i, col)
-            nodeCell = cell.parent[AXObject.get_index_in_parent(cell) - 1]
+            nodeCell = AXObject.get_previous_sibling(cell)
             relations = nodeCell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
@@ -130,11 +130,7 @@ class Utilities(script_utilities.Utilities):
         if not self._script.chat.isInBuddyList(obj):
             return script_utilities.Utilities.nodeLevel(self, obj)
 
-        try:
-            obj = obj.parent[AXObject.get_index_in_parent(obj) - 1]
-        except:
-            return -1
-
+        obj = AXObject.get_previous_sibling(obj)
         try:
             table = obj.parent.queryTable()
         except:
