@@ -118,45 +118,6 @@ class Utilities(web.Utilities):
         self._isListItemMarker[hash(obj)] = rv
         return rv
 
-    def selectedChildCount(self, obj):
-        if not obj:
-            return []
-
-        count = super().selectedChildCount(obj)
-        if count or AXObject.supports_selection(obj):
-            return count
-
-        # HACK: Ideally, we'd use the selection interface to get the selected
-        # child count. But that interface is not implemented yet. This hackaround
-        # is extremely non-performant.
-        for child in obj:
-            if child.getState().contains(Atspi.StateType.SELECTED):
-                count += 1
-
-        msg = "CHROMIUM: NO SELECTION INTERFACE HACK: Selected children: %i" % count
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return count
-
-    def selectedChildren(self, obj):
-        if not obj:
-            return []
-
-        result = super().selectedChildren(obj)
-
-        # The fix for this issue landed in 90.0.4413.0.
-        if AXObject.get_role(obj) == Atspi.Role.MENU and not self.inDocumentContent(obj) and len(result) > 1:
-            msg = "CHROMIUM: Browser menu %s claims more than one state-selected child." % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-            isFocused = lambda x: x and x.getState().contains(Atspi.StateType.FOCUSED)
-            focused = list(filter(isFocused, result))
-            if len(focused) == 1:
-                msg = "CHROMIUM: Suspecting %s is the only actually-selected child" % focused[0]
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return focused
-
-        return result
-
     def isMenuInCollapsedSelectElement(self, obj):
         role = AXObject.get_role(obj)
         if role != Atspi.Role.MENU or self._getTag(obj.parent) != 'select':
