@@ -10,7 +10,6 @@ SUBDIRS = \
 	gcalctool \
 	gedit \
 	gnome-documents \
-	gnome-keyring-ask \
 	gnome-shell \
 	gnome-search-tool \
 	gnome-window-properties \
