@@ -11,7 +11,6 @@ SUBDIRS = \
 	gedit \
 	gnome-documents \
 	gnome-keyring-ask \
-	gnome-panel \
 	gnome-shell \
 	gnome-search-tool \
 	gnome-window-properties \
