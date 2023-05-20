@@ -712,6 +712,14 @@ class Utilities:
     def isCodeDescendant(self, obj):
         return False
 
+    def isDockedFrame(self, obj):
+        role = AXObject.get_role(obj)
+        if role != Atspi.Role.FRAME:
+            return False
+
+        attrs = self.objectAttributes(obj)
+        return attrs.get('window-type') == 'dock'
+
     def isDesktop(self, obj):
         role = AXObject.get_role(obj)
         if role != Atspi.Role.FRAME:

@@ -561,6 +561,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isDesktop(obj):
             return []
 
+        if self._script.utilities.isDockedFrame(obj):
+            return []
+
         result = []
         role = args.get('role', AXObject.get_role(obj))
 
