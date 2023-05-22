@@ -1078,7 +1078,8 @@ class EventManager:
         event.timestamp = device.event_count
         device.event_count = device.event_count + 1
 
-        if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys and orca_state.activeSWcript is not None:
+        if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys \
+            and orca_state.activeScript is not None:
             orca_state.activeScript.refreshKeyGrabs()
 
         if pressed:
