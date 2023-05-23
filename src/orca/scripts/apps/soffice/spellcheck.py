@@ -41,6 +41,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
     def __init__(self, script):
         super().__init__(script, hasChangeToEntry=False)
+        self._windows = {}
 
     def _findChildDialog(self, root):
         if not root:
@@ -49,39 +50,66 @@ class SpellCheck(spellcheck.SpellCheck):
         if AXObject.get_role(root) == Atspi.Role.DIALOG:
             return root
 
-        if AXObject.get_child_count(root):
-            return self._findChildDialog(root[0])
-
-        return None
+        return self._findChildDialog(AXObject.get_child(root, 0))
 
     def _isCandidateWindow(self, window):
         if self._script.utilities.isDead(window):
-            msg = "SOFFICE: %s is not candidate window because it's dead." % window
+            msg = "SOFFICE: %s is not spellcheck window because it's dead." % window
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if window and AXObject.get_child_count(window) and AXObject.get_role(window) == Atspi.Role.FRAME:
-            child = self._findChildDialog(window[0])
-            if child and AXObject.get_role(child) == Atspi.Role.DIALOG:
-                isPageTabList = lambda x: x and AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
-                if AXObject.find_descendant(child, isPageTabList):
-                    return False
+        rv = self._windows.get(hash(window))
+        if rv is not None:
+            msg = "SOFFICE: %s is spellcheck window: %s" % (window, rv)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return rv
 
-                isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-                return AXObject.find_descendant(child, isComboBox)
+        dialog = self._findChildDialog(window)
+        if not dialog:
+            self._windows[hash(window)] = False
+            msg = "SOFFICE: %s is not spellcheck window because the dialog was not found." % window
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
-        return False
+        isPageTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
+        if AXObject.find_descendant(dialog, isPageTabList) is not None:
+            self._windows[hash(window)] = False
+            self._windows[hash(dialog)] = False
+            msg = "SOFFICE: %s is not spellcheck dialog because a page tab list was found." % dialog
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        isComboBox = lambda x: AXObject.get_role(x) == Atspi.Role.COMBO_BOX
+        rv = AXObject.find_descendant(dialog, isComboBox) is not None
+        msg = "SOFFICE: %s is spellcheck dialog based on combobox descendant: %s" % (dialog, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self._windows[hash(dialog)] = rv
+        return rv
 
     def _findErrorWidget(self, root):
-        isError = lambda x: AXObject.get_role(x) == Atspi.Role.TEXT and AXObject.get_name(x) \
-                  and AXObject.get_role(AXObject.get_parent(x)) != Atspi.Role.COMBO_BOX
-        return AXObject.find_descendant(root, isError)
+        def isError(x):
+            if not AXObject.supports_editable_text(x):
+                return False
+            try:
+                state = x.getState()
+                rv = state.contains(Atspi.StateType.FOCUSABLE) \
+                    and state.contains(Atspi.StateType.MULTI_LINE)
+            except:
+                return False
+            return rv
+
+        rv = AXObject.find_descendant(root, isError)
+        msg = "SOFFICE: Error widget for: %s is: %s" % (root, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: AXObject.get_role(x) == Atspi.Role.LIST and AXObject.get_name(x) \
-                  and AXObject.supports_selection(x) \
-                  and AXObject.get_role(AXObject.get_parent(x)) != Atspi.Role.COMBO_BOX
-        return AXObject.find_descendant(root, isList)
+        roles = [Atspi.Role.LIST, Atspi.Role.LIST_BOX, Atspi.Role.TREE_TABLE]
+        isList = lambda x: AXObject.get_role(x) in roles and AXObject.supports_selection(x)
+        rv = AXObject.find_descendant(root, isList)
+        msg = "SOFFICE: Suggestions list for: %s is: %s" % (root, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
 
     def _getSuggestionIndexAndPosition(self, suggestion):
         index, total = self._script.utilities.getPositionAndSetSize(suggestion)

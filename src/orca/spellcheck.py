@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 import re
 
+from orca import debug
 from orca import guilabels
 from orca import messages
 from orca import object_properties
@@ -59,24 +60,36 @@ class SpellCheck:
         self.presentContextCheckButton = None
 
     def activate(self, window):
+        msg = 'SPELL CHECK: Attempting activation for %s' % window
+        debug.println(debug.LEVEL_INFO, msg, True)
         if not self._isCandidateWindow(window):
+            msg = 'SPELL CHECK: %s is not spellcheck window' % window
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._hasChangeToEntry:
             self._changeToEntry = self._findChangeToEntry(window)
             if not self._changeToEntry:
+                msg = 'SPELL CHECK: Change-to entry not found'
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
         self._errorWidget = self._findErrorWidget(window)
         if not self._errorWidget:
+            msg = 'SPELL CHECK: Error widget not found'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         self._suggestionsList = self._findSuggestionsList(window)
         if not self._suggestionsList:
+            msg = 'SPELL CHECK: Suggestions list not found'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         self._window = window
         self._activated = True
+        msg = 'SPELL CHECK: Activation complete'
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
     def deactivate(self):

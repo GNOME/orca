@@ -900,6 +900,15 @@ class Script(default.Script):
             self.utilities.handleCellSelectionChange(event.source)
             return
 
+        if event.source == self.spellcheck.getSuggestionsList():
+            if event.source.getState().contains(Atspi.StateType.FOCUSED):
+                orca.setLocusOfFocus(event, event.any_data, False)
+                self.updateBraille(orca_state.locusOfFocus)
+                self.spellcheck.presentSuggestionListItem()
+            else:
+                self.spellcheck.presentErrorDetails()
+            return
+
         if not self.utilities.isComboBoxSelectionChange(event):
             super().onSelectionChanged(event)
             return
