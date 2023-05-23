@@ -901,7 +901,10 @@ class Script(default.Script):
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
-            if event.source.getState().contains(Atspi.StateType.FOCUSED):
+            if orca_state.locusOfFocus == orca_state.activeWindow:
+                msg = "SOFFICE: Not presenting because locusOfFocus is window"
+                debug.println(debug.LEVEL_INFO, msg, True)
+            elif event.source.getState().contains(Atspi.StateType.FOCUSED):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
