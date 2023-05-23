@@ -132,7 +132,7 @@ class SpellCheck:
         if not self._suggestionsList:
             return False
 
-        return obj and obj.parent == self._suggestionsList
+        return obj and AXObject.get_parent(obj) == self._suggestionsList
 
     def presentContext(self):
         if not self.isActive():

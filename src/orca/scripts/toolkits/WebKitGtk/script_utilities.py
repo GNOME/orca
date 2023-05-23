@@ -109,7 +109,8 @@ class Utilities(script_utilities.Utilities):
             return text
 
         if AXObject.get_role(obj) in [Atspi.Role.LINK, Atspi.Role.LIST_ITEM]:
-            text = ' '.join(map(self.displayedText, (x for x in obj)))
+            children = [x for x in AXObject.iter_children(obj)]
+            text = ' '.join(map(self.displayedText, children))
             if not text:
                 text = self.linkBasename(obj)
 
@@ -182,14 +183,9 @@ class Utilities(script_utilities.Utilities):
             return None
 
         if AXObject.get_role(obj) == Atspi.Role.LINK:
-            obj = obj.parent
+            obj = AXObject.get_parent(obj)
 
-        index = AXObject.get_index_in_parent(obj) - 1
-        if not (0 <= index < AXObject.get_child_count(obj.parent) - 1):
-            obj = obj.parent
-            index = AXObject.get_index_in_parent(obj) - 1
-
-        prevObj = AXObject.get_child(AXObject.get_parent(obj), index)
+        prevObj = AXObject.get_previous_object(obj)
         if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
             child = AXObject.get_child(prevObj, -1)
             if self.isTextListItem(child):
@@ -204,14 +200,9 @@ class Utilities(script_utilities.Utilities):
             return None
 
         if AXObject.get_role(obj) == Atspi.Role.LINK:
-            obj = obj.parent
+            obj = AXObject.get_parent(obj)
 
-        index = AXObject.get_index_in_parent(obj) + 1
-        if not (0 < index < AXObject.get_child_count(obj.parent)):
-            obj = obj.parent
-            index = AXObject.get_index_in_parent(obj) + 1
-
-        nextObj = AXObject.get_child(AXObject.get_parent(obj), index)
+        nextObj = AXObject.get_next_object(obj)
         if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):
             child = AXObject.get_child(nextObj, 0)
             if self.isTextListItem(child):
@@ -225,7 +216,11 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) != Atspi.Role.LIST_ITEM:
             return False
 
-        return not obj.parent.getState().contains(Atspi.StateType.FOCUSABLE)
+        parent = AXObject.get_parent(obj)
+        if parent is None:
+            return False
+
+        return not parent.getState().contains(Atspi.StateType.FOCUSABLE)
 
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
@@ -253,14 +248,14 @@ class Utilities(script_utilities.Utilities):
             return False
 
         docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if not (obj and AXObject.get_role(obj) in docRoles):
+        if not AXObject.get_role(obj) in docRoles:
             return False
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         if not (parent and self.isWebKitGtk(parent)):
             return False
 
-        parent = parent.parent
+        parent = AXObject.get_parent(parent)
         if not (parent and not self.isWebKitGtk(parent)):
             return False
 

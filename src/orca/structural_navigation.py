@@ -989,10 +989,11 @@ class StructuralNavigation:
             while obj:
                 if obj in matches:
                     return obj, matches.index(obj)
-                obj = obj.parent
+                obj = AXObject.get_parent(obj)
 
             return None, -1
 
+        offset = 0
         if not obj:
             obj, offset = self._script.utilities.getCaretContext()
         thisObj, index = _getMatchingObjAndIndex(obj)
@@ -1005,7 +1006,7 @@ class StructuralNavigation:
             if not _isValidMatch(match):
                 continue
 
-            if match.parent == obj:
+            if AXObject.get_parent(match) == obj:
                 comparison = self._script.utilities.characterOffsetInParent(match) - offset
             else:
                 path = AXObject.get_path(match)
@@ -1041,7 +1042,8 @@ class StructuralNavigation:
     #########################################################################
 
     def _getListDescription(self, obj):
-        children = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LIST_ITEM]
+        pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
+        children = [x for x in AXObject.iter_children(obj, pred)]
         if not children:
             return ""
 
@@ -1350,10 +1352,13 @@ class StructuralNavigation:
                 text = AXObject.get_description(obj)
             else:
                 text = image.imageDescription or AXObject.get_description(obj)
-            if not text and AXObject.get_role(obj.parent) == Atspi.Role.LINK:
-                text = self._script.utilities.linkBasename(obj.parent)
+            if not text:
+                parent = AXObject.get_parent(obj)
+                if AXObject.get_role(parent) == Atspi.Role.LINK:
+                    text = self._script.utilities.linkBasename(parent)
         if not text and AXObject.get_role(obj) == Atspi.Role.LIST:
-            children = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LIST_ITEM]
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
+            children = [x for x in AXObject.iter_children(obj, pred)]
             text = " ".join(list(map(self._getText, children)))
 
         return text
@@ -1911,10 +1916,14 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if not obj and obj.parent:
+        if not obj:
             return False
 
-        return not obj.parent.getState().contains(Atspi.StateType.EDITABLE)
+        parent = AXObject.get_parent(obj)
+        if not parent:
+            return False
+
+        return not parent.getState().contains(Atspi.StateType.EDITABLE)
 
     def _entryPresentation(self, obj, arg=None):
         """Presents the entry or indicates that one was not found.

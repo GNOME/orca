@@ -190,8 +190,12 @@ class SpeechGenerator(generator.Generator):
             if name:
                 result.append(name)
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if not result and obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.AUTOCOMPLETE:
-            result = self._generateLabelOrName(obj.parent, **args)
+        if result:
+            return result
+
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) == Atspi.Role.AUTOCOMPLETE:
+            result = self._generateLabelOrName(parent, **args)
 
         return result
 
@@ -572,13 +576,10 @@ class SpeechGenerator(generator.Generator):
                         Atspi.Role.FILLER,
                         Atspi.Role.EXTENDED]
 
-        try:
-            parentRole = AXObject.get_role(obj.parent)
-        except:
-            parentRole = None
-
+        parent = AXObject.get_parent(obj)
+        parentRole = AXObject.get_role(parent)
         if role == Atspi.Role.MENU and parentRole == Atspi.Role.COMBO_BOX:
-            return self._generateRoleName(obj.parent)
+            return self._generateRoleName(parent)
 
         if self._script.utilities.isSingleLineAutocompleteEntry(obj):
             result.append(self.getLocalizedRoleName(obj, role=Atspi.Role.AUTOCOMPLETE))
@@ -1066,7 +1067,7 @@ class SpeechGenerator(generator.Generator):
         if not obj:
             return []
 
-        if not AXObject.supports_selection(obj.parent):
+        if not AXObject.supports_selection(AXObject.get_parent(obj)):
             return []
 
         state = obj.getState()
@@ -1095,7 +1096,8 @@ class SpeechGenerator(generator.Generator):
         if not obj:
             return []
 
-        if not AXObject.supports_selection(obj.parent):
+        parent = AXObject.get_parent(obj)
+        if not AXObject.supports_selection(parent):
             return []
 
         state = obj.getState()
@@ -1112,8 +1114,8 @@ class SpeechGenerator(generator.Generator):
                 return []
             if self._script.utilities.isLayoutOnly(table):
                 return []
-        elif AXObject.get_role(obj.parent) == Atspi.Role.LAYERED_PANE:
-            if obj in self._script.utilities.selectedChildren(obj.parent):
+        elif AXObject.get_role(parent) == Atspi.Role.LAYERED_PANE:
+            if obj in self._script.utilities.selectedChildren(parent):
                 return []
         else:
             return []
@@ -1144,8 +1146,9 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         col = -1
-        if AXObject.get_role(obj.parent) == Atspi.Role.TABLE_CELL:
-            obj = obj.parent
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
@@ -1182,8 +1185,9 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         row = -1
-        if AXObject.get_role(obj.parent) == Atspi.Role.TABLE_CELL:
-            obj = obj.parent
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
@@ -1209,8 +1213,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if AXObject.get_role(obj.parent) == Atspi.Role.TABLE_CELL:
-            obj = obj.parent
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
@@ -1713,7 +1718,8 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-            children = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LIST_ITEM]
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
+            children = [x for x in AXObject.iter_children(obj, pred)]
             setsize = len(children)
             if not setsize:
                 return []
@@ -1793,7 +1799,7 @@ class SpeechGenerator(generator.Generator):
 
         container = obj
         if not AXObject.supports_selection(container):
-            container = obj.parent
+            container = AXObject.get_parent(obj)
             if not AXObject.supports_selection(container):
                 return []
 
@@ -1821,7 +1827,7 @@ class SpeechGenerator(generator.Generator):
 
         container = obj
         if not AXObject.supports_selection(container):
-            container = obj.parent
+            container = AXObject.get_parent(obj)
             if not AXObject.supports_selection(container):
                 return []
 
@@ -2078,7 +2084,7 @@ class SpeechGenerator(generator.Generator):
         if priorObj and AXObject.get_role(priorObj) == Atspi.Role.TOOL_TIP:
             return []
 
-        if priorObj and priorObj.parent == obj.parent:
+        if priorObj and AXObject.get_parent(priorObj) == AXObject.get_parent(obj):
             return []
 
         if self._script.utilities.isTypeahead(priorObj):
@@ -2269,9 +2275,11 @@ class SpeechGenerator(generator.Generator):
            and args.get('formatType', None) \
                in ['basicWhereAmI', 'detailedWhereAmI']:
             return [object_properties.ROLE_ICON_PANEL]
-        if AXObject.get_role(obj.parent) in [Atspi.Role.TABLE_CELL, Atspi.Role.MENU]:
-            obj = obj.parent
-        return self._generateRoleName(obj.parent)
+
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) in [Atspi.Role.TABLE_CELL, Atspi.Role.MENU]:
+            obj = parent
+        return self._generateRoleName(AXObject.get_parent(obj))
 
     def _generateToolbar(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -2480,7 +2488,7 @@ class SpeechGenerator(generator.Generator):
                        Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
         result = []
-        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 if self._script.utilities.isShowingAndVisible(widget):

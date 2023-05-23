@@ -114,7 +114,7 @@ class Script(gtk.Script):
             self.spellcheck.presentErrorDetails()
             return
 
-        parent = event.source.parent
+        parent = AXObject.get_parent(event.source)
         if parent != self.spellcheck.getSuggestionsList() \
            or not parent.getState().contains(Atspi.StateType.FOCUSED):
             return

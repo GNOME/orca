@@ -485,7 +485,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isDescriptionList(obj):
                 children = self._script.utilities.descriptionListTerms(obj)
             elif role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-                children = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LIST_ITEM]
+                pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
+                children = [x for x in AXObject.iter_children(obj, pred)]
             setsize = len(children)
 
         if not setsize:
@@ -595,7 +596,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif isEditable and self._script.utilities.isDocument(obj):
-            if obj.parent and not obj.parent.getState().contains(Atspi.StateType.EDITABLE) \
+            parent = AXObject.get_parent(obj)
+            if parent and not parent.getState().contains(Atspi.StateType.EDITABLE) \
                and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -613,7 +615,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif self._script.utilities.isLink(obj):
-            if AXObject.get_role(obj.parent) == Atspi.Role.IMAGE:
+            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             else:

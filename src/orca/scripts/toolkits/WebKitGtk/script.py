@@ -189,7 +189,7 @@ class Script(default.Script):
             return
 
         if lastKey == 'Down' \
-           and orca_state.locusOfFocus == event.source.parent \
+           and orca_state.locusOfFocus == AXObject.get_parent(event.source) \
            and AXObject.get_index_in_parent(event.source) == 0 \
            and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.LINK:
             self.updateBraille(event.source)
@@ -330,7 +330,7 @@ class Script(default.Script):
             # TODO: Move these next items into the speech generator.
             if AXObject.get_role(obj) == Atspi.Role.PANEL \
                and AXObject.get_index_in_parent(obj) == 0:
-                obj = obj.parent
+                obj = AXObject.get_parent(obj)
 
             rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]
             if AXObject.get_role(obj) in rolesToSpeak:
@@ -355,7 +355,8 @@ class Script(default.Script):
         if len(phrase) and phrase != "\n":
             voice = self.speechGenerator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
-            links = [x for x in obj if AXObject.get_role(x) == Atspi.Role.LINK]
+            pred = lambda x: AXObject.get_role(x) == Atspi.Role.LINK
+            links = [x for x in AXObject.iter_children(obj, pred)]
             if links:
                 phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
@@ -516,7 +517,7 @@ class Script(default.Script):
             return
 
         if AXObject.get_role(obj) == Atspi.Role.LINK:
-            obj = obj.parent
+            obj = AXObject.get_parent(obj)
 
         document = self.utilities.getDocumentForObject(obj)
         if not document or document.getState().contains(Atspi.StateType.BUSY):
@@ -525,7 +526,7 @@ class Script(default.Script):
         allTextObjs = self.utilities.findAllDescendants(
             document, lambda x: AXObject.supports_text(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
-        textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]
+        textObjs = [x for x in allTextObjs if AXObject.get_parent(x) not in allTextObjs]
         if not textObjs:
             return
 

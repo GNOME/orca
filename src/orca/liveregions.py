@@ -551,11 +551,11 @@ class LiveRegionManager:
         docframe = self._script.utilities.documentFrame()
         path = []
         while True:
-            if obj.parent is None or obj == docframe:
+            if obj == docframe or AXObject.get_parent(obj) is None:
                 path.reverse()
                 return tuple(path)
             path.append(AXObject.get_index_in_parent(obj))
-            obj = obj.parent
+            obj = AXObject.get_parent(obj)
 
     def toggleMonitoring(self, script, inputEvent):
         if not _settingsManager.getSetting('inferLiveRegions'):

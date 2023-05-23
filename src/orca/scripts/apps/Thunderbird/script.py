@@ -232,7 +232,7 @@ class Script(Gecko.Script):
         if event.source == self.spellcheck.getSuggestionsList():
             return
 
-        parent = event.source.parent
+        parent = AXObject.get_parent(event.source)
         if parent and AXObject.get_role(parent) == Atspi.Role.COMBO_BOX \
            and not parent.getState().contains(Atspi.StateType.FOCUSED):
             return
@@ -272,7 +272,7 @@ class Script(Gecko.Script):
         """
 
         if AXObject.get_role(event.source) == Atspi.Role.LABEL \
-            and AXObject.get_role(event.source.parent) == Atspi.Role.STATUS_BAR:
+            and AXObject.get_role(AXObject.get_parent(event.source)) == Atspi.Role.STATUS_BAR:
             return
 
         super().onTextDeleted(event)
@@ -282,7 +282,7 @@ class Script(Gecko.Script):
 
         obj = event.source
         role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(obj.parent)
+        parentRole = AXObject.get_role(AXObject.get_parent(obj))
         if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
             return
 

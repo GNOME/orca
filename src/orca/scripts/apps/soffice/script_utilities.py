@@ -85,7 +85,7 @@ class Utilities(script_utilities.Utilities):
             return AXObject.get_name(obj)
 
         if role == Atspi.Role.TABLE_CELL:
-            strings = list(map(self.displayedText, [child for child in obj]))
+            strings = list(map(self.displayedText, [x for x in AXObject.iter_children(obj)]))
             text = "\n".join(strings)
             if text.strip():
                 return text
@@ -113,7 +113,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return False
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         role = AXObject.get_role(parent)
 
         if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
@@ -136,14 +136,14 @@ class Utilities(script_utilities.Utilities):
         if not (cell and AXObject.get_role(cell) == Atspi.Role.TABLE_CELL):
             return -1, -1, None
 
-        cellParent = cell.parent
-        if cellParent and AXObject.get_role(cellParent) == Atspi.Role.TABLE_CELL:
+        cellParent = AXObject.get_parent(cell)
+        if AXObject.get_role(cellParent) == Atspi.Role.TABLE_CELL:
             cell = cellParent
-            cellParent = cell.parent
+            cellParent = AXObject.get_parent(cell)
 
         table = cellParent
         if table and AXObject.get_role(table) != Atspi.Role.TABLE:
-            table = table.parent
+            table = AXObject.get_parent(table)
 
         try:
             iTable = table.queryTable()
@@ -248,13 +248,13 @@ class Utilities(script_utilities.Utilities):
         if obj == self.locateInputLine(obj):
             return True
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         role = AXObject.get_role(parent)
         if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
             if self.spreadSheetCellName(parent):
                 return False
 
-        parent = parent.parent
+        parent = AXObject.get_parent(parent)
         role = AXObject.get_role(parent)
         if role == Atspi.Role.TEXT:
             return True
@@ -292,10 +292,10 @@ class Utilities(script_utilities.Utilities):
             return None
 
         toolbar = None
-        for child in scrollPane.parent:
-            if child and AXObject.get_role(child) == Atspi.Role.TOOL_BAR:
-                toolbar = child
-                break
+        pred = lambda x: AXObject.get_role(x) == Atspi.Role.TOOL_BAR
+        for child in AXObject.iter_children(AXObject.get_parent(scrollPane), pred):
+            toolbar = child
+            break
 
         if not toolbar:
             msg = "ERROR: Calc inputline toolbar not found."
@@ -454,9 +454,9 @@ class Utilities(script_utilities.Utilities):
         if not drawingView:
             return None, None
 
-        parent = drawingView.parent
+        parent = AXObject.get_parent(drawingView)
         if parent:
-            parent = parent.parent
+            parent = AXObject.get_parent(parent)
         if not parent:
             return None, None
 
@@ -562,14 +562,13 @@ class Utilities(script_utilities.Utilities):
         if not self.isZombie(comboBox):
             return comboBox
 
-        try:
-            parent = comboBox.parent
-        except:
-            pass
-        else:
-            replicant = self.findReplicant(parent, comboBox)
-            if replicant and not self.isZombie(replicant):
-                comboBox = replicant
+        parent = AXObject.get_parent(comboBox)
+        if not parent:
+            return comboBox
+
+        replicant = self.findReplicant(parent, comboBox)
+        if replicant and not self.isZombie(replicant):
+            comboBox = replicant
 
         return comboBox
 

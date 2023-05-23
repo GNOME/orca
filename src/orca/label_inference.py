@@ -280,7 +280,7 @@ class LabelInference:
         key = hash(obj)
         if self._isWidget(obj):
             start, end = self._script.utilities.getHyperlinkRange(obj)
-            obj = obj.parent
+            obj = AXObject.get_parent(obj)
 
         rv = self._script.utilities.getLineContentsAtOffset(obj, start, True, False)
         self._lineCache[key] = rv
@@ -527,7 +527,8 @@ class LabelInference:
         if not self._isSimpleObject(cell):
             return None, []
 
-        if not cell in [obj.parent, obj.parent.parent]:
+        parent = AXObject.get_parent(obj)
+        if not cell in [parent, AXObject.get_parent(parent)]:
             return None, []
 
         grid = AXObject.find_ancestor(cell, self._isTable)
@@ -542,15 +543,18 @@ class LabelInference:
             cellRight = self._getCellFromTable(grid, rowindex, colindex + 1)
             cellAbove = self._getCellFromTable(grid, rowindex - 1, colindex)
             cellBelow = self._getCellFromTable(grid, rowindex + 1, colindex)
-        elif gridrow and cell.parent == gridrow:
+        elif gridrow and AXObject.get_parent(cell) == gridrow:
             cellindex = AXObject.get_index_in_parent(cell)
             cellLeft = self._getCellFromRow(gridrow, cellindex - 1)
             cellRight = self._getCellFromRow(gridrow, cellindex + 1)
             rowindex = AXObject.get_index_in_parent(gridrow)
+            gridrowParent = AXObject.get_parent(gridrow)
             if rowindex > 0:
-                cellAbove = self._getCellFromRow(gridrow.parent[rowindex - 1], cellindex)
+                rowAbove = AXObject.get_child(gridrowParent, rowindex - 1)
+                cellAbove = self._getCellFromRow(rowAbove, cellindex)
             if rowindex + 1 < AXObject.get_child_count(grid):
-                cellBelow = self._getCellFromRow(gridrow.parent[rowindex + 1], cellindex)
+                rowBelow = AXObject.get_child(gridrowParent, rowindex + 1)
+                cellBelow = self._getCellFromRow(rowBelow, cellindex)
 
         if cellLeft and not self._preferRight(obj):
             label, sources = self._createLabelFromContents(cellLeft)

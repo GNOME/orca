@@ -92,7 +92,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         elif self._script.utilities.isLink(obj) and obj == orca_state.locusOfFocus:
-            if AXObject.get_role(obj.parent) == Atspi.Role.IMAGE:
+            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:

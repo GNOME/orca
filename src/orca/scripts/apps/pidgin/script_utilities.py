@@ -74,8 +74,9 @@ class Utilities(script_utilities.Utilities):
         if not self._script.chat.isInBuddyList(obj):
             return script_utilities.Utilities.childNodes(self, obj)
 
+        parent = AXObject.get_parent(obj)
         try:
-            table = obj.parent.queryTable()
+            table = parent.queryTable()
         except:
             return []
         else:
@@ -131,8 +132,9 @@ class Utilities(script_utilities.Utilities):
             return script_utilities.Utilities.nodeLevel(self, obj)
 
         obj = AXObject.get_previous_sibling(obj)
+        parent = AXObject.get_parent(obj)
         try:
-            table = obj.parent.queryTable()
+            table = parent.queryTable()
         except:
             return -1
 

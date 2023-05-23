@@ -162,7 +162,7 @@ class Script(default.Script):
 
         role = AXObject.get_role(event.source)
         if role in [Atspi.Role.CANVAS, Atspi.Role.ICON] \
-           and self.utilities.handleContainerSelectionChange(event.source.parent):
+           and self.utilities.handleContainerSelectionChange(AXObject.get_parent(event.source)):
             return
 
         super().onSelectedChanged(event)
@@ -206,7 +206,7 @@ class Script(default.Script):
         obj = event.source
         if self.utilities.isPopOver(obj) \
            or AXObject.get_role(obj) in [Atspi.Role.ALERT, Atspi.Role.INFO_BAR]:
-            if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.APPLICATION:
+            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.APPLICATION:
                 return
             self.presentObject(event.source, interrupt=True)
             return

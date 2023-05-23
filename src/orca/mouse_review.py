@@ -281,7 +281,7 @@ class _ItemContext:
         if not self._obj or not prior._obj:
             return False
 
-        if prior._obj.parent != self._obj:
+        if AXObject.get_parent(prior._obj) != self._obj:
             return False
 
         if self._treatAsSingleObject():
@@ -539,7 +539,8 @@ class MouseReviewer:
         if not app:
             return None
 
-        candidates = [o for o in app if self._contains_point(o, pX, pY)]
+        pred = lambda x: self._contains_point(x, pX, pY)
+        candidates = [o for o in AXObject.iter_children(app, pred)]
         if len(candidates) == 1:
             return candidates[0]
 

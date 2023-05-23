@@ -223,12 +223,12 @@ class Bookmarks:
 
         path = []
         path.append(AXObject.get_index_in_parent(start_obj))
-        p = start_obj.parent
+        p = AXObject.get_parent(start_obj)
         while p:
             if self._script.utilities.isDocument(p):
                 path.reverse()
                 return path
             path.append(AXObject.get_index_in_parent(p))
-            p = p.parent
+            p = AXObject.get_parent(p)
 
         return []

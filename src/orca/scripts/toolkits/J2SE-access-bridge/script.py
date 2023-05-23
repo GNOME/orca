@@ -153,7 +153,7 @@ class Script(default.Script):
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.POPUP_MENU]
 
-        if role in menuRoles or AXObject.get_role(obj.parent) in menuRoles:
+        if role in menuRoles or AXObject.get_role(AXObject.get_parent(obj)) in menuRoles:
             orca.setLocusOfFocus(event, obj)
             return
 
@@ -193,13 +193,10 @@ class Script(default.Script):
         # just process the single value changed event.
         #
         if AXObject.get_role(event.source) == Atspi.Role.SPIN_BUTTON:
-            try:
-                thisBox = orca_state.locusOfFocus.parent.parent == event.source
-            except:
-                thisBox = False
-            if thisBox:
-                self._presentTextAtNewCaretPosition(event,
-                                                    orca_state.locusOfFocus)
+            parent = AXObject.get_parent(orca_state.locusOfFocus)
+            grandparent = AXObject.get_parent(parent)
+            if grandparent == event.source:
+                self._presentTextAtNewCaretPosition(event, orca_state.locusOfFocus)
                 return
 
         default.Script.onValueChanged(self, event)

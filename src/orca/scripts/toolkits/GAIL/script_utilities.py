@@ -51,9 +51,9 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         while parent and self.isLayoutOnly(parent):
-            parent = parent.parent
+            parent = AXObject.get_parent(parent)
 
         rv = parent and AXObject.get_role(parent) == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv

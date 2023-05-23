@@ -74,7 +74,7 @@ class Utilities(web.Utilities):
             return False
 
         roles = [Atspi.Role.MENU, Atspi.Role.TOOL_TIP]
-        if AXObject.get_role(obj) in roles and self.topLevelObject(obj) == obj.parent:
+        if AXObject.get_role(obj) in roles and self.topLevelObject(obj) == AXObject.get_parent(obj):
             msg = "GECKO: %s is suspected to be off screen object" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -114,7 +114,7 @@ class Utilities(web.Utilities):
         if AXObject.get_role(obj) != Atspi.Role.UNKNOWN:
             return True
 
-        if self.topLevelObject(obj) == obj.parent:
+        if self.topLevelObject(obj) == AXObject.get_parent(obj):
             msg = "INFO: %s is suspected to be off screen object" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -127,7 +127,8 @@ class Utilities(web.Utilities):
         # For things like Thunderbird's "Select columns to display" button
         if AXObject.get_role(root) == Atspi.Role.TREE_TABLE and AXObject.get_child_count(root):
             isExtra = lambda x: x and AXObject.get_role(x) != Atspi.Role.COLUMN_HEADER
-            objects.extend([x for x in root[0] if isExtra(x)])
+            child = AXObject.get_child(root, 0)
+            objects.extend([x for x in AXObject.iter_children(child, isExtra)])
 
         return objects
 
@@ -171,7 +172,8 @@ class Utilities(web.Utilities):
         if not obj:
             return False
 
-        if AXObject.get_role(obj) == Atspi.Role.SECTION and AXObject.get_role(obj.parent) == Atspi.Role.FRAME:
+        if AXObject.get_role(obj) == Atspi.Role.SECTION \
+            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME:
             msg = "GECKO: %s is believed to be a bogus object" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True

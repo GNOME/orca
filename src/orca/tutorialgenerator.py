@@ -247,8 +247,9 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if AXObject.get_role(obj.parent) == Atspi.Role.LAYERED_PANE:
-            utterances = self._getTutorialForLayeredPane(obj.parent,
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_role(parent) == Atspi.Role.LAYERED_PANE:
+            utterances = self._getTutorialForLayeredPane(parent,
                                                          alreadyFocused,
                                                          forceTutorial)
         else:
@@ -287,10 +288,7 @@ class TutorialGenerator:
         desktopMsg = _("To get to the system menus press the alt+f1 key.")
 
         scriptName = self._script.name
-        try:
-            sibling = obj.parent.getChildAtIndex(0)
-        except AttributeError:
-            sibling = None
+        sibling = AXObject.get_child(AXObject.get_parent(obj), 0)
         if 'nautilus' in scriptName and obj == sibling:
             utterances.append(desktopMsg)
 
@@ -609,14 +607,14 @@ class TutorialGenerator:
         utterances = []
 
         if (not alreadyFocused):
+            parent = AXObject.get_parent(obj)
             try:
-                parent_table = obj.parent.queryTable()
+                parent_table = parent.queryTable()
             except:
                 parent_table = None
             readFullRow = self._script.utilities.shouldReadFullRow(obj)
             if readFullRow and parent_table \
-                and not self._script.utilities.isLayoutOnly(obj.parent):
-                parent = obj.parent
+                and not self._script.utilities.isLayoutOnly(parent):
                 index = self._script.utilities.cellIndex(obj)
                 row = parent_table.getRowAtIndex(index)
                 column = parent_table.getColumnAtIndex(index)
@@ -697,7 +695,10 @@ class TutorialGenerator:
 
         # Checking if we are a submenu,
         # we can't rely on our parent being just a menu.
-        if AXObject.get_name(obj.parent) != "" and obj.parent.__class__ == obj.__class__:
+        # TODO - JD: What exactly are the __class__ checks for? All accessible objects
+        # have the same class. Should this be checking the role instead?
+        parent = AXObject.get_parent(obj)
+        if AXObject.get_name(parent) and parent.__class__ == obj.__class__:
             if (self.lastTutorial != [subMenuMsg]) or forceTutorial:
                 utterances.append(subMenuMsg)
         else:

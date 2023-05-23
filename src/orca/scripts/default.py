@@ -3543,7 +3543,7 @@ class Script(script.Script):
             if not oldName or AXObject.get_name(event.any_data) == oldName:
                 return False
 
-        if event.source == orca_state.locusOfFocus == event.any_data.parent:
+        if event.source == orca_state.locusOfFocus == AXObject.get_parent(event.any_data):
             return False
 
         return True

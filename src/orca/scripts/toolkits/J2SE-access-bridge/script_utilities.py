@@ -97,8 +97,8 @@ class Utilities(script_utilities.Utilities):
                     AXObject.get_role(parent2) == Atspi.Role.LABEL:
                 if AXObject.get_index_in_parent(parent1) != AXObject.get_index_in_parent(parent2):
                     return False
-                parent1 = parent1.parent
-                parent2 = parent2.parent
+                parent1 = AXObject.get_parent(parent1)
+                parent2 = AXObject.get_parent(parent2)
             if parent1 and parent2 and parent1 == parent2:
                 return True
         except:
@@ -129,7 +129,7 @@ class Utilities(script_utilities.Utilities):
                or state.contains(Atspi.StateType.COLLAPSED):
                 if state.contains(Atspi.StateType.VISIBLE):
                     count += 1
-                newObj = newObj.parent
+                newObj = AXObject.get_parent(newObj)
             else:
                 break
 

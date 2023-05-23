@@ -154,7 +154,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def generateSpeech(self, obj, **args):
         result = []
         if AXObject.get_role(obj) == Atspi.Role.CHECK_BOX \
-           and AXObject.get_role(obj.parent) == Atspi.Role.MENU:
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.MENU:
             oldRole = self._overrideRole(Atspi.Role.CHECK_MENU_ITEM, args)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))

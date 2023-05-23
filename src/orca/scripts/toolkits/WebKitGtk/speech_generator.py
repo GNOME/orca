@@ -123,8 +123,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.__generateHeadingRole(obj))
             else:
                 result.append(self.getLocalizedRoleName(obj, role=role))
-                if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.HEADING:
-                    result.extend(self.__generateHeadingRole(obj.parent))
+                if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.HEADING:
+                    result.extend(self.__generateHeadingRole(AXObject.get_parent(obj)))
 
             if result:
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))

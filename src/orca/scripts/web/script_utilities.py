@@ -144,7 +144,8 @@ class Utilities(script_utilities.Utilities):
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
 
-        context = self._caretContexts.get(hash(documentFrame.parent))
+        documentFrameParent = AXObject.get_parent(documentFrame)
+        context = self._caretContexts.get(hash(documentFrameParent))
 
         msg = "WEB: Clearing all cached info for %s" % documentFrame
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -156,7 +157,7 @@ class Utilities(script_utilities.Utilities):
         if preserveContext and context:
             msg = "WEB: Preserving context of %s, %i" % (context[0], context[1])
             debug.println(debug.LEVEL_INFO, msg, True)
-            self._caretContexts[hash(documentFrame.parent)] = context
+            self._caretContexts[hash(documentFrameParent)] = context
 
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
@@ -790,17 +791,18 @@ class Utilities(script_utilities.Utilities):
                 return result
 
         role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(obj.parent)
+        parent = AXObject.get_parent(obj)
+        parentRole = AXObject.get_role(parent)
         if role in [Atspi.Role.MENU, Atspi.Role.LIST_ITEM] \
            and parentRole in [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]:
             try:
-                ext = obj.parent.queryComponent().getExtents(0)
+                ext = parent.queryComponent().getExtents(0)
             except NotImplementedError:
-                msg = "WEB: %s does not implement the component interface" % obj.parent
+                msg = "WEB: %s does not implement the component interface" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
             except:
-                msg = "WEB: Exception getting extents for %s" % obj.parent
+                msg = "WEB: Exception getting extents for %s" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
         else:
@@ -829,7 +831,7 @@ class Utilities(script_utilities.Utilities):
             result = super().descendantAtPoint(root, x, y, coordType)
 
         if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
-            return result.parent
+            return AXObject.get_parent(result)
 
         return result
 
@@ -898,13 +900,18 @@ class Utilities(script_utilities.Utilities):
 
     def getLanguageAndDialectFromTextAttributes(self, obj, startOffset=0, endOffset=-1):
         rv = super().getLanguageAndDialectFromTextAttributes(obj, startOffset, endOffset)
+        if rv or obj is None:
+            return rv
 
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
-        if not rv and obj and obj.parent:
-            start, end = self.getHyperlinkRange(obj)
-            language, dialect = self.getLanguageAndDialectForSubstring(obj.parent, start, end)
-            rv.append((0, 1, language, dialect))
+        parent = AXObject.get_parent(obj)
+        if parent is None:
+            return rv
+
+        start, end = self.getHyperlinkRange(obj)
+        language, dialect = self.getLanguageAndDialectForSubstring(parent, start, end)
+        rv.append((0, 1, language, dialect))
 
         return rv
 
@@ -982,7 +989,7 @@ class Utilities(script_utilities.Utilities):
         if role in roles:
             rv = True
         elif role == Atspi.Role.LIST_ITEM:
-            rv = AXObject.get_role(obj.parent) != Atspi.Role.LIST
+            rv = AXObject.get_role(AXObject.get_parent(obj)) != Atspi.Role.LIST
         elif role == Atspi.Role.TABLE_CELL:
             if obj.getState().contains(Atspi.StateType.EDITABLE):
                 rv = False
@@ -1470,7 +1477,7 @@ class Utilities(script_utilities.Utilities):
             if self.isTextBlockElement(firstObj):
                 if firstStart == 0:
                     break
-            elif self.isTextBlockElement(firstObj.parent):
+            elif self.isTextBlockElement(AXObject.get_parent(firstObj)):
                 if self.characterOffsetInParent(firstObj) == 0:
                     break
 
@@ -1619,7 +1626,7 @@ class Utilities(script_utilities.Utilities):
                 return False
             if x == obj:
                 return True
-            return _isInObject(x.parent)
+            return _isInObject(AXObject.get_parent(x))
 
         def _include(x):
             if x in objects:
@@ -1931,10 +1938,11 @@ class Utilities(script_utilities.Utilities):
 
         if line == contents:
             start, end = self.getHyperlinkRange(obj)
-            msg = "WEB: Got same line. %s has range in %s of %i-%i" % (obj, obj.parent, start, end)
+            parent = AXObject.get_parent(obj)
+            msg = "WEB: Got same line. %s has range in %s of %i-%i" % (obj, parent, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
             if start >= 0:
-                obj, offset = self.previousContext(obj.parent, start, True)
+                obj, offset = self.previousContext(parent, start, True)
                 msg = "WEB: Trying again with %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
@@ -1990,10 +1998,11 @@ class Utilities(script_utilities.Utilities):
 
         if line == contents:
             start, end = self.getHyperlinkRange(obj)
-            msg = "WEB: Got same line. %s has range in %s of %i-%i" % (obj, obj.parent, start, end)
+            parent = AXObject.get_parent(obj)
+            msg = "WEB: Got same line. %s has range in %s of %i-%i" % (obj, parent, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
             if end >= 0:
-                obj, offset = self.nextContext(obj.parent, end, True)
+                obj, offset = self.nextContext(parent, end, True)
                 msg = "WEB: Trying again with %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
@@ -2065,7 +2074,7 @@ class Utilities(script_utilities.Utilities):
 
     def isTopLevelWebApp(self, obj):
         role = AXObject.get_role(obj)
-        if role == Atspi.Role.EMBEDDED and not self.getDocumentForObject(obj.parent):
+        if role == Atspi.Role.EMBEDDED and not self.getDocumentForObject(AXObject.get_parent(obj)):
             uri = self.documentFrameURI()
             rv = bool(uri and uri.startswith("http"))
             msg = "WEB: %s is top-level web application: %s (URI: %s)" % (obj, rv, uri)
@@ -2371,12 +2380,15 @@ class Utilities(script_utilities.Utilities):
             if not childCount:
                 rv = True
             else:
-                rv = bool([x for x in obj if x and AXObject.get_role(x) not in validRoles])
+                pred = lambda x: x and AXObject.get_role(x) not in validRoles
+                rv = bool([x for x in AXObject.iter_children(obj, pred)])
 
         if not rv:
-            validRoles = self._validChildRoles.get(obj.parent)
+            parent = AXObject.get_parent(obj)
+            validRoles = self._validChildRoles.get(parent)
             if validRoles:
-                rv = bool([x for x in obj.parent if x and AXObject.get_role(x) not in validRoles])
+                pred = lambda x: x and AXObject.get_role(x) not in validRoles
+                rv = bool([x for x in AXObject.iter_children(parent, pred)])
 
         self._treatAsDiv[hash(obj)] = rv
         return rv
@@ -3316,8 +3328,9 @@ class Utilities(script_utilities.Utilities):
 
     def isDetachedDocument(self, obj):
         docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if (obj and AXObject.get_role(obj) in docRoles):
-            if obj.parent is None or self.isZombie(obj.parent):
+        if AXObject.get_role(obj) in docRoles:
+            parent = AXObject.get_parent(obj)
+            if parent is None or self.isZombie(parent):
                 msg = "WEB: %s is a detached document" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -3330,9 +3343,6 @@ class Utilities(script_utilities.Utilities):
         iframes = self.findAllDescendants(root, isIframe)
         for iframe in iframes:
             if obj in iframe:
-                # We won't change behavior, but we do want to log all bogosity.
-                self._isBrokenChildParentTree(obj, iframe)
-
                 msg = "WEB: Returning %s as iframe parent of detached %s" % (iframe, obj)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return iframe
@@ -3352,43 +3362,12 @@ class Utilities(script_utilities.Utilities):
         if self.extentsAreOnSameLine(start, end):
             return False
 
-        if not self.hasPresentableText(obj.parent):
+        if not self.hasPresentableText(AXObject.get_parent(obj)):
             return False
 
         msg = "WEB: Objects bounds of %s might be bogus" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
-
-    def _isBrokenChildParentTree(self, child, parent):
-        if not (child and parent):
-            return False
-
-        try:
-            childIsChildOfParent = child in parent
-        except:
-            msg = "WEB: Exception checking if %s is in %s" % (child, parent)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            childIsChildOfParent = False
-        else:
-            msg = "WEB: %s is child of %s: %s" % (child, parent, childIsChildOfParent)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        try:
-            parentIsParentOfChild = child.parent == parent
-        except:
-            msg = "WEB: Exception getting parent of %s" % child
-            debug.println(debug.LEVEL_INFO, msg, True)
-            parentIsParentOfChild = False
-        else:
-            msg = "WEB: %s is parent of %s: %s" % (parent, child, parentIsParentOfChild)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        if parentIsParentOfChild != childIsChildOfParent:
-            msg = "FAIL: The above is broken and likely needs to be fixed by the toolkit."
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
 
     def targetsForLabel(self, obj):
         isLabel = lambda r: r.getRelationType() == Atspi.RelationType.LABEL_FOR
@@ -3529,9 +3508,9 @@ class Utilities(script_utilities.Utilities):
         if not self.isBrowserUIAlert(obj):
             return False
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         while parent and self.isLayoutOnly(parent):
-            parent = parent.parent
+            parent = AXObject.get_parent(parent)
 
         return AXObject.get_role(parent) == Atspi.Role.FRAME
 
@@ -3812,7 +3791,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isFakePlaceholderForEntry(self, obj):
-        if not (obj and self.inDocumentContent(obj) and obj.parent):
+        if not (obj and self.inDocumentContent(obj) and AXObject.get_parent(obj)):
             return False
 
         if obj.getState().contains(Atspi.StateType.EDITABLE):
@@ -3984,8 +3963,8 @@ class Utilities(script_utilities.Utilities):
         if role == Atspi.Role.LINK and not self.isAnchor(obj):
             rv = True
         elif role == Atspi.Role.STATIC \
-           and AXObject.get_role(obj.parent) == Atspi.Role.LINK \
-           and AXObject.has_same_non_empty_name(obj, obj.parent):
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LINK \
+           and AXObject.has_same_non_empty_name(obj, AXObject.get_parent(obj)):
             rv = True
         else:
             rv = False
@@ -4052,7 +4031,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isRedundantSVG(self, obj):
-        if self._getTag(obj) != 'svg' or AXObject.get_child_count(obj.parent) == 1:
+        if self._getTag(obj) != 'svg' or AXObject.get_child_count(AXObject.get_parent(obj)) == 1:
             return False
 
         rv = self._isRedundantSVG.get(hash(obj))
@@ -4060,8 +4039,10 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        children = [x for x in obj.parent if self._getTag(x) == 'svg']
-        if len(children) == AXObject.get_child_count(obj.parent):
+        parent = AXObject.get_parent(obj)
+        pred = lambda x: x and self._getTag(x) == 'svg'
+        children = [x for x in AXObject.iter_children(parent, pred)]
+        if len(children) == AXObject.get_child_count(parent):
             sortedChildren = sorted(children, key=functools.cmp_to_key(self.sizeComparison))
             if obj != sortedChildren[-1]:
                 objExtents = self.getExtents(obj, 0, -1)
@@ -4111,8 +4092,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and obj.getState().contains(Atspi.StateType.FOCUSABLE):
             rv = False
-        if rv and AXObject.get_role(obj.parent) == Atspi.Role.LINK and not self.hasExplicitName(obj):
-            uri = self.uri(obj.parent)
+        if rv and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LINK and not self.hasExplicitName(obj):
+            uri = self.uri(AXObject.get_parent(obj))
             if uri and not uri.startswith('javascript'):
                 rv = False
         if rv and AXObject.supports_image(obj):
@@ -4428,7 +4409,7 @@ class Utilities(script_utilities.Utilities):
         if not obj.getState().contains(Atspi.StateType.EDITABLE):
             return False
 
-        if Atspi.Role.SPIN_BUTTON in [AXObject.get_role(obj), AXObject.get_role(obj.parent)]:
+        if Atspi.Role.SPIN_BUTTON in [AXObject.get_role(obj), AXObject.get_role(AXObject.get_parent(obj))]:
             return True
 
         return False
@@ -4475,9 +4456,9 @@ class Utilities(script_utilities.Utilities):
         if not inContent:
             return False
 
-        isListBoxItem = lambda x: x and x.parent and AXObject.get_role(x.parent) == Atspi.Role.LIST_BOX
-        isMenuItem = lambda x: x and x.parent and AXObject.get_role(x.parent) == Atspi.Role.MENU
-        isComboBoxItem = lambda x: x and x.parent and AXObject.get_role(x.parent) == Atspi.Role.COMBO_BOX
+        isListBoxItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.LIST_BOX
+        isMenuItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.MENU
+        isComboBoxItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.COMBO_BOX
 
         if event.source.getState().contains(Atspi.StateType.EDITABLE) \
            and event.type.startswith("object:text-"):
@@ -4740,7 +4721,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return -1, -1, 0
 
-        text = self.queryNonEmptyText(obj.parent)
+        text = self.queryNonEmptyText(AXObject.get_parent(obj))
         if not text:
             return -1, -1, 0
 
@@ -4958,7 +4939,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset
 
-        context = self._caretContexts.get(hash(documentFrame.parent))
+        context = self._caretContexts.get(hash(AXObject.get_parent(documentFrame)))
         if not context or not self.isTopLevelDocument(documentFrame):
             if not searchIfNeeded:
                 return None, -1
@@ -4970,7 +4951,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             obj, offset = self.findContextReplicant()
             if obj:
-                caretObj, caretOffset = self.searchForCaretContext(obj.parent)
+                caretObj, caretOffset = self.searchForCaretContext(AXObject.get_parent(obj))
                 if caretObj and not self.isZombie(caretObj):
                     obj, offset = caretObj, caretOffset
         else:
@@ -4985,7 +4966,7 @@ class Utilities(script_utilities.Utilities):
         if not documentFrame:
             return [-1], None, None
 
-        rv = self._contextPathsRolesAndNames.get(hash(documentFrame.parent))
+        rv = self._contextPathsRolesAndNames.get(hash(AXObject.get_parent(documentFrame)))
         if not rv:
             return [-1], None, None
 
@@ -4997,7 +4978,7 @@ class Utilities(script_utilities.Utilities):
         if not documentFrame:
             return
 
-        parent = documentFrame.parent
+        parent = AXObject.get_parent(documentFrame)
         self._caretContexts.pop(hash(parent), None)
         self._priorContexts.pop(hash(parent), None)
 
@@ -5028,7 +5009,7 @@ class Utilities(script_utilities.Utilities):
 
         notify = AXObject.get_name(replicant) != name
         documentFrame = self.documentFrame()
-        obj, offset = self._caretContexts.get(hash(documentFrame.parent))
+        obj, offset = self._caretContexts.get(hash(AXObject.get_parent(documentFrame)))
 
         msg = "WEB: Is event from context replicant. Notify: %s" % notify
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -5132,7 +5113,7 @@ class Utilities(script_utilities.Utilities):
             documentFrame = self.documentFrame()
 
         if documentFrame:
-            context = self._priorContexts.get(hash(documentFrame.parent))
+            context = self._priorContexts.get(hash(AXObject.get_parent(documentFrame)))
             if context:
                 return context
 
@@ -5152,7 +5133,7 @@ class Utilities(script_utilities.Utilities):
         if not documentFrame:
             return
 
-        parent = documentFrame.parent
+        parent = AXObject.get_parent(documentFrame)
         oldObj, oldOffset = self._caretContexts.get(hash(parent), (obj, offset))
         self._priorContexts[hash(parent)] = oldObj, oldOffset
         self._caretContexts[hash(parent)] = obj, offset
@@ -5292,19 +5273,19 @@ class Utilities(script_utilities.Utilities):
         if self.isTopLevelDocument(obj):
             return None, -1
 
-        while obj and obj.parent:
-            if self.isDetachedDocument(obj.parent):
-                obj = self.iframeForDetachedDocument(obj.parent)
+        while obj and AXObject.get_parent(obj):
+            if self.isDetachedDocument(AXObject.get_parent(obj)):
+                obj = self.iframeForDetachedDocument(AXObject.get_parent(obj))
                 continue
 
-            parent = obj.parent
+            parent = AXObject.get_parent(obj)
             if self.isZombie(parent):
                 msg = "WEB: Finding next caret in order. Parent is Zombie."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
-                elif parent.parent:
+                elif AXObject.get_parent(parent):
                     obj = parent
                     continue
                 else:
@@ -5363,19 +5344,19 @@ class Utilities(script_utilities.Utilities):
         if self.isTopLevelDocument(obj):
             return None, -1
 
-        while obj and obj.parent:
-            if self.isDetachedDocument(obj.parent):
-                obj = self.iframeForDetachedDocument(obj.parent)
+        while obj and AXObject.get_parent(obj):
+            if self.isDetachedDocument(AXObject.get_parent(obj)):
+                obj = self.iframeForDetachedDocument(AXObject.get_parent(obj))
                 continue
 
-            parent = obj.parent
+            parent = AXObject.get_parent(obj)
             if self.isZombie(parent):
                 msg = "WEB: Finding previous caret in order. Parent is Zombie."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
-                elif parent.parent:
+                elif AXObject.get_parent(parent):
                     obj = parent
                     continue
                 else:

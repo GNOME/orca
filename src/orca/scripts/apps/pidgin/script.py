@@ -127,14 +127,20 @@ class Script(GAIL.Script):
                 # last child has a name.
                 #
                 nameFound = False
-                frameName = AXObject.get_name(event.source.parent.parent)
+                frame = AXObject.find_ancestor(event.source,
+                                               lambda x: AXObject.get_role(x) == Atspi.Role.FRAME)
+                frameName = AXObject.get_name(frame)
+                if not frameName:
+                    return
                 for child in AXObject.iter_children(event.source):
-                    if frameName and (frameName == AXObject.get_name(child)):
+                    if frameName == AXObject.get_name(child):
                         nameFound = True
+                        break
                 if nameFound:
                     child = AXObject.get_child(event.source, -1)
-                    if AXObject.get_name(child):
-                        line = messages.CHAT_NEW_TAB % AXObject.get_name(child)
+                    childName = AXObject.get_name(child)
+                    if childName:
+                        line = messages.CHAT_NEW_TAB % childName
                         voice = self.speechGenerator.voice(obj=child, string=line)
                         self.speakMessage(line, voice=voice)
 

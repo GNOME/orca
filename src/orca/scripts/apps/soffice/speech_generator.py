@@ -56,7 +56,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.TOGGLE_BUTTON \
-           and AXObject.get_role(obj.parent) == Atspi.Role.TOOL_BAR:
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
             pass
         else:
             # Treat a paragraph which is serving as a text entry in a dialog
@@ -80,7 +80,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateTextRole(self, obj, **args):
         result = []
         role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.TEXT and AXObject.get_role(obj.parent) == Atspi.Role.COMBO_BOX:
+        if role == Atspi.Role.TEXT \
+            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
             return []
 
         if role != Atspi.Role.PARAGRAPH \
@@ -98,7 +99,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         override = self.__overrideParagraph(obj, **args)
         label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
-            label = self._script.utilities.displayedLabel(obj.parent) or ""
+            label = self._script.utilities.displayedLabel(AXObject.get_parent(obj)) or ""
         if label:
             result.append(label.strip())
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
@@ -158,8 +159,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         #
         if override:
             result.extend(self._generateLabel(obj, **args))
-            if len(result) == 0 and obj.parent:
-                parentLabel = self._generateLabel(obj.parent, **args)
+            if len(result) == 0 and AXObject.get_parent(obj):
+                parentLabel = self._generateLabel(AXObject.get_parent(obj), **args)
                 # If we aren't already focused, we will have spoken the
                 # parent as part of the speech context and do not want
                 # to repeat it.
@@ -237,9 +238,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateCurrentLineText(self, obj, **args):
-        if self._script.utilities.isTextDocumentCell(obj.parent):
+        if self._script.utilities.isTextDocumentCell(AXObject.get_parent(obj)):
             priorObj = args.get('priorObj', None)
-            if priorObj and priorObj.parent != obj.parent:
+            if priorObj and AXObject.get_parent(priorObj) != AXObject.get_parent(obj):
                 return []
 
         if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
@@ -265,7 +266,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.TOGGLE_BUTTON \
-           and AXObject.get_role(obj.parent) == Atspi.Role.TOOL_BAR:
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
             if obj.getState().contains(Atspi.StateType.CHECKED):
                 result.append(messages.ON)
             else:
@@ -457,7 +458,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.isSpreadSheetCell(obj) \
-           and self._script.utilities.isDocumentPanel(priorObj.parent):
+           and self._script.utilities.isDocumentPanel(AXObject.get_parent(priorObj)):
             return []
 
         return super()._generateNewAncestors(obj, **args)

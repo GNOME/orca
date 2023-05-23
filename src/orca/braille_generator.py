@@ -119,12 +119,12 @@ class BrailleGenerator(generator.Generator):
                 break
             elif isinstance(region, braille.Text) \
                  and role == Atspi.Role.COMBO_BOX \
-                 and region.accessible.parent == obj:
+                 and AXObject.get_parent(region.accessible) == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Component) \
                  and role == Atspi.Role.TABLE_CELL \
-                 and region.accessible.parent == obj:
+                 and AXObject.get_parent(region.accessible) == obj:
                 focusedRegion = region
                 break
         else:
@@ -164,7 +164,7 @@ class BrailleGenerator(generator.Generator):
                         Atspi.Role.LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
             doNotPresent.append(AXObject.get_role(obj))
 
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
@@ -373,7 +373,7 @@ class BrailleGenerator(generator.Generator):
                        Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
         result = []
-        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))

@@ -72,8 +72,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         elif not role in doNotDisplay:
             result.extend(braille_generator.BrailleGenerator._generateRoleName(
                 self, obj, **args))
-            if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.HEADING:
-                result.extend(self.__generateHeadingRole(obj.parent))
+            parent = AXObject.get_parent(obj)
+            if AXObject.get_role(parent) == Atspi.Role.HEADING:
+                result.extend(self.__generateHeadingRole(parent))
 
         return result
 

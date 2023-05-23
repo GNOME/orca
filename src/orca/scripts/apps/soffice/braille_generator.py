@@ -151,13 +151,12 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                      Atspi.Role.FRAME, \
                      Atspi.Role.APPLICATION]
         if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
-            for child in obj.parent:
-                if AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST:
-                    for tab in child:
-                        eventState = tab.getState()
-                        if eventState.contains(Atspi.StateType.SELECTED):
-                            args['role'] = AXObject.get_role(tab)
-                            result.extend(self.generate(tab, **args))
+            isTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
+            isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
+            for child in AXObject.iter_children(AXObject.get_parent(obj), isTabList):
+                for tab in AXObject.iter_children(child, isSelected):
+                    args['role'] = AXObject.get_role(tab)
+                    result.extend(self.generate(tab, **args))
         return result
 
     def _generateAncestors(self, obj, **args):

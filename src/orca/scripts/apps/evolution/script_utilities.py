@@ -55,13 +55,13 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
-        return self.isReceivedMessage(obj.parent)
+        return self.isReceivedMessage(AXObject.get_parent(obj))
 
     def isReceivedMessageContent(self, obj):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.SECTION):
             return False
 
-        return self.isReceivedMessage(obj.parent)
+        return self.isReceivedMessage(AXObject.get_parent(obj))
 
     def isComposeAutocomplete(self, obj):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):

@@ -106,9 +106,9 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        parent = obj.parent
+        parent = AXObject.get_parent(obj)
         while parent and self.isLayoutOnly(parent):
-            parent = parent.parent
+            parent = AXObject.get_parent(parent)
 
         rv = parent and AXObject.get_role(parent) == Atspi.Role.WINDOW
         self._isTypeahead[hash(obj)] = rv
@@ -129,7 +129,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         isIcon = lambda x: x and AXObject.get_role(x) == Atspi.Role.ICON
-        icons = list(filter(isIcon, [x for x in obj]))
+        icons = [x for x in AXObject.iter_children(obj, isIcon)]
         if icons:
             return True
 

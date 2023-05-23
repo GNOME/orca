@@ -1290,14 +1290,12 @@ class Script(default.Script):
     def togglePresentationMode(self, inputEvent, documentFrame=None):
         [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
         if self._inFocusMode:
-            try:
-                parentRole = AXObject.get_role(obj.parent)
-            except:
-                parentRole = None
+            parent = AXObject.get_parent(obj)
+            parentRole = AXObject.get_role(parent)
             if parentRole == Atspi.Role.LIST_BOX:
-                self.utilities.setCaretContext(obj.parent, -1)
+                self.utilities.setCaretContext(parent, -1)
             elif parentRole == Atspi.Role.MENU:
-                self.utilities.setCaretContext(obj.parent.parent, -1)
+                self.utilities.setCaretContext(AXObject.get_parent(parent), -1)
             if not self._loadingDocumentContent:
                 self.presentMessage(messages.MODE_BROWSE)
         else:
@@ -1495,7 +1493,7 @@ class Script(default.Script):
 
         self.structuralNavigation.clearCache()
 
-        if self.utilities.getDocumentForObject(event.source.parent):
+        if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1984,7 +1982,7 @@ class Script(default.Script):
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        if self.utilities.getDocumentForObject(event.source.parent):
+        if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1998,7 +1996,7 @@ class Script(default.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        if self.utilities.getDocumentForObject(event.source.parent):
+        if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -2011,7 +2009,7 @@ class Script(default.Script):
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
 
-        if self.utilities.getDocumentForObject(event.source.parent):
+        if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True

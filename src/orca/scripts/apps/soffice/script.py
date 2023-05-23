@@ -404,8 +404,9 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
-            cell = cell.parent
+        parent = AXObject.get_parent(cell)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            cell = parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         if table:
@@ -422,8 +423,9 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
-            cell = cell.parent
+        parent = AXObject.get_parent(cell)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            cell = parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         try:
@@ -449,8 +451,9 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
-            cell = cell.parent
+        parent = AXObject.get_parent(cell)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            cell = parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         if table:
@@ -468,8 +471,9 @@ class Script(default.Script):
         """
 
         cell = orca_state.locusOfFocus
-        if cell and AXObject.get_role(cell.parent) == Atspi.Role.TABLE_CELL:
-            cell = cell.parent
+        parent = AXObject.get_parent(cell)
+        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+            cell = parent
 
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         try:
@@ -520,12 +524,11 @@ class Script(default.Script):
                      Atspi.Role.FRAME,
                      Atspi.Role.APPLICATION]
         if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
-            for child in newLocusOfFocus.parent:
-                if AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST:
-                    for tab in child:
-                        eventState = tab.getState()
-                        if eventState.contains(Atspi.StateType.SELECTED):
-                            self.presentObject(tab)
+            isTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
+            isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
+            for child in AXObject.iter_children(AXObject.get_parent(newLocusOfFocus), isTabList):
+                for tab in AXObject.iter_children(child, isSelected):
+                    self.presentObject(tab)
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
@@ -564,11 +567,15 @@ class Script(default.Script):
         if not newLocusOfFocus:
             return
 
+        parent = AXObject.get_parent(newLocusOfFocus)
+        if parent is None:
+            return
+
         cell = None
         if self.utilities.isTextDocumentCell(newLocusOfFocus):
             cell = newLocusOfFocus
-        elif self.utilities.isTextDocumentCell(newLocusOfFocus.parent):
-            cell = newLocusOfFocus.parent
+        elif self.utilities.isTextDocumentCell(parent):
+            cell = parent
         if cell:
             row, column = self.utilities.coordinatesForCell(cell)
             self.pointOfReference['lastRow'] = row
@@ -603,7 +610,7 @@ class Script(default.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        if not event.source.parent:
+        if not AXObject.get_parent(event.source):
             msg = "SOFFICE: Event source lacks parent"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -751,7 +758,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, comboBox, True)
                 return
 
-        parent = event.source.parent
+        parent = AXObject.get_parent(event.source)
         if parent and AXObject.get_role(parent) == Atspi.Role.TOOL_BAR:
             default.Script.onFocusedChanged(self, event)
             return
@@ -829,7 +836,7 @@ class Script(default.Script):
 
         obj = event.source
         role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(obj.parent)
+        parentRole = AXObject.get_role(AXObject.get_parent(obj))
         if not role in [Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON] \
            or not parentRole == Atspi.Role.TOOL_BAR:
             default.Script.onCheckedChanged(self, event)
@@ -925,7 +932,7 @@ class Script(default.Script):
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        if AXObject.get_role(obj.parent) == Atspi.Role.COMBO_BOX:
+        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
             try:
                 text = obj.queryText()
             except NotImplementedError:

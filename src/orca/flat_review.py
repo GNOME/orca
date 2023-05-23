@@ -226,14 +226,12 @@ class Zone:
         if Atspi.Role.SCROLL_BAR in [self.role, zone.role]:
             return self.accessible == zone.accessible
 
-        try:
-            thisParentRole = AXObject.get_role(self.accessible.parent)
-            zoneParentRole = AXObject.get_role(zone.accessible.parent)
-        except:
-            pass
-        else:
-            if Atspi.Role.MENU_BAR in [thisParentRole, zoneParentRole]:
-                return self.accessible.parent == zone.accessible.parent
+        thisParent = AXObject.get_parent(self.accessible)
+        thisParentRole = AXObject.get_role(thisParent)
+        zoneParent = AXObject.get_parent(zone.accessible)
+        zoneParentRole = AXObject.get_role(zoneParent)
+        if Atspi.Role.MENU_BAR in [thisParentRole, zoneParentRole]:
+            return thisParent == zoneParent
 
         return self._extentsAreOnSameLine(zone)
 

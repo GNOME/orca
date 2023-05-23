@@ -120,13 +120,14 @@ class Utilities(web.Utilities):
 
     def isMenuInCollapsedSelectElement(self, obj):
         role = AXObject.get_role(obj)
-        if role != Atspi.Role.MENU or self._getTag(obj.parent) != 'select':
+        parent = AXObject.get_parent(obj)
+        if role != Atspi.Role.MENU or self._getTag(parent) != 'select':
             return False
 
         try:
-            parentState = obj.parent.getState()
+            parentState = parent.getState()
         except:
-            msg = "CHROMIUM: Exception getting state for %s" % obj.parent
+            msg = "CHROMIUM: Exception getting state for %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -216,9 +217,10 @@ class Utilities(web.Utilities):
             if not self.isFindContainer(result):
                 return result
             else:
-                msg = "CHROMIUM: Top level object for %s is %s" % (obj, result.parent)
+                parent = AXObject.get_parent(result)
+                msg = "CHROMIUM: Top level object for %s is %s" % (obj, parent)
                 debug.println(debug.LEVEL_INFO, msg, True)
-                return result.parent
+                return parent
 
         cached = self._topLevelObject.get(hash(obj))
         if cached is not None:
@@ -234,7 +236,7 @@ class Utilities(web.Utilities):
 
         listbox = obj
         if AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
-            listbox = listbox.parent
+            listbox = AXObject.get_parent(listbox)
 
         if not listbox:
             return result
@@ -477,7 +479,7 @@ class Utilities(web.Utilities):
         # We don't want to do that in the case of menu items like "zoom" because our result
         # will not jibe with the values of its siblings. Thus if a sibling has a value,
         # assume that the missing attributes are missing on purpose.
-        for sibling in obj.parent:
+        for sibling in AXObject.iter_children(AXObject.get_parent(obj)):
             if self.getPositionInSet(sibling) is not None:
                 msg = "CHROMIUM: %s's sibling %s has posinset." % (obj, sibling)
                 debug.println(debug.LEVEL_INFO, msg, True)

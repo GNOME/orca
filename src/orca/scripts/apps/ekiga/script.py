@@ -58,7 +58,7 @@ class Script(default.Script):
         """
 
         if obj and AXObject.get_role(obj) == Atspi.Role.TEXT \
-           and AXObject.get_role(obj.parent) == Atspi.Role.SCROLL_PANE:
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.SCROLL_PANE:
             state = obj.getState()
             if not state.contains(Atspi.StateType.EDITABLE) \
                and state.contains(Atspi.StateType.MULTI_LINE):

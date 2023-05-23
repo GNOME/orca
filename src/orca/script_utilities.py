@@ -248,8 +248,9 @@ class Utilities:
         Returns: a list of all the child nodes
         """
 
+        parent = AXObject.get_parent(obj)
         try:
-            table = obj.parent.queryTable()
+            table = parent.queryTable()
         except:
             return []
         else:
@@ -1489,7 +1490,7 @@ class Utilities:
 
         attrs = self.objectAttributes(obj)
         role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(obj.parent)
+        parentRole = AXObject.get_role(AXObject.get_parent(obj))
         firstChild = AXObject.get_child(obj, 0)
 
         topLevelRoles = self._topLevelRoles()
@@ -1522,7 +1523,7 @@ class Utilities:
             elif AXObject.get_role(firstChild) == Atspi.Role.TABLE_CELL:
                 layoutOnly = True
             elif parentRole == Atspi.Role.TABLE:
-                layoutOnly = self.isLayoutOnly(obj.parent)
+                layoutOnly = self.isLayoutOnly(AXObject.get_parent(obj))
         elif role == Atspi.Role.SECTION:
             layoutOnly = not self.isBlockquote(obj)
         elif role == Atspi.Role.BLOCK_QUOTE:
@@ -1876,10 +1877,10 @@ class Utilities:
         if self.isBlockquote(obj):
             pred = lambda x: self.isBlockquote(x)
         elif AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
-            pred = lambda x: x and x.parent and AXObject.get_role(x.parent) == Atspi.Role.LIST
+            pred = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.LIST
         else:
             role = AXObject.get_role(obj)
-            pred = lambda x: x and AXObject.get_role(x) == role
+            pred = lambda x: AXObject.get_role(x) == role
 
         ancestors = []
         ancestor = AXObject.find_ancestor(obj, pred)
@@ -1989,7 +1990,7 @@ class Utilities:
 
             return True
 
-        if boundingbox is None or not self._boundsIncludeChildren(obj.parent):
+        if boundingbox is None or not self._boundsIncludeChildren(AXObject.get_parent(obj)):
             return True
 
         if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
@@ -2083,7 +2084,7 @@ class Utilities:
         if role == Atspi.Role.MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
 
-        if root.parent and AXObject.get_role(root.parent) == Atspi.Role.MENU_BAR \
+        if AXObject.get_role(AXObject.get_parent(root)) == Atspi.Role.MENU_BAR \
            and not self.isInOpenMenuBarMenu(root):
             return [root]
 
@@ -2150,12 +2151,7 @@ class Utilities:
         if not childCount:
             return False
 
-        try:
-            if not obj.parent:
-                return False
-        except:
-            msg = "ERROR: Exception getting parent for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if not AXObject.get_parent(obj):
             return False
 
         role = AXObject.get_role(obj)
@@ -2165,15 +2161,15 @@ class Utilities:
         if role == Atspi.Role.TABLE_CELL:
             return False
 
-        if AXObject.get_role(obj.parent) != Atspi.Role.TABLE:
+        if AXObject.get_role(AXObject.get_parent(obj)) != Atspi.Role.TABLE:
             return False
 
-        isCell = lambda x: x and AXObject.get_role(x) in [Atspi.Role.TABLE_CELL,
-                                                 Atspi.Role.TABLE_COLUMN_HEADER,
-                                                 Atspi.Role.TABLE_ROW_HEADER,
-                                                 Atspi.Role.ROW_HEADER,
-                                                 Atspi.Role.COLUMN_HEADER]
-        cellChildren = list(filter(isCell, [x for x in obj]))
+        isCell = lambda x: AXObject.get_role(x) in [Atspi.Role.TABLE_CELL,
+                                                    Atspi.Role.TABLE_COLUMN_HEADER,
+                                                    Atspi.Role.TABLE_ROW_HEADER,
+                                                    Atspi.Role.ROW_HEADER,
+                                                    Atspi.Role.COLUMN_HEADER]
+        cellChildren = [x for x in AXObject.iter_children(obj, isCell)]
         if len(cellChildren) == childCount:
             return True        
 
@@ -2191,7 +2187,7 @@ class Utilities:
                  Atspi.Role.LIST_ITEM]
 
         ancestor = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) in roles)
-        if ancestor and not self._script.utilities.isLayoutOnly(ancestor.parent):
+        if ancestor and not self._script.utilities.isLayoutOnly(AXObject.get_parent(ancestor)):
             obj = ancestor
 
         return obj
@@ -2212,10 +2208,10 @@ class Utilities:
         if AXObject.get_role(obj) != Atspi.Role.TABLE_CELL:
             return obj
 
-        children = [x for x in obj if not self.isStaticTextLeaf(x)]
-        hasContent = [x for x in children if self.displayedText(x).strip()]
-        if len(hasContent) == 1:
-            return hasContent[0]
+        pred = lambda x: not self.isStaticTextLeaf(x) and self.displayedText(x).strip()
+        children = [x for x in AXObject.iter_children(obj, pred)]
+        if len(children) == 1:
+            return children[0]
 
         return obj
 
@@ -2413,7 +2409,7 @@ class Utilities:
         # a horrible design crime or we've been given bogus extents. Fall back
         # on the index in the parent. This is seen with GtkListBox items which
         # had been scrolled off-screen.
-        if not rv and obj1.parent == obj2.parent:
+        if not rv and AXObject.get_parent(obj1) == AXObject.get_parent(obj2):
             rv = AXObject.get_index_in_parent(obj1) - AXObject.get_index_in_parent(obj2)
 
         rv = max(rv, -1)
@@ -2527,7 +2523,7 @@ class Utilities:
         d = {}
         for label in labels:
             name = AXObject.get_name(label) or self.displayedText(label)
-            if name and name in [rootName, AXObject.get_name(label.parent)]:
+            if name and name in [rootName, AXObject.get_name(AXObject.get_parent(label))]:
                 continue
             if len(name.split()) < minimumWords:
                 continue
@@ -2557,9 +2553,9 @@ class Utilities:
         if self._treatAlertsAsDialogs():
             roles.append(Atspi.Role.ALERT)
 
-        isDialog = lambda x: x and AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
-        dialogs = [x for x in obj.getApplication() if isDialog(x)]
-        dialogs.extend([x for x in self.topLevelObject(obj) if isDialog(x)])
+        isDialog = lambda x: AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
+        dialogs = [x for x in AXObject.iter_children(obj.getApplication(), isDialog)]
+        dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])
 
         isPresentable = lambda x: self.isShowingAndVisible(x) \
             and (AXObject.get_name(x) or AXObject.get_child_count(x))
@@ -2761,11 +2757,12 @@ class Utilities:
             # We need to make sure that this is an embedded object in
             # some accessible text (as opposed to an imagemap link).
             #
+            parent = AXObject.get_parent(obj)
             try:
-                obj.parent.queryText()
+                parent.queryText()
                 offset = hyperlink.startIndex
             except:
-                msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, obj.parent)
+                msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, parent)
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 msg = "INFO: startIndex of %s is %i" % (obj, offset)
@@ -4083,7 +4080,7 @@ class Utilities:
             return True
 
         if role in [Atspi.Role.PANEL, Atspi.Role.SEPARATOR]:
-            return obj.parent and AXObject.get_role(obj.parent) in menuRoles
+            return AXObject.get_role(AXObject.get_parent(obj)) in menuRoles
 
         return False
 
@@ -4101,11 +4098,11 @@ class Utilities:
         if not (obj and AXObject.get_role(obj) == Atspi.Role.MENU):
             return False
 
-        return obj.parent and AXObject.get_role(obj.parent) in self._contextMenuParentRoles()
+        return AXObject.get_role(AXObject.get_parent(obj)) in self._contextMenuParentRoles()
 
     def isTopLevelMenu(self, obj):
         if AXObject.get_role(obj) == Atspi.Role.MENU:
-            return obj.parent == self.topLevelObject(obj)
+            return AXObject.get_parent(obj) == self.topLevelObject(obj)
 
         return False
 
@@ -4135,7 +4132,7 @@ class Utilities:
         if role != Atspi.Role.COMBO_BOX:
             return None
 
-        children = [x for x in obj if self.isEditableTextArea(x)]
+        children = [x for x in AXObject.iter_children(obj, self.isEditableTextArea)]
         if len(children) == 1:
             return children[0]
 
@@ -5084,7 +5081,7 @@ class Utilities:
             if self.isDescriptionListDescription(sibling):
                 return self.valuesForTerm(self.termForValue(sibling))
 
-        return result or [child for child in obj]
+        return result or [x for x in AXObject.iter_children(obj)]
 
     def getFunctionalParent(self, obj):
         if not obj:
@@ -5096,7 +5093,7 @@ class Utilities:
         if relations:
             result = relations[0].getTarget(0)
 
-        return result or obj.parent
+        return result or AXObject.get_parent(obj)
 
     def getPositionAndSetSize(self, obj, **args):
         if not obj:
@@ -5122,7 +5119,7 @@ class Utilities:
 
         parent = self.getFunctionalParent(obj)
         childCount = self.getFunctionalChildCount(parent)
-        if childCount > 100 and parent == obj.parent:
+        if childCount > 100 and parent == AXObject.get_parent(obj):
             return AXObject.get_index_in_parent(obj), childCount
 
         siblings = self.getFunctionalChildren(parent, obj)
@@ -5608,7 +5605,7 @@ class Utilities:
         if role == Atspi.Role.PASSWORD_TEXT and state.contains(Atspi.StateType.FOCUSED):
             return True
 
-        if orca_state.locusOfFocus in [event.source, event.source.parent]:
+        if orca_state.locusOfFocus in [event.source, AXObject.get_parent(event.source)]:
             return True
 
         if self.isDead(orca_state.locusOfFocus):

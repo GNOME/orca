@@ -47,7 +47,7 @@ class BrailleGenerator(web.BrailleGenerator):
             document = self._script.utilities.activeDocument(obj)
             if document and not self._script.utilities.documentFrameURI(document):
                 # Eliminates including "untitled" in the frame name.
-                return super()._generateLabelOrName(obj.parent)
+                return super()._generateLabelOrName(AXObject.get_parent(obj))
 
         return super()._generateLabelOrName(obj)
 

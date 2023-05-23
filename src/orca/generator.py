@@ -344,6 +344,8 @@ class Generator:
         result = []
         self._script.pointOfReference['usedDescriptionForName'] = False
         name = AXObject.get_name(obj)
+        role = args.get('role', AXObject.get_role(obj))
+        parent = AXObject.get_parent(obj)
         if name:
             result.append(name)
         elif self._fallBackOnDescriptionForName(obj, **args):
@@ -353,22 +355,18 @@ class Generator:
                 self._script.pointOfReference['usedDescriptionForName'] = True
             else:
                 link = None
-                if AXObject.get_role(obj) == Atspi.Role.LINK:
+                if role == Atspi.Role.LINK:
                     link = obj
-                elif obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LINK:
-                    link = obj.parent
+                elif AXObject.get_role(parent) == Atspi.Role.LINK:
+                    link = parent
                 if link:
                     basename = self._script.utilities.linkBasenameToName(link)
                     if basename:
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
-        try:
-            role = args.get('role', AXObject.get_role(obj))
-        except (LookupError, RuntimeError):
-            return result
-        if not result and AXObject.get_role(obj) == Atspi.Role.ICON \
-           and AXObject.get_role(obj.parent) == Atspi.Role.PANEL:
-            return self._generateName(obj.parent)
+        if not result and role == Atspi.Role.ICON \
+           and AXObject.get_role(parent) == Atspi.Role.PANEL:
+            return self._generateName(parent)
 
         return result
 
@@ -626,7 +624,7 @@ class Generator:
         args['stringType'] = 'required'
         if obj.getState().contains(Atspi.StateType.REQUIRED) \
            or (AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON \
-               and obj.parent.getState().contains(Atspi.StateType.REQUIRED)):
+               and AXObject.get_parent(obj).getState().contains(Atspi.StateType.REQUIRED)):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -706,7 +704,7 @@ class Generator:
         isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
 
         # For GtkListBox, such as those found in the control center
-        if obj.parent and AXObject.get_role(obj.parent) == Atspi.Role.LIST_BOX:
+        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
             widget = AXObject.find_descendant(obj, isWidget)
             if widget:
                 return self.generate(widget, includeContext=False)
