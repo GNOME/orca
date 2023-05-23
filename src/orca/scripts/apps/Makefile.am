@@ -1,7 +1,6 @@
 SUBDIRS = \
 	Banshee \
 	Eclipse \
-	ekiga \
 	empathy \
 	epiphany \
 	evince \
