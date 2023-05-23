@@ -328,7 +328,7 @@ class KeyboardEvent(InputEvent):
         elif self.isModifierKey():
             self.keyType = KeyboardEvent.TYPE_MODIFIER
             self.shouldEcho = _mayEcho and settings.enableModifierKeys
-            if self.isOrcaModifier():
+            if self.isOrcaModifier() and not self.is_duplicate:
                 now = time.time()
                 if KeyboardEvent.lastOrcaModifierAlone:
                     if _isPressed:
