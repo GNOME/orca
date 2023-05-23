@@ -102,7 +102,6 @@ src/orca/scripts/apps/gnome-search-tool/Makefile
 src/orca/scripts/apps/gnome-shell/Makefile
 src/orca/scripts/apps/gnome-window-properties/Makefile
 src/orca/scripts/apps/kwin/Makefile
-src/orca/scripts/apps/Instantbird/Makefile
 src/orca/scripts/apps/notification-daemon/Makefile
 src/orca/scripts/apps/notify-osd/Makefile
 src/orca/scripts/apps/Mozilla/Makefile
