@@ -11,7 +11,6 @@ SUBDIRS = \
 	gnome-documents \
 	gnome-shell \
 	gnome-search-tool \
-	gnome-window-properties \
 	kwin \
 	notification-daemon \
 	notify-osd \
