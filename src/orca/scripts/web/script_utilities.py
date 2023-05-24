@@ -237,7 +237,7 @@ class Utilities(script_utilities.Utilities):
 
         roles = [pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
         if not excludeDocumentFrame:
-            roles.append(pyastpi.ROLE_DOCUMENT_FRAME)
+            roles.append(pyatspi.ROLE_DOCUMENT_FRAME)
 
         try:
             rv = obj.getRole() in roles
