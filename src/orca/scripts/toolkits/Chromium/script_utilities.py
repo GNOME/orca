@@ -244,13 +244,12 @@ class Utilities(web.Utilities):
         return result
 
     def autocompleteForPopup(self, obj):
-        popupFor = lambda r: r.getRelationType() == Atspi.RelationType.POPUP_FOR
-        relations = list(filter(popupFor, obj.getRelationSet()))
-        if not relations:
+        relation = AXObject.get_relation(obj, Atspi.RelationType.POPUP_FOR)
+        if not relation:
             return None
 
-        target = relations[0].getTarget(0)
-        if target and AXObject.get_role(target) == Atspi.Role.AUTOCOMPLETE:
+        target = relation.get_target(0)
+        if AXObject.get_role(target) == Atspi.Role.AUTOCOMPLETE:
             return target
 
         return None

@@ -83,12 +83,11 @@ class Utilities(script_utilities.Utilities):
             if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
                 return []
 
-        nodes = []        
+        nodes = []
         index = self.cellIndex(obj)
         row = table.getRowAtIndex(index)
         col = table.getColumnAtIndex(index + 1)
         nodeLevel = self.nodeLevel(obj)
-        done = False
 
         # Candidates will be in the rows beneath the current row.
         # Only check in the current column and stop checking as
@@ -98,19 +97,14 @@ class Utilities(script_utilities.Utilities):
         for i in range(row+1, table.nRows):
             cell = table.getAccessibleAt(i, col)
             nodeCell = AXObject.get_previous_sibling(cell)
-            relations = nodeCell.getRelationSet()
-            for relation in relations:
-                if relation.getRelationType() \
-                       == Atspi.RelationType.NODE_CHILD_OF:
-                    nodeOf = relation.getTarget(0)
-                    if self.isSameObject(obj, nodeOf):
-                        nodes.append(cell)
-                    else:
-                        currentLevel = self.nodeLevel(nodeOf)
-                        if currentLevel <= nodeLevel:
-                            done = True
-                    break
-            if done:
+            relation = AXObject.get_relation(nodeCell, Atspi.RelationType.NODE_CHILD_OF)
+            if not relation:
+                continue
+
+            nodeOf = relation.getTarget(0)
+            if self.isSameObject(obj, nodeOf):
+                nodes.append(cell)
+            elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
 
         return nodes
@@ -142,13 +136,10 @@ class Utilities(script_utilities.Utilities):
         node = obj
         done = False
         while not done:
-            relations = node.getRelationSet()
+            relation = AXObject.get_relation(node, Atspi.RelationType.NODE_CHILD_OF)
             node = None
-            for relation in relations:
-                if relation.getRelationType() \
-                       == Atspi.RelationType.NODE_CHILD_OF:
-                    node = relation.getTarget(0)
-                    break
+            if relation:
+                node = relation.get_target(0)
 
             # We want to avoid situations where something gives us an
             # infinite cycle of nodes.  Bon Echo has been seen to do

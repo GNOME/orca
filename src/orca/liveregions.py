@@ -384,21 +384,20 @@ class LiveRegionManager:
         results = []
 
         # get the description if there is one.
-        for relation in obj.getRelationSet():
-            relationtype = relation.getRelationType()
-            if relationtype == Atspi.RelationType.DESCRIBED_BY:
-                targetobj = relation.getTarget(0)
-                try:
-                    # We will add on descriptions if they don't duplicate
-                    # what's already in the object's description.
-                    # See http://bugzilla.gnome.org/show_bug.cgi?id=568467
-                    # for more information.
-                    #
-                    description = targetobj.queryText().getText(0, -1)
-                    if description.strip() != AXObject.get_description(obj).strip():
-                        results.append(description)
-                except NotImplemented:
-                    pass
+        relation = AXObject.get_relation(obj, Atspi.RelationType.DESCRIBED_BY)
+        if relation:
+            targetobj = relation.getTarget(0)
+            try:
+                # We will add on descriptions if they don't duplicate
+                # what's already in the object's description.
+                # See http://bugzilla.gnome.org/show_bug.cgi?id=568467
+                # for more information.
+                #
+                description = targetobj.queryText().getText(0, -1)
+                if description.strip() != AXObject.get_description(obj).strip():
+                    results.append(description)
+            except NotImplementedError:
+                pass
 
         # get the politeness level as a string
         try:

@@ -1179,34 +1179,24 @@ class Generator:
         represents the radio button group label for the object, or an
         empty array if the object has no such label.
         """
-        result = []
-        try:
-            role = AXObject.get_role(obj)
-        except:
-            role = None
-        if role == Atspi.Role.RADIO_BUTTON:
-            radioGroupLabel = None
-            relations = obj.getRelationSet()
-            for relation in relations:
-                if (not radioGroupLabel) \
-                    and (relation.getRelationType() \
-                         == Atspi.RelationType.LABELLED_BY):
-                    radioGroupLabel = relation.getTarget(0)
-                    break
-            if radioGroupLabel:
-                result.append(self._script.utilities.\
-                                  displayedText(radioGroupLabel))
-            else:
-                parent = AXObject.get_parent_checked(obj)
-                while parent:
-                    if AXObject.get_role(parent) in [Atspi.Role.PANEL,
-                                            Atspi.Role.FILLER]:
-                        label = self._generateLabelAndName(parent)
-                        if label:
-                            result.extend(label)
-                            break
-                    parent = AXObject.get_parent_checked(parent)
-        return result
+        if AXObject.get_role(obj) != Atspi.Role.RADIO_BUTTON:
+            return []
+
+        radioGroupLabel = None
+        relation = AXObject.get_relation(obj, Atspi.RelationType.LABELLED_BY)
+        if relation:
+            radioGroupLabel = relation.get_target(0)
+        if radioGroupLabel:
+            return [self._script.utilities.displayedText(radioGroupLabel)]
+
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
+            if AXObject.get_role(parent) in [Atspi.Role.PANEL, Atspi.Role.FILLER]:
+                label = self._generateLabelAndName(parent)
+                if label:
+                    return label
+            parent = AXObject.get_parent_checked(parent)
+        return []
 
     def _generateRealActiveDescendantDisplayedText(self, obj, **args ):
         """Objects, such as tables and trees, can represent individual cells

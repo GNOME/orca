@@ -715,3 +715,73 @@ class AXObject:
 
         as_string = lambda x: x.value_name[12:].replace("_", "-").lower()
         return ", ".join(map(as_string, AXObject.get_state_set(obj).getStates()))
+
+    @staticmethod
+    def get_relations(obj):
+        """Returns the list of Atspi.Relation objects associated with obj"""
+
+        if obj is None:
+            return []
+
+        try:
+            relations = Atspi.Accessible.get_relation_set(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_relations: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        return relations
+
+    @staticmethod
+    def get_relation(obj, relation_type):
+        """Returns the specified Atspi.Relation for obj"""
+
+        if obj is None:
+            return None
+
+        for relation in AXObject.get_relations(obj):
+            if relation and relation.get_relation_type() == relation_type:
+                return relation
+
+        return None
+
+    @staticmethod
+    def has_relation(obj, relation_type):
+        """Returns true if obj has the specified relation type"""
+
+        return AXObject.get_relation(obj, relation_type) is not None
+
+    @staticmethod
+    def get_relation_targets(obj, relation_type, pred=None):
+        """Returns the list of targets with the specified relation type to obj.
+        If pred is provided, a target will only be included if pred is true."""
+
+        if obj is None:
+            return []
+
+        relation = AXObject.get_relation(obj, relation_type)
+        if relation is None:
+            return []
+
+        targets = set()
+        for i in range(relation.get_n_targets()):
+            target = relation.get_target(i)
+            if pred is None or pred(target):
+                targets.add(target)
+
+        # We want to avoid self-referential relationships.
+        type_includes_object = [Atspi.RelationType.MEMBER_OF]
+        if not relation_type in type_includes_object and obj in targets:
+            msg = 'ERROR: %s is in its own %s target list' % (obj, relation_type)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            targets.remove(obj)
+
+        return list(targets)
+
+    @staticmethod
+    def relations_as_string(obj):
+        """Returns the relations associated with obj as a string"""
+
+        as_string = lambda x: x.value_name[15:].replace("_", "-").lower()
+        relations = [r.get_relation_type() for r in AXObject.get_relations(obj)]
+        return ", ".join(map(as_string, relations))

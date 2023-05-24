@@ -251,53 +251,38 @@ class Utilities:
             if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
                 return []
 
-        nodes = []
-
         # First see if this accessible implements RELATION_NODE_PARENT_OF.
         # If it does, the full target list are the nodes. If it doesn't
         # we'll do an old-school, row-by-row search for child nodes.
-        #
-        relations = obj.getRelationSet()
-        try:
-            for relation in relations:
-                if relation.getRelationType() == \
-                        Atspi.RelationType.NODE_PARENT_OF:
-                    for target in range(relation.getNTargets()):
-                        node = relation.getTarget(target)
-                        if node and AXObject.get_index_in_parent(node) != -1:
-                            nodes.append(node)
-                    return nodes
-        except:
-            pass
 
-        row, col = self.coordinatesForCell(obj)
-        nodeLevel = self.nodeLevel(obj)
-        done = False
+        pred = lambda x: AXObject.get_index_in_parent(x) >= 0
+        nodes = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF, pred)
+        msg = "INFO: %i child nodes for %s found via node-parent-of" % (len(nodes), obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if nodes:
+            return nodes
 
         # Candidates will be in the rows beneath the current row.
         # Only check in the current column and stop checking as
         # soon as the node level of a candidate is equal or less
         # than our current level.
         #
+        row, col = self.coordinatesForCell(obj)
+        nodeLevel = self.nodeLevel(obj)
         for i in range(row+1, table.nRows):
             cell = table.getAccessibleAt(i, col)
-            if not cell:
+            relation = AXObject.get_relation(cell, Atspi.RelationType.NODE_CHILD_OF)
+            if not relation:
                 continue
-            relations = cell.getRelationSet()
-            for relation in relations:
-                if relation.getRelationType() \
-                       == Atspi.RelationType.NODE_CHILD_OF:
-                    nodeOf = relation.getTarget(0)
-                    if self.isSameObject(obj, nodeOf):
-                        nodes.append(cell)
-                    else:
-                        currentLevel = self.nodeLevel(nodeOf)
-                        if currentLevel <= nodeLevel:
-                            done = True
-                    break
-            if done:
+
+            nodeOf = relation.get_target(0)
+            if self.isSameObject(obj, nodeOf):
+                nodes.append(cell)
+            elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
 
+        msg = "INFO: %i child nodes for %s found via node-child-of" % (len(nodes), obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return nodes
 
     def commonAncestor(self, a, b):
@@ -417,23 +402,11 @@ class Utilities:
     def descriptionsForObject(self, obj):
         """Return a list of objects describing obj."""
 
-        try:
-            relations = obj.getRelationSet()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        describedBy = lambda x: x.getRelationType() == Atspi.RelationType.DESCRIBED_BY
-        relation = filter(describedBy, relations)
-        descriptions = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
+        descriptions = AXObject.get_relation_targets(obj, Atspi.RelationType.DESCRIBED_BY)
         if not descriptions:
             return []
 
-        labelledBy = lambda x: x.getRelationType() == Atspi.RelationType.LABELLED_BY
-        relation = filter(labelledBy, relations)
-        labels = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
-
+        labels = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         if descriptions == labels:
             msg = "INFO: %s's described-by targets are the same as labelled-by targets" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -448,18 +421,8 @@ class Utilities:
     def detailsForObject(self, obj, textOnly=True):
         """Return a list of objects containing details for obj."""
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        role = AXObject.get_role(obj)
-        hasDetails = lambda x: x.getRelationType() == Atspi.RelationType.DETAILS
-        relation = filter(hasDetails, relations)
-        details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
-        if not details and role == Atspi.Role.TOGGLE_BUTTON \
+        details = AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS)
+        if not details and AXObject.get_role(obj) == Atspi.Role.TOGGLE_BUTTON \
             and AXObject.has_state(obj, Atspi.StateType.EXPANDED):
             details = [child for child in AXObject.iter_children(obj)]
 
@@ -1696,28 +1659,10 @@ class Utilities:
     def labelsForObject(self, obj):
         """Return a list of the labels for this object."""
 
-        try:
-            relations = obj.getRelationSet()
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        pred = lambda r: r.getRelationType() == Atspi.RelationType.LABELLED_BY
-        relations = list(filter(pred, obj.getRelationSet()))
-        if not relations:
-            return []
-
-        r = relations[0]
-        result = set([r.getTarget(i) for i in range(r.getNTargets())])
-        if obj in result:
-            msg = 'WARNING: %s claims to be labelled by itself' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            result.remove(obj)
-
         def isNotAncestor(acc):
             return not AXObject.find_ancestor(obj, lambda x: x == acc)
 
+        result = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         return list(filter(isNotAncestor, result))
 
     def linkBasenameToName(self, obj):
@@ -1882,18 +1827,10 @@ class Utilities:
         node = obj
         done = False
         while not done:
-            try:
-                relations = node.getRelationSet()
-            except (LookupError, RuntimeError):
-                msg = 'ERROR: Exception getting relationset for %s' % node
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return -1
+            relation = AXObject.get_relation(node, Atspi.RelationType.NODE_CHILD_OF)
             node = None
-            for relation in relations:
-                if relation.getRelationType() \
-                       == Atspi.RelationType.NODE_CHILD_OF:
-                    node = relation.getTarget(0)
-                    break
+            if relation:
+                node = relation.get_target(0)
 
             # We want to avoid situations where something gives us an
             # infinite cycle of nodes.  Bon Echo has been seen to do
@@ -2462,7 +2399,7 @@ class Utilities:
         def _include(x):
             if not (x and AXObject.get_role(x) in labelRoles):
                 return False
-            if x.getRelationSet():
+            if AXObject.get_relations(x):
                 return False
             if onlyShowing and not AXObject.has_state(x, Atspi.StateType.SHOWING):
                 return False
@@ -2577,9 +2514,9 @@ class Utilities:
         if not obj or self.isZombie(obj):
             return None
 
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == Atspi.RelationType.FLOWS_FROM:
-                return relation.getTarget(0)
+        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
+        if relation:
+            return relation.get_target(0)
 
         return AXObject.get_previous_object(obj)
 
@@ -2589,9 +2526,9 @@ class Utilities:
         if not obj or self.isZombie(obj):
             return None
 
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
-                return relation.getTarget(0)
+        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
+        if relation:
+            return relation.get_target(0)
 
         return AXObject.get_next_object(obj)
 
@@ -4946,47 +4883,26 @@ class Utilities:
         return replicant
 
     def getFunctionalChildCount(self, obj):
-        if not obj:
-            return None
-
-        result = []
-        pred = lambda r: r.getRelationType() == Atspi.RelationType.NODE_PARENT_OF
-        relations = list(filter(pred, obj.getRelationSet()))
-        if relations:
-            return relations[0].getNTargets()
-
+        relation = AXObject.get_relation(obj, Atspi.RelationType.NODE_PARENT_OF)
+        if relation:
+            return relation.get_n_targets()
         return AXObject.get_child_count(obj)
 
     def getFunctionalChildren(self, obj, sibling=None):
-        if not obj:
-            return None
-
-        result = []
-        pred = lambda r: r.getRelationType() == Atspi.RelationType.NODE_PARENT_OF
-        relations = list(filter(pred, obj.getRelationSet()))
-        if relations:
-            r = relations[0]
-            result = [r.getTarget(i) for i in range(r.getNTargets())]
-
-        if not result:
-            if self.isDescriptionListTerm(sibling):
-                return self.descriptionListTerms(obj)
-            if self.isDescriptionListDescription(sibling):
-                return self.valuesForTerm(self.termForValue(sibling))
-
-        return result or [x for x in AXObject.iter_children(obj)]
+        result = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
+        if result:
+            return result
+        if self.isDescriptionListTerm(sibling):
+            return self.descriptionListTerms(obj)
+        if self.isDescriptionListDescription(sibling):
+            return self.valuesForTerm(self.termForValue(sibling))
+        return [x for x in AXObject.iter_children(obj)]
 
     def getFunctionalParent(self, obj):
-        if not obj:
-            return None
-
-        result = None
-        pred = lambda r: r.getRelationType() == Atspi.RelationType.NODE_CHILD_OF
-        relations = list(filter(pred, obj.getRelationSet()))
-        if relations:
-            result = relations[0].getTarget(0)
-
-        return result or AXObject.get_parent(obj)
+        relation = AXObject.get_relation(obj, Atspi.RelationType.NODE_CHILD_OF)
+        if relation:
+            return relation.get_target(0)
+        return AXObject.get_parent(obj)
 
     def getPositionAndSetSize(self, obj, **args):
         if not obj:

@@ -319,12 +319,7 @@ def statesToString(acc, indent=""):
     return "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
 
 def relationsToString(acc, indent=""):
-    try:
-        relations = [r.getRelationType() for r in acc.getRelationSet()]
-    except:
-        return "%srelations=(exception)" % indent
-
-    return "%srelations='%s'" % (indent, " ".join(map(pyatspi.relationToString, [r for r in relations])))
+    return "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
 
 def interfacesToString(acc, indent=""):
     return "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))

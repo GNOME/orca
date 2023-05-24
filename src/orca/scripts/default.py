@@ -3763,21 +3763,20 @@ class Script(script.Script):
                 yield [context, voice]
 
             moreLines = False
-            relations = obj.getRelationSet()
-            for relation in relations:
-                if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
-                    priorObj = obj
-                    obj = relation.getTarget(0)
+            relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
+            if relation:
+                priorObj = obj
+                obj = relation.getTarget(0)
 
-                    try:
-                        text = obj.queryText()
-                    except NotImplementedError:
-                        return
+                try:
+                    text = obj.queryText()
+                except NotImplementedError:
+                    return
 
-                    length = text.characterCount
-                    offset = 0
-                    moreLines = True
-                    break
+                length = text.characterCount
+                offset = 0
+                moreLines = True
+                break
             if not moreLines:
                 done = True
 

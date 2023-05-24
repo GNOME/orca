@@ -264,26 +264,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _getDocumentsEmbeddedBy(self, frame):
-        if not frame:
-            return []
-
-        isEmbeds = lambda r: r.getRelationType() == Atspi.RelationType.EMBEDS
-        try:
-            relations = list(filter(isEmbeds, frame.getRelationSet()))
-        except:
-            msg = "ERROR: Exception getting embeds relation for %s" % frame
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        if not relations:
-            return []
-
-        relation = relations[0]
-        targets = [relation.getTarget(i) for i in range(relation.getNTargets())]
-        if not targets:
-            return []
-
-        return list(filter(self.isDocument, targets))
+        return AXObject.get_relation_targets(frame, Atspi.RelationType.EMBEDS, self.isDocument)
 
     def sanityCheckActiveWindow(self):
         app = self._script.app
@@ -452,9 +433,9 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == Atspi.RelationType.FLOWS_TO:
-                return relation.getTarget(0)
+        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
+        if relation:
+            return relation.get_target(0)
 
         if obj == documentFrame:
             obj, offset = self.getCaretContext(documentFrame)
@@ -3314,26 +3295,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def targetsForLabel(self, obj):
-        isLabel = lambda r: r.getRelationType() == Atspi.RelationType.LABEL_FOR
-        try:
-            relations = list(filter(isLabel, obj.getRelationSet()))
-        except:
-            msg = "WEB: Exception getting relations of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        if not relations:
-            return []
-
-        r = relations[0]
-        rv = set([r.getTarget(i) for i in range(r.getNTargets())])
-
-        if obj in rv:
-            msg = 'WARNING: %s claims to be a label for itself' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv.remove(obj)
-
-        return list(filter(lambda x: x is not None, rv))
+        return AXObject.get_relation_targets(obj, Atspi.RelationType.LABEL_FOR)
 
     def labelTargets(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3708,22 +3670,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        # Remove this when we bump dependencies to 2.26
-        try:
-            relationType = Atspi.RelationType.ERROR_FOR
-        except:
-            rv = False
-        else:
-            isMessage = lambda r: r.getRelationType() == relationType
-            rv = bool(list(filter(isMessage, relations)))
-
+        rv = AXObject.has_relation(obj, Atspi.RelationType.ERROR_FOR)
         self._isErrorMessage[hash(obj)] = rv
         return rv
 
@@ -4170,20 +4117,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        rv = False
-        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS, relations)
-        for r in relation:
-            if r.getNTargets() > 0:
-                rv = True
-                break
-
+        relation = AXObject.get_relation(obj, Atspi.RelationType.DETAILS)
+        rv = relation and relation.get_n_targets() > 0
         self._hasDetails[hash(obj)] = rv
         return rv
 
@@ -4191,20 +4126,7 @@ class Utilities(script_utilities.Utilities):
         if not self.hasDetails(obj):
             return []
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        rv = []
-        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS, relations)
-        for r in relation:
-            for i in range(r.getNTargets()):
-                rv.append(r.getTarget(i))
-
-        return rv
+        return AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS)
 
     def isDetails(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -4214,20 +4136,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        rv = False
-        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS_FOR, relations)
-        for r in relation:
-            if r.getNTargets() > 0:
-                rv = True
-                break
-
+        relation = AXObject.get_relation(obj, Atspi.RelationType.DETAILS_FOR)
+        rv = relation and relation.get_n_targets() > 0
         self._isDetails[hash(obj)] = rv
         return rv
 
@@ -4235,20 +4145,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isDetails(obj):
             return []
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            msg = 'ERROR: Exception getting relationset for %s' % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        rv = []
-        relation = filter(lambda x: x.getRelationType() == Atspi.RelationType.DETAILS_FOR, relations)
-        for r in relation:
-            for i in range(r.getNTargets()):
-                rv.append(r.getTarget(i))
-
-        return rv
+        return AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS_FOR)
 
     def popupType(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -4672,18 +4569,11 @@ class Utilities(script_utilities.Utilities):
         if not self.getError(obj):
             return None
 
-        # Remove this when we bump dependencies to 2.26
-        try:
-            relationType = Atspi.RelationType.ERROR_MESSAGE
-        except:
-            return None
+        relation = AXObject.get_relation(obj, Atspi.RelationType.ERROR_MESSAGE)
+        if relation:
+            return relation.get_target(0)
 
-        isMessage = lambda r: r.getRelationType() == relationType
-        relations = list(filter(isMessage, obj.getRelationSet()))
-        if not relations:
-            return None
-
-        return relations[0].getTarget(0)
+        return None
 
     def getErrorMessage(self, obj):
         return self.expandEOCs(self._getErrorMessageContainer(obj))

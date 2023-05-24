@@ -79,7 +79,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
     def _findErrorWidget(self, root):
         isError = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL \
-                  and not ":" in AXObject.get_name(x) and not x.getRelationSet()
+                  and not ":" in AXObject.get_name(x) and not AXObject.get_relations(x)
         return AXObject.find_descendant(root, isError)
 
     def _findSuggestionsList(self, root):

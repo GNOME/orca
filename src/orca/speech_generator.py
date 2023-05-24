@@ -25,6 +25,7 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import functools
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -1655,33 +1656,26 @@ class SpeechGenerator(generator.Generator):
         'priorObj' is typically set by Orca to be the previous object
         with focus.
         """
-        # [[[TODO: WDW - hate duplicating code from _generateRadioButtonGroup
-        # but don't want to call it because it will make the same
-        # AT-SPI method calls.]]]
-        #
-        result = []
+
+        if AXObject.get_role(obj) != Atspi.Role.RADIO_BUTTON:
+            return []
+
+        result = super()._generateRadioButtonGroup(obj, **args)
+        if not result:
+            return []
+
+        result.extend(self.voice(DEFAULT, obj=obj, **args))
         priorObj = args.get('priorObj', None)
-        if obj and AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
-            radioGroupLabel = None
-            inSameGroup = False
-            relations = obj.getRelationSet()
-            for relation in relations:
-                if (not radioGroupLabel) \
-                    and (relation.getRelationType() \
-                         == Atspi.RelationType.LABELLED_BY):
-                    radioGroupLabel = relation.getTarget(0)
-                if (not inSameGroup) \
-                    and (relation.getRelationType() \
-                         == Atspi.RelationType.MEMBER_OF):
-                    for i in range(0, relation.getNTargets()):
-                        target = relation.getTarget(i)
-                        if target == priorObj:
-                            inSameGroup = True
-                            break
-            if (not inSameGroup) and radioGroupLabel:
-                result.append(self._script.utilities.displayedText(radioGroupLabel))
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
-        return result
+        if AXObject.get_role(priorObj) != Atspi.Role.RADIO_BUTTON:
+            return result
+
+        # TODO - JD: We need other ways to determine group membership. Not all
+        # implementations expose the member-of relation. Gtk3 does. Others are TBD.
+        members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF)
+        if not priorObj in members:
+            return result
+
+        return []
 
     def _generateTermValueCount(self, obj, **args):
         count = self._script.utilities.getValueCountForTerm(obj)
@@ -2298,34 +2292,28 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        # TODO - JD: We need other ways to determine group membership. Not all
+        # implementations expose the member-of relation. Gtk3 does. Others are TBD.
+        pred = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
+        members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF, pred)
+        if obj not in members:
+            return []
+
         result = []
-        position = -1
-        total = -1
 
-        try:
-            relations = obj.getRelationSet()
-        except:
-            relations = []
-        for relation in relations:
-            if relation.getRelationType() == Atspi.RelationType.MEMBER_OF:
-                total = 0
-                for i in range(0, relation.getNTargets()):
-                    target = relation.getTarget(i)
-                    if AXObject.has_state(target, Atspi.StateType.SHOWING):
-                        total += 1
-                        if target == obj:
-                            position = total
-
-        if position >= 0:
-            # Adjust the position because the relations tend to be given
-            # in the reverse order.
-            position = total - position + 1
-            result.append(self._script.formatting.getString(
+        # TODO - JD: We used to adjust the position on the basis of this particular
+        # relation "tending to be given in the reverse order". But there's no reason
+        # that should be the case. And doesn't always appear to be the case in Gtk3.
+        # Until we sort out the position in group/list mess, try a more reliable
+        # "adjustment."
+        cmp = lambda x, y: AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
+        members = sorted(members, key=functools.cmp_to_key(cmp))
+        result.append(self._script.formatting.getString(
                               mode='speech',
                               stringType='groupindex') \
-                          % {"index" : position,
-                             "total" : total})
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+                          % {"index" : members.index(obj) + 1,
+                             "total" : len(members)})
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generatePositionInList(self, obj, **args):

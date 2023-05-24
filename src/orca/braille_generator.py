@@ -482,11 +482,9 @@ class BrailleGenerator(generator.Generator):
 
             include = startOffset == 0
             if include:
-                for relation in obj.getRelationSet():
-                    if relation.getRelationType() \
-                            == Atspi.RelationType.FLOWS_FROM:
-                        include = not self._script.utilities.\
-                            isTextArea(relation.getTarget(0))
+                relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
+                if relation:
+                    include = not self._script.utilities.isTextArea(relation.get_target(0))
         return include
 
     #####################################################################

@@ -459,9 +459,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateLeaving(obj, **args)
 
     def _generateNewRadioButtonGroup(self, obj, **args):
-        # TODO - JD: Looking at the default speech generator's method, this
-        # is all kinds of broken. Until that can be sorted out, try to filter
-        # out some of the noise....
+        # TODO - JD: The default speech generator's method determines group membership
+        # via the member-of relation. We cannot count on that here. Plus, radio buttons
+        # on the web typically live in a group which is labelled. Thus the new-ancestor
+        # presentation accomplishes the same thing. Unless this can be further sorted out,
+        # try to filter out some of the noise....
         return []
 
     def _generateNumberOfChildren(self, obj, **args):

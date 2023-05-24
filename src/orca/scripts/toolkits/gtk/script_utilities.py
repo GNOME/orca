@@ -141,16 +141,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isPopOver(self, obj):
-        try:
-            relations = obj.getRelationSet()
-        except:
-            return False
-
-        for relation in relations:
-            if relation.getRelationType() == Atspi.RelationType.POPUP_FOR:
-                return True
-
-        return False
+        return AXObject.has_relation(obj, Atspi.RelationType.POPUP_FOR)
 
     def isUselessPanel(self, obj):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.PANEL):
