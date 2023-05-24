@@ -359,7 +359,7 @@ class TutorialGenerator:
 
 
         # If already in focus then the tree probably collapsed or expanded
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EXPANDABLE):
             if state.contains(Atspi.StateType.EXPANDED):
                 if (self.lastTutorial != [expandedMsg]) or forceTutorial:
@@ -411,7 +411,7 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if not obj.getState().contains(Atspi.StateType.EDITABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return []
 
         utterances = []
@@ -577,7 +577,7 @@ class TutorialGenerator:
             utterances = self._getTutorialForCheckBox(
                 obj, alreadyFocused, forceTutorial)
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EXPANDABLE):
             if state.contains(Atspi.StateType.EXPANDED):
                 if self.lastTutorial != [expandedMsg] or forceTutorial:

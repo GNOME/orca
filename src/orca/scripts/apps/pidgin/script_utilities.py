@@ -80,7 +80,7 @@ class Utilities(script_utilities.Utilities):
         except:
             return []
         else:
-            if not obj.getState().contains(Atspi.StateType.EXPANDED):
+            if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
                 return []
 
         nodes = []        

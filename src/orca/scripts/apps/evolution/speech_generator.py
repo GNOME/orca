@@ -74,7 +74,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isFocused")
         if rv is None:
-            rv = obj.getState().contains(Atspi.StateType.FOCUSED)
+            rv = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
             cached["isFocused"] = rv
             self._cache[hash(obj)] = cached
 
@@ -84,7 +84,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isChecked")
         if rv is None:
-            rv = obj.getState().contains(Atspi.StateType.CHECKED)
+            rv = AXObject.has_state(obj, Atspi.StateType.CHECKED)
             cached["isChecked"] = rv
             self._cache[hash(obj)] = cached
 

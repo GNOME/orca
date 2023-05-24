@@ -267,7 +267,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.TOGGLE_BUTTON \
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
-            if obj.getState().contains(Atspi.StateType.CHECKED):
+            if AXObject.has_state(obj, Atspi.StateType.CHECKED):
                 result.append(messages.ON)
             else:
                 result.append(messages.OFF)

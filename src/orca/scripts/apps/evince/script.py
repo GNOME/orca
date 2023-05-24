@@ -35,7 +35,9 @@ import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
+from orca.ax_object import AXObject
 from orca.structural_navigation import StructuralNavigation
+
 
 ########################################################################
 #                                                                      #
@@ -106,8 +108,7 @@ class Script(gtk.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        states = orca_state.locusOfFocus.getState()
-        if states.contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.EDITABLE):
             return False
 
         return True
@@ -116,7 +117,7 @@ class Script(gtk.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         obj = event.source
-        if obj.getState().contains(Atspi.StateType.FOCUSED):
+        if AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)

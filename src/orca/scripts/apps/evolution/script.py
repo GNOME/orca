@@ -89,7 +89,7 @@ class Script(WebKitGtk.Script, gtk.Script):
             return True
 
         window = self.utilities.topLevelObject(event.source)
-        if window and not window.getState().contains(Atspi.StateType.ACTIVE):
+        if not AXObject.has_state(window, Atspi.StateType.ACTIVE):
             return False
 
         return True
@@ -119,7 +119,7 @@ class Script(WebKitGtk.Script, gtk.Script):
             return
 
         if self.utilities.isComposeAutocomplete(event.source):
-            if event.any_data.getState().contains(Atspi.StateType.SELECTED):
+            if AXObject.has_state(event.any_data, Atspi.StateType.SELECTED):
                 orca.setLocusOfFocus(event, event.any_data)
             else:
                 orca.setLocusOfFocus(event, event.source)
@@ -157,9 +157,8 @@ class Script(WebKitGtk.Script, gtk.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        obj = event.source
-        if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX \
-           and not obj.getState().contains(Atspi.StateType.FOCUSED):
+        if AXObject.get_role(event.source) == Atspi.Role.COMBO_BOX \
+           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             return
 
         gtk.Script.onSelectionChanged(self, event)

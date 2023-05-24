@@ -119,37 +119,21 @@ class Utilities(web.Utilities):
         return rv
 
     def isMenuInCollapsedSelectElement(self, obj):
-        role = AXObject.get_role(obj)
+        if AXObject.get_role(obj) != Atspi.Role.MENU:
+            return False
+
         parent = AXObject.get_parent(obj)
-        if role != Atspi.Role.MENU or self._getTag(parent) != 'select':
+        if self._getTag(parent) != 'select':
             return False
 
-        try:
-            parentState = parent.getState()
-        except:
-            msg = "CHROMIUM: Exception getting state for %s" % parent
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return not parentState.contains(Atspi.StateType.EXPANDED)
+        return not AXObject.has_state(parent, Atspi.StateType.EXPANDED)
 
     def treatAsMenu(self, obj):
-        if not obj:
-            return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "CHROMIUM: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         # Unlike other apps and toolkits, submenus in Chromium have the menu item
         # role rather than the menu role, but we can identify them as submenus via
         # the has-popup state.
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.MENU_ITEM:
-            return state.contains(Atspi.StateType.HAS_POPUP)
+        if AXObject.get_role(obj) == Atspi.Role.MENU_ITEM:
+            return AXObject.has_state(obj, Atspi.StateType.HAS_POPUP)
 
         return False
 

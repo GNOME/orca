@@ -741,7 +741,7 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EDITABLE) \
            and state.contains(Atspi.StateType.SINGLE_LINE):
             return True
@@ -820,7 +820,7 @@ class Chat:
         # rooms with identical names anyway. :-)
         #
         if AXObject.get_role(obj) in [Atspi.Role.TEXT, Atspi.Role.ENTRY] \
-           and obj.getState().contains(Atspi.StateType.EDITABLE):
+           and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             name = self.getChatRoomName(obj)
 
         for conversation in self._conversationList.conversations:
@@ -843,9 +843,9 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if obj and AXObject.get_role(obj) == Atspi.Role.TEXT \
+        if AXObject.get_role(obj) == Atspi.Role.TEXT \
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.SCROLL_PANE:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             if not state.contains(Atspi.StateType.EDITABLE) \
                and state.contains(Atspi.StateType.MULTI_LINE):
                 return True
@@ -861,7 +861,7 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getState().contains(Atspi.StateType.SHOWING):
+        if AXObject.has_state(obj, Atspi.StateType.SHOWING):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
             msg = "INFO: %s's window is focused chat: %s" % (obj, active)
             debug.println(debug.LEVEL_INFO, msg, True)

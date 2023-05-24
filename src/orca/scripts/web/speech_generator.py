@@ -582,7 +582,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(Atspi.Role.MENU)
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        isEditable = obj.getState().contains(Atspi.StateType.EDITABLE)
+        isEditable = AXObject.has_state(obj, Atspi.StateType.EDITABLE)
 
         if isEditable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if ((lastKey in ["Down", "Right"] and not mods) or self._script.inSayAll()) and start:
@@ -597,7 +597,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         elif isEditable and self._script.utilities.isDocument(obj):
             parent = AXObject.get_parent(obj)
-            if parent and not parent.getState().contains(Atspi.StateType.EDITABLE) \
+            if parent and not AXObject.has_state(parent, Atspi.StateType.EDITABLE) \
                and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))

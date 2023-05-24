@@ -683,3 +683,35 @@ class AXObject:
             return None
 
         return previous_object
+
+    @staticmethod
+    def get_state_set(obj):
+        """Returns the state set associated with obj"""
+
+        if obj is None:
+            return Atspi.StateSet()
+
+        try:
+            state_set = Atspi.Accessible.get_state_set(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_state_set: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return Atspi.StateSet()
+
+        return state_set
+
+    @staticmethod
+    def has_state(obj, state):
+        """Returns true if obj has the specified state"""
+
+        if obj is None:
+            return False
+
+        return AXObject.get_state_set(obj).contains(state)
+
+    @staticmethod
+    def state_set_as_string(obj):
+        """Returns the state set associated with obj as a string"""
+
+        as_string = lambda x: x.value_name[12:].replace("_", "-").lower()
+        return ", ".join(map(as_string, AXObject.get_state_set(obj).getStates()))

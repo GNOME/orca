@@ -132,10 +132,7 @@ class SpellCheck:
         return self.activate(window)
 
     def isComplete(self):
-        try:
-            state = self._changeToEntry.getState()
-        except:
-            return False
+        state = AXObject.get_state_set(self._changeToEntry)
         return not state.contains(Atspi.StateType.SENSITIVE)
 
     def isAutoFocusEvent(self, event):

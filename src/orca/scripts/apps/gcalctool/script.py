@@ -66,20 +66,18 @@ class Script(gtk.Script):
             gtk.Script.onWindowActivated(self, event)
             return
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.FRAME:
+        if AXObject.get_role(event.source) != Atspi.Role.FRAME:
             gtk.Script.onWindowActivated(self, event)
             return
 
-        isEditbar = lambda x: x and AXObject.get_role(x) == Atspi.Role.EDITBAR
-        self._resultsDisplay = AXObject.find_descendant(obj, isEditbar)
+        isEditbar = lambda x: AXObject.get_role(x) == Atspi.Role.EDITBAR
+        self._resultsDisplay = AXObject.find_descendant(event.source, isEditbar)
         if not self._resultsDisplay:
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
-        isStatusLine = lambda x: x and AXObject.get_role(x) == Atspi.Role.TEXT \
-                       and not x.getState().contains(Atspi.StateType.EDITABLE)
-        self._statusLine = AXObject.find_descendant(obj, isStatusLine)
+        isStatusLine = lambda x: AXObject.get_role(x) == Atspi.Role.TEXT \
+                       and not AXObject.has_state(x, Atspi.StateType.EDITABLE)
+        self._statusLine = AXObject.find_descendant(event.source, isStatusLine)
 
         gtk.Script.onWindowActivated(self, event)
 

@@ -114,13 +114,7 @@ class Utilities:
     #########################################################################
 
     def _isActiveAndShowingAndNotIconified(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         if not state.contains(Atspi.StateType.ACTIVE):
             msg = "INFO: %s lacks state active" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -254,7 +248,7 @@ class Utilities:
         except:
             return []
         else:
-            if not obj.getState().contains(Atspi.StateType.EXPANDED):
+            if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
                 return []
 
         nodes = []
@@ -369,7 +363,7 @@ class Utilities:
                      Atspi.Role.TREE_TABLE,
                      Atspi.Role.TABLE]
 
-        if obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS) \
+        if AXObject.has_state(obj, Atspi.StateType.MANAGES_DESCENDANTS) \
            or AXObject.get_role(obj) in skipRoles:
             return
 
@@ -380,7 +374,7 @@ class Utilities:
             child = AXObject.get_child(obj, i)
             role = AXObject.get_role(child)
             if role == Atspi.Role.PUSH_BUTTON \
-                and child.getState().contains(Atspi.StateType.IS_DEFAULT):
+                and AXObject.has_state(child, Atspi.StateType.IS_DEFAULT):
                 defaultButton = child
             elif not role in skipRoles:
                 defaultButton = self.defaultButton(child)
@@ -456,9 +450,8 @@ class Utilities:
 
         try:
             relations = obj.getRelationSet()
-            state = obj.getState()
         except:
-            msg = 'ERROR: Exception getting relationset and state for %s' % obj
+            msg = 'ERROR: Exception getting relationset for %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -466,7 +459,8 @@ class Utilities:
         hasDetails = lambda x: x.getRelationType() == Atspi.RelationType.DETAILS
         relation = filter(hasDetails, relations)
         details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
-        if not details and role == Atspi.Role.TOGGLE_BUTTON and state.contains(Atspi.StateType.EXPANDED):
+        if not details and role == Atspi.Role.TOGGLE_BUTTON \
+            and AXObject.has_state(obj, Atspi.StateType.EXPANDED):
             details = [child for child in AXObject.iter_children(obj)]
 
         if not textOnly:
@@ -581,7 +575,7 @@ class Utilities:
         if not root:
             return None
 
-        if root.getState().contains(Atspi.StateType.FOCUSED):
+        if AXObject.has_state(root, Atspi.StateType.FOCUSED):
             return root
 
         for child in AXObject.iter_children(root):
@@ -1150,7 +1144,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        if obj.getState().contains(Atspi.StateType.INDETERMINATE):
+        if AXObject.has_state(obj, Atspi.StateType.INDETERMINATE):
             msg = "INFO: %s has state indeterminate and value of %s" % (obj, val)
             debug.println(debug.LEVEL_INFO, msg, True)
             if val <= 0:
@@ -1244,19 +1238,9 @@ class Utilities:
         return AXObject.find_ancestor(obj, self.isDocument)
 
     def isModalDialog(self, obj):
-        if not obj:
+        if not AXObject.has_state(obj, Atspi.StateType.MODAL):
             return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        role = AXObject.get_role(obj)
-        return role in [Atspi.Role.DIALOG, Atspi.Role.ALERT] \
-            and state.contains(Atspi.StateType.MODAL)
+        return AXObject.get_role(obj) in [Atspi.Role.DIALOG, Atspi.Role.ALERT]
 
     def getModalDialog(self, obj):
         if not obj:
@@ -1416,15 +1400,10 @@ class Utilities:
         return result
 
     def isFocusableLabel(self, obj):
-        try:
-            role = AXObject.get_role(obj)
-            state = obj.getState()
-        except:
+        if AXObject.get_role(obj) != Atspi.Role.LABEL:
             return False
 
-        if role != Atspi.Role.LABEL:
-            return False
-
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.FOCUSABLE):
             return True
 
@@ -1436,15 +1415,10 @@ class Utilities:
         return False
 
     def isNonFocusableList(self, obj):
-        try:
-            state = obj.getState()
-        except:
+        if AXObject.get_role(obj) != Atspi.Role.LIST:
             return False
 
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.LIST:
-            return False
-
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.FOCUSABLE):
             return False
 
@@ -1456,14 +1430,11 @@ class Utilities:
         return True
 
     def isStatusBarNotification(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.NOTIFICATION):
+        if AXObject.get_role(obj) != Atspi.Role.NOTIFICATION:
             return False
 
-        isStatusBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.STATUS_BAR
-        if AXObject.find_ancestor(obj, isStatusBar):
-            return True
-
-        return False
+        isStatusBar = lambda x: AXObject.get_role(x) == Atspi.Role.STATUS_BAR
+        return AXObject.find_ancestor(obj, isStatusBar) is not None
 
     def isTreeDescendant(self, obj):
         if not obj:
@@ -1473,11 +1444,8 @@ class Utilities:
         if role == Atspi.Role.TREE_ITEM:
             return True
 
-        isTree = lambda x: x and AXObject.get_role(x) in [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
-        if AXObject.find_ancestor(obj, isTree):
-            return True
-
-        return False
+        isTree = lambda x: AXObject.get_role(x) in [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
+        return AXObject.find_ancestor(obj, isTree) is not None
 
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
@@ -1512,7 +1480,7 @@ class Utilities:
                 layoutOnly = True
             else:
                 if not (table.nRows and table.nColumns):
-                    layoutOnly = not obj.getState().contains(Atspi.StateType.FOCUSED)
+                    layoutOnly = not AXObject.has_state(obj, Atspi.StateType.FOCUSED)
                 elif attrs.get('xml-roles') == 'table' or attrs.get('tag') == 'table':
                     layoutOnly = False
                 elif not (AXObject.get_name(obj) or self.displayedLabel(obj)):
@@ -1559,7 +1527,7 @@ class Utilities:
         elif role in [Atspi.Role.REDUNDANT_OBJECT, Atspi.Role.UNKNOWN]:
             layoutOnly = True
         elif self.isTableRow(obj):
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             layoutOnly = not (state.contains(Atspi.StateType.FOCUSABLE) \
                               or state.contains(Atspi.StateType.SELECTABLE))
         elif role == Atspi.Role.PANEL and AXObject.get_role(firstChild) in ignorePanelParent:
@@ -1605,7 +1573,7 @@ class Utilities:
         if not self.isTextArea(obj):
             return False
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
                    and not state.contains(Atspi.StateType.EDITABLE)
         return readOnly
@@ -2014,12 +1982,12 @@ class Utilities:
         for menu in menubar:
             try:
                 menu.clearCache()
-                state = menu.getState()
             except:
-                msg = "ERROR: Exception getting state of %s" % menu
+                msg = "ERROR: Exception clearing cache of %s" % menu
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
+            state = AXObject.get_state_set(menu)
             if state.contains(Atspi.StateType.EXPANDED) \
                or state.contains(Atspi.StateType.SELECTED):
                 return menu
@@ -2176,7 +2144,7 @@ class Utilities:
         return False
 
     def realActiveAncestor(self, obj):
-        if obj.getState().contains(Atspi.StateType.FOCUSED):
+        if AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             return obj
 
         roles = [Atspi.Role.TABLE_CELL,
@@ -2258,7 +2226,7 @@ class Utilities:
                      Atspi.Role.TREE_TABLE,
                      Atspi.Role.TABLE]
 
-        if obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS) \
+        if AXObject.has_state(obj, Atspi.StateType.MANAGES_DESCENDANTS) \
            or AXObject.get_role(obj) in skipRoles:
             return
 
@@ -2312,19 +2280,12 @@ class Utilities:
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):
         obj = obj or orca_state.locusOfFocus
-
         topLevel = self.topLevelObject(obj)
         if not topLevel:
             return False
 
         topLevel.clearCache()
-        try:
-            state = topLevel.getState()
-        except:
-            msg = "ERROR: Exception getting state of topLevel %s" % topLevel
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        AXObject.get_state_set(topLevel)
         if not state.contains(Atspi.StateType.ACTIVE) \
            or state.contains(Atspi.StateType.DEFUNCT):
             return False
@@ -2503,14 +2464,14 @@ class Utilities:
                 return False
             if x.getRelationSet():
                 return False
-            if onlyShowing and not x.getState().contains(Atspi.StateType.SHOWING):
+            if onlyShowing and not AXObject.has_state(x, Atspi.StateType.SHOWING):
                 return False
             return True
 
         def _exclude(x):
             if not x or AXObject.get_role(x) in skipRoles:
                 return True
-            if onlyShowing and not x.getState().contains(Atspi.StateType.SHOWING):
+            if onlyShowing and not AXObject.has_state(x, Atspi.StateType.SHOWING):
                 return True
             return False
 
@@ -2858,7 +2819,7 @@ class Utilities:
         return False
 
     def getError(self, obj):
-        return obj.getState().contains(Atspi.StateType.INVALID_ENTRY)
+        return AXObject.has_state(obj, Atspi.StateType.INVALID_ENTRY)
 
     def getErrorMessage(self, obj):
         return ""
@@ -3199,7 +3160,7 @@ class Utilities:
         if role == Atspi.Role.PASSWORD_TEXT:
             return False
 
-        if obj.getState().contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return True
 
         return False
@@ -3503,14 +3464,14 @@ class Utilities:
             if not event.any_data or not event.source:
                 return False
 
-            state = event.source.getState()
+            state = AXObject.get_state_set(event.source)
             if not state.contains(Atspi.StateType.EDITABLE):
                 return False
             if not state.contains(Atspi.StateType.SHOWING):
                 return False
             if state.contains(Atspi.StateType.FOCUSABLE):
                 event.source.clearCache()
-                state = event.source.getState()
+                state = AXObject.get_state_set(event.source)
                 if not state.contains(Atspi.StateType.FOCUSED):
                     return False
 
@@ -3895,7 +3856,7 @@ class Utilities:
 
         role = AXObject.get_role(obj)
         if role == Atspi.Role.MENU and not children:
-            pred = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
+            pred = lambda x: AXObject.has_state(x, Atspi.StateType.SELECTED)
             children = self.findAllDescendants(obj, pred)
 
         if role == Atspi.Role.COMBO_BOX \
@@ -3991,7 +3952,7 @@ class Utilities:
         return selection.getSelectedChild(0), selection.getSelectedChild(count-1)
 
     def focusedChild(self, obj):
-        isFocused = lambda x: x and x.getState().contains(Atspi.StateType.FOCUSED)
+        isFocused = lambda x: AXObject.has_state(x, Atspi.StateType.FOCUSED)
         child = AXObject.find_descendant(obj, isFocused)
         if child == obj:
             msg = "ERROR: focused child of %s is %s" % (obj, child)
@@ -4007,30 +3968,16 @@ class Utilities:
         pred = lambda x: AXObject.get_role(x) == Atspi.Role.MENU
         menus = [child for child in AXObject.iter_children(obj, pred)]
         for menu in menus:
-            try:
-                state = menu.getState()
-            except:
-                msg = "ERROR: Exception getting state for %s" % menu
-                debug.println(debug.LEVEL_INFO, msg, True)
-                continue
-            if state.contains(Atspi.StateType.ENABLED):
+            if AXObject.has_state(menu, Atspi.StateType.ENABLED):
                 return menu
 
         return None
 
     def isButtonWithPopup(self, obj):
-        if not obj:
+        if AXObject.get_role(obj) != Atspi.Role.PUSH_BUTTON:
             return False
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        role = AXObject.get_role(obj)
-        return role == Atspi.Role.PUSH_BUTTON and state.contains(Atspi.StateType.HAS_POPUP)
+        return AXObject.has_state(obj, Atspi.StateType.HAS_POPUP)
 
     def isPopupMenuForCurrentItem(self, obj):
         if obj == orca_state.locusOfFocus:
@@ -4107,17 +4054,10 @@ class Utilities:
         return False
 
     def isSingleLineAutocompleteEntry(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if AXObject.get_role(obj) != Atspi.Role.ENTRY:
             return False
 
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.ENTRY:
-            return False
-
+        state = AXObject.get_state_set(obj)
         return state.contains(Atspi.StateType.SUPPORTS_AUTOCOMPLETION) \
             and state.contains(Atspi.StateType.SINGLE_LINE)
 
@@ -4142,17 +4082,7 @@ class Utilities:
         return self.getEntryForEditableComboBox(obj) is not None
 
     def isEditableDescendantOfComboBox(self, obj):
-        if not obj:
-            return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not state.contains(Atspi.StateType.EDITABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
@@ -4179,15 +4109,7 @@ class Utilities:
     def isNonModalPopOver(self, obj):
         if not self.isPopOver(obj):
             return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return not state.contains(Atspi.StateType.MODAL)
+        return not AXObject.has_state(obj, Atspi.StateType.MODAL)
 
     def isUselessPanel(self, obj):
         return False
@@ -4453,10 +4375,10 @@ class Utilities:
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
     def setSizeUnknown(self, obj):
-        return obj.getState().contains(Atspi.StateType.INDETERMINATE)
+        return AXObject.has_state(obj, Atspi.StateType.INDETERMINATE)
 
     def rowOrColumnCountUnknown(self, obj):
-        return obj.getState().contains(Atspi.StateType.INDETERMINATE)
+        return AXObject.has_state(obj, Atspi.StateType.INDETERMINATE)
 
     def rowAndColumnCount(self, obj, preferAttribute=True):
         try:
@@ -4534,7 +4456,7 @@ class Utilities:
         if role == Atspi.Role.LINK and AXObject.get_name(obj):
             return True
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EXPANDABLE):
             return not state.contains(Atspi.StateType.EXPANDED)
 
@@ -4595,7 +4517,7 @@ class Utilities:
                 string = child.queryText().getText(0, -1)
                 if re.search("[^\ufffc\s]", string):
                     candidates.append(child)
-                    if child.getState().contains(Atspi.StateType.SHOWING):
+                    if AXObject.has_state(child, Atspi.StateType.SHOWING):
                         candidates_showing.append(child)
 
         if len(candidates_showing) == 1:
@@ -4880,11 +4802,7 @@ class Utilities:
         cells = []
         for i in range(startIndex, endIndex):
             cell = table.getAccessibleAt(row, i)
-            try:
-                showing = cell.getState().contains(Atspi.StateType.SHOWING)
-            except:
-                continue
-            if showing:
+            if AXObject.has_state(cell, Atspi.StateType.SHOWING):
                 cells.append(cell)
 
         return cells
@@ -4899,17 +4817,10 @@ class Utilities:
         if not showingOnly:
             return cell
 
-        try:
-            state = cell.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % cell
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
+        if AXObject.has_state(cell, Atspi.StateType.SHOWING):
+            return cell
 
-        if not state().contains(Atspi.StateType.SHOWING):
-            return None
-
-        return cell
+        return None
 
     def isLastCell(self, obj):
         role = AXObject.get_role(obj)
@@ -4940,13 +4851,7 @@ class Utilities:
         return False
 
     def isShowingOrVisible(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.SHOWING) \
            or state.contains(Atspi.StateType.VISIBLE):
             return True
@@ -4956,13 +4861,7 @@ class Utilities:
         return False
 
     def isShowingAndVisible(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.SHOWING) \
            and state.contains(Atspi.StateType.VISIBLE):
             return True
@@ -4976,9 +4875,7 @@ class Utilities:
                      Atspi.Role.CHECK_MENU_ITEM,
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.SEPARATOR]
-
-        role = AXObject.get_role(obj)
-        if role in menuRoles and self.isInOpenMenuBarMenu(obj):
+        if AXObject.get_role(obj) in menuRoles and self.isInOpenMenuBarMenu(obj):
             msg = "HACK: Treating %s as showing and visible" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -4998,12 +4895,6 @@ class Utilities:
 
     def isZombie(self, obj):
         index = AXObject.get_index_in_parent(obj)
-        try:
-            state = obj.getState()
-        except:
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj, True)
-            return True
-
         topLevelRoles = [Atspi.Role.APPLICATION,
                          Atspi.Role.ALERT,
                          Atspi.Role.DIALOG,
@@ -5015,6 +4906,8 @@ class Utilities:
         if index == -1 and role not in topLevelRoles:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj, True)
             return True
+
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.DEFUNCT):
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj, True)
             return True
@@ -5550,17 +5443,11 @@ class Utilities:
         if self.isSameObject(event.source, orca_state.locusOfFocus):
             return True
 
-        try:
-            state = event.source.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(event.source)
         if role in [Atspi.Role.TABLE_ROW, Atspi.Role.LIST_BOX]:
             return True
 
+        state = AXObject.get_state_set(event.source)
         if role == Atspi.Role.COMBO_BOX:
             return state.contains(Atspi.StateType.FOCUSED)
 
@@ -5574,13 +5461,6 @@ class Utilities:
            and not event.type.startswith("object:text-attributes-changed"):
             return False
 
-        try:
-            state = event.source.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(event.source)
         ignoreRoles = [Atspi.Role.LABEL,
                        Atspi.Role.MENU,
@@ -5592,6 +5472,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        state = AXObject.get_state_set(event.source)
         if role == Atspi.Role.TABLE_CELL \
            and not state.contains(Atspi.StateType.FOCUSED) \
            and not state.contains(Atspi.StateType.SELECTED):
@@ -5681,13 +5562,7 @@ class Utilities:
         if not event.type.startswith("object:text-changed:insert"):
             return False
 
-        try:
-            state = event.source.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(event.source)
         if state.contains(Atspi.StateType.FOCUSABLE) and not state.contains(Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "INFO: Not echoable text insertion event: focusable source is not focused"
@@ -5706,15 +5581,7 @@ class Utilities:
     def isEditableTextArea(self, obj):
         if not self.isTextArea(obj):
             return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return state.contains(Atspi.StateType.EDITABLE)
+        return AXObject.has_state(obj, Atspi.StateType.EDITABLE)
 
     def isClipboardTextChangedEvent(self, event):
         if not event.type.startswith("object:text-changed"):
@@ -5858,7 +5725,7 @@ class Utilities:
         if not AXObject.supports_selection(obj):
             return False
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EXPANDABLE) \
            and not state.contains(Atspi.StateType.EXPANDED):
             return False

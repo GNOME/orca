@@ -316,12 +316,7 @@ def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
                 timestamp)
 
 def statesToString(acc, indent=""):
-    try:
-        states = acc.getState().getStates()
-    except:
-        return "%sstates=(exception)" % indent
-
-    return "%sstates='%s'" % (indent, " ".join(map(pyatspi.stateToString, states)))
+    return "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
 
 def relationsToString(acc, indent=""):
     try:

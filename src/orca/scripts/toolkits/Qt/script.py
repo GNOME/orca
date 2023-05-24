@@ -61,7 +61,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        state = event.source.getState()
+        state = AXObject.get_state_set(event.source)
         if state.contains(Atspi.StateType.FOCUSED) and state.contains(Atspi.StateType.FOCUSABLE):
             super().onFocusedChanged(event)
             return

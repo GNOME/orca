@@ -43,7 +43,7 @@ class Utilities(switcher.Utilities):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.FILLER):
             return False
 
-        return obj.getState().contains(Atspi.StateType.FOCUSED)
+        return AXObject.has_state(obj, Atspi.StateType.FOCUSED)
 
     def isSwitcherSelectionChangeEventType(self, event):
         """Returns True if this event is the one we use to present changes."""

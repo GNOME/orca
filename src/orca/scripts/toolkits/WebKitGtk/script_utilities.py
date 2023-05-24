@@ -88,7 +88,7 @@ class Utilities(script_utilities.Utilities):
         if not AXObject.get_role(obj) == Atspi.Role.ENTRY:
             return False
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
                    and not state.contains(Atspi.StateType.EDITABLE)
 
@@ -220,7 +220,7 @@ class Utilities(script_utilities.Utilities):
         if parent is None:
             return False
 
-        return not parent.getState().contains(Atspi.StateType.FOCUSABLE)
+        return not AXObject.has_state(parent, Atspi.StateType.FOCUSABLE)
 
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
@@ -233,7 +233,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if AXObject.get_role(obj) == Atspi.Role.LIST:
-            if obj.getState().contains(Atspi.StateType.FOCUSABLE):
+            if AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
                 return False
             if not childCount:
                 return AXObject.supports_text(obj)

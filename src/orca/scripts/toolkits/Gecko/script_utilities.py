@@ -135,14 +135,11 @@ class Utilities(web.Utilities):
     def isEditableMessage(self, obj):
         """Returns True if this is an editable message."""
 
-        if not obj:
-            return False
-
-        if not obj.getState().contains(Atspi.StateType.EDITABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         document = self.getDocumentForObject(obj)
-        if document and document.getState().contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(document, Atspi.StateType.EDITABLE):
             msg = "GECKO: %s is in an editable document: %s" % (obj, document)
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -191,22 +188,13 @@ class Utilities(web.Utilities):
 
         # Firefox seems to have turned its accessible location widget into a
         # childless editable combobox.
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.COMBO_BOX:
+        if AXObject.get_role(obj) != Atspi.Role.COMBO_BOX:
             return False
 
-        try:
-            state = obj.getState()
-            childCount = AXObject.get_child_count(obj)
-        except:
-            msg = "GECKO: Exception getting state and child count for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if AXObject.get_child_count(obj):
             return False
 
-        if not state.contains(Atspi.StateType.FOCUSED):
-            return False
-
-        if childCount:
+        if not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             return False
 
         if not AXObject.supports_editable_text(obj):

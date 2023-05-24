@@ -88,8 +88,7 @@ class Script(gtk.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        state = event.source.getState()
-        if state.contains(Atspi.StateType.MULTI_LINE):
+        if AXObject.has_state(event.source, Atspi.StateType.MULTI_LINE):
             self.spellcheck.setDocumentPosition(event.source, event.detail1)
 
         gtk.Script.onCaretMoved(self, event)
@@ -116,7 +115,7 @@ class Script(gtk.Script):
 
         parent = AXObject.get_parent(event.source)
         if parent != self.spellcheck.getSuggestionsList() \
-           or not parent.getState().contains(Atspi.StateType.FOCUSED):
+           or not AXObject.has_state(parent, Atspi.StateType.FOCUSED):
             return
 
         entry = self.spellcheck.getChangeToEntry()

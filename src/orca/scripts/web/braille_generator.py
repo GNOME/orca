@@ -72,7 +72,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                         Atspi.Role.REDUNDANT_OBJECT,
                         Atspi.Role.UNKNOWN]
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if not state.contains(Atspi.StateType.FOCUSABLE):
             doNotDisplay.extend([Atspi.Role.LIST,
                                  Atspi.Role.LIST_ITEM,
@@ -120,7 +120,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        if obj.getState().contains(Atspi.StateType.EDITABLE) \
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
            and self._script.utilities.isCodeDescendant(obj):
             return []
 
@@ -245,7 +245,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if AXObject.get_role(obj) == Atspi.Role.MENU_ITEM:
             pred = lambda x: AXObject.get_role(x) == Atspi.Role.COMBO_BOX
             comboBox = AXObject.find_ancestor(obj, pred)
-            if comboBox and not comboBox.getState().contains(Atspi.StateType.EXPANDED):
+            if comboBox and not AXObject.has_state(comboBox, Atspi.StateType.EXPANDED):
                 obj = comboBox
         result.extend(super().generateBraille(obj, **args))
         del args['includeContext']
@@ -258,7 +258,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             return []
 
-        if obj.getState().contains(Atspi.StateType.EDITABLE) \
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
            or not self._script.utilities.inDocumentContent(obj):
             return super()._generateEol(obj, **args)
 

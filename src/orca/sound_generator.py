@@ -272,7 +272,7 @@ class SoundGenerator(generator.Generator):
             args['mode'] = self._mode
 
         args['stringType'] = 'visited'
-        if obj.getState().contains(Atspi.StateType.VISITED):
+        if AXObject.has_state(obj, Atspi.StateType.VISITED):
             filenames = [self._script.formatting.getString(**args)]
             result = list(map(self._convertFilenameToIcon, filenames))
             if result:

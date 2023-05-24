@@ -40,13 +40,13 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         super().__init__(script)
 
     def isComposeMessageBody(self, obj):
-        if not obj.getState().contains(Atspi.StateType.EDITABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessage(self, obj):
-        if obj.getState().contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         return self.isEmbeddedDocument(obj)
@@ -67,7 +67,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
             return False
 
-        if not obj.getState().contains(Atspi.StateType.MANAGES_DESCENDANTS):
+        if not AXObject.has_state(obj, Atspi.StateType.MANAGES_DESCENDANTS):
             return False
 
         topLevel = self.topLevelObject(obj)

@@ -586,7 +586,8 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        if role == Atspi.Role.PANEL and obj.getState().contains(Atspi.StateType.SELECTED):
+        if role == Atspi.Role.PANEL \
+           and AXObject.has_state(obj, Atspi.StateType.SELECTED):
             return []
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
@@ -647,7 +648,7 @@ class SpeechGenerator(generator.Generator):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         role = args.get('role', AXObject.get_role(obj))
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if role == Atspi.Role.LINK and state.contains(Atspi.StateType.VISITED):
             return object_properties.ROLE_VISITED_LINK
 
@@ -834,10 +835,7 @@ class SpeechGenerator(generator.Generator):
             else:
                 linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 text = self._script.utilities.displayedText(obj)
-                try:
-                    isVisited = obj.getState().contains(Atspi.StateType.VISITED)
-                except:
-                    isVisited = False
+                isVisited = AXObject.has_state(obj, Atspi.StateType.VISITED)
                 if not isVisited:
                     linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 else:
@@ -1070,8 +1068,7 @@ class SpeechGenerator(generator.Generator):
         if not AXObject.supports_selection(AXObject.get_parent(obj)):
             return []
 
-        state = obj.getState()
-        if state.contains(Atspi.StateType.SELECTED):
+        if AXObject.has_state(obj, Atspi.StateType.SELECTED):
             return []
 
         result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
@@ -1100,8 +1097,7 @@ class SpeechGenerator(generator.Generator):
         if not AXObject.supports_selection(parent):
             return []
 
-        state = obj.getState()
-        if state.contains(Atspi.StateType.SELECTED):
+        if AXObject.has_state(obj, Atspi.StateType.SELECTED):
             return []
 
         if AXObject.get_role(obj) == Atspi.Role.TEXT:
@@ -1267,7 +1263,8 @@ class SpeechGenerator(generator.Generator):
         array if this is not a text object.]]]
         """
 
-        if args.get('inMouseReview') and obj.getState().contains(Atspi.StateType.EDITABLE):
+        if args.get('inMouseReview') \
+           and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return []
 
         result = self._generateSubstring(obj, **args)
@@ -1742,11 +1739,10 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         hasItems = False
-        for child in AXObject.iter_children(obj):
-            state = child.getState()
-            if state.contains(Atspi.StateType.SHOWING):
-                hasItems = True
-                break
+        pred = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
+        for child in AXObject.iter_children(obj, pred):
+            hasItems = True
+            break
         if not hasItems:
             result.append(messages.ZERO_ITEMS)
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -2315,7 +2311,7 @@ class SpeechGenerator(generator.Generator):
                 total = 0
                 for i in range(0, relation.getNTargets()):
                     target = relation.getTarget(i)
-                    if target.getState().contains(Atspi.StateType.SHOWING):
+                    if AXObject.has_state(target, Atspi.StateType.SHOWING):
                         total += 1
                         if target == obj:
                             position = total
@@ -2413,7 +2409,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         button = self._script.utilities.defaultButton(obj)
-        if button and button.getState().contains(Atspi.StateType.SENSITIVE):
+        if AXObject.has_state(button, Atspi.StateType.SENSITIVE):
             name = self._generateName(button)
             if name:
                 result.append(messages.DEFAULT_BUTTON_IS % name[0])

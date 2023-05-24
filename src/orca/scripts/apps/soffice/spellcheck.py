@@ -90,13 +90,9 @@ class SpellCheck(spellcheck.SpellCheck):
         def isError(x):
             if not AXObject.supports_editable_text(x):
                 return False
-            try:
-                state = x.getState()
-                rv = state.contains(Atspi.StateType.FOCUSABLE) \
-                    and state.contains(Atspi.StateType.MULTI_LINE)
-            except:
-                return False
-            return rv
+            state = AXObject.get_state_set(x)
+            return state.contains(Atspi.StateType.FOCUSABLE) \
+                and state.contains(Atspi.StateType.MULTI_LINE)
 
         rv = AXObject.find_descendant(root, isError)
         msg = "SOFFICE: Error widget for: %s is: %s" % (root, rv)

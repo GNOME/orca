@@ -587,7 +587,7 @@ class Context:
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
         if AXObject.supports_editable_text(accessible) \
-           and accessible.getState().contains(Atspi.StateType.SINGLE_LINE):
+           and AXObject.has_state(accessible, Atspi.StateType.SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 

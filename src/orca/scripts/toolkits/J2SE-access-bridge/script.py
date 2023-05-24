@@ -122,7 +122,7 @@ class Script(default.Script):
         if (AXObject.get_role(event.source) in [Atspi.Role.LIST,
                                        Atspi.Role.PAGE_TAB_LIST,
                                        Atspi.Role.TREE]) \
-            and event.source.getState().contains(Atspi.StateType.FOCUSED):
+            and AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             newFocus = event.source
             if AXObject.get_child_count(event.source):
                 selection = event.source.querySelection()

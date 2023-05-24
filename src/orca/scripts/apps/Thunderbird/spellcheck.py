@@ -73,8 +73,8 @@ class SpellCheck(spellcheck.SpellCheck):
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY \
-                  and x.getState().contains(Atspi.StateType.SINGLE_LINE)
+        isEntry = lambda x: AXObject.get_role(x) == Atspi.Role.ENTRY \
+                  and AXObject.has_state(x, Atspi.StateType.SINGLE_LINE)
         return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):

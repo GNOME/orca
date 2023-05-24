@@ -95,7 +95,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         childCount = AXObject.get_child_count(obj)
-        if obj and obj.getState().contains(Atspi.StateType.EXPANDED) \
+        if obj and AXObject.has_state(obj, Atspi.StateType.EXPANDED) \
            and AXObject.get_role(obj) == Atspi.Role.LABEL and childCount:
             result.append(messages.itemCount(childCount))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -133,7 +133,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         for child in listObj:
             nextName = self._generateName(child)
             if not nextName or nextName[0] in ["", "Empty", "separator"] \
-               or not child.getState().contains(Atspi.StateType.VISIBLE):
+               or not AXObject.has_state(child, Atspi.StateType.VISIBLE):
                 continue
 
             index += 1

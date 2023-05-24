@@ -49,4 +49,4 @@ class Chat(chat.Chat):
         if pageTab is None:
             return super().isFocusedChat(obj)
 
-        return pageTab.getState().contains(Atspi.StateType.SHOWING)
+        return AXObject.has_state(pageTab, Atspi.StateType.SHOWING)

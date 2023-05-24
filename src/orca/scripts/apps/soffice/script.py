@@ -525,7 +525,7 @@ class Script(default.Script):
                      Atspi.Role.APPLICATION]
         if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
             isTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
-            isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
+            isSelected = lambda x: AXObject.has_state(x, Atspi.StateType.SELECTED)
             for child in AXObject.iter_children(AXObject.get_parent(newLocusOfFocus), isTabList):
                 for tab in AXObject.iter_children(child, isSelected):
                     self.presentObject(tab)
@@ -634,7 +634,7 @@ class Script(default.Script):
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
-            if event.source.getState().contains(Atspi.StateType.FOCUSED):
+            if AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
@@ -643,8 +643,8 @@ class Script(default.Script):
             return
 
         if self.utilities.isSpreadSheetCell(event.any_data) \
-           and not event.any_data.getState().contains(Atspi.StateType.FOCUSED) \
-           and not event.source.getState().contains(Atspi.StateType.FOCUSED) :
+           and not AXObject.has_state(event.any_data, Atspi.StateType.FOCUSED) \
+           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             debug.println(debug.LEVEL_INFO, msg, True)
             event.source.clearCache()
@@ -808,9 +808,9 @@ class Script(default.Script):
             return
 
         if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
-           and not event.source.getState().contains(Atspi.StateType.FOCUSED):
+           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             event.source.clearCache()
-            if event.source.getState().contains(Atspi.StateType.FOCUSED):
+            if AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -854,7 +854,7 @@ class Script(default.Script):
             x = orca_state.lastInputEvent.x
             y = orca_state.lastInputEvent.y
             weToggledIt = obj.queryComponent().contains(x, y, 0)
-        elif obj.getState().contains(Atspi.StateType.FOCUSED):
+        elif AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             weToggledIt = True
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
@@ -904,7 +904,7 @@ class Script(default.Script):
             if orca_state.locusOfFocus == orca_state.activeWindow:
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
                 debug.println(debug.LEVEL_INFO, msg, True)
-            elif event.source.getState().contains(Atspi.StateType.FOCUSED):
+            elif AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
@@ -936,7 +936,7 @@ class Script(default.Script):
             return
 
         if event.source != orca_state.locusOfFocus \
-           and event.source.getState().contains(Atspi.StateType.FOCUSED):
+           and AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         super().onTextSelectionChanged(event)
@@ -962,7 +962,7 @@ class Script(default.Script):
                 return [lineString, 0, startOffset]
 
         textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
-        if not obj.getState().contains(Atspi.StateType.FOCUSED):
+        if not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             textLine[0] = self.utilities.displayedText(obj)
 
         return textLine

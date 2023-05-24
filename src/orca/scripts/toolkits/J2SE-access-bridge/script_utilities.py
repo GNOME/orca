@@ -124,7 +124,7 @@ class Utilities(script_utilities.Utilities):
 
         count = 0
         while newObj:
-            state = newObj.getState()
+            state = AXObject.get_state_set(newObj)
             if state.contains(Atspi.StateType.EXPANDABLE) \
                or state.contains(Atspi.StateType.COLLAPSED):
                 if state.contains(Atspi.StateType.VISIBLE):

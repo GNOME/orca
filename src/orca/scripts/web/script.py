@@ -1242,7 +1242,7 @@ class Script(default.Script):
         if not obj:
             return
 
-        if obj.getState().contains(Atspi.StateType.FOCUSABLE):
+        if AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
             obj.queryComponent().grabFocus()
 
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
@@ -1541,7 +1541,7 @@ class Script(default.Script):
 
         if not self.utilities.isDead(orca_state.locusOfFocus) \
            and not self.utilities.inDocumentContent(orca_state.locusOfFocus) \
-           and orca_state.locusOfFocus.getState().contains(Atspi.StateType.FOCUSED):
+           and AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.FOCUSED):
             msg = "WEB: Not presenting content, focus is outside of document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1555,13 +1555,8 @@ class Script(default.Script):
                 self.presentMessage(summary)
 
         obj, offset = self.utilities.getCaretContext()
-
-        try:
-            sourceIsBusy = event.souce.getState().contains(Atspi.StateType.BUSY)
-        except:
-            sourceIsBusy = False
-
-        if not sourceIsBusy and self.utilities.isTopLevelWebApp(event.source):
+        if not AXObject.has_state(event.source, Atspi.StateType.BUSY) \
+           and self.utilities.isTopLevelWebApp(event.source):
             msg = "WEB: Setting locusOfFocus to %s with sticky focus mode" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
@@ -1582,7 +1577,7 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return True
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if self.utilities.isLink(obj) and state.contains(Atspi.StateType.FOCUSED):
             msg = "WEB: Setting locus of focus to focused link %s. No SayAll." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1595,14 +1590,7 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return True
 
-        try:
-            focusState = orca_state.locusOfFocus.getState()
-        except:
-            inFocusedObject = False
-        else:
-            inFocusedObject = focusState.contains(Atspi.StateType.FOCUSED)
-
-        if not inFocusedObject:
+        if not AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.FOCUSED):
             msg = "WEB: Setting locus of focus to context obj %s (no notification)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj, False)
@@ -1741,7 +1729,7 @@ class Script(default.Script):
             return True
 
         if not self.utilities.queryNonEmptyText(event.source) \
-           and not event.source.getState().contains(Atspi.StateType.EDITABLE):
+           and not AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -1764,7 +1752,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         elif self.utilities.isTextField(event.source) \
-           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
+           and AXObject.has_state(event.source, Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused text field is not (yet) the locus of focus."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1858,13 +1846,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        try:
-            docIsBusy = document.getState().contains(Atspi.StateType.BUSY)
-        except:
-            docIsBusy = False
-            msg = "WEB: Exception getting state of %s" % document
-            debug.println(debug.LEVEL_INFO, msg, True)
-        if docIsBusy:
+        if AXObject.has_state(document, Atspi.StateType.BUSY):
             msg = "WEB: Ignoring because %s is busy." % document
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -2094,7 +2076,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source)
                 return True
 
-        state = event.source.getState()
+        state = AXObject.get_state_set(event.source)
         if state.contains(Atspi.StateType.EDITABLE):
             msg = "WEB: Event source is editable"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2167,9 +2149,9 @@ class Script(default.Script):
             self.utilities.setCaretContext(obj, offset)
             return True
 
-        wasFocused = obj.getState().contains(Atspi.StateType.FOCUSED)
+        wasFocused = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
         obj.clearCache()
-        isFocused = obj.getState().contains(Atspi.StateType.FOCUSED)
+        isFocused = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
         if wasFocused != isFocused:
             msg = "WEB: Focused state of %s changed to %s" % (obj, isFocused)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2413,7 +2395,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)
 
-        if not event.source.getState().contains(Atspi.StateType.EDITABLE) \
+        if not AXObject.has_state(event.source, Atspi.StateType.EDITABLE) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             if self._inMouseOverObject \
                and self.utilities.isZombie(self._lastMouseOverObject):
@@ -2480,7 +2462,7 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
-        state = event.source.getState()
+        state = AXObject.get_state_set(event.source)
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if self.utilities.isDead(orca_state.locusOfFocus):
@@ -2518,7 +2500,7 @@ class Script(default.Script):
                 return True
 
         if AXObject.get_role(event.source) in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
-           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
+           and AXObject.has_state(event.source, Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2572,7 +2554,7 @@ class Script(default.Script):
             return True
 
         if AXObject.get_role(event.source) in [Atspi.Role.ENTRY, Atspi.Role.SPIN_BUTTON] \
-           and event.source.getState().contains(Atspi.StateType.FOCUSED) \
+           and AXObject.has_state(event.source, Atspi.StateType.FOCUSED) \
            and event.source != orca_state.locusOfFocus:
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.println(debug.LEVEL_INFO, msg, True)

@@ -621,7 +621,7 @@ class MouseReviewer:
             boundary = Atspi.TextBoundaryType.WORD_START
         elif obj == self._currentMouseOver.getObject():
             boundary = Atspi.TextBoundaryType.LINE_START
-        elif obj and obj.getState().contains(Atspi.StateType.SELECTABLE):
+        elif AXObject.has_state(obj, Atspi.StateType.SELECTABLE):
             boundary = Atspi.TextBoundaryType.LINE_START
         elif script.utilities.isMultiParagraphObject(obj):
             boundary = Atspi.TextBoundaryType.LINE_START

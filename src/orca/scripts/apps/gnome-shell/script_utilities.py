@@ -50,7 +50,7 @@ class Utilities(script_utilities.Utilities):
             if AXObject.get_role(obj) != Atspi.Role.PANEL:
                 return []
 
-            isSelected = lambda x: x and x.getState().contains(Atspi.StateType.SELECTED)
+            isSelected = lambda x: x and AXObject.has_state(x, Atspi.StateType.SELECTED)
             children = self.findAllDescendants(obj, isSelected)
         else:
             children = []

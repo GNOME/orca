@@ -581,7 +581,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'insensitive'
-        if not obj.getState().contains(Atspi.StateType.SENSITIVE):
+        if not AXObject.has_state(obj, Atspi.StateType.SENSITIVE):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -622,9 +622,11 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'required'
-        if obj.getState().contains(Atspi.StateType.REQUIRED) \
-           or (AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON \
-               and AXObject.get_parent(obj).getState().contains(Atspi.StateType.REQUIRED)):
+        isRequired = AXObject.has_state(obj, Atspi.StateType.REQUIRED)
+        if not isRequired and AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
+            parent = AXObject.get_parent(obj)
+            isRequired = AXObject.has_state(parent, Atspi.StateType.REQUIRED)
+        if isRequired:
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -637,7 +639,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
-        if obj.getState().contains(Atspi.StateType.READ_ONLY) \
+        if AXObject.has_state(obj, Atspi.StateType.READ_ONLY) \
            or self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
@@ -667,7 +669,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.CHECKED):
             result.append(indicators[1])
         elif state.contains(Atspi.StateType.INDETERMINATE):
@@ -687,7 +689,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'radiobutton'
         indicators = self._script.formatting.getString(**args)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.CHECKED):
             result.append(indicators[1])
         else:
@@ -717,7 +719,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'switch'
         indicators = self._script.formatting.getString(**args)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.CHECKED) \
            or state.contains(Atspi.StateType.PRESSED):
             result.append(indicators[1])
@@ -736,7 +738,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'togglebutton'
         indicators = self._script.formatting.getString(**args)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.CHECKED) \
            or state.contains(Atspi.StateType.PRESSED):
             result.append(indicators[1])
@@ -745,11 +747,11 @@ class Generator:
         return result
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
-        if obj.getState().contains(Atspi.StateType.CHECKABLE) \
+        if AXObject.has_state(obj, Atspi.StateType.CHECKABLE) \
            or AXObject.get_role(obj) == Atspi.Role.CHECK_MENU_ITEM:
             return self._generateCheckedState(obj, **args)
 
-        if obj.getState().contains(Atspi.StateType.CHECKED):
+        if AXObject.has_state(obj, Atspi.StateType.CHECKED):
             return self._generateCheckedState(obj, **args)
 
         return []
@@ -764,7 +766,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
-        if obj.getState().contains(Atspi.StateType.CHECKED):
+        if AXObject.has_state(obj, Atspi.StateType.CHECKED):
             result.append(indicators[1])
         return result
 
@@ -779,7 +781,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'expansion'
         indicators = self._script.formatting.getString(**args)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.COLLAPSED):
             result.append(indicators[0])
         elif state.contains(Atspi.StateType.EXPANDED):
@@ -800,7 +802,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'multiselect'
-        if obj.getState().contains(Atspi.StateType.MULTISELECTABLE) \
+        if AXObject.has_state(obj, Atspi.StateType.MULTISELECTABLE) \
            and AXObject.get_child_count(obj):
             result.append(self._script.formatting.getString(**args))
         return result
@@ -1131,7 +1133,8 @@ class Generator:
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
 
-        if role == Atspi.Role.SEPARATOR and not obj.getState().contains(Atspi.StateType.FOCUSED):
+        if role == Atspi.Role.SEPARATOR \
+            and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             return []
 
         return [self._script.utilities.textForValue(obj)]
@@ -1376,7 +1379,7 @@ class Generator:
         role = args.get('role', AXObject.get_role(obj))
 
         if AXObject.supports_value(obj):
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isVertical = state.contains(Atspi.StateType.VERTICAL)
             isHorizontal = state.contains(Atspi.StateType.HORIZONTAL)
             isFocused = state.contains(Atspi.StateType.FOCUSED) \

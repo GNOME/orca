@@ -221,19 +221,13 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        try:
-            # TODO - JD: For now we won't ask for the name. Simply asking for the name should
-            # not break anything, and should be a reliable way to quickly identify defunct
-            # objects. But apparently the mere act of asking for the name causes Orca to stop
-            # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
-            # issue, but until we know for certain....
-            #name = Atspi.Accessible.get_name(event.source)
-            state = event.source.getState()
-        except:
-            msg = 'ERROR: Event is from potentially-defunct source'
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
+        # TODO - JD: For now we won't ask for the name. Simply asking for the name should
+        # not break anything, and should be a reliable way to quickly identify defunct
+        # objects. But apparently the mere act of asking for the name causes Orca to stop
+        # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
+        # issue, but until we know for certain....
+        #name = Atspi.Accessible.get_name(event.source)
+        state = AXObject.get_state_set(event.source)
         if state.isEmpty():
             msg = 'EVENT MANAGER: Ignoring event due to empty state set'
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -349,19 +343,13 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
 
             childRole = AXObject.get_role(event.any_data)
-            try:
-                childState = event.any_data.getState()
-                defunct = False
-            except:
+            childState = AXObject.get_state_set(event.any_data)
+            defunct = childState.contains(Atspi.StateType.DEFUNCT) \
+                or childState.isEmpty() \
+                or self._isDead(event.any_data)
+            if defunct:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
-                defunct = True
-            else:
-                defunct = childState.contains(Atspi.StateType.DEFUNCT) \
-                    or self._isDead(event.any_data)
-                if defunct:
-                    msg = 'ERROR: Event any_data contains defunct child/descendant'
-                    debug.println(debug.LEVEL_INFO, msg, True)
 
             if defunct:
                 if state.contains(Atspi.StateType.MANAGES_DESCENDANTS) \
@@ -726,8 +714,9 @@ class EventManager:
         app = None
         try:
             app = event.host_application or event.source.getApplication()
-            if app and app.getState().contains(Atspi.StateType.DEFUNCT):
-                msg = 'WARNING: App is defunct. Cannot get script for event.'
+            state = AXObject.get_state_set(app)
+            if state.contains(Atspi.StateType.DEFUNCT):
+                msg = 'WARNING: %s is defunct. Cannot get script for event.' % app
                 debug.println(debug.LEVEL_WARNING, msg, True)
                 return None
         except:
@@ -770,11 +759,6 @@ class EventManager:
         if not event.source:
             return False, "event.source? What event.source??"
 
-        try:
-            state = event.source.getState()
-        except (LookupError, RuntimeError):
-            return False, "Error getting event.source's state"
-        
         if not script:
             script = self._getScriptForEvent(event)
             if not script:
@@ -809,6 +793,7 @@ class EventManager:
                and event.detail1):
             return True, "Event source claimed focus."
 
+        state = AXObject.get_state_set(event.source)
         if eType.startswith('object:state-changed:selected') and event.detail1 \
            and role == Atspi.Role.MENU and state.contains(Atspi.StateType.FOCUSED):
             return True, "Selection change in focused menu"
@@ -991,16 +976,8 @@ class EventManager:
                 if role == Atspi.Role.FRAME:
                     _scriptManager.reclaimScripts()
 
-        try:
-            state = event.source.getState()
-        except:
-            isDefunct = True
-            msg = 'ERROR: Exception getting state for event source'
-            debug.println(debug.LEVEL_WARNING, msg, True)
-        else:
-            isDefunct = state.contains(Atspi.StateType.DEFUNCT)
-
-        if isDefunct:
+        state = AXObject.get_state_set(event.source)
+        if state.contains(Atspi.StateType.DEFUNCT):
             msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
@@ -1012,7 +989,7 @@ class EventManager:
                 orca_state.activeScript = None
             return
 
-        if state and state.contains(Atspi.StateType.ICONIFIED):
+        if state.contains(Atspi.StateType.ICONIFIED):
             msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return

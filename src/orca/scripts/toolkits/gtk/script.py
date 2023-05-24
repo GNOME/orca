@@ -116,7 +116,7 @@ class Script(default.Script):
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
            and AXObject.supports_table(event.source) \
-           and not event.source.getState().contains(Atspi.StateType.FOCUSED):
+           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             return
 
         if AXObject.supports_table(event.source):
@@ -175,7 +175,7 @@ class Script(default.Script):
             super().onSelectionChanged(event)
             return
 
-        isFocused = event.source.getState().contains(Atspi.StateType.FOCUSED)
+        isFocused = AXObject.has_state(event.source, Atspi.StateType.FOCUSED)
         role = AXObject.get_role(event.source)
         if role == Atspi.Role.COMBO_BOX and not isFocused:
             return

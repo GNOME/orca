@@ -250,16 +250,10 @@ class ScriptManager:
         return script
 
     def getScriptForMouseButtonEvent(self, event):
-        try:
-            state = orca_state.activeWindow.getState()
-            isActive = state.contains(Atspi.StateType.ACTIVE)
-        except:
-            msg = "SCRIPT MANAGER: Exception checking state of %s" % orca_state.activeWindow
-            debug.println(debug.LEVEL_INFO, msg, True)
-            isActive = False
-        else:
-            msg = "SCRIPT MANAGER: %s is active: %s" % (orca_state.activeWindow, isActive)
-            debug.println(debug.LEVEL_INFO, msg, True)
+        state = AXObject.get_state_set(orca_state.activeWindow)
+        isActive = state.contains(Atspi.StateType.ACTIVE)
+        msg = "SCRIPT MANAGER: %s is active: %s" % (orca_state.activeWindow, isActive)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if isActive and orca_state.activeScript:
             return orca_state.activeScript

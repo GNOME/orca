@@ -797,11 +797,6 @@ class Script(script.Script):
         if not obj:
             return
 
-        try:
-            state = obj.getState()
-        except:
-            return
-
         # We want to save the name because some apps and toolkits emit name
         # changes after the focus or selection has changed, even though the
         # name has not.
@@ -835,6 +830,7 @@ class Script(script.Script):
         self.pointOfReference['lastColumn'] = column
         self.pointOfReference['lastRow'] = row
 
+        state = AXObject.get_state_set(obj)
         self.pointOfReference['checkedChange'] = \
             hash(obj), state.contains(Atspi.StateType.CHECKED)
         self.pointOfReference['selectedChange'] = \
@@ -857,7 +853,7 @@ class Script(script.Script):
             orca_state.noFocusTimeStamp = time.time()
             return
 
-        if newLocusOfFocus.getState().contains(Atspi.StateType.DEFUNCT):
+        if AXObject.has_state(newLocusOfFocus, Atspi.StateType.DEFUNCT):
             return
 
         if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
@@ -2271,8 +2267,8 @@ class Script(script.Script):
         if not event.any_data:
             return
 
-        if not event.source.getState().contains(Atspi.StateType.FOCUSED) \
-           and not event.any_data.getState().contains(Atspi.StateType.FOCUSED):
+        if not AXObject.has_state(event.source, Atspi.StateType.FOCUSED) \
+           and not AXObject.has_state(event.any_data, Atspi.StateType.FOCUSED):
             msg = "DEFAULT: Ignoring event. Neither source nor child have focused state."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -2289,29 +2285,27 @@ class Script(script.Script):
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        obj = event.source
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+        if not self.utilities.isSameObject(event.source, orca_state.locusOfFocus):
             return
 
-        state = obj.getState()
-        if state.contains(Atspi.StateType.EXPANDABLE):
+        if AXObject.has_state(event.source, Atspi.StateType.EXPANDABLE):
             return
- 
+
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
-        if AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
+        if AXObject.get_role(event.source) == Atspi.Role.RADIO_BUTTON:
             eventString, mods = self.utilities.lastKeyAndModifiers()
             if not eventString in [" ", "space"]:
                 return
 
         oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+        if hash(oldObj) == hash(event.source) and oldState == event.detail1:
             return
- 
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['checkedChange'] = hash(obj), event.detail1
+
+        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        self.pointOfReference['checkedChange'] = hash(event.source), event.detail1
 
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -2332,7 +2326,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        state = event.source.getState()
+        state = AXObject.get_state_set(event.source)
         if not state.contains(Atspi.StateType.SHOWING):
             msg = "DEFAULT: Event source is not showing"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2475,9 +2469,8 @@ class Script(script.Script):
             orca.setLocusOfFocus(None, mouseEvent.window, False)
 
         self.presentationInterrupt()
-        obj = mouseEvent.obj
-        if obj and obj.getState().contains(Atspi.StateType.FOCUSED):
-            orca.setLocusOfFocus(None, obj, windowChanged)
+        if AXObject.has_state(mouseEvent.obj, Atspi.StateType.FOCUSED):
+            orca.setLocusOfFocus(None, mouseEvent.obj, windowChanged)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -2530,7 +2523,7 @@ class Script(script.Script):
 
         obj = event.source
         obj.clearCache()
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if not state.contains(Atspi.StateType.FOCUSED):
             return
 
@@ -2579,7 +2572,7 @@ class Script(script.Script):
         """Callback for object:selection-changed accessibility events."""
 
         obj = event.source
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
 
         if self.utilities.handlePasteLocusOfFocusChange():
             if self.utilities.topLevelObjectIsActiveAndCurrent(event.source):
@@ -2602,7 +2595,7 @@ class Script(script.Script):
         role = AXObject.get_role(obj)
         if role == Atspi.Role.COMBO_BOX and not state.contains(Atspi.StateType.EXPANDED):
             entry = self.utilities.getEntryForEditableComboBox(event.source)
-            if entry and entry.getState().contains(Atspi.StateType.FOCUSED):
+            if AXObject.has_state(entry, Atspi.StateType.FOCUSED):
                 return
 
         # If a wizard-like notebook page being reviewed changes, we might not get
@@ -2610,7 +2603,7 @@ class Script(script.Script):
         # review commands will continue to present the stale content.
         if role == Atspi.Role.PAGE_TAB_LIST and self.flatReviewContext:
             self.flatReviewContext = None
- 
+
         mouseReviewItem = mouse_review.reviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
@@ -2652,7 +2645,7 @@ class Script(script.Script):
             return
 
         obj = event.source
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if not state.contains(Atspi.StateType.FOCUSED):
             return
 
@@ -3025,14 +3018,8 @@ class Script(script.Script):
         if not self.utilities.lastInputEventWasCut():
             return
 
-        try:
-            state = orca_state.locusOfFocus.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if state.contains(Atspi.StateType.EDITABLE):
-                return
+        if AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.EDITABLE):
+            return
 
         self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
 

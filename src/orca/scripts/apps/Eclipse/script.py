@@ -62,7 +62,7 @@ class Script(GAIL.Script):
             return
 
         obj = otherObj or event.source
-        if obj.getState().contains(Atspi.StateType.SINGLE_LINE):
+        if AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE):
             return
 
         # if Tab key is pressed and there is text selected, we must announce
@@ -143,7 +143,7 @@ class Script(GAIL.Script):
         """Callback for object:selection-changed accessibility events."""
 
         obj = event.source
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         # sometimes eclipse issues an object:selection-changed for objects not focused.
         # we do not want that orca announces this objects.
 

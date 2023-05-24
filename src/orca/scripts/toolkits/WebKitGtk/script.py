@@ -403,7 +403,7 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return False
 
-        states = orca_state.locusOfFocus.getState()
+        states = AXObject.get_state_set(orca_state.locusOfFocus)
         if states.contains(Atspi.StateType.EDITABLE):
             return False
 
@@ -520,7 +520,7 @@ class Script(default.Script):
             obj = AXObject.get_parent(obj)
 
         document = self.utilities.getDocumentForObject(obj)
-        if not document or document.getState().contains(Atspi.StateType.BUSY):
+        if not document or AXObject.has_state(document, Atspi.StateType.BUSY):
             return
 
         allTextObjs = self.utilities.findAllDescendants(
@@ -608,7 +608,7 @@ class Script(default.Script):
         textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
         string = textLine[0]
         if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1 \
-           and obj.getState().contains(Atspi.StateType.FOCUSED):
+           and AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             return textLine
 
         textLine[0] = self.utilities.displayedText(obj)

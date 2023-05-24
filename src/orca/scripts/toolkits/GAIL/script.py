@@ -81,7 +81,7 @@ class Script(default.Script):
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
            and AXObject.supports_table(event.source) \
-           and not event.source.getState().contains(Atspi.StateType.FOCUSED):
+           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
             return
 
         ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
@@ -101,7 +101,7 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        isFocused = event.source.getState().contains(Atspi.StateType.FOCUSED)
+        isFocused = AXObject.has_state(event.source, Atspi.StateType.FOCUSED)
         role = AXObject.get_role(event.source)
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):

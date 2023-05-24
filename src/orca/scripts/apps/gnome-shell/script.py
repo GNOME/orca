@@ -144,17 +144,12 @@ class Script(clutter.Script):
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
-        try:
-            state = event.source.getState()
-        except:
-            return
 
         # Some buttons, like the Wikipedia button, claim to be selected but
         # lack STATE_SELECTED. The other buttons, such as in the Dash and
         # event switcher, seem to have the right state. Since the ones with
         # the wrong state seem to be things we don't want to present anyway
         # we'll stop doing so and hope we are right.
-
         if event.detail1:
             if AXObject.get_role(event.source) == Atspi.Role.PANEL:
                 try:
@@ -162,7 +157,7 @@ class Script(clutter.Script):
                 except:
                     pass
 
-            if state.contains(Atspi.StateType.SELECTED):
+            if AXObject.has_state(event.source, Atspi.StateType.SELECTED):
                 orca.setLocusOfFocus(event, event.source)
             return
 

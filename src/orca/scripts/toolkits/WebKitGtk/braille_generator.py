@@ -60,7 +60,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         doNotDisplay = [Atspi.Role.FORM,
                         Atspi.Role.SECTION,
                         Atspi.Role.UNKNOWN]
-        if not obj.getState().contains(Atspi.StateType.FOCUSABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
             doNotDisplay.extend([Atspi.Role.LIST,
                                  Atspi.Role.LIST_ITEM,
                                  Atspi.Role.PANEL])
@@ -99,7 +99,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateEol(self, obj, **args):
         if self._script.utilities.isWebKitGtk(obj) \
            and AXObject.get_role(obj) == Atspi.Role.PARAGRAPH \
-           and not obj.getState().contains(Atspi.StateType.EDITABLE):
+           and not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return []
 
         return braille_generator.BrailleGenerator._generateEol(

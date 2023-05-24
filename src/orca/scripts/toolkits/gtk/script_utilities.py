@@ -116,11 +116,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.
-        try:
-            state = obj.getState()
-        except:
-            return False
-
+        state = AXObject.get_state_set(obj)
         name = AXObject.get_name(obj)
         if not (name and state.contains(Atspi.StateType.SINGLE_LINE)):
             return False
@@ -209,12 +205,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _adjustPointForObj(self, obj, x, y, coordType):
-        try:
-            singleLine = obj.getState().contains(Atspi.StateType.SINGLE_LINE)
-        except:
-            singleLine = False
-
-        if not singleLine or not AXObject.supports_editable_text(obj):
+        if not AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE) \
+           or not AXObject.supports_editable_text(obj):
             return x, y
 
         text = self.queryNonEmptyText(obj)

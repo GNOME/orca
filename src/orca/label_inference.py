@@ -62,7 +62,7 @@ class LabelInference:
         if not obj:
             return None, []
 
-        if focusedOnly and not obj.getState().contains(Atspi.StateType.FOCUSED):
+        if focusedOnly and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             debug.println(debug.LEVEL_INFO, "INFER - object not focused", True)
             return None, []
 
@@ -204,7 +204,7 @@ class LabelInference:
                        Atspi.Role.PUSH_BUTTON]
 
         isWidget = AXObject.get_role(obj) in widgetRoles
-        if not isWidget and obj.getState().contains(Atspi.StateType.EDITABLE):
+        if not isWidget and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             isWidget = True
 
         self._isWidgetCache[hash(obj)] = isWidget

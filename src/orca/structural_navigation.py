@@ -1258,9 +1258,10 @@ class StructuralNavigation:
 
         try:
             obj.clearCache()
-            isDefunct = obj.getState().contains(Atspi.StateType.DEFUNCT)
         except:
             isDefunct = True
+        else:
+            isDefunct = AXObject.has_state(obj, Atspi.StateType.DEFUNCT)
 
         if not isDefunct:
             return obj, characterOffset
@@ -1376,11 +1377,7 @@ class StructuralNavigation:
     def _getState(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        try:
-            state = obj.getState()
-        except:
-            return ''
-
+        state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
 
         # For now, we'll just grab the spoken indicator from settings.
@@ -1567,7 +1564,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and AXObject.get_role(obj) in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.SENSITIVE)
 
         return isMatch
@@ -1650,7 +1647,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and AXObject.get_role(obj) == Atspi.Role.CHECK_BOX:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
 
@@ -1832,7 +1829,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
 
@@ -1923,7 +1920,7 @@ class StructuralNavigation:
         if not parent:
             return False
 
-        return not parent.getState().contains(Atspi.StateType.EDITABLE)
+        return not AXObject.has_state(parent, Atspi.StateType.EDITABLE)
 
     def _entryPresentation(self, obj, arg=None):
         """Presents the entry or indicates that one was not found.
@@ -2014,7 +2011,7 @@ class StructuralNavigation:
         if not role in self.FORM_ROLES:
             return False
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
 
@@ -2404,7 +2401,7 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and AXObject.get_role(obj) == Atspi.Role.LIST:
-            isMatch = not obj.getState().contains(Atspi.StateType.FOCUSABLE)
+            isMatch = not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
 
         return isMatch
 
@@ -2489,7 +2486,7 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
-            isMatch = not obj.getState().contains(Atspi.StateType.FOCUSABLE)
+            isMatch = not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
 
         return isMatch
 
@@ -2743,7 +2740,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.FOCUSABLE) \
                   and state.contains(Atspi.StateType.SENSITIVE)
 
@@ -3089,7 +3086,7 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and AXObject.get_role(obj) == Atspi.Role.LINK:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = not state.contains(Atspi.StateType.VISITED) \
                 and state.contains(Atspi.StateType.FOCUSABLE)
 
@@ -3177,7 +3174,7 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and AXObject.get_role(obj) == Atspi.Role.LINK:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.VISITED) \
                 and state.contains(Atspi.StateType.FOCUSABLE)
 
@@ -3263,7 +3260,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and AXObject.get_role(obj) == Atspi.Role.LINK:
-            state = obj.getState()
+            state = AXObject.get_state_set(obj)
             isMatch = state.contains(Atspi.StateType.FOCUSABLE)
         return isMatch
 

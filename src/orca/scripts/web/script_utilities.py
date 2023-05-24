@@ -329,7 +329,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def activeDocument(self, window=None):
-        isShowing = lambda x: x and x.getState().contains(Atspi.StateType.SHOWING)
+        isShowing = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
         documents = self._getDocumentsEmbeddedBy(window or orca_state.activeWindow)
         documents = list(filter(isShowing, documents))
         if len(documents) == 1:
@@ -386,13 +386,6 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def grabFocusWhenSettingCaret(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(obj)
 
         # To avoid triggering popup lists.
@@ -406,7 +399,7 @@ class Utilities(script_utilities.Utilities):
         if role == Atspi.Role.HEADING and AXObject.get_child_count(obj) == 1:
             return self.isLink(AXObject.get_child(obj, 0))
 
-        return state.contains(Atspi.StateType.FOCUSABLE)
+        return AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
 
     def grabFocus(self, obj):
         try:
@@ -651,22 +644,15 @@ class Utilities(script_utilities.Utilities):
         if self.isLink(obj):
             return False
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(obj)
         if role == Atspi.Role.COMBO_BOX \
-           and state.contains(Atspi.StateType.EDITABLE) \
+           and AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
            and not AXObject.get_child_count(obj):
             return True
 
         if role in self._textBlockElementRoles():
             document = self.getDocumentForObject(obj)
-            if document and document.getState().contains(Atspi.StateType.EDITABLE):
+            if AXObject.has_state(document, Atspi.StateType.EDITABLE):
                 return True
 
         return super().isTextArea(obj)
@@ -676,7 +662,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) != Atspi.Role.ENTRY:
             return False
 
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
                    and not state.contains(Atspi.StateType.EDITABLE)
 
@@ -991,7 +977,7 @@ class Utilities(script_utilities.Utilities):
         elif role == Atspi.Role.LIST_ITEM:
             rv = AXObject.get_role(AXObject.get_parent(obj)) != Atspi.Role.LIST
         elif role == Atspi.Role.TABLE_CELL:
-            if obj.getState().contains(Atspi.StateType.EDITABLE):
+            if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
                 rv = False
             else:
                 rv = not self.isTextBlockElement(obj)
@@ -1015,7 +1001,8 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return rv
 
-        if rv and self._treatObjectAsWhole(obj, -1) and AXObject.get_name(obj) and not self.isCellWithNameFromHeader(obj):
+        if rv and self._treatObjectAsWhole(obj, -1) and AXObject.get_name(obj) \
+            and not self.isCellWithNameFromHeader(obj):
             msg = "WEB: Treating %s as non-text: named object treated as whole." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
@@ -1087,18 +1074,11 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         role = AXObject.get_role(obj)
         rv = False
         roles = self._textBlockElementRoles()
         roles.extend([Atspi.Role.IMAGE, Atspi.Role.CANVAS])
-        if role in roles and not state.contains(Atspi.StateType.FOCUSABLE):
+        if role in roles and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
             controls = [Atspi.Role.CHECK_BOX,
                         Atspi.Role.CHECK_MENU_ITEM,
                         Atspi.Role.LIST_BOX,
@@ -1108,7 +1088,7 @@ class Utilities(script_utilities.Utilities):
                         Atspi.Role.PUSH_BUTTON,
                         Atspi.Role.TOGGLE_BUTTON,
                         Atspi.Role.TREE_ITEM]
-            rv = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) in controls)
+            rv = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in controls)
 
         self._isNonInteractiveDescendantOfControl[hash(obj)] = rv
         return rv
@@ -1147,8 +1127,7 @@ class Utilities(script_utilities.Utilities):
                 return True
             return False
 
-        state = obj.getState()
-        if state.contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         if role == Atspi.Role.TABLE_CELL:
@@ -1273,7 +1252,7 @@ class Utilities(script_utilities.Utilities):
             return string, start, end
 
         if boundary == Atspi.TextBoundaryType.SENTENCE_START \
-            and not obj.getState().contains(Atspi.StateType.EDITABLE):
+            and not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             allText = text.getText(0, -1)
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
@@ -1449,7 +1428,7 @@ class Utilities(script_utilities.Utilities):
 
         boundary = Atspi.TextBoundaryType.SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
-        state = obj.getState()
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EDITABLE):
             if state.contains(Atspi.StateType.FOCUSED):
                 return objects
@@ -2089,7 +2068,7 @@ class Utilities(script_utilities.Utilities):
 
         role = AXObject.get_role(obj)
         if role == Atspi.Role.TOOL_TIP:
-            return obj.getState().contains(Atspi.StateType.FOCUSED)
+            return AXObject.has_state(obj, Atspi.StateType.FOCUSED)
 
         if role == Atspi.Role.DOCUMENT_WEB:
             return not self.isFocusModeWidget(obj)
@@ -2097,13 +2076,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isFocusModeWidget(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         if state.contains(Atspi.StateType.EDITABLE):
             msg = "WEB: %s is focus mode widget because it's editable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2262,19 +2235,12 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         rv = False
-        if state.contains(Atspi.StateType.FOCUSABLE) and not self.isDocument(obj):
-            for child in AXObject.iter_children(obj):
-                if self.isMathTopLevel(child):
-                    rv = True
-                    break
+        if AXObject.has_state(obj, Atspi.StateType.FOCUSABLE) \
+            and not self.isDocument(obj):
+            for child in AXObject.iter_children(obj, self.isMathTopLevel):
+                rv = True
+                break
 
         self._isFocusableWithMathChild[hash(obj)] = rv
         return rv
@@ -2282,15 +2248,7 @@ class Utilities(script_utilities.Utilities):
     def isFocusedWithMathChild(self, obj):
         if not self.isFocusableWithMathChild(obj):
             return False
-
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return state.contains(Atspi.StateType.FOCUSED)
+        return AXObject.has_state(obj, Atspi.StateType.FOCUSED)
 
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2300,13 +2258,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
         textBlockElements = self._textBlockElementRoles()
         if not role in textBlockElements:
@@ -2427,7 +2379,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) not in self._textBlockElementRoles():
             return False
 
-        return obj.getState().contains(Atspi.StateType.INVALID_ENTRY)
+        return AXObject.has_state(obj, Atspi.StateType.INVALID_ENTRY)
 
     def isContentInsertion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3103,13 +3055,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
         if role == Atspi.Role.LIST:
             rv = self.treatAsDiv(obj)
@@ -3203,9 +3149,8 @@ class Utilities(script_utilities.Utilities):
 
         try:
             obj.clearCache()
-            state = obj.getState()
         except:
-            msg = "ERROR: Exception getting state for %s" % obj
+            msg = "ERROR: Exception clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -3213,7 +3158,7 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not state.contains(Atspi.StateType.EDITABLE) and len(tokens) > 1
+        rv = not AXObject.has_state(obj, Atspi.StateType.EDITABLE) and len(tokens) > 1
         if rv:
             boundary = Atspi.TextBoundaryType.LINE_START
             i = 0
@@ -3259,15 +3204,14 @@ class Utilities(script_utilities.Utilities):
 
         try:
             obj.clearCache()
-            state = obj.getState()
         except:
-            msg = "ERROR: Exception getting state for %s" % obj
+            msg = "ERROR: Exception clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not state.contains(Atspi.StateType.EDITABLE)
+        rv = not AXObject.has_state(obj, Atspi.StateType.EDITABLE)
         if rv:
             boundary = Atspi.TextBoundaryType.LINE_START
             for i in range(nChars):
@@ -3434,7 +3378,7 @@ class Utilities(script_utilities.Utilities):
 
         targets = self.targetsForLabel(obj)
         for target in targets:
-            if target.getState().contains(Atspi.StateType.FOCUSABLE):
+            if AXObject.has_state(target, Atspi.StateType.FOCUSABLE):
                 return True
 
         return False
@@ -3477,7 +3421,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if AXObject.get_role(obj) == Atspi.Role.LINK \
-           and not obj.getState().contains(Atspi.StateType.FOCUSABLE) \
+           and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE) \
            and not 'jump' in self._getActionNames(obj) \
            and not self._getXMLRoles(obj):
             rv = True
@@ -3541,7 +3485,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if not self.isFocusModeWidget(obj):
             names = self._getActionNames(obj)
-            if not obj.getState().contains(Atspi.StateType.FOCUSABLE):
+            if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
                 rv = "click" in names
             else:
                 rv = "clickancestor" in names
@@ -3632,17 +3576,10 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         rv = False
         role = AXObject.get_role(obj)
         if role == Atspi.Role.COMBO_BOX:
-            rv = state.contains(Atspi.StateType.EDITABLE)
+            rv = AXObject.has_state(obj, Atspi.StateType.EDITABLE)
 
         self._isEditableComboBox[hash(obj)] = rv
         return rv
@@ -3794,7 +3731,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj) and AXObject.get_parent(obj)):
             return False
 
-        if obj.getState().contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         entry = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY)
@@ -3981,7 +3918,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = AXObject.get_role(obj) == Atspi.Role.TOOL_TIP \
-            and not obj.getState().contains(Atspi.StateType.FOCUSABLE)
+            and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
@@ -4090,7 +4027,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
-        if rv and obj.getState().contains(Atspi.StateType.FOCUSABLE):
+        if rv and AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
             rv = False
         if rv and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LINK and not self.hasExplicitName(obj):
             uri = self.uri(AXObject.get_parent(obj))
@@ -4144,13 +4081,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        state = AXObject.get_state_set(obj)
         roles = [Atspi.Role.PARAGRAPH,
                  Atspi.Role.SECTION,
                  Atspi.Role.STATIC,
@@ -4406,7 +4337,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return False
 
-        if not obj.getState().contains(Atspi.StateType.EDITABLE):
+        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
             return False
 
         if Atspi.Role.SPIN_BUTTON in [AXObject.get_role(obj), AXObject.get_role(AXObject.get_parent(obj))]:
@@ -4460,7 +4391,7 @@ class Utilities(script_utilities.Utilities):
         isMenuItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.MENU
         isComboBoxItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.COMBO_BOX
 
-        if event.source.getState().contains(Atspi.StateType.EDITABLE) \
+        if AXObject.has_state(event.source, Atspi.StateType.EDITABLE) \
            and event.type.startswith("object:text-"):
             obj, offset = self.getCaretContext(documentFrame)
             if isListBoxItem(obj) or isMenuItem(obj):
@@ -4487,18 +4418,9 @@ class Utilities(script_utilities.Utilities):
         if not event.type in selection:
             return False
 
-        try:
-            focusState = orca_state.locusOfFocus.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        focusRole = AXObject.get_role(orca_state.locusOfFocus)
-        role = AXObject.get_role(event.source)
-        if role in [Atspi.Role.MENU, Atspi.Role.MENU_ITEM] \
-           and focusRole == Atspi.Role.ENTRY \
-           and focusState.contains(Atspi.StateType.FOCUSED):
+        if AXObject.get_role(event.source) in [Atspi.Role.MENU, Atspi.Role.MENU_ITEM] \
+           and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.ENTRY \
+           and AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.FOCUSED):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey not in ["Down", "Up"]:
                 return True
@@ -4517,7 +4439,7 @@ class Utilities(script_utilities.Utilities):
                  Atspi.Role.LIST_ITEM]
 
         if AXObject.get_role(orca_state.locusOfFocus) in roles \
-           and orca_state.locusOfFocus.getState().contains(Atspi.StateType.SELECTABLE):
+           and AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.SELECTABLE):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey in ["Down", "Up"]
 
@@ -4594,7 +4516,7 @@ class Utilities(script_utilities.Utilities):
 
     def textEventIsDueToDeletion(self, event):
         if not self.inDocumentContent(event.source) \
-           or not event.source.getState().contains(Atspi.StateType.EDITABLE):
+           or not AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
             return False
 
         if self.isDeleteCommandTextDeletionEvent(event) \
@@ -4608,8 +4530,8 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not self.inDocumentContent(event.source) \
-           or not event.source.getState().contains(Atspi.StateType.EDITABLE) \
-           or not event.source == orca_state.locusOfFocus:
+           or event.source != orca_state.locusOfFocus \
+           or not AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
             return False
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
@@ -4648,7 +4570,7 @@ class Utilities(script_utilities.Utilities):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        if event.source.getState().contains(Atspi.StateType.EDITABLE):
+        if AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
             return False
 
         docURI = self.documentFrameURI()
@@ -4689,13 +4611,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return rv
-
+        state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
         hasTextBlockRole = lambda x: x and AXObject.get_role(x) in self._textBlockElementRoles() \
             and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
@@ -4732,14 +4648,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().getError(obj)
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not state.contains(Atspi.StateType.INVALID_ENTRY):
+        if not AXObject.has_state(obj, Atspi.StateType.INVALID_ENTRY):
             return False
 
         try:
@@ -5078,7 +4987,7 @@ class Utilities(script_utilities.Utilities):
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused.
             if obj and self.isDead(orca_state.locusOfFocus) \
-               and obj.getState().contains(Atspi.StateType.FOCUSED):
+               and AXObject.has_state(obj, Atspi.StateType.FOCUSED):
                 notify = True
 
         if obj:
@@ -5479,7 +5388,7 @@ class Utilities(script_utilities.Utilities):
                 result['tables'] += 1
             elif role == Atspi.Role.LINK:
                 if self.isLink(obj):
-                    if obj.getState().contains(Atspi.StateType.VISITED):
+                    if AXObject.has_state(obj, Atspi.StateType.VISITED):
                         result['visitedLinks'] += 1
                     else:
                         result['unvisitedLinks'] += 1

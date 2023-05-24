@@ -233,8 +233,8 @@ class Script(Gecko.Script):
             return
 
         parent = AXObject.get_parent(event.source)
-        if parent and AXObject.get_role(parent) == Atspi.Role.COMBO_BOX \
-           and not parent.getState().contains(Atspi.StateType.FOCUSED):
+        if AXObject.get_role(parent) == Atspi.Role.COMBO_BOX \
+           and not AXObject.has_state(parent, Atspi.StateType.FOCUSED):
             return
 
         super().onSelectionChanged(event)
