@@ -243,7 +243,7 @@ class Utilities(script_utilities.Utilities):
 
         roles = [Atspi.Role.DOCUMENT_WEB, Atspi.Role.EMBEDDED]
         if not excludeDocumentFrame:
-            roles.append(pyastpi.ROLE_DOCUMENT_FRAME)
+            roles.append(Atspi.Role.DOCUMENT_FRAME)
 
         return AXObject.get_role(obj) in roles
 
