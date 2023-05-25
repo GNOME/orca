@@ -1,3 +1,25 @@
+44.1 - 25 May 2023
+
+Web:
+
+* Support aria-disabled on application, tab, group, and focusable
+  separator/splitter
+
+* Fix bug in identification of inline iframes
+
+General:
+
+* Improve performance by checking for duplicate object events
+
+* Filter duplicate events when checking for double presses of the
+  orca modifier
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  it              Italian                   Gianvito Cavasoli
+
+=========
+
 44.0 - 24 March 2023
 
 New and updated translations (THANKS EVERYONE!!!):
