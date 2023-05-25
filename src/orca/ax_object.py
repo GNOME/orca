@@ -517,6 +517,22 @@ class AXObject:
         return role
 
     @staticmethod
+    def get_role_name(obj):
+        """Returns the accessible role name of obj"""
+
+        if obj is None:
+            return ""
+
+        try:
+            role_name = Atspi.Accessible.get_role_name(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_role_name: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return role_name
+
+    @staticmethod
     def get_name(obj):
         """Returns the accessible name of obj"""
 

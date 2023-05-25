@@ -626,13 +626,10 @@ class Utilities:
             if not isinstance(role, list):
                 role = [role]
 
-            try:
-                if isinstance(role[0], str):
-                    current_role = current.getRoleName()
-                else:
-                    current_role = AXObject.get_role(current)
-            except:
-                current_role = None
+            if isinstance(role[0], str):
+                current_role = AXObject.get_role_name(current)
+            else:
+                current_role = AXObject.get_role(current)
 
             if not current_role in role:
                 return False

@@ -395,7 +395,7 @@ class Generator:
         result = []
         label = self._generateLabel(obj, **args)
         name = self._generateName(obj, **args)
-        role = args.get('role', obj.role)
+        role = args.get('role', AXObject.get_role(obj))
         if not (label or name) and role == Atspi.Role.TABLE_CELL:
             descendant = self._script.utilities.realActiveDescendant(obj)
             name = self._generateName(descendant)

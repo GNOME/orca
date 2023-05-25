@@ -454,7 +454,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateNewAncestors(self, obj, **args):
         priorObj = args.get('priorObj', None)
-        if not priorObj or priorObj.getRoleName() == 'text frame':
+        if not priorObj or AXObject.get_role_name(priorObj) == 'text frame':
             return []
 
         if self._script.utilities.isSpreadSheetCell(obj) \
@@ -468,7 +468,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represent the text of the ancestors for
         the object being left."""
 
-        if obj.getRoleName() == 'text frame':
+        if AXObject.get_role_name(obj) == 'text frame':
             return []
 
         priorObj = args.get('priorObj', None)

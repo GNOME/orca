@@ -122,7 +122,7 @@ class TutorialGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           obj             = %s" % AXObject.get_name(obj))
         debug.println(debug.LEVEL_FINER,
-                      "           role            = %s" % obj.getRoleName())
+                      "           role            = %s" % AXObject.get_role_name(obj))
         debug.println(debug.LEVEL_FINER,
                       "           alreadyFocused  = %s" % alreadyFocused)
         debug.println(debug.LEVEL_FINER,

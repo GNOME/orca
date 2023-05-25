@@ -367,12 +367,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
 
     name_string = "name='%s'".replace("\n", "\\n") % AXObject.get_name(acc)
     desc_string = "%sdescription='%s'".replace("\n", "\\n") % (indent, AXObject.get_description(acc))
-
-    try:
-        role_string = "role='%s'" % acc.getRoleName()
-    except:
-        role_string = "role=(exception)"
-
+    role_string = "role='%s'" % AXObject.get_role_name(acc)
     path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
     state_string = statesToString(acc, indent)
     rel_string = relationsToString(acc, indent)

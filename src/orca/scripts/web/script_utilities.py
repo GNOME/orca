@@ -4378,9 +4378,9 @@ class Utilities(script_utilities.Utilities):
             return False
 
         # There may be other roles where we need to do this. For now, solve the known one.
-        if event.source.role in [Atspi.Role.PAGE_TAB_LIST]:
+        if AXObject.get_role(event.source) in [Atspi.Role.PAGE_TAB_LIST]:
             msg = "WEB: Selection changed event is irrelevant (unrelated %s)" \
-                % event.source.getRoleName()
+                % AXObject.get_role_name(event.source)
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
