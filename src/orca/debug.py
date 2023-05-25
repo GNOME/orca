@@ -357,16 +357,11 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         return ""
 
     if includeApp:
-        try:
-            app = acc.getApplication()
-        except:
-            string = indent + "app=(exception getting app) "
-            app = None
+        app = AXObject.get_application(acc)
+        if app is not None:
+            string = indent + "app='%s' " % AXObject.get_name(app)
         else:
-            if app:
-                string = indent + "app='%s' " % AXObject.get_name(app)
-            else:
-                string = indent + "app=None "
+            string = indent + "app=None "
     else:
         string = indent
 
@@ -420,14 +415,9 @@ def _shouldTraceIt():
 
     eventSource = objEvent.source
     if TRACE_APPS:
-        app = objEvent.host_application or eventSource.getApplication()
-        try:
-            app = objEvent.host_application or eventSource.getApplication()
-        except:
-            pass
-        else:
-            if not AXObject.get_name(app) in TRACE_APPS:
-                return False
+        app = objEvent.host_application or AXObject.get_application(eventSource)
+        if not AXObject.get_name(app) in TRACE_APPS:
+            return False
 
     if TRACE_ROLES and not AXObject.get_role(eventSource) in TRACE_ROLES:
         return False

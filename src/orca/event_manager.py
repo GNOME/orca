@@ -473,7 +473,7 @@ class EventManager:
 
         asyncMode = self._asyncMode
         if isObjectEvent:
-            app = e.source.getApplication()
+            app = AXObject.get_application(e.source)
             try:
                 toolkitName = app.toolkitName
             except:
@@ -711,37 +711,32 @@ class EventManager:
             return _scriptManager.getScriptForMouseButtonEvent(event)
 
         script = None
-        app = None
-        try:
-            app = event.host_application or event.source.getApplication()
-            state = AXObject.get_state_set(app)
-            if state.contains(Atspi.StateType.DEFUNCT):
-                msg = 'WARNING: %s is defunct. Cannot get script for event.' % app
-                debug.println(debug.LEVEL_WARNING, msg, True)
-                return None
-        except:
-            msg = 'WARNING: Exception when getting script for event.'
+        app = event.host_application or AXObject.get_application(event.source)
+        state = AXObject.get_state_set(app)
+        if state.contains(Atspi.StateType.DEFUNCT):
+            msg = 'WARNING: %s is defunct. Cannot get script for event.' % app
             debug.println(debug.LEVEL_WARNING, msg, True)
-        else:
-            skipCheck = [
-                "object:children-changed",
-                "object:column-reordered",
-                "object:row-reordered",
-                "object:property-change",
-                "object:selection-changed"
-                "object:state-changed:checked",
-                "object:state-changed:expanded",
-                "object:state-changed:indeterminate",
-                "object:state-changed:pressed",
-                "object:state-changed:selected",
-                "object:state-changed:sensitive",
-                "object:state-changed:showing",
-                "object:text-changed",
-            ]
-            check = not list(filter(lambda x: event.type.startswith(x), skipCheck))
-            msg = 'EVENT MANAGER: Getting script for %s (check: %s)' % (app, check)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            script = _scriptManager.getScript(app, event.source, sanityCheck=check)
+            return None
+
+        skipCheck = [
+            "object:children-changed",
+            "object:column-reordered",
+            "object:row-reordered",
+            "object:property-change",
+            "object:selection-changed"
+            "object:state-changed:checked",
+            "object:state-changed:expanded",
+            "object:state-changed:indeterminate",
+            "object:state-changed:pressed",
+            "object:state-changed:selected",
+            "object:state-changed:sensitive",
+            "object:state-changed:showing",
+            "object:text-changed",
+        ]
+        check = not list(filter(lambda x: event.type.startswith(x), skipCheck))
+        msg = 'EVENT MANAGER: Getting script for %s (check: %s)' % (app, check)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        script = _scriptManager.getScript(app, event.source, sanityCheck=check)
 
         msg = 'EVENT MANAGER: Script is %s' % script
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -1029,12 +1024,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if setNewActiveScript:
-            try:
-                app = event.host_application or event.source.getApplication()
-            except:
-                msg = 'ERROR: Could not get application for %s' % event.source
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
+            app = event.host_application or AXObject.get_application(event.source)
             try:
                 _scriptManager.setActiveScript(script, reason)
             except:

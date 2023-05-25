@@ -268,19 +268,13 @@ class Utilities(script_utilities.Utilities):
 
     def sanityCheckActiveWindow(self):
         app = self._script.app
-        try:
-            windowInApp = orca_state.activeWindow in app
-        except:
-            msg = "ERROR: Exception checking if %s is in %s" % (orca_state.activeWindow, app)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            windowInApp = False
-
-        if windowInApp:
+        if AXObject.get_parent(orca_state.activeWindow) == app:
             return True
 
-        msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)
+        msg = "WARNING: %s is not child of %s" % (orca_state.activeWindow, app)
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        # TODO - JD: Is this exception handling still needed?
         try:
             script = _scriptManager.getScript(app, orca_state.activeWindow)
             msg = "WEB: Script for active Window is %s" % script
@@ -297,14 +291,9 @@ class Utilities(script_utilities.Utilities):
                     setattr(self._script, attr, value)
 
         window = self.activeWindow(app)
-        try:
-            self._script.app = window.getApplication()
-            msg = "WEB: updating script's app to %s" % self._script.app
-            debug.println(debug.LEVEL_INFO, msg, True)
-        except:
-            msg = "ERROR: Exception getting app for %s" % window
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+        self._script.app = AXObject.get_application(window)
+        msg = "WEB: updating script's app to %s" % self._script.app
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         orca_state.activeWindow = window
         return True

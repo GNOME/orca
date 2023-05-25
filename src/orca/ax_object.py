@@ -1,4 +1,4 @@
-# Utilites for obtaining information about accessible objects.
+# Utilities for obtaining information about accessible objects.
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -315,7 +315,7 @@ class AXObject:
 
     @staticmethod
     def get_path(obj):
-        """Retrns the path from application to obj as list of child indices"""
+        """Returns the path from application to obj as list of child indices"""
 
         if obj is None:
             return []
@@ -785,3 +785,19 @@ class AXObject:
         as_string = lambda x: x.value_name[15:].replace("_", "-").lower()
         relations = [r.get_relation_type() for r in AXObject.get_relations(obj)]
         return ", ".join(map(as_string, relations))
+
+    @staticmethod
+    def get_application(obj):
+        """Returns the accessible application associated with obj"""
+
+        if obj is None:
+            return None
+
+        try:
+            app = Atspi.Accessible.get_application(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_application: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return app

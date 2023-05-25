@@ -285,8 +285,8 @@ class KeyboardEvent(InputEvent):
                 msg = 'INPUT EVENT: Updated window and active window to %s' % self._window
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-        if self._window and self._app != self._window.getApplication():
-            self._script = script_manager.getManager().getScript(self._window.getApplication())
+        if self._window and self._app != AXObject.get_application(self._window):
+            self._script = script_manager.getManager().getScript(AXObject.get_application(self._window))
             self._app = self._script.app
             msg = 'INPUT EVENT: Updated script to %s' % self._script
             debug.println(debug.LEVEL_INFO, msg, True)

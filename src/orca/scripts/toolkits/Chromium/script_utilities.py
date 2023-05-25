@@ -425,7 +425,7 @@ class Utilities(web.Utilities):
         if super()._isActiveAndShowingAndNotIconified(obj):
             return True
 
-        if obj and obj.getApplication() != self._script.app:
+        if obj and AXObject.get_application(obj) != self._script.app:
             return False
 
         # FIXME: This can potentially be non-performant because AT-SPI2 will recursively

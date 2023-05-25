@@ -1150,7 +1150,7 @@ class Generator:
         represents the name of the application for the object.
         """
         result = []
-        name = AXObject.get_name(obj.getApplication())
+        name = AXObject.get_name(AXObject.get_application(obj))
         if name:
             result.append(name)
         return result

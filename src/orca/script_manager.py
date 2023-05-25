@@ -265,9 +265,9 @@ class ScriptManager:
 
         focusedObject = script.utilities.focusedObject(activeWindow)
         if focusedObject:
-            return self.getScript(focusedObject.getApplication(), focusedObject)
+            return self.getScript(AXObject.get_application(focusedObject), focusedObject)
 
-        return self.getScript(activeWindow.getApplication(), activeWindow)
+        return self.getScript(AXObject.get_application(activeWindow), activeWindow)
 
     def getScript(self, app, obj=None, sanityCheck=False):
         """Get a script for an app (and make it if necessary).  This is used

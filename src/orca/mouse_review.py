@@ -391,7 +391,7 @@ class MouseReviewer:
         script = None
         frame = None
         if obj:
-            script = _scriptManager.getScript(obj.getApplication(), obj)
+            script = _scriptManager.getScript(AXObject.get_application(obj), obj)
         if script:
             frame = script.utilities.topLevelObject(obj)
         self._currentMouseOver = _ItemContext(obj=obj, frame=frame, script=script)
@@ -566,7 +566,7 @@ class MouseReviewer:
         if not window:
             return
 
-        script = _scriptManager.getScript(window.getApplication())
+        script = _scriptManager.getScript(AXObject.get_application(window))
         if not script:
             return
 
@@ -594,7 +594,7 @@ class MouseReviewer:
         msg = "MOUSE REVIEW: Object at (%i, %i) is %s" % (pX, pY, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        script = _scriptManager.getScript(window.getApplication(), obj)
+        script = _scriptManager.getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, isMenu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
                 msg = "MOUSE REVIEW: %s believed to be under %s" % (obj, menu)

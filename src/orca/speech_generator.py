@@ -2171,7 +2171,7 @@ class SpeechGenerator(generator.Generator):
         if AXObject.get_role(obj) == Atspi.Role.PAGE_TAB:
             return []
 
-        if obj.getApplication() != priorObj.getApplication() \
+        if AXObject.get_application(obj) != AXObject.get_application(priorObj) \
            or AXObject.find_ancestor(obj, lambda x: x == priorObj):
             return []
 

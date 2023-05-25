@@ -155,11 +155,7 @@ class Utilities:
         if not window:
             return False
 
-        try:
-            app = window.getApplication()
-        except:
-            app = None
-
+        app = AXObject.get_application(window)
         msg = "INFO: Looking at %s from %s %s" % (window, app, self._getAppCommandLine(app))
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -1087,7 +1083,7 @@ class Utilities:
             if event:
                 app = event.host_application
             else:
-                app = obj.getApplication()
+                app = AXObject.get_application(obj)
             if app == orca_state.activeScript.app:
                 return True, "Verbosity is app"
             return False, "App %s is not %s" % (app, orca_state.activeScript.app)
@@ -1495,7 +1491,7 @@ class Utilities:
                               or state.contains(Atspi.StateType.SELECTABLE))
         elif role == Atspi.Role.PANEL and AXObject.get_role(firstChild) in ignorePanelParent:
             layoutOnly = True
-        elif role == Atspi.Role.PANEL and AXObject.has_same_non_empty_name(obj, obj.getApplication()):
+        elif role == Atspi.Role.PANEL and AXObject.has_same_non_empty_name(obj, AXObject.get_application(obj)):
             layoutOnly = True
         elif AXObject.get_child_count(obj) == 1 and AXObject.has_same_non_empty_name(obj, firstChild):
             layoutOnly = True
@@ -1523,7 +1519,7 @@ class Utilities:
         if not obj or not orca_state.locusOfFocus:
             return False
 
-        return orca_state.locusOfFocus.getApplication() == obj.getApplication()
+        return AXObject.get_application(orca_state.locusOfFocus) == AXObject.get_application(obj)
 
     def isLink(self, obj):
         """Returns True if obj is a link."""
@@ -2452,7 +2448,7 @@ class Utilities:
             roles.append(Atspi.Role.ALERT)
 
         isDialog = lambda x: AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
-        dialogs = [x for x in AXObject.iter_children(obj.getApplication(), isDialog)]
+        dialogs = [x for x in AXObject.iter_children(AXObject.get_application(obj), isDialog)]
         dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])
 
         isPresentable = lambda x: self.isShowingAndVisible(x) \
