@@ -307,7 +307,7 @@ class Utilities(web.Utilities):
             return ""
 
         label = labels[0]
-        label.clearCache()
+        AXObject.clear_cache(label)
         return AXObject.get_name(label)
 
     def isAutoTextEvent(self, event):

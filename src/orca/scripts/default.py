@@ -2522,7 +2522,7 @@ class Script(script.Script):
         """Callback for object:state-changed:selected accessibility events."""
 
         obj = event.source
-        obj.clearCache()
+        AXObject.clear_cache(obj)
         state = AXObject.get_state_set(obj)
         if not state.contains(Atspi.StateType.FOCUSED):
             return

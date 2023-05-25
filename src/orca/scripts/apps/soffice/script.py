@@ -647,7 +647,7 @@ class Script(default.Script):
            and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             debug.println(debug.LEVEL_INFO, msg, True)
-            event.source.clearCache()
+            AXObject.clear_cache(event.source)
 
         default.Script.onActiveDescendantChanged(self, event)
 
@@ -809,7 +809,7 @@ class Script(default.Script):
 
         if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
            and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
-            event.source.clearCache()
+            AXObject.clear_cache(event.source)
             if AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.println(debug.LEVEL_INFO, msg, True)

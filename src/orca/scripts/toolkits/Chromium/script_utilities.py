@@ -313,7 +313,7 @@ class Utilities(web.Utilities):
             return ""
 
         bar = statusBars[0]
-        bar.clearCache()
+        AXObject.clear_cache(bar)
         if len(re.findall("\d+", AXObject.get_name(bar))) == 2:
             return AXObject.get_name(bar)
 
@@ -435,7 +435,7 @@ class Utilities(web.Utilities):
         try:
             msg = "CHROMIUM: Clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            obj.clearCache()
+            AXObject.clear_cache(obj)
         except:
             msg = "CHROMIUM: Exception clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

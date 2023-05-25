@@ -160,7 +160,7 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if clearCache:
-            window.clearCache()
+            AXObject.clear_cache(window)
 
         if not self._isActiveAndShowingAndNotIconified(window):
             msg = "INFO: %s is not active and showing, or is iconified" % window
@@ -1913,13 +1913,7 @@ class Utilities:
             return None
 
         for menu in menubar:
-            try:
-                menu.clearCache()
-            except:
-                msg = "ERROR: Exception clearing cache of %s" % menu
-                debug.println(debug.LEVEL_INFO, msg, True)
-                continue
-
+            AXObject.clear_cache(menu)
             state = AXObject.get_state_set(menu)
             if state.contains(Atspi.StateType.EXPANDED) \
                or state.contains(Atspi.StateType.SELECTED):
@@ -1992,7 +1986,7 @@ class Utilities:
         if role == Atspi.Role.FILLER and not AXObject.get_child_count(root):
             msg = "INFO: %s is empty filler. Clearing cache." % root
             debug.println(debug.LEVEL_INFO, msg, True)
-            root.clearCache()
+            AXObject.clear_cache(root)
             msg = "INFO: %s reports %i children" % (root, AXObject.get_child_count(root))
             debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -2217,7 +2211,7 @@ class Utilities:
         if not topLevel:
             return False
 
-        topLevel.clearCache()
+        AXObject.clear_cache(topLevel)
         AXObject.get_state_set(topLevel)
         if not state.contains(Atspi.StateType.ACTIVE) \
            or state.contains(Atspi.StateType.DEFUNCT):
@@ -3403,7 +3397,7 @@ class Utilities:
             if not state.contains(Atspi.StateType.SHOWING):
                 return False
             if state.contains(Atspi.StateType.FOCUSABLE):
-                event.source.clearCache()
+                AXObject.clear_cache(event.source)
                 state = AXObject.get_state_set(event.source)
                 if not state.contains(Atspi.StateType.FOCUSED):
                     return False

@@ -1253,15 +1253,8 @@ class StructuralNavigation:
             return obj, characterOffset
 
         self._script.utilities.setCaretPosition(obj, characterOffset)
-
-        try:
-            obj.clearCache()
-        except:
-            isDefunct = True
-        else:
-            isDefunct = AXObject.has_state(obj, Atspi.StateType.DEFUNCT)
-
-        if not isDefunct:
+        AXObject.clear_cache(obj)
+        if not AXObject.has_state(obj, Atspi.StateType.DEFUNCT):
             return obj, characterOffset
 
         msg = "STRUCTURAL NAVIGATION: %s became defunct after setting caret position" % obj

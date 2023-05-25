@@ -2150,7 +2150,7 @@ class Script(default.Script):
             return True
 
         wasFocused = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
-        obj.clearCache()
+        AXObject.clear_cache(obj)
         isFocused = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
         if wasFocused != isFocused:
             msg = "WEB: Focused state of %s changed to %s" % (obj, isFocused)

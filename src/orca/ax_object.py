@@ -801,3 +801,16 @@ class AXObject:
             return None
 
         return app
+
+    @staticmethod
+    def clear_cache(obj):
+        """Clears the Atspi cached information associated with obj"""
+
+        if obj is None:
+            return
+
+        try:
+            Atspi.Accessible.clear_cache(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in clear_cache: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)

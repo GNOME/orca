@@ -412,7 +412,7 @@ class Utilities(script_utilities.Utilities):
             self._script.togglePresentationMode(None)
 
         if obj:
-            obj.clearCache()
+            AXObject.clear_cache(obj)
 
         # TODO - JD: This is private.
         self._script._saveFocusedObjectInfo(obj)
@@ -598,7 +598,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: %s contains locusOfFocus but not showing and visible" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        obj.clearCache()
+        AXObject.clear_cache(obj)
         rv = super().isShowingAndVisible(obj)
         if rv:
             msg = "WEB: Clearing cache fixed state of %s. Missing event?" % obj
@@ -3116,13 +3116,7 @@ class Utilities(script_utilities.Utilities):
         if len(eocs)/nChars > 0.3:
             return False
 
-        try:
-            obj.clearCache()
-        except:
-            msg = "ERROR: Exception clearing cache for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
+        AXObject.clear_cache(obj)
         tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", text.getText(0, -1))))
 
         # Note: We cannot check for the editable-text interface, because Gecko
@@ -3171,12 +3165,7 @@ class Utilities(script_utilities.Utilities):
         if len(eocs)/nChars > 0.3:
             return False
 
-        try:
-            obj.clearCache()
-        except:
-            msg = "ERROR: Exception clearing cache for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+        AXObject.clear_cache(obj)
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.

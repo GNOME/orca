@@ -69,7 +69,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_index_in_parent(obj) >= 0:
             return True
 
-        obj.clearCache()
+        AXObject.clear_cache(obj)
 
         if self.isShowingAndVisible(obj):
             msg = "SWITCHER: Ignoring bad index of %s" % obj

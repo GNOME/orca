@@ -152,11 +152,7 @@ class Script(clutter.Script):
         # we'll stop doing so and hope we are right.
         if event.detail1:
             if AXObject.get_role(event.source) == Atspi.Role.PANEL:
-                try:
-                    event.source.clearCache()
-                except:
-                    pass
-
+                AXObject.clear_cache(event.source)
             if AXObject.has_state(event.source, Atspi.StateType.SELECTED):
                 orca.setLocusOfFocus(event, event.source)
             return
