@@ -1,3 +1,26 @@
+43.2 - 25 May 2023
+
+Web:
+
+* Support aria-disabled on application, tab, group, and focusable
+  separator/splitter
+
+* Fix bug in identification of inline iframes
+
+General:
+
+* Filter duplicate events when checking for double presses of the
+  orca modifier
+
+* Interrupt speech immediately prior to speaking "screen reader off"
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ab              Abkhazian                 Nart Tlisha
+  id              Indonesian                Andika Triwidada
+
+=========
+
 43.1 - 3 January 2023
 
 General:
