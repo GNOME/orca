@@ -180,6 +180,12 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if AXObject.get_name(event.host_application) == 'gnome-shell':
+            if event.type.startswith('object:children-changed:remove'):
+                msg = 'EVENT MANAGER: Ignoring event based on type and app'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
         if event.type.startswith('window'):
             msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
             debug.println(debug.LEVEL_INFO, msg, True)
