@@ -29,8 +29,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 import orca.orca as orca
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -377,16 +375,6 @@ class Script(Gecko.Script):
             msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
-
-    def toggleFlatReviewMode(self, inputEvent=None):
-        """Toggles between flat review mode and focus tracking mode."""
-
-        # If we're leaving flat review dump the cache. See bug 568658.
-        #
-        if self.flatReviewContext:
-            pyatspi.clearCache()
-
-        return default.Script.toggleFlatReviewMode(self, inputEvent)
 
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
