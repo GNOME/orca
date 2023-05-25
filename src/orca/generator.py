@@ -34,7 +34,6 @@ from gi.repository import Atspi
 gi.require_version('Atk', '1.0')
 from gi.repository import Atk
 
-import pyatspi
 import re
 import sys
 import time
@@ -102,7 +101,6 @@ class Generator:
         """
         globalsDict['obj'] = None
         globalsDict['role'] = None
-        globalsDict['pyatspi'] = pyatspi
 
     def _verifyFormatting(self):
 
@@ -1504,7 +1502,7 @@ class Generator:
         elif self._script.utilities.isComment(obj):
             role = Atspi.Role.COMMENT
 
-        if not isinstance(role, (pyatspi.Role, Atspi.Role)):
+        if not isinstance(role, Atspi.Role):
             try:
                 return obj.getLocalizedRoleName()
             except:

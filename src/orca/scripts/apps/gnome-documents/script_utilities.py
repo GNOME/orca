@@ -25,8 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
-import pyatspi
-
 import orca.script_utilities as script_utilities
 import orca.scripts.toolkits.gtk as gtk
 

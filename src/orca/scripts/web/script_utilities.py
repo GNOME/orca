@@ -30,7 +30,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import functools
-import pyatspi
 import re
 import time
 import urllib
@@ -5200,7 +5199,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
-        if isinstance(event.any_data, pyatspi.Accessible):
+        if isinstance(event.any_data, Atspi.Accessible):
             role = AXObject.get_role(event.any_data)
             if role in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT] \
                and self._getTag(event.any_data) in ["", None, "br"]:
@@ -5239,7 +5238,7 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         col = docframe.queryCollection()
-        stateset = pyatspi.StateSet()
+        stateset = Atspi.StateSet()
         roles = [Atspi.Role.HEADING,
                  Atspi.Role.LINK,
                  Atspi.Role.TABLE,

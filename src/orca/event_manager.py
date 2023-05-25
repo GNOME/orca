@@ -1009,7 +1009,7 @@ class EventManager:
            and not eType.startswith("mouse:"):
             indent = " " * 32
             debug.printDetails(debug.LEVEL_INFO, indent, event.source)
-            if isinstance(event.any_data, pyatspi.Accessible):
+            if isinstance(event.any_data, Atspi.Accessible):
                 debug.println(debug.LEVEL_INFO, '%sANY DATA:' % indent)
                 debug.printDetails(debug.LEVEL_INFO, indent, event.any_data, includeApp=False)
 

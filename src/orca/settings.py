@@ -27,8 +27,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
-
 from . import messages
 from .acss import ACSS
 

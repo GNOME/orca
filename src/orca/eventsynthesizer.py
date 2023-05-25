@@ -39,11 +39,6 @@ from gi.repository import Gtk
 from . import debug
 from .ax_object import AXObject
 
-try:
-    _canScrollTo = pyatspi.Component.scrollTo is not None
-except:
-    _canScrollTo = False
-
 _banner = None
 
 def _getMouseCoordinates():
@@ -355,11 +350,6 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
     debug.println(debug.LEVEL_INFO, msg, True)
 
 def scrollIntoView(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.ANYWHERE, startOffset, endOffset)
 
 def _containingDocument(obj):
@@ -445,11 +435,6 @@ def _scrollBelowBanner(obj, banner, startOffset, endOffset, margin=25):
     _scrollToPoint(obj, objX, bannerY + bannerHeight + margin, startOffset, endOffset)
 
 def scrollToTopEdge(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     global _banner
     if _banner and not _isDead(_banner):
         msg = "EVENT SYNTHESIZER: Suspected existing banner found: %s" % _banner
@@ -466,43 +451,18 @@ def scrollToTopEdge(obj, startOffset=None, endOffset=None):
         debug.println(debug.LEVEL_INFO, msg, True)
 
 def scrollToTopLeft(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.TOP_LEFT, startOffset, endOffset)
 
 def scrollToLeftEdge(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.LEFT_EDGE, startOffset, endOffset)
 
 def scrollToBottomEdge(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.BOTTOM_EDGE, startOffset, endOffset)
 
 def scrollToBottomRight(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.BOTTOM_RIGHT, startOffset, endOffset)
 
 def scrollToRightEdge(obj, startOffset=None, endOffset=None):
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
     _scrollToLocation(obj, Atspi.ScrollType.RIGHT_EDGE, startOffset, endOffset)
 
 def _performNamedAction(obj, name):

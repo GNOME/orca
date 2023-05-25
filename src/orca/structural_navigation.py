@@ -31,8 +31,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import pyatspi
-
 from . import cmdnames
 from . import debug
 from . import eventsynthesizer
@@ -83,7 +81,7 @@ class MatchCriteria:
         Arguments:
         - collection: the collection interface for the document in
           which the accessible objects can be found.
-        - states: a list of pyatspi states of interest
+        - states: a list of accessible states of interest
         - matchStates: whether an object must have all of the states
           in the states list, any of the states in the list, or none
           of the states in the list.  Must be one of the collection
@@ -117,7 +115,7 @@ class MatchCriteria:
         self.invert = invert
         self.applyPredicate = applyPredicate
 
-        self.states = pyatspi.StateSet()
+        self.states = Atspi.StateSet()
         for state in states:
             self.states.add(state)
 
@@ -804,7 +802,7 @@ class StructuralNavigation:
         Arguments:
         - structuralNavigationObject: the StructuralNavigationObject which
           represents the table cell.
-        - thisCell: the pyatspi accessible TABLE_CELL we're currently in
+        - thisCell: the accessible TABLE_CELL we're currently in
         - currentCoordinates: the [row, column] of thisCell.  Note, we
           cannot just get the coordinates because in table cells which
           span multiple rows and/or columns, the value returned by 
@@ -2549,6 +2547,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
+        # TODO - JD: Is this still an issue?
         # Matches based on object attributes assume unique name-value pairs
         # because pyatspi creates a dictionary from the list. In addition,
         # wildcard matching is not possible. As a result, we cannot search
