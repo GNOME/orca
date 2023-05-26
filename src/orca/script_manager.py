@@ -29,11 +29,11 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import importlib
-import pyatspi
 
 from . import debug
 from . import orca_state
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 from .scripts import apps, toolkits
 
 class ScriptManager:
@@ -66,7 +66,6 @@ class ScriptManager:
             {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk'}
 
         self.setActiveScript(None, "__init__")
-        self._desktop = pyatspi.Registry.getDesktop(0)
         self._active = False
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initialized', True)
 
@@ -83,7 +82,7 @@ class ScriptManager:
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Dectivating', True)
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivating', True)
         if self._defaultScript:
             self._defaultScript.deregisterEventListeners()
         self._defaultScript = None
@@ -227,21 +226,11 @@ class ScriptManager:
         if not self._active:
             return script
 
-        try:
-            appInDesktop = script.app in self._desktop
-        except:
-            appInDesktop = False
-
-        if appInDesktop:
+        if AXUtilities.is_application_in_desktop(script.app):
             return script
-
-        msg = "WARNING: %s is not in the registry's desktop" % script.app
-        debug.println(debug.LEVEL_INFO, msg, True)
 
         newScript = self._getScriptForAppReplicant(script.app)
         if newScript:
-            msg = "SCRIPT MANAGER: Script for app replicant found: %s" % newScript
-            debug.println(debug.LEVEL_INFO, msg, True)
             return newScript
 
         msg = "WARNING: Failed to get a replacement script for %s" % script.app
@@ -357,35 +346,17 @@ class ScriptManager:
         if not self._active:
             return None
 
-        def _pid(app):
-            try:
-                result = app.get_process_id()
-                msg = "SCRIPT MANAGER: %s is has pid: %s" % (app, result)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return result
-            except:
-                msg = "SCRIPT MANAGER: Exception getting pid for %s" % app
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return -1
-
-        def _isValidApp(app):
-            try:
-                result = app in self._desktop
-                msg = "SCRIPT MANAGER: %s is in desktop: %s" % (app, result)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return result
-            except:
-                msg = "SCRIPT MANAGER: Exception seeing if %s is in desktop" % app
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return False
-
-        pid = _pid(app)
+        pid = AXObject.get_process_id(app)
         if pid == -1:
             return None
 
         items = self.appScripts.items()
         for a, script in items:
-            if a != app and _pid(a) == pid and _isValidApp(a):
+            if AXObject.get_process_id(a) != pid:
+                continue
+            if a != app and AXUtilities.is_application_in_desktop(a):
+                msg = "SCRIPT MANAGER: Script for app replicant found: %s" % script
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return script
 
         return None
@@ -395,16 +366,13 @@ class ScriptManager:
         deleting any scripts as necessary.
         """
 
-        appList = list(self.appScripts.keys())
-        try:
-            appList = [a for a in appList if a is not None and a not in self._desktop]
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            return
+        msg = "SCRIPT MANAGER: Checking and cleaning up scripts."
+        debug.println(debug.LEVEL_INFO, msg, True)
 
+        appList = list(self.appScripts.keys())
         for app in appList:
-            msg = "SCRIPT MANAGER: %s is no longer in registry's desktop" % app
-            debug.println(debug.LEVEL_INFO, msg, True)
+            if AXUtilities.is_application_in_desktop(app):
+                continue
 
             try:
                 appScript = self.appScripts.pop(app)
@@ -418,9 +386,6 @@ class ScriptManager:
 
             newScript = self._getScriptForAppReplicant(app)
             if newScript:
-                msg = "SCRIPT MANAGER: Script for app replicant found: %s" % newScript
-                debug.println(debug.LEVEL_INFO, msg, True)
-
                 attrs = appScript.getTransferableAttributes()
                 for attr, value in attrs.items():
                     msg = "SCRIPT MANAGER: Setting %s to %s" % (attr, value)

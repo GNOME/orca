@@ -24,10 +24,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
-from gi.repository import GLib
 import gi
 gi.require_version('Atspi', '2.0') 
 from gi.repository import Atspi
+from gi.repository import GLib
 import pyatspi
 import queue
 import threading
@@ -40,6 +40,7 @@ from . import orca_state
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _scriptManager = script_manager.getManager()
 
@@ -53,7 +54,6 @@ class EventManager:
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
-        self._desktop = pyatspi.Registry.getDesktop(0)
         self._active = False
         self._enqueueCount = 0
         self._dequeueCount = 0
@@ -957,25 +957,16 @@ class EventManager:
         debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         eType = event.type
 
-        if eType.startswith("object:children-changed:remove"):
-            try:
-                if event.source == self._desktop:
-                    _scriptManager.reclaimScripts()
-                    return
-            except:
-                return
+        if eType.startswith("object:children-changed:remove") \
+           and event.source == AXUtilities.get_desktop():
+            _scriptManager.reclaimScripts()
+            return
 
         if eType.startswith("window:") and not eType.endswith("create"):
             _scriptManager.reclaimScripts()
-
-        if eType.startswith("object:state-changed:active"):
-            try:
-                role = AXObject.get_role(event.source)
-            except:
-                pass
-            else:
-                if role == Atspi.Role.FRAME:
-                    _scriptManager.reclaimScripts()
+        elif eType.startswith("object:state-changed:active") \
+           and AXObject.get_role(event.source) == Atspi.Role.FRAME:
+            _scriptManager.reclaimScripts()
 
         state = AXObject.get_state_set(event.source)
         if state.contains(Atspi.StateType.DEFUNCT):

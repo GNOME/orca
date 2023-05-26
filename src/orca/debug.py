@@ -35,7 +35,6 @@ from gi.repository import Atspi
 import inspect
 import traceback
 import os
-import pyatspi
 import re
 import subprocess
 import sys
@@ -43,6 +42,7 @@ import sys
 from datetime import datetime
 
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 # Used to turn off all debugging.
 #
@@ -507,10 +507,10 @@ def examineProcesses(force=False):
     else:
         level = LEVEL_ALL
 
-    desktop = pyatspi.Registry.getDesktop(0)
+    desktop = AXUtilities.get_desktop()
     println(level, 'INFO: Desktop has %i apps:' % AXObject.get_child_count(desktop), True)
-    for i, app in enumerate(desktop):
-        pid = app.get_process_id()
+    for i, app in enumerate(AXObject.iter_children(desktop)):
+        pid = AXObject.get_process_id(app)
         cmd = getCmdline(pid)
         fds = getOpenFDCount(pid)
         name = AXObject.get_name(app)

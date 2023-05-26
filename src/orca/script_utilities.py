@@ -32,7 +32,6 @@ import functools
 import gi
 import locale
 import math
-import pyatspi
 import re
 import subprocess
 import time
@@ -58,6 +57,7 @@ from . import settings
 from . import settings_manager
 from . import text_attribute_names
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -69,7 +69,6 @@ _settingsManager = settings_manager.getManager()
 
 class Utilities:
 
-    _desktop = pyatspi.Registry.getDesktop(0)
     _last_clipboard_update = time.time()
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
@@ -175,7 +174,7 @@ class Utilities:
         """Tries to locate the active window; may or may not succeed."""
 
         candidates = []
-        apps = apps or self.knownApplications()
+        apps = apps or AXUtilities.get_all_applications(must_have_window=True)
         for app in apps:
             candidates.extend([child for child in AXObject.iter_children(app, self.canBeActiveWindow)])
 
@@ -1640,14 +1639,6 @@ class Utilities:
         return obj and AXObject.get_role(obj) in (Atspi.Role.TEXT,
                                          Atspi.Role.ENTRY,
                                          Atspi.Role.PARAGRAPH)
-
-    @staticmethod
-    def knownApplications():
-        """Retrieves the list of currently running apps for the desktop
-        as a list of Accessible objects.
-        """
-
-        return [x for x in AXObject.iter_children(Utilities._desktop)]
 
     def labelsForObject(self, obj):
         """Return a list of the labels for this object."""

@@ -830,3 +830,19 @@ class AXObject:
         except Exception as e:
             msg = "ERROR: Exception in clear_cache: %s" % e
             debug.println(debug.LEVEL_INFO, msg, True)
+
+    @staticmethod
+    def get_process_id(obj):
+        """Returns the process id associated with obj"""
+
+        if obj is None:
+            return -1
+
+        try:
+            pid = Atspi.Accessible.get_process_id(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_process_id: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1
+
+        return pid

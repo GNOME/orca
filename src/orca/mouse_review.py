@@ -32,7 +32,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import math
-import pyatspi
 import time
 
 from gi.repository import Gdk
@@ -51,6 +50,7 @@ from . import orca_state
 from . import script_manager
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
@@ -525,17 +525,11 @@ class MouseReviewer:
         if not window:
             return None
 
-        app = None
         windowApp = window.get_application()
         if not windowApp:
             return None
 
-        pid = windowApp.get_pid()
-        for a in pyatspi.Registry.getDesktop(0):
-            if a.get_process_id() == pid:
-                app = a
-                break
-
+        app = AXUtilities.get_application_with_pid(windowApp.get_pid())
         if not app:
             return None
 
