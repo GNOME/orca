@@ -45,6 +45,8 @@ class Script(web.Script):
     def __init__(self, app):
         super().__init__(app)
 
+        self.presentIfInactive = False
+
     def getUtilities(self):
         """Returns the utilities for this script."""
 
