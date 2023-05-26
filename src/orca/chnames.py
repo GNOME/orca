@@ -810,15 +810,8 @@ def getCharacterName(character, preferMath=False):
     Returns a string representing the name for the character
     """
 
-    mathName = mathsymbols.getCharacterName(character)
-    charName = chnames.get(character)
-    if not (charName or mathName):
+    if not preferMath and orca_state.activeScript:
+        preferMath = orca_state.activeScript.utilities.isInMath()
+    if not preferMath:
         return character
-    if mathName and (not charName or preferMath):
-        return mathName
-    if charName and not mathName:
-        return charName
-    if orca_state.activeScript and orca_state.activeScript.utilities.isInMath():
-        return mathName
-
-    return charName
+    return mathsymbols.getCharacterName(character) or character
