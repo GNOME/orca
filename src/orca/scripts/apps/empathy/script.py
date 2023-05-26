@@ -61,7 +61,7 @@ class Script(gtk.Script):
         return chat.Chat(self, self._buddyListAncestries)
 
     def getUtilities(self):
-        """Returns the utilites for this script."""
+        """Returns the utilities for this script."""
 
         return Utilities(self)
 

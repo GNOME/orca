@@ -196,8 +196,7 @@ class Script:
         return None
 
     def getUtilities(self):
-        """Returns the utilites for this script.
-        """
+        """Returns the utilities for this script."""
         return script_utilities.Utilities(self)
 
     def getLabelInference(self):

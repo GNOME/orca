@@ -57,7 +57,7 @@ class Script(default.Script):
         return SpeechGenerator(self)
 
     def getUtilities(self):
-        """Returns the utilites for this script."""
+        """Returns the utilities for this script."""
 
         return Utilities(self)
 

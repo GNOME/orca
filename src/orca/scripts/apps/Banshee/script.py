@@ -15,7 +15,7 @@ class Script(default.Script):
         self._last_seek_value = 0
 
     def getUtilities(self):
-        """Returns the utilites for this script."""
+        """Returns the utilities for this script."""
 
         return Utilities(self)
 
