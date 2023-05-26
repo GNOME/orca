@@ -14,7 +14,6 @@ SUBDIRS = \
 	kwin \
 	notification-daemon \
 	notify-osd \
-	Mozilla \
 	pidgin \
 	rhythmbox \
 	soffice \

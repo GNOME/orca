@@ -52,8 +52,7 @@ class ScriptManager:
              "orca.scripts.apps",
              "orca.scripts.toolkits"]
         self._appNames = \
-            {'Firefox': 'Mozilla',
-             'Icedove': 'Thunderbird',
+            {'Icedove': 'Thunderbird',
              'Nereid': 'Banshee',
              'empathy-chat': 'empathy',
              'gnome-calculator': 'gcalctool',
