@@ -2200,7 +2200,7 @@ class Utilities:
             return False
 
         AXObject.clear_cache(topLevel)
-        AXObject.get_state_set(topLevel)
+        state = AXObject.get_state_set(topLevel)
         if not state.contains(Atspi.StateType.ACTIVE) \
            or state.contains(Atspi.StateType.DEFUNCT):
             return False
