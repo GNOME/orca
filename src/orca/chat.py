@@ -212,7 +212,7 @@ class ConversationList:
         else:
             if not self.hasConversation(conversation):
                 self.addConversation(conversation)
-            name = AXObject.get_name(conversation)
+            name = conversation.name
 
         self._messageHistory.append(message)
         self._roomHistory.append(name)
@@ -564,7 +564,7 @@ class Chat:
             conversation = self.getConversation(orca_state.locusOfFocus)
             if conversation:
                 message = conversation.getNthMessage(messageNumber)
-                chatRoomName = AXObject.get_name(conversation)
+                chatRoomName = conversation.name
         else:
             message, chatRoomName = \
                 self._conversationList.getNthMessageAndName(messageNumber)
@@ -669,7 +669,7 @@ class Chat:
                 conversation = Conversation(name, event.source)
             else:
                 conversation = self.getConversation(event.source)
-                name = AXObject.get_name(conversation)
+                name = conversation.name
             message = self.getMessageFromEvent(event).strip("\n")
             if message:
                 self.addMessageToHistory(message, conversation)
@@ -825,7 +825,7 @@ class Chat:
 
         for conversation in self._conversationList.conversations:
             if name:
-                if name == AXObject.get_name(conversation):
+                if name == conversation.name:
                     return conversation
             # Doing an equality check seems to be preferable here to
             # utilities.isSameObject as a result of false positives.
