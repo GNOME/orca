@@ -242,7 +242,7 @@ def speakKeyEvent(event, acss=None):
     lockingStateString = event.getLockingStateString()
     acss = __resolveACSS(acss)
     msg = "%s %s" % (keyname, lockingStateString)
-    logLine = "SPEECH OUTPUT: '%s' %s" % (msg, acss)
+    logLine = "SPEECH OUTPUT: '%s' %s" % (msg.strip(), acss)
     debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 

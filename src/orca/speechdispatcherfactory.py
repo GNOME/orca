@@ -646,13 +646,9 @@ class SpeechServer(speechserver.SpeechServer):
 
     def speakKeyEvent(self, event, acss=None):
         event_string = event.getKeyName()
-        if orca_state.activeScript:
-            event_string = orca_state.activeScript.\
-                utilities.adjustForPronunciation(event_string)
-
         lockingStateString = event.getLockingStateString()
         event_string = "%s %s" % (event_string, lockingStateString)
-        self.speak(event_string, acss=acss)
+        self.speak(event_string.strip(), acss=acss)
         self._lastKeyEchoTime = time.time()
 
     def increaseSpeechRate(self, step=5):
