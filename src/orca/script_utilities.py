@@ -188,18 +188,50 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return candidates[0]
 
-        # Sorting by size in a lame attempt to filter out the "desktop" frame of various
-        # desktop environments. App name won't work because we don't know it. Getting the
-        # screen/desktop size via Gdk risks a segfault depending on the user environment.
-        # Asking AT-SPI2 for the size seems to give us 1024x768 regardless of reality....
-        # This is why we can't have nice things.
-        candidates = sorted(candidates, key=functools.cmp_to_key(self.sizeComparison))
         msg = "WARNING: These windows all claim to be active: %s" % list(map(str, candidates))
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = "INFO: Active window is (hopefully) %s" % candidates[0]
+        filtered = []
+        for candidate in candidates:
+            if self.isDesktop(candidate):
+                msg = "INFO: Rejecting %s because it's the desktop frame" % candidate
+                debug.println(debug.LEVEL_INFO, msg, True)
+            elif AXObject.get_name(AXObject.get_application(candidate)) == "mutter-x11-frames":
+                msg = "INFO: Rejecting %s because app is mutter-x11-frames" % candidate
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                filtered.append(candidate)
+
+        if len(filtered) == 1:
+            msg = "INFO: Active window is believed to be %s" % filtered[0]
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return filtered[0]
+
+        # Some electron apps running in the background claim to be active even when they
+        # are not. Slack is one such example. We can add others as we go.
+        suspect_app_names = ["slack"]
+        refiltered = []
+        for frame in filtered:
+            if AXObject.get_name(AXObject.get_application(frame)) == "slack":
+                msg = "INFO: Suspecting %s might be a non-active Electron app" % frame
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                refiltered.append(frame)
+
+        if len(refiltered) == 1:
+            msg = "INFO: Active window is believed to be %s" % refiltered[0]
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return refiltered[0]
+
+        guess = None
+        if refiltered:
+            msg = "WARNING: Still have multiple active windows: %s" % list(map(str, refiltered))
+            debug.println(debug.LEVEL_INFO, msg, True)
+            guess = refiltered[0]
+
+        msg = "INFO: Active window is: %s" % guess
         debug.println(debug.LEVEL_INFO, msg, True)
-        return candidates[0]
+        return guess
 
     def objectAttributes(self, obj, useCache=True):
         try:
