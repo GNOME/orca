@@ -54,7 +54,6 @@ class ScriptManager:
         self._appNames = \
             {'Icedove': 'Thunderbird',
              'Nereid': 'Banshee',
-             'empathy-chat': 'empathy',
              'gnome-calculator': 'gcalctool',
              'gtk-window-decorator': 'switcher',
              'marco': 'switcher',

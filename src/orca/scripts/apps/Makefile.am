@@ -1,7 +1,6 @@
 SUBDIRS = \
 	Banshee \
 	Eclipse \
-	empathy \
 	epiphany \
 	evince \
 	evolution \
