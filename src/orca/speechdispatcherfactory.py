@@ -647,8 +647,15 @@ class SpeechServer(speechserver.SpeechServer):
     def speakKeyEvent(self, event, acss=None):
         event_string = event.getKeyName()
         lockingStateString = event.getLockingStateString()
-        event_string = "%s %s" % (event_string, lockingStateString)
-        self.speak(event_string.strip(), acss=acss)
+        event_string = ("%s %s" % (event_string, lockingStateString)).strip()
+        if len(event_string) == 1:
+            msg = "SPEECH DISPATCHER: Speaking '%s' as key'" % event_string
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._send_command(self._client.key, event_string)
+        else:
+            msg = "SPEECH DISPATCHER: Speaking '%s' as string'" % event_string
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.speak(event_string, acss=acss)
         self._lastKeyEchoTime = time.time()
 
     def increaseSpeechRate(self, step=5):
