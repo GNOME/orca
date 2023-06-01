@@ -5559,7 +5559,11 @@ class Utilities:
         if not keyString in ["Left", "Right"]:
             return False
 
-        return not (mods & keybindings.CTRL_MODIFIER_MASK)
+        if mods & keybindings.CTRL_MODIFIER_MASK \
+           or mods & keybindings.ALT_MODIFIER_MASK:
+            return False
+
+        return True
 
     def lastInputEventWasWordNav(self):
         keyString, mods = self.lastKeyAndModifiers()
