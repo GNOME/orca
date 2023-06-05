@@ -198,7 +198,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRealActiveDescendantDisplayedText(obj, **args)
 
-        return self._generateDisplayedText(obj, **args)
+        rad = self._script.utilities.realActiveDescendant(obj)
+        return self._generateDisplayedText(rad, **args)
 
     def _generateTableCellRow(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):

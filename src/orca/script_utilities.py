@@ -2334,10 +2334,13 @@ class Utilities:
         if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             return obj
 
-        children = [x for x in obj if not self.isStaticTextLeaf(x)]
-        hasContent = [x for x in children if self.displayedText(x).strip()]
-        if len(hasContent) == 1:
-            return hasContent[0]
+        if obj.name:
+            return obj
+
+        pred = lambda x: not self.isStaticTextLeaf(x) and self.displayedText(x).strip()
+        child = pyatspi.findDescendant(obj, pred)
+        if child:
+            return child
 
         return obj
 
