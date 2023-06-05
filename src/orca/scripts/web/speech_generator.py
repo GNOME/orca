@@ -521,7 +521,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRealActiveDescendantDisplayedText(obj, **args)
 
-        return self._generateDisplayedText(obj, **args)
+        rad = self._script.utilities.realActiveDescendant(obj)
+        return self._generateDisplayedText(rad, **args)
 
     def _generateRoleName(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):

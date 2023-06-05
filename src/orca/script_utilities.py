@@ -2124,9 +2124,9 @@ class Utilities:
             return obj
 
         pred = lambda x: not self.isStaticTextLeaf(x) and self.displayedText(x).strip()
-        children = [x for x in AXObject.iter_children(obj, pred)]
-        if len(children) == 1:
-            return children[0]
+        child = AXObject.find_descendant(obj, pred)
+        if child:
+            return child
 
         return obj
 
