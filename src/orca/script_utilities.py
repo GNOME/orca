@@ -2123,6 +2123,9 @@ class Utilities:
         if AXObject.get_role(obj) != Atspi.Role.TABLE_CELL:
             return obj
 
+        if AXObject.get_name(obj):
+            return obj
+
         pred = lambda x: not self.isStaticTextLeaf(x) and self.displayedText(x).strip()
         child = AXObject.find_descendant(obj, pred)
         if child:
