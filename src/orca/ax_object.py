@@ -389,6 +389,9 @@ class AXObject:
         if debug.LEVEL_INFO < debug.debugLevel:
             return parent
 
+        if AXObject.is_dead(obj):
+            return parent
+
         index = AXObject.get_index_in_parent(obj)
         nchildren = AXObject.get_child_count(parent)
         if index < 0 or index > nchildren:
@@ -798,9 +801,16 @@ class AXObject:
     def relations_as_string(obj):
         """Returns the relations associated with obj as a string"""
 
+
+        results = []
         as_string = lambda x: x.value_name[15:].replace("_", "-").lower()
-        relations = [r.get_relation_type() for r in AXObject.get_relations(obj)]
-        return ", ".join(map(as_string, relations))
+        for r in AXObject.get_relations(obj):
+            type_string = as_string(r.get_relation_type())
+            targets = AXObject.get_relation_targets(obj, r.get_relation_type())
+            target_string = ",".join(map(str, targets))
+            results.append("%s: %s" % (type_string, target_string))
+
+        return "; ".join(results)
 
     @staticmethod
     def get_application(obj):
@@ -846,3 +856,19 @@ class AXObject:
             return -1
 
         return pid
+
+    @staticmethod
+    def is_dead(obj):
+        """Returns true of obj exists but is believed to be dead."""
+
+        if obj is None:
+            return False
+
+        try:
+            # We use the Atspi function rather than the AXObject function because the
+            # latter intentionally handles exceptions.
+            Atspi.Accessible.get_name(obj)
+        except:
+            return True
+
+        return False

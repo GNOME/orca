@@ -315,15 +315,6 @@ def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
                 getAccessibleDetails(level, accessible, indent, includeApp),
                 timestamp)
 
-def statesToString(acc, indent=""):
-    return "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
-
-def relationsToString(acc, indent=""):
-    return "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
-
-def interfacesToString(acc, indent=""):
-    return "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
-
 def attributesToString(acc, indent=""):
     try:
         attributes = acc.getAttributes()
@@ -365,23 +356,23 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     else:
         string = indent
 
+    if AXObject.is_dead(acc):
+        string += "(exception fetching data)"
+        return string
+
     name_string = "name='%s'".replace("\n", "\\n") % AXObject.get_name(acc)
     desc_string = "%sdescription='%s'".replace("\n", "\\n") % (indent, AXObject.get_description(acc))
     role_string = "role='%s'" % AXObject.get_role_name(acc)
     path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
-    state_string = statesToString(acc, indent)
-    rel_string = relationsToString(acc, indent)
+    state_string = "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
+    rel_string = "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
     actions_string = actionsToString(acc, indent)
-    iface_string = interfacesToString(acc, indent)
+    iface_string = "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
     attr_string = attributesToString(acc, indent)
 
-    try:
-        string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
+    string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
                   % (name_string, role_string, desc_string, state_string, rel_string,
                      actions_string, iface_string, attr_string, path_string)
-    except:
-        string += "(exception fetching data)"
-
     return string
 
 # The following code originated from the following URL:

@@ -4802,7 +4802,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Removed child is ancestor of locusOfFocus."
             debug.println(debug.LEVEL_INFO, msg, True)
         elif self.isSameObject(event.any_data, orca_state.locusOfFocus, True, True):
-            msg = "WEB: Removed child appears to be replicant oflocusOfFocus."
+            msg = "WEB: Removed child appears to be replicant of locusOfFocus."
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             return False
