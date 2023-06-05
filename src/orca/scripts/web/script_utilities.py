@@ -4850,12 +4850,18 @@ class Utilities(script_utilities.Utilities):
 
         else:
             notify = False
+            AXObject.clear_cache(event.source)
             obj, offset = self.searchForCaretContext(event.source)
+            if obj is None:
+                obj = self.focusedObject(event.source)
+
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
-            # focused.
+            # focused and has a different name than the last known focused object.
             if obj and self.isDead(orca_state.locusOfFocus) \
                and AXObject.has_state(obj, Atspi.StateType.FOCUSED):
-                notify = True
+                names = self._script.pointOfReference.get('names', {})
+                oldName = names.get(hash(orca_state.locusOfFocus))
+                notify = AXObject.get_name(obj) != oldName
 
         if obj:
             msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
