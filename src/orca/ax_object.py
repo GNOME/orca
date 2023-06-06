@@ -888,6 +888,9 @@ class AXObject:
             debug.println(debug.LEVEL_INFO, msg, True)
             return {}
 
+        if attributes is None:
+            return {}
+
         return attributes
 
     @staticmethod
