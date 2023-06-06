@@ -234,12 +234,7 @@ class Utilities:
         return guess
 
     def objectAttributes(self, obj, useCache=True):
-        try:
-            rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            rv = {}
-
-        return rv
+        return AXObject.get_attributes_dict(obj)
 
     def cellIndex(self, obj):
         """Returns the index of the cell which should be used with the

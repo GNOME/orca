@@ -129,18 +129,8 @@ class ScriptManager:
     def _toolkitForObject(self, obj):
         """Returns the name of the toolkit associated with obj."""
 
-        name = ''
-        if obj:
-            try:
-                attributes = obj.getAttributes()
-            except (LookupError, RuntimeError):
-                pass
-            else:
-                attrs = dict([attr.split(':', 1) for attr in attributes])
-                name = attrs.get('toolkit', '')
-                name = self._toolkitNames.get(name, name)
-
-        return name
+        name = AXObject.get_attribute(obj, 'toolkit')
+        return self._toolkitNames.get(name, name)
 
     def _scriptForRole(self, obj):
         role = AXObject.get_role(obj)

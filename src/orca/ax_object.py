@@ -35,6 +35,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -872,3 +873,36 @@ class AXObject:
             return True
 
         return False
+
+    @staticmethod
+    def get_attributes_dict(obj):
+        """Returns the object attributes of obj as a dictionary."""
+
+        if obj is None:
+            return {}
+
+        try:
+            attributes = Atspi.Accessible.get_attributes(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_attributes_dict: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return {}
+
+        return attributes
+
+    @staticmethod
+    def get_attribute(obj, attribute_name):
+        """Returns the value of the specified attribute as a string."""
+
+        if obj is None:
+            return ""
+
+        attributes = AXObject.get_attributes_dict(obj)
+        return attributes.get(attribute_name, "")
+
+    @staticmethod
+    def attributes_as_string(obj):
+        """Returns the object attributes of obj as a string."""
+
+        as_string = lambda x: "%s:%s" % (x[0], x[1])
+        return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))

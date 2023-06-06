@@ -315,14 +315,6 @@ def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
                 getAccessibleDetails(level, accessible, indent, includeApp),
                 timestamp)
 
-def attributesToString(acc, indent=""):
-    try:
-        attributes = acc.getAttributes()
-    except:
-        return "%sattributes=(exception)" % indent
-
-    return "%sattributes='%s'" % (indent, re.sub("\s+", " ", ", ".join(attributes)))
-
 def actionsToString(acc, indent=""):
     try:
         action = acc.queryAction()
@@ -368,7 +360,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     rel_string = "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
     actions_string = actionsToString(acc, indent)
     iface_string = "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
-    attr_string = attributesToString(acc, indent)
+    attr_string = "%sattributes='%s'" % (indent, AXObject.attributes_as_string(acc))
 
     string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
                   % (name_string, role_string, desc_string, state_string, rel_string,

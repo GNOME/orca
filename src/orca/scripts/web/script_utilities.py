@@ -465,11 +465,7 @@ class Utilities(script_utilities.Utilities):
             if rv is not None:
                 return rv
 
-        try:
-            rv = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            rv = {}
-
+        rv = AXObject.get_attributes_dict(obj)
         self._objectAttributes[hash(obj)] = rv
         return rv
 
