@@ -1711,6 +1711,13 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
+        if self.utilities.isItemForEditableComboBox(orca_state.locusOfFocus, event.source) \
+           and not self.utilities.lastInputEventWasCharNav() \
+           and not self.utilities.lastInputEventWasLineBoundaryNav():
+            msg = "WEB: Event ignored: Editable combobox noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.eventIsAutocompleteNoise(event, document):
             msg = "WEB: Event ignored: Autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)

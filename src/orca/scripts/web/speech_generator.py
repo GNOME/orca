@@ -91,11 +91,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 or AXObject.get_role(obj) in [Atspi.Role.TOOL_TIP, Atspi.Role.STATUS_BAR]):
             return result
 
-        if self._script.utilities.isEditableComboBox(priorObj) \
-           and AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
-            pred = lambda x: AXObject.find_ancestor(obj, lambda y: x == y)
-            if AXObject.get_relation_targets(priorObj, Atspi.RelationType.CONTROLLER_FOR, pred):
-                return result
+        if self._script.utilities.isItemForEditableComboBox(obj, priorObj):
+            return result
 
         args['stopAtRoles'] = [Atspi.Role.DOCUMENT_WEB,
                                Atspi.Role.EMBEDDED,

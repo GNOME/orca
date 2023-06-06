@@ -3523,6 +3523,34 @@ class Utilities(script_utilities.Utilities):
         self._isEditableComboBox[hash(obj)] = rv
         return rv
 
+    def getEditableComboBoxForItem(self, item):
+        if AXObject.get_role(item) != Atspi.Role.LIST_ITEM:
+            return None
+
+        isListBox = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_BOX
+        listbox = AXObject.find_ancestor(item, isListBox)
+        if not listbox:
+            return None
+
+        targets = AXObject.get_relation_targets(listbox,
+                                                Atspi.RelationType.CONTROLLED_BY,
+                                                self.isEditableComboBox)
+        if len(targets) == 1:
+            return targets[0]
+
+        return AXObject.find_ancestor(listbox, self.isEditableComboBox)
+
+    def isItemForEditableComboBox(self, item, comboBox):
+        if AXObject.get_role(item) != Atspi.Role.LIST_ITEM:
+            return False
+        if not self.isEditableComboBox(comboBox):
+            return False
+
+        rv = self.getEditableComboBoxForItem(item) == comboBox
+        msg = "WEB: %s is item of %s: %s" % (item, comboBox, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
     def isDPub(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
