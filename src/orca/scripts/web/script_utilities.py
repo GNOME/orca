@@ -570,7 +570,7 @@ class Utilities(script_utilities.Utilities):
         return self.queryNonEmptyText(obj, False) is None
 
     def isHidden(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = self.objectAttributes(obj, False)
         return attrs.get('hidden', False)
 
     def _isOrIsIn(self, child, parent):
