@@ -4805,6 +4805,37 @@ class Utilities(script_utilities.Utilities):
         self.setCaretContext(replicant, offset, documentFrame)
         return True
 
+    def _handleEventForRemovedListBoxChild(self, event):
+        isListBox = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_BOX
+        if isListBox(event.source):
+            listBox = event.source
+        else:
+            listBox = AXObject.find_ancestor(event.source, isListBox)
+        if listBox is None:
+            msg = "WEB: Could not find listbox to recover from removed child."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "WEB: Checking %s for focused child." % listBox
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        AXObject.clear_cache(listBox)
+        item = self.focusedObject(listBox)
+        if not AXObject.get_role(item) == Atspi.Role.LIST_ITEM:
+            msg = "WEB: Could not find focused list item to recover from removed child."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        names = self._script.pointOfReference.get('names', {})
+        oldName = names.get(hash(orca_state.locusOfFocus))
+        notify = AXObject.get_name(item) != oldName
+
+        msg = "WEB: Recovered from removed child new focus is: %s, %i" % (item, 0)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        orca.setLocusOfFocus(event, item, notify)
+        self.setCaretContext(item, 0)
+        return True
+
     def handleEventForRemovedChild(self, event):
         if event.any_data == orca_state.locusOfFocus:
             msg = "WEB: Removed child is locusOfFocus."
@@ -4822,6 +4853,9 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Event detail1 is useless."
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+
+        if self._handleEventForRemovedListBoxChild(event):
+            return True
 
         obj, offset = None, -1
         notify = True

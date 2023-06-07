@@ -1395,6 +1395,10 @@ class Script(default.Script):
             msg = "WEB: Event source %s is same page fragment. Generating line contents." % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
+        elif event.type.startswith("object:children-changed:remove") \
+             and self.utilities.isFocusModeWidget(newFocus):
+            msg = "WEB: New focus %s is recovery from removed child. Generating speech." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
         elif self.utilities.lastInputEventWasLineNav() and self.utilities.isZombie(oldFocus):
             msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line contents."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2278,6 +2282,9 @@ class Script(default.Script):
 
         if self.utilities.isWebAppDescendant(event.source):
             if self._inFocusMode:
+                # Because we cannot count on the app firing the right state-changed events
+                # for descendants.
+                AXObject.clear_cache(event.source)
                 msg = "WEB: Event source is web app descendant and we're in focus mode"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
