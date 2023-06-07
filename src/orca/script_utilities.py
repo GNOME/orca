@@ -3585,9 +3585,8 @@ class Utilities:
             if self.KEY_BINDING not in self._script.generatorCache:
                 self._script.generatorCache[self.KEY_BINDING] = {}
 
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
+        keybinding = AXObject.get_action_key_binding(obj, 0)
+        if not keybinding:
             self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
             return self._script.generatorCache[self.KEY_BINDING][obj]
 
@@ -3598,12 +3597,8 @@ class Utilities:
         #
         # The keybindings in <full-path> should be separated by ":"
         #
-        try:
-            bindingStrings = action.getKeyBinding(0).split(';')
-        except:
-            self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
-            return self._script.generatorCache[self.KEY_BINDING][obj]
 
+        bindingStrings = keybinding.split(';')
         if len(bindingStrings) == 3:
             mnemonic       = bindingStrings[0]
             fullShortcut   = bindingStrings[1]
@@ -4103,17 +4098,8 @@ class Utilities:
         return value
 
     def hasMeaningfulToggleAction(self, obj):
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            return False
-
-        toggleActionNames = ["toggle", object_properties.ACTION_TOGGLE]
-        for i in range(action.nActions):
-            if action.getName(i) in toggleActionNames:
-                return True
-
-        return False
+        return AXObject.has_action(obj, "toggle") \
+            or AXObject.has_action(obj, object_properties.ACTION_TOGGLE)
 
     def containingTableHeader(self, obj):
         if not obj:

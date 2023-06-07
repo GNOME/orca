@@ -33,6 +33,7 @@ from . import debug
 from . import eventsynthesizer
 from . import guilabels
 from . import orca_state
+from .ax_object import AXObject
 
 class OrcaNavListGUI:
 
@@ -124,12 +125,8 @@ class OrcaNavListGUI:
 
     def _onCursorChanged(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()
-        try:
-            action = obj.queryAction()
-        except:
-            self._activateButton.set_sensitive(False)
-        else:
-            self._activateButton.set_sensitive(action.get_nActions() > 0)
+        n_actions = AXObject.get_n_actions(obj)
+        self._activateButton.set_sensitive(n_actions > 0)
 
     def _onKeyRelease(self, widget, event):
         keycode = event.hardware_keycode
@@ -155,30 +152,10 @@ class OrcaNavListGUI:
             return
 
         self._script.utilities.setCaretPosition(obj, offset)
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            msg = "ERROR: Action interface not implemented for %s" % obj
+        if not eventsynthesizer.tryAllClickableActions(obj):
+            msg = "INFO: Attempting a synthesized click on %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return
-        except:
-            msg = "ERROR: Exception getting action interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        # Chromium exposes the clickAncestor action and then expects us to do the work.
-        # Invoking the action appears to do nothing. Other actions should work as expected.
-        if action.nActions and action.getName(0).lower() != "clickancestor":
-            action.doAction(0)
-            return
-
-        if not action.nActions:
-            msg = "INFO: Action interface for %s has 0 actions" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        msg = "INFO: Attempting a synthesized click on %s" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
-        eventsynthesizer.clickObject(obj)
+            eventsynthesizer.clickObject(obj)
 
     def _getSelectedAccessibleAndOffset(self):
         if not self._tree:

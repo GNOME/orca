@@ -315,17 +315,6 @@ def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
                 getAccessibleDetails(level, accessible, indent, includeApp),
                 timestamp)
 
-def actionsToString(acc, indent=""):
-    try:
-        action = acc.queryAction()
-        names = [action.getName(i).lower() for i in range(action.nActions)]
-    except NotImplementedError:
-        return "%sactions=(not implemented)" % indent
-    except:
-        return "%sactions=(exception)" % indent
-
-    return "%sactions='%s'" % (indent, " ".join(names))
-
 def getAccessibleDetails(level, acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
@@ -358,7 +347,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
     state_string = "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
     rel_string = "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
-    actions_string = actionsToString(acc, indent)
+    actions_string = "%sactions='%s'" % (indent, AXObject.actions_as_string(acc))
     iface_string = "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
     attr_string = "%sattributes='%s'" % (indent, AXObject.attributes_as_string(acc))
 

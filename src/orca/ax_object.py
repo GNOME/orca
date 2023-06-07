@@ -35,6 +35,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import gi
+import re
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -53,8 +54,6 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_action_iface(obj)
-        except NotImplementedError:
-            return False
         except Exception as e:
             msg = "ERROR: Exception calling get_action_iface on %s: %s" % (obj, e)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -909,3 +908,149 @@ class AXObject:
 
         as_string = lambda x: "%s:%s" % (x[0], x[1])
         return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))
+
+    @staticmethod
+    def get_n_actions(obj):
+        """Returns the number of actions supported on obj."""
+
+        if not AXObject.supports_action(obj):
+            return 0
+
+        try:
+            count = Atspi.Action.get_n_actions(obj)
+        except Exception as e:
+            msg = "ERROR: Exception in get_n_actions: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        return count
+
+    @staticmethod
+    def _normalize_action_name(action_name):
+        """Adjusts the name to account for differences in implementations."""
+
+        name = re.sub(r'(?<=[a-z])([A-Z])', r'-\1', action_name).lower()
+        name = re.sub('[!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]', '-', name)
+        return name
+
+    @staticmethod
+    def get_action_name(obj, i):
+        """Returns the name of obj's action at index i."""
+
+        if not (0 <= i < AXObject.get_n_actions(obj)):
+            return ""
+
+        try:
+            name = Atspi.Action.get_action_name(obj, i)
+        except Exception as e:
+            msg = "ERROR: Exception in get_action_name: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return AXObject._normalize_action_name(name)
+
+    @staticmethod
+    def get_action_names(obj):
+        """Returns the list of actions supported on obj."""
+
+        results = []
+        for i in range(AXObject.get_n_actions(obj)):
+            name = AXObject.get_action_name(obj, i)
+            if name:
+                results.append(name)
+        return results
+
+    @staticmethod
+    def get_action_description(obj, i):
+        """Returns the description of obj's action at index i."""
+
+        if not (0 <= i < AXObject.get_n_actions(obj)):
+            return ""
+
+        try:
+            description = Atspi.Action.get_action_description(obj, i)
+        except Exception as e:
+            msg = "ERROR: Exception in get_action_description: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return description
+
+    @staticmethod
+    def get_action_key_binding(obj, i):
+        """Returns the key binding string of obj's action at index i."""
+
+        if not (0 <= i < AXObject.get_n_actions(obj)):
+            return ""
+
+        try:
+            keybinding = Atspi.Action.get_key_binding(obj, i)
+        except Exception as e:
+            msg = "ERROR: Exception in get_action_key_binding: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return keybinding
+
+    @staticmethod
+    def has_action(obj, action_name):
+        """Returns true if the named action is supported on obj."""
+
+        return AXObject.get_action_index(obj, action_name) >= 0
+
+    @staticmethod
+    def get_action_index(obj, action_name):
+        """Returns the index of the named action or -1 if unsupported."""
+
+        action_name = AXObject._normalize_action_name(action_name)
+        for i in range(AXObject.get_n_actions(obj)):
+            if action_name == AXObject.get_action_name(obj, i):
+                return i
+
+        return -1
+
+    @staticmethod
+    def do_action(obj, i):
+        """Invokes obj's action at index i. The return value, if true, may be
+        meaningless because most implementors return true without knowing if
+        the action was successfully performed."""
+
+        if not (0 <= i < AXObject.get_n_actions(obj)):
+            return False
+
+        try:
+            result = Atspi.Action.do_action(obj, i)
+        except Exception as e:
+            msg = "ERROR: Exception in do_action: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return result
+
+    @staticmethod
+    def do_named_action(obj, action_name):
+        """Invokes the named action on obj. The return value, if true, may be
+        meaningless because most implementors return true without knowing if
+        the action was successfully performed."""
+
+        index = AXObject.get_action_index(obj, action_name)
+        if index == -1:
+            msg = "INFO: %s not an available action for %s" % (action_name, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return AXObject.do_action(obj, index)
+
+    @staticmethod
+    def actions_as_string(obj):
+        """Returns information about the actions as a string."""
+
+        results = []
+        for i in range(AXObject.get_n_actions(obj)):
+            result = AXObject.get_action_name(obj, i)
+            keybinding = AXObject.get_action_key_binding(obj, i)
+            if keybinding:
+                result += " (%s)" % keybinding
+            results.append(result)
+
+        return "; ".join(results)

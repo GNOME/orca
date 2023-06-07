@@ -3357,7 +3357,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if AXObject.get_role(obj) == Atspi.Role.LINK \
            and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE) \
-           and not 'jump' in self._getActionNames(obj) \
+           and not AXObject.has_action(obj, "jump") \
            and not self._getXMLRoles(obj):
             rv = True
 
@@ -3393,19 +3393,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXObject.get_role(parent) == Atspi.Role.FRAME
 
-    def _getActionNames(self, obj):
-        try:
-            action = obj.queryAction()
-            names = [action.getName(i).lower() for i in range(action.nActions)]
-        except NotImplementedError:
-            return []
-        except:
-            msg = "WEB: Exception getting actions for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-
-        return list(filter(lambda x: x, names))
-
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3419,11 +3406,10 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if not self.isFocusModeWidget(obj):
-            names = self._getActionNames(obj)
             if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
-                rv = "click" in names
+                rv = AXObject.has_action(obj, "click")
             else:
-                rv = "clickancestor" in names
+                rv = AXObject.has_action(obj, "click-ancestor")
 
         if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
             string = obj.queryText().getText(0, -1)
@@ -4046,8 +4032,11 @@ class Utilities(script_utilities.Utilities):
         elif AXObject.supports_text(obj) and obj.queryText().characterCount \
              and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
             rv = False
-        elif AXObject.supports_action(obj) and self._getActionNames(obj):
-            rv = False
+        elif AXObject.supports_action(obj):
+            names = AXObject.get_action_names(obj)
+            ignore = ["click-ancestor", "show-context-menu", "do-default"]
+            names = list(filter(lambda x: x not in ignore, names))
+            rv = not names
         else:
             rv = True
 
@@ -4087,9 +4076,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        names = self._getActionNames(obj)
-        rv = "showlongdesc" in names
-
+        rv = AXObject.has_action(obj, "showlongdesc")
         self._hasLongDesc[hash(obj)] = rv
         return rv
 

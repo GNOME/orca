@@ -47,6 +47,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 
+from .ax_object import AXObject
 from .orca_platform import tablesdir
 
 _logger = logger.getLogger()
@@ -523,23 +524,21 @@ class Component(Region):
             except:
                 pass
 
+        if AXObject.do_action(self.accessible, 0):
+            return
+
+        # Do a mouse button 1 click if we have to.  For example, page tabs
+        # don't have any actions but we want to be able to select them with
+        # the cursor routing key.
         try:
-            action = self.accessible.queryAction()
-        except:
-            # Do a mouse button 1 click if we have to.  For example, page tabs
-            # don't have any actions but we want to be able to select them with
-            # the cursor routing key.
-            #
-            debug.println(debug.LEVEL_FINEST,
-                          "braille.Component.processRoutingKey: no action")
-            try:
-                eventsynthesizer.clickObject(self.accessible, 1)
-            except:
-                debug.println(debug.LEVEL_SEVERE,
-                              "Could not process routing key:")
-                debug.printException(debug.LEVEL_SEVERE)
+            result = eventsynthesizer.clickObject(self.accessible, 1)
+        except Exception as e:
+            msg = "ERROR: Could not process routing key: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
-            action.doAction(0)
+            if not result:
+                msg = "INFO: Processing routing key failed"
+                debug.println(debug.LEVEL_INFO, msg, True)
 
 class Link(Component):
     """A subclass of Component backed by an accessible.  This Region will be

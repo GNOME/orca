@@ -465,33 +465,20 @@ def scrollToBottomRight(obj, startOffset=None, endOffset=None):
 def scrollToRightEdge(obj, startOffset=None, endOffset=None):
     _scrollToLocation(obj, Atspi.ScrollType.RIGHT_EDGE, startOffset, endOffset)
 
-def _performNamedAction(obj, name):
-    try:
-        action = obj.queryAction()
-    except NotImplementedError:
-        msg = "ERROR: Action interface not implemented for %s" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
+def tryAllClickableActions(obj):
+    actions = ["click", "press", "jump", "open"]
+    for a in actions:
+        if AXObject.do_named_action(obj, a):
+            msg = "INFO: '%s' on %s performed successfully" % (a, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+    if debug.LEVEL_INFO < debug.debugLevel:
         return False
 
-    for i in range(action.nActions):
-        if action.getName(i).lower() == name.lower():
-            rv = action.doAction(i)
-            msg = "EVENT SYNTHESIZER: %s on %s result: %s" % (name, obj, rv)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return rv
-
-    msg = "INFO: %s not an available action for %s" % (name, obj)
+    msg = "INFO: Actions on %s: %s" % (obj, AXObject.actions_as_string(obj))
     debug.println(debug.LEVEL_INFO, msg, True)
     return False
-
-def activateActionOn(obj):
-    return _performNamedAction(obj, "activate")
-
-def clickActionOn(obj):
-    return _performNamedAction(obj, "click")
-
-def pressActionOn(obj):
-    return _performNamedAction(obj, "press")
 
 def grabFocusOn(obj):
     try:
