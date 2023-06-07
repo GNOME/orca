@@ -1743,6 +1743,7 @@ class Script(default.Script):
 
         obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
         notify = force = handled = False
+        AXObject.clear_cache(event.source)
 
         if self.utilities.lastInputEventWasPageNav():
             msg = "WEB: Caret moved due to scrolling."
