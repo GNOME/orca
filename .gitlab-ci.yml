@@ -1,0 +1,56 @@
+# -*- indent-tabs-mode: nil -*-
+#
+# Continuous Integration configuration for at-spi2-core
+#
+# Full documentation for Gitlab CI: https://docs.gitlab.com/ee/ci/
+#
+# Introduction to Gitlab CI: https://docs.gitlab.com/ee/ci/quick_start/index.html
+
+# Include the parameters we need from Freedesktop CI Templates
+include:
+  - local: 'ci/container_builds.yml'
+
+# Stages in the CI pipeline in which jobs will be run
+stages:
+  - container-build
+  - build
+  - lint
+
+# Enable merge request pipelines and avoid duplicate pipelines
+# https://docs.gitlab.com/ee/ci/yaml/index.html#switch-between-branch-pipelines-and-merge-request-pipelines
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - if: '$CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH'
+
+# Main build job; installs at-spi2-core and pyatspi2, and builds/installs Orca.
+build-opensuse-x86_64:
+  stage: build
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: opensuse-container@x86_64
+      artifacts: false
+  script:
+    - bash -x ci/install_atspi.sh
+    - bash -x ci/install_pyatspi2.sh
+    - bash -x ci/build_and_install.sh
+
+# Ruff linter for Python.
+#
+# The configuration is in pyproject.toml.
+ruff lint:
+  stage: lint
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: opensuse-container@x86_64
+      artifacts: false
+  script:
+    - ruff check src/orca
+  allow_failure: true
