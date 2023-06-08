@@ -394,7 +394,7 @@ class AXObject:
 
         index = AXObject.get_index_in_parent(obj)
         nchildren = AXObject.get_child_count(parent)
-        if index < 0 or index > nchildren:
+        if index < 0 or index >= nchildren:
             msg = "ERROR: %s has index %i; parent %s has %i children" % \
                 (obj, index, parent, nchildren)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -408,8 +408,15 @@ class AXObject:
             return parent
 
         if child != obj:
-           msg = "ERROR: %s's child at %i is %s; not obj %s" % (parent, index, child, obj)
-           debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "ERROR: %s's child at %i is %s; not obj %s. " % (parent, index, child, obj)
+            for i in range(nchildren):
+                if obj == AXObject.get_child(parent, i):
+                    msg += "obj is child %i." % i
+                    break
+            else:
+                msg += "obj is not any of its parent's children."
+
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         return parent
 
