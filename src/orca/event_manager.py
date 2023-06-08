@@ -53,7 +53,6 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Async Mode is %s' % asyncMode, True)
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
-        self.registry = pyatspi.Registry
         self._active = False
         self._enqueueCount = 0
         self._dequeueCount = 0
@@ -113,7 +112,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Dectivating', True)
         self._active = False
         for eventType in self._scriptListenerCounts.keys():
-            self.registry.deregisterEventListener(self._enqueue, eventType)
+            pyatspi.Registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
         self.deactivateLegacyKeyHandling()
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
@@ -587,7 +586,7 @@ class EventManager:
         if eventType in self._scriptListenerCounts:
             self._scriptListenerCounts[eventType] += 1
         else:
-            self.registry.registerEventListener(self._enqueue, eventType)
+            pyatspi.Registry.registerEventListener(self._enqueue, eventType)
             self._scriptListenerCounts[eventType] = 1
 
     def _deregisterListener(self, eventType):
@@ -605,7 +604,7 @@ class EventManager:
 
         self._scriptListenerCounts[eventType] -= 1
         if self._scriptListenerCounts[eventType] == 0:
-            self.registry.deregisterEventListener(self._enqueue, eventType)
+            pyatspi.Registry.deregisterEventListener(self._enqueue, eventType)
             del self._scriptListenerCounts[eventType]
 
     def registerScriptListeners(self, script):
@@ -640,13 +639,13 @@ class EventManager:
         """Register the listeners on behalf of the caller."""
 
         for eventType, function in listeners.items():
-            self.registry.registerEventListener(function, eventType)
+            pyatspi.Registry.registerEventListener(function, eventType)
 
     def deregisterModuleListeners(self, listeners):
         """Deegister the listeners on behalf of the caller."""
 
         for eventType, function in listeners.items():
-            self.registry.deregisterEventListener(function, eventType)
+            pyatspi.Registry.deregisterEventListener(function, eventType)
 
     def registerKeystrokeListener(self, function, mask=None, kind=None):
         """Register the keystroke listener on behalf of the caller."""
@@ -660,7 +659,7 @@ class EventManager:
         if kind is None:
             kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
 
-        self.registry.registerKeystrokeListener(function, mask=mask, kind=kind)
+        pyatspi.Registry.registerKeystrokeListener(function, mask=mask, kind=kind)
 
     def deregisterKeystrokeListener(self, function, mask=None, kind=None):
         """Deregister the keystroke listener on behalf of the caller."""
@@ -674,8 +673,7 @@ class EventManager:
         if kind is None:
             kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
 
-        self.registry.deregisterKeystrokeListener(
-            function, mask=mask, kind=kind)
+        pyatspi.Registry.deregisterKeystrokeListener(function, mask=mask, kind=kind)
 
     def _processInputEvent(self, event):
         """Processes the given input event based on the keybinding from the

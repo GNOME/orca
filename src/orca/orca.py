@@ -588,7 +588,7 @@ def showFindGUI(script=None, inputEvent=None):
 #
 _initialized = False
 
-def init(registry):
+def init():
     """Initialize the orca module, which initializes the speech and braille
     modules.  Also builds up the application list, registers for AT-SPI events,
     and creates scripts for all known applications.
@@ -627,13 +627,13 @@ def init(registry):
 
     return True
 
-def start(registry, cacheValues):
+def start():
     """Starts Orca."""
 
     debug.println(debug.LEVEL_INFO, 'ORCA: Starting', True)
 
     if not _initialized:
-        init(registry)
+        init()
 
     # Do not hang on startup if we can help it.
     #
@@ -643,9 +643,6 @@ def start(registry, cacheValues):
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
-
-    if cacheValues:
-        pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
     # Event handlers for input devices being plugged in/unplugged.
     # Used to re-create the Xmodmap when a new keyboard is plugged in.
@@ -661,7 +658,7 @@ def start(registry, cacheValues):
     debug.println(debug.LEVEL_INFO, msg, True)
 
     debug.println(debug.LEVEL_INFO, 'ORCA: Starting registry', True)
-    registry.start(gil=False)
+    pyatspi.Registry.start(gil=False)
 
 def die(exitCode=1):
     pid = os.getpid()
@@ -783,7 +780,7 @@ def crashOnSignal(signum, frame):
     _restoreXmodmap(_orcaModifiers)
     os.kill(os.getpid(), signum)
 
-def main(cacheValues=True):
+def main():
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
     signal used to terminate Orca (if a signal was used).  Otherwise,
@@ -816,9 +813,9 @@ def main(cacheValues=True):
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
-    debug.println(debug.LEVEL_INFO, "ORCA: Initializing ATSPI registry.", True)
-    init(pyatspi.Registry)
-    debug.println(debug.LEVEL_INFO, "ORCA: ATSPI registry initialized.", True)
+    debug.println(debug.LEVEL_INFO, "ORCA: Initializing.", True)
+    init()
+    debug.println(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
     try:
         message = messages.START_ORCA
@@ -844,7 +841,7 @@ def main(cacheValues=True):
 
     try:
         debug.println(debug.LEVEL_INFO, "ORCA: Starting ATSPI registry.", True)
-        start(pyatspi.Registry, cacheValues) # waits until we stop the registry
+        start() # waits until we stop the registry
     except:
         debug.println(debug.LEVEL_SEVERE, "ORCA: Exception starting ATSPI registry.", True)
         die(EXIT_CODE_HANG)
