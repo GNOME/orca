@@ -1395,7 +1395,7 @@ class Script(default.Script):
             msg = "WEB: Event source %s is same page fragment. Generating line contents." % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
-        elif event.type.startswith("object:children-changed:remove") \
+        elif event and event.type.startswith("object:children-changed:remove") \
              and self.utilities.isFocusModeWidget(newFocus):
             msg = "WEB: New focus %s is recovery from removed child. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
