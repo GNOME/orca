@@ -651,6 +651,7 @@ class SpeechServer(speechserver.SpeechServer):
         if len(event_string) == 1:
             msg = "SPEECH DISPATCHER: Speaking '%s' as key'" % event_string
             debug.println(debug.LEVEL_INFO, msg, True)
+            self._apply_acss(acss)
             self._send_command(self._client.key, event_string)
         else:
             msg = "SPEECH DISPATCHER: Speaking '%s' as string'" % event_string
