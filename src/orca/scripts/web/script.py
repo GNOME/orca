@@ -988,7 +988,8 @@ class Script(default.Script):
             return
 
         priorObj = args.get("priorObj")
-        if self._lastCommandWasCaretNav or args.get("includeContext"):
+        if self._lastCommandWasCaretNav or args.get("includeContext") \
+           or self.utilities.getTable(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
