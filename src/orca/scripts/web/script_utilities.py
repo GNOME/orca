@@ -631,7 +631,7 @@ class Utilities(script_utilities.Utilities):
 
     def _getDisplayStyle(self, obj):
         attrs = self.objectAttributes(obj)
-        return attrs.get('display')
+        return attrs.get('display', '')
 
     def _getTag(self, obj):
         attrs = self.objectAttributes(obj)
