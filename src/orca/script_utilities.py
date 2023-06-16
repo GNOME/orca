@@ -1612,7 +1612,7 @@ class Utilities:
 
         return path1[0:index] == path2[0:index]
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False, ignoreDescriptions=False):
         if (obj1 == obj2):
             return True
         elif (not obj1) or (not obj2):
@@ -1622,6 +1622,9 @@ class Utilities:
             return False
 
         if not ignoreNames and AXObject.get_name(obj1) != AXObject.get_name(obj2):
+            return False
+
+        if not ignoreDescriptions and AXObject.get_description(obj1) != AXObject.get_description(obj2):
             return False
 
         if comparePaths and self._hasSamePath(obj1, obj2):
