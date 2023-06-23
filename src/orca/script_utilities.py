@@ -5617,19 +5617,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.isKeyGrabEvent(event):
-            msg = "INFO: Last key was consumed. Probably a bogus event from a key grab"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
         return True
-
-    def isKeyGrabEvent(self, event):
-        """ Returns True if this event appears to be a side-effect of an
-        X11 key grab. """
-        if not isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            return False
-        return orca_state.lastInputEvent.didConsume() and not orca_state.openingDialog
 
     def presentFocusChangeReason(self):
         if self.handleUndoLocusOfFocusChange():

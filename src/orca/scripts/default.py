@@ -754,8 +754,6 @@ class Script(script.Script):
 
     def addKeyGrabs(self):
         """ Sets up the key grabs currently needed by this script. """
-        if orca_state.device is None:
-            return
         msg = "INFO: adding key grabs"
         debug.println(debug.LEVEL_INFO, msg, True)
         bound = self.getEnabledKeyBindings()
@@ -902,13 +900,6 @@ class Script(script.Script):
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 
-        # Gtk 4 requrns "GTK", while older versions return "gtk"
-        # TODO: move this to a toolkit-specific script
-        if self.app is not None and self.app.toolkitName == "GTK" and self.app.toolkitVersion > "4":
-            orca.setKeyHandling(True)
-        else:
-            orca.setKeyHandling(False)
-
         self.addKeyGrabs()
 
         msg = 'DEFAULT: Script for %s activated' % self.app
@@ -979,8 +970,7 @@ class Script(script.Script):
         self.speakMessage(messages.LEARN_MODE_START_SPEECH)
         self.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
         orca_state.learnModeEnabled = True
-        if orca_state.device is not None:
-            Atspi.Device.grab_keyboard(orca_state.device)
+        Atspi.Device.grab_keyboard(orca_state.device)
         return True
 
     def exitLearnMode(self, inputEvent=None):
@@ -998,8 +988,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
-        if orca_state.device is not None:
-            Atspi.Device.ungrab_keyboard(orca_state.device)
+        Atspi.Device.ungrab_keyboard(orca_state.device)
         return True
 
     def showHelp(self, inputEvent=None):
@@ -2967,11 +2956,6 @@ class Script(script.Script):
 
         if event.source != orca_state.activeWindow:
             msg = "DEFAULT: Ignoring event. Not for active window %s." % orca_state.activeWindow
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        if self.utilities.isKeyGrabEvent(event):
-            msg = "DEFAULT: Ignoring event. Likely from key grab."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
