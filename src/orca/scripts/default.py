@@ -2919,11 +2919,6 @@ class Script(script.Script):
         self.windowActivateTime = time.time()
         orca_state.activeWindow = event.source
 
-        if self.utilities.isKeyGrabEvent(event):
-            msg = "DEFAULT: Ignoring event. Likely from key grab."
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
         if AXObject.get_child_count(event.source) == 1:
             child = AXObject.get_child(event.source, 0)
             if AXObject.get_role(child) == Atspi.Role.MENU:
