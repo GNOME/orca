@@ -608,7 +608,7 @@ class EventManager:
         """Deegister the listeners on behalf of the caller."""
 
         for eventType, function in listeners.items():
-            self.registry.deregisterEventListener(function, eventType)
+            pyatspi.Registry.deregisterEventListener(function, eventType)
 
     def _processInputEvent(self, event):
         """Processes the given input event based on the keybinding from the
