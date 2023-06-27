@@ -1635,9 +1635,9 @@ class Utilities:
             # addresses both managed descendants and implementations which
             # recreate accessibles for the same widget.
             extents1 = \
-                obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+                obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             extents2 = \
-                obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+                obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
 
             # Objects which claim to be different and which are in different
             # locations are almost certainly not recreated objects.
