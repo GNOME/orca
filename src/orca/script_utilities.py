@@ -600,6 +600,8 @@ class Utilities:
         else:
             results[1] = AXObject.find_ancestor(obj, isDialog)
 
+        msg = "INFO: %s is in frame %s and dialog %s" % (obj, results[0], results[1])
+        debug.println(debug.LEVEL_INFO, msg, True)
         return results
 
     def presentEventFromNonShowingObject(self, event):
