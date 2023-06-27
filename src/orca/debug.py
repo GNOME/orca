@@ -329,11 +329,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         return ""
 
     if includeApp:
-        app = AXObject.get_application(acc)
-        if app is not None:
-            string = indent + "app='%s' " % AXObject.get_name(app)
-        else:
-            string = indent + "app=None "
+        string = indent + "app='%s' " % AXObject.application_as_string(acc)
     else:
         string = indent
 

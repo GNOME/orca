@@ -441,18 +441,13 @@ class EventManager:
 
         asyncMode = self._asyncMode
         if isObjectEvent:
-            app = AXObject.get_application(e.source)
-            try:
-                toolkitName = app.toolkitName
-            except:
-                toolkitName = None
             if isinstance(e, input_event.MouseButtonEvent):
                 asyncMode = True
-            elif toolkitName in self._synchronousToolkits:
+            elif AXObject.get_application_toolkit_name(e.source) in self._synchronousToolkits:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
                 asyncMode = AXObject.get_role(e.source) == Atspi.Role.TABLE
-            script = _scriptManager.getScript(app, e.source)
+            script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
             script.eventCache[e.type] = (e, time.time())
 
         self._addToQueue(e, asyncMode)

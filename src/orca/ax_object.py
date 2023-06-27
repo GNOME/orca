@@ -808,7 +808,6 @@ class AXObject:
     def relations_as_string(obj):
         """Returns the relations associated with obj as a string"""
 
-
         results = []
         as_string = lambda x: x.value_name[15:].replace("_", "-").lower()
         for r in AXObject.get_relations(obj):
@@ -834,6 +833,52 @@ class AXObject:
             return None
 
         return app
+
+    @staticmethod
+    def get_application_toolkit_name(obj):
+        """Returns the toolkit name reported for obj's application."""
+
+        app = AXObject.get_application(obj)
+        if app is None:
+            return ""
+
+        try:
+            name = Atspi.Accessible.get_toolkit_name(app)
+        except Exception as e:
+            msg = "ERROR: Exception in get_application_toolkit_name: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return name
+
+    @staticmethod
+    def get_application_toolkit_version(obj):
+        """Returns the toolkit version reported for obj's application."""
+
+        app = AXObject.get_application(obj)
+        if app is None:
+            return ""
+
+        try:
+            version = Atspi.Accessible.get_toolkit_version(app)
+        except Exception as e:
+            msg = "ERROR: Exception in get_application_toolkit_version: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return version
+
+    @staticmethod
+    def application_as_string(obj):
+        """Returns the application details of obj as a string."""
+
+        app = AXObject.get_application(obj)
+        if app is None:
+            return ""
+
+        return "%s (%s %s)" % (AXObject.get_name(app),
+                               AXObject.get_application_toolkit_name(obj),
+                               AXObject.get_application_toolkit_version(obj))
 
     @staticmethod
     def clear_cache(obj):

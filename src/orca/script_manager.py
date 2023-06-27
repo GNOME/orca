@@ -183,14 +183,9 @@ class ScriptManager:
         if script:
             return script
 
-        try:
-            toolkitName = getattr(app, "toolkitName", None)
-        except (LookupError, RuntimeError):
-            msg = 'ERROR: Exception getting toolkitName for: %s' % app
-            debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if app and toolkitName:
-                script = self._newNamedScript(app, toolkitName)
+        toolkitName = AXObject.get_application_toolkit_name(app)
+        if app and toolkitName:
+            script = self._newNamedScript(app, toolkitName)
 
         if not script:
             script = self.getDefaultScript(app)
