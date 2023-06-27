@@ -61,6 +61,22 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        frame = self.utilities.topLevelObject(event.source)
+        if not frame:
+            msg = "QT: Ignoring event because we couldn't find an ancestor window."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        isActive = AXObject.has_state(frame, Atspi.StateType.ACTIVE)
+        if not isActive:
+            msg = "QT: Event came from inactive top-level object %s" % frame
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            AXObject.clear_cache(frame)
+            isActive = AXObject.has_state(frame, Atspi.StateType.ACTIVE)
+            msg = "QT: Cleared cache of %s. Frame is now active: %s" % (frame, isActive)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         state = AXObject.get_state_set(event.source)
         if state.contains(Atspi.StateType.FOCUSED) and state.contains(Atspi.StateType.FOCUSABLE):
             super().onFocusedChanged(event)
