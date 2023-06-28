@@ -785,6 +785,13 @@ def main():
     msg = "ORCA: Launching version %s" % orca_platform.version
     if orca_platform.revision:
         msg += " (rev %s)" % orca_platform.revision
+
+    sessionType = os.environ.get('XDG_SESSION_TYPE') or ""
+    sessionDesktop = os.environ.get('XDG_SESSION_DESKTOP') or ""
+    session = "%s %s".strip() % (sessionType, sessionDesktop)
+    if session:
+        msg += " session: %s" % session
+
     debug.println(debug.LEVEL_INFO, msg, True)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
