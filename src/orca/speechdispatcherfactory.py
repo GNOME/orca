@@ -610,6 +610,9 @@ class SpeechServer(speechserver.SpeechServer):
         return families
 
     def speak(self, text=None, acss=None, interrupt=True):
+        if not text:
+            return
+
         # In order to re-enable this, a potentially non-trivial amount of work
         # will be needed to ensure multiple utterances sent to speech.speak
         # do not result in the intial utterances getting cut off before they
@@ -626,7 +629,14 @@ class SpeechServer(speechserver.SpeechServer):
         if self._lastKeyEchoTime:
             interrupt = interrupt and (time.time() - self._lastKeyEchoTime) > 0.5
 
-        if text:
+        if len(text) == 1:
+            msg = "SPEECH DISPATCHER: Speaking '%s' as char" % text.replace("\n", "\\n")
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._apply_acss(acss)
+            self._send_command(self._client.char, text)
+        else:
+            msg = "SPEECH DISPATCHER: Speaking '%s' as string" % text
+            debug.println(debug.LEVEL_INFO, msg, True)
             self._speak(text, acss)
 
     def sayAll(self, utteranceIterator, progressCallback):
@@ -636,6 +646,8 @@ class SpeechServer(speechserver.SpeechServer):
         self._apply_acss(acss)
         name = chnames.getCharacterName(character)
         if not name or name == character:
+            msg = "SPEECH DISPATCHER: Speaking '%s' as char" % character.replace("\n", "\\n")
+            debug.println(debug.LEVEL_INFO, msg, True)
             self._send_command(self._client.char, character)
             return
 
