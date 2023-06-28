@@ -584,21 +584,28 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return results
 
-        isFrame = lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
-        if isFrame(obj):
-            results[0] = obj
-        else:
-            results[0] = AXObject.find_ancestor(obj, isFrame)
+        topLevel = self.topLevelObject(obj)
+        if topLevel is None:
+            msg = "ERROR: could not find top-level object for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return results
 
         dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
         if self._treatAlertsAsDialogs():
             dialog_roles.append(Atspi.Role.ALERT)
 
-        isDialog = lambda x: AXObject.get_role(x) in dialog_roles
-        if isDialog(obj):
-            results[1] = obj
+        role = AXObject.get_role(topLevel)
+        if role in dialog_roles:
+            results[1] = topLevel
         else:
-            results[1] = AXObject.find_ancestor(obj, isDialog)
+            if role in [Atspi.Role.FRAME, Atspi.Role.WINDOW]:
+                results[0] = topLevel
+
+            isDialog = lambda x: AXObject.get_role(x) in dialog_roles
+            if isDialog(obj):
+                results[1] = obj
+            else:
+                results[1] = AXObject.find_ancestor(obj, isDialog)
 
         msg = "INFO: %s is in frame %s and dialog %s" % (obj, results[0], results[1])
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -2199,20 +2206,21 @@ class Utilities:
         return None
 
     def _topLevelRoles(self):
-        return [Atspi.Role.ALERT,
-                Atspi.Role.DIALOG,
-                Atspi.Role.FRAME,
-                Atspi.Role.WINDOW]
+        roles = [Atspi.Role.DIALOG,
+                 Atspi.Role.FILE_CHOOSER,
+                 Atspi.Role.FRAME,
+                 Atspi.Role.WINDOW]
+        if self._treatAlertsAsDialogs():
+            roles.append(Atspi.Role.ALERT)
+        return roles
 
     def _locusOfFocusIsTopLevelObject(self):
         if not orca_state.locusOfFocus:
             return False
 
-        role = AXObject.get_role(orca_state.locusOfFocus)
-        rv = role in self._topLevelRoles()
+        rv = orca_state.locusOfFocus == self.topLevelObject(orca_state.locusOfFocus)
         msg = "INFO: %s is top-level object: %s" % (orca_state.locusOfFocus, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
-
         return rv
 
     def topLevelObject(self, obj):
@@ -2223,10 +2231,17 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        isTopLevel = lambda x: AXObject.get_role(x) in self._topLevelRoles()
+        isTopLevel = lambda x: AXObject.get_role(x) in self._topLevelRoles() \
+            and AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.APPLICATION
+
         if isTopLevel(obj):
-            return obj
-        return AXObject.find_ancestor(obj, isTopLevel)
+            rv = obj
+        else:
+            rv = AXObject.find_ancestor(obj, isTopLevel)
+
+        msg = "INFO: %s is top-level object for: %s" % (rv, obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):
         obj = obj or orca_state.locusOfFocus
