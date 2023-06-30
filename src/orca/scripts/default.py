@@ -92,7 +92,6 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext  = None
-        self.windowActivateTime = None
         self.targetCursorCell = None
 
         self.justEnteredFlatReviewMode = False
@@ -872,7 +871,6 @@ class Script(script.Script):
         topLevel = self.utilities.topLevelObject(newLocusOfFocus)
         if orca_state.activeWindow != topLevel:
             orca_state.activeWindow = topLevel
-            self.windowActivateTime = time.time()
 
         self.updateBraille(newLocusOfFocus)
 
@@ -2237,7 +2235,6 @@ class Script(script.Script):
             if not sourceIsActiveWindow and event.detail1:
                 msg = "DEFAULT: Updating active window to event source."
                 debug.println(debug.LEVEL_INFO, msg, True)
-                self.windowActivateTime = time.time()
                 orca.setLocusOfFocus(event, event.source)
                 orca_state.activeWindow = event.source
 
@@ -2915,7 +2912,6 @@ class Script(script.Script):
 
         self.pointOfReference = {}
 
-        self.windowActivateTime = time.time()
         orca_state.activeWindow = event.source
 
         if AXObject.get_child_count(event.source) == 1:
