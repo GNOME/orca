@@ -876,14 +876,13 @@ class Script(script.Script):
 
         self.updateBraille(newLocusOfFocus)
 
-        shouldNotInterrupt = \
-           self.windowActivateTime and time.time() - self.windowActivateTime < 1
-
         utterances = self.speechGenerator.generateSpeech(
             newLocusOfFocus,
             priorObj=oldLocusOfFocus)
 
-        speech.speak(utterances, interrupt=not shouldNotInterrupt)
+        if self.utilities.shouldInterruptForLocusOfFocusChange(oldLocusOfFocus, newLocusOfFocus):
+            self.presentationInterrupt()
+        speech.speak(utterances, interrupt=False)
         orca.emitRegionChanged(newLocusOfFocus)
         self._saveFocusedObjectInfo(newLocusOfFocus)
 

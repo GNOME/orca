@@ -446,6 +446,14 @@ class AXObject:
         return None
 
     @staticmethod
+    def is_ancestor(obj, ancestor):
+        """Returns true if ancestor is an ancestor of obj"""
+        if ancestor is None:
+            return False
+
+        return AXObject.find_ancestor(obj, lambda x: x == ancestor) is not None
+
+    @staticmethod
     def get_child(obj, index):
         """Returns the nth child of obj. See also get_child_checked."""
 
