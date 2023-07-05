@@ -2223,7 +2223,29 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
-    def topLevelObject(self, obj):
+    def _findWindowWithDescendant(self, child):
+        """Searches each frame/window/dialog of an application to find the one
+        which contains child. This is extremely non-performant and should only
+        be used to work around broken accessibility trees where topLevelObject
+        fails."""
+
+        app = AXObject.get_application(child)
+        if app is None:
+            return None
+
+        for i in range(AXObject.get_child_count(app)):
+            window = AXObject.get_child(app, i)
+            if AXObject.find_descendant(window, lambda x: x == child) is not None:
+                msg = "INFO: %s contains %s" % (window, child)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return window
+
+            msg = "INFO: %s does not contain %s" % (window, child)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return None
+
+    def topLevelObject(self, obj, useFallbackSearch=False):
         """Returns the top-level object (frame, dialog ...) containing obj,
         or None if obj is not inside a top-level object.
 
@@ -2241,6 +2263,12 @@ class Utilities:
 
         msg = "INFO: %s is top-level object for: %s" % (rv, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
+
+        if rv is None and useFallbackSearch:
+            msg = "INFO: Attempting to find top-level object via fallback search"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = self._findWindowWithDescendant(obj)
+
         return rv
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):

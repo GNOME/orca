@@ -61,7 +61,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        frame = self.utilities.topLevelObject(event.source)
+        frame = self.utilities.topLevelObject(event.source, useFallbackSearch=True)
         if not frame:
             msg = "QT: Ignoring event because we couldn't find an ancestor window."
             debug.println(debug.LEVEL_INFO, msg, True)

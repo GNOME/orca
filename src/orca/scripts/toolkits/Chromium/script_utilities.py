@@ -177,7 +177,7 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu
 
-    def topLevelObject(self, obj):
+    def topLevelObject(self, obj, useFallbackSearch=False):
         if not obj:
             return None
 
