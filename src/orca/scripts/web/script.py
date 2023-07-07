@@ -130,7 +130,7 @@ class Script(default.Script):
         self._preMouseOverContext = None, -1
         self._inMouseOverObject = False
         self.utilities.clearCachedObjects()
-        self.removeKeyGrabs()
+        self.removeKeyGrabs("script deactivation")
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
@@ -1278,7 +1278,7 @@ class Script(default.Script):
         self._inFocusMode = False
         self._focusModeIsSticky = False
         self._browseModeIsSticky = True
-        self.refreshKeyGrabs()
+        self.refreshKeyGrabs("enable sticky browse mode")
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
@@ -1287,7 +1287,7 @@ class Script(default.Script):
         self._inFocusMode = True
         self._focusModeIsSticky = True
         self._browseModeIsSticky = False
-        self.refreshKeyGrabs()
+        self.refreshKeyGrabs("enable sticky focus mode")
 
     def toggleLayoutMode(self, inputEvent):
         layoutMode = not _settingsManager.getSetting('layoutMode')
@@ -1319,7 +1319,7 @@ class Script(default.Script):
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
-        self.refreshKeyGrabs()
+        self.refreshKeyGrabs("toggling focus/browse mode")
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
@@ -1343,7 +1343,7 @@ class Script(default.Script):
             self._madeFindAnnouncement = False
             self._inFocusMode = False
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.refreshKeyGrabs()
+            self.refreshKeyGrabs("locus of focus no longer in document")
             return False
 
         if self.flatReviewContext:
@@ -1450,7 +1450,7 @@ class Script(default.Script):
             self.togglePresentationMode(None, document)
 
         if not self.utilities.inDocumentContent(oldFocus):
-            self.refreshKeyGrabs()
+            self.refreshKeyGrabs("locus of focus now in document")
 
         return True
 
@@ -2132,7 +2132,7 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, obj, notify)
                 if not notify and prevDocument is None:
-                    self.refreshKeyGrabs()
+                    self.refreshKeyGrabs("updating locus of focus without notification")
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
@@ -2617,7 +2617,7 @@ class Script(default.Script):
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
-        self.removeKeyGrabs()
+        self.removeKeyGrabs("window deactivated")
         return False
 
     def getTransferableAttributes(self):

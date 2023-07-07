@@ -745,36 +745,50 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
-        self.removeKeyGrabs()
+        self.removeKeyGrabs("script deactivation")
 
     def getEnabledKeyBindings(self):
         """ Returns the key bindings that are currently active. """
         return self.getKeyBindings().getBoundBindings()
 
-    def addKeyGrabs(self):
+    def addKeyGrabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
+
         msg = "INFO: adding key grabs"
+        if reason:
+            msg += ": %s" % reason
         debug.println(debug.LEVEL_INFO, msg, True)
+
         bound = self.getEnabledKeyBindings()
         for b in bound:
             for id in orca.addKeyGrab(b):
                 self.grab_ids.append(id)
 
-    def removeKeyGrabs(self):
+    def removeKeyGrabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
+
         msg = "INFO: removing key grabs"
+        if reason:
+            msg += ": %s" % reason
         debug.println(debug.LEVEL_INFO, msg, True)
+
         for id in self.grab_ids:
             orca.removeKeyGrab(id)
         self.grab_ids = []
 
-    def refreshKeyGrabs(self):
+    def refreshKeyGrabs(self, reason=""):
         """ Refreshes the enabled key grabs for this script. """
+
+        msg = "INFO: refreshing key grabs"
+        if reason:
+            msg += ": %s" % reason
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         # TODO: Should probably avoid removing key grabs and re-adding them.
         # Otherwise, a key could conceivably leak through while the script is
         # in the process of updating the bindings.
-        self.removeKeyGrabs()
-        self.addKeyGrabs()
+        self.removeKeyGrabs("refreshing")
+        self.addKeyGrabs("refreshing")
 
     def registerEventListeners(self):
         super().registerEventListeners()
@@ -897,7 +911,7 @@ class Script(script.Script):
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 
-        self.addKeyGrabs()
+        self.addKeyGrabs("script activation")
 
         msg = 'DEFAULT: Script for %s activated' % self.app
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -950,7 +964,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.BYPASS_MODE_ENABLED)
         orca_state.bypassNextCommand = True
-        self.removeKeyGrabs()
+        self.removeKeyGrabs("bypass next command")
         return True
 
     def enterLearnMode(self, inputEvent=None):

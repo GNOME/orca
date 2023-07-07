@@ -992,7 +992,7 @@ class EventManager:
 
         if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys \
             and orca_state.activeScript is not None:
-            orca_state.activeScript.refreshKeyGrabs()
+            orca_state.activeScript.refreshKeyGrabs("num lock toggled")
 
         keyboardEvent = input_event.KeyboardEvent(event)
         if not keyboardEvent.is_duplicate:

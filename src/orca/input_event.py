@@ -918,7 +918,7 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand:
             if not self.isModifierKey():
                 orca_state.bypassNextCommand = False
-            self._script.addKeyGrabs()
+            self._script.addKeyGrabs("bypassed next command")
             return False, 'Bypass next command'
 
         if not self._should_consume:
