@@ -423,24 +423,45 @@ class KeyBindings:
 
         return [kb for kb in self.keyBindings if kb.handler == handler]
 
+    def _checkMatchingBindings(self, keyboardEvent, result):
+        if debug.debugLevel > debug.LEVEL_INFO:
+            return
+
+        # If we don't have multiple matches, we're good.
+        if len(result) <= 1:
+            return
+
+        # If we have multiple matches, but they have unique click counts, we're good.
+        if len(set(map(lambda x: x.click_count, result))) == len(result):
+            return
+
+        toString = lambda x: "%s (%ix)" % (x.handler.description, x.click_count)
+        msg = "WARNING: '%s' matches multiple handlers: %s" % \
+            (keyboardEvent.event_string, ", ".join(map(toString, result)))
+        debug.println(debug.LEVEL_INFO, msg, True)
+
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.
         """
 
+        matches = []
         candidates = []
         clickCount = keyboardEvent.getClickCount()
         for keyBinding in self.keyBindings:
-            if keyBinding.matches(keyboardEvent.hw_code,
-                                  keyboardEvent.modifiers):
+            if keyBinding.matches(keyboardEvent.hw_code, keyboardEvent.modifiers):
                 if keyBinding.modifier_mask == keyboardEvent.modifiers and \
                    keyBinding.click_count == clickCount:
-                    return keyBinding.handler
+                    matches.append(keyBinding)
                 # If there's no keysymstring, it's unbound and cannot be
                 # a match.
                 #
                 if keyBinding.keysymstring:
                     candidates.append(keyBinding)
+
+        self._checkMatchingBindings(keyboardEvent, matches)
+        if matches:
+            return matches[0].handler
 
         if keyboardEvent.isKeyPadKeyWithNumlockOn():
             return None
@@ -451,6 +472,7 @@ class KeyBindings:
         #
         comparison = lambda x, y: y.click_count - x.click_count
         candidates.sort(key=functools.cmp_to_key(comparison))
+        self._checkMatchingBindings(keyboardEvent, candidates)
         for candidate in candidates:
             if candidate.click_count <= clickCount:
                 return candidate.handler
