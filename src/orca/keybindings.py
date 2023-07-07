@@ -323,10 +323,15 @@ class KeyBindings:
                        keyBinding.handler.description)
         result += "]"
         return result
-    
+
     def add(self, keyBinding):
         """Adds the given KeyBinding instance to this set of keybindings.
         """
+
+        if keyBinding.keysymstring and self.hasKeyBinding(keyBinding, "keysNoMask"):
+           msg = "WARNING: '%s' (%s) already in keybindings" % \
+            (keyBinding.asString(), keyBinding.description())
+           debug.println(debug.LEVEL_INFO, msg, True)
 
         self.keyBindings.append(keyBinding)
 
@@ -414,6 +419,15 @@ class KeyBindings:
         if uniqueOnly:
             handlers = [kb.handler.description for kb in bound]
             bound = [bound[i] for i in map(handlers.index, set(handlers))]
+
+        bindings = {}
+        for kb in bound:
+            string = kb.asString()
+            match = bindings.get(string)
+            if match is not None:
+                msg = "WARNING: '%s' (%s) also matches: %s" % (string, kb.description(), match)
+                debug.println(debug.LEVEL_INFO, msg, True)
+            bindings[string] = kb.description()
 
         return bound
 
