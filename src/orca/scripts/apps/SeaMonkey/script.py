@@ -130,8 +130,8 @@ class Script(Gecko.Script):
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
-    def useStructuralNavigationModel(self):
+    def useStructuralNavigationModel(self, debugOutput=True):
         if self.utilities.isEditableMessage(orca_state.locusOfFocus):
             return False
 
-        return super().useStructuralNavigationModel()
+        return super().useStructuralNavigationModel(debugOutput)

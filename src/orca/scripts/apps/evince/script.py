@@ -102,7 +102,7 @@ class Script(gtk.Script):
 
         return enabledTypes
 
-    def useStructuralNavigationModel(self):
+    def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should do our own structural navigation."""
 
         if not self.structuralNavigation.enabled:

@@ -219,7 +219,7 @@ class Script:
         """Returns the live region support for this script."""
         return None
 
-    def useStructuralNavigationModel(self):
+    def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most
         scripts will have no need to override this.  Gecko does however
         because within an HTML document there are times when we do want

@@ -161,13 +161,13 @@ class Script(Gecko.Script):
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
-    def useStructuralNavigationModel(self):
+    def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if structural navigation should be enabled here."""
 
         if self.utilities.isEditableMessage(orca_state.locusOfFocus):
             return False
 
-        return super().useStructuralNavigationModel()
+        return super().useStructuralNavigationModel(debugOutput)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
