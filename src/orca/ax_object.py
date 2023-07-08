@@ -197,8 +197,6 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_selection_iface(obj)
-        except NotImplementedError:
-            return False
         except Exception as e:
             msg = "ERROR: Exception calling get_selection_iface on %s: %s" % (obj, e)
             debug.println(debug.LEVEL_INFO, msg, True)

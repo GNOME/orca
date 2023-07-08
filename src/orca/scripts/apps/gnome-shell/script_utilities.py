@@ -32,6 +32,8 @@ from gi.repository import Atspi
 import orca.debug as debug
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_selection import AXSelection
+
 
 class Utilities(script_utilities.Utilities):
 
@@ -43,20 +45,15 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly = {}
 
     def selectedChildren(self, obj):
-        try:
-            selection = obj.querySelection()
-        except:
-            # This is a workaround for bgo#738705.
-            if AXObject.get_role(obj) != Atspi.Role.PANEL:
-                return []
+        if AXObject.supports_selection(obj):
+            return AXSelection.get_selected_children(obj)
 
-            isSelected = lambda x: x and AXObject.has_state(x, Atspi.StateType.SELECTED)
-            children = self.findAllDescendants(obj, isSelected)
-        else:
-            children = []
-            for x in range(selection.nSelectedChildren):
-                children.append(selection.getSelectedChild(x))
+        # This is a workaround for bgo#738705.
+        if AXObject.get_role(obj) != Atspi.Role.PANEL:
+            return []
 
+        isSelected = lambda x: x and AXObject.has_state(x, Atspi.StateType.SELECTED)
+        children = self.findAllDescendants(obj, isSelected)
         return children
 
     def insertedText(self, event):

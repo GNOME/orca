@@ -34,6 +34,7 @@ import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 from orca.ax_object import AXObject
+from orca.ax_selection import AXSelection
 
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
@@ -123,11 +124,7 @@ class Script(default.Script):
                                        Atspi.Role.PAGE_TAB_LIST,
                                        Atspi.Role.TREE]) \
             and AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
-            newFocus = event.source
-            if AXObject.get_child_count(event.source):
-                selection = event.source.querySelection()
-                if selection.nSelectedChildren > 0:
-                    newFocus = selection.getSelectedChild(0)
+            newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
             orca.setLocusOfFocus(event, newFocus)
         else:
             default.Script.onSelectionChanged(self, event)

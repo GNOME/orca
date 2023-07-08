@@ -57,6 +57,7 @@ from . import settings
 from . import settings_manager
 from . import text_attribute_names
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
@@ -3815,32 +3816,12 @@ class Utilities:
         return start, end
 
     def selectedChildren(self, obj):
-        try:
-            selection = obj.querySelection()
-            count = selection.nSelectedChildren
-        except NotImplementedError:
-            msg = "INFO: %s does not implement the selection interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
-        except:
-            msg = "ERROR: Exception querying selection interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return []
+        children = AXSelection.get_selected_children(obj)
+        if children:
+            return children
 
-        msg = "INFO: %s reports %i selected child(ren)" % (obj, count)
+        msg = "INFO: Selected children not retrieved via selection interface."
         debug.println(debug.LEVEL_INFO, msg, True)
-
-        children = []
-        for x in range(count):
-            child = selection.getSelectedChild(x)
-            msg = "INFO: Child %i: %s" % (x, child)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            if not self.isZombie(child):
-                children.append(child)
-
-        if count and not children:
-            msg = "INFO: Selected children not retrieved via selection interface."
-            debug.println(debug.LEVEL_INFO, msg, True)
 
         role = AXObject.get_role(obj)
         if role == Atspi.Role.MENU and not children:
@@ -3904,40 +3885,7 @@ class Utilities:
             if table.nSelectedRows:
                 return table.nSelectedRows
 
-        try:
-            selection = obj.querySelection()
-            count = selection.nSelectedChildren
-        except NotImplementedError:
-            msg = "INFO: %s does not implement the selection interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return 0
-        except:
-            msg = "ERROR: Exception querying selection interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return 0
-
-        msg = "INFO: %s reports %i selected children" % (obj, count)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return count
-
-    def firstAndLastSelectedChildren(self, obj):
-        try:
-            selection = obj.querySelection()
-            count = selection.nSelectedChildren
-        except NotImplementedError:
-            msg = "INFO: %s does not implement the selection interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None, None
-        except:
-            msg = "ERROR: Exception querying selection interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None, None
-
-        msg = "INFO: %s reports %i selected children" % (obj, count)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        if count < 1:
-            return None, None
-        return selection.getSelectedChild(0), selection.getSelectedChild(count-1)
+        return AXSelection.get_selected_child_count(obj)
 
     def focusedChild(self, obj):
         isFocused = lambda x: AXObject.has_state(x, Atspi.StateType.FOCUSED)
@@ -5684,16 +5632,12 @@ class Utilities:
         if role in [Atspi.Role.COMBO_BOX, Atspi.Role.MENU]:
             return False
 
-        selection = obj.querySelection()
-        if not selection.nSelectedChildren:
-            return False
-
         childCount = AXObject.get_child_count(obj)
-        if self.selectedChildCount(obj) == childCount:
+        if childCount == AXSelection.get_selected_child_count(obj):
             # The selection interface gives us access to what is selected, which might
             # not actually be a direct child.
-            child = selection.getSelectedChild(0)
-            if child not in obj:
+            child = AXSelection.get_selected_child(obj, 0)
+            if AXObject.get_parent(child) != obj:
                 return False
 
             msg = "INFO: All %i children believed to be selected" % childCount

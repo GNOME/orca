@@ -38,6 +38,7 @@ import orca.messages as messages
 import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_selection import AXSelection
 
 
 #############################################################################
@@ -617,6 +618,9 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def selectedChildren(self, obj):
+        # TODO - JD: Are these overrides still needed? They appear to be
+        # quite old.
+
         if not obj:
             return []
 
@@ -638,17 +642,7 @@ class Utilities(script_utilities.Utilities):
         if self.isSpreadSheetTable(obj):
             return []
 
-        try:
-            selection = obj.querySelection()
-        except:
-            return []
-
-        children = []
-        for i in range(AXObject.get_child_count(obj)):
-            if selection.isChildSelected(i):
-                children.append(AXObject.get_child(obj, i))
-
-        return children
+        return AXSelection.get_selected_children(obj)
 
     def getFirstCaretPosition(self, obj):
         try:
@@ -717,7 +711,8 @@ class Utilities(script_utilities.Utilities):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             return (-1, -1), (-1, -1)
 
-        first, last = self.firstAndLastSelectedChildren(obj)
+        first = AXSelection.get_selected_child(obj, 0)
+        last = AXSelection.get_selected_child(obj, -1)
         firstCoords = self.coordinatesForCell(first)
         lastCoords = self.coordinatesForCell(last)
         return firstCoords, lastCoords

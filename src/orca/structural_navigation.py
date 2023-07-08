@@ -45,6 +45,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 
 _settingsManager = settings_manager.getManager()
 #############################################################################
@@ -1320,12 +1321,11 @@ class StructuralNavigation:
         # object presentation is refactored.
         if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
             obj = AXObject.get_child(obj, 0)
-        try:
-            selection = obj.querySelection()
-        except NotImplementedError:
+
+        if not AXObject.supports_selection(obj):
             return None
 
-        return selection.getSelectedChild(0)
+        return AXSelection.get_selected_child(obj, 0)
 
     def _getText(self, obj):
         # Another case where we'll do this for now, and clean it up when
