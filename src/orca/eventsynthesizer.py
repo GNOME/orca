@@ -96,7 +96,7 @@ def _extentsAtCaret(obj):
     try:
         text = obj.queryText()
         extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.SCREEN)
-    except:
+    except Exception:
         msg = "ERROR: Exception getting character extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return 0, 0, 0, 0
@@ -108,7 +108,7 @@ def _objectExtents(obj):
 
     try:
         extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-    except:
+    except Exception:
         msg = "ERROR: Exception getting extents for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return 0, 0, 0, 0
@@ -235,7 +235,7 @@ def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
         msg = "ERROR: Text interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
-    except:
+    except Exception:
         msg = "ERROR: Exception scrolling %s (%s,%s) to %s." % \
             (obj, startOffset, endOffset, location)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -255,7 +255,7 @@ def _scrollObjectToLocation(obj, location):
         msg = "ERROR: Component interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
-    except:
+    except Exception:
         msg = "ERROR: Exception scrolling %s to %s." % (obj, location)
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
@@ -269,7 +269,7 @@ def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
 
     try:
         component = obj.queryComponent()
-    except:
+    except Exception:
         msg = "ERROR: Exception querying component of %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return
@@ -300,7 +300,7 @@ def _scrollSubstringToPoint(obj, x, y, startOffset, endOffset):
         msg = "ERROR: Text interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
-    except:
+    except Exception:
         msg = "ERROR: Exception scrolling %s (%i,%i) to %i,%i." % \
             (obj, startOffset, endOffset, x, y)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -320,7 +320,7 @@ def _scrollObjectToPoint(obj, x, y):
         msg = "ERROR: Component interface not implemented for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
-    except:
+    except Exception:
         msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
@@ -334,7 +334,7 @@ def _scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
 
     try:
         component = obj.queryComponent()
-    except:
+    except Exception:
         msg = "ERROR: Exception querying component of %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return
@@ -359,7 +359,10 @@ def _containingDocument(obj):
              Atspi.Role.DOCUMENT_SPREADSHEET,
              Atspi.Role.DOCUMENT_TEXT,
              Atspi.Role.DOCUMENT_WEB]
-    isDocument = lambda x: x and AXObject.get_role(x) in roles
+
+    def isDocument(x):
+        return AXObject.get_role(x) in roles
+
     document = AXObject.find_ancestor(obj, isDocument)
     while document:
         ancestor = AXObject.find_ancestor(document, isDocument)
@@ -376,7 +379,7 @@ def _isDead(obj):
     try:
         # We use the Atspi function rather than the AXObject function because the
         # latter intentionally handles exceptions.
-        name = Atspi.Accessible.get_name(obj)
+        Atspi.Accessible.get_name(obj)
     except Exception as e:
         msg = "ERROR: %s is dead: %s" % (obj, e)
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -391,7 +394,7 @@ def _getAccessibleAtPoint(root, x, y):
         msg = "ERROR: Component interface not implemented for %s" % root
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
-    except:
+    except Exception:
         msg = "ERROR: Exception getting accessible at (%i, %i) for %s" % (x, y, root)
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
@@ -483,7 +486,7 @@ def tryAllClickableActions(obj):
 def grabFocusOn(obj):
     try:
         component = obj.queryComponent()
-    except:
+    except Exception:
         msg = "ERROR: Exception querying component of %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False

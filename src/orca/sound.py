@@ -31,7 +31,7 @@ from gi.repository import GLib
 try:
     gi.require_version('Gst', '1.0')
     from gi.repository import Gst
-except:
+except Exception:
     _gstreamerAvailable = False
 else:
     _gstreamerAvailable, args = Gst.init_check(None)

@@ -154,7 +154,7 @@ class SpellCheck:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return False
 
         # This should work, but some toolkits are broken.

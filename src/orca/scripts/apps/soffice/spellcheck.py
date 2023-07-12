@@ -114,7 +114,7 @@ class SpellCheck(spellcheck.SpellCheck):
     def getMisspelledWord(self):
         try:
             text = self._errorWidget.queryText()
-        except:
+        except Exception:
             return ""
 
         offset, string = 0, ""
@@ -133,7 +133,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
         try:
             text = self._errorWidget.queryText()
-        except:
+        except Exception:
             return False
 
         string = text.getText(0, -1)

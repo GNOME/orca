@@ -353,8 +353,9 @@ class SoundGenerator(generator.Generator):
         if not _settingsManager.getSetting('playSoundForPositionInSet'):
             return []
 
-        position, setSize = self._script.utilities.getPositionAndSetSize(obj)
-        percent = int((position / setSize) * 100)
+        # TODO: Implement the result.
+        # position, setSize = self._script.utilities.getPositionAndSetSize(obj)
+        # percent = int((position / setSize) * 100)
 
         return []
 

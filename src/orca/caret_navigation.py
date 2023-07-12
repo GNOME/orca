@@ -49,7 +49,7 @@ class CaretNavigation:
     def handles_navigation(self, handler):
         """Returns True if handler is a navigation command."""
 
-        if not handler in self._handlers.values():
+        if handler not in self._handlers.values():
             return False
 
         if handler.function == self._toggle_enabled:

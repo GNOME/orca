@@ -108,7 +108,7 @@ class BrailleGenerator(generator.Generator):
         #
         try:
             focusedRegion = result[0]
-        except:
+        except Exception:
             focusedRegion = None
 
         role = AXObject.get_role(obj)
@@ -243,7 +243,7 @@ class BrailleGenerator(generator.Generator):
         try:
             alertAndDialogCount = \
                 self._script.utilities.unfocusedAlertAndDialogCount(obj)
-        except:
+        except Exception:
             alertAndDialogCount = 0
         if alertAndDialogCount > 0:
              result.append(messages.dialogCountBraille(alertAndDialogCount))
@@ -371,7 +371,10 @@ class BrailleGenerator(generator.Generator):
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.SLIDER,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
+
+        def isWidget(x):
+            return AXObject.get_role(x) in widgetRoles
+
         result = []
         if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
@@ -477,7 +480,7 @@ class BrailleGenerator(generator.Generator):
             try:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     text.caretOffset, Atspi.TextBoundaryType.LINE_START)
-            except:
+            except Exception:
                 return include
 
             include = startOffset == 0

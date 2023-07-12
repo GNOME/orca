@@ -156,7 +156,7 @@ class Script(default.Script):
 
         try:
             focusRole = AXObject.get_role(orca_state.locusOfFocus)
-        except:
+        except Exception:
             focusRole = None
 
         if focusRole in menuRoles and role == Atspi.Role.ROOT_PANE:

@@ -32,7 +32,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import object_properties
-from . import settings
 
 # pylint: disable-msg=C0301
 
@@ -1075,33 +1074,33 @@ class Formatting(dict):
         """
         try:
             return self[args['mode']][args['role']][args['formatType']]
-        except:
+        except Exception:
             pass
 
         if args.get('formatType') == 'ancestor':
             try:
                 return self[args['mode']][args['role']]['focused']
-            except:
+            except Exception:
                 pass
 
         if args.get('formatType') == 'detailedWhereAmI':
             try:
                 return self[args['mode']][args['role']]['basicWhereAmI']
-            except:
+            except Exception:
                 pass
 
         try:
             return self[args['mode']][args['role']]['unfocused']
-        except:
+        except Exception:
             pass
 
 
         try:
             return self[args['mode']]['default'][args['formatType']]
-        except:
+        except Exception:
             pass
 
         try:
             return self[args['mode']]['default']['unfocused']
-        except:
+        except Exception:
             return []

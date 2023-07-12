@@ -655,7 +655,7 @@ class Script(script.Script):
 
         try:
             keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
-        except:
+        except Exception:
             msg = 'ERROR: Exception when overriding keybindings in %s' % self
             debug.println(debug.LEVEL_WARNING, msg, True)
             debug.printException(debug.LEVEL_WARNING)
@@ -728,7 +728,7 @@ class Script(script.Script):
         except AttributeError:
             msg = 'DEFAULT: Braille bindings unavailable in %s' % self
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = 'ERROR: Exception getting braille bindings in %s' % self
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_CONFIGURATION)
@@ -828,7 +828,7 @@ class Script(script.Script):
         try:
             text = obj.queryText()
             caretOffset = text.caretOffset
-        except:
+        except Exception:
             pass
         else:
             self._saveLastCursorPosition(obj, max(0, caretOffset))
@@ -876,7 +876,7 @@ class Script(script.Script):
                 # to the original window.  We don't want to speak
                 # the window title, current line, etc.
                 return
-        except:
+        except Exception:
             pass
 
         if self.flatReviewContext:
@@ -2147,7 +2147,7 @@ class Script(script.Script):
 
         try:
             levelIndex = levels.index(debug.debugLevel) + 2
-        except:
+        except Exception:
             levelIndex = 0
         else:
             if levelIndex >= len(levels):
@@ -2292,7 +2292,7 @@ class Script(script.Script):
         # the user needs to press the space key to select them.
         if AXObject.get_role(event.source) == Atspi.Role.RADIO_BUTTON:
             eventString, mods = self.utilities.lastKeyAndModifiers()
-            if not eventString in [" ", "space"]:
+            if eventString not in [" ", "space"]:
                 return
 
         oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
@@ -2352,8 +2352,8 @@ class Script(script.Script):
 
         text = event.source.queryText()
         try:
-            caretOffset = text.caretOffset
-        except:
+            text.caretOffset
+        except Exception:
             msg = "DEFAULT: Exception getting caretOffset for %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -2881,7 +2881,7 @@ class Script(script.Script):
             msg = "ERROR: %s doesn't implement AtspiValue" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return
-        except:
+        except Exception:
             msg = "ERROR: Exception getting current value for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -3077,7 +3077,7 @@ class Script(script.Script):
 
         try:
             text = context.obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
@@ -3092,7 +3092,7 @@ class Script(script.Script):
 
         try:
             text = context.obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
@@ -3110,7 +3110,7 @@ class Script(script.Script):
         try:
             text = context.obj.queryText()
             char = text.getText(context.currentOffset, context.currentOffset+1)
-        except:
+        except Exception:
             return
 
         # Setting the caret at the offset of an embedded object results in
@@ -3446,7 +3446,7 @@ class Script(script.Script):
         try:
             text = obj.queryText()
             offset = text.caretOffset
-        except:
+        except Exception:
             self.sayCharacter(obj)
             return
 
@@ -3664,7 +3664,7 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             self._inSayAll = False
             self._sayAllContexts = []
             return
@@ -3780,7 +3780,7 @@ class Script(script.Script):
             characterCount = text.characterCount
         except NotImplementedError:
             return ["", 0, 0]
-        except:
+        except Exception:
             msg = "DEFAULT: Exception getting offset and length for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return ["", 0, 0]
@@ -3832,7 +3832,7 @@ class Script(script.Script):
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
                         fixedTargetOffset, Atspi.TextBoundaryType.LINE_START)
-                except:
+                except Exception:
                     return ["", 0, 0]
 
             # Sometimes we get the trailing line-feed-- remove it
@@ -3891,7 +3891,7 @@ class Script(script.Script):
         if _settingsManager.getSetting('speakMisspelledIndicator'):
             try:
                 text = obj.queryText()
-            except:
+            except Exception:
                 return
             # If we're on whitespace, we cannot be on a misspelled word.
             #
@@ -3938,12 +3938,12 @@ class Script(script.Script):
             self.utilities.clearCachedCommandState()
 
         if not orca_state.learnModeEnabled:
-            if event.shouldEcho == False or event.isOrcaModified():
+            if not event.shouldEcho or event.isOrcaModified():
                 return False
 
         try:
             role = AXObject.get_role(orca_state.locusOfFocus)
-        except:
+        except Exception:
             return False
 
         if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
@@ -4037,7 +4037,7 @@ class Script(script.Script):
             return
 
         if not isinstance(sounds, list):
-            icon = [sounds]
+            sounds = [sounds]
 
         _player = sound.getPlayer()
         _player.play(sounds[0], interrupt)

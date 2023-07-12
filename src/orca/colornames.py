@@ -744,7 +744,7 @@ def rgbToName(red, green, blue):
     # Hold black and white to higher standards than the other close colors.
     d1 = min(colors.keys())
     match = colors.pop(d1)
-    if not match in ["#000000", "#ffffff"]:
+    if match not in ["#000000", "#ffffff"]:
         return cssNames.get(match)
 
     d2 = min(colors.keys())

@@ -308,7 +308,7 @@ class Script(Gecko.Script):
             # to save their lives, so we'll add yet another sad hack.
             try:
                 text = event.source.queryText()
-            except:
+            except Exception:
                 hasSelection = False
             else:
                 hasSelection = text.getNSelections() > 0

@@ -153,7 +153,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             childCount = AXObject.get_child_count(obj)
-        except:
+        except Exception:
             rv = True
         else:
             name = AXObject.get_name(obj)

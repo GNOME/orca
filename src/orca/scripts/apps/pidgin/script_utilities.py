@@ -77,7 +77,7 @@ class Utilities(script_utilities.Utilities):
         parent = AXObject.get_parent(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return []
         else:
             if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
@@ -128,8 +128,8 @@ class Utilities(script_utilities.Utilities):
         obj = AXObject.get_previous_sibling(obj)
         parent = AXObject.get_parent(obj)
         try:
-            table = parent.queryTable()
-        except:
+            parent.queryTable()
+        except Exception:
             return -1
 
         nodes = []

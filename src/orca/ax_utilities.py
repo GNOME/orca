@@ -66,10 +66,10 @@ class AXUtilities:
         if desktop is None:
             return []
 
-        if must_have_window:
-            pred = lambda x: AXObject.get_child_count(x) > 0
-        else:
-            pred = None
+        def pred(x):
+            if must_have_window:
+                return AXObject.get_child_count(x) > 0
+            return True
 
         return [app for app in AXObject.iter_children(desktop, pred)]
 

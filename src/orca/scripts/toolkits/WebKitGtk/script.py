@@ -596,7 +596,7 @@ class Script(default.Script):
         else:
             linkCount = hypertext.getNLinks()
             links = [hypertext.getLink(x) for x in range(linkCount)]
-            if [l for l in links if l.startIndex <= offset <= l.endIndex]:
+            if [link for link in links if link.startIndex <= offset <= link.endIndex]:
                 return
 
         orca.emitRegionChanged(obj, offset, mode=orca.SAY_ALL)
@@ -614,7 +614,7 @@ class Script(default.Script):
         textLine[0] = self.utilities.displayedText(obj)
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             textLine[1] = min(textLine[1], text.characterCount)

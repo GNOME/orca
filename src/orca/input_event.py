@@ -70,14 +70,14 @@ class InputEvent:
         pass
 
 def _getXkbStickyKeysState():
-    from subprocess import check_output, CalledProcessError
+    from subprocess import check_output
 
     try:
         output = check_output(['xkbset', 'q'])
         for line in output.decode('ASCII', errors='ignore').split('\n'):
             if line.startswith('Sticky-Keys = '):
                 return line.endswith('On')
-    except:
+    except Exception:
         pass
     return False
 
@@ -567,11 +567,11 @@ class KeyboardEvent(InputEvent):
             return self.keyType in KeyboardEvent.TYPE_LOCKING
 
         lockingKeys = ["Caps_Lock", "Shift_Lock", "Num_Lock", "Scroll_Lock"]
-        if not self.event_string in lockingKeys:
+        if self.event_string not in lockingKeys:
             return False
 
         if not orca_state.bypassNextCommand and not self._bypassOrca:
-            return not self.event_string in settings.orcaModifierKeys
+            return self.event_string not in settings.orcaModifierKeys
 
         return True
 
@@ -732,17 +732,17 @@ class KeyboardEvent(InputEvent):
         # TODO - JD: This should go away once plugin support is in place.
         try:
             bindings = settings.keyBindingsMap.get(self._script.__module__)
-        except:
+        except Exception:
             bindings = None
         if not bindings:
             try:
                 bindings = settings.keyBindingsMap.get("default")
-            except:
+            except Exception:
                 bindings = None
 
         try:
             handler = bindings.getInputHandler(self)
-        except:
+        except Exception:
             handler = None
 
         return handler
@@ -945,7 +945,7 @@ class KeyboardEvent(InputEvent):
                         debug.println(debug.LEVEL_INFO, "Locking capslock", True)
                     pyatspi.Registry.generateKeyboardEvent(modifier, None, lock)
                     debug.println(debug.LEVEL_INFO, "Done with capslock", True)
-                except:
+                except Exception:
                     debug.println(debug.LEVEL_INFO, "Could not trigger capslock, " \
                         "at-spi2-core >= 2.32 is needed for triggering capslock", True)
                     pass
@@ -1004,7 +1004,7 @@ class MouseButtonEvent(InputEvent):
         display = Gdk.Display.get_default()
         seat = Gdk.Display.get_default_seat(display)
         _pointer = seat.get_pointer()
-    except:
+    except Exception:
         _pointer = None
 
     def __init__(self, event):
@@ -1123,7 +1123,7 @@ class InputEventHandler:
         else:
             try:
                 consumed = self.function(script, inputEvent)
-            except:
+            except Exception:
                 debug.printException(debug.LEVEL_SEVERE)
 
         return consumed

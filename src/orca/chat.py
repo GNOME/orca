@@ -271,7 +271,7 @@ class ConversationList:
         #
         try:
             self.conversations.remove(conversation)
-        except:
+        except Exception:
             return False
         else:
             return True
@@ -554,7 +554,7 @@ class Chat:
 
         try:
             index = self.messageKeys.index(inputEvent.event_string)
-        except:
+        except Exception:
             pass
 
         messageNumber = self.messageListLength - (index + 1)
@@ -892,7 +892,7 @@ class Chat:
             text = self._script.utilities.displayedText(ancestor)
             if text.lower().strip() != self._script.name.lower().strip():
                 name = text
-        except:
+        except Exception:
             pass
 
         # Some applications don't trash their page tab list when there is
@@ -906,7 +906,7 @@ class Chat:
                 text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():
                     name = text
-            except:
+            except Exception:
                 pass     
 
         return name

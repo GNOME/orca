@@ -777,7 +777,9 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return ""
 
-        as_string = lambda x: x.value_name[12:].replace("_", "-").lower()
+        def as_string(x):
+            return x.value_name[12:].replace("_", "-").lower()
+
         return ", ".join(map(as_string, AXObject.get_state_set(obj).getStates()))
 
     @staticmethod
@@ -838,7 +840,7 @@ class AXObject:
 
         # We want to avoid self-referential relationships.
         type_includes_object = [Atspi.RelationType.MEMBER_OF]
-        if not relation_type in type_includes_object and obj in targets:
+        if relation_type not in type_includes_object and obj in targets:
             msg = 'ERROR: %s is in its own %s target list' % (obj, relation_type)
             debug.println(debug.LEVEL_INFO, msg, True)
             targets.remove(obj)
@@ -852,8 +854,10 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return ""
 
+        def as_string(x):
+            return x.value_name[15:].replace("_", "-").lower()
+
         results = []
-        as_string = lambda x: x.value_name[15:].replace("_", "-").lower()
         for r in AXObject.get_relations(obj):
             type_string = as_string(r.get_relation_type())
             targets = AXObject.get_relation_targets(obj, r.get_relation_type())
@@ -973,7 +977,7 @@ class AXObject:
             # We use the Atspi function rather than the AXObject function because the
             # latter intentionally handles exceptions.
             Atspi.Accessible.get_name(obj)
-        except Exception as e:
+        except Exception:
             return True
 
         return False
@@ -1014,7 +1018,9 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return ""
 
-        as_string = lambda x: "%s:%s" % (x[0], x[1])
+        def as_string(x):
+            return "%s:%s" % (x[0], x[1])
+
         return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))
 
     @staticmethod

@@ -28,14 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import inspect
 import traceback
 import os
-import re
 import subprocess
 import sys
 
@@ -224,7 +219,7 @@ def println(level, text="", timestamp=False):
             except TypeError:
                 text = "TypeError when trying to write text"
                 debugFile.writelines([text, "\n"])
-            except:
+            except Exception:
                 text = "Exception when trying to write text"
                 debugFile.writelines([text, "\n"])
         else:
@@ -233,7 +228,7 @@ def println(level, text="", timestamp=False):
             except TypeError:
                 text = "TypeError when trying to write text"
                 sys.stderr.writelines([text, "\n"])
-            except:
+            except Exception:
                 text = "Exception when trying to write text"
                 sys.stderr.writelines([text, "\n"])
 
@@ -338,7 +333,8 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         return string
 
     name_string = "name='%s'".replace("\n", "\\n") % AXObject.get_name(acc)
-    desc_string = "%sdescription='%s'".replace("\n", "\\n") % (indent, AXObject.get_description(acc))
+    desc_string = "%sdescription='%s'".replace("\n", "\\n") % \
+        (indent, AXObject.get_description(acc))
     role_string = "role='%s'" % AXObject.get_role_name(acc)
     path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
     state_string = "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
@@ -364,7 +360,7 @@ def _getFileAndModule(frame):
     try:
         filename = frame.f_globals["__file__"]
         module = frame.f_globals["__name__"]
-    except:
+    except Exception:
         pass
     else:
         if (filename.endswith(".pyc") or filename.endswith(".pyo")):
@@ -379,10 +375,10 @@ def _shouldTraceIt():
     eventSource = objEvent.source
     if TRACE_APPS:
         app = objEvent.host_application or AXObject.get_application(eventSource)
-        if not AXObject.get_name(app) in TRACE_APPS:
+        if AXObject.get_name(app) not in TRACE_APPS:
             return False
 
-    if TRACE_ROLES and not AXObject.get_role(eventSource) in TRACE_ROLES:
+    if TRACE_ROLES and AXObject.get_role(eventSource) not in TRACE_ROLES:
         return False
 
     if TRACE_EVENTS and \
@@ -393,9 +389,9 @@ def _shouldTraceIt():
 
 def traceit(frame, event, arg):
     """Line tracing utility to output all lines as they are executed by
-    the interpreter.  This is to be used by sys.settrace and is for 
+    the interpreter.  This is to be used by sys.settrace and is for
     debugging purposes.
-   
+
     Arguments:
     - frame: is the current stack frame
     - event: 'call', 'line', 'return', 'exception', 'c_call', 'c_return',
@@ -411,9 +407,9 @@ def traceit(frame, event, arg):
         return traceit
     if module in TRACE_IGNORE_MODULES:
         return traceit
-    if TRACE_MODULES and not module.split('.')[0] in TRACE_MODULES:
+    if TRACE_MODULES and module.split('.')[0] not in TRACE_MODULES:
         return traceit
-    if not event in ['call', 'line', 'return']:
+    if event not in ['call', 'line', 'return']:
         return traceit
 
     lineno = frame.f_lineno
@@ -455,7 +451,7 @@ def getCmdline(pid):
         openFile = os.popen('cat /proc/%s/cmdline' % pid)
         cmdline = openFile.read()
         openFile.close()
-    except:
+    except Exception:
         cmdline = '(Could not obtain cmdline)'
     cmdline = cmdline.replace('\x00', ' ')
 

@@ -226,11 +226,11 @@ class LabelInference:
         text = self._script.utilities.queryNonEmptyText(obj)
         if text:
             skipTextExtents = [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT]
-            if not AXObject.get_role(obj) in skipTextExtents:
+            if AXObject.get_role(obj) not in skipTextExtents:
                 if endOffset == -1:
                     try:
                         endOffset = text.characterCount
-                    except:
+                    except Exception:
                         msg = "ERROR: Exception getting character count for %s" % obj
                         debug.println(debug.LEVEL_INFO, msg, True)
                         return extents
@@ -243,7 +243,7 @@ class LabelInference:
             except NotImplementedError:
                 msg = "INFO: %s does not implement the component interface" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting extents for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -528,7 +528,7 @@ class LabelInference:
             return None, []
 
         parent = AXObject.get_parent(obj)
-        if not cell in [parent, AXObject.get_parent(parent)]:
+        if cell not in [parent, AXObject.get_parent(parent)]:
             return None, []
 
         grid = AXObject.find_ancestor(cell, self._isTable)

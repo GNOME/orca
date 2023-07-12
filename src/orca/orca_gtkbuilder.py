@@ -53,7 +53,7 @@ class GtkBuilderWrapper:
         # bug. See bgo bug 589362.
         #
         for obj in self.builder.get_objects():
-            success = self.localize_widget(obj)
+            self.localize_widget(obj)
 
         # Set default application icon.
         self.set_orca_icon()
@@ -75,7 +75,7 @@ class GtkBuilderWrapper:
             icon24 = icon_theme.load_icon("orca", 24, 0)
             icon32 = icon_theme.load_icon("orca", 32, 0)
             icon48 = icon_theme.load_icon("orca", 48, 0)
-        except:
+        except Exception:
             return
         else:
             Gtk.Window.set_default_icon_list((icon16,
@@ -121,7 +121,7 @@ class GtkBuilderWrapper:
         try:
             useMarkup = obj.get_use_markup()
             useUnderline = obj.get_use_underline()
-        except:
+        except Exception:
             useMarkup = False
             useUnderline = False
 
@@ -138,10 +138,10 @@ class GtkBuilderWrapper:
             title = obj.get_title()
             if title and len(title):
                 obj.set_title(_(title))
-        except:
+        except Exception:
             try:
                 text = obj.get_label()
-            except:
+            except Exception:
                 return False
 
             if text and len(text):

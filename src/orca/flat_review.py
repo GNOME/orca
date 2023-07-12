@@ -35,7 +35,6 @@ import re
 from . import braille
 from . import debug
 from . import eventsynthesizer
-from . import messages
 from . import orca_state
 from . import settings
 from .ax_object import AXObject
@@ -109,7 +108,7 @@ class Word:
 
         try:
             text = self.zone.accessible.queryText()
-        except:
+        except Exception:
             text = None
 
         chars = []
@@ -276,7 +275,7 @@ class TextZone(Zone):
     def __getattribute__(self, attr):
         """To ensure we update the content."""
 
-        if not attr in ["words", "string"]:
+        if attr not in ["words", "string"]:
             return super().__getattribute__(attr)
 
         string = self._itext.getText(self.startOffset, self.endOffset)
@@ -427,7 +426,7 @@ class Line:
                 else:
                     try:
                         brailleString = zone.brailleString
-                    except:
+                    except Exception:
                         brailleString = zone.string
                     region = braille.ReviewComponent(zone.accessible,
                                                      brailleString,
@@ -492,12 +491,15 @@ class Context:
         try:
             component = self.topLevel.queryComponent()
             self.bounds = component.getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting extents of %s" % self.topLevel
             debug.println(debug.LEVEL_INFO, msg, True)
 
         containerRoles = [Atspi.Role.MENU]
-        isContainer = lambda x: x and AXObject.get_role(x) in containerRoles
+
+        def isContainer(x):
+            return AXObject.get_role(x) in containerRoles
+
         container = AXObject.find_ancestor(self.focusObj, isContainer)
         if not container and isContainer(self.focusObj):
             container = self.focusObj
@@ -591,12 +593,9 @@ class Context:
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 
-        offset = 0
-        lastEndOffset = -1
         upperMax = lowerMax = text.characterCount
         upperMid = lowerMid = int(upperMax / 2)
         upperMin = lowerMin = 0
-        upperY = lowerY = 0
         oldMid = 0
 
         # performing binary search to locate first line inside clipped area
@@ -692,12 +691,12 @@ class Context:
         try:
             component = accessible.queryComponent()
             extents = component.getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             return []
 
         try:
             role = AXObject.get_role(accessible)
-        except:
+        except Exception:
             return []
 
         zones = self.getZonesFromText(accessible, cliprect)
@@ -808,7 +807,7 @@ class Context:
             if flatReviewType == Context.CHAR and current.chars:
                 try:
                     current = current.chars[self.charIndex]
-                except:
+                except Exception:
                     return None, -1, -1, -1, -1
 
         return current.string, current.x, current.y, current.width, current.height

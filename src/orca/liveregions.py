@@ -430,7 +430,7 @@ class LiveRegionManager:
         attrs = self._getAttrDictionary(event.source)
         content = ""
         labels = ""
-        
+
         # A message is divided into two parts: labels and content.  We
         # will first try to get the content.  If there is None, 
         # assume it is an invalid message and return None
@@ -442,7 +442,7 @@ class LiveRegionManager:
 
         elif event.type.startswith('object:text-changed:insert'):
             if attrs.get('container-atomic') != 'true':
-                if not "\ufffc" in event.any_data:
+                if "\ufffc" not in event.any_data:
                     content = event.any_data
                 else:
                     content = self._script.utilities.expandEOCs(
@@ -523,7 +523,8 @@ class LiveRegionManager:
                 return LIVE_ASSERTIVE
             elif attrs['container-live'] == 'rude': 
                 return LIVE_RUDE
-            else: return LIVE_NONE
+            else:
+                return LIVE_NONE
         except KeyError:
             return LIVE_NONE
 
@@ -539,11 +540,12 @@ class LiveRegionManager:
             return 'rude'
         elif politeness == LIVE_NONE: 
             return 'none'
-        else: return 'unknown'
+        else:
+            return 'unknown'
 
     def _getAttrDictionary(self, obj):
         return self._script.utilities.objectAttributes(obj)
-    
+
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object 
         to the document frame."""

@@ -35,7 +35,6 @@ import time
 
 from . import debug
 from . import input_event
-from . import messages
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -74,7 +73,8 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
         orca_state.device = Atspi.Device.new()
         orca_state.device.event_count = 0
-        orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processKeyboardEvent)
+        orca_state.device.key_watcher = \
+            orca_state.device.add_key_watcher(self._processKeyboardEvent)
 
         self._active = True
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
@@ -92,7 +92,7 @@ class EventManager:
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
-            if not eventType in self._ignoredEvents:
+            if eventType not in self._ignoredEvents:
                 self._ignoredEvents.append(eventType)
 
     def unignoreEventTypes(self, eventTypeList):
@@ -103,11 +103,12 @@ class EventManager:
     def _isDuplicateEvent(self, event):
         """Returns True if this event is already in the event queue."""
 
-        isSame = lambda x: x.type == event.type \
-            and x.source == event.source \
-            and x.detail1 == event.detail1 \
-            and x.detail2 == event.detail2 \
-            and x.any_data == event.any_data
+        def isSame(x):
+            return x.type == event.type \
+                and x.source == event.source \
+                and x.detail1 == event.detail1 \
+                and x.detail2 == event.detail2 \
+                and x.any_data == event.any_data
 
         for e in self._eventQueue.queue:
             if isSame(e):
@@ -423,7 +424,7 @@ class EventManager:
 
         try:
             ignore = isObjectEvent and self._ignore(e)
-        except:
+        except Exception:
             msg = 'ERROR: Exception evaluating event: %s' % e
             debug.println(debug.LEVEL_INFO, msg, True)
             ignore = True
@@ -521,7 +522,7 @@ class EventManager:
             debug.println(debug.LEVEL_SEVERE, msg, True)
             self._gidleId = 0
             rerun = False # destroy and don't call again
-        except:
+        except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
         if debug.debugEventQueue:
@@ -557,7 +558,7 @@ class EventManager:
         msg = 'EVENT MANAGER: deregistering listener for: %s' % eventType
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        if not eventType in self._scriptListenerCounts:
+        if eventType not in self._scriptListenerCounts:
             return
 
         self._scriptListenerCounts[eventType] -= 1
@@ -628,7 +629,7 @@ class EventManager:
                       "\nvvvvv PROCESS %s %s vvvvv" % (eType, data))
         try:
             function(event)
-        except:
+        except Exception:
             debug.printException(debug.LEVEL_WARNING)
             debug.printStack(debug.LEVEL_WARNING)
         debug.println(debug.eventDebugLevel,
@@ -743,7 +744,7 @@ class EventManager:
         try:
             # We use the Atspi function rather than the AXObject function because the
             # latter intentionally handles exceptions.
-            name = Atspi.Accessible.get_name(obj)
+            Atspi.Accessible.get_name(obj)
         except Exception as e:
             msg = "ERROR: %s is dead: %s" % (obj, e)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -856,7 +857,7 @@ class EventManager:
         while not self._eventQueue.empty():
             try:
                 event = self._eventQueue.get()
-            except Empty:
+            except Exception:
                 continue
 
             if self._processDuringFlood(event):
@@ -953,17 +954,16 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if setNewActiveScript:
-            app = event.host_application or AXObject.get_application(event.source)
             try:
                 _scriptManager.setActiveScript(script, reason)
-            except:
+            except Exception:
                 msg = 'ERROR: Could not set active script for %s' % event.source
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         try:
             script.processObjectEvent(event)
-        except:
+        except Exception:
             msg = 'ERROR: Could not process %s' % event.type
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)

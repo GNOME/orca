@@ -42,7 +42,6 @@ from orca import orca
 from orca import orca_state
 from orca import script_utilities
 from orca import script_manager
-from orca import settings
 from orca import settings_manager
 from orca.ax_object import AXObject
 
@@ -278,7 +277,7 @@ class Utilities(script_utilities.Utilities):
             script = _scriptManager.getScript(app, orca_state.activeWindow)
             msg = "WEB: Script for active Window is %s" % script
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting script for active window"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
@@ -321,7 +320,7 @@ class Utilities(script_utilities.Utilities):
             except NotImplementedError:
                 msg = "WEB: %s does not implement document interface" % documentFrame
                 debug.println(debug.LEVEL_INFO, msg, True)
-            except:
+            except Exception:
                 msg = "ERROR: Exception querying document interface of %s" % documentFrame
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -344,7 +343,7 @@ class Utilities(script_utilities.Utilities):
         except NotImplementedError:
             msg = "WEB: %s does not implement document interface" % documentFrame
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting document attributes of %s" % documentFrame
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
@@ -376,7 +375,7 @@ class Utilities(script_utilities.Utilities):
         except NotImplementedError:
             msg = "WEB: %s does not implement the component interface" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = "WEB: Exception grabbing focus on %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -401,7 +400,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.supports_text(obj):
             try:
                 obj.queryText().setCaretOffset(offset)
-            except:
+            except Exception:
                 msg = "WEB: Exception setting caret to %i in %s" % (offset, obj)
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -445,7 +444,7 @@ class Utilities(script_utilities.Utilities):
     def getLastObjectInDocument(self, documentFrame):
         try:
             lastChild = documentFrame[AXObject.get_child_count(documentFrame) - 1]
-        except:
+        except Exception:
             lastChild = documentFrame
         while lastChild:
             lastObj = self.getNextObjectInDocument(lastChild, documentFrame)
@@ -728,7 +727,7 @@ class Utilities(script_utilities.Utilities):
                 result = list(text.getRangeExtents(startOffset, endOffset, 0))
         except NotImplementedError:
             pass
-        except:
+        except Exception:
             msg = "WEB: Exception getting range extents for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return [0, 0, 0, 0]
@@ -752,7 +751,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: %s does not implement the component interface" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
-            except:
+            except Exception:
                 msg = "WEB: Exception getting extents for %s" % parent
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
@@ -763,7 +762,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: %s does not implement the component interface" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
-            except:
+            except Exception:
                 msg = "WEB: Exception getting extents for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
@@ -1360,7 +1359,7 @@ class Utilities(script_utilities.Utilities):
         stringOffset = offset - start
         try:
             char = string[stringOffset]
-        except:
+        except Exception:
             pass
         else:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
@@ -1625,7 +1624,7 @@ class Utilities(script_utilities.Utilities):
         for i, (acc, start, end, string) in enumerate(contents):
             try:
                 extents = self.getExtents(acc, start, end)
-            except:
+            except Exception:
                 extents = "(exception)"
             msg = "     %i. chars: %i-%i: '%s' extents=%s\n" % (i, start, end, string, extents)
             msg += debug.getAccessibleDetails(debug.LEVEL_INFO, acc, indent)
@@ -2164,14 +2163,14 @@ class Utilities(script_utilities.Utilities):
         try:
             roles.append(Atspi.Role.CONTENT_DELETION)
             roles.append(Atspi.Role.CONTENT_INSERTION)
-        except:
+        except Exception:
             pass
 
         # Remove this check when we bump dependencies to 2.36
         try:
             roles.append(Atspi.Role.MARK)
             roles.append(Atspi.Role.SUGGESTION)
-        except:
+        except Exception:
             pass
 
         return roles
@@ -2226,7 +2225,7 @@ class Utilities(script_utilities.Utilities):
         state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
         textBlockElements = self._textBlockElementRoles()
-        if not role in textBlockElements:
+        if role not in textBlockElements:
             rv = False
         elif not AXObject.supports_text(obj):
             rv = False
@@ -2767,7 +2766,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSorted(self, obj):
         attrs = self.objectAttributes(obj, False)
-        return not attrs.get("sort") in ("none", None)
+        return attrs.get("sort") not in ("none", None)
 
     def isAscending(self, obj):
         attrs = self.objectAttributes(obj, False)
@@ -3096,7 +3095,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             nChars = text.characterCount
-        except:
+        except Exception:
             return False
 
         if not nChars:
@@ -3145,7 +3144,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             nChars = text.characterCount
-        except:
+        except Exception:
             return False
 
         if not nChars:
@@ -3215,7 +3214,7 @@ class Utilities(script_utilities.Utilities):
             try:
                 text = obj.queryText()
                 end = text.characterCount
-            except:
+            except Exception:
                 end = 1
             x, y, width, height = self.getExtents(obj, 0, end)
             if x < 0 or y < 0:
@@ -3675,7 +3674,7 @@ class Utilities(script_utilities.Utilities):
         def _isMatch(x):
             try:
                 string = x.queryText().getText(0, -1).strip()
-            except:
+            except Exception:
                 return False
             role = AXObject.get_role(x)
             return role in [Atspi.Role.SECTION, Atspi.Role.STATIC] and AXObject.get_name(entry) == string
@@ -3893,7 +3892,7 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(obj) and self.getDocumentForObject(obj):
             try:
                 name = AXObject.get_name(obj)
-            except:
+            except Exception:
                 rv = True
             else:
                 rv = "doubleclick" in name
@@ -4161,7 +4160,7 @@ class Utilities(script_utilities.Utilities):
         rv = self._shouldInferLabelFor.get(hash(obj))
         if rv and not self._script._lastCommandWasCaretNav:
             return not self._script.inSayAll()
-        if rv == False:
+        if rv is False:
             return rv
 
         role = AXObject.get_role(obj)
@@ -4197,7 +4196,8 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         labels = self.labelsForObject(obj)
-        strings = [AXObject.get_name(l) or self.displayedText(l) for l in labels if l is not None]
+        strings = [AXObject.get_name(label)
+                   or self.displayedText(label) for label in labels if label is not None]
         rv = " ".join(strings)
 
         self._displayedLabelText[hash(obj)] = rv
@@ -4300,7 +4300,7 @@ class Utilities(script_utilities.Utilities):
 
     def _eventIsBrowserUIAutocompleteSelectionNoise(self, event):
         selection = ["object:selection-changed", "object:state-changed:selected"]
-        if not event.type in selection:
+        if event.type not in selection:
             return False
 
         if AXObject.get_role(event.source) in [Atspi.Role.MENU, Atspi.Role.MENU_ITEM] \
@@ -4332,11 +4332,11 @@ class Utilities(script_utilities.Utilities):
 
     def eventIsBrowserUIPageSwitch(self, event):
         selection = ["object:selection-changed", "object:state-changed:selected"]
-        if not event.type in selection:
+        if event.type not in selection:
             return False
 
         roles = [Atspi.Role.PAGE_TAB, Atspi.Role.PAGE_TAB_LIST]
-        if not AXObject.get_role(event.source) in roles:
+        if AXObject.get_role(event.source) not in roles:
             return False
 
         if self.inDocumentContent(event.source):
@@ -4538,7 +4538,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             self._currentTextAttrs.pop(hash(obj))
-        except:
+        except Exception:
             pass
 
         attrs, start, end = self.textAttributes(obj, 0, True)
@@ -4674,7 +4674,7 @@ class Utilities(script_utilities.Utilities):
         while obj:
             try:
                 offset = obj.queryText().caretOffset
-            except:
+            except Exception:
                 msg = "WEB: Exception getting caret offset of %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj = None
@@ -4703,7 +4703,7 @@ class Utilities(script_utilities.Utilities):
             offset = obj.queryText().caretOffset
         except NotImplementedError:
             offset = 0
-        except:
+        except Exception:
             offset = -1
 
         return obj, offset

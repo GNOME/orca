@@ -41,7 +41,6 @@ import orca.input_event as input_event
 import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
-import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
@@ -327,7 +326,7 @@ class Script(default.Script):
         obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             orca.setLocusOfFocus(None, obj, notifyScript=False)
@@ -357,7 +356,7 @@ class Script(default.Script):
         obj = self.utilities.findNextObject(orca_state.locusOfFocus)
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             orca.setLocusOfFocus(None, obj, notifyScript=False)
@@ -432,7 +431,7 @@ class Script(default.Script):
             del self.dynamicColumnHeaders[hash(table)]
             self.presentationInterrupt()
             self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
-        except:
+        except Exception:
             pass
 
         return True
@@ -480,7 +479,7 @@ class Script(default.Script):
             del self.dynamicRowHeaders[hash(table)]
             self.presentationInterrupt()
             self.presentMessage(messages.DYNAMIC_ROW_HEADER_CLEARED)
-        except:
+        except Exception:
             pass
 
         return True
@@ -508,7 +507,7 @@ class Script(default.Script):
 
         if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
            and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):
-            orca.emitRegionChanged(newFocus)
+            orca.emitRegionChanged(newLocusOfFocus)
             self.updateBraille(newLocusOfFocus)
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return
@@ -555,7 +554,7 @@ class Script(default.Script):
                     self.updateBraille(newLocusOfFocus)
                     try:
                         text = newLocusOfFocus.queryText()
-                    except:
+                    except Exception:
                         pass
                     else:
                         self._saveLastCursorPosition(newLocusOfFocus, text.caretOffset)
@@ -837,11 +836,11 @@ class Script(default.Script):
         obj = event.source
         role = AXObject.get_role(obj)
         parentRole = AXObject.get_role(AXObject.get_parent(obj))
-        if not role in [Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON] \
+        if role not in [Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON] \
            or not parentRole == Atspi.Role.TOOL_BAR:
             default.Script.onCheckedChanged(self, event)
             return
- 
+
         sourceWindow = self.utilities.topLevelObject(obj)
         focusWindow = self.utilities.topLevelObject(orca_state.locusOfFocus)
         if sourceWindow != focusWindow:

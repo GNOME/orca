@@ -101,7 +101,7 @@ class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 orca_state.searchQuery.windowWrap)
             self.get_widget("searchBackwardsCheckbox").set_active(\
                 orca_state.searchQuery.searchBackwards)
-        except:
+        except Exception:
             pass
 
     def searchForEntryChanged(self, widget):

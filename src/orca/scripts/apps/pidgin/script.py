@@ -204,8 +204,11 @@ class Script(GAIL.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.PAGE_TAB
-        allPageTabs = self.utilities.findAllDescendants(event.source, hasRole)
+
+        def hasRole(x):
+            return AXObject.get_role(x) == Atspi.Role.PAGE_TAB
+
+        self.utilities.findAllDescendants(event.source, hasRole)
         msg = "PIDGIN: Hack to work around missing events complete"
         debug.println(debug.LEVEL_INFO, msg, True)
         GAIL.Script.onWindowActivated(self, event)
@@ -219,5 +222,5 @@ class Script(GAIL.Script):
             obj = AXObject.get_next_sibling(obj)
             self.presentObject(obj, alreadyFocused=True)
             return
-            
+
         GAIL.Script.onExpandedChanged(self, event)

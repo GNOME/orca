@@ -421,7 +421,7 @@ class Utilities(web.Utilities):
             msg = "CHROMIUM: Clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             AXObject.clear_cache(obj)
-        except:
+        except Exception:
             msg = "CHROMIUM: Exception clearing cache for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False

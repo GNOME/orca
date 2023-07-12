@@ -224,7 +224,7 @@ class TutorialGenerator:
         try:
             alertAndDialogCount = \
                 self._script.utilities.unfocusedAlertAndDialogCount(obj)
-        except:
+        except Exception:
             alertAndDialogCount = 0
         if alertAndDialogCount > 0:
             utterances.append(childWindowsMsg)
@@ -610,7 +610,7 @@ class TutorialGenerator:
             parent = AXObject.get_parent(obj)
             try:
                 parent_table = parent.queryTable()
-            except:
+            except Exception:
                 parent_table = None
             readFullRow = self._script.utilities.shouldReadFullRow(obj)
             if readFullRow and parent_table \
@@ -619,6 +619,10 @@ class TutorialGenerator:
                 row = parent_table.getRowAtIndex(index)
                 column = parent_table.getColumnAtIndex(index)
 
+                # TODO - JD: speakAll is never being used. It appears to have
+                # been this way since 2008/2009. Figure out what should happen
+                # here and fix it.
+                #
                 # This is an indication of whether we should speak all the
                 # table cells (the user has moved focus up or down a row),
                 # or just the current one (focus has moved left or right in

@@ -44,7 +44,9 @@ class Chat(chat.Chat):
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused."""
 
-        isPageTab = lambda x: x and AXObject.get_role(x) == Atspi.Role.PAGE_TAB
+        def isPageTab(x):
+            return AXObject.get_role(x) == Atspi.Role.PAGE_TAB
+
         pageTab = AXObject.find_ancestor(obj, isPageTab)
         if pageTab is None:
             return super().isFocusedChat(obj)

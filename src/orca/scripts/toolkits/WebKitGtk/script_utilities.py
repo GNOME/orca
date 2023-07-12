@@ -164,7 +164,7 @@ class Utilities(script_utilities.Utilities):
         objects = []
         try:
             objs = [obj[htext.getLinkIndex(offset)] for offset in offsets]
-        except:
+        except Exception:
             objs = []
         ranges = [self.getHyperlinkRange(x) for x in objs]
         for i, (first, last) in enumerate(ranges):
@@ -248,7 +248,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if not AXObject.get_role(obj) in docRoles:
+        if AXObject.get_role(obj) not in docRoles:
             return False
 
         parent = AXObject.get_parent(obj)

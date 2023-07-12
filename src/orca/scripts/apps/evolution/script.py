@@ -34,7 +34,6 @@ from gi.repository import Atspi
 import orca.orca as orca
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
-import orca.settings as settings
 import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
 

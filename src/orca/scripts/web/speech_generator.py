@@ -835,7 +835,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         else:
             oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
 
-        if not 'priorObj' in args:
+        if 'priorObj' not in args:
             document = self._script.utilities.getTopLevelDocumentForObject(obj)
             args['priorObj'] = self._script.utilities.getPriorContext(document)[0]
 

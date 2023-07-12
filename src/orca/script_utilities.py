@@ -139,14 +139,14 @@ class Utilities:
 
         try:
             pid = app.get_process_id()
-        except:
+        except Exception:
             msg = "ERROR: Exception getting process id of %s. May be defunct." % app
             debug.println(debug.LEVEL_INFO, msg, True)
             return ""
 
         try:
             cmdline = subprocess.getoutput("cat /proc/%s/cmdline" % pid)
-        except:
+        except Exception:
             return ""
 
         return cmdline.replace("\x00", " ")
@@ -213,7 +213,7 @@ class Utilities:
         suspect_app_names = ["slack"]
         refiltered = []
         for frame in filtered:
-            if AXObject.get_name(AXObject.get_application(frame)) == "slack":
+            if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
                 msg = "INFO: Suspecting %s might be a non-active Electron app" % frame
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -268,7 +268,7 @@ class Utilities:
         parent = AXObject.get_parent(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return []
         else:
             if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
@@ -384,7 +384,7 @@ class Utilities:
             if role == Atspi.Role.PUSH_BUTTON \
                 and AXObject.has_state(child, Atspi.StateType.IS_DEFAULT):
                 defaultButton = child
-            elif not role in skipRoles:
+            elif role not in skipRoles:
                 defaultButton = self.defaultButton(child)
 
             if defaultButton:
@@ -406,7 +406,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
-        except:
+        except Exception:
             if self.DISPLAYED_LABEL not in self._script.generatorCache:
                 self._script.generatorCache[self.DISPLAYED_LABEL] = {}
             labelString = None
@@ -463,7 +463,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj]
-        except:
+        except Exception:
             if self.DISPLAYED_DESCRIPTION not in self._script.generatorCache:
                 self._script.generatorCache[self.DISPLAYED_DESCRIPTION] = {}
 
@@ -483,7 +483,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
-        except:
+        except Exception:
             displayedText = None
 
         name = AXObject.get_name(obj)
@@ -569,7 +569,7 @@ class Utilities:
                 candidate = Utilities.focusedObject(child)
                 if candidate:
                     return candidate
-            except:
+            except Exception:
                 pass
 
         return None
@@ -667,7 +667,7 @@ class Utilities:
             else:
                 current_role = AXObject.get_role(current)
 
-            if not current_role in role:
+            if current_role not in role:
                 return False
 
             current = AXObject.get_parent_checked(current)
@@ -1068,7 +1068,7 @@ class Utilities:
             msg = "ERROR: %s doesn't implement AtspiValue" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-        except:
+        except Exception:
             msg = "ERROR: Exception getting value for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -1078,7 +1078,7 @@ class Utilities:
                     msg = "INFO: %s is busy indicator" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
-            except:
+            except Exception:
                 msg = "INFO: %s is either busy indicator or broken" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
@@ -1131,7 +1131,7 @@ class Utilities:
             msg = "ERROR: %s doesn't implement AtspiValue" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
-        except:
+        except Exception:
             msg = "ERROR: Exception getting value for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
@@ -1175,7 +1175,7 @@ class Utilities:
 
         try:
             document = AXObject.find_ancestor(obj, self.isDocument)
-        except:
+        except Exception:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
             return False
@@ -1188,7 +1188,7 @@ class Utilities:
 
         try:
             document = AXObject.find_ancestor(obj, self.isDocument)
-        except:
+        except Exception:
             msg = "ERROR: Exception finding ancestor of %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
             return False
@@ -1296,7 +1296,7 @@ class Utilities:
         except NotImplementedError:
             msg = 'ERROR: Table %s does not implement table interface' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = 'ERROR: Exception querying table interface of %s' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
@@ -1312,21 +1312,19 @@ class Utilities:
                 Atspi.Role.ROW_HEADER]
 
     def isTextDocumentCell(self, obj):
-        if not obj:
+        if obj is None:
             return False
 
-        role = AXObject.get_role(obj)
-        if not role in self.getCellRoles():
+        if AXObject.get_role(obj) not in self.getCellRoles():
             return False
 
         return AXObject.find_ancestor(obj, self.isTextDocumentTable)
 
     def isSpreadSheetCell(self, obj):
-        if not obj:
+        if obj is None:
             return False
 
-        role = AXObject.get_role(obj)
-        if not role in self.getCellRoles():
+        if AXObject.get_role(obj) not in self.getCellRoles():
             return False
 
         return AXObject.find_ancestor(obj, self.isSpreadSheetTable)
@@ -1466,7 +1464,7 @@ class Utilities:
                 msg = 'ERROR: Table %s does not implement table interface' % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
-            except:
+            except Exception:
                 msg = 'ERROR: Exception querying table interface of %s' % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
@@ -1581,7 +1579,7 @@ class Utilities:
                 continue
             try:
                 start = start[p]
-            except:
+            except Exception:
                 break
         else:
             rv = start
@@ -1712,7 +1710,7 @@ class Utilities:
 
         try:
             hyperlink = obj.queryHyperlink()
-        except:
+        except Exception:
             pass
         else:
             uri = hyperlink.getURI(0)
@@ -1807,7 +1805,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.NESTING_LEVEL][obj]
-        except:
+        except Exception:
             if self.NESTING_LEVEL not in self._script.generatorCache:
                 self._script.generatorCache[self.NESTING_LEVEL] = {}
 
@@ -1843,7 +1841,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.NODE_LEVEL][obj]
-        except:
+        except Exception:
             if self.NODE_LEVEL not in self._script.generatorCache:
                 self._script.generatorCache[self.NODE_LEVEL] = {}
 
@@ -1889,7 +1887,7 @@ class Utilities:
 
         try:
             box = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting extents for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -2022,7 +2020,7 @@ class Utilities:
             try:
                 component = root.queryComponent()
                 extents = component.getExtents(Atspi.CoordType.SCREEN)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting extents of %s" % root
                 debug.println(debug.LEVEL_INFO, msg, True)
                 extents = 0, 0, 0, 0
@@ -2196,7 +2194,7 @@ class Utilities:
             role = AXObject.get_role(child)
             if role == Atspi.Role.STATUS_BAR:
                 statusBar = child
-            elif not role in skipRoles:
+            elif role not in skipRoles:
                 statusBar = self.statusBar(child)
             if statusBar and self.isShowingAndVisible(statusBar):
                 break
@@ -2296,7 +2294,7 @@ class Utilities:
         try:
             bbox1 = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
             bbox2 = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             return False
 
         center1 = bbox1.y + bbox1.height / 2
@@ -2329,13 +2327,13 @@ class Utilities:
         try:
             bbox = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
             width1, height1 = bbox.width, bbox.height
-        except:
+        except Exception:
             width1, height1 = 0, 0
 
         try:
             bbox = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
             width2, height2 = bbox.width, bbox.height
-        except:
+        except Exception:
             width2, height2 = 0, 0
 
         return (width1 * height1) - (width2 * height2)
@@ -2349,13 +2347,13 @@ class Utilities:
         try:
             bbox = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
             x1, y1 = bbox.x, bbox.y
-        except:
+        except Exception:
             x1, y1 = 0, 0
 
         try:
             bbox = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
             x2, y2 = bbox.x, bbox.y
-        except:
+        except Exception:
             x2, y2 = 0, 0
 
         rv = y1 - y2 or x1 - x2
@@ -2375,7 +2373,7 @@ class Utilities:
     def getTextBoundingBox(self, obj, start, end):
         try:
             extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting range extents of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1, 0, 0
@@ -2385,7 +2383,7 @@ class Utilities:
     def getBoundingBox(self, obj):
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting extents of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1, 0, 0
@@ -2401,7 +2399,7 @@ class Utilities:
 
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting extents for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -2469,7 +2467,6 @@ class Utilities:
                 return True
             return False
 
-        excludeIf = lambda x: x and AXObject.get_role(x) in skipRoles
         labels = self.findAllDescendants(root, _include, _exclude)
 
         rootName = AXObject.get_name(root)
@@ -2528,7 +2525,7 @@ class Utilities:
 
         try:
             return obj.queryHyperlink().getURI(0)
-        except:
+        except Exception:
             return None
 
     #########################################################################
@@ -2549,7 +2546,7 @@ class Utilities:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return
 
         if text.getNSelections() <= 0:
@@ -2643,13 +2640,13 @@ class Utilities:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return []
 
         rv = []
         try:
             nSelections = text.getNSelections()
-        except:
+        except Exception:
             nSelections = 0
         for i in range(nSelections):
             rv.append(text.getSelection(i))
@@ -2663,7 +2660,7 @@ class Utilities:
             msg = "INFO: %s does not implement the hypertext interface" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
-        except:
+        except Exception:
             msg = "INFO: Exception querying hypertext interface for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
@@ -2716,7 +2713,7 @@ class Utilities:
             try:
                 parent.queryText()
                 offset = hyperlink.startIndex
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, parent)
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -2734,7 +2731,7 @@ class Utilities:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return
 
         for i in range(text.getNSelections()):
@@ -2743,7 +2740,7 @@ class Utilities:
     def containsOnlyEOCs(self, obj):
         try:
             string = obj.queryText().getText(0, -1)
-        except:
+        except Exception:
             return False
 
         return string and not re.search(r"[^\ufffc]", string)
@@ -2762,10 +2759,10 @@ class Utilities:
 
         try:
             string = self.substring(obj, startOffset, endOffset)
-        except:
+        except Exception:
             return ""
 
-        if not self.EMBEDDED_OBJECT_CHARACTER in string:
+        if self.EMBEDDED_OBJECT_CHARACTER not in string:
             return string
 
         blockRoles = [Atspi.Role.HEADING,
@@ -2843,7 +2840,7 @@ class Utilities:
             charCount = text.characterCount
         except NotImplementedError:
             pass
-        except:
+        except Exception:
             msg = "ERROR: Exception getting character count of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
@@ -2890,7 +2887,7 @@ class Utilities:
         startOffset = endOffset = 0
         try:
             textObj = obj.queryText()
-        except:
+        except Exception:
             nSelections = 0
         else:
             nSelections = textObj.getNSelections()
@@ -2912,7 +2909,7 @@ class Utilities:
             offset = obj.queryText().caretOffset
         except NotImplementedError:
             offset = 0
-        except:
+        except Exception:
             offset = -1
 
         return obj, offset
@@ -2934,7 +2931,7 @@ class Utilities:
         """
         try:
             texti = obj.queryText()
-        except:
+        except Exception:
             return None
 
         texti.setCaretOffset(offset)
@@ -2951,7 +2948,7 @@ class Utilities:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return ""
 
         return text.getText(startOffset, endOffset)
@@ -2992,7 +2989,7 @@ class Utilities:
         """Returns a list of (start, end, attrsDict) tuples for obj."""
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             return []
 
         if endOffset == -1:
@@ -3009,7 +3006,7 @@ class Utilities:
                 attrList, start, end = text.getAttributeRun(offset)
                 msg = "INFO: Attributes at %i: %s (%i-%i)" % (offset, attrList, start, end)
                 debug.println(debug.LEVEL_INFO, msg, True)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting attributes at %i" % (offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return rv
@@ -3041,7 +3038,7 @@ class Utilities:
         rv = {}
         try:
             text = acc.queryText()
-        except:
+        except Exception:
             return rv, 0, 0
 
         if get_defaults:
@@ -3184,11 +3181,11 @@ class Utilities:
         isPunctChar = True
         try:
             level, action = punctuation_settings.getPunctuationInfo(segment[0])
-        except:
+        except Exception:
             isPunctChar = False
         count = len(segment)
         if (count >= settings.repeatCharacterLimit) \
-           and (not segment[0] in self._script.whitespace):
+           and (segment[0] not in self._script.whitespace):
             if (not respectPunctuation) \
                or (isPunctChar and (style <= level)):
                 repeatChar = chnames.getCharacterName(segment[0])
@@ -3240,7 +3237,7 @@ class Utilities:
         try:
             hyperText = obj.queryHypertext()
             nLinks = hyperText.getNLinks()
-        except:
+        except Exception:
             nLinks = 0
 
         adjustedLine = list(line)
@@ -3531,7 +3528,7 @@ class Utilities:
         try:
             extents1 = obj1.queryComponent().getExtents(coordType)
             extents2 = obj2.queryComponent().getExtents(coordType)
-        except:
+        except Exception:
             return 0, 0, 0, 0
 
         return self.intersection(extents1, extents2)
@@ -3609,7 +3606,7 @@ class Utilities:
             if newSequence and \
                (not newSequence.endswith('+') or newSequence.endswith('++')):
                 sequence = newSequence
-        except:
+        except Exception:
             if sequence.endswith(" "):
                 sequence += chnames.getCharacterName(" ")
             sequence = sequence.replace("<", "")
@@ -3630,7 +3627,7 @@ class Utilities:
 
         try:
             return self._script.generatorCache[self.KEY_BINDING][obj]
-        except:
+        except Exception:
             if self.KEY_BINDING not in self._script.generatorCache:
                 self._script.generatorCache[self.KEY_BINDING] = {}
 
@@ -3657,7 +3654,7 @@ class Utilities:
             fullShortcut   = bindingStrings[0]
             try:
                 accelerator = bindingStrings[1]
-            except:
+            except Exception:
                 accelerator = ""
         else:
             mnemonic       = ""
@@ -3696,7 +3693,7 @@ class Utilities:
             items = [item for item in items if len(item.split(':')) == 2]
             keys = [item.split(':')[0].strip() for item in items]
             dictionary = dict([item.split(':') for item in items])
-        except:
+        except Exception:
             return [], {}
 
         return [keys, dictionary]
@@ -3768,7 +3765,7 @@ class Utilities:
 
         try:
             return "%04x" % ord(character)
-        except:
+        except Exception:
             debug.printException(debug.LEVEL_WARNING)
             return ""
 
@@ -3808,7 +3805,7 @@ class Utilities:
             msg = "INFO: %s does not implement the hyperlink interface" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
-        except:
+        except Exception:
             msg = "INFO: Exception getting hyperlink indices for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
@@ -4134,7 +4131,7 @@ class Utilities:
             tableCell = obj.queryTableCell()
             try:
                 headers = tableCell.columnHeaderCells
-            except:
+            except Exception:
                 msg = "INFO: Exception getting column headers for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -4143,7 +4140,7 @@ class Utilities:
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return []
 
         row, col = self.coordinatesForCell(obj)
@@ -4178,7 +4175,7 @@ class Utilities:
             tableCell = obj.queryTableCell()
             try:
                 headers = tableCell.rowHeaderCells
-            except:
+            except Exception:
                 msg = "INFO: Exception getting row headers for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -4187,7 +4184,7 @@ class Utilities:
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return []
 
         row, col = self.coordinatesForCell(obj)
@@ -4234,7 +4231,7 @@ class Utilities:
             tableCell = obj.queryTableCell()
             try:
                 successful, row, col = tableCell.position
-            except:
+            except Exception:
                 msg = "INFO: Exception getting table cell position of %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -4253,7 +4250,7 @@ class Utilities:
 
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             msg = "INFO: Exception querying table interface %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
@@ -4262,7 +4259,7 @@ class Utilities:
         try:
             row = table.getRowAtIndex(index)
             col = table.getColumnAtIndex(index)
-        except:
+        except Exception:
             msg = "INFO: Exception getting row and column at index from %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
@@ -4282,7 +4279,7 @@ class Utilities:
             tableCell = obj.queryTableCell()
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
-            except:
+            except Exception:
                 msg = "INFO: Exception getting table row and col span of %s via table cell" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
@@ -4292,7 +4289,7 @@ class Utilities:
         parent = AXObject.find_ancestor(obj, isTable)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return -1, -1
 
         row, col = self.coordinatesForCell(obj)
@@ -4310,7 +4307,7 @@ class Utilities:
     def rowAndColumnCount(self, obj, preferAttribute=True):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             return -1, -1
 
         return table.nRows, table.nColumns
@@ -4331,7 +4328,7 @@ class Utilities:
 
         try:
             component = obj.queryComponent()
-        except:
+        except Exception:
             return False
 
         if coordType is None:
@@ -4398,7 +4395,7 @@ class Utilities:
 
         try:
             component = root.queryComponent()
-        except:
+        except Exception:
             msg = "INFO: Exception querying component of %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
@@ -4475,7 +4472,7 @@ class Utilities:
             text = obj.queryText()
             if offset is None:
                 offset = text.caretOffset
-        except:
+        except Exception:
             return "", 0, 0
 
         word, start, end = self.getWordAtOffset(obj, offset)
@@ -4551,7 +4548,7 @@ class Utilities:
             text = obj.queryText()
             if offset is None:
                 offset = text.caretOffset
-        except:
+        except Exception:
             return "", 0, 0
 
         word, start, end = text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
@@ -4602,7 +4599,7 @@ class Utilities:
         try:
             table = obj.queryTable()
             nRows = table.nRows
-        except:
+        except Exception:
             return []
 
         msg = "INFO: %s has %i rows" % (obj, nRows)
@@ -4618,7 +4615,7 @@ class Utilities:
         # Just in case the row above is a static header row in a scrollable table.
         try:
             extents = cell.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             nextIndex = startIndex
         else:
             cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
@@ -4645,13 +4642,13 @@ class Utilities:
     def getVisibleTableCells(self, obj):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             return []
 
         try:
             component = obj.queryComponent()
             extents = component.getExtents(Atspi.CoordType.SCREEN)
-        except:
+        except Exception:
             msg = "ERROR: Exception getting extents of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
@@ -4672,7 +4669,7 @@ class Utilities:
             for row in rows:
                 try:
                     cell = table.getAccessibleAt(row, col)
-                except:
+                except Exception:
                     continue
                 if cell and self.isOnScreen(cell):
                     cells.append(cell)
@@ -4688,7 +4685,7 @@ class Utilities:
         parent = self.getTable(obj)
         try:
             component = parent.queryComponent()
-        except:
+        except Exception:
             msg = "ERROR: Exception querying component interface of %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
             return startIndex, endIndex
@@ -4710,7 +4707,7 @@ class Utilities:
         parent = self.getTable(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             msg = "ERROR: Exception querying table interface of %s" % parent
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
@@ -4737,7 +4734,7 @@ class Utilities:
     def cellForCoordinates(self, obj, row, column, showingOnly=False):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             return None
 
         cell = table.getAccessibleAt(row, column)
@@ -4757,7 +4754,7 @@ class Utilities:
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             return False
 
         row, col = self.coordinatesForCell(obj)
@@ -4766,7 +4763,7 @@ class Utilities:
     def isNonUniformTable(self, obj):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             return False
 
         for r in range(table.nRows):
@@ -4813,8 +4810,8 @@ class Utilities:
         try:
             # We use the Atspi function rather than the AXObject function because the
             # latter intentionally handles exceptions.
-            name = Atspi.Accessible.get_name(obj)
-        except:
+            Atspi.Accessible.get_name(obj)
+        except Exception:
             debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj, True)
             return True
 
@@ -4863,7 +4860,7 @@ class Utilities:
         else:
             try:
                 replicant = AXObject.find_descendant(root, isSame)
-            except:
+            except Exception:
                 msg = "INFO: Exception from findDescendant for %s" % root
                 debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = None
@@ -4980,7 +4977,7 @@ class Utilities:
             msg = "ERROR: %s doesn't implement AtspiText" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             text = None
-        except:
+        except Exception:
             msg = "ERROR: Exception querying text interface for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             text = None
@@ -5006,7 +5003,7 @@ class Utilities:
         if text:
             try:
                 start, end = text.getSelection(0)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting selected text for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 start = end = 0
@@ -5094,7 +5091,7 @@ class Utilities:
 
     def lastInputEventWasUnmodifiedArrow(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Left", "Right", "Up", "Down"]:
+        if keyString not in ["Left", "Right", "Up", "Down"]:
             return False
 
         if mods & keybindings.CTRL_MODIFIER_MASK \
@@ -5113,7 +5110,7 @@ class Utilities:
 
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Left", "Right"]:
+        if keyString not in ["Left", "Right"]:
             return False
 
         if mods & keybindings.CTRL_MODIFIER_MASK \
@@ -5124,7 +5121,7 @@ class Utilities:
 
     def lastInputEventWasWordNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Left", "Right"]:
+        if keyString not in ["Left", "Right"]:
             return False
 
         return mods & keybindings.CTRL_MODIFIER_MASK
@@ -5145,7 +5142,7 @@ class Utilities:
 
     def lastInputEventWasLineNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Up", "Down"]:
+        if keyString not in ["Up", "Down"]:
             return False
 
         if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
@@ -5155,14 +5152,14 @@ class Utilities:
 
     def lastInputEventWasLineBoundaryNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Home", "End"]:
+        if keyString not in ["Home", "End"]:
             return False
 
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasPageNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Page_Up", "Page_Down"]:
+        if keyString not in ["Page_Up", "Page_Down"]:
             return False
 
         if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
@@ -5172,7 +5169,7 @@ class Utilities:
 
     def lastInputEventWasFileBoundaryNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not keyString in ["Home", "End"]:
+        if keyString not in ["Home", "End"]:
             return False
 
         return mods & keybindings.CTRL_MODIFIER_MASK
@@ -5677,7 +5674,7 @@ class Utilities:
     def _findSelectionBoundaryObject(self, root, findStart=True):
         try:
             text = root.queryText()
-        except:
+        except Exception:
             msg = "ERROR: Exception querying text for %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
             return None

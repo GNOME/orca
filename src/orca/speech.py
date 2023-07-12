@@ -31,7 +31,6 @@ import time
 
 from . import debug
 from . import logger
-from . import orca_state
 from . import settings
 from . import speech_generator
 from .speechserver import VoiceFamily
@@ -58,10 +57,10 @@ def _initSpeechServer(moduleName, speechServerInfo):
     factory = None
     try:
         factory = importlib.import_module('orca.%s' % moduleName)
-    except:
+    except Exception:
         try:
             factory = importlib.import_module(moduleName)
-        except:
+        except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
     # Now, get the speech server we care about.
@@ -89,7 +88,7 @@ def init():
         moduleName = settings.speechServerFactory
         _initSpeechServer(moduleName,
                           settings.speechServerInfo)
-    except:
+    except Exception:
         moduleNames = settings.speechFactoryModules
         for moduleName in moduleNames:
             if moduleName != settings.speechServerFactory:
@@ -97,7 +96,7 @@ def init():
                     _initSpeechServer(moduleName, None)
                     if _speechserver:
                         break
-                except:
+                except Exception:
                     debug.printException(debug.LEVEL_SEVERE)
 
     if _speechserver:
@@ -123,7 +122,7 @@ def __resolveACSS(acss=None):
         family = acss.get(acss.FAMILY)
         try:
             family = VoiceFamily(family)
-        except:
+        except Exception:
             family = VoiceFamily({})
         acss[acss.FAMILY] = family
         return acss
@@ -165,7 +164,7 @@ def _speak(text, acss, interrupt):
         voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
         try:
             voice.update(__resolveACSS(acss))
-        except:
+        except Exception:
             pass
         _speechserver.speak(text, __resolveACSS(voice), interrupt)
 

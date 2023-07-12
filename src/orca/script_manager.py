@@ -163,7 +163,7 @@ class ScriptManager:
                 else:
                     script = module.Script(app)
                 break
-            except:
+            except Exception:
                 debug.printException(debug.LEVEL_INFO)
                 msg = 'ERROR: Could not load %s' % moduleName
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -281,7 +281,7 @@ class ScriptManager:
             else:
                 appScript = self._createScript(app, None)
                 self.appScripts[app] = appScript
-        except:
+        except Exception:
             msg = 'WARNING: Exception getting app script.'
             debug.printException(debug.LEVEL_ALL)
             debug.println(debug.LEVEL_WARNING, msg, True)

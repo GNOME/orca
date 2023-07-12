@@ -256,7 +256,7 @@ class KeyBinding:
 
         try:
             return self.handler.description
-        except:
+        except Exception:
             return ''
 
     def asString(self):
@@ -341,7 +341,7 @@ class KeyBindings:
 
         try:
             i = self.keyBindings.index(keyBinding)
-        except:
+        except Exception:
             pass
         else:
             del self.keyBindings[i]
@@ -508,7 +508,7 @@ class KeyBindings:
             handler = i[3]
             try:
                 clickCount = i[4]
-            except:
+            except Exception:
                 clickCount = 1
 
             if handler in handlers:

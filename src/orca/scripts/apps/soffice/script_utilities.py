@@ -93,7 +93,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             text = super().displayedText(obj)
-        except:
+        except Exception:
             return ""
 
         # TODO - JD: This is needed because the default behavior is to fall
@@ -148,7 +148,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             iTable = table.queryTable()
-        except:
+        except Exception:
             return -1, -1, None
 
         index = self.cellIndex(cell)
@@ -279,7 +279,7 @@ class Utilities(script_utilities.Utilities):
         if self._script.inputLineForCell:
             try:
                 topLevel = self.topLevelObject(self._script.inputLineForCell)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting topLevelObject for inputline"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self._script.inputLineForCell = None
@@ -380,7 +380,7 @@ class Utilities(script_utilities.Utilities):
         for target in targets:
             try:
                 nSelections = target.queryText().getNSelections()
-            except:
+            except Exception:
                 return False
             if nSelections:
                 return True
@@ -429,7 +429,7 @@ class Utilities(script_utilities.Utilities):
         if obj:
             try:
                 topLevel = self.topLevelObject(obj)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting top-level object for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
@@ -540,7 +540,7 @@ class Utilities(script_utilities.Utilities):
             if lastKey == "Return":
                 try:
                     charCount = event.source.queryText().characterCount
-                except:
+                except Exception:
                     charCount = 0
                 return charCount > 0
 
@@ -575,7 +575,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         lastKey, mods = self.lastKeyAndModifiers()
-        if not lastKey in ["Down", "Up"]:
+        if lastKey not in ["Down", "Up"]:
             return False
 
         return True
@@ -646,8 +646,8 @@ class Utilities(script_utilities.Utilities):
 
     def getFirstCaretPosition(self, obj):
         try:
-            text = obj.queryText()
-        except:
+            obj.queryText()
+        except Exception:
             if AXObject.get_child_count(obj):
                 return self.getFirstCaretPosition(AXObject.get_child(obj, 0))
 
@@ -688,14 +688,14 @@ class Utilities(script_utilities.Utilities):
     def _getCellNameForCoordinates(self, obj, row, col, includeContents=False):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             msg = "SOFFICE: Exception querying Table interface of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         try:
             cell = table.getAccessibleAt(row, col)
-        except:
+        except Exception:
             msg = "SOFFICE: Exception getting cell (%i,%i) of %s" % (row, col, obj)
             debug.println(debug.LEVEL_INFO, msg, True)
             return

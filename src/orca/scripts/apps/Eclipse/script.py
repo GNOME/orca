@@ -29,6 +29,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.toolkits.GAIL as GAIL
 from orca.ax_object import AXObject

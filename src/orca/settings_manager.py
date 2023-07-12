@@ -29,8 +29,6 @@ __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
 import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 import imp
 import importlib
@@ -55,7 +53,7 @@ try:
         '/org/a11y/bus',
         'org.freedesktop.DBus.Properties',
         None)
-except:
+except Exception:
     _proxy = None
 
 _scriptManager = script_manager.getManager()
@@ -167,7 +165,7 @@ class SettingsManager(object):
             backend = '.backends.%s_backend' % self.backendName
             self.backendModule = importlib.import_module(backend, 'orca')
             return True
-        except:
+        except Exception:
             return False
 
     def _createDefaults(self):
@@ -230,7 +228,7 @@ class SettingsManager(object):
             if value is None:
                 try:
                     value = getattr(settings, key)
-                except:
+                except Exception:
                     pass
             self.defaultGeneral[key] = value
 
@@ -302,7 +300,7 @@ class SettingsManager(object):
                 factories.append(module)
                 msg = "SETTINGS MANAGER: Valid speech server factory: %s" % moduleName
                 debug.println(debug.LEVEL_INFO, msg, True)
-            except:
+            except Exception:
                 msg = "SETTINGS MANAGER: Invalid speech server factory: %s" % moduleName
                 debug.println(debug.LEVEL_INFO, msg, True)
 

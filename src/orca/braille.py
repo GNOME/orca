@@ -64,7 +64,7 @@ try:
     _brlAPIAvailable = True
     _brlAPIRunning = False
     _brlAPISourceId = 0
-except:
+except Exception:
     msg = "BRAILLE: Could not import brlapi."
     debug.println(debug.LEVEL_WARNING, msg, True)
     _brlAPIAvailable = False
@@ -77,7 +77,7 @@ try:
     msg = "BRAILLE: About to import louis."
     debug.println(debug.LEVEL_INFO, msg, True)
     import louis
-except:
+except Exception:
     msg = "BRAILLE: Could not import liblouis"
     debug.println(debug.LEVEL_WARNING, msg, True)
     louis = None
@@ -97,7 +97,7 @@ else:
 
 try:
     from . import brlmon
-except:
+except Exception:
     settings.enableBrailleMonitor = False
 
 
@@ -521,7 +521,7 @@ class Component(Region):
            grabFocusBeforeRouting(self.accessible, offset):
             try:
                 self.accessible.queryComponent().grabFocus()
-            except:
+            except Exception:
                 pass
 
         if AXObject.do_action(self.accessible, 0):
@@ -711,7 +711,7 @@ class Text(Region):
         """
 
         try:
-            text = self.accessible.queryText()
+            self.accessible.queryText()
         except NotImplementedError:
             return ''
 
@@ -730,7 +730,7 @@ class Text(Region):
             try:
                 hyperText = self.accessible.queryHypertext()
                 nLinks = hyperText.getNLinks()
-            except:
+            except Exception:
                 nLinks = 0
 
             n = 0
@@ -740,7 +740,7 @@ class Text(Region):
                     for i in range(link.startIndex, link.endIndex):
                         try:
                             regionMask[i] |= linkIndicator
-                        except:
+                        except Exception:
                             pass
                 n += 1
 
@@ -1141,7 +1141,7 @@ def _idleBraille():
             debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 0)
             idle = True
-        except:
+        except Exception:
             msg = "BRAILLE: Idling braille failled. This requires BrlAPI >= 0.8."
             debug.println(debug.LEVEL_INFO, msg, True)
             pass
@@ -1163,7 +1163,7 @@ def _clearBraille():
         try:
             _brlAPI.writeText("", 0)
             _idleBraille()
-        except:
+        except Exception:
             msg = "BRAILLE: BrlTTY seems to have disappeared."
             debug.println(debug.LEVEL_WARNING, msg, True)
             shutdown()
@@ -1190,7 +1190,7 @@ def _enableBraille():
                 debug.println(debug.LEVEL_INFO, msg, True)
                 _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 50)
                 idle = False
-            except:
+            except Exception:
                 msg = "BRAILLE: could not restore priority"
                 debug.println(debug.LEVEL_WARNING, msg, True)
             else:
@@ -1446,7 +1446,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
 
         try:
             _brlAPI.write(writeStruct)
-        except:
+        except Exception:
             msg = "BRAILLE: BrlTTY seems to have disappeared."
             debug.println(debug.LEVEL_WARNING, msg, True)
             shutdown()
@@ -1456,7 +1456,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
             try:
                 _monitor = brlmon.BrlMon(_displaySize[0])
                 _monitor.show_all()
-            except:
+            except Exception:
                 debug.println(debug.LEVEL_WARNING, "brlmon failed")
                 _monitor = None
         if attributeMask:
@@ -1773,7 +1773,7 @@ def _processBrailleEvent(event):
             # the command was consumed.
             #
             consumed = _callback(event)
-        except:
+        except Exception:
             debug.println(debug.LEVEL_WARNING, "Issue processing event:")
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
@@ -1789,7 +1789,7 @@ def _brlAPIKeyReader(source, condition):
     """
     try:
         key = _brlAPI.readKey(False)
-    except:
+    except Exception:
         debug.println(debug.LEVEL_WARNING, "BrlTTY seems to have disappeared:")
         debug.printException(debug.LEVEL_WARNING)
         shutdown()
@@ -1906,7 +1906,7 @@ def init(callback=None):
         msg = "BRAILLE: Initialization failed: BrlApi is not defined."
         debug.println(debug.LEVEL_WARNING, msg, True)
         return False
-    except:
+    except Exception:
         msg = "BRAILLE: Initialization failed."
         debug.println(debug.LEVEL_WARNING, msg, True)
         debug.printException(debug.LEVEL_WARNING)
@@ -1922,7 +1922,7 @@ def init(callback=None):
             _brlAPI.leaveTtyMode()
             msg = "BRAILLE: TTY mode exited."
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = "BRAILLE: Exception leaving TTY mode."
             debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -1932,7 +1932,7 @@ def init(callback=None):
             _brlAPI.closeConnection()
             msg = "BRAILLE: Connection closed."
             debug.println(debug.LEVEL_INFO, msg, True)
-        except:
+        except Exception:
             msg = "BRAILLE: Exception closing connection."
             debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -1940,7 +1940,6 @@ def init(callback=None):
         return False
 
     _displaySize = [x, 1]
-    idle = False
 
     # The monitor will be created in refresh if needed.
     if _monitor:
@@ -1981,7 +1980,7 @@ def shutdown():
             msg = "BRAILLE: Attempting to leave TTY mode."
             debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.leaveTtyMode()
-        except:
+        except Exception:
             msg = "BRAILLE: Exception leaving TTY mode."
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:
@@ -1992,7 +1991,7 @@ def shutdown():
             msg = "BRAILLE: Attempting to close connection."
             debug.println(debug.LEVEL_INFO, msg, True)
             _brlAPI.closeConnection()
-        except:
+        except Exception:
             msg = "BRAILLE: Exception closing connection."
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:

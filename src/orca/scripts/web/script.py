@@ -42,7 +42,6 @@ from orca import guilabels
 from orca import input_event
 from orca import liveregions
 from orca import messages
-from orca import object_properties
 from orca import orca
 from orca import orca_state
 from orca import settings
@@ -519,7 +518,7 @@ class Script(default.Script):
         if event.type.startswith('object:children-changed'):
             try:
                 role = AXObject.get_role(event.any_data)
-            except:
+            except Exception:
                 pass
             else:
                 if role == Atspi.Role.DIALOG:
@@ -1208,7 +1207,7 @@ class Script(default.Script):
         if offset is None:
             try:
                 offset = max(0, text.caretOffset)
-            except:
+            except Exception:
                 offset = 0
 
         if text and startOffset is not None and endOffset is not None:
@@ -1229,7 +1228,7 @@ class Script(default.Script):
 
         if index > -1:
             candidate, startOffset, endOffset, string = contents[index]
-            if not self.EMBEDDED_OBJECT_CHARACTER in string:
+            if elf.EMBEDDED_OBJECT_CHARACTER not in string:
                 return string, caretOffset, startOffset
 
         return "", 0, 0
@@ -1906,7 +1905,7 @@ class Script(default.Script):
         if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
             utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(self.speechGenerator.generateSpeech(child, force=True))
+            utterances.extend(self.speechGenerator.generateSpeech(event.any_data, force=True))
             speech.speak(utterances)
             self._lastMouseOverObject = event.any_data
             self.preMouseOverContext = self.utilities.getCaretContext()
@@ -2154,7 +2153,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not role in [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]:
+        if role not in [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]:
             msg = "WEB: Deferring to other scripts for handling non-document source"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False

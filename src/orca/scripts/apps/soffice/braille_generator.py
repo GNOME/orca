@@ -111,7 +111,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         try:
             objectText = self._script.utilities.substring(obj, 0, -1)
             cellName = self._script.utilities.spreadSheetCellName(obj)
-        except:
+        except Exception:
             return []
 
         return [braille.Component(obj, " ".join((objectText, cellName)))]

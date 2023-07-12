@@ -30,7 +30,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import urllib.parse, urllib.request, urllib.error, urllib.parse
+import urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
 
 from . import chnames
 from . import debug
@@ -238,12 +241,12 @@ class SpeechGenerator(generator.Generator):
         if role == Atspi.Role.ALERT:
             try:
                 alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
-            except:
+            except Exception:
                 pass
         else:
             try:
                 alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForUnrelatedLabels')
-            except:
+            except Exception:
                 pass
 
         if alreadyUsed:
@@ -935,8 +938,8 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         try:
-            image = obj.queryImage()
-        except:
+            obj.queryImage()
+        except Exception:
             pass
         else:
             args['role'] = Atspi.Role.IMAGE
@@ -1149,7 +1152,7 @@ class SpeechGenerator(generator.Generator):
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             if args.get('guessCoordinates', False):
                 col = self._script.pointOfReference.get('lastColumn', -1)
         else:
@@ -1188,7 +1191,7 @@ class SpeechGenerator(generator.Generator):
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             if args.get('guessCoordinates', False):
                 row = self._script.pointOfReference.get('lastRow', -1)
         else:
@@ -1216,7 +1219,7 @@ class SpeechGenerator(generator.Generator):
         parent = self._script.utilities.getTable(obj)
         try:
             table = parent.queryTable()
-        except:
+        except Exception:
             table = None
         else:
             index = self._script.utilities.cellIndex(obj)
@@ -1393,7 +1396,7 @@ class SpeechGenerator(generator.Generator):
 
         try:
             return self._script.generatorCache['textInformation']
-        except:
+        except Exception:
             pass
 
         textObj = obj.queryText()
@@ -1436,7 +1439,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         try:
-            text = obj.queryText()
+            obj.queryText()
         except NotImplementedError:
             return []
 
@@ -1461,7 +1464,7 @@ class SpeechGenerator(generator.Generator):
         """
 
         try:
-            text = obj.queryText()
+            obj.queryText()
         except NotImplementedError:
             return []
 
@@ -1530,7 +1533,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         try:
             textObj = obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             noOfSelections = textObj.getNSelections()
@@ -1672,7 +1675,7 @@ class SpeechGenerator(generator.Generator):
         # TODO - JD: We need other ways to determine group membership. Not all
         # implementations expose the member-of relation. Gtk3 does. Others are TBD.
         members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF)
-        if not priorObj in members:
+        if priorObj not in members:
             return result
 
         return []
@@ -1845,7 +1848,7 @@ class SpeechGenerator(generator.Generator):
         try:
             alertAndDialogCount = \
                 self._script.utilities.unfocusedAlertAndDialogCount(obj)
-        except:
+        except Exception:
             alertAndDialogCount = 0
         if alertAndDialogCount > 0:
             result.append(messages.dialogCountSpeech(alertAndDialogCount))
@@ -2865,7 +2868,7 @@ class SpeechGenerator(generator.Generator):
     def _generateMathTableStart(self, obj, **args):
         try:
             table = obj.queryTable()
-        except:
+        except Exception:
             return []
 
         nestingLevel = self._script.utilities.getMathNestingLevel(obj)

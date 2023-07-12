@@ -71,7 +71,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                       Atspi.Role.LIST,
                       Atspi.Role.PASSWORD_TEXT,
                       Atspi.Role.RADIO_BUTTON]
-        if not role in inferRoles:
+        if role not in inferRoles:
             return result
 
         label, objects = self._script.labelInference.infer(obj)
@@ -112,8 +112,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                Atspi.Role.SECTION,
                                Atspi.Role.TABLE_CELL])
 
-        if not (role in doNotSpeak):
-            docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
+        if role not in doNotSpeak:
             if role == Atspi.Role.IMAGE:
                 pred = lambda x: AXObject.get_role(x) == Atspi.Role.LINK
                 link = AXObject.find_ancestor(obj, pred)

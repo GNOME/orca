@@ -121,7 +121,7 @@ class Generator:
                 try:
                     evalString = \
                         self._script.formatting[self._mode][roleKey][key]
-                except:
+                except Exception:
                     continue
                 else:
                     if not evalString:
@@ -140,7 +140,7 @@ class Generator:
                             if arg not in self._methodsDict:
                                 debug.printException(debug.LEVEL_SEVERE)
                             globalsDict[arg] = []
-                        except:
+                        except Exception:
                             debug.printException(debug.LEVEL_SEVERE)
                             break
 
@@ -205,7 +205,7 @@ class Generator:
         globalsDict['obj'] = obj
         try:
             globalsDict['role'] = args.get('role', AXObject.get_role(obj))
-        except:
+        except Exception:
             msg = 'ERROR: Cannot generate presentation for: %s. Aborting' % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return result
@@ -240,9 +240,6 @@ class Generator:
                     suffix = self._script.formatting.getSuffix(**args)
                     formatting = '%s + %s + %s' % (prefix, formatting, suffix)
                 args['recursing'] = True
-                firstTimeCalled = True
-            else:
-                firstTimeCalled = False
 
             msg = '%s GENERATOR: Starting %s generation for %s (%s)' % \
                 (self._mode.upper(), args.get('formatType'), obj, args.get('role'))
@@ -277,7 +274,7 @@ class Generator:
                                       "%sGENERATION TIME: %s  ---->  %s=[%s]" \
                                       % (" " * 18, duration, arg, stringResult))
 
-        except:
+        except Exception:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
@@ -480,7 +477,7 @@ class Generator:
                 tokens = self._script.formatting[self._mode][role][args.get('formatType')].split()
                 isLabelAndName = 'labelAndName' in tokens
                 isLabelOrName = 'labelOrName' in tokens
-            except:
+            except Exception:
                 isLabelAndName = False
                 isLabelOrName = False
 
@@ -488,11 +485,11 @@ class Generator:
             desc = description.lower()
             canUse = True
             if isLabelAndName:
-                canUse = not desc in name.lower() and not desc in label.lower()
+                canUse = desc not in name.lower() and desc not in label.lower()
             elif isLabelOrName and label:
-                canUse = not desc in label.lower()
+                canUse = desc not in label.lower()
             elif isLabelOrName and name:
-                canUse = not desc in name.lower()
+                canUse = desc not in name.lower()
             if canUse:
                 result.append(description)
 
@@ -701,7 +698,9 @@ class Generator:
                        Atspi.Role.RADIO_BUTTON,
                        Atspi.Role.SLIDER,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
+
+        def isWidget(x):
+            return AXObject.get_role(x) in widgetRoles
 
         # For GtkListBox, such as those found in the control center
         if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
@@ -832,7 +831,7 @@ class Generator:
         roleString =  self.getLocalizedRoleName(obj, role=Atspi.Role.ROW_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
-               and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
+               and args.get('formatType') not in ['basicWhereAmI', 'detailedWhereAmI']:
                 text = "%s %s" % (text, roleString)
         elif args.get('mode') == 'braille':
             text = "%s %s" % (text, roleString)
@@ -858,7 +857,7 @@ class Generator:
         roleString =  self.getLocalizedRoleName(obj, role=Atspi.Role.COLUMN_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
-               and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
+               and args.get('formatType') not in ['basicWhereAmI', 'detailedWhereAmI']:
                 text = "%s %s" % (text, roleString)
         elif args.get('mode') == 'braille':
             text = "%s %s" % (text, roleString)
@@ -1003,7 +1002,7 @@ class Generator:
         current cell.
         """
 
-        presentAll = args.get('readingRow') == True \
+        presentAll = args.get('readingRow') is True \
             or args.get('formatType') == 'detailedWhereAmI' \
             or self._mode == 'braille' \
             or self._script.utilities.shouldReadFullRow(obj)
@@ -1050,7 +1049,7 @@ class Generator:
             return []
 
         substring = args.get('string', self._script.utilities.substring(obj, start, end))
-        if substring and not self._script.EMBEDDED_OBJECT_CHARACTER in substring:
+        if substring and self._script.EMBEDDED_OBJECT_CHARACTER not in substring:
             return [substring]
 
         return []
@@ -1072,7 +1071,7 @@ class Generator:
             return result
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        if text and not self._script.EMBEDDED_OBJECT_CHARACTER in text:
+        if text and self._script.EMBEDDED_OBJECT_CHARACTER not in text:
             return [text]
 
         return []
@@ -1203,7 +1202,6 @@ class Generator:
         the text actually being painted in the cell, if it can be
         found.  Otherwise, an empty array is returned.
         """
-        result = []
         rad = self._script.utilities.realActiveDescendant(obj)
 
         if not (AXObject.get_role(rad) == Atspi.Role.TABLE_CELL and AXObject.get_child_count(rad)):
@@ -1270,7 +1268,9 @@ class Generator:
         return interval >= self._getProgressBarUpdateInterval()
 
     def _cleanUpCachedProgressBars(self):
-        isValid = lambda x: not (self._script.utilities.isZombie(x) or self._script.utilities.isDead(x))
+        def isValid(x):
+            return not (self._script.utilities.isZombie(x) or self._script.utilities.isDead(x))
+
         bars = list(filter(isValid, self._activeProgressBars))
         self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}
 
@@ -1285,7 +1285,7 @@ class Generator:
 
     def getProgressBarNumberAndCount(self, obj):
         self._cleanUpCachedProgressBars()
-        if not obj in self._activeProgressBars:
+        if obj not in self._activeProgressBars:
             self._activeProgressBars[obj] = 0.0, None
 
         thisValue = self.getProgressBarUpdateTimeAndValue(obj)
@@ -1293,7 +1293,7 @@ class Generator:
         return index + 1, len(self._activeProgressBars)
 
     def getProgressBarUpdateTimeAndValue(self, obj, **args):
-        if not obj in self._activeProgressBars:
+        if obj not in self._activeProgressBars:
             self._activeProgressBars[obj] = 0.0, None
 
         return self._activeProgressBars.get(obj)
@@ -1505,7 +1505,7 @@ class Generator:
         if not isinstance(role, Atspi.Role):
             try:
                 return obj.getLocalizedRoleName()
-            except:
+            except Exception:
                 return ''
 
         nonlocalized = Atspi.role_get_name(role)

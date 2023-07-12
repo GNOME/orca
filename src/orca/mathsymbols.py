@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import re
 import unicodedata
 
-from .orca_i18n import _, C_
+from .orca_i18n import C_
 
 fallbackOnUnicodeData = False
 
@@ -2224,7 +2224,7 @@ def __compileRE():
     global _RE
     try:
         _RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
-    except:
+    except Exception:
         _RE = None
 
 def __compileRE_COMBINING():
@@ -2232,7 +2232,7 @@ def __compileRE_COMBINING():
     try:
         _RE_COMBINING = re.compile('.[%s]' % ''.join(list(_combining.keys())),
                                    re.UNICODE)
-    except:
+    except Exception:
         _RE_COMBINING = None
 
 def _getStyleString(symbol):
@@ -2273,7 +2273,7 @@ def updateSymbols(symbolDict):
     _all.update(symbolDict)
 
 def _getSpokenName(symbol, includeStyle):
-    if not symbol in _all:
+    if symbol not in _all:
         return ""
 
     name = _all.get(symbol)

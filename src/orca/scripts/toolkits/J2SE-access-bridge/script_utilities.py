@@ -79,7 +79,7 @@ class Utilities(script_utilities.Utilities):
             try:
                 ext1 = obj1.queryComponent().getExtents(0)
                 ext2 = obj2.queryComponent().getExtents(0)
-            except:
+            except Exception:
                 pass
             else:
                 if ext1.x == ext2.x and ext1.y == ext2.y \
@@ -101,7 +101,7 @@ class Utilities(script_utilities.Utilities):
                 parent2 = AXObject.get_parent(parent2)
             if parent1 and parent2 and parent1 == parent2:
                 return True
-        except:
+        except Exception:
             pass
 
         return script_utilities.Utilities.isSameObject(self, obj1, obj2, comparePaths, ignoreNames)

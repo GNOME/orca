@@ -70,7 +70,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             text = event.source.queryText()
-        except:
+        except Exception:
             msg = "ERROR: Exception querying text for %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return event.any_data
@@ -120,7 +120,7 @@ class Utilities(script_utilities.Utilities):
     def insertionEndsAtCaret(self, event):
         try:
             text = event.source.queryText()
-        except:
+        except Exception:
             msg = "ERROR: Exception querying text for %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return False

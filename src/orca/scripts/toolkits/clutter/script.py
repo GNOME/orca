@@ -26,10 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
-from gi.repository import Gdk
-
 import orca.scripts.default as default
-import orca.debug as debug
 from .script_utilities import Utilities
 
 

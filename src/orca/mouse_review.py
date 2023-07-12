@@ -39,7 +39,7 @@ try:
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck
     _mouseReviewCapable = True
-except:
+except Exception:
     _mouseReviewCapable = False
 
 from . import debug
@@ -357,7 +357,7 @@ class MouseReviewer:
             msg = "MOUSE REVIEW ERROR: Gtk+ 3.20 is not available"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
-        except:
+        except Exception:
             msg = "MOUSE REVIEW ERROR: Exception getting pointer for default seat."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -493,7 +493,7 @@ class MouseReviewer:
 
         try:
             return obj.queryComponent().contains(x, y, coordType)
-        except:
+        except Exception:
             return False
 
     def _has_bounds(self, obj, bounds, coordType=None):
@@ -504,7 +504,7 @@ class MouseReviewer:
 
         try:
             extents = obj.queryComponent().getExtents(coordType)
-        except:
+        except Exception:
             return False
 
         return list(extents) == list(bounds)
@@ -572,7 +572,7 @@ class MouseReviewer:
         else:
             try:
                 menu = AXObject.find_ancestor(orca_state.locusOfFocus, isMenu)
-            except:
+            except Exception:
                 msg = "ERROR: Exception getting ancestor of %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 menu = None

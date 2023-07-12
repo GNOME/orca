@@ -39,7 +39,6 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import object_properties
-from . import orca
 from . import orca_gui_navlist
 from . import orca_state
 from . import settings
@@ -365,7 +364,7 @@ class StructuralNavigationObject:
 
         try:
             objects, criteria = self.structuralNavigation._getAll(self)
-        except:
+        except Exception:
             script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
             return
 
@@ -388,7 +387,7 @@ class StructuralNavigationObject:
         currentObject, offset = script.utilities.getCaretContext()
         try:
             index = objects.index(currentObject)
-        except:
+        except Exception:
             index = 0
 
         rows = [[obj, -1] + rowData(obj) for obj in objects]
@@ -436,7 +435,7 @@ class StructuralNavigationObject:
         def showListAtLevel(script, inputEvent):
             try:
                 objects, criteria = self.structuralNavigation._getAll(self, arg=level)
-            except:
+            except Exception:
                 script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
                 return
 
@@ -457,7 +456,7 @@ class StructuralNavigationObject:
             currentObject, offset = script.utilities.getCaretContext()
             try:
                 index = objects.index(currentObject)
-            except:
+            except Exception:
                 index = 0
 
             rows = [[obj, -1] + rowData(obj) for obj in objects]
@@ -711,7 +710,7 @@ class StructuralNavigation:
 
         try:
             dialogData = eval("self._%sDialogData" % name)
-        except:
+        except Exception:
             dialogData = None
 
         return StructuralNavigationObject(self, name, bindings, predicate,
@@ -890,7 +889,7 @@ class StructuralNavigation:
             msg = "STRUCTURAL NAVIGATION: %s does not implement collection" % document
             debug.println(debug.LEVEL_INFO, msg, True)
             return [], None
-        except:
+        except Exception:
             msg = "STRUCTURAL NAVIGATION: Exception querying collection on %s" % document
             debug.println(debug.LEVEL_INFO, msg, True)
             return [], None
@@ -1059,7 +1058,7 @@ class StructuralNavigation:
         caption = obj.queryTable().caption
         try:
             caption.queryText()
-        except:
+        except Exception:
             return None
         else:
             return self._script.utilities.displayedText(caption)
@@ -1145,7 +1144,7 @@ class StructuralNavigation:
 
         try:
             text = obj.queryText()
-        except:
+        except Exception:
             pass
         else:
             if text.getText(0, -1).strip():
@@ -1189,7 +1188,7 @@ class StructuralNavigation:
         if rowDiff:
             rowHeaders = self._script.utilities.rowHeadersForCell(cell)
             for header in rowHeaders:
-                if not header in oldRowHeaders:
+                if header not in oldRowHeaders:
                     text = self._getCellText(header)
                     voice = self._script.speechGenerator.voice(string=text)
                     self._script.speakMessage(text, voice=voice, force=True)
@@ -1197,7 +1196,7 @@ class StructuralNavigation:
         if colDiff:
             colHeaders = self._script.utilities.columnHeadersForCell(cell)
             for header in colHeaders:
-                if not header in oldColHeaders:
+                if header not in oldColHeaders:
                     text = self._getCellText(header)
                     voice = self._script.speechGenerator.voice(string=text)
                     self._script.speakMessage(text, voice=voice, force=True)
@@ -1340,7 +1339,7 @@ class StructuralNavigation:
         if not text and AXObject.get_role(obj) == Atspi.Role.IMAGE:
             try:
                 image = obj.queryImage()
-            except:
+            except Exception:
                 text = AXObject.get_description(obj)
             else:
                 text = image.imageDescription or AXObject.get_description(obj)
@@ -1999,7 +1998,7 @@ class StructuralNavigation:
             return False
 
         role = AXObject.get_role(obj)
-        if not role in self.FORM_ROLES:
+        if role not in self.FORM_ROLES:
             return False
 
         state = AXObject.get_state_set(obj)
@@ -2649,7 +2648,7 @@ class StructuralNavigation:
                 # We want to skip these.
                 #
                 isMatch = text.characterCount > 2
-            except:
+            except Exception:
                 pass
 
         return isMatch
@@ -2881,7 +2880,7 @@ class StructuralNavigation:
 
         try:
             return obj.queryTable().nRows > 0
-        except:
+        except Exception:
             pass
 
         return False
