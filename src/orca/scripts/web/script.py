@@ -1228,7 +1228,7 @@ class Script(default.Script):
 
         if index > -1:
             candidate, startOffset, endOffset, string = contents[index]
-            if elf.EMBEDDED_OBJECT_CHARACTER not in string:
+            if self.EMBEDDED_OBJECT_CHARACTER not in string:
                 return string, caretOffset, startOffset
 
         return "", 0, 0
