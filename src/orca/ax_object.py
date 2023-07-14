@@ -87,6 +87,9 @@ class AXObject:
         elif re.search(r"The application no longer exists", error):
             AXObject.KNOWN_DEAD.append(hash(obj))
             msg = msg.replace(error, "app no longer exists")
+        elif re.search(r"The process appears to be hung", error):
+            AXObject.KNOWN_DEAD.append(hash(obj))
+            msg = msg.replace(error, "The application is not responsive")
 
         debug.println(debug.LEVEL_INFO, msg, True)
 
