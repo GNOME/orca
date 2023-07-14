@@ -34,11 +34,15 @@ import orca.orca as orca
 import orca.scripts.default as default
 from orca.ax_object import AXObject
 
+from .script_utilities import Utilities
 
 class Script(default.Script):
 
     def __init__(self, app):
         super().__init__(app)
+
+    def getUtilities(self):
+        return Utilities(self)
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
@@ -61,7 +65,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        frame = self.utilities.topLevelObject(event.source, useFallbackSearch=True)
+        frame = self.utilities.topLevelObject(event.source)
         if not frame:
             msg = "QT: Ignoring event because we couldn't find an ancestor window."
             debug.println(debug.LEVEL_INFO, msg, True)

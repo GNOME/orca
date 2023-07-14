@@ -2244,6 +2244,10 @@ class Utilities:
 
         return None
 
+    def _isTopLevelObject(self, obj):
+        return AXObject.get_role(obj) in self._topLevelRoles() \
+            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.APPLICATION
+
     def topLevelObject(self, obj, useFallbackSearch=False):
         """Returns the top-level object (frame, dialog ...) containing obj,
         or None if obj is not inside a top-level object.
@@ -2252,13 +2256,10 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        isTopLevel = lambda x: AXObject.get_role(x) in self._topLevelRoles() \
-            and AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.APPLICATION
-
-        if isTopLevel(obj):
+        if self._isTopLevelObject(obj):
             rv = obj
         else:
-            rv = AXObject.find_ancestor(obj, isTopLevel)
+            rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
 
         msg = "INFO: %s is top-level object for: %s" % (rv, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
