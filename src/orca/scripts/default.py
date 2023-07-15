@@ -60,6 +60,7 @@ import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
 import orca.notification_messages as notification_messages
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -841,13 +842,9 @@ class Script(script.Script):
         self.pointOfReference['lastColumn'] = column
         self.pointOfReference['lastRow'] = row
 
-        state = AXObject.get_state_set(obj)
-        self.pointOfReference['checkedChange'] = \
-            hash(obj), state.contains(Atspi.StateType.CHECKED)
-        self.pointOfReference['selectedChange'] = \
-            hash(obj), state.contains(Atspi.StateType.SELECTED)
-        self.pointOfReference['expandedChange'] = \
-            hash(obj), state.contains(Atspi.StateType.EXPANDED)
+        self.pointOfReference['checkedChange'] = hash(obj), AXUtilities.is_checked(obj)
+        self.pointOfReference['selectedChange'] = hash(obj), AXUtilities.is_selected(obj)
+        self.pointOfReference['expandedChange'] = hash(obj), AXUtilities.is_expanded(obj)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -864,7 +861,7 @@ class Script(script.Script):
             orca_state.noFocusTimeStamp = time.time()
             return
 
-        if AXObject.has_state(newLocusOfFocus, Atspi.StateType.DEFUNCT):
+        if AXUtilities.is_defunct(newLocusOfFocus):
             return
 
         if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
@@ -1149,9 +1146,7 @@ class Script(script.Script):
             # jump into flat review to review the text.  See
             # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
             #
-            if (not movedCaret) \
-               and (AXObject.get_role(orca_state.locusOfFocus) \
-                    == Atspi.Role.TERMINAL):
+            if not movedCaret and AXUtilities.is_terminal(orca_state.locusOfFocus):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
                 self.reviewPreviousCharacter(inputEvent)
@@ -2218,12 +2213,7 @@ class Script(script.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        frames = [Atspi.Role.FRAME,
-                  Atspi.Role.DIALOG,
-                  Atspi.Role.FILE_CHOOSER,
-                  Atspi.Role.COLOR_CHOOSER]
-
-        if AXObject.get_role(event.source) in frames:
+        if AXUtilities.is_dialog_or_alert(event.source) or AXUtilities.is_frame(event.source):
             if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
                 return
 
@@ -2262,8 +2252,8 @@ class Script(script.Script):
         if not event.any_data:
             return
 
-        if not AXObject.has_state(event.source, Atspi.StateType.FOCUSED) \
-           and not AXObject.has_state(event.any_data, Atspi.StateType.FOCUSED):
+        if not AXUtilities.is_focused(event.source) \
+           and not AXUtilities.is_focused(event.any_data):
             msg = "DEFAULT: Ignoring event. Neither source nor child have focused state."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -2283,7 +2273,7 @@ class Script(script.Script):
         if not self.utilities.isSameObject(event.source, orca_state.locusOfFocus):
             return
 
-        if AXObject.has_state(event.source, Atspi.StateType.EXPANDABLE):
+        if AXUtilities.is_expandable(event.source):
             return
 
         # Radio buttons normally change their state when you arrow to them,
@@ -2321,15 +2311,13 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        state = AXObject.get_state_set(event.source)
-        if not state.contains(Atspi.StateType.SHOWING):
+        if not AXUtilities.is_showing(event.source):
             msg = "DEFAULT: Event source is not showing"
             debug.println(debug.LEVEL_INFO, msg, True)
             if not self.utilities.presentEventFromNonShowingObject(event):
                 return
 
-        if event.source != orca_state.locusOfFocus \
-           and state.contains(Atspi.StateType.FOCUSED):
+        if event.source != orca_state.locusOfFocus and AXUtilities.is_focused(event.source):
             topLevelObject = self.utilities.topLevelObject(event.source)
             if self.utilities.isSameObject(orca_state.activeWindow, topLevelObject):
                 msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
@@ -2464,37 +2452,35 @@ class Script(script.Script):
             orca.setLocusOfFocus(None, mouseEvent.window, False)
 
         self.presentationInterrupt()
-        if AXObject.has_state(mouseEvent.obj, Atspi.StateType.FOCUSED):
+        if AXUtilities.is_focused(mouseEvent.obj):
             orca.setLocusOfFocus(None, mouseEvent.obj, windowChanged)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        obj = event.source
         names = self.pointOfReference.get('names', {})
-        oldName = names.get(hash(obj))
+        oldName = names.get(hash(event.source))
         if oldName == event.any_data:
             msg = "DEFAULT: Old name (%s) is the same as new name" % oldName
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        role = AXObject.get_role(obj)
-        if role in [Atspi.Role.COMBO_BOX, Atspi.Role.TABLE_CELL]:
+        if AXUtilities.is_combo_box(event.source) or AXUtilities.is_table_cell(event.source):
             msg = "DEFAULT: Event is redundant notification for this role"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if role == Atspi.Role.FRAME:
-            if obj != orca_state.activeWindow:
+        if AXUtilities.is_frame(event.source):
+            if event.source != orca_state.activeWindow:
                 msg = "DEFAULT: Event is for frame other than the active window"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
-        elif obj != orca_state.locusOfFocus:
+        elif event.source != orca_state.locusOfFocus:
             msg = "DEFAULT: Event is for object other than the locusOfFocus"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        names[hash(obj)] = event.any_data
+        names[hash(event.source)] = event.any_data
         self.pointOfReference['names'] = names
         if event.any_data:
             self.presentMessage(event.any_data)
@@ -2517,25 +2503,28 @@ class Script(script.Script):
         """Callback for object:state-changed:selected accessibility events."""
 
         obj = event.source
-        AXObject.clear_cache(obj)
-        state = AXObject.get_state_set(obj)
-        if not state.contains(Atspi.StateType.FOCUSED):
+        AXObject.clear_cache(event.source)
+        if not AXUtilities.is_focused(event.source):
+            msg = "DEFAULT: Event is not toggling of currently-focused object"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if not self.utilities.isSameObject(orca_state.locusOfFocus, obj):
+        if not self.utilities.isSameObject(orca_state.locusOfFocus, event.source):
+            msg = "DEFAULT: Event is not for locusOfFocus %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return
 
-        isSelected = state.contains(Atspi.StateType.SELECTED)
+        isSelected = AXUtilities.is_selected(event.source)
         if isSelected != event.detail1:
             msg = "DEFAULT: Bogus event: detail1 doesn't match state"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         oldObj, oldState = self.pointOfReference.get('selectedChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+        if hash(oldObj) == hash(event.source) and oldState == event.detail1:
             msg = "DEFAULT: Duplicate or spam event"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -2544,9 +2533,8 @@ class Script(script.Script):
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "space":
             announceState = True
-        elif keyString in ["Down", "Up"] \
-             and isSelected and AXObject.get_role(obj) == Atspi.Role.TABLE_CELL:
-            announceState = True
+        elif keyString in ["Down", "Up"] and AXUtilities.is_table_cell(event.source):
+            announceState = isSelected
 
         if not announceState:
             return
@@ -2561,25 +2549,18 @@ class Script(script.Script):
         else:
             self.speakMessage(messages.TEXT_UNSELECTED, interrupt=False)
 
-        self.pointOfReference['selectedChange'] = hash(obj), event.detail1
+        self.pointOfReference['selectedChange'] = hash(event.source), event.detail1
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
-
-        obj = event.source
-        state = AXObject.get_state_set(obj)
 
         if self.utilities.handlePasteLocusOfFocusChange():
             if self.utilities.topLevelObjectIsActiveAndCurrent(event.source):
                 orca.setLocusOfFocus(event, event.source, False)
         elif self.utilities.handleContainerSelectionChange(event.source):
             return
-        else:
-            if state.contains(Atspi.StateType.MANAGES_DESCENDANTS):
-                return
-
-        # TODO - JD: We need to give more thought to where we look to this
-        # event and where we prefer object:state-changed:selected.
+        elif AXUtilities.manages_descendants(event.source):
+            return
 
         # If the current item's selection is toggled, we'll present that
         # via the state-changed event.
@@ -2587,20 +2568,17 @@ class Script(script.Script):
         if keyString == "space":
             return
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.COMBO_BOX and not state.contains(Atspi.StateType.EXPANDED):
-            entry = self.utilities.getEntryForEditableComboBox(event.source)
-            if AXObject.has_state(entry, Atspi.StateType.FOCUSED):
+        if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
+            if AXUtilities.is_focused(self.utilities.getEntryForEditableComboBox(event.source)):
                 return
-
-        # If a wizard-like notebook page being reviewed changes, we might not get
-        # any events to update the locusOfFocus. As a result, subsequent flat
-        # review commands will continue to present the stale content.
-        if role == Atspi.Role.PAGE_TAB_LIST and self.flatReviewContext:
+        elif AXUtilities.is_page_tab_list(event.source) and self.flatReviewContext:
+            # If a wizard-like notebook page being reviewed changes, we might not get
+            # any events to update the locusOfFocus. As a result, subsequent flat
+            # review commands will continue to present the stale content.
             self.flatReviewContext = None
 
         mouseReviewItem = mouse_review.reviewer.getCurrentItem()
-        selectedChildren = self.utilities.selectedChildren(obj)
+        selectedChildren = self.utilities.selectedChildren(event.source)
         for child in selectedChildren:
             if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == child):
                 msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
@@ -2613,9 +2591,9 @@ class Script(script.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            if AXObject.get_role(child) == Atspi.Role.PAGE_TAB and orca_state.locusOfFocus \
+            if AXUtilities.is_page_tab(child) and orca_state.locusOfFocus \
                and AXObject.get_name(child) == AXObject.get_name(orca_state.locusOfFocus) \
-               and not state.contains(Atspi.StateType.FOCUSED):
+               and not AXUtilities.is_focused(event.source):
                 msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 break
@@ -2639,17 +2617,16 @@ class Script(script.Script):
         if not event.detail1:
             return
 
-        obj = event.source
-        state = AXObject.get_state_set(obj)
-        if not state.contains(Atspi.StateType.FOCUSED):
+        if not AXUtilities.is_focused(event.source):
             return
 
+        obj = event.source
         window, dialog = self.utilities.frameAndDialog(obj)
         clearCache = window != orca_state.activeWindow
         if window and not self.utilities.canBeActiveWindow(window, clearCache) and not dialog:
             return
 
-        if AXObject.get_child_count(obj) and AXObject.get_role(obj) != Atspi.Role.COMBO_BOX:
+        if AXObject.get_child_count(obj) and not AXUtilities.is_combo_box(obj):
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
                 obj = selectedChildren[0]
@@ -3002,7 +2979,7 @@ class Script(script.Script):
         if not self.utilities.lastInputEventWasCut():
             return
 
-        if AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(orca_state.locusOfFocus):
             return
 
         self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
