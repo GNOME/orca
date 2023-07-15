@@ -41,7 +41,7 @@ class Utilities(switcher.Utilities):
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 
-        if AXUtilities.is_filler(obj) and AXUtilities.is_focused(obj)
+        return AXUtilities.is_filler(obj) and AXUtilities.is_focused(obj)
 
     def isSwitcherSelectionChangeEventType(self, event):
         """Returns True if this event is the one we use to present changes."""

@@ -109,7 +109,7 @@ class Script(default.Script):
                     self.presentObject(child)
             return
 
-        if AXUtilities.is_layered_pane(event.source)
+        if AXUtilities.is_layered_pane(event.source) \
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 
