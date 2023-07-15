@@ -40,6 +40,7 @@ from orca import object_properties
 from orca import orca_state
 from orca import settings_manager
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -132,8 +133,7 @@ class SpellCheck:
         return self.activate(window)
 
     def isComplete(self):
-        state = AXObject.get_state_set(self._changeToEntry)
-        return not state.contains(Atspi.StateType.SENSITIVE)
+        return not AXUtilities.is_sensitive(self._changeToEntry)
 
     def isAutoFocusEvent(self, event):
         return False
