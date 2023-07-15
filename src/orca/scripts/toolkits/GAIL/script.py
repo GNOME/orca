@@ -86,7 +86,8 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, AXUtilities.is_menu):
+        if AXUtilities.is_menu(ancestor) \
+           and not AXObject.find_ancestor(ancestor, AXUtilities.is_menu):
             return
 
         orca.setLocusOfFocus(event, event.source)
