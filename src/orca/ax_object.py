@@ -47,16 +47,21 @@ from . import debug
 
 class AXObject:
     KNOWN_DEAD = []
+    KNOWN_ROLES = {}
 
     @staticmethod
     def _clear_stored_data():
         """Clears any data we have cached for objects"""
 
         while True:
-            time.sleep(120)
+            time.sleep(60)
             msg = "AXObject: Clearing %i known-dead objects" % len(AXObject.KNOWN_DEAD)
             debug.println(debug.LEVEL_INFO, msg, True)
             AXObject.KNOWN_DEAD.clear()
+
+            msg = "AXObject: Clearing %i known roles" % len(AXObject.KNOWN_ROLES)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            AXObject.KNOWN_ROLES.clear()
 
     @staticmethod
     def start_cache_clearing_thread():
@@ -555,6 +560,10 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return Atspi.Role.INVALID
 
+        role = AXObject.KNOWN_ROLES.get(hash(obj))
+        if role is not None:
+            return role
+
         try:
             role = Atspi.Accessible.get_role(obj)
         except Exception as e:
@@ -562,6 +571,7 @@ class AXObject:
             AXObject.handle_error(obj, e, msg)
             return Atspi.Role.INVALID
 
+        AXObject.KNOWN_ROLES[hash(obj)] = role
         return role
 
     @staticmethod
@@ -976,11 +986,16 @@ class AXObject:
         if obj is None:
             return False
 
+        if not AXObject.is_valid(obj):
+            return True
+
         try:
             # We use the Atspi function rather than the AXObject function because the
             # latter intentionally handles exceptions.
             Atspi.Accessible.get_name(obj)
-        except Exception:
+        except Exception as e:
+            msg = "AXObject: Accessible is dead: %s" % e
+            AXObject.handle_error(obj, e, msg)
             return True
 
         return False
@@ -1045,6 +1060,9 @@ class AXObject:
     @staticmethod
     def _normalize_action_name(action_name):
         """Adjusts the name to account for differences in implementations."""
+
+        if not action_name:
+            return ""
 
         name = re.sub(r'(?<=[a-z])([A-Z])', r'-\1', action_name).lower()
         name = re.sub('[!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]', '-', name)

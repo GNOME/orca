@@ -1,4 +1,4 @@
-# Utilities for performing tasks not specific to a particular object.
+# Utilities for performing tasks related to accessibility inspection.
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -19,7 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 """
-Utilities for performing tasks not specific to a particular object.
+Utilities for performing tasks related to accessibility inspection.
 These utilities are app-type- and toolkit-agnostic. Utilities that might have
 different implementations or results depending on the type of app (e.g. terminal,
 chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
@@ -35,11 +35,15 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import gi
+import inspect
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_state import AXUtilitiesState
 
 
 class AXUtilities:
@@ -105,3 +109,9 @@ class AXUtilities:
         msg = "WARNING: app with pid %i is not in %s" % (pid, desktop)
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
+
+for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
+    setattr(AXUtilities, name, method)
+
+for name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfunction):
+    setattr(AXUtilities, name, method)

@@ -11,6 +11,8 @@ orca_python_PYTHON = \
 	ax_object.py \
 	ax_selection.py \
 	ax_utilities.py \
+	ax_utilities_role.py \
+	ax_utilities_state.py \
 	bookmarks.py \
 	braille.py \
 	braille_generator.py \
