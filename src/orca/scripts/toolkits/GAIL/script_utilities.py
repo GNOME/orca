@@ -32,6 +32,7 @@ import re
 
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(script_utilities.Utilities):
@@ -44,7 +45,7 @@ class Utilities(script_utilities.Utilities):
         self._isTypeahead = {}
 
     def isTypeahead(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.TEXT):
+        if not AXUtilities.is_text(obj):
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -55,7 +56,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = AXObject.get_parent(parent)
 
-        rv = parent and AXObject.get_role(parent) == Atspi.Role.WINDOW
+        rv = AXUtilities.is_window(parent)
         self._isTypeahead[hash(obj)] = rv
         return rv
 

@@ -34,6 +34,7 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
@@ -78,7 +79,7 @@ class Script(default.Script):
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
            and AXObject.supports_table(event.source) \
-           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+           and not AXUtilities.is_focused(event.source):
             return
 
         ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
@@ -89,8 +90,7 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        isMenu = lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU
-        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
+        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, AXUtilities.is_menu):
             return
 
         orca.setLocusOfFocus(event, event.source)
@@ -98,9 +98,7 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        isFocused = AXObject.has_state(event.source, Atspi.StateType.FOCUSED)
-        role = AXObject.get_role(event.source)
-
+        isFocused = AXUtilities.is_focused(event.source)
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -111,7 +109,7 @@ class Script(default.Script):
                     self.presentObject(child)
             return
 
-        if role == Atspi.Role.LAYERED_PANE \
+        if AXUtilities.is_layered_pane(event.source)
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 

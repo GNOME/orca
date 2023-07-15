@@ -34,6 +34,7 @@ import orca.debug as debug
 import orca.script_utilities as script_utilities
 import orca.orca_state as orca_state
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(script_utilities.Utilities):
@@ -52,24 +53,21 @@ class Utilities(script_utilities.Utilities):
         self._isUselessPanel = {}
 
     def infoBar(self, root):
-        isInfoBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.INFO_BAR
-        return AXObject.find_descendant(root, isInfoBar)
+        return AXObject.find_descendant(root, AXUtilities.is_info_bar)
 
     def isComboBoxWithToggleDescendant(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.COMBO_BOX):
+        if not AXUtilities.is_combo_box(obj):
             return False
 
         rv = self._isComboBoxWithToggleDescendant.get(hash(obj))
         if rv is not None:
             return rv
 
-        isToggle = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOGGLE_BUTTON
-
         for child in AXObject.iter_children(obj):
-            if AXObject.get_role(child) != Atspi.Role.FILLER:
+            if not AXUtilities.is_filler(child):
                 continue
 
-            toggle = AXObject.find_descendant(child, isToggle)
+            toggle = AXObject.find_descendant(child, AXUtilities.is_toggle_button)
             rv = toggle is not None
             if toggle:
                 self._isToggleDescendantOfComboBox[hash(toggle)] = True
@@ -79,15 +77,14 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isToggleDescendantOfComboBox(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.TOGGLE_BUTTON):
+        if not AXUtilities.is_toggle_button(obj):
             return False
 
         rv = self._isToggleDescendantOfComboBox.get(hash(obj))
         if rv is not None:
             return rv
 
-        isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-        comboBox = AXObject.find_ancestor(obj, isComboBox)
+        comboBox = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)
         if comboBox:
             self._isComboBoxWithToggleDescendant[hash(comboBox)] = True
 
@@ -99,7 +96,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or self.isDead(obj):
             return False
 
-        if AXObject.get_role(obj) != Atspi.Role.TEXT:
+        if not AXUtilities.is_text(obj):
             return False
 
         rv = self._isTypeahead.get(hash(obj))
@@ -110,55 +107,42 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = AXObject.get_parent(parent)
 
-        rv = parent and AXObject.get_role(parent) == Atspi.Role.WINDOW
+        rv = AXUtilities.is_window(parent)
         self._isTypeahead[hash(obj)] = rv
         return rv
 
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.
-        state = AXObject.get_state_set(obj)
-        name = AXObject.get_name(obj)
-        if not (name and state.contains(Atspi.StateType.SINGLE_LINE)):
+        if not (AXObject.get_name(obj) and AXUtilities.is_single_line(obj)):
             return False
 
-        if focusedOnly and not state.contains(Atspi.StateType.FOCUSED):
+        if focusedOnly and not AXUtilities.is_focused(obj):
             return False
 
-        isIcon = lambda x: x and AXObject.get_role(x) == Atspi.Role.ICON
-        icons = [x for x in AXObject.iter_children(obj, isIcon)]
+        icons = [x for x in AXObject.iter_children(obj, AXUtilities.is_icon)]
         if icons:
             return True
 
         return False
 
     def isEntryCompletionPopupItem(self, obj):
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_CELL:
-            isWindow = lambda x: x and AXObject.get_role(x) == Atspi.Role.WINDOW
-            window = AXObject.find_ancestor(obj, isWindow)
-            if window:
-                return True
-
-        return False
+        return AXUtilities.is_table_cell(obj) \
+            and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
 
     def isPopOver(self, obj):
         return AXObject.has_relation(obj, Atspi.RelationType.POPUP_FOR)
 
     def isUselessPanel(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.PANEL):
+        if not AXUtilities.is_panel(obj):
             return False
 
         rv = self._isUselessPanel.get(hash(obj))
         if rv is not None:
             return rv
 
-        try:
-            childCount = AXObject.get_child_count(obj)
-        except Exception:
-            rv = True
-        else:
-            name = AXObject.get_name(obj)
-            rv = not (name or childCount or AXObject.supports_text(obj))
-
+        childCount = AXObject.get_child_count(obj)
+        name = AXObject.get_name(obj)
+        rv = not (name or childCount or AXObject.supports_text(obj))
         self._isUselessPanel[hash(obj)] = rv
         return rv
 
@@ -179,7 +163,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def eventIsCanvasNoise(self, event):
-        if AXObject.get_role(event.source) != Atspi.Role.CANVAS:
+        if not AXUtilities.is_canvas(event.source):
             return False
 
         if not orca_state.activeWindow:
@@ -196,7 +180,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _adjustPointForObj(self, obj, x, y, coordType):
-        if not AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE) \
+        if not AXUtilities.is_single_line(obj) \
            or not AXObject.supports_editable_text(obj):
             return x, y
 

@@ -25,14 +25,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.default as default
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
@@ -47,7 +44,7 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if AXObject.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
+        if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -60,7 +57,7 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if AXObject.get_role(event.source) == Atspi.Role.ACCELERATOR_LABEL:
+        if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -71,21 +68,20 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        isActive = AXObject.has_state(frame, Atspi.StateType.ACTIVE)
+        isActive = AXUtilities.is_active(frame)
         if not isActive:
             msg = "QT: Event came from inactive top-level object %s" % frame
             debug.println(debug.LEVEL_INFO, msg, True)
 
             AXObject.clear_cache(frame)
-            isActive = AXObject.has_state(frame, Atspi.StateType.ACTIVE)
+            isActive = AXUtilities.is_active(frame)
             msg = "QT: Cleared cache of %s. Frame is now active: %s" % (frame, isActive)
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        state = AXObject.get_state_set(event.source)
-        if state.contains(Atspi.StateType.FOCUSED) and state.contains(Atspi.StateType.FOCUSABLE):
+        if AXUtilities.is_focused(event.source):
             super().onFocusedChanged(event)
             return
 
-        msg = "QT: WARNING - source states lack focused and/or focusable"
+        msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
         debug.println(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, event.source)

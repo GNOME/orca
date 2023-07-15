@@ -33,6 +33,7 @@ import orca.debug as debug
 import orca.script_utilities as script_utilities
 
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 class Utilities(script_utilities.Utilities):
 
@@ -42,7 +43,7 @@ class Utilities(script_utilities.Utilities):
     def _isTopLevelObject(self, obj):
         # This is needed because Qt apps might insert some junk (e.g. a filler) in
         # between the window/frame/dialog and the application.
-        return AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.APPLICATION
+        return AXUtilities.is_application(AXObject.get_parent(obj))
 
     def topLevelObject(self, obj, useFallbackSearch=False):
         # The fallback search is needed because sometimes we can ascend the accessibility

@@ -25,16 +25,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.debug as debug
 import orca.mouse_review as mouse_review
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
@@ -56,8 +53,7 @@ class Script(default.Script):
         """Handles changes of focus of interest to the script."""
 
         if self.utilities.isToggleDescendantOfComboBox(newFocus):
-            isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-            newFocus = AXObject.find_ancestor(newFocus, isComboBox) or newFocus
+            newFocus = AXObject.find_ancestor(newFocus, AXUtilities.is_combo_box) or newFocus
             orca.setLocusOfFocus(event, newFocus, False)
         elif self.utilities.isInOpenMenuBarMenu(newFocus):
             window = self.utilities.topLevelObject(newFocus)
@@ -87,8 +83,7 @@ class Script(default.Script):
             return
 
         # Present changes of child widgets of GtkListBox items
-        isListBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST_BOX
-        if not AXObject.find_ancestor(obj, isListBox):
+        if not AXObject.find_ancestor(obj, AXUtilities.is_list_box):
             return
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
@@ -113,7 +108,7 @@ class Script(default.Script):
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
            and AXObject.supports_table(event.source) \
-           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+           and not AXUtilities.is_focused(event.source):
             return
 
         if AXObject.supports_table(event.source):
@@ -130,8 +125,8 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        isMenu = lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU
-        if isMenu(ancestor) and not AXObject.find_ancestor(ancestor, isMenu):
+        if AXUtilities.is_menu(ancestor) \
+           and AXObject.find_ancestor(ancestor, AXUtilities.is_menu) is None:
             return
 
         orca.setLocusOfFocus(event, event.source)
@@ -157,8 +152,7 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, None)
                 return
 
-        role = AXObject.get_role(event.source)
-        if role in [Atspi.Role.CANVAS, Atspi.Role.ICON] \
+        if AXUtilities.is_icon_or_canvas(event.source) \
            and self.utilities.handleContainerSelectionChange(AXObject.get_parent(event.source)):
             return
 
@@ -172,9 +166,8 @@ class Script(default.Script):
             super().onSelectionChanged(event)
             return
 
-        isFocused = AXObject.has_state(event.source, Atspi.StateType.FOCUSED)
-        role = AXObject.get_role(event.source)
-        if role == Atspi.Role.COMBO_BOX and not isFocused:
+        isFocused = AXUtilities.is_focused(event.source)
+        if AXUtilities.is_combo_box(event.source) and not isFocused:
             return
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
@@ -187,7 +180,7 @@ class Script(default.Script):
                     self.presentObject(child)
             return
 
-        if role == Atspi.Role.LAYERED_PANE \
+        if AXUtilities.is_layered_pane(event.source) \
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 
@@ -200,10 +193,10 @@ class Script(default.Script):
             super().onShowingChanged(event)
             return
 
-        obj = event.source
-        if self.utilities.isPopOver(obj) \
-           or AXObject.get_role(obj) in [Atspi.Role.ALERT, Atspi.Role.INFO_BAR]:
-            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.APPLICATION:
+        if self.utilities.isPopOver(event.source) \
+           or AXUtilities.is_alert(event.source) \
+           or AXUtilities.is_info_bar(event.source):
+            if AXUtilities.is_application(AXObject.get_parent(event.source)):
                 return
             self.presentObject(event.source, interrupt=True)
             return
