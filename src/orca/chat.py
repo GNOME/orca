@@ -25,10 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from . import cmdnames
 from . import debug
 from . import guilabels
@@ -39,6 +35,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -741,12 +738,7 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.EDITABLE) \
-           and state.contains(Atspi.StateType.SINGLE_LINE):
-            return True
-
-        return False
+        return AXUtilities.is_editable(obj) and AXUtilities.is_single_line(obj)
 
     def isBuddyList(self, obj):
         """Returns True if obj is the list of buddies in the buddy list
@@ -759,10 +751,12 @@ class Chat:
         - obj: the accessible being examined
         """
 
-        if obj:
-            for roleList in self._buddyListAncestries:
-                if self._script.utilities.hasMatchingHierarchy(obj, roleList):
-                    return True
+        if obj is None:
+            return False
+
+        for roleList in self._buddyListAncestries:
+            if self._script.utilities.hasMatchingHierarchy(obj, roleList):
+                return True
 
         return False
 
@@ -779,9 +773,8 @@ class Chat:
             return True
 
         for roleList in self._buddyListAncestries:
-            buddyListRole = roleList[0]
-            pred = lambda x: AXObject.get_role(x) == buddyListRole
-            candidate = AXObject.find_ancestor(obj, pred)
+            role = roleList[0]
+            candidate = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) == role)
             if self.isBuddyList(candidate):
                 return True
 
@@ -819,8 +812,8 @@ class Chat:
         # things working. And people should not be in multiple chat
         # rooms with identical names anyway. :-)
         #
-        if AXObject.get_role(obj) in [Atspi.Role.TEXT, Atspi.Role.ENTRY] \
-           and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if (AXUtilities.is_text(obj) or AXObject.is_entry(obj)) \
+           and AXUtilities.is_editable(obj):
             name = self.getChatRoomName(obj)
 
         for conversation in self._conversationList.conversations:
@@ -843,13 +836,8 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if AXObject.get_role(obj) == Atspi.Role.TEXT \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.SCROLL_PANE:
-            state = AXObject.get_state_set(obj)
-            if not state.contains(Atspi.StateType.EDITABLE) \
-               and state.contains(Atspi.StateType.MULTI_LINE):
-                return True
-
+        if AXUtilities.is_text(obj) and AXUtilities.is_scroll_pane(AXObject.get_parent(obj)):
+            return not AXUtilities.is_editable(obj) and AXUtilities.is_multi_line(obj)
         return False
 
     def isFocusedChat(self, obj):
@@ -861,7 +849,7 @@ class Chat:
         - obj: the accessible object to examine.
         """
 
-        if AXObject.has_state(obj, Atspi.StateType.SHOWING):
+        if AXUtilities.is_showing(obj):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
             msg = "INFO: %s's window is focused chat: %s" % (obj, active)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -885,7 +873,9 @@ class Chat:
         # that, we'll look at the frame name. Failing that, scripts
         # should override this method. :-)
         #
-        pred = lambda x: AXObject.get_role(x) in [Atspi.Role.PAGE_TAB, Atspi.Role.FRAME]
+        def pred(x):
+            return AXUtilities.is_page_tab(x) or AXUtilities.is_frame(x)
+
         ancestor = AXObject.find_ancestor(obj, pred)
         name = ""
         try:
@@ -900,8 +890,7 @@ class Chat:
         # the item. Therefore, we'll give it one more shot.
         #
         if not name:
-            pred = lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
-            ancestor = AXObject.find_ancestor(obj, pred)
+            ancestor = AXObject.find_ancestor(obj, AXUtilities.is_frame)
             try:
                 text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():
@@ -918,7 +907,7 @@ class Chat:
         - event: the accessible event being examined
         """
 
-        if AXObject.get_role(event.source) != Atspi.Role.TEXT:
+        if not AXUtilities.is_text(event.source):
             return False
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()

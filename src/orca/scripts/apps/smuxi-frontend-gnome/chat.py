@@ -27,28 +27,22 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 import orca.chat as chat
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Chat(chat.Chat):
 
     def __init__(self, script, buddyListAncestries):
-
         super().__init__(script, buddyListAncestries)
 
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused."""
 
-        def isPageTab(x):
-            return AXObject.get_role(x) == Atspi.Role.PAGE_TAB
-
-        pageTab = AXObject.find_ancestor(obj, isPageTab)
+        pageTab = AXObject.find_ancestor(obj, AXUtilities.is_page_tab)
         if pageTab is None:
             return super().isFocusedChat(obj)
 
-        return AXObject.has_state(pageTab, Atspi.StateType.SHOWING)
+        return AXUtilities.is_showing(pageTab)

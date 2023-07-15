@@ -35,6 +35,7 @@ from gi.repository import Atspi
 import orca.debug as debug
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 #############################################################################
 #                                                                           #
@@ -80,7 +81,7 @@ class Utilities(script_utilities.Utilities):
         except Exception:
             return []
         else:
-            if not AXObject.has_state(obj, Atspi.StateType.EXPANDED):
+            if not AXUtilities.is_expanded(obj):
                 return []
 
         nodes = []
