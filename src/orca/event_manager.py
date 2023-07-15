@@ -196,14 +196,14 @@ class EventManager:
         # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
         # issue, but until we know for certain....
         #name = Atspi.Accessible.get_name(event.source)
-        state = AXObject.get_state_set(event.source)
-        if state.isEmpty():
+
+        if AXUtilities.has_no_state(event.source):
             msg = 'EVENT MANAGER: Ignoring event due to empty state set'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if state.contains(Atspi.StateType.DEFUNCT):
-            msg = 'ERROR: Event is from defunct source'
+        if AXUtilities.is_defunct(event.source):
+            msg = 'EVENT MANAGER: Ignoreing event from defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -223,7 +223,7 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:property-change:accessible-value'):
-            if role == Atspi.Role.SPLIT_PANE and not state.contains(Atspi.StateType.FOCUSED):
+            if role == Atspi.Role.SPLIT_PANE and not AXUtilities.is_focused(event.source):
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -265,7 +265,7 @@ class EventManager:
                     msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
-                if self._isDead(event.source):
+                if AXObject.is_dead(event.source):
                     msg = 'EVENT MANAGER: Ignoring event from dead source'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
@@ -280,7 +280,7 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-            if self._isDead(event.source):
+            if AXObject.is_dead(event.source):
                 msg = 'EVENT MANAGER: Ignoring event from dead source'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -303,7 +303,7 @@ class EventManager:
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
 
-                if self._isDead(orca_state.locusOfFocus):
+                if AXObject.is_dead(orca_state.locusOfFocus):
                     msg = 'EVENT MANAGER: Locus of focus is dead.'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
@@ -311,17 +311,11 @@ class EventManager:
                 msg = 'EVENT MANAGER: Locus of focus: %s' % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-            childRole = AXObject.get_role(event.any_data)
-            childState = AXObject.get_state_set(event.any_data)
-            defunct = childState.contains(Atspi.StateType.DEFUNCT) \
-                or childState.isEmpty() \
-                or self._isDead(event.any_data)
+            defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
             if defunct:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
-
-            if defunct:
-                if state.contains(Atspi.StateType.MANAGES_DESCENDANTS) \
+                if AXUtilities.manages_descendants(event.source) \
                    and event.source not in self._parentsOfDefunctDescendants:
                     self._parentsOfDefunctDescendants.append(event.source)
                 return True
@@ -334,7 +328,7 @@ class EventManager:
             # This is very likely a completely and utterly useless event for us. The
             # reason for ignoring it here rather than quickly processing it is the
             # potential for event floods like we're seeing from matrix.org.
-            if childRole == Atspi.Role.IMAGE:
+            if AXUtilities.is_image(event.any_data):
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -342,7 +336,7 @@ class EventManager:
             # In normal apps we would have caught this from the parent role.
             # But gnome-shell has panel parents adding/removing menu items.
             if event.type.startswith('object:children-changed'):
-                if childRole == Atspi.Role.MENU_ITEM:
+                if AXUtilities.is_menu_item(event.any_data):
                     msg = 'EVENT MANAGER: Ignoring event type due to child role'
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
@@ -447,7 +441,7 @@ class EventManager:
             elif AXObject.get_application_toolkit_name(e.source) in self._synchronousToolkits:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
-                asyncMode = AXObject.get_role(e.source) == Atspi.Role.TABLE
+                asyncMode = AXUtilities.is_table(e.source)
             script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
             script.eventCache[e.type] = (e, time.time())
 
@@ -647,8 +641,7 @@ class EventManager:
 
         script = None
         app = event.host_application or AXObject.get_application(event.source)
-        state = AXObject.get_state_set(app)
-        if state.contains(Atspi.StateType.DEFUNCT):
+        if AXUtilities.is_defunct(app):
             msg = 'WARNING: %s is defunct. Cannot get script for event.' % app
             debug.println(debug.LEVEL_WARNING, msg, True)
             return None
@@ -703,14 +696,13 @@ class EventManager:
         if script.forceScriptActivation(event):
             return True, "The script insists it should be activated for this event."
 
-        role = AXObject.get_role(event.source)
         eType = event.type
 
         if eType.startswith('window:activate'):
             windowActivation = True
         else:
             windowActivation = eType.startswith('object:state-changed:active') \
-                and event.detail1 and role == Atspi.Role.FRAME
+                and event.detail1 and AXUtilities.is_frame(event.source)
 
         if windowActivation:
             if event.source != orca_state.activeWindow:
@@ -723,37 +715,20 @@ class EventManager:
                and event.detail1):
             return True, "Event source claimed focus."
 
-        state = AXObject.get_state_set(event.source)
         if eType.startswith('object:state-changed:selected') and event.detail1 \
-           and role == Atspi.Role.MENU and state.contains(Atspi.StateType.FOCUSED):
+           and AXUtilities.is_menu(event.source) and AXUtilities.is_focusable(event.source):
             return True, "Selection change in focused menu"
 
-        # This condition appears with gnome-screensave-dialog.
+        # This condition appears with gnome-screensaver-dialog.
         # See bug 530368.
         if eType.startswith('object:state-changed:showing') \
-           and role == Atspi.Role.PANEL \
-           and state.contains(Atspi.StateType.MODAL):
+           and AXUtilities.is_panel(event.source) and AXUtilities.is_modal(event.source):
             return True, "Modal panel is showing."
 
         return False, "No reason found to activate a different script."
 
-    def _isDead(self, obj):
-        if not obj:
-            return True
-
-        try:
-            # We use the Atspi function rather than the AXObject function because the
-            # latter intentionally handles exceptions.
-            Atspi.Accessible.get_name(obj)
-        except Exception as e:
-            msg = "ERROR: %s is dead: %s" % (obj, e)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
-
     def _eventSourceIsDead(self, event):
-        if self._isDead(event.source):
+        if AXObject.is_dead(event.source):
             msg = "EVENT MANAGER: source of %s is dead" % event.type
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -838,7 +813,7 @@ class EventManager:
             return True
 
         if event.type.startswith("object:state-changed:active"):
-            return AXObject.get_role(event.source) in [Atspi.Role.FRAME, Atspi.Role.WINDOW]
+            return AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source)
 
         if event.type.startswith("document:load-complete"):
             return True
@@ -898,11 +873,10 @@ class EventManager:
         if eType.startswith("window:") and not eType.endswith("create"):
             _scriptManager.reclaimScripts()
         elif eType.startswith("object:state-changed:active") \
-           and AXObject.get_role(event.source) == Atspi.Role.FRAME:
+           and AXUtilities.is_frame(event.source):
             _scriptManager.reclaimScripts()
 
-        state = AXObject.get_state_set(event.source)
-        if state.contains(Atspi.StateType.DEFUNCT):
+        if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
             msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
@@ -914,7 +888,7 @@ class EventManager:
                 orca_state.activeScript = None
             return
 
-        if state.contains(Atspi.StateType.ICONIFIED):
+        if AXUtilities.is_iconified(event.source):
             msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             return
