@@ -28,8 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-import gi
-
 import imp
 import importlib
 import os

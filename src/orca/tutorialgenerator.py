@@ -612,34 +612,11 @@ class TutorialGenerator:
             except Exception:
                 parent_table = None
             readFullRow = self._script.utilities.shouldReadFullRow(obj)
-            if readFullRow and parent_table \
-                and not self._script.utilities.isLayoutOnly(parent):
-                index = self._script.utilities.cellIndex(obj)
-                row = parent_table.getRowAtIndex(index)
-                column = parent_table.getColumnAtIndex(index)
-
-                # TODO - JD: speakAll is never being used. It appears to have
-                # been this way since 2008/2009. Figure out what should happen
-                # here and fix it.
-                #
-                # This is an indication of whether we should speak all the
-                # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in
-                # the same row).
-                #
-                # speakAll = True
-                if "lastRow" in self._script.pointOfReference and \
-                    "lastColumn" in self._script.pointOfReference:
-                    pointOfReference = self._script.pointOfReference
-                    speakAll = (pointOfReference["lastRow"] != row) or \
-                        ((row == 0 or row == parent_table.nRows-1) and \
-                           pointOfReference["lastColumn"] == column)
-
+            if readFullRow and parent_table and not self._script.utilities.isLayoutOnly(parent):
                 utterances.extend(self._getTutorialForTableCell(obj,
-                                        alreadyFocused, forceTutorial))
+                                                                alreadyFocused, forceTutorial))
             else:
-                utterances = self._getTutorialForTableCell(obj,
-                  alreadyFocused, forceTutorial)
+                utterances = self._getTutorialForTableCell(obj, alreadyFocused, forceTutorial)
         else:
             utterances = self._getTutorialForTableCell(obj, alreadyFocused, \
               forceTutorial)
