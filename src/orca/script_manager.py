@@ -24,10 +24,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import importlib
 
 from . import debug
@@ -133,8 +129,7 @@ class ScriptManager:
         return self._toolkitNames.get(name, name)
 
     def _scriptForRole(self, obj):
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.TERMINAL:
+        if AXUtilities.is_terminal(obj):
             return 'terminal'
 
         return ''
@@ -222,8 +217,7 @@ class ScriptManager:
         return script
 
     def getScriptForMouseButtonEvent(self, event):
-        state = AXObject.get_state_set(orca_state.activeWindow)
-        isActive = state.contains(Atspi.StateType.ACTIVE)
+        isActive = AXUtilities.is_active(orca_state.activeWindow)
         msg = "SCRIPT MANAGER: %s is active: %s" % (orca_state.activeWindow, isActive)
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -290,12 +284,9 @@ class ScriptManager:
         if customScript:
             return customScript
 
-        role = AXObject.get_role(obj)
-        forceAppScript = role in [Atspi.Role.FRAME, Atspi.Role.STATUS_BAR]
-
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
-        if toolkitScript and not forceAppScript \
+        if toolkitScript and not (AXUtilities.is_frame(obj) or AXUtilities.is_status_bar(obj)) \
            and not issubclass(appScript.__class__, toolkitScript.__class__):
             return toolkitScript
 
