@@ -2534,8 +2534,10 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        isMatch = False
+        if self._script.liveRegionManager is None:
+            return False
 
+        isMatch = False
         regobjs = self._script.liveRegionManager.getLiveNoneObjects()
         if self._script.liveRegionManager.matchLiveRegion(obj) or obj in regobjs:
             isMatch = True
