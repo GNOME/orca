@@ -283,7 +283,7 @@ class Utilities(web.Utilities):
 
         bar = statusBars[0]
         AXObject.clear_cache(bar)
-        if len(re.findall("\d+", AXObject.get_name(bar))) == 2:
+        if len(re.findall(r"\d+", AXObject.get_name(bar))) == 2:
             return AXObject.get_name(bar)
 
         return ""

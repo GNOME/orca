@@ -290,7 +290,7 @@ class Utilities(web.Utilities):
             return ""
 
         def isMatch(x):
-            return AXUtilities.is_label(x) and len(re.findall("\d+", AXObject.get_name(x))) == 2
+            return AXUtilities.is_label(x) and len(re.findall(r"\d+", AXObject.get_name(x))) == 2
 
         labels = self.findAllDescendants(root, isMatch)
         if len(labels) != 1:

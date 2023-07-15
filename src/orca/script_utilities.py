@@ -522,7 +522,7 @@ class Utilities:
 
         return document
 
-    def documentFrameURI(self):
+    def documentFrameURI(self, documentFrame=None):
         """Returns the URI of the document frame that is active."""
 
         return None
@@ -3095,7 +3095,7 @@ class Utilities:
         result = string
         for symbol in set(re.findall(self.PUNCTUATION, result)):
             charName = " %s " % chnames.getCharacterName(symbol)
-            result = re.sub("\%s" % symbol, charName, result)
+            result = re.sub(r"\%s" % symbol, charName, result)
 
         return result
 
@@ -4261,7 +4261,7 @@ class Utilities:
                 continue
             if self.queryNonEmptyText(child):
                 string = child.queryText().getText(0, -1)
-                if re.search("[^\ufffc\s]", string):
+                if re.search(r"[^\ufffc\s]", string):
                     candidates.append(child)
                     if AXUtilities.is_showing(child):
                         candidates_showing.append(child)

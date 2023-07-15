@@ -56,11 +56,6 @@ try:
 
     gi.require_version("Gdk", "3.0")
     from gi.repository import Gdk
-
-    # Note: This last import is here due to bgo #673396.
-    # See bgo#673397 for the rest of the story.
-    gi.require_version("GdkX11", "3.0")
-    from gi.repository.GdkX11 import X11Screen
 except Exception:
     pass
 

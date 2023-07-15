@@ -1259,6 +1259,7 @@ class AXUtilitiesRole:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.UNKNOWN
 
+    @staticmethod
     def is_unknown_or_redundant(obj, role=None):
         """Returns True if obj has the unknown or redundant object role"""
 
