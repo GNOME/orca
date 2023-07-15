@@ -44,6 +44,7 @@ import orca.orca_state as orca_state
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
 from .formatting import Formatting
@@ -523,10 +524,9 @@ class Script(default.Script):
                      Atspi.Role.FRAME,
                      Atspi.Role.APPLICATION]
         if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
-            isTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
-            isSelected = lambda x: AXObject.has_state(x, Atspi.StateType.SELECTED)
-            for child in AXObject.iter_children(AXObject.get_parent(newLocusOfFocus), isTabList):
-                for tab in AXObject.iter_children(child, isSelected):
+            parent = AXObject.get_parent(newLocusOfFocus)
+            for child in AXObject.iter_children(parent, AXUtilities.is_page_tab_list):
+                for tab in AXObject.iter_children(child, AXUtilities.is_selected):
                     self.presentObject(tab)
 
         # TODO - JD: This is a hack that needs to be done better. For now it
@@ -633,7 +633,7 @@ class Script(default.Script):
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
-            if AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+            if AXUtilities.is_focused(event.source):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
@@ -642,8 +642,8 @@ class Script(default.Script):
             return
 
         if self.utilities.isSpreadSheetCell(event.any_data) \
-           and not AXObject.has_state(event.any_data, Atspi.StateType.FOCUSED) \
-           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED) :
+           and not AXUtilities.is_focused(event.any_data) \
+           and not AXUtilities.is_focused(event.source) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             debug.println(debug.LEVEL_INFO, msg, True)
             AXObject.clear_cache(event.source)
@@ -807,9 +807,9 @@ class Script(default.Script):
             return
 
         if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
-           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+           and not AXUtilities.is_focused(event.source):
             AXObject.clear_cache(event.source)
-            if AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+            if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -853,7 +853,7 @@ class Script(default.Script):
             x = orca_state.lastInputEvent.x
             y = orca_state.lastInputEvent.y
             weToggledIt = obj.queryComponent().contains(x, y, 0)
-        elif AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+        elif AXUtilities.is_focused(obj):
             weToggledIt = True
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
@@ -903,7 +903,7 @@ class Script(default.Script):
             if orca_state.locusOfFocus == orca_state.activeWindow:
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
                 debug.println(debug.LEVEL_INFO, msg, True)
-            elif AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+            elif AXUtilities.is_focused(event.source):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
@@ -935,7 +935,7 @@ class Script(default.Script):
             return
 
         if event.source != orca_state.locusOfFocus \
-           and AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+           and AXUtilities.is_focused(event.source):
             orca.setLocusOfFocus(event, event.source, False)
 
         super().onTextSelectionChanged(event)
@@ -961,7 +961,7 @@ class Script(default.Script):
                 return [lineString, 0, startOffset]
 
         textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
-        if not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+        if not AXUtilities.is_focused(obj):
             textLine[0] = self.utilities.displayedText(obj)
 
         return textLine

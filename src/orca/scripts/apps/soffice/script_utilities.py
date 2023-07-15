@@ -39,6 +39,7 @@ import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
+from orca.ax_utilities import AXUtilities
 
 
 #############################################################################
@@ -80,12 +81,11 @@ class Utilities(script_utilities.Utilities):
         any text being shown.
         """
 
-        role = AXObject.get_role(obj)
+        name = AXObject.get_name(obj)
+        if name and AXUtilities.is_push_button(obj):
+            return name
 
-        if role == Atspi.Role.PUSH_BUTTON and AXObject.get_name(obj):
-            return AXObject.get_name(obj)
-
-        if role == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(obj):
             strings = list(map(self.displayedText, [x for x in AXObject.iter_children(obj)]))
             text = "\n".join(strings)
             if text.strip():
@@ -99,25 +99,20 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
-        if role == Atspi.Role.TABLE_CELL and text == AXObject.get_name(obj) \
+        if AXUtilities.is_table_cell(obj) and text == name \
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
         # More bogusness from (at least) Calc combined with the aforementioned
         # fallback-to-name behavior....
-        if self.isDocument(obj) and text == AXObject.get_name(obj) and text.startswith("file:///"):
+        if self.isDocument(obj) and text == name and text.startswith("file:///"):
             return ""
 
         return text
 
     def isCellBeingEdited(self, obj):
-        if not obj:
-            return False
-
         parent = AXObject.get_parent(obj)
-        role = AXObject.get_role(parent)
-
-        if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
+        if AXUtilities.is_panel(parent) or AXUtilities.is_extended(parent):
             return self.spreadSheetCellName(parent)
 
         return False
@@ -134,16 +129,16 @@ class Utilities(script_utilities.Utilities):
     def getRowColumnAndTable(self, cell):
         """Returns the (row, column, table) tuple for cell."""
 
-        if not (cell and AXObject.get_role(cell) == Atspi.Role.TABLE_CELL):
+        if not AXUtilities.is_table_cell(cell):
             return -1, -1, None
 
         cellParent = AXObject.get_parent(cell)
-        if AXObject.get_role(cellParent) == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(cellParent):
             cell = cellParent
             cellParent = AXObject.get_parent(cell)
 
         table = cellParent
-        if table and AXObject.get_role(table) != Atspi.Role.TABLE:
+        if table is not None and not AXUtilities.is_table(table):
             table = AXObject.get_parent(table)
 
         try:
@@ -206,17 +201,17 @@ class Utilities(script_utilities.Utilities):
         if obj1 == obj2:
             return True
 
-        role1 = AXObject.get_role(obj1)
-        role2 = AXObject.get_role(obj2)
-        if role1 != role2 or role1 == Atspi.Role.PARAGRAPH:
+        if not AXUtilities.have_same_role(obj1, obj2):
             return False
 
-        name1 = AXObject.get_name(obj1)
-        name2 = AXObject.get_name(obj2)
-        if name1 == name2:
-            if role1 == Atspi.Role.FRAME:
+        if AXUtilities.is_paragraph(obj1):
+            return False
+
+        name = AXObject.get_name(obj1)
+        if name == AXObject.get_name(obj2):
+            if AXUtilities.is_frame(obj1):
                 return True
-            if role1 == Atspi.Role.TABLE_CELL and not name1:
+            if AXUtilities.is_table_cell(obj1) and not name:
                 if self.isZombie(obj1) and self.isZombie(obj2):
                     return False
 
@@ -226,19 +221,20 @@ class Utilities(script_utilities.Utilities):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.LIST:
-            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
+        if AXUtilities.is_list(obj):
+            if AXUtilities.is_combo_box(AXObject.get_parent(obj)):
                 return True
             return super().isLayoutOnly(obj)
 
         name = AXObject.get_name(obj)
-        if role == Atspi.Role.FRAME and name:
+        if not name:
+            return super().isLayoutOnly(obj)
+
+        if AXUtilities.is_frame(obj):
             return name == AXObject.get_name(orca_state.activeWindow)
 
-        if role == Atspi.Role.PANEL and name and AXObject.get_child_count(obj):
-            child = AXObject.get_child(obj, 0)
-            if child and AXObject.get_name(child) == name:
+        if AXUtilities.is_panel(obj) and AXObject.get_child_count(obj):
+            if AXObject.get_name(AXObject.get_child(obj, 0)) == name:
                 return True
 
         return super().isLayoutOnly(obj)
@@ -250,14 +246,12 @@ class Utilities(script_utilities.Utilities):
             return True
 
         parent = AXObject.get_parent(obj)
-        role = AXObject.get_role(parent)
-        if role in [Atspi.Role.EXTENDED, Atspi.Role.PANEL]:
+        if AXUtilities.is_panel(parent) or AXUtilities.is_extended(parent):
             if self.spreadSheetCellName(parent):
                 return False
 
         parent = AXObject.get_parent(parent)
-        role = AXObject.get_role(parent)
-        if role == Atspi.Role.TEXT:
+        if AXUtilities.is_text(parent):
             return True
 
         return False
@@ -276,35 +270,26 @@ class Utilities(script_utilities.Utilities):
         Returns the spread sheet input line component.
         """
 
-        if self._script.inputLineForCell:
-            try:
-                topLevel = self.topLevelObject(self._script.inputLineForCell)
-            except Exception:
-                msg = "ERROR: Exception getting topLevelObject for inputline"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                self._script.inputLineForCell = None
-            else:
-                if self.isSameObject(orca_state.activeWindow, topLevel):
-                    return self._script.inputLineForCell
+        if self._script.inputLineForCell is not None:
+            topLevel = self.topLevelObject(self._script.inputLineForCell)
+            if self.isSameObject(orca_state.activeWindow, topLevel):
+                return self._script.inputLineForCell
 
-        isScrollPane = lambda x: x and AXObject.get_role(x) == Atspi.Role.SCROLL_PANE
-        scrollPane = AXObject.find_ancestor(obj, isScrollPane)
-        if not scrollPane:
+        scrollPane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
+        if scrollPane is None:
             return None
 
         toolbar = None
-        pred = lambda x: AXObject.get_role(x) == Atspi.Role.TOOL_BAR
-        for child in AXObject.iter_children(AXObject.get_parent(scrollPane), pred):
+        for child in AXObject.iter_children(AXObject.get_parent(scrollPane), AXUtilities.is_tool_bar):
             toolbar = child
             break
 
-        if not toolbar:
+        if toolbar is None:
             msg = "ERROR: Calc inputline toolbar not found."
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        isParagraph = lambda x: x and AXObject.get_role(x) == Atspi.Role.PARAGRAPH
-        allParagraphs = self.findAllDescendants(toolbar, isParagraph)
+        allParagraphs = self.findAllDescendants(toolbar, AXUtilities.is_paragraph)
         if len(allParagraphs) == 1:
             self._script.inputLineForCell = allParagraphs[0]
 

@@ -33,6 +33,7 @@ import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
+from orca.ax_object import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -267,7 +268,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.TOGGLE_BUTTON \
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
-            if AXObject.has_state(obj, Atspi.StateType.CHECKED):
+            if AXUtilities.is_checked(obj):
                 result.append(messages.ON)
             else:
                 result.append(messages.OFF)

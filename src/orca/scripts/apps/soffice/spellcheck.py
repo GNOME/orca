@@ -27,15 +27,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from orca import debug
 from orca import messages
 from orca import spellcheck
 from orca.ax_object import AXObject
-
+from orca.ax_utilities import AXUtilities
 
 class SpellCheck(spellcheck.SpellCheck):
 
@@ -44,10 +40,10 @@ class SpellCheck(spellcheck.SpellCheck):
         self._windows = {}
 
     def _findChildDialog(self, root):
-        if not root:
+        if root is None:
             return None
 
-        if AXObject.get_role(root) == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog(root):
             return root
 
         return self._findChildDialog(AXObject.get_child(root, 0))
@@ -71,16 +67,14 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isPageTabList = lambda x: AXObject.get_role(x) == Atspi.Role.PAGE_TAB_LIST
-        if AXObject.find_descendant(dialog, isPageTabList) is not None:
+        if AXObject.find_descendant(dialog, AXUtilities.is_page_tab_list) is not None:
             self._windows[hash(window)] = False
             self._windows[hash(dialog)] = False
             msg = "SOFFICE: %s is not spellcheck dialog because a page tab list was found." % dialog
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isComboBox = lambda x: AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-        rv = AXObject.find_descendant(dialog, isComboBox) is not None
+        rv = AXObject.find_descendant(dialog, AXUtilities.is_combo_box) is not None
         msg = "SOFFICE: %s is spellcheck dialog based on combobox descendant: %s" % (dialog, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
         self._windows[hash(dialog)] = rv
@@ -90,9 +84,7 @@ class SpellCheck(spellcheck.SpellCheck):
         def isError(x):
             if not AXObject.supports_editable_text(x):
                 return False
-            state = AXObject.get_state_set(x)
-            return state.contains(Atspi.StateType.FOCUSABLE) \
-                and state.contains(Atspi.StateType.MULTI_LINE)
+            return AXUtilities.is_focusable(x) and AXUtilities.is_multi_line(x)
 
         rv = AXObject.find_descendant(root, isError)
         msg = "SOFFICE: Error widget for: %s is: %s" % (root, rv)
@@ -100,9 +92,14 @@ class SpellCheck(spellcheck.SpellCheck):
         return rv
 
     def _findSuggestionsList(self, root):
-        roles = [Atspi.Role.LIST, Atspi.Role.LIST_BOX, Atspi.Role.TREE_TABLE]
-        isList = lambda x: AXObject.get_role(x) in roles and AXObject.supports_selection(x)
-        rv = AXObject.find_descendant(root, isList)
+        def isSelectableList(x):
+            if not AXObject.supports_selection(x):
+                return False
+            return AXUtilities.is_list(x) \
+                or AXUtilities.is_list_box(x) \
+                or AXUtilities.is_tree_table(x)
+
+        rv = AXObject.find_descendant(root, isSelectableList)
         msg = "SOFFICE: Suggestions list for: %s is: %s" % (root, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
