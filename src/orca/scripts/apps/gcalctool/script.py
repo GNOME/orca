@@ -32,6 +32,7 @@ from gi.repository import Atspi
 import orca.scripts.toolkits.gtk as gtk
 import orca.messages as messages
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -76,7 +77,7 @@ class Script(gtk.Script):
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
         isStatusLine = lambda x: AXObject.get_role(x) == Atspi.Role.TEXT \
-                       and not AXObject.has_state(x, Atspi.StateType.EDITABLE)
+                       and not AXUtilities.is_editable(x)
         self._statusLine = AXObject.find_descendant(event.source, isStatusLine)
 
         gtk.Script.onWindowActivated(self, event)

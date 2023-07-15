@@ -24,8 +24,7 @@ class Script(default.Script):
         if self.utilities.isSeekSlider(obj):
             value = obj.queryValue()
             current_value = int(value.currentValue)/1000
-            if current_value in \
-                    range(self._last_seek_value, self._last_seek_value + 4):
+            if current_value in range(self._last_seek_value, self._last_seek_value + 4):
                 if self.utilities.isSameObject(obj, orca_state.locusOfFocus):
                     self.updateBraille(obj)
                 return

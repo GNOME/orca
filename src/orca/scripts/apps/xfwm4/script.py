@@ -25,12 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011 The Orca Team."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.scripts.default as default
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -58,7 +55,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if AXObject.get_role(event.source) != Atspi.Role.LABEL:
+        if not AXUtilities.is_label(event.source):
             default.Script.onTextInserted(self, event)
             return
 
@@ -73,5 +70,5 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if AXObject.get_role(event.source) != Atspi.Role.LABEL:
+        if not AXUtilities.is_label(event.source):
             default.Script.onTextDeleted(self, event)

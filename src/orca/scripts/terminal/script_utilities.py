@@ -36,6 +36,7 @@ from orca import orca_state
 from orca import script_utilities
 from orca import settings_manager
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -128,13 +129,13 @@ class Utilities(script_utilities.Utilities):
         return text.caretOffset == event.detail1 + event.detail2
 
     def isEditableTextArea(self, obj):
-        if obj and AXObject.get_role(obj) == Atspi.Role.TERMINAL:
+        if AXUtilities.is_terminal(obj):
             return True
 
         return super().isEditableTextArea(obj)
 
     def isTextArea(self, obj):
-        if obj and AXObject.get_role(obj) == Atspi.Role.TERMINAL:
+        if AXUtilities.is_terminal(obj):
             return True
 
         return super().isTextArea(obj)

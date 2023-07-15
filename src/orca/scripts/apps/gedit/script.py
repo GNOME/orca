@@ -33,6 +33,7 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 from .spellcheck import SpellCheck
 
 class Script(gtk.Script):
@@ -88,7 +89,7 @@ class Script(gtk.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if AXObject.has_state(event.source, Atspi.StateType.MULTI_LINE):
+        if AXUtilities.is_multi_line(event.source):
             self.spellcheck.setDocumentPosition(event.source, event.detail1)
 
         gtk.Script.onCaretMoved(self, event)
@@ -115,7 +116,7 @@ class Script(gtk.Script):
 
         parent = AXObject.get_parent(event.source)
         if parent != self.spellcheck.getSuggestionsList() \
-           or not AXObject.has_state(parent, Atspi.StateType.FOCUSED):
+           or not AXUtilities.is_focused(parent):
             return
 
         entry = self.spellcheck.getChangeToEntry()

@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class SpellCheck(spellcheck.SpellCheck):
@@ -50,25 +51,26 @@ class SpellCheck(spellcheck.SpellCheck):
         if role != Atspi.Role.FRAME:
             return False
 
-        isSplitPane = lambda x: x and AXObject.get_role(x) == Atspi.Role.SPLIT_PANE
-        if AXObject.find_descendant(window, isSplitPane):
+        if AXObject.find_descendant(window, AXUtilities.is_split_pane):
             return False
 
         return True
 
     def _findChangeToEntry(self, root):
-        isEntry = lambda x: x and AXObject.get_role(x) == Atspi.Role.TEXT \
-                  and AXObject.has_state(x, Atspi.StateType.SINGLE_LINE)
+        def isEntry(x):
+            return AXUtilities.is_text(x) and AXUtilities.is_single_line(x)
+
         return AXObject.find_descendant(root, isEntry)
 
     def _findErrorWidget(self, root):
-        isPanel = lambda x: x and AXObject.get_role(x) == Atspi.Role.PANEL
-        panel = AXObject.find_ancestor(self._changeToEntry, isPanel)
-        if not panel:
+        panel = AXObject.find_ancestor(self._changeToEntry, AXUtilities.is_panel)
+        if panel is None:
             return None
 
-        isError = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL \
+        def isError(x):
+            return AXUtilities.is_label(x) \
                   and ":" not in AXObject.get_name(x) and not AXObject.get_relations(x)
+
         return AXObject.find_descendant(panel, isError)
 
     def _findSuggestionsList(self, root):

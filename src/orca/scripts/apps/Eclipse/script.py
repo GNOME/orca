@@ -25,14 +25,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.toolkits.GAIL as GAIL
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -63,7 +60,7 @@ class Script(GAIL.Script):
             return
 
         obj = otherObj or event.source
-        if AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE):
+        if AXUtilities.is_single_line(obj):
             return
 
         # if Tab key is pressed and there is text selected, we must announce
@@ -86,14 +83,11 @@ class Script(GAIL.Script):
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits.
-
-        role = AXObject.get_role(event.source)
-
-        if role == Atspi.Role.PANEL:
+        if AXUtilities.is_panel(event.source):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if role == Atspi.Role.TEXT \
+        if AXUtilities.is_text(event.source) \
            and self.utilities.lastInputEventWasUnmodifiedArrow() \
            and self.utilities.inMenu():
             msg = "ECLIPSE: Ignoring event. In menu."
@@ -143,14 +137,10 @@ class Script(GAIL.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        obj = event.source
-        state = AXObject.get_state_set(obj)
-        # sometimes eclipse issues an object:selection-changed for objects not focused.
-        # we do not want that orca announces this objects.
+        # Sometimes Eclipse fires an object:selection-changed event for non-focused
+        # containers. We don't want to present those. The exception is the MenuBar.
+        if not (AXUtilities.is_focused(event.source) or AXUtilities.is_menu_bar(event.source)):
+            return
 
-        if not state.contains(Atspi.StateType.FOCUSED):
-            # the exception, at least for while, is the MenuBar
-            if AXObject.get_role(obj) != Atspi.Role.MENU_BAR:
-                return
         GAIL.Script.onSelectionChanged(self, event)
 

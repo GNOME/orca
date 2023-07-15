@@ -25,13 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team"
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.scripts.toolkits.gtk as gtk
 import orca.orca_state as orca_state
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
@@ -60,10 +56,8 @@ class Script(gtk.Script):
     def onNameChanged(self, event):
         """Callback for accessible name change events."""
 
-        eventRole = AXObject.get_role(event.source)
-
         # Present page changes in the previewer.
-        if eventRole == Atspi.Role.LABEL \
+        if AXUtilities.is_label(event.source) \
            and self.utilities.isDocument(orca_state.locusOfFocus):
             self.presentMessage(event.any_data)
 

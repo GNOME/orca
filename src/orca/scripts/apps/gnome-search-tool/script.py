@@ -27,13 +27,9 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.event_manager as event_manager
 import orca.scripts.toolkits.gtk as gtk
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -59,7 +55,7 @@ class Script(gtk.Script):
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing events."""
 
-        if AXObject.get_role(event.source) == Atspi.Role.ANIMATION:
+        if AXUtilities.is_animation(event.source):
             _manager = event_manager.getManager()
             if event.detail1:
                 _manager.ignoreEventTypes(self._floodEvents)
