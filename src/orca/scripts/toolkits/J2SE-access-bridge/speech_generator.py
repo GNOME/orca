@@ -34,6 +34,7 @@ import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -95,8 +96,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         childCount = AXObject.get_child_count(obj)
-        if obj and AXObject.has_state(obj, Atspi.StateType.EXPANDED) \
-           and AXObject.get_role(obj) == Atspi.Role.LABEL and childCount:
+        if childCount and AXUtilities.is_label(obj) \
+           and AXUtilities.is_expanded(obj):
             result.append(messages.itemCount(childCount))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         else:
@@ -115,13 +116,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         listObj = None
-        if obj and AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
-            hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST
-            allLists = self._script.utilities.findAllDescendants(obj, hasRole)
+        if AXUtilities.is_combo_box(obj):
+            allLists = self._script.utilities.findAllDescendants(obj, AXUtilities.is_list)
             if len(allLists) == 1:
                 listObj = allLists[0]
 
-        if not listObj:
+        if listObj is None:
             return speech_generator.SpeechGenerator._generatePositionInList(
                 self, obj, **args)
 
@@ -130,10 +130,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         position = -1
         index = total = 0
 
-        for child in listObj:
+        for child in AXObject.iter_children(listObj):
             nextName = self._generateName(child)
             if not nextName or nextName[0] in ["", "Empty", "separator"] \
-               or not AXObject.has_state(child, Atspi.StateType.VISIBLE):
+               or not AXUtilities.is_visible(child):
                 continue
 
             index += 1
@@ -150,22 +150,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                               %  {"index" : position, "total" : total})
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
-        
+
     def generateSpeech(self, obj, **args):
         result = []
-        if AXObject.get_role(obj) == Atspi.Role.CHECK_BOX \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.MENU:
+        if AXUtilities.is_check_box(obj) and AXUtilities.is_menu(AXObject.get_parent(obj)):
             oldRole = self._overrideRole(Atspi.Role.CHECK_MENU_ITEM, args)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
 
-        if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
-           and AXObject.get_role(obj) == Atspi.Role.TEXT:
-            pred = lambda x: AXObject.get_role(x) == Atspi.Role.SPIN_BUTTON
-            spinbox = AXObject.find_ancestor(obj, pred)
-            if spinbox:
+        if args.get('formatType', 'unfocused') == 'basicWhereAmI' and AXUtilities.is_text(obj):
+            spinbox = AXObject.find_ancestor(obj, AXUtilities.is_spin_button)
+            if spinbox is not None:
                 obj = spinbox
-        result.extend(speech_generator.SpeechGenerator.\
-                                       generateSpeech(self, obj, **args))
+        result.extend(speech_generator.SpeechGenerator.generateSpeech(self, obj, **args))
         return result

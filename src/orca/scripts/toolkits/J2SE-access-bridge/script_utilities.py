@@ -28,12 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 #############################################################################
 #                                                                           #
@@ -63,19 +60,20 @@ class Utilities(script_utilities.Utilities):
         the same object. This is needed because some applications and
         toolkits kill and replace accessibles."""
 
-        if (obj1 == obj2):
+        if obj1 == obj2:
             return True
-        elif (not obj1) or (not obj2):
+        if obj1 is None or obj2 is None:
             return False
-        elif (AXObject.get_name(obj1) != AXObject.get_name(obj2)) \
-              or (AXObject.get_child_count(obj1) != AXObject.get_child_count(obj2)):
+        if not ignoreNames and AXObject.get_name(obj1) != AXObject.get_name(obj2):
+            return False
+        if AXObject.get_child_count(obj1) != AXObject.get_child_count(obj2):
             return False
 
         # This is to handle labels in trees. In some cases the default
         # script's method gives us false positives; other times false
         # negatives.
         #
-        if AXObject.get_role(obj1) == AXObject.get_role(obj2) == Atspi.Role.LABEL:
+        if AXUtilities.is_label(obj1) and AXUtilities.is_label(obj2):
             try:
                 ext1 = obj1.queryComponent().getExtents(0)
                 ext2 = obj2.queryComponent().getExtents(0)
@@ -89,20 +87,15 @@ class Utilities(script_utilities.Utilities):
         # In java applications, TRANSIENT state is missing for tree items
         # (fix for bug #352250)
         #
-        try:
-            parent1 = obj1
-            parent2 = obj2
-            while parent1 and parent2 and \
-                    AXObject.get_role(parent1) == Atspi.Role.LABEL and \
-                    AXObject.get_role(parent2) == Atspi.Role.LABEL:
-                if AXObject.get_index_in_parent(parent1) != AXObject.get_index_in_parent(parent2):
-                    return False
-                parent1 = AXObject.get_parent(parent1)
-                parent2 = AXObject.get_parent(parent2)
-            if parent1 and parent2 and parent1 == parent2:
-                return True
-        except Exception:
-            pass
+        parent1 = obj1
+        parent2 = obj2
+        while AXUtilities.is_label(parent1) and AXUtilities.is_label(parent2):
+            if AXObject.get_index_in_parent(parent1) != AXObject.get_index_in_parent(parent2):
+                return False
+            parent1 = AXObject.get_parent(parent1)
+            parent2 = AXObject.get_parent(parent2)
+        if parent1 and parent2 and parent1 == parent2:
+            return True
 
         return script_utilities.Utilities.isSameObject(self, obj1, obj2, comparePaths, ignoreNames)
 
@@ -125,9 +118,8 @@ class Utilities(script_utilities.Utilities):
         count = 0
         while newObj:
             state = AXObject.get_state_set(newObj)
-            if state.contains(Atspi.StateType.EXPANDABLE) \
-               or state.contains(Atspi.StateType.COLLAPSED):
-                if state.contains(Atspi.StateType.VISIBLE):
+            if AXUtilities.is_expandable(newObj) or AXUtilities.is_collapsed(newObj):
+                if AXUtilities.is_visible(newObj):
                     count += 1
                 newObj = AXObject.get_parent(newObj)
             else:

@@ -35,6 +35,7 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
+from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
@@ -120,10 +121,10 @@ class Script(default.Script):
         # focus. If there is no selection, we default the locus of
         # focus to the containing object.
         #
-        if (AXObject.get_role(event.source) in [Atspi.Role.LIST,
-                                       Atspi.Role.PAGE_TAB_LIST,
-                                       Atspi.Role.TREE]) \
-            and AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+        if (AXUtilities.is_list(event.source) \
+           or AXUtilities.is_page_tab_list(event.source) \
+           or AXUtilities.is_tree(event.source)) \
+           and AXUtilities.is_focused(event.source):
             newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
             orca.setLocusOfFocus(event, newFocus)
         else:
@@ -135,31 +136,18 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-
         # Accessibility support for menus in Java is badly broken: Missing
         # events, missing states, bogus events from other objects, etc.
         # Therefore if we get an event, however broken, for menus or their
         # their items that suggests they are selected, we'll just cross our
         # fingers and hope that's true.
-        menuRoles = [Atspi.Role.MENU,
-                     Atspi.Role.MENU_BAR,
-                     Atspi.Role.MENU_ITEM,
-                     Atspi.Role.CHECK_MENU_ITEM,
-                     Atspi.Role.RADIO_MENU_ITEM,
-                     Atspi.Role.POPUP_MENU]
-
-        if role in menuRoles or AXObject.get_role(AXObject.get_parent(obj)) in menuRoles:
-            orca.setLocusOfFocus(event, obj)
+        if AXUtilities.is_menu_related(event.source) \
+           or AXUtilities.is_menu_related(AXObject.get_parent(event.source)):
+            orca.setLocusOfFocus(event, event.source)
             return
 
-        try:
-            focusRole = AXObject.get_role(orca_state.locusOfFocus)
-        except Exception:
-            focusRole = None
-
-        if focusRole in menuRoles and role == Atspi.Role.ROOT_PANE:
+        if AXUtilities.is_root_pane(event.source) \
+           and AXUtilities.is_menu_related(orca_state.locusOfFocus):
             return
 
         default.Script.onFocusedChanged(self, event)
@@ -173,11 +161,9 @@ class Script(default.Script):
 
         # We'll ignore value changed events for Java's toggle buttons since
         # they also send a redundant object:state-changed:checked event.
-        #
-        ignoreRoles = [Atspi.Role.TOGGLE_BUTTON,
-                       Atspi.Role.RADIO_BUTTON,
-                       Atspi.Role.CHECK_BOX]
-        if AXObject.get_role(event.source) in ignoreRoles:
+        if AXUtilities.is_toggle_button(event.source) \
+           or AXUtilities.is_radio_button(event.source) \
+           or AXUtilities.is_check_box(event.source):
             return
 
         # Java's SpinButtons are the most caret movement happy thing
@@ -189,7 +175,7 @@ class Script(default.Script):
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
         #
-        if AXObject.get_role(event.source) == Atspi.Role.SPIN_BUTTON:
+        if AXUtilities.is_spin_button(event.source):
             parent = AXObject.get_parent(orca_state.locusOfFocus)
             grandparent = AXObject.get_parent(parent)
             if grandparent == event.source:
@@ -203,15 +189,7 @@ class Script(default.Script):
         # Accessibility support for menus in Java is badly broken. One problem
         # is bogus focus claims following menu-related focus claims. Therefore
         # in this particular toolkit, we mustn't skip events for menus.
-
-        menuRoles = [Atspi.Role.MENU,
-                     Atspi.Role.MENU_BAR,
-                     Atspi.Role.MENU_ITEM,
-                     Atspi.Role.CHECK_MENU_ITEM,
-                     Atspi.Role.RADIO_MENU_ITEM,
-                     Atspi.Role.POPUP_MENU]
-
-        if AXObject.get_role(event.source) in menuRoles:
+        if AXUtilities.is_menu_related(event.source):
             return False
 
         return default.Script.skipObjectEvent(self, event)
