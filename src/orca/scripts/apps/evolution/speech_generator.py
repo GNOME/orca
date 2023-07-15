@@ -32,6 +32,7 @@ from gi.repository import Atspi
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerator):
@@ -44,7 +45,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isTreeTableCell")
         if rv is None:
-            rv = AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TREE_TABLE
+            rv = AXUtilities.is_tree_table(AXObject.get_parent(obj))
             cached["isTreeTableCell"] = rv
             self._cache[hash(obj)] = cached
 
@@ -74,7 +75,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isFocused")
         if rv is None:
-            rv = AXObject.has_state(obj, Atspi.StateType.FOCUSED)
+            rv = AXUtilities.is_focused(obj)
             cached["isFocused"] = rv
             self._cache[hash(obj)] = cached
 
@@ -84,7 +85,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isChecked")
         if rv is None:
-            rv = AXObject.has_state(obj, Atspi.StateType.CHECKED)
+            rv = AXUtilities.is_checked(obj)
             cached["isChecked"] = rv
             self._cache[hash(obj)] = cached
 

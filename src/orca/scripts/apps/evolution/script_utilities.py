@@ -32,6 +32,7 @@ from gi.repository import Atspi
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(WebKitGtk.Utilities, gtk.Utilities):
@@ -40,38 +41,37 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         super().__init__(script)
 
     def isComposeMessageBody(self, obj):
-        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if not AXUtilities.is_editable(obj):
             return False
 
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessage(self, obj):
-        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(obj):
             return False
 
         return self.isEmbeddedDocument(obj)
 
     def isReceivedMessageHeader(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
+        if not AXUtilities.is_table(obj):
             return False
 
         return self.isReceivedMessage(AXObject.get_parent(obj))
 
     def isReceivedMessageContent(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.SECTION):
+        if not AXUtilities.is_section(obj):
             return False
 
         return self.isReceivedMessage(AXObject.get_parent(obj))
 
     def isComposeAutocomplete(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.TABLE):
+        if not AXUtilities.is_table(obj):
             return False
 
-        if not AXObject.has_state(obj, Atspi.StateType.MANAGES_DESCENDANTS):
+        if not AXUtilities.manages_descendants(obj):
             return False
 
-        topLevel = self.topLevelObject(obj)
-        return topLevel and AXObject.get_role(topLevel) == Atspi.Role.WINDOW
+        return AXUtilities.is_window(self.topLevelObject(obj))
 
     def findMessageBodyChild(self, root):
         candidate = AXObject.find_descendant(root, self.isDocument)
@@ -105,9 +105,8 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
-        if AXObject.get_role(obj) == Atspi.Role.LAYERED_PANE:
-            isTreeTable = lambda x: x and AXObject.get_role(x) == Atspi.Role.TREE_TABLE
-            return AXObject.find_descendant(obj, isTreeTable) or obj
+        if AXUtilities.is_layered_pane(obj):
+            return AXObject.find_descendant(obj, AXUtilities.is_tree_table) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
 
@@ -125,8 +124,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not self.isEmbeddedDocument(obj):
             return False
 
-        isSplitPane = lambda x: x and AXObject.get_role(x) == Atspi.Role.SPLIT_PANE
-        if AXObject.find_ancestor(obj, isSplitPane):
+        if AXObject.find_ancestor(obj, AXUtilities.is_split_pane) is not None:
             return False
 
         return True

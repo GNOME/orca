@@ -36,6 +36,7 @@ import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -83,12 +84,11 @@ class Script(WebKitGtk.Script, gtk.Script):
         to say it shouldn't.
         """
 
-        if event.type.startswith("focus:") \
-            and AXObject.get_role(event.source) == Atspi.Role.MENU:
+        if event.type.startswith("focus:") and AXUtilities.is_menu(event.source):
             return True
 
         window = self.utilities.topLevelObject(event.source)
-        if not AXObject.has_state(window, Atspi.StateType.ACTIVE):
+        if not AXUtilities.is_active(window):
             return False
 
         return True
@@ -118,7 +118,7 @@ class Script(WebKitGtk.Script, gtk.Script):
             return
 
         if self.utilities.isComposeAutocomplete(event.source):
-            if AXObject.has_state(event.any_data, Atspi.StateType.SELECTED):
+            if AXUtilities.is_selected(event.any_data):
                 orca.setLocusOfFocus(event, event.any_data)
             else:
                 orca.setLocusOfFocus(event, event.source)
@@ -138,7 +138,7 @@ class Script(WebKitGtk.Script, gtk.Script):
 
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
-        if AXObject.get_role(event.source) == Atspi.Role.LAYERED_PANE:
+        if AXUtilities.is_layered_pane(event.source):
             obj = self.utilities.realActiveDescendant(event.source)
             orca.setLocusOfFocus(event, obj)
             return
@@ -156,8 +156,8 @@ class Script(WebKitGtk.Script, gtk.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if AXObject.get_role(event.source) == Atspi.Role.COMBO_BOX \
-           and not AXObject.has_state(event.source, Atspi.StateType.FOCUSED):
+        if AXUtilities.is_combo_box(event.source) \
+           and not AXUtilities.is_focused(event.source):
             return
 
         gtk.Script.onSelectionChanged(self, event)
