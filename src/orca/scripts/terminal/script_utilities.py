@@ -35,7 +35,6 @@ from orca import keybindings
 from orca import orca_state
 from orca import script_utilities
 from orca import settings_manager
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
