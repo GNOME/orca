@@ -33,6 +33,7 @@ import orca.debug as debug
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(script_utilities.Utilities):
@@ -49,12 +50,10 @@ class Utilities(script_utilities.Utilities):
             return AXSelection.get_selected_children(obj)
 
         # This is a workaround for bgo#738705.
-        if AXObject.get_role(obj) != Atspi.Role.PANEL:
+        if not AXUtilities.is_panel(obj):
             return []
 
-        isSelected = lambda x: x and AXObject.has_state(x, Atspi.StateType.SELECTED)
-        children = self.findAllDescendants(obj, isSelected)
-        return children
+        return self.findAllDescendants(obj, AXUtilities.is_selected)
 
     def insertedText(self, event):
         if event.any_data:

@@ -35,6 +35,7 @@ import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.toolkits.clutter as clutter
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .formatting import Formatting
 from .script_utilities import Utilities
@@ -63,12 +64,11 @@ class Script(clutter.Script):
         """Determines whether or not this event should be skipped due to
         being redundant, part of an event flood, etc."""
 
-        role = AXObject.get_role(event.source)
         # We must handle all dialogs ourselves in this script.
-        if role == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog(event.source):
             return False
 
-        if role == Atspi.Role.WINDOW:
+        if AXUtilities.is_window(event.source):
             return self.utilities.isBogusWindowFocusClaim(event)
 
         return clutter.Script.skipObjectEvent(self, event)
@@ -84,9 +84,8 @@ class Script(clutter.Script):
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
     def _presentDialogLabel(self, event):
-        role = AXObject.get_role(event.source)
         activeDialog, timestamp = self._activeDialog
-        if not activeDialog or role != Atspi.Role.LABEL:
+        if not activeDialog or not AXUtilities.is_label(event.source):
             return False
 
         obj = hash(event.source)
@@ -94,8 +93,7 @@ class Script(clutter.Script):
         if name == self._activeDialogLabels.get(obj):
             return True
 
-        isDialog = lambda x: x and AXObject.get_role(x) == Atspi.Role.DIALOG
-        parentDialog = AXObject.find_ancestor(event.source, isDialog)
+        parentDialog = AXObject.find_ancestor(event.source, AXUtilities.is_dialog)
         if activeDialog == parentDialog:
             self.presentMessage(name)
             self._activeDialogLabels[obj] = name
@@ -122,8 +120,7 @@ class Script(clutter.Script):
         # act of processing these by the default script causes us to
         # present nothing, and introduces a significant delay before
         # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-        role = AXObject.get_role(event.source)
-        if role == Atspi.Role.PANEL and not AXObject.get_name(event.source):
+        if AXUtilities.is_panel(event.source) and not AXObject.get_name(event.source):
             return
 
         # We cannot count on events or their order from dialog boxes.
@@ -136,7 +133,7 @@ class Script(clutter.Script):
             self._activeDialogLabels = {}
             return
 
-        if activeDialog and role == Atspi.Role.LABEL and event.detail1:
+        if activeDialog and event.detail1 and AXUtilities.is_label(event.source):
             if self._presentDialogLabel(event):
                 return
 
@@ -151,9 +148,9 @@ class Script(clutter.Script):
         # the wrong state seem to be things we don't want to present anyway
         # we'll stop doing so and hope we are right.
         if event.detail1:
-            if AXObject.get_role(event.source) == Atspi.Role.PANEL:
+            if AXUtilities.is_panel(event.source):
                 AXObject.clear_cache(event.source)
-            if AXObject.has_state(event.source, Atspi.StateType.SELECTED):
+            if AXUtilities.is_selected(event.source):
                 orca.setLocusOfFocus(event, event.source)
             return
 
@@ -165,24 +162,19 @@ class Script(clutter.Script):
         if not event.detail1:
             return
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-
         # The dialog will get presented when its first child gets focus.
-        if role == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog(event.source):
             return
 
         # We're getting a spurious focus claim from the gnome-shell window after
         # the window switcher is used.
-        if role == Atspi.Role.WINDOW:
+        if AXUtilities.is_window(event.source):
             return
 
-        name = AXObject.get_name(obj)
-        if role == Atspi.Role.MENU_ITEM and not name \
-           and not self.utilities.labelsForObject(obj):
-            isRealFocus = lambda x: x and AXObject.get_role(x) == Atspi.Role.SLIDER
-            descendant = AXObject.find_descendant(obj, isRealFocus)
-            if descendant:
+        if not AXObject.get_name(event.source) and AXUtilities.is_menu_item(event.source) \
+           and not self.utilities.labelsForObject(event.source):
+            descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
+            if descendant is not None:
                 orca.setLocusOfFocus(event, descendant)
                 return
 
@@ -192,8 +184,7 @@ class Script(clutter.Script):
         # state regardless.
         activeDialog, timestamp = self._activeDialog
         if not activeDialog:
-            isDialog = lambda x: x and AXObject.get_role(x) == Atspi.Role.DIALOG
-            dialog = AXObject.find_ancestor(obj, isDialog)
+            dialog = AXObject.find_ancestor(event.source, AXUtilities.is_dialog)
             self._activeDialog = (dialog, time.time())
             if dialog:
                 orca.setLocusOfFocus(None, dialog)
