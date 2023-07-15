@@ -25,10 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject

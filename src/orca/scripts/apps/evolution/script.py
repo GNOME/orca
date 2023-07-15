@@ -27,15 +27,11 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 import orca.orca as orca
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator

@@ -24,10 +24,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import switcher

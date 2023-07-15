@@ -27,15 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
