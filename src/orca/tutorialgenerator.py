@@ -627,7 +627,7 @@ class TutorialGenerator:
                 # or just the current one (focus has moved left or right in
                 # the same row).
                 #
-                speakAll = True
+                # speakAll = True
                 if "lastRow" in self._script.pointOfReference and \
                     "lastColumn" in self._script.pointOfReference:
                     pointOfReference = self._script.pointOfReference

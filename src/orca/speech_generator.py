@@ -1508,7 +1508,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         try:
-            text = obj.queryText()
+            obj.queryText()
         except NotImplementedError:
             return []
 

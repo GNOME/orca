@@ -2200,7 +2200,6 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        state = AXObject.get_state_set(obj)
         role = AXObject.get_role(obj)
         textBlockElements = self._textBlockElementRoles()
         if role not in textBlockElements:

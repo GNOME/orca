@@ -2502,7 +2502,6 @@ class Script(script.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        obj = event.source
         AXObject.clear_cache(event.source)
         if not AXUtilities.is_focused(event.source):
             msg = "DEFAULT: Event is not toggling of currently-focused object"

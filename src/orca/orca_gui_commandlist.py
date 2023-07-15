@@ -108,7 +108,8 @@ class OrcaCommandListGUI:
         self._gui.destroy()
 
     def _onOKClicked(self, widget):
-        handler = self._getSelectedHandler()
+        # TODO - JD: Look into why this was assigned but is unused.
+        # handler = self._getSelectedHandler()
         self._gui.destroy()
 
     def _getSelectedHandler(self):

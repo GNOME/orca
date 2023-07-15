@@ -187,7 +187,6 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # The only (known) object giving us a broken ancestry is the omnibox popup.
-        roles = [Atspi.Role.LIST_ITEM, Atspi.Role.LIST_BOX]
         if not (AXUtilities.is_list_item(obj or AXUtilities.is_list_box(obj))):
             return result
 

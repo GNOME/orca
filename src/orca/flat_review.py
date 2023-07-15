@@ -605,7 +605,6 @@ class Context:
             [x, y, width, height] = text.getRangeExtents(upperMid,
                                                          upperMid+1,
                                                          0)
-            upperY = y
             if y > cliprect.y:
                 upperMax = upperMid
             else:
@@ -620,7 +619,6 @@ class Context:
             [x, y, width, height] = text.getRangeExtents(lowerMid,
                                                          lowerMid+1,
                                                          0)
-            lowerY = y
             if y > limit:
                 lowerMax = lowerMid
             else:

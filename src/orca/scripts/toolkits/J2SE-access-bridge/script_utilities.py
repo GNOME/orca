@@ -117,7 +117,6 @@ class Utilities(script_utilities.Utilities):
 
         count = 0
         while newObj:
-            state = AXObject.get_state_set(newObj)
             if AXUtilities.is_expandable(newObj) or AXUtilities.is_collapsed(newObj):
                 if AXUtilities.is_visible(newObj):
                     count += 1

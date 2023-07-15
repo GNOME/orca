@@ -731,7 +731,6 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'togglebutton'
         indicators = self._script.formatting.getString(**args)
-        state = AXObject.get_state_set(obj)
         if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
             result.append(indicators[1])
         else:
