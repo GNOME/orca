@@ -582,7 +582,7 @@ class MouseReviewer:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         script = _scriptManager.getScript(AXObject.get_application(window), obj)
-        if menu and obj and not AXObject.find_ancestor(obj, isMenu):
+        if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
                 msg = "MOUSE REVIEW: %s believed to be under %s" % (obj, menu)
                 debug.println(debug.LEVEL_INFO, msg, True)
