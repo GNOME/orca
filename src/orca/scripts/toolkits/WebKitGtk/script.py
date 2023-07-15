@@ -46,6 +46,7 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -191,7 +192,7 @@ class Script(default.Script):
         if lastKey == 'Down' \
            and orca_state.locusOfFocus == AXObject.get_parent(event.source) \
            and AXObject.get_index_in_parent(event.source) == 0 \
-           and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.LINK:
+           and AXUtilities.is_link(orca_state.locusOfFocus):
             self.updateBraille(event.source)
             return
 
@@ -279,7 +280,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
+        if AXUtilities.is_entry(obj):
             default.Script.sayCharacter(self, obj)
             return
 
@@ -300,7 +301,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
+        if AXUtilities.is_entry(obj):
             default.Script.sayWord(self, obj)
             return
 
@@ -318,7 +319,7 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
+        if AXUtilities.is_entry(obj):
             default.Script.sayLine(self, obj)
             return
 
@@ -328,8 +329,7 @@ class Script(default.Script):
             self.sayPhrase(obj, start, end)
 
             # TODO: Move these next items into the speech generator.
-            if AXObject.get_role(obj) == Atspi.Role.PANEL \
-               and AXObject.get_index_in_parent(obj) == 0:
+            if AXUtilities.is_panel(obj) and AXObject.get_index_in_parent(obj) == 0:
                 obj = AXObject.get_parent(obj)
 
             rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]
@@ -347,7 +347,7 @@ class Script(default.Script):
         - endOffset: the end text offset.
         """
 
-        if AXObject.get_role(obj) == Atspi.Role.ENTRY:
+        if AXUtilities.is_entry(obj):
             default.Script.sayPhrase(self, obj, startOffset, endOffset)
             return
 
@@ -355,8 +355,7 @@ class Script(default.Script):
         if len(phrase) and phrase != "\n":
             voice = self.speechGenerator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
-            pred = lambda x: AXObject.get_role(x) == Atspi.Role.LINK
-            links = [x for x in AXObject.iter_children(obj, pred)]
+            links = [x for x in AXObject.iter_children(obj, AXUtilities.is_link)]
             if links:
                 phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
@@ -377,9 +376,8 @@ class Script(default.Script):
         Returns True if we shouldn't bother processing this object event.
         """
 
-        if event.type.startswith('object:state-changed:focused') \
-           and event.detail1:
-            if AXObject.get_role(event.source) == Atspi.Role.LINK:
+        if event.type.startswith('object:state-changed:focused') and event.detail1 \
+           and AXUtilities.is_link(event.source):
                 return False
 
         return default.Script.skipObjectEvent(self, event)
@@ -403,16 +401,15 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return False
 
-        states = AXObject.get_state_set(orca_state.locusOfFocus)
-        if states.contains(Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(orca_state.locusOfFocus):
             return False
 
         role = AXObject.get_role(orca_state.locusOfFocus)
         if role in doNotHandleRoles:
             if role == Atspi.Role.LIST_ITEM:
-                return not states.contains(Atspi.StateType.SELECTABLE)
+                return not AXUtilities.is_selectable(orca_state.locusOfFocus)
 
-            if states.contains(Atspi.StateType.FOCUSED):
+            if AXUtilities.is_focused(orca_state.locusOfFocus):
                 return False
 
         return True
@@ -520,7 +517,7 @@ class Script(default.Script):
             obj = AXObject.get_parent(obj)
 
         document = self.utilities.getDocumentForObject(obj)
-        if not document or AXObject.has_state(document, Atspi.StateType.BUSY):
+        if not document or AXUtilities.is_busy(document):
             return
 
         allTextObjs = self.utilities.findAllDescendants(
@@ -608,7 +605,7 @@ class Script(default.Script):
         textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
         string = textLine[0]
         if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1 \
-           and AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+           and AXUtilities.is_focused(obj):
             return textLine
 
         textLine[0] = self.utilities.displayedText(obj)

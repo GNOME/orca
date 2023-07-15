@@ -37,6 +37,7 @@ import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.orca_state as orca_state
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 #############################################################################
 #                                                                           #
@@ -85,14 +86,13 @@ class Utilities(script_utilities.Utilities):
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
 
-        if not AXObject.get_role(obj) == Atspi.Role.ENTRY:
+        if not AXUtilities.is_entry(obj):
             return False
 
-        state = AXObject.get_state_set(obj)
-        readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
-                   and not state.contains(Atspi.StateType.EDITABLE)
+        if AXUtilities.is_read_only(obj):
+            return True
 
-        return readOnly
+        return AXUtilities.is_focusable(obj) and not AXUtilities.is_editable(obj)
 
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
@@ -108,7 +108,7 @@ class Utilities(script_utilities.Utilities):
         if text and text != self.EMBEDDED_OBJECT_CHARACTER:
             return text
 
-        if AXObject.get_role(obj) in [Atspi.Role.LINK, Atspi.Role.LIST_ITEM]:
+        if AXUtilities.is_link(obj) or AXUtilities.is_list_item(obj):
             children = [x for x in AXObject.iter_children(obj)]
             text = ' '.join(map(self.displayedText, children))
             if not text:
@@ -179,14 +179,14 @@ class Utilities(script_utilities.Utilities):
     def findPreviousObject(self, obj):
         """Finds the object before this one."""
 
-        if not obj:
+        if obj is None:
             return None
 
-        if AXObject.get_role(obj) == Atspi.Role.LINK:
+        if AXUtilities.is_link(obj):
             obj = AXObject.get_parent(obj)
 
         prevObj = AXObject.get_previous_object(obj)
-        if AXObject.get_role(prevObj) == Atspi.Role.LIST and AXObject.get_child_count(prevObj):
+        if AXUtilities.is_list(prevObj) and AXObject.get_child_count(prevObj):
             child = AXObject.get_child(prevObj, -1)
             if self.isTextListItem(child):
                 prevObj = child
@@ -196,14 +196,14 @@ class Utilities(script_utilities.Utilities):
     def findNextObject(self, obj):
         """Finds the object after this one."""
 
-        if not obj:
+        if obj is None:
             return None
 
-        if AXObject.get_role(obj) == Atspi.Role.LINK:
+        if AXUtilities.is_link(obj):
             obj = AXObject.get_parent(obj)
 
         nextObj = AXObject.get_next_object(obj)
-        if AXObject.get_role(nextObj) == Atspi.Role.LIST and AXObject.get_child_count(nextObj):
+        if AXUtilities.is_list(nextObj) and AXObject.get_child_count(nextObj):
             child = AXObject.get_child(nextObj, 0)
             if self.isTextListItem(child):
                 nextObj = child
@@ -213,28 +213,27 @@ class Utilities(script_utilities.Utilities):
     def isTextListItem(self, obj):
         """Returns True if obj is an item in a non-selectable list."""
 
-        if AXObject.get_role(obj) != Atspi.Role.LIST_ITEM:
+        if not AXUtilities.is_list_item(obj):
             return False
 
         parent = AXObject.get_parent(obj)
         if parent is None:
             return False
 
-        return not AXObject.has_state(parent, Atspi.StateType.FOCUSABLE)
+        return not AXUtilities.is_focusable(parent)
 
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
 
-        role = AXObject.get_role(obj)
-        childCount = AXObject.get_child_count(obj)
-        if role == Atspi.Role.SECTION:
-            if childCount > 1:
+        if AXUtilities.is_section(obj):
+            if AXObject.get_child_count(obj) > 1:
                 return self.onSameLine(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
             return False
 
-        if AXObject.get_role(obj) == Atspi.Role.LIST:
-            if AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
+        if AXUtilities.is_list(obj):
+            if AXUtilities.is_focusable(obj):
                 return False
+            childCount = AXObject.get_child_count(obj)
             if not childCount:
                 return AXObject.supports_text(obj)
             if childCount == 1:
@@ -247,8 +246,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isWebKitGtk(obj):
             return False
 
-        docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if AXObject.get_role(obj) not in docRoles:
+        if not AXUtilities.is_document(obj):
             return False
 
         parent = AXObject.get_parent(obj)
@@ -263,9 +261,7 @@ class Utilities(script_utilities.Utilities):
 
     def setCaretAtStart(self, obj):
         def implementsText(obj):
-            if AXObject.get_role(obj) == Atspi.Role.LIST:
-                return False
-            return AXObject.supports_text(obj)
+            return not AXUtilities.is_list(obj) and AXObject.supports_text(obj)
 
         child = obj
         if not implementsText(obj):

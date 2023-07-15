@@ -34,6 +34,7 @@ from gi.repository import Atspi
 import orca.object_properties as object_properties
 import orca.braille_generator as braille_generator
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -60,7 +61,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         doNotDisplay = [Atspi.Role.FORM,
                         Atspi.Role.SECTION,
                         Atspi.Role.UNKNOWN]
-        if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
+        if not AXUtilities.is_focusable(obj):
             doNotDisplay.extend([Atspi.Role.LIST,
                                  Atspi.Role.LIST_ITEM,
                                  Atspi.Role.PANEL])
@@ -99,7 +100,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateEol(self, obj, **args):
         if self._script.utilities.isWebKitGtk(obj) \
            and AXObject.get_role(obj) == Atspi.Role.PARAGRAPH \
-           and not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+           and not AXUtilities.is_editable(obj):
             return []
 
         return braille_generator.BrailleGenerator._generateEol(
