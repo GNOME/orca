@@ -41,6 +41,7 @@ from orca import debug
 from orca import orca_state
 from orca.scripts import web
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(web.Utilities):
@@ -64,7 +65,7 @@ class Utilities(web.Utilities):
         return True
 
     def _treatAsLeafNode(self, obj):
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
+        if AXUtilities.is_table_row(obj):
             return not AXObject.get_child_count(obj)
 
         return super()._treatAsLeafNode(obj)
@@ -73,8 +74,8 @@ class Utilities(web.Utilities):
         if not super().containsPoint(obj, x, y, coordType, margin):
             return False
 
-        roles = [Atspi.Role.MENU, Atspi.Role.TOOL_TIP]
-        if AXObject.get_role(obj) in roles and self.topLevelObject(obj) == AXObject.get_parent(obj):
+        if (AXUtilities.is_menu(obj) or AXUtilities.is_tool_tip(obj)) \
+           and self.topLevelObject(obj) == AXObject.get_parent(obj):
             msg = "GECKO: %s is suspected to be off screen object" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -85,9 +86,8 @@ class Utilities(web.Utilities):
         if super().isLayoutOnly(obj):
             return True
 
-        if AXObject.get_role(obj) == Atspi.Role.TOOL_BAR and AXObject.get_child_count(obj):
-            child = AXObject.get_child(obj, 0)
-            return AXObject.get_role(child) == Atspi.Role.PAGE_TAB_LIST
+        if AXUtilities.is_tool_bar(obj) and AXObject.get_child_count(obj):
+            return AXUtilities.is_page_tab_list(AXObject.get_child(obj, 0))
 
         return False
 
@@ -95,15 +95,11 @@ class Utilities(web.Utilities):
         if super().isSameObject(obj1, obj2, comparePaths, ignoreNames):
             return True
 
-        role1 = AXObject.get_role(obj1)
-        role2 = AXObject.get_role(obj2)
         roles = self._topLevelRoles()
-        if not (role1 in roles and role2 in roles):
+        if not (AXObject.get_role(obj1) in roles and AXObject.get_role(obj2) in roles):
             return False
 
-        name1 = AXObject.get_name(obj1)
-        name2 = AXObject.get_name(obj2)
-        rv = name1 == name2
+        rv = AXObject.get_name(obj1) == AXObject.get_name(obj2)
         msg = "GECKO: Treating %s and %s as same object: %s" % (obj1, obj2, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
@@ -111,7 +107,7 @@ class Utilities(web.Utilities):
     def isOnScreen(self, obj, boundingbox=None):
         if not super().isOnScreen(obj, boundingbox):
             return False
-        if AXObject.get_role(obj) != Atspi.Role.UNKNOWN:
+        if not AXUtilities.is_unknown(obj):
             return True
 
         if self.topLevelObject(obj) == AXObject.get_parent(obj):
@@ -125,8 +121,11 @@ class Utilities(web.Utilities):
         objects = super().getOnScreenObjects(root, extents)
 
         # For things like Thunderbird's "Select columns to display" button
-        if AXObject.get_role(root) == Atspi.Role.TREE_TABLE and AXObject.get_child_count(root):
-            isExtra = lambda x: x and AXObject.get_role(x) != Atspi.Role.COLUMN_HEADER
+        if AXUtilities.is_tree_table(root) and AXObject.get_child_count(root):
+
+            def isExtra(x):
+                return not AXUtilities.is_column_header(x)
+
             child = AXObject.get_child(root, 0)
             objects.extend([x for x in AXObject.iter_children(child, isExtra)])
 
@@ -135,11 +134,11 @@ class Utilities(web.Utilities):
     def isEditableMessage(self, obj):
         """Returns True if this is an editable message."""
 
-        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if not AXUtilities.is_editable(obj):
             return False
 
         document = self.getDocumentForObject(obj)
-        if AXObject.has_state(document, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(document):
             msg = "GECKO: %s is in an editable document: %s" % (obj, document)
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -166,11 +165,7 @@ class Utilities(web.Utilities):
         return False
 
     def _objectMightBeBogus(self, obj):
-        if not obj:
-            return False
-
-        if AXObject.get_role(obj) == Atspi.Role.SECTION \
-            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME:
+        if AXUtilities.is_section(obj) and AXUtilities.is_frame(AXObject.get_parent(obj)):
             msg = "GECKO: %s is believed to be a bogus object" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -188,13 +183,13 @@ class Utilities(web.Utilities):
 
         # Firefox seems to have turned its accessible location widget into a
         # childless editable combobox.
-        if AXObject.get_role(obj) != Atspi.Role.COMBO_BOX:
+        if not AXUtilities.is_combo_box(obj):
             return False
 
         if AXObject.get_child_count(obj):
             return False
 
-        if not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+        if not AXUtilities.is_focused(obj):
             return False
 
         if not AXObject.supports_editable_text(obj):
@@ -211,19 +206,17 @@ class Utilities(web.Utilities):
         if obj == self._findContainer:
             return True
 
-        if AXObject.get_role(obj) != Atspi.Role.TOOL_BAR:
+        if not AXUtilities.is_tool_bar(obj):
             return False
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
-        isEntry = lambda x: AXObject.get_role(x) == Atspi.Role.ENTRY
-        if len(self.findAllDescendants(obj, isEntry)) != 1:
+        if len(self.findAllDescendants(obj, AXUtilities.is_entry)) != 1:
             msg = "GECKO: %s not believed to be quick-find container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isButton = lambda x: AXObject.get_role(x) == Atspi.Role.PUSH_BUTTON
-        if len(self.findAllDescendants(obj, isButton)) != 1:
+        if len(self.findAllDescendants(obj, AXUtilities.is_push_button)) != 1:
             msg = "GECKO: %s not believed to be quick-find container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -240,7 +233,7 @@ class Utilities(web.Utilities):
         if obj == self._findContainer:
             return True
 
-        if AXObject.get_role(obj) != Atspi.Role.TOOL_BAR:
+        if not AXUtilities.is_tool_bar(obj):
             return False
 
         result = self.getFindResultsCount(obj)
@@ -252,14 +245,12 @@ class Utilities(web.Utilities):
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
-        isEntry = lambda x: AXObject.get_role(x) == Atspi.Role.ENTRY
-        if len(self.findAllDescendants(obj, isEntry)) != 1:
+        if len(self.findAllDescendants(obj, AXUtilities.is_entry)) != 1:
             msg = "GECKO: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        isButton = lambda x: AXObject.get_role(x) == Atspi.Role.PUSH_BUTTON
-        if len(self.findAllDescendants(obj, isButton)) < 5:
+        if len(self.findAllDescendants(obj, AXUtilities.is_push_button)) < 5:
             msg = "GECKO: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -276,11 +267,10 @@ class Utilities(web.Utilities):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        if AXObject.get_role(obj) not in [Atspi.Role.ENTRY, Atspi.Role.PUSH_BUTTON]:
+        if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
 
-        isToolbar = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOOL_BAR
-        toolbar = AXObject.find_ancestor(obj, isToolbar)
+        toolbar = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
         result = self.isFindContainer(toolbar)
         if result:
             msg = "GECKO: %s believed to be find-in-page widget (toolbar)" % obj
@@ -299,8 +289,8 @@ class Utilities(web.Utilities):
         if not root:
             return ""
 
-        isMatch = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL \
-            and len(re.findall("\d+", AXObject.get_name(x))) == 2
+        def isMatch(x):
+            return AXUtilities.is_label(x) and len(re.findall("\d+", AXObject.get_name(x))) == 2
 
         labels = self.findAllDescendants(root, isMatch)
         if len(labels) != 1:
