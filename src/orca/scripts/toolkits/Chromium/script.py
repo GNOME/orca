@@ -35,6 +35,7 @@ from orca import debug
 from orca import orca
 from orca import orca_state
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 from orca.scripts import default
 from orca.scripts import web
 from .braille_generator import BrailleGenerator
@@ -88,8 +89,7 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
-        role = AXObject.get_role(event.source)
-        if event.detail1 and role == Atspi.Role.FRAME \
+        if event.detail1 and AXUtilities.is_frame(event.source) \
            and not self.utilities.canBeActiveWindow(event.source):
             return
 
@@ -443,7 +443,7 @@ class Script(web.Script):
         # already showing at the time of window activation. If that changes,
         # we should store presented alerts so we don't double-present them.
         for child in AXObject.iter_children(event.source):
-            if AXObject.get_role(child) == Atspi.Role.ALERT:
+            if AXUtilities.is_alert(child):
                 self.presentObject(child)
 
     def onWindowDeactivated(self, event):
