@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 class LabelInference:
 
@@ -62,7 +63,7 @@ class LabelInference:
         if not obj:
             return None, []
 
-        if focusedOnly and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+        if focusedOnly and not AXUtilities.is_focused(obj):
             debug.println(debug.LEVEL_INFO, "INFER - object not focused", True)
             return None, []
 
@@ -113,48 +114,36 @@ class LabelInference:
         """Returns True if we should prefer text on the right, rather than the
         left, for the object obj."""
 
-        onRightRoles = [Atspi.Role.CHECK_BOX, Atspi.Role.RADIO_BUTTON]
-        return AXObject.get_role(obj) in onRightRoles
+        return AXUtilities.is_check_box(obj) or AXUtilities.is_radio_button(obj)
 
     def _preventRight(self, obj):
         """Returns True if we should not permit inference based on text to
         the right for the object obj."""
 
-        roles = [Atspi.Role.COMBO_BOX,
-                 Atspi.Role.LIST,
-                 Atspi.Role.LIST_BOX]
-
-        return AXObject.get_role(obj) in roles
+        return AXUtilities.is_combo_box(obj) or AXUtilities.is_list_box(obj)
 
     def _preferTop(self, obj):
         """Returns True if we should prefer text above, rather than below for
         the object obj."""
 
-        roles = [Atspi.Role.COMBO_BOX,
-                 Atspi.Role.LIST,
-                 Atspi.Role.LIST_BOX]
-
-        return AXObject.get_role(obj) in roles
+        return AXUtilities.is_combo_box(obj) or AXUtilities.is_list_box(obj)
 
     def _preventBelow(self, obj):
         """Returns True if we should not permit inference based on text below
         the object obj."""
 
-        roles = [Atspi.Role.ENTRY,
-                 Atspi.Role.PASSWORD_TEXT]
-
-        return AXObject.get_role(obj) not in roles
+        return not AXUtilities.is_text_input(obj)
 
     def _isSimpleObject(self, obj):
         """Returns True if the given object has 'simple' contents, such as text
         without embedded objects or a single embedded object without text."""
 
-        if not obj:
+        if obj is None:
             return False
 
         isMatch = lambda x: x and not self._script.utilities.isStaticTextLeaf(x)
         children = [child for child in AXObject.iter_children(obj, isMatch)]
-        children = [x for x in children if AXObject.get_role(x) != Atspi.Role.LINK]
+        children = [x for x in children if not AXUtilities.is_link(x)]
         if len(children) > 1:
             return False
 
@@ -172,11 +161,10 @@ class LabelInference:
     def _cannotLabel(self, obj):
         """Returns True if the given object should not be treated as a label."""
 
-        if not obj:
+        if obj is None:
             return True
 
-        nonLabelTextRoles = [Atspi.Role.HEADING, Atspi.Role.LIST_ITEM]
-        if AXObject.get_role(obj) in nonLabelTextRoles:
+        if AXUtilities.is_heading(obj) or AXUtilities.is_list_item(obj):
             return True
 
         return self._isWidget(obj)
@@ -184,7 +172,7 @@ class LabelInference:
     def _isWidget(self, obj):
         """Returns True if the given object is a widget."""
 
-        if not obj:
+        if obj is None:
             return False
 
         rv = self._isWidgetCache.get(hash(obj))
@@ -204,7 +192,7 @@ class LabelInference:
                        Atspi.Role.PUSH_BUTTON]
 
         isWidget = AXObject.get_role(obj) in widgetRoles
-        if not isWidget and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if not isWidget and AXUtilities.is_editable(obj):
             isWidget = True
 
         self._isWidgetCache[hash(obj)] = isWidget
@@ -225,8 +213,7 @@ class LabelInference:
         extents = 0, 0, 0, 0
         text = self._script.utilities.queryNonEmptyText(obj)
         if text:
-            skipTextExtents = [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT]
-            if AXObject.get_role(obj) not in skipTextExtents:
+            if not AXUtilities.is_text_input(obj):
                 if endOffset == -1:
                     try:
                         endOffset = text.characterCount
@@ -462,28 +449,19 @@ class LabelInference:
         return None, []
 
     def _isTable(self, obj):
-        if not obj:
-            return False
-
-        if AXObject.get_role(obj) == Atspi.Role.TABLE:
+        if AXUtilities.is_table(obj):
             return True
 
         return self._getTag(obj) == 'table'
 
     def _isRow(self, obj):
-        if not obj:
-            return False
-
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
+        if AXUtilities.is_table_row(obj):
             return True
 
         return self._getTag(obj) == 'tr'
 
     def _isCell(self, obj):
-        if not obj:
-            return False
-
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(obj):
             return True
 
         return self._getTag(obj) in ['td', 'th']
@@ -610,10 +588,13 @@ class LabelInference:
         if colindex < 0:
             return None, []
 
+        def isMatch(x):
+            if not AXObject.get_child_count(x):
+                return False
+            return not AXUtilities.have_same_role(AXObject.get_child(x, 0), obj)
+
         cells = [table.getAccessibleAt(i, colindex) for i in range(1, table.nRows)]
-        cells = [x for x in cells if x is not None]
-        if [x for x in cells if AXObject.get_child_count(x) \
-            and AXObject.get_role(x[0]) != AXObject.get_role(obj)]:
+        if list(filter(isMatch, cells)):
             return None, []
 
         label, sources = self._createLabelFromContents(firstRow[colindex])
