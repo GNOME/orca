@@ -36,6 +36,7 @@ import os
 from . import generator
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -272,7 +273,7 @@ class SoundGenerator(generator.Generator):
             args['mode'] = self._mode
 
         args['stringType'] = 'visited'
-        if AXObject.has_state(obj, Atspi.StateType.VISITED):
+        if AXUtilities.is_visited(obj):
             filenames = [self._script.formatting.getString(**args)]
             result = list(map(self._convertFilenameToIcon, filenames))
             if result:

@@ -45,6 +45,7 @@ from . import settings_manager
 from . import text_attribute_names
 from . import acss
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -198,7 +199,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) == Atspi.Role.AUTOCOMPLETE:
+        if AXUtilities.is_autocomplete(parent):
             result = self._generateLabelOrName(parent, **args)
 
         return result
@@ -262,7 +263,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         priorObj = args.get('priorObj')
-        if priorObj and AXObject.get_role(priorObj) == Atspi.Role.TOOL_TIP:
+        if AXUtilities.is_tool_tip(priorObj):
             return []
 
         if priorObj == obj:
@@ -581,8 +582,7 @@ class SpeechGenerator(generator.Generator):
                         Atspi.Role.EXTENDED]
 
         parent = AXObject.get_parent(obj)
-        parentRole = AXObject.get_role(parent)
-        if role == Atspi.Role.MENU and parentRole == Atspi.Role.COMBO_BOX:
+        if role == Atspi.Role.MENU and AXUtilities.is_combo_box(parent):
             return self._generateRoleName(parent)
 
         if self._script.utilities.isSingleLineAutocompleteEntry(obj):
@@ -591,11 +591,11 @@ class SpeechGenerator(generator.Generator):
             return result
 
         if role == Atspi.Role.PANEL \
-           and AXObject.has_state(obj, Atspi.StateType.SELECTED):
+           and AXUtilities.is_selected(obj):
             return []
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if parentRole == Atspi.Role.LIST_BOX:
+        if AXUtilities.is_list_box(parent):
             doNotPresent.append(AXObject.get_role(obj))
 
         if self._script.utilities.isStatusBarDescendant(obj):
@@ -652,8 +652,7 @@ class SpeechGenerator(generator.Generator):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         role = args.get('role', AXObject.get_role(obj))
-        state = AXObject.get_state_set(obj)
-        if role == Atspi.Role.LINK and state.contains(Atspi.StateType.VISITED):
+        if role == Atspi.Role.LINK and AXUtilities.is_visited(obj):
             return object_properties.ROLE_VISITED_LINK
 
         return super().getLocalizedRoleName(obj, **args)
@@ -839,7 +838,7 @@ class SpeechGenerator(generator.Generator):
             else:
                 linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 text = self._script.utilities.displayedText(obj)
-                isVisited = AXObject.has_state(obj, Atspi.StateType.VISITED)
+                isVisited = AXUtilities.is_visited(obj)
                 if not isVisited:
                     linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 else:
@@ -853,7 +852,7 @@ class SpeechGenerator(generator.Generator):
                     linkOutput += " " + text
                 result.append(linkOutput)
                 child = AXObject.get_child(obj, 0)
-                if AXObject.get_role(child) == Atspi.Role.IMAGE:
+                if AXUtilities.is_image(child):
                     result.extend(self._generateRoleName(child))
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1072,7 +1071,7 @@ class SpeechGenerator(generator.Generator):
         if not AXObject.supports_selection(AXObject.get_parent(obj)):
             return []
 
-        if AXObject.has_state(obj, Atspi.StateType.SELECTED):
+        if AXUtilities.is_selected(obj):
             return []
 
         result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
@@ -1101,10 +1100,10 @@ class SpeechGenerator(generator.Generator):
         if not AXObject.supports_selection(parent):
             return []
 
-        if AXObject.has_state(obj, Atspi.StateType.SELECTED):
+        if AXUtilities.is_selected(obj):
             return []
 
-        if AXObject.get_role(obj) == Atspi.Role.TEXT:
+        if AXUtilities.is_text(obj):
             return []
 
         table = self._script.utilities.getTable(obj)
@@ -1114,7 +1113,7 @@ class SpeechGenerator(generator.Generator):
                 return []
             if self._script.utilities.isLayoutOnly(table):
                 return []
-        elif AXObject.get_role(parent) == Atspi.Role.LAYERED_PANE:
+        elif AXUtilities.is_layered_pane(parent):
             if obj in self._script.utilities.selectedChildren(parent):
                 return []
         else:
@@ -1147,7 +1146,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         col = -1
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(parent):
             obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1186,7 +1185,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         row = -1
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(parent):
             obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1214,7 +1213,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
+        if AXUtilities.is_table_cell(parent):
             obj = parent
         parent = self._script.utilities.getTable(obj)
         try:
@@ -1268,7 +1267,7 @@ class SpeechGenerator(generator.Generator):
         """
 
         if args.get('inMouseReview') \
-           and AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+           and AXUtilities.is_editable(obj):
             return []
 
         result = self._generateSubstring(obj, **args)
@@ -1660,7 +1659,7 @@ class SpeechGenerator(generator.Generator):
         with focus.
         """
 
-        if AXObject.get_role(obj) != Atspi.Role.RADIO_BUTTON:
+        if AXUtilities.is_radio_button(obj):
             return []
 
         result = super()._generateRadioButtonGroup(obj, **args)
@@ -1669,7 +1668,7 @@ class SpeechGenerator(generator.Generator):
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         priorObj = args.get('priorObj', None)
-        if AXObject.get_role(priorObj) != Atspi.Role.RADIO_BUTTON:
+        if not AXUtilities.is_radio_button(priorObj):
             return result
 
         # TODO - JD: We need other ways to determine group membership. Not all
@@ -1712,8 +1711,7 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-            pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
-            children = [x for x in AXObject.iter_children(obj, pred)]
+            children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             setsize = len(children)
             if not setsize:
                 return []
@@ -1736,7 +1734,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         hasItems = False
-        pred = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
+        pred = lambda x: AXUtilities.is_showing(x)
         for child in AXObject.iter_children(obj, pred):
             hasItems = True
             break
@@ -2074,7 +2072,7 @@ class SpeechGenerator(generator.Generator):
         if priorObj and self._script.utilities.isDead(priorObj):
             return []
 
-        if priorObj and AXObject.get_role(priorObj) == Atspi.Role.TOOL_TIP:
+        if AXUtilities.is_tool_tip(priorObj):
             return []
 
         if priorObj and AXObject.get_parent(priorObj) == AXObject.get_parent(obj):
@@ -2083,7 +2081,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isTypeahead(priorObj):
             return []
 
-        if obj and AXObject.get_role(obj) == Atspi.Role.PAGE_TAB:
+        if AXUtilities.is_tool_tip(obj):
             return []
 
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
@@ -2171,7 +2169,7 @@ class SpeechGenerator(generator.Generator):
         if not priorObj or obj == priorObj or self._script.utilities.isZombie(priorObj):
             return []
 
-        if AXObject.get_role(obj) == Atspi.Role.PAGE_TAB:
+        if AXUtilities.is_page_tab(obj):
             return []
 
         if AXObject.get_application(obj) != AXObject.get_application(priorObj) \
@@ -2242,13 +2240,10 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if role == Atspi.Role.MENU_ITEM \
-           and (not priorObj or AXObject.get_role(priorObj) == Atspi.Role.WINDOW):
+        if role == Atspi.Role.MENU_ITEM and (not priorObj or AXUtilities.is_window(priorObj)):
             return result
 
-        topLevelObj = self._script.utilities.topLevelObject(obj)
-        if priorObj \
-           or (topLevelObj and AXObject.get_role(topLevelObj) == Atspi.Role.DIALOG):
+        if priorObj or AXUtilities.is_dialog(self._script.utilities.topLevelObject(obj)):
             result = self._generateAncestors(obj, **args)
         return result
 
@@ -2270,7 +2265,7 @@ class SpeechGenerator(generator.Generator):
             return [object_properties.ROLE_ICON_PANEL]
 
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) in [Atspi.Role.TABLE_CELL, Atspi.Role.MENU]:
+        if AXUtilities.is_table_cell(parent) or AXUtilities.is_menu(parent):
             obj = parent
         return self._generateRoleName(AXObject.get_parent(obj))
 
@@ -2280,8 +2275,7 @@ class SpeechGenerator(generator.Generator):
         which contains obj.
         """
         result = []
-        pred = lambda x: AXObject.get_role(x) == Atspi.Role.TOOL_BAR
-        ancestor = AXObject.find_ancestor(obj, pred)
+        ancestor = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
         if ancestor:
             result.extend(self._generateLabelAndName(ancestor))
             result.extend(self._generateRoleName(ancestor))
@@ -2297,7 +2291,7 @@ class SpeechGenerator(generator.Generator):
 
         # TODO - JD: We need other ways to determine group membership. Not all
         # implementations expose the member-of relation. Gtk3 does. Others are TBD.
-        pred = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
+        pred = lambda x: AXUtilities.is_showing(x)
         members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF, pred)
         if obj not in members:
             return []
@@ -2341,7 +2335,7 @@ class SpeechGenerator(generator.Generator):
         if position < 0 or total < 0:
             return []
 
-        if AXObject.get_role(obj) == Atspi.Role.MENU and total == 1:
+        if total == 1 and AXUtilities.is_menu(obj):
             return []
 
         position += 1
@@ -2400,7 +2394,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         button = self._script.utilities.defaultButton(obj)
-        if AXObject.has_state(button, Atspi.StateType.SENSITIVE):
+        if AXUtilities.is_sensitive(button):
             name = self._generateName(button)
             if name:
                 result.append(messages.DEFAULT_BUTTON_IS % name[0])
@@ -2475,7 +2469,7 @@ class SpeechGenerator(generator.Generator):
                        Atspi.Role.TOGGLE_BUTTON]
         isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
         result = []
-        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
+        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 if self._script.utilities.isShowingAndVisible(widget):
@@ -2951,7 +2945,7 @@ class SpeechGenerator(generator.Generator):
         if key in [None, DEFAULT]:
             string = args.get('string', '')
             obj = args.get('obj')
-            if obj and AXObject.get_role(obj) == Atspi.Role.LINK:
+            if AXUtilities.is_link(obj):
                 voice.update(voices.get(voiceType.get(HYPERLINK)))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType.get(UPPERCASE)))

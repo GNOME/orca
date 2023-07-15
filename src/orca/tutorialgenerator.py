@@ -38,6 +38,7 @@ from . import orca_state
 from . import settings
 
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 from .orca_i18n import _         # for gettext support
 
 class TutorialGenerator:
@@ -248,7 +249,7 @@ class TutorialGenerator:
         """
 
         parent = AXObject.get_parent(obj)
-        if AXObject.get_role(parent) == Atspi.Role.LAYERED_PANE:
+        if AXUtilities.is_layered_pane(parent):
             utterances = self._getTutorialForLayeredPane(parent,
                                                          alreadyFocused,
                                                          forceTutorial)
@@ -359,9 +360,8 @@ class TutorialGenerator:
 
 
         # If already in focus then the tree probably collapsed or expanded
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.EXPANDABLE):
-            if state.contains(Atspi.StateType.EXPANDED):
+        if AXUtilities.is_expandable(obj):
+            if AXUtilities.is_expanded(obj):
                 if (self.lastTutorial != [expandedMsg]) or forceTutorial:
                     utterances.append(expandedMsg)
             else:
@@ -411,7 +411,7 @@ class TutorialGenerator:
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
-        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if not AXUtilities.is_editable(obj):
             return []
 
         utterances = []
@@ -577,9 +577,8 @@ class TutorialGenerator:
             utterances = self._getTutorialForCheckBox(
                 obj, alreadyFocused, forceTutorial)
 
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.EXPANDABLE):
-            if state.contains(Atspi.StateType.EXPANDED):
+        if AXUtilities.is_expandable(obj):
+            if AXUtilities.is_expanded(obj):
                 if self.lastTutorial != [expandedMsg] or forceTutorial:
                     utterances.append(expandedMsg)
             else:

@@ -46,6 +46,7 @@ from . import object_properties
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 # Python 3.10 compatibility:
 try:
@@ -352,15 +353,14 @@ class Generator:
                 link = None
                 if role == Atspi.Role.LINK:
                     link = obj
-                elif AXObject.get_role(parent) == Atspi.Role.LINK:
+                elif AXUtilities.is_link(parent):
                     link = parent
                 if link:
                     basename = self._script.utilities.linkBasenameToName(link)
                     if basename:
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
-        if not result and role == Atspi.Role.ICON \
-           and AXObject.get_role(parent) == Atspi.Role.PANEL:
+        if not result and role == Atspi.Role.ICON and AXUtilities.is_panel(parent):
             return self._generateName(parent)
 
         return result
@@ -576,7 +576,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'insensitive'
-        if not AXObject.has_state(obj, Atspi.StateType.SENSITIVE):
+        if not AXUtilities.is_sensitive(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -617,10 +617,10 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'required'
-        isRequired = AXObject.has_state(obj, Atspi.StateType.REQUIRED)
-        if not isRequired and AXObject.get_role(obj) == Atspi.Role.RADIO_BUTTON:
+        isRequired = AXUtilities.is_required(obj)
+        if not isRequired and AXUtilities.is_radio_button(obj):
             parent = AXObject.get_parent(obj)
-            isRequired = AXObject.has_state(parent, Atspi.StateType.REQUIRED)
+            isRequired = AXUtilities.is_required(parent)
         if isRequired:
             result.append(self._script.formatting.getString(**args))
         return result
@@ -634,7 +634,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
-        if AXObject.has_state(obj, Atspi.StateType.READ_ONLY) \
+        if AXUtilities.is_read_only(obj) \
            or self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
@@ -664,10 +664,9 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.CHECKED):
+        if AXUtilities.is_checked(obj):
             result.append(indicators[1])
-        elif state.contains(Atspi.StateType.INDETERMINATE):
+        elif AXUtilities.is_indeterminate(obj):
             result.append(indicators[2])
         else:
             result.append(indicators[0])
@@ -684,8 +683,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'radiobutton'
         indicators = self._script.formatting.getString(**args)
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.CHECKED):
+        if AXUtilities.is_checked(obj):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
@@ -703,7 +701,7 @@ class Generator:
             return AXObject.get_role(x) in widgetRoles
 
         # For GtkListBox, such as those found in the control center
-        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
+        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             widget = AXObject.find_descendant(obj, isWidget)
             if widget:
                 return self.generate(widget, includeContext=False)
@@ -716,9 +714,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'switch'
         indicators = self._script.formatting.getString(**args)
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.CHECKED) \
-           or state.contains(Atspi.StateType.PRESSED):
+        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
@@ -736,19 +732,17 @@ class Generator:
         args['stringType'] = 'togglebutton'
         indicators = self._script.formatting.getString(**args)
         state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.CHECKED) \
-           or state.contains(Atspi.StateType.PRESSED):
+        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
             result.append(indicators[1])
         else:
             result.append(indicators[0])
         return result
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
-        if AXObject.has_state(obj, Atspi.StateType.CHECKABLE) \
-           or AXObject.get_role(obj) == Atspi.Role.CHECK_MENU_ITEM:
+        if AXUtilities.is_checkable(obj) or AXUtilities.is_check_menu_item(obj):
             return self._generateCheckedState(obj, **args)
 
-        if AXObject.has_state(obj, Atspi.StateType.CHECKED):
+        if AXUtilities.is_checked(obj):
             return self._generateCheckedState(obj, **args)
 
         return []
@@ -763,7 +757,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
-        if AXObject.has_state(obj, Atspi.StateType.CHECKED):
+        if AXUtilities.is_checked(obj):
             result.append(indicators[1])
         return result
 
@@ -778,12 +772,11 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'expansion'
         indicators = self._script.formatting.getString(**args)
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.COLLAPSED):
+        if AXUtilities.is_collapsed(obj):
             result.append(indicators[0])
-        elif state.contains(Atspi.StateType.EXPANDED):
+        elif AXUtilities.is_expanded(obj):
             result.append(indicators[1])
-        elif state.contains(Atspi.StateType.EXPANDABLE):
+        elif AXUtilities.is_expandable(obj):
             result.append(indicators[0])
 
         return result
@@ -799,8 +792,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'multiselect'
-        if AXObject.has_state(obj, Atspi.StateType.MULTISELECTABLE) \
-           and AXObject.get_child_count(obj):
+        if AXUtilities.is_multiselectable(obj) and AXObject.get_child_count(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -1130,8 +1122,7 @@ class Generator:
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
 
-        if role == Atspi.Role.SEPARATOR \
-            and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+        if role == Atspi.Role.SEPARATOR and not AXUtilities.is_focused(obj):
             return []
 
         return [self._script.utilities.textForValue(obj)]
@@ -1176,7 +1167,7 @@ class Generator:
         represents the radio button group label for the object, or an
         empty array if the object has no such label.
         """
-        if AXObject.get_role(obj) != Atspi.Role.RADIO_BUTTON:
+        if not AXUtilities.is_radio_button(obj):
             return []
 
         radioGroupLabel = None
@@ -1188,7 +1179,7 @@ class Generator:
 
         parent = AXObject.get_parent_checked(obj)
         while parent:
-            if AXObject.get_role(parent) in [Atspi.Role.PANEL, Atspi.Role.FILLER]:
+            if AXUtilities.is_panel(parent) or AXUtilities.is_filler(parent):
                 label = self._generateLabelAndName(parent)
                 if label:
                     return label
@@ -1204,7 +1195,7 @@ class Generator:
         """
         rad = self._script.utilities.realActiveDescendant(obj)
 
-        if not (AXObject.get_role(rad) == Atspi.Role.TABLE_CELL and AXObject.get_child_count(rad)):
+        if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
             return self._generateDisplayedText(rad, **args)
 
         content = set([self._script.utilities.displayedText(x).strip() for x in rad])
@@ -1230,7 +1221,7 @@ class Generator:
         result = []
         parent = AXObject.get_parent_checked(obj)
         while parent:
-            if AXObject.get_role(parent) == Atspi.Role.PANEL:
+            if AXUtilities.is_panel(parent):
                 label = self._generateLabelAndName(parent)
                 if label:
                     result.extend(label)
@@ -1322,7 +1313,7 @@ class Generator:
         if self._script.utilities.isDPub(obj):
             if self._script.utilities.isLandmark(obj):
                 return 'ROLE_DPUB_LANDMARK'
-            if AXObject.get_role(obj) == Atspi.Role.SECTION:
+            if AXUtilities.is_section(obj):
                 return 'ROLE_DPUB_SECTION'
         if self._script.utilities.isSwitch(obj):
             return 'ROLE_SWITCH'
@@ -1367,32 +1358,24 @@ class Generator:
         role = args.get('role', AXObject.get_role(obj))
 
         if AXObject.supports_value(obj):
-            state = AXObject.get_state_set(obj)
-            isVertical = state.contains(Atspi.StateType.VERTICAL)
-            isHorizontal = state.contains(Atspi.StateType.HORIZONTAL)
-            isFocused = state.contains(Atspi.StateType.FOCUSED) \
-                        or args.get('alreadyFocused', False)
-
-            if role == Atspi.Role.SLIDER:
-                if isHorizontal:
-                    return object_properties.ROLE_SLIDER_HORIZONTAL
-                if isVertical:
-                    return object_properties.ROLE_SLIDER_VERTICAL
-            elif role == Atspi.Role.SCROLL_BAR:
-                if isHorizontal:
-                    return object_properties.ROLE_SCROLL_BAR_HORIZONTAL
-                if isVertical:
-                    return object_properties.ROLE_SCROLL_BAR_VERTICAL
-            elif role == Atspi.Role.SEPARATOR:
-                if isHorizontal:
-                    return object_properties.ROLE_SPLITTER_HORIZONTAL
-                if isVertical:
-                    return object_properties.ROLE_SPLITTER_VERTICAL
-            elif role == Atspi.Role.SPLIT_PANE and isFocused:
+            if AXUtilities.is_horizontal_slider(obj):
+                return object_properties.ROLE_SLIDER_HORIZONTAL
+            if AXUtilities.is_vertical_slider(obj):
+                return object_properties.ROLE_SLIDER_VERTICAL
+            if AXUtilities.is_horizontal_scrollbar(obj):
+                return object_properties.ROLE_SCROLL_BAR_HORIZONTAL
+            if AXUtilities.is_vertical_scrollbar(obj):
+                return object_properties.ROLE_SCROLL_BAR_VERTICAL
+            if AXUtilities.is_horizontal_separator(obj):
+                return object_properties.ROLE_SPLITTER_HORIZONTAL
+            if AXUtilities.is_vertical_separator(obj):
+                return object_properties.ROLE_SPLITTER_VERTICAL
+            if AXUtilities.is_split_pane(obj) \
+               and (AXUtilities.is_focused(obj) or args.get('alreadyFocused', False)):
                 # The splitter has the opposite orientation of the split pane.
-                if isHorizontal:
+                if AXUtilities.is_horizontal(obj):
                     return object_properties.ROLE_SPLITTER_VERTICAL
-                if isVertical:
+                if AXUtilities.is_vertical(obj):
                     return object_properties.ROLE_SPLITTER_HORIZONTAL
 
         if self._script.utilities.isContentSuggestion(obj):

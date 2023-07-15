@@ -38,6 +38,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 from .braille_rolenames import shortRoleNames
 
 _settingsManager = settings_manager.getManager()
@@ -81,7 +82,7 @@ class BrailleGenerator(generator.Generator):
         if not isinstance(region, (braille.Component, braille.Text)):
             return False
 
-        if AXObject.get_role(obj) != AXObject.get_role(region.accessible):
+        if not AXUtilities.have_same_role(obj, region.accessible):
             return False
 
         return AXObject.get_name(obj) == AXObject.get_name(region.accessible)
@@ -111,24 +112,27 @@ class BrailleGenerator(generator.Generator):
         except Exception:
             focusedRegion = None
 
-        role = AXObject.get_role(obj)
         for region in result:
             if isinstance(region, (braille.Component, braille.Text)) \
                and self._script.utilities.isSameObject(region.accessible, obj, True):
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Text) \
-                 and role == Atspi.Role.COMBO_BOX \
+                 and AXUtilities.is_combo_box(obj) \
                  and AXObject.get_parent(region.accessible) == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Component) \
-                 and role == Atspi.Role.TABLE_CELL \
+                 and AXUtilities.is_table_cell(obj) \
                  and AXObject.get_parent(region.accessible) == obj:
                 focusedRegion = region
                 break
         else:
-            candidates = list(filter(lambda x: self._isCandidateFocusedRegion(obj, x), result))
+
+            def pred(x):
+                return self._isCandidateFocusedRegion(obj, x)
+
+            candidates = list(filter(pred, result))
             msg = 'INFO: Could not determine focused region. Candidates: %i' % len(candidates)
             debug.println(debug.LEVEL_INFO, msg)
             if len(candidates) == 1:
@@ -164,7 +168,7 @@ class BrailleGenerator(generator.Generator):
                         Atspi.Role.LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
+        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             doNotPresent.append(AXObject.get_role(obj))
 
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
@@ -376,7 +380,7 @@ class BrailleGenerator(generator.Generator):
             return AXObject.get_role(x) in widgetRoles
 
         result = []
-        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LIST_BOX:
+        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))
@@ -475,8 +479,7 @@ class BrailleGenerator(generator.Generator):
             text = obj.queryText()
         except NotImplementedError:
             text = None
-        if text and (self._script.utilities.isTextArea(obj) \
-                     or (AXObject.get_role(obj) in [Atspi.Role.LABEL])):
+        if text and (self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj)):
             try:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
                     text.caretOffset, Atspi.TextBoundaryType.LINE_START)
