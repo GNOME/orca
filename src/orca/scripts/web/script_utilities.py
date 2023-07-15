@@ -44,6 +44,7 @@ from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
@@ -236,14 +237,13 @@ class Utilities(script_utilities.Utilities):
         self._currentTextAttrs = {}
 
     def isDocument(self, obj, excludeDocumentFrame=True):
-        if not obj:
-            return False
+        if AXUtilities.is_document_web(obj) or AXUtilities.is_embedded(obj):
+            return True
 
-        roles = [Atspi.Role.DOCUMENT_WEB, Atspi.Role.EMBEDDED]
         if not excludeDocumentFrame:
-            roles.append(Atspi.Role.DOCUMENT_FRAME)
+            return AXUtilities.is_document_frame(obj)
 
-        return AXObject.get_role(obj) in roles
+        return False
 
     def inDocumentContent(self, obj=None):
         if not obj:
@@ -297,7 +297,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def activeDocument(self, window=None):
-        isShowing = lambda x: AXObject.has_state(x, Atspi.StateType.SHOWING)
+        isShowing = lambda x: AXUtilities.is_showing(x)
         documents = self._getDocumentsEmbeddedBy(window or orca_state.activeWindow)
         documents = list(filter(isShowing, documents))
         if len(documents) == 1:
@@ -354,20 +354,17 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def grabFocusWhenSettingCaret(self, obj):
-        role = AXObject.get_role(obj)
-
         # To avoid triggering popup lists.
-        if role == Atspi.Role.ENTRY:
+        if AXUtilities.is_entry(obj):
             return False
 
-        if role == Atspi.Role.IMAGE:
-            isLink = lambda x: x and AXObject.get_role(x) == Atspi.Role.LINK
-            return AXObject.find_ancestor(obj, isLink) is not None
+        if AXUtilities.is_image(obj):
+            return AXObject.find_ancestor(obj, AXUtilities.is_link) is not None
 
-        if role == Atspi.Role.HEADING and AXObject.get_child_count(obj) == 1:
+        if AXUtilities.is_heading(obj) and AXObject.get_child_count(obj) == 1:
             return self.isLink(AXObject.get_child(obj, 0))
 
-        return AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
+        return AXUtilities.is_focusable(obj)
 
     def grabFocus(self, obj):
         try:
@@ -481,7 +478,7 @@ class Utilities(script_utilities.Utilities):
             return super().nodeLevel(obj)
 
         rv = -1
-        if not (self.inMenu(obj) or AXObject.get_role(obj) == Atspi.Role.HEADING):
+        if not (self.inMenu(obj) or AXUtilities.is_heading(obj)):
             attrs = self.objectAttributes(obj)
             # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
             rv = int(attrs.get('level', 0)) -1
@@ -509,11 +506,10 @@ class Utilities(script_utilities.Utilities):
         if position is not None:
             return int(position)
 
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
+        if AXUtilities.is_table_row(obj):
             rowindex = attrs.get('rowindex')
             if rowindex is None and AXObject.get_child_count(obj):
-                roles = self._cellRoles()
-                cell = AXObject.find_descendant(obj, lambda x: x and AXObject.get_role(x) in roles)
+                cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell_or_header)
                 rowindex = self.objectAttributes(cell, False).get('rowindex')
 
             if rowindex is not None:
@@ -527,7 +523,7 @@ class Utilities(script_utilities.Utilities):
         if setsize is not None:
             return int(setsize)
 
-        if AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
+        if AXUtilities.is_table_row(obj):
             rows, cols = self.rowAndColumnCount(self.getTable(obj))
             if rows != -1:
                 return rows
@@ -608,29 +604,27 @@ class Utilities(script_utilities.Utilities):
         if self.isLink(obj):
             return False
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.COMBO_BOX \
-           and AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
+        if AXUtilities.is_combo_box(obj) \
+           and AXUtilities.is_editable(obj) \
            and not AXObject.get_child_count(obj):
             return True
 
-        if role in self._textBlockElementRoles():
+        if AXObject.get_role(obj) in self._textBlockElementRoles():
             document = self.getDocumentForObject(obj)
-            if AXObject.has_state(document, Atspi.StateType.EDITABLE):
+            if AXUtilities.is_editable(document):
                 return True
 
         return super().isTextArea(obj)
 
     def isReadOnlyTextArea(self, obj):
         # NOTE: This method is deliberately more conservative than isTextArea.
-        if AXObject.get_role(obj) != Atspi.Role.ENTRY:
+        if not AXUtilities.is_entry(obj):
             return False
 
-        state = AXObject.get_state_set(obj)
-        readOnly = state.contains(Atspi.StateType.FOCUSABLE) \
-                   and not state.contains(Atspi.StateType.EDITABLE)
+        if AXUtilities.is_read_only(obj):
+            return True
 
-        return readOnly
+        return AXUtilities.is_focusable(obj) and not AXUtilities.is_editable(obj)
 
     def setCaretOffset(self, obj, characterOffset):
         self.setCaretPosition(obj, characterOffset)
@@ -740,11 +734,9 @@ class Utilities(script_utilities.Utilities):
             elif text.characterCount:
                 return result
 
-        role = AXObject.get_role(obj)
         parent = AXObject.get_parent(obj)
-        parentRole = AXObject.get_role(parent)
-        if role in [Atspi.Role.MENU, Atspi.Role.LIST_ITEM] \
-           and parentRole in [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]:
+        if (AXUtilities.is_menu(obj) or AXUtilities.is_list_item(obj)) \
+            and (AXUtilities.is_combo_box(parent) or AXUtilities.is_list_box(parent)):
             try:
                 ext = parent.queryComponent().getExtents(0)
             except NotImplementedError:
@@ -939,9 +931,9 @@ class Utilities(script_utilities.Utilities):
         if role in roles:
             rv = True
         elif role == Atspi.Role.LIST_ITEM:
-            rv = AXObject.get_role(AXObject.get_parent(obj)) != Atspi.Role.LIST
+            rv = not AXUtilities.is_list(AXObject.get_parent(obj))
         elif role == Atspi.Role.TABLE_CELL:
-            if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+            if AXUtilities.is_editable(obj):
                 rv = False
             else:
                 rv = not self.isTextBlockElement(obj)
@@ -1042,7 +1034,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         roles = self._textBlockElementRoles()
         roles.extend([Atspi.Role.IMAGE, Atspi.Role.CANVAS])
-        if role in roles and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
+        if role in roles and not AXUtilities.is_focusable(obj):
             controls = [Atspi.Role.CHECK_BOX,
                         Atspi.Role.CHECK_MENU_ITEM,
                         Atspi.Role.LIST_BOX,
@@ -1091,7 +1083,7 @@ class Utilities(script_utilities.Utilities):
                 return True
             return False
 
-        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(obj):
             return False
 
         if role == Atspi.Role.TABLE_CELL:
@@ -1216,7 +1208,7 @@ class Utilities(script_utilities.Utilities):
             return string, start, end
 
         if boundary == Atspi.TextBoundaryType.SENTENCE_START \
-            and not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+            and not AXUtilities.is_editable(obj):
             allText = text.getText(0, -1)
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
@@ -1348,8 +1340,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 boundary = None
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.INTERNAL_FRAME and AXObject.get_child_count(obj) == 1:
+        if AXUtilities.is_internal_frame(obj) and AXObject.get_child_count(obj) == 1:
             return self._getContentsForObj(AXObject.get_child(obj, 0), 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
@@ -1392,9 +1383,8 @@ class Utilities(script_utilities.Utilities):
 
         boundary = Atspi.TextBoundaryType.SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.EDITABLE):
-            if state.contains(Atspi.StateType.FOCUSED):
+        if AXUtilities.is_editable(obj):
+            if AXUtilities.is_focused(obj):
                 return objects
             if self.isContentEditableWithEmbeddedObjects(obj):
                 return objects
@@ -1537,7 +1527,7 @@ class Utilities(script_utilities.Utilities):
 
         # We want to treat the list item marker as its own word.
         firstObj, firstStart, firstEnd, firstString = objects[0]
-        if firstStart == 0 and AXObject.get_role(firstObj) == Atspi.Role.LIST_ITEM:
+        if firstStart == 0 and AXUtilities.is_list_item(firstObj):
             objects = [objects[0]]
 
         if useCache:
@@ -1675,7 +1665,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         offset = max(0, offset)
-        if AXObject.get_role(obj) == Atspi.Role.TOOL_BAR and not self._treatObjectAsWhole(obj):
+        if AXUtilities.is_tool_bar(obj) and not self._treatObjectAsWhole(obj):
             child = self.getChildAtOffset(obj, offset)
             if child:
                 obj = child
@@ -1724,12 +1714,11 @@ class Utilities(script_utilities.Utilities):
                         return False
                 elif self.isBlockListDescendant(obj) != self.isBlockListDescendant(xObj):
                     return False
-                elif AXObject.get_role(obj) in [Atspi.Role.TREE, Atspi.Role.TREE_ITEM] \
-                     and AXObject.get_role(xObj) in [Atspi.Role.TREE, Atspi.Role.TREE_ITEM]:
+                elif AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(xObj):
                     return False
-                elif AXObject.get_role(obj) == Atspi.Role.HEADING and self.hasNoSize(obj):
+                elif AXUtilities.is_heading(obj) and self.hasNoSize(obj):
                     return False
-                elif AXObject.get_role(xObj) == Atspi.Role.HEADING and self.hasNoSize(xObj):
+                elif AXUtilities.is_heading(xObj) and self.hasNoSize(xObj):
                     return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
@@ -2016,8 +2005,8 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isTopLevelWebApp(self, obj):
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.EMBEDDED and not self.getDocumentForObject(AXObject.get_parent(obj)):
+        if AXUtilities.is_embedded(obj) \
+           and not self.getDocumentForObject(AXObject.get_parent(obj)):
             uri = self.documentFrameURI()
             rv = bool(uri and uri.startswith("http"))
             msg = "WEB: %s is top-level web application: %s (URI: %s)" % (obj, rv, uri)
@@ -2030,25 +2019,22 @@ class Utilities(script_utilities.Utilities):
         if not self.isWebAppDescendant(obj):
             return False
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.TOOL_TIP:
-            return AXObject.has_state(obj, Atspi.StateType.FOCUSED)
+        if AXUtilities.is_tool_tip(obj):
+            return AXUtilities.is_focused(obj)
 
-        if role == Atspi.Role.DOCUMENT_WEB:
+        if AXUtilities.is_document_web(obj):
             return not self.isFocusModeWidget(obj)
 
         return False
 
     def isFocusModeWidget(self, obj):
-        state = AXObject.get_state_set(obj)
-        if state.contains(Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(obj):
             msg = "WEB: %s is focus mode widget because it's editable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        role = AXObject.get_role(obj)
-        if state.contains(Atspi.StateType.EXPANDABLE) and state.contains(Atspi.StateType.FOCUSABLE) \
-           and role != Atspi.Role.LINK:
+        if AXUtilities.is_expandable(obj) and AXUtilities.is_focusable(obj) \
+           and not AXUtilities.is_link(obj):
             msg = "WEB: %s is focus mode widget because it's expandable and focusable" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -2070,6 +2056,7 @@ class Utilities(script_utilities.Utilities):
                                 Atspi.Role.TREE_TABLE,
                                 Atspi.Role.TREE]
 
+        role = AXObject.get_role(obj)
         if role in alwaysFocusModeRoles:
             msg = "WEB: %s is focus mode widget due to its role" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2081,8 +2068,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role == Atspi.Role.LIST_ITEM:
-            rv = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST_BOX)
+        if AXUtilities.is_list_item(obj):
+            rv = AXObject.find_ancestor(obj, AXUtilities.is_list_box)
             if rv:
                 msg = "WEB: %s is focus mode widget because it's a listbox descendant" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2126,15 +2113,6 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
-
-    def _cellRoles(self):
-        roles = [Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER]
-
-        return roles
 
     def _textBlockElementRoles(self):
         roles = [Atspi.Role.ARTICLE,
@@ -2200,7 +2178,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if AXObject.has_state(obj, Atspi.StateType.FOCUSABLE) \
+        if AXUtilities.is_focusable(obj) \
             and not self.isDocument(obj):
             for child in AXObject.iter_children(obj, self.isMathTopLevel):
                 rv = True
@@ -2212,7 +2190,7 @@ class Utilities(script_utilities.Utilities):
     def isFocusedWithMathChild(self, obj):
         if not self.isFocusableWithMathChild(obj):
             return False
-        return AXObject.has_state(obj, Atspi.StateType.FOCUSED)
+        return AXUtilities.is_focused(obj)
 
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2229,15 +2207,15 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif not AXObject.supports_text(obj):
             rv = False
-        elif state.contains(Atspi.StateType.EDITABLE):
+        elif AXUtilities.is_editable(obj):
             rv = False
         elif self.isGridCell(obj):
             rv = False
-        elif role in [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]:
+        elif AXUtilities.is_document(obj):
             rv = True
         elif self.isCustomImage(obj):
             rv = False
-        elif not state.contains(Atspi.StateType.FOCUSABLE) and not state.contains(Atspi.StateType.FOCUSED):
+        elif not AXUtilities.is_focusable(obj):
             rv = not self.hasNameAndActionAndNoUsefulChildren(obj)
         else:
             rv = False
@@ -2246,8 +2224,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _advanceCaretInEmptyObject(self, obj):
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.TABLE_CELL and not self.queryNonEmptyText(obj):
+        if AXUtilities.is_table_cell(obj) and not self.queryNonEmptyText(obj):
             return not self._script._lastCommandWasStructNav
 
         return True
@@ -2277,21 +2254,20 @@ class Utilities(script_utilities.Utilities):
         if self.isDescriptionList(obj):
             return False
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.LIST and offset is not None:
+        if AXUtilities.is_list(obj) and offset is not None:
             string = self.substring(obj, offset, offset + 1)
             if string and string != self.EMBEDDED_OBJECT_CHARACTER:
                 return True
 
         childCount = AXObject.get_child_count(obj)
-        if role == Atspi.Role.PANEL and not childCount:
+        if AXUtilities.is_panel(obj) and not childCount:
             return True
 
         rv = self._treatAsDiv.get(hash(obj))
         if rv is not None:
             return rv
 
-        validRoles = self._validChildRoles.get(role)
+        validRoles = self._validChildRoles.get(AXObject.get_role(obj))
         if validRoles:
             if not childCount:
                 rv = True
@@ -2322,7 +2298,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isComment(obj)
 
-        if AXObject.get_role(obj) == Atspi.Role.COMMENT:
+        if AXUtilities.is_comment(obj):
             return True
 
         return 'comment' in self._getXMLRoles(obj)
@@ -2331,7 +2307,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentDeletion(obj)
 
-        if AXObject.get_role(obj) == Atspi.Role.CONTENT_DELETION:
+        if AXUtilities.is_content_deletion(obj):
             return True
 
         return 'deletion' in self._getXMLRoles(obj) or 'del' == self._getTag(obj)
@@ -2343,13 +2319,13 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) not in self._textBlockElementRoles():
             return False
 
-        return AXObject.has_state(obj, Atspi.StateType.INVALID_ENTRY)
+        return AXUtilities.is_invalid_entry(obj)
 
     def isContentInsertion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentInsertion(obj)
 
-        if AXObject.get_role(obj) == Atspi.Role.CONTENT_INSERTION:
+        if AXUtilities.is_content_insertion(obj):
             return True
 
         return 'insertion' in self._getXMLRoles(obj) or 'ins' == self._getTag(obj)
@@ -2358,7 +2334,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentMarked(obj)
 
-        if AXObject.get_role(obj) == Atspi.Role.MARK:
+        if AXUtilities.is_mark(obj):
             return True
 
         return 'mark' in self._getXMLRoles(obj) or 'mark' == self._getTag(obj)
@@ -2367,7 +2343,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentSuggestion(obj)
 
-        if AXObject.get_role(obj) == Atspi.Role.SUGGESTION:
+        if AXUtilities.is_suggestion(obj):
             return True
 
         return 'suggestion' in self._getXMLRoles(obj)
@@ -2377,7 +2353,7 @@ class Utilities(script_utilities.Utilities):
         return tag and '-' in tag
 
     def isInlineIframe(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.INTERNAL_FRAME):
+        if not AXUtilities.is_internal_frame(obj):
             return False
 
         displayStyle = self._getDisplayStyle(obj)
@@ -2407,13 +2383,10 @@ class Utilities(script_utilities.Utilities):
         return "inline" in displayStyle
 
     def isTextField(self, obj):
-        role = AXObject.get_role(obj)
-        if role in [Atspi.Role.ENTRY,
-                    Atspi.Role.PASSWORD_TEXT,
-                    Atspi.Role.SPIN_BUTTON]:
+        if AXUtilities.is_text_input(obj):
             return True
 
-        if role == Atspi.Role.COMBO_BOX:
+        if AXUtilities.is_combo_box(obj):
             return self.isEditableComboBox(obj)
 
         return False
@@ -2500,8 +2473,7 @@ class Utilities(script_utilities.Utilities):
         return self._getTag(obj) == 'mfenced'
 
     def isMathFractionWithoutBar(self, obj):
-        role = AXObject.get_role(obj)
-        if role != Atspi.Role.MATH_FRACTION:
+        if not AXUtilities.is_math_fraction(obj):
             return False
 
         attrs = self.objectAttributes(obj)
@@ -2564,7 +2536,7 @@ class Utilities(script_utilities.Utilities):
         return self._getTag(obj) in ['mi', 'mn', 'mo', 'mtext', 'ms', 'mspace']
 
     def isMathTopLevel(self, obj):
-        return AXObject.get_role(obj) == Atspi.Role.MATH
+        return AXUtilities.is_math(obj)
 
     def getMathAncestor(self, obj):
         if not self.isMath(obj):
@@ -2718,7 +2690,7 @@ class Utilities(script_utilities.Utilities):
                or self.isErrorForContents(obj, contents) \
                or self.isLabellingContents(obj, contents):
                 rv = False
-            elif AXObject.get_role(obj) == Atspi.Role.TABLE_ROW:
+            elif AXUtilities.is_table_row(obj):
                 rv = self.hasExplicitName(obj)
             else:
                 widget = self.isInferredLabelForContents(x, contents)
@@ -2785,9 +2757,8 @@ class Utilities(script_utilities.Utilities):
         if rowindex is not None and colindex is not None:
             return rowindex, colindex
 
-        isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
-        row = AXObject.find_ancestor(obj, isRow)
-        if not row:
+        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
+        if row is None:
             return rowindex, colindex
 
         attrs = self.objectAttributes(row)
@@ -2796,7 +2767,7 @@ class Utilities(script_utilities.Utilities):
         return rowindex, colindex
 
     def isCellWithNameFromHeader(self, obj):
-        if AXObject.get_role(obj) != Atspi.Role.TABLE_CELL:
+        if not AXUtilities.is_table_cell(obj):
             return False
 
         name = AXObject.get_name(obj)
@@ -2822,9 +2793,8 @@ class Utilities(script_utilities.Utilities):
         if collabel is not None and rowlabel is not None:
             return '%s%s' % (collabel, rowlabel)
 
-        isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
-        row = AXObject.find_ancestor(obj, isRow)
-        if not row:
+        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
+        if row is None:
             return ''
 
         attrs = self.objectAttributes(row)
@@ -2836,16 +2806,11 @@ class Utilities(script_utilities.Utilities):
         return ''
 
     def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
-        roles = [Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
-        if not (obj and AXObject.get_role(obj) in roles):
+        if not AXUtilities.is_table_cell_or_header(obj):
             if not findCellAncestor:
                 return -1, -1
 
-            cell = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) in roles)
+            cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
         if not preferAttribute:
@@ -2916,8 +2881,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isEntry = lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY
-        rv = AXObject.find_ancestor(obj, isEntry) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_entry) is not None
         self._isEntryDescendant[hash(obj)] = rv
         return rv
 
@@ -2929,8 +2893,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isLabel = lambda x: x and AXObject.get_role(x) in [Atspi.Role.LABEL, Atspi.Role.CAPTION]
-        rv = AXObject.find_ancestor(obj, isLabel) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_label_or_caption) is not None
         self._isLabelDescendant[hash(obj)] = rv
         return rv
 
@@ -2945,8 +2908,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isMenu = lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU
-        rv = AXObject.find_ancestor(obj, isMenu) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None
         self._isMenuDescendant[hash(obj)] = rv
         return rv
 
@@ -2970,11 +2932,10 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isToolTip = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOOL_TIP
-        if isToolTip(obj):
+        if AXUtilities.is_tool_tip(obj):
             ancestor = obj
         else:
-            ancestor = AXObject.find_ancestor(obj, isToolTip)
+            ancestor = AXObject.find_ancestor(obj, AXUtilities.is_tool_tip)
         rv = ancestor and not self.isNonNavigablePopup(ancestor)
         self._isNavigableToolTipDescendant[hash(obj)] = rv
         return rv
@@ -2990,8 +2951,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isToolBar = lambda x: x and AXObject.get_role(x) == Atspi.Role.TOOL_BAR
-        rv = AXObject.find_ancestor(obj, isToolBar) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar) is not None
         self._isToolBarDescendant[hash(obj)] = rv
         return rv
 
@@ -3003,8 +2963,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isEmbedded = lambda x: x and AXObject.get_role(x) == Atspi.Role.EMBEDDED
-        rv = AXObject.find_ancestor(obj, isEmbedded) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_embedded) is not None
         self._isWebAppDescendant[hash(obj)] = rv
         return rv
 
@@ -3019,9 +2978,7 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
-        state = AXObject.get_state_set(obj)
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.LIST:
+        if AXUtilities.is_list(obj):
             rv = self.treatAsDiv(obj)
         elif self.isDescriptionList(obj):
             rv = False
@@ -3049,13 +3006,13 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isGrid(obj):
             rv = False
-        elif role in [Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER]:
+        elif AXUtilities.is_table_header(obj):
             rv = False
-        elif role == Atspi.Role.SEPARATOR:
+        elif AXUtilities.is_separator(obj):
             rv = False
-        elif role == Atspi.Role.PANEL:
+        elif AXUtilities.is_panel(obj):
             rv = not self.hasExplicitName(obj)
-        elif role == Atspi.Role.TABLE_ROW and not state.contains(Atspi.StateType.EXPANDABLE):
+        elif AXUtilities.is_table_row(obj) and not AXUtilities.is_expandable(obj):
             rv = not self.hasExplicitName(obj)
         elif self.isCustomImage(obj):
             rv = False
@@ -3116,7 +3073,7 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not AXObject.has_state(obj, Atspi.StateType.EDITABLE) and len(tokens) > 1
+        rv = not AXUtilities.is_editable(obj) and len(tokens) > 1
         if rv:
             boundary = Atspi.TextBoundaryType.LINE_START
             i = 0
@@ -3164,7 +3121,7 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not AXObject.has_state(obj, Atspi.StateType.EDITABLE)
+        rv = not AXUtilities.is_editable(obj)
         if rv:
             boundary = Atspi.TextBoundaryType.LINE_START
             for i in range(nChars):
@@ -3224,8 +3181,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isDetachedDocument(self, obj):
-        docRoles = [Atspi.Role.DOCUMENT_FRAME, Atspi.Role.DOCUMENT_WEB]
-        if AXObject.get_role(obj) in docRoles:
+        if AXUtilities.is_document(obj):
             parent = AXObject.get_parent(obj)
             if parent is None or self.isZombie(parent):
                 msg = "WEB: %s is a detached document" % obj
@@ -3236,10 +3192,8 @@ class Utilities(script_utilities.Utilities):
 
     def iframeForDetachedDocument(self, obj, root=None):
         root = root or self.documentFrame()
-        isIframe = lambda x: x and AXObject.get_role(x) == Atspi.Role.INTERNAL_FRAME
-        iframes = self.findAllDescendants(root, isIframe)
-        for iframe in iframes:
-            if obj in iframe:
+        for iframe in self.findAllDescendants(root, AXUtilities.is_internal_frame):
+            if AXObject.get_parent(obj) == iframe:
                 msg = "WEB: Returning %s as iframe parent of detached %s" % (iframe, obj)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return iframe
@@ -3250,7 +3204,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super()._objectBoundsMightBeBogus(obj)
 
-        if AXObject.get_role(obj) != Atspi.Role.LINK or not AXObject.supports_text(obj):
+        if not AXUtilities.is_link(obj) or not AXObject.supports_text(obj):
             return False
 
         text = obj.queryText()
@@ -3286,7 +3240,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         for obj, start, end, string in contents:
-            if AXObject.get_role(obj) != Atspi.Role.IMAGE:
+            if not AXUtilities.is_image(obj):
                 continue
             if AXObject.find_ancestor(obj, lambda x: x == link):
                 return True
@@ -3312,7 +3266,7 @@ class Utilities(script_utilities.Utilities):
 
         targets = self.targetsForLabel(obj)
         for target in targets:
-            if AXObject.has_state(target, Atspi.StateType.FOCUSABLE):
+            if AXUtilities.is_focusable(target):
                 return True
 
         return False
@@ -3339,8 +3293,7 @@ class Utilities(script_utilities.Utilities):
             if not self.isLabelDescendant(acc) or self.isTextBlockElement(acc):
                 continue
 
-            ancestor = self.commonAncestor(acc, obj)
-            if ancestor and AXObject.get_role(ancestor) in [Atspi.Role.LABEL, Atspi.Role.CAPTION]:
+            if AXUtilities.is_label_or_caption(self.commonAncestor(acc, obj)):
                 return True
 
         return False
@@ -3354,8 +3307,8 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if AXObject.get_role(obj) == Atspi.Role.LINK \
-           and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE) \
+        if AXUtilities.is_link(obj) \
+           and not AXUtilities.is_focusable(obj) \
            and not AXObject.has_action(obj, "jump") \
            and not self._getXMLRoles(obj):
             rv = True
@@ -3370,11 +3323,10 @@ class Utilities(script_utilities.Utilities):
         return self.queryNonEmptyText(obj) is None
 
     def isEmptyToolTip(self, obj):
-        return obj and AXObject.get_role(obj) == Atspi.Role.TOOL_TIP \
-            and self.queryNonEmptyText(obj) is None
+        return AXUtilities.is_tool_tip(obj) and self.queryNonEmptyText(obj) is None
 
     def isBrowserUIAlert(self, obj):
-        if not (obj and AXObject.get_role(obj) == Atspi.Role.ALERT):
+        if not AXUtilities.is_alert(obj):
             return False
 
         if self.inDocumentContent(obj):
@@ -3390,7 +3342,7 @@ class Utilities(script_utilities.Utilities):
         while parent and self.isLayoutOnly(parent):
             parent = AXObject.get_parent(parent)
 
-        return AXObject.get_role(parent) == Atspi.Role.FRAME
+        return AXUtilities.is_frame(parent)
 
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3405,7 +3357,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if not self.isFocusModeWidget(obj):
-            if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
+            if not AXUtilities.is_focusable(obj):
                 rv = AXObject.has_action(obj, "click")
             else:
                 rv = AXObject.has_action(obj, "click-ancestor")
@@ -3413,7 +3365,7 @@ class Utilities(script_utilities.Utilities):
         if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
             string = obj.queryText().getText(0, -1)
             if not string.strip():
-                rv = AXObject.get_role(obj) not in [Atspi.Role.STATIC, Atspi.Role.LINK]
+                rv = not (AXUtilities.is_static(obj) or AXUtilities.is_link(obj))
 
         self._isClickableElement[hash(obj)] = rv
         return rv
@@ -3497,20 +3449,18 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.COMBO_BOX:
-            rv = AXObject.has_state(obj, Atspi.StateType.EDITABLE)
+        if AXUtilities.is_combo_box(obj):
+            rv = AXUtilities.is_editable(obj)
 
         self._isEditableComboBox[hash(obj)] = rv
         return rv
 
     def getEditableComboBoxForItem(self, item):
-        if AXObject.get_role(item) != Atspi.Role.LIST_ITEM:
+        if not AXUtilities.is_list_item(item):
             return None
 
-        isListBox = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_BOX
-        listbox = AXObject.find_ancestor(item, isListBox)
-        if not listbox:
+        listbox = AXObject.find_ancestor(item, AXUtilities.is_list_box)
+        if listbox is None:
             return None
 
         targets = AXObject.get_relation_targets(listbox,
@@ -3522,7 +3472,7 @@ class Utilities(script_utilities.Utilities):
         return AXObject.find_ancestor(listbox, self.isEditableComboBox)
 
     def isItemForEditableComboBox(self, item, comboBox):
-        if AXObject.get_role(item) != Atspi.Role.LIST_ITEM:
+        if not AXUtilities.is_list_item(item):
             return False
         if not self.isEditableComboBox(comboBox):
             return False
@@ -3664,11 +3614,11 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj) and AXObject.get_parent(obj)):
             return False
 
-        if AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(obj):
             return False
 
-        entry = AXObject.find_ancestor(obj, lambda x: x and AXObject.get_role(x) == Atspi.Role.ENTRY)
-        if not (entry and AXObject.get_name(entry)):
+        entryName = AXObject.get_name(AXObject.find_ancestor(obj, AXUtilities.is_entry))
+        if not entryName:
             return False
 
         def _isMatch(x):
@@ -3676,8 +3626,9 @@ class Utilities(script_utilities.Utilities):
                 string = x.queryText().getText(0, -1).strip()
             except Exception:
                 return False
-            role = AXObject.get_role(x)
-            return role in [Atspi.Role.SECTION, Atspi.Role.STATIC] and AXObject.get_name(entry) == string
+            if entryName != string:
+                return False
+            return AXUtilities.is_section(x) or AXUtilities.is_static(x)
 
         if _isMatch(obj):
             return True
@@ -3698,7 +3649,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if AXObject.get_role(obj) != Atspi.Role.LIST_ITEM:
+        if not AXUtilities.is_list_item(obj):
             rv = False
         else:
             displayStyle = self._getDisplayStyle(obj)
@@ -3721,10 +3672,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isList = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST
-        ancestor = AXObject.find_ancestor(obj, isList)
+        ancestor = AXObject.find_ancestor(obj, AXUtilities.is_list)
         rv = ancestor is not None
-
         self._isListDescendant[hash(obj)] = rv
         return rv
 
@@ -3749,8 +3698,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isInlineListDescendant(obj):
             return None
 
-        isList = lambda x: x and AXObject.get_role(x) == Atspi.Role.LIST
-        return AXObject.find_ancestor(obj, isList)
+        return AXObject.find_ancestor(obj, AXUtilities.is_list)
 
     def isFeed(self, obj):
         return 'feed' in self._getXMLRoles(obj)
@@ -3759,7 +3707,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        if AXObject.get_role(obj) != Atspi.Role.ARTICLE:
+        if not AXUtilities.is_article(obj):
             return False
 
         return AXObject.find_ancestor(obj, self.isFeed) is not None
@@ -3775,7 +3723,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if AXObject.get_role(obj) == Atspi.Role.LANDMARK:
+        if AXUtilities.is_landmark(obj):
             rv = True
         elif self.isLandmarkRegion(obj):
             rv = bool(AXObject.get_name(obj))
@@ -3829,11 +3777,10 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.LINK and not self.isAnchor(obj):
+        if AXUtilities.is_link(obj) and not self.isAnchor(obj):
             rv = True
-        elif role == Atspi.Role.STATIC \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LINK \
+        elif AXUtilities.is_static(obj) \
+           and AXUtilities.is_link(AXObject.get_parent(obj)) \
            and AXObject.has_same_non_empty_name(obj, AXObject.get_parent(obj)):
             rv = True
         else:
@@ -3850,8 +3797,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = AXObject.get_role(obj) == Atspi.Role.TOOL_TIP \
-            and not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE)
+        rv = AXUtilities.is_tool_tip(obj) \
+            and not AXUtilities.is_focusable(obj)
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
@@ -3864,8 +3811,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isCanvas = lambda x: x and AXObject.get_role(x) == Atspi.Role.CANVAS
-        canvases = self.findAllDescendants(obj, isCanvas)
+        canvases = self.findAllDescendants(obj, AXUtilities.is_canvas)
         rv = len(list(filter(self.isUselessImage, canvases))) > 0
 
         self._hasUselessCanvasDescendant[hash(obj)] = rv
@@ -3875,7 +3821,7 @@ class Utilities(script_utilities.Utilities):
         if self.isMath(obj):
             return False
 
-        return AXObject.get_role(obj) in [Atspi.Role.SUBSCRIPT, Atspi.Role.SUPERSCRIPT]
+        return AXUtilities.is_subscript_or_superscript(obj)
 
     def isSwitch(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3935,8 +3881,7 @@ class Utilities(script_utilities.Utilities):
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in AXObject.iter_children(obj):
-                if AXObject.get_role(child) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
-                   and self._getTag(child) != 'svg':
+                if not AXUtilities.is_image_or_canvas(child) and self._getTag(child) != 'svg':
                     break
             else:
                 rv = True
@@ -3960,9 +3905,9 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
-        if rv and AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
+        if rv and AXUtilities.is_focusable(obj):
             rv = False
-        if rv and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.LINK and not self.hasExplicitName(obj):
+        if rv and AXUtilities.is_link(AXObject.get_parent(obj)) and not self.hasExplicitName(obj):
             uri = self.uri(AXObject.get_parent(obj))
             if uri and not uri.startswith('javascript'):
                 rv = False
@@ -4014,7 +3959,6 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        state = AXObject.get_state_set(obj)
         roles = [Atspi.Role.PARAGRAPH,
                  Atspi.Role.SECTION,
                  Atspi.Role.STATIC,
@@ -4022,9 +3966,9 @@ class Utilities(script_utilities.Utilities):
         role = AXObject.get_role(obj)
         if role not in roles and not self.isAriaAlert(obj):
             rv = False
-        elif state.contains(Atspi.StateType.FOCUSABLE) or state.contains(Atspi.StateType.FOCUSED):
+        elif AXUtilities.is_focusable(obj):
             rv = False
-        elif state.contains(Atspi.StateType.EDITABLE):
+        elif AXUtilities.is_editable(obj):
             rv = False
         elif self.hasValidName(obj) or AXObject.get_description(obj) or AXObject.get_child_count(obj):
             rv = False
@@ -4091,8 +4035,11 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         labels = self.labelsForObject(obj)
-        pred = lambda x: x and AXObject.get_role(x) == Atspi.Role.CAPTION and self.isShowingAndVisible(x)
-        rv = bool(list(filter(pred, labels)))
+
+        def isVisibleCaption(x):
+            return AXUtilities.is_caption(x) and self.isShowingAndVisible(x)
+
+        rv = bool(list(filter(isVisibleCaption, labels)))
         self._hasVisibleCaption[hash(obj)] = rv
         return rv
 
@@ -4222,10 +4169,10 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return False
 
-        if not AXObject.has_state(obj, Atspi.StateType.EDITABLE):
+        if not AXUtilities.is_editable(obj):
             return False
 
-        if Atspi.Role.SPIN_BUTTON in [AXObject.get_role(obj), AXObject.get_role(AXObject.get_parent(obj))]:
+        if AXUtilities.is_spin_button(obj) or AXUtilities.is_spin_button(AXObject.get_parent):
             return True
 
         return False
@@ -4255,14 +4202,13 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(event.source):
             return False
 
-        role = AXObject.get_role(event.source)
-        eType = event.type
-        if eType.startswith("object:text-") and self.isSingleLineAutocompleteEntry(event.source):
+        if event.type.startswith("object:text-") \
+           and self.isSingleLineAutocompleteEntry(event.source):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey == "Return"
-        if eType.startswith("object:text-") or eType.endswith("accessible-name"):
-            return role in [Atspi.Role.STATUS_BAR, Atspi.Role.LABEL]
-        if eType.startswith("object:children-changed"):
+        if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
+            return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source)
+        if event.type.startswith("object:children-changed"):
             return True
 
         return False
@@ -4272,11 +4218,16 @@ class Utilities(script_utilities.Utilities):
         if not inContent:
             return False
 
-        isListBoxItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.LIST_BOX
-        isMenuItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.MENU
-        isComboBoxItem = lambda x: AXObject.get_role(AXObject.get_parent(x)) == Atspi.Role.COMBO_BOX
+        def isListBoxItem(x):
+            return AXUtilities.is_list_box(AXObject.get_parent(x))
 
-        if AXObject.has_state(event.source, Atspi.StateType.EDITABLE) \
+        def isMenuItem(x):
+            return AXUtilities.is_menu(AXObject.get_parent(x))
+
+        def isComboBoxItem(x):
+            return AXUtilities.is_combo_box(AXObject.get_parent(x))
+
+        if AXUtilities.is_editable(event.source) \
            and event.type.startswith("object:text-"):
             obj, offset = self.getCaretContext(documentFrame)
             if isListBoxItem(obj) or isMenuItem(obj):
@@ -4303,9 +4254,9 @@ class Utilities(script_utilities.Utilities):
         if event.type not in selection:
             return False
 
-        if AXObject.get_role(event.source) in [Atspi.Role.MENU, Atspi.Role.MENU_ITEM] \
-           and AXObject.get_role(orca_state.locusOfFocus) == Atspi.Role.ENTRY \
-           and AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.FOCUSED):
+        if AXUtilities.is_menu_related(event.source) \
+           and AXUtilities.is_entry(orca_state.locusOfFocus) \
+           and AXUtilities.is_focused(orca_state.locusOfFocus):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey not in ["Down", "Up"]:
                 return True
@@ -4318,13 +4269,11 @@ class Utilities(script_utilities.Utilities):
            or not self.isSingleLineAutocompleteEntry(event.source):
             return False
 
-        roles = [Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.LIST_ITEM]
+        if not AXUtilities.is_selectable(orca_state.locusOfFocus):
+            return False
 
-        if AXObject.get_role(orca_state.locusOfFocus) in roles \
-           and AXObject.has_state(orca_state.locusOfFocus, Atspi.StateType.SELECTABLE):
+        if AXUtilities.is_menu_item_of_any_kind(orca_state.locusOfFocus) \
+           or AXUtilities.is_list_item(orca_state.locusOfFocus):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey in ["Down", "Up"]
 
@@ -4335,8 +4284,7 @@ class Utilities(script_utilities.Utilities):
         if event.type not in selection:
             return False
 
-        roles = [Atspi.Role.PAGE_TAB, Atspi.Role.PAGE_TAB_LIST]
-        if AXObject.get_role(event.source) not in roles:
+        if not AXUtilities.is_page_tab_list_related(event.source):
             return False
 
         if self.inDocumentContent(event.source):
@@ -4389,7 +4337,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         # There may be other roles where we need to do this. For now, solve the known one.
-        if AXObject.get_role(event.source) in [Atspi.Role.PAGE_TAB_LIST]:
+        if AXUtilities.is_page_tab_list(event.source):
             msg = "WEB: Selection changed event is irrelevant (unrelated %s)" \
                 % AXObject.get_role_name(event.source)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4401,7 +4349,7 @@ class Utilities(script_utilities.Utilities):
 
     def textEventIsDueToDeletion(self, event):
         if not self.inDocumentContent(event.source) \
-           or not AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
+           or not AXUtilities.is_editable(event.source):
             return False
 
         if self.isDeleteCommandTextDeletionEvent(event) \
@@ -4416,7 +4364,7 @@ class Utilities(script_utilities.Utilities):
 
         if not self.inDocumentContent(event.source) \
            or event.source != orca_state.locusOfFocus \
-           or not AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
+           or not AXUtilities.is_editable(event.source):
             return False
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
@@ -4455,7 +4403,7 @@ class Utilities(script_utilities.Utilities):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        if AXObject.has_state(event.source, Atspi.StateType.EDITABLE):
+        if AXUtilities.is_editable(event.source):
             return False
 
         docURI = self.documentFrameURI()
@@ -4496,16 +4444,14 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        state = AXObject.get_state_set(obj)
-        role = AXObject.get_role(obj)
         hasTextBlockRole = lambda x: x and AXObject.get_role(x) in self._textBlockElementRoles() \
             and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
 
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
-        elif role == Atspi.Role.ENTRY and state.contains(Atspi.StateType.MULTI_LINE):
+        elif AXUtilities.is_multi_line_entry(obj):
             rv = AXObject.find_descendant(obj, hasTextBlockRole)
-        elif state.contains(Atspi.StateType.EDITABLE):
+        elif AXUtilities.is_editable(obj):
             rv = hasTextBlockRole(obj) or self.isLink(obj)
         elif not self.isDocument(obj):
             document = self.getDocumentForObject(obj)
@@ -4533,7 +4479,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().getError(obj)
 
-        if not AXObject.has_state(obj, Atspi.StateType.INVALID_ENTRY):
+        if not AXUtilities.is_invalid_entry(obj):
             return False
 
         try:
@@ -4806,11 +4752,10 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def _handleEventForRemovedListBoxChild(self, event):
-        isListBox = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_BOX
-        if isListBox(event.source):
+        if AXUtilities.is_list_box(event.source):
             listBox = event.source
         else:
-            listBox = AXObject.find_ancestor(event.source, isListBox)
+            listBox = AXObject.find_ancestor(event.source, AXUtilities.is_list_box)
         if listBox is None:
             msg = "WEB: Could not find listbox to recover from removed child."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4821,7 +4766,7 @@ class Utilities(script_utilities.Utilities):
 
         AXObject.clear_cache(listBox)
         item = self.focusedObject(listBox)
-        if not AXObject.get_role(item) == Atspi.Role.LIST_ITEM:
+        if not AXUtilities.is_list_item(item):
             msg = "WEB: Could not find focused list item to recover from removed child."
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -4903,7 +4848,7 @@ class Utilities(script_utilities.Utilities):
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
             if obj and self.isDead(orca_state.locusOfFocus) \
-               and AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+               and AXUtilities.is_focused(obj):
                 names = self._script.pointOfReference.get('names', {})
                 oldName = names.get(hash(orca_state.locusOfFocus))
                 notify = AXObject.get_name(obj) != oldName
@@ -5240,8 +5185,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
         if isinstance(event.any_data, Atspi.Accessible):
-            role = AXObject.get_role(event.any_data)
-            if role in [Atspi.Role.UNKNOWN, Atspi.Role.REDUNDANT_OBJECT] \
+            if AXUtilities.is_unknown_or_redundant(event.any_data) \
                and self._getTag(event.any_data) in ["", None, "br"]:
                 msg = "WEB: Child has unknown role and no tag %s" % event.any_data
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -5297,16 +5241,15 @@ class Utilities(script_utilities.Utilities):
         matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
         col.freeMatchRule(rule)
         for obj in matches:
-            role = AXObject.get_role(obj)
-            if role == Atspi.Role.HEADING:
+            if AXUtilities.is_heading(obj):
                 result['headings'] += 1
-            elif role == Atspi.Role.FORM:
+            elif AXUtilities.is_form(obj):
                 result['forms'] += 1
-            elif role == Atspi.Role.TABLE and not self.isLayoutOnly(obj):
+            elif AXUtilities.is_table(obj) and not self.isLayoutOnly(obj):
                 result['tables'] += 1
-            elif role == Atspi.Role.LINK:
+            elif AXUtilities.is_link(obj):
                 if self.isLink(obj):
-                    if AXObject.has_state(obj, Atspi.StateType.VISITED):
+                    if AXUtilities.is_visited(obj):
                         result['visitedLinks'] += 1
                     else:
                         result['unvisitedLinks'] += 1
@@ -5344,8 +5287,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = True
         elif AXObject.get_description(obj):
-            roles = [Atspi.Role.PUSH_BUTTON]
-            rv = AXObject.get_role(obj) in roles and len(name) == 1
+            rv = AXUtilities.is_push_button(obj) and len(name) == 1
         else:
             rv = False
 
