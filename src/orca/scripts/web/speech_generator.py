@@ -40,6 +40,7 @@ from orca import settings
 from orca import settings_manager
 from orca import speech_generator
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -88,7 +89,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and (self._script.utilities.isLink(obj) \
                 or self._script.utilities.isLandmark(obj) \
                 or self._script.utilities.isMath(obj) \
-                or AXObject.get_role(obj) in [Atspi.Role.TOOL_TIP, Atspi.Role.STATUS_BAR]):
+                or AXUtilities.is_tool_tip(obj) \
+                or AXUtilities.is_status_bar(obj)):
             return result
 
         if self._script.utilities.isItemForEditableComboBox(obj, priorObj):
@@ -353,8 +355,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 return []
 
-        if priorObj and AXObject.get_role(priorObj) == Atspi.Role.PAGE_TAB \
-            and AXObject.get_name(priorObj) == objName:
+        if AXUtilities.is_page_tab(priorObj) and AXObject.get_name(priorObj) == objName:
             return []
 
         if objName:
@@ -369,7 +370,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
-        if AXObject.get_role(obj) == Atspi.Role.CHECK_BOX:
+        if AXUtilities.is_check_box(obj):
             gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateLabelOrName(gridCell, **args)
@@ -391,9 +392,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if self._script.utilities.isFigure(obj) and args.get('ancestorOf'):
             caption = args.get('ancestorOf')
-            if AXObject.get_role(caption) != Atspi.Role.CAPTION:
-                isCaption = lambda x: x and AXObject.get_role(x) == Atspi.Role.CAPTION
-                caption = AXObject.find_ancestor(caption, isCaption)
+            if not AXUtilities.is_caption(caption):
+                caption = AXObject.find_ancestor(caption, AXUtilities.is_caption)
             if caption and hash(obj) in self._script.utilities.labelTargets(caption):
                 return []
 
@@ -490,8 +490,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isDescriptionList(obj):
                 children = self._script.utilities.descriptionListTerms(obj)
             elif role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-                pred = lambda x: AXObject.get_role(x) == Atspi.Role.LIST_ITEM
-                children = [x for x in AXObject.iter_children(obj, pred)]
+                children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             setsize = len(children)
 
         if not setsize:
@@ -588,7 +587,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(Atspi.Role.MENU)
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        isEditable = AXObject.has_state(obj, Atspi.StateType.EDITABLE)
+        isEditable = AXUtilities.is_editable(obj)
 
         if isEditable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if ((lastKey in ["Down", "Right"] and not mods) or self._script.inSayAll()) and start:
@@ -603,7 +602,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         elif isEditable and self._script.utilities.isDocument(obj):
             parent = AXObject.get_parent(obj)
-            if parent and not AXObject.has_state(parent, Atspi.StateType.EDITABLE) \
+            if parent and not AXUtilities.is_editable(parent) \
                and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -621,7 +620,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif self._script.utilities.isLink(obj):
-            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.IMAGE:
+            if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             else:
@@ -639,8 +638,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isMath(obj) and not self._script.utilities.isMathTopLevel(obj):
             return result
 
-        ancestorRoles = [Atspi.Role.HEADING, Atspi.Role.LINK]
-        speakRoles = lambda x: x and AXObject.get_role(x) in ancestorRoles
+        def speakRoles(x):
+            return AXUtilities.is_heading(x) or AXUtilities.is_link(x)
+
         ancestor = AXObject.find_ancestor(obj, speakRoles)
         if ancestor and AXObject.get_role(ancestor) != role \
             and (index == total - 1 or AXObject.get_name(obj) == AXObject.get_name(ancestor)):
@@ -720,15 +720,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generatePositionInList(obj, **args)
 
-        menuRoles = [Atspi.Role.MENU_ITEM,
-                     Atspi.Role.TEAROFF_MENU_ITEM,
-                     Atspi.Role.CHECK_MENU_ITEM,
-                     Atspi.Role.RADIO_MENU_ITEM,
-                     Atspi.Role.MENU]
-        if AXObject.get_role(obj) in menuRoles:
+        if AXUtilities.is_menu_related(obj):
             return super()._generatePositionInList(obj, **args)
 
-        if AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
+        if AXUtilities.is_list_item(obj):
             thisObjIndex = args.get('index', 0)
             objCount = args.get('total', 1)
             if thisObjIndex + 1 < objCount:
@@ -801,8 +796,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
-        isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
-        row = AXObject.find_ancestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row)
 

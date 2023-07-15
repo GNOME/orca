@@ -38,6 +38,7 @@ from orca import messages
 from orca import object_properties
 from orca import orca_state
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
@@ -72,8 +73,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                         Atspi.Role.REDUNDANT_OBJECT,
                         Atspi.Role.UNKNOWN]
 
-        state = AXObject.get_state_set(obj)
-        if not state.contains(Atspi.StateType.FOCUSABLE):
+        if not AXUtilities.is_focusable(obj):
             doNotDisplay.extend([Atspi.Role.LIST,
                                  Atspi.Role.LIST_ITEM,
                                  Atspi.Role.COLUMN_HEADER,
@@ -92,7 +92,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         elif self._script.utilities.isLink(obj) and obj == orca_state.locusOfFocus:
-            if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.IMAGE:
+            if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:
@@ -106,9 +106,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         total = args.get('total', 1)
         if index == total - 1 and role != Atspi.Role.HEADING \
            and (role == Atspi.Role.IMAGE or self._script.utilities.queryNonEmptyText(obj)):
-            isHeading = lambda x: x and AXObject.get_role(x) == Atspi.Role.HEADING
-            heading = AXObject.find_ancestor(obj, isHeading)
-            if heading:
+            heading = AXObject.find_ancestor(obj, AXUtilities.is_heading)
+            if heading is not None:
                 result.extend(self._generateRoleName(heading))
 
         return result
@@ -120,7 +119,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        if AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
+        if AXUtilities.is_editable(obj) \
            and self._script.utilities.isCodeDescendant(obj):
             return []
 
@@ -175,7 +174,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = super()._generateName(obj, **args)
         if result and result[0] and not self._script.utilities.hasExplicitName(obj):
             result[0] = result[0].strip()
-        elif not result and AXObject.get_role(obj) == Atspi.Role.CHECK_BOX:
+        elif not result and AXUtilities.is_check_box(obj):
             gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
             if gridCell:
                 return super()._generateName(gridCell, **args)
@@ -211,8 +210,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
-        isRow = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE_ROW
-        row = AXObject.find_ancestor(obj, isRow)
+        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
 
@@ -243,10 +241,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         elif self._script.utilities.treatAsEntry(obj):
             oldRole = self._overrideRole(Atspi.Role.ENTRY, args)
 
-        if AXObject.get_role(obj) == Atspi.Role.MENU_ITEM:
-            pred = lambda x: AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-            comboBox = AXObject.find_ancestor(obj, pred)
-            if comboBox and not AXObject.has_state(comboBox, Atspi.StateType.EXPANDED):
+        if AXUtilities.is_menu_item(obj):
+            comboBox = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)
+            if comboBox and not AXUtilities.is_expanded(comboBox):
                 obj = comboBox
         result.extend(super().generateBraille(obj, **args))
         del args['includeContext']
@@ -259,7 +256,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             return []
 
-        if AXObject.has_state(obj, Atspi.StateType.EDITABLE) \
+        if AXUtilities.is_editable(obj) \
            or not self._script.utilities.inDocumentContent(obj):
             return super()._generateEol(obj, **args)
 
