@@ -38,6 +38,7 @@ import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .spellcheck import SpellCheck
 
@@ -202,9 +203,9 @@ class Script(Gecko.Script):
 
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
-            name = AXObject.get_name(orca_state.locusOfFocus)
-            role = AXObject.get_role(orca_state.locusOfFocus)
-            if role in [Atspi.Role.FRAME, Atspi.Role.PAGE_TAB] and name:
+            if AXObject.get_name(orca_state.locusOfFocus) \
+                and (AXUtilities.is_frame(orca_state.locusOfFocus) \
+                     or AXUtilities.is_page_tab(orca_state.locusOfFocus)):
                 orca.setLocusOfFocus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
@@ -231,8 +232,7 @@ class Script(Gecko.Script):
             return
 
         parent = AXObject.get_parent(event.source)
-        if AXObject.get_role(parent) == Atspi.Role.COMBO_BOX \
-           and not AXObject.has_state(parent, Atspi.StateType.FOCUSED):
+        if AXUtilities.is_combo_box(parent) and not AXUtilities.is_focused(parent):
             return
 
         super().onSelectionChanged(event)
@@ -269,8 +269,8 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        if AXObject.get_role(event.source) == Atspi.Role.LABEL \
-            and AXObject.get_role(AXObject.get_parent(event.source)) == Atspi.Role.STATUS_BAR:
+        if AXUtilities.is_label(event.source) \
+           and AXUtilities.is_status_bar(AXObject.get_parent(event.source)):
             return
 
         super().onTextDeleted(event)
@@ -278,25 +278,23 @@ class Script(Gecko.Script):
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(AXObject.get_parent(obj))
-        if role == Atspi.Role.LABEL and parentRole == Atspi.Role.STATUS_BAR:
+        parent = AXObject.get_parent(event.source)
+        if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(parent):
             return
 
-        if len(event.any_data) > 1 and obj == self.spellcheck.getChangeToEntry():
+        if len(event.any_data) > 1 and event.source == self.spellcheck.getChangeToEntry():
             return
 
         isSystemEvent = event.type.endswith("system")
 
         # Try to stop unwanted chatter when a message is being replied to.
         # See bgo#618484.
-        if isSystemEvent and self.utilities.isEditableMessage(obj):
+        if isSystemEvent and self.utilities.isEditableMessage(event.source):
             return
 
         # Speak the autocompleted text, but only if it is different
         # address so that we're not too "chatty." See bug #533042.
-        if parentRole == Atspi.Role.AUTOCOMPLETE:
+        if AXUtilities.is_autocomplete(parent):
             if len(event.any_data) == 1:
                 default.Script.onTextInserted(self, event)
                 return
