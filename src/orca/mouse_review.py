@@ -287,8 +287,7 @@ class _ItemContext:
         if self._treatAsSingleObject():
             return False
 
-        role = AXObject.get_role(prior._obj)
-        return role == Atspi.Role.LINK
+        return AXUtilities.is_link(prior._obj)
 
     def present(self, prior):
         """Presents this context to the user."""
@@ -320,7 +319,7 @@ class _ItemContext:
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
-            if AXObject.get_role(self._obj) == Atspi.Role.TABLE_CELL \
+            if AXUtilities.is_table_cell(self._obj) \
                and self._string.getString() == self._script.utilities.displayedText(self._obj):
                 return True
 
@@ -564,18 +563,12 @@ class MouseReviewer:
         if not script:
             return
 
-        isMenu = lambda x: x and AXObject.get_role(x) == Atspi.Role.MENU
         if script.utilities.isDead(orca_state.locusOfFocus):
             menu = None
-        elif isMenu(orca_state.locusOfFocus):
+        elif AXUtilities.is_menu(orca_state.locusOfFocus):
             menu = orca_state.locusOfFocus
         else:
-            try:
-                menu = AXObject.find_ancestor(orca_state.locusOfFocus, isMenu)
-            except Exception:
-                msg = "ERROR: Exception getting ancestor of %s" % orca_state.locusOfFocus
-                debug.println(debug.LEVEL_INFO, msg, True)
-                menu = None
+            menu = AXObject.find_ancestor(orca_state.locusOfFocus, AXUtilities.is_menu)
 
         screen, nowX, nowY = self._pointer.get_position()
         if (pX, pY) != (nowX, nowY):
@@ -615,7 +608,7 @@ class MouseReviewer:
             boundary = Atspi.TextBoundaryType.WORD_START
         elif obj == self._currentMouseOver.getObject():
             boundary = Atspi.TextBoundaryType.LINE_START
-        elif AXObject.has_state(obj, Atspi.StateType.SELECTABLE):
+        elif AXUtilities.is_selectable(obj):
             boundary = Atspi.TextBoundaryType.LINE_START
         elif script.utilities.isMultiParagraphObject(obj):
             boundary = Atspi.TextBoundaryType.LINE_START

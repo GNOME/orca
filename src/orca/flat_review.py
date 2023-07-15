@@ -38,6 +38,7 @@ from . import eventsynthesizer
 from . import orca_state
 from . import settings
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
@@ -589,7 +590,7 @@ class Context:
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
         if AXObject.supports_editable_text(accessible) \
-           and AXObject.has_state(accessible, Atspi.StateType.SINGLE_LINE):
+           and AXUtilities.is_single_line(accessible):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 

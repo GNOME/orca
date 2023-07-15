@@ -45,6 +45,7 @@ from . import orca_state
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -468,8 +469,7 @@ class KeyboardEvent(InputEvent):
              + ("                 shouldEcho=%s\n" % self.shouldEcho)
 
     def _shouldObscure(self):
-        role = AXObject.get_role(self._obj)
-        if role != Atspi.Role.PASSWORD_TEXT:
+        if not AXUtilities.is_password_text(self._obj):
             return False
 
         if not self.isPrintableKey():

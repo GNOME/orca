@@ -38,6 +38,7 @@ from gi.repository import Gtk
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _banner = None
 
@@ -353,39 +354,14 @@ def scrollIntoView(obj, startOffset=None, endOffset=None):
     _scrollToLocation(obj, Atspi.ScrollType.ANYWHERE, startOffset, endOffset)
 
 def _containingDocument(obj):
-    roles = [Atspi.Role.DOCUMENT_EMAIL,
-             Atspi.Role.DOCUMENT_FRAME,
-             Atspi.Role.DOCUMENT_PRESENTATION,
-             Atspi.Role.DOCUMENT_SPREADSHEET,
-             Atspi.Role.DOCUMENT_TEXT,
-             Atspi.Role.DOCUMENT_WEB]
-
-    def isDocument(x):
-        return AXObject.get_role(x) in roles
-
-    document = AXObject.find_ancestor(obj, isDocument)
+    document = AXObject.find_ancestor(obj, AXUtilities.is_document)
     while document:
-        ancestor = AXObject.find_ancestor(document, isDocument)
-        if not ancestor or ancestor == document:
+        ancestor = AXObject.find_ancestor(document, AXUtilities.is_document)
+        if ancestor is None or ancestor == document:
             break
         document = ancestor
 
     return document
-
-def _isDead(obj):
-    if not obj:
-        return True
-
-    try:
-        # We use the Atspi function rather than the AXObject function because the
-        # latter intentionally handles exceptions.
-        Atspi.Accessible.get_name(obj)
-    except Exception as e:
-        msg = "ERROR: %s is dead: %s" % (obj, e)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return True
-
-    return False
 
 def _getAccessibleAtPoint(root, x, y):
     try:
@@ -439,7 +415,7 @@ def _scrollBelowBanner(obj, banner, startOffset, endOffset, margin=25):
 
 def scrollToTopEdge(obj, startOffset=None, endOffset=None):
     global _banner
-    if _banner and not _isDead(_banner):
+    if _banner and not AXObject.is_dead(_banner):
         msg = "EVENT SYNTHESIZER: Suspected existing banner found: %s" % _banner
         debug.println(debug.LEVEL_INFO, msg, True)
         _scrollBelowBanner(obj, _banner, startOffset, endOffset)
