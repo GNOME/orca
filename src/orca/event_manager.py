@@ -89,7 +89,8 @@ class EventManager:
                 self.forceLegacyKeyHandling = True
                 self.activateLegacyKeyHandling()
                 return
-            orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processNewKeyboardEvent)
+            orca_state.device.key_watcher = orca_state.device.add_key_watcher(
+                self._processNewKeyboardEvent)
             self.newKeyHandlingActive = True
 
     def activateLegacyKeyHandling(self):
@@ -119,12 +120,12 @@ class EventManager:
     def deactivateNewKeyHandling(self):
         if self.newKeyHandlingActive:
             orca_state.device = None
-            self.newKeyHandlingActive = False;
+            self.newKeyHandlingActive = False
 
     def deactivateLegacyKeyHandling(self):
         if self.legacyKeyHandlingActive:
             self.deregisterKeystrokeListener(self._processKeyboardEvent)
-            self.legacyKeyHandlingActive = False;
+            self.legacyKeyHandlingActive = False
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
