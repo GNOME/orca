@@ -64,20 +64,46 @@ class EventManager:
                                'object:state-changed:defunct',
                                'object:property-change:accessible-parent']
         self._parentsOfDefunctDescendants = []
+
         orca_state.device = None
+        self.newKeyHandlingActive = False
+        self.legacyKeyHandlingActive = False
+        self.forceLegacyKeyHandling = False
+
         debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
         """Called when this event manager is activated."""
 
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
-        orca_state.device = Atspi.Device.new()
-        orca_state.device.event_count = 0
-        orca_state.device.key_watcher = \
-            orca_state.device.add_key_watcher(self._processKeyboardEvent)
+        self.setKeyHandling(False)
 
         self._active = True
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
+
+    def activateNewKeyHandling(self):
+        if not self.newKeyHandlingActive:
+            try:
+                orca_state.device = Atspi.Device.new()
+            except:
+                self.forceLegacyKeyHandling = True
+                self.activateLegacyKeyHandling()
+                return
+            orca_state.device.key_watcher = orca_state.device.add_key_watcher(self._processNewKeyboardEvent)
+            self.newKeyHandlingActive = True
+
+    def activateLegacyKeyHandling(self):
+        if not self.legacyKeyHandlingActive:
+            self.registerKeystrokeListener(self._processKeyboardEvent)
+            self.legacyKeyHandlingActive = True
+
+    def setKeyHandling(self, new):
+        if new and not self.forceLegacyKeyHandling:
+            self.deactivateLegacyKeyHandling()
+            self.activateNewKeyHandling()
+        else:
+            self.deactivateNewKeyHandling()
+            self.activateLegacyKeyHandling()
 
     def deactivate(self):
         """Called when this event manager is deactivated."""
@@ -87,8 +113,18 @@ class EventManager:
         for eventType in self._scriptListenerCounts.keys():
             pyatspi.Registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
-        orca_state.device = None
+        self.deactivateLegacyKeyHandling()
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
+
+    def deactivateNewKeyHandling(self):
+        if self.newKeyHandlingActive:
+            orca_state.device = None
+            self.newKeyHandlingActive = False;
+
+    def deactivateLegacyKeyHandling(self):
+        if self.legacyKeyHandlingActive:
+            self.deregisterKeystrokeListener(self._processKeyboardEvent)
+            self.legacyKeyHandlingActive = False;
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
@@ -600,6 +636,34 @@ class EventManager:
         for eventType, function in listeners.items():
             pyatspi.Registry.deregisterEventListener(function, eventType)
 
+    def registerKeystrokeListener(self, function, mask=None, kind=None):
+        """Register the keystroke listener on behalf of the caller."""
+
+        msg = 'EVENT MANAGER: registering keystroke listener function: %s' % function
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if mask is None:
+            mask = list(range(256))
+
+        if kind is None:
+            kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
+
+        pyatspi.Registry.registerKeystrokeListener(function, mask=mask, kind=kind)
+
+    def deregisterKeystrokeListener(self, function, mask=None, kind=None):
+        """Deregister the keystroke listener on behalf of the caller."""
+
+        msg = 'EVENT MANAGER: deregistering keystroke listener function: %s' % function
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if mask is None:
+            mask = list(range(256))
+
+        if kind is None:
+            kind = (Atspi.EventType.KEY_PRESSED_EVENT, Atspi.EventType.KEY_RELEASED_EVENT)
+
+        pyatspi.Registry.deregisterKeystrokeListener(function, mask=mask, kind=kind)
+
     def _processInputEvent(self, event):
         """Processes the given input event based on the keybinding from the
         currently-active script.
@@ -954,7 +1018,7 @@ class EventManager:
             msg = 'EVENT MANAGER: %s: %s' % (key, value)
             debug.println(debug.LEVEL_INFO, msg, True)
 
-    def _processKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
+    def _processNewKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
         event = Atspi.DeviceEvent()
         if pressed:
             event.type = Atspi.EventType.KEY_PRESSED_EVENT
@@ -970,17 +1034,25 @@ class EventManager:
 
         if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys \
             and orca_state.activeScript is not None:
-            orca_state.activeScript.refreshKeyGrabs("num lock toggled")
+            orca_state.activeScript.refreshKeyGrabs()
 
+        if pressed:
+            orca_state.openingDialog = (text == "space" and (state & ~(1 << Atspi.ModifierType.NUMLOCK)))
+
+        self._processKeyboardEvent(event)
+
+    def _processKeyboardEvent(self, event):
         keyboardEvent = input_event.KeyboardEvent(event)
         if not keyboardEvent.is_duplicate:
             debug.println(debug.LEVEL_INFO, "\n%s" % keyboardEvent)
 
-        keyboardEvent.process()
+        rv = keyboardEvent.process()
 
         # Do any needed xmodmap crap. Hopefully this can die soon.
         from orca import orca
         orca.updateKeyMap(keyboardEvent)
+
+        return rv
 
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a cursor key is pressed on the Braille display.

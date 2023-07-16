@@ -746,50 +746,38 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
-        self.removeKeyGrabs("script deactivation")
+        self.removeKeyGrabs()
 
     def getEnabledKeyBindings(self):
         """ Returns the key bindings that are currently active. """
         return self.getKeyBindings().getBoundBindings()
 
-    def addKeyGrabs(self, reason=""):
+    def addKeyGrabs(self):
         """ Sets up the key grabs currently needed by this script. """
-
+        if orca_state.device is None:
+            return
         msg = "INFO: adding key grabs"
-        if reason:
-            msg += ": %s" % reason
         debug.println(debug.LEVEL_INFO, msg, True)
-
         bound = self.getEnabledKeyBindings()
         for b in bound:
             for id in orca.addKeyGrab(b):
                 self.grab_ids.append(id)
 
-    def removeKeyGrabs(self, reason=""):
+    def removeKeyGrabs(self):
         """ Removes this script's AT-SPI key grabs. """
-
         msg = "INFO: removing key grabs"
-        if reason:
-            msg += ": %s" % reason
         debug.println(debug.LEVEL_INFO, msg, True)
-
         for id in self.grab_ids:
             orca.removeKeyGrab(id)
         self.grab_ids = []
 
-    def refreshKeyGrabs(self, reason=""):
+    def refreshKeyGrabs(self):
         """ Refreshes the enabled key grabs for this script. """
-
-        msg = "INFO: refreshing key grabs"
-        if reason:
-            msg += ": %s" % reason
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         # TODO: Should probably avoid removing key grabs and re-adding them.
         # Otherwise, a key could conceivably leak through while the script is
         # in the process of updating the bindings.
-        self.removeKeyGrabs("refreshing")
-        self.addKeyGrabs("refreshing")
+        self.removeKeyGrabs()
+        self.addKeyGrabs()
 
     def registerEventListeners(self):
         super().registerEventListeners()
@@ -908,7 +896,14 @@ class Script(script.Script):
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 
-        self.addKeyGrabs("script activation")
+        # Gtk 4 requrns "GTK", while older versions return "gtk"
+        # TODO: move this to a toolkit-specific script
+        if self.app is not None and self.app.toolkitName == "GTK" and self.app.toolkitVersion > "4":
+            orca.setKeyHandling(True)
+        else:
+            orca.setKeyHandling(False)
+
+        self.addKeyGrabs()
 
         msg = 'DEFAULT: Script for %s activated' % self.app
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -961,7 +956,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.BYPASS_MODE_ENABLED)
         orca_state.bypassNextCommand = True
-        self.removeKeyGrabs("bypass next command")
+        self.removeKeyGrabs()
         return True
 
     def enterLearnMode(self, inputEvent=None):
@@ -978,7 +973,8 @@ class Script(script.Script):
         self.speakMessage(messages.LEARN_MODE_START_SPEECH)
         self.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
         orca_state.learnModeEnabled = True
-        Atspi.Device.grab_keyboard(orca_state.device)
+        if orca_state.device is not None:
+            Atspi.Device.grab_keyboard(orca_state.device)
         return True
 
     def exitLearnMode(self, inputEvent=None):
@@ -996,7 +992,8 @@ class Script(script.Script):
 
         self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
-        Atspi.Device.ungrab_keyboard(orca_state.device)
+        if orca_state.device is not None:
+            Atspi.Device.ungrab_keyboard(orca_state.device)
         return True
 
     def showHelp(self, inputEvent=None):
@@ -2904,6 +2901,11 @@ class Script(script.Script):
 
         orca_state.activeWindow = event.source
 
+        if self.utilities.isKeyGrabEvent(event):
+            msg = "DEFAULT: Ignoring event. Likely from key grab."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if AXObject.get_child_count(event.source) == 1:
             child = AXObject.get_child(event.source, 0)
             if AXObject.get_role(child) == Atspi.Role.MENU:
@@ -2936,6 +2938,11 @@ class Script(script.Script):
 
         if event.source != orca_state.activeWindow:
             msg = "DEFAULT: Ignoring event. Not for active window %s." % orca_state.activeWindow
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self.utilities.isKeyGrabEvent(event):
+            msg = "DEFAULT: Ignoring event. Likely from key grab."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 

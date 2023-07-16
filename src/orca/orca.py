@@ -372,6 +372,11 @@ def _restoreXmodmap(keyList=[]):
         stdin=subprocess.PIPE, stdout=None, stderr=None)
     p.communicate(_originalXmodmap)
 
+def setKeyHandling(new):
+    """Toggle use of the new vs. legacy key handling mode.
+    """
+    _eventManager.setKeyHandling(new)
+
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -463,8 +468,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _storeXmodmap(_orcaModifiers)
     _createOrcaXmodmap()
 
-    _eventManager.activate()
     _scriptManager.activate()
+    _eventManager.activate()
 
     debug.println(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
