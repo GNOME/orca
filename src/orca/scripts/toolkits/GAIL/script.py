@@ -49,7 +49,7 @@ class Script(default.Script):
             window = self.utilities.topLevelObject(newFocus)
             windowChanged = window and orca_state.activeWindow != window
             if windowChanged:
-                orca_state.activeWindow = window
+                orca.setActiveWindow(window)
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 

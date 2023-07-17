@@ -48,6 +48,8 @@ from . import debug
 class AXObject:
     KNOWN_DEAD = []
     KNOWN_ROLES = {}
+    REAL_APP_FOR_MUTTER_FRAME = {}
+    REAL_FRAME_FOR_MUTTER_FRAME = {}
 
     @staticmethod
     def _clear_stored_data():
@@ -62,6 +64,16 @@ class AXObject:
             msg = "AXObject: Clearing %i known roles" % len(AXObject.KNOWN_ROLES)
             debug.println(debug.LEVEL_INFO, msg, True)
             AXObject.KNOWN_ROLES.clear()
+
+            msg = "AXObject: Clearing %i real app for mutter frame" \
+                % len(AXObject.REAL_APP_FOR_MUTTER_FRAME)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
+
+            msg = "AXObject: Clearing %i real frame for mutter frame" \
+                % len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
 
     @staticmethod
     def start_cache_clearing_thread():
@@ -879,6 +891,57 @@ class AXObject:
 
         return "; ".join(results)
 
+
+    @staticmethod
+    def find_real_app_and_window_for(obj, app=None):
+        """Work around for window events coming from mutter-x11-frames."""
+
+        if app is None:
+            try:
+                app = Atspi.Accessible.get_application(obj)
+            except Exception as e:
+                msg = "AXObject: Exception getting application of %s: %s" % (obj, e)
+                AXObject.handle_error(obj, e, msg)
+                return None, None
+
+        if AXObject.get_name(app) != "mutter-x11-frames":
+            return app, obj
+
+        real_app = AXObject.REAL_APP_FOR_MUTTER_FRAME.get(hash(obj))
+        real_frame = AXObject.REAL_FRAME_FOR_MUTTER_FRAME.get(hash(obj))
+        if real_app is not None and real_frame is not None:
+            return real_app, real_frame
+
+        msg = "AXObject: %s is not valid app for %s" % (app, obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        try:
+            desktop = Atspi.get_desktop(0)
+        except Exception as e:
+            msg = "AXObject: Exception getting desktop from Atspi: %s" % e
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None, None
+
+        name = AXObject.get_name(obj)
+        for app in AXObject.iter_children(desktop):
+            if AXObject.get_name(app) == "mutter-x11-frames":
+                continue
+            for frame in AXObject.iter_children(app):
+                if name == AXObject.get_name(frame):
+                    real_app = app
+                    real_frame = frame
+
+        msg = "AXObject: %s is real app for %s" % (real_app, obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if real_frame != obj:
+            msg = "AXObject: Updated frame to frame from real app"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        AXObject.REAL_APP_FOR_MUTTER_FRAME[hash(obj)] = real_app
+        AXObject.REAL_FRAME_FOR_MUTTER_FRAME[hash(obj)] = real_frame
+        return real_app, real_frame
+
     @staticmethod
     def get_application(obj):
         """Returns the accessible application associated with obj"""
@@ -886,12 +949,23 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return None
 
+        app = AXObject.REAL_APP_FOR_MUTTER_FRAME.get(hash(obj))
+        if app is not None:
+            return app
+
         try:
             app = Atspi.Accessible.get_application(obj)
         except Exception as e:
             msg = "AXObject: Exception in get_application: %s" % e
             AXObject.handle_error(obj, e, msg)
             return None
+
+        if AXObject.get_name(app) != "mutter-x11-frames":
+            return app
+
+        real_app = AXObject.find_real_app_and_window_for(obj, app)[0]
+        if real_app is not None:
+            app = real_app
 
         return app
 

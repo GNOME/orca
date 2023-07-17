@@ -41,6 +41,7 @@ from . import debug
 from . import keybindings
 from . import keynames
 from . import messages
+from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -282,7 +283,8 @@ class KeyboardEvent(InputEvent):
         if self._script:
             self._app = self._script.app
             if not self._window:
-                self._window = orca_state.activeWindow = self._script.utilities.activeWindow()
+                orca.setActiveWindow(self._script.utilities.activeWindow())
+                self._window = orca_state.activeWindow
                 msg = 'INPUT EVENT: Updated window and active window to %s' % self._window
                 debug.println(debug.LEVEL_INFO, msg, True)
 

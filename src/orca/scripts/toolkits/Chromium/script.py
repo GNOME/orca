@@ -333,7 +333,7 @@ class Script(web.Script):
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source):
             topLevel = self.utilities.topLevelObject(event.source)
             if self.utilities.canBeActiveWindow(topLevel):
-                orca_state.activeWindow = topLevel
+                orca.setActiveWindow(topLevel)
                 self.presentObject(event.source)
                 orca.setLocusOfFocus(event, event.source, False)
             return
@@ -406,7 +406,7 @@ class Script(web.Script):
         # far as the end-user experience is concerned.
         menu = self.utilities.popupMenuForFrame(event.source)
         if menu:
-            orca_state.activeWindow = event.source
+            orca.setActiveWindow(event.source)
 
             activeItem = None
             selected = self.utilities.selectedChildren(menu)

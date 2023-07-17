@@ -293,7 +293,7 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: updating script's app to %s" % self._script.app
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        orca_state.activeWindow = window
+        orca.setActiveWindow(window)
         return True
 
     def activeDocument(self, window=None):
