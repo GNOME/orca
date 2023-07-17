@@ -2213,13 +2213,15 @@ class Script(script.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        if AXUtilities.is_dialog_or_alert(event.source) or AXUtilities.is_frame(event.source):
-            if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
+        window = event.source
+        if AXUtilities.is_application(AXObject.get_parent(event.source)):
+            window = AXObject.find_real_app_and_window_for(event.source)[1]
+
+        if AXUtilities.is_dialog_or_alert(window) or AXUtilities.is_frame(window):
+            if event.detail1 and not self.utilities.canBeActiveWindow(window):
                 return
 
-            sourceIsActiveWindow = self.utilities.isSameObject(
-                event.source, orca_state.activeWindow)
-
+            sourceIsActiveWindow = self.utilities.isSameObject(window, orca_state.activeWindow)
             if sourceIsActiveWindow and not event.detail1:
                 if self.utilities.inMenu():
                     msg = "DEFAULT: Ignoring event. In menu."
@@ -2237,9 +2239,9 @@ class Script(script.Script):
                 return
 
             if not sourceIsActiveWindow and event.detail1:
-                msg = "DEFAULT: Updating active window to event source."
+                msg = "DEFAULT: Updating active window."
                 debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setActiveWindow(event.source, alsoSetLocusOfFocus=True, notifyScript=True)
+                orca.setActiveWindow(window, alsoSetLocusOfFocus=True, notifyScript=True)
 
         if self.findCommandRun:
             self.findCommandRun = False
@@ -2890,20 +2892,21 @@ class Script(script.Script):
         - event: the Event
         """
 
-        if not self.utilities.canBeActiveWindow(event.source, False):
+        window = AXObject.find_real_app_and_window_for(event.source)[1]
+        if not self.utilities.canBeActiveWindow(window, False):
             return
 
-        if self.utilities.isSameObject(event.source, orca_state.activeWindow):
+        if self.utilities.isSameObject(window, orca_state.activeWindow):
             msg = "DEFAULT: Event is for active window."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         self.pointOfReference = {}
 
-        orca.setActiveWindow(event.source)
+        orca.setActiveWindow(window)
 
-        if AXObject.get_child_count(event.source) == 1:
-            child = AXObject.get_child(event.source, 0)
+        if AXObject.get_child_count(window) == 1:
+            child = AXObject.get_child(window, 0)
             if AXObject.get_role(child) == Atspi.Role.MENU:
                 orca.setLocusOfFocus(event, child)
                 return
