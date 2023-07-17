@@ -450,13 +450,6 @@ class AXObject:
 
         if child != obj:
             msg = "AXObject: %s's child at %i is %s; not obj %s. " % (parent, index, child, obj)
-            for i in range(nchildren):
-                if obj == AXObject.get_child(parent, i):
-                    msg += "obj is child %i." % i
-                    break
-            else:
-                msg += "obj is not any of its parent's children."
-
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return parent
