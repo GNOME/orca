@@ -5697,21 +5697,3 @@ class Utilities:
             self._script.speakMessage(line)
 
         return True
-
-    def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus):
-        if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
-            msg = "INFO: Not interrupting for locusOfFocus change, oldLocusOfFocus is ancestor of new"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-       
-        isOld = lambda target: target == oldLocusOfFocus
-        isNew = lambda target: target == newLocusOfFocus
-        if AXObject.get_relation_targets(newLocusOfFocus, Atspi.RelationType.CONTROLLER_FOR, isOld):
-            msg = "INFO: Not interrupting for locusOfFocus change, newLocusOfFocus controls old"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-        if AXObject.get_relation_targets(oldLocusOfFocus, Atspi.RelationType.CONTROLLER_FOR, isNew):
-            msg = "INFO: Not interrupting for locusOfFocus change, oldLocusOfFocus controls new"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-        return True

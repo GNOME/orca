@@ -25,6 +25,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+import time
+
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import orca.debug as debug
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -50,6 +56,7 @@ class Script(default.Script):
             windowChanged = window and orca_state.activeWindow != window
             if windowChanged:
                 orca_state.activeWindow = window
+                self.windowActivateTime = time.time()
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
