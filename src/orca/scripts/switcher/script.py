@@ -71,7 +71,7 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         self.presentationInterrupt()
-        orca_state.activeWindow = self.utilities.topLevelObject(event.source)
+        orca.setActiveWindow(self.utilities.topLevelObject(event.source))
         orca.setLocusOfFocus(event, event.source, False)
         self.presentMessage(self.utilities.getSelectionName(event.source), resetStyles=False, force=True)
         return True

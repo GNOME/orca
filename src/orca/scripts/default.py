@@ -870,7 +870,7 @@ class Script(script.Script):
 
         topLevel = self.utilities.topLevelObject(newLocusOfFocus)
         if orca_state.activeWindow != topLevel:
-            orca_state.activeWindow = topLevel
+            orca.setActiveWindow(topLevel)
             self.windowActivateTime = time.time()
 
         self.updateBraille(newLocusOfFocus)
@@ -2233,15 +2233,14 @@ class Script(script.Script):
 
                 msg = "DEFAULT: Event is for active window. Clearing state."
                 debug.println(debug.LEVEL_INFO, msg, True)
-                orca_state.activeWindow = None
+                orca.setActiveWindow(None)
                 return
 
             if not sourceIsActiveWindow and event.detail1:
                 msg = "DEFAULT: Updating active window to event source."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.windowActivateTime = time.time()
-                orca.setLocusOfFocus(event, event.source)
-                orca_state.activeWindow = event.source
+                orca.setActiveWindow(event.source, alsoSetLocusOfFocus=True, notifyScript=True)
 
         if self.findCommandRun:
             self.findCommandRun = False
@@ -2449,8 +2448,7 @@ class Script(script.Script):
 
         windowChanged = orca_state.activeWindow != mouseEvent.window
         if windowChanged:
-            orca_state.activeWindow = mouseEvent.window
-            orca.setLocusOfFocus(None, mouseEvent.window, False)
+            orca.setActiveWindow(mouseEvent.window, alsoSetLocusOfFocus=True)
 
         self.presentationInterrupt()
         if AXUtilities.is_focused(mouseEvent.obj):
@@ -2867,7 +2865,7 @@ class Script(script.Script):
            and (currentValue == self.pointOfReference["oldValue"]):
             return
 
-        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj, event)
+        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj)
         msg = "DEFAULT: Is progress bar update: %s, %s" % (isProgressBarUpdate, msg)
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -2904,7 +2902,7 @@ class Script(script.Script):
         self.pointOfReference = {}
 
         self.windowActivateTime = time.time()
-        orca_state.activeWindow = event.source
+        orca.setActiveWindow(event.source)
 
         if self.utilities.isKeyGrabEvent(event):
             msg = "DEFAULT: Ignoring event. Likely from key grab."
@@ -2917,7 +2915,7 @@ class Script(script.Script):
                 orca.setLocusOfFocus(event, child)
                 return
 
-        orca.setLocusOfFocus(event, event.source)
+        orca.setLocusOfFocus(event, orca_state.activeWindow)
 
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
@@ -2968,7 +2966,7 @@ class Script(script.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         orca.setLocusOfFocus(event, None)
-        orca_state.activeWindow = None
+        orca.setActiveWindow(None)
         orca_state.activeScript = None
         orca_state.listNotificationsModeEnabled = False
         orca_state.learnModeEnabled = False

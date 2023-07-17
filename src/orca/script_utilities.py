@@ -1064,7 +1064,7 @@ class Utilities:
 
         return True
 
-    def isProgressBarUpdate(self, obj, event):
+    def isProgressBarUpdate(self, obj):
         if not _settingsManager.getSetting('speakProgressBarUpdates') \
            and not _settingsManager.getSetting('brailleProgressBarUpdates') \
            and not _settingsManager.getSetting('beepProgressBarUpdates'):
@@ -1091,10 +1091,7 @@ class Utilities:
             return False, "Window %s is not %s" % (topLevel, orca_state.activeWindow)
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
-            if event:
-                app = event.host_application
-            else:
-                app = AXObject.get_application(obj)
+            app = AXObject.get_application(obj)
             if app == orca_state.activeScript.app:
                 return True, "Verbosity is app"
             return False, "App %s is not %s" % (app, orca_state.activeScript.app)

@@ -374,7 +374,7 @@ def _shouldTraceIt():
 
     eventSource = objEvent.source
     if TRACE_APPS:
-        app = objEvent.host_application or AXObject.get_application(eventSource)
+        app = AXObject.get_application(eventSource)
         if AXObject.get_name(app) not in TRACE_APPS:
             return False
 

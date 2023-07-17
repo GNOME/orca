@@ -150,6 +150,29 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         msg = "ORCA: Exception emitting region-changed notification"
         debug.println(debug.LEVEL_INFO, msg, True)
 
+def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
+    msg = "ORCA: Request to set active window to %s" % frame
+    if app is not None:
+        msg += " in %s" % app
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+    if frame == orca_state.activeWindow:
+        msg = "ORCA: Setting activeWindow to existing activeWindow"
+        debug.println(debug.LEVEL_INFO, msg, True)
+    elif frame is None:
+        orca_state.activeWindow = None
+    else:
+        real_app, real_frame = AXObject.find_real_app_and_window_for(frame, app)
+        if real_frame != frame:
+            msg = "ORCA: Correcting active window to %s in %s" % (real_frame, real_app)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca_state.activeWindow = real_frame
+        else:
+            orca_state.activeWindow = frame
+
+    if alsoSetLocusOfFocus:
+        setLocusOfFocus(None, orca_state.activeWindow, notifyScript=notifyScript)
+
 def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     """Sets the locus of focus (i.e., the object with visual focus) and
     notifies the script of the change should the script wish to present
@@ -169,18 +192,15 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         return
 
     if event and (orca_state.activeScript and not orca_state.activeScript.app):
-        script = _scriptManager.getScript(event.host_application, event.source)
+        app = AXObject.get_application(event.source)
+        script = _scriptManager.getScript(app, event.source)
         _scriptManager.setActiveScript(script, "Setting locusOfFocus")
 
     oldFocus = orca_state.locusOfFocus
-    try:
-        oldFocus.name
-    except Exception:
-        msg = "ORCA: Old locusOfFocus is null or defunct"
-        debug.println(debug.LEVEL_INFO, msg, True)
+    if AXObject.is_dead(oldFocus):
         oldFocus = None
 
-    if not obj:
+    if obj is None:
         msg = "ORCA: New locusOfFocus is null (being cleared)"
         debug.println(debug.LEVEL_INFO, msg, True)
         orca_state.locusOfFocus = None
