@@ -2081,6 +2081,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isTypeahead(priorObj):
             return []
 
+        if AXUtilities.is_page_tab(obj):
+            return []
+
         if AXUtilities.is_tool_tip(obj):
             return []
 
