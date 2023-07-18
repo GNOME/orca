@@ -1018,11 +1018,22 @@ class AXObject:
                                AXObject.get_application_toolkit_version(obj))
 
     @staticmethod
-    def clear_cache(obj):
+    def clear_cache(obj, recursive=False):
         """Clears the Atspi cached information associated with obj"""
 
         if not AXObject.is_valid(obj):
             return
+
+        if not recursive:
+            try:
+                Atspi.Accessible.clear_cache_single(obj)
+            except Exception:
+                # This is new API, added in 2.49.1. So log success rather than
+                # (likely) failure for now.
+            else:
+                msg = "AXObject: clear_cache_single succeeded."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
 
         try:
             Atspi.Accessible.clear_cache(obj)
