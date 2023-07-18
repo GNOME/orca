@@ -1030,6 +1030,7 @@ class AXObject:
             except Exception:
                 # This is new API, added in 2.49.1. So log success rather than
                 # (likely) failure for now.
+                pass
             else:
                 msg = "AXObject: clear_cache_single succeeded."
                 debug.println(debug.LEVEL_INFO, msg, True)
