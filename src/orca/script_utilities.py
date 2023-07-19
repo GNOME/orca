@@ -5703,7 +5703,7 @@ class Utilities:
 
     def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus):
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
-            msg = "INFO: Not interrupting for locusOfFocus change, oldLocusOfFocus is ancestor of new"
+            msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
