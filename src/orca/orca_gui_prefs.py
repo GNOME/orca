@@ -693,7 +693,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         if i == 0:
-            debug.println(debug.LEVEL_SEVERE, "No speech family was available for %s." % str(currentLanguage))
+            msg = "No speech family was available for %s." % str(currentLanguage)
+            debug.println(debug.LEVEL_SEVERE, msg, True)
             debug.printStack(debug.LEVEL_FINEST)
             self.speechFamiliesChoice = None
             return
@@ -2898,10 +2899,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         description = self.pendingKeyBindings.get(newString)
 
         if description is None:
-            match = lambda x: x.keysymstring == keyName \
-                          and x.modifiers == modifiers \
-                          and x.click_count == clickCount \
-                          and x.handler
+
+            def match(x):
+                return x.keysymstring == keyName and x.modifiers == modifiers \
+                    and x.click_count == clickCount and x.handler
+
             matches = list(filter(match, self.kbindings.keyBindings))
             if matches:
                 description = matches[0].handler.description

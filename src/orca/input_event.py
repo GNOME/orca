@@ -336,7 +336,8 @@ class KeyboardEvent(InputEvent):
                 if KeyboardEvent.lastOrcaModifierAlone:
                     if _isPressed:
                         KeyboardEvent.secondOrcaModifierTime = now
-                    if KeyboardEvent.secondOrcaModifierTime < KeyboardEvent.lastOrcaModifierAloneTime + 0.5:
+                    if (KeyboardEvent.secondOrcaModifierTime <
+                        KeyboardEvent.lastOrcaModifierAloneTime + 0.5):
                         # double-orca, let the real action happen
                         self._bypassOrca = True
                     if not _isPressed:
@@ -348,8 +349,10 @@ class KeyboardEvent(InputEvent):
                         KeyboardEvent.currentOrcaModifierAlone = True
                         KeyboardEvent.currentOrcaModifierAloneTime = now
                     else:
-                        KeyboardEvent.lastOrcaModifierAlone = KeyboardEvent.currentOrcaModifierAlone
-                        KeyboardEvent.lastOrcaModifierAloneTime = KeyboardEvent.currentOrcaModifierAloneTime
+                        KeyboardEvent.lastOrcaModifierAlone = \
+                            KeyboardEvent.currentOrcaModifierAlone
+                        KeyboardEvent.lastOrcaModifierAloneTime = \
+                            KeyboardEvent.currentOrcaModifierAloneTime
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
             self.shouldEcho = _mayEcho and settings.enableFunctionKeys

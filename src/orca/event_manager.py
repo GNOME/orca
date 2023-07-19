@@ -85,7 +85,7 @@ class EventManager:
         if not self.newKeyHandlingActive:
             try:
                 orca_state.device = Atspi.Device.new()
-            except:
+            except Exception:
                 self.forceLegacyKeyHandling = True
                 self.activateLegacyKeyHandling()
                 return

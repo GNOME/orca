@@ -280,7 +280,8 @@ class Utilities(script_utilities.Utilities):
             return None
 
         toolbar = None
-        for child in AXObject.iter_children(AXObject.get_parent(scrollPane), AXUtilities.is_tool_bar):
+        for child in AXObject.iter_children(AXObject.get_parent(scrollPane),
+                                             AXUtilities.is_tool_bar):
             toolbar = child
             break
 
@@ -442,8 +443,7 @@ class Utilities(script_utilities.Utilities):
         if not parent:
             return None, None
 
-        hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.SPLIT_PANE
-        panes = self.findAllDescendants(parent, hasRole)
+        panes = self.findAllDescendants(parent, AXUtilities.is_split_pane)
         if not panes:
             return None, None
 
@@ -532,11 +532,10 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def containingComboBox(self, obj):
-        isComboBox = lambda x: x and AXObject.get_role(x) == Atspi.Role.COMBO_BOX
-        if isComboBox(obj):
+        if AXUtilities.is_combo_box(obj):
             comboBox = obj
         else:
-            comboBox = AXObject.find_ancestor(obj, isComboBox)
+            comboBox = AXObject.find_ancestor(obj, isCoAXUtilities.is_combo_boxmboBox)
 
         if not comboBox:
             return None
@@ -606,19 +605,17 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: Are these overrides still needed? They appear to be
         # quite old.
 
-        if not obj:
+        if obj is None:
             return []
 
-        role = AXObject.get_role(obj)
-        isSelection = lambda x: AXObject.supports_selection(x)
-        if not isSelection(obj) and role == Atspi.Role.COMBO_BOX:
-            child = AXObject.find_descendant(obj, isSelection)
+        if not AXObject.supports_selection(obj) and AXUtilities.is_combo_box(obj):
+            child = AXObject.find_descendant(obj, AXObject.supports_selection)
             if child:
                 return super().selectedChildren(child)
 
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
-        if role != Atspi.Role.TABLE:
+        if not AXUtilities.is_table(obj):
             return super().selectedChildren(obj)
 
         # We will need to special case this due to the possibility of there
@@ -776,15 +773,21 @@ class Utilities(script_utilities.Utilities):
 
         selectedCols = sorted(cols.difference(set(self._calcSelectedColumns)))
         unselectedCols = sorted(set(self._calcSelectedColumns).difference(cols))
-        convert = lambda x: self.columnConvert(x+1)
-        selectedCols = list(map(convert, selectedCols))
-        unselectedCols = list(map(convert, unselectedCols))
+
+        def convertColumn(x):
+            return self.columnConvert(x+1)
+
+        def convertRow(x):
+            return x + 1
+
+        selectedCols = list(map(convertColumn, selectedCols))
+        unselectedCols = list(map(convertColumn, unselectedCols))
 
         selectedRows = sorted(rows.difference(set(self._calcSelectedRows)))
         unselectedRows = sorted(set(self._calcSelectedRows).difference(rows))
-        convert = lambda x: x + 1
-        selectedRows = list(map(convert, selectedRows))
-        unselectedRows = list(map(convert, unselectedRows))
+
+        selectedRows = list(map(convertRow, selectedRows))
+        unselectedRows = list(map(convertRow, unselectedRows))
 
         self._calcSelectedColumns = list(cols)
         self._calcSelectedRows = list(rows)
@@ -801,12 +804,14 @@ class Utilities(script_utilities.Utilities):
         if len(unselectedCols) == 1:
             msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselectedCols[0])
         elif len(unselectedCols) > 1:
-            msgs.append(messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselectedCols[0], unselectedCols[-1]))
+            msgs.append(messages.TABLE_COLUMN_RANGE_UNSELECTED % \
+                        (unselectedCols[0], unselectedCols[-1]))
 
         if len(unselectedRows) == 1:
             msgs.append(messages.TABLE_ROW_UNSELECTED % unselectedRows[0])
         elif len(unselectedRows) > 1:
-            msgs.append(messages.TABLE_ROW_RANGE_UNSELECTED % (unselectedRows[0], unselectedRows[-1]))
+            msgs.append(messages.TABLE_ROW_RANGE_UNSELECTED % \
+                        (unselectedRows[0], unselectedRows[-1]))
 
         if len(selectedCols) == 1:
             msgs.append(messages.TABLE_COLUMN_SELECTED % selectedCols[0])

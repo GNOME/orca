@@ -33,7 +33,7 @@ import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
 import orca.notification_messages as notification_messages
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 ########################################################################
@@ -47,8 +47,7 @@ class Script(default.Script):
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
 
-        hasRole = lambda x: x and AXObject.get_role(x) == Atspi.Role.LABEL
-        allLabels = self.utilities.findAllDescendants(event.source, hasRole)
+        allLabels = self.utilities.findAllDescendants(event.source, AXUtilities.is_label)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
 

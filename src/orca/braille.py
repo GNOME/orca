@@ -282,7 +282,9 @@ def getDefaultTable():
     # for the largest group of users; not the perfect default for all users.
     prefer = ["g1", "g2", "comp6", "comp8"]
 
-    isCandidate = lambda t: t.startswith(language) and not any(e in t for e in exclude)
+    def isCandidate(t):
+        return t.startswith(language) and not any(e in t for e in exclude)
+
     tables = list(filter(isCandidate, tables))
     msg = "BRAILLE: %i candidate tables for locale found: %s" % (len(tables), ", ".join(tables))
     debug.println(debug.LEVEL_INFO, msg, True)
@@ -354,7 +356,8 @@ class Region:
         else:
             if string.strip():
                 if not settings.enableContractedBraille:
-                    msg = "BRAILLE: Not contracting '%s' because contracted braille is not enabled." % string
+                    msg = "BRAILLE: Not contracting '%s' \
+                           because contracted braille is not enabled." % string
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
                     msg = "BRAILLE: Not contracting '%s' due to problem with liblouis." % string
@@ -942,7 +945,8 @@ class Line:
                     displayWidths = wordLength // _displaySize[0]
                     if displayWidths:
                         for i in range(displayWidths):
-                            ranges.append([start + i * _displaySize[0], start + (i+1) * _displaySize[0]])
+                            ranges.append([start + i * _displaySize[0],
+                                            start + (i+1) * _displaySize[0]])
                         if wordLength % _displaySize[0]:
                             span = [start + displayWidths * _displaySize[0], end]
                         else:
@@ -1604,7 +1608,8 @@ def displayKeyEvent(event):
 def _adjustForWordWrap(targetCursorCell):
     startPos = viewport[0]
     endPos = startPos + _displaySize[0]
-    msg = "BRAILLE: Current range: (%i, %i). Target cell: %i." % (startPos, endPos, targetCursorCell)
+    msg = "BRAILLE: Current range: (%i, %i). Target cell: %i." % \
+          (startPos, endPos, targetCursorCell)
     debug.println(debug.LEVEL_INFO, msg, True)
 
     if not _lines or not settings.enableBrailleWordWrap:

@@ -295,12 +295,18 @@ class Script(default.Script):
         """Returns a dictionary with the app-specific preferences."""
 
         prefs = {
-            'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
-            'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
-            'skipBlankCells': self.skipBlankCellsCheckButton.get_active(),
-            'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
-            'speakSpreadsheetCoordinates': self.speakSpreadsheetCoordinatesCheckButton.get_active(),
-            'alwaysSpeakSelectedSpreadsheetRange': self.alwaysSpeakSelectedSpreadsheetRangeCheckButton.get_active(),
+            'speakCellSpan':
+                self.speakCellSpanCheckButton.get_active(),
+            'speakCellHeaders':
+                self.speakCellHeadersCheckButton.get_active(),
+            'skipBlankCells':
+                self.skipBlankCellsCheckButton.get_active(),
+            'speakCellCoordinates':
+                self.speakCellCoordinatesCheckButton.get_active(),
+            'speakSpreadsheetCoordinates':
+                self.speakSpreadsheetCoordinatesCheckButton.get_active(),
+            'alwaysSpeakSelectedSpreadsheetRange':
+                self.alwaysSpeakSelectedSpreadsheetRangeCheckButton.get_active(),
         }
 
         prefs.update(self.spellcheck.getPreferencesFromGUI())
@@ -791,8 +797,8 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
                 return
-
-            if  AXObject.get_role(orca_state.locusOfFocus) in [Atspi.Role.PARAGRAPH, Atspi.Role.TABLE_CELL]:
+            if AXUtilities.is_paragraph(orca_state.locusOfFocus) \
+               or AXUtilities.is_table_cell(orca_state.locusOfFocus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)

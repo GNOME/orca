@@ -98,7 +98,8 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self.inferFromTextLeft(obj, proximity=200)
-            debug.println(debug.LEVEL_INFO, "INFER - Text Left with proximity of 200: %s" % result, True)
+            msg = "INFER - Text Left with proximity of 200: %s" % result
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         self.clearCache()
         return result, objects
@@ -141,9 +142,12 @@ class LabelInference:
         if obj is None:
             return False
 
-        isMatch = lambda x: x and not self._script.utilities.isStaticTextLeaf(x)
+        def isMatch(x):
+            return x is not None \
+                  and not self._script.utilities.isStaticTextLeaf(x) \
+                  and not AXUtilities.is_link(x)
+
         children = [child for child in AXObject.iter_children(obj, isMatch)]
-        children = [x for x in children if not AXUtilities.is_link(x)]
         if len(children) > 1:
             return False
 

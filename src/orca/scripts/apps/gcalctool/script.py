@@ -71,15 +71,14 @@ class Script(gtk.Script):
             gtk.Script.onWindowActivated(self, event)
             return
 
-        isEditbar = lambda x: AXObject.get_role(x) == Atspi.Role.EDITBAR
-        self._resultsDisplay = AXObject.find_descendant(event.source, isEditbar)
+        self._resultsDisplay = AXObject.find_descendant(event.source, AXUtilities.is_editbar)
         if not self._resultsDisplay:
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
-        isStatusLine = lambda x: AXObject.get_role(x) == Atspi.Role.TEXT \
-                       and not AXUtilities.is_editable(x)
-        self._statusLine = AXObject.find_descendant(event.source, isStatusLine)
+        def isStatusLine(x):
+            return AXObject.get_role(x) == Atspi.Role.TEXT and not AXUtilities.is_editable(x)
 
+        self._statusLine = AXObject.find_descendant(event.source, isStatusLine)
         gtk.Script.onWindowActivated(self, event)
 
     def onTextInserted(self, event):

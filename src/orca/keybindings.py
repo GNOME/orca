@@ -448,7 +448,9 @@ class KeyBindings:
         if len(set(map(lambda x: x.click_count, result))) == len(result):
             return
 
-        toString = lambda x: "%s (%ix)" % (x.handler.description, x.click_count)
+        def toString(x):
+            return "%s (%ix)" % (x.handler.description, x.click_count)
+
         msg = "WARNING: '%s' matches multiple handlers: %s" % \
             (keyboardEvent.event_string, ", ".join(map(toString, result)))
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -483,8 +485,7 @@ class KeyBindings:
         # the one whose click count is closest to, but does not exceed,
         # the actual click count.
         #
-        comparison = lambda x, y: y.click_count - x.click_count
-        candidates.sort(key=functools.cmp_to_key(comparison))
+        candidates.sort(key=functools.cmp_to_key(lambda x, y: y.click_count - x.click_count))
         self._checkMatchingBindings(keyboardEvent, candidates)
         for candidate in candidates:
             if candidate.click_count <= clickCount:

@@ -29,14 +29,14 @@ LIVE_RUDE      = 3
 # Seconds a message is held in the queue before it is discarded
 MSG_KEEPALIVE_TIME = 45  # in seconds
 
-# The number of messages that are cached and can later be reviewed via 
+# The number of messages that are cached and can later be reviewed via
 # LiveRegionManager.reviewLiveAnnouncement.
 CACHE_SIZE = 9  # corresponds to one of nine key bindings
 
 class PriorityQueue:
     """ This class represents a thread **UNSAFE** priority queue where priority
-    is determined by the given integer priority.  The entries are also   
-    maintained in chronological order. 
+    is determined by the given integer priority.  The entries are also
+    maintained in chronological order.
 
     TODO: experiment with Queue.Queue to make thread safe
     """
@@ -47,7 +47,7 @@ class PriorityQueue:
         """ Add a new element to the queue according to 1) priority and
         2) timestamp. """
         bisect.insort_left(self.queue, (priority, time.time(), data, obj))
-       
+
     def dequeue(self):
         """get the highest priority element from the queue.  """
         return self.queue.pop(0)
@@ -57,16 +57,21 @@ class PriorityQueue:
         self.queue = []
 
     def purgeByKeepAlive(self):
-        """ Purge items from the queue that are older than the keepalive 
-        time """
+        """ Purge items from the queue that are older than the keepalive time """
         currenttime = time.time()
-        myfilter = lambda item: item[1] + MSG_KEEPALIVE_TIME > currenttime
+
+        def myfilter(item):
+            return item and item[1] + MSG_KEEPALIVE_TIME > currenttime
+
         self.queue = list(filter(myfilter, self.queue))
 
     def purgeByPriority(self, priority):
         """ Purge items from the queue that have a lower than or equal priority
         than the given argument """
-        myfilter = lambda item: item[0] > priority
+
+        def myfilter(item):
+            return item and item[0] > priority
+
         self.queue = list(filter(myfilter, self.queue))
 
     def __len__(self):
@@ -419,7 +424,9 @@ class LiveRegionManager:
         return 'container-live' in attrs
 
     def _findContainer(self, obj):
-        isContainer = lambda x: self._getAttrDictionary(x).get('atomic')
+        def isContainer(x):
+            return self._getAttrDictionary(x).get('atomic')
+
         if isContainer(obj):
             return obj
 

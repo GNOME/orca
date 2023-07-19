@@ -245,8 +245,7 @@ class _ItemContext:
                  Atspi.Role.PAGE_TAB,
                  Atspi.Role.TOOL_BAR,
                  Atspi.Role.WINDOW]
-        isContainer = lambda x: x and AXObject.get_role(x) in roles
-        return AXObject.find_ancestor(self._obj, isContainer)
+        return AXObject.find_ancestor(self._obj, lambda x: AXObject.get_role(x) in roles)
 
     def _isSubstringOf(self, other):
         """Returns True if this is a substring of other."""
@@ -304,7 +303,10 @@ class _ItemContext:
             self._script.presentationInterrupt()
 
         if self._frame and self._frame != prior._frame:
-            self._script.presentObject(self._frame, alreadyFocused=True, inMouseReview=True, interrupt=True)
+            self._script.presentObject(self._frame,
+                                        alreadyFocused=True,
+                                        inMouseReview=True,
+                                        interrupt=True)
 
         if self._script.utilities.containsOnlyEOCs(self._obj):
             msg = "MOUSE REVIEW: Not presenting object which contains only EOCs"
@@ -532,8 +534,8 @@ class MouseReviewer:
         if not app:
             return None
 
-        pred = lambda x: self._contains_point(x, pX, pY)
-        candidates = [o for o in AXObject.iter_children(app, pred)]
+        candidates = [o for o in AXObject.iter_children(
+            app, lambda x: self._contains_point(x, pX, pY))]
         if len(candidates) == 1:
             return candidates[0]
 

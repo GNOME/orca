@@ -273,7 +273,8 @@ def _processBrailleEvent(event):
 ########################################################################
 
 def deviceChangeHandler(deviceManager, device):
-    """New keyboards being plugged in stomp on our changes to the keymappings, so we have to re-apply"""
+    """New keyboards being plugged in stomp on our changes to the keymappings,
+       so we have to re-apply"""
     source = device.get_source()
     if source == Gdk.InputSource.KEYBOARD:
         msg = "ORCA: Keyboard change detected, re-creating the xmodmap"
@@ -859,10 +860,12 @@ def main():
                 _scriptManager.setActiveScript(script, "Found focused object.")
 
     try:
-        debug.println(debug.LEVEL_INFO, "ORCA: Starting ATSPI registry.", True)
+        msg = "ORCA: Starting ATSPI registry."
+        debug.println(debug.LEVEL_INFO, msg, True)
         start() # waits until we stop the registry
     except Exception:
-        debug.println(debug.LEVEL_SEVERE, "ORCA: Exception starting ATSPI registry.", True)
+        msg = "ORCA: Exception starting ATSPI registry."
+        debug.println(debug.LEVEL_SEVERE, msg, True)
         die(EXIT_CODE_HANG)
     return 0
 

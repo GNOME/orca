@@ -71,7 +71,8 @@ class Script(clutter.Script):
         return clutter.Script.skipObjectEvent(self, event)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
-        if (event and event.type == "window:activate" and newFocus and not AXObject.get_name(newFocus)):
+        if event is not None and event.type == "window:activate" \
+          and newFocus is not None and not AXObject.get_name(newFocus):
             queuedEvent = self._getQueuedEvent("object:state-changed:focused", True)
             if queuedEvent and queuedEvent.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."

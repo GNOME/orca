@@ -74,8 +74,9 @@ class SpellCheck(spellcheck.SpellCheck):
         return AXObject.find_descendant(panel, isError)
 
     def _findSuggestionsList(self, root):
-        isTable = lambda x: x and AXObject.get_role(x) == Atspi.Role.TABLE \
-                  and AXObject.supports_selection(x)
+        def isTable(x):
+            return AXUtilities.is_table(x) and AXObject.supports_selection(x)
+
         return AXObject.find_descendant(root, isTable)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
