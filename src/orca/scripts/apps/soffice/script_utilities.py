@@ -535,7 +535,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_combo_box(obj):
             comboBox = obj
         else:
-            comboBox = AXObject.find_ancestor(obj, isCoAXUtilities.is_combo_boxmboBox)
+            comboBox = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)
 
         if not comboBox:
             return None
