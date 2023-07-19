@@ -297,9 +297,8 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def activeDocument(self, window=None):
-        isShowing = lambda x: AXUtilities.is_showing(x)
         documents = self._getDocumentsEmbeddedBy(window or orca_state.activeWindow)
-        documents = list(filter(isShowing, documents))
+        documents = list(filter(AXUtilities.is_showing, documents))
         if len(documents) == 1:
             return documents[0]
         return None
@@ -2281,15 +2280,19 @@ class Utilities(script_utilities.Utilities):
             if not childCount:
                 rv = True
             else:
-                pred = lambda x: x and AXObject.get_role(x) not in validRoles
-                rv = bool([x for x in AXObject.iter_children(obj, pred)])
+                def pred1(x):
+                    return x is not None and AXObject.get_role(x) not in validRoles
+
+                rv = bool([x for x in AXObject.iter_children(obj, pred1)])
 
         if not rv:
             parent = AXObject.get_parent(obj)
             validRoles = self._validChildRoles.get(parent)
             if validRoles:
-                pred = lambda x: x and AXObject.get_role(x) not in validRoles
-                rv = bool([x for x in AXObject.iter_children(parent, pred)])
+                def pred2(x):
+                    return x is not None and AXObject.get_role(x) not in validRoles
+
+                rv = bool([x for x in AXObject.iter_children(parent, pred2)])
 
         self._treatAsDiv[hash(obj)] = rv
         return rv
@@ -2390,6 +2393,9 @@ class Utilities(script_utilities.Utilities):
 
         displayStyle = self._getDisplayStyle(obj)
         return "inline" in displayStyle
+
+    def isSVG(self, obj):
+        return 'svg' == self._getTag(obj)
 
     def isTextField(self, obj):
         if AXUtilities.is_text_input(obj):
@@ -2665,13 +2671,15 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if not test:
-            test = lambda x: self._getTag(x) == self._getTag(obj)
+        def pred(x):
+            if test is not None:
+                return test(x)
+            return self._getTag(x) == self._getTag(obj)
 
         rv = -1
         ancestor = obj
         while ancestor:
-            ancestor = AXObject.find_ancestor(ancestor, test)
+            ancestor = AXObject.find_ancestor(ancestor, pred)
             rv += 1
 
         self._mathNestingLevel[hash(obj)] = rv
@@ -3856,7 +3864,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isRedundantSVG(self, obj):
-        if self._getTag(obj) != 'svg' or AXObject.get_child_count(AXObject.get_parent(obj)) == 1:
+        if not self.isSVG(obj) or AXObject.get_child_count(AXObject.get_parent(obj)) == 1:
             return False
 
         rv = self._isRedundantSVG.get(hash(obj))
@@ -3865,8 +3873,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         parent = AXObject.get_parent(obj)
-        pred = lambda x: x and self._getTag(x) == 'svg'
-        children = [x for x in AXObject.iter_children(parent, pred)]
+        children = [x for x in AXObject.iter_children(parent, self.isSVG)]
         if len(children) == AXObject.get_child_count(parent):
             sortedChildren = sorted(children, key=functools.cmp_to_key(self.sizeComparison))
             if obj != sortedChildren[-1]:
@@ -3890,7 +3897,7 @@ class Utilities(script_utilities.Utilities):
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in AXObject.iter_children(obj):
-                if not AXUtilities.is_image_or_canvas(child) and self._getTag(child) != 'svg':
+                if not (AXUtilities.is_image_or_canvas(child) or self.isSVG(child)):
                     break
             else:
                 rv = True
@@ -3907,8 +3914,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
-        if AXObject.get_role(obj) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
-           and self._getTag(obj) != 'svg':
+        if not (AXUtilities.is_image_or_canvas(obj) or self.isSVG(obj)):
             rv = False
         if rv and (AXObject.get_name(obj) \
                    or AXObject.get_description(obj) \
@@ -4439,7 +4445,9 @@ class Utilities(script_utilities.Utilities):
         if not parseResult.fragment:
             return False
 
-        isSameFragment = lambda x: self._getID(x) == parseResult.fragment
+        def isSameFragment(x):
+            return self._getID(x) == parseResult.fragment
+
         return AXObject.find_ancestor(obj, isSameFragment) is not None
 
     def documentFragment(self, documentFrame):
@@ -4455,8 +4463,9 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        hasTextBlockRole = lambda x: x and AXObject.get_role(x) in self._textBlockElementRoles() \
-            and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
+        def hasTextBlockRole(x):
+            return AXObject.get_role(x) in self._textBlockElementRoles() \
+                and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
 
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
@@ -4829,7 +4838,8 @@ class Utilities(script_utilities.Utilities):
                 obj, offset = self.previousContext(child, -1)
             else:
                 prevObj = self.findPreviousObject(event.source)
-                msg = "WEB: Getting new location from end of source's previous object %s." % prevObj
+                msg = "WEB: Getting new location from end of source's previous object %s." \
+                    % prevObj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.previousContext(prevObj, -1)
 
@@ -4840,7 +4850,8 @@ class Utilities(script_utilities.Utilities):
                 obj, offset = self.nextContext(event.source, -1)
             elif 0 < event.detail1 < childCount:
                 child = AXObject.get_child(event.source, event.detail1)
-                msg = "WEB: Getting new location from start of child %i %s." % (event.detail1, child)
+                msg = "WEB: Getting new location from start of child %i %s." \
+                    % (event.detail1, child)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(child, -1)
             else:
@@ -4935,15 +4946,18 @@ class Utilities(script_utilities.Utilities):
                        Atspi.Role.INTERNAL_FRAME,
                        Atspi.Role.TABLE,
                        Atspi.Role.TABLE_ROW]
-        if role in lookInChild and AXObject.get_child_count(obj) and not self.treatAsDiv(obj, offset):
+        if role in lookInChild \
+           and AXObject.get_child_count(obj) and not self.treatAsDiv(obj, offset):
             firstChild = AXObject.get_child(obj, 0)
-            msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, firstChild)
+            msg = "WEB: First caret context for %s, %i will look in child %s" \
+                % (obj, offset, firstChild)
             debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(firstChild, 0)
 
         text = self.queryNonEmptyText(obj)
         if not text and self._canHaveCaretContext(obj):
-            msg = "WEB: First caret context for non-text context %s, %i is %s, %i" % (obj, offset, obj, 0)
+            msg = "WEB: First caret context for non-text context %s, %i is %s, %i" \
+                  % (obj, offset, obj, 0)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, 0
 
@@ -4954,15 +4968,17 @@ class Utilities(script_utilities.Utilities):
                     msg = "WEB: No next object found at end of contenteditable %s" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
                 elif not self.isContentEditableWithEmbeddedObjects(nextObj):
-                    msg = "WEB: Next object found at end of contenteditable %s is not editable %s" % (obj, nextObj)
+                    msg = "WEB: Next object found at end of contenteditable %s is not editable %s" \
+                          % (obj, nextObj)
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
-                    msg = "WEB: First caret context at end of contenteditable %s is next context %s, %i" % \
-                        (obj, nextObj, nextOffset)
+                    msg = "WEB: First caret context at end of contenteditable %s \
+                        is next context %s, %i" % (obj, nextObj, nextOffset)
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return nextObj, nextOffset
 
-            msg = "WEB: First caret context at end of %s, %i is %s, %i" % (obj, offset, obj, text.characterCount)
+            msg = "WEB: First caret context at end of %s, %i is %s, %i" \
+                % (obj, offset, obj, text.characterCount)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, text.characterCount
 
@@ -4974,9 +4990,10 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
-            # Descending an element that we're treating as a whole can lead to looping/getting stuck.
+            # Descending an element that we're treating as whole can lead to looping/getting stuck.
             if self.elementLinesAreSingleChars(obj):
-                msg = "WEB: EOC in single-char-lines element. Returning %s, %i unchanged." % (obj, offset)
+                msg = "WEB: EOC in single-char-lines element. Returning %s, %i unchanged." \
+                      % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
@@ -4994,16 +5011,16 @@ class Utilities(script_utilities.Utilities):
                 child = self.getChildAtOffset(obj, offset)
 
         if self.isListItemMarker(child):
-            msg = "WEB: First caret context for %s, %i is %s, %i (skip list item marker child)" % \
-                (obj, offset, obj, offset + 1)
+            msg = "WEB: First caret context for %s, %i is %s, %i (skip list item marker child)" \
+                % (obj, offset, obj, offset + 1)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset + 1
 
         if self.isEmptyAnchor(child):
             nextObj, nextOffset = self.nextContext(obj, offset)
             if nextObj:
-                msg = "WEB: First caret context at end of empty anchor %s is next context %s, %i" % \
-                    (obj, nextObj, nextOffset)
+                msg = "WEB: First caret context at end of empty anchor %s is next context %s, %i" \
+                    % (obj, nextObj, nextOffset)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return nextObj, nextOffset
 
@@ -5045,7 +5062,8 @@ class Utilities(script_utilities.Utilities):
                         if self._treatObjectAsWhole(child, -1):
                             return child, 0
                         return self._findNextCaretInOrder(child, -1)
-                    if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
+                    if allText[i] not in (
+                            self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
                 return self._findNextCaretInOrder(AXObject.get_child(obj, 0), -1)
@@ -5116,10 +5134,12 @@ class Utilities(script_utilities.Utilities):
                         if self._treatObjectAsWhole(child, -1):
                             return child, 0
                         return self._findPreviousCaretInOrder(child, -1)
-                    if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
+                    if allText[i] not in (
+                            self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif AXObject.get_child_count(obj) and not self._treatObjectAsWhole(obj, offset):
-                return self._findPreviousCaretInOrder(AXObject.get_child(obj, AXObject.get_child_count(obj) - 1), -1)
+                return self._findPreviousCaretInOrder(
+                    AXObject.get_child(obj, AXObject.get_child_count(obj) - 1), -1)
             elif offset < 0 and not self.isTextBlockElement(obj):
                 return obj, 0
 

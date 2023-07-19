@@ -910,6 +910,9 @@ class Utilities:
     def isLandmarkSearch(self, obj):
         return False
 
+    def isSVG(self, obj):
+        return False
+
     def speakMathSymbolNames(self, obj=None):
         return False
 
