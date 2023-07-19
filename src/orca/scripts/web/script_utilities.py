@@ -3991,7 +3991,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif AXUtilities.is_editable(obj):
             rv = False
-        elif self.hasValidName(obj) or AXObject.get_description(obj) or AXObject.get_child_count(obj):
+        elif self.hasValidName(obj) \
+                or AXObject.get_description(obj) or AXObject.get_child_count(obj):
             rv = False
         elif AXObject.supports_text(obj) and obj.queryText().characterCount \
              and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
@@ -4018,7 +4019,8 @@ class Utilities(script_utilities.Utilities):
         rv = False
         childCount = AXObject.get_child_count(obj)
         if childCount and AXObject.get_child(obj, 0) is None:
-            msg = "ERROR: %s reports %i children, but AXObject.get_child(obj, 0) is None" % (obj, childCount)
+            msg = "ERROR: %s reports %i children, but AXObject.get_child(obj, 0) is None" \
+                  % (obj, childCount)
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = True
 
