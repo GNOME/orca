@@ -524,9 +524,9 @@ class SpeechGenerator(generator.Generator):
             enabled, disabled = self._getEnabledAndDisabledContextRoles()
             if role in disabled:
                 return []
-        elif _settingsManager.getSetting('speechVerbosityLevel') == \
-           settings.VERBOSITY_LEVEL_BRIEF:
-            return []
+
+        if _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
+            return self._generateRoleName(obj, **args)
 
         result = generator.Generator._generateTable(self, obj, **args)
         if result:
