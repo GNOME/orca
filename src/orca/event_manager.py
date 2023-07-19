@@ -202,6 +202,13 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        # Thunderbird spams us with these when a message list thread is expanded or collapsed.
+        if event.type.endswith('system'):
+            if AXUtilities.is_table_cell(event.source) or AXUtilities.is_section(event.source):
+                msg = 'EVENT MANAGER: Ignoring system event based on role'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
         if self._inDeluge() and self._ignoreDuringDeluge(event):
             msg = 'EVENT MANAGER: Ignoring event type due to deluge'
             debug.println(debug.LEVEL_INFO, msg, True)
