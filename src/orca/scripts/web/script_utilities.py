@@ -281,7 +281,7 @@ class Utilities(script_utilities.Utilities):
             msg = "ERROR: Exception getting script for active window"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
-            if type(script) == type(self._script):
+            if isinstance(script, type(self._script)):
                 attrs = script.getTransferableAttributes()
                 for attr, value in attrs.items():
                     msg = "WEB: Setting %s to %s" % (attr, value)
@@ -1185,6 +1185,9 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _getTextAtOffset(self, obj, offset, boundary):
+        def stringForDebug(x):
+            return x.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+
         if not obj:
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '', Start: 0, End: 0. (obj is None)" % (offset, obj, boundary)
@@ -1201,7 +1204,7 @@ class Utilities(script_utilities.Utilities):
 
         if boundary is None:
             string, start, end = text.getText(0, -1), 0, text.characterCount
-            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s = stringForDebug(string)
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1213,7 +1216,7 @@ class Utilities(script_utilities.Utilities):
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
                 string, start, end = allText, 0, text.characterCount
-                s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+                s = stringForDebug(string)
                 msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                       "     String: '%s', Start: %i, End: %i." % \
                         (offset, obj, boundary, s, start, end)
@@ -1230,7 +1233,7 @@ class Utilities(script_utilities.Utilities):
 
         # The above should be all that we need to do, but....
         if not self._attemptBrokenTextRecovery(obj, boundary=boundary):
-            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s = stringForDebug(string)
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i.\n" \
                   "     Not checking for broken text." % (offset, obj, boundary, s, start, end)
@@ -1240,8 +1243,8 @@ class Utilities(script_utilities.Utilities):
         needSadHack = False
         testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
         if (string, start, end) != (testString, testStart, testEnd):
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
-            s2 = testString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s1 = stringForDebug(string)
+            s2 = stringForDebug(testString)
             msg = "FAIL: Bad results for text at offset for %s using %s.\n" \
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
@@ -1251,8 +1254,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
         elif not string and 0 <= offset < text.characterCount:
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
-            s2 = text.getText(0, -1).replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s1 = stringForDebug(string)
+            s2 = stringForDebug(text.getText(0, -1))
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is no text reported for a valid offset.\n" \
@@ -1261,8 +1264,9 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary, s1, start, end, text.characterCount, s2)
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
-        elif not (start <= offset < end) and not (self.isPlainText() or self.elementIsPreformattedText(obj)):
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+        elif not (start <= offset < end) \
+                and not (self.isPlainText() or self.elementIsPreformattedText(obj)):
+            s1 = stringForDebug(string)
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is the range returned is outside of the offset.\n" \
@@ -1271,7 +1275,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
         elif len(string) < end - start:
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s1 = stringForDebug(string)
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is that the length of string is less than the text range.\n" \
@@ -1290,13 +1294,13 @@ class Utilities(script_utilities.Utilities):
 
         if needSadHack:
             sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
-            s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s = stringForDebug(sadString)
             msg = "HACK: Attempting to recover from above failure.\n" \
                   "      String: '%s', Start: %i, End: %i." % (s, sadStart, sadEnd)
             debug.println(debug.LEVEL_INFO, msg, True)
             return sadString, sadStart, sadEnd
 
-        s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+        s = stringForDebug(string)
         msg = "WEB: Results for text at offset %i for %s using %s:\n" \
               "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
         debug.println(debug.LEVEL_INFO, msg, True)

@@ -219,7 +219,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateAlertText(self, obj, **args):
-        result = self._generateExpandedEOCs(obj, **args) or self._generateUnrelatedLabels(obj, **args)
+        result = self._generateExpandedEOCs(obj, **args) \
+                 or self._generateUnrelatedLabels(obj, **args)
         if result:
             self._script.pointOfReference['usedDescriptionForAlert'] = False
             return result
@@ -2138,8 +2139,9 @@ class SpeechGenerator(generator.Generator):
             presentedRoles.append(altRole)
             count = ancestorRoles.count(altRole)
             self._overrideRole(altRole, args)
-            result.append(self.generate(x, formatType='ancestor', role=altRole, leaving=leaving, count=count,
-                                        ancestorOf=obj, priorObj=priorObj))
+            result.append(
+                self.generate(x, formatType='ancestor', role=altRole,
+                              leaving=leaving, count=count, ancestorOf=obj, priorObj=priorObj))
             self._restoreRole(altRole, args)
 
         if not leaving:
