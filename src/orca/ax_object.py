@@ -51,29 +51,33 @@ class AXObject:
     REAL_APP_FOR_MUTTER_FRAME = {}
     REAL_FRAME_FOR_MUTTER_FRAME = {}
 
+    _lock = threading.Lock()
+
     @staticmethod
     def _clear_stored_data():
         """Clears any data we have cached for objects"""
 
         while True:
             time.sleep(60)
-            msg = "AXObject: Clearing %i known-dead objects" % len(AXObject.KNOWN_DEAD)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            AXObject.KNOWN_DEAD.clear()
+            with AXObject._lock:
+                msg = "AXObject: Clearing %i known-dead objects" % len(AXObject.KNOWN_DEAD)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                AXObject.KNOWN_DEAD.clear()
 
-            msg = "AXObject: Clearing %i known roles" % len(AXObject.KNOWN_ROLES)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            AXObject.KNOWN_ROLES.clear()
+                msg = "AXObject: Clearing %i known roles" % len(AXObject.KNOWN_ROLES)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                AXObject.KNOWN_ROLES.clear()
 
-            msg = "AXObject: Clearing %i real app for mutter frame" \
-                % len(AXObject.REAL_APP_FOR_MUTTER_FRAME)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
+                msg = "AXObject: Clearing %i real app for mutter frame" \
+                    % len(AXObject.REAL_APP_FOR_MUTTER_FRAME)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
 
-            msg = "AXObject: Clearing %i real frame for mutter frame" \
-                % len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
+                msg = "AXObject: Clearing %i real frame for mutter frame" \
+                    % len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
+
 
     @staticmethod
     def start_cache_clearing_thread():
