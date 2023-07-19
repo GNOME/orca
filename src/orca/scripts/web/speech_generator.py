@@ -242,7 +242,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        objString = lambda x: str.strip("%s %s" % (AXObject.get_name(x), self.getLocalizedRoleName(x)))
+        def objString(x):
+            return str.strip("%s %s" % (AXObject.get_name(x), self.getLocalizedRoleName(x)))
+
         toPresent = ", ".join(set(map(objString, objs)))
 
         args['stringType'] = 'hasdetails'
@@ -338,8 +340,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         objName = AXObject.get_name(obj)
         descendant = args.get("ancestorOf")
         if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
-            msg = "WEB: %s's ancestor %s has same name as priorObj %s. Not generating labelOrName." \
-                % (descendant, obj, priorObj)
+            msg = "WEB: %s's ancestor %s has same name as priorObj %s. \
+                   Not generating labelOrName." % (descendant, obj, priorObj)
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -603,7 +605,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif isEditable and self._script.utilities.isDocument(obj):
             parent = AXObject.get_parent(obj)
             if parent and not AXUtilities.is_editable(parent) \
-               and lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
+               and lastKey not in \
+                    ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
@@ -863,7 +866,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)
             if isinstance(utterance, list):
-                isNotEmptyList = lambda x: not (isinstance(x, list) and not x)
+                def isNotEmptyList(x)
+                    return not (isinstance(x, list) and not x)
+
                 utterance = list(filter(isNotEmptyList, utterance))
             if utterance and utterance[0]:
                 result.append(utterance)

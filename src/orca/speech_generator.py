@@ -1725,11 +1725,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        hasItems = False
-        pred = lambda x: AXUtilities.is_showing(x)
-        for child in AXObject.iter_children(obj, pred):
-            hasItems = True
-            break
+        hasItems = any(True for _ in AXObject.iter_children(obj, AXUtilities.is_showing))
         if not hasItems:
             result.append(messages.ZERO_ITEMS)
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -2102,7 +2098,8 @@ class SpeechGenerator(generator.Generator):
         if commonAncestor and not leaving:
             commonRole = self._getAlternativeRole(commonAncestor)
             if commonRole in presentOnce:
-                pred = lambda x: x and self._getAlternativeRole(x) == commonRole
+                def pred(x):
+                    return self._getAlternativeRole(x) == commonRole
                 objAncestor = AXObject.find_ancestor(obj, pred)
                 priorAncestor = AXObject.find_ancestor(priorObj, pred)
                 objLevel = self._script.utilities.nestingLevel(objAncestor)
@@ -2286,8 +2283,8 @@ class SpeechGenerator(generator.Generator):
 
         # TODO - JD: We need other ways to determine group membership. Not all
         # implementations expose the member-of relation. Gtk3 does. Others are TBD.
-        pred = lambda x: AXUtilities.is_showing(x)
-        members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF, pred)
+        members = AXObject.get_relation_targets(
+            obj, Atspi.RelationType.MEMBER_OF, AXUtilities.is_showing)
         if obj not in members:
             return []
 
@@ -2298,7 +2295,9 @@ class SpeechGenerator(generator.Generator):
         # that should be the case. And doesn't always appear to be the case in Gtk3.
         # Until we sort out the position in group/list mess, try a more reliable
         # "adjustment."
-        cmp = lambda x, y: AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
+        def cmp(x, y):
+            return AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
+
         members = sorted(members, key=functools.cmp_to_key(cmp))
         result.append(self._script.formatting.getString(
                               mode='speech',
@@ -2462,7 +2461,9 @@ class SpeechGenerator(generator.Generator):
                        Atspi.Role.SLIDER,
                        Atspi.Role.TEXT,
                        Atspi.Role.TOGGLE_BUTTON]
-        isWidget = lambda x: x and AXObject.get_role(x) in widgetRoles
+        def isWidget(x):
+            return AXObject.get_role(x) in widgetRoles
+
         result = []
         if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             widgets = self._script.utilities.findAllDescendants(obj, isWidget)

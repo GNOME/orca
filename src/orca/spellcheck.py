@@ -250,7 +250,8 @@ class SpellCheck:
             return False
 
         if includeLabel:
-            label = self._script.utilities.displayedLabel(suggestions) or AXObject.get_name(suggestions)
+            label = self._script.utilities.displayedLabel(suggestions) \
+                or AXObject.get_name(suggestions)
         else:
             label = ""
         string = AXObject.get_name(items[0])
