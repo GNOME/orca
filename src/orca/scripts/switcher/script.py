@@ -28,7 +28,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import orca
-from orca import orca_state
 from orca.scripts import default
 
 from .script_utilities import Utilities
@@ -73,7 +72,8 @@ class Script(default.Script):
         self.presentationInterrupt()
         orca.setActiveWindow(self.utilities.topLevelObject(event.source))
         orca.setLocusOfFocus(event, event.source, False)
-        self.presentMessage(self.utilities.getSelectionName(event.source), resetStyles=False, force=True)
+        self.presentMessage(self.utilities.getSelectionName(event.source),
+                            resetStyles=False, force=True)
         return True
 
     def onFocusedChanged(self, event):

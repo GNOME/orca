@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import orca
-from orca import orca_state
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
