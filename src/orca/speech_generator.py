@@ -477,14 +477,6 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
-    def _generateSuggestionStart(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
-            return []
-
-        result = [messages.CONTENT_SUGGESTION_START]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
-        return result
-
     def _generateAvailability(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
