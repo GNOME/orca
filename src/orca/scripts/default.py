@@ -1181,7 +1181,8 @@ class Script(script.Script):
         if self.flatReviewContext:
             if self.isBrailleEndShowing():
                 self.flatReviewContext.goEnd(flat_review.Context.LINE)
-                # Reviewing the next character also updates the braille output and refreshes the display.
+                # Reviewing the next character also updates the braille output
+                # and refreshes the display.
                 self.reviewNextCharacter(inputEvent)
                 return
             self.panBrailleInDirection(panAmount, panToLeft=False)
@@ -1959,7 +1960,9 @@ class Script(script.Script):
             self.presentMessage(messages.PROFILE_NOT_FOUND)
             return True
 
-        isMatch = lambda x: x[1] == _settingsManager.getProfile()
+        def isMatch(x):
+            return x is not None and x[1] == _settingsManager.getProfile()
+
         current = list(filter(isMatch, profiles))[0]
         try:
             name, profileID = profiles[profiles.index(current) + 1]
@@ -3306,7 +3309,8 @@ class Script(script.Script):
            and eventString in ["Right", "Down"]:
             offset -= 1
 
-        character, startOffset, endOffset = text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
+        character, startOffset, endOffset = text.getTextAtOffset(
+            offset, Atspi.TextBoundaryType.CHAR)
         orca.emitRegionChanged(obj, startOffset, endOffset, orca.CARET_TRACKING)
 
         if not character or character == '\r':
@@ -3427,7 +3431,8 @@ class Script(script.Script):
             self.sayCharacter(obj)
             return
 
-        word, startOffset, endOffset = self.utilities.getWordAtOffsetAdjustedForNavigation(obj, offset)
+        word, startOffset, endOffset = \
+            self.utilities.getWordAtOffsetAdjustedForNavigation(obj, offset)
 
         # Announce when we cross a hard line boundary.
         if "\n" in word:
@@ -3555,18 +3560,20 @@ class Script(script.Script):
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
 
         # The first character on the flat review line has to be in object with text.
-        isTextOrComponent = lambda x: isinstance(x, (braille.ReviewText, braille.ReviewComponent))
-        regions = list(filter(isTextOrComponent, regions))
+        def isTextOrComponent(x):
+            return isinstance(x, (braille.ReviewText, braille.ReviewComponent))
 
+        regions = list(filter(isTextOrComponent, regions))
         msg = "DEFAULT: Text/Component regions on line:\n%s" % "\n".join(map(str, regions))
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # TODO - JD: The current code was stopping on the first region which met the
         # following condition. Is that definitely the right thing to do? Assume so for now.
         # Also: Should the default script be accessing things like the viewport directly??
-        isMatch = lambda x: x.brailleOffset + len(x.string) > braille.viewport[0]
-        regions = list(filter(isMatch, regions))
+        def isMatch(x):
+            return x is not None and x.brailleOffset + len(x.string) > braille.viewport[0]
 
+        regions = list(filter(isMatch, regions))
         if not regions:
             msg = "DEFAULT: Could not find review region to move to start of display"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -3949,7 +3956,8 @@ class Script(script.Script):
         self.speakKeyEvent(event)
         return True
 
-    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True, force=False):
+    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True,
+                       force=False):
         """Convenience method to speak a message and 'flash' it in braille.
 
         Arguments:
@@ -4408,7 +4416,8 @@ class Script(script.Script):
             speech.updateCapitalizationStyle()
 
             punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
-            _settingsManager.setSetting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
+            _settingsManager.setSetting('verbalizePunctuationStyle',
+                                         settings.PUNCTUATION_STYLE_NONE)
             speech.updatePunctuationLevel()
 
         speech.speak(string, voice, interrupt)

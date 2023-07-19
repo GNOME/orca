@@ -37,6 +37,7 @@ import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -114,8 +115,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if role not in doNotSpeak:
             if role == Atspi.Role.IMAGE:
-                pred = lambda x: AXObject.get_role(x) == Atspi.Role.LINK
-                link = AXObject.find_ancestor(obj, pred)
+                link = AXObject.find_ancestor(obj, AXUtilities.is_link)
                 if link:
                     result.append(self.getLocalizedRoleName(link))
             elif role == Atspi.Role.HEADING:
