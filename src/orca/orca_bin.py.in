@@ -61,12 +61,12 @@ class ListApps(argparse.Action):
             pid = AXObject.get_process_id(app)
             try:
                 name = Atspi.Accessible.get_name(app) or "(none)"
-            except:
+            except Exception:
                 name = "[DEAD]"
 
             try:
                 cmdline = subprocess.getoutput('cat /proc/%s/cmdline' % pid)
-            except:
+            except Exception:
                 cmdline = '(exception encountered)'
             else:
                 cmdline = cmdline.replace('\x00', ' ')
@@ -144,7 +144,7 @@ class Parser(argparse.ArgumentParser):
         opts, invalid = super(Parser, self).parse_known_args(*args, **kwargs)
         try:
             invalid.extend(opts.invalid)
-        except:
+        except Exception:
             pass
         if invalid:
             print((messages.CLI_INVALID_OPTIONS + " ".join(invalid)))
@@ -178,7 +178,7 @@ def setProcessName(name):
         stringBuffer.value = bytes(name, 'UTF-8')
         libc.prctl(15, byref(stringBuffer), 0, 0, 0)
         return True
-    except:
+    except Exception:
         pass
 
     return False
@@ -192,7 +192,7 @@ def inGraphicalDesktop():
         gi.require_version("Gdk", "3.0")
         from gi.repository import Gdk
         display = Gdk.Display.get_default()
-    except:
+    except Exception:
         return False
 
     return display is not None
@@ -267,7 +267,7 @@ def main():
     if args.profile:
         try:
             manager.setProfile(args.profile)
-        except:
+        except Exception:
             print(messages.CLI_LOAD_PROFILE_ERROR % args.profile)
             manager.setProfile()
 
