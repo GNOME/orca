@@ -251,7 +251,9 @@ class Generator:
             self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = False
             self._script.pointOfReference['usedDescriptionForAlert'] = False
 
-            debuginfo = lambda x: self._resultElementToString(x, False)
+            def debuginfo(x):
+                return self._resultElementToString(x, False)
+
             assert(formatting)
             while True:
                 currentTime = time.time()
@@ -270,7 +272,8 @@ class Generator:
                     globalsDict[arg] = self._methodsDict[arg](obj, **args)
                     duration = "%.4f" % (time.time() - currentTime)
                     if isinstance(globalsDict[arg], list):
-                        stringResult = " ".join(filter(lambda x: x, map(debuginfo, globalsDict[arg])))
+                        stringResult = " ".join(filter(lambda x: x,
+                                                        map(debuginfo, globalsDict[arg])))
                         debug.println(debug.LEVEL_ALL,
                                       "%sGENERATION TIME: %s  ---->  %s=[%s]" \
                                       % (" " * 18, duration, arg, stringResult))

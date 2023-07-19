@@ -1107,7 +1107,17 @@ _monospaceDigits = range(0x1d7f6, 0x1d800)
 _otherDoubleStruck = [0x2102, 0x210d, 0x2115, 0x2119, 0x211a, 0x211d, 0x2124]
 _otherFraktur = [0x212d, 0x210c, 0x2111, 0x211c, 0x2128]
 _otherItalic = [0x210e]
-_otherScript = [0x212c, 0x2130, 0x2131, 0x210b, 0x2110, 0x2112, 0x2133, 0x211b, 0x212f, 0x210a, 0x2134]
+_otherScript = [0x212c,
+                0x2130,
+                0x2131,
+                0x210b,
+                0x2110,
+                0x2112,
+                0x2133,
+                0x211b,
+                0x212f,
+                0x210a,
+                0x2134]
 
 # Translators: Unicode has a large set of characters consisting of a common
 # alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -2089,10 +2099,12 @@ _operators['\u22f1'] = C_('math symbol', 'down right diagonal ellipsis')
 _operators['\u22f2'] = C_('math symbol', 'element of with long horizontal stroke')
 
 # Translators: this is the spoken representation for the character '⋳' (U+22f3)
-_operators['\u22f3'] = C_('math symbol', 'element of with vertical bar at end of horizontal stroke')
+_operators['\u22f3'] = C_('math symbol',
+                           'element of with vertical bar at end of horizontal stroke')
 
 # Translators: this is the spoken representation for the character '⋴' (U+22f4)
-_operators['\u22f4'] = C_('math symbol', 'small element of with vertical bar at end of horizontal stroke')
+_operators['\u22f4'] = C_('math symbol',
+                          'small element of with vertical bar at end of horizontal stroke')
 
 # Translators: this is the spoken representation for the character '⋵' (U+22f5)
 _operators['\u22f5'] = C_('math symbol', 'element of with dot above')
@@ -2116,7 +2128,8 @@ _operators['\u22fa'] = C_('math symbol', 'contains with long horizontal stroke')
 _operators['\u22fb'] = C_('math symbol', 'contains with vertical bar at end of horizontal stroke')
 
 # Translators: this is the spoken representation for the character '⋼' (U+22fc)
-_operators['\u22fc'] = C_('math symbol', 'small contains with vertical bar at end of horizontal stroke')
+_operators['\u22fc'] = C_('math symbol',
+                          'small contains with vertical bar at end of horizontal stroke')
 
 # Translators: this is the spoken representation for the character '⋽' (U+22fd)
 _operators['\u22fd'] = C_('math symbol', 'contains with overbar')

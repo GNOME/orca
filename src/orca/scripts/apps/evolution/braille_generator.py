@@ -59,8 +59,12 @@ class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGene
         if not result or focusedRegion != result[0]:
             return [result, focusedRegion]
 
-        hasObj = lambda x: isinstance(x, (braille.Component, braille.Text))
-        isObj = lambda x: self._script.utilities.isSameObject(obj, x.accessible)
+        def hasObj(x):
+            return isinstance(x, (braille.Component, braille.Text))
+
+        def isObj(x):
+            return self._script.utilities.isSameObject(obj, x.accessible)
+
         matches = [r for r in result if hasObj(r) and isObj(r)]
         if matches:
             focusedRegion = matches[0]
