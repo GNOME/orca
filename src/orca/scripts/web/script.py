@@ -637,7 +637,8 @@ class Script(default.Script):
             self._sayAllContents = contents
             for i, content in enumerate(contents):
                 obj, startOffset, endOffset, text = content
-                msg = "WEB SAY ALL CONTENT: %i. %s '%s' (%i-%i)" % (i, obj, text, startOffset, endOffset)
+                msg = "WEB SAY ALL CONTENT: %i. %s '%s' (%i-%i)" % \
+                      (i, obj, text, startOffset, endOffset)
                 debug.println(debug.LEVEL_INFO, msg, True)
 
                 if self.utilities.isInferredLabelForContents(content, contents):
@@ -1039,7 +1040,8 @@ class Script(default.Script):
             super().updateBraille(obj, **args)
             return
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=document, getZombieReplicant=True)
+        obj, offset = self.utilities.getCaretContext(
+            documentFrame=document, getZombieReplicant=True)
         if offset > 0 and isContentEditable:
             text = self.utilities.queryNonEmptyText(obj)
             if text:
@@ -1163,25 +1165,25 @@ class Script(default.Script):
 
         if not self.structuralNavigation.enabled:
             if debugOutput:
-                msg = "WEB: Not using structural navigation because it's not enabled."
+                msg = "WEB: Not using structural navigation: it's not enabled."
                 debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._inFocusMode:
             if debugOutput:
-                msg = "WEB: Not using structural navigation because focus mode is active."
+                msg = "WEB: Not using structural navigation: focus mode is active."
                 debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent():
             if debugOutput:
-                msg = "WEB: Not using structural navigation because %s is not in document content." \
+                msg = "WEB: Not using structural navigation: %s is not in document content." \
                       % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if debugOutput:
-            msg = "WEB: Using structural navigation. In browse mode and %s is in document content." \
+            msg = "WEB: Using structural navigation: browse mode and %s is in document content." \
                   % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
         return True
@@ -1361,36 +1363,36 @@ class Script(default.Script):
         args = {}
         if self._lastCommandWasMouseButton and event \
              and event.type.startswith("object:text-caret-moved"):
-            msg = "WEB: Last input event was mouse button. Generating line contents."
+            msg = "WEB: Last input event was mouse button. Generating line."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
            and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
            and not (AXUtilities.is_table_cell(newFocus) and AXObject.get_name(newFocus)):
-            msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
+            msg = "WEB: New focus %s content editable. Generating line." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         elif self.utilities.isAnchor(newFocus):
-            msg = "WEB: New focus %s is anchor. Generating line contents." % newFocus
+            msg = "WEB: New focus %s is anchor. Generating line." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
         elif self.utilities.lastInputEventWasPageNav() \
              and not self.utilities.getTable(newFocus) \
              and not self.utilities.isFeedArticle(newFocus):
-            msg = "WEB: New focus %s was scrolled to. Generating line contents." % newFocus
+            msg = "WEB: New focus %s was scrolled to. Generating line." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         elif self.utilities.isFocusedWithMathChild(newFocus):
-            msg = "WEB: New focus %s has math child. Generating line contents." % newFocus
+            msg = "WEB: New focus %s has math child. Generating line." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         elif AXUtilities.is_heading(newFocus):
-            msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
+            msg = "WEB: New focus %s is heading. Generating object." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
         elif self.utilities.caretMovedToSamePageFragment(event, oldFocus):
-            msg = "WEB: Event source %s is same page fragment. Generating line contents." % event.source
+            msg = "WEB: Source %s is same page fragment. Generating line." % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
         elif event and event.type.startswith("object:children-changed:remove") \
@@ -1398,12 +1400,12 @@ class Script(default.Script):
             msg = "WEB: New focus %s is recovery from removed child. Generating speech." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
         elif self.utilities.lastInputEventWasLineNav() and self.utilities.isZombie(oldFocus):
-            msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line contents."
+            msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         elif self.utilities.lastInputEventWasLineNav() and event \
              and event.type.startswith("object:children-changed"):
-            msg = "WEB: Last input event was line nav and children changed. Generating line contents."
+            msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         else:

@@ -1150,7 +1150,8 @@ class Utilities(script_utilities.Utilities):
         spans = []
         charCount = text.characterCount
         if boundary == Atspi.TextBoundaryType.SENTENCE_START:
-            spans = [m.span() for m in re.finditer(r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
+            spans = [m.span() for m in re.finditer(
+                r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
         elif boundary is not None:
             spans = [m.span() for m in re.finditer("[^\n\r]+", allText)]
         if not spans:
@@ -1215,7 +1216,8 @@ class Utilities(script_utilities.Utilities):
                 string, start, end = allText, 0, text.characterCount
                 s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
                 msg = "WEB: Results for text at offset %i for %s using %s:\n" \
-                      "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
+                      "     String: '%s', Start: %i, End: %i." % \
+                        (offset, obj, boundary, s, start, end)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return string, start, end
 
@@ -1378,7 +1380,8 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentSentenceContents, usingCache=True) != -1:
+            if self.findObjectInContents(
+                    obj, offset, self._currentSentenceContents, usingCache=True) != -1:
                 return self._currentSentenceContents
 
         boundary = Atspi.TextBoundaryType.SENTENCE_START
@@ -1451,7 +1454,8 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentCharacterContents, usingCache=True) != -1:
+            if self.findObjectInContents(
+                    obj, offset, self._currentCharacterContents, usingCache=True) != -1:
                 return self._currentCharacterContents
 
         boundary = Atspi.TextBoundaryType.CHAR
@@ -1468,7 +1472,8 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentWordContents, usingCache=True) != -1:
+            if self.findObjectInContents(
+                    obj, offset, self._currentWordContents, usingCache=True) != -1:
                 self._debugContentsInfo(obj, offset, self._currentWordContents, "Word (cached)")
                 return self._currentWordContents
 
@@ -1548,8 +1553,10 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentObjectContents, usingCache=True) != -1:
-                self._debugContentsInfo(obj, offset, self._currentObjectContents, "Object (cached)")
+            if self.findObjectInContents(
+                    obj, offset, self._currentObjectContents, usingCache=True) != -1:
+                self._debugContentsInfo(
+                    obj, offset, self._currentObjectContents, "Object (cached)")
                 return self._currentObjectContents
 
         objIsLandmark = self.isLandmark(obj)
@@ -1672,8 +1679,10 @@ class Utilities(script_utilities.Utilities):
                 offset = 0
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentLineContents, usingCache=True) != -1:
-                self._debugContentsInfo(obj, offset, self._currentLineContents, "Line (cached)")
+            if self.findObjectInContents(
+                    obj, offset, self._currentLineContents, usingCache=True) != -1:
+                self._debugContentsInfo(
+                    obj, offset, self._currentLineContents, "Line (cached)")
                 return self._currentLineContents
 
         if layoutMode is None:
@@ -1774,7 +1783,7 @@ class Utilities(script_utilities.Utilities):
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
 
         prevEndTime = time.time()
-        msg = "INFO: Time needed to get line contents on left: %.4fs" % (prevEndTime - prevStartTime)
+        msg = "INFO: Time to get line contents on left: %.4fs" % (prevEndTime - prevStartTime)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # Check for things on the same line to the right of this object.
@@ -1804,7 +1813,7 @@ class Utilities(script_utilities.Utilities):
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
         nextEndTime = time.time()
-        msg = "INFO: Time needed to get line contents on right: %.4fs" % (nextEndTime - nextStartTime)
+        msg = "INFO: Time to get line contents on right: %.4fs" % (nextEndTime - nextStartTime)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
@@ -1814,7 +1823,7 @@ class Utilities(script_utilities.Utilities):
         if useCache:
             self._currentLineContents = objects
 
-        msg = "INFO: Time needed to get line contents: %.4fs" % (time.time() - startTime)
+        msg = "INFO: Time to get line contents: %.4fs" % (time.time() - startTime)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         self._debugContentsInfo(obj, offset, objects, "Line (layout mode)")
@@ -1958,7 +1967,8 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return super().handleTextSelectionChange(obj)
 
-        oldStart, oldEnd = self._script.pointOfReference.get('selectionAnchorAndFocus', (None, None))
+        oldStart, oldEnd = \
+            self._script.pointOfReference.get('selectionAnchorAndFocus', (None, None))
         start, end = self._getSelectionAnchorAndFocus(obj)
         self._script.pointOfReference['selectionAnchorAndFocus'] = (start, end)
 
@@ -3900,7 +3910,9 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) not in [Atspi.Role.IMAGE, Atspi.Role.CANVAS] \
            and self._getTag(obj) != 'svg':
             rv = False
-        if rv and (AXObject.get_name(obj) or AXObject.get_description(obj) or self.hasLongDesc(obj)):
+        if rv and (AXObject.get_name(obj) \
+                   or AXObject.get_description(obj) \
+                   or self.hasLongDesc(obj)):
             rv = False
         if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
             rv = False
