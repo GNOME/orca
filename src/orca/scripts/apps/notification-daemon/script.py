@@ -25,10 +25,6 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings

@@ -33,7 +33,7 @@ import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
-from orca.ax_object import AXUtilities
+from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -50,8 +50,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return True
         if role != Atspi.Role.PARAGRAPH:
             return False
-        pred = lambda x: AXObject.get_role(x) == Atspi.Role.DIALOG
-        return AXObject.find_ancestor(obj, pred) is not None
+        return AXObject.find_ancestor(obj, AXUtilities.is_dialog) is not None
 
     def _generateRoleName(self, obj, **args):
         result = []
