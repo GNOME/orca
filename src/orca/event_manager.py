@@ -1050,7 +1050,8 @@ class EventManager:
             orca_state.activeScript.refreshKeyGrabs()
 
         if pressed:
-            orca_state.openingDialog = (text == "space" and (state & ~(1 << Atspi.ModifierType.NUMLOCK)))
+            orca_state.openingDialog = (text == "space" \
+                                         and (state & ~(1 << Atspi.ModifierType.NUMLOCK)))
 
         self._processKeyboardEvent(event)
 
