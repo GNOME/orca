@@ -175,8 +175,8 @@ formatting = {
             'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         Atspi.Role.COLUMN_HEADER: {
-            'focused': 'labelAndName + roleName + pause + sortOrder',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder'
+            'focused': 'labelAndName + roleName + pause + sortOrder + pause + newRow + pause + newColumn',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder + pause + newRow + pause + newColumn'
             },
         Atspi.Role.COMBO_BOX: {
             'focused': 'labelOrName + roleName + expandableState',
@@ -432,8 +432,8 @@ formatting = {
             'unfocused': 'labelOrName + roleName + currentLineText + allTextSelection'
             },
         Atspi.Role.ROW_HEADER: {
-            'focused': 'labelAndName + roleName + pause + sortOrder',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder'
+            'focused': 'labelAndName + roleName + pause + sortOrder + pause + newRow + pause + newColumn',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + sortOrder + pause + newRow + pause + newColumn'
             },
         Atspi.Role.SCROLL_BAR: {
             'focused': 'value',
