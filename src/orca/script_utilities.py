@@ -176,7 +176,7 @@ class Utilities:
         candidates = []
         apps = apps or AXUtilities.get_all_applications(must_have_window=True)
         for app in apps:
-            candidates.extend([child for child in AXObject.iter_children(app, self.canBeActiveWindow)])
+            candidates.extend([c for c in AXObject.iter_children(app, self.canBeActiveWindow)])
 
         if not candidates:
             msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
@@ -3708,7 +3708,9 @@ class Utilities:
             children = self.selectedChildren(children[0])
             name = AXObject.get_name(obj)
             if not children and name:
-                pred = lambda x: x and AXObject.get_name(x) == name
+                def pred(x):
+                    return AXObject.get_name(x) == name
+
                 children = self.findAllDescendants(obj, pred)
 
         return children
