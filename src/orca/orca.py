@@ -556,17 +556,28 @@ def helpForOrca(script=None, inputEvent=None, page=""):
     return True
 
 def addKeyGrab(binding):
-    """ Add a key grab for the given key binding. """
+    """ Add a key grab for the given key binding."""
+
+    if orca_state.device is None:
+        return []
+
     ret = []
     for kd in binding.keyDefs():
         ret.append(orca_state.device.add_key_grab(kd, None))
     return ret
 
 def removeKeyGrab(id):
-    """ Remove the key grab for the given key binding. """
+    """ Remove the key grab for the given key binding."""
+
+    if orca_state.device is None:
+        return
+
     orca_state.device.remove_key_grab(id)
 
 def mapModifier(keycode):
+    if orca_state.device is None:
+        return
+
     return orca_state.device.map_modifier(keycode)
 
 def quitOrca(script=None, inputEvent=None):
