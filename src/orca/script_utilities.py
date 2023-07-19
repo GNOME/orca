@@ -5711,7 +5711,7 @@ class Utilities:
             return target == oldLocusOfFocus
 
         def isNew(target):
-            return target: target == newLocusOfFocus
+            return target == newLocusOfFocus
 
         if AXObject.get_relation_targets(newLocusOfFocus,
                                          Atspi.RelationType.CONTROLLER_FOR, isOld):
