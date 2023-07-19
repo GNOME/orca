@@ -968,6 +968,9 @@ class Generator:
         if self._script.utilities.isLayoutOnly(obj):
             return []
 
+        if self._script.utilities.isSpreadSheetTable(obj):
+            return []
+
         rows, cols = self._script.utilities.rowAndColumnCount(obj)
 
         # This suggests broken or missing table interface.
