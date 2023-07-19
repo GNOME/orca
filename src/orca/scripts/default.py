@@ -93,7 +93,6 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext  = None
-        self.windowActivateTime = None
         self.targetCursorCell = None
 
         self.justEnteredFlatReviewMode = False
@@ -871,18 +870,16 @@ class Script(script.Script):
         topLevel = self.utilities.topLevelObject(newLocusOfFocus)
         if orca_state.activeWindow != topLevel:
             orca.setActiveWindow(topLevel)
-            self.windowActivateTime = time.time()
 
         self.updateBraille(newLocusOfFocus)
-
-        shouldNotInterrupt = \
-           self.windowActivateTime and time.time() - self.windowActivateTime < 1
 
         utterances = self.speechGenerator.generateSpeech(
             newLocusOfFocus,
             priorObj=oldLocusOfFocus)
 
-        speech.speak(utterances, interrupt=not shouldNotInterrupt)
+        if self.utilities.shouldInterruptForLocusOfFocusChange(oldLocusOfFocus, newLocusOfFocus):
+            self.presentationInterrupt()
+        speech.speak(utterances, interrupt=False)
         orca.emitRegionChanged(newLocusOfFocus)
         self._saveFocusedObjectInfo(newLocusOfFocus)
 
@@ -2244,7 +2241,6 @@ class Script(script.Script):
             if not sourceIsActiveWindow and event.detail1:
                 msg = "DEFAULT: Updating active window."
                 debug.println(debug.LEVEL_INFO, msg, True)
-                self.windowActivateTime = time.time()
                 orca.setActiveWindow(window, alsoSetLocusOfFocus=True, notifyScript=True)
 
         if self.findCommandRun:
@@ -2907,9 +2903,7 @@ class Script(script.Script):
 
         self.pointOfReference = {}
 
-        self.windowActivateTime = time.time()
         orca.setActiveWindow(window)
-
         if self.utilities.isKeyGrabEvent(event):
             msg = "DEFAULT: Ignoring event. Likely from key grab."
             debug.println(debug.LEVEL_INFO, msg, True)

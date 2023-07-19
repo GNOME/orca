@@ -25,8 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import time
-
 import orca.debug as debug
 import orca.mouse_review as mouse_review
 import orca.orca as orca
@@ -62,7 +60,6 @@ class Script(default.Script):
             windowChanged = window and orca_state.activeWindow != window
             if windowChanged:
                 orca.setActiveWindow(window)
-                self.windowActivateTime = time.time()
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
