@@ -1123,6 +1123,18 @@ class AXUtilitiesRole:
         return role in roles
 
     @staticmethod
+    def is_table_related(obj, role=None):
+        roles = [Atspi.Role.TABLE,
+                 Atspi.Role.TABLE_CELL,
+                 Atspi.Role.TABLE_COLUMN_HEADER,
+                 Atspi.Role.TABLE_ROW_HEADER,
+                 Atspi.Role.COLUMN_HEADER,
+                 Atspi.Role.ROW_HEADER]
+        if role is None:
+            role = AXObject.get_role(obj)
+        return role in roles
+
+    @staticmethod
     def is_table_row(obj, role=None):
         """Returns True if obj has the table row role"""
 

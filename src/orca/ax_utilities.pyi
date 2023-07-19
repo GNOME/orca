@@ -443,6 +443,9 @@ class AXUtilities:
     def is_table_header(obj, role=None): ...
 
     @staticmethod
+    def is_table_related(obj, role=None): ...
+
+    @staticmethod
     def is_table_row(obj, role=None): ...
 
     @staticmethod
