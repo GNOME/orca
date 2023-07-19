@@ -204,7 +204,9 @@ class EventManager:
 
         # Thunderbird spams us with these when a message list thread is expanded or collapsed.
         if event.type.endswith('system'):
-            if AXUtilities.is_table_cell(event.source) or AXUtilities.is_section(event.source):
+            if AXUtilities.is_table_related(event.source) \
+              or AXUtilities.is_tree_related(event.source) \
+              or AXUtilities.is_section(event.source):
                 msg = 'EVENT MANAGER: Ignoring system event based on role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
@@ -262,6 +264,8 @@ class EventManager:
                         Atspi.Role.SECTION,    # Web app spam
                         Atspi.Role.TABLE_ROW,  # Thunderbird spam
                         Atspi.Role.TABLE_CELL, # Thunderbird spam
+                        Atspi.Role.TREE_ITEM,  # Thunderbird spam
+                        Atspi.Role.IMAGE,      # Thunderbird spam
                         Atspi.Role.MENU,
                         Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
@@ -338,8 +342,8 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
-            if not event.any_data:
-                msg = 'ERROR: Event any_data lacks child/descendant'
+            if event.any_data is None:
+                msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
             if event.type.endswith('remove'):
@@ -358,7 +362,7 @@ class EventManager:
 
             defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
             if defunct:
-                msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
+                msg = 'EVENT MANAGER: Ignoring event for potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 if AXUtilities.manages_descendants(event.source) \
                    and event.source not in self._parentsOfDefunctDescendants:
