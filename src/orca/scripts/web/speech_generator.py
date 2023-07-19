@@ -866,7 +866,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)
             if isinstance(utterance, list):
-                def isNotEmptyList(x)
+                def isNotEmptyList(x):
                     return not (isinstance(x, list) and not x)
 
                 utterance = list(filter(isNotEmptyList, utterance))
