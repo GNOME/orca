@@ -47,7 +47,6 @@ from . import debug
 
 class AXObject:
     KNOWN_DEAD = []
-    KNOWN_ROLES = {}
     REAL_APP_FOR_MUTTER_FRAME = {}
     REAL_FRAME_FOR_MUTTER_FRAME = {}
 
@@ -63,10 +62,6 @@ class AXObject:
                 msg = "AXObject: Clearing %i known-dead objects" % len(AXObject.KNOWN_DEAD)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 AXObject.KNOWN_DEAD.clear()
-
-                msg = "AXObject: Clearing %i known roles" % len(AXObject.KNOWN_ROLES)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                AXObject.KNOWN_ROLES.clear()
 
                 msg = "AXObject: Clearing %i real app for mutter frame" \
                     % len(AXObject.REAL_APP_FOR_MUTTER_FRAME)
@@ -569,10 +564,6 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return Atspi.Role.INVALID
 
-        role = AXObject.KNOWN_ROLES.get(hash(obj))
-        if role is not None:
-            return role
-
         try:
             role = Atspi.Accessible.get_role(obj)
         except Exception as e:
@@ -580,7 +571,6 @@ class AXObject:
             AXObject.handle_error(obj, e, msg)
             return Atspi.Role.INVALID
 
-        AXObject.KNOWN_ROLES[hash(obj)] = role
         return role
 
     @staticmethod
