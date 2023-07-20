@@ -5701,7 +5701,10 @@ class Utilities:
 
         return True
 
-    def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus):
+    def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus, event=None):
+        if event is not None and event.type.startswith("object:active-descendant-changed"):
+            return self._script.stopSpeechOnActiveDescendantChanged(event)
+
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
             msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
             debug.println(debug.LEVEL_INFO, msg, True)

@@ -28,10 +28,12 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 
+import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
+from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
@@ -111,15 +113,30 @@ class Script(WebKitGtk.Script, gtk.Script):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not event.any_data:
+            msg = "EVOLUTION: Ignoring event. No any_data."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isComposeAutocomplete(event.source):
             if AXUtilities.is_selected(event.any_data):
+                msg = "EVOLUTION: Source is compose autocomplete with selected child."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.any_data)
             else:
+                msg = "EVOLUTION: Source is compose autocomplete without selected child."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source)
             return
 
+        child = AXObject.get_active_descendant_checked(event.source, event.any_data)
+        if child is not None and child != event.any_data:
+            msg = "EVOLUTION: Bogus any_data suspected. Setting focus to %s" % child
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca.setLocusOfFocus(event, child)
+            return
+
+        msg = "EVOLUTION: Passing event to super class for processing."
+        debug.println(debug.LEVEL_INFO, msg, True)
         super().onActiveDescendantChanged(event)
 
     def onBusyChanged(self, event):

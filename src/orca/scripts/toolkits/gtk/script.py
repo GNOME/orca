@@ -67,6 +67,8 @@ class Script(default.Script):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not self.utilities.isTypeahead(orca_state.locusOfFocus):
+            msg = "GTK: locusOfFocus is not typeahead. Passing along to default script."
+            debug.println(debug.LEVEL_INFO, msg, True)
             super().onActiveDescendantChanged(event)
             return
 
