@@ -702,7 +702,7 @@ class StructuralNavigation:
         # Predicates should be the exception; not the rule.
         try:
             predicate = eval("self._%sPredicate" % name)
-        except:
+        except Exception:
             predicate = None
 
         # Dialogs are nice, but we shouldn't insist upon them.
