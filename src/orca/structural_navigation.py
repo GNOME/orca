@@ -43,75 +43,12 @@ from . import orca_gui_navlist
 from . import orca_state
 from . import settings
 from . import settings_manager
+from .ax_collection import AXCollection
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
-#############################################################################
-#                                                                           #
-# MatchCriteria                                                             #
-#                                                                           #
-#############################################################################
-
-class MatchCriteria:
-    """Contains the criteria which will be used to generate a collection
-    matchRule.  We don't want to create the rule until we need it and
-    are ready to use it. In addition, the creation of an AT-SPI match
-    rule requires you specify quite a few things (see the __init__),
-    most of which are irrelevant to the search at hand.  This class
-    makes it possible for the StructuralNavigationObject creator to just
-    specify the few criteria that actually matter.
-    """
-
-    def __init__(self,
-                 collection,
-                 states = [],
-                 matchStates = None,
-                 objAttrs = [],
-                 matchObjAttrs = None,
-                 roles = [],
-                 matchRoles = None,
-                 interfaces = [],
-                 matchInterfaces = None,
-                 invert = False):
-
-        """Creates a new match criteria object.
-
-        Arguments:
-        - collection: the collection interface for the document in
-          which the accessible objects can be found.
-        - states: a list of accessible states of interest
-        - matchStates: whether an object must have all of the states
-          in the states list, any of the states in the list, or none
-          of the states in the list.  Must be one of the collection
-          interface MatchTypes if provided.
-        - objAttrs: a list of object attributes (not text attributes)
-        - matchObjAttrs: whether an object must have all of the
-          attributes in the objAttrs list, any of the attributes in
-          the list, or none of the attributes in the list.  Must be
-          one of the collection interface MatchTypes if provided.
-        - interfaces: (We aren't using this.  According to the at-spi
-          idl, it is a string.)
-        - matchInterfaces: The collection MatchType for matching by
-          interface.
-        - invert: If true the match rule will find objects that don't
-          match. We always use False.
-        """
-
-        self.collection = collection
-        self.matchStates = matchStates or collection.MATCH_ANY
-        self.objAttrs = objAttrs
-        self.matchObjAttrs = matchObjAttrs or collection.MATCH_ANY
-        self.roles = roles
-        self.matchRoles = matchRoles or collection.MATCH_ANY
-        self.interfaces = interfaces
-        self.matchInterfaces = matchInterfaces or collection.MATCH_ALL
-        self.invert = invert
-
-        self.states = Atspi.StateSet()
-        for state in states:
-            self.states.add(state)
 
 ###########################################################################
 #                                                                         #
@@ -126,10 +63,8 @@ class StructuralNavigationObject:
     role and/or a state of interest. Or they may be something more complex
     such as character counts, text attributes, and other object attributes.
     """
-
     def __init__(self, structuralNavigation, objType, bindings, predicate,
                  criteria, presentation, dialogData):
-
         """Creates a new structural navigation object.
 
         Arguments:
@@ -885,18 +820,8 @@ class StructuralNavigation:
             msg = "STRUCTURAL NAVIGATION: %s does not support collection" % document
             return []
 
-        col = document.queryCollection()
-        criteria = structuralNavigationObject.criteria(col, arg)
-        rule = col.createMatchRule(criteria.states.raw(),
-                                   criteria.matchStates,
-                                   criteria.objAttrs,
-                                   criteria.matchObjAttrs,
-                                   criteria.roles,
-                                   criteria.matchRoles,
-                                   criteria.interfaces,
-                                   criteria.matchInterfaces,
-                                   criteria.invert)
-        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        rule = structuralNavigationObject.criteria(arg)
+        matches = AXCollection.get_all_matches(document, rule)
 
         if inModalDialog:
             originalSize = len(matches)
@@ -1425,10 +1350,6 @@ class StructuralNavigation:
     ########################
 
     def _blockquoteBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating among blockquotes.
-        """
-
         bindings = {}
         prevDesc = cmdnames.BLOCKQUOTE_PREV
         bindings["previous"] = ["q", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1440,29 +1361,11 @@ class StructuralNavigation:
         bindings["list"] = ["q", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _blockquoteCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating blockquotes
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        attrs = ['tag:BLOCKQUOTE']
-        return MatchCriteria(collection, objAttrs=attrs)
+    def _blockquoteCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=[Atspi.Role.BLOCKQUOTE])
 
     def _blockquotePresentation(self, obj, arg=None):
-        """Presents the blockquote or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -1486,10 +1389,6 @@ class StructuralNavigation:
     ########################
 
     def _buttonBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst buttons.
-        """
-
         bindings = {}
         prevDesc = cmdnames.BUTTON_PREV
         bindings["previous"] = ["b", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1501,34 +1400,13 @@ class StructuralNavigation:
         bindings["list"] = ["b", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _buttonCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating buttons
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]
-        state = [Atspi.StateType.SENSITIVE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _buttonCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.SENSITIVE],
+            roles=[Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON])
 
     def _buttonPresentation(self, obj, arg=None):
-        """Presents the button or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -1552,10 +1430,6 @@ class StructuralNavigation:
     ########################
 
     def _checkBoxBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst check boxes.
-        """
-
         bindings = {}
         prevDesc = cmdnames.CHECK_BOX_PREV
         bindings["previous"] = ["x", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1567,34 +1441,13 @@ class StructuralNavigation:
         bindings["list"] = ["x", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _checkBoxCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating check boxes
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.CHECK_BOX]
-        state = [Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _checkBoxCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE],
+            roles=[Atspi.Role.CHECK_BOX])
 
     def _checkBoxPresentation(self, obj, arg=None):
-        """Presents the check box or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -1619,10 +1472,6 @@ class StructuralNavigation:
     ########################
 
     def _chunkBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst chunks/large objects.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LARGE_OBJECT_PREV
         bindings["previous"] = ["o", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1634,21 +1483,8 @@ class StructuralNavigation:
         bindings["list"] = ["o", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _chunkCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating chunks/
-        large objects by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = self.OBJECT_ROLES + self.CONTAINER_ROLES
-        roleMatch = collection.MATCH_ANY
-        return MatchCriteria(collection,
-                             roles=role,
-                             matchRoles=roleMatch)
+    def _chunkCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=self.OBJECT_ROLES + self.CONTAINER_ROLES)
 
     def _chunkPredicate(self, obj, arg=None):
         if AXUtilities.is_heading(obj):
@@ -1666,15 +1502,7 @@ class StructuralNavigation:
         return False
 
     def _chunkPresentation(self, obj, arg=None):
-        """Presents the chunk or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
@@ -1699,10 +1527,6 @@ class StructuralNavigation:
     ########################
 
     def _comboBoxBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst combo boxes.
-        """
-
         bindings = {}
         prevDesc = cmdnames.COMBO_BOX_PREV
         bindings["previous"] = ["c", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1714,34 +1538,13 @@ class StructuralNavigation:
         bindings["list"] = ["c", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _comboBoxCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating combo boxes
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.COMBO_BOX]
-        state = [Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _comboBoxCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE],
+            roles=[Atspi.Role.COMBO_BOX])
 
     def _comboBoxPresentation(self, obj, arg=None):
-        """Presents the combo box or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -1766,10 +1569,6 @@ class StructuralNavigation:
     ########################
 
     def _entryBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst entries.
-        """
-
         bindings = {}
         prevDesc = cmdnames.ENTRY_PREV
         bindings["previous"] = ["e", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1781,23 +1580,11 @@ class StructuralNavigation:
         bindings["list"] = ["e", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _entryCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating entries
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
+    def _entryCriteria(self, arg=None):
         state = [Atspi.StateType.FOCUSABLE,
-                 Atspi.StateType.SENSITIVE,
-                 Atspi.StateType.EDITABLE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch)
+                  Atspi.StateType.SENSITIVE,
+                  Atspi.StateType.EDITABLE]
+        return AXCollection.create_match_rule(states=state)
 
     def _entryPredicate(self, obj, arg=None):
         parent = AXObject.get_parent(obj)
@@ -1807,15 +1594,7 @@ class StructuralNavigation:
         return not AXUtilities.is_editable(parent)
 
     def _entryPresentation(self, obj, arg=None):
-        """Presents the entry or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -1840,10 +1619,6 @@ class StructuralNavigation:
     ########################
 
     def _formFieldBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst form fields.
-        """
-
         bindings = {}
         prevDesc = cmdnames.FORM_FIELD_PREV
         bindings["previous"] = ["Tab",
@@ -1857,25 +1632,10 @@ class StructuralNavigation:
         bindings["list"] = ["f", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _formFieldCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating form fields
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = self.FORM_ROLES
-        roleMatch = collection.MATCH_ANY
-        state = [Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role,
-                             matchRoles=roleMatch)
+    def _formFieldCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE],
+            roles=self.FORM_ROLES)
 
     def _formFieldPredicate(self, obj, arg=None):
         if AXUtilities.is_document_frame(obj):
@@ -1883,15 +1643,7 @@ class StructuralNavigation:
         return True
 
     def _formFieldPresentation(self, obj, arg=None):
-        """Presents the form field or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             if AXUtilities.is_text(obj) and AXObject.get_child_count(obj):
                 obj = AXObject.get_child(obj, 0)
             [obj, characterOffset] = self._getCaretPosition(obj)
@@ -1921,10 +1673,6 @@ class StructuralNavigation:
     ########################
 
     def _headingBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst headings.
-        """
-
         bindings = {}
         prevDesc = cmdnames.HEADING_PREV
         bindings["previous"] = ["h", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -1962,45 +1710,23 @@ class StructuralNavigation:
         return bindings
 
     def _headingLevels(self):
-        """Returns the [minimum heading level, maximum heading level]
-        which should be navigable via structural navigation.
-        """
-
         return [1, 6]
 
-    def _headingCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating headings
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.HEADING]
+    def _headingCriteria(self, arg=None):
         attrs = []
-        if arg:
+        if arg is not None:
             attrs.append('level:%d' % arg)
 
-        return MatchCriteria(collection,
-                             roles=role,
-                             objAttrs=attrs)
+        return AXCollection.create_match_rule(
+            roles=[Atspi.Role.HEADING],
+            attributes=attrs)
 
     def _headingPresentation(self, obj, arg=None):
-        """Presents the heading or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
-        elif not arg:
+        elif arg is not None:
             full = messages.NO_MORE_HEADINGS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
@@ -2035,9 +1761,6 @@ class StructuralNavigation:
     ########################
 
     def _imageBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst images."""
-
         bindings = {}
         prevDesc = cmdnames.IMAGE_PREV
         bindings["previous"] = ["g", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2049,28 +1772,11 @@ class StructuralNavigation:
         bindings["list"] = ["g", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _imageCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating images
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return MatchCriteria(collection, roles=self.IMAGE_ROLES)
+    def _imageCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=self.IMAGE_ROLES)
 
     def _imagePresentation(self, obj, arg=None):
-        """Presents the image/graphic or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
@@ -2094,10 +1800,6 @@ class StructuralNavigation:
     ########################
 
     def _landmarkBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst landmarks.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LANDMARK_PREV
         bindings["previous"] = ["m", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2109,28 +1811,11 @@ class StructuralNavigation:
         bindings["list"] = ["m", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _landmarkCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating landmarks
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return MatchCriteria(collection, roles=[Atspi.Role.LANDMARK])
+    def _landmarkCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=[Atspi.Role.LANDMARK])
 
     def _landmarkPresentation(self, obj, arg=None):
-        """Presents the landmark or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._script.presentMessage(AXObject.get_name(obj))
@@ -2156,10 +1841,6 @@ class StructuralNavigation:
     ########################
 
     def _listBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst (un)ordered lists.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LIST_PREV
         bindings["previous"] = ["l", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2171,35 +1852,14 @@ class StructuralNavigation:
         bindings["list"] = ["l", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _listCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating (un)ordered
-        lists by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.LIST]
-        state = [Atspi.StateType.FOCUSABLE]
-        stateMatch = collection.MATCH_NONE
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _listCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE],
+            state_match_type=Atspi.CollectionMatchType.NONE,
+            roles=[Atspi.Role.LIST])
 
     def _listPresentation(self, obj, arg=None):
-        """Presents the (un)ordered list or indicates that one was not
-        found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             self._script.speakMessage(self._getListDescription(obj))
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
@@ -2224,10 +1884,6 @@ class StructuralNavigation:
     ########################
 
     def _listItemBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst items in an (un)ordered list.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LIST_ITEM_PREV
         bindings["previous"] = ["i", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2239,35 +1895,14 @@ class StructuralNavigation:
         bindings["list"] = ["i", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _listItemCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating items in an
-        (un)ordered list by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.LIST_ITEM]
-        state = [Atspi.StateType.FOCUSABLE]
-        stateMatch = collection.MATCH_NONE
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _listItemCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE],
+            state_match_type=Atspi.CollectionMatchType.NONE,
+            roles=[Atspi.Role.LIST_ITEM])
 
     def _listItemPresentation(self, obj, arg=None):
-        """Presents the (un)ordered list item or indicates that one was not
-        found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
@@ -2291,10 +1926,6 @@ class StructuralNavigation:
     ########################
 
     def _liveRegionBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst live regions.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LIVE_REGION_PREV
         bindings["previous"] = ["d", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2306,27 +1937,19 @@ class StructuralNavigation:
         bindings["last"] = ["y", keybindings.NO_MODIFIER_MASK, desc]
         return bindings
 
-    def _liveRegionCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating live regions
-        by collection.
+    def _liveRegionCriteria(self, arg=None):
+        attrs = []
+        levels = ["off", "polite", "assertive"]
+        for level in levels:
+            attrs.append('container-live:' + level)
 
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        # TODO - JD: Is this still an issue?
-        # Matches based on object attributes assume unique name-value pairs
-        # because pyatspi creates a dictionary from the list. In addition,
-        # wildcard matching is not possible. As a result, we cannot search
-        # for any object which has an attribute named container-live.
-        return MatchCriteria(collection)
+        return AXCollection.create_match_rule(attributes=attrs)
 
     def _liveRegionPredicate(self, obj, arg=None):
         if self._script.liveRegionManager is None:
             return False
 
+        # TODO - JD: This does not seem needed. Verify that.
         isMatch = False
         regobjs = self._script.liveRegionManager.getLiveNoneObjects()
         if self._script.liveRegionManager.matchLiveRegion(obj) or obj in regobjs:
@@ -2335,15 +1958,7 @@ class StructuralNavigation:
         return isMatch
 
     def _liveRegionPresentation(self, obj, arg=None):
-        """Presents the live region or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -2359,10 +1974,6 @@ class StructuralNavigation:
     ########################
 
     def _paragraphBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst paragraphs.
-        """
-
         bindings = {}
         prevDesc = cmdnames.PARAGRAPH_PREV
         bindings["previous"] = ["p", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2374,24 +1985,14 @@ class StructuralNavigation:
         bindings["list"] = ["p", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _paragraphCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating paragraphs
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        # Treat headings as paragraphs so that the user doesn't miss context when
-        # the topic of the paragraph changes. Besides, a heading is paragraphy.
-
-        role = [Atspi.Role.PARAGRAPH, Atspi.Role.HEADING]
-        roleMatch = collection.MATCH_ANY
-        return MatchCriteria(collection, roles=role, matchRoles=roleMatch)
+    def _paragraphCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            roles=[Atspi.Role.PARAGRAPH, Atspi.Role.HEADING])
 
     def _paragraphPredicate(self, obj, arg=None):
+        if obj is None:
+            return False
+
         if AXUtilities.is_heading(obj):
             return True
 
@@ -2410,15 +2011,7 @@ class StructuralNavigation:
         return isMatch
 
     def _paragraphPresentation(self, obj, arg=None):
-        """Presents the paragraph or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
@@ -2442,10 +2035,6 @@ class StructuralNavigation:
     ########################
 
     def _radioButtonBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst radio buttons.
-        """
-
         bindings = {}
         prevDesc = cmdnames.RADIO_BUTTON_PREV
         bindings["previous"] = ["r", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2457,34 +2046,13 @@ class StructuralNavigation:
         bindings["list"] = ["r", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _radioButtonCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating radio buttons
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.RADIO_BUTTON]
-        state = [Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _radioButtonCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE, Atspi.StateType.SENSITIVE],
+            roles=[Atspi.Role.RADIO_BUTTON])
 
     def _radioButtonPresentation(self, obj, arg=None):
-        """Presents the radio button or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -2509,10 +2077,6 @@ class StructuralNavigation:
     ########################
 
     def _separatorBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst separators.
-        """
-
         bindings = {}
         prevDesc = cmdnames.SEPARATOR_PREV
         bindings["previous"] = ["s", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2521,29 +2085,11 @@ class StructuralNavigation:
         bindings["next"] = ["s", keybindings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
-    def _separatorCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating separators
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.SEPARATOR]
-        return MatchCriteria(collection, roles=role)
+    def _separatorCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=[Atspi.Role.SEPARATOR])
 
     def _separatorPresentation(self, obj, arg=None):
-        """Presents the separator or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
@@ -2559,10 +2105,6 @@ class StructuralNavigation:
     ########################
 
     def _tableBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst tables.
-        """
-
         bindings = {}
         prevDesc = cmdnames.TABLE_PREV
         bindings["previous"] = ["t", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2574,18 +2116,8 @@ class StructuralNavigation:
         bindings["list"] = ["t", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _tableCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating tables
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.TABLE]
-        return MatchCriteria(collection, roles=role)
+    def _tableCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=[Atspi.Role.TABLE])
 
     def _tablePredicate(self, obj, arg=None):
         if not AXObject.get_child_count(obj):
@@ -2604,15 +2136,7 @@ class StructuralNavigation:
         return False
 
     def _tablePresentation(self, obj, arg=None):
-        """Presents the table or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             caption = self._getTableCaption(obj)
             if caption:
                 self._script.presentMessage(caption)
@@ -2652,10 +2176,6 @@ class StructuralNavigation:
     ########################
 
     def _tableCellBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating spatially amongst table cells.
-        """
-
         bindings = {}
         desc = cmdnames.TABLE_CELL_LEFT
         bindings["left"] = ["Left", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
@@ -2676,31 +2196,14 @@ class StructuralNavigation:
         bindings["last"] = ["End", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
         return bindings
 
-    def _tableCellCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating table cells
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
+    def _tableCellCriteria(self, arg=None):
         role = [Atspi.Role.TABLE_CELL,
                 Atspi.Role.COLUMN_HEADER,
                 Atspi.Role.ROW_HEADER]
-        return MatchCriteria(collection, roles=role)
+        return AXCollection.create_match_rule(roles=role)
 
     def _tableCellPresentation(self, cell, arg):
-        """Presents the table cell or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not cell:
+        if cell is None:
             return
 
         if settings.speakCellHeaders:
@@ -2733,10 +2236,6 @@ class StructuralNavigation:
     ########################
 
     def _unvisitedLinkBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst unvisited links.
-        """
-
         bindings = {}
         prevDesc = cmdnames.UNVISITED_LINK_PREV
         bindings["previous"] = ["u", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2749,38 +2248,17 @@ class StructuralNavigation:
 
         return bindings
 
-    def _unvisitedLinkCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating unvisited links
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.LINK]
-        state = [Atspi.StateType.VISITED]
-        stateMatch = collection.MATCH_NONE
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _unvisitedLinkCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.VISITED],
+            state_match_type=Atspi.CollectionMatchType.NONE,
+            roles=[Atspi.Role.LINK])
 
     def _unvisitedLinkPredicate(self, obj, arg=None):
         return AXUtilities.is_focusable(obj)
 
     def _unvisitedLinkPresentation(self, obj, arg=None):
-        """Presents the unvisited link or indicates that one was not
-        found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -2805,10 +2283,6 @@ class StructuralNavigation:
     ########################
 
     def _visitedLinkBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst visited links.
-        """
-
         bindings = {}
         prevDesc = cmdnames.VISITED_LINK_PREV
         bindings["previous"] = ["v", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2821,35 +2295,13 @@ class StructuralNavigation:
 
         return bindings
 
-    def _visitedLinkCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating visited links
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.LINK]
-        state = [Atspi.StateType.VISITED, Atspi.StateType.FOCUSABLE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _visitedLinkCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.VISITED, Atspi.StateType.FOCUSABLE],
+            roles=[Atspi.Role.LINK])
 
     def _visitedLinkPresentation(self, obj, arg=None):
-        """Presents the visited link or indicates that one was not
-        found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -2874,10 +2326,6 @@ class StructuralNavigation:
     ########################
 
     def _linkBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst links.
-        """
-
         bindings = {}
         prevDesc = cmdnames.LINK_PREV
         bindings["previous"] = ["k", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2889,34 +2337,13 @@ class StructuralNavigation:
         bindings["list"] = ["k", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _linkCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating unvisited links
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [Atspi.Role.LINK]
-        state = [Atspi.StateType.FOCUSABLE]
-        stateMatch = collection.MATCH_ALL
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
+    def _linkCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            states=[Atspi.StateType.FOCUSABLE],
+            roles=[Atspi.Role.LINK])
 
     def _linkPresentation(self, obj, arg=None):
-        """Presents the link or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -2944,9 +2371,6 @@ class StructuralNavigation:
     ########################
 
     def _clickableBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst "clickable" objects."""
-
         bindings = {}
         prevDesc = cmdnames.CLICKABLE_PREV
         bindings["previous"] = ["a", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
@@ -2958,35 +2382,16 @@ class StructuralNavigation:
         bindings["list"] = ["a", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _clickableCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating clickables
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        interfaces = ["action"]
-        interfaceMatch = collection.MATCH_ANY
-        return MatchCriteria(collection,
-                             interfaces=interfaces,
-                             matchInterfaces=interfaceMatch)
+    def _clickableCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            interfaces=["action"],
+            interface_match_type=Atspi.CollectionMatchType.ANY)
 
     def _clickablePredicate(self, obj, arg=None):
         return self._script.utilities.isClickableElement(obj)
 
     def _clickablePresentation(self, obj, arg=None):
-        """Presents the clickable or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
+        if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
@@ -3020,14 +2425,14 @@ class StructuralNavigation:
 
         return bindings
 
-    def _containerCriteria(self, collection, arg=None):
-        return MatchCriteria(collection, roles=self.CONTAINER_ROLES)
+    def _containerCriteria(self, arg=None):
+        return AXCollection.create_match_rule(roles=self.CONTAINER_ROLES)
 
     def _containerPredicate(self, obj, arg=None):
         return self._isContainer(obj)
 
     def _containerPresentation(self, obj, arg=None, **kwargs):
-        if not obj:
+        if obj is not None:
             self._script.presentMessage(messages.CONTAINER_NOT_IN_A)
             return
 

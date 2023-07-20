@@ -363,6 +363,7 @@ class LiveRegionManager:
             # look through all the objects on the page and set/add to
             # politeness overrides.  This only adds live regions with good
             # markup.
+            # TODO - JD: This presumably could also be done via collection.
             matches = self._script.utilities.findAllDescendants(
                 docframe, self.matchLiveRegion)
             for match in matches:
