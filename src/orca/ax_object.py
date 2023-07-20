@@ -440,17 +440,8 @@ class AXObject:
             debug.println(debug.LEVEL_INFO, msg, True)
             return parent
 
-        try:
-            child = Atspi.Accessible.get_child_at_index(parent, index)
-        except Exception as e:
-            msg = "AXObject: Exception in get_parent_checked: %s" % e
-            AXObject.handle_error(parent, e, msg)
-            return parent
-
-        if child != obj:
-            msg = "AXObject: %s's child at %i is %s; not obj %s. " % (parent, index, child, obj)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
+        # This performs our check and includes any errors. We don't need the return value here.
+        AXObject.get_active_descendant_checked(parent, obj)
         return parent
 
     @staticmethod
@@ -538,6 +529,28 @@ class AXObject:
            debug.println(debug.LEVEL_INFO, msg, True)
 
         return child
+
+    @staticmethod
+    def get_active_descendant_checked(container, reported_child):
+        """Checks the reported active descendant and return the real/valid one."""
+
+        if not AXObject.has_state(container, Atspi.StateType.MANAGES_DESCENDANTS):
+            return reported_child
+
+        index = AXObject.get_index_in_parent(reported_child)
+        try:
+            real_child = Atspi.Accessible.get_child_at_index(container, index)
+        except Exception as e:
+            msg = "AXObject: Exception in get_active_descendant_checked: %s" % e
+            AXObject.handle_error(container, e, msg)
+            return reported_child
+
+        if real_child != reported_child:
+            msg = "AXObject: %s's child at %i is %s; not reported child %s. " \
+                % (container, index, real_child, reported_child)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return real_child
 
     @staticmethod
     def find_descendant(obj, pred):

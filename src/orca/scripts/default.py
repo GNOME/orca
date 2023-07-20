@@ -852,7 +852,21 @@ class Script(script.Script):
         if AXUtilities.is_defunct(newLocusOfFocus):
             return
 
-        if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+        if oldLocusOfFocus == newLocusOfFocus:
+            msg = 'DEFAULT: old focus == new focus'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        # Don't apply the is-same-object heuristic in the case of table cells.
+        # One scenario is email client message lists. When you delete a message
+        # and land on the next one, the cells likely occupy the same space,
+        # have the same role, and might even have the same name, same path, etc.
+        if not AXUtilities.is_table_cell(oldLocusOfFocus) \
+           and not AXUtilities.is_table_cell(newLocusOfFocus) \
+           and self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+            msg = 'DEFAULT: old focus %s believed to be same as new focus %s' \
+                % (oldLocusOfFocus, newLocusOfFocus)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         try:
@@ -877,7 +891,8 @@ class Script(script.Script):
             newLocusOfFocus,
             priorObj=oldLocusOfFocus)
 
-        if self.utilities.shouldInterruptForLocusOfFocusChange(oldLocusOfFocus, newLocusOfFocus):
+        if self.utilities.shouldInterruptForLocusOfFocusChange(
+           oldLocusOfFocus, newLocusOfFocus, event):
             self.presentationInterrupt()
         speech.speak(utterances, interrupt=False)
         orca.emitRegionChanged(newLocusOfFocus)
@@ -2251,6 +2266,8 @@ class Script(script.Script):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not event.any_data:
+            msg = "DEFAULT: Ignoring event. No any_data."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if not AXUtilities.is_focused(event.source) \
@@ -2262,6 +2279,8 @@ class Script(script.Script):
         if self.stopSpeechOnActiveDescendantChanged(event):
             self.presentationInterrupt()
 
+        msg = "DEFAULT: Setting locus of focus to any_data %s" % event.any_data
+        debug.println(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, event.any_data)
 
     def onBusyChanged(self, event):
