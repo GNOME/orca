@@ -43,6 +43,7 @@ from orca import orca_state
 from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
+from orca.ax_collection import AXCollection
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -5258,22 +5259,15 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: Document frame for %s is %s" % (obj, docframe)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        col = docframe.queryCollection()
-        stateset = Atspi.StateSet()
         roles = [Atspi.Role.HEADING,
                  Atspi.Role.LINK,
                  Atspi.Role.TABLE,
                  Atspi.Role.FORM,
                  Atspi.Role.LANDMARK]
 
-        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
-                                   "", col.MATCH_NONE,
-                                   roles, col.MATCH_ANY,
-                                   "", col.MATCH_NONE,
-                                   False)
+        rule = AXCollection.create_match_rule(roles=roles)
+        matches = AXCollection.get_all_matches(docframe, rule)
 
-        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
-        col.freeMatchRule(rule)
         for obj in matches:
             if AXUtilities.is_heading(obj):
                 result['headings'] += 1

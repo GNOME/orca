@@ -8,6 +8,7 @@ gfxdir=$(datadir)/orca/gfx
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
+	ax_collection.py \
 	ax_object.py \
 	ax_selection.py \
 	ax_utilities.py \
