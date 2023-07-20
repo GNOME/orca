@@ -2119,25 +2119,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if self._script.utilities.supportsLandmarkRole():
-            return MatchCriteria(collection, roles=[Atspi.Role.LANDMARK])
-
-        # NOTE: there is a limitation in the AT-SPI Collections interface
-        # when it comes to an attribute whose value can be a list.  For
-        # example, the xml-roles attribute can be a space-separate list
-        # of roles.  We'd like to make a match if the xml-roles attribute
-        # has one (or any) of the roles we care about.  Instead, we're
-        # restricted to an exact match.  So, the below will only work in 
-        # the cases where the xml-roles attribute value consists solely of a
-        # single role.  In practice, this seems to be the case that we run
-        # into for the landmark roles.
-        #
-        attrs = []
-        landmarkTypes = self._script.utilities.getLandmarkTypes()
-        for landmark in landmarkTypes:
-            attrs.append('xml-roles:' + landmark)
-
-        return MatchCriteria(collection, objAttrs=attrs)
+        return MatchCriteria(collection, roles=[Atspi.Role.LANDMARK])
 
     def _landmarkPresentation(self, obj, arg=None):
         """Presents the landmark or indicates that one was not found.

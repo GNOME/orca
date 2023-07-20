@@ -5266,9 +5266,6 @@ class Utilities(script_utilities.Utilities):
                  Atspi.Role.FORM,
                  Atspi.Role.LANDMARK]
 
-        if not self.supportsLandmarkRole():
-            roles.append(Atspi.Role.SECTION)
-
         rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                                    "", col.MATCH_NONE,
                                    roles, col.MATCH_ANY,

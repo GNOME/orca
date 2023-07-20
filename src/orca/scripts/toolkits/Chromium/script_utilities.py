@@ -354,9 +354,6 @@ class Utilities(web.Utilities):
 
         return True
 
-    def supportsLandmarkRole(self):
-        return True
-
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
         if not root:
             return []
