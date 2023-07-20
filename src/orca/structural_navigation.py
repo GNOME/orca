@@ -74,8 +74,7 @@ class MatchCriteria:
                  matchRoles = None,
                  interfaces = [],
                  matchInterfaces = None,
-                 invert = False,
-                 applyPredicate = False):
+                 invert = False):
 
         """Creates a new match criteria object.
 
@@ -98,11 +97,6 @@ class MatchCriteria:
           interface.
         - invert: If true the match rule will find objects that don't
           match. We always use False.
-        - applyPredicate: whether or not a predicate should be applied
-          as an additional check to see if an item is indeed a match.
-          This is necessary, for instance, when one of the things we
-          care about is a text attribute, something the collection
-          interface doesn't include in its criteria.
         """
 
         self.collection = collection
@@ -114,7 +108,6 @@ class MatchCriteria:
         self.interfaces = interfaces
         self.matchInterfaces = matchInterfaces or collection.MATCH_ALL
         self.invert = invert
-        self.applyPredicate = applyPredicate
 
         self.states = Atspi.StateSet()
         for state in states:
@@ -148,12 +141,12 @@ class StructuralNavigationObject:
           binding takes the form of [keysymstring, modifiers, description].
           The goPreviousAtLevel and goNextAtLevel bindings are each a list
           of bindings in that form.
-        - predicate: the predicate to use to determine if a given accessible
-          matches this structural navigation object. Used when a search via
-          collection is not possible or practical.
-        - criteria: a method which returns a MatchCriteria object which
-          can in turn be used to locate the next/previous matching accessible
-          via collection.
+        - predicate: the method to use to verify if a given accessible
+          matches this structural navigation object. Used only when the
+          collection interface does not provide a way for us to specify
+          needed condition(s).
+        - criteria: a method which returns a MatchRule object which is used
+          to find all matching objects via AtspiCollection.
         - presentation: the method which should be called after performing
           the search for the structural navigation object.
         - dialogData: the method which returns the title, column headers,
@@ -363,9 +356,8 @@ class StructuralNavigationObject:
     def showList(self, script, inputEvent):
         """Show a list of all the items with this object type."""
 
-        try:
-            objects, criteria = self.structuralNavigation._getAll(self)
-        except Exception:
+        objects = self.structuralNavigation._getAll(self)
+        if not objects:
             script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
             return
 
@@ -375,8 +367,14 @@ class StructuralNavigationObject:
             return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
 
         objects = list(filter(_isValidMatch, objects))
-        if criteria.applyPredicate:
+
+        if self.predicate is not None:
             objects = list(filter(self.predicate, objects))
+
+        if self._dialogData is None:
+            msg = "STRUCTURAL NAVIGATION: Cannot show list without dialog data"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         title, columnHeaders, rowData = self._dialogData()
         count = len(objects)
@@ -434,9 +432,8 @@ class StructuralNavigationObject:
         """
 
         def showListAtLevel(script, inputEvent):
-            try:
-                objects, criteria = self.structuralNavigation._getAll(self, arg=level)
-            except Exception:
+            objects = self.structuralNavigation._getAll(self, arg=level)
+            if not objects:
                 script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
                 return
 
@@ -444,7 +441,7 @@ class StructuralNavigationObject:
                 return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
 
             objects = list(filter(_isValidMatch, objects))
-            if criteria.applyPredicate:
+            if self.predicate is not None:
                 objects = list(filter(self.predicate, objects))
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
@@ -697,18 +694,18 @@ class StructuralNavigation:
         - name: the name/objType associated with this object.
         """
 
-        # We're going to assume bindings.  After all, a structural
-        # navigation object is by definition an object which one can
-        # navigate to using the associated keybindings. For similar
-        # reasons we'll also assume a predicate and a presentation
-        # method.  (See the Objects section towards the end of this
-        # class for examples of each.)
-        #
+        # Bindings, criteria, and presentation are mandatory.
         bindings = eval("self._%sBindings()" % name)
         criteria = eval("self._%sCriteria" % name)
-        predicate = eval("self._%sPredicate" % name)
         presentation = eval("self._%sPresentation" % name)
 
+        # Predicates should be the exception; not the rule.
+        try:
+            predicate = eval("self._%sPredicate" % name)
+        except:
+            predicate = None
+
+        # Dialogs are nice, but we shouldn't insist upon them.
         try:
             dialogData = eval("self._%sDialogData" % name)
         except Exception:
@@ -865,7 +862,7 @@ class StructuralNavigation:
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
         if not structuralNavigationObject.criteria:
-            return [], None
+            return []
 
         modalDialog = self._script.utilities.getModalDialog(orca_state.locusOfFocus)
         inModalDialog = bool(modalDialog)
@@ -880,21 +877,15 @@ class StructuralNavigation:
         document = self._script.utilities.documentFrame()
         cache = self._objectCache.get(hash(document), {})
         key = "%s:%s" % (structuralNavigationObject.objType, arg)
-        matches, criteria = cache.get(key, ([], None))
+        matches = cache.get(key, [])
         if matches:
-            return matches.copy(), criteria
+            return matches.copy()
 
-        try:
-            col = document.queryCollection()
-        except NotImplementedError:
-            msg = "STRUCTURAL NAVIGATION: %s does not implement collection" % document
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return [], None
-        except Exception:
-            msg = "STRUCTURAL NAVIGATION: Exception querying collection on %s" % document
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return [], None
+        if not AXObject.supports_collection(document):
+            msg = "STRUCTURAL NAVIGATION: %s does not support collection" % document
+            return []
 
+        col = document.queryCollection()
         criteria = structuralNavigationObject.criteria(col, arg)
         rule = col.createMatchRule(criteria.states.raw(),
                                    criteria.matchStates,
@@ -906,7 +897,6 @@ class StructuralNavigation:
                                    criteria.matchInterfaces,
                                    criteria.invert)
         matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
-        col.freeMatchRule(rule)
 
         if inModalDialog:
             originalSize = len(matches)
@@ -915,8 +905,8 @@ class StructuralNavigation:
                 (originalSize - len(matches), modalDialog)
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        rv = matches.copy(), criteria
-        cache[key] = matches, criteria
+        rv = matches.copy()
+        cache[key] = matches
         self._objectCache[hash(document)] = cache
         return rv
 
@@ -967,7 +957,7 @@ class StructuralNavigation:
           is needed and passed in as arg.
         """
 
-        matches, criteria = list(self._getAll(structuralNavigationObject, arg))
+        matches = self._getAll(structuralNavigationObject, arg)
         if not matches:
             structuralNavigationObject.present(None, arg)
             return
@@ -980,7 +970,7 @@ class StructuralNavigation:
                 return False
             if self._script.utilities.isHidden(obj) or self._script.utilities.isEmpty(obj):
                 return False
-            if not criteria.applyPredicate:
+            if structuralNavigationObject.predicate is None:
                 return True
             return structuralNavigationObject.predicate(obj)
 
@@ -1023,7 +1013,7 @@ class StructuralNavigation:
         else:
             self._script.presentMessage(messages.WRAPPING_TO_TOP)
 
-        matches, criteria = list(self._getAll(structuralNavigationObject, arg))
+        matches = self._getAll(structuralNavigationObject, arg)
         if not isNext:
             matches.reverse()
 
@@ -1400,12 +1390,23 @@ class StructuralNavigation:
     # All structural navigation objects have the following essential
     # characteristics:
     #
-    # 1. Keybindings for goPrevious, goNext, and other such methods
-    # 2. A means of identification (at least a predicate and possibly
-    #    also criteria for generating a collection match rule)
-    # 3. A definition of how the object should be presented (both
-    #    when another instance of that object is found as well as
-    #    when it is not)
+    # 1. Keybindings for goPrevious, goNext, and other such methods.
+    #    This is a dictionary. See _setUpHandlersAndBindings() for
+    #    supported values. But "previous", "next", and "list" are
+    #    typically what you'll need.
+    # 2. A means of identification: MatchCriteria and optional predicate.
+    #    The MatchCriteria is required. For ATK implementations, AT-SPI2
+    #    implements Collection. Applications and toolkits which implement
+    #    AT-SPI2 directly should provide the implementation because our
+    #    getting all objects via a tree dive is extremely non-performant.
+    #    The predicate is only needed if Collection lacks something we
+    #    need to identify the object is really the thing we want. Usually
+    #    the predicate is not needed and can remain undefined.
+    # 3. A definition of how the object should be presented (both when
+    #    another instance of that object is found as well as when it is
+    #    not). This function should do the presentation.
+    # 4. Details needed to populate the dialog with the object list is
+    #    presented.
     #
     # Convenience methods have been put into place whereby one can
     # create an object (FOO = "foo"), and then provide the following
@@ -1415,11 +1416,7 @@ class StructuralNavigation:
     # the script, the structural navigation object should be created
     # and set up automagically. At least that is the idea. :-) This
     # hopefully will also enable easy re-definition of existing
-    # objects on a script-by-script basis.  For instance, in the
-    # StarOffice script, overriding the _blockquotePredicate should
-    # be all that is needed to implement navigation by blockquote
-    # in OOo Writer documents.
-    #
+    # objects on a script-by-script basis.
 
     ########################
     #                      #
@@ -1455,18 +1452,6 @@ class StructuralNavigation:
 
         attrs = ['tag:BLOCKQUOTE']
         return MatchCriteria(collection, objAttrs=attrs)
-
-    def _blockquotePredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a blockquote.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return self._script.utilities.isBlockquote(obj)
 
     def _blockquotePresentation(self, obj, arg=None):
         """Presents the blockquote or indicates that one was not found.
@@ -1534,18 +1519,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _buttonPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a button.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_button(obj) and AXUtilities.is_sensitive(obj)
-
     def _buttonPresentation(self, obj, arg=None):
         """Presents the button or indicates that one was not found.
 
@@ -1612,20 +1585,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _checkBoxPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a check box.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_check_box(obj) \
-              and AXUtilities.is_sensitive(obj) \
-              and AXUtilities.is_focusable(obj)
-
     def _checkBoxPresentation(self, obj, arg=None):
         """Presents the check box or indicates that one was not found.
 
@@ -1689,27 +1648,10 @@ class StructuralNavigation:
         roleMatch = collection.MATCH_ANY
         return MatchCriteria(collection,
                              roles=role,
-                             matchRoles=roleMatch,
-                             applyPredicate=True)
+                             matchRoles=roleMatch)
 
     def _chunkPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a chunk.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not obj:
-            return False
-
-        role = AXObject.get_role(obj)
-        if role not in self.OBJECT_ROLES + self.CONTAINER_ROLES:
-            return False
-
-        if role == Atspi.Role.HEADING:
+        if AXUtilities.is_heading(obj):
             return True
 
         text = self._script.utilities.queryNonEmptyText(obj)
@@ -1790,20 +1732,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _comboBoxPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a combo box.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_combo_box(obj) \
-              and AXUtilities.is_sensitive(obj) \
-              and AXUtilities.is_focusable(obj)
-
     def _comboBoxPresentation(self, obj, arg=None):
         """Presents the combo box or indicates that one was not found.
 
@@ -1869,24 +1797,11 @@ class StructuralNavigation:
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
-                             matchStates=stateMatch,
-                             applyPredicate=True)
+                             matchStates=stateMatch)
 
     def _entryPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an entry.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not obj:
-            return False
-
         parent = AXObject.get_parent(obj)
-        if not parent:
+        if parent is None:
             return False
 
         return not AXUtilities.is_editable(parent)
@@ -1960,32 +1875,11 @@ class StructuralNavigation:
                              states=state,
                              matchStates=stateMatch,
                              roles=role,
-                             matchRoles=roleMatch,
-                             applyPredicate=True)
+                             matchRoles=roleMatch)
 
     def _formFieldPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a form field.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not obj:
-            return False
-
-        role = AXObject.get_role(obj)
-        if role not in self.FORM_ROLES:
-            return False
-
-        if not (AXUtilities.is_sensitive(obj) and AXUtilities.is_focusable(obj)):
-            return False
-
-        if role == Atspi.Role.DOCUMENT_FRAME:
+        if AXUtilities.is_document_frame(obj):
             return AXUtilities.is_editable(obj)
-
         return True
 
     def _formFieldPresentation(self, obj, arg=None):
@@ -2093,25 +1987,6 @@ class StructuralNavigation:
                              roles=role,
                              objAttrs=attrs)
 
-    def _headingPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a heading.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        isMatch = False
-        if obj and AXObject.get_role(obj) == Atspi.Role.HEADING:
-            if arg:
-                isMatch = arg == self._script.utilities.headingLevel(obj)
-            else:
-                isMatch = True
-
-        return isMatch
-
     def _headingPresentation(self, obj, arg=None):
         """Presents the heading or indicates that one was not found.
 
@@ -2185,18 +2060,6 @@ class StructuralNavigation:
         """
 
         return MatchCriteria(collection, roles=self.IMAGE_ROLES)
-
-    def _imagePredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an image.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return (obj and AXObject.get_role(obj) in self.IMAGE_ROLES)
 
     def _imagePresentation(self, obj, arg=None):
         """Presents the image/graphic or indicates that one was not found.
@@ -2276,18 +2139,6 @@ class StructuralNavigation:
 
         return MatchCriteria(collection, objAttrs=attrs)
 
-    def _landmarkPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a landmark.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return self._script.utilities.isLandmark(obj)
-
     def _landmarkPresentation(self, obj, arg=None):
         """Presents the landmark or indicates that one was not found.
 
@@ -2355,23 +2206,6 @@ class StructuralNavigation:
                              states=state,
                              matchStates=stateMatch,
                              roles=role)
-
-    def _listPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an (un)ordered list.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        isMatch = False
-
-        if obj and AXObject.get_role(obj) == Atspi.Role.LIST:
-            isMatch = not AXUtilities.is_focusable(obj)
-
-        return isMatch
 
     def _listPresentation(self, obj, arg=None):
         """Presents the (un)ordered list or indicates that one was not
@@ -2441,23 +2275,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _listItemPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an item in an (un)ordered list.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        isMatch = False
-
-        if obj and AXObject.get_role(obj) == Atspi.Role.LIST_ITEM:
-            isMatch = not AXUtilities.is_focusable(obj)
-
-        return isMatch
-
     def _listItemPresentation(self, obj, arg=None):
         """Presents the (un)ordered list item or indicates that one was not
         found.
@@ -2522,18 +2339,9 @@ class StructuralNavigation:
         # because pyatspi creates a dictionary from the list. In addition,
         # wildcard matching is not possible. As a result, we cannot search
         # for any object which has an attribute named container-live.
-        return MatchCriteria(collection, applyPredicate=True)
+        return MatchCriteria(collection)
 
     def _liveRegionPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a live region.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
         if self._script.liveRegionManager is None:
             return False
 
@@ -2599,37 +2407,23 @@ class StructuralNavigation:
 
         role = [Atspi.Role.PARAGRAPH, Atspi.Role.HEADING]
         roleMatch = collection.MATCH_ANY
-        return MatchCriteria(collection, roles=role, matchRoles=roleMatch, applyPredicate=True)
+        return MatchCriteria(collection, roles=role, matchRoles=roleMatch)
 
     def _paragraphPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a paragraph.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not obj:
-            return False
-
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.HEADING:
+        if AXUtilities.is_heading(obj):
             return True
 
         isMatch = False
-        if role == Atspi.Role.PARAGRAPH:
-            try:
-                text = obj.queryText()
-                # We're choosing 3 characters as the minimum because some
-                # paragraphs contain a single image or link and a text
-                # of length 2: An embedded object character and a space.
-                # We want to skip these.
-                #
-                isMatch = text.characterCount > 2
-            except Exception:
-                pass
+        try:
+            text = obj.queryText()
+            # We're choosing 3 characters as the minimum because some
+            # paragraphs contain a single image or link and a text
+            # of length 2: An embedded object character and a space.
+            # We want to skip these.
+            #
+            isMatch = text.characterCount > 2
+        except Exception:
+            pass
 
         return isMatch
 
@@ -2699,20 +2493,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _radioButtonPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a radio button.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_radio_button(obj) \
-              and AXUtilities.is_sensitive(obj) \
-              and AXUtilities.is_focusable(obj)
-
     def _radioButtonPresentation(self, obj, arg=None):
         """Presents the radio button or indicates that one was not found.
 
@@ -2770,19 +2550,7 @@ class StructuralNavigation:
         """
 
         role = [Atspi.Role.SEPARATOR]
-        return MatchCriteria(collection, roles=role, applyPredicate=False)
-
-    def _separatorPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a separator.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_separator(obj)
+        return MatchCriteria(collection, roles=role)
 
     def _separatorPresentation(self, obj, arg=None):
         """Presents the separator or indicates that one was not found.
@@ -2835,24 +2603,13 @@ class StructuralNavigation:
         """
 
         role = [Atspi.Role.TABLE]
-        return MatchCriteria(collection, roles=role, applyPredicate=True)
+        return MatchCriteria(collection, roles=role)
 
     def _tablePredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a table.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if not AXUtilities.is_table(obj):
-            return False
-
         if not AXObject.get_child_count(obj):
             return False
 
+        # This should no longer be needed once Atspi 2.8.4 is released.
         attrs = self._script.utilities.objectAttributes(obj)
         if attrs.get('layout-guess') == 'true':
             return False
@@ -2952,20 +2709,6 @@ class StructuralNavigation:
                 Atspi.Role.ROW_HEADER]
         return MatchCriteria(collection, roles=role)
 
-    def _tableCellPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a table cell.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return (obj and AXObject.get_role(obj) in [Atspi.Role.COLUMN_HEADER,
-                                          Atspi.Role.ROW_HEADER,
-                                          Atspi.Role.TABLE_CELL])
-
     def _tableCellPresentation(self, cell, arg):
         """Presents the table cell or indicates that one was not found.
 
@@ -3040,22 +2783,10 @@ class StructuralNavigation:
         return MatchCriteria(collection,
                              states=state,
                              matchStates=stateMatch,
-                             roles=role,
-                             applyPredicate=True)
+                             roles=role)
 
     def _unvisitedLinkPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an unvisited link.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_link(obj) \
-              and not AXUtilities.is_visited(obj) \
-              and AXUtilities.is_focusable(obj)
+        return AXUtilities.is_focusable(obj)
 
     def _unvisitedLinkPresentation(self, obj, arg=None):
         """Presents the unvisited link or indicates that one was not
@@ -3126,20 +2857,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _visitedLinkPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a visited link.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_link(obj) \
-              and AXUtilities.is_visited(obj) \
-              and AXUtilities.is_focusable(obj)
-
     def _visitedLinkPresentation(self, obj, arg=None):
         """Presents the visited link or indicates that one was not
         found.
@@ -3208,18 +2925,6 @@ class StructuralNavigation:
                              matchStates=stateMatch,
                              roles=role)
 
-    def _linkPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an link.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        return AXUtilities.is_link(obj) and AXUtilities.is_focusable(obj)
-
     def _linkPresentation(self, obj, arg=None):
         """Presents the link or indicates that one was not found.
 
@@ -3285,19 +2990,9 @@ class StructuralNavigation:
         interfaceMatch = collection.MATCH_ANY
         return MatchCriteria(collection,
                              interfaces=interfaces,
-                             matchInterfaces=interfaceMatch,
-                             applyPredicate=True)
+                             matchInterfaces=interfaceMatch)
 
     def _clickablePredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is a clickable.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
         return self._script.utilities.isClickableElement(obj)
 
     def _clickablePresentation(self, obj, arg=None):
@@ -3344,7 +3039,7 @@ class StructuralNavigation:
         return bindings
 
     def _containerCriteria(self, collection, arg=None):
-        return MatchCriteria(collection, roles=self.CONTAINER_ROLES, applyPredicate=True)
+        return MatchCriteria(collection, roles=self.CONTAINER_ROLES)
 
     def _containerPredicate(self, obj, arg=None):
         return self._isContainer(obj)
