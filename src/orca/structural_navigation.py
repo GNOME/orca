@@ -1999,7 +1999,7 @@ class StructuralNavigation:
         return isMatch
 
     def _paragraphPresentation(self, obj, arg=None):
-        if obj is None:
+        if obj is not None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
