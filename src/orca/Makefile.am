@@ -12,6 +12,7 @@ orca_python_PYTHON = \
 	ax_object.py \
 	ax_selection.py \
 	ax_utilities.py \
+	ax_utilities_collection.py \
 	ax_utilities_role.py \
 	ax_utilities_state.py \
 	bookmarks.py \
