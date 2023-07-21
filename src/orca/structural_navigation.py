@@ -2145,7 +2145,7 @@ class StructuralNavigation:
             if not cell:
                 msg = 'ERROR: Broken table interface for %s' % obj
                 debug.println(debug.LEVEL_INFO, msg)
-                cell = AXObject.find_descendant(obj, self._tableCellPredicate)
+                cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell)
                 if cell:
                     msg = 'HACK: Located %s for first cell' % cell
                     debug.println(debug.LEVEL_INFO, msg)
