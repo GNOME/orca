@@ -203,7 +203,8 @@ class EventManager:
             return True
 
         # Thunderbird spams us with these when a message list thread is expanded or collapsed.
-        if event.type.endswith('system'):
+        if event.type.endswith('system') \
+           and AXObject.get_name(app).lower().startswith('thunderbird'):
             if AXUtilities.is_table_related(event.source) \
               or AXUtilities.is_tree_related(event.source) \
               or AXUtilities.is_section(event.source):
