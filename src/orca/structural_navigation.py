@@ -1945,18 +1945,6 @@ class StructuralNavigation:
 
         return AXCollection.create_match_rule(attributes=attrs)
 
-    def _liveRegionPredicate(self, obj, arg=None):
-        if self._script.liveRegionManager is None:
-            return False
-
-        # TODO - JD: This does not seem needed. Verify that.
-        isMatch = False
-        regobjs = self._script.liveRegionManager.getLiveNoneObjects()
-        if self._script.liveRegionManager.matchLiveRegion(obj) or obj in regobjs:
-            isMatch = True
-
-        return isMatch
-
     def _liveRegionPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
