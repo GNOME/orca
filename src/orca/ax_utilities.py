@@ -42,6 +42,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
@@ -115,3 +116,7 @@ for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunc
 
 for name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfunction):
     setattr(AXUtilities, name, method)
+
+for name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
+    if name.startswith("find"):
+        setattr(AXUtilities, name, method)
