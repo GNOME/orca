@@ -15,6 +15,7 @@ from . import messages
 from . import input_event
 from . import orca_state
 from . import settings_manager
+from .ax_collection import AXCollection
 from .ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
@@ -352,7 +353,7 @@ class LiveRegionManager:
         if self.monitoring:
             self._script.presentMessage(messages.LIVE_REGIONS_ALL_OFF)
             self.msg_queue.clear()
-            
+
             # First we'll save off a copy for quick restoration
             self._restoreOverrides = copy.copy(self._politenessOverrides)
 
@@ -363,9 +364,7 @@ class LiveRegionManager:
             # look through all the objects on the page and set/add to
             # politeness overrides.  This only adds live regions with good
             # markup.
-            # TODO - JD: This presumably could also be done via collection.
-            matches = self._script.utilities.findAllDescendants(
-                docframe, self.matchLiveRegion)
+            matches = self.getAllLiveRegions(docframe)
             for match in matches:
                 objectid = self._getObjectId(match)
                 self._politenessOverrides[(uri, objectid)] = LIVE_OFF
@@ -380,6 +379,19 @@ class LiveRegionManager:
             self._script.presentMessage(messages.LIVE_REGIONS_ALL_RESTORED)
             # Toggle our flag
             self.monitoring = True  
+
+    def getAllLiveRegions(self, document):
+        attrs = []
+        levels = ["off", "polite", "assertive"]
+        for level in levels:
+            attrs.append('container-live:' + level)
+
+        rule = AXCollection.create_match_rule(attributes=attrs)
+        result = AXCollection.get_all_matches(document, rule)
+
+        msg = 'LIVE REGIONS: %i regions found' % len(result)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
 
     def generateLiveRegionDescription(self, obj, **args):
         """Used in conjunction with whereAmI to output description and 
@@ -418,11 +430,6 @@ class LiveRegionManager:
             results.append(messages.LIVE_REGIONS_LEVEL % liveprioritystr)
 
         return results
-
-    def matchLiveRegion(self, obj):
-        """Predicate used to find a live region"""
-        attrs = self._getAttrDictionary(obj)
-        return 'container-live' in attrs
 
     def _findContainer(self, obj):
         def isContainer(x):
