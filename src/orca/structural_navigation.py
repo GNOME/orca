@@ -292,9 +292,6 @@ class StructuralNavigationObject:
         """Show a list of all the items with this object type."""
 
         objects = self.structuralNavigation._getAll(self)
-        if not objects:
-            script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
-            return
 
         def _isValidMatch(x):
             if script.utilities.isDead(x):
