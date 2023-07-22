@@ -49,6 +49,8 @@ from .ax_utilities_state import AXUtilitiesState
 
 class AXUtilities:
 
+    COMPARE_COLLECTION_PERFORMANCE = False
+
     @staticmethod
     def get_desktop():
         """Returns the accessible desktop"""
@@ -94,7 +96,6 @@ class AXUtilities:
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
-
     @staticmethod
     def get_application_with_pid(pid):
         """Returns the accessible application with the specified pid"""
@@ -110,6 +111,19 @@ class AXUtilities:
         msg = "WARNING: app with pid %i is not in %s" % (pid, desktop)
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
+
+    @staticmethod
+    def get_default_button(obj):
+        """Searches for the default button descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_default_button(obj)
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
+
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
     setattr(AXUtilities, name, method)

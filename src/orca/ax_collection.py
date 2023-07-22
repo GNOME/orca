@@ -35,6 +35,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import gi
+import time
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -99,6 +100,7 @@ class AXCollection:
         if rule is None:
             return []
 
+        start = time.time()
         try:
             # 0 means no limit on the number of results
             # The final argument, traverse, is not supported but is expected.
@@ -108,6 +110,8 @@ class AXCollection:
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
+        msg = "AXCollection: %i match(es) found in %.4fs" % (len(matches), time.time() - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -120,6 +124,7 @@ class AXCollection:
         if rule is None:
             return None
 
+        start = time.time()
         try:
             # 1 means limit the number of results to 1
             # The final argument, traverse, is not supported but is expected.
@@ -129,6 +134,8 @@ class AXCollection:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
+        msg = "AXCollection: %i match(es) found in %.4fs" % (len(matches), time.time() - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
         if matches:
             return matches[0]
 

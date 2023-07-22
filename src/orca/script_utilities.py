@@ -2298,9 +2298,12 @@ class Utilities:
             self._findAllDescendants(child, includeIf, excludeIf, matches)
 
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
-        # TODO - JD: Can we use collection for this?
+        start = time.time()
         matches = []
         self._findAllDescendants(root, includeIf, excludeIf, matches)
+        msg = "INFO: findAllDescendants: %i matches found in %.4fs" \
+            % (len(matches), time.time() - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
@@ -4663,9 +4666,6 @@ class Utilities:
         if not (root and obj):
             return None
 
-        # Given an broken table hierarchy, findDescendant can hang. And the
-        # reason we're here in the first place is to work around the app or
-        # toolkit killing accessibles. There's only so much we can do....
         if AXUtilities.is_table(root) or AXUtilities.is_embedded(root):
             return None
 
@@ -4675,12 +4675,7 @@ class Utilities:
         if isSame(root):
             replicant = root
         else:
-            try:
-                replicant = AXObject.find_descendant(root, isSame)
-            except Exception:
-                msg = "INFO: Exception from findDescendant for %s" % root
-                debug.println(debug.LEVEL_INFO, msg, True)
-                replicant = None
+            replicant = AXObject.find_descendant(root, isSame)
 
         msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
