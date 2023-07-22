@@ -365,9 +365,6 @@ class StructuralNavigationObject:
 
         def showListAtLevel(script, inputEvent):
             objects = self.structuralNavigation._getAll(self, arg=level)
-            if not objects:
-                script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
-                return
 
             def _isValidMatch(x):
                 return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
@@ -511,7 +508,7 @@ class StructuralNavigation:
 
     # Roles which are recognized as being a form field. Note that this
     # is for the purpose of match rules and predicates and refers to
-    # AT-SPI roles. 
+    # AT-SPI roles.
     #
     FORM_ROLES = [Atspi.Role.CHECK_BOX,
                   Atspi.Role.RADIO_BUTTON,
