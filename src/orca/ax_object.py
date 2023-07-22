@@ -553,7 +553,7 @@ class AXObject:
         return real_child
 
     @staticmethod
-    def find_descendant(obj, pred):
+    def _find_descendant(obj, pred):
         """Returns the descendant of obj if the function pred is true"""
 
         if not AXObject.is_valid(obj):
@@ -564,11 +564,21 @@ class AXObject:
             if child and pred(child):
                 return child
 
-            child = AXObject.find_descendant(child, pred)
+            child = AXObject._find_descendant(child, pred)
             if child and pred(child):
                 return child
 
         return None
+
+    @staticmethod
+    def find_descendant(obj, pred):
+        """Returns the descendant of obj if the function pred is true"""
+
+        start = time.time()
+        result = AXObject._find_descendant(obj, pred)
+        msg = "AXObject: find_descendant: found %s in %.4fs" % (result, time.time() - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
 
     @staticmethod
     def get_role(obj):

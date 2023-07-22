@@ -40,7 +40,6 @@ from gi.repository import Atspi
 
 from .ax_object import AXObject
 
-
 class AXUtilitiesRole:
 
     @staticmethod
@@ -232,6 +231,13 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.DATE_EDITOR
+
+    @staticmethod
+    def is_default_button(obj, role=None):
+        """Returns True if obj has the push button role the is-default state"""
+
+        return AXUtilitiesRole.is_push_button(obj, role) \
+            and AXObject.has_state(obj, Atspi.StateType.IS_DEFAULT)
 
     @staticmethod
     def is_definition(obj, role=None):
@@ -527,21 +533,21 @@ class AXUtilitiesRole:
     def is_horizontal_scrollbar(obj, role=None):
         """Returns True if obj is a horizontal scrollbar"""
 
-        return AXUtilitiesRole.is_scroll_bar(obj) \
+        return AXUtilitiesRole.is_scroll_bar(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
 
     @staticmethod
     def is_horizontal_separator(obj, role=None):
         """Returns True if obj is a horizontal separator"""
 
-        return AXUtilitiesRole.is_separator(obj) \
+        return AXUtilitiesRole.is_separator(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
 
     @staticmethod
     def is_horizontal_slider(obj, role=None):
         """Returns True if obj is a horizontal slider"""
 
-        return AXUtilitiesRole.is_slider(obj) \
+        return AXUtilitiesRole.is_slider(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
 
     @staticmethod
@@ -791,14 +797,14 @@ class AXUtilitiesRole:
     def is_modal_dialog(obj, role=None):
         """Returns True if obj has the alert or dialog role and modal state"""
 
-        return AXUtilitiesRole.is_dialog_or_alert(obj) \
+        return AXUtilitiesRole.is_dialog_or_alert(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.MODAL)
 
     @staticmethod
     def is_multi_line_entry(obj, role=None):
         """Returns True if obj has the entry role and multiline state"""
 
-        return AXUtilitiesRole.is_entry(obj) \
+        return AXUtilitiesRole.is_entry(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.MULTI_LINE)
 
     @staticmethod
@@ -998,7 +1004,7 @@ class AXUtilitiesRole:
     def is_single_line_entry(obj, role=None):
         """Returns True if obj has the entry role and multiline state"""
 
-        return AXUtilitiesRole.is_entry(obj) \
+        return AXUtilitiesRole.is_entry(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE)
 
     @staticmethod
@@ -1283,21 +1289,21 @@ class AXUtilitiesRole:
     def is_vertical_scrollbar(obj, role=None):
         """Returns True if obj is a vertical scrollbar"""
 
-        return AXUtilitiesRole.is_scroll_bar(obj) \
+        return AXUtilitiesRole.is_scroll_bar(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
 
     @staticmethod
     def is_vertical_separator(obj, role=None):
         """Returns True if obj is a vertical separator"""
 
-        return AXUtilitiesRole.is_separator(obj) \
+        return AXUtilitiesRole.is_separator(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
 
     @staticmethod
     def is_vertical_slider(obj, role=None):
         """Returns True if obj is a vertical slider"""
 
-        return AXUtilitiesRole.is_slider(obj) \
+        return AXUtilitiesRole.is_slider(obj, role) \
             and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
 
     @staticmethod

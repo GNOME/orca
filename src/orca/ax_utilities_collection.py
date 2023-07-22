@@ -102,12 +102,7 @@ class AXUtilitiesCollection:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(states=state_list, state_match_type=state_match_type)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-              % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -127,11 +122,7 @@ class AXUtilitiesCollection:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(interfaces=interface_list)
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -151,12 +142,7 @@ class AXUtilitiesCollection:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(roles=role_list)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -181,12 +167,7 @@ class AXUtilitiesCollection:
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ALL)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-              % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -211,12 +192,7 @@ class AXUtilitiesCollection:
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ANY)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -241,12 +217,7 @@ class AXUtilitiesCollection:
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.NONE)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
 
@@ -732,12 +703,7 @@ class AXUtilitiesCollection:
         roles = [Atspi.Role.HEADING]
         attributes = ["level:%d" % level]
         rule = AXCollection.create_match_rule(roles=roles, attributes=attributes)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
         return matches
@@ -899,14 +865,10 @@ class AXUtilitiesCollection:
             attributes.append('container-live:' + level)
 
         rule = AXCollection.create_match_rule(attributes=attributes)
-
-        start = time.time()
         matches = AXCollection.get_all_matches(root, rule)
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
+
         return matches
 
     @staticmethod
