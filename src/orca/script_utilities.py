@@ -354,36 +354,6 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg, True)
         return commonAncestor
 
-    def defaultButton(self, obj):
-        """Returns the default button in the dialog which contains obj.
-
-        Arguments:
-        - obj: the top-level object (e.g. window, frame, dialog) for
-          which the status bar is sought.
-        """
-
-        # TODO - JD: Consider using findAllDescendants
-
-        # There are some objects which are not worth descending.
-        if AXUtilities.manages_descendants(obj) \
-           or AXUtilities.is_table(obj) or AXUtilities.is_tree_or_tree_table(obj):
-            return
-
-        defaultButton = None
-        # The default button is likely near the bottom of the window.
-        for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
-            child = AXObject.get_child(obj, i)
-            if AXUtilities.is_push_button(child) \
-                and AXUtilities.is_default(child):
-                defaultButton = child
-            elif not (AXUtilities.is_table(child) or AXUtilities.is_tree_or_tree_table(child)):
-                defaultButton = self.defaultButton(child)
-
-            if defaultButton:
-                break
-
-        return defaultButton
-
     def displayedLabel(self, obj):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.

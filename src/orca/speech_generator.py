@@ -2389,7 +2389,7 @@ class SpeechGenerator(generator.Generator):
         This method should initially be called with a top-level window.
         """
         result = []
-        button = self._script.utilities.defaultButton(obj)
+        button = AXUtilities.get_default_button(obj)
         if AXUtilities.is_sensitive(button):
             name = self._generateName(button)
             if name:
