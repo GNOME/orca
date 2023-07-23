@@ -229,7 +229,7 @@ class ScriptManager:
         if not activeWindow:
             return script
 
-        focusedObject = script.utilities.focusedObject(activeWindow)
+        focusedObject = AXUtilities.get_focused_object(activeWindow)
         if focusedObject:
             return self.getScript(AXObject.get_application(focusedObject), focusedObject)
 

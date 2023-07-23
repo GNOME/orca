@@ -3950,13 +3950,9 @@ class Script(script.Script):
             if not event.shouldEcho or event.isOrcaModified():
                 return False
 
-        try:
-            role = AXObject.get_role(orca_state.locusOfFocus)
-        except Exception:
-            return False
-
+        role = AXObject.get_role(orca_state.locusOfFocus)
         if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
-            focusedObject = self.utilities.focusedObject(orca_state.activeWindow)
+            focusedObject = AXUtilities.get_focused_object(orca_state.activeWindow)
             if focusedObject:
                 orca.setLocusOfFocus(None, focusedObject, False)
                 role = AXObject.get_role(focusedObject)

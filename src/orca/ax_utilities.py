@@ -125,6 +125,18 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
 
     @staticmethod
+    def get_focused_object(obj):
+        """Returns the focused descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_focused_object(obj)
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesState.is_focused)
+
+    @staticmethod
     def get_status_bar(obj):
         """Returns the status bar descendant of obj"""
 

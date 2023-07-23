@@ -334,7 +334,7 @@ class BrailleGenerator(generator.Generator):
         if AXObject.supports_selection(obj):
             items = self._script.utilities.selectedChildren(obj)
         else:
-            items = [self._script.utilities.focusedChild(obj)]
+            items = [AXUtilities.get_focused_object(obj)]
         if not (items and items[0]):
             return result
 
