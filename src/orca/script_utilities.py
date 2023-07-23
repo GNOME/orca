@@ -2197,13 +2197,7 @@ class Utilities:
             self._findAllDescendants(child, includeIf, excludeIf, matches)
 
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
-        start = time.time()
-        matches = []
-        self._findAllDescendants(root, includeIf, excludeIf, matches)
-        msg = "INFO: findAllDescendants: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return matches
+        return AXObject.find_all_descendants(root, includeIf, excludeIf)
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         """Returns a list containing all the unrelated (i.e., have no
