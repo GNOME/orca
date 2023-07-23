@@ -277,7 +277,7 @@ class Utilities(web.Utilities):
         if not root:
             return ""
 
-        statusBars = self.findAllDescendants(root, AXUtilities.is_status_bar)
+        statusBars = AXUtilities.find_all_status_bars(root)
         if len(statusBars) != 1:
             return ""
 
@@ -311,17 +311,17 @@ class Utilities(web.Utilities):
         # back on the widgets. TODO: This would be far easier if Chromium gave us an
         # object attribute we could look for....
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_entry)) != 1:
+        if len(AXUtilities.find_all_entries(obj)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_push_button)) != 3:
+        if len(AXUtilities.find_all_push_buttons(obj)) != 3:
             msg = "CHROMIUM: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_separator)) != 1:
+        if len(AXUtilities.find_all_separators(obj)) != 1:
             msg = "CHROMIUM: %s not believed to be find-in-page container (separator count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
