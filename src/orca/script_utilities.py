@@ -2183,19 +2183,6 @@ class Utilities:
 
         return not (extents.width and extents.height)
 
-    def _findAllDescendants(self, root, includeIf, excludeIf, matches):
-        if not root:
-            return
-
-        childCount = AXObject.get_child_count(root)
-        for i in range(childCount):
-            child = AXObject.get_child(root, i)
-            if excludeIf and excludeIf(child):
-                continue
-            if includeIf and includeIf(child):
-                matches.append(child)
-            self._findAllDescendants(child, includeIf, excludeIf, matches)
-
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
         return AXObject.find_all_descendants(root, includeIf, excludeIf)
 
