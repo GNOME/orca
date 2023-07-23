@@ -89,7 +89,6 @@ class Utilities(script_utilities.Utilities):
         self._hasDetails = {}
         self._isDetails = {}
         self._isNonInteractiveDescendantOfControl = {}
-        self._hasUselessCanvasDescendant = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
@@ -186,7 +185,6 @@ class Utilities(script_utilities.Utilities):
         self._hasVisibleCaption = {}
         self._hasDetails = {}
         self._isDetails = {}
-        self._hasUselessCanvasDescendant = {}
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
@@ -3212,7 +3210,7 @@ class Utilities(script_utilities.Utilities):
 
     def iframeForDetachedDocument(self, obj, root=None):
         root = root or self.documentFrame()
-        for iframe in self.findAllDescendants(root, AXUtilities.is_internal_frame):
+        for iframe in AXUtilities.find_all_internal_frames(root):
             if AXObject.get_parent(obj) == iframe:
                 msg = "WEB: Returning %s as iframe parent of detached %s" % (iframe, obj)
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -3824,18 +3822,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def hasUselessCanvasDescendant(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._hasUselessCanvasDescendant.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        canvases = self.findAllDescendants(obj, AXUtilities.is_canvas)
-        rv = len(list(filter(self.isUselessImage, canvases))) > 0
-
-        self._hasUselessCanvasDescendant[hash(obj)] = rv
-        return rv
+        return len(AXUtilities.find_all_canvases(obj, self.isUselessImage)) > 0
 
     def isTextSubscriptOrSuperscript(self, obj):
         if self.isMath(obj):
