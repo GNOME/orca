@@ -321,42 +321,6 @@ class Utilities(script_utilities.Utilities):
 
         return results
 
-    def validatedTopLevelObject(self, obj):
-        # TODO - JD: We cannot just override topLevelObject() because that will
-        # break flat review access to document content in LO using Gtk+ 3. That
-        # bug seems to be fixed in LO v5.3.0. When that version is released, this
-        # and hopefully other hacks can be removed.
-        window = super().topLevelObject(obj)
-        if not window or AXObject.get_index_in_parent(window) >= 0:
-            return window
-
-        msg = "SOFFICE: %s's window %s has -1 indexInParent" % (obj, window)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-        for child in self._script.app:
-            if self.isSameObject(child, window):
-                window = child
-                break
-
-        index = AXObject.get_index_in_parent(window)
-        msg = "SOFFICE: Returning %s (index: %i)" % (window, index)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return window
-
-    def commonAncestor(self, a, b):
-        ancestor = super().commonAncestor(a, b)
-        if ancestor or not (a and b):
-            return ancestor
-
-        windowA = self.validatedTopLevelObject(a)
-        windowB = self.validatedTopLevelObject(b)
-        if not self.isSameObject(windowA, windowB):
-            return None
-
-        msg = "SOFFICE: Adjusted ancestor %s and %s to %s" % (a, b, windowA)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return windowA
-
     @staticmethod
     def _flowsFromOrToSelection(obj):
         relationSet = AXObject.get_relations(obj)
