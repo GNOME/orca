@@ -113,6 +113,31 @@ class AXUtilities:
         return None
 
     @staticmethod
+    def get_all_widgets(obj, must_be_showing_and_visible=True):
+        """Returns all the descendants of obj with a widget role"""
+
+        roles = AXUtilitiesRole.get_widget_roles()
+        result = None
+        if AXObject.supports_collection(obj):
+            if not must_be_showing_and_visible:
+                result = AXUtilitiesCollection.find_all_with_role(obj, roles)
+            else:
+                states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+                result = AXUtilitiesCollection.find_all_with_role_and_all_states(
+                    obj, roles, states)
+
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        def is_match(x):
+            if AXObject.get_role(x) not in roles:
+                return False
+            if must_be_showing_and_visible:
+                return AXUtilitiesState.is_showing(x) and AXUtilitiesState.is_visible(x)
+
+        return AXObject.find_all_descendants(obj, is_match)
+
+    @staticmethod
     def get_default_button(obj):
         """Returns the default button descendant of obj"""
 

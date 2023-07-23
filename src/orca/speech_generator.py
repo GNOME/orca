@@ -2455,23 +2455,13 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateListBoxItemWidgets(self, obj, **args):
-        widgetRoles = [Atspi.Role.CHECK_BOX,
-                       Atspi.Role.COMBO_BOX,
-                       Atspi.Role.PUSH_BUTTON,
-                       Atspi.Role.RADIO_BUTTON,
-                       Atspi.Role.SLIDER,
-                       Atspi.Role.TEXT,
-                       Atspi.Role.TOGGLE_BUTTON]
-        def isWidget(x):
-            return AXObject.get_role(x) in widgetRoles
+        if not AXUtilities.is_list_box(AXObject.get_parent(obj)):
+            return []
 
         result = []
-        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
-            widgets = self._script.utilities.findAllDescendants(obj, isWidget)
-            for widget in widgets:
-                if self._script.utilities.isShowingAndVisible(widget):
-                    result.append(self.generate(widget, includeContext=False))
-
+        widgets = AXUtilities.get_all_widgets(obj)
+        for widget in widgets:
+            result.append(self.generate(widget, includeContext=False))
         return result
 
     #####################################################################

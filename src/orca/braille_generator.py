@@ -368,23 +368,13 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _generateListBoxItemWidgets(self, obj, **args):
-        widgetRoles = [Atspi.Role.CHECK_BOX,
-                       Atspi.Role.COMBO_BOX,
-                       Atspi.Role.PUSH_BUTTON,
-                       Atspi.Role.RADIO_BUTTON,
-                       Atspi.Role.SLIDER,
-                       Atspi.Role.TOGGLE_BUTTON]
-
-        def isWidget(x):
-            return AXObject.get_role(x) in widgetRoles
+        if not AXUtilities.is_list_box(AXObject.get_parent(obj)):
+            return []
 
         result = []
-        if AXUtilities.is_list_box(AXObject.get_parent(obj)):
-            widgets = self._script.utilities.findAllDescendants(obj, isWidget)
-            for widget in widgets:
-                result.extend(self.generate(widget, includeContext=False))
-                result.append(braille.Region(" "))
-
+        for widget in AXUtilities.get_all_widgets(obj):
+            result.extend(self.generate(widget, includeContext=False))
+            result.append(braille.Region(" "))
         return result
 
     def _generateProgressBarIndex(self, obj, **args):
