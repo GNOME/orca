@@ -49,6 +49,9 @@ class AXUtilities:
     def get_default_button(obj): ...
 
     @staticmethod
+    def get_focused_object(obj): ...
+
+    @staticmethod
     def get_status_bar(obj): ...
 
     # From ax_utilities_role.py
@@ -1226,6 +1229,3 @@ class AXUtilities:
 
     @staticmethod
     def find_status_bar(root): ...
-
-    @staticmethod
-    def get_focused_object(obj):
