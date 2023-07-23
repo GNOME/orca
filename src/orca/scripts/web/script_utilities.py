@@ -1963,6 +1963,93 @@ class Utilities(script_utilities.Utilities):
         if self.hasPresentableText(obj):
             super().updateCachedTextSelection(obj)
 
+    def _findSelectionBoundaryObject(self, root, findStart=True):
+        try:
+            text = root.queryText()
+        except Exception:
+            msg = "ERROR: Exception querying text for %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if not text.getNSelections():
+            return None
+
+        start, end = text.getSelection(0)
+        string = text.getText(start, end)
+        if not string:
+            return None
+
+        if findStart and not string.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+            return root
+
+        if not findStart and not string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
+            return root
+
+        indices = list(range(AXObject.get_child_count(root)))
+        if not findStart:
+            indices.reverse()
+
+        for i in indices:
+            result = self._findSelectionBoundaryObject(root[i], findStart)
+            if result:
+                return result
+
+        return None
+
+    def _getSelectionAnchorAndFocus(self, root):
+        obj1 = self._findSelectionBoundaryObject(root, True)
+        obj2 = self._findSelectionBoundaryObject(root, False)
+        return obj1, obj2
+
+    def _getSubtree(self, startObj, endObj):
+        if not (startObj and endObj):
+            return []
+
+        if self.isDead(startObj):
+            msg = "INFO: Cannot get subtree: Start object is dead."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        def _include(x):
+            return x is not None
+
+        def _exclude(x):
+            return self.isStaticTextLeaf(x)
+
+        subtree = []
+        startObjParent = AXObject.get_parent(startObj)
+        for i in range(AXObject.get_index_in_parent(startObj),
+                        AXObject.get_child_count(startObjParent)):
+            child = AXObject.get_child(startObjParent, i)
+            if self.isStaticTextLeaf(child):
+                continue
+            subtree.append(child)
+            subtree.extend(self.findAllDescendants(child, _include, _exclude))
+            if endObj in subtree:
+                break
+
+        if endObj == startObj:
+            return subtree
+
+        if endObj not in subtree:
+            subtree.append(endObj)
+            subtree.extend(self.findAllDescendants(endObj, _include, _exclude))
+
+        endObjParent = AXObject.get_parent(endObj)
+        endObjIndex = AXObject.get_index_in_parent(endObj)
+        lastObj = AXObject.get_child(endObjParent, endObjIndex + 1) or endObj
+
+        try:
+            endIndex = subtree.index(lastObj)
+        except ValueError:
+            pass
+        else:
+            if lastObj == endObj:
+                endIndex += 1
+            subtree = subtree[:endIndex]
+
+        return subtree
+
     def handleTextSelectionChange(self, obj, speakMessage=True):
         if not self.inDocumentContent(obj):
             return super().handleTextSelectionChange(obj)
