@@ -211,12 +211,12 @@ class Utilities(web.Utilities):
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_entry)) != 1:
+        if len(AXUtilities.find_all_entries(obj)) != 1:
             msg = "GECKO: %s not believed to be quick-find container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_push_button)) != 1:
+        if len(AXUtilities.find_all_push_buttons(obj)) != 1:
             msg = "GECKO: %s not believed to be quick-find container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -245,12 +245,12 @@ class Utilities(web.Utilities):
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_entry)) != 1:
+        if len(AXUtilities.find_all_entries(obj)) != 1:
             msg = "GECKO: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if len(self.findAllDescendants(obj, AXUtilities.is_push_button)) < 5:
+        if len(AXUtilities.find_all_push_buttons(obj)) < 5:
             msg = "GECKO: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -290,9 +290,9 @@ class Utilities(web.Utilities):
             return ""
 
         def isMatch(x):
-            return AXUtilities.is_label(x) and len(re.findall(r"\d+", AXObject.get_name(x))) == 2
+            return len(re.findall(r"\d+", AXObject.get_name(x))) == 2
 
-        labels = self.findAllDescendants(root, isMatch)
+        labels = AXUtilities.find_all_labels(root, isMatch)
         if len(labels) != 1:
             return ""
 
