@@ -43,7 +43,7 @@ class Script(default.Script):
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
 
-        allLabels = self.utilities.findAllDescendants(event.source, AXUtilities.is_label)
+        allLabels = AXUtilities.find_all_labels(event.source)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
 
