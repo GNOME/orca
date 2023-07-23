@@ -114,7 +114,7 @@ class AXUtilities:
 
     @staticmethod
     def get_default_button(obj):
-        """Searches for the default button descendant of obj"""
+        """Returns the default button descendant of obj"""
 
         result = None
         if AXObject.supports_collection(obj):
@@ -123,6 +123,18 @@ class AXUtilities:
                 return result
 
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
+
+    @staticmethod
+    def get_status_bar(obj):
+        """Returns the status bar descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_status_bar(obj)
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
 
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):

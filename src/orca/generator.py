@@ -517,10 +517,10 @@ class Generator:
             result.append(label)
         return result
 
-    def generateStatusBar(self, obj, **args):
+    def _generateStatusBar(self, obj, **args):
         """Returns an array of strings that represent a status bar."""
 
-        return self._generateStatusBar(obj, **args)
+        return []
 
     def _generateTermValueCount(self, obj, **args):
         return []
