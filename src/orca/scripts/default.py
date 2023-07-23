@@ -1315,7 +1315,7 @@ class Script(script.Script):
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
             start = time.time()
-            statusbar = self.utilities.statusBar(frame)
+            statusbar = AXUtilities.get_status_bar(frame)
             end = time.time()
             msg = "DEFAULT: Time searching for status bar: %.4f" % (end - start)
             debug.println(debug.LEVEL_INFO, msg, True)

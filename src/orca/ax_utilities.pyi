@@ -48,6 +48,9 @@ class AXUtilities:
     @staticmethod
     def get_default_button(obj): ...
 
+    @staticmethod
+    def get_status_bar(obj): ...
+
     # From ax_utilities_role.py
     @staticmethod
     def have_same_role(obj1, obj2): ...

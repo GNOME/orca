@@ -2410,17 +2410,16 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the status bar of a window.
         """
 
-        statusBar = self._script.utilities.statusBar(obj)
-        if not statusBar:
+        if not AXUtilities.is_status_bar(obj):
             return []
 
-        items = self._script.utilities.statusBarItems(statusBar)
-        if not items or items == [statusBar]:
+        items = self._script.utilities.statusBarItems(obj)
+        if not items or items == [obj]:
             return []
 
         result = []
         for child in items:
-            if child == statusBar:
+            if child == obj:
                 continue
 
             childResult = self.generate(child, includeContext=False)

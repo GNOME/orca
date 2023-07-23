@@ -351,12 +351,11 @@ class BrailleGenerator(generator.Generator):
         return ["(%s)" % messages.valueCountForTerm(count)]
 
     def _generateStatusBar(self, obj, **args):
-        statusBar = self._script.utilities.statusBar(obj)
-        if not statusBar:
+        if not AXUtilities.is_status_bar(obj):
             return []
 
         items = self._script.utilities.statusBarItems(obj)
-        if not items or items == [statusBar]:
+        if not items or items == [obj]:
             return []
 
         result = []

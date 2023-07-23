@@ -2012,44 +2012,6 @@ class Utilities:
 
         return items
 
-    def statusBar(self, obj):
-        """Returns the status bar in the window which contains obj.
-
-        Arguments:
-        - obj: the top-level object (e.g. window, frame, dialog) for which
-          the status bar is sought.
-        """
-
-        if AXUtilities.is_status_bar(obj):
-            return obj
-
-        # TODO - JD: Consider using findAllDescendants
-
-        # There are some objects which are not worth descending.
-        #
-        skipRoles = [Atspi.Role.TREE,
-                     Atspi.Role.TREE_TABLE,
-                     Atspi.Role.TABLE]
-
-        if AXUtilities.manages_descendants(obj) \
-           or AXObject.get_role(obj) in skipRoles:
-            return
-
-        statusBar = None
-        # The status bar is likely near the bottom of the window.
-        #
-        for i in range(AXObject.get_child_count(obj) - 1, -1, -1):
-            child = AXObject.get_child(obj, i)
-            role = AXObject.get_role(child)
-            if role == Atspi.Role.STATUS_BAR:
-                statusBar = child
-            elif role not in skipRoles:
-                statusBar = self.statusBar(child)
-            if statusBar and self.isShowingAndVisible(statusBar):
-                break
-
-        return statusBar
-
     def infoBar(self, root):
         return None
 
