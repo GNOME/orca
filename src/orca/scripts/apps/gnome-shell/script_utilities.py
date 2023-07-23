@@ -49,7 +49,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_panel(obj):
             return []
 
-        return self.findAllDescendants(obj, AXUtilities.is_selected)
+        return AXUtilities.find_all_selected_objects(obj)
 
     def insertedText(self, event):
         if event.any_data:
