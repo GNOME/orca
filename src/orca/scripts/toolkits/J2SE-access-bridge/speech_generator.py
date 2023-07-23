@@ -117,7 +117,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         listObj = None
         if AXUtilities.is_combo_box(obj):
-            allLists = self._script.utilities.findAllDescendants(obj, AXUtilities.is_list)
+            allLists = AXUtilities.find_all_lists(obj)
             if len(allLists) == 1:
                 listObj = allLists[0]
 
