@@ -43,6 +43,138 @@ from .ax_object import AXObject
 class AXUtilitiesRole:
 
     @staticmethod
+    def get_dialog_roles(include_alert_as_dialog=True):
+        """Returns the list of roles we consider documents"""
+
+        roles = [Atspi.Role.COLOR_CHOOSER,
+                 Atspi.Role.DIALOG,
+                 Atspi.Role.FILE_CHOOSER]
+        if include_alert_as_dialog:
+            roles.append(Atspi.Role.ALERT)
+        return roles
+
+    @staticmethod
+    def get_document_roles():
+        """Returns the list of roles we consider documents"""
+
+        roles = [Atspi.Role.DOCUMENT_EMAIL,
+                 Atspi.Role.DOCUMENT_FRAME,
+                 Atspi.Role.DOCUMENT_PRESENTATION,
+                 Atspi.Role.DOCUMENT_SPREADSHEET,
+                 Atspi.Role.DOCUMENT_TEXT,
+                 Atspi.Role.DOCUMENT_WEB]
+        return roles
+
+    @staticmethod
+    def get_form_field_roles():
+        """Returns the list of roles we consider form fields"""
+
+        roles = [Atspi.Role.CHECK_BOX,
+                 Atspi.Role.RADIO_BUTTON,
+                 Atspi.Role.COMBO_BOX,
+                 Atspi.Role.DOCUMENT_FRAME, # rich text editing pred recommended
+                 Atspi.Role.TEXT, # predicate recommended to check it is editable
+                 Atspi.Role.LIST_BOX,
+                 Atspi.Role.ENTRY,
+                 Atspi.Role.PASSWORD_TEXT,
+                 Atspi.Role.PUSH_BUTTON,
+                 Atspi.Role.SPIN_BUTTON]
+        return roles
+
+    @staticmethod
+    def get_menu_item_roles():
+        """Returns the list of roles we consider menu items"""
+
+        roles = [Atspi.Role.MENU_ITEM,
+                 Atspi.Role.CHECK_MENU_ITEM,
+                 Atspi.Role.RADIO_MENU_ITEM,
+                 Atspi.Role.TEAROFF_MENU_ITEM]
+        return roles
+
+    @staticmethod
+    def get_menu_related_roles():
+        """Returns the list of roles we consider menu related"""
+
+        roles = [Atspi.Role.MENU,
+                 Atspi.Role.MENU_BAR,
+                 Atspi.Role.POPUP_MENU,
+                 Atspi.Role.MENU_ITEM,
+                 Atspi.Role.CHECK_MENU_ITEM,
+                 Atspi.Role.RADIO_MENU_ITEM,
+                 Atspi.Role.TEAROFF_MENU_ITEM]
+        return roles
+
+    @staticmethod
+    def get_set_container_roles():
+        """Returns the list of roles we consider a set container"""
+
+        roles = [Atspi.Role.LIST,
+                 Atspi.Role.MENU,
+                 Atspi.Role.PAGE_TAB_LIST,
+                 Atspi.Role.TABLE,
+                 Atspi.Role.TREE,
+                 Atspi.Role.TREE_TABLE]
+        return roles
+
+    @staticmethod
+    def get_table_cell_roles(include_headers=True):
+        """Returns the list of roles we consider table cells"""
+
+        roles = [Atspi.Role.TABLE_CELL]
+        if include_headers:
+            roles.extend([Atspi.Role.TABLE_COLUMN_HEADER,
+                          Atspi.Role.TABLE_ROW_HEADER,
+                          Atspi.Role.COLUMN_HEADER,
+                          Atspi.Role.ROW_HEADER])
+        return roles
+
+    @staticmethod
+    def get_table_header_roles():
+        """Returns the list of roles we consider table headers"""
+
+        roles = [Atspi.Role.TABLE_COLUMN_HEADER,
+                 Atspi.Role.TABLE_ROW_HEADER,
+                 Atspi.Role.COLUMN_HEADER,
+                 Atspi.Role.ROW_HEADER]
+        return roles
+
+    @staticmethod
+    def get_table_related_roles(include_caption=False):
+        """Returns the list of roles we consider table related"""
+
+        roles = [Atspi.Role.TABLE,
+                 Atspi.Role.TABLE_CELL,
+                 Atspi.Role.TABLE_COLUMN_HEADER,
+                 Atspi.Role.TABLE_ROW_HEADER,
+                 Atspi.Role.COLUMN_HEADER,
+                 Atspi.Role.ROW_HEADER]
+        if include_caption:
+            roles.append(Atspi.Role.CAPTION)
+        return roles
+
+    @staticmethod
+    def get_tree_related_roles():
+        """Returns the list of roles we consider tree related"""
+
+        roles = [Atspi.Role.TREE,
+                 Atspi.Role.TREE_ITEM,
+                 Atspi.Role.TREE_TABLE]
+        return roles
+
+    @staticmethod
+    def get_widget_roles():
+        """Returns the list of roles we consider widgets"""
+
+        roles = [Atspi.Role.CHECK_BOX,
+                 Atspi.Role.COMBO_BOX,
+                 Atspi.Role.PUSH_BUTTON,
+                 Atspi.Role.RADIO_BUTTON,
+                 Atspi.Role.SLIDER,
+                 Atspi.Role.TEXT, # predicate recommended to check it is editable
+                 Atspi.Role.TOGGLE_BUTTON]
+        return roles
+
+    @staticmethod
     def have_same_role(obj1, obj2):
         """Returns True if obj1 and obj2 have the same role"""
 
@@ -307,10 +439,7 @@ class AXUtilitiesRole:
     def is_dialog_or_alert(obj, role=None):
         """Returns True if obj has any dialog or alert role"""
 
-        roles = [Atspi.Role.ALERT,
-                 Atspi.Role.COLOR_CHOOSER,
-                 Atspi.Role.DIALOG,
-                 Atspi.Role.FILE_CHOOSER]
+        roles = AXUtilitiesRole.get_dialog_roles(True)
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -327,12 +456,7 @@ class AXUtilitiesRole:
     def is_document(obj, role=None):
         """Returns True if obj has any document-related role"""
 
-        roles = [Atspi.Role.DOCUMENT_EMAIL,
-                 Atspi.Role.DOCUMENT_FRAME,
-                 Atspi.Role.DOCUMENT_PRESENTATION,
-                 Atspi.Role.DOCUMENT_SPREADSHEET,
-                 Atspi.Role.DOCUMENT_TEXT,
-                 Atspi.Role.DOCUMENT_WEB]
+        roles = AXUtilitiesRole.get_document_roles()
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -770,10 +894,7 @@ class AXUtilitiesRole:
     def is_menu_item_of_any_kind(obj, role=None):
         """Returns True if obj has any menu item role"""
 
-        roles = [Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = AXUtilitiesRole.get_menu_item_roles()
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -782,13 +903,7 @@ class AXUtilitiesRole:
     def is_menu_related(obj, role=None):
         """Returns True if obj has any menu-related role"""
 
-        roles = [Atspi.Role.MENU,
-                 Atspi.Role.MENU_BAR,
-                 Atspi.Role.POPUP_MENU,
-                 Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = AXUtilitiesRole.get_menu_related_roles()
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -1099,11 +1214,7 @@ class AXUtilitiesRole:
     def is_table_cell_or_header(obj, role=None):
         """Returns True if obj has the table cell or a header-related role"""
 
-        roles = [Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = AXUtilitiesRole.get_table_cell_roles()
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -1120,22 +1231,14 @@ class AXUtilitiesRole:
     def is_table_header(obj, role=None):
         """Returns True if obj has a table header related role"""
 
-        roles = [Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = AXUtilitiesRole.get_table_header_roles()
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
 
     @staticmethod
-    def is_table_related(obj, role=None):
-        roles = [Atspi.Role.TABLE,
-                 Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+    def is_table_related(obj, role=None, include_caption=False):
+        roles = AXUtilitiesRole.get_table_related_roles(include_caption)
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles

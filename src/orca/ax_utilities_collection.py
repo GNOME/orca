@@ -44,6 +44,7 @@ from gi.repository import Atspi
 from . import debug
 from .ax_collection import AXCollection
 from .ax_object import AXObject
+from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
 
@@ -458,10 +459,7 @@ class AXUtilitiesCollection:
     def find_all_dialogs_and_alerts(root, pred=None):
         """Returns all descendants of root that has any dialog or alert role"""
 
-        roles = [Atspi.Role.ALERT,
-                 Atspi.Role.COLOR_CHOOSER,
-                 Atspi.Role.DIALOG,
-                 Atspi.Role.FILE_CHOOSER]
+        roles = AXUtilitiesRole.get_dialog_roles(True)
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -475,12 +473,7 @@ class AXUtilitiesCollection:
     def find_all_documents(root, pred=None):
         """Returns all descendants of root that has any document-related role"""
 
-        roles = [Atspi.Role.DOCUMENT_EMAIL,
-                 Atspi.Role.DOCUMENT_FRAME,
-                 Atspi.Role.DOCUMENT_PRESENTATION,
-                 Atspi.Role.DOCUMENT_SPREADSHEET,
-                 Atspi.Role.DOCUMENT_TEXT,
-                 Atspi.Role.DOCUMENT_WEB]
+        roles = AXUtilitiesRole.get_document_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -636,17 +629,7 @@ class AXUtilitiesCollection:
     def find_all_form_fields(root, must_be_focusable=True, pred=None):
         """Returns all descendants of root with a form-field-related role"""
 
-        roles = [Atspi.Role.CHECK_BOX,
-                 Atspi.Role.RADIO_BUTTON,
-                 Atspi.Role.COMBO_BOX,
-                 Atspi.Role.DOCUMENT_FRAME, # rich text editing pred recommended
-                 Atspi.Role.TEXT, # pred recommended to check it is editable
-                 Atspi.Role.LIST_BOX,
-                 Atspi.Role.ENTRY,
-                 Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.PUSH_BUTTON,
-                 Atspi.Role.SPIN_BUTTON]
-
+        roles = AXUtilitiesRole.get_form_field_roles()
         if not must_be_focusable:
             return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
@@ -959,33 +942,21 @@ class AXUtilitiesCollection:
     def find_all_menu_items_of_any_kind(root, pred=None):
         """Returns all descendants of root that has any menu item role"""
 
-        roles = [Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = AXUtilitiesRole.get_menu_item_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
     def find_all_menu_related_objects(root, pred=None):
         """Returns all descendants of root that has any menu-related role"""
 
-        roles = [Atspi.Role.MENU,
-                 Atspi.Role.MENU_BAR,
-                 Atspi.Role.POPUP_MENU,
-                 Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = AXUtilitiesRole.get_menu_related_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
     def find_all_modal_dialogs(root, pred=None):
         """Returns all descendants of root with the alert or dialog role and modal state"""
 
-        roles = [Atspi.Role.ALERT,
-                 Atspi.Role.COLOR_CHOOSER,
-                 Atspi.Role.DIALOG,
-                 Atspi.Role.FILE_CHOOSER]
+        roles = AXUtilitiesRole.get_dialog_roles(True)
         states = [Atspi.StateType.MODAL]
         return AXUtilitiesCollection.find_all_with_role_and_all_states(root, roles, states, pred)
 
@@ -1178,12 +1149,7 @@ class AXUtilitiesCollection:
     def find_all_set_containers(root, pred=None):
         """Returns all descendants of root with a set container role"""
 
-        roles = [Atspi.Role.LIST,
-                 Atspi.Role.MENU,
-                 Atspi.Role.PAGE_TAB_LIST,
-                 Atspi.Role.TABLE,
-                 Atspi.Role.TREE,
-                 Atspi.Role.TREE_TABLE]
+        roles = AXUtilitiesRole.get_set_container_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -1366,11 +1332,7 @@ class AXUtilitiesCollection:
     def find_all_table_cells_and_headers(root, pred=None):
         """Returns all descendants of root with the table cell or a header-related role"""
 
-        roles = [Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = AXUtilitiesRole.get_table_cell_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -1384,22 +1346,14 @@ class AXUtilitiesCollection:
     def find_all_table_headers(root, pred=None):
         """Returns all descendants of root that has a table header related role"""
 
-        roles = [Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = AXUtilitiesRole.get_table_header_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
-    def find_all_table_related_objects(root, pred=None):
+    def find_all_table_related_objects(root, pred=None, include_caption=False):
         """Returns all descendants of root that has a table related role"""
 
-        roles = [Atspi.Role.TABLE,
-                 Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = AXUtilitiesRole.get_table_related_roles(include_caption)
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -1497,9 +1451,7 @@ class AXUtilitiesCollection:
     def find_all_tree_related_objects(root, pred=None):
         """Returns all descendants of root that has a tree related role"""
 
-        roles = [Atspi.Role.TREE,
-                 Atspi.Role.TREE_ITEM,
-                 Atspi.Role.TREE_TABLE]
+        roles = AXUtilitiesRole.get_tree_related_roles()
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
