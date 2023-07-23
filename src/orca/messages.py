@@ -1821,6 +1821,11 @@ NO_MORE_HEADINGS = _("No more headings.")
 # at the desired level can be found.
 NO_MORE_HEADINGS_AT_LEVEL = _("No more headings at level %d.")
 
+# Translators: This is for navigating document content by moving from iframe
+# to iframe. This is a detailed message which will be presented to the user
+# if no more iframes can be found.
+NO_MORE_IFRAMES = _("No more internal frames.")
+
 # Translators: This is for navigating document content by moving from image
 # to image. This is a detailed message which will be presented to the user
 # if no more images can be found.

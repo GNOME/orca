@@ -156,6 +156,7 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.ENTRY,
                 structural_navigation.StructuralNavigation.FORM_FIELD,
                 structural_navigation.StructuralNavigation.HEADING,
+                structural_navigation.StructuralNavigation.IFRAME,
                 structural_navigation.StructuralNavigation.IMAGE,
                 structural_navigation.StructuralNavigation.LANDMARK,
                 structural_navigation.StructuralNavigation.LINK,
