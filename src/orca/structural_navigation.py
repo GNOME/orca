@@ -496,6 +496,7 @@ class StructuralNavigation:
     FORM_FIELD      = "formField"
     HEADING         = "heading"
     IMAGE           = "image"
+    IFRAME          = "iframe"
     LANDMARK        = "landmark"
     LINK            = "link"
     LIST            = "list"        # Bulleted/numbered lists
@@ -1728,6 +1729,48 @@ class StructuralNavigation:
                 return [self._getText(obj)]
 
         return title, columnHeaders, rowData
+
+    ########################
+    #                      #
+    # Iframes              #
+    #                      #
+    ########################
+
+    def _iframeBindings(self):
+        bindings = {}
+        prevDesc = cmdnames.IFRAME_PREV
+        bindings["previous"] = ["", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
+
+        nextDesc = cmdnames.IFRAME_NEXT
+        bindings["next"] = ["", keybindings.NO_MODIFIER_MASK, nextDesc]
+
+        listDesc = cmdnames.IFRAME_LIST
+        bindings["list"] = ["", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        return bindings
+
+    def _iframeGetter(self, document, arg=None):
+        return AXUtilities.find_all_internal_frames(document)
+
+    def _iframePresentation(self, obj, arg=None):
+        if obj is not None:
+            [newObj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(newObj, characterOffset)
+            self._presentObject(obj, 0)
+        else:
+            full = messages.NO_MORE_IFRAMES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+            self._script.presentMessage(full, brief)
+
+    def _iframeDialogData(self):
+        columnHeaders = [guilabels.SN_HEADER_IFRAME]
+
+        def rowData(obj):
+            name = AXObject.get_name(obj)
+            if not name and AXObject.get_child_count(obj):
+                name = AXObject.get_name(AXObject.get_child(obj, 0))
+            return [name or self._getRoleName(obj)]
+
+        return guilabels.SN_TITLE_IFRAME, columnHeaders, rowData
 
     ########################
     #                      #

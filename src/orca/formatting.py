@@ -294,6 +294,9 @@ formatting = {
         Atspi.Role.INFO_BAR: {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
+        Atspi.Role.INTERNAL_FRAME: {
+            'unfocused': 'labelAndName + roleName'
+            },
         Atspi.Role.LABEL: {
             'unfocused': 'label + ((displayedText + allTextSelection) or name) + roleName',
             },

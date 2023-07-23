@@ -877,6 +877,15 @@ HEADING_AT_LEVEL_NEXT = _("Go to next heading at level %d")
 # <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 HEADING_AT_LEVEL_LIST = _("Display a list of headings at level %d")
 
+# Translators: this is for navigating among iframes in a document.
+IFRAME_PREV = _("Go to previous internal frame")
+
+# Translators: this is for navigating among iframes in a document.
+IFRAME_NEXT = _("Go to next internal frame")
+
+# Translators: this is for navigating among images in a document.
+IFRAME_LIST = _("Display a list of internal frames")
+
 # Translators: this is for navigating among images in a document.
 IMAGE_PREV = _("Go to previous image")
 

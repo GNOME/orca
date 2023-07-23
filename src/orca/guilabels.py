@@ -493,6 +493,12 @@ SN_HEADER_HEADING = C_("structural navigation", "Heading")
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
+# contains the title associated with an iframe.
+SN_HEADER_IFRAME = C_("structural navigation", "Internal Frame")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title for a column which
 # contains the text (alt text, title, etc.) associated with an image.
 SN_HEADER_IMAGE = C_("structural navigation", "Image")
 
@@ -631,6 +637,11 @@ SN_TITLE_FORM_FIELD = C_("structural navigation", "Form Fields")
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title of such a dialog box.
 SN_TITLE_HEADING = C_("structural navigation", "Headings")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title of such a dialog box.
+SN_TITLE_IFRAME = C_("structural navigation", "Interal Frames")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
