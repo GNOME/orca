@@ -46,6 +46,9 @@ class AXUtilities:
     def get_application_with_pid(pid): ...
 
     @staticmethod
+    def get_all_widgets(obj, must_be_showing_and_visible=True): ...
+
+    @staticmethod
     def get_default_button(obj): ...
 
     @staticmethod
