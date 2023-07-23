@@ -31,7 +31,7 @@ from gi.repository import Atspi
 
 import orca.chat as chat
 import orca.scripts.default as default
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 ########################################################################
 #                                                                      #
@@ -100,9 +100,5 @@ class Script(default.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-
-        def hasRole(x):
-            return AXObject.get_role(x) == Atspi.Role.PAGE_TAB
-
-        self.utilities.findAllDescendants(event.source, hasRole)
+        AXUtilities.find_all_page_tabs(event.source)
         default.Script.onWindowActivated(self, event)

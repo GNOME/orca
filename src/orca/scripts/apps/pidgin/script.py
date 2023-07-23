@@ -35,6 +35,7 @@ import orca.messages as messages
 import orca.scripts.toolkits.GAIL as GAIL
 import orca.settings as settings
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .chat import Chat
 from .script_utilities import Utilities
@@ -204,11 +205,8 @@ class Script(GAIL.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
+        AXUtilities.find_all_page_tabs(event.source)
 
-        def hasRole(x):
-            return AXObject.get_role(x) == Atspi.Role.PAGE_TAB
-
-        self.utilities.findAllDescendants(event.source, hasRole)
         msg = "PIDGIN: Hack to work around missing events complete"
         debug.println(debug.LEVEL_INFO, msg, True)
         GAIL.Script.onWindowActivated(self, event)
