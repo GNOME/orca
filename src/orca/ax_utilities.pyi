@@ -1226,3 +1226,6 @@ class AXUtilities:
 
     @staticmethod
     def find_status_bar(root): ...
+
+    @staticmethod
+    def get_focused_object(obj):

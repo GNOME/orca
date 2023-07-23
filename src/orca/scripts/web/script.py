@@ -1881,7 +1881,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data, interrupt=True)
 
-            focused = self.utilities.focusedObject(event.any_data)
+            focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
                 notify = self.utilities.queryNonEmptyText(focused) is None
                 msg = "WEB: Setting locusOfFocus and caret context to %s" % focused

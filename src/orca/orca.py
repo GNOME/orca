@@ -73,6 +73,7 @@ from . import settings_manager
 from . import speech
 from . import sound
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 from .input_event import BrailleEvent
 
 _eventManager = event_manager.getManager()
@@ -859,7 +860,7 @@ def main():
             _scriptManager.setActiveScript(script, "Launching.")
 
             setLocusOfFocus(None, window)
-            focusedObject = script.utilities.focusedObject(window)
+            focusedObject = AXUtilities.get_focused_object(window)
             if focusedObject:
                 setLocusOfFocus(None, focusedObject)
                 script = _scriptManager.getScript(

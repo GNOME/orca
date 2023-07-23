@@ -4790,7 +4790,7 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         AXObject.clear_cache(listBox)
-        item = self.focusedObject(listBox)
+        item = AXUtilities.get_focused_object(listBox)
         if not AXUtilities.is_list_item(item):
             msg = "WEB: Could not find focused list item to recover from removed child."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4870,7 +4870,7 @@ class Utilities(script_utilities.Utilities):
             AXObject.clear_cache(event.source)
             obj, offset = self.searchForCaretContext(event.source)
             if obj is None:
-                obj = self.focusedObject(event.source)
+                obj = AXUtilities.get_focused_object(event.source)
 
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
@@ -5208,7 +5208,7 @@ class Utilities(script_utilities.Utilities):
 
         if event.type.startswith("object:text-changed:insert"):
             alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
-            if alert and self.focusedObject(alert) == event.source:
+            if alert and AXUtilities.get_focused_object(alert) == event.source:
                 msg = "WEB: Focused source will be presented as part of alert"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False

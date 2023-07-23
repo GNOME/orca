@@ -498,39 +498,6 @@ class Utilities:
 
         return None
 
-    @staticmethod
-    def focusedObject(root):
-        """Returns the accessible that has focus under or including the
-        given root.
-
-        TODO: This will currently traverse all children, whether they are
-        visible or not and/or whether they are children of parents that
-        manage their descendants.  At some point, this method should be
-        optimized to take such things into account.
-
-        Arguments:
-        - root: the root object where to start searching
-
-        Returns the object with the FOCUSED state or None if no object with
-        the FOCUSED state can be found.
-        """
-
-        if not root:
-            return None
-
-        if AXUtilities.is_focused(root):
-            return root
-
-        for child in AXObject.iter_children(root):
-            try:
-                candidate = Utilities.focusedObject(child)
-                if candidate:
-                    return candidate
-            except Exception:
-                pass
-
-        return None
-
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing obj."""
 
@@ -3703,15 +3670,6 @@ class Utilities:
                 return table.nSelectedRows
 
         return AXSelection.get_selected_child_count(obj)
-
-    def focusedChild(self, obj):
-        child = AXObject.find_descendant(obj, AXUtilities.is_focused)
-        if child == obj:
-            msg = "ERROR: focused child of %s is %s" % (obj, child)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
-        return child
 
     def popupMenuFor(self, obj):
         if obj is None:

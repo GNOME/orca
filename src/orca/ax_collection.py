@@ -134,9 +134,10 @@ class AXCollection:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = "AXCollection: %i match(es) found in %.4fs" % (len(matches), time.time() - start)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        match = None
         if matches:
-            return matches[0]
+            match = matches[0]
 
-        return None
+        msg = "AXCollection: found %s in %.4fs" % (match, time.time() - start)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return match
