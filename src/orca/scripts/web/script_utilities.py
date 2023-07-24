@@ -4268,7 +4268,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_editable(obj):
             return False
 
-        if AXUtilities.is_spin_button(obj) or AXUtilities.is_spin_button(AXObject.get_parent):
+        if AXUtilities.is_spin_button(obj) or AXUtilities.is_spin_button(AXObject.get_parent(obj)):
             return True
 
         return False
