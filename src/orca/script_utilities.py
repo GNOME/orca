@@ -1103,7 +1103,10 @@ class Utilities:
         return self.getTopLevelDocumentForObject(orca_state.locusOfFocus)
 
     def isTopLevelDocument(self, obj):
-        return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
+        result = self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
+        msg = "INFO: %s is top-level document: %s" % (obj, result)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
 
     def getTopLevelDocumentForObject(self, obj):
         if self.isTopLevelDocument(obj):
@@ -2443,12 +2446,9 @@ class Utilities:
             return None
 
         child = hyperlink.getObject(0)
-        msg = "INFO: Hyperlink object at index %i for %s is %s" % (index, obj, child)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         if offset != hyperlink.startIndex:
-            msg = "ERROR: The hyperlink start index (%i) should match the offset (%i)" \
-                % (hyperlink.startIndex, offset)
+            msg = "ERROR: The hyperlink start index (%i) should match the offset (%i) " \
+                  "obj: %s, child: %s" % (hyperlink.startIndex, offset, obj, child)
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return child

@@ -4794,6 +4794,8 @@ class Utilities(script_utilities.Utilities):
 
     def _getCaretContextViaLocusOfFocus(self):
         obj = orca_state.locusOfFocus
+        msg = "WEB: Getting caret context via locusOfFocus %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
         if not self.inDocumentContent(obj):
             return None, -1
 
@@ -4812,6 +4814,8 @@ class Utilities(script_utilities.Utilities):
 
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
+            msg = "WEB: Now getting caret context for %s" % documentFrame
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         if not documentFrame:
             if not searchIfNeeded:
@@ -4825,12 +4829,22 @@ class Utilities(script_utilities.Utilities):
             return obj, offset
 
         context = self._caretContexts.get(hash(AXObject.get_parent(documentFrame)))
+        if context is not None:
+            msg = "WEB: Cached context of %s is %s, %i." % (documentFrame, context[0], context[1])
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            msg = "WEB: No cached context for %s." % (documentFrame)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         if not context or not self.isTopLevelDocument(documentFrame):
             if not searchIfNeeded:
+                msg = "WEB: Returning None, -1: No top-level document with context " \
+                    "and no search requested."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return None, -1
             obj, offset = self.searchForCaretContext(documentFrame)
         elif not getZombieReplicant:
-            return context
+            obj, offset = context
         elif self.isZombie(context[0]):
             msg = "WEB: Context is Zombie. Searching for replicant."
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -4842,8 +4856,9 @@ class Utilities(script_utilities.Utilities):
         else:
             obj, offset = context
 
+        msg = "WEB: Result context of %s is %s." % (documentFrame, context)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.setCaretContext(obj, offset, documentFrame)
-
         return obj, offset
 
     def getCaretContextPathRoleAndName(self, documentFrame=None):
