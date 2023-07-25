@@ -913,6 +913,9 @@ class AXUtilities:
     def find_all_glass_panes(root, pred=None): ...
 
     @staticmethod
+    def find_all_grid_cells(root, pred=None): ...
+
+    @staticmethod
     def find_all_groupings(root, pred=None): ...
 
     @staticmethod

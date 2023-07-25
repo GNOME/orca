@@ -730,6 +730,38 @@ class AXUtilitiesCollection:
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
+    def find_all_grid_cells(root, pred=None):
+        """Returns all descendants of root that are grid cells"""
+
+        if root is None:
+            return []
+
+        msg = "AXUtilitiesCollection: %s Searching for grids" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        roles = [Atspi.Role.TABLE]
+        attributes = ["xml-roles:grid"]
+        rule = AXCollection.create_match_rule(roles=roles, attributes=attributes)
+        grids = AXCollection.get_all_matches(root, rule)
+        if not grids:
+            return []
+
+        msg = "AXUtilitiesCollection: %s Searching for grid cells" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        cells = []
+        for grid in grids:
+            cells.extend(AXUtilitiesCollection.find_all_table_cells(grid))
+
+        if pred is not None:
+            AXUtilitiesCollection._apply_predicate(cells, pred)
+
+        print("grids:", len(grids), "cells:", len(cells))
+        return cells
+
+    @staticmethod
     def find_all_groupings(root, pred=None):
         """Returns all descendants of root with the grouping role"""
 
