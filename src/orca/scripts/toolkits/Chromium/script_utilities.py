@@ -70,7 +70,7 @@ class Utilities(web.Utilities):
             return rv
 
         roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
-        rv = AXObject.get_role(obj) in roles and self._getTag(obj) in (None, "br")
+        rv = AXObject.get_role(obj) in roles and self._getTag(obj) in (None, "", "br")
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -108,7 +108,7 @@ class Utilities(web.Utilities):
             tag = self._getTag(obj)
             if tag == "::marker":
                 rv = True
-            elif tag is not None:
+            elif tag:
                 rv = False
             elif AXObject.get_child_count(parent) > 1:
                 rv = AXObject.get_child(parent, 0) == obj
