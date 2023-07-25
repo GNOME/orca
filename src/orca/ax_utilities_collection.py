@@ -110,6 +110,27 @@ class AXUtilitiesCollection:
         return matches
 
     @staticmethod
+    def _find_all_with_role(root, role_list, role_match_type, pred=None):
+        if not (root and role_list):
+            return []
+
+        role_list = list(role_list)
+        string = "Root: %s %s of: %s" % \
+              (root,
+               role_match_type.value_nick,
+               AXUtilitiesCollection._roles_as_string(role_list))
+        msg = "AXUtilitiesCollection: %s" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        rule = AXCollection.create_match_rule(roles=role_list, role_match_type=role_match_type)
+        matches = AXCollection.get_all_matches(root, rule)
+        if pred is not None:
+            matches = AXUtilitiesCollection._apply_predicate(matches, pred)
+
+        return matches
+
+    @staticmethod
     def find_all_with_interfaces(root, interface_list, pred=None):
         """Returns all descendants of root which implement all the specified interfaces"""
 
@@ -133,21 +154,15 @@ class AXUtilitiesCollection:
     def find_all_with_role(root, role_list, pred=None):
         """Returns all descendants of root with any of the specified roles"""
 
-        if not (root and role_list):
-            return []
+        return AXUtilitiesCollection._find_all_with_role(
+            root, role_list, Atspi.CollectionMatchType.ANY, pred)
 
-        role_list = list(role_list)
-        string = "Root: %s Roles: %s" % (root, AXUtilitiesCollection._roles_as_string(role_list))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
-        debug.println(debug.LEVEL_INFO, msg, True)
+    @staticmethod
+    def find_all_without_roles(root, role_list, pred=None):
+        """Returns all descendants of root which have none of the specified roles"""
 
-        rule = AXCollection.create_match_rule(roles=role_list)
-        matches = AXCollection.get_all_matches(root, rule)
-        if pred is not None:
-            matches = AXUtilitiesCollection._apply_predicate(matches, pred)
-
-        return matches
+        return AXUtilitiesCollection._find_all_with_role(
+            root, role_list, Atspi.CollectionMatchType.NONE, pred)
 
     @staticmethod
     def find_all_with_role_and_all_states(root, role_list, state_list, pred=None):
@@ -240,7 +255,7 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_without_states(root, state_list, pred=None):
-        """Returns all descendants of root which have any of the specified states"""
+        """Returns all descendants of root which have none of the specified states"""
 
         return AXUtilitiesCollection._find_all_with_states(
             root, state_list, Atspi.CollectionMatchType.NONE, pred)
@@ -349,6 +364,32 @@ class AXUtilitiesCollection:
 
         roles = [Atspi.Role.CHECK_MENU_ITEM]
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
+
+    @staticmethod
+    def find_all_clickables(root, pred=None):
+        """Returns all non-focusable descendants of root which support the click action"""
+
+        if root is None:
+            return []
+
+        msg = "AXUtilitiesCollection: %s" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        interfaces = ["Action"]
+        states = [Atspi.StateType.FOCUSABLE]
+        state_match_type = Atspi.CollectionMatchType.NONE
+
+        def is_match(x):
+            if not AXObject.has_action(x, "click"):
+                return False
+            return pred is None or pred(x)
+
+        rule = AXCollection.create_match_rule(
+            interfaces=interfaces, states=states, state_match_type=state_match_type)
+        matches = AXCollection.get_all_matches(root, rule)
+        matches = AXUtilitiesCollection._apply_predicate(matches, is_match)
+        return matches
 
     @staticmethod
     def find_all_color_choosers(root, pred=None):
@@ -582,6 +623,32 @@ class AXUtilitiesCollection:
 
         states = [Atspi.StateType.FOCUSABLE]
         return AXUtilitiesCollection.find_all_with_states(root, states, pred)
+
+    @staticmethod
+    def find_all_focusable_objects_with_click_ancestor(root, pred=None):
+        """Returns all focusable descendants of root which support the click-ancestor action"""
+
+        if root is None:
+            return []
+
+        msg = "AXUtilitiesCollection: %s" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        interfaces = ["Action"]
+        states = [Atspi.StateType.FOCUSABLE]
+        state_match_type = Atspi.CollectionMatchType.ANY
+
+        def is_match(x):
+            if not AXObject.has_action(x, "click-ancestor"):
+                return False
+            return pred is None or pred(x)
+
+        rule = AXCollection.create_match_rule(
+            interfaces=interfaces, states=states, state_match_type=state_match_type)
+        matches = AXCollection.get_all_matches(root, rule)
+        matches = AXUtilitiesCollection._apply_predicate(matches, is_match)
+        return matches
 
     @staticmethod
     def find_all_focused_objects(root, pred=None):
