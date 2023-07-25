@@ -379,6 +379,8 @@ class AXUtilitiesCollection:
         interfaces = ["Action"]
         states = [Atspi.StateType.FOCUSABLE]
         state_match_type = Atspi.CollectionMatchType.NONE
+        roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
+        roles_match_type = Atspi.CollectionMatchType.NONE
 
         def is_match(x):
             if not AXObject.has_action(x, "click"):
@@ -386,7 +388,11 @@ class AXUtilitiesCollection:
             return pred is None or pred(x)
 
         rule = AXCollection.create_match_rule(
-            interfaces=interfaces, states=states, state_match_type=state_match_type)
+            interfaces=interfaces,
+            roles=roles,
+            role_match_type=roles_match_type,
+            states=states,
+            state_match_type=state_match_type)
         matches = AXCollection.get_all_matches(root, rule)
         matches = AXUtilitiesCollection._apply_predicate(matches, is_match)
         return matches
@@ -638,6 +644,8 @@ class AXUtilitiesCollection:
         interfaces = ["Action"]
         states = [Atspi.StateType.FOCUSABLE]
         state_match_type = Atspi.CollectionMatchType.ANY
+        roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
+        roles_match_type = Atspi.CollectionMatchType.NONE
 
         def is_match(x):
             if not AXObject.has_action(x, "click-ancestor"):
@@ -645,7 +653,11 @@ class AXUtilitiesCollection:
             return pred is None or pred(x)
 
         rule = AXCollection.create_match_rule(
-            interfaces=interfaces, states=states, state_match_type=state_match_type)
+            interfaces=interfaces,
+            roles=roles,
+            role_match_type=roles_match_type,
+            states=states,
+            state_match_type=state_match_type)
         matches = AXCollection.get_all_matches(root, rule)
         matches = AXUtilitiesCollection._apply_predicate(matches, is_match)
         return matches

@@ -105,6 +105,28 @@ class AXUtilitiesRole:
         return roles
 
     @staticmethod
+    def get_roles_to_exclude_from_clickables_list():
+        """Returns the list of roles we want to exclude from the list of clickables"""
+
+        roles = [Atspi.Role.COMBO_BOX,
+                 Atspi.Role.ENTRY,
+                 Atspi.Role.LIST_BOX,
+                 Atspi.Role.MENU,
+                 Atspi.Role.MENU_ITEM,
+                 Atspi.Role.CHECK_MENU_ITEM,
+                 Atspi.Role.RADIO_MENU_ITEM,
+                 Atspi.Role.PAGE_TAB,
+                 Atspi.Role.PASSWORD_TEXT,
+                 Atspi.Role.PROGRESS_BAR,
+                 Atspi.Role.SLIDER,
+                 Atspi.Role.SPIN_BUTTON,
+                 Atspi.Role.TOOL_BAR,
+                 Atspi.Role.TREE_ITEM,
+                 Atspi.Role.TREE_TABLE,
+                 Atspi.Role.TREE]
+        return roles
+
+    @staticmethod
     def get_set_container_roles():
         """Returns the list of roles we consider a set container"""
 
