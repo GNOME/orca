@@ -1805,11 +1805,10 @@ class Utilities:
         if self.isStaticTextLeaf(obj):
             return False
 
-        text = self.queryNonEmptyText(obj)
-        if not text:
+        if not AXObject.supports_text(obj):
             return False
 
-        return bool(re.search(r"\w+", text.getText(0, -1)))
+        return bool(re.search(r"\w+", obj.queryText().getText(0, -1)))
 
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
