@@ -61,7 +61,11 @@ class EventManager:
         self._gilSleepTime = 0.00001
         self._synchronousToolkits = ['VCL']
         self._eventsSuspended = False
-        self._suspendableEvents = ['object:children-changed']
+
+        # Note: These must match what the scripts registered for, otherwise
+        # Atspi might segfault.
+        self._suspendableEvents = ['object:children-changed:add',
+                                   'object:children-changed:remove']
         self._eventsTriggeringSuspension = []
         self._ignoredEvents = ['object:bounds-changed',
                                'object:state-changed:defunct',
