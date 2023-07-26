@@ -27,6 +27,12 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+# If we were to adhere to the line-length requirements of 100 characters,
+# this file would be even more cumbersome to look at than it already is.
+# We shall respect the line-length requirements for all files that are not
+# formatting.py.
+# ruff: noqa: E501
+
 import copy
 import gi
 gi.require_version("Atspi", "2.0")
