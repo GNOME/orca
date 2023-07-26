@@ -33,8 +33,6 @@ from gi.repository import Atspi
 
 from . import object_properties
 
-# pylint: disable-msg=C0301
-
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 

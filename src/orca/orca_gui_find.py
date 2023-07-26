@@ -49,9 +49,6 @@ class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
-
-        # Initialize variables to None to keep pylint happy.
-        #
         self.activeScript = None
         self.caseSensitive = None
         self.matchEntireWord = None

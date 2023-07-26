@@ -80,12 +80,7 @@ class Generator:
     objects.  See the generate method, which is the primary entry
     point."""
 
-    # pylint: disable-msg=W0142
-
     def __init__(self, script, mode):
-
-        # pylint: disable-msg=W0108
-
         self._mode = mode
         self._script = script
         self._activeProgressBars = {}

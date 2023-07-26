@@ -40,8 +40,6 @@ _settingsManager = settings_manager.getManager()
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
-    # pylint: disable-msg=W0142
-
     def __init__(self, script):
         super().__init__(script)
 

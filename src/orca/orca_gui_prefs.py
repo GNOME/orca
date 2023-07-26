@@ -107,9 +107,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.prefsDict = prefsDict
 
         self._defaultProfile = ['Default', 'default']
-
-        # Initialize variables to None to keep pylint happy.
-        #
         self.bbindings = None
         self.cellRendererText = None
         self.defaultVoice = None

@@ -77,7 +77,6 @@ esac
 AC_SUBST(PLATFORM_PATH)
 
 AC_CONFIG_FILES([
-run_pylint.sh
 Makefile
 docs/Makefile
 docs/man/Makefile
@@ -126,7 +125,7 @@ src/orca/orca_bin.py
 src/orca/orca_i18n.py
 src/orca/orca_platform.py
 ])
-AC_CONFIG_COMMANDS([default],[chmod +x run_pylint.sh ; cp src/orca/orca_bin.py src/orca/orca],[])
+AC_CONFIG_COMMANDS([default],[cp src/orca/orca_bin.py src/orca/orca],[])
 AC_OUTPUT
 
 if test "x$brlapi_available" = "xno" ; then

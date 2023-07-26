@@ -17,15 +17,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# # [[[TODO: richb - Pylint is giving us a bunch of warnings along these
-# lines throughout this file:
-#
-#  W0142:202:SpeechServer._send_command: Used * or ** magic
-#
-# So for now, we just disable these warnings in this module.]]]
-#
-# pylint: disable-msg=W0142
-
 """Provides an Orca speech server for Speech Dispatcher backend."""
 
 __id__ = "$Id$"

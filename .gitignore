@@ -33,9 +33,7 @@ orca.spec
 py-compile
 stamp-h1
 xmldocs.make
-*.pylint
 core
-run_pylint.sh
 bld
 *~
 patch.*
