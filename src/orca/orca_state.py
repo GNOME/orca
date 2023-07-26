@@ -78,8 +78,6 @@ learnModeEnabled = False
 #
 orcaOS = None
 
-listNotificationsModeEnabled = False
-
 # Set to True if the last key opened the preferences dialog
 #
 openingDialog = False

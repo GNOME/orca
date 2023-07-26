@@ -58,7 +58,6 @@ import orca.sound as sound
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
-import orca.notification_messages as notification_messages
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -524,7 +523,7 @@ class Script(script.Script):
                 Script.presentSizeAndPosition,
                 cmdnames.PRESENT_SIZE_AND_POSITION)
 
-        self.inputEventHandlers.update(notification_messages.inputEventHandlers)
+        self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -651,6 +650,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.getAppKeyBindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.notificationPresenter.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -1013,12 +1016,6 @@ class Script(script.Script):
 
     def showHelp(self, inputEvent=None):
         return orca.helpForOrca()
-
-    def listNotifications(self, inputEvent=None):
-        if inputEvent is None:
-            inputEvent = orca_state.lastNonModifierKeyEvent
-
-        return notification_messages.listNotificationMessages(self, inputEvent)
 
     def listOrcaShortcuts(self, inputEvent=None):
         """Shows a simple gui listing Orca's bound commands."""
@@ -2662,9 +2659,9 @@ class Script(script.Script):
             speech.speak(self.speechGenerator.generateSpeech(obj))
             visibleOnly = not self.utilities.isStatusBarNotification(obj)
             labels = self.utilities.unrelatedLabels(obj, visibleOnly, 1)
-            msg = ''.join(map(self.utilities.displayedText, labels))
+            msg = ' '.join(map(self.utilities.displayedText, labels))
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
-            notification_messages.saveMessage(msg)
+            self.notificationPresenter.save_notification(msg)
             return
 
         if role == Atspi.Role.TOOL_TIP:
@@ -2987,7 +2984,6 @@ class Script(script.Script):
         orca.setLocusOfFocus(event, None)
         orca.setActiveWindow(None)
         orca_state.activeScript = None
-        orca_state.listNotificationsModeEnabled = False
         orca_state.learnModeEnabled = False
 
     def onClipboardContentsChanged(self, *args):

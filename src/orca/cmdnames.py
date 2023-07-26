@@ -656,6 +656,10 @@ NOTIFICATION_MESSAGES_LIST = _("Present notification messages list")
 # notification message.
 NOTIFICATION_MESSAGES_PREVIOUS = _("Present previous notification message")
 
+# Translators: this is a command which causes Orca to present the next
+# notification message.
+NOTIFICATION_MESSAGES_NEXT = _("Present next notification message")
+
 # Translators: this is a command related to navigating within a document.
 CARET_NAVIGATION_NEXT_CHAR = _("Go to next character")
 

@@ -554,6 +554,10 @@ class EventManager:
                 asyncMode = False
             elif e.type.startswith("object:children-changed"):
                 asyncMode = AXUtilities.is_table(e.source)
+            elif AXUtilities.is_notification(e.source):
+                # To decrease the likelihood that the popup will be destroyed before we
+                # have its contents.
+                asyncMode = False
             script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
             script.eventCache[e.type] = (e, time.time())
 
