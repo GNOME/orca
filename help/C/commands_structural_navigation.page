@@ -132,8 +132,8 @@
         <item>
           <p>
             Next and previous form field:
-            <keyseq><key>Orca Modifier</key><key>Tab</key></keyseq> and
-            <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>
+            <keyseq><key>F</key></keyseq> and
+            <keyseq><key>Shift</key><key>F</key></keyseq>
           </p>
         </item> 
         <item>
