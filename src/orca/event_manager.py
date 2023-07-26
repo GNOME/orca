@@ -60,6 +60,9 @@ class EventManager:
         self._gidleLock      = threading.Lock()
         self._gilSleepTime = 0.00001
         self._synchronousToolkits = ['VCL']
+        self._eventsSuspended = False
+        self._suspendableEvents = ['object:children-changed']
+        self._eventsTriggeringSuspension = []
         self._ignoredEvents = ['object:bounds-changed',
                                'object:state-changed:defunct',
                                'object:property-change:accessible-parent']
@@ -82,10 +85,9 @@ class EventManager:
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Dectivating', True)
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
         self._active = False
-        for eventType in self._scriptListenerCounts.keys():
-            pyatspi.Registry.deregisterEventListener(self._enqueue, eventType)
+        self._eventQueue = queue.Queue(0)
         self._scriptListenerCounts = {}
         orca_state.device = None
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
@@ -412,6 +414,59 @@ class EventManager:
 
         debug.println(debug.LEVEL_INFO, string, True)
 
+    def _suspendEvents(self, triggeringEvent):
+        self._eventsTriggeringSuspension.append(triggeringEvent)
+
+        if self._eventsSuspended:
+            msg = "EVENT MANAGER: Events already suspended."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "EVENT MANAGER: Suspending events."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        for event in self._suspendableEvents:
+            self._deregisterListener(event)
+
+        self._eventsSuspended = True
+
+    def _unsuspendEvents(self, triggeringEvent):
+        if triggeringEvent in self._eventsTriggeringSuspension:
+            self._eventsTriggeringSuspension.remove(triggeringEvent)
+
+        if not self._eventsSuspended:
+            msg = "EVENT MANAGER: Events already unsuspended."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self._eventsTriggeringSuspension:
+            msg = "EVENT MANAGER: Events are suspended for another event."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "EVENT MANAGER: Unsuspending events."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        for event in self._suspendableEvents:
+            self._registerListener(event)
+
+        self._eventsSuspended = False
+
+    def _shouldSuspendEventsFor(self, event):
+        if AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source):
+            if event.type.startswith("window"):
+                msg = "EVENT MANAGER: Should suspend events for window event."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+            if event.type.endswith("active"):
+                msg = "EVENT MANAGER: Should suspend events for active event on window."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+        return False
+
+    def _didSuspendEventsFor(self, event):
+        return event in self._eventsTriggeringSuspension
+
     def _enqueue(self, e):
         """Handles the enqueueing of all events destined for scripts.
 
@@ -446,6 +501,9 @@ class EventManager:
             msg = 'EVENT MANAGER: Pruning event queue due to flood.'
             debug.println(debug.LEVEL_INFO, msg, True)
             self._pruneEventsDuringFlood()
+
+        if isObjectEvent and self._shouldSuspendEventsFor(e):
+            self._suspendEvents(e)
 
         asyncMode = self._asyncMode
         if isObjectEvent:
@@ -506,9 +564,12 @@ class EventManager:
                 if debugging:
                     startTime = time.time()
                     debug.println(debug.eventDebugLevel,
-                                  "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
-                                  % event.type)
+                                  "\nvvvvv PROCESS OBJECT EVENT %s (queue size: %i) vvvvv" \
+                                  % (event.type, self._eventQueue.qsize()))
                 self._processObjectEvent(event)
+                if self._didSuspendEventsFor(event):
+                    self._unsuspendEvents(event)
+
                 if debugging:
                     debug.println(debug.eventDebugLevel,
                                   "TOTAL PROCESSING TIME: %.4f" \

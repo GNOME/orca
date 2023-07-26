@@ -722,8 +722,10 @@ def shutdown(script=None, inputEvent=None):
     orca_state.activeScript.presentationInterrupt()
     orca_state.activeScript.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
-    _scriptManager.deactivate()
+    # Deactivate the event manager first so that it clears its queue and will not
+    # accept new events. Then let the script manager unregister script event listeners.
     _eventManager.deactivate()
+    _scriptManager.deactivate()
 
     # Shutdown all the other support.
     #
