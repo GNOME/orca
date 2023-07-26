@@ -99,8 +99,6 @@ class SpeechGenerator(generator.Generator):
     entry point.  Subclasses can feel free to override/extend the
     speechGenerators instance field as they see fit."""
 
-    # pylint: disable-msg=W0142
-
     def __init__(self, script):
         generator.Generator.__init__(self, script, "speech")
 

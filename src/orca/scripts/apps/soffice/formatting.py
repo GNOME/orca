@@ -25,8 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-# pylint: disable-msg=C0301
-
 import copy
 import gi
 gi.require_version("Atspi", "2.0")

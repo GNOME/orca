@@ -319,8 +319,6 @@ class Chat:
         self.messageListLength = len(self.messageKeys)
         self._conversationList = ConversationList(self.messageListLength)
 
-        # To make pylint happy.
-        #
         self.focusedChannelRadioButton = None
         self.allChannelsRadioButton = None
         self.allMessagesRadioButton = None

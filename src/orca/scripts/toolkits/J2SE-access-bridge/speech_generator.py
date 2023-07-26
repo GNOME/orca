@@ -46,8 +46,6 @@ _settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
-    # pylint: disable-msg=W0142
-
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 

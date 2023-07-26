@@ -34,8 +34,6 @@ from gi.repository import Atspi
 
 import orca.formatting
 
-# pylint: disable-msg=C0301
-
 formatting = {
     'speech': {
         # In Java, tree objects are labels, so we need to look at their

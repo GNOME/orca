@@ -161,8 +161,6 @@ def setProcessName(name):
 
     sys.argv[0] = name
 
-    # Disabling the import error of setproctitle.
-    # pylint: disable-msg=F0401
     try:
         from setproctitle import setproctitle
     except ImportError:
