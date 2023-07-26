@@ -53,6 +53,9 @@
         <p>Present the previous notification message: (Unbound)</p>
       </item>
       <item>
+        <p>Present the next notification message: (Unbound)</p>
+      </item>
+      <item>
         <p>Present list of all notification messages: (Unbound)</p>
       </item>
     </list>

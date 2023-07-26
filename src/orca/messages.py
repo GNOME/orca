@@ -1907,24 +1907,9 @@ NOTIFICATION = _("Notification")
 # the list of notifications is reached.
 NOTIFICATION_LIST_BOTTOM = C_("notification", "Bottom")
 
-# Translators: This message is presented to the user to confirm the list of
-# notifications mode is being exited.
-NOTIFICATION_LIST_EXIT = _("Exiting list notification messages mode.")
-
 # Translators: This is a brief message presented to the user when the top of the
 # list of notifications is reached.
 NOTIFICATION_LIST_TOP = C_("notification", "Top")
-
-# Translators: This is a tutorial message for the notification list mode.
-NOTIFICATION_LIST_HELP = _("Press h for help.\n")
-
-# Translators: The following string instructs the user how to navigate within
-# the list notifications mode.
-NOTIFICATION_LIST_TUTORIAL =  \
-            _("Use Up, Down, Home or End to navigate in the list.\n"\
-              "Press Escape to exit.\n"\
-              "Press Space to repeat the last message read.\n"\
-              "Press one digit to read a specific message.\n")
 
 # Translators: This message is presented to the user when the notifications list
 # is empty.
@@ -2740,6 +2725,26 @@ def tableSize(nRows, nColumns):
                          nColumns) % nColumns
 
     return rowString + " " + colString
+
+def secondsAgo(count):
+    # Translators: This message informs the user how long ago something took
+    # place in terms of seconds.
+    return ngettext("%d second ago", "%d seconds ago", count) % count
+
+def minutesAgo(count):
+    # Translators: This message informs the user how long ago something took
+    # place in terms of minutes.
+    return ngettext("%d minute ago", "%d minutes ago", count) % count
+
+def hoursAgo(count):
+    # Translators: This message informs the user how long ago something took
+    # place in terms of hours.
+    return ngettext("%d hour ago", "%d hours ago", count) % count
+
+def daysAgo(count):
+    # Translators: This message informs the user how long ago something took
+    # place in terms of days.
+    return ngettext("%d day ago", "%d days ago", count) % count
 
 def unvisitedLinkCount(count, onlyIfFound=True):
     if not count and onlyIfFound:

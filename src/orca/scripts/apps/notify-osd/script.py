@@ -29,7 +29,6 @@ import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
 import orca.settings_manager as settings_manager
-import orca.notification_messages as notification_messages
 from orca.ax_object import AXObject
 
 _settingsManager = settings_manager.getManager()
@@ -79,4 +78,4 @@ class Script(default.Script):
         voice = self.speechGenerator.voice(obj=event.source, string=message)
         self.speakMessage(message, voice=voice)
         self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
-        notification_messages.saveMessage(message)
+        self.notificationPresenter.save_notification(message)

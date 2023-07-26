@@ -78,8 +78,6 @@ learnModeEnabled = False
 #
 orcaOS = None
 
-listNotificationsModeEnabled = False
-
 # The AT-SPI device (needed for key grabs).
 #
 device = None

@@ -180,15 +180,6 @@ keymap = (
     "changeNumberStyleHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "repeatLastNotificationMessageHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "repeatPreviousNotificationMessageHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "enableNotificationMessageListModeHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "flatReviewCopyHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,

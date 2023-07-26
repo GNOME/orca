@@ -47,8 +47,9 @@ from . import braille_generator
 from . import debug
 from . import event_manager
 from . import formatting
-from . import label_inference
 from . import keybindings
+from . import label_inference
+from . import notification_presenter
 from . import orca_state
 from . import script_manager
 from . import script_utilities
@@ -98,6 +99,7 @@ class Script:
         self.caretNavigation = self.getCaretNavigation()
         self.bookmarks = self.getBookmarks()
         self.liveRegionManager = self.getLiveRegionManager()
+        self.notificationPresenter = self.getNotificationPresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -218,6 +220,9 @@ class Script:
     def getLiveRegionManager(self):
         """Returns the live region support for this script."""
         return None
+
+    def getNotificationPresenter(self):
+        return notification_presenter.getPresenter()
 
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most

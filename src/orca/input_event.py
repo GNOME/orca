@@ -803,10 +803,6 @@ class KeyboardEvent(InputEvent):
                 return False, 'Non-Orca modifier not in Learn Mode'
             return True, 'Orca modifier'
 
-        if orca_state.listNotificationsModeEnabled:
-            self._consumer = self._script.listNotifications
-            return True, 'Listing notifications'
-
         if not self._handler:
             return False, 'No handler'
 

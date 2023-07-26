@@ -293,6 +293,23 @@ KB_MODIFIED = C_("keybindings", "Modified")
 # Translators: This label refers to the keyboard layout (desktop or laptop).
 KEYBOARD_LAYOUT_DESKTOP = _("_Desktop")
 
+# Translators: This is a column header for a list of notification messages.
+# It will appear over the message text.
+NOTIFICATIONS_COLUMN_HEADER = C_("notification presenter", "Notifications")
+
+# Translators: This is a title for a dialog that will present a list of
+# notification messages.
+NOTIFICATIONS_COUNT = C_("notification presenter", "%d Notifications")
+
+# Translators: This is a column header for a list of notification messages.
+# It will appear over the time a particular notification was received. The
+# time will be relative (e.g. "10 minutes ago") or absolute.
+NOTIFICATIONS_RECEIVED_TIME = C_("notification presenter", "Received")
+
+# Translators: This string is a label for the group of Orca commands which
+# are associated with presenting notifications.
+NOTIFICATIONS_KB_GROUP = _("Notification presenter")
+
 # Translators: Orca's preferences can be configured on a per-application basis,
 # allowing users to customize Orca's behavior, keybindings, etc. to work one
 # way in LibreOffice and another way in a chat application. This string is the

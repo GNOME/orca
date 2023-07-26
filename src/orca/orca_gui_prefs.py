@@ -2188,16 +2188,20 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterApp = self._createNode(appName)
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
+        iterNotificationPresenter = self._createNode(guilabels.NOTIFICATIONS_KB_GROUP)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
             self.script.setupInputEventHandlers()
             allKeyBindings = self.script.getKeyBindings()
             defKeyBindings = self.script.getDefaultKeyBindings()
+            npKeyBindings = self.script.getNotificationPresenter().get_bindings()
             for kb in allKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):
                     handl = self.script.getInputEventHandlerKey(kb.handler)
-                    if not defKeyBindings.hasKeyBinding(kb, "description"):
+                    if npKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterNotificationPresenter)
+                    elif not defKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:
                         self._insertRow(handl, kb, iterOrca)
