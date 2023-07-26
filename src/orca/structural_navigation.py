@@ -1604,12 +1604,10 @@ class StructuralNavigation:
     def _formFieldBindings(self):
         bindings = {}
         prevDesc = cmdnames.FORM_FIELD_PREV
-        bindings["previous"] = ["Tab",
-                                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                                prevDesc]
+        bindings["previous"] = ["f", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.FORM_FIELD_NEXT
-        bindings["next"] = ["Tab", keybindings.ORCA_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["f", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.FORM_FIELD_LIST
         bindings["list"] = ["f", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
