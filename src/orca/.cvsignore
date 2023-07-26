@@ -1,7 +1,0 @@
-Makefile
-Makefile.in
-orca
-orca-setup
-orca_i18n.py
-orca_platform.py
-*.pyc
