@@ -32,7 +32,6 @@ __license__   = "LGPL"
 
 import gi
 import time
-from datetime import datetime, timedelta
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import GObject
