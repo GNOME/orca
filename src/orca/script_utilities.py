@@ -1255,6 +1255,29 @@ class Utilities:
             return False
         return AXObject.find_ancestor(obj, AXUtilities.is_status_bar) is not None
 
+    def getNotificationContent(self, obj):
+        if not AXUtilities.is_notification(obj):
+            return ""
+
+        tokens = []
+        name = AXObject.get_name(obj)
+        if name:
+            tokens.append(name)
+        text = self.expandEOCs(obj)
+        if text and text not in tokens:
+            tokens.append(text)
+        else:
+            labels = " ".join(map(self.displayedText, self.unrelatedLabels(obj, False, 1)))
+            if labels and labels not in tokens:
+                tokens.append(labels)
+
+        if not tokens:
+            description = AXObject.get_description(obj)
+            if description:
+                tokens.append(description)
+
+        return " ".join(tokens)
+
     def isTreeDescendant(self, obj):
         if obj is None:
             return False
