@@ -43,7 +43,6 @@ except Exception:
     _mouseReviewCapable = False
 
 from . import debug
-from . import event_manager
 from . import messages
 from . import orca
 from . import orca_state
