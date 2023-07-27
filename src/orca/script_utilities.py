@@ -4099,6 +4099,9 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
+        if coordType is None:
+            coordType = Atspi.CoordType.SCREEN
+
         result = component.getAccessibleAtPoint(x, y, coordType)
         msg = "INFO: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
         debug.println(debug.LEVEL_INFO, msg, True)

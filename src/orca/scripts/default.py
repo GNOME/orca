@@ -1290,10 +1290,9 @@ class Script(script.Script):
             self.flatReviewContext.routeToCurrent()
             return True
 
-        if eventsynthesizer.routeToCharacter(orca_state.locusOfFocus):
-            return True
-
-        if eventsynthesizer.routeToObject(orca_state.locusOfFocus):
+        if eventsynthesizer.routeToCharacter(orca_state.locusOfFocus) \
+           or eventsynthesizer.routeToObject(orca_state.locusOfFocus):
+            self.presentMessage(messages.MOUSE_MOVED_SUCCESS)
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
