@@ -2659,10 +2659,9 @@ class Script(script.Script):
         if role == Atspi.Role.NOTIFICATION:
             if not event.detail1:
                 return
+
             speech.speak(self.speechGenerator.generateSpeech(obj))
-            visibleOnly = not self.utilities.isStatusBarNotification(obj)
-            labels = self.utilities.unrelatedLabels(obj, visibleOnly, 1)
-            msg = ' '.join(map(self.utilities.displayedText, labels))
+            msg = self.utilities.getNotificationContent(obj)
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
             self.notificationPresenter.save_notification(msg)
             return
