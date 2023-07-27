@@ -32,7 +32,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import math
-import pyatspi
 import time
 from gi.repository import Gdk
 from gi.repository import GLib
@@ -945,7 +944,7 @@ class KeyboardEvent(InputEvent):
                     else:
                         lock = Atspi.KeySynthType.LOCKMODIFIERS
                         debug.println(debug.LEVEL_INFO, "Locking capslock", True)
-                    pyatspi.Registry.generateKeyboardEvent(modifier, None, lock)
+                    Atspi.generate_keyboard_event(modifier, "", lock)
                     debug.println(debug.LEVEL_INFO, "Done with capslock", True)
                 except Exception:
                     debug.println(debug.LEVEL_INFO, "Could not trigger capslock, " \
