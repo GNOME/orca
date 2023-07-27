@@ -116,6 +116,7 @@ class AXUtilitiesRole:
                  Atspi.Role.CHECK_MENU_ITEM,
                  Atspi.Role.RADIO_MENU_ITEM,
                  Atspi.Role.PAGE_TAB,
+                 Atspi.Role.PAGE_TAB_LIST,
                  Atspi.Role.PASSWORD_TEXT,
                  Atspi.Role.PROGRESS_BAR,
                  Atspi.Role.SLIDER,

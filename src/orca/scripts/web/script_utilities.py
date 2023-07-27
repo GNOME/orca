@@ -4860,6 +4860,7 @@ class Utilities(script_utilities.Utilities):
         else:
             msg = "WEB: No cached context for %s." % (documentFrame)
             debug.println(debug.LEVEL_INFO, msg, True)
+            obj, offset = None, -1
 
         if not context or not self.isTopLevelDocument(documentFrame):
             if not searchIfNeeded:
@@ -4881,7 +4882,7 @@ class Utilities(script_utilities.Utilities):
         else:
             obj, offset = context
 
-        msg = "WEB: Result context of %s is %s." % (documentFrame, context)
+        msg = "WEB: Result context of %s is %s, %i." % (documentFrame, obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
         self.setCaretContext(obj, offset, documentFrame)
         return obj, offset
