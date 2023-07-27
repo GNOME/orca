@@ -14,7 +14,6 @@ SUBDIRS = \
 	notification-daemon \
 	notify-osd \
 	pidgin \
-	rhythmbox \
 	soffice \
 	SeaMonkey \
 	smuxi-frontend-gnome \
