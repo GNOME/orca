@@ -4850,6 +4850,14 @@ class Utilities(script_utilities.Utilities):
             return obj, offset
 
         context = self._caretContexts.get(hash(AXObject.get_parent(documentFrame)))
+        if context is not None:
+            msg = "WEB: Cached context of %s is %s, %i." % (documentFrame, context[0], context[1])
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            msg = "WEB: No cached context for %s." % (documentFrame)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            obj, offset = None, -1
+
         if not context or not self.isTopLevelDocument(documentFrame):
             if not searchIfNeeded:
                 return None, -1
@@ -4867,6 +4875,8 @@ class Utilities(script_utilities.Utilities):
         else:
             obj, offset = context
 
+        msg = "WEB: Result context of %s is %s, %i." % (documentFrame, obj, offset)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.setCaretContext(obj, offset, documentFrame)
 
         return obj, offset
