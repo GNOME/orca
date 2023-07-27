@@ -69,6 +69,7 @@ class Utilities(script_utilities.Utilities):
         self._isContentEditableWithEmbeddedObjects = {}
         self._isCodeDescendant = {}
         self._isEntryDescendant = {}
+        self._hasGridDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isModalDialogDescendant = {}
@@ -166,6 +167,7 @@ class Utilities(script_utilities.Utilities):
         self._isContentEditableWithEmbeddedObjects = {}
         self._isCodeDescendant = {}
         self._isEntryDescendant = {}
+        self._hasGridDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
@@ -785,6 +787,11 @@ class Utilities(script_utilities.Utilities):
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         if not self.inDocumentContent(obj):
             return super().expandEOCs(obj, startOffset, endOffset)
+
+        if self.hasGridDescendant(obj):
+            msg = "WEB: not expanding EOCs: %s has grid descendant" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
 
         text = self.queryNonEmptyText(obj)
         if not text:
@@ -2861,6 +2868,19 @@ class Utilities(script_utilities.Utilities):
     def supportsSelectionAndTable(self, obj):
         return AXObject.supports_table(obj) and AXObject.supports_selection(obj)
 
+    def hasGridDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._hasGridDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        grids = AXUtilities.find_all_grids(obj)
+        rv = bool(grids)
+        self._hasGridDescendant[hash(obj)] = rv
+        return rv
+
     def isGridDescendant(self, obj):
         if not obj:
             return False
@@ -3491,6 +3511,11 @@ class Utilities(script_utilities.Utilities):
 
         if self.labelIsAncestorOfLabelled(obj):
             return False
+
+        if self.hasGridDescendant(obj):
+            msg = "WEB: %s is not clickable: has grid descendant" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return ""
 
         rv = False
         if not self.isFocusModeWidget(obj):
