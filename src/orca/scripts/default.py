@@ -128,7 +128,8 @@ class Script(script.Script):
         self.grab_ids = []
 
         if app:
-            app.setCacheMask(Atspi.Cache.DEFAULT ^ Atspi.Cache.NAME ^ Atspi.Cache.DESCRIPTION)
+            Atspi.Accessible.set_cache_mask(
+                app, Atspi.Cache.DEFAULT ^ Atspi.Cache.NAME ^ Atspi.Cache.DESCRIPTION)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
