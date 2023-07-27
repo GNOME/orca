@@ -29,6 +29,12 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+
+# This unused import keeps Orca working by making pyatspi still available.
+# It can only be removed when we have completely eliminated all uses of
+# pyatspi API.
+import pyatspi
+
 import faulthandler
 import gi
 import importlib
