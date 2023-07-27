@@ -1728,6 +1728,10 @@ MODE_LAYOUT = _("Layout mode.")
 # object-based presentation.
 MODE_OBJECT = _("Object mode.")
 
+# Translators: This message is presented to the user when the command to move
+# the mouse pointer to a particular object is believed to have succeeded.
+MOUSE_MOVED_SUCCESS = _("Pointer moved to object.")
+
 # Translators: Hovering the mouse over certain objects on a web page causes a 
 # new object to appear such as a pop-up menu. Orca has a command will move the
 # user to the object which just appeared as a result of the user hovering the

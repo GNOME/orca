@@ -28,7 +28,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import gi
-import pyatspi
+import time
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -58,7 +58,20 @@ def _generateMouseEvent(x, y, event):
 
     msg = "EVENT SYNTHESIZER: Generating %s mouse event at %d,%d" % (event, x, y)
     debug.println(debug.LEVEL_INFO, msg, True)
-    pyatspi.Registry.generateMouseEvent(x, y, event)
+
+    try:
+        success = Atspi.generate_mouse_event(x, y, event)
+    except Exception as e:
+        msg = "EVENT SYNTHESIZER: Exception in _generateMouseEvent: %s" % e
+        debug.println(debug.LEVEL_INFO, msg, True)
+        success = False
+    else:
+        msg = "EVENT SYNTHESIZER: Atspi.generate_mouse_event returned %s" % success
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    # There seems to be a timeout / lack of reply from this blocking call.
+    # But often the mouse event is successful. Pause briefly before checking.
+    time.sleep(0.5)
 
     newX, newY = _getMouseCoordinates()
     if oldX == newX and oldY == newY and (oldX, oldY) != (x, y):
@@ -148,11 +161,15 @@ def _mouseEventOnObject(obj, event):
 def routeToCharacter(obj):
     """Routes the pointer to the current character in obj."""
 
+    msg = "EVENT SYNTHESIZER: Attempting to route to character in %s" % obj
+    debug.println(debug.LEVEL_INFO, msg, True)
     return _mouseEventOnCharacter(obj, "abs")
 
 def routeToObject(obj):
     """Moves the mouse pointer to the center of obj."""
 
+    msg = "EVENT SYNTHESIZER: Attempting to route to %s" % obj
+    debug.println(debug.LEVEL_INFO, msg, True)
     return _mouseEventOnObject(obj, "abs")
 
 def routeToPoint(x, y):
