@@ -28,7 +28,6 @@ import gi
 gi.require_version('Atspi', '2.0') 
 from gi.repository import Atspi
 from gi.repository import GLib
-import pyatspi
 import queue
 import threading
 import time
@@ -61,6 +60,7 @@ class EventManager:
         self._gilSleepTime = 0.00001
         self._synchronousToolkits = ['VCL']
         self._eventsSuspended = False
+        self._listener = Atspi.EventListener.new(self._enqueue)
 
         # Note: These must match what the scripts registered for, otherwise
         # Atspi might segfault.
@@ -621,7 +621,7 @@ class EventManager:
         if eventType in self._scriptListenerCounts:
             self._scriptListenerCounts[eventType] += 1
         else:
-            pyatspi.Registry.registerEventListener(self._enqueue, eventType)
+            self._listener.register(eventType)
             self._scriptListenerCounts[eventType] = 1
 
     def _deregisterListener(self, eventType):
@@ -639,7 +639,7 @@ class EventManager:
 
         self._scriptListenerCounts[eventType] -= 1
         if self._scriptListenerCounts[eventType] == 0:
-            pyatspi.Registry.deregisterEventListener(self._enqueue, eventType)
+            self._listener.deregister(eventType)
             del self._scriptListenerCounts[eventType]
 
     def registerScriptListeners(self, script):
@@ -669,18 +669,6 @@ class EventManager:
 
         for eventType in script.listeners.keys():
             self._deregisterListener(eventType)
-
-    def registerModuleListeners(self, listeners):
-        """Register the listeners on behalf of the caller."""
-
-        for eventType, function in listeners.items():
-            pyatspi.Registry.registerEventListener(function, eventType)
-
-    def deregisterModuleListeners(self, listeners):
-        """Deegister the listeners on behalf of the caller."""
-
-        for eventType, function in listeners.items():
-            pyatspi.Registry.deregisterEventListener(function, eventType)
 
     def _processInputEvent(self, event):
         """Processes the given input event based on the keybinding from the
