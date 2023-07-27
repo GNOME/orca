@@ -25,4 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+# https://gitlab.gnome.org/GNOME/orca/-/issues/358
+# ruff: noqa: F401
 from .script import Script

@@ -19,5 +19,7 @@
 
 """Custom script for xfwm4."""
 
+# https://gitlab.gnome.org/GNOME/orca/-/issues/358
+# ruff: noqa: F401
 from .script import Script
 
