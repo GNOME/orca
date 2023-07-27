@@ -96,7 +96,6 @@ src/orca/scripts/apps/gajim/Makefile
 src/orca/scripts/apps/gcalctool/Makefile
 src/orca/scripts/apps/gedit/Makefile
 src/orca/scripts/apps/gnome-documents/Makefile
-src/orca/scripts/apps/gnome-search-tool/Makefile
 src/orca/scripts/apps/gnome-shell/Makefile
 src/orca/scripts/apps/kwin/Makefile
 src/orca/scripts/apps/notification-daemon/Makefile
