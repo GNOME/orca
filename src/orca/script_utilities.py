@@ -209,7 +209,7 @@ class Utilities:
 
         # Some electron apps running in the background claim to be active even when they
         # are not. Slack is one such example. We can add others as we go.
-        suspect_app_names = ["slack"]
+        suspect_app_names = ["slack", "whatsapp-desktop-linux"]
         refiltered = []
         for frame in filtered:
             if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
