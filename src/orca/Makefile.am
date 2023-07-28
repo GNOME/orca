@@ -33,6 +33,7 @@ orca_python_PYTHON = \
 	eventsynthesizer.py \
 	find.py \
 	flat_review.py \
+	flat_review_presenter.py \
 	formatting.py \
 	generator.py \
 	guilabels.py \

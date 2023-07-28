@@ -46,6 +46,7 @@ from gi.repository import Atspi
 from . import braille_generator
 from . import debug
 from . import event_manager
+from . import flat_review_presenter
 from . import formatting
 from . import keybindings
 from . import label_inference
@@ -100,6 +101,7 @@ class Script:
         self.bookmarks = self.getBookmarks()
         self.liveRegionManager = self.getLiveRegionManager()
         self.notificationPresenter = self.getNotificationPresenter()
+        self.flatReviewPresenter = self.getFlatReviewPresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -223,6 +225,9 @@ class Script:
 
     def getNotificationPresenter(self):
         return notification_presenter.getPresenter()
+
+    def getFlatReviewPresenter(self):
+        return flat_review_presenter.getPresenter()
 
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most

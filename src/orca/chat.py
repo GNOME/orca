@@ -656,8 +656,8 @@ class Chat:
             # We always automatically go back to focus tracking mode when
             # someone sends us a message.
             #
-            if self._script.flatReviewContext:
-                self._script.toggleFlatReviewMode()
+            if self._script.flatReviewPresenter.is_active():
+                self._script.flatReviewPresenter.quit()
 
             if self.isNewConversation(event.source):
                 name = self.getChatRoomName(event.source)

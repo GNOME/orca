@@ -332,6 +332,17 @@ FLAT_REVIEW_COPY = _("Copy the contents under flat review to the clipboard")
 FLAT_REVIEW_APPEND = \
     _("Append the contents under flat review to the clipboard")
 
+# Translators: the 'flat review' feature of Orca allows the blind user to
+# explore the text in a window in a 2D fashion.  That is, Orca treats all
+# the text from all objects in a window (e.g., buttons, labels, etc.) as a
+# sequence of words in a sequence of lines.  The flat review feature allows
+# the user to explore this text by the {previous,next} {line,word,character}.
+# Normally the contents are navigated without leaving the application being
+# reviewed. There is a command which will place the entire contents of the
+# flat review representation into a text view to make it easy to review
+# and copy the text. This string describes that command.
+FLAT_REVIEW_SHOW_CONTENTS = _("Show flat review contents")
+
 # Translators: when users are navigating a table, they sometimes want the
 # entire row of a table read; other times they just want the current cell
 # to be presented to them.

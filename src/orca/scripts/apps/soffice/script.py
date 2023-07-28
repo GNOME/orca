@@ -317,7 +317,7 @@ class Script(default.Script):
         entire document.
         """
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
            or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
            or not self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -347,7 +347,7 @@ class Script(default.Script):
         entire document.
         """
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
            or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
            or not self.utilities.isTextArea(orca_state.locusOfFocus):
@@ -509,8 +509,8 @@ class Script(default.Script):
             self.find()
             return
 
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.quit()
 
         if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
            and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):

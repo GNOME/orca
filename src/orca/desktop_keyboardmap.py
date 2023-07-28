@@ -52,14 +52,8 @@ keymap = (
     ("KP_Multiply", ORCA_MODIFIER_MASK, NO_MODIFIER_MASK,
     "rightClickReviewItemHandler"),
 
-    ("KP_Subtract", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleFlatReviewModeHandler"),
-
     ("KP_Add", defaultModifierMask, NO_MODIFIER_MASK,
     "sayAllHandler", 1),
-
-    ("KP_Add", defaultModifierMask, NO_MODIFIER_MASK,
-    "flatReviewSayAllHandler", 2),
 
     ("KP_Enter", defaultModifierMask, NO_MODIFIER_MASK,
     "whereAmIBasicHandler", 1),
@@ -81,69 +75,4 @@ keymap = (
 
     ("KP_Delete", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
     "findPreviousHandler"),
-
-    ("KP_Home", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPreviousLineHandler"),
-
-    ("KP_Home", defaultModifierMask, ORCA_MODIFIER_MASK, 
-    "reviewHomeHandler"),
-
-    ("KP_Up", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentLineHandler", 1),
-
-    ("KP_Up", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentLineHandler", 2),
-
-    ("KP_Up", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPhoneticCurrentLineHandler", 3),
-
-    ("KP_Page_Up", defaultModifierMask, NO_MODIFIER_MASK, 
-    "reviewNextLineHandler"),
-
-    ("KP_Page_Up", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewEndHandler"),
-
-    ("KP_Left", defaultModifierMask, NO_MODIFIER_MASK, 
-    "reviewPreviousItemHandler"),
-
-    ("KP_Left", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewAboveHandler"),
-
-    ("KP_Begin", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentItemHandler", 1),
-
-    ("KP_Begin", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentItemHandler", 2),
-
-    ("KP_Begin", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPhoneticCurrentItemHandler", 3),
-
-    ("KP_Begin", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewCurrentAccessibleHandler"),
-
-    ("KP_Right", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewNextItemHandler"),
-
-    ("KP_Right", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewBelowHandler"),
-
-    ("KP_End", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPreviousCharacterHandler"),
-
-    ("KP_End", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewEndOfLineHandler"),
-
-    ("KP_Down", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentCharacterHandler", 1),
-
-    ("KP_Down", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentCharacterHandler", 2),
-
-    ("KP_Down", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewUnicodeCurrentCharacterHandler", 3),
-
-    ("KP_Page_Down", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewNextCharacterHandler"),
-
 )
-
