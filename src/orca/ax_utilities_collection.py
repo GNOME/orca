@@ -59,7 +59,9 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def _get_function_string(func):
-        if hasattr(func, '__self__'):
+        if func is None:
+            return "None"
+        elif hasattr(func, '__self__'):
             return f'{func.__module__}.{func.__self__.__class__.__name__}.{func.__name__}'
         else:
             return f'{func.__module__}.{func.__name__}'
@@ -375,10 +377,6 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         interfaces = ["Action"]
         states = [Atspi.StateType.FOCUSABLE]
         state_match_type = Atspi.CollectionMatchType.NONE
@@ -387,8 +385,21 @@ class AXUtilitiesCollection:
         attributes = ["xml-roles:gridcell"]
         attribute_match_type = Atspi.CollectionMatchType.NONE
 
+        string = "Root: %s %s of: %s. pred: %s" % \
+              (root,
+               roles_match_type.value_nick,
+               AXUtilitiesCollection._roles_as_string(roles),
+               AXUtilitiesCollection._get_function_string(pred))
+        msg = "AXUtilitiesCollection: %s" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         def is_match(x):
-            if not AXObject.has_action(x, "click"):
+            result = AXObject.has_action(x, "click")
+            msg = "AXUtilitiesCollection: %s %s has click Action: %s" % \
+                (x, AXObject.actions_as_string(x), result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            if not result:
                 return False
             return pred is None or pred(x)
 
@@ -644,18 +655,27 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         interfaces = ["Action"]
         states = [Atspi.StateType.FOCUSABLE]
         state_match_type = Atspi.CollectionMatchType.ANY
         roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
         roles_match_type = Atspi.CollectionMatchType.NONE
 
+        string = "Root: %s %s of: %s. pred: %s" % \
+              (root,
+               roles_match_type.value_nick,
+               AXUtilitiesCollection._roles_as_string(roles),
+               AXUtilitiesCollection._get_function_string(pred))
+        msg = "AXUtilitiesCollection: %s" \
+            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         def is_match(x):
-            if not AXObject.has_action(x, "click-ancestor"):
+            result = AXObject.has_action(x, "click-ancestor")
+            msg = "AXUtilitiesCollection: %s %s has click-ancestor Action: %s" % \
+                (x, AXObject.actions_as_string(x), result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            if not result:
                 return False
             return pred is None or pred(x)
 
