@@ -2876,8 +2876,19 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        grids = AXUtilities.find_all_grids(obj)
-        rv = bool(grids)
+        if not AXObject.get_child_count(obj):
+            rv = False
+        else:
+            document = self.documentFrame(obj)
+            if obj != document:
+                document_has_grids = self.hasGridDescendant(document)
+                if not document_has_grids:
+                    rv = False
+
+        if rv is None:
+            grids = AXUtilities.find_all_grids(obj)
+            rv = bool(grids)
+
         self._hasGridDescendant[hash(obj)] = rv
         return rv
 
