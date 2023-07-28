@@ -2186,6 +2186,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
         iterNotificationPresenter = self._createNode(guilabels.NOTIFICATIONS_KB_GROUP)
+        iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
@@ -2193,11 +2194,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             allKeyBindings = self.script.getKeyBindings()
             defKeyBindings = self.script.getDefaultKeyBindings()
             npKeyBindings = self.script.getNotificationPresenter().get_bindings()
+
+            layout = _settingsManager.getSetting('keyboardLayout')
+            isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+            frKeyBindings = self.script.getFlatReviewPresenter().get_bindings(isDesktop)
             for kb in allKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):
                     handl = self.script.getInputEventHandlerKey(kb.handler)
                     if npKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterNotificationPresenter)
+                    elif frKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterFlatReviewPresenter)
                     elif not defKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:

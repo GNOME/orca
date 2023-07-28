@@ -91,7 +91,6 @@ class Script(script.Script):
         """
         script.Script.__init__(self, app)
 
-        self.flatReviewContext  = None
         self.targetCursorCell = None
 
         self.justEnteredFlatReviewMode = False
@@ -114,11 +113,6 @@ class Script(script.Script):
         # the pointer elsewhere.
         #
         self.oldMouseCoordinates = [0, 0]
-
-        # Used to copy/append the current flat review contents to the
-        # clipboard.
-        #
-        self.currentReviewContents = ""
 
         self._lastWordCheckedForSpelling = ""
 
@@ -154,11 +148,6 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.sayAll,
                 cmdnames.SAY_ALL)
-
-        self.inputEventHandlers["flatReviewSayAllHandler"] = \
-            input_event.InputEventHandler(
-                Script.flatReviewSayAll,
-                cmdnames.SAY_ALL_FLAT_REVIEW)
 
         self.inputEventHandlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
@@ -204,131 +193,6 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.findPrevious,
                 cmdnames.FIND_PREVIOUS)
-
-        self.inputEventHandlers["toggleFlatReviewModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleFlatReviewMode,
-                cmdnames.TOGGLE_FLAT_REVIEW)
-
-        self.inputEventHandlers["reviewPreviousLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewPreviousLine,
-                cmdnames.REVIEW_PREVIOUS_LINE)
-
-        self.inputEventHandlers["reviewHomeHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewHome,
-                cmdnames.REVIEW_HOME)
-
-        self.inputEventHandlers["reviewCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewCurrentLine,
-                cmdnames.REVIEW_CURRENT_LINE)
-
-        self.inputEventHandlers["reviewSpellCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewSpellCurrentLine,
-                cmdnames.REVIEW_SPELL_CURRENT_LINE)
-
-        self.inputEventHandlers["reviewPhoneticCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewPhoneticCurrentLine,
-                cmdnames.REVIEW_PHONETIC_CURRENT_LINE)
-
-        self.inputEventHandlers["reviewNextLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewNextLine,
-                cmdnames.REVIEW_NEXT_LINE)
-
-        self.inputEventHandlers["reviewEndHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewEnd,
-                cmdnames.REVIEW_END)
-
-        self.inputEventHandlers["reviewPreviousItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewPreviousItem,
-                cmdnames.REVIEW_PREVIOUS_ITEM)
-
-        self.inputEventHandlers["reviewAboveHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewAbove,
-                cmdnames.REVIEW_ABOVE)
-
-        self.inputEventHandlers["reviewCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewCurrentItem,
-                cmdnames.REVIEW_CURRENT_ITEM)
-
-        self.inputEventHandlers["reviewSpellCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewSpellCurrentItem,
-                cmdnames.REVIEW_SPELL_CURRENT_ITEM)
-
-        self.inputEventHandlers["reviewPhoneticCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewPhoneticCurrentItem,
-                cmdnames.REVIEW_PHONETIC_CURRENT_ITEM)
-
-        self.inputEventHandlers["reviewNextItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewNextItem,
-                cmdnames.REVIEW_NEXT_ITEM)
-
-        self.inputEventHandlers["reviewCurrentAccessibleHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewCurrentAccessible,
-                cmdnames.REVIEW_CURRENT_ACCESSIBLE)
-
-        self.inputEventHandlers["reviewBelowHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewBelow,
-                cmdnames.REVIEW_BELOW)
-
-        self.inputEventHandlers["reviewPreviousCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewPreviousCharacter,
-                cmdnames.REVIEW_PREVIOUS_CHARACTER)
-
-        self.inputEventHandlers["reviewEndOfLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewEndOfLine,
-                cmdnames.REVIEW_END_OF_LINE)
-
-        self.inputEventHandlers["reviewBottomLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewBottomLeft,
-                cmdnames.REVIEW_BOTTOM_LEFT)
-
-        self.inputEventHandlers["reviewCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewCurrentCharacter,
-                cmdnames.REVIEW_CURRENT_CHARACTER)
-
-        self.inputEventHandlers["reviewSpellCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewSpellCurrentCharacter,
-                cmdnames.REVIEW_SPELL_CURRENT_CHARACTER)
-
-        self.inputEventHandlers["reviewUnicodeCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewUnicodeCurrentCharacter,
-                cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER)
-
-        self.inputEventHandlers["reviewNextCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewNextCharacter,
-                cmdnames.REVIEW_NEXT_CHARACTER)
-
-        self.inputEventHandlers["flatReviewCopyHandler"] = \
-            input_event.InputEventHandler(
-                Script.flatReviewCopy,
-                cmdnames.FLAT_REVIEW_COPY)
-
-        self.inputEventHandlers["flatReviewAppendHandler"] = \
-            input_event.InputEventHandler(
-                Script.flatReviewAppend,
-                cmdnames.FLAT_REVIEW_APPEND)
 
         self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
             input_event.InputEventHandler(
@@ -525,6 +389,7 @@ class Script(script.Script):
                 cmdnames.PRESENT_SIZE_AND_POSITION)
 
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
+        self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -660,6 +525,12 @@ class Script(script.Script):
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
+        layout = _settingsManager.getSetting('keyboardLayout')
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        bindings = self.flatReviewPresenter.get_bindings(isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
         try:
             keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
         except Exception:
@@ -712,16 +583,6 @@ class Script(script.Script):
                 self.inputEventHandlers["panBrailleRightHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \
                 self.inputEventHandlers["panBrailleRightHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_LNUP]       = \
-                self.inputEventHandlers["reviewAboveHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_LNDN]       = \
-                self.inputEventHandlers["reviewBelowHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FREEZE]     = \
-                self.inputEventHandlers["toggleFlatReviewModeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT]   = \
-                self.inputEventHandlers["reviewHomeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT]   = \
-                self.inputEventHandlers["reviewBottomLeftHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_HOME]       = \
                 self.inputEventHandlers["goBrailleHomeHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]     = \
@@ -732,6 +593,8 @@ class Script(script.Script):
                 self.inputEventHandlers["processBrailleCutBeginHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_CUTLINE]   = \
                 self.inputEventHandlers["processBrailleCutLineHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_HOME] = \
+                self.inputEventHandlers["goBrailleHomeHandler"]
         except AttributeError:
             msg = 'DEFAULT: Braille bindings unavailable in %s' % self
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -739,6 +602,9 @@ class Script(script.Script):
             msg = 'ERROR: Exception getting braille bindings in %s' % self
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_CONFIGURATION)
+
+        reviewBindings = self.flatReviewPresenter.get_braille_bindings()
+        brailleBindings.update(reviewBindings)
 
         msg = 'DEFAULT: Finished getting braille bindings.'
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -896,8 +762,8 @@ class Script(script.Script):
         except Exception:
             pass
 
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.quit()
 
         topLevel = self.utilities.topLevelObject(newLocusOfFocus)
         if orca_state.activeWindow != topLevel:
@@ -1128,10 +994,10 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if self.flatReviewContext:
+        if self.flatReviewPresenter.is_active():
             if self.isBrailleBeginningShowing():
-                self.flatReviewContext.goBegin(flat_review.Context.LINE)
-                self.reviewPreviousCharacter(inputEvent)
+                self.flatReviewPresenter.go_start_of_line()
+                self.flatReviewPresenter.go_previous_character(inputEvent)
             else:
                 self.panBrailleInDirection(panAmount, panToLeft=True)
 
@@ -1193,12 +1059,12 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if self.flatReviewContext:
+        if self.flatReviewPresenter.is_active():
             if self.isBrailleEndShowing():
-                self.flatReviewContext.goEnd(flat_review.Context.LINE)
+                self.flatReviewPresenter.go_end_of_line()
                 # Reviewing the next character also updates the braille output
                 # and refreshes the display.
-                self.reviewNextCharacter(inputEvent)
+                self.flatReviewPresenter.go_next_character(input_event)
                 return
             self.panBrailleInDirection(panAmount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
@@ -1240,10 +1106,10 @@ class Script(script.Script):
     def goBrailleHome(self, inputEvent=None):
         """Returns to the component with focus."""
 
-        if self.flatReviewContext:
-            return self.toggleFlatReviewMode(inputEvent)
-        else:
-            return braille.returnToRegionWithFocus(inputEvent)
+        if self.flatReviewPresenter.is_active():
+            return self.flatReviewPresenter.quit()
+
+        return braille.returnToRegionWithFocus(inputEvent)
 
     def setContractedBraille(self, inputEvent=None):
         """Toggles contracted braille."""
@@ -1292,8 +1158,8 @@ class Script(script.Script):
         #
         self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
-        if self.flatReviewContext:
-            self.flatReviewContext.routeToCurrent()
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.route_pointer_to_object()
             return True
 
         if eventsynthesizer.routeToCharacter(orca_state.locusOfFocus) \
@@ -1384,11 +1250,11 @@ class Script(script.Script):
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
 
-        if self.flatReviewContext:
-            obj = self.flatReviewContext.getCurrentAccessible()
+        if self.flatReviewPresenter.is_active():
+            obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
             if eventsynthesizer.tryAllClickableActions(obj):
                 return True
-            return self.flatReviewContext.clickCurrent(1)
+            return self.flatReviewPresenter.left_click_on_object()
 
         if eventsynthesizer.tryAllClickableActions(orca_state.locusOfFocus):
             return True
@@ -1408,8 +1274,8 @@ class Script(script.Script):
     def rightClickReviewItem(self, inputEvent=None):
         """Performs a right mouse button click on the current item."""
 
-        if self.flatReviewContext:
-            self.flatReviewContext.clickCurrent(3)
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.right_click_on_object()
             return True
 
         if eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 3):
@@ -1433,423 +1299,6 @@ class Script(script.Script):
         for character in itemString:
             self.speakCharacter(character)
 
-    def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
-                           speechType=1):
-        """Presents the current item to the user.
-
-        Arguments:
-        - inputEvent - the current input event.
-        - targetCursorCell - if non-zero, the target braille cursor cell.
-        - speechType - the desired presentation: speak (1), spell (2), or
-                       phonetic (3).
-        """
-
-        context = self.getFlatReviewContext()
-        [wordString, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.WORD)
-
-        voice = self.speechGenerator.voice(string=wordString)
-
-        # Don't announce anything from speech if the user used
-        # the Braille display as an input device.
-        #
-        if not isinstance(inputEvent, input_event.BrailleEvent):
-            if not wordString or wordString == "\n":
-                self.speakMessage(messages.BLANK)
-            else:
-                [lineString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.LINE)
-                if lineString == "\n":
-                    self.speakMessage(messages.BLANK)
-                elif wordString.isspace():
-                    self.speakMessage(messages.WHITE_SPACE)
-                elif wordString.isupper() and speechType == 1:
-                    self.speakMessage(wordString, voice)
-                elif speechType == 2:
-                    self.spellCurrentItem(wordString)
-                elif speechType == 3:
-                    self.phoneticSpellCurrentItem(wordString)
-                elif speechType == 1:
-                    wordString = self.utilities.adjustForRepeats(wordString)
-                    self.speakMessage(wordString, voice)
-
-        self.updateBrailleReview(targetCursorCell)
-        self.currentReviewContents = wordString
-
-        return True
-
-    def reviewCurrentAccessible(self, inputEvent):
-        context = self.getFlatReviewContext()
-        [zoneString, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.ZONE)
-
-        # Don't announce anything from speech if the user used
-        # the Braille display as an input device.
-        #
-        if not isinstance(inputEvent, input_event.BrailleEvent):
-            utterances = self.speechGenerator.generateSpeech(
-                    context.getCurrentAccessible())
-            utterances.extend(self.tutorialGenerator.getTutorial(
-                    context.getCurrentAccessible(), False))
-            speech.speak(utterances)
-        return True
-
-    def reviewPreviousItem(self, inputEvent):
-        """Moves the flat review context to the previous item.  Places
-        the flat review cursor at the beginning of the item."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goPrevious(flat_review.Context.WORD,
-                                   flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentItem(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewNextItem(self, inputEvent):
-        """Moves the flat review context to the next item.  Places
-        the flat review cursor at the beginning of the item."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goNext(flat_review.Context.WORD,
-                               flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentItem(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewCurrentCharacter(self, inputEvent):
-        """Brailles and speaks the current flat review character."""
-
-        self._reviewCurrentCharacter(inputEvent, 1)
-
-        return True
-
-    def reviewSpellCurrentCharacter(self, inputEvent):
-        """Brailles and 'spells' (phonetically) the current flat review
-        character.
-        """
-
-        self._reviewCurrentCharacter(inputEvent, 2)
-
-        return True
-
-    def reviewUnicodeCurrentCharacter(self, inputEvent):
-        """Brailles and speaks unicode information about the current flat
-        review character.
-        """
-
-        self._reviewCurrentCharacter(inputEvent, 3)
-
-        return True
-
-    def _reviewCurrentCharacter(self, inputEvent, speechType=1):
-        """Presents the current flat review character via braille and speech.
-
-        Arguments:
-        - inputEvent - the current input event.
-        - speechType - the desired presentation:
-                       speak (1),
-                       phonetic (2)
-                       unicode value information (3)
-        """
-
-        context = self.getFlatReviewContext()
-
-        [charString, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.CHAR)
-
-        # Don't announce anything from speech if the user used
-        # the Braille display as an input device.
-        #
-        if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not charString) or (not len(charString)):
-                self.speakMessage(messages.BLANK)
-            else:
-                [lineString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.LINE)
-                if lineString == "\n" and speechType != 3:
-                    self.speakMessage(messages.BLANK)
-                elif speechType == 3:
-                    self.speakUnicodeCharacter(charString)
-                elif speechType == 2:
-                    self.phoneticSpellCurrentItem(charString)
-                else:
-                    self.speakCharacter(charString)
-
-        self.updateBrailleReview()
-        self.currentReviewContents = charString
-
-        return True
-
-    def reviewPreviousCharacter(self, inputEvent):
-        """Moves the flat review context to the previous character.  Places
-        the flat review cursor at character."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goPrevious(flat_review.Context.CHAR,
-                                   flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentCharacter(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewEndOfLine(self, inputEvent):
-        """Moves the flat review context to the end of the line.  Places
-        the flat review cursor at the end of the line."""
-
-        context = self.getFlatReviewContext()
-        context.goEnd(flat_review.Context.LINE)
-
-        self.reviewCurrentCharacter(inputEvent)
-        self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewNextCharacter(self, inputEvent):
-        """Moves the flat review context to the next character.  Places
-        the flat review cursor at character."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goNext(flat_review.Context.CHAR,
-                               flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentCharacter(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewAbove(self, inputEvent):
-        """Moves the flat review context to the character most directly
-        above the current flat review cursor.  Places the flat review
-        cursor at character."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goAbove(flat_review.Context.CHAR,
-                                flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
-
-        return True
-
-    def reviewBelow(self, inputEvent):
-        """Moves the flat review context to the character most directly
-        below the current flat review cursor.  Places the flat review
-        cursor at character."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goBelow(flat_review.Context.CHAR,
-                                flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
-
-        return True
-
-    def reviewCurrentLine(self, inputEvent):
-        """Brailles and speaks the current flat review line."""
-
-        self._reviewCurrentLine(inputEvent, 1)
-
-        return True
-
-    def reviewSpellCurrentLine(self, inputEvent):
-        """Brailles and spells the current flat review line."""
-
-        self._reviewCurrentLine(inputEvent, 2)
-
-        return True
-
-    def reviewPhoneticCurrentLine(self, inputEvent):
-        """Brailles and phonetically spells the current flat review line."""
-
-        self._reviewCurrentLine(inputEvent, 3)
-
-        return True
-
-    def _reviewCurrentLine(self, inputEvent, speechType=1):
-        """Presents the current flat review line via braille and speech.
-
-        Arguments:
-        - inputEvent - the current input event.
-        - speechType - the desired presentation: speak (1), spell (2), or
-                       phonetic (3)
-        """
-
-        context = self.getFlatReviewContext()
-
-        [lineString, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.LINE)
-
-        voice = self.speechGenerator.voice(string=lineString)
-
-        # Don't announce anything from speech if the user used
-        # the Braille display as an input device.
-        #
-        if not isinstance(inputEvent, input_event.BrailleEvent):
-            if not lineString or lineString == "\n":
-                self.speakMessage(messages.BLANK)
-            elif lineString.isspace():
-                self.speakMessage(messages.WHITE_SPACE)
-            elif lineString.isupper() and (speechType < 2 or speechType > 3):
-                self.speakMessage(lineString, voice)
-            elif speechType == 2:
-                self.spellCurrentItem(lineString)
-            elif speechType == 3:
-                self.phoneticSpellCurrentItem(lineString)
-            else:
-                lineString = self.utilities.adjustForRepeats(lineString)
-                self.speakMessage(lineString, voice)
-
-        self.updateBrailleReview()
-        self.currentReviewContents = lineString
-
-        return True
-
-    def reviewPreviousLine(self, inputEvent):
-        """Moves the flat review context to the beginning of the
-        previous line."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goPrevious(flat_review.Context.LINE,
-                                   flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentLine(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewHome(self, inputEvent):
-        """Moves the flat review context to the top left of the current
-        window."""
-
-        context = self.getFlatReviewContext()
-
-        context.goBegin()
-
-        self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewNextLine(self, inputEvent):
-        """Moves the flat review context to the beginning of the
-        next line.  Places the flat review cursor at the beginning
-        of the line."""
-
-        context = self.getFlatReviewContext()
-
-        moved = context.goNext(flat_review.Context.LINE,
-                               flat_review.Context.WRAP_LINE)
-
-        if moved:
-            self._reviewCurrentLine(inputEvent)
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewBottomLeft(self, inputEvent):
-        """Moves the flat review context to the beginning of the
-        last line in the window.  Places the flat review cursor at
-        the beginning of the line."""
-
-        context = self.getFlatReviewContext()
-
-        context.goEnd(flat_review.Context.WINDOW)
-        context.goBegin(flat_review.Context.LINE)
-        self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewEnd(self, inputEvent):
-        """Moves the flat review context to the end of the
-        last line in the window.  Places the flat review cursor
-        at the end of the line."""
-
-        context = self.getFlatReviewContext()
-        context.goEnd()
-
-        self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = self.getBrailleCursorCell()
-
-        return True
-
-    def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
-        """Brailles and speaks the current item to the user."""
-
-        self._reviewCurrentItem(inputEvent, targetCursorCell, 1)
-
-        return True
-
-    def reviewSpellCurrentItem(self, inputEvent, targetCursorCell=0):
-        """Brailles and spells the current item to the user."""
-
-        self._reviewCurrentItem(inputEvent, targetCursorCell, 2)
-
-        return True
-
-    def reviewPhoneticCurrentItem(self, inputEvent, targetCursorCell=0):
-        """Brailles and phonetically spells the current item to the user."""
-
-        self._reviewCurrentItem(inputEvent, targetCursorCell, 3)
-
-        return True
-
-    def flatReviewCopy(self, inputEvent):
-        """Copies the contents of the item under flat review to and places
-        them in the clipboard."""
-
-        if self.flatReviewContext:
-            self.utilities.setClipboardText(self.currentReviewContents.rstrip("\n"))
-            self.presentMessage(messages.FLAT_REVIEW_COPIED)
-        else:
-            self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
-
-        return True
-
-    def flatReviewAppend(self, inputEvent):
-        """Appends the contents of the item under flat review to
-        the clipboard."""
-
-        if self.flatReviewContext:
-            self.utilities.appendTextToClipboard(self.currentReviewContents.rstrip("\n"))
-            self.presentMessage(messages.FLAT_REVIEW_APPENDED)
-        else:
-            self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
-
-        return True
-
-    def flatReviewSayAll(self, inputEvent):
-        context = self.getFlatReviewContext()
-        context.goBegin()
-
-        while True:
-            [string, x, y, width, height] = context.getCurrent(flat_review.Context.LINE)
-            if string is not None:
-                speech.speak(string)
-            moved = context.goNext(flat_review.Context.LINE, flat_review.Context.WRAP_LINE)
-            if not moved:
-                break
-
-        return True
-
     def sayAll(self, inputEvent, obj=None, offset=None):
         obj = obj or orca_state.locusOfFocus
         if not obj or self.utilities.isDead(obj):
@@ -1869,25 +1318,6 @@ class Script(script.Script):
                 offset = text.caretOffset
             speech.sayAll(self.textLines(obj, offset),
                           self.__sayAllProgressCallback)
-
-        return True
-
-    def toggleFlatReviewMode(self, inputEvent=None):
-        """Toggles between flat review mode and focus tracking mode."""
-
-        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
-        if self.flatReviewContext:
-            if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
-                self.presentMessage(messages.FLAT_REVIEW_STOP)
-            self.flatReviewContext = None
-            self.updateBraille(orca_state.locusOfFocus)
-        else:
-            if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
-                self.presentMessage(messages.FLAT_REVIEW_START)
-            context = self.getFlatReviewContext()
-            [wordString, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.WORD)
-            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
 
@@ -2357,8 +1787,8 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.quit()
 
         text = event.source.queryText()
         try:
@@ -2597,11 +2027,12 @@ class Script(script.Script):
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
             if AXUtilities.is_focused(self.utilities.getEntryForEditableComboBox(event.source)):
                 return
-        elif AXUtilities.is_page_tab_list(event.source) and self.flatReviewContext:
+        elif AXUtilities.is_page_tab_list(event.source) and self.flatReviewPresenter.is_active():
             # If a wizard-like notebook page being reviewed changes, we might not get
             # any events to update the locusOfFocus. As a result, subsequent flat
             # review commands will continue to present the stale content.
-            self.flatReviewContext = None
+            # TODO - JD: We can potentially do some automatic reading here.
+            self.flatReviewPresenter.quit()
 
         mouseReviewItem = mouse_review.reviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(event.source)
@@ -2969,8 +2400,8 @@ class Script(script.Script):
         self.presentationInterrupt()
         self.clearBraille()
 
-        if self.flatReviewContext:
-            self.flatReviewContext = None
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.quit()
 
         self.pointOfReference = {}
 
@@ -2988,7 +2419,7 @@ class Script(script.Script):
         orca_state.learnModeEnabled = False
 
     def onClipboardContentsChanged(self, *args):
-        if self.flatReviewContext:
+        if self.flatReviewPresenter.is_active():
             return
 
         if not self.utilities.objectContentsAreInClipboard():
@@ -3487,7 +2918,8 @@ class Script(script.Script):
         msg = "DEFAULT: Presenting object %s. Interrupt: %s" % (obj, interrupt)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        self.updateBraille(obj, **args)
+        if not args.get("speechonly", False):
+            self.updateBraille(obj, **args)
         utterances = self.speechGenerator.generateSpeech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
 
@@ -3526,18 +2958,7 @@ class Script(script.Script):
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
 
-        if not self.flatReviewContext:
-            self.flatReviewContext = flat_review.Context(self)
-            self.justEnteredFlatReviewMode = True
-
-            # Remember where the cursor currently was
-            # when the user was in focus tracking mode.  We'll try to
-            # keep the position the same as we move to characters above
-            # and below us.
-            #
-            self.targetCursorCell = self.getBrailleCursorCell()
-
-        return self.flatReviewContext
+        return self.flatReviewPresenter.get_or_create_context(self)
 
     def updateBrailleReview(self, targetCursorCell=0):
         """Obtains the braille regions for the current flat review line
@@ -3551,9 +2972,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
             return
 
-        context = self.getFlatReviewContext()
-
-        [regions, regionWithFocus] = context.getCurrentBrailleRegions()
+        [regions, regionWithFocus] = self.flatReviewPresenter.get_braille_regions()
         if not regions:
             regions = []
             regionWithFocus = None
@@ -3578,13 +2997,11 @@ class Script(script.Script):
         """Sets the character of interest to be the first character showing
         at the beginning of the braille display."""
 
-        context = self.getFlatReviewContext()
-        [regions, regionWithFocus] = context.getCurrentBrailleRegions()
-
         # The first character on the flat review line has to be in object with text.
         def isTextOrComponent(x):
             return isinstance(x, (braille.ReviewText, braille.ReviewComponent))
 
+        regions = self.flatReviewPresenter.get_braille_regions()[0]
         regions = list(filter(isTextOrComponent, regions))
         msg = "DEFAULT: Text/Component regions on line:\n%s" % "\n".join(map(str, regions))
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -4491,8 +3908,8 @@ class Script(script.Script):
     def presentSizeAndPosition(self, inputEvent):
         """ Presents the size and position of the locusOfFocus. """
 
-        if self.flatReviewContext:
-            obj = self.flatReviewContext.getCurrentAccessible()
+        if self.flatReviewPresenter.is_active():
+            obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
         else:
             obj = orca_state.locusOfFocus
 

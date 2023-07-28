@@ -284,6 +284,26 @@ KB_GROUP_BRAILLE = _("Braille Bindings")
 # do not currently have an associated key binding.
 KB_GROUP_UNBOUND = _("Unbound")
 
+# Translators: This string is a label for the group of Orca commands which
+# are related to Orca's "flat review" feature. This feature allows the blind
+# user to explore the text in a window in a 2D fashion. That is, Orca treats
+# all the text from all objects in a window (e.g., buttons, labels, etc.) as
+# a sequence of words in a sequence of lines.  The flat review feature allows
+# the user to explore this text by the {previous,next} {line,word,character}.
+# Those commands are all listed under this group label.
+KB_GROUP_FLAT_REVIEW = _("Flat review")
+
+# Translators: the 'flat review' feature of Orca allows the blind user to
+# explore the text in a window in a 2D fashion.  That is, Orca treats all
+# the text from all objects in a window (e.g., buttons, labels, etc.) as a
+# sequence of words in a sequence of lines.  The flat review feature allows
+# the user to explore this text by the {previous,next} {line,word,character}.
+# Normally the contents are navigated without leaving the application being
+# reviewed. There is a command which will place the entire contents of the
+# flat review representation into a text view to make it easy to review
+# and copy the text. This string is the title of the window with the text view.
+FLAT_REVIEW_CONTENTS = _("Flat review contents")
+
 # Translators: Modified is a table column header in Orca's preferences dialog.
 # This column contains a checkbox which indicates whether a key binding
 # for an Orca command has been changed by the user to something other than its

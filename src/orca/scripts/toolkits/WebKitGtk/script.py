@@ -420,7 +420,7 @@ class Script(default.Script):
         entire document.
         """
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
            or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
@@ -443,7 +443,7 @@ class Script(default.Script):
         entire document.
         """
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
            or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)

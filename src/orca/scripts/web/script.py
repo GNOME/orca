@@ -1084,7 +1084,7 @@ class Script(default.Script):
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans braille to the left."""
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleBeginningShowing():
             super().panBrailleLeft(inputEvent, panAmount)
@@ -1110,7 +1110,7 @@ class Script(default.Script):
     def panBrailleRight(self, inputEvent=None, panAmount=0):
         """Pans braille to the right."""
 
-        if self.flatReviewContext \
+        if self.flatReviewPresenter.is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleEndShowing():
             super().panBrailleRight(inputEvent, panAmount)
@@ -1343,8 +1343,8 @@ class Script(default.Script):
             self.refreshKeyGrabs("locus of focus no longer in document")
             return False
 
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
+        if self.flatReviewPresenter.is_active():
+            self.flatReviewPresenter.quit()
 
         caretOffset = 0
         if self.utilities.inFindContainer(oldFocus) \

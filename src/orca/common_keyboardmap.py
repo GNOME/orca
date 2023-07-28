@@ -180,12 +180,6 @@ keymap = (
     "changeNumberStyleHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "flatReviewCopyHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "flatReviewAppendHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "shutdownHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,

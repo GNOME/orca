@@ -375,9 +375,8 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
-        if self._script.flatReviewContext:
-            self._script.toggleFlatReviewMode()
-
+        if self._script.flatReviewPresenter.is_active():
+            self._script.flatReviewPresenter.quit()
         grabFocus = self.grabFocusWhenSettingCaret(obj)
 
         obj, offset = self.findFirstCaretContext(obj, offset)

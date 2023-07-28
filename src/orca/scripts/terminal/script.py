@@ -98,7 +98,7 @@ class Script(default.Script):
             voice = self.speechGenerator.voice(obj=event.source, string=newString)
             self.speakMessage(newString, voice=voice)
 
-        if self.flatReviewContext:
+        if self.flatReviewPresenter.is_active():
             return
 
         try:
