@@ -486,8 +486,13 @@ class Context:
         self.focusZone = None
         self.container = None
         self.focusObj = orca_state.locusOfFocus
-        self.topLevel = script.utilities.topLevelObject(self.focusObj)
+        self.topLevel = None
         self.bounds = 0, 0, 0, 0
+
+        frame, dialog = script.utilities.frameAndDialog(self.focusObj)
+        self.topLevel = dialog or frame
+        msg = "FLAT REVIEW: Frame: %s Dialog: %s. Top level: %s" % (frame, dialog, self.topLevel)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         try:
             component = self.topLevel.queryComponent()
