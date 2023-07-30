@@ -816,12 +816,14 @@ class EventManager:
                   "object:text-changed:delete:system",
                   "object:text-changed:insert:system",
                   "object:text-attributes-changed",
+                  "object:text-caret-moved",
                   "object:children-changed:add",
                   "object:children-changed:add:system",
                   "object:children-changed:remove",
                   "object:children-changed:remove:system",
                   "object:property-change:accessible-name",
                   "object:property-change:accessible-description",
+                  "object:selection-changed",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
@@ -850,12 +852,14 @@ class EventManager:
                   "object:text-changed:delete:system",
                   "object:text-changed:insert:system",
                   "object:text-attributes-changed",
+                  "object:text-caret-moved",
                   "object:children-changed:add",
                   "object:children-changed:add:system",
                   "object:children-changed:remove",
                   "object:children-changed:remove:system",
                   "object:property-change:accessible-name",
                   "object:property-change:accessible-description",
+                  "object:selection-changed",
                   "object:state-changed:showing",
                   "object:state-changed:sensitive"]
 
