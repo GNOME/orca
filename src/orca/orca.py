@@ -30,6 +30,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 
+# ruff: noqa: F401
 # This unused import keeps Orca working by making pyatspi still available.
 # It can only be removed when we have completely eliminated all uses of
 # pyatspi API.
