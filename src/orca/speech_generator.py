@@ -2231,13 +2231,18 @@ class SpeechGenerator(generator.Generator):
         if role in [Atspi.Role.FRAME, Atspi.Role.WINDOW]:
             return []
 
-        result = []
         if role == Atspi.Role.MENU_ITEM and (not priorObj or AXUtilities.is_window(priorObj)):
-            return result
+            return []
 
-        if priorObj or AXUtilities.is_dialog(self._script.utilities.topLevelObject(obj)):
-            result = self._generateAncestors(obj, **args)
-        return result
+        if priorObj is not None:
+            return self._generateAncestors(obj, **args)
+
+        frame, dialog = self._script.utilities.frameAndDialog(obj)
+        topLevel = dialog or frame
+        if AXUtilities.is_dialog_or_alert(topLevel):
+            return self._generateAncestors(obj, **args)
+
+        return []
 
     def generateContext(self, obj, **args):
         if args.get('priorObj') == obj:
