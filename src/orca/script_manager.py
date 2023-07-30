@@ -330,7 +330,9 @@ class ScriptManager:
             if AXObject.get_process_id(a) != pid:
                 continue
             if a != app and AXUtilities.is_application_in_desktop(a):
-                msg = "SCRIPT MANAGER: Script for app replicant found: %s" % script
+                if script.app is None:
+                    script.app = a
+                msg = "SCRIPT MANAGER: Script for app replicant: %s %s" % (script, script.app)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return script
 
@@ -356,11 +358,13 @@ class ScriptManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            msg = "SCRIPT MANAGER: Old script for app found: %s" % appScript
+            msg = "SCRIPT MANAGER: Old script for app found: %s %s" % (appScript, appScript.app)
             debug.println(debug.LEVEL_INFO, msg, True)
 
             newScript = self._getScriptForAppReplicant(app)
             if newScript:
+                msg = "SCRIPT MANAGER: Transferring attributes: %s %s" % (newScript, newScript.app)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 attrs = appScript.getTransferableAttributes()
                 for attr, value in attrs.items():
                     msg = "SCRIPT MANAGER: Setting %s to %s" % (attr, value)
