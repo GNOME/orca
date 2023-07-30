@@ -2978,7 +2978,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
             return
 
-        [regions, regionWithFocus] = self.flatReviewPresenter.get_braille_regions()
+        [regions, regionWithFocus] = self.flatReviewPresenter.get_braille_regions(self)
         if not regions:
             regions = []
             regionWithFocus = None
