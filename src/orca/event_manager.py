@@ -331,6 +331,12 @@ class EventManager:
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return True
 
+        elif event.type.startswith('object:text-caret-moved'):
+            if role in [Atspi.Role.LABEL] and not AXUtilities.is_focused(event.source):
+                msg = 'EVENT MANAGER: Ignoring event type due to role and state'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
         elif event.type.startswith('object:selection-changed'):
             if event.source in self._parentsOfDefunctDescendants:
                 msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
