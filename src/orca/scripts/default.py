@@ -194,11 +194,6 @@ class Script(script.Script):
                 Script.findPrevious,
                 cmdnames.FIND_PREVIOUS)
 
-        self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleTableCellReadMode,
-                cmdnames.TOGGLE_TABLE_CELL_READ_MODE)
-
         self.inputEventHandlers["readCharAttributesHandler"] = \
             input_event.InputEventHandler(
                 Script.readCharAttributes,
@@ -246,36 +241,6 @@ class Script(script.Script):
                 Script.enterLearnMode,
                 cmdnames.ENTER_LEARN_MODE)
 
-        self.inputEventHandlers["decreaseSpeechRateHandler"] = \
-            input_event.InputEventHandler(
-                speech.decreaseSpeechRate,
-                cmdnames.DECREASE_SPEECH_RATE)
-
-        self.inputEventHandlers["increaseSpeechRateHandler"] = \
-            input_event.InputEventHandler(
-                speech.increaseSpeechRate,
-                cmdnames.INCREASE_SPEECH_RATE)
-
-        self.inputEventHandlers["decreaseSpeechPitchHandler"] = \
-            input_event.InputEventHandler(
-                speech.decreaseSpeechPitch,
-                cmdnames.DECREASE_SPEECH_PITCH)
-
-        self.inputEventHandlers["increaseSpeechPitchHandler"] = \
-            input_event.InputEventHandler(
-                speech.increaseSpeechPitch,
-                cmdnames.INCREASE_SPEECH_PITCH)
-
-        self.inputEventHandlers["decreaseSpeechVolumeHandler"] = \
-            input_event.InputEventHandler(
-                speech.decreaseSpeechVolume,
-                cmdnames.DECREASE_SPEECH_VOLUME)
-
-        self.inputEventHandlers["increaseSpeechVolumeHandler"] = \
-            input_event.InputEventHandler(
-                speech.increaseSpeechVolume,
-                cmdnames.INCREASE_SPEECH_VOLUME)
-
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
                 orca.quitOrca,
@@ -291,47 +256,10 @@ class Script(script.Script):
                 orca.showAppPreferencesGUI,
                 cmdnames.SHOW_APP_PREFERENCES_GUI)
 
-        self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleSilenceSpeech,
-                cmdnames.TOGGLE_SPEECH)
-
-        self.inputEventHandlers["toggleSpeechVerbosityHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleSpeechVerbosity,
-                cmdnames.TOGGLE_SPEECH_VERBOSITY)
-
-        self.inputEventHandlers[ \
-          "toggleSpeakingIndentationJustificationHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleSpeakingIndentationJustification,
-                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION)
-
-        self.inputEventHandlers[ \
-          "changeNumberStyleHandler"] = \
-            input_event.InputEventHandler(
-                Script.changeNumberStyle,
-                cmdnames.CHANGE_NUMBER_STYLE)
-
-        self.inputEventHandlers["cycleSpeakingPunctuationLevelHandler"] = \
-            input_event.InputEventHandler(
-                Script.cycleSpeakingPunctuationLevel,
-                cmdnames.CYCLE_PUNCTUATION_LEVEL)
-
         self.inputEventHandlers["cycleSettingsProfileHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleSettingsProfile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
-
-        self.inputEventHandlers["cycleCapitalizationStyleHandler"] = \
-            input_event.InputEventHandler(
-                Script.cycleCapitalizationStyle,
-                cmdnames.CYCLE_CAPITALIZATION_STYLE)
-
-        self.inputEventHandlers["cycleKeyEchoHandler"] = \
-            input_event.InputEventHandler(
-                Script.cycleKeyEcho,
-                cmdnames.CYCLE_KEY_ECHO)
 
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
@@ -390,6 +318,7 @@ class Script(script.Script):
 
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
+        self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -528,6 +457,10 @@ class Script(script.Script):
         layout = _settingsManager.getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         bindings = self.flatReviewPresenter.get_bindings(isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.speechAndVerbosityManager.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -780,8 +713,8 @@ class Script(script.Script):
         braille.checkBrailleSetting()
         braille.setupKeyRanges(self.brailleBindings.keys())
         speech.checkSpeechSetting()
-        speech.updatePunctuationLevel()
-        speech.updateCapitalizationStyle()
+        self.speechAndVerbosityManager.update_punctuation_level()
+        self.speechAndVerbosityManager.update_capitalization_style()
 
         # Gtk 4 requrns "GTK", while older versions return "gtk"
         # TODO: move this to a toolkit-specific script
@@ -1332,81 +1265,6 @@ class Script(script.Script):
 
         return True
 
-    def toggleSilenceSpeech(self, inputEvent=None):
-        """Toggle the silencing of speech.
-
-        Returns True to indicate the input event has been consumed.
-        """
-
-        self.presentationInterrupt()
-        if _settingsManager.getSetting('silenceSpeech'):
-            _settingsManager.setSetting('silenceSpeech', False)
-            self.presentMessage(messages.SPEECH_ENABLED)
-        elif not _settingsManager.getSetting('enableSpeech'):
-            _settingsManager.setSetting('enableSpeech', True)
-            speech.init()
-            self.presentMessage(messages.SPEECH_ENABLED)
-        else:
-            self.presentMessage(messages.SPEECH_DISABLED)
-            _settingsManager.setSetting('silenceSpeech', True)
-        return True
-
-    def toggleSpeechVerbosity(self, inputEvent=None):
-        """Toggles speech verbosity level between verbose and brief."""
-
-        value = _settingsManager.getSetting('speechVerbosityLevel')
-        if value == settings.VERBOSITY_LEVEL_BRIEF:
-            self.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
-            _settingsManager.setSetting(
-                'speechVerbosityLevel', settings.VERBOSITY_LEVEL_VERBOSE)
-        else:
-            self.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
-            _settingsManager.setSetting(
-                'speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
-
-        return True
-
-    def toggleSpeakingIndentationJustification(self, inputEvent=None):
-        """Toggles the speaking of indentation and justification."""
-
-        value = _settingsManager.getSetting('enableSpeechIndentation')
-        _settingsManager.setSetting('enableSpeechIndentation', not value)
-        if _settingsManager.getSetting('enableSpeechIndentation'):
-            full = messages.INDENTATION_JUSTIFICATION_ON_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
-        else:
-            full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
-        self.presentMessage(full, brief)
-
-        return True
-
-    def cycleSpeakingPunctuationLevel(self, inputEvent=None):
-        """ Cycle through the punctuation levels for speech. """
-
-        currentLevel = _settingsManager.getSetting('verbalizePunctuationStyle')
-        if currentLevel == settings.PUNCTUATION_STYLE_NONE:
-            newLevel = settings.PUNCTUATION_STYLE_SOME
-            full = messages.PUNCTUATION_SOME_FULL
-            brief = messages.PUNCTUATION_SOME_BRIEF
-        elif currentLevel == settings.PUNCTUATION_STYLE_SOME:
-            newLevel = settings.PUNCTUATION_STYLE_MOST
-            full = messages.PUNCTUATION_MOST_FULL
-            brief = messages.PUNCTUATION_MOST_BRIEF
-        elif currentLevel == settings.PUNCTUATION_STYLE_MOST:
-            newLevel = settings.PUNCTUATION_STYLE_ALL
-            full = messages.PUNCTUATION_ALL_FULL
-            brief = messages.PUNCTUATION_ALL_BRIEF
-        else:
-            newLevel = settings.PUNCTUATION_STYLE_NONE
-            full = messages.PUNCTUATION_NONE_FULL
-            brief = messages.PUNCTUATION_NONE_BRIEF
-
-        _settingsManager.setSetting('verbalizePunctuationStyle', newLevel)
-        self.presentMessage(full, brief)
-        speech.updatePunctuationLevel()
-        return True
-
     def cycleSettingsProfile(self, inputEvent=None):
         """Cycle through the user's existing settings profiles."""
 
@@ -1436,108 +1294,6 @@ class Script(script.Script):
         self.setupInputEventHandlers()
 
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
-        return True
-
-    def cycleCapitalizationStyle(self, inputEvent=None):
-        """ Cycle through the speech-dispatcher capitalization styles. """
-
-        currentStyle = _settingsManager.getSetting('capitalizationStyle')
-        if currentStyle == settings.CAPITALIZATION_STYLE_NONE:
-            newStyle = settings.CAPITALIZATION_STYLE_SPELL
-            full = messages.CAPITALIZATION_SPELL_FULL
-            brief = messages.CAPITALIZATION_SPELL_BRIEF
-        elif currentStyle == settings.CAPITALIZATION_STYLE_SPELL:
-            newStyle = settings.CAPITALIZATION_STYLE_ICON
-            full = messages.CAPITALIZATION_ICON_FULL
-            brief = messages.CAPITALIZATION_ICON_BRIEF
-        else:
-            newStyle = settings.CAPITALIZATION_STYLE_NONE
-            full = messages.CAPITALIZATION_NONE_FULL
-            brief = messages.CAPITALIZATION_NONE_BRIEF
-
-        _settingsManager.setSetting('capitalizationStyle', newStyle)
-        self.presentMessage(full, brief)
-        speech.updateCapitalizationStyle()
-        return True
-
-    def cycleKeyEcho(self, inputEvent=None):
-        (newKey, newWord, newSentence) = (False, False, False)
-        key = _settingsManager.getSetting('enableKeyEcho')
-        word = _settingsManager.getSetting('enableEchoByWord')
-        sentence = _settingsManager.getSetting('enableEchoBySentence')
-
-        if (key, word, sentence) == (False, False, False):
-            (newKey, newWord, newSentence) = (True, False, False)
-            full = messages.KEY_ECHO_KEY_FULL
-            brief = messages.KEY_ECHO_KEY_BRIEF
-        elif (key, word, sentence) == (True, False, False):
-            (newKey, newWord, newSentence) = (False, True, False)
-            full = messages.KEY_ECHO_WORD_FULL
-            brief = messages.KEY_ECHO_WORD_BRIEF
-        elif (key, word, sentence) == (False, True, False):
-            (newKey, newWord, newSentence) = (False, False, True)
-            full = messages.KEY_ECHO_SENTENCE_FULL
-            brief = messages.KEY_ECHO_SENTENCE_BRIEF
-        elif (key, word, sentence) == (False, False, True):
-            (newKey, newWord, newSentence) = (True, True, False)
-            full = messages.KEY_ECHO_KEY_AND_WORD_FULL
-            brief = messages.KEY_ECHO_KEY_AND_WORD_BRIEF
-        elif (key, word, sentence) == (True, True, False):
-            (newKey, newWord, newSentence) = (False, True, True)
-            full = messages.KEY_ECHO_WORD_AND_SENTENCE_FULL
-            brief = messages.KEY_ECHO_WORD_AND_SENTENCE_BRIEF
-        else:
-            (newKey, newWord, newSentence) = (False, False, False)
-            full = messages.KEY_ECHO_NONE_FULL
-            brief = messages.KEY_ECHO_NONE_BRIEF
-
-        _settingsManager.setSetting('enableKeyEcho', newKey)
-        _settingsManager.setSetting('enableEchoByWord', newWord)
-        _settingsManager.setSetting('enableEchoBySentence', newSentence)
-        self.presentMessage(full, brief)
-        return True
-
-    def changeNumberStyle(self, inputEvent=None):
-        """Changes spoken number style between digits and words."""
-
-        speakDigits = _settingsManager.getSetting('speakNumbersAsDigits')
-        if speakDigits:
-            brief = messages.NUMBER_STYLE_WORDS_BRIEF
-            full = messages.NUMBER_STYLE_WORDS_FULL
-        else:
-            brief = messages.NUMBER_STYLE_DIGITS_BRIEF
-            full = messages.NUMBER_STYLE_DIGITS_FULL
-
-        _settingsManager.setSetting('speakNumbersAsDigits', not speakDigits)
-        self.presentMessage(full, brief)
-        return True
-
-    def toggleTableCellReadMode(self, inputEvent=None):
-        """Toggles an indicator for whether we should just read the current
-        table cell or read the whole row."""
-
-        table = self.utilities.getTable(orca_state.locusOfFocus)
-        if not table:
-            self.presentMessage(messages.TABLE_NOT_IN_A)
-            return True
-
-        if not self.utilities.getDocumentForObject(table):
-            settingName = 'readFullRowInGUITable'
-        elif self.utilities.isSpreadSheetTable(table):
-            settingName = 'readFullRowInSpreadSheet'
-        else:
-            settingName = 'readFullRowInDocumentTable'
-
-        speakRow = _settingsManager.getSetting(settingName)
-        _settingsManager.setSetting(settingName, not speakRow)
-
-        if not speakRow:
-            line = messages.TABLE_MODE_ROW
-        else:
-            line = messages.TABLE_MODE_CELL
-
-        self.presentMessage(line)
-
         return True
 
     def doWhereAmI(self, inputEvent, basicOnly):
@@ -3868,21 +3624,21 @@ class Script(script.Script):
         if voice == systemVoice and resetStyles:
             capStyle = _settingsManager.getSetting('capitalizationStyle')
             _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
-            speech.updateCapitalizationStyle()
+            self.speechAndVerbosityManager.update_capitalization_style()
 
             punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
             _settingsManager.setSetting('verbalizePunctuationStyle',
                                          settings.PUNCTUATION_STYLE_NONE)
-            speech.updatePunctuationLevel()
+            self.speechAndVerbosityManager.update_punctuation_level()
 
         speech.speak(string, voice, interrupt)
 
         if voice == systemVoice and resetStyles:
             _settingsManager.setSetting('capitalizationStyle', capStyle)
-            speech.updateCapitalizationStyle()
+            self.speechAndVerbosityManager.update_capitalization_style()
 
             _settingsManager.setSetting('verbalizePunctuationStyle', punctStyle)
-            speech.updatePunctuationLevel()
+            self.speechAndVerbosityManager.update_punctuation_level()
 
     @staticmethod
     def presentItemsInSpeech(items):

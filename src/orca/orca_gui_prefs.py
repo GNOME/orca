@@ -2187,6 +2187,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
         iterNotificationPresenter = self._createNode(guilabels.NOTIFICATIONS_KB_GROUP)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
+        iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
@@ -2194,6 +2195,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             allKeyBindings = self.script.getKeyBindings()
             defKeyBindings = self.script.getDefaultKeyBindings()
             npKeyBindings = self.script.getNotificationPresenter().get_bindings()
+            svKeyBindings = self.script.getSpeechAndVerbosityManager().get_bindings()
 
             layout = _settingsManager.getSetting('keyboardLayout')
             isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
@@ -2205,6 +2207,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterNotificationPresenter)
                     elif frKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterFlatReviewPresenter)
+                    elif svKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterSpeechAndVerbosity)
                     elif not defKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:
@@ -2650,7 +2654,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_SPELL
         else:
             self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_NONE
-        speech.updateCapitalizationStyle()
+        self.script.speechAndVerbosityManager.update_capitalization_style()
 
     def sayAllStyleChanged(self, widget):
         """Signal handler for the "changed" signal for the sayAllStyle

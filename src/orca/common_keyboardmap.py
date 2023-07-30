@@ -42,9 +42,6 @@ SHIFT_ALT_MODIFIER_MASK = keybindings.SHIFT_ALT_MODIFIER_MASK
 
 keymap = (
 
-    ("F11", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "toggleTableCellReadModeHandler"),
-
     ("f", defaultModifierMask, ORCA_MODIFIER_MASK,
     "readCharAttributesHandler"),
 
@@ -56,12 +53,6 @@ keymap = (
 
     ("space", defaultModifierMask, ORCA_CTRL_MODIFIER_MASK,
     "appPreferencesSettingsHandler"),
-
-    ("s", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "toggleSilenceSpeechHandler"),
-
-    ("v", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "toggleSpeechVerbosityHandler"),
 
     ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
     "presentTimeHandler", 1),
@@ -135,28 +126,7 @@ keymap = (
     "cycleSettingsProfileHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "cycleCapitalizationStyleHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "cycleDebugLevelHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "decreaseSpeechRateHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "increaseSpeechRateHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "decreaseSpeechPitchHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "increaseSpeechPitchHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "increaseSpeechVolumeHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "decreaseSpeechVolumeHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "panBrailleLeftHandler"),
@@ -166,18 +136,6 @@ keymap = (
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "toggleMouseReviewHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleSpeakingIndentationJustificationHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "cycleSpeakingPunctuationLevelHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "cycleKeyEchoHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "changeNumberStyleHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "shutdownHandler"),
