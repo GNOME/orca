@@ -553,6 +553,8 @@ class Script(script.Script):
             self.onDocumentLoadStopped
         listeners["mouse:button"]                           = \
             self.onMouseButton
+        listeners["object:announcement"]                    = \
+            self.onAnnouncement
         listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
         listeners["object:property-change:accessible-description"] = \
@@ -2470,6 +2472,12 @@ class Script(script.Script):
         self.presentationInterrupt()
         if AXUtilities.is_focused(mouseEvent.obj):
             orca.setLocusOfFocus(None, mouseEvent.obj, windowChanged)
+
+    def onAnnouncement(self, event):
+        """Callback for object:announcement events."""
+
+        if isinstance(str, event.any_data):
+            self.presentMessage(event.any_data)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
