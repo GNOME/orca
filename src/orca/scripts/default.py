@@ -1272,7 +1272,7 @@ class Script(script.Script):
         """Performs a right mouse button click on the current item."""
 
         if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.right_click_on_object()
+            self.flatReviewPresenter.right_click_on_object(script)
             return True
 
         if eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 3):
