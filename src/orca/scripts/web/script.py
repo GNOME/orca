@@ -1022,6 +1022,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
+        if self._inFocusMode:
+            msg = "WEB: updating braille in focus mode %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            super().updateBraille(obj, **args)
+            return
+
         document = args.get("documentFrame", self.utilities.getTopLevelDocumentForObject(obj))
         if not document:
             msg = "WEB: updating braille for non-document object %s" % obj
