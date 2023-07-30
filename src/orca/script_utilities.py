@@ -210,6 +210,7 @@ class Utilities:
         # Some electron apps running in the background claim to be active even when they
         # are not. Slack is one such example. We can add others as we go.
         suspect_app_names = ["slack",
+                             "discord",
                              "outline-client",
                              "whatsapp-desktop-linux"]
         refiltered = []
