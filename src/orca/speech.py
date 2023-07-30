@@ -281,58 +281,6 @@ def stop():
     if _speechserver:
         _speechserver.stop()
 
-def updateCapitalizationStyle(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.updateCapitalizationStyle()
-
-    return True
-
-def updatePunctuationLevel(script=None, inputEvent=None):
-    """ Punctuation level changed, inform this speechServer. """
-
-    if _speechserver:
-        _speechserver.updatePunctuationLevel()
-
-    return True
-
-def increaseSpeechRate(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.increaseSpeechRate()
-
-    return True
-
-def decreaseSpeechRate(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.decreaseSpeechRate()
-    else:
-        logLine = "SPEECH OUTPUT: 'slower'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
-
-    return True
-
-def increaseSpeechPitch(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.increaseSpeechPitch()
-
-    return True
-
-def decreaseSpeechPitch(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.decreaseSpeechPitch()
-
-    return True
-
-def increaseSpeechVolume(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.increaseSpeechVolume()
-    return True
-
-def decreaseSpeechVolume(script=None, inputEvent=None):
-    if _speechserver:
-        _speechserver.decreaseSpeechVolume()
-    return True
-
 def shutdown():
     debug.println(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
     global _speechserver
@@ -343,3 +291,6 @@ def shutdown():
 def reset(text=None, acss=None):
     if _speechserver:
         _speechserver.reset(text, acss)
+
+def getSpeechServer():
+    return _speechserver

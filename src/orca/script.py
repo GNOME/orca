@@ -57,6 +57,7 @@ from . import script_utilities
 from . import settings
 from . import settings_manager
 from . import sound_generator
+from . import speech_and_verbosity_manager
 from . import speech_generator
 from . import structural_navigation
 from . import bookmarks
@@ -102,6 +103,7 @@ class Script:
         self.liveRegionManager = self.getLiveRegionManager()
         self.notificationPresenter = self.getNotificationPresenter()
         self.flatReviewPresenter = self.getFlatReviewPresenter()
+        self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -228,6 +230,9 @@ class Script:
 
     def getFlatReviewPresenter(self):
         return flat_review_presenter.getPresenter()
+
+    def getSpeechAndVerbosityManager(self):
+        return speech_and_verbosity_manager.getManager()
 
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most
