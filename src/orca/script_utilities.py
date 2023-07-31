@@ -5520,6 +5520,12 @@ class Utilities:
         if event is not None and event.type.startswith("object:active-descendant-changed"):
             return self._script.stopSpeechOnActiveDescendantChanged(event)
 
+        if AXUtilities.is_table_cell(oldLocusOfFocus) and AXUtilities.is_text(newLocusOfFocus) \
+           and AXUtilities.is_editable(newLocusOfFocus):
+            msg = "INFO: Not interrupting for locusOfFocus change, suspected editable cell"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
             msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
             debug.println(debug.LEVEL_INFO, msg, True)
