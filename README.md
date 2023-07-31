@@ -1,5 +1,19 @@
 # Orca v46.alpha
 
+## Important information about keyboard-related regressions
+
+TL;DR: You should use the gnome-45 branch. It is the branch in which
+development related to Orca v45 is taking place.
+
+Orca's `master` branch contains work-in-progress development to use new
+key handling support. There are currently a number of regressions that
+make this branch unsuitable for regular use. In order to facilitate
+work continuing in this area, without disrupting Orca users who want
+to try the development version of Orca, we have already branched for
+the GNOME 45 release. The `gnome-45` branch is being actively developed
+and lacks the new key handling support. Thus it is suitable for end-user
+testing. Apologies for this temporary inconvenience.
+
 ## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
