@@ -2351,10 +2351,10 @@ class StructuralNavigation:
         bindings["list"] = ["a", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
-    def _clickableGetter(self, document, arg=None):
-        rv = AXUtilities.find_all_clickables(document)
-        rv.extend(AXUtilities.find_all_focusable_objects_with_click_ancestor(document))
-        return rv
+    def _clickableCriteria(self, arg=None):
+        return AXCollection.create_match_rule(
+            interfaces=["action"],
+            interface_match_type=Atspi.CollectionMatchType.ANY)
 
     def _clickablePredicate(self, obj, arg=None):
         return self._script.utilities.isClickableElement(obj)
