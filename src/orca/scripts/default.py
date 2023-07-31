@@ -994,6 +994,13 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
+        if isinstance(inputEvent, input_event.KeyboardEvent) \
+           and not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if self.flatReviewPresenter.is_active():
             if self.isBrailleBeginningShowing():
                 self.flatReviewPresenter.go_start_of_line()
@@ -1058,6 +1065,13 @@ class Script(script.Script):
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
+
+        if isinstance(inputEvent, input_event.KeyboardEvent) \
+           and not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         if self.flatReviewPresenter.is_active():
             if self.isBrailleEndShowing():
