@@ -64,12 +64,14 @@ class EventManager:
 
         # Note: These must match what the scripts registered for, otherwise
         # Atspi might segfault.
+        #
+        # Events we don't want to suspend include:
+        # object:state-changed:showing - Potentially used in window switchers
+        # object:text-changed:insert - Potentially used in window switchers
         self._suspendableEvents = ['object:children-changed:add',
                                    'object:children-changed:remove',
                                    'object:property-change:accessible-name',
                                    'object:state-changed:sensitive',
-                                   'object:state-changed:showing',
-                                   'object:text-changed:insert',
                                    'object:text-changed:delete']
         self._eventsTriggeringSuspension = []
         self._ignoredEvents = ['object:bounds-changed',
