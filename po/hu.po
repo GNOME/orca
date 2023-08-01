@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-01 09:16+0000\n"
-"PO-Revision-Date: 2023-08-01 11:27+0200\n"
+"POT-Creation-Date: 2023-08-01 11:35+0000\n"
+"PO-Revision-Date: 2023-08-01 15:26+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -4727,8 +4727,20 @@ msgid "Braille Bindings"
 msgstr "Braille társítások"
 
 #. Translators: This string is a label for the group of Orca commands which
-#. do not currently have an associated key binding.
+#. are related to saving and jumping among objects via "bookmarks".
 #: src/orca/guilabels.py:285
+msgid "Bookmarks"
+msgstr "Könyvjelző"
+
+#. Translators: This string is a label for the group of Orca commands which
+#. are related to presenting the date and time.
+#: src/orca/guilabels.py:289
+msgid "Date and time"
+msgstr "Dátum és idő"
+
+#. Translators: This string is a label for the group of Orca commands which
+#. do not currently have an associated key binding.
+#: src/orca/guilabels.py:293
 msgid "Unbound"
 msgstr "Nincs kiosztva"
 
@@ -4739,7 +4751,7 @@ msgstr "Nincs kiosztva"
 #. a sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
-#: src/orca/guilabels.py:294
+#: src/orca/guilabels.py:302
 msgid "Flat review"
 msgstr "Egyszerű áttekintés"
 
@@ -4748,8 +4760,7 @@ msgstr "Egyszerű áttekintés"
 #. allows on-the-fly configuration of how much (or little) Orca says about a
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
-#: src/orca/guilabels.py:301
-#| msgid "Toggle speech verbosity level"
+#: src/orca/guilabels.py:309
 msgid "Speech and verbosity"
 msgstr "Beszéd és bőbeszédűség"
 
@@ -4762,7 +4773,7 @@ msgstr "Beszéd és bőbeszédűség"
 #. reviewed. There is a command which will place the entire contents of the
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
-#: src/orca/guilabels.py:312
+#: src/orca/guilabels.py:320
 msgid "Flat review contents"
 msgstr "Az egyszerű áttekintés tartalma"
 
@@ -4770,26 +4781,26 @@ msgstr "Az egyszerű áttekintés tartalma"
 #. This column contains a checkbox which indicates whether a key binding
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
-#: src/orca/guilabels.py:318
+#: src/orca/guilabels.py:326
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Módosítva"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
-#: src/orca/guilabels.py:321 src/orca/orca-setup.ui:242
+#: src/orca/guilabels.py:329 src/orca/orca-setup.ui:242
 msgid "_Desktop"
 msgstr "As_ztali"
 
 #. Translators: This is a column header for a list of notification messages.
 #. It will appear over the message text.
-#: src/orca/guilabels.py:325
+#: src/orca/guilabels.py:333
 msgctxt "notification presenter"
 msgid "Notifications"
 msgstr "Értesítés"
 
 #. Translators: This is a title for a dialog that will present a list of
 #. notification messages.
-#: src/orca/guilabels.py:329
+#: src/orca/guilabels.py:337
 #, python-format
 msgctxt "notification presenter"
 msgid "%d Notifications"
@@ -4798,14 +4809,14 @@ msgstr "%d Értesítés"
 #. Translators: This is a column header for a list of notification messages.
 #. It will appear over the time a particular notification was received. The
 #. time will be relative (e.g. "10 minutes ago") or absolute.
-#: src/orca/guilabels.py:334
+#: src/orca/guilabels.py:342
 msgctxt "notification presenter"
 msgid "Received"
 msgstr "Érkezett"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
-#: src/orca/guilabels.py:338
+#: src/orca/guilabels.py:346
 msgid "Notification presenter"
 msgstr "Értesítés megjelenítő"
 
@@ -4815,7 +4826,7 @@ msgstr "Értesítés megjelenítő"
 #. title of Orca's application-specific preferences dialog for an application.
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
-#: src/orca/guilabels.py:346
+#: src/orca/guilabels.py:354
 #, python-format
 msgid "Screen Reader Preferences for %s"
 msgstr "A képernyőolvasó beállításai a(z) %s alkalmazáshoz"
@@ -4825,7 +4836,7 @@ msgstr "A képernyőolvasó beállításai a(z) %s alkalmazáshoz"
 #. or attribute by "marking" it in braille. "Marking" is not the same as writing
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
-#: src/orca/guilabels.py:353
+#: src/orca/guilabels.py:361
 msgid "Mark in braille"
 msgstr "Braille kijelzés"
 
@@ -4839,7 +4850,7 @@ msgstr "Braille kijelzés"
 #. stating that he/she would like to have underlined text announced for all cases
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
-#: src/orca/guilabels.py:365
+#: src/orca/guilabels.py:373
 msgid "Present Unless"
 msgstr "Csak ha nem"
 
@@ -4848,7 +4859,7 @@ msgstr "Csak ha nem"
 #. item or attribute (e.g. saying "Bold" as part of the information presented
 #. when the user gives the Orca command to obtain the format and font details of
 #. the current text).
-#: src/orca/guilabels.py:372
+#: src/orca/guilabels.py:380
 msgid "Speak"
 msgstr "Felolvasás"
 
@@ -4857,7 +4868,7 @@ msgstr "Felolvasás"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:379
+#: src/orca/guilabels.py:387
 msgid "Save Profile As Conflict"
 msgstr "Menti az ütköző profilt?"
 
@@ -4866,7 +4877,7 @@ msgstr "Menti az ütköző profilt?"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:386
+#: src/orca/guilabels.py:394
 msgid "User Profile Conflict!"
 msgstr "A felhasználói profil ütközik!"
 
@@ -4875,7 +4886,7 @@ msgstr "A felhasználói profil ütközik!"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:393
+#: src/orca/guilabels.py:401
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -4890,7 +4901,7 @@ msgstr ""
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: src/orca/guilabels.py:403
+#: src/orca/guilabels.py:411
 msgid "Load user profile"
 msgstr "Felhasználói profil betöltése"
 
@@ -4900,7 +4911,7 @@ msgstr "Felhasználói profil betöltése"
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: src/orca/guilabels.py:412
+#: src/orca/guilabels.py:420
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -4920,7 +4931,7 @@ msgstr ""
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the title of a dialog in which users can save a newly-
 #. defined profile.
-#: src/orca/guilabels.py:423
+#: src/orca/guilabels.py:431
 msgid "Save Profile As"
 msgstr "Profil mentése másként"
 
@@ -4930,7 +4941,7 @@ msgstr "Profil mentése másként"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for a text entry in which the user enters the
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
-#: src/orca/guilabels.py:431
+#: src/orca/guilabels.py:439
 msgid "_Profile Name:"
 msgstr "_Profil neve:"
 
@@ -4940,7 +4951,7 @@ msgstr "_Profil neve:"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text.
 #. The following is a label in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
-#: src/orca/guilabels.py:439
+#: src/orca/guilabels.py:447
 msgid "Remove user profile"
 msgstr "Felhasználói profil eltávolítása"
 
@@ -4950,7 +4961,7 @@ msgstr "Felhasználói profil eltávolítása"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text.
 #. The following is a message in a dialog informing the user that he/she
 #. is about to remove a user profile, an action that cannot be undone.
-#: src/orca/guilabels.py:447
+#: src/orca/guilabels.py:455
 #, python-format
 msgid ""
 "You are about to remove profile %s. All unsaved settings and settings saved "
@@ -4966,7 +4977,7 @@ msgstr ""
 #. should be announced. Choosing "All" means that Orca will present progress bar
 #. updates regardless of what application and window they happen to be in.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: src/orca/guilabels.py:455 src/orca/orca-setup.ui:63
+#: src/orca/guilabels.py:463 src/orca/orca-setup.ui:63
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Mindent"
@@ -4975,7 +4986,7 @@ msgstr "Mindent"
 #. should be announced. Choosing "Application" means that Orca will present
 #. progress bar updates as long as the progress bar is in the active application
 #. (but not necessarily in the current window).
-#: src/orca/guilabels.py:461
+#: src/orca/guilabels.py:469
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Alkalmazás"
@@ -4983,7 +4994,7 @@ msgstr "Alkalmazás"
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Window" means that Orca will present progress
 #. bar updates as long as the progress bar is in the active window.
-#: src/orca/guilabels.py:466
+#: src/orca/guilabels.py:474
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Ablak"
@@ -4991,7 +5002,7 @@ msgstr "Ablak"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: src/orca/guilabels.py:470 src/orca/orca-setup.ui:1547
+#: src/orca/guilabels.py:478 src/orca/orca-setup.ui:1547
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Nincs"
@@ -4999,25 +5010,25 @@ msgstr "_Nincs"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: src/orca/guilabels.py:475 src/orca/orca-setup.ui:1563
+#: src/orca/guilabels.py:483 src/orca/orca-setup.ui:1563
 msgid "So_me"
 msgstr "Né_hány"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: src/orca/guilabels.py:479 src/orca/orca-setup.ui:1579
+#: src/orca/guilabels.py:487 src/orca/orca-setup.ui:1579
 msgid "M_ost"
 msgstr "_Legtöbb"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
-#: src/orca/guilabels.py:483 src/orca/orca-setup.ui:49
+#: src/orca/guilabels.py:491 src/orca/orca-setup.ui:49
 msgid "Line"
 msgstr "Sor"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
-#: src/orca/guilabels.py:487 src/orca/orca-setup.ui:52
+#: src/orca/guilabels.py:495 src/orca/orca-setup.ui:52
 msgid "Sentence"
 msgstr "Mondat"
 
@@ -5025,7 +5036,7 @@ msgstr "Mondat"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
-#: src/orca/guilabels.py:493
+#: src/orca/guilabels.py:501
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Idézetblokk"
@@ -5034,7 +5045,7 @@ msgstr "Idézetblokk"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
-#: src/orca/guilabels.py:499
+#: src/orca/guilabels.py:507
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Gomb"
@@ -5043,7 +5054,7 @@ msgstr "Gomb"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the caption of a table.
-#: src/orca/guilabels.py:505
+#: src/orca/guilabels.py:513
 msgctxt "structural navigation"
 msgid "Caption"
 msgstr "Felirat"
@@ -5052,7 +5063,7 @@ msgstr "Felirat"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a check box.
-#: src/orca/guilabels.py:511
+#: src/orca/guilabels.py:519
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Jelölőnégyzet"
@@ -5061,7 +5072,7 @@ msgstr "Jelölőnégyzet"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text displayed for a web element with an "onClick" handler.
-#: src/orca/guilabels.py:517
+#: src/orca/guilabels.py:525
 msgctxt "structural navigation"
 msgid "Clickable"
 msgstr "Kattintható elem"
@@ -5070,7 +5081,7 @@ msgstr "Kattintható elem"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
-#: src/orca/guilabels.py:523
+#: src/orca/guilabels.py:531
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Kombinált listamező"
@@ -5079,7 +5090,7 @@ msgstr "Kombinált listamező"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: src/orca/guilabels.py:529
+#: src/orca/guilabels.py:537
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Leírás"
@@ -5088,7 +5099,7 @@ msgstr "Leírás"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: src/orca/guilabels.py:535
+#: src/orca/guilabels.py:543
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Címsor"
@@ -5097,7 +5108,7 @@ msgstr "Címsor"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the title associated with an iframe.
-#: src/orca/guilabels.py:541
+#: src/orca/guilabels.py:549
 msgctxt "structural navigation"
 msgid "Internal Frame"
 msgstr "Keretek listája"
@@ -5106,7 +5117,7 @@ msgstr "Keretek listája"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text (alt text, title, etc.) associated with an image.
-#: src/orca/guilabels.py:547
+#: src/orca/guilabels.py:555
 msgctxt "structural navigation"
 msgid "Image"
 msgstr "Kép"
@@ -5115,7 +5126,7 @@ msgstr "Kép"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: src/orca/guilabels.py:553
+#: src/orca/guilabels.py:561
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Címke"
@@ -5126,7 +5137,7 @@ msgstr "Címke"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: src/orca/guilabels.py:561
+#: src/orca/guilabels.py:569
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Jelölő"
@@ -5137,7 +5148,7 @@ msgstr "Jelölő"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: src/orca/guilabels.py:568
+#: src/orca/guilabels.py:576
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Címsorszint száma"
@@ -5146,7 +5157,7 @@ msgstr "Címsorszint száma"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: src/orca/guilabels.py:574
+#: src/orca/guilabels.py:582
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Hivatkozás"
@@ -5155,7 +5166,7 @@ msgstr "Hivatkozás"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: src/orca/guilabels.py:580
+#: src/orca/guilabels.py:588
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Lista"
@@ -5164,7 +5175,7 @@ msgstr "Lista"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: src/orca/guilabels.py:586
+#: src/orca/guilabels.py:594
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Listaelem"
@@ -5173,7 +5184,7 @@ msgstr "Listaelem"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: src/orca/guilabels.py:592
+#: src/orca/guilabels.py:600
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objektum"
@@ -5182,7 +5193,7 @@ msgstr "Objektum"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: src/orca/guilabels.py:598
+#: src/orca/guilabels.py:606
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Bekezdés"
@@ -5191,7 +5202,7 @@ msgstr "Bekezdés"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: src/orca/guilabels.py:604
+#: src/orca/guilabels.py:612
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Választógomb"
@@ -5201,7 +5212,7 @@ msgstr "Választógomb"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: src/orca/guilabels.py:611
+#: src/orca/guilabels.py:619
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Vezérlőelem"
@@ -5210,7 +5221,7 @@ msgstr "Vezérlőelem"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: src/orca/guilabels.py:617
+#: src/orca/guilabels.py:625
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Kiválasztott elem"
@@ -5220,7 +5231,7 @@ msgstr "Kiválasztott elem"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: src/orca/guilabels.py:624
+#: src/orca/guilabels.py:632
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Állapot"
@@ -5229,7 +5240,7 @@ msgstr "Állapot"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: src/orca/guilabels.py:630
+#: src/orca/guilabels.py:638
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Szöveg"
@@ -5238,7 +5249,7 @@ msgstr "Szöveg"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: src/orca/guilabels.py:636
+#: src/orca/guilabels.py:644
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -5247,7 +5258,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: src/orca/guilabels.py:642
+#: src/orca/guilabels.py:650
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Érték"
@@ -5255,7 +5266,7 @@ msgstr "Érték"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:647
+#: src/orca/guilabels.py:655
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Idézetblokkok listája"
@@ -5263,7 +5274,7 @@ msgstr "Idézetblokkok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:652
+#: src/orca/guilabels.py:660
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Gombok listája"
@@ -5271,7 +5282,7 @@ msgstr "Gombok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:657
+#: src/orca/guilabels.py:665
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Jelölőnégyzetek listája"
@@ -5281,7 +5292,7 @@ msgstr "Jelölőnégyzetek listája"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
-#: src/orca/guilabels.py:663
+#: src/orca/guilabels.py:671
 msgctxt "structural navigation"
 msgid "Clickables"
 msgstr "Kattintható elemek listája"
@@ -5289,7 +5300,7 @@ msgstr "Kattintható elemek listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:668
+#: src/orca/guilabels.py:676
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Kombinált listamezők listája"
@@ -5297,7 +5308,7 @@ msgstr "Kombinált listamezők listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:673
+#: src/orca/guilabels.py:681
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Szerkesztőmezők listája"
@@ -5305,7 +5316,7 @@ msgstr "Szerkesztőmezők listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:678
+#: src/orca/guilabels.py:686
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Űrlapmezők listája"
@@ -5313,7 +5324,7 @@ msgstr "Űrlapmezők listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:683
+#: src/orca/guilabels.py:691
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Címsorok listája"
@@ -5321,7 +5332,7 @@ msgstr "Címsorok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:688
+#: src/orca/guilabels.py:696
 msgctxt "structural navigation"
 msgid "Interal Frames"
 msgstr "Keretek listája"
@@ -5330,7 +5341,7 @@ msgstr "Keretek listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:693
+#: src/orca/guilabels.py:701
 msgctxt "structural navigation"
 msgid "Images"
 msgstr "Képek listája"
@@ -5339,7 +5350,7 @@ msgstr "Képek listája"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: src/orca/guilabels.py:699
+#: src/orca/guilabels.py:707
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -5350,7 +5361,7 @@ msgstr "%d. szintű címsorok listája"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/guilabels.py:706
+#: src/orca/guilabels.py:714
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Jelölők listája"
@@ -5360,7 +5371,7 @@ msgstr "Jelölők listája"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: src/orca/guilabels.py:713
+#: src/orca/guilabels.py:721
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Nagy objektumok listája"
@@ -5368,7 +5379,7 @@ msgstr "Nagy objektumok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:718
+#: src/orca/guilabels.py:726
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Hivatkozások listája"
@@ -5376,7 +5387,7 @@ msgstr "Hivatkozások listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:723
+#: src/orca/guilabels.py:731
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Listák listája"
@@ -5384,7 +5395,7 @@ msgstr "Listák listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:728
+#: src/orca/guilabels.py:736
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Listaelemek listája"
@@ -5392,7 +5403,7 @@ msgstr "Listaelemek listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:733
+#: src/orca/guilabels.py:741
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Bekezdések listája"
@@ -5400,7 +5411,7 @@ msgstr "Bekezdések listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:738
+#: src/orca/guilabels.py:746
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Választógombok listája"
@@ -5408,7 +5419,7 @@ msgstr "Választógombok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:743
+#: src/orca/guilabels.py:751
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Táblázatok listája"
@@ -5416,7 +5427,7 @@ msgstr "Táblázatok listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:748
+#: src/orca/guilabels.py:756
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Nem látogatott hivatkozások listája"
@@ -5424,7 +5435,7 @@ msgstr "Nem látogatott hivatkozások listája"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:753
+#: src/orca/guilabels.py:761
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Meglátogatott hivatkozások listája"
@@ -5432,21 +5443,21 @@ msgstr "Meglátogatott hivatkozások listája"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: src/orca/guilabels.py:758
+#: src/orca/guilabels.py:766
 msgid "Page Navigation"
 msgstr "Oldalnavigáció"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: src/orca/guilabels.py:764
+#: src/orca/guilabels.py:772
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "A weblap automatikus felolvasása, amint befejeződött a _letöltése"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically summarize details about the page, such as the number of elements
 #. (landmarks, forms, links, tables, etc.).
-#: src/orca/guilabels.py:769
+#: src/orca/guilabels.py:777
 msgid "_Present summary of a page when it is first loaded"
 msgstr "Öss_zefoglaló megjelenítése egy lap első betöltésekor"
 
@@ -5457,7 +5468,7 @@ msgstr "Öss_zefoglaló megjelenítése egy lap első betöltésekor"
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: src/orca/guilabels.py:777 src/orca/orca-setup.ui:1342
+#: src/orca/guilabels.py:785 src/orca/orca-setup.ui:1342
 msgid "Break speech into ch_unks between pauses"
 msgstr "A beszéd megállítása s_züneteknél"
 
@@ -5467,21 +5478,21 @@ msgstr "A beszéd megállítása s_züneteknél"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: src/orca/guilabels.py:785
+#: src/orca/guilabels.py:793
 #, python-format
 msgid "%s default voice"
 msgstr "%s alapértelmezett hang"
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: src/orca/guilabels.py:789
+#: src/orca/guilabels.py:797
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Alapértelmezett"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: src/orca/guilabels.py:793
+#: src/orca/guilabels.py:801
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Hiperlink"
@@ -5492,27 +5503,27 @@ msgstr "Hiperlink"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:801
+#: src/orca/guilabels.py:809
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Rendszer"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:805
+#: src/orca/guilabels.py:813
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Nagybetűk"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: src/orca/guilabels.py:809
+#: src/orca/guilabels.py:817
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: src/orca/guilabels.py:813
+#: src/orca/guilabels.py:821
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Helyesírás-ellenőrzés"
@@ -5521,7 +5532,7 @@ msgstr "Helyesírás-ellenőrzés"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: src/orca/guilabels.py:819
+#: src/orca/guilabels.py:827
 msgid "Spell _error"
 msgstr "A _hibás szó betűzése"
 
@@ -5530,21 +5541,21 @@ msgstr "A _hibás szó betűzése"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: src/orca/guilabels.py:826
+#: src/orca/guilabels.py:834
 msgid "Spell _suggestion"
 msgstr "_Javítási javaslat betűzése"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: src/orca/guilabels.py:831
+#: src/orca/guilabels.py:839
 msgid "Present _context of error"
 msgstr "A hiba szöveg_környezetének felolvasása"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
-#: src/orca/guilabels.py:836
+#: src/orca/guilabels.py:844
 msgid "Speak spreadsheet cell coordinates"
 msgstr "Munkafüzet cellakoordinátáinak felolvasása"
 
@@ -5555,51 +5566,51 @@ msgstr "Munkafüzet cellakoordinátáinak felolvasása"
 #. Some users, however, prefer to have Orca always announce the entire selected range,
 #. i.e. in the same scenario say "A1 through A9 selected." Those users should enable
 #. this option.
-#: src/orca/guilabels.py:845
+#: src/orca/guilabels.py:853
 msgid "Always speak selected spreadsheet range"
 msgstr "Mindig a teljes kijelölt cella_tartomány felolvasása"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: src/orca/guilabels.py:849
+#: src/orca/guilabels.py:857
 msgid "Announce cell _header"
 msgstr "C_ellafejléc felolvasása"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: src/orca/guilabels.py:853
+#: src/orca/guilabels.py:861
 msgid "Table Navigation"
 msgstr "Táblázatnavigáció"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: src/orca/guilabels.py:857
+#: src/orca/guilabels.py:865
 msgid "Skip _blank cells"
 msgstr "Üres _cellák kihagyása"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
-#: src/orca/guilabels.py:862
+#: src/orca/guilabels.py:870
 msgid "Speak _cell"
 msgstr "_Cella felolvasása"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: src/orca/guilabels.py:866
+#: src/orca/guilabels.py:874
 msgid "Speak _cell coordinates"
 msgstr "Cella_koordináták felolvasása"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: src/orca/guilabels.py:871
+#: src/orca/guilabels.py:879
 msgid "Speak _multiple cell spans"
 msgstr "Cella _kiterjedésének felolvasása"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: src/orca/guilabels.py:875
+#: src/orca/guilabels.py:883
 msgid "Attribute Name"
 msgstr "Attribútumnév"
 
@@ -5608,20 +5619,20 @@ msgstr "Attribútumnév"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:882
+#: src/orca/guilabels.py:890
 msgid "Control caret navigation"
 msgstr "Mutatónavigáció irányítása"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:887
+#: src/orca/guilabels.py:895
 msgid "Enable _structural navigation"
 msgstr "_Strukturált navigáció engedélyezése"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:891 src/orca/orca-setup.ui:1480
+#: src/orca/guilabels.py:899 src/orca/orca-setup.ui:1480
 #: src/orca/orca-setup.ui:2224
 msgid "Brie_f"
 msgstr "_Tömör"
@@ -8073,17 +8084,40 @@ msgstr "könyvjelzők mentése"
 msgid "bookmarks could not be saved"
 msgstr "a könyvjelzők nincsenek mentve"
 
+# Fixme: Mi erről a véleményed? Ha akarod javítsd.
+#. Translators: Orca has a feature in which users can store/save a particular
+#. location in an application window and return to it later by pressing a
+#. keystroke. These stored/saved locations are "bookmarks". This string is
+#. presented to the user when they try to go to a bookmark, but don't have
+#. any bookmarks.
+#: src/orca/messages.py:74
+#| msgid "No landmark found."
+msgid "No bookmarks found."
+msgstr "Nem találhatók könyvjelzők."
+
+# Fixme: Mi erről a véleményed? Ha akarod javítsd.
+#. Translators: Orca has a feature in which users can store/save a particular
+#. location in an application window and return to it later by pressing a
+#. keystroke. These stored/saved locations are "bookmarks". This string is
+#. presented to the user when they try to go to a bookmark at a particular
+#. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
+#. that index.
+#: src/orca/messages.py:82
+#| msgid "No landmark found."
+msgid "Bookmark not found."
+msgstr "Nemtalálható könyvjelző."
+
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
 #. command causes the next command issued to be passed along to the current
 #. application, bypassing Orca's interception of it.
-#: src/orca/messages.py:73
+#: src/orca/messages.py:88
 msgid "Bypass mode enabled."
 msgstr "Átugró mód engedélyezve."
 
 #. Translators: this is an indication that Orca is unable to obtain the display/
 #. results area of the calculator being used (e.g. gcalctool).
-#: src/orca/messages.py:77
+#: src/orca/messages.py:92
 msgid "Unable to get calculator display"
 msgstr "A számológép képernyője nem érhető el"
 
@@ -8096,7 +8130,7 @@ msgstr "A számológép képernyője nem érhető el"
 #. non-verbose output presented in response to the use of an Orca command which
 #. makes it possible for users to quickly cycle amongst these alternatives
 #. without having to get into a GUI.
-#: src/orca/messages.py:87
+#: src/orca/messages.py:102
 msgctxt "capitalization style"
 msgid "icon"
 msgstr "hangjelzés"
@@ -8109,7 +8143,7 @@ msgstr "hangjelzés"
 #. output presented in response to the use of an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
-#: src/orca/messages.py:97
+#: src/orca/messages.py:112
 msgid "Capitalization style set to icon."
 msgstr "A nagybetű stílus hangjelzésre állítva."
 
@@ -8121,7 +8155,7 @@ msgstr "A nagybetű stílus hangjelzésre állítva."
 #. non-verbose output presented in response to the use of an Orca command which
 #. makes it possible for users to quickly cycle amongst these alternatives
 #. without having to get into a GUI.
-#: src/orca/messages.py:107
+#: src/orca/messages.py:122
 msgctxt "capitalization style"
 msgid "none"
 msgstr "nincs"
@@ -8134,7 +8168,7 @@ msgstr "nincs"
 #. output presented in response to the use of an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
-#: src/orca/messages.py:117
+#: src/orca/messages.py:132
 msgid "Capitalization style set to none."
 msgstr "A nagybetű stílus nincsre állítva."
 
@@ -8146,7 +8180,7 @@ msgstr "A nagybetű stílus nincsre állítva."
 #. non-verbose output presented in response to the use of an Orca command which
 #. makes it possible for users to quickly cycle amongst these alternatives
 #. without having to get into a GUI.
-#: src/orca/messages.py:127
+#: src/orca/messages.py:142
 msgctxt "capitalization style"
 msgid "spell"
 msgstr "betűzés"
@@ -8159,7 +8193,7 @@ msgstr "betűzés"
 #. output presented in response to the use of an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
-#: src/orca/messages.py:137
+#: src/orca/messages.py:152
 msgid "Capitalization style set to spell."
 msgstr "A nagybetű stílus betűzésre állítva."
 
@@ -8168,7 +8202,7 @@ msgstr "A nagybetű stílus betűzésre állítva."
 #. the application controlling the caret and Orca controlling it. This message
 #. is presented to indicate that the application's native caret navigation is
 #. active / not being overridden by Orca.
-#: src/orca/messages.py:144
+#: src/orca/messages.py:159
 msgid "The application is controlling the caret."
 msgstr "Az alkalmazás vezérli a mutatót."
 
@@ -8176,12 +8210,12 @@ msgstr "Az alkalmazás vezérli a mutatót."
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
-#: src/orca/messages.py:150
+#: src/orca/messages.py:165
 msgid "The screen reader is controlling the caret."
 msgstr "A képernyőolvasó vezérli a mutatót."
 
 #. Translators: this is the name of a cell in a spreadsheet.
-#: src/orca/messages.py:153
+#: src/orca/messages.py:168
 #, python-format
 msgid "Cell %s"
 msgstr "Cella: %s"
@@ -8191,7 +8225,7 @@ msgstr "Cella: %s"
 #. selected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
-#: src/orca/messages.py:159
+#: src/orca/messages.py:174
 #, python-format
 msgctxt "cell"
 msgid "%s selected"
@@ -8202,7 +8236,7 @@ msgstr "%s kijelölve"
 #. string substitution is the name of the first cell in the range. The second string
 #. substitution is for the name of the last cell in the range. An example message
 #. for Calc would be "A1 through A30 selected".
-#: src/orca/messages.py:166
+#: src/orca/messages.py:181
 #, python-format
 msgctxt "cell"
 msgid "%s through %s selected"
@@ -8213,7 +8247,7 @@ msgstr "%s oszloptól %s sorig kijelölve"
 #. string substitution is the name of the first cell in the range. The second string
 #. substitution is for the name of the last cell in the range. An example message
 #. for Calc would be "A1 through A30 unselected".
-#: src/orca/messages.py:173
+#: src/orca/messages.py:188
 #, python-format
 msgctxt "cell"
 msgid "%s through %s unselected"
@@ -8223,7 +8257,7 @@ msgstr "%s oszloptól %s sorig nincs kijelölve"
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
-#: src/orca/messages.py:179
+#: src/orca/messages.py:194
 #, python-format
 msgctxt "cell"
 msgid "%s unselected"
@@ -8231,46 +8265,46 @@ msgstr "%s nincs kijelölve"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
-#: src/orca/messages.py:183
+#: src/orca/messages.py:198
 msgid "Prevent use of option"
 msgstr "A kapcsoló használatának megakadályozása"
 
 #. Translators: this is the description of command line option '-e, --enable'
 #. which allows the user to specify an option to enable as Orca is started.
-#: src/orca/messages.py:187
+#: src/orca/messages.py:202
 msgid "Force use of option"
 msgstr "Kapcsoló használatának kikényszerítése"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-e, --enable' or '-d, --disable' command line options.
-#: src/orca/messages.py:191
+#: src/orca/messages.py:206
 msgid "OPTION"
 msgstr "KAPCSOLÓ"
 
 #. Translators: This string appears when using 'Orca -h' at the command line.
 #. It serves as a sort of title and is followed by a detailed list of Orca's
 #. optional command-line arguments.
-#: src/orca/messages.py:196
+#: src/orca/messages.py:211
 msgid "Optional arguments"
 msgstr "Opcionális kapcsolók"
 
 #. Translators: This string appears when using 'Orca -h' at the command line.
 #. It is followed by a brief list of Orca's optional command-line arguments.
-#: src/orca/messages.py:200
+#: src/orca/messages.py:215
 msgid "Usage: "
 msgstr "Használat: "
 
 #. Translators: This message is displayed when the user starts Orca from the
 #. command line and includes an invalid option or argument. After the message,
 #. the list of invalid items, as typed by the user, is displayed.
-#: src/orca/messages.py:205
+#: src/orca/messages.py:220
 msgid "The following are not valid: "
 msgstr "A következő argumentumok érvénytelenek: "
 
 #. Translators: This is the description of command line option '-l, --list-apps'
 #. which prints the names of running applications which can be seen by assistive
 #. technologies such as Orca and Accerciser.
-#: src/orca/messages.py:210
+#: src/orca/messages.py:225
 msgid "Print the known running applications"
 msgstr "Az ismert futó alkalmazások kiírása"
 
@@ -8279,7 +8313,7 @@ msgstr "Az ismert futó alkalmazások kiírása"
 #. of Orca settings configured by the user for a particular purpose, such as a
 #. 'Spanish' profile which would include Spanish braille and text-to-speech.
 #. An Orca settings file contains one or more profiles.
-#: src/orca/messages.py:217
+#: src/orca/messages.py:232
 msgid "Load profile"
 msgstr "Profil betöltése"
 
@@ -8288,14 +8322,14 @@ msgstr "Profil betöltése"
 #. a particular purpose, such as a Spanish profile which would include Spanish
 #. braille and Spanish text-to-speech. The string substituted in is the user-
 #. provided profile name.
-#: src/orca/messages.py:224
+#: src/orca/messages.py:239
 #, python-format
 msgid "Profile could not be loaded: %s"
 msgstr "A következő profil nem tölthető be: %s"
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
-#: src/orca/messages.py:229
+#: src/orca/messages.py:244
 msgid ""
 "Cannot start the screen reader because it cannot connect to the Desktop."
 msgstr ""
@@ -8304,13 +8338,13 @@ msgstr ""
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. but the launch fails due to an error related to the settings manager.
-#: src/orca/messages.py:234
+#: src/orca/messages.py:249
 msgid "Could not activate the settings manager. Exiting."
 msgstr "A beállításkezelőt nem lehetett aktiválni. Kilépés."
 
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
-#: src/orca/messages.py:239
+#: src/orca/messages.py:254
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
@@ -8321,38 +8355,38 @@ msgstr ""
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
-#: src/orca/messages.py:245
+#: src/orca/messages.py:260
 msgid "NAME"
 msgstr "NÉV"
 
 #. Translators: This is the description of command line option '-u, --user-prefs'
 #. that allows you to specify an alternate location from which to load the user
 #. preferences.
-#: src/orca/messages.py:250
+#: src/orca/messages.py:265
 msgid "Use alternate directory for user preferences"
 msgstr "Alternatív könyvtár használata a felhasználói beállításokhoz"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-u, --user-prefs' command line option.
-#: src/orca/messages.py:254
+#: src/orca/messages.py:269
 msgid "DIR"
 msgstr "KÖNYVTÁR"
 
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
-#: src/orca/messages.py:258
+#: src/orca/messages.py:273
 msgid "Version of this application"
 msgstr "Az alkalmazás verziójának kiírása"
 
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
-#: src/orca/messages.py:262
+#: src/orca/messages.py:277
 msgid "Replace a currently running instance of this screen reader"
 msgstr "Lecseréli a képernyőolvasó jelenleg futó példányát"
 
 #. Translators: this is the description of command line option '-h, --help'
 #. which lists all the available command line options.
-#: src/orca/messages.py:266
+#: src/orca/messages.py:281
 msgid "Show this help message and exit"
 msgstr "Megjeleníti a súgóképernyőt, majd kilép."
 
@@ -8362,7 +8396,7 @@ msgstr "Megjeleníti a súgóképernyőt, majd kilép."
 #. date and time with 'debug' in front and '.out' at the end. The 'debug' and
 #. '.out' portions of this string should not be translated (i.e. it should always
 #. start with 'debug' and end with '.out', regardless of the locale.).
-#: src/orca/messages.py:274
+#: src/orca/messages.py:289
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
@@ -8370,13 +8404,13 @@ msgstr ""
 #. Translators: This is the description of command line option '--debug-file'
 #. which allows the user to override the default date-based name of the debugging
 #. output file.
-#: src/orca/messages.py:279
+#: src/orca/messages.py:294
 msgid "Send debug output to the specified file"
 msgstr "A hibakövetési információk mentése a megadott fájlba"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--debug-file' command line option.
-#: src/orca/messages.py:283
+#: src/orca/messages.py:298
 msgid "FILE"
 msgstr "FÁJL"
 
@@ -8384,19 +8418,19 @@ msgstr "FÁJL"
 #. that will initially display a list of questions in text form, that the user
 #. will need to answer, before Orca will startup. For this to happen properly,
 #. Orca will need to be run from a terminal window.
-#: src/orca/messages.py:289
+#: src/orca/messages.py:304
 msgid "Set up user preferences (text version)"
 msgstr "Felhasználói beállítások (szöveges változat)"
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences dialog.
-#: src/orca/messages.py:293
+#: src/orca/messages.py:308
 msgid "Set up user preferences (GUI version)"
 msgstr "Felhasználói beállítások (grafikus változat)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
-#: src/orca/messages.py:297
+#: src/orca/messages.py:312
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "A hibákat az orca-list@gnome.org levelezőlistán jelezheti."
 
@@ -8406,7 +8440,7 @@ msgstr "A hibákat az orca-list@gnome.org levelezőlistán jelezheti."
 #. document matches the clipboard contents, Orca will indicate that fact
 #. instead of presenting the full string which was just deleted. This message
 #. is the full/verbose indication.
-#: src/orca/messages.py:305
+#: src/orca/messages.py:320
 msgid "Cut selection to clipboard."
 msgstr "A kijelölt tartalom a vágólapra mozgatva."
 
@@ -8416,21 +8450,21 @@ msgstr "A kijelölt tartalom a vágólapra mozgatva."
 #. document matches the clipboard contents, Orca will indicate that fact
 #. instead of presenting the full string which was just deleted. This message
 #. is the brief indication.
-#: src/orca/messages.py:313
+#: src/orca/messages.py:328
 msgctxt "clipboard"
 msgid "cut"
 msgstr "kivágás"
 
 #. Translators: This message is the detailed message presented when the contents
 #. of the clipboard have changed and match the current selection.
-#: src/orca/messages.py:317
+#: src/orca/messages.py:332
 msgid "Copied selection to clipboard."
 msgstr "A kijelölt tartalom a vágólapra másolva."
 
 # Megjegyzés: a rövid vágólap művelet üzenetet szándékosan fordítottam így.
 #. Translators: This message is the brief message presented when the contents
 #. of the clipboard have changed and match the current selection.
-#: src/orca/messages.py:321
+#: src/orca/messages.py:336
 msgctxt "clipboard"
 msgid "copied"
 msgstr "másolás"
@@ -8442,7 +8476,7 @@ msgstr "másolás"
 #. document matches the clipboard contents, Orca will indicate that fact
 #. instead of presenting the full string which was just inserted. This message
 #. is the full/verbose indication.
-#: src/orca/messages.py:329
+#: src/orca/messages.py:344
 msgid "Pasted contents from clipboard."
 msgstr "A tartalom beillesztve a vágólapról."
 
@@ -8453,7 +8487,7 @@ msgstr "A tartalom beillesztve a vágólapról."
 #. document matches the clipboard contents, Orca will indicate that fact
 #. instead of presenting the full string which was just inserted. This message
 #. is the brief indication.
-#: src/orca/messages.py:337
+#: src/orca/messages.py:352
 msgctxt "clipboard"
 msgid "pasted"
 msgstr "beillesztés"
@@ -8463,7 +8497,7 @@ msgstr "beillesztés"
 #. to have this typing status announced by Orca; others find that announcement
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is presented when the value of the setting is toggled.
-#: src/orca/messages.py:344
+#: src/orca/messages.py:359
 msgid "Do not announce when your buddies are typing."
 msgstr "Nincs értesítés, ha a partnerek gépelnek."
 
@@ -8472,7 +8506,7 @@ msgstr "Nincs értesítés, ha a partnerek gépelnek."
 #. to have this typing status announced by Orca; others find that announcement
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is presented when the value of the setting is toggled.
-#: src/orca/messages.py:351
+#: src/orca/messages.py:366
 msgid "announce when your buddies are typing."
 msgstr "Értesítés, ha a partnerek gépelnek."
 
@@ -8482,7 +8516,7 @@ msgstr "Értesítés, ha a partnerek gépelnek."
 #. a given message came from just from hearing/reading it. This string to be
 #. translated is presented to the user to clarify where an incoming message
 #. came from. The name of the chat room is the string substitution.
-#: src/orca/messages.py:359
+#: src/orca/messages.py:374
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Üzenet ezen csevegőszobából: %s"
@@ -8491,7 +8525,7 @@ msgstr "Üzenet ezen csevegőszobából: %s"
 #. conversation has been added to the existing conversations. The "tab" here
 #. refers to the tab which contains the label for a GtkNotebook page. The
 #. label on the tab is the string substitution.
-#: src/orca/messages.py:365
+#: src/orca/messages.py:380
 #, python-format
 msgid "New chat tab %s"
 msgstr "Új csevegőlap: %s"
@@ -8503,7 +8537,7 @@ msgstr "Új csevegőlap: %s"
 #. has an option to present the name of the room first ("#a11y <joanie> hello!"
 #. instead of "<joanie> hello!"). This string to be translated is presented when
 #. the value of the setting is toggled.
-#: src/orca/messages.py:374
+#: src/orca/messages.py:389
 msgid "Do not speak chat room name."
 msgstr "Ne mondja ki a csevegőszoba nevét."
 
@@ -8514,7 +8548,7 @@ msgstr "Ne mondja ki a csevegőszoba nevét."
 #. has an option to present the name of the room first ("#a11y <joanie> hello!"
 #. instead of "<joanie> hello!"). This string to be translated is presented when
 #. the value of the setting is toggled.
-#: src/orca/messages.py:383
+#: src/orca/messages.py:398
 msgid "speak chat room name."
 msgstr "Csevegőszoba nevének kimondása."
 
@@ -8524,7 +8558,7 @@ msgstr "Csevegőszoba nevének kimondása."
 #. from). Other users prefer to have specific room history (e.g. the last ten
 #. messages from #a11y). Therefore, this is a setting in Orca. This string to be
 #. translated is presented when the value of the setting is toggled.
-#: src/orca/messages.py:392
+#: src/orca/messages.py:407
 msgid "Do not provide chat room specific message histories."
 msgstr "Ne jelenítse meg a csevegőszoba üzenetelőzményeit."
 
@@ -8534,14 +8568,14 @@ msgstr "Ne jelenítse meg a csevegőszoba üzenetelőzményeit."
 #. from). Other users prefer to have specific room history (e.g. the last ten
 #. messages from #a11y). Therefore, this is a setting in Orca. This string to be
 #. translated is presented when the value of the setting is toggled.
-#: src/orca/messages.py:400
+#: src/orca/messages.py:415
 msgid "Provide chat room specific message histories."
 msgstr "A csevegőszoba üzenetelőzményeinek megjelenítése."
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
-#: src/orca/messages.py:422
+#: src/orca/messages.py:437
 msgctxt "content"
 msgid "deletion start"
 msgstr "törlés kezdete"
@@ -8549,7 +8583,7 @@ msgstr "törlés kezdete"
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
-#: src/orca/messages.py:427
+#: src/orca/messages.py:442
 msgctxt "content"
 msgid "deletion end"
 msgstr "törlés vége"
@@ -8557,7 +8591,7 @@ msgstr "törlés vége"
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for insertion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
-#: src/orca/messages.py:432
+#: src/orca/messages.py:447
 msgctxt "content"
 msgid "insertion start"
 msgstr "beszúrás kezdete"
@@ -8565,7 +8599,7 @@ msgstr "beszúrás kezdete"
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
-#: src/orca/messages.py:437
+#: src/orca/messages.py:452
 msgctxt "content"
 msgid "insertion end"
 msgstr "beszúrás vége"
@@ -8573,7 +8607,7 @@ msgstr "beszúrás vége"
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
-#: src/orca/messages.py:442
+#: src/orca/messages.py:457
 msgctxt "content"
 msgid "highlight start"
 msgstr "kiemelés kezdete"
@@ -8581,7 +8615,7 @@ msgstr "kiemelés kezdete"
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
-#: src/orca/messages.py:447
+#: src/orca/messages.py:462
 msgctxt "content"
 msgid "highlight end"
 msgstr "kiemelés vége"
@@ -8591,7 +8625,7 @@ msgstr "kiemelés vége"
 #. proposed change. This change can include the insertion and/or deletion
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
-#: src/orca/messages.py:454
+#: src/orca/messages.py:469
 msgctxt "content"
 msgid "suggestion end"
 msgstr "javaslat vége"
@@ -8603,7 +8637,7 @@ msgstr "javaslat vége"
 #. done (e.g. because the container is the last element on the page), Orca will
 #. instead present this message as an indication that the container was not
 #. exited as expected.
-#: src/orca/messages.py:463
+#: src/orca/messages.py:478
 msgid "End of container."
 msgstr "Elemblokk vége."
 
@@ -8611,14 +8645,14 @@ msgstr "Elemblokk vége."
 #. or end of a container. Examples of containers include tables, lists, and
 #. blockquotes. If the user attempts to use this command in an object which is
 #. not a container, this message will be presented.
-#: src/orca/messages.py:469
+#: src/orca/messages.py:484
 msgid "Not in a container."
 msgstr "Nem egy elemblokkon áll."
 
 # Megjegyzés: nem akartam hozzá tenni a lefordított sztringhez a szokásos „A(z)” részt, mivel hosszú lenne a beszéd kimenet.
 #. Translators: This message is presented when the user selects all of the items
 #. in a container that supports selection, such as a GUI table or a list of icons.
-#: src/orca/messages.py:473
+#: src/orca/messages.py:488
 msgid "all items selected"
 msgstr "Minden elem kijelölve"
 
@@ -8628,7 +8662,7 @@ msgstr "Minden elem kijelölve"
 # Az alapértelmezett gomb: %s
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box.
-#: src/orca/messages.py:477
+#: src/orca/messages.py:492
 #, python-format
 msgid "Default button is %s"
 msgstr "%s az alapértelmezett gomb"
@@ -8637,7 +8671,7 @@ msgstr "%s az alapértelmezett gomb"
 #. one or several consecutive subscripted characters. For example, 'X' followed
 #. by 'subscript 2' followed by 'subscript 3' should be presented to the user as
 #. 'X subscript 23'.
-#: src/orca/messages.py:483
+#: src/orca/messages.py:498
 #, python-format
 msgid " subscript %s"
 msgstr "alsó index %s"
@@ -8646,7 +8680,7 @@ msgstr "alsó index %s"
 #. one or several consecutive superscripted characters. For example, 'X' followed
 #. by 'superscript 2' followed by 'superscript 3' should be presented to the user
 #. as 'X superscript 23'.
-#: src/orca/messages.py:489
+#: src/orca/messages.py:504
 #, python-format
 msgid " superscript %s"
 msgstr "felső index %s"
@@ -8655,7 +8689,7 @@ msgstr "felső index %s"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects the entire
 #. document by pressing Ctrl+A.
-#: src/orca/messages.py:495
+#: src/orca/messages.py:510
 msgid "entire document selected"
 msgstr "az egész dokumentum kijelölve"
 
@@ -8664,7 +8698,7 @@ msgstr "az egész dokumentum kijelölve"
 #. unselected. This message is presented when the entire document had been
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
-#: src/orca/messages.py:502
+#: src/orca/messages.py:517
 msgid "entire document unselected"
 msgstr "az egész dokumentum nincs kijelölve"
 
@@ -8672,7 +8706,7 @@ msgstr "az egész dokumentum nincs kijelölve"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the document by pressing Ctrl+Shift+End.
-#: src/orca/messages.py:508
+#: src/orca/messages.py:523
 msgid "document selected from cursor position"
 msgstr "a dokumentum kijelölve a kurzorpozíciótól"
 
@@ -8680,7 +8714,7 @@ msgstr "a dokumentum kijelölve a kurzorpozíciótól"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects previously
 #. selected text by pressing Ctrl+Shift+End.
-#: src/orca/messages.py:514
+#: src/orca/messages.py:529
 msgid "document unselected from cursor position"
 msgstr "a dokumentum kijelölése megszüntetve a kurzorpozíciótól"
 
@@ -8688,7 +8722,7 @@ msgstr "a dokumentum kijelölése megszüntetve a kurzorpozíciótól"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the document by pressing Ctrl+Shift+Home.
-#: src/orca/messages.py:520
+#: src/orca/messages.py:535
 msgid "document selected to cursor position"
 msgstr "a dokumentum kijelölve a kurzorpozícióig"
 
@@ -8696,14 +8730,14 @@ msgstr "a dokumentum kijelölve a kurzorpozícióig"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects previously
 #. selected text by pressing Ctrl+Shift+Home.
-#: src/orca/messages.py:526
+#: src/orca/messages.py:541
 msgid "document unselected to cursor position"
 msgstr "A dokumentum nincs kijelölve a kurzorpozícióig"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
 #. presented when the user sets the row to a particular row number.
-#: src/orca/messages.py:531
+#: src/orca/messages.py:546
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "Dinamikus oszlopfejléc beállítva a következő sorhoz: %d"
@@ -8712,7 +8746,7 @@ msgstr "Dinamikus oszlopfejléc beállítva a következő sorhoz: %d"
 #. or table should be treated as containing column headers. This message is
 #. presented when the user unsets the row so it is no longer treated as if it
 #. contained column headers.
-#: src/orca/messages.py:537
+#: src/orca/messages.py:552
 msgid "Dynamic column header cleared."
 msgstr "A dinamikus oszlopfejléc törölve lett."
 
@@ -8720,7 +8754,7 @@ msgstr "A dinamikus oszlopfejléc törölve lett."
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user sets the column to a particular column
 #. number.
-#: src/orca/messages.py:543
+#: src/orca/messages.py:558
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dinamikus sorfejléc beállítva a következő oszlophoz: %s"
@@ -8729,31 +8763,31 @@ msgstr "Dinamikus sorfejléc beállítva a következő oszlophoz: %s"
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user unsets the column so it is no longer
 #. treated as if it contained row headers.
-#: src/orca/messages.py:549
+#: src/orca/messages.py:564
 msgid "Dynamic row header cleared."
 msgstr "A dinamikus sorfejléc törölve lett."
 
 #. Translators: this is used to announce that the current input line in a
 #. spreadsheet is blank/empty.
-#: src/orca/messages.py:553
+#: src/orca/messages.py:568
 msgid "empty"
 msgstr "üres"
 
 #. Translators: This is the size of a file in kilobytes
-#: src/orca/messages.py:556
+#: src/orca/messages.py:571
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobájt"
 
 #. Translators: This is the size of a file in megabytes
-#: src/orca/messages.py:559
+#: src/orca/messages.py:574
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabájt"
 
 #. Translators: This message is presented to the user after performing a file
 #. search to indicate there were no matches.
-#: src/orca/messages.py:563
+#: src/orca/messages.py:578
 msgid "No files found."
 msgstr "Nem találhatók fájlok."
 
@@ -8763,7 +8797,7 @@ msgstr "Nem találhatók fájlok."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully appended the contents under
 #. flat review onto the existing contents of the clipboard.
-#: src/orca/messages.py:571
+#: src/orca/messages.py:586
 msgid "Appended contents to clipboard."
 msgstr "Az egyszerű áttekintés tartalma hozzáfűzve a vágólaphoz."
 
@@ -8773,7 +8807,7 @@ msgstr "Az egyszerű áttekintés tartalma hozzáfűzve a vágólaphoz."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully copied the contents under flat
 #. review to the clipboard.
-#: src/orca/messages.py:579
+#: src/orca/messages.py:594
 msgid "Copied contents to clipboard."
 msgstr "Az egyszerű áttekintés tartalma a vágólapra másolva."
 
@@ -8783,7 +8817,7 @@ msgstr "Az egyszerű áttekintés tartalma a vágólapra másolva."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she attempted to use a flat review command when
 #. not using flat review.
-#: src/orca/messages.py:587
+#: src/orca/messages.py:602
 msgid "Not using flat review."
 msgstr "Az egyszerű áttekintés nem használható."
 
@@ -8792,7 +8826,7 @@ msgstr "Az egyszerű áttekintés nem használható."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: src/orca/messages.py:594
+#: src/orca/messages.py:609
 msgid "Entering flat review."
 msgstr "Belépés az egyszerű áttekintés módba."
 
@@ -8801,37 +8835,37 @@ msgstr "Belépés az egyszerű áttekintés módba."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: src/orca/messages.py:601
+#: src/orca/messages.py:616
 msgid "Leaving flat review."
 msgstr "Kilépés az egyszerű áttekintés módból."
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
-#: src/orca/messages.py:605
+#: src/orca/messages.py:620
 msgid "has formula"
 msgstr "képletet tartalmaz"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a dialog to appear if activated.
-#: src/orca/messages.py:609
+#: src/orca/messages.py:624
 msgid "opens dialog"
 msgstr "megnyitja a párbeszédablakot"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a grid to appear if activated. A grid is an interactive table.
-#: src/orca/messages.py:613
+#: src/orca/messages.py:628
 msgid "opens grid"
 msgstr "megnyitja a rácsot"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a listbox to appear if activated.
-#: src/orca/messages.py:617
+#: src/orca/messages.py:632
 msgid "opens listbox"
 msgstr "megnyitja a listadobozt"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a menu to appear if activated.
-#: src/orca/messages.py:621
+#: src/orca/messages.py:636
 msgid "opens menu"
 msgstr "megnyitja a menüt"
 
@@ -8839,7 +8873,7 @@ msgstr "megnyitja a menüt"
 #. will cause a tree to appear if activated. A tree is a list with sub-levels
 #. which can be expanded or collapsed, similar to the list of folders in an
 #. email client.
-#: src/orca/messages.py:627
+#: src/orca/messages.py:642
 msgid "opens tree"
 msgstr "megnyitja a fanézetet"
 
@@ -8848,7 +8882,7 @@ msgstr "megnyitja a fanézetet"
 #. been divided into regions. Each region can be clicked on and has an associated
 #. link. Please see http://en.wikipedia.org/wiki/Imagemap for more information
 #. and examples.
-#: src/orca/messages.py:634
+#: src/orca/messages.py:649
 msgid "image map link"
 msgstr "kép hivatkozás"
 
@@ -8856,7 +8890,7 @@ msgstr "kép hivatkozás"
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
 #. bound to another command and is thus unavailable. The string substituted in is
 #. the name of the command which already has the binding.
-#: src/orca/messages.py:640
+#: src/orca/messages.py:655
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "A megadott billentyű már ehhez van kötve: %s"
@@ -8864,7 +8898,7 @@ msgstr "A megadott billentyű már ehhez van kötve: %s"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: src/orca/messages.py:645
+#: src/orca/messages.py:660
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Billentyűütés: %s. A megerősítéshez nyomja meg az Entert."
@@ -8872,7 +8906,7 @@ msgstr "Billentyűütés: %s. A megerősítéshez nyomja meg az Entert."
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: src/orca/messages.py:650
+#: src/orca/messages.py:665
 #, python-format
 msgid "The new key is: %s"
 msgstr "Az új billentyű: %s"
@@ -8880,21 +8914,21 @@ msgstr "Az új billentyű: %s"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
 #. result of their input.
-#: src/orca/messages.py:655
+#: src/orca/messages.py:670
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "A billentyűtársítás törölve. A megerősítéshez nyomja meg az Entert."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input.
-#: src/orca/messages.py:660
+#: src/orca/messages.py:675
 msgid "The keybinding has been removed."
 msgstr "A billentyűtársítás törölve."
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 #. Orca command.
-#: src/orca/messages.py:665
+#: src/orca/messages.py:680
 msgid "enter new key"
 msgstr "üsse le az új billentyűt"
 
@@ -8910,7 +8944,7 @@ msgstr "üsse le az új billentyűt"
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:679
+#: src/orca/messages.py:694
 msgctxt "key echo"
 msgid "key"
 msgstr "karakterek"
@@ -8925,7 +8959,7 @@ msgstr "karakterek"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:691
+#: src/orca/messages.py:706
 msgid "Echo set to key."
 msgstr "A billentyűvisszhang karakterenkéntire állítva."
 
@@ -8941,7 +8975,7 @@ msgstr "A billentyűvisszhang karakterenkéntire állítva."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:705
+#: src/orca/messages.py:720
 msgctxt "key echo"
 msgid "None"
 msgstr "Nincs"
@@ -8956,7 +8990,7 @@ msgstr "Nincs"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:717
+#: src/orca/messages.py:732
 msgid "Echo set to None."
 msgstr "A billentyűvisszhang nincsre állítva."
 
@@ -8973,7 +9007,7 @@ msgstr "A billentyűvisszhang nincsre állítva."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:731
+#: src/orca/messages.py:746
 msgctxt "key echo"
 msgid "key and word"
 msgstr "karakterek és szavak"
@@ -8988,7 +9022,7 @@ msgstr "karakterek és szavak"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:743
+#: src/orca/messages.py:758
 msgid "Echo set to key and word."
 msgstr "A billentyűvisszhang karakterek és szavakra állítva."
 
@@ -9004,7 +9038,7 @@ msgstr "A billentyűvisszhang karakterek és szavakra állítva."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:757
+#: src/orca/messages.py:772
 msgctxt "key echo"
 msgid "sentence"
 msgstr "mondatok"
@@ -9020,7 +9054,7 @@ msgstr "mondatok"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:769
+#: src/orca/messages.py:784
 msgid "Echo set to sentence."
 msgstr "A billentyűvisszhang mondatonkéntire állítva."
 
@@ -9037,7 +9071,7 @@ msgstr "A billentyűvisszhang mondatonkéntire állítva."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:783
+#: src/orca/messages.py:798
 msgctxt "key echo"
 msgid "word"
 msgstr "szavak"
@@ -9052,7 +9086,7 @@ msgstr "szavak"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:795
+#: src/orca/messages.py:810
 msgid "Echo set to word."
 msgstr "A billentyűvisszhang szavankéntire állítva."
 
@@ -9068,7 +9102,7 @@ msgstr "A billentyűvisszhang szavankéntire állítva."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:809
+#: src/orca/messages.py:824
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "szavak és mondatok"
@@ -9083,7 +9117,7 @@ msgstr "szavak és mondatok"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:821
+#: src/orca/messages.py:836
 msgid "Echo set to word and sentence."
 msgstr "A billentyűvisszhang szavak és mondatokra állítva."
 
@@ -9097,7 +9131,7 @@ msgstr "A billentyűvisszhang szavak és mondatokra állítva."
 #. substitution is for that list of enclosure types. For more information
 #. about the MathML 'menclose' element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:833
+#: src/orca/messages.py:848
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
@@ -9109,7 +9143,7 @@ msgstr "%s által körbezárt"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:841
+#: src/orca/messages.py:856
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
 msgstr "biztosításmatematikai szimbólum"
@@ -9120,7 +9154,7 @@ msgstr "biztosításmatematikai szimbólum"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:849
+#: src/orca/messages.py:864
 msgctxt "math enclosure"
 msgid "a box"
 msgstr "egy doboz"
@@ -9131,7 +9165,7 @@ msgstr "egy doboz"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:857
+#: src/orca/messages.py:872
 msgctxt "math enclosure"
 msgid "a circle"
 msgstr "egy kör"
@@ -9142,7 +9176,7 @@ msgstr "egy kör"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:865
+#: src/orca/messages.py:880
 msgctxt "math enclosure"
 msgid "a long division sign"
 msgstr "egy hosszú osztás jel"
@@ -9153,7 +9187,7 @@ msgstr "egy hosszú osztás jel"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:873
+#: src/orca/messages.py:888
 msgctxt "math enclosure"
 msgid "a radical"
 msgstr "egy gyökjel"
@@ -9164,7 +9198,7 @@ msgstr "egy gyökjel"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:881
+#: src/orca/messages.py:896
 msgctxt "math enclosure"
 msgid "a rounded box"
 msgstr "egy lekerekített doboz"
@@ -9175,7 +9209,7 @@ msgstr "egy lekerekített doboz"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:889
+#: src/orca/messages.py:904
 msgctxt "math enclosure"
 msgid "a horizontal strike"
 msgstr "vízszintesen áthúzott"
@@ -9186,7 +9220,7 @@ msgstr "vízszintesen áthúzott"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:897
+#: src/orca/messages.py:912
 msgctxt "math enclosure"
 msgid "a vertical strike"
 msgstr "függőlegesen áthúzott"
@@ -9197,7 +9231,7 @@ msgstr "függőlegesen áthúzott"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:905
+#: src/orca/messages.py:920
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
 msgstr "egy lefelé mutató átlós áthúzás"
@@ -9208,7 +9242,7 @@ msgstr "egy lefelé mutató átlós áthúzás"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:913
+#: src/orca/messages.py:928
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
 msgstr "egy felfelé mutató átlós áthúzás"
@@ -9219,7 +9253,7 @@ msgstr "egy felfelé mutató átlós áthúzás"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:921
+#: src/orca/messages.py:936
 msgctxt "math enclosure"
 msgid "a northeast arrow"
 msgstr "egy északnyugat felé mutató nyíl"
@@ -9230,7 +9264,7 @@ msgstr "egy északnyugat felé mutató nyíl"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:929
+#: src/orca/messages.py:944
 msgctxt "math enclosure"
 msgid "a line at the bottom"
 msgstr "egy vonal alján"
@@ -9241,7 +9275,7 @@ msgstr "egy vonal alján"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:937
+#: src/orca/messages.py:952
 msgctxt "math enclosure"
 msgid "a line on the left"
 msgstr "egy vonalat a bal oldalán"
@@ -9252,7 +9286,7 @@ msgstr "egy vonalat a bal oldalán"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:945
+#: src/orca/messages.py:960
 msgctxt "math enclosure"
 msgid "a line on the right"
 msgstr "egy vonal jobb oldalán"
@@ -9263,7 +9297,7 @@ msgstr "egy vonal jobb oldalán"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:953
+#: src/orca/messages.py:968
 msgctxt "math enclosure"
 msgid "a line at the top"
 msgstr "egy vonal tetején"
@@ -9274,7 +9308,7 @@ msgstr "egy vonal tetején"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:961
+#: src/orca/messages.py:976
 msgctxt "math enclosure"
 msgid "a phasor angle"
 msgstr "egy fázisvektor szöge"
@@ -9286,7 +9320,7 @@ msgstr "egy fázisvektor szöge"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #. This particular string is for the "madruwb" notation type.
-#: src/orca/messages.py:970
+#: src/orca/messages.py:985
 msgctxt "math enclosure"
 msgid "an arabic factorial symbol"
 msgstr "egy arab faktoros szimbólum"
@@ -9302,7 +9336,7 @@ msgstr "egy arab faktoros szimbólum"
 #. one enclosure notation. For more information about the MathML 'menclose'
 #. element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:983
+#: src/orca/messages.py:998
 msgctxt "math enclosure"
 msgid "and"
 msgstr "és"
@@ -9310,7 +9344,7 @@ msgstr "és"
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:988
+#: src/orca/messages.py:1003
 msgid "fraction start"
 msgstr "tört kezdete"
 
@@ -9323,14 +9357,14 @@ msgstr "tört kezdete"
 #. the pause which results is not needed. You should be able to test this with
 #. "spd-say <your text here>" in a terminal on a machine where speech-dispatcher
 #. is installed.
-#: src/orca/messages.py:999
+#: src/orca/messages.py:1014
 msgid "fraction without bar, start"
 msgstr "törtvonal nélküli tört kezdete"
 
 #. Translators: This word refers to the line separating the numerator from the
 #. denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:1004
+#: src/orca/messages.py:1019
 msgctxt "math fraction"
 msgid "over"
 msgstr "felette"
@@ -9338,7 +9372,7 @@ msgstr "felette"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
 #. Orca would would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:1009
+#: src/orca/messages.py:1024
 msgid "fraction end"
 msgstr "tört vége"
 
@@ -9348,7 +9382,7 @@ msgstr "tört vége"
 #. be spoken). Note that the radicand, which follows the "of", is unknown and
 #. might not even be a simple string; it might be the square root of another
 #. expression such as a fraction.
-#: src/orca/messages.py:1017
+#: src/orca/messages.py:1032
 msgid "square root of"
 msgstr "Négyzetgyöke"
 
@@ -9358,7 +9392,7 @@ msgstr "Négyzetgyöke"
 #. endings should  be spoken). Note that the radicand, which follows the "of",
 #. is unknown and might not even be a simple string; it might be the cube root
 #. of another expression such as a fraction.
-#: src/orca/messages.py:1025
+#: src/orca/messages.py:1040
 msgid "cube root of"
 msgstr "Köbgyöke"
 
@@ -9368,7 +9402,7 @@ msgstr "Köbgyöke"
 #. the user settings indicate that root endings should be spoken). Note that the
 #. index, which precedes this string, is unknown and might not even be a simple
 #. expression like "fourth"; the index might instead be a fraction.
-#: src/orca/messages.py:1033
+#: src/orca/messages.py:1048
 msgid "root of"
 msgstr "gyöke"
 
@@ -9379,7 +9413,7 @@ msgstr "gyöke"
 #. "fourth root of 9" may be sufficient for the user. But if the index is not
 #. 4, but instead the fraction x/4, beginning the phrase with "root start" can
 #. help the user better understand that x/4 is the index of the root.
-#: src/orca/messages.py:1042
+#: src/orca/messages.py:1057
 msgid "root start"
 msgstr "gyök kezdete"
 
@@ -9387,7 +9421,7 @@ msgstr "gyök kezdete"
 #. phrase is the end of a mathematical root (square root, cube root, nth root).
 #. For instance, for the cube root of 9, Orca would say "cube root of 9, root
 #. end" (assuming the user settings indicate that root endings should be spoken).
-#: src/orca/messages.py:1048
+#: src/orca/messages.py:1063
 msgid "root end"
 msgstr "gyök vége"
 
@@ -9396,7 +9430,7 @@ msgstr "gyök vége"
 #. subscript might be simple text or may itself be a mathematical expression,
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
-#: src/orca/messages.py:1055
+#: src/orca/messages.py:1070
 msgctxt "math script generic"
 msgid "subscript"
 msgstr "alsó indexe"
@@ -9406,7 +9440,7 @@ msgstr "alsó indexe"
 #. superscript might be simple text or may itself be a mathematical expression,
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
-#: src/orca/messages.py:1062
+#: src/orca/messages.py:1077
 msgctxt "math script generic"
 msgid "superscript"
 msgstr "felső indexe"
@@ -9416,7 +9450,7 @@ msgstr "felső indexe"
 #. expression. See, for instance, the MathML mmultiscripts element:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-#: src/orca/messages.py:1069
+#: src/orca/messages.py:1084
 msgctxt "math script"
 msgid "pre-subscript"
 msgstr "bal alsó indexe"
@@ -9426,7 +9460,7 @@ msgstr "bal alsó indexe"
 #. expression. See, for instance, the MathML mmultiscripts element:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-#: src/orca/messages.py:1076
+#: src/orca/messages.py:1091
 msgctxt "math script"
 msgid "pre-superscript"
 msgstr "bal felső indexe"
@@ -9438,7 +9472,7 @@ msgstr "bal felső indexe"
 #. friendly word or phrase can reliably be chosen. Examples of underscripts:
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.munder
 #. https://reference.wolfram.com/language/ref/Underscript.html
-#: src/orca/messages.py:1085
+#: src/orca/messages.py:1100
 msgctxt "math script generic"
 msgid "underscript"
 msgstr "szöveg alatti indexe"
@@ -9450,14 +9484,14 @@ msgstr "szöveg alatti indexe"
 #. friendly word or phrase can reliably be chosen. Examples of overscripts:
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.mover
 #. https://reference.wolfram.com/language/ref/Overscript.html
-#: src/orca/messages.py:1094
+#: src/orca/messages.py:1109
 msgctxt "math script generic"
 msgid "overscript"
 msgstr "szöveg feletti indexe"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
-#: src/orca/messages.py:1098
+#: src/orca/messages.py:1113
 msgctxt "math table"
 msgid "table end"
 msgstr "Táblázat vége"
@@ -9465,7 +9499,7 @@ msgstr "Táblázat vége"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
-#: src/orca/messages.py:1103
+#: src/orca/messages.py:1118
 msgctxt "math table"
 msgid "nested table end"
 msgstr "beágyazott táblázat vége"
@@ -9473,33 +9507,33 @@ msgstr "beágyazott táblázat vége"
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
 #. infrastructure.
-#: src/orca/messages.py:1108
+#: src/orca/messages.py:1123
 msgid "inaccessible"
 msgstr "elérhetetlen"
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1113
+#: src/orca/messages.py:1128
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Letiltva"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will not be spoken.
-#: src/orca/messages.py:1118
+#: src/orca/messages.py:1133
 msgid "Speaking of indentation and justification disabled."
 msgstr "Behúzás és igazítás felolvasása letiltva."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1123
+#: src/orca/messages.py:1138
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Engedélyezve"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1128
+#: src/orca/messages.py:1143
 msgid "Speaking of indentation and justification enabled."
 msgstr "Behúzás és igazítás felolvasása engedélyezve."
 
@@ -9509,7 +9543,7 @@ msgstr "Behúzás és igazítás felolvasása engedélyezve."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented on the braille display when
 #. entering Learn Mode.
-#: src/orca/messages.py:1136
+#: src/orca/messages.py:1151
 msgid "Learn mode.  Press escape to exit."
 msgstr "Tanulómód. Kilépéshez nyomja meg az Esc billentyűt."
 
@@ -9519,7 +9553,7 @@ msgstr "Tanulómód. Kilépéshez nyomja meg az Esc billentyűt."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
-#: src/orca/messages.py:1145
+#: src/orca/messages.py:1160
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader’s documentation, press F1. To get a list of the screen "
@@ -9537,7 +9571,7 @@ msgstr ""
 # Megjegyzés: szó szerinti fordításban idézetblokk elhagyása lenne az üzenet, de szerintem az idézetblokk vége jobb (hasonló lesz az üzenet a listák végének bejelentésekor és a táblázat végének bejelentésekor).
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
-#: src/orca/messages.py:1154
+#: src/orca/messages.py:1169
 msgid "leaving blockquote."
 msgstr "idézetblokk vége."
 
@@ -9550,7 +9584,7 @@ msgstr "idézetblokk vége."
 #. This message is presented when a user just navigated out of a container holding
 #. detailed information about another object.
 #. See https://w3c.github.io/aria/#aria-details
-#: src/orca/messages.py:1165
+#: src/orca/messages.py:1180
 msgid "leaving details."
 msgstr "részletek vége."
 
@@ -9558,7 +9592,7 @@ msgstr "részletek vége."
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1171
+#: src/orca/messages.py:1186
 msgctxt "role"
 msgid "leaving feed."
 msgstr "cikklista vége."
@@ -9567,14 +9601,14 @@ msgstr "cikklista vége."
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1177
+#: src/orca/messages.py:1192
 msgctxt "role"
 msgid "leaving figure."
 msgstr "Ábra vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
-#: src/orca/messages.py:1181
+#: src/orca/messages.py:1196
 msgid "leaving form."
 msgstr "űrlap vége."
 
@@ -9582,7 +9616,7 @@ msgstr "űrlap vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1187
+#: src/orca/messages.py:1202
 msgctxt "role"
 msgid "leaving banner."
 msgstr "Főcím vége."
@@ -9591,7 +9625,7 @@ msgstr "Főcím vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1193
+#: src/orca/messages.py:1208
 msgctxt "role"
 msgid "leaving complementary content."
 msgstr "Kiegészítő tartalom vége."
@@ -9600,7 +9634,7 @@ msgstr "Kiegészítő tartalom vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1199
+#: src/orca/messages.py:1214
 msgctxt "role"
 msgid "leaving information."
 msgstr "információ vége."
@@ -9609,7 +9643,7 @@ msgstr "információ vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1205
+#: src/orca/messages.py:1220
 msgctxt "role"
 msgid "leaving main content."
 msgstr "Fő tartalom vége."
@@ -9618,7 +9652,7 @@ msgstr "Fő tartalom vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1211
+#: src/orca/messages.py:1226
 msgctxt "role"
 msgid "leaving navigation."
 msgstr "navigáció vége."
@@ -9627,7 +9661,7 @@ msgstr "navigáció vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1217
+#: src/orca/messages.py:1232
 msgctxt "role"
 msgid "leaving region."
 msgstr "speciális terület vége."
@@ -9636,33 +9670,33 @@ msgstr "speciális terület vége."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1223
+#: src/orca/messages.py:1238
 msgctxt "role"
 msgid "leaving search."
 msgstr "keresés vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
-#: src/orca/messages.py:1227
+#: src/orca/messages.py:1242
 msgid "leaving list."
 msgstr "lista vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
-#: src/orca/messages.py:1232
+#: src/orca/messages.py:1247
 msgid "leaving panel."
 msgstr "panel vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
-#: src/orca/messages.py:1236
+#: src/orca/messages.py:1251
 msgid "leaving table."
 msgstr "táblázat vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
-#: src/orca/messages.py:1240
+#: src/orca/messages.py:1255
 msgid "leaving tooltip."
 msgstr "buborék súgó vége."
 
@@ -9670,7 +9704,7 @@ msgstr "buborék súgó vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1246
+#: src/orca/messages.py:1261
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "kivonat vége."
@@ -9679,7 +9713,7 @@ msgstr "kivonat vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1252
+#: src/orca/messages.py:1267
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "Elismerések vége."
@@ -9688,7 +9722,7 @@ msgstr "Elismerések vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1258
+#: src/orca/messages.py:1273
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "Utószó vége."
@@ -9697,7 +9731,7 @@ msgstr "Utószó vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1264
+#: src/orca/messages.py:1279
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "függelék vége."
@@ -9706,7 +9740,7 @@ msgstr "függelék vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1270
+#: src/orca/messages.py:1285
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "Irodalomjegyzék vége."
@@ -9715,7 +9749,7 @@ msgstr "Irodalomjegyzék vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1276
+#: src/orca/messages.py:1291
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "Fejezet vége."
@@ -9724,7 +9758,7 @@ msgstr "Fejezet vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1282
+#: src/orca/messages.py:1297
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "Kolofon vége."
@@ -9733,7 +9767,7 @@ msgstr "Kolofon vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1288
+#: src/orca/messages.py:1303
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "Következtetés vége."
@@ -9742,7 +9776,7 @@ msgstr "Következtetés vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1294
+#: src/orca/messages.py:1309
 msgctxt "role"
 msgid "leaving credit."
 msgstr "Köszönet vége."
@@ -9751,7 +9785,7 @@ msgstr "Köszönet vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1300
+#: src/orca/messages.py:1315
 msgctxt "role"
 msgid "leaving credits."
 msgstr "Köszönet vége."
@@ -9760,7 +9794,7 @@ msgstr "Köszönet vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1306
+#: src/orca/messages.py:1321
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "Dedikáció vége."
@@ -9769,7 +9803,7 @@ msgstr "Dedikáció vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1312
+#: src/orca/messages.py:1327
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "végjegyzet vége."
@@ -9778,7 +9812,7 @@ msgstr "végjegyzet vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1318
+#: src/orca/messages.py:1333
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "felirat vége."
@@ -9787,7 +9821,7 @@ msgstr "felirat vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1324
+#: src/orca/messages.py:1339
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "Epilógus vége."
@@ -9796,7 +9830,7 @@ msgstr "Epilógus vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1330
+#: src/orca/messages.py:1345
 msgctxt "role"
 msgid "leaving errata."
 msgstr "Hibajegyzék vége."
@@ -9805,7 +9839,7 @@ msgstr "Hibajegyzék vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1336
+#: src/orca/messages.py:1351
 msgctxt "role"
 msgid "leaving example."
 msgstr "Példa vége."
@@ -9814,7 +9848,7 @@ msgstr "Példa vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1342
+#: src/orca/messages.py:1357
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "Előszó vége."
@@ -9823,7 +9857,7 @@ msgstr "Előszó vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1348
+#: src/orca/messages.py:1363
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "Szószedet vége."
@@ -9832,7 +9866,7 @@ msgstr "Szószedet vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1354
+#: src/orca/messages.py:1369
 msgctxt "role"
 msgid "leaving index."
 msgstr "tárgymutató vége."
@@ -9841,7 +9875,7 @@ msgstr "tárgymutató vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1360
+#: src/orca/messages.py:1375
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "Bevezetés vége."
@@ -9850,7 +9884,7 @@ msgstr "Bevezetés vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1366
+#: src/orca/messages.py:1381
 msgctxt "role"
 msgid "leaving page list."
 msgstr "oldallista vége."
@@ -9859,7 +9893,7 @@ msgstr "oldallista vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1372
+#: src/orca/messages.py:1387
 msgctxt "role"
 msgid "leaving part."
 msgstr "Rész vége."
@@ -9868,7 +9902,7 @@ msgstr "Rész vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1378
+#: src/orca/messages.py:1393
 msgctxt "role"
 msgid "leaving preface."
 msgstr "Előszó vége."
@@ -9878,7 +9912,7 @@ msgstr "Előszó vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1384
+#: src/orca/messages.py:1399
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "Prológus vége."
@@ -9888,7 +9922,7 @@ msgstr "Prológus vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1390
+#: src/orca/messages.py:1405
 msgctxt "role"
 msgid "leaving pullquote."
 msgstr "Idézőjel vége."
@@ -9898,7 +9932,7 @@ msgstr "Idézőjel vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1396
+#: src/orca/messages.py:1411
 msgctxt "role"
 msgid "leaving QNA."
 msgstr "GYIK vége."
@@ -9908,7 +9942,7 @@ msgstr "GYIK vége."
 #. a proposed change. This change can include the insertion and/or deletion
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
-#: src/orca/messages.py:1403
+#: src/orca/messages.py:1418
 msgctxt "role"
 msgid "leaving suggestion."
 msgstr "javaslat vége."
@@ -9917,7 +9951,7 @@ msgstr "javaslat vége."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1409
+#: src/orca/messages.py:1424
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "Tartalomjegyzék vége."
@@ -9926,7 +9960,7 @@ msgstr "Tartalomjegyzék vége."
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the line by pressing Shift+Down.
-#: src/orca/messages.py:1415
+#: src/orca/messages.py:1430
 msgid "line selected down from cursor position"
 msgstr "a kurzorpozíció alatti sor kijelölve"
 
@@ -9934,7 +9968,7 @@ msgstr "a kurzorpozíció alatti sor kijelölve"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the line by pressing Shift+Up.
-#: src/orca/messages.py:1421
+#: src/orca/messages.py:1436
 msgid "line selected up from cursor position"
 msgstr "a kurzorpozíció feletti sor kijelölve"
 
@@ -9943,7 +9977,7 @@ msgstr "a kurzorpozíció feletti sor kijelölve"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the end of the paragraph by
 #. pressing Shift+Down.
-#: src/orca/messages.py:1428
+#: src/orca/messages.py:1443
 msgid "line unselected down from cursor position"
 msgstr "a kurzorpozíció alatti sor kijelölése megszüntetve"
 
@@ -9952,7 +9986,7 @@ msgstr "a kurzorpozíció alatti sor kijelölése megszüntetve"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the start of the paragraph by
 #. pressing Shift+Up.
-#: src/orca/messages.py:1435
+#: src/orca/messages.py:1450
 msgid "line unselected up from cursor position"
 msgstr "a kurzorpozíció feletti sor kijelölése megszüntetve"
 
@@ -9962,7 +9996,7 @@ msgstr "a kurzorpozíció feletti sor kijelölése megszüntetve"
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented in speech and braille when
 #. exiting Learn Mode.
-#: src/orca/messages.py:1443
+#: src/orca/messages.py:1458
 msgid "Exiting learn mode."
 msgstr "Kilépés a tanulómódból."
 
@@ -9970,7 +10004,7 @@ msgstr "Kilépés a tanulómódból."
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the line by pressing Ctrl+Shift+Page_Up.
-#: src/orca/messages.py:1449
+#: src/orca/messages.py:1464
 msgid "line selected from start to previous cursor position"
 msgstr "a sor kijelölve a kurzorpozíciótól a sor elejéig"
 
@@ -9978,50 +10012,50 @@ msgstr "a sor kijelölve a kurzorpozíciótól a sor elejéig"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the line by pressing Ctrl+Shift+Page_Down.
-#: src/orca/messages.py:1455
+#: src/orca/messages.py:1470
 msgid "line selected to end from previous cursor position"
 msgstr "a sor kijelölve a kurzorpozíciótól a sor végéig"
 
 #. Translators: this indicates that this piece of text is a hypertext link.
-#: src/orca/messages.py:1458
+#: src/orca/messages.py:1473
 msgid "link"
 msgstr "hivatkozás"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is on the same page.
-#: src/orca/messages.py:1462
+#: src/orca/messages.py:1477
 msgid "same page"
 msgstr "azonos lap"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at the same site (but not on the same page as the link).
-#: src/orca/messages.py:1466
+#: src/orca/messages.py:1481
 msgid "same site"
 msgstr "azonos oldal"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at a different site than that of the link.
-#: src/orca/messages.py:1470
+#: src/orca/messages.py:1485
 msgid "different site"
 msgstr "különböző oldal"
 
 #. Translators: this refers to a link to a file, where the first item is the
 #. protocol (ftp, ftps, or file) and the second item the name of the file being
 #. linked to.
-#: src/orca/messages.py:1475
+#: src/orca/messages.py:1490
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s hivatkozás erre a fájlra: %(file)s"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
-#: src/orca/messages.py:1478
+#: src/orca/messages.py:1493
 #, python-format
 msgid "%s link"
 msgstr "%s hivatkozás"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
 #. along with the visited state of that link.
-#: src/orca/messages.py:1482
+#: src/orca/messages.py:1497
 #, python-format
 msgid "visited %s link"
 msgstr "meglátogatott %s hivatkozás"
@@ -10029,7 +10063,7 @@ msgstr "meglátogatott %s hivatkozás"
 #. Translators: The following string instructs the user how to navigate amongst
 #. the list of commands presented in learn mode, as well as how to exit the list
 #. when finished.
-#: src/orca/messages.py:1488
+#: src/orca/messages.py:1503
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "A listában való navigációhoz használja a felfelé és lefelé nyilakat, a "
@@ -10043,7 +10077,7 @@ msgstr ""
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed to
 #. "off" for all of the live regions.
-#: src/orca/messages.py:1498
+#: src/orca/messages.py:1513
 msgid "All live regions set to off"
 msgstr "Az összes élő régió kikapcsolása"
 
@@ -10055,7 +10089,7 @@ msgstr "Az összes élő régió kikapcsolása"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level for all live
 #. regions has been restored to their original values.
-#: src/orca/messages.py:1508
+#: src/orca/messages.py:1523
 msgid "live regions politeness levels restored"
 msgstr "az élő régiók udvariassági szintje visszaállítva"
 
@@ -10066,7 +10100,7 @@ msgstr "az élő régiók udvariassági szintje visszaállítva"
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user of the "politeness" level for the current live region.
-#: src/orca/messages.py:1517
+#: src/orca/messages.py:1532
 #, python-format
 msgid "politeness level %s"
 msgstr "%s udvariassági szint"
@@ -10079,7 +10113,7 @@ msgstr "%s udvariassági szint"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1527
+#: src/orca/messages.py:1542
 msgid "setting live region to assertive"
 msgstr "élő régió beállítása nyersre"
 
@@ -10091,7 +10125,7 @@ msgstr "élő régió beállítása nyersre"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1537
+#: src/orca/messages.py:1552
 msgid "setting live region to off"
 msgstr "élő régiók kikapcsolva"
 
@@ -10103,7 +10137,7 @@ msgstr "élő régiók kikapcsolva"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1547
+#: src/orca/messages.py:1562
 msgid "setting live region to polite"
 msgstr "élő régió beállítása udvariasra"
 
@@ -10115,7 +10149,7 @@ msgstr "élő régió beállítása udvariasra"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1557
+#: src/orca/messages.py:1572
 msgid "setting live region to rude"
 msgstr "élő régió beállítása durvára"
 
@@ -10128,7 +10162,7 @@ msgstr "élő régió beállítása durvára"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1568
+#: src/orca/messages.py:1583
 msgid "Live regions monitoring off"
 msgstr "Az élő régiók figyelése kikapcsolva"
 
@@ -10141,7 +10175,7 @@ msgstr "Az élő régiók figyelése kikapcsolva"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1579
+#: src/orca/messages.py:1594
 msgid "Live regions monitoring on"
 msgstr "Az élő régiók figyelése bekapcsolva"
 
@@ -10150,7 +10184,7 @@ msgstr "Az élő régiók figyelése bekapcsolva"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that a cached message is not available for the
 #. the current live region.
-#: src/orca/messages.py:1586
+#: src/orca/messages.py:1601
 msgid "no live message saved"
 msgstr "Nincs helyi elmentett üzenet"
 
@@ -10159,14 +10193,14 @@ msgstr "Nincs helyi elmentett üzenet"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that Orca's live region features have been
 #. turned off.
-#: src/orca/messages.py:1593
+#: src/orca/messages.py:1608
 msgid "Live region support is off"
 msgstr "Az élő régiók támogatása kikapcsolva"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
 #. some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1598
+#: src/orca/messages.py:1613
 msgctxt "location"
 msgid "Not found"
 msgstr "Nem található"
@@ -10174,7 +10208,7 @@ msgstr "Nem található"
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a detailed message which will be presented if
 #. for some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1603
+#: src/orca/messages.py:1618
 msgid "Could not find current location."
 msgstr "Nem állapítható meg a jelenlegi hely."
 
@@ -10183,7 +10217,7 @@ msgstr "Nem állapítható meg a jelenlegi hely."
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1610
+#: src/orca/messages.py:1625
 msgctxt "locking key state"
 msgid "off"
 msgstr "kikapcsolva"
@@ -10193,7 +10227,7 @@ msgstr "kikapcsolva"
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1617
+#: src/orca/messages.py:1632
 msgctxt "locking key state"
 msgid "on"
 msgstr "bekapcsolva"
@@ -10201,14 +10235,14 @@ msgstr "bekapcsolva"
 # Szintén a sorszámnevek kezelése miatt kellett a változtatás. Csak a #kimondásra van hatással.
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
-#: src/orca/messages.py:1621
+#: src/orca/messages.py:1636
 msgid "misspelled"
 msgstr "Hibásan írt szó"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The first thing it does is let the user know
 #. what the misspelled word is.
-#: src/orca/messages.py:1626
+#: src/orca/messages.py:1641
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Elgépelt szó: %s"
@@ -10216,7 +10250,7 @@ msgstr "Elgépelt szó: %s"
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
 #. containing the misspelled word in the document. This is known as the context.
-#: src/orca/messages.py:1631
+#: src/orca/messages.py:1646
 #, python-format
 msgid "Context is %s"
 msgstr "Kontextusa: %s"
@@ -10234,7 +10268,7 @@ msgstr "Kontextusa: %s"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to browse mode.
-#: src/orca/messages.py:1646
+#: src/orca/messages.py:1661
 msgid "Browse mode"
 msgstr "Böngésző mód bekapcsolva"
 
@@ -10251,7 +10285,7 @@ msgstr "Böngésző mód bekapcsolva"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
-#: src/orca/messages.py:1661
+#: src/orca/messages.py:1676
 msgid "Focus mode"
 msgstr "Fókuszmód bekapcsolva"
 
@@ -10272,7 +10306,7 @@ msgstr "Fókuszmód bekapcsolva"
 #. they must press to enable focus mode for the purposes of interacting
 #. with the widget. The substituted string is a human-consumable keybinding
 #. such as "Alt+Shift+A."
-#: src/orca/messages.py:1680
+#: src/orca/messages.py:1695
 #, python-format
 msgid "To enable focus mode press %s."
 msgstr "A fókuszmód bekapcsolásához nyomja meg a(z) %s billentyűkombinációt."
@@ -10288,7 +10322,7 @@ msgstr "A fókuszmód bekapcsolásához nyomja meg a(z) %s billentyűkombináci�
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky focus mode.
-#: src/orca/messages.py:1691
+#: src/orca/messages.py:1706
 msgid "Focus mode is sticky."
 msgstr "Rögzített fókuszmód bekapcsolva."
 
@@ -10303,7 +10337,7 @@ msgstr "Rögzített fókuszmód bekapcsolva."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky browse mode.
-#: src/orca/messages.py:1702
+#: src/orca/messages.py:1717
 msgid "Browse mode is sticky."
 msgstr "Rögzített böngészőmód bekapcsolva."
 
@@ -10318,7 +10352,7 @@ msgstr "Rögzített böngészőmód bekapcsolva."
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation. This string is presented when the user
 #. switches to layout mode via an Orca command.
-#: src/orca/messages.py:1715
+#: src/orca/messages.py:1730
 msgid "Layout mode."
 msgstr "Elrendezés mód."
 
@@ -10334,13 +10368,13 @@ msgstr "Elrendezés mód."
 #. both for presentation and navigation. This string is presented when the user
 #. toggles layout mode off via an Orca command and switches to the aforementioned
 #. object-based presentation.
-#: src/orca/messages.py:1729
+#: src/orca/messages.py:1744
 msgid "Object mode."
 msgstr "Objektum mód."
 
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
-#: src/orca/messages.py:1733
+#: src/orca/messages.py:1748
 msgid "Pointer moved to object."
 msgstr "A mutató átirányítva az aktuális elemre."
 
@@ -10348,21 +10382,21 @@ msgstr "A mutató átirányítva az aktuális elemre."
 #. new object to appear such as a pop-up menu. Orca has a command will move the
 #. user to the object which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
-#: src/orca/messages.py:1739
+#: src/orca/messages.py:1754
 msgid "Mouse over object not found."
 msgstr "A felbukkanó objektum nem található."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
-#: src/orca/messages.py:1744
+#: src/orca/messages.py:1759
 msgid "Mouse review disabled."
 msgstr "Az áttekintés egérrel mód letiltva."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
-#: src/orca/messages.py:1749
+#: src/orca/messages.py:1764
 msgid "Mouse review enabled."
 msgstr "Az áttekintés egérrel mód engedélyezve."
 
@@ -10371,14 +10405,14 @@ msgstr "Az áttekintés egérrel mód engedélyezve."
 #. could with native keyboard navigation. This is a message that will be
 #. presented to the user when an error (such as the operation timing out) kept us
 #. from getting these objects.
-#: src/orca/messages.py:1756
+#: src/orca/messages.py:1771
 msgid "Error: Could not create list of objects."
 msgstr "Hiba: a kért objektumok listája nem hozható létre."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
-#: src/orca/messages.py:1761 src/orca/object_properties.py:60
+#: src/orca/messages.py:1776 src/orca/object_properties.py:60
 #, python-format
 msgid "Nesting level %d"
 msgstr "%d. fa szint"
@@ -10386,40 +10420,40 @@ msgstr "%d. fa szint"
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
-#: src/orca/messages.py:1766
+#: src/orca/messages.py:1781
 msgid "New item has been added"
 msgstr "Az új elem hozzáadva."
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
-#: src/orca/messages.py:1770
+#: src/orca/messages.py:1785
 msgid "No focus"
 msgstr "Nincs fókusz"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
-#: src/orca/messages.py:1774
+#: src/orca/messages.py:1789
 msgid "No application has focus."
 msgstr "Nincs kijelölt alkalmazás."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
-#: src/orca/messages.py:1779
+#: src/orca/messages.py:1794
 msgid "No more blockquotes."
 msgstr "Nincs több idézetblokk."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
-#: src/orca/messages.py:1784
+#: src/orca/messages.py:1799
 msgid "No more buttons."
 msgstr "Nincs több gomb."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
-#: src/orca/messages.py:1789
+#: src/orca/messages.py:1804
 msgid "No more check boxes."
 msgstr "Nincs több jelölőnégyzet."
 
@@ -10427,42 +10461,42 @@ msgstr "Nincs több jelölőnégyzet."
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
 #. such as a paragraph, a list, a table, etc. This is a detailed message which
 #. will be presented to the user if no more check boxes can be found.
-#: src/orca/messages.py:1795
+#: src/orca/messages.py:1810
 msgid "No more large objects."
 msgstr "Nincs több nagy objektum."
 
 #. Translators: This is for navigating document content by moving amongst web
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
-#: src/orca/messages.py:1800
+#: src/orca/messages.py:1815
 msgid "No more clickables."
 msgstr "Nincs több kattintható elem."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
-#: src/orca/messages.py:1805
+#: src/orca/messages.py:1820
 msgid "No more combo boxes."
 msgstr "Nincs több kombinált listamező."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
-#: src/orca/messages.py:1810
+#: src/orca/messages.py:1825
 msgid "No more entries."
 msgstr "Nincs több szerkesztőmező."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
-#: src/orca/messages.py:1815
+#: src/orca/messages.py:1830
 msgid "No more form fields."
 msgstr "Nincs több űrlapmező."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
-#: src/orca/messages.py:1820
+#: src/orca/messages.py:1835
 msgid "No more headings."
 msgstr "Nincs több címsor."
 
@@ -10470,7 +10504,7 @@ msgstr "Nincs több címsor."
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
 #. is a detailed message which will be presented to the user if no more headings
 #. at the desired level can be found.
-#: src/orca/messages.py:1826
+#: src/orca/messages.py:1841
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Nincs több %d. szintű címsor."
@@ -10478,14 +10512,14 @@ msgstr "Nincs több %d. szintű címsor."
 #. Translators: This is for navigating document content by moving from iframe
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
-#: src/orca/messages.py:1831
+#: src/orca/messages.py:1846
 msgid "No more internal frames."
 msgstr "Nincs több belső keret."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
-#: src/orca/messages.py:1836
+#: src/orca/messages.py:1851
 msgid "No more images."
 msgstr "Nincs több kép."
 
@@ -10494,28 +10528,28 @@ msgstr "Nincs több kép."
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #. This is an indication that one was not found.
-#: src/orca/messages.py:1842
+#: src/orca/messages.py:1857
 msgid "No landmark found."
 msgstr "Nincs több jelölő."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
-#: src/orca/messages.py:1847
+#: src/orca/messages.py:1862
 msgid "No more links."
 msgstr "Nincs több hivatkozás."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
-#: src/orca/messages.py:1852
+#: src/orca/messages.py:1867
 msgid "No more lists."
 msgstr "Nincs több lista."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
-#: src/orca/messages.py:1857
+#: src/orca/messages.py:1872
 msgid "No more list items."
 msgstr "Nincs több listaelem."
 
@@ -10524,89 +10558,89 @@ msgstr "Nincs több listaelem."
 #. periodically updated, e.g. stock ticker. This is a detailed message which
 #. will be presented to the user if no more live regions can be found. For
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: src/orca/messages.py:1864
+#: src/orca/messages.py:1879
 msgid "No more live regions."
 msgstr "Nincs több élő régió."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
-#: src/orca/messages.py:1869
+#: src/orca/messages.py:1884
 msgid "No more paragraphs."
 msgstr "Nincs több bekezdés."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
-#: src/orca/messages.py:1874
+#: src/orca/messages.py:1889
 msgid "No more radio buttons."
 msgstr "Nincs több választógomb."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
-#: src/orca/messages.py:1879
+#: src/orca/messages.py:1894
 msgid "No more separators."
 msgstr "Nincs több elválasztó."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
-#: src/orca/messages.py:1884
+#: src/orca/messages.py:1899
 msgid "No more tables."
 msgstr "Nincs több táblázat."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
-#: src/orca/messages.py:1889
+#: src/orca/messages.py:1904
 msgid "No more unvisited links."
 msgstr "Nincs több nem látogatott hivatkozás."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
-#: src/orca/messages.py:1894
+#: src/orca/messages.py:1909
 msgid "No more visited links."
 msgstr "Nincs több látogatott hivatkozás."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is what Orca will present if the user performs this
 #. command when no text is selected.
-#: src/orca/messages.py:1899
+#: src/orca/messages.py:1914
 msgid "No selected text."
 msgstr "Nincs kijelölt szöveg."
 
 #. Translators: Orca has a dedicated command to speak detailed information
 #. about the currently-focused link. This message is what Orca will present
 #. if the user performs this command when not on a link.
-#: src/orca/messages.py:1904
+#: src/orca/messages.py:1919
 msgid "Not on a link."
 msgstr "Nem egy hivatkozáson áll."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
-#: src/orca/messages.py:1908
+#: src/orca/messages.py:1923
 msgid "Notification"
 msgstr "Értesítés"
 
 #. Translators: This is a brief message presented to the user when the bottom of
 #. the list of notifications is reached.
-#: src/orca/messages.py:1912
+#: src/orca/messages.py:1927
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Vissza a lista aljára."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
-#: src/orca/messages.py:1916
+#: src/orca/messages.py:1931
 msgctxt "notification"
 msgid "Top"
 msgstr "Vissza a lista tetejére"
 
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
-#: src/orca/messages.py:1920
+#: src/orca/messages.py:1935
 msgid "No notification messages"
 msgstr "Nincsenek értesítések"
 
@@ -10615,7 +10649,7 @@ msgstr "Nincsenek értesítések"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as digits.
-#: src/orca/messages.py:1927
+#: src/orca/messages.py:1942
 msgctxt "number style"
 msgid "digits"
 msgstr "Számjegyenként"
@@ -10625,7 +10659,7 @@ msgstr "Számjegyenként"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as digits.
-#: src/orca/messages.py:1934
+#: src/orca/messages.py:1949
 msgid "Speak numbers as digits."
 msgstr "Számok kimondása számjegyenként."
 
@@ -10635,7 +10669,7 @@ msgstr "Számok kimondása számjegyenként."
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as words.
-#: src/orca/messages.py:1941
+#: src/orca/messages.py:1956
 msgctxt "number style"
 msgid "words"
 msgstr "hagyományos alak"
@@ -10646,40 +10680,40 @@ msgstr "hagyományos alak"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as words.
-#: src/orca/messages.py:1948
+#: src/orca/messages.py:1963
 msgid "Speak numbers as words."
 msgstr "Számok kimondása a hagyományos alakban."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:1953
+#: src/orca/messages.py:1968
 msgid "off"
 msgstr "kikapcsolva"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:1958
+#: src/orca/messages.py:1973
 msgid "on"
 msgstr "bekapcsolva"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
-#: src/orca/messages.py:1962
+#: src/orca/messages.py:1977
 msgid "Loading.  Please wait."
 msgstr "Betöltés, kis türelmet."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
-#: src/orca/messages.py:1966
+#: src/orca/messages.py:1981
 msgid "Finished loading."
 msgstr "A betöltés befejeződött."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
 #. object which has just finished loading (most likely the page's title).
-#: src/orca/messages.py:1971
+#: src/orca/messages.py:1986
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s betöltése befejeződött."
@@ -10689,7 +10723,7 @@ msgstr "%s betöltése befejeződött."
 #. (landmarks, forms, links, tables, etc.). The following string precedes the
 #. presentation of the summary. The string substitution is a list of items, such
 #. as "10 headings, 1 form, 52 links".
-#: src/orca/messages.py:1978
+#: src/orca/messages.py:1993
 #, python-format
 msgid "Page has %s."
 msgstr "A lap tartalma %s"
@@ -10698,7 +10732,7 @@ msgstr "A lap tartalma %s"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the page by pressing Shift+Page_Down.
-#: src/orca/messages.py:1984
+#: src/orca/messages.py:1999
 msgid "page selected from cursor position"
 msgstr "az oldal kijelölve a kurzorpozíciótól"
 
@@ -10706,7 +10740,7 @@ msgstr "az oldal kijelölve a kurzorpozíciótól"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the page by pressing Shift+Page_Up.
-#: src/orca/messages.py:1990
+#: src/orca/messages.py:2005
 msgid "page selected to cursor position"
 msgstr "az oldal kijelölve a kurzorpozícióig"
 
@@ -10714,7 +10748,7 @@ msgstr "az oldal kijelölve a kurzorpozícióig"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects a previously
 #. selected page by pressing Shift+Page_Down.
-#: src/orca/messages.py:1996
+#: src/orca/messages.py:2011
 msgid "page unselected from cursor position"
 msgstr "az oldal kijelölése megszüntetve a kurzorpozíciótól"
 
@@ -10722,7 +10756,7 @@ msgstr "az oldal kijelölése megszüntetve a kurzorpozíciótól"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects a previously
 #. selected page by pressing Shift+Page_Up.
-#: src/orca/messages.py:2002
+#: src/orca/messages.py:2017
 msgid "page unselected to cursor position"
 msgstr "az oldal kijelölése megszüntetve a kurzorpozícióig"
 
@@ -10730,7 +10764,7 @@ msgstr "az oldal kijelölése megszüntetve a kurzorpozícióig"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the paragraph by pressing Ctrl+Shift+Down.
-#: src/orca/messages.py:2008
+#: src/orca/messages.py:2023
 msgid "paragraph selected down from cursor position"
 msgstr "a bekezdés kijelölve a kurzorpozíciótól"
 
@@ -10738,7 +10772,7 @@ msgstr "a bekezdés kijelölve a kurzorpozíciótól"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the paragraph by pressing Ctrl+Shift+UP.
-#: src/orca/messages.py:2014
+#: src/orca/messages.py:2029
 msgid "paragraph selected up from cursor position"
 msgstr "a kurzorpozíció feletti bekezdés kijelölve"
 
@@ -10747,7 +10781,7 @@ msgstr "a kurzorpozíció feletti bekezdés kijelölve"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the end of the paragraph by
 #. pressing Ctrl+Shift+Down.
-#: src/orca/messages.py:2021
+#: src/orca/messages.py:2036
 msgid "paragraph unselected down from cursor position"
 msgstr "a bekezdés kijelölése megszüntetve a kurzorpozíciótól"
 
@@ -10756,14 +10790,14 @@ msgstr "a bekezdés kijelölése megszüntetve a kurzorpozíciótól"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the start of the paragraph by
 #. pressing Ctrl+Shift+UP.
-#: src/orca/messages.py:2028
+#: src/orca/messages.py:2043
 msgid "paragraph unselected up from cursor position"
 msgstr "a kurzorpozíció feletti bekezdés kijelölése megszüntetve"
 
 #. Translators: This message appears in a warning dialog when the user performs
 #. the command to get into Orca's preferences dialog when the preferences dialog
 #. is already open.
-#: src/orca/messages.py:2034
+#: src/orca/messages.py:2049
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -10773,7 +10807,7 @@ msgstr ""
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
-#: src/orca/messages.py:2039
+#: src/orca/messages.py:2054
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "%(position)d. dia, összesen %(count)d."
@@ -10783,7 +10817,7 @@ msgstr "%(position)d. dia, összesen %(count)d."
 #. which apply to a given task, such as a "Spanish" profile which would use
 #. Spanish text-to-speech and Spanish braille and selected when reading Spanish
 #. content. The string representing the profile name is created by the user.
-#: src/orca/messages.py:2046
+#: src/orca/messages.py:2061
 #, python-format
 msgid "Profile set to %s."
 msgstr "A profil beállítva a következőre: %s."
@@ -10793,14 +10827,14 @@ msgstr "A profil beállítva a következőre: %s."
 #. is a collection of settings which apply to a given task, such as a "Spanish"
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
-#: src/orca/messages.py:2053
+#: src/orca/messages.py:2068
 msgid "No profiles found."
 msgstr "Nem találhatók profilok."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
 #. progress bars (e.g. in the Firefox downloads dialog).
-#: src/orca/messages.py:2058
+#: src/orca/messages.py:2073
 #, python-format
 msgid "Progress bar %d."
 msgstr "folyamatjelző: %d."
@@ -10809,7 +10843,7 @@ msgstr "folyamatjelző: %d."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2064
+#: src/orca/messages.py:2079
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Mindent"
@@ -10818,7 +10852,7 @@ msgstr "Mindent"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2070
+#: src/orca/messages.py:2085
 msgid "Punctuation level set to all."
 msgstr "A központozási szint mindre állítva."
 
@@ -10826,7 +10860,7 @@ msgstr "A központozási szint mindre állítva."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2076
+#: src/orca/messages.py:2091
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "Legtöbb"
@@ -10835,7 +10869,7 @@ msgstr "Legtöbb"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2082
+#: src/orca/messages.py:2097
 msgid "Punctuation level set to most."
 msgstr "A központozási szint legtöbbre állítva."
 
@@ -10843,7 +10877,7 @@ msgstr "A központozási szint legtöbbre állítva."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2088
+#: src/orca/messages.py:2103
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Nincs"
@@ -10852,7 +10886,7 @@ msgstr "Nincs"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2094
+#: src/orca/messages.py:2109
 msgid "Punctuation level set to none."
 msgstr "A központozási szint nincsre állítva."
 
@@ -10860,7 +10894,7 @@ msgstr "A központozási szint nincsre állítva."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2100
+#: src/orca/messages.py:2115
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Néhány"
@@ -10869,32 +10903,32 @@ msgstr "Néhány"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2106
+#: src/orca/messages.py:2121
 msgid "Punctuation level set to some."
 msgstr "A központozási szint néhányra állítva."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
-#: src/orca/messages.py:2110
+#: src/orca/messages.py:2125
 msgid "Searching."
 msgstr "Keresés."
 
 #. Translators: This message is presented to indicate a search executed by the
 #. user has been completed.
-#: src/orca/messages.py:2114
+#: src/orca/messages.py:2129
 msgid "Search complete."
 msgstr "A keresés befejeződött."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
-#: src/orca/messages.py:2118
+#: src/orca/messages.py:2133
 msgid "Screen reader settings reloaded."
 msgstr "A képernyőolvasó beállításainak újratöltése megtörtént."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is spoken by Orca before speaking the text which is
 #. selected. The string substitution is for the selected text.
-#: src/orca/messages.py:2123
+#: src/orca/messages.py:2138
 #, python-format
 msgid "Selected text is: %s"
 msgstr "A kijelölt szöveg: %s"
@@ -10904,7 +10938,7 @@ msgstr "A kijelölt szöveg: %s"
 #. large string. Therefore, if the text which has just been deleted from a
 #. document matches the previously-selected contents, Orca will indicate that
 #. fact instead of presenting the full string which was just deleted.
-#: src/orca/messages.py:2130
+#: src/orca/messages.py:2145
 msgid "Selection deleted."
 msgstr "A kijelölt tartalom törölve."
 
@@ -10916,14 +10950,14 @@ msgstr "A kijelölt tartalom törölve."
 #. and then pressed Ctrl+Z to undo that deletion). In this instance, Orca
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
-#: src/orca/messages.py:2140
+#: src/orca/messages.py:2155
 msgid "Selection restored."
 msgstr "A kijelölt tartalom visszaállítva."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
-#: src/orca/messages.py:2145
+#: src/orca/messages.py:2160
 msgid "Text unselected."
 msgstr "Nincs kijelölve"
 
@@ -10931,7 +10965,7 @@ msgstr "Nincs kijelölve"
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2151
+#: src/orca/messages.py:2166
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
 msgstr "Méret: %d, %d. Hely: %d, %d."
@@ -10940,50 +10974,50 @@ msgstr "Méret: %d, %d. Hely: %d, %d."
 #. current object in pixels. This string refers to the full/verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2157
+#: src/orca/messages.py:2172
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
 msgstr "Szélesség: %d. Magasság: %d. %d balról. %d fentről."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: src/orca/messages.py:2161
+#: src/orca/messages.py:2176
 msgid "Speech disabled."
 msgstr "Beszéd letiltva."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: src/orca/messages.py:2165
+#: src/orca/messages.py:2180
 msgid "Speech enabled."
 msgstr "Beszéd engedélyezve."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2168
+#: src/orca/messages.py:2183
 msgid "faster."
 msgstr "gyorsabb."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2171
+#: src/orca/messages.py:2186
 msgid "slower."
 msgstr "lassabb."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2174
+#: src/orca/messages.py:2189
 msgid "higher."
 msgstr "magasabb."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2177
+#: src/orca/messages.py:2192
 msgid "lower."
 msgstr "mélyebb."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2180
+#: src/orca/messages.py:2195
 msgid "louder."
 msgstr "Hangosabb."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2183
+#: src/orca/messages.py:2198
 msgid "softer."
 msgstr "Halkabb."
 
@@ -10992,7 +11026,7 @@ msgstr "Halkabb."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2190
+#: src/orca/messages.py:2205
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "Részletességi szint: tömör"
@@ -11002,7 +11036,7 @@ msgstr "Részletességi szint: tömör"
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2197
+#: src/orca/messages.py:2212
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Részletességi szint: részletes"
@@ -11011,29 +11045,29 @@ msgstr "Részletességi szint: részletes"
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: src/orca/messages.py:2203
+#: src/orca/messages.py:2218
 msgid " dot dot dot"
 msgstr " pont pont pont"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2206
+#: src/orca/messages.py:2221
 msgid "Screen reader on."
 msgstr "A képernyőolvasó bekapcsolva."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2209
+#: src/orca/messages.py:2224
 msgid "Screen reader off."
 msgstr "A képernyőolvasó kikapcsolva."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: src/orca/messages.py:2212
+#: src/orca/messages.py:2227
 msgid "Speech is unavailable."
 msgstr "A beszéd nem érhető el."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2217
+#: src/orca/messages.py:2232
 msgctxt "status bar"
 msgid "Not found"
 msgstr "Nem található"
@@ -11041,7 +11075,7 @@ msgstr "Nem található"
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2222
+#: src/orca/messages.py:2237
 msgid "Status bar not found"
 msgstr "Nem található állapotsor"
 
@@ -11049,7 +11083,7 @@ msgstr "Nem található állapotsor"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2228
+#: src/orca/messages.py:2243
 msgid "string not found"
 msgstr "a karakterlánc nem található"
 
@@ -11059,7 +11093,7 @@ msgstr "a karakterlánc nem található"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2236
+#: src/orca/messages.py:2251
 msgid "Structural navigation keys off."
 msgstr "Strukturált navigációs billentyűk kikapcsolva."
 
@@ -11069,7 +11103,7 @@ msgstr "Strukturált navigációs billentyűk kikapcsolva."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2244
+#: src/orca/messages.py:2259
 msgid "Structural navigation keys on."
 msgstr "Strukturált navigációs billentyűk engedélyezve."
 
@@ -11079,34 +11113,34 @@ msgstr "Strukturált navigációs billentyűk engedélyezve."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2252
+#: src/orca/messages.py:2267
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Nincs több"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2255
+#: src/orca/messages.py:2270
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "%(row)d. sor, %(column)d. oszlop"
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: src/orca/messages.py:2259
+#: src/orca/messages.py:2274
 msgid "End of table"
 msgstr "Táblázat vége"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2264
+#: src/orca/messages.py:2279
 msgid "Speak cell"
 msgstr "Cella felolvasása"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2269
+#: src/orca/messages.py:2284
 msgid "Speak row"
 msgstr "Sor felolvasása"
 
@@ -11114,39 +11148,39 @@ msgstr "Sor felolvasása"
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2274
+#: src/orca/messages.py:2289
 msgid "Non-uniform"
 msgstr "Nem egységes"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2279
+#: src/orca/messages.py:2294
 msgid "Not in a table."
 msgstr "Itt nincs táblázat."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2283
+#: src/orca/messages.py:2298
 msgid "Columns reordered"
 msgstr "A táblázat oszlopai újrarendezve"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2287
+#: src/orca/messages.py:2302
 msgid "Rows reordered"
 msgstr "A táblázat sorai újrarendezve"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2291
+#: src/orca/messages.py:2306
 #, python-format
 msgid "column %d"
 msgstr "%d. oszlop"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2295
+#: src/orca/messages.py:2310
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "%(index)d. oszlop, %(total)d oszlopból."
@@ -11154,14 +11188,14 @@ msgstr "%(index)d. oszlop, %(total)d oszlopból."
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2300
+#: src/orca/messages.py:2315
 msgid "Bottom of column."
 msgstr "Ez az alsó sor."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2305
+#: src/orca/messages.py:2320
 msgid "Top of column."
 msgstr "Ez az első sor."
 
@@ -11169,7 +11203,7 @@ msgstr "Ez az első sor."
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2310
+#: src/orca/messages.py:2325
 #, python-format
 msgid "Column %s selected"
 msgstr "%s oszlop kijelölve"
@@ -11180,7 +11214,7 @@ msgstr "%s oszlop kijelölve"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2317
+#: src/orca/messages.py:2332
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "%s oszloptól %s oszlopig kijelölve"
@@ -11191,7 +11225,7 @@ msgstr "%s oszloptól %s oszlopig kijelölve"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2324
+#: src/orca/messages.py:2339
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "%s oszloptól %s oszlopig nincs kijelölve"
@@ -11200,7 +11234,7 @@ msgstr "%s oszloptól %s oszlopig nincs kijelölve"
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2329
+#: src/orca/messages.py:2344
 #, python-format
 msgid "Column %s unselected"
 msgstr "%s oszlop nincs kijelölve"
@@ -11208,14 +11242,14 @@ msgstr "%s oszlop nincs kijelölve"
 # Szintén a sorszámnév kezelés miatt kellett változtatni.
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2333
+#: src/orca/messages.py:2348
 #, python-format
 msgid "row %d"
 msgstr "%d. sor"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2337
+#: src/orca/messages.py:2352
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "%(index)d. sor, %(total)d sorból."
@@ -11223,39 +11257,39 @@ msgstr "%(index)d. sor, %(total)d sorból."
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2342
+#: src/orca/messages.py:2357
 msgid "Beginning of row."
 msgstr "Ez az első oszlop."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2347
+#: src/orca/messages.py:2362
 msgid "End of row."
 msgstr "Ez az utolsó oszlop."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2351
+#: src/orca/messages.py:2366
 msgid "Row deleted."
 msgstr "A sor törölve."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2355
+#: src/orca/messages.py:2370
 msgid "Last row deleted."
 msgstr "Az utolsó sor törölve."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2359
+#: src/orca/messages.py:2374
 msgid "Row inserted."
 msgstr "A sor beszúrva."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2364
+#: src/orca/messages.py:2379
 msgid "Row inserted at the end of the table."
 msgstr "A sor beszúrva a táblázat végére."
 
@@ -11263,7 +11297,7 @@ msgstr "A sor beszúrva a táblázat végére."
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2369
+#: src/orca/messages.py:2384
 #, python-format
 msgid "Row %s selected"
 msgstr "%s sor kijelölve"
@@ -11273,7 +11307,7 @@ msgstr "%s sor kijelölve"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2376
+#: src/orca/messages.py:2391
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "%s sortól %s sorig kijelölve"
@@ -11283,7 +11317,7 @@ msgstr "%s sortól %s sorig kijelölve"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2383
+#: src/orca/messages.py:2398
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "%s sortól %s sorig nincs kijelölve"
@@ -11292,21 +11326,21 @@ msgstr "%s sortól %s sorig nincs kijelölve"
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2388
+#: src/orca/messages.py:2403
 #, python-format
 msgid "Row %s unselected"
 msgstr "%s sor nincs kijelölve"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2392
+#: src/orca/messages.py:2407
 msgctxt "text"
 msgid "selected"
 msgstr "kijelölve"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2396
+#: src/orca/messages.py:2411
 msgctxt "text"
 msgid "unselected"
 msgstr "Nincs kijelölve"
@@ -11314,47 +11348,47 @@ msgstr "Nincs kijelölve"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2407
+#: src/orca/messages.py:2422
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%-H óra %-M perc, %-S másodperc."
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2412
+#: src/orca/messages.py:2427
 msgid "%H hours and %M minutes"
 msgstr "%-H óra %-M perc."
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2416
+#: src/orca/messages.py:2431
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2420
+#: src/orca/messages.py:2435
 msgctxt "command"
 msgid "undo"
 msgstr "visszavonás"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2424
+#: src/orca/messages.py:2439
 msgctxt "command"
 msgid "redo"
 msgstr "ismétlés"
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2427
+#: src/orca/messages.py:2442
 #, python-format
 msgid "Screen reader version %s."
 msgstr "A képernyőolvasó verziószáma %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2431
+#: src/orca/messages.py:2446
 msgid "white space"
 msgstr "üreshely"
 
@@ -11362,7 +11396,7 @@ msgstr "üreshely"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2437
+#: src/orca/messages.py:2452
 msgid "Wrapping to bottom."
 msgstr "Vissza a lap aljára."
 
@@ -11370,21 +11404,21 @@ msgstr "Vissza a lap aljára."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2443
+#: src/orca/messages.py:2458
 msgid "Wrapping to top."
 msgstr "Vissza a lap tetejére."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2448
+#: src/orca/messages.py:2463
 msgid "0 items"
 msgstr "0 elem"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2456 src/orca/messages.py:2475
+#: src/orca/messages.py:2471 src/orca/messages.py:2490
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -11392,7 +11426,7 @@ msgstr[0] "A cella %d sor magas"
 msgstr[1] "A cella %d sor magas"
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2461
+#: src/orca/messages.py:2476
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -11402,7 +11436,7 @@ msgstr[1] "%d oszloppal"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2468
+#: src/orca/messages.py:2483
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -11412,7 +11446,7 @@ msgstr[1] "A cella %d oszlop széles"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2485
+#: src/orca/messages.py:2500
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -11422,7 +11456,7 @@ msgstr[1] "Túl sok karaktert írt be (%d karaktert)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2493
+#: src/orca/messages.py:2508
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -11432,7 +11466,7 @@ msgstr[1] "(%d párbeszédablak)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2499
+#: src/orca/messages.py:2514
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -11440,7 +11474,7 @@ msgstr[0] "%d nem fókuszált párbeszédablak"
 msgstr[1] "%d nem fókuszált párbeszédablak"
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2503
+#: src/orca/messages.py:2518
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -11449,7 +11483,7 @@ msgstr[1] "%d bájt"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2508
+#: src/orca/messages.py:2523
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -11457,7 +11491,7 @@ msgstr[0] "%d fájl található"
 msgstr[1] "%d fájl található"
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2515
+#: src/orca/messages.py:2530
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -11465,7 +11499,7 @@ msgstr[0] "%d űrlap"
 msgstr[1] "%d űrlap"
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2522
+#: src/orca/messages.py:2537
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -11474,7 +11508,7 @@ msgstr[1] "%d címsor"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2527
+#: src/orca/messages.py:2542
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -11484,7 +11518,7 @@ msgstr[1] "%d elem"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2536
+#: src/orca/messages.py:2551
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -11494,7 +11528,7 @@ msgstr[1] "%d jelölő"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2542
+#: src/orca/messages.py:2557
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -11505,7 +11539,7 @@ msgstr[1] "%d elem található"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2548
+#: src/orca/messages.py:2563
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -11514,7 +11548,7 @@ msgstr[1] "%d idézetblokk vége."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2553
+#: src/orca/messages.py:2568
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -11527,12 +11561,12 @@ msgstr[1] "%d lista vége."
 #. you're currently viewing messages 1-100 out of some huge, unspecified
 #. number. Normally Orca announces "list with n items" when the count is
 #. known. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2578
 msgid "List of unknown size"
 msgstr "Ismeretlen elemszámú lista"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2566
+#: src/orca/messages.py:2581
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11544,13 +11578,13 @@ msgstr[1] "%d elemű lista"
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2575
+#: src/orca/messages.py:2590
 msgid "Feed of unknown size"
 msgstr "Ismeretlen számú hírforrás"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2579
+#: src/orca/messages.py:2594
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
@@ -11560,7 +11594,7 @@ msgstr[1] "%d cikket tartalmazó hírcsatorna"
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
-#: src/orca/messages.py:2585
+#: src/orca/messages.py:2600
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -11571,7 +11605,7 @@ msgstr[1] "Leírások listája %d kifejezéssel"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2593
+#: src/orca/messages.py:2608
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -11580,7 +11614,7 @@ msgstr[1] "%d érték"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2613
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11593,8 +11627,8 @@ msgstr[1] "Matematikai táblázat %d sorral"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2603 src/orca/messages.py:2619
-#: src/orca/messages.py:2727
+#: src/orca/messages.py:2618 src/orca/messages.py:2634
+#: src/orca/messages.py:2742
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11604,7 +11638,7 @@ msgstr[1] "%d oszloppal"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2613
+#: src/orca/messages.py:2628
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11613,7 +11647,7 @@ msgstr[1] "beágyazott matematikai táblázat %d sorral"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2628
+#: src/orca/messages.py:2643
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11622,7 +11656,7 @@ msgstr[1] "%d értesítés.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2648
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11632,7 +11666,7 @@ msgstr[1] "%d százalék."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2639
+#: src/orca/messages.py:2654
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11641,7 +11675,7 @@ msgstr[1] "a dokumentum %d százaléka beolvasva"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2646
+#: src/orca/messages.py:2661
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11651,7 +11685,7 @@ msgstr[1] "%d képpont"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2652
+#: src/orca/messages.py:2667
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11660,7 +11694,7 @@ msgstr[1] "%(count)d %(repeatChar)s karakter"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2659
+#: src/orca/messages.py:2674
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11671,7 +11705,7 @@ msgstr[1] "%(index)d elem kijelölve, %(total)d elemből."
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2668
+#: src/orca/messages.py:2683
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11681,7 +11715,7 @@ msgstr[1] "%d alapértelmezett képernyőolvasó billentyűparancs található."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2676
+#: src/orca/messages.py:2691
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11694,7 +11728,7 @@ msgstr[1] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2683
+#: src/orca/messages.py:2698
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11703,7 +11737,7 @@ msgstr[1] "%d szóköz"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2688
+#: src/orca/messages.py:2703
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11711,7 +11745,7 @@ msgstr[0] "%d tabulátor"
 msgstr[1] "%d tabulátor"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2695
+#: src/orca/messages.py:2710
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11722,14 +11756,14 @@ msgstr[1] "%d táblázat"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2704
+#: src/orca/messages.py:2719
 msgid "table of unknown size"
 msgstr "Ismeretlen méretű táblázat"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2709
+#: src/orca/messages.py:2724
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
@@ -11739,7 +11773,7 @@ msgstr[1] "Ismeretlen sorszámú táblázat, %d oszloppal"
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
 #. in a horizontally infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2717
+#: src/orca/messages.py:2732
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
@@ -11747,7 +11781,7 @@ msgstr[0] "Táblázat %d sorral, ismeretlen számú oszloppal"
 msgstr[1] "Táblázat %d sorral, ismeretlen számú oszloppal"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2722
+#: src/orca/messages.py:2737
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11756,7 +11790,7 @@ msgstr[1] "Táblázat %d sorral"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2736
+#: src/orca/messages.py:2751
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -11765,7 +11799,7 @@ msgstr[1] "%d másodperce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2741
+#: src/orca/messages.py:2756
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -11774,7 +11808,7 @@ msgstr[1] "%d perce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2746
+#: src/orca/messages.py:2761
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -11783,7 +11817,7 @@ msgstr[1] "%d órája"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2751
+#: src/orca/messages.py:2766
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -11792,7 +11826,7 @@ msgstr[1] "%d napja"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2759
+#: src/orca/messages.py:2774
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11801,7 +11835,7 @@ msgstr[1] "%d nem látogatott hivatkozás"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2767
+#: src/orca/messages.py:2782
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
