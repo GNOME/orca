@@ -27,6 +27,7 @@ orca_python_PYTHON = \
 	cmdnames.py \
 	colornames.py \
 	common_keyboardmap.py \
+	date_and_time_presenter.py \
 	debug.py \
 	desktop_keyboardmap.py \
 	event_manager.py \

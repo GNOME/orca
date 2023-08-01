@@ -54,12 +54,6 @@ keymap = (
     ("space", defaultModifierMask, ORCA_CTRL_MODIFIER_MASK,
     "appPreferencesSettingsHandler"),
 
-    ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "presentTimeHandler", 1),
-
-    ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "presentDateHandler", 2),
-
     ("Up", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
     "whereAmISelectionHandler"),
 
