@@ -2401,7 +2401,7 @@ class StructuralNavigation:
         return self._isContainer(obj)
 
     def _containerPresentation(self, obj, arg=None, **kwargs):
-        if obj is not None:
+        if obj is None:
             self._script.presentMessage(messages.CONTAINER_NOT_IN_A)
             return
 
