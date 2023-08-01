@@ -1770,6 +1770,36 @@ MOUSE_REVIEW_ENABLED = _("Mouse review enabled.")
 # from getting these objects.
 NAVIGATION_DIALOG_ERROR = _("Error: Could not create list of objects.")
 
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This message is spoken when the current node in the hierarchy
+# has no children.
+NAVIGATOR_NO_CHILDREN = _("No children.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This message is spoken when the current node in the hierarchy
+# has no next sibling.
+NAVIGATOR_NO_NEXT = _("No next.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This message is spoken when the current node in the hierarchy
+# has no parent.
+NAVIGATOR_NO_PARENT = _("No parent.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This message is spoken when the current node in the hierarchy
+# has no previous sibling.
+NAVIGATOR_NO_PREVIOUS = _("No previous.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This hierarchy can be simplified to aid with navigation. This
+# message is spoken when the simplified view is enabled.
+NAVIGATOR_SIMPLIFIED_ENABLED = _("Simplified navigation enabled.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This hierarchy can be simplified to aid with navigation. This
+# message is spoken when the simplified view is disabled.
+NAVIGATOR_SIMPLIFIED_DISABLED = _("Simplified navigation disabled.")
+
 # Translators: This message describes a list item in a document. Nesting level
 # is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 # list that's inside another list).

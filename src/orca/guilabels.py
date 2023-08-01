@@ -289,6 +289,10 @@ KB_GROUP_BOOKMARKS = _("Bookmarks")
 KB_GROUP_DATE_AND_TIME = _("Date and time")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to object navigation.
+KB_OBJECT_NAVIGATION = _("Object navigation")
+
+# Translators: This string is a label for the group of Orca commands which
 # do not currently have an associated key binding.
 KB_GROUP_UNBOUND = _("Unbound")
 
