@@ -147,7 +147,7 @@ class ObjectNavigator:
 
         return AXUtilities.is_paragraph(obj)
 
-    def _exclude_from_simple_navigation(self, obj):
+    def _exclude_from_simple_navigation(self, script, obj):
         """Returns True if obj should be excluded from simple navigation."""
 
         if self._include_in_simple_navigation(obj):
@@ -155,7 +155,7 @@ class ObjectNavigator:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if orca_state.activeScript.utilities.isLayoutOnly(obj):
+        if script.utilities.isLayoutOnly(obj):
             msg = "OBJECT NAVIGATOR: Excluding %s: is layout only" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -174,7 +174,7 @@ class ObjectNavigator:
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _children(self, obj):
+    def _children(self, script, obj):
         """Returns a list of children for obj, taking simple navigation into account."""
 
         if not AXObject.get_child_count(obj):
@@ -187,14 +187,14 @@ class ObjectNavigator:
         # Add the children of excluded objects to our list of children.
         functional_children = []
         for child in children:
-            if self._exclude_from_simple_navigation(child):
-                functional_children.extend(self._children(child))
+            if self._exclude_from_simple_navigation(script, child):
+                functional_children.extend(self._children(script, child))
             else:
                 functional_children.append(child)
 
         return functional_children
 
-    def _parent(self, obj):
+    def _parent(self, script, obj):
         """Returns the parent for obj, taking simple navigation into account."""
 
         parent = AXObject.get_parent(obj)
@@ -202,7 +202,7 @@ class ObjectNavigator:
             return parent
 
         # The first non-excluded ancestor is the functional parent.
-        while parent is not None and self._exclude_from_simple_navigation(parent):
+        while parent is not None and self._exclude_from_simple_navigation(script, parent):
             parent = AXObject.get_parent(parent)
 
         return parent
@@ -225,14 +225,13 @@ class ObjectNavigator:
     def present(self, script):
         """Presents the current navigator focus to the user."""
 
-        orca_state.activeScript.presentObject(
-            self._navigator_focus, priorObj=self._last_navigator_focus)
+        script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
     def up(self, script, event=None):
         """Moves the navigator focus to the parent of the current focus."""
 
         self.update()
-        parent = self._parent(self._navigator_focus)
+        parent = self._parent(script, self._navigator_focus)
         if parent is not None:
             self._set_navigator_focus(parent)
             self.present(script)
@@ -243,7 +242,7 @@ class ObjectNavigator:
         """Moves the navigator focus to the first child of the current focus."""
 
         self.update()
-        children = self._children(self._navigator_focus)
+        children = self._children(script, self._navigator_focus)
         if not children:
             script.presentMessage(messages.NAVIGATOR_NO_CHILDREN)
             return
@@ -255,12 +254,12 @@ class ObjectNavigator:
         """Moves the navigator focus to the next sibling of the current focus."""
 
         self.update()
-        parent = self._parent(self._navigator_focus)
+        parent = self._parent(script, self._navigator_focus)
         if parent is None:
             script.presentMessage(messages.NAVIGATOR_NO_NEXT)
             return
 
-        siblings = self._children(parent)
+        siblings = self._children(script, parent)
         if self._navigator_focus in siblings:
             index = siblings.index(self._navigator_focus)
             if index < len(siblings) - 1:
@@ -275,12 +274,12 @@ class ObjectNavigator:
         """Moves the navigator focus to the previous sibling of the current focus."""
 
         self.update()
-        parent = self._parent(self._navigator_focus)
+        parent = self._parent(script, self._navigator_focus)
         if parent is None:
             script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
             return
 
-        siblings = self._children(parent)
+        siblings = self._children(script, parent)
         if self._navigator_focus in siblings:
             index = siblings.index(self._navigator_focus)
             if index > 0:
