@@ -57,55 +57,6 @@ keymap = (
     ("Up", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
     "whereAmISelectionHandler"),
 
-    #####################################################################
-    #                                                                   #
-    #  Bookmark key bindings                                            #
-    #                                                                   #
-    #####################################################################
-
-    # key binding to save bookmark information to disk
-    ("b", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "saveBookmarks"),
-
-    # key binding to move to the previous bookmark
-    ("b", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
-    "goToPrevBookmark"),
-
-    # key binding to move to the next bookmark
-    ("b", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToNextBookmark"),
-
-    # key bindings for '1' through '6' for relevant commands
-
-    # 'Add bookmark' key bindings
-    ("1", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-    ("2", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-    ("3", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-    ("4", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-    ("5", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-    ("6", defaultModifierMask, ORCA_ALT_MODIFIER_MASK,
-    "addBookmark"),
-
-    # 'Go to bookmark' key bindings
-    
-    ("1", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-    ("2", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-    ("3", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-    ("4", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-    ("5", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-    ("6", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goToBookmark"),
-
     ("BackSpace", defaultModifierMask, ORCA_MODIFIER_MASK,
     "bypassNextCommandHandler"),
 
