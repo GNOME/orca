@@ -1048,7 +1048,7 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
-                orca_state.activeScript = None
+                _scriptManager.setActiveScript(None, "Active window is dead or defunct")
             return
 
         if AXUtilities.is_iconified(event.source):
