@@ -44,6 +44,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import braille_generator
+from . import date_and_time_presenter
 from . import debug
 from . import event_manager
 from . import flat_review_presenter
@@ -104,6 +105,7 @@ class Script:
         self.notificationPresenter = self.getNotificationPresenter()
         self.flatReviewPresenter = self.getFlatReviewPresenter()
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
+        self.dateAndTimePresenter = self.getDateAndTimePresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -230,6 +232,9 @@ class Script:
 
     def getFlatReviewPresenter(self):
         return flat_review_presenter.getPresenter()
+
+    def getDateAndTimePresenter(self):
+        return date_and_time_presenter.getPresenter()
 
     def getSpeechAndVerbosityManager(self):
         return speech_and_verbosity_manager.getManager()

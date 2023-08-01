@@ -296,16 +296,6 @@ class Script(script.Script):
                 mouse_review.reviewer.toggle,
                 cmdnames.MOUSE_REVIEW_TOGGLE)
 
-        self.inputEventHandlers["presentTimeHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentTime,
-                cmdnames.PRESENT_CURRENT_TIME)
-
-        self.inputEventHandlers["presentDateHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentDate,
-                cmdnames.PRESENT_CURRENT_DATE)
-
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(
                 Script.bypassNextCommand,
@@ -319,6 +309,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
+        self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -461,6 +452,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.speechAndVerbosityManager.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.dateAndTimePresenter.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -3660,20 +3655,6 @@ class Script(script.Script):
         """
         speech.speak(messages.UNICODE % \
                          self.utilities.unicodeValueString(character))
-
-    def presentTime(self, inputEvent):
-        """ Presents the current time. """
-        timeFormat = _settingsManager.getSetting('presentTimeFormat')
-        message = time.strftime(timeFormat, time.localtime())
-        self.presentMessage(message)
-        return True
-
-    def presentDate(self, inputEvent):
-        """ Presents the current date. """
-        dateFormat = _settingsManager.getSetting('presentDateFormat')
-        message = time.strftime(dateFormat, time.localtime())
-        self.presentMessage(message)
-        return True
 
     def presentSizeAndPosition(self, inputEvent):
         """ Presents the size and position of the locusOfFocus. """

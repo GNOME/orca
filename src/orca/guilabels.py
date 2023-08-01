@@ -281,6 +281,10 @@ KB_GROUP_DEFAULT = C_("keybindings", "Default")
 KB_GROUP_BRAILLE = _("Braille Bindings")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to presenting the date and time.
+KB_GROUP_DATE_AND_TIME = _("Date and time")
+
+# Translators: This string is a label for the group of Orca commands which
 # do not currently have an associated key binding.
 KB_GROUP_UNBOUND = _("Unbound")
 
