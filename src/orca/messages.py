@@ -66,6 +66,21 @@ BOOKMARKS_SAVED = _("bookmarks saved")
 # list of bookmarks being saved to disk.
 BOOKMARKS_SAVED_FAILURE = _("bookmarks could not be saved")
 
+# Translators: Orca has a feature in which users can store/save a particular
+# location in an application window and return to it later by pressing a
+# keystroke. These stored/saved locations are "bookmarks". This string is
+# presented to the user when they try to go to a bookmark, but don't have
+# any bookmarks.
+BOOKMARKS_NOT_FOUND = _("No bookmarks found.")
+
+# Translators: Orca has a feature in which users can store/save a particular
+# location in an application window and return to it later by pressing a
+# keystroke. These stored/saved locations are "bookmarks". This string is
+# presented to the user when they try to go to a bookmark at a particular
+# index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
+# that index.
+BOOKMARK_NOT_FOUND = _("Bookmark not found.")
+
 # Translators: Orca normally intercepts all keyboard commands and only passes
 # them along to the current application when they are not Orca commands. This
 # command causes the next command issued to be passed along to the current

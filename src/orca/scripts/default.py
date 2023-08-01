@@ -266,31 +266,6 @@ class Script(script.Script):
                 Script.cycleDebugLevel,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
-        self.inputEventHandlers["goToPrevBookmark"] = \
-            input_event.InputEventHandler(
-                Script.goToPrevBookmark,
-                cmdnames.BOOKMARK_GO_TO_PREVIOUS)
-
-        self.inputEventHandlers["goToBookmark"] = \
-            input_event.InputEventHandler(
-                Script.goToBookmark,
-                cmdnames.BOOKMARK_GO_TO)
-
-        self.inputEventHandlers["goToNextBookmark"] = \
-            input_event.InputEventHandler(
-                Script.goToNextBookmark,
-                cmdnames.BOOKMARK_GO_TO_NEXT)
-
-        self.inputEventHandlers["addBookmark"] = \
-            input_event.InputEventHandler(
-                Script.addBookmark,
-                cmdnames.BOOKMARK_ADD)
-
-        self.inputEventHandlers["saveBookmarks"] = \
-            input_event.InputEventHandler(
-                Script.saveBookmarks,
-                cmdnames.BOOKMARK_SAVE)
-
         self.inputEventHandlers["toggleMouseReviewHandler"] = \
             input_event.InputEventHandler(
                 mouse_review.reviewer.toggle,
@@ -310,6 +285,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
         self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
+        self.inputEventHandlers.update(self.bookmarks.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -456,6 +432,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.dateAndTimePresenter.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.bookmarks.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -876,38 +856,6 @@ class Script(script.Script):
             self.find(lastQuery)
         else:
             orca.showFindGUI()
-
-    def addBookmark(self, inputEvent):
-        """ Add an in-page accessible object bookmark for this key.
-        Delegates to Bookmark.addBookmark """
-        bookmarks = self.getBookmarks()
-        bookmarks.addBookmark(inputEvent)
-
-    def goToBookmark(self, inputEvent):
-        """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to
-        Bookmark.goToBookmark """
-        bookmarks = self.getBookmarks()
-        bookmarks.goToBookmark(inputEvent)
-
-    def goToNextBookmark(self, inputEvent):
-        """ Go to the next bookmark location.  If no bookmark has yet to be
-        selected, the first bookmark will be used.  Delegates to
-        Bookmark.goToNextBookmark """
-        bookmarks = self.getBookmarks()
-        bookmarks.goToNextBookmark(inputEvent)
-
-    def goToPrevBookmark(self, inputEvent):
-        """ Go to the previous bookmark location.  If no bookmark has yet to
-        be selected, the first bookmark will be used.  Delegates to
-        Bookmark.goToPrevBookmark """
-        bookmarks = self.getBookmarks()
-        bookmarks.goToPrevBookmark(inputEvent)
-
-    def saveBookmarks(self, inputEvent):
-        """ Save the bookmarks for this script. Delegates to
-        Bookmark.saveBookmarks """
-        bookmarks = self.getBookmarks()
-        bookmarks.saveBookmarks(inputEvent)
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the left.  If panAmount is non-zero,
@@ -2840,7 +2788,7 @@ class Script(script.Script):
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
                                    location.wordIndex, location.charIndex)
-                self.reviewCurrentItem(None)
+                self.flatReviewPresenter.present_item(self)
                 self.targetCursorCell = self.getBrailleCursorCell()
 
     def textLines(self, obj, offset=None):
