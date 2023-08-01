@@ -982,6 +982,31 @@ LIVE_REGION_NEXT = _("Go to next live region")
 # ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 LIVE_REGION_LAST = _("Go to the last live region which made an announcement")
 
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy.
+NAVIGATOR_UP = _("Go to the parent of the object with navigator focus.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy.
+NAVIGATOR_DOWN = _("Go to the first child of the object with navigator focus.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy.
+NAVIGATOR_NEXT = _("Go to the next sibling of the object with navigator focus.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy.
+NAVIGATOR_PREVIOUS = _("Go to the previous sibling of the object with navigator focus.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. Users are also able to synthesize a click on the objects.
+NAVIGATOR_PERFORM_ACTION = _("Click on the object with navigator focus.")
+
+# Translators: the object navigator allows users to explore UI objects presented
+# as a hierarchy. This hierarchy can be simplified, and the simplification can be
+# toggled on and off.
+NAVIGATOR_TOGGLE_SIMPLIFIED = _("Toggle simplified object navigation.")
+
 # Translators: this is for navigating among paragraphs in a document.
 PARAGRAPH_PREV = _("Go to previous paragraph")
 

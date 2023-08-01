@@ -286,6 +286,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
         self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
+        self.inputEventHandlers.update(self.objectNavigator.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -432,6 +433,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.dateAndTimePresenter.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.objectNavigator.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 

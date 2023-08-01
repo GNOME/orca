@@ -52,6 +52,7 @@ from . import formatting
 from . import keybindings
 from . import label_inference
 from . import notification_presenter
+from . import object_navigator
 from . import orca_state
 from . import script_manager
 from . import script_utilities
@@ -106,6 +107,7 @@ class Script:
         self.flatReviewPresenter = self.getFlatReviewPresenter()
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
         self.dateAndTimePresenter = self.getDateAndTimePresenter()
+        self.objectNavigator = self.getObjectNavigator()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -235,6 +237,9 @@ class Script:
 
     def getDateAndTimePresenter(self):
         return date_and_time_presenter.getPresenter()
+
+    def getObjectNavigator(self):
+        return object_navigator.getNavigator()
 
     def getSpeechAndVerbosityManager(self):
         return speech_and_verbosity_manager.getManager()
