@@ -30,6 +30,7 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.orca as orca
+import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
@@ -127,6 +128,14 @@ class Script(WebKitGtk.Script, gtk.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source)
             return
+
+        if AXUtilities.is_table_cell(orca_state.locusOfFocus):
+            table = AXObject.find_ancestor(
+                orca_state.locusOfFocus, AXUtilities.is_tree_or_tree_table)
+            if table is not None and table != event.source:
+                msg = "EVOLUTION: Event is from a different tree or tree table."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
 
         child = AXObject.get_active_descendant_checked(event.source, event.any_data)
         if child is not None and child != event.any_data:
