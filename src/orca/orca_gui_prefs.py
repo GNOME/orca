@@ -716,8 +716,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - languageName: the language name to use to set the active combo box item.
         """
 
-        print("setSpeechLanguagesChoice")
-
         if len(self.speechLanguagesChoices) == 0:
             return
 
@@ -859,6 +857,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         GtkComboBox list.  Set the current choice to be the first item.
         """
 
+        combobox = self.get_widget("speechServers")
+        combobox.set_model(None)
+
         self.speechServersModel.clear()
         self.speechServersChoices = \
                 self.speechSystemsChoice.SpeechServer.getSpeechServers()
@@ -870,6 +871,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
+            combobox.set_model(self.speechServersModel)
             return
 
         i = 0
@@ -878,6 +880,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechServersModel.append((i, name))
             i += 1
 
+        combobox.set_model(self.speechServersModel)
         self._setSpeechServersChoice(self.prefsDict["speechServerInfo"])
 
         debug.println(
