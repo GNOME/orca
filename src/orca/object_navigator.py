@@ -32,6 +32,7 @@ from . import eventsynthesizer
 from . import input_event
 from . import keybindings
 from . import messages
+from . import orca
 from . import orca_state
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -225,6 +226,7 @@ class ObjectNavigator:
     def present(self, script):
         """Presents the current navigator focus to the user."""
 
+        orca.emitRegionChanged(self._navigator_focus, mode=orca.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
     def up(self, script, event=None):

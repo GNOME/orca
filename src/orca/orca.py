@@ -129,7 +129,15 @@ CARET_TRACKING = "caret-tracking"
 FOCUS_TRACKING = "focus-tracking"
 FLAT_REVIEW = "flat-review"
 MOUSE_REVIEW = "mouse-review"
+OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
+
+def getActiveModeAndObjectOfInterest():
+    msg = "ORCA: Active mode: %s Object of interest: %s" % \
+        (orca_state.activeMode, orca_state.objOfInterest)
+
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return orca_state.activeMode, orca_state.objOfInterest
 
 def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
     """Notifies interested clients that the current region of interest has changed."""
@@ -159,6 +167,8 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
     except Exception:
         msg = "ORCA: Exception emitting region-changed notification"
         debug.println(debug.LEVEL_INFO, msg, True)
+
+    orca_state.objOfInterest = obj
 
 def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
     msg = "ORCA: Request to set active window to %s" % frame
