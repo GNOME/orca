@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import re
 
+import orca.debug as debug
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -37,9 +38,11 @@ class Utilities(script_utilities.Utilities):
     def __init__(self, script):
         super().__init__(script)
         self._isTypeahead = {}
+        self._isLayoutOnly = {}
 
     def clearCachedObjects(self):
         self._isTypeahead = {}
+        self._isLayoutOnly = {}
 
     def isTypeahead(self, obj):
         if not AXUtilities.is_text(obj):
@@ -63,3 +66,15 @@ class Utilities(script_utilities.Utilities):
         red, green, blue = string.split(",")
 
         return int(red) >> 8, int(green) >> 8, int(blue) >> 8
+
+    def isLayoutOnly(self, obj):
+        rv = self._isLayoutOnly.get(hash(obj))
+        if rv is not None:
+            if rv:
+                msg = "GTK: %s is deemed to be layout only" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            return rv
+
+        rv = super().isLayoutOnly(obj)
+        self._isLayoutOnly[hash(obj)] = rv
+        return rv
