@@ -35,6 +35,7 @@ import re
 from . import braille
 from . import debug
 from . import eventsynthesizer
+from . import orca
 from . import orca_state
 from . import settings
 from .ax_object import AXObject
@@ -485,7 +486,7 @@ class Context:
         self.targetCharInfo = None
         self.focusZone = None
         self.container = None
-        self.focusObj = orca_state.locusOfFocus
+        self.focusObj = orca.getActiveModeAndObjectOfInterest()[1] or orca_state.locusOfFocus
         self.topLevel = None
         self.bounds = 0, 0, 0, 0
 
