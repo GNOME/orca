@@ -1327,7 +1327,7 @@ class Utilities:
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == Atspi.Role.TABLE_CELL and AXObject.get_child_count(obj):
             if parentRole == Atspi.Role.TREE_TABLE:
-                layoutOnly = False
+                layoutOnly = not AXObject.get_name(obj)
             elif AXUtilities.is_table_cell(firstChild):
                 layoutOnly = True
             elif parentRole == Atspi.Role.TABLE:
