@@ -734,6 +734,68 @@ class Context:
 
         return AXObject.find_ancestor(child, lambda x: x == parent)
 
+    def setCurrentToZoneWithObject(self, obj):
+        """Attempts to set the current zone to obj, if obj is in the current context."""
+
+        def _toString(x):
+            if AXObject.get_name(x):
+                return str(x)
+            return "%s: '%s'" % (x, self.script.utilities.displayedText(x))
+
+        msg = "FLAT REVIEW: Current %s (line: %i, zone: %i, word: %i, char: %i)" % \
+              (_toString(self.getCurrentAccessible()),
+               self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        zone = self._findZoneWithObject(obj)
+        msg = "FLAT REVIEW: Zone with %s is %s" % (obj, zone)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if zone is None:
+            return False
+
+        for i, line in enumerate(self.lines):
+            if zone in line.zones:
+                self.lineIndex = i
+                self.zoneIndex = line.zones.index(zone)
+                word, offset = zone.wordWithCaret()
+                if word:
+                    self.wordIndex = word.index
+                    self.charIndex = offset
+                msg = "FLAT REVIEW: Updated current zone."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                break
+        else:
+            msg = "FLAT REVIEW: Failed to update current zone."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "FLAT REVIEW: Updated %s (line: %i, zone: %i, word: %i, char: %i)" % \
+              (_toString(self.getCurrentAccessible()),
+               self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
+
+    def _findZoneWithObject(self, obj):
+        """Returns the existing zone which contains obj."""
+
+        if obj is None:
+            return None
+
+        for zone in self.zones:
+            if zone.accessible == obj:
+                return zone
+
+            # Some items get pruned from the flat review tree. For instance, a
+            # tree item which has a descendant section whose text is the displayed
+            # text of the tree item, that section will be in the flat review tree
+            # but the ancestor item might not.
+            if AXObject.is_ancestor(zone.accessible, obj):
+                msg = "FLAT REVIEW: %s is ancestor of zone accessible %s" % (zone.accessible, obj)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return zone
+
+        return None
+
     def getShowingZones(self, root, boundingbox=None):
         """Returns an unsorted list of all the zones under root and the focusZone."""
 
