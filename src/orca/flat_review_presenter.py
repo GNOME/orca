@@ -64,12 +64,32 @@ class FlatReviewPresenter:
         """Returns the flat review context, creating one if necessary."""
 
         # TODO - JD: Scripts should not be able to interact with the
-        # context directly. This is to temporarily prevent breakage
+        # context directly. get_or_create_context is public temporarily
+        # to prevent breakage.
+
         if not self._context:
             self._context = flat_review.Context(script)
             if script is not None:
                 script.justEnteredFlatReviewMode = True
                 script.targetCursorCell = script.getBrailleCursorCell()
+            return self._context
+
+        # If the context already exists, but the active mode is not flat review, update
+        # the flat review location to that of the object of interest -- if the object of
+        # interest is in the flat review context (which means it's on screen). In some
+        # cases the object of interest will not be in the flat review context because it
+        # is represented by descendant text objects. setCurrentToZoneWithObject checks
+        # for this condition and if it can find a zone whose ancestor is the object of
+        # interest, it will set the current zone to the descendant, causing Orca to
+        # present the text at the location of the object of interest.
+        mode, obj = orca.getActiveModeAndObjectOfInterest()
+        if mode != orca.FLAT_REVIEW:
+            obj = obj or orca_state.locusOfFocus
+            msg = "FLAT REVIEW PRESENTER: Attempting to update location from %s to %s" \
+                % (self._context.getCurrentAccessible(), obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._context.setCurrentToZoneWithObject(obj)
+
         return self._context
 
     def start(self, script=None):
