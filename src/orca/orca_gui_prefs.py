@@ -666,6 +666,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         GtkComboBox list.
         """
 
+        combobox = self.get_widget("speechFamilies")
+        combobox.set_model(None)
         self.speechFamiliesModel.clear()
 
         currentLanguage = self.speechLanguagesChoice
@@ -689,6 +691,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechFamiliesModel.append((i, name))
             i += 1
 
+        combobox.set_model(self.speechFamiliesModel)
         if i == 0:
             msg = "No speech family was available for %s." % str(currentLanguage)
             debug.println(debug.LEVEL_SEVERE, msg, True)
@@ -748,10 +751,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         GtkComboBox list.
         """
 
+        combobox = self.get_widget("speechLanguages")
+        combobox.set_model(None)
         self.speechLanguagesModel.clear()
-
         self.speechFamilies = self.speechServersChoice.getVoiceFamilies()
-
         self.speechLanguagesChoices = []
 
         if len(self.speechFamilies) == 0:
@@ -791,6 +794,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         selectedIndex = 0
         if self.speechServersChoice in self.selectedLanguageChoices:
             selectedIndex = self.selectedLanguageChoices[self.speechServersChoice]
+
+        combobox.set_model(self.speechLanguagesModel)
 
         self.get_widget("speechLanguages").set_active(selectedIndex)
         if self.initializingSpeech:
@@ -859,7 +864,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         combobox = self.get_widget("speechServers")
         combobox.set_model(None)
-
         self.speechServersModel.clear()
         self.speechServersChoices = \
                 self.speechSystemsChoice.SpeechServer.getSpeechServers()
@@ -931,6 +935,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         Arguments:
         -factories: the list of known speech factories (working or not)
         """
+
+        combobox = self.get_widget("speechSystems")
+        combobox.set_model(None)
         self.speechSystemsModel.clear()
         self.workingFactories = []
         for factory in factories:
@@ -952,6 +959,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
+            combobox.set_model(self.speechSystemsModel)
             return
 
         i = 0
@@ -961,6 +969,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechSystemsModel.append((i, name))
             i += 1
 
+        combobox.set_model(self.speechSystemsModel)
         if self.prefsDict["speechServerFactory"]:
             self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
         else:
