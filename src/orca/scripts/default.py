@@ -1053,7 +1053,7 @@ class Script(script.Script):
         self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
         if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.route_pointer_to_object()
+            self.flatReviewPresenter.route_pointer_to_object(script)
             return True
 
         if eventsynthesizer.routeToCharacter(orca_state.locusOfFocus) \
