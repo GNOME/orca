@@ -224,6 +224,8 @@ class ObjectNavigator:
     def present(self, script):
         """Presents the current navigator focus to the user."""
 
+        msg = "OBJECT NAVIGATOR: Presenting %s" % self._navigator_focus
+        debug.println(debug.LEVEL_INFO, msg, True)
         orca.emitRegionChanged(self._navigator_focus, mode=orca.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
@@ -269,6 +271,7 @@ class ObjectNavigator:
                 script.presentMessage(messages.NAVIGATOR_NO_NEXT)
         else:
             self._set_navigator_focus(parent)
+            self.present(script)
 
     def previous(self, script, event=None):
         """Moves the navigator focus to the previous sibling of the current focus."""
@@ -289,6 +292,7 @@ class ObjectNavigator:
                 script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
         else:
             self._set_navigator_focus(parent)
+            self.present(script)
 
     def toggle_simplify(self, script, event=None):
         """Toggles simplified navigation."""
