@@ -113,12 +113,6 @@ class Script(default.Script):
            and not AXUtilities.is_focused(event.source):
             return
 
-        if AXObject.supports_table(event.source):
-            selectedChildren = self.utilities.selectedChildren(event.source)
-            if selectedChildren:
-                orca.setLocusOfFocus(event, selectedChildren[0])
-                return
-
         ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
         if not ancestor:
             orca.setLocusOfFocus(event, event.source)
