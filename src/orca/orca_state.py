@@ -44,8 +44,9 @@ activeWindow = None
 #
 activeScript = None
 
-# The currently active mode (focus, say all, flat review, etc.)
+# The currently active mode (focus, say all, flat review, etc.) and obj
 activeMode = None
+objOfInterest = None
 
 # Used to capture keys to redefine key bindings by the user.
 #

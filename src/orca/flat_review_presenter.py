@@ -40,6 +40,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import orca
 from . import orca_state
 from . import settings_manager
 from . import settings
@@ -673,8 +674,10 @@ class FlatReviewPresenter:
 
         if self._context:
             self._context = None
+            orca.emitRegionChanged(orca_state.locusOfFocus, mode=orca.FOCUS_TRACKING)
         else:
             self.get_or_create_context(script)
+            orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
 
         if event is None or script is None:
             return
@@ -877,6 +880,8 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         if not isinstance(event, input_event.BrailleEvent):
             script.presentObject(self._context.getCurrentAccessible(), speechonly=True)
+
+        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
         return True
 
     def left_click_on_object(self, script, event=None):
@@ -983,6 +988,7 @@ class FlatReviewPresenter:
                 line_string = script.utilities.adjustForRepeats(line_string)
                 script.speakMessage(line_string, voice)
 
+        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
         script.updateBrailleReview()
         self._current_contents = line_string
         return True
@@ -1012,6 +1018,7 @@ class FlatReviewPresenter:
                     word_string = script.utilities.adjustForRepeats(word_string)
                     script.speakMessage(word_string, voice)
 
+        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
         script.updateBrailleReview(targetCursorCell)
         self._current_contents = word_string
         return True
@@ -1035,6 +1042,7 @@ class FlatReviewPresenter:
                 else:
                     script.speakCharacter(char_string)
 
+        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
         script.updateBrailleReview()
         self._current_contents = char_string
         return True
