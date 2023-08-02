@@ -212,13 +212,14 @@ class ObjectNavigator:
         self._navigator_focus = obj
 
     def update(self):
-        """Updates the navigator focus to Orca's locusOfFocus."""
+        """Updates the navigator focus to Orca's object of interest."""
 
-        if self._last_locus_of_focus == orca_state.locusOfFocus:
+        obj = orca.getActiveModeAndObjectOfInterest()[1] or orca_state.locusOfFocus
+        if self._last_locus_of_focus == obj:
             return
 
-        self._navigator_focus = orca_state.locusOfFocus
-        self._last_locus_of_focus = orca_state.locusOfFocus
+        self._navigator_focus = obj
+        self._last_locus_of_focus = obj
 
     def present(self, script):
         """Presents the current navigator focus to the user."""
