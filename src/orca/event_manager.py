@@ -485,7 +485,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for event in self._suspendableEvents:
-            self._deregisterListener(event)
+            self.deregisterListener(event)
 
         self._eventsSuspended = True
 
@@ -507,7 +507,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for event in self._suspendableEvents:
-            self._registerListener(event)
+            self.registerListener(event)
 
         self._eventsSuspended = False
 
@@ -669,7 +669,7 @@ class EventManager:
 
         return rerun
 
-    def _registerListener(self, eventType):
+    def registerListener(self, eventType):
         """Tells this module to listen for the given event type.
 
         Arguments:
@@ -685,7 +685,7 @@ class EventManager:
             self._listener.register(eventType)
             self._scriptListenerCounts[eventType] = 1
 
-    def _deregisterListener(self, eventType):
+    def deregisterListener(self, eventType):
         """Tells this module to stop listening for the given event type.
 
         Arguments:
@@ -715,7 +715,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for eventType in script.listeners.keys():
-            self._registerListener(eventType)
+            self.registerListener(eventType)
 
     def deregisterScriptListeners(self, script):
         """Tells the event manager to stop listening for all the event types
@@ -729,7 +729,7 @@ class EventManager:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for eventType in script.listeners.keys():
-            self._deregisterListener(eventType)
+            self.deregisterListener(eventType)
 
     def registerKeystrokeListener(self, function, mask=None, kind=None):
         """Register the keystroke listener on behalf of the caller."""

@@ -39,6 +39,7 @@ import time
 
 from . import acss
 from . import debug
+from . import event_manager
 from . import guilabels
 from . import messages
 from . import orca
@@ -3281,8 +3282,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         Arguments:
         - widget: the component that generated the signal.
         """
-        self.saveBasicSettings()
 
+        msg = "PREFERENCES DIALOG: Apply button clicked"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
+        self.saveBasicSettings()
         activeProfile = self.getComboBoxList(self.profilesCombo)
         startingProfile = self.getComboBoxList(self.startingProfileCombo)
 
@@ -3292,16 +3296,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         _settingsManager.setStartingProfile(startingProfile)
 
         self.writeUserPreferences()
-
         orca.loadUserSettings(self.script)
-
         braille.checkBrailleSetting()
-
         self._initSpeechState()
-
         self._populateKeyBindings()
-
         self.__initProfileCombo()
+
+        msg = "PREFERENCES DIALOG: Handling Apply button click complete"
+        debug.println(debug.LEVEL_ALL, msg, True)
 
     def cancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the cancelButton
@@ -3312,8 +3314,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
+        msg = "PREFERENCES DIALOG: Cancel button clicked"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
         self.windowClosed(widget)
         self.get_widget("orcaSetupWindow").destroy()
+
+        msg = "PREFERENCES DIALOG: Handling Cancel button click complete"
+        debug.println(debug.LEVEL_ALL, msg, True)
 
     def okButtonClicked(self, widget=None):
         """Signal handler for the "clicked" signal for the okButton
@@ -3328,9 +3336,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
+        msg = "PREFERENCES DIALOG: OK button clicked"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
         self.applyButtonClicked(widget)
         self._cleanupSpeechServers()
         self.get_widget("orcaSetupWindow").destroy()
+
+        msg = "PREFERENCES DIALOG: Handling OK button click complete"
+        debug.println(debug.LEVEL_ALL, msg, True)
 
     def windowClosed(self, widget):
         """Signal handler for the "closed" signal for the orcaSetupWindow
@@ -3340,6 +3354,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         Arguments:
         - widget: the component that generated the signal.
         """
+
+        msg = "PREFERENCES DIALOG: Window is being closed"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
+        self.suspendEvents()
 
         factory = _settingsManager.getSetting('speechServerFactory')
         if factory:
@@ -3352,6 +3371,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._cleanupSpeechServers()
         self.restoreSettings()
 
+        GObject.timeout_add(1000, self.resumeEvents)
+
+        msg = "PREFERENCES DIALOG: Window closure complete"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
            GtkWindow widget. Reset orca_state.orcaOS to None, so that the 
@@ -3361,6 +3385,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         Arguments:
         - widget: the component that generated the signal.
         """
+
+        msg = "PREFERENCES DIALOG: Window is being destroyed"
+        debug.println(debug.LEVEL_ALL, msg, True)
 
         self.keyBindView.set_model(None)
         self.getTextAttributesView.set_model(None)
@@ -3372,6 +3399,29 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.getTextAttributesView.hide()
         self.pronunciationView.hide()
         orca_state.orcaOS = None
+
+        msg = "PREFERENCES DIALOG: Window destruction complete"
+        debug.println(debug.LEVEL_ALL, msg, True)
+
+    def resumeEvents(self):
+        msg = "PREFERENCES DIALOG: Re-registering floody events."
+        debug.println(debug.LEVEL_ALL, msg, True)
+
+        manager = event_manager.getManager()
+        manager.registerListener("object:state-changed:showing")
+        manager.registerListener("object:children-changed:remove")
+        manager.registerListener("object:selection-changed")
+        manager.registerListener("object:property-change:accessible-name")
+
+    def suspendEvents(self):
+        msg = "PREFERENCES DIALOG: Deregistering floody events."
+        debug.println(debug.LEVEL_ALL, msg, True)
+
+        manager = event_manager.getManager()
+        manager.deregisterListener("object:state-changed:showing")
+        manager.deregisterListener("object:children-changed:remove")
+        manager.deregisterListener("object:selection-changed")
+        manager.deregisterListener("object:property-change:accessible-name")
 
     def showProfileGUI(self, widget):
         """Show profile Dialog to add a new one"""
