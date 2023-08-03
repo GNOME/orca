@@ -99,30 +99,6 @@ class FlatReviewPresenter:
 
         return self._context
 
-    def start(self, script=None):
-        """Starts flat review."""
-
-        if self._context:
-            msg = "FLAT REVIEW PRESENTER: Already in flat review"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        msg = "FLAT REVIEW PRESENTER: Starting flat review"
-        debug.println(debug.LEVEL_INFO, msg, True)
-        self.toggle_flat_review_mode(script)
-
-    def quit(self, script=None):
-        """Quits flat review."""
-
-        if self._context is None:
-            msg = "FLAT REVIEW PRESENTER: Not in flat review"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        msg = "FLAT REVIEW PRESENTER: Quitting flat review"
-        debug.println(debug.LEVEL_INFO, msg, True)
-        self.toggle_flat_review_mode(script)
-
     def get_bindings(self, is_desktop):
         """Returns the flat-review-presenter keybindings."""
 
@@ -696,32 +672,57 @@ class FlatReviewPresenter:
 
         return bindings
 
-    def toggle_flat_review_mode(self, script, event=None):
-        """Toggles between flat review mode and focus tracking mode."""
+    def start(self, script=None, event=None):
+        """Starts flat review."""
 
         if self._context:
-            self._context = None
-            orca.emitRegionChanged(orca_state.locusOfFocus, mode=orca.FOCUS_TRACKING)
-        else:
-            self.get_or_create_context(script)
-            orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+            msg = "FLAT REVIEW PRESENTER: Already in flat review"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "FLAT REVIEW PRESENTER: Starting flat review"
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if script is None:
+            script = orca_state.activeScript
+
+        self.get_or_create_context(script)
+        if event is None:
+            return
+
+        if _settingsManager.getSetting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_BRIEF:
+            script.presentMessage(messages.FLAT_REVIEW_START)
+        self._item_presentation(script, event, script.targetCursorCell)
+
+    def quit(self, script=None, event=None):
+        """Quits flat review."""
+
+        if self._context is None:
+            msg = "FLAT REVIEW PRESENTER: Not in flat review"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "FLAT REVIEW PRESENTER: Quitting flat review"
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._context = None
+        orca.emitRegionChanged(orca_state.locusOfFocus, mode=orca.FOCUS_TRACKING)
 
         if event is None or script is None:
             return
 
-        announce = _settingsManager.getSetting('speechVerbosityLevel') \
-            != settings.VERBOSITY_LEVEL_BRIEF
-
-        if self._context:
-            script.updateBraille(orca_state.locusOfFocus)
-            if announce:
-                script.presentMessage(messages.FLAT_REVIEW_START)
-            return
-
-        if announce:
+        if _settingsManager.getSetting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_BRIEF:
             script.presentMessage(messages.FLAT_REVIEW_STOP)
+        script.updateBraille(orca_state.locusOfFocus)
 
-        self._item_presentation(script, event, script.targetCursorCell)
+    def toggle_flat_review_mode(self, script, event=None):
+        """Toggles between flat review mode and focus tracking mode."""
+
+        if self.is_active():
+            self.quit(script, event)
+            return True
+
+        self.start(script, event)
         return True
 
     def go_home(self, script, event=None):
