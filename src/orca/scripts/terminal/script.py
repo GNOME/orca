@@ -99,6 +99,8 @@ class Script(default.Script):
             self.speakMessage(newString, voice=voice)
 
         if self.flatReviewPresenter.is_active():
+            msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         try:
