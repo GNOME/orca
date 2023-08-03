@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-03-16 16:30+0000\n"
-"PO-Revision-Date: 2023-03-18 13:19+0300\n"
-"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
+"POT-Creation-Date: 2023-07-26 20:29+0000\n"
+"PO-Revision-Date: 2023-07-31 00:44+1000\n"
+"Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1946,13 +1946,11 @@ msgstr "Формы"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Следующее и предыдущее поле формы: <keyseq><key>Модификатор Orca</"
-"key><key>Tab</key></keyseq> и <keyseq><key>Модификатор Orca</key><key>Shift</"
-"key><key>Tab</key></keyseq>"
+"Следующее и предыдущее поле формы: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2517,6 +2515,11 @@ msgstr "Сообщить предыдущее уведомление: (Не за
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Сообщить следующее уведомление: (Не задано)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr "Сообщить список всех уведомлений: (Не задано)"
 
@@ -8252,6 +8255,15 @@ msgstr ""
 "Если флажок <gui>Произносить числа цифрами</gui> установлен, <app>Orca</app> "
 "будет разбивать такие числа, как «123», на отдельные цифры («1», «2» и «3») "
 "перед их передачей синтезатору речи."
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Следующее и предыдущее поле формы: <keyseq><key>Модификатор Orca</"
+#~ "key><key>Tab</key></keyseq> и <keyseq><key>Модификатор Orca</"
+#~ "key><key>Shift</key><key>Tab</key></keyseq>"
 
 #~ msgid ""
 #~ "In the lists that follow, you will see several references to \"KP\". All "
