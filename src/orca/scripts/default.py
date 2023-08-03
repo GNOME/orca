@@ -1001,7 +1001,8 @@ class Script(script.Script):
         """Returns to the component with focus."""
 
         if self.flatReviewPresenter.is_active():
-            return self.flatReviewPresenter.quit()
+            self.flatReviewPresenter.quit()
+            return True
 
         return braille.returnToRegionWithFocus(inputEvent)
 

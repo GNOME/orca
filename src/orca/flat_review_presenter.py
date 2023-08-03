@@ -68,11 +68,17 @@ class FlatReviewPresenter:
         # to prevent breakage.
 
         if not self._context:
+            msg = "FLAT REVIEW PRESENTER: Creating new context"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             self._context = flat_review.Context(script)
             if script is not None:
                 script.justEnteredFlatReviewMode = True
                 script.targetCursorCell = script.getBrailleCursorCell()
             return self._context
+
+        msg = "FLAT REVIEW PRESENTER: Using existing context"
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         # If the context already exists, but the active mode is not flat review, update
         # the flat review location to that of the object of interest -- if the object of
