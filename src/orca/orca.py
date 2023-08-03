@@ -872,13 +872,20 @@ def main():
     script = orca_state.activeScript
     if script:
         window = script.utilities.activeWindow()
+
         if window and not orca_state.locusOfFocus:
             app = AXObject.get_application(window)
+            setActiveWindow(window, app, alsoSetLocusOfFocus=True, notifyScript=True)
+
+            # setActiveWindow does some corrective work needed thanks to
+            # mutter-x11-frames. So retrieve the window just in case.
+            window = orca_state.activeWindow
             script = _scriptManager.getScript(app, window)
             _scriptManager.setActiveScript(script, "Launching.")
 
-            setLocusOfFocus(None, window)
             focusedObject = AXUtilities.get_focused_object(window)
+            msg = "ORCA: Focused object is: %s" % focusedObject
+            debug.println(debug.LEVEL_INFO, msg, True)
             if focusedObject:
                 setLocusOfFocus(None, focusedObject)
                 script = _scriptManager.getScript(
