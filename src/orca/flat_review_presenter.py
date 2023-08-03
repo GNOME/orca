@@ -72,6 +72,7 @@ class FlatReviewPresenter:
             debug.println(debug.LEVEL_INFO, msg, True)
 
             self._context = flat_review.Context(script)
+            orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
             if script is not None:
                 script.justEnteredFlatReviewMode = True
                 script.targetCursorCell = script.getBrailleCursorCell()
@@ -89,8 +90,8 @@ class FlatReviewPresenter:
         # interest, it will set the current zone to the descendant, causing Orca to
         # present the text at the location of the object of interest.
         mode, obj = orca.getActiveModeAndObjectOfInterest()
-        if mode != orca.FLAT_REVIEW:
-            obj = obj or orca_state.locusOfFocus
+        obj = obj or orca_state.locusOfFocus
+        if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible():
             msg = "FLAT REVIEW PRESENTER: Attempting to update location from %s to %s" \
                 % (self._context.getCurrentAccessible(), obj)
             debug.println(debug.LEVEL_INFO, msg, True)
