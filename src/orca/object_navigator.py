@@ -297,8 +297,8 @@ class ObjectNavigator:
     def toggle_simplify(self, script, event=None):
         """Toggles simplified navigation."""
 
-        self.navigator.simplify = not self.navigator.simplify
-        if self.navigator.simplify:
+        self._simplify = not self._simplify
+        if self._simplify:
             script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_ENABLED)
         else:
             script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_DISABLED)
