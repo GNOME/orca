@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-08-04 14:13+0000\n"
-"PO-Revision-Date: 2023-08-04 16:49+0200\n"
+"PO-Revision-Date: 2023-08-04 16:51+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -1859,7 +1859,7 @@ msgstr "Kimondja a hivatkozás részleteit."
 #. box.
 #: src/orca/cmdnames.py:96
 msgid "Present the default button"
-msgstr ""
+msgstr "Kimondja és megjeleníti a Braille-kijelzőn az alapértelmezett gombot"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
