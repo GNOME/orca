@@ -3624,6 +3624,9 @@ class Utilities:
 
         return children
 
+    def speakSelectedCellRange(self, obj):
+        return False
+
     def getSelectionContainer(self, obj):
         if not obj:
             return None

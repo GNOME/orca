@@ -151,36 +151,6 @@ class Script(script.Script):
                 Script.sayAll,
                 cmdnames.SAY_ALL)
 
-        self.inputEventHandlers["whereAmIBasicHandler"] = \
-            input_event.InputEventHandler(
-                Script.whereAmIBasic,
-                cmdnames.WHERE_AM_I_BASIC)
-
-        self.inputEventHandlers["whereAmIDetailedHandler"] = \
-            input_event.InputEventHandler(
-                Script.whereAmIDetailed,
-                cmdnames.WHERE_AM_I_DETAILED)
-
-        self.inputEventHandlers["whereAmILinkHandler"] = \
-            input_event.InputEventHandler(
-                Script.whereAmILink,
-                cmdnames.WHERE_AM_I_LINK)
-
-        self.inputEventHandlers["whereAmISelectionHandler"] = \
-            input_event.InputEventHandler(
-                Script.whereAmISelection,
-                cmdnames.WHERE_AM_I_SELECTION)
-
-        self.inputEventHandlers["getTitleHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentTitle,
-                cmdnames.PRESENT_TITLE)
-
-        self.inputEventHandlers["getStatusBarHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentStatusBar,
-                cmdnames.PRESENT_STATUS_BAR)
-
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
                 orca.showFindGUI,
@@ -195,11 +165,6 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.findPrevious,
                 cmdnames.FIND_PREVIOUS)
-
-        self.inputEventHandlers["readCharAttributesHandler"] = \
-            input_event.InputEventHandler(
-                Script.readCharAttributes,
-                cmdnames.READ_CHAR_ATTRIBUTES)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
@@ -278,17 +243,13 @@ class Script(script.Script):
                 Script.bypassNextCommand,
                 cmdnames.BYPASS_NEXT_COMMAND)
 
-        self.inputEventHandlers["presentSizeAndPositionHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentSizeAndPosition,
-                cmdnames.PRESENT_SIZE_AND_POSITION)
-
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
         self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
+        self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -427,6 +388,10 @@ class Script(script.Script):
         layout = _settingsManager.getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         bindings = self.flatReviewPresenter.get_bindings(isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.whereAmIPresenter.get_bindings(isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -1067,81 +1032,6 @@ class Script(script.Script):
         self.presentMessage(full, brief)
         return False
 
-    def presentStatusBar(self, inputEvent):
-        """Speaks and brailles the contents of the status bar and/or default
-        button of the window with focus.
-        """
-
-        obj = orca_state.locusOfFocus
-        self.updateBraille(obj)
-
-        frame, dialog = self.utilities.frameAndDialog(obj)
-        if frame:
-            start = time.time()
-            statusbar = AXUtilities.get_status_bar(frame)
-            end = time.time()
-            msg = "DEFAULT: Time searching for status bar: %.4f" % (end - start)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            if statusbar:
-                self.pointOfReference['statusBarItems'] = None
-                self.presentObject(statusbar, interrupt=True)
-                self.pointOfReference['statusBarItems'] = None
-            else:
-                full = messages.STATUS_BAR_NOT_FOUND_FULL
-                brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
-                self.presentMessage(full, brief)
-
-            infobar = self.utilities.infoBar(frame)
-            if infobar:
-                speech.speak(self.speechGenerator.generateSpeech(infobar))
-
-        window = dialog or frame
-        if window:
-            speech.speak(self.speechGenerator.generateDefaultButton(window))
-
-    def presentTitle(self, inputEvent):
-        """Speaks and brailles the title of the window with focus."""
-
-        obj = orca_state.locusOfFocus
-        if self.utilities.isDead(obj):
-            obj = orca_state.activeWindow
-
-        if not obj or self.utilities.isDead(obj):
-            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
-            return True
-
-        title = self.speechGenerator.generateTitle(obj)
-        for (string, voice) in title:
-            self.presentMessage(string, voice=voice)
-
-    def readCharAttributes(self, inputEvent=None):
-        """Reads the attributes associated with the current text character.
-        Calls outCharAttributes to speak a list of attributes. By default,
-        a certain set of attributes will be spoken. If this is not desired,
-        then individual application scripts should override this method to
-        only speak the subset required.
-        """
-
-        attrs, start, end = self.utilities.textAttributes(orca_state.locusOfFocus, None, True)
-
-        # Get a dictionary of text attributes that the user cares about.
-        [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
-            _settingsManager.getSetting('enabledSpokenTextAttributes'))
-
-        nullValues = ['0', '0mm', 'none', 'false']
-        for key in userAttrList:
-            # Convert the standard key into the non-standard implementor variant.
-            appKey = self.utilities.getAppNameForAttribute(key)
-            value = attrs.get(appKey)
-            ignoreIfValue = userAttrDict.get(key)
-            if value in nullValues and ignoreIfValue in nullValues:
-                continue
-
-            if value and value != ignoreIfValue:
-                self.speakMessage(self.utilities.localizeTextAttribute(key, value))
-
-        return True
-
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
 
@@ -1247,53 +1137,6 @@ class Script(script.Script):
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 
-    def doWhereAmI(self, inputEvent, basicOnly):
-        """Peforms the whereAmI operation.
-
-        Arguments:
-        - inputEvent:     The original inputEvent
-        """
-
-        if self.spellcheck and self.spellcheck.isActive():
-            self.spellcheck.presentErrorDetails(not basicOnly)
-
-        obj = orca_state.locusOfFocus
-        if self.utilities.isDead(obj):
-            obj = orca_state.activeWindow
-
-        if not obj or self.utilities.isDead(obj):
-            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
-            return True
-
-        self.updateBraille(obj)
-
-        if basicOnly:
-            formatType = 'basicWhereAmI'
-        else:
-            formatType = 'detailedWhereAmI'
-        speech.speak(self.speechGenerator.generateSpeech(
-            self.utilities.realActiveAncestor(obj),
-            alreadyFocused=True,
-            formatType=formatType,
-            forceMnemonic=True,
-            forceList=True,
-            forceTutorial=True))
-
-        return True
-
-    def whereAmIBasic(self, inputEvent):
-        """Speaks basic information about the current object of interest.
-        """
-
-        self.doWhereAmI(inputEvent, True)
-
-    def whereAmIDetailed(self, inputEvent):
-        """Speaks detailed/custom information about the current object of
-        interest.
-        """
-
-        self.doWhereAmI(inputEvent, False)
-
     def cycleDebugLevel(self, inputEvent=None):
         levels = [debug.LEVEL_ALL, "all",
                   debug.LEVEL_FINEST, "finest",
@@ -1318,47 +1161,6 @@ class Script(script.Script):
         fullMessage =  "Debug level %s." % briefMessage
         self.presentMessage(fullMessage, briefMessage)
 
-        return True
-
-    def whereAmILink(self, inputEvent=None, link=None):
-        link = link or orca_state.locusOfFocus
-        if not self.utilities.isLink(link):
-            self.presentMessage(messages.NOT_ON_A_LINK)
-        else:
-            speech.speak(self.speechGenerator.generateLinkInfo(link))
-        return True
-
-    def _whereAmISelectedText(self, inputEvent, obj):
-        text, startOffset, endOffset = self.utilities.allSelectedText(obj)
-        if self.utilities.shouldVerbalizeAllPunctuation(obj):
-            text = self.utilities.verbalizeAllPunctuation(text)
-
-        if not text:
-            msg = messages.NO_SELECTED_TEXT
-        else:
-            msg = messages.SELECTED_TEXT_IS % text
-        self.speakMessage(msg)
-        return True
-
-    def whereAmISelection(self, inputEvent=None, obj=None):
-        obj = obj or orca_state.locusOfFocus
-        if not obj:
-            return True
-
-        container = self.utilities.getSelectionContainer(obj)
-        if not container:
-            msg = "INFO: Selection container not found for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return self._whereAmISelectedText(inputEvent, obj)
-
-        count = self.utilities.selectedChildCount(container)
-        childCount = self.utilities.selectableChildCount(container)
-        self.presentMessage(messages.selectedItemsCount(count, childCount))
-        if not count:
-            return True
-
-        utterances = self.speechGenerator.generateSelectedItems(container)
-        speech.speak(utterances)
         return True
 
     ########################################################################
@@ -3617,23 +3419,3 @@ class Script(script.Script):
         """
         speech.speak(messages.UNICODE % \
                          self.utilities.unicodeValueString(character))
-
-    def presentSizeAndPosition(self, inputEvent):
-        """ Presents the size and position of the locusOfFocus. """
-
-        if self.flatReviewPresenter.is_active():
-            obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
-        else:
-            obj = orca_state.locusOfFocus
-
-        x, y, width, height = self.utilities.getBoundingBox(obj)
-        if (x, y, width, height) == (-1, -1, 0, 0):
-            full = messages.LOCATION_NOT_FOUND_FULL
-            brief = messages.LOCATION_NOT_FOUND_BRIEF
-            self.presentMessage(full, brief)
-            return True
-
-        full = messages.SIZE_AND_POSITION_FULL % (width, height, x, y)
-        brief = messages.SIZE_AND_POSITION_BRIEF % (width, height, x, y)
-        self.presentMessage(full, brief)
-        return True

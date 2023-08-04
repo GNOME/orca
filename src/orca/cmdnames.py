@@ -89,12 +89,19 @@ WHERE_AM_I_SELECTION = _("Speak the current selection")
 # about a link, such as the uri and type of link.
 WHERE_AM_I_LINK = _("Speak link details")
 
-# Translators: This command will cause the window's status bar contents to be
-# spoken.
-PRESENT_STATUS_BAR = _("Speak the status bar")
+# Translators: This command will cause the dialog's default button name to be
+# spoken and displayed in braille. The "default" button in a dialog box is the
+# button that gets activated when Enter is pressed anywhere within that dialog
+# box.
+PRESENT_DEFAULT_BUTTON = _("Present the default button")
 
-# Translators: This command will cause the window's title to be spoken.
-PRESENT_TITLE = _("Speak the title bar")
+# Translators: This command will cause the window's status bar contents to be
+# spoken and displayed in braille.
+PRESENT_STATUS_BAR = _("Present the status bar")
+
+# Translators: This command will cause the window's title to be spoken and
+# displayed in braille.
+PRESENT_TITLE = _("Present the title bar")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find

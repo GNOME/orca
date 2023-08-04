@@ -55,18 +55,6 @@ keymap = (
     ("KP_Add", defaultModifierMask, NO_MODIFIER_MASK,
     "sayAllHandler", 1),
 
-    ("KP_Enter", defaultModifierMask, NO_MODIFIER_MASK,
-    "whereAmIBasicHandler", 1),
-
-    ("KP_Enter", defaultModifierMask, NO_MODIFIER_MASK,
-    "whereAmIDetailedHandler", 2),
-
-    ("KP_Enter", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getTitleHandler", 1),
-
-    ("KP_Enter", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getStatusBarHandler", 2),
-
     ("KP_Delete", defaultModifierMask, NO_MODIFIER_MASK,
     "findHandler"),
 
