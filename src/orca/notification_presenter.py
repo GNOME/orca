@@ -269,7 +269,7 @@ class NotificationListGUI:
         self._model = None
         self._gui = self._create_dialog(title, column_headers, rows)
 
-    def _create_dialog(self, title, columnHeaders, rows):
+    def _create_dialog(self, title, column_headers, rows):
         dialog = Gtk.Dialog(title,
                             None,
                             Gtk.DialogFlags.MODAL,
@@ -289,8 +289,8 @@ class NotificationListGUI:
         tree.set_vexpand(True)
         scrolled_window.add(tree)
 
-        cols = len(columnHeaders) * [GObject.TYPE_STRING]
-        for i, header in enumerate(columnHeaders):
+        cols = len(column_headers) * [GObject.TYPE_STRING]
+        for i, header in enumerate(column_headers):
             cell = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(header, cell, text=i)
             tree.append_column(column)

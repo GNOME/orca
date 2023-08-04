@@ -43,6 +43,7 @@ orca_python_PYTHON = \
 	keynames.py \
 	label_inference.py \
 	laptop_keyboardmap.py \
+	learn_mode_presenter.py \
 	liveregions.py \
 	logger.py \
 	mathsymbols.py \
@@ -54,7 +55,6 @@ orca_python_PYTHON = \
 	orca.py \
 	orca_gtkbuilder.py \
 	orca_gui_find.py \
-	orca_gui_commandlist.py \
 	orca_gui_navlist.py \
 	orca_gui_prefs.py \
 	orca_gui_profile.py \

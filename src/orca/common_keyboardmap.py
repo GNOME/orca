@@ -42,9 +42,6 @@ SHIFT_ALT_MODIFIER_MASK = keybindings.SHIFT_ALT_MODIFIER_MASK
 
 keymap = (
 
-    ("h", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "enterLearnModeHandler", 1),
-
     ("space", defaultModifierMask, ORCA_MODIFIER_MASK,
     "preferencesSettingsHandler"),
 

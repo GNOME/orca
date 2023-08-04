@@ -51,6 +51,7 @@ from . import flat_review_presenter
 from . import formatting
 from . import keybindings
 from . import label_inference
+from . import learn_mode_presenter
 from . import notification_presenter
 from . import object_navigator
 from . import orca_state
@@ -110,6 +111,7 @@ class Script:
         self.dateAndTimePresenter = self.getDateAndTimePresenter()
         self.objectNavigator = self.getObjectNavigator()
         self.whereAmIPresenter = self.getWhereAmIPresenter()
+        self.learnModePresenter = self.getLearnModePresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -248,6 +250,9 @@ class Script:
 
     def getWhereAmIPresenter(self):
         return where_am_i_presenter.getPresenter()
+
+    def getLearnModePresenter(self):
+        return learn_mode_presenter.getPresenter()
 
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most

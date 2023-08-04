@@ -274,6 +274,11 @@ KB_HEADER_KEY_BINDING = _("Key Binding")
 # to, for instance, web browsing.
 KB_GROUP_DEFAULT = C_("keybindings", "Default")
 
+# Translators: This string is a label for the group of Orca commands which
+# are related to its "learn mode". Please use the same translation as done
+# in cmdnames.py
+KB_GROUP_LEARN_MODE = C_("keybindings", "Learn mode")
+
 # Translators: An external braille device has buttons on it that permit the
 # user to create input gestures from the braille device. The braille bindings
 # are what determine the actions Orca will take when the user presses these

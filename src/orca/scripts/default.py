@@ -43,12 +43,10 @@ import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
 import orca.find as find
 import orca.flat_review as flat_review
-import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.orca as orca
-import orca.orca_gui_commandlist as commandlist
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
@@ -203,11 +201,6 @@ class Script(script.Script):
                 Script.processBrailleCutLine,
                 cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
-        self.inputEventHandlers["enterLearnModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.enterLearnMode,
-                cmdnames.ENTER_LEARN_MODE)
-
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
                 orca.quitOrca,
@@ -250,6 +243,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
         self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
+        self.inputEventHandlers.update(self.learnModePresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -361,6 +355,45 @@ class Script(script.Script):
         keyBindings.load(laptop_keyboardmap.keymap, self.inputEventHandlers)
         return keyBindings
 
+    def getExtensionBindings(self):
+        keyBindings = keybindings.KeyBindings()
+
+        bindings = self.notificationPresenter.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        layout = _settingsManager.getSetting('keyboardLayout')
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        bindings = self.flatReviewPresenter.get_bindings(isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.whereAmIPresenter.get_bindings(isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.learnModePresenter.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.speechAndVerbosityManager.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.dateAndTimePresenter.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.objectNavigator.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.bookmarks.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        return keyBindings
+
     def getKeyBindings(self):
         """Defines the key bindings for this script.
 
@@ -381,33 +414,7 @@ class Script(script.Script):
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.notificationPresenter.get_bindings()
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        layout = _settingsManager.getSetting('keyboardLayout')
-        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        bindings = self.flatReviewPresenter.get_bindings(isDesktop)
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        bindings = self.whereAmIPresenter.get_bindings(isDesktop)
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        bindings = self.speechAndVerbosityManager.get_bindings()
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        bindings = self.dateAndTimePresenter.get_bindings()
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        bindings = self.objectNavigator.get_bindings()
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        bindings = self.bookmarks.get_bindings()
+        bindings = self.getExtensionBindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -724,77 +731,6 @@ class Script(script.Script):
         self.presentMessage(messages.BYPASS_MODE_ENABLED)
         orca_state.bypassNextCommand = True
         self.removeKeyGrabs()
-        return True
-
-    def enterLearnMode(self, inputEvent=None):
-        """Turns learn mode on.  The user must press the escape key to exit
-        learn mode.
-
-        Returns True to indicate the input event has been consumed.
-        """
-
-        if orca_state.learnModeEnabled:
-            return True
-
-        self.presentMessage(messages.VERSION)
-        self.speakMessage(messages.LEARN_MODE_START_SPEECH)
-        self.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
-        orca_state.learnModeEnabled = True
-        if orca_state.device is not None:
-            Atspi.Device.grab_keyboard(orca_state.device)
-        return True
-
-    def exitLearnMode(self, inputEvent=None):
-        """Turns learn mode off.
-
-        Returns True to indicate the input event has been consumed.
-        """
-
-        if not orca_state.learnModeEnabled:
-            return False
-
-        if isinstance(inputEvent, input_event.KeyboardEvent) \
-           and not inputEvent.event_string == 'Escape':
-            return False
-
-        self.presentMessage(messages.LEARN_MODE_STOP)
-        orca_state.learnModeEnabled = False
-        if orca_state.device is not None:
-            Atspi.Device.ungrab_keyboard(orca_state.device)
-        return True
-
-    def showHelp(self, inputEvent=None):
-        return orca.helpForOrca()
-
-    def listOrcaShortcuts(self, inputEvent=None):
-        """Shows a simple gui listing Orca's bound commands."""
-
-        if inputEvent is None:
-            inputEvent = orca_state.lastNonModifierKeyEvent
-
-        if not inputEvent or inputEvent.event_string == "F2":
-            bound = self.getDefaultKeyBindings().getBoundBindings()
-            title = messages.shortcutsFoundOrca(len(bound))
-        else:
-            appName = AXObject.get_name(self.app) or messages.APPLICATION_NO_NAME
-            bound = self.getAppKeyBindings().getBoundBindings()
-            bound.extend(self.getToolkitKeyBindings().getBoundBindings())
-            title = messages.shortcutsFoundApp(len(bound), appName)
-
-        if not bound:
-            self.presentMessage(title)
-            return True
-
-        self.exitLearnMode()
-
-        rows = [(kb.handler.function,
-                 kb.handler.description,
-                 kb.asString()) for kb in bound]
-        sorted(rows, key=lambda cmd: cmd[2])
-
-        header1 = guilabels.KB_HEADER_FUNCTION
-        header2 = guilabels.KB_HEADER_KEY_BINDING
-        commandlist.showUI(title, ("", header1, header2), rows, False)
         return True
 
     def findNext(self, inputEvent):
@@ -1945,7 +1881,7 @@ class Script(script.Script):
         orca.setLocusOfFocus(event, None)
         orca.setActiveWindow(None)
         _scriptManager.setActiveScript(None, "Window deactivated")
-        orca_state.learnModeEnabled = False
+        self.learnModePresenter.quit()
 
     def onClipboardContentsChanged(self, *args):
         if self.flatReviewPresenter.is_active():
@@ -2889,9 +2825,8 @@ class Script(script.Script):
             self._sayAllIsInterrupted = False
             self.utilities.clearCachedCommandState()
 
-        if not orca_state.learnModeEnabled:
-            if not event.shouldEcho or event.isOrcaModified():
-                return False
+        if not event.shouldEcho or event.isOrcaModified():
+            return False
 
         role = AXObject.get_role(orca_state.locusOfFocus)
         if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
@@ -2910,10 +2845,6 @@ class Script(script.Script):
         orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
         if event.isCharacterEchoable() and not orcaModifierPressed:
             return False
-        if orca_state.learnModeEnabled:
-            if event.isPrintableKey() and event.getClickCount() == 2:
-                self.phoneticSpellCurrentItem(event.event_string)
-                return True
 
         msg = "DEFAULT: Presenting keyboard event"
         debug.println(debug.LEVEL_INFO, msg, True)

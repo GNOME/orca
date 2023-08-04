@@ -70,11 +70,6 @@ bypassNextCommand = False
 #
 searchQuery = None
 
-# Assists with learn mode (what you enter when you press Insert+F1
-# and exit when you press escape.
-#
-learnModeEnabled = False
-
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None

@@ -2205,6 +2205,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
         iterObjectNav = self._createNode(guilabels.KB_OBJECT_NAVIGATION)
         iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
+        iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
@@ -2216,6 +2217,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             dtKeyBindings = self.script.getDateAndTimePresenter().get_bindings()
             bmKeyBindings = self.script.getBookmarks().get_bindings()
             onKeyBindings = self.script.getObjectNavigator().get_bindings()
+            lmKeyBindings = self.script.getLearnModePresenter().get_bindings()
 
             layout = _settingsManager.getSetting('keyboardLayout')
             isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
@@ -2239,6 +2241,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterDateAndTime)
                     elif bmKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterBookmarks)
+                    elif lmKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterLearnMode)
                     elif not defKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:
@@ -3236,7 +3240,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        orca.helpForOrca(page="preferences")
+        self.script.learnModePresenter.show_help(page="preferences")
 
     def restoreSettings(self):
         """Restore the settings we saved away when opening the preferences
