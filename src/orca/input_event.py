@@ -685,9 +685,6 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
-        if orca_state.learnModeEnabled:
-            return False
-
         script = orca_state.activeScript
         return script and script.utilities.willEchoCharacter(self)
 
@@ -732,6 +729,11 @@ class KeyboardEvent(InputEvent):
         """Returns the object believed to be associated with this key event."""
 
         return self._obj
+
+    def getHandler(self):
+        """Returns the handler associated with this key event."""
+
+        return self._handler
 
     def _getUserHandler(self):
         # TODO - JD: This should go away once plugin support is in place.
@@ -781,20 +783,8 @@ class KeyboardEvent(InputEvent):
         if self._isReleaseForLastNonModifierKeyEvent():
             return scriptConsumes, 'Is release for last non-modifier keyevent'
 
-        if orca_state.learnModeEnabled:
-            if self.event_string == 'Escape':
-                self._consumer = self._script.exitLearnMode
-                return True, 'Exiting Learn Mode'
-
-            if self.event_string == 'F1' and not self.modifiers:
-                self._consumer = self._script.showHelp
-                return True, 'Showing Help'
-
-            if self.event_string in ['F2', 'F3'] and not self.modifiers:
-                self._consumer = self._script.listOrcaShortcuts
-                return True, 'Listing shortcuts'
-
-            self._consumer = self._presentHandler
+        if self._script.learnModePresenter.is_active():
+            self._consumer = self._script.learnModePresenter.handle_event
             return True, 'In Learn Mode'
 
         if self.isModifierKey():
@@ -825,16 +815,10 @@ class KeyboardEvent(InputEvent):
         if self.isPressedKey():
             self._script.presentationInterrupt()
 
-        return self._script.presentKeyboardEvent(self)
-
-    def _presentHandler(self, input_event=None):
-        if not self._handler:
+        if self._script.learnModePresenter.is_active():
             return False
 
-        if self._handler.learnModeEnabled and self._handler.description:
-            self._script.presentMessage(self._handler.description)
-
-        return True
+        return self._script.presentKeyboardEvent(self)
 
     def process(self):
         """Processes this input event."""
@@ -1100,11 +1084,7 @@ class InputEventHandler:
         return (self.function == other.function)
 
     def processInputEvent(self, script, inputEvent):
-        """Processes an input event.  If learnModeEnabled is True,
-        this will merely present the description of the input event via
-        If learnModeEnabled is False, this will call the function bound
-        to this InputEventHandler instance, passing the inputEvent as
-        the sole argument to the function.
+        """Processes an input event.
 
         This function is expected to return True if it consumes the
         event; otherwise it is expected to return False.
@@ -1116,15 +1096,9 @@ class InputEventHandler:
         """
 
         consumed = False
-
-        if orca_state.learnModeEnabled and self._learnModeEnabled:
-            if self.description:
-                script.presentMessage(self.description)
-                consumed = True
-        else:
-            try:
-                consumed = self.function(script, inputEvent)
-            except Exception:
-                debug.printException(debug.LEVEL_SEVERE)
+        try:
+            consumed = self.function(script, inputEvent)
+        except Exception:
+            debug.printException(debug.LEVEL_SEVERE)
 
         return consumed

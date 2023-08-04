@@ -26,7 +26,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import orca
-from orca import orca_state
 from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
@@ -112,7 +111,7 @@ class Script(default.Script):
             self.utilities.updateCachedTextSelection(event.source)
 
     def presentKeyboardEvent(self, event):
-        if orca_state.learnModeEnabled or not event.isPrintableKey():
+        if not event.isPrintableKey():
             return super().presentKeyboardEvent(event)
 
         if event.isPressedKey():

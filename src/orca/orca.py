@@ -46,7 +46,9 @@ import subprocess
 import sys
 
 gi.require_version("Atspi", "2.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
+from gi.repository import Gdk
 
 try:
     from gi.repository.Gio import Settings
@@ -54,23 +56,10 @@ try:
 except Exception:
     a11yAppSettings = None
 
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    gi.require_version("Gtk", "3.0")
-    from gi.repository import Gtk
-
-    gi.require_version("Gdk", "3.0")
-    from gi.repository import Gdk
-except Exception:
-    pass
-
 from . import braille
 from . import debug
 from . import event_manager
+from . import learn_mode_presenter
 from . import logger
 from . import messages
 from . import mouse_review
@@ -88,6 +77,7 @@ from .input_event import BrailleEvent
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
+_learnModePresenter = learn_mode_presenter.getPresenter()
 _logger = logger.getLogger()
 
 def onEnabledChanged(gsetting, key):
@@ -281,7 +271,8 @@ def _processBrailleEvent(event):
     except Exception:
         debug.printException(debug.LEVEL_SEVERE)
 
-    if (not consumed) and orca_state.learnModeEnabled:
+    # TODO - JD: Is this still possible?
+    if not consumed and _learnModePresenter.is_active():
         consumed = True
 
     return consumed
@@ -565,20 +556,6 @@ def showPreferencesGUI(script=None, inputEvent=None):
     script = _scriptManager.getDefaultScript()
     _showPreferencesUI(script, prefs)
 
-    return True
-
-def helpForOrca(script=None, inputEvent=None, page=""):
-    """Show Orca Help window (part of the GNOME Access Guide).
-
-    Returns True to indicate the input event has been consumed.
-    """
-    orca_state.learnModeEnabled = False
-    uri = "help:orca"
-    if page:
-        uri += "?%s" % page
-    Gtk.show_uri(Gdk.Screen.get_default(),
-                 uri,
-                 Gtk.get_current_event_time())
     return True
 
 def addKeyGrab(binding):
