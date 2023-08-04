@@ -400,11 +400,17 @@ def _restoreXmodmap(keyList=[]):
       to restore the entire saved xmodmap.
     """
 
+    msg = "ORCA: Attempting to restore original xmodmap"
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     global _capsLockCleared
     _capsLockCleared = False
     p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
         stdin=subprocess.PIPE, stdout=None, stderr=None)
     p.communicate(_originalXmodmap)
+
+    msg = "ORCA: Original xmodmap restored"
+    debug.println(debug.LEVEL_INFO, msg, True)
 
 def setKeyHandling(new):
     """Toggle use of the new vs. legacy key handling mode.
@@ -770,14 +776,8 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    try:
-        # Requires python 3.8
-        signalString = '(%s)' % signal.strsignal(signum)
-    except Exception:
-        signalString = ''
-
-    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % \
-        (signum, signalString)
+    signalString = '(%s)' % signal.strsignal(signum)
+    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
     debug.println(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
@@ -814,9 +814,17 @@ def shutdownOnSignal(signum, frame):
         die(EXIT_CODE_HANG)
 
 def crashOnSignal(signum, frame):
-    signal.signal(signum, signal.SIG_DFL)
+    signalString = '(%s)' % signal.strsignal(signum)
+    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
+    debug.println(debug.LEVEL_SEVERE, msg, True)
+    debug.printStack(debug.LEVEL_SEVERE)
     _restoreXmodmap(_orcaModifiers)
-    os.kill(os.getpid(), signum)
+    try:
+        orca_state.activeScript.presentationInterrupt()
+        orca_state.activeScript.presentMessage(messages.STOP_ORCA, resetStyles=False)
+    except Exception:
+        pass
+    sys.exit(1)
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
