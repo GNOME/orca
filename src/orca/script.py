@@ -64,6 +64,7 @@ from . import speech_generator
 from . import structural_navigation
 from . import bookmarks
 from . import tutorialgenerator
+from . import where_am_i_presenter
 from .ax_object import AXObject
 
 _eventManager = event_manager.getManager()
@@ -108,6 +109,7 @@ class Script:
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
         self.dateAndTimePresenter = self.getDateAndTimePresenter()
         self.objectNavigator = self.getObjectNavigator()
+        self.whereAmIPresenter = self.getWhereAmIPresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -243,6 +245,9 @@ class Script:
 
     def getSpeechAndVerbosityManager(self):
         return speech_and_verbosity_manager.getManager()
+
+    def getWhereAmIPresenter(self):
+        return where_am_i_presenter.getPresenter()
 
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if we should use structural navigation. Most

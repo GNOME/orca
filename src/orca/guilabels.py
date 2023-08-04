@@ -293,6 +293,13 @@ KB_GROUP_DATE_AND_TIME = _("Date and time")
 KB_OBJECT_NAVIGATION = _("Object navigation")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to presenting information about the current location, such as
+# the title, status bar, and default button of the current window; the
+# name, role, and location of the currently-focused object; the selected
+# text in the currently-focused object; etc.
+KB_GROUP_WHERE_AM_I = _("Object details")
+
+# Translators: This string is a label for the group of Orca commands which
 # do not currently have an associated key binding.
 KB_GROUP_UNBOUND = _("Unbound")
 

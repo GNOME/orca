@@ -57,18 +57,6 @@ keymap = (
     ("semicolon", defaultModifierMask, ORCA_MODIFIER_MASK,
     "sayAllHandler", 1),
 
-    ("Return", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "whereAmIBasicHandler", 1),
-
-    ("Return", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "whereAmIDetailedHandler", 2),
-
-    ("slash", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getTitleHandler", 1),
-    
-    ("slash", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getStatusBarHandler", 2),
-
     ("bracketleft", defaultModifierMask, ORCA_MODIFIER_MASK,
     "findHandler"),
 

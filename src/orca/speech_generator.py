@@ -789,14 +789,6 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def generateLinkInfo(self, obj, **args):
-        result = self._generateLinkInfo(obj, **args)
-        result.extend(self._generatePause(obj, **args))
-        result.append(self._generateSiteDescription(obj, **args))
-        result.extend(self._generatePause(obj, **args))
-        result.append(self._generateFileSize(obj, **args))
-        return result
-
     def _generateLinkInfo(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the protocol of the URI of
@@ -2385,28 +2377,6 @@ class SpeechGenerator(generator.Generator):
             return False
 
         return super()._shouldPresentProgressBarUpdate(obj, **args)
-
-    def _generateDefaultButton(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the default button in a dialog.
-        This method should initially be called with a top-level window.
-        """
-        result = []
-        button = AXUtilities.get_default_button(obj)
-        if AXUtilities.is_sensitive(button):
-            name = self._generateName(button)
-            if name:
-                result.append(messages.DEFAULT_BUTTON_IS % name[0])
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
-
-        return result
-
-    def generateDefaultButton(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the default button of the window
-        containing the object.
-        """
-        return self._generateDefaultButton(obj, **args)
 
     def _generateStatusBar(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

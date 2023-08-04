@@ -655,6 +655,8 @@ class Utilities(script_utilities.Utilities):
 
     def _getCoordinatesForSelectedRange(self, obj):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
+            msg = "SOFFICE: %s does not implement both selection and table" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return (-1, -1), (-1, -1)
 
         first = AXSelection.get_selected_child(obj, 0)
@@ -663,10 +665,20 @@ class Utilities(script_utilities.Utilities):
         lastCoords = self.coordinatesForCell(last)
         return firstCoords, lastCoords
 
+    def getSelectionContainer(self, obj):
+        # Writer implements the selection interface on the document and all its
+        # children. The former is interesting, but interferes with our presentation
+        # of selected text. The latter is just weird.
+        if AXUtilities.is_document_text(obj):
+            return None
+        if AXObject.find_ancestor(obj, AXUtilities.is_document_text):
+            return None
+        return super().getSelectionContainer(obj)
+
     def speakSelectedCellRange(self, obj):
         firstCoords, lastCoords = self._getCoordinatesForSelectedRange(obj)
         if firstCoords == (-1, -1) or lastCoords == (-1, -1):
-            return True
+            return False
 
         self._script.presentationInterrupt()
 

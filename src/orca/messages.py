@@ -488,8 +488,23 @@ CONTAINER_NOT_IN_A = _("Not in a container.")
 CONTAINER_SELECTED_ALL = _("all items selected")
 
 # Translators: The "default" button in a dialog box is the button that gets
-# activated when Enter is pressed anywhere within that dialog box.
+# activated when Enter is pressed anywhere within that dialog box. The string
+# substitution is the name of the button (e.g. "OK" or "Close").
 DEFAULT_BUTTON_IS = _("Default button is %s")
+
+# Translators: The "default" button in a dialog box is the button that gets
+# activated when Enter is pressed anywhere within that dialog box. This
+# message is presented when the default button was found but is insensitive /
+# grayed out / cannot be activated. The string substitution is the name of
+# the button (e.g. "OK" or "Close"). When translating "Grayed," please use
+# the same word used for the string in object_properties.py.
+DEFAULT_BUTTON_IS_GRAYED = _("Default button is %s. Grayed")
+
+# Translators: The "default" button in a dialog box is the button that gets
+# activated when Enter is pressed anywhere within that dialog box. Orca has
+# a command to present the default button. This is the message Orca will
+# present if it could not find the default button.
+DEFAULT_BUTTON_NOT_FOUND = _("Default button not found")
 
 # Translators: This string is part of the presentation of an item that includes
 # one or several consecutive subscripted characters. For example, 'X' followed
@@ -502,6 +517,11 @@ DIGITS_SUBSCRIPT =  _(" subscript %s")
 # by 'superscript 2' followed by 'superscript 3' should be presented to the user
 # as 'X superscript 23'.
 DIGITS_SUPERSCRIPT =  _(" superscript %s")
+
+# Translators: this message is presented when the user tries to perform a command
+# specific to dialog boxes, such as presenting the default button, but is not in
+# a dialog.
+DIALOG_NOT_IN_A = _("Not in a dialog")
 
 # Translators: when the user selects (highlights) or unselects text in a
 # document, Orca will speak information about what they have selected or

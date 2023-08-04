@@ -2204,7 +2204,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterDateAndTime = self._createNode(guilabels.KB_GROUP_DATE_AND_TIME)
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
         iterObjectNav = self._createNode(guilabels.KB_OBJECT_NAVIGATION)
-
+        iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
@@ -2220,6 +2220,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             layout = _settingsManager.getSetting('keyboardLayout')
             isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
             frKeyBindings = self.script.getFlatReviewPresenter().get_bindings(isDesktop)
+            waiKeyBindings = self.script.getWhereAmIPresenter().get_bindings(isDesktop)
+
             for kb in allKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):
                     handl = self.script.getInputEventHandlerKey(kb.handler)
@@ -2229,6 +2231,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterObjectNav)
                     elif frKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterFlatReviewPresenter)
+                    elif waiKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterWhereAmIPresenter)
                     elif svKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterSpeechAndVerbosity)
                     elif dtKeyBindings.hasKeyBinding(kb, "description"):
