@@ -41,12 +41,12 @@ from gi.repository import GLib
 from . import brltablenames
 from . import cmdnames
 from . import debug
-from . import eventsynthesizer
 from . import logger
 from . import orca_state
 from . import settings
 from . import settings_manager
 
+from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .orca_platform import tablesdir
 
@@ -534,7 +534,7 @@ class Component(Region):
         # don't have any actions but we want to be able to select them with
         # the cursor routing key.
         try:
-            result = eventsynthesizer.clickObject(self.accessible, 1)
+            result = AXEventSynthesizer.click_object(self.accessible, 1)
         except Exception as e:
             msg = "ERROR: Could not process routing key: %s" % e
             debug.println(debug.LEVEL_INFO, msg, True)

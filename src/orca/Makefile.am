@@ -9,6 +9,7 @@ orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
 	ax_collection.py \
+	ax_event_synthesizer.py \
 	ax_object.py \
 	ax_selection.py \
 	ax_utilities.py \
@@ -31,7 +32,6 @@ orca_python_PYTHON = \
 	debug.py \
 	desktop_keyboardmap.py \
 	event_manager.py \
-	eventsynthesizer.py \
 	find.py \
 	flat_review.py \
 	flat_review_presenter.py \

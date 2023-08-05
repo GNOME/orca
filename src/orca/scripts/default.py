@@ -40,7 +40,6 @@ import time
 import orca.braille as braille
 import orca.cmdnames as cmdnames
 import orca.debug as debug
-import orca.eventsynthesizer as eventsynthesizer
 import orca.find as find
 import orca.flat_review as flat_review
 import orca.input_event as input_event
@@ -957,8 +956,8 @@ class Script(script.Script):
             self.flatReviewPresenter.route_pointer_to_object(script)
             return True
 
-        if eventsynthesizer.routeToCharacter(orca_state.locusOfFocus) \
-           or eventsynthesizer.routeToObject(orca_state.locusOfFocus):
+        if self.eventSynthesizer.route_to_character(orca_state.locusOfFocus) \
+           or self.eventSynthesizer.route_to_object(orca_state.locusOfFocus):
             self.presentMessage(messages.MOUSE_MOVED_SUCCESS)
             return True
 
@@ -972,18 +971,18 @@ class Script(script.Script):
 
         if self.flatReviewPresenter.is_active():
             obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
-            if eventsynthesizer.tryAllClickableActions(obj):
+            if self.eventSynthesizer.try_all_clickable_actions(obj):
                 return True
             return self.flatReviewPresenter.left_click_on_object()
 
-        if eventsynthesizer.tryAllClickableActions(orca_state.locusOfFocus):
+        if self.eventSynthesizer.try_all_clickable_actions(orca_state.locusOfFocus):
             return True
 
         if self.utilities.queryNonEmptyText(orca_state.locusOfFocus):
-            if eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 1):
+            if self.eventSynthesizer.click_character(orca_state.locusOfFocus, 1):
                 return True
 
-        if eventsynthesizer.clickObject(orca_state.locusOfFocus, 1):
+        if self.eventSynthesizer.click_object(orca_state.locusOfFocus, 1):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -998,10 +997,10 @@ class Script(script.Script):
             self.flatReviewPresenter.right_click_on_object(script)
             return True
 
-        if eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 3):
+        if self.eventSynthesizer.click_character(orca_state.locusOfFocus, 3):
             return True
 
-        if eventsynthesizer.clickObject(orca_state.locusOfFocus, 3):
+        if self.eventSynthesizer.click_object(orca_state.locusOfFocus, 3):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -2630,7 +2629,7 @@ class Script(script.Script):
                 msg = "DEFAULT %s" % context
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self._sayAllContexts.append(context)
-                eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
+                self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)
                 yield [context, voice]
 
             moreLines = False

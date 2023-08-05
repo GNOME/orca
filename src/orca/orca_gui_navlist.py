@@ -30,9 +30,9 @@ __license__   = "LGPL"
 from gi.repository import GObject, Gdk, Gtk
 
 from . import debug
-from . import eventsynthesizer
 from . import guilabels
 from . import orca_state
+from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 
 class OrcaNavListGUI:
@@ -152,10 +152,10 @@ class OrcaNavListGUI:
             return
 
         self._script.utilities.setCaretPosition(obj, offset)
-        if not eventsynthesizer.tryAllClickableActions(obj):
+        if not AXEventSynthesizer.try_all_clickable_actions(obj):
             msg = "INFO: Attempting a synthesized click on %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            eventsynthesizer.clickObject(obj)
+            AXEventSynthesizer.click_object(obj)
 
     def _getSelectedAccessibleAndOffset(self):
         if not self._tree:

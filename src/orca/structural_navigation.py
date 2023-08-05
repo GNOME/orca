@@ -33,7 +33,6 @@ from gi.repository import Atspi
 
 from . import cmdnames
 from . import debug
-from . import eventsynthesizer
 from . import guilabels
 from . import input_event
 from . import keybindings
@@ -44,6 +43,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_collection import AXCollection
+from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
@@ -1204,7 +1204,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        eventsynthesizer.scrollToTopEdge(obj)
+        AXEventSynthesizer.scroll_to_top_edge(obj)
         self._script.presentObject(obj, offset=offset, priorObj=priorObj, interrupt=True)
 
     def _presentWithSayAll(self, obj, offset):

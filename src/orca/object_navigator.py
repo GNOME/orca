@@ -28,12 +28,12 @@ __license__   = "LGPL"
 
 from . import cmdnames
 from . import debug
-from . import eventsynthesizer
 from . import input_event
 from . import keybindings
 from . import messages
 from . import orca
 from . import orca_state
+from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -307,10 +307,10 @@ class ObjectNavigator:
 
     def perform_action(self, script, event=None):
         """Attempts to click on the current focus."""
-        if eventsynthesizer.tryAllClickableActions(self._navigator_focus):
+        if AXEventSynthesizer.try_all_clickable_actions(self._navigator_focus):
             return True
 
-        eventsynthesizer.clickObject(self._navigator_focus, 1)
+        AXEventSynthesizer.click_object(self._navigator_focus, 1)
         return True
 
 
