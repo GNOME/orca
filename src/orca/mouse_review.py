@@ -42,7 +42,10 @@ try:
 except Exception:
     _mouseReviewCapable = False
 
+from . import cmdnames
 from . import debug
+from . import keybindings
+from . import input_event
 from . import messages
 from . import orca
 from . import orca_state
@@ -342,6 +345,8 @@ class MouseReviewer:
         self._handlerIds = {}
         self._eventListener = Atspi.EventListener.new(self._listener)
         self.inMouseEvent = False
+        self._handlers = self._setup_handlers()
+        self._bindings = self._setup_bindings()
 
         if not _mouseReviewCapable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
@@ -370,6 +375,42 @@ class MouseReviewer:
             return
 
         self.activate()
+
+    def get_bindings(self):
+        """Returns the mouse-review keybindings."""
+
+        return self._bindings
+
+    def get_handlers(self):
+        """Returns the mouse-review handlers."""
+
+        return self._handlers
+
+    def _setup_handlers(self):
+        """Sets up and returns the mouse-review input event handlers."""
+
+        handlers = {}
+
+        handlers["toggleMouseReviewHandler"] = \
+            input_event.InputEventHandler(
+                self.toggle,
+                cmdnames.MOUSE_REVIEW_TOGGLE)
+
+        return handlers
+
+    def _setup_bindings(self):
+        """Sets up and returns the mouse-review key bindings."""
+
+        bindings = keybindings.KeyBindings()
+
+        bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers.get("toggleMouseReviewHandler")))
+
+        return bindings
 
     def activate(self):
         """Activates mouse review."""
@@ -629,4 +670,6 @@ class MouseReviewer:
         debug.println(debug.LEVEL_INFO, msg, False)
 
 
-reviewer = MouseReviewer()
+_reviewer = MouseReviewer()
+def getReviewer():
+    return _reviewer

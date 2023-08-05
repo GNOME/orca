@@ -2198,14 +2198,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterApp = self._createNode(appName)
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
-        iterNotificationPresenter = self._createNode(guilabels.NOTIFICATIONS_KB_GROUP)
+        iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
         iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
         iterDateAndTime = self._createNode(guilabels.KB_GROUP_DATE_AND_TIME)
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
-        iterObjectNav = self._createNode(guilabels.KB_OBJECT_NAVIGATION)
+        iterObjectNav = self._createNode(guilabels.KB_GROUP_OBJECT_NAVIGATION)
         iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
         iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
+        iterMouseReviewer = self._createNode(guilabels.KB_GROUP_MOUSE_REVIEW)
 
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
@@ -2218,6 +2219,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             bmKeyBindings = self.script.getBookmarks().get_bindings()
             onKeyBindings = self.script.getObjectNavigator().get_bindings()
             lmKeyBindings = self.script.getLearnModePresenter().get_bindings()
+            mrKeyBindings = self.script.getMouseReviewer().get_bindings()
 
             layout = _settingsManager.getSetting('keyboardLayout')
             isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
@@ -2243,6 +2245,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterBookmarks)
                     elif lmKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterLearnMode)
+                    elif mrKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterMouseReviewer)
                     elif not defKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:

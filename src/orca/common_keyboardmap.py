@@ -71,8 +71,5 @@ keymap = (
     "panBrailleRightHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleMouseReviewHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "shutdownHandler"),
 )
