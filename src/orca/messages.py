@@ -1846,6 +1846,13 @@ NESTING_LEVEL = _("Nesting level %d")
 # such as a pop-up menu, we want to present that fact.
 NEW_ITEM_ADDED = _("New item has been added")
 
+# Translators: Orca has a command which presents a menu with accessible actions
+# that can be performed on the current object. This is the message that Orca
+# presents when the object has no actions. The string substitution will be the
+# name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
+# localized rolename if it does not.
+NO_ACTIONS_FOUND_ON = _("No actions found on: %s")
+
 # Translators: This is intended to be a short phrase to present the fact that no
 # no accessible component has keyboard focus.
 NO_FOCUS =  _("No focus")

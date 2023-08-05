@@ -44,6 +44,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import ax_event_synthesizer
+from . import action_presenter
 from . import braille_generator
 from . import date_and_time_presenter
 from . import debug
@@ -116,6 +117,7 @@ class Script:
         self.learnModePresenter = self.getLearnModePresenter()
         self.mouseReviewer = self.getMouseReviewer()
         self.eventSynthesizer = self.getEventSynthesizer()
+        self.actionPresenter = self.getActionPresenter()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -257,6 +259,9 @@ class Script:
 
     def getLearnModePresenter(self):
         return learn_mode_presenter.getPresenter()
+
+    def getActionPresenter(self):
+        return action_presenter.getPresenter()
 
     def getMouseReviewer(self):
         return mouse_review.getReviewer()

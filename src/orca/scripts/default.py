@@ -238,6 +238,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
         self.inputEventHandlers.update(self.learnModePresenter.get_handlers())
         self.inputEventHandlers.update(self.mouseReviewer.get_handlers())
+        self.inputEventHandlers.update(self.actionPresenter.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -387,6 +388,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.mouseReviewer.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.actionPresenter.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
