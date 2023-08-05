@@ -34,7 +34,6 @@ from orca import caret_navigation
 from orca import cmdnames
 from orca import keybindings
 from orca import debug
-from orca import eventsynthesizer
 from orca import guilabels
 from orca import input_event
 from orca import liveregions
@@ -668,7 +667,7 @@ class Script(default.Script):
                     msg = "WEB %s" % context
                     debug.println(debug.LEVEL_INFO, msg, True)
                     self._sayAllContexts.append(context)
-                    eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
+                    self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)
                     yield [context, voices[i]]
 
             lastObj, lastOffset = contents[-1][0], contents[-1][2]
@@ -1241,7 +1240,7 @@ class Script(default.Script):
 
         if self._inMouseOverObject:
             x, y = self.oldMouseCoordinates
-            eventsynthesizer.routeToPoint(x, y)
+            self.eventSynthesizer.route_to_point(x, y)
             self.restorePreMouseOverContext()
             return
 

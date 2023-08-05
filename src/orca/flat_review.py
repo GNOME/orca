@@ -34,9 +34,9 @@ import re
 
 from . import braille
 from . import debug
-from . import eventsynthesizer
 from . import orca_state
 from . import settings
+from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -917,16 +917,16 @@ class Context:
         if x < 0 or y < 0:
             return False
 
-        return eventsynthesizer.routeToPoint(x, y)
+        return AXEventSynthesizer.route_to_point(x, y)
 
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
 
         x, y = self._getClickPoint()
-        if x >= 0 and y >= 0 and eventsynthesizer.clickPoint(x, y, button):
+        if x >= 0 and y >= 0 and AXEventSynthesizer.click_point(x, y, button):
             return True
 
-        if eventsynthesizer.clickObject(self.getCurrentAccessible(), button):
+        if AXEventSynthesizer.click_object(self.getCurrentAccessible(), button):
             return True
 
         return False
