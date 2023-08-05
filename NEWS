@@ -1,3 +1,111 @@
+45.alpha - 5 August 2023
+
+NOTE: A beta release will follow in a few days, hopefully including all
+of the translations that are in master but never made it to the gnome-45
+branch.
+
+New and Modified Features:
+
+* Object Navigator: This allows the user to navigate through a hierarchy
+  of UI objects. Bindings:
+  - Ctrl+Orca+Up/Down for navigating between parent/child
+  - Ctrl+Orca+Left/Right for navigating among siblings
+  - Ctrl+Orca+Return for performing a click
+  - Ctrl+Orca+S to toggle the simplification of the object hierarchy
+
+* Flat Review can now by restricted to the current object of interest to
+  eliminate "noise" from irrelevant objects.
+  Binding: Currently unbound
+
+* Flat Review now has a command that displays the entire contents being
+  reviewed in an editable text view, making it easier to copy and paste
+  the contents of terminals, dialogs, etc.
+  Binding: Currently unbound
+
+* Action Presenter: A popup menu for performing accessible actions on an
+  object, such as click, expand/collapse, press. This should make it
+  easier to interact with applications with poor keyboard navigability.
+  Binding: Orca+Shift+A
+
+* The Notification List feature was re-written. It now uses an actual
+  Gtk list rather than an off-screen one. The review announcements now
+  include a timestamp and the dialog allows you to clear the history.
+
+* Preferences Dialog and Shortcuts List are now grouped based on feature,
+  making it far easier to discover and bind/rebind commands of interest.
+
+* The Structural Navigation command to navigate among form fields was
+  remapped from Orca+Tab/Orca+Shift+Tab to F/Shift+F. A new command was
+  also added to navigate among iframes, which is currently unbound.
+
+* Added a command to present the default button. Binding: Orca+E.
+
+* Modify Orca's left-click functionality to prefer actions which are
+  associated with performing a left click (e.g. click, press, jump,
+  open) and only attempt to synthesize a click as a last resort.
+
+Bug Fixes and Other Improvements:
+
+* Added the ability to temporarily suspend registration for accessibility
+  events which can greatly improve performance at times event floods are
+  likely, such as window creation/destruction and activation/deactivation.
+
+* Started preferring AtspiCollection over child iteration to locate
+  descendants in the accessibility tree. The performance improvement can
+  be up to 10 times faster. We will continue making changes in this area
+  between now and the stable release.
+
+* Started relying on speech-dispatcher for character presentation rather
+  than our own character names dictionary, which we were not always using.
+  This should cause Orca to always speak the character name in the same
+  way.
+
+* Interrupt speech conditionally on focus changes. This is needed for
+  Gtk 4 on Wayland because we currently do not get notifications for
+  input events, which had been our most reliable hint to interrupt speech.
+  The heuristics to identify when we should not interrupt speech are
+  still being refined, but hopefully this will make the user experience
+  a bit more tolerable until a solution is agreed upon and implemented.
+  See https://github.com/flatpak/xdg-desktop-portal/issues/1046 for more
+  information.
+
+* A number of improvements to reduce some lagginess and chattiness in
+  certain web apps.
+
+* Added logic to filter out windows which claim to be active but really
+  aren't, including descendants of mutter-x11-frames, the desktop frame
+  of some window environments, and certain Electron apps.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Bruce Cowan
+  hu              Hungarian                 Attila Hammer
+  it              Italian                   Gianvito Cavasoli
+  ka              Georgian                  Ekaterine Papava
+
+=========
+
+44.1 - 25 May 2023
+
+Web:
+
+* Support aria-disabled on application, tab, group, and focusable
+  separator/splitter
+
+* Fix bug in identification of inline iframes
+
+General:
+
+* Improve performance by checking for duplicate object events
+
+* Filter duplicate events when checking for double presses of the
+  orca modifier
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  it              Italian                   Gianvito Cavasoli
+
+
 44.0 - 24 March 2023
 
 New and updated translations (THANKS EVERYONE!!!):
