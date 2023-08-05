@@ -3644,9 +3644,10 @@ class Utilities:
         }
 
         matchingRoles = rolemap.get(AXObject.get_role(obj))
-
         def isMatch(x):
-            return AXObject.supports_selection(x) and AXObject.get_role(x) in matchingRoles
+            if matchingRoles and AXObject.get_role(x) not in matchingRoles:
+                return False
+            return AXObject.supports_selection(x)
 
         return AXObject.find_ancestor(obj, isMatch)
 
