@@ -635,6 +635,22 @@ FLAT_REVIEW_START = _("Entering flat review.")
 # let the user know he/she just entered flat review.
 FLAT_REVIEW_STOP = _("Leaving flat review.")
 
+# Translators: the 'flat review' feature of Orca allows the blind user to
+# explore the text in a window in a 2D fashion.  That is, Orca treats all
+# the text from all objects in a window (e.g., buttons, labels, etc.) as a
+# sequence of words in a sequence of lines.  This message is presented to
+# let the user know that flat review is being restricted to the current
+# object of interest.
+FLAT_REVIEW_RESTRICTED = _("Flat review restricted to the current object")
+
+# Translators: the 'flat review' feature of Orca allows the blind user to
+# explore the text in a window in a 2D fashion.  That is, Orca treats all
+# the text from all objects in a window (e.g., buttons, labels, etc.) as a
+# sequence of words in a sequence of lines.  This message is presented to
+# let the user know that flat review is unrestricted,
+# that is, the entire window can be explored.
+FLAT_REVIEW_UNRESTRICTED = _("Flat review unrestricted")
+
 # Translators: this means a particular cell in a spreadsheet has a formula
 # (e.g., "=sum(a1:d1)")
 HAS_FORMULA = _("has formula")

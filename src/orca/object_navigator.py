@@ -214,8 +214,9 @@ class ObjectNavigator:
     def update(self):
         """Updates the navigator focus to Orca's object of interest."""
 
-        obj = orca.getActiveModeAndObjectOfInterest()[1] or orca_state.locusOfFocus
-        if self._last_locus_of_focus == obj:
+        mode, region = orca.getActiveModeAndObjectOfInterest()
+        obj = region or orca_state.locusOfFocus
+        if self._last_locus_of_focus == obj or (region is None and mode == orca.FLAT_REVIEW): # don't update on a None accessible from flat review
             return
 
         self._navigator_focus = obj

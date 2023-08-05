@@ -472,7 +472,7 @@ class Context:
     WRAP_TOP_BOTTOM = 1 << 1
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
 
-    def __init__(self, script):
+    def __init__(self, script, root=None):
         """Create a new Context for script."""
 
         self.script = script
@@ -490,7 +490,12 @@ class Context:
         self.bounds = 0, 0, 0, 0
 
         frame, dialog = script.utilities.frameAndDialog(self.focusObj)
-        self.topLevel = dialog or frame
+        if root is not None:
+            self.topLevel = root
+            msg = "FLAT REVIEW: Restricting flat review to %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            self.topLevel = dialog or frame
         msg = "FLAT REVIEW: Frame: %s Dialog: %s. Top level: %s" % (frame, dialog, self.topLevel)
         debug.println(debug.LEVEL_INFO, msg, True)
 
