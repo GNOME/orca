@@ -38,6 +38,7 @@ orca_python_PYTHON = \
 	formatting.py \
 	generator.py \
 	guilabels.py \
+	highlighter.py \
 	input_event.py \
 	keybindings.py \
 	keynames.py \
