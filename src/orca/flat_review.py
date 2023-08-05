@@ -117,7 +117,11 @@ class Word:
         for i, char in enumerate(self.string):
             start = i + self.startOffset
             if text:
-                extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
+                try:
+                    extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
+                except Exception as e:
+                    msg = "FLAT REVIEW: Exception in getRangeExtents: %s" % e
+                    debug.println(debug.LEVEL_INFO, msg, True)
             chars.append(Char(self, i, start, char, *extents))
 
         return chars
