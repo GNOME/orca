@@ -1699,7 +1699,7 @@ class StructuralNavigation:
             [obj, characterOffset] = self._getCaretPosition(obj)
             obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
-        elif arg is not None:
+        elif arg is None:
             full = messages.NO_MORE_HEADINGS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
