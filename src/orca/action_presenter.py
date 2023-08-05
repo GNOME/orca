@@ -105,7 +105,12 @@ class ActionPresenter:
 
         actions = {}
         for i in range(AXObject.get_n_actions(obj)):
-            actions[AXObject.get_action_name(obj, i)] = AXObject.get_action_description(obj, i)
+            name = AXObject.get_action_name(obj, i)
+            description = AXObject.get_action_description(obj, i)
+            msg = "ActionPresenter: Action %i on %s: '%s' (localized description: '%s')" \
+                % (i, obj, name, description)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            actions[name] = description or name
 
         if not actions.items():
             name = AXObject.get_name(obj) or script.speechGenerator.getLocalizedRoleName(obj)
