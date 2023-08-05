@@ -787,8 +787,8 @@ class Script(script.Script):
 
         if self.flatReviewPresenter.is_active():
             if self.isBrailleBeginningShowing():
-                self.flatReviewPresenter.go_start_of_line()
-                self.flatReviewPresenter.go_previous_character(inputEvent)
+                self.flatReviewPresenter.go_start_of_line(self, inputEvent)
+                self.flatReviewPresenter.go_previous_character(self, inputEvent)
             else:
                 self.panBrailleInDirection(panAmount, panToLeft=True)
 
@@ -859,10 +859,10 @@ class Script(script.Script):
 
         if self.flatReviewPresenter.is_active():
             if self.isBrailleEndShowing():
-                self.flatReviewPresenter.go_end_of_line()
+                self.flatReviewPresenter.go_end_of_line(self, inputEvent)
                 # Reviewing the next character also updates the braille output
                 # and refreshes the display.
-                self.flatReviewPresenter.go_next_character(input_event)
+                self.flatReviewPresenter.go_next_character(self, inputEvent)
                 return
             self.panBrailleInDirection(panAmount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
@@ -958,7 +958,7 @@ class Script(script.Script):
         self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
         if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.route_pointer_to_object(script)
+            self.flatReviewPresenter.route_pointer_to_object(self, inputEvent)
             return True
 
         if self.eventSynthesizer.route_to_character(orca_state.locusOfFocus) \
@@ -978,7 +978,7 @@ class Script(script.Script):
             obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
             if self.eventSynthesizer.try_all_clickable_actions(obj):
                 return True
-            return self.flatReviewPresenter.left_click_on_object()
+            return self.flatReviewPresenter.left_click_on_object(self, inputEvent)
 
         if self.eventSynthesizer.try_all_clickable_actions(orca_state.locusOfFocus):
             return True
@@ -999,7 +999,7 @@ class Script(script.Script):
         """Performs a right mouse button click on the current item."""
 
         if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.right_click_on_object(script)
+            self.flatReviewPresenter.right_click_on_object(self, inputEvent)
             return True
 
         if self.eventSynthesizer.click_character(orca_state.locusOfFocus, 3):
@@ -2469,7 +2469,7 @@ class Script(script.Script):
         def isTextOrComponent(x):
             return isinstance(x, (braille.ReviewText, braille.ReviewComponent))
 
-        regions = self.flatReviewPresenter.get_braille_regions()[0]
+        regions = self.flatReviewPresenter.get_braille_regions(self)[0]
         regions = list(filter(isTextOrComponent, regions))
         msg = "DEFAULT: Text/Component regions on line:\n%s" % "\n".join(map(str, regions))
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -2505,7 +2505,8 @@ class Script(script.Script):
         if word:
             msg = "DEFAULT: Setting start of display to %s, %i" % (str(word), charOffset)
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.flatReviewContext.setCurrent(
+            context = self.getFlatReviewContext()
+            context.setCurrent(
                 word.zone.line.index,
                 word.zone.index,
                 word.index,
@@ -2513,7 +2514,8 @@ class Script(script.Script):
         else:
             msg = "DEFAULT: Setting start of display to %s" % region.zone
             debug.println(debug.LEVEL_INFO, msg, True)
-            self.flatReviewContext.setCurrent(
+            context = self.getFlatReviewContext()
+            context.setCurrent(
                 region.zone.line.index,
                 region.zone.index,
                 0, # word index
