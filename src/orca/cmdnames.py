@@ -108,6 +108,10 @@ PRESENT_TITLE = _("Present the title bar")
 # the "OK" button.
 SHOW_FIND_GUI = _("Open the Find dialog")
 
+# Translators: Orca has a command which presents a menu with accessible actions
+# that can be performed on the current object. This is the name of that command.
+SHOW_ACTIONS_MENU = _("Show actions menu")
+
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find
 # the "OK" button. This string is used for finding the next occurrence of a

@@ -226,6 +226,10 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
             items += len(bound)
 
+            bound = script.getActionPresenter().get_bindings().getBoundBindings()
+            bindings[guilabels.KB_GROUP_ACTIONS] = bound
+            items += len(bound)
+
             title = messages.shortcutsFoundOrca(items)
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
