@@ -132,6 +132,14 @@ TOGGLE_FLAT_REVIEW = _("Enter and exit flat review mode")
 # the text from all objects in a window (e.g., buttons, labels, etc.) as a
 # sequence of words in a sequence of lines.  The flat review feature allows
 # the user to explore this text by the {previous,next} {line,word,character}.
+# This switch allows the user to restrict the flat review function to a specific object.
+TOGGLE_RESTRICT_FLAT_REVIEW = _("Toggle restricting flat review to the current object")
+
+# Translators: the 'flat review' feature of Orca allows the blind user to
+# explore the text in a window in a 2D fashion.  That is, Orca treats all
+# the text from all objects in a window (e.g., buttons, labels, etc.) as a
+# sequence of words in a sequence of lines.  The flat review feature allows
+# the user to explore this text by the {previous,next} {line,word,character}.
 # The home position is the beginning of the content in the window.
 REVIEW_HOME = _("Move flat review to the home position")
 

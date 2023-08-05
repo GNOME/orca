@@ -53,6 +53,7 @@ class FlatReviewPresenter:
     def __init__(self):
         self._context = None
         self._current_contents = ""
+        self._restrict = False
         self._handlers = self._setup_handlers()
         self._desktop_bindings = self._setup_desktop_bindings()
         self._laptop_bindings = self._setup_laptop_bindings()
@@ -71,7 +72,12 @@ class FlatReviewPresenter:
             msg = "FLAT REVIEW PRESENTER: Creating new context"
             debug.println(debug.LEVEL_INFO, msg, True)
 
-            self._context = flat_review.Context(script)
+            if self._restrict:
+                mode, obj = orca.getActiveModeAndObjectOfInterest()
+                self._context = flat_review.Context(script, root=obj)
+            else:
+                self._context = flat_review.Context(script)
+
             orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
             if script is not None:
                 script.justEnteredFlatReviewMode = True
@@ -81,6 +87,7 @@ class FlatReviewPresenter:
         msg = "FLAT REVIEW PRESENTER: Using existing context"
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        # If we are in unrestricted mode, update the context as below.
         # If the context already exists, but the active mode is not flat review, update
         # the flat review location to that of the object of interest -- if the object of
         # interest is in the flat review context (which means it's on screen). In some
@@ -91,11 +98,18 @@ class FlatReviewPresenter:
         # present the text at the location of the object of interest.
         mode, obj = orca.getActiveModeAndObjectOfInterest()
         obj = obj or orca_state.locusOfFocus
-        if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible():
+        if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
+           and not self._restrict:
             msg = "FLAT REVIEW PRESENTER: Attempting to update location from %s to %s" \
                 % (self._context.getCurrentAccessible(), obj)
             debug.println(debug.LEVEL_INFO, msg, True)
             self._context.setCurrentToZoneWithObject(obj)
+
+        # If we are restricting, and the current mode is not flat review, calculate a new context
+        if self._restrict and mode != orca.FLAT_REVIEW:
+            msg = "FLAT REVIEW PRESENTER: Creating new restricted context."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._context = flat_review.Context(script, obj)
 
         return self._context
 
@@ -271,6 +285,11 @@ class FlatReviewPresenter:
             input_event.InputEventHandler(
                 self.say_all,
                 cmdnames.SAY_ALL_FLAT_REVIEW)
+
+        handlers["flatReviewToggleRestrictHandler"] = \
+            input_event.InputEventHandler(
+                self.toggle_restrict,
+                cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW)
 
         return handlers
 
@@ -471,6 +490,13 @@ class FlatReviewPresenter:
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewAppendHandler")))
 
+        bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers.get("flatReviewToggleRestrictHandler")))
+
         return bindings
 
     def _setup_laptop_bindings(self):
@@ -669,6 +695,13 @@ class FlatReviewPresenter:
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewAppendHandler")))
+
+        bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers.get("flatReviewToggleRestrictHandler")))
 
         return bindings
 
@@ -992,6 +1025,22 @@ class FlatReviewPresenter:
 
         script.utilities.appendTextToClipboard(self._current_contents.rstrip("\n"))
         script.presentMessage(messages.FLAT_REVIEW_APPENDED)
+        return True
+
+    def toggle_restrict(self, script, event=None):
+        """ Toggles the restricting of flat review to the current object. """
+
+
+        self._restrict = not self._restrict
+        if self._restrict:
+            script.presentMessage(messages.FLAT_REVIEW_RESTRICTED)
+        else:
+            script.presentMessage(messages.FLAT_REVIEW_UNRESTRICTED)
+        if self.is_active():
+            # Reset the context
+            self._context = None
+            self.start()
+
         return True
 
     def _line_presentation(self, script, event, speech_type=1):
