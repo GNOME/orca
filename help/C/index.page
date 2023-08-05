@@ -3,8 +3,9 @@
     type="guide"
     id="index">
   <info>
-    <title type="text">Orca Screen Reader</title>
-    <title type="link">Introduction to the <app>Orca</app> Screen Reader</title>
+    <title type="text"><app>Orca</app> Screen Reader</title>
+    <title type="link" role="trail"><app>Orca</app> Screen Reader</title>
+    <title type="link"><app>Orca</app> Screen Reader</title>
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>
@@ -19,10 +20,8 @@
   </info>
 
   <title>
-    <media type="image" mime="image/png" src="figures/orca-logo.png" its:translate="no">
-      <span its:translate="yes"><app>Orca</app>'s logo</span>
-    </media>
-    <app>Orca</app> Screen Reader
+    <media type="image" width="48px" height="48px" its:translate="no"
+    src="figures/orca-logo.svg" /> <app>Orca</app> Screen Reader
   </title>
   <note style="important">
     <title>Before You Begin</title>

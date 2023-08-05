@@ -2,7 +2,7 @@
 
 HELP_ID = orca
 HELP_MEDIA = \
-	figures/orca-logo.png
+	figures/orca-logo.svg
 
 HELP_FILES = \
 	commands_bookmarks.page \
