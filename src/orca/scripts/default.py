@@ -56,7 +56,6 @@ import orca.settings_manager as settings_manager
 import orca.sound as sound
 import orca.speech as speech
 import orca.speechserver as speechserver
-import orca.mouse_review as mouse_review
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -226,11 +225,6 @@ class Script(script.Script):
                 Script.cycleDebugLevel,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
-        self.inputEventHandlers["toggleMouseReviewHandler"] = \
-            input_event.InputEventHandler(
-                mouse_review.reviewer.toggle,
-                cmdnames.MOUSE_REVIEW_TOGGLE)
-
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(
                 Script.bypassNextCommand,
@@ -244,6 +238,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
         self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
         self.inputEventHandlers.update(self.learnModePresenter.get_handlers())
+        self.inputEventHandlers.update(self.mouseReviewer.get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
@@ -389,6 +384,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.bookmarks.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.mouseReviewer.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -1495,7 +1494,7 @@ class Script(script.Script):
             # TODO - JD: We can potentially do some automatic reading here.
             self.flatReviewPresenter.quit()
 
-        mouseReviewItem = mouse_review.reviewer.getCurrentItem()
+        mouseReviewItem = self.mouseReviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(event.source)
         for child in selectedChildren:
             if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == child):

@@ -294,8 +294,14 @@ KB_GROUP_BOOKMARKS = _("Bookmarks")
 KB_GROUP_DATE_AND_TIME = _("Date and time")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to presenting the object under the mouse pointer in speech
+# and/or braille. The translation should be consistent with the string
+# used in cmdnames.py.
+KB_GROUP_MOUSE_REVIEW = _("Mouse review")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to object navigation.
-KB_OBJECT_NAVIGATION = _("Object navigation")
+KB_GROUP_OBJECT_NAVIGATION = _("Object navigation")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to presenting information about the current location, such as
@@ -359,7 +365,7 @@ NOTIFICATIONS_RECEIVED_TIME = C_("notification presenter", "Received")
 
 # Translators: This string is a label for the group of Orca commands which
 # are associated with presenting notifications.
-NOTIFICATIONS_KB_GROUP = _("Notification presenter")
+KB_GROUP_NOTIFICATIONS = _("Notification presenter")
 
 # Translators: Orca's preferences can be configured on a per-application basis,
 # allowing users to customize Orca's behavior, keybindings, etc. to work one

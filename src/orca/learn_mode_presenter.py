@@ -202,7 +202,7 @@ class LearnModePresenter:
             items += len(bound)
 
             bound = script.getObjectNavigator().get_bindings().getBoundBindings()
-            bindings[guilabels.KB_OBJECT_NAVIGATION] = bound
+            bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
             items += len(bound)
 
             bound = script.getDateAndTimePresenter().get_bindings().getBoundBindings()
@@ -210,11 +210,15 @@ class LearnModePresenter:
             items += len(bound)
 
             bound = script.getNotificationPresenter().get_bindings().getBoundBindings()
-            bindings[guilabels.NOTIFICATIONS_KB_GROUP] = bound
+            bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
             items += len(bound)
 
             bound = script.getBookmarks().get_bindings().getBoundBindings()
             bindings[guilabels.KB_GROUP_BOOKMARKS] = bound
+            items += len(bound)
+
+            bound = script.getMouseReviewer().get_bindings().getBoundBindings()
+            bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
             items += len(bound)
 
             title = messages.shortcutsFoundOrca(items)
