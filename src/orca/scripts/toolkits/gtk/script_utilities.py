@@ -82,7 +82,7 @@ class Utilities(script_utilities.Utilities):
         rv = self._isLayoutOnly.get(hash(obj))
         if rv is not None:
             if rv:
-                msg = "GTK: %s is deemed to be layout only" % obj
+                msg = f"GTK: {obj} is deemed to be layout only"
                 debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
@@ -170,7 +170,7 @@ class Utilities(script_utilities.Utilities):
     def isZombie(self, obj):
         rv = super().isZombie(obj)
         if rv and self.isLink(obj) and AXObject.get_index_in_parent(obj) == -1:
-            msg = 'INFO: Hacking around bug 759736 for %s' % obj
+            msg = f'INFO: Hacking around bug 759736 for {obj}'
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -207,7 +207,7 @@ class Utilities(script_utilities.Utilities):
         if self.intersection(objBox, stringBox) != (0, 0, 0, 0):
             return x, y
 
-        msg = "ERROR: text bounds %s not in obj bounds %s" % (stringBox, objBox)
+        msg = f"ERROR: text bounds {stringBox} not in obj bounds {objBox}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # This is where the string starts; not the widget.

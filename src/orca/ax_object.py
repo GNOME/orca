@@ -59,17 +59,15 @@ class AXObject:
         while True:
             time.sleep(60)
             with AXObject._lock:
-                msg = "AXObject: Clearing %i known-dead objects" % len(AXObject.KNOWN_DEAD)
+                msg = f"AXObject: Clearing {len(AXObject.KNOWN_DEAD)} known-dead objects"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 AXObject.KNOWN_DEAD.clear()
 
-                msg = "AXObject: Clearing %i real app for mutter frame" \
-                    % len(AXObject.REAL_APP_FOR_MUTTER_FRAME)
+                msg = f"AXObject: Clearing {len(AXObject.REAL_APP_FOR_MUTTER_FRAME)} real app for mutter frame"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
 
-                msg = "AXObject: Clearing %i real frame for mutter frame" \
-                    % len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)
+                msg = f"AXObject: Clearing {len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)} real frame for mutter frame"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
 
@@ -116,7 +114,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_action_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_action_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_action_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -132,7 +130,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_collection_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_collection_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_collection_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -148,7 +146,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_component_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_component_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_component_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -165,7 +163,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_document_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_document_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_document_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -181,7 +179,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_editable_text_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_editable_text_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_editable_text_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -197,7 +195,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_hyperlink(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_hyperlink on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_hyperlink on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -213,7 +211,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_hypertext_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_hypertext_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_hypertext_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -229,7 +227,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_image_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_image_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_image_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -245,7 +243,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_selection_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_selection_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_selection_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -261,7 +259,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_table_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_table_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_table_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -277,7 +275,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_table_cell(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_table_cell on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_table_cell on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -293,7 +291,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_text_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_text_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_text_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
         return iface is not None
@@ -308,7 +306,7 @@ class AXObject:
         try:
             iface = Atspi.Accessible.get_value_iface(obj)
         except Exception as e:
-            msg = "AXObject: Exception calling get_value_iface on %s: %s" % (obj, e)
+            msg = f"AXObject: Exception calling get_value_iface on {obj}: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -363,7 +361,7 @@ class AXObject:
             try:
                 path.append(Atspi.Accessible.get_index_in_parent(acc))
             except Exception as e:
-                msg = "AXObject: Exception getting index in parent for %s: %s" % (acc, e)
+                msg = f"AXObject: Exception getting index in parent for {acc}: {e}"
                 AXObject.handle_error(acc, e, msg)
                 return []
             acc = AXObject.get_parent_checked(acc)
@@ -381,7 +379,7 @@ class AXObject:
         try:
             index = Atspi.Accessible.get_index_in_parent(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_index_in_parent: %s" % e
+            msg = f"AXObject: Exception in get_index_in_parent: {e}"
             AXObject.handle_error(obj, e, msg)
             return -1
 
@@ -397,12 +395,12 @@ class AXObject:
         try:
             parent = Atspi.Accessible.get_parent(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_parent: %s" % e
+            msg = f"AXObject: Exception in get_parent: {e}"
             AXObject.handle_error(obj, e, msg)
             return None
 
         if parent == obj:
-            msg = "AXObject: %s claims to be its own parent" % obj
+            msg = f"AXObject: {obj} claims to be its own parent"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -453,8 +451,7 @@ class AXObject:
         parent = AXObject.get_parent_checked(obj)
         while parent:
             if parent in objects:
-                msg = "AXObject: Circular tree suspected in find_ancestor. " \
-                      "%s already in: %s" % (parent, " ".join(map(str, objects)))
+                msg = f"AXObject: Circular tree suspected in find_ancestor. {parent} already in: {' '.join(map(str, objects))}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return None
 
@@ -498,12 +495,12 @@ class AXObject:
         try:
             child = Atspi.Accessible.get_child_at_index(obj, index)
         except Exception as e:
-            msg = "AXObject: Exception in get_child: %s" % e
+            msg = f"AXObject: Exception in get_child: {e}"
             AXObject.handle_error(obj, e, msg)
             return None
 
         if child == obj:
-            msg = "AXObject: %s claims to be its own child" % obj
+            msg = f"AXObject: {obj} claims to be its own child"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -522,7 +519,7 @@ class AXObject:
 
         parent = AXObject.get_parent(child)
         if obj != parent:
-           msg = "AXObject: %s claims %s as child; child's parent is %s" % (obj, child, parent)
+           msg = f"AXObject: {obj} claims {child} as child; child's parent is {parent}"
            debug.println(debug.LEVEL_INFO, msg, True)
 
         return child
@@ -538,7 +535,7 @@ class AXObject:
         try:
             real_child = Atspi.Accessible.get_child_at_index(container, index)
         except Exception as e:
-            msg = "AXObject: Exception in get_active_descendant_checked: %s" % e
+            msg = f"AXObject: Exception in get_active_descendant_checked: {e}"
             AXObject.handle_error(container, e, msg)
             return reported_child
 
@@ -573,7 +570,7 @@ class AXObject:
 
         start = time.time()
         result = AXObject._find_descendant(obj, pred)
-        msg = "AXObject: find_descendant: found %s in %.4fs" % (result, time.time() - start)
+        msg = f"AXObject: find_descendant: found {result} in {time.time() - start:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -600,8 +597,7 @@ class AXObject:
         start = time.time()
         matches = []
         AXObject._find_all_descendants(root, include_if, exclude_if, matches)
-        msg = "AXObject: find_all_descendants: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
+        msg = f"AXObject: find_all_descendants: {len(matches)} matches found in {time.time() - start:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
@@ -615,7 +611,7 @@ class AXObject:
         try:
             role = Atspi.Accessible.get_role(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_role: %s" % e
+            msg = f"AXObject: Exception in get_role: {e}"
             AXObject.handle_error(obj, e, msg)
             return Atspi.Role.INVALID
 
@@ -631,7 +627,7 @@ class AXObject:
         try:
             role_name = Atspi.Accessible.get_role_name(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_role_name: %s" % e
+            msg = f"AXObject: Exception in get_role_name: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -647,7 +643,7 @@ class AXObject:
         try:
             name = Atspi.Accessible.get_name(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_name: %s" % e
+            msg = f"AXObject: Exception in get_name: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -673,7 +669,7 @@ class AXObject:
         try:
             description = Atspi.Accessible.get_description(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_description: %s" % e
+            msg = f"AXObject: Exception in get_description: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -689,7 +685,7 @@ class AXObject:
         try:
             count = Atspi.Accessible.get_child_count(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_child_count: %s" % e
+            msg = f"AXObject: Exception in get_child_count: {e}"
             AXObject.handle_error(obj, e, msg)
             return 0
 
@@ -726,7 +722,7 @@ class AXObject:
 
         sibling = AXObject.get_child(parent, index - 1)
         if sibling == obj:
-            msg = "AXObject: %s claims to be its own sibling" % obj
+            msg = f"AXObject: {obj} claims to be its own sibling"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -749,7 +745,7 @@ class AXObject:
 
         sibling = AXObject.get_child(parent, index + 1)
         if sibling == obj:
-            msg = "AXObject: %s claims to be its own sibling" % obj
+            msg = f"AXObject: {obj} claims to be its own sibling"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -774,7 +770,7 @@ class AXObject:
 
         next_object = AXObject.get_child(parent, index)
         if next_object == obj:
-            msg = "AXObject: %s claims to be its own next object" % obj
+            msg = f"AXObject: {obj} claims to be its own next object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -799,7 +795,7 @@ class AXObject:
 
         previous_object = AXObject.get_child(parent, index)
         if previous_object == obj:
-            msg = "AXObject: %s claims to be its own previous object" % obj
+            msg = f"AXObject: {obj} claims to be its own previous object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -815,7 +811,7 @@ class AXObject:
         try:
             state_set = Atspi.Accessible.get_state_set(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_state_set: %s" % e
+            msg = f"AXObject: Exception in get_state_set: {e}"
             AXObject.handle_error(obj, e, msg)
             return Atspi.StateSet()
 
@@ -852,7 +848,7 @@ class AXObject:
         try:
             relations = Atspi.Accessible.get_relation_set(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_relations: %s" % e
+            msg = f"AXObject: Exception in get_relations: {e}"
             AXObject.handle_error(obj, e, msg)
             return []
 
@@ -901,7 +897,7 @@ class AXObject:
         # We want to avoid self-referential relationships.
         type_includes_object = [Atspi.RelationType.MEMBER_OF]
         if relation_type not in type_includes_object and obj in targets:
-            msg = 'ERROR: %s is in its own %s target list' % (obj, relation_type)
+            msg = f'ERROR: {obj} is in its own {relation_type} target list'
             debug.println(debug.LEVEL_INFO, msg, True)
             targets.remove(obj)
 
@@ -922,7 +918,7 @@ class AXObject:
             type_string = as_string(r.get_relation_type())
             targets = AXObject.get_relation_targets(obj, r.get_relation_type())
             target_string = ",".join(map(str, targets))
-            results.append("%s: %s" % (type_string, target_string))
+            results.append(f"{type_string}: {target_string}")
 
         return "; ".join(results)
 
@@ -935,7 +931,7 @@ class AXObject:
             try:
                 app = Atspi.Accessible.get_application(obj)
             except Exception as e:
-                msg = "AXObject: Exception getting application of %s: %s" % (obj, e)
+                msg = f"AXObject: Exception getting application of {obj}: {e}"
                 AXObject.handle_error(obj, e, msg)
                 return None, None
 
@@ -947,13 +943,13 @@ class AXObject:
         if real_app is not None and real_frame is not None:
             return real_app, real_frame
 
-        msg = "AXObject: %s is not valid app for %s" % (app, obj)
+        msg = f"AXObject: {app} is not valid app for {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         try:
             desktop = Atspi.get_desktop(0)
         except Exception as e:
-            msg = "AXObject: Exception getting desktop from Atspi: %s" % e
+            msg = f"AXObject: Exception getting desktop from Atspi: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None, None
 
@@ -966,7 +962,7 @@ class AXObject:
                     real_app = app
                     real_frame = frame
 
-        msg = "AXObject: %s is real app for %s" % (real_app, obj)
+        msg = f"AXObject: {real_app} is real app for {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if real_frame != obj:
@@ -991,7 +987,7 @@ class AXObject:
         try:
             app = Atspi.Accessible.get_application(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_application: %s" % e
+            msg = f"AXObject: Exception in get_application: {e}"
             AXObject.handle_error(obj, e, msg)
             return None
 
@@ -1018,7 +1014,7 @@ class AXObject:
         try:
             name = Atspi.Accessible.get_toolkit_name(app)
         except Exception as e:
-            msg = "AXObject: Exception in get_application_toolkit_name: %s" % e
+            msg = f"AXObject: Exception in get_application_toolkit_name: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return ""
 
@@ -1038,7 +1034,7 @@ class AXObject:
         try:
             version = Atspi.Accessible.get_toolkit_version(app)
         except Exception as e:
-            msg = "AXObject: Exception in get_application_toolkit_version: %s" % e
+            msg = f"AXObject: Exception in get_application_toolkit_version: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return ""
 
@@ -1055,9 +1051,7 @@ class AXObject:
         if app is None:
             return ""
 
-        return "%s (%s %s)" % (AXObject.get_name(app),
-                               AXObject.get_application_toolkit_name(obj),
-                               AXObject.get_application_toolkit_version(obj))
+        return f"{AXObject.get_name(app)} ({AXObject.get_application_toolkit_name(obj)} {AXObject.get_application_toolkit_version(obj)})"
 
     @staticmethod
     def clear_cache(obj, recursive=False):
@@ -1081,7 +1075,7 @@ class AXObject:
         try:
             Atspi.Accessible.clear_cache(obj)
         except Exception as e:
-            msg = "AXObject: Exception in clear_cache: %s" % e
+            msg = f"AXObject: Exception in clear_cache: {e}"
             AXObject.handle_error(obj, e, msg)
 
     @staticmethod
@@ -1094,7 +1088,7 @@ class AXObject:
         try:
             pid = Atspi.Accessible.get_process_id(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_process_id: %s" % e
+            msg = f"AXObject: Exception in get_process_id: {e}"
             AXObject.handle_error(obj, e, msg)
             return -1
 
@@ -1115,7 +1109,7 @@ class AXObject:
             # latter intentionally handles exceptions.
             Atspi.Accessible.get_name(obj)
         except Exception as e:
-            msg = "AXObject: Accessible is dead: %s" % e
+            msg = f"AXObject: Accessible is dead: {e}"
             AXObject.handle_error(obj, e, msg)
             return True
 
@@ -1131,7 +1125,7 @@ class AXObject:
         try:
             attributes = Atspi.Accessible.get_attributes(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_attributes_dict: %s" % e
+            msg = f"AXObject: Exception in get_attributes_dict: {e}"
             AXObject.handle_error(obj, e, msg)
             return {}
 
@@ -1158,7 +1152,7 @@ class AXObject:
             return ""
 
         def as_string(x):
-            return "%s:%s" % (x[0], x[1])
+            return f"{x[0]}:{x[1]}"
 
         return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))
 
@@ -1172,7 +1166,7 @@ class AXObject:
         try:
             count = Atspi.Action.get_n_actions(obj)
         except Exception as e:
-            msg = "AXObject: Exception in get_n_actions: %s" % e
+            msg = f"AXObject: Exception in get_n_actions: {e}"
             AXObject.handle_error(obj, e, msg)
             return 0
 
@@ -1199,7 +1193,7 @@ class AXObject:
         try:
             name = Atspi.Action.get_action_name(obj, i)
         except Exception as e:
-            msg = "AXObject: Exception in get_action_name: %s" % e
+            msg = f"AXObject: Exception in get_action_name: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -1226,7 +1220,7 @@ class AXObject:
         try:
             description = Atspi.Action.get_action_description(obj, i)
         except Exception as e:
-            msg = "AXObject: Exception in get_action_description: %s" % e
+            msg = f"AXObject: Exception in get_action_description: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -1242,7 +1236,7 @@ class AXObject:
         try:
             keybinding = Atspi.Action.get_key_binding(obj, i)
         except Exception as e:
-            msg = "AXObject: Exception in get_action_key_binding: %s" % e
+            msg = f"AXObject: Exception in get_action_key_binding: {e}"
             AXObject.handle_error(obj, e, msg)
             return ""
 
@@ -1277,7 +1271,7 @@ class AXObject:
         try:
             result = Atspi.Action.do_action(obj, i)
         except Exception as e:
-            msg = "AXObject: Exception in do_action: %s" % e
+            msg = f"AXObject: Exception in do_action: {e}"
             AXObject.handle_error(obj, e, msg)
             return False
 
@@ -1291,7 +1285,7 @@ class AXObject:
 
         index = AXObject.get_action_index(obj, action_name)
         if index == -1:
-            msg = "INFO: %s not an available action for %s" % (action_name, obj)
+            msg = f"INFO: {action_name} not an available action for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -1306,7 +1300,7 @@ class AXObject:
             result = AXObject.get_action_name(obj, i)
             keybinding = AXObject.get_action_key_binding(obj, i)
             if keybinding:
-                result += " (%s)" % keybinding
+                result += f" ({keybinding})"
             results.append(result)
 
         return "; ".join(results)

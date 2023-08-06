@@ -2236,14 +2236,14 @@ _RE_COMBINING = None
 def __compileRE():
     global _RE
     try:
-        _RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
+        _RE = re.compile(f"[{''.join(list(_all.keys()))}]", re.UNICODE)
     except Exception:
         _RE = None
 
 def __compileRE_COMBINING():
     global _RE_COMBINING
     try:
-        _RE_COMBINING = re.compile('.[%s]' % ''.join(list(_combining.keys())),
+        _RE_COMBINING = re.compile(f".[{''.join(list(_combining.keys()))}]",
                                    re.UNICODE)
     except Exception:
         _RE_COMBINING = None
@@ -2315,7 +2315,7 @@ def adjustForSpeech(string):
         for pair in combiningPairs:
             name = _combining.get(pair[1])
             if name:
-                string = re.sub(pair, " %s " % (name % pair[0]), string)
+                string = re.sub(pair, f" {name % pair[0]} ", string)
 
     if _RE is not None:
         chars = set(re.findall(_RE, string))
@@ -2323,6 +2323,6 @@ def adjustForSpeech(string):
         for char in chars:
             name = _getSpokenName(char, includeStyle)
             if name:
-                string = re.sub(char, " %s " % name, string)
+                string = re.sub(char, f" {name} ", string)
 
     return string

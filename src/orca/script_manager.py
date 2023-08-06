@@ -118,7 +118,7 @@ class ScriptManager:
                     name = names[0]
                     break
 
-        msg = 'SCRIPT MANAGER: mapped %s to %s' % (AXObject.get_name(app), name)
+        msg = f'SCRIPT MANAGER: mapped {AXObject.get_name(app)} to {name}'
         debug.println(debug.LEVEL_INFO, msg, True)
         return name
 
@@ -151,7 +151,7 @@ class ScriptManager:
             except OSError:
                 debug.examineProcesses()
 
-            debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Found %s' % moduleName, True)
+            debug.println(debug.LEVEL_INFO, f'SCRIPT MANAGER: Found {moduleName}', True)
             try:
                 if hasattr(module, 'getScript'):
                     script = module.getScript(app)
@@ -160,7 +160,7 @@ class ScriptManager:
                 break
             except Exception:
                 debug.printException(debug.LEVEL_INFO)
-                msg = 'ERROR: Could not load %s' % moduleName
+                msg = f'ERROR: Could not load {moduleName}'
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         return script
@@ -212,13 +212,13 @@ class ScriptManager:
         if newScript:
             return newScript
 
-        msg = "WARNING: Failed to get a replacement script for %s" % script.app
+        msg = f"WARNING: Failed to get a replacement script for {script.app}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return script
 
     def getScriptForMouseButtonEvent(self, event):
         isActive = AXUtilities.is_active(orca_state.activeWindow)
-        msg = "SCRIPT MANAGER: %s is active: %s" % (orca_state.activeWindow, isActive)
+        msg = f"SCRIPT MANAGER: {orca_state.activeWindow} is active: {isActive}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if isActive and orca_state.activeScript:
@@ -313,8 +313,7 @@ class ScriptManager:
             return
 
         newScript.activate()
-        msg = 'SCRIPT MANAGER: Setting active script: %s (reason=%s)' % \
-              (newScript.name, reason)
+        msg = f'SCRIPT MANAGER: Setting active script: {newScript.name} (reason={reason})'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def _getScriptForAppReplicant(self, app):
@@ -332,7 +331,7 @@ class ScriptManager:
             if a != app and AXUtilities.is_application_in_desktop(a):
                 if script.app is None:
                     script.app = a
-                msg = "SCRIPT MANAGER: Script for app replicant: %s %s" % (script, script.app)
+                msg = f"SCRIPT MANAGER: Script for app replicant: {script} {script.app}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return script
 
@@ -354,20 +353,20 @@ class ScriptManager:
             try:
                 appScript = self.appScripts.pop(app)
             except KeyError:
-                msg = "SCRIPT MANAGER: %s not found in appScripts" % app
+                msg = f"SCRIPT MANAGER: {app} not found in appScripts"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
-            msg = "SCRIPT MANAGER: Old script for app found: %s %s" % (appScript, appScript.app)
+            msg = f"SCRIPT MANAGER: Old script for app found: {appScript} {appScript.app}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
             newScript = self._getScriptForAppReplicant(app)
             if newScript:
-                msg = "SCRIPT MANAGER: Transferring attributes: %s %s" % (newScript, newScript.app)
+                msg = f"SCRIPT MANAGER: Transferring attributes: {newScript} {newScript.app}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 attrs = appScript.getTransferableAttributes()
                 for attr, value in attrs.items():
-                    msg = "SCRIPT MANAGER: Setting %s to %s" % (attr, value)
+                    msg = f"SCRIPT MANAGER: Setting {attr} to {value}"
                     debug.println(debug.LEVEL_INFO, msg, True)
                     setattr(newScript, attr, value)
 

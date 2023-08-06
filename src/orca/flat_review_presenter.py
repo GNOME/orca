@@ -100,8 +100,7 @@ class FlatReviewPresenter:
         obj = obj or orca_state.locusOfFocus
         if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
            and not self._restrict:
-            msg = "FLAT REVIEW PRESENTER: Attempting to update location from %s to %s" \
-                % (self._context.getCurrentAccessible(), obj)
+            msg = f"FLAT REVIEW PRESENTER: Attempting to update location from {self._context.getCurrentAccessible()} to {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             self._context.setCurrentToZoneWithObject(obj)
 
@@ -136,7 +135,7 @@ class FlatReviewPresenter:
             bindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
                 self._handlers.get("reviewBottomLeftHandler")
         except Exception as e:
-            msg = "FLAT REVIEW PRESENTER: Exception getting braille bindings: %s" % e
+            msg = f"FLAT REVIEW PRESENTER: Exception getting braille bindings: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return {}
         return bindings

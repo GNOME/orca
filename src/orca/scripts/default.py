@@ -424,7 +424,7 @@ class Script(script.Script):
         try:
             keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
         except Exception:
-            msg = 'ERROR: Exception when overriding keybindings in %s' % self
+            msg = f'ERROR: Exception when overriding keybindings in {self}'
             debug.println(debug.LEVEL_WARNING, msg, True)
             debug.printException(debug.LEVEL_WARNING)
 
@@ -486,10 +486,10 @@ class Script(script.Script):
             brailleBindings[braille.brlapi.KEY_CMD_HOME] = \
                 self.inputEventHandlers["goBrailleHomeHandler"]
         except AttributeError:
-            msg = 'DEFAULT: Braille bindings unavailable in %s' % self
+            msg = f'DEFAULT: Braille bindings unavailable in {self}'
             debug.println(debug.LEVEL_INFO, msg, True)
         except Exception:
-            msg = 'ERROR: Exception getting braille bindings in %s' % self
+            msg = f'ERROR: Exception getting braille bindings in {self}'
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_CONFIGURATION)
 
@@ -519,7 +519,7 @@ class Script(script.Script):
 
         msg = "INFO: adding key grabs"
         if reason:
-            msg += ": %s" % reason
+            msg += f": {reason}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         bound = self.getEnabledKeyBindings()
@@ -532,7 +532,7 @@ class Script(script.Script):
 
         msg = "INFO: removing key grabs"
         if reason:
-            msg += ": %s" % reason
+            msg += f": {reason}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for id in self.grab_ids:
@@ -544,7 +544,7 @@ class Script(script.Script):
 
         msg = "INFO: refreshing key grabs"
         if reason:
-            msg += ": %s" % reason
+            msg += f": {reason}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # TODO: Should probably avoid removing key grabs and re-adding them.
@@ -638,8 +638,7 @@ class Script(script.Script):
         if not AXUtilities.is_table_cell(oldLocusOfFocus) \
            and not AXUtilities.is_table_cell(newLocusOfFocus) \
            and self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
-            msg = 'DEFAULT: old focus %s believed to be same as new focus %s' \
-                % (oldLocusOfFocus, newLocusOfFocus)
+            msg = f'DEFAULT: old focus {oldLocusOfFocus} believed to be same as new focus {newLocusOfFocus}'
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -675,7 +674,7 @@ class Script(script.Script):
     def activate(self):
         """Called when this script is activated."""
 
-        msg = 'DEFAULT: activating script for %s' % self.app
+        msg = f'DEFAULT: activating script for {self.app}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         _settingsManager.loadAppSettings(self)
@@ -687,7 +686,7 @@ class Script(script.Script):
 
         self.addKeyGrabs("script activation")
 
-        msg = 'DEFAULT: Script for %s activated' % self.app
+        msg = f'DEFAULT: Script for {self.app} activated'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def updateBraille(self, obj, **args):
@@ -1102,7 +1101,7 @@ class Script(script.Script):
 
         debug.debugLevel = levels[levelIndex]
         briefMessage = levels[levelIndex + 1]
-        fullMessage =  "Debug level %s." % briefMessage
+        fullMessage =  f"Debug level {briefMessage}."
         self.presentMessage(fullMessage, briefMessage)
 
         return True
@@ -1175,7 +1174,7 @@ class Script(script.Script):
         if self.stopSpeechOnActiveDescendantChanged(event):
             self.presentationInterrupt()
 
-        msg = "DEFAULT: Setting locus of focus to any_data %s" % event.any_data
+        msg = f"DEFAULT: Setting locus of focus to any_data {event.any_data}"
         debug.println(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, event.any_data)
 
@@ -1236,18 +1235,15 @@ class Script(script.Script):
         if event.source != orca_state.locusOfFocus and AXUtilities.is_focused(event.source):
             topLevelObject = self.utilities.topLevelObject(event.source)
             if self.utilities.isSameObject(orca_state.activeWindow, topLevelObject):
-                msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
-                      (orca_state.locusOfFocus, event.source)
+                msg = f"DEFAULT: Updating locusOfFocus from {orca_state.locusOfFocus} to {event.source}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
             else:
-                msg = "DEFAULT: Source window (%s) is not active window(%s)" \
-                      % (topLevelObject, orca_state.activeWindow)
+                msg = f"DEFAULT: Source window ({topLevelObject}) is not active window({orca_state.activeWindow})"
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         if event.source != orca_state.locusOfFocus:
-            msg = "DEFAULT: Event source (%s) is not locusOfFocus (%s)" \
-                  % (event.source, orca_state.locusOfFocus)
+            msg = f"DEFAULT: Event source ({event.source}) is not locusOfFocus ({orca_state.locusOfFocus})"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1258,7 +1254,7 @@ class Script(script.Script):
         try:
             text.caretOffset
         except Exception:
-            msg = "DEFAULT: Exception getting caretOffset for %s" % event.source
+            msg = f"DEFAULT: Exception getting caretOffset for {event.source}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1286,7 +1282,7 @@ class Script(script.Script):
         descriptions = self.pointOfReference.get('description', {})
         oldDescription = descriptions.get(hash(obj))
         if oldDescription == event.any_data:
-            msg = "DEFAULT: Old description (%s) is the same as new one" % oldDescription
+            msg = f"DEFAULT: Old description ({oldDescription}) is the same as new one"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1382,7 +1378,7 @@ class Script(script.Script):
         names = self.pointOfReference.get('names', {})
         oldName = names.get(hash(event.source))
         if oldName == event.any_data:
-            msg = "DEFAULT: Old name (%s) is the same as new name" % oldName
+            msg = f"DEFAULT: Old name ({oldName}) is the same as new name"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1430,7 +1426,7 @@ class Script(script.Script):
             return
 
         if not self.utilities.isSameObject(orca_state.locusOfFocus, event.source):
-            msg = "DEFAULT: Event is not for locusOfFocus %s" % orca_state.locusOfFocus
+            msg = f"DEFAULT: Event is not for locusOfFocus {orca_state.locusOfFocus}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1502,20 +1498,20 @@ class Script(script.Script):
         selectedChildren = self.utilities.selectedChildren(event.source)
         for child in selectedChildren:
             if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == child):
-                msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
+                msg = f"DEFAULT: Child {child} is ancestor of locusOfFocus"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self._saveFocusedObjectInfo(orca_state.locusOfFocus)
                 return
 
             if child == mouseReviewItem:
-                msg = "DEFAULT: Child %s is current mouse review item" % child
+                msg = f"DEFAULT: Child {child} is current mouse review item"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 continue
 
             if AXUtilities.is_page_tab(child) and orca_state.locusOfFocus \
                and AXObject.get_name(child) == AXObject.get_name(orca_state.locusOfFocus) \
                and not AXUtilities.is_focused(event.source):
-                msg = "DEFAULT: %s's selection redundant to %s" % (child, orca_state.locusOfFocus)
+                msg = f"DEFAULT: {child}'s selection redundant to {orca_state.locusOfFocus}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 break
 
@@ -1775,11 +1771,11 @@ class Script(script.Script):
             value = obj.queryValue()
             currentValue = value.currentValue
         except NotImplementedError:
-            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            msg = f"ERROR: {obj} doesn't implement AtspiValue"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
         except Exception:
-            msg = "ERROR: Exception getting current value for %s" % obj
+            msg = f"ERROR: Exception getting current value for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1788,11 +1784,11 @@ class Script(script.Script):
             return
 
         isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj)
-        msg = "DEFAULT: Is progress bar update: %s, %s" % (isProgressBarUpdate, msg)
+        msg = f"DEFAULT: Is progress bar update: {isProgressBarUpdate}, {msg}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not isProgressBarUpdate and obj != orca_state.locusOfFocus:
-            msg = "DEFAULT: Source != locusOfFocus (%s)" % orca_state.locusOfFocus
+            msg = f"DEFAULT: Source != locusOfFocus ({orca_state.locusOfFocus})"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1857,7 +1853,7 @@ class Script(script.Script):
             return
 
         if event.source != orca_state.activeWindow:
-            msg = "DEFAULT: Ignoring event. Not for active window %s." % orca_state.activeWindow
+            msg = f"DEFAULT: Ignoring event. Not for active window {orca_state.activeWindow}."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -2379,7 +2375,7 @@ class Script(script.Script):
 
     def presentObject(self, obj, **args):
         interrupt = args.get("interrupt", False)
-        msg = "DEFAULT: Presenting object %s. Interrupt: %s" % (obj, interrupt)
+        msg = f"DEFAULT: Presenting object {obj}. Interrupt: {interrupt}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not args.get("speechonly", False):
@@ -2508,7 +2504,7 @@ class Script(script.Script):
                 word.index,
                 charOffset)
         else:
-            msg = "DEFAULT: Setting start of display to %s" % region.zone
+            msg = f"DEFAULT: Setting start of display to {region.zone}"
             debug.println(debug.LEVEL_INFO, msg, True)
             context = self.getFlatReviewContext()
             context.setCurrent(
@@ -2629,7 +2625,7 @@ class Script(script.Script):
 
                 context = speechserver.SayAllContext(
                     obj, lineString, startOffset, endOffset)
-                msg = "DEFAULT %s" % context
+                msg = f"DEFAULT {context}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self._sayAllContexts.append(context)
                 self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)
@@ -2670,7 +2666,7 @@ class Script(script.Script):
         except NotImplementedError:
             return ["", 0, 0]
         except Exception:
-            msg = "DEFAULT: Exception getting offset and length for %s" % obj
+            msg = f"DEFAULT: Exception getting offset and length for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return ["", 0, 0]
 

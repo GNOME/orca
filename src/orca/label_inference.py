@@ -59,7 +59,7 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
-        debug.println(debug.LEVEL_INFO, "INFER label for: %s" % obj, True)
+        debug.println(debug.LEVEL_INFO, f"INFER label for: {obj}", True)
         if not obj:
             return None, []
 
@@ -70,19 +70,19 @@ class LabelInference:
         result, objects = None, []
         if not result:
             result, objects = self.inferFromTextLeft(obj)
-            debug.println(debug.LEVEL_INFO, "INFER - Text Left: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Text Left: {result}", True)
         if not result or self._preferRight(obj):
             result, objects = self.inferFromTextRight(obj) or result
-            debug.println(debug.LEVEL_INFO, "INFER - Text Right: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Text Right: {result}", True)
         if not result:
             result, objects = self.inferFromTable(obj)
-            debug.println(debug.LEVEL_INFO, "INFER - Table: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Table: {result}", True)
         if not result:
             result, objects = self.inferFromTextAbove(obj)
-            debug.println(debug.LEVEL_INFO, "INFER - Text Above: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Text Above: {result}", True)
         if not result:
             result, objects = self.inferFromTextBelow(obj)
-            debug.println(debug.LEVEL_INFO, "INFER - Text Below: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Text Below: {result}", True)
 
         # TODO - We probably do not wish to "infer" from these. Instead, we
         # should ensure that this content gets presented as part of the widget.
@@ -90,7 +90,7 @@ class LabelInference:
         # are each something other than a label.)
         if not result:
             result, objects = AXObject.get_name(obj), []
-            debug.println(debug.LEVEL_INFO, "INFER - Name: %s" % result, True)
+            debug.println(debug.LEVEL_INFO, f"INFER - Name: {result}", True)
         if result:
             result = result.strip()
             result = result.replace("\n", " ")
@@ -98,7 +98,7 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self.inferFromTextLeft(obj, proximity=200)
-            msg = "INFER - Text Left with proximity of 200: %s" % result
+            msg = f"INFER - Text Left with proximity of 200: {result}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         self.clearCache()
@@ -222,7 +222,7 @@ class LabelInference:
                     try:
                         endOffset = text.characterCount
                     except Exception:
-                        msg = "ERROR: Exception getting character count for %s" % obj
+                        msg = f"ERROR: Exception getting character count for {obj}"
                         debug.println(debug.LEVEL_INFO, msg, True)
                         return extents
 
@@ -232,10 +232,10 @@ class LabelInference:
             try:
                 ext = obj.queryComponent().getExtents(0)
             except NotImplementedError:
-                msg = "INFO: %s does not implement the component interface" % obj
+                msg = f"INFO: {obj} does not implement the component interface"
                 debug.println(debug.LEVEL_INFO, msg, True)
             except Exception:
-                msg = "ERROR: Exception getting extents for %s" % obj
+                msg = f"ERROR: Exception getting extents for {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 extents = ext.x, ext.y, ext.width, ext.height

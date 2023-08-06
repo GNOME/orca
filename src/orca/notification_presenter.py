@@ -74,7 +74,7 @@ class NotificationPresenter:
     def save_notification(self, message):
         """Adds message to the list of notification messages."""
 
-        msg = "NOTIFICATION PRESENTER: Adding '%s'." % message
+        msg = f"NOTIFICATION PRESENTER: Adding '{message}'."
         debug.println(debug.LEVEL_INFO, msg, True)
         to_remove = max(len(self._notifications) - self._max_size + 1, 0)
         self._notifications = self._notifications[to_remove:]
@@ -175,7 +175,7 @@ class NotificationPresenter:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         message, timestamp = self._notifications[-1]
-        string = "%s %s" % (message, self._timestamp_to_string(timestamp))
+        string = f"{message} {self._timestamp_to_string(timestamp)}"
         script.presentMessage(string)
         self._current_index = -1
         return True
@@ -206,7 +206,7 @@ class NotificationPresenter:
                 script.presentMessage(messages.NOTIFICATION_LIST_TOP)
                 message, timestamp = self._notifications[self._current_index]
 
-        string = "%s %s" % (message, self._timestamp_to_string(timestamp))
+        string = f"{message} {self._timestamp_to_string(timestamp)}"
         script.presentMessage(string)
         return True
 
@@ -236,7 +236,7 @@ class NotificationPresenter:
                 script.presentMessage(messages.NOTIFICATION_LIST_BOTTOM)
                 message, timestamp = self._notifications[self._current_index]
 
-        string = "%s %s" % (message, self._timestamp_to_string(timestamp))
+        string = f"{message} {self._timestamp_to_string(timestamp)}"
         script.presentMessage(string)
         return True
 

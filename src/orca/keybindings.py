@@ -265,7 +265,7 @@ class KeyBinding:
         mods = getModifierNames(self.modifiers)
         clickCount = getClickCountString(self.click_count)
         keysym = self.keysymstring
-        string = '%s%s %s' % (mods, keysym, clickCount)
+        string = f'{mods}{keysym} {clickCount}'
 
         return string.strip()
 
@@ -329,8 +329,7 @@ class KeyBindings:
         """
 
         if keyBinding.keysymstring and self.hasKeyBinding(keyBinding, "keysNoMask"):
-           msg = "WARNING: '%s' (%s) already in keybindings" % \
-            (keyBinding.asString(), keyBinding.description())
+           msg = f"WARNING: '{keyBinding.asString()}' ({keyBinding.description()}) already in keybindings"
            debug.println(debug.LEVEL_INFO, msg, True)
 
         self.keyBindings.append(keyBinding)
@@ -425,7 +424,7 @@ class KeyBindings:
             string = kb.asString()
             match = bindings.get(string)
             if match is not None:
-                msg = "WARNING: '%s' (%s) also matches: %s" % (string, kb.description(), match)
+                msg = f"WARNING: '{string}' ({kb.description()}) also matches: {match}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             bindings[string] = kb.description()
 
@@ -451,8 +450,7 @@ class KeyBindings:
         def toString(x):
             return "%s (%ix)" % (x.handler.description, x.click_count)
 
-        msg = "WARNING: '%s' matches multiple handlers: %s" % \
-            (keyboardEvent.event_string, ", ".join(map(toString, result)))
+        msg = f"WARNING: '{keyboardEvent.event_string}' matches multiple handlers: {', '.join(map(toString, result))}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def getInputHandler(self, keyboardEvent):
@@ -519,5 +517,4 @@ class KeyBindings:
                     handlers[handler], clickCount))
             else:
                 debug.println(debug.LEVEL_WARNING, \
-                  "WARNING: could not find %s handler to associate " \
-                  "with keybinding." % handler)
+                  f"WARNING: could not find {handler} handler to associate with keybinding.")

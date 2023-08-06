@@ -50,7 +50,7 @@ class Icon:
         self.path = os.path.join(location, filename)
 
     def __str__(self):
-        return 'Icon(path: %s, isValid: %s)' % (self.path, self.isValid())
+        return f'Icon(path: {self.path}, isValid: {self.isValid()})'
 
     def isValid(self):
         return os.path.isfile(self.path)
@@ -79,8 +79,7 @@ class Tone:
         self.wave = wave
 
     def __str__(self):
-        return 'Tone(duration: %s, frequency: %s, volume: %s, wave: %s)' \
-            % (self.duration, self.frequency, self.volume, self.wave)
+        return f'Tone(duration: {self.duration}, frequency: {self.frequency}, volume: {self.volume}, wave: {self.wave})'
 
 class SoundGenerator(generator.Generator):
     """Takes accessible objects and produces the sound(s) to be played."""

@@ -242,7 +242,7 @@ class Script(default.Script):
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 2, 1, 1)
 
-        label = Gtk.Label(label="<b>%s</b>" % guilabels.TABLE_NAVIGATION)
+        label = Gtk.Label(label=f"<b>{guilabels.TABLE_NAVIGATION}</b>")
         label.set_use_markup(True)
         tableFrame.set_label_widget(label)
 
@@ -821,7 +821,7 @@ class Script(default.Script):
             return
 
         if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
-            msg = "SOFFICE: locusOfFocus %s is spreadsheet cell" % orca_state.locusOfFocus
+            msg = f"SOFFICE: locusOfFocus {orca_state.locusOfFocus} is spreadsheet cell"
             debug.println(debug.LEVEL_INFO, msg, True)
 
             if not self.utilities.isCellBeingEdited(event.source):

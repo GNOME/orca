@@ -70,12 +70,12 @@ class Script(default.Script):
 
         isActive = AXUtilities.is_active(frame)
         if not isActive:
-            msg = "QT: Event came from inactive top-level object %s" % frame
+            msg = f"QT: Event came from inactive top-level object {frame}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
             AXObject.clear_cache(frame)
             isActive = AXUtilities.is_active(frame)
-            msg = "QT: Cleared cache of %s. Frame is now active: %s" % (frame, isActive)
+            msg = f"QT: Cleared cache of {frame}. Frame is now active: {isActive}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_focused(event.source):

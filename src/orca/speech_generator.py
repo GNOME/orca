@@ -111,7 +111,7 @@ class SpeechGenerator(generator.Generator):
     def generateSpeech(self, obj, **args):
         rv = self.generate(obj, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
-            msg = 'SPEECH GENERATOR: Results for %s are pauses only' % obj
+            msg = f'SPEECH GENERATOR: Results for {obj} are pauses only'
             debug.println(debug.LEVEL_INFO, msg, True)
             rv = []
 
@@ -182,7 +182,7 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            msg = 'SPEECH GENERATOR: %s is popup menu for current item.' % obj
+            msg = f'SPEECH GENERATOR: {obj} is popup menu for current item.'
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -1274,7 +1274,7 @@ class SpeechGenerator(generator.Generator):
                 continue
             args["language"], args["dialect"] = language, dialect
             if "string" in args:
-                msg = "INFO: Found existing string '%s'; using '%s'" % (args.get("string"), string)
+                msg = f"INFO: Found existing string '{args.get('string')}'; using '{string}'"
                 debug.println(debug.LEVEL_INFO, msg)
                 args.pop("string")
 
@@ -1345,13 +1345,13 @@ class SpeechGenerator(generator.Generator):
                         #
                         if key == "weight":
                             if int(attribute) > 400:
-                                attribStr += " %s" % messages.BOLD
+                                attribStr += f" {messages.BOLD}"
                         elif key == "underline":
                             if attribute != "none":
-                                attribStr += " %s" % localizedKey
+                                attribStr += f" {localizedKey}"
                         elif key == "style":
                             if attribute != "normal":
-                                attribStr += " %s" % localizedValue
+                                attribStr += f" {localizedValue}"
                         else:
                             attribStr += " "
                             attribStr += (localizedKey + " " + localizedValue)
@@ -1359,7 +1359,7 @@ class SpeechGenerator(generator.Generator):
             # Also check to see if this is a hypertext link.
             #
             if self._script.utilities.linkIndex(obj, textOffset) >= 0:
-                attribStr += " %s" % messages.LINK
+                attribStr += f" {messages.LINK}"
 
         return attribStr
 
@@ -2582,7 +2582,7 @@ class SpeechGenerator(generator.Generator):
         if 'madruwb' in enclosures:
             strings.append(messages.MATH_ENCLOSURE_MADRUWB)
         if not strings:
-            msg = 'INFO: Could not get enclosure message for %s' % enclosures
+            msg = f'INFO: Could not get enclosure message for {enclosures}'
             debug.println(debug.LEVEL_INFO, msg)
             return []
 
@@ -2898,8 +2898,7 @@ class SpeechGenerator(generator.Generator):
 
         language = args.get('language')
         dialect = args.get('dialect')
-        msg = "SPEECH GENERATOR: %s voice requested with language='%s', dialect='%s'" % \
-            (key, language, dialect)
+        msg = f"SPEECH GENERATOR: {key} voice requested with language='{language}', dialect='{dialect}'"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if key in [None, DEFAULT]:
@@ -2920,7 +2919,7 @@ class SpeechGenerator(generator.Generator):
         string = ""
         for u in utterances:
             if isinstance(u, str):
-                string += " %s" % u
+                string += f" {u}"
             elif isinstance(u, Pause) and string and string[-1].isalnum():
                 string += "."
 

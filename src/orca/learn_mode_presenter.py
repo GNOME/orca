@@ -249,7 +249,7 @@ class LearnModePresenter:
         self.quit()
         uri = "help:orca"
         if page:
-            uri += "/%s" % page
+            uri += f"/{page}"
         Gtk.show_uri(Gdk.Screen.get_default(), uri, Gtk.get_current_event_time())
         return True
 

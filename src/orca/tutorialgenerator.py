@@ -119,18 +119,18 @@ class TutorialGenerator:
         """
 
         debug.println(debug.LEVEL_FINER,
-                      "GENERATOR: %s" % generatorName)
+                      f"GENERATOR: {generatorName}")
         debug.println(debug.LEVEL_FINER,
-                      "           obj             = %s" % AXObject.get_name(obj))
+                      f"           obj             = {AXObject.get_name(obj)}")
         debug.println(debug.LEVEL_FINER,
-                      "           role            = %s" % AXObject.get_role_name(obj))
+                      f"           role            = {AXObject.get_role_name(obj)}")
         debug.println(debug.LEVEL_FINER,
-                      "           alreadyFocused  = %s" % alreadyFocused)
+                      f"           alreadyFocused  = {alreadyFocused}")
         debug.println(debug.LEVEL_FINER,
                       "           utterances:")
         for text in utterances:
             debug.println(debug.LEVEL_FINER,
-                    "               (%s)" % text)
+                    f"               ({text})")
 
     def _getDefaultTutorial(
         self, obj, alreadyFocused, forceTutorial, role=None):
@@ -762,7 +762,7 @@ class TutorialGenerator:
         # will do, better to say nothing than to risk confusing the user with
         # bogus info.
         if self._script.utilities.inDocumentContent(obj):
-            msg = "INFO: Not generating tutorial for document object %s." % obj
+            msg = f"INFO: Not generating tutorial for document object {obj}."
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 

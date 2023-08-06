@@ -138,7 +138,7 @@ class Script:
         self.findCommandRun = False
         self._lastCommandWasStructNav = False
 
-        msg = 'SCRIPT: %s initialized' % self.name
+        msg = f'SCRIPT: {self.name} initialized'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def getListeners(self):
@@ -382,34 +382,26 @@ class Script:
     def _getQueuedEvent(self, eventType, detail1=None, detail2=None, any_data=None):
         cachedEvent, eventTime = self.eventCache.get(eventType, [None, 0])
         if not cachedEvent:
-            msg = "SCRIPT: No queued event of type %s" % eventType
+            msg = f"SCRIPT: No queued event of type {eventType}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if detail1 is not None and detail1 != cachedEvent.detail1:
-            msg = "SCRIPT: Queued event's detail1 (%s) doesn't match %s" \
-                % (cachedEvent.detail1, detail1)
+            msg = f"SCRIPT: Queued event's detail1 ({cachedEvent.detail1}) doesn't match {detail1}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if detail2 is not None and detail2 != cachedEvent.detail2:
-            msg = "SCRIPT: Queued event's detail2 (%s) doesn't match %s" \
-                % (cachedEvent.detail2, detail2)
+            msg = f"SCRIPT: Queued event's detail2 ({cachedEvent.detail2}) doesn't match {detail2}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if any_data is not None and any_data != cachedEvent.any_data:
-            msg = "SCRIPT: Queued event's any_data (%s) doesn't match %s" \
-                % (cachedEvent.any_data, any_data)
+            msg = f"SCRIPT: Queued event's any_data ({cachedEvent.any_data}) doesn't match {any_data}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = "SCRIPT: Found matching queued event: %s (%s,%s,%s) on %s" \
-            % (cachedEvent.type,
-               cachedEvent.detail1,
-               cachedEvent.detail2,
-               cachedEvent.any_data,
-               cachedEvent.source)
+        msg = f"SCRIPT: Found matching queued event: {cachedEvent.type} ({cachedEvent.detail1},{cachedEvent.detail2},{cachedEvent.any_data}) on {cachedEvent.source}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return cachedEvent
 
@@ -454,7 +446,7 @@ class Script:
 
         if skip:
             eventDetails = '        %s' % str(cachedEvent).replace('\t', ' ' * 8)
-            msg = 'SCRIPT: Skipping object event due to %s\n%s' % (reason, eventDetails)
+            msg = f'SCRIPT: Skipping object event due to {reason}\n{eventDetails}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return skip

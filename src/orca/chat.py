@@ -422,7 +422,7 @@ class Chat:
 
         messagesFrame = Gtk.Frame()
         grid.attach(messagesFrame, 0, 3, 1, 1)
-        label = Gtk.Label("<b>%s</b>" % guilabels.CHAT_SPEAK_MESSAGES_FROM)
+        label = Gtk.Label(f"<b>{guilabels.CHAT_SPEAK_MESSAGES_FROM}</b>")
         label.set_use_markup(True)
         messagesFrame.set_label_widget(label)
 
@@ -849,11 +849,11 @@ class Chat:
 
         if AXUtilities.is_showing(obj):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
-            msg = "INFO: %s's window is focused chat: %s" % (obj, active)
+            msg = f"INFO: {obj}'s window is focused chat: {active}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return active
 
-        msg = "INFO: %s is not focused chat (not showing)" % obj
+        msg = f"INFO: {obj} is not focused chat (not showing)"
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 

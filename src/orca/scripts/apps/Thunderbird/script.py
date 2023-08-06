@@ -132,11 +132,11 @@ class Script(Gecko.Script):
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
-            msg = "THUNDERBIRD: Using focus mode for editable message %s" % obj
+            msg = f"THUNDERBIRD: Using focus mode for editable message {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        msg = "THUNDERBIRD: %s is not an editable message." % obj
+        msg = f"THUNDERBIRD: {obj} is not an editable message."
         debug.println(debug.LEVEL_INFO, msg, True)
         return super().useFocusMode(obj, prevObj)
 
@@ -352,7 +352,7 @@ class Script(Gecko.Script):
         self.updateBraille(obj)
 
         if _settingsManager.getSetting('pageSummaryOnLoad'):
-            msg = "THUNDERBIRD: Getting page summary for obj %s" % obj
+            msg = f"THUNDERBIRD: Getting page summary for obj {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             summary = self.utilities.getPageSummary(obj)
             if summary:

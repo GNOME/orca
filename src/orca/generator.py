@@ -204,7 +204,7 @@ class Generator:
         try:
             globalsDict['role'] = args.get('role', AXObject.get_role(obj))
         except Exception:
-            msg = 'ERROR: Cannot generate presentation for: %s. Aborting' % obj
+            msg = f'ERROR: Cannot generate presentation for: {obj}. Aborting'
             debug.println(debug.LEVEL_INFO, msg, True)
             return result
         try:
@@ -236,11 +236,10 @@ class Generator:
                 if args.get('includeContext', True):
                     prefix = self._script.formatting.getPrefix(**args)
                     suffix = self._script.formatting.getSuffix(**args)
-                    formatting = '%s + %s + %s' % (prefix, formatting, suffix)
+                    formatting = f'{prefix} + {formatting} + {suffix}'
                 args['recursing'] = True
 
-            msg = '%s GENERATOR: Starting %s generation for %s (%s)' % \
-                (self._mode.upper(), args.get('formatType'), obj, args.get('role'))
+            msg = f"{self._mode.upper()} GENERATOR: Starting {args.get('formatType')} generation for {obj} ({args.get('role')})"
             debug.println(debug.LEVEL_INFO, msg, True)
 
             # Reset 'usedDescriptionFor*' if a previous generator used it.
@@ -267,20 +266,19 @@ class Generator:
                         debug.printException(debug.LEVEL_SEVERE)
                         break
                     globalsDict[arg] = self._methodsDict[arg](obj, **args)
-                    duration = "%.4f" % (time.time() - currentTime)
+                    duration = f"{time.time() - currentTime:.4f}"
                     if isinstance(globalsDict[arg], list):
                         stringResult = " ".join(filter(lambda x: x,
                                                         map(debuginfo, globalsDict[arg])))
                         debug.println(debug.LEVEL_ALL,
-                                      "%sGENERATION TIME: %s  ---->  %s=[%s]" \
-                                      % (" " * 18, duration, arg, stringResult))
+                                      f"{' ' * 18}GENERATION TIME: {duration}  ---->  {arg}=[{stringResult}]")
 
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
-        duration = "%.4f" % (time.time() - startTime)
-        debug.println(debug.LEVEL_ALL, "%sCOMPLETION TIME: %s" % (' ' * 18, duration))
+        duration = f"{time.time() - startTime:.4f}"
+        debug.println(debug.LEVEL_ALL, f"{' ' * 18}COMPLETION TIME: {duration}")
         self._debugResultInfo(result)
         if args.get('isProgressBarUpdate') and result and result[0]:
             self.setProgressBarUpdateTimeAndValue(obj)
@@ -291,14 +289,14 @@ class Generator:
         if not includeAll:
             return str(element).replace("\n", "\\n")
 
-        return "\n%s'%s'" % (" " * 18, element)
+        return f"\n{' ' * 18}'{element}'"
 
     def _debugResultInfo(self, result):
         if debug.LEVEL_ALL < debug.debugLevel:
             return
 
-        info = "%s%s GENERATOR: Results: " % (" " * 18, self._mode.upper())
-        info += "%s" % " ".join(map(self._resultElementToString, result))
+        info = f"{' ' * 18}{self._mode.upper()} GENERATOR: Results: "
+        info += f"{' '.join(map(self._resultElementToString, result))}"
         debug.println(debug.LEVEL_ALL, info)
 
     #####################################################################
@@ -412,7 +410,7 @@ class Generator:
 
         # If all of the words in the name are in the label, the name is redundant.
         if set(nameWords).issubset(set(labelWords)):
-            msg = "GENERATOR: name '%s' is redundant to label '%s'" % (name[0], label[0])
+            msg = f"GENERATOR: name '{name[0]}' is redundant to label '{label[0]}'"
             debug.println(debug.LEVEL_INFO, msg, True)
             return result
 
@@ -600,7 +598,7 @@ class Generator:
 
         errorMessage = self._script.utilities.getErrorMessage(obj)
         if errorMessage:
-            result.append("%s: %s" % (indicator, errorMessage))
+            result.append(f"{indicator}: {errorMessage}")
         else:
             result.append(indicator)
 
@@ -823,9 +821,9 @@ class Generator:
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and args.get('formatType') not in ['basicWhereAmI', 'detailedWhereAmI']:
-                text = "%s %s" % (text, roleString)
+                text = f"{text} {roleString}"
         elif args.get('mode') == 'braille':
-            text = "%s %s" % (text, roleString)
+            text = f"{text} {roleString}"
 
         result.append(text)
         return result
@@ -849,9 +847,9 @@ class Generator:
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and args.get('formatType') not in ['basicWhereAmI', 'detailedWhereAmI']:
-                text = "%s %s" % (text, roleString)
+                text = f"{text} {roleString}"
         elif args.get('mode') == 'braille':
-            text = "%s %s" % (text, roleString)
+            text = f"{text} {roleString}"
 
         result.append(text)
         return result
@@ -1250,7 +1248,7 @@ class Generator:
         percent = self._script.utilities.getValueAsPercent(obj)
         lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj, type=self)
         if percent == lastValue:
-            msg = "GENERATOR: Not presenting update for %s. Value still %s" % (obj, percent)
+            msg = f"GENERATOR: Not presenting update for {obj}. Value still {percent}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 

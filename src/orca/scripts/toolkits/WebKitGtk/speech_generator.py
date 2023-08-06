@@ -193,7 +193,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if shortcut:
             if _settingsManager.getSetting('speechVerbosityLevel') == \
                settings.VERBOSITY_LEVEL_VERBOSE:
-                shortcut = 'Alt Shift %s' % shortcut
+                shortcut = f'Alt Shift {shortcut}'
             result = [keynames.localizeKeySequence(shortcut)]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 

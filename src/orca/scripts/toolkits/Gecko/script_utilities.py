@@ -76,7 +76,7 @@ class Utilities(web.Utilities):
 
         if (AXUtilities.is_menu(obj) or AXUtilities.is_tool_tip(obj)) \
            and self.topLevelObject(obj) == AXObject.get_parent(obj):
-            msg = "GECKO: %s is suspected to be off screen object" % obj
+            msg = f"GECKO: {obj} is suspected to be off screen object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -100,7 +100,7 @@ class Utilities(web.Utilities):
             return False
 
         rv = AXObject.get_name(obj1) == AXObject.get_name(obj2)
-        msg = "GECKO: Treating %s and %s as same object: %s" % (obj1, obj2, rv)
+        msg = f"GECKO: Treating {obj1} and {obj2} as same object: {rv}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -111,7 +111,7 @@ class Utilities(web.Utilities):
             return True
 
         if self.topLevelObject(obj) == AXObject.get_parent(obj):
-            msg = "INFO: %s is suspected to be off screen object" % obj
+            msg = f"INFO: {obj} is suspected to be off screen object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -139,11 +139,11 @@ class Utilities(web.Utilities):
 
         document = self.getDocumentForObject(obj)
         if AXUtilities.is_editable(document):
-            msg = "GECKO: %s is in an editable document: %s" % (obj, document)
+            msg = f"GECKO: {obj} is in an editable document: {document}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        msg = "GECKO: Editable %s not in an editable document" % obj
+        msg = f"GECKO: Editable {obj} not in an editable document"
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
@@ -166,7 +166,7 @@ class Utilities(web.Utilities):
 
     def _objectMightBeBogus(self, obj):
         if AXUtilities.is_section(obj) and AXUtilities.is_frame(AXObject.get_parent(obj)):
-            msg = "GECKO: %s is believed to be a bogus object" % obj
+            msg = f"GECKO: {obj} is believed to be a bogus object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -195,7 +195,7 @@ class Utilities(web.Utilities):
         if not AXObject.supports_editable_text(obj):
             return False
 
-        msg = "GECKO: Treating %s as entry" % obj
+        msg = f"GECKO: Treating {obj} as entry"
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -212,16 +212,16 @@ class Utilities(web.Utilities):
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
         if len(AXUtilities.find_all_entries(obj)) != 1:
-            msg = "GECKO: %s not believed to be quick-find container (entry count)" % obj
+            msg = f"GECKO: {obj} not believed to be quick-find container (entry count)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if len(AXUtilities.find_all_push_buttons(obj)) != 1:
-            msg = "GECKO: %s not believed to be quick-find container (button count)" % obj
+            msg = f"GECKO: {obj} not believed to be quick-find container (button count)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "GECKO: %s believed to be quick-find container (accessibility tree)" % obj
+        msg = f"GECKO: {obj} believed to be quick-find container (accessibility tree)"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._findContainer = obj
         return True
@@ -238,7 +238,7 @@ class Utilities(web.Utilities):
 
         result = self.getFindResultsCount(obj)
         if result:
-            msg = "GECKO: %s believed to be find-in-page container (%s)" % (obj, result)
+            msg = f"GECKO: {obj} believed to be find-in-page container ({result})"
             debug.println(debug.LEVEL_INFO, msg, True)
             self._findContainer = obj
             return True
@@ -246,16 +246,16 @@ class Utilities(web.Utilities):
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
         if len(AXUtilities.find_all_entries(obj)) != 1:
-            msg = "GECKO: %s not believed to be find-in-page container (entry count)" % obj
+            msg = f"GECKO: {obj} not believed to be find-in-page container (entry count)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if len(AXUtilities.find_all_push_buttons(obj)) < 5:
-            msg = "GECKO: %s not believed to be find-in-page container (button count)" % obj
+            msg = f"GECKO: {obj} not believed to be find-in-page container (button count)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "GECKO: %s believed to be find-in-page container (accessibility tree)" % obj
+        msg = f"GECKO: {obj} believed to be find-in-page container (accessibility tree)"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._findContainer = obj
         return True
@@ -273,12 +273,12 @@ class Utilities(web.Utilities):
         toolbar = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
         result = self.isFindContainer(toolbar)
         if result:
-            msg = "GECKO: %s believed to be find-in-page widget (toolbar)" % obj
+            msg = f"GECKO: {obj} believed to be find-in-page widget (toolbar)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._isQuickFind(toolbar):
-            msg = "GECKO: %s believed to be find-in-page widget (quick find)" % obj
+            msg = f"GECKO: {obj} believed to be find-in-page widget (quick find)"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 

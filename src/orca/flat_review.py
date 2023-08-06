@@ -119,7 +119,7 @@ class Word:
                 try:
                     extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
                 except Exception as e:
-                    msg = "FLAT REVIEW: Exception in getRangeExtents: %s" % e
+                    msg = f"FLAT REVIEW: Exception in getRangeExtents: {e}"
                     debug.println(debug.LEVEL_INFO, msg, True)
             chars.append(Char(self, i, start, char, *extents))
 
@@ -244,7 +244,7 @@ class Zone:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for word in self.words:
-            msg = "FLAT REVIEW: Checking %s" % word
+            msg = f"FLAT REVIEW: Checking {word}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
             offset = word.getRelativeOffset(charOffset)
@@ -360,7 +360,7 @@ class ValueZone(Zone):
         rolename = generator.getLocalizedRoleName(self.accessible)
         value = generator.getValue(self.accessible)
         if rolename and value:
-            result = "%s %s" % (rolename, value[0])
+            result = f"{rolename} {value[0]}"
 
         return result
 
@@ -496,18 +496,18 @@ class Context:
         frame, dialog = script.utilities.frameAndDialog(self.focusObj)
         if root is not None:
             self.topLevel = root
-            msg = "FLAT REVIEW: Restricting flat review to %s" % root
+            msg = f"FLAT REVIEW: Restricting flat review to {root}"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             self.topLevel = dialog or frame
-        msg = "FLAT REVIEW: Frame: %s Dialog: %s. Top level: %s" % (frame, dialog, self.topLevel)
+        msg = f"FLAT REVIEW: Frame: {frame} Dialog: {dialog}. Top level: {self.topLevel}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         try:
             component = self.topLevel.queryComponent()
             self.bounds = component.getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting extents of %s" % self.topLevel
+            msg = f"ERROR: Exception getting extents of {self.topLevel}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         containerRoles = [Atspi.Role.MENU]
@@ -643,7 +643,7 @@ class Context:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         lines = self._getLines(accessible, upperMin, lowerMax)
-        msg = "FLAT REVIEW: %i lines found for %s" % (len(lines), accessible)
+        msg = f"FLAT REVIEW: {len(lines)} lines found for {accessible}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         for string, startOffset, endOffset in lines:
@@ -748,7 +748,7 @@ class Context:
         def _toString(x):
             if AXObject.get_name(x):
                 return str(x)
-            return "%s: '%s'" % (x, self.script.utilities.displayedText(x))
+            return f"{x}: '{self.script.utilities.displayedText(x)}'"
 
         msg = "FLAT REVIEW: Current %s (line: %i, zone: %i, word: %i, char: %i)" % \
               (_toString(self.getCurrentAccessible()),
@@ -756,7 +756,7 @@ class Context:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         zone = self._findZoneWithObject(obj)
-        msg = "FLAT REVIEW: Zone with %s is %s" % (obj, zone)
+        msg = f"FLAT REVIEW: Zone with {obj} is {zone}"
         debug.println(debug.LEVEL_INFO, msg, True)
         if zone is None:
             return False
@@ -798,7 +798,7 @@ class Context:
             # text of the tree item, that section will be in the flat review tree
             # but the ancestor item might not.
             if AXObject.is_ancestor(zone.accessible, obj):
-                msg = "FLAT REVIEW: %s is ancestor of zone accessible %s" % (zone.accessible, obj)
+                msg = f"FLAT REVIEW: {zone.accessible} is ancestor of zone accessible {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return zone
 
@@ -811,7 +811,7 @@ class Context:
             boundingbox = self.bounds
 
         objs = self.script.utilities.getOnScreenObjects(root, boundingbox)
-        msg = "FLAT REVIEW: %i on-screen objects found for %s" % (len(objs), root)
+        msg = f"FLAT REVIEW: {len(objs)} on-screen objects found for {root}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         allZones, focusZone = [], None
@@ -830,7 +830,7 @@ class Context:
                 zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
                 focusZone = zones[0]
 
-        msg = "FLAT REVIEW: %i zones found for %s" % (len(allZones), root)
+        msg = f"FLAT REVIEW: {len(allZones)} zones found for {root}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return allZones, focusZone
 
@@ -860,7 +860,7 @@ class Context:
                 zone.line = lines[lineIndex]
                 zone.index = zoneIndex
 
-        msg = "FLAT REVIEW: Zones clustered into %i lines" % len(lines)
+        msg = f"FLAT REVIEW: Zones clustered into {len(lines)} lines"
         debug.println(debug.LEVEL_INFO, msg, True)
         return lines
 

@@ -72,7 +72,7 @@ class Script(Gecko.Script):
 
         table = self.utilities.getTable(orca_state.locusOfFocus)
         if table and not self.utilities.isTextDocumentTable(table):
-            msg = "SEAMONKEY: Ignoring, locusOfFocus is %s" % orca_state.locusOfFocus
+            msg = f"SEAMONKEY: Ignoring, locusOfFocus is {orca_state.locusOfFocus}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -103,11 +103,11 @@ class Script(Gecko.Script):
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
-            msg = "SEAMONKEY: Using focus mode for editable message %s" % obj
+            msg = f"SEAMONKEY: Using focus mode for editable message {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        msg = "SEAMONKEY: %s is not an editable message." % obj
+        msg = f"SEAMONKEY: {obj} is not an editable message."
         debug.println(debug.LEVEL_INFO, msg, True)
         return super().useFocusMode(obj, prevObj)
 

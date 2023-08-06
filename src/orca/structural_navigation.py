@@ -114,7 +114,7 @@ class StructuralNavigationObject:
         previousBinding = self.bindings.get("previous")
         if previousBinding:
             [keysymstring, modifiers, description] = previousBinding
-            handlerName = "%sGoPrevious" % self.objType
+            handlerName = f"{self.objType}GoPrevious"
             self.inputEventHandlers[handlerName] = \
                 input_event.InputEventHandler(self.goPrevious, description)
 
@@ -130,7 +130,7 @@ class StructuralNavigationObject:
         nextBinding = self.bindings.get("next")
         if nextBinding:
             [keysymstring, modifiers, description] = nextBinding
-            handlerName = "%sGoNext" % self.objType
+            handlerName = f"{self.objType}GoNext"
             self.inputEventHandlers[handlerName] = \
                 input_event.InputEventHandler(self.goNext, description)
 
@@ -146,7 +146,7 @@ class StructuralNavigationObject:
         listBinding = self.bindings.get("list")
         if listBinding:
             [keysymstring, modifiers, description] = listBinding
-            handlerName = "%sShowList" % self.objType
+            handlerName = f"{self.objType}ShowList"
             self.inputEventHandlers[handlerName] = \
                 input_event.InputEventHandler(self.showList, description)
 
@@ -239,7 +239,7 @@ class StructuralNavigationObject:
                 continue
 
             handler = self.goDirectionFactory(direction)
-            handlerName = "%sGo%s" % (self.objType, direction)
+            handlerName = f"{self.objType}Go{direction}"
             keysymstring, modifiers, description = binding
 
             self.inputEventHandlers[handlerName] = \
@@ -313,7 +313,7 @@ class StructuralNavigationObject:
 
         title, columnHeaders, rowData = self._dialogData()
         count = len(objects)
-        title = "%s: %s" % (title, messages.itemsFound(count))
+        title = f"{title}: {messages.itemsFound(count)}"
         if not count:
             script.presentMessage(title)
             return
@@ -378,7 +378,7 @@ class StructuralNavigationObject:
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
             count = len(objects)
-            title = "%s: %s" % (title, messages.itemsFound(count))
+            title = f"{title}: {messages.itemsFound(count)}"
             if not count:
                 script.presentMessage(title)
                 return
@@ -610,30 +610,30 @@ class StructuralNavigation:
         """
 
         # Bindings and presentation are mandatory.
-        bindings = eval("self._%sBindings()" % name)
-        presentation = eval("self._%sPresentation" % name)
+        bindings = eval(f"self._{name}Bindings()")
+        presentation = eval(f"self._{name}Presentation")
 
         # Predicates should be the exception; not the rule.
         try:
-            predicate = eval("self._%sPredicate" % name)
+            predicate = eval(f"self._{name}Predicate")
         except Exception:
             predicate = None
 
         # Dialogs are nice, but we shouldn't insist upon them.
         try:
-            dialogData = eval("self._%sDialogData" % name)
+            dialogData = eval(f"self._{name}DialogData")
         except Exception:
             dialogData = None
 
         # Criteria is the present, but being phased out.
         try:
-            criteria = eval("self._%sCriteria" % name)
+            criteria = eval(f"self._{name}Criteria")
         except Exception:
             criteria = None
 
         # Getters are the future!
         try:
-            getter = eval("self._%sGetter" % name)
+            getter = eval(f"self._{name}Getter")
         except Exception:
             getter = None
 
@@ -791,18 +791,17 @@ class StructuralNavigation:
         modalDialog = self._script.utilities.getModalDialog(orca_state.locusOfFocus)
         inModalDialog = bool(modalDialog)
         if self._inModalDialog != inModalDialog:
-            msg = "STRUCTURAL NAVIGATION: in modal dialog has changed from %s to %s" % \
-                (self._inModalDialog, inModalDialog)
+            msg = f"STRUCTURAL NAVIGATION: in modal dialog has changed from {self._inModalDialog} to {inModalDialog}"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCache()
             self._inModalDialog = inModalDialog
 
         document = self._script.utilities.documentFrame()
         cache = self._objectCache.get(hash(document), {})
-        key = "%s:%s" % (structuralNavigationObject.objType, arg)
+        key = f"{structuralNavigationObject.objType}:{arg}"
         matches = cache.get(key, [])
         if matches:
-            msg = "STRUCTURAL NAVIGATION: Returning %i matches from cache" % len(matches)
+            msg = f"STRUCTURAL NAVIGATION: Returning {len(matches)} matches from cache"
             debug.println(debug.LEVEL_INFO, msg, True)
             return matches.copy()
 
@@ -811,7 +810,7 @@ class StructuralNavigation:
         elif not structuralNavigationObject.criteria:
             return []
         elif not AXObject.supports_collection(document):
-            msg = "STRUCTURAL NAVIGATION: %s does not support collection" % document
+            msg = f"STRUCTURAL NAVIGATION: {document} does not support collection"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
         else:
@@ -1162,12 +1161,12 @@ class StructuralNavigation:
         if not AXUtilities.is_defunct(obj):
             return obj, characterOffset
 
-        msg = "STRUCTURAL NAVIGATION: %s became defunct after setting caret position" % obj
+        msg = f"STRUCTURAL NAVIGATION: {obj} became defunct after setting caret position"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         replicant = self._script.utilities.getObjectFromPath(objPath)
         if replicant and AXObject.get_role(replicant) == objRole:
-            msg = "STRUCTURAL NAVIGATION: Updating obj to replicant %s" % replicant
+            msg = f"STRUCTURAL NAVIGATION: Updating obj to replicant {replicant}"
             debug.println(debug.LEVEL_INFO, msg, True)
             obj = replicant
 
@@ -2123,11 +2122,11 @@ class StructuralNavigation:
             self._script.presentMessage(self._getTableDescription(obj))
             cell = obj.queryTable().getAccessibleAt(0, 0)
             if not cell:
-                msg = 'ERROR: Broken table interface for %s' % obj
+                msg = f'ERROR: Broken table interface for {obj}'
                 debug.println(debug.LEVEL_INFO, msg)
                 cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell)
                 if cell:
-                    msg = 'HACK: Located %s for first cell' % cell
+                    msg = f'HACK: Located {cell} for first cell'
                     debug.println(debug.LEVEL_INFO, msg)
 
             self.lastTableCell = [0, 0]

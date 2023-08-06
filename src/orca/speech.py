@@ -56,7 +56,7 @@ def _initSpeechServer(moduleName, speechServerInfo):
 
     factory = None
     try:
-        factory = importlib.import_module('orca.%s' % moduleName)
+        factory = importlib.import_module(f'orca.{moduleName}')
     except Exception:
         try:
             factory = importlib.import_module(moduleName)
@@ -72,11 +72,11 @@ def _initSpeechServer(moduleName, speechServerInfo):
     if not _speechserver:
         _speechserver = factory.SpeechServer.getSpeechServer()
         if speechServerInfo:
-            msg = 'SPEECH: Invalid speechServerInfo: %s' % speechServerInfo
+            msg = f'SPEECH: Invalid speechServerInfo: {speechServerInfo}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
     if not _speechserver:
-        raise Exception("ERROR: No speech server for factory: %s" % moduleName)
+        raise Exception(f"ERROR: No speech server for factory: {moduleName}")
 
 def init():
     debug.println(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
@@ -100,7 +100,7 @@ def init():
                     debug.printException(debug.LEVEL_SEVERE)
 
     if _speechserver:
-        msg = 'SPEECH: Using speech server factory: %s' % moduleName
+        msg = f'SPEECH: Using speech server factory: {moduleName}'
         debug.println(debug.LEVEL_INFO, msg, True)
     else:
         msg = 'SPEECH: Not available'
@@ -154,7 +154,7 @@ def _speak(text, acss, interrupt):
         for key in settings.voices:
             if acss == settings.voices[key]:
                 if key != settings.DEFAULT_VOICE:
-                    extraDebug = " voice=%s" % key
+                    extraDebug = f" voice={key}"
                 break
 
     debug.println(debug.LEVEL_INFO, logLine + extraDebug + str(acss), True)
@@ -186,7 +186,7 @@ def speak(content, acss=None, interrupt=True):
 
     global _timestamp
     if _timestamp:
-        msg = "SPEECH: Last spoke %.4f seconds ago" % (time.time() - _timestamp)
+        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
         debug.println(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
@@ -240,8 +240,8 @@ def speakKeyEvent(event, acss=None):
     keyname = event.getKeyName()
     lockingStateString = event.getLockingStateString()
     acss = __resolveACSS(acss)
-    msg = "%s %s" % (keyname, lockingStateString)
-    logLine = "SPEECH OUTPUT: '%s' %s" % (msg.strip(), acss)
+    msg = f"{keyname} {lockingStateString}"
+    logLine = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
     debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
@@ -265,7 +265,7 @@ def speakCharacter(character, acss=None):
     acss = __resolveACSS(acss)
     msg = "SPEECH OUTPUT: '" + character + "' " + str(acss)
     debug.println(debug.LEVEL_INFO, msg, True)
-    log.info("SPEECH OUTPUT: '%s'" % character)
+    log.info(f"SPEECH OUTPUT: '{character}'")
 
     if _speechserver:
         _speechserver.speakCharacter(character, acss=acss)

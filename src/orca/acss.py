@@ -95,7 +95,7 @@ class ACSS(dict):
         if names:
             names.sort()
             for  k in names:
-                _name += "%s-%s:" % (k, self[k])
+                _name += f"{k}-{self[k]}:"
         _name = _name[:-1]
         return _name
 

@@ -56,7 +56,7 @@ class BrailleGenerator(web.BrailleGenerator):
 
         oldRole = None
         if self._script.utilities.treatAsMenu(obj):
-            msg = "CHROMIUM: HACK? Displaying menu item as menu %s" % obj
+            msg = f"CHROMIUM: HACK? Displaying menu item as menu {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             oldRole = self._overrideRole(Atspi.Role.MENU, args)
 

@@ -35,7 +35,7 @@ try:
     from gi.repository import Gtk
     CAIRO_AVAILABLE = True
 except Exception as e:
-    msg = "HIGHLIGHTER: GtkHighlighter unavailable: %s" % e
+    msg = f"HIGHLIGHTER: GtkHighlighter unavailable: {e}"
     debug.println(debug.LEVEL_INFO, msg, True)
     CAIRO_AVAILABLE = False
 
@@ -199,7 +199,7 @@ class GtkHighlighter(Highlighter):
             self._gui.move(x - self._padding, y - self._padding)
             self._gui.resize(width + 2 * self._padding, height + 2 * self._padding)
         except Exception as e:
-            msg = "GTK HIGHLIGHTER: Exception: %s" % e
+            msg = f"GTK HIGHLIGHTER: Exception: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             self._gui.show_all()

@@ -118,7 +118,7 @@ class _StringContext:
         if not (self._string and self._string.strip() in other._string):
             return False
 
-        msg = "MOUSE REVIEW: '%s' is substring of '%s'" % (self._string, other._string)
+        msg = f"MOUSE REVIEW: '{self._string}' is substring of '{other._string}'"
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -205,7 +205,7 @@ class _ItemContext:
 
         interval = self._time - prior._time
         if interval > 0.5:
-            msg = "MOUSE REVIEW: Not a duplicate: was %.2fs ago" % interval
+            msg = f"MOUSE REVIEW: Not a duplicate: was {interval:.2f}s ago"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -478,7 +478,7 @@ class MouseReviewer:
         obj = self._currentMouseOver.getObject()
 
         if time.time() - self._currentMouseOver.getTime() > 0.1:
-            msg = "MOUSE REVIEW: Treating %s as stale" % obj
+            msg = f"MOUSE REVIEW: Treating {obj} as stale"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -620,7 +620,7 @@ class MouseReviewer:
         script = _scriptManager.getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
-                msg = "MOUSE REVIEW: %s believed to be under %s" % (obj, menu)
+                msg = f"MOUSE REVIEW: {obj} believed to be under {menu}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
@@ -628,7 +628,7 @@ class MouseReviewer:
         if objDocument and script.utilities.inDocumentContent():
             document = script.utilities.activeDocument()
             if document != objDocument:
-                msg = "MOUSE REVIEW: %s is not in active document %s" % (obj, document)
+                msg = f"MOUSE REVIEW: {obj} is not in active document {document}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
@@ -657,7 +657,7 @@ class MouseReviewer:
         """Generic listener, mainly to output debugging info."""
 
         startTime = time.time()
-        msg = "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" % event.type
+        msg = f"\nvvvvv PROCESS OBJECT EVENT {event.type} vvvvv"
         debug.println(debug.LEVEL_INFO, msg, False)
 
         if event.type.startswith("mouse:abs"):
@@ -665,8 +665,8 @@ class MouseReviewer:
             self._on_mouse_moved(event)
             self.inMouseEvent = False
 
-        msg = "TOTAL PROCESSING TIME: %.4f\n" % (time.time() - startTime)
-        msg += "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type
+        msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}\n"
+        msg += f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
         debug.println(debug.LEVEL_INFO, msg, False)
 
 

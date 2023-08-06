@@ -152,7 +152,7 @@ class ObjectNavigator:
         """Returns True if obj should be excluded from simple navigation."""
 
         if self._include_in_simple_navigation(obj):
-            msg = "OBJECT NAVIGATOR: Not excluding %s: explicit inclusion" % obj
+            msg = f"OBJECT NAVIGATOR: Not excluding {obj}: explicit inclusion"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -164,11 +164,11 @@ class ObjectNavigator:
         # You do not want to exclude table cells and headers because it will make the
         # selectable items in tables non-navigable (e.g. the mail folders in Evolution)
         if script.utilities.isLayoutOnly(obj):
-            msg = "OBJECT NAVIGATOR: Excluding %s: is layout only" % obj
+            msg = f"OBJECT NAVIGATOR: Excluding {obj}: is layout only"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        msg = "OBJECT NAVIGATOR: Not excluding %s" % obj
+        msg = f"OBJECT NAVIGATOR: Not excluding {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
@@ -225,7 +225,7 @@ class ObjectNavigator:
     def present(self, script):
         """Presents the current navigator focus to the user."""
 
-        msg = "OBJECT NAVIGATOR: Presenting %s" % self._navigator_focus
+        msg = f"OBJECT NAVIGATOR: Presenting {self._navigator_focus}"
         debug.println(debug.LEVEL_INFO, msg, True)
         orca.emitRegionChanged(self._navigator_focus, mode=orca.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)

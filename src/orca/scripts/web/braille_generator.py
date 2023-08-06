@@ -218,11 +218,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def generateBraille(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            msg = "WEB: %s is not in document content. Calling default braille generator." % obj
+            msg = f"WEB: {obj} is not in document content. Calling default braille generator."
             debug.println(debug.LEVEL_INFO, msg, True)
             return super().generateBraille(obj, **args)
 
-        msg = "WEB: Generating braille for document object %s" % obj
+        msg = f"WEB: Generating braille for document object {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         result = []

@@ -263,7 +263,7 @@ class LiveRegionManager:
         if not self.monitoring:
             self.msg_queue.purgeByKeepAlive()
 
-        msg = 'LIVE REGIONS: messages in queue: %i' % len(self.msg_queue)
+        msg = f'LIVE REGIONS: messages in queue: {len(self.msg_queue)}'
         debug.println(debug.LEVEL_INFO, msg, True)
         debug.println(debug.eventDebugLevel, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
 
@@ -389,7 +389,7 @@ class LiveRegionManager:
         rule = AXCollection.create_match_rule(attributes=attrs)
         result = AXCollection.get_all_matches(document, rule)
 
-        msg = 'LIVE REGIONS: %i regions found' % len(result)
+        msg = f'LIVE REGIONS: {len(result)} regions found'
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
