@@ -83,8 +83,8 @@ class Utilities:
 
     flags = re.UNICODE
     WORDS_RE = re.compile(r"(\W+)", flags)
-    SUPERSCRIPTS_RE = re.compile("[%s]+" % "".join(SUPERSCRIPT_DIGITS), flags)
-    SUBSCRIPTS_RE = re.compile("[%s]+" % "".join(SUBSCRIPT_DIGITS), flags)
+    SUPERSCRIPTS_RE = re.compile(f"[{''.join(SUPERSCRIPT_DIGITS)}]+", flags)
+    SUBSCRIPTS_RE = re.compile(f"[{''.join(SUBSCRIPT_DIGITS)}]+", flags)
     PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
     # generatorCache
@@ -115,17 +115,17 @@ class Utilities:
 
     def _isActiveAndShowingAndNotIconified(self, obj):
         if not AXUtilities.is_active(obj):
-            msg = "INFO: %s lacks state active" % obj
+            msg = f"INFO: {obj} lacks state active"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_iconified(obj):
-            msg = "INFO: %s has state iconified" % obj
+            msg = f"INFO: {obj} has state iconified"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not AXUtilities.is_showing(obj):
-            msg = "INFO: %s lacks state showing" % obj
+            msg = f"INFO: {obj} lacks state showing"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -139,12 +139,12 @@ class Utilities:
         try:
             pid = app.get_process_id()
         except Exception:
-            msg = "ERROR: Exception getting process id of %s. May be defunct." % app
+            msg = f"ERROR: Exception getting process id of {app}. May be defunct."
             debug.println(debug.LEVEL_INFO, msg, True)
             return ""
 
         try:
-            cmdline = subprocess.getoutput("cat /proc/%s/cmdline" % pid)
+            cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
         except Exception:
             return ""
 
@@ -155,18 +155,18 @@ class Utilities:
             return False
 
         app = AXObject.get_application(window)
-        msg = "INFO: Looking at %s from %s %s" % (window, app, self._getAppCommandLine(app))
+        msg = f"INFO: Looking at {window} from {app} {self._getAppCommandLine(app)}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if clearCache:
             AXObject.clear_cache(window)
 
         if not self._isActiveAndShowingAndNotIconified(window):
-            msg = "INFO: %s is not active and showing, or is iconified" % window
+            msg = f"INFO: {window} is not active and showing, or is iconified"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "INFO: %s can be active window" % window
+        msg = f"INFO: {window} can be active window"
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -179,31 +179,31 @@ class Utilities:
             candidates.extend([c for c in AXObject.iter_children(app, self.canBeActiveWindow)])
 
         if not candidates:
-            msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
+            msg = f"ERROR: Unable to find active window from {list(map(str, apps))}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if len(candidates) == 1:
-            msg = "INFO: Active window is %s" % candidates[0]
+            msg = f"INFO: Active window is {candidates[0]}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return candidates[0]
 
-        msg = "WARNING: These windows all claim to be active: %s" % list(map(str, candidates))
+        msg = f"WARNING: These windows all claim to be active: {list(map(str, candidates))}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         filtered = []
         for candidate in candidates:
             if self.isDesktop(candidate):
-                msg = "INFO: Rejecting %s because it's the desktop frame" % candidate
+                msg = f"INFO: Rejecting {candidate} because it's the desktop frame"
                 debug.println(debug.LEVEL_INFO, msg, True)
             elif AXObject.get_name(AXObject.get_application(candidate)) == "mutter-x11-frames":
-                msg = "INFO: Rejecting %s because app is mutter-x11-frames" % candidate
+                msg = f"INFO: Rejecting {candidate} because app is mutter-x11-frames"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 filtered.append(candidate)
 
         if len(filtered) == 1:
-            msg = "INFO: Active window is believed to be %s" % filtered[0]
+            msg = f"INFO: Active window is believed to be {filtered[0]}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return filtered[0]
 
@@ -216,23 +216,23 @@ class Utilities:
         refiltered = []
         for frame in filtered:
             if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
-                msg = "INFO: Suspecting %s might be a non-active Electron app" % frame
+                msg = f"INFO: Suspecting {frame} might be a non-active Electron app"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 refiltered.append(frame)
 
         if len(refiltered) == 1:
-            msg = "INFO: Active window is believed to be %s" % refiltered[0]
+            msg = f"INFO: Active window is believed to be {refiltered[0]}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return refiltered[0]
 
         guess = None
         if refiltered:
-            msg = "WARNING: Still have multiple active windows: %s" % list(map(str, refiltered))
+            msg = f"WARNING: Still have multiple active windows: {list(map(str, refiltered))}"
             debug.println(debug.LEVEL_INFO, msg, True)
             guess = refiltered[0]
 
-        msg = "INFO: Active window is: %s" % guess
+        msg = f"INFO: Active window is: {guess}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return guess
 
@@ -282,7 +282,7 @@ class Utilities:
             return AXObject.get_index_in_parent(x) >= 0
 
         nodes = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF, pred)
-        msg = "INFO: %i child nodes for %s found via node-parent-of" % (len(nodes), obj)
+        msg = f"INFO: {len(nodes)} child nodes for {obj} found via node-parent-of"
         debug.println(debug.LEVEL_INFO, msg, True)
         if nodes:
             return nodes
@@ -306,7 +306,7 @@ class Utilities:
             elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
 
-        msg = "INFO: %i child nodes for %s found via node-child-of" % (len(nodes), obj)
+        msg = f"INFO: {len(nodes)} child nodes for {obj} found via node-child-of"
         debug.println(debug.LEVEL_INFO, msg, True)
         return nodes
 
@@ -318,7 +318,7 @@ class Utilities:
         - b: Accessible
         """
 
-        msg = 'INFO: Looking for common ancestor of %s and %s' % (a, b)
+        msg = f'INFO: Looking for common ancestor of {a} and {b}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         # Don't do any Zombie checks here, as tempting and logical as it
@@ -353,7 +353,7 @@ class Utilities:
             else:
                 break
 
-        msg = 'INFO: Common ancestor of %s and %s is %s' % (a, b, commonAncestor)
+        msg = f'INFO: Common ancestor of {a} and {b} is {commonAncestor}'
         debug.println(debug.LEVEL_INFO, msg, True)
         return commonAncestor
 
@@ -396,7 +396,7 @@ class Utilities:
 
         labels = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         if descriptions == labels:
-            msg = "INFO: %s's described-by targets are the same as labelled-by targets" % obj
+            msg = f"INFO: {obj}'s described-by targets are the same as labelled-by targets"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -514,7 +514,7 @@ class Utilities:
 
         topLevel = self.topLevelObject(obj)
         if topLevel is None:
-            msg = "ERROR: could not find top-level object for %s" % obj
+            msg = f"ERROR: could not find top-level object for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return results
 
@@ -537,7 +537,7 @@ class Utilities:
             else:
                 results[1] = AXObject.find_ancestor(obj, isDialog)
 
-        msg = "INFO: %s is in frame %s and dialog %s" % (obj, results[0], results[1])
+        msg = f"INFO: {obj} is in frame {results[0]} and dialog {results[1]}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return results
 
@@ -985,21 +985,21 @@ class Utilities:
         try:
             value = obj.queryValue()
         except NotImplementedError:
-            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            msg = f"ERROR: {obj} doesn't implement AtspiValue"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         except Exception:
-            msg = "ERROR: Exception getting value for %s" % obj
+            msg = f"ERROR: Exception getting value for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         else:
             try:
                 if value.maximumValue == value.minimumValue:
-                    msg = "INFO: %s is busy indicator" % obj
+                    msg = f"INFO: {obj} is busy indicator"
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return False
             except Exception:
-                msg = "INFO: %s is either busy indicator or broken" % obj
+                msg = f"INFO: {obj} is either busy indicator or broken"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
@@ -1029,13 +1029,13 @@ class Utilities:
             topLevel = self.topLevelObject(obj)
             if topLevel == orca_state.activeWindow:
                 return True, "Verbosity is window"
-            return False, "Window %s is not %s" % (topLevel, orca_state.activeWindow)
+            return False, f"Window {topLevel} is not {orca_state.activeWindow}"
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
             app = AXObject.get_application(obj)
             if app == orca_state.activeScript.app:
                 return True, "Verbosity is app"
-            return False, "App %s is not %s" % (app, orca_state.activeScript.app)
+            return False, f"App {app} is not {orca_state.activeScript.app}"
 
         return True, "Not handled by any other case"
 
@@ -1044,16 +1044,16 @@ class Utilities:
             value = obj.queryValue()
             minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
         except NotImplementedError:
-            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            msg = f"ERROR: {obj} doesn't implement AtspiValue"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
         except Exception:
-            msg = "ERROR: Exception getting value for %s" % obj
+            msg = f"ERROR: Exception getting value for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if AXUtilities.is_indeterminate(obj):
-            msg = "INFO: %s has state indeterminate and value of %s" % (obj, val)
+            msg = f"INFO: {obj} has state indeterminate and value of {val}"
             debug.println(debug.LEVEL_INFO, msg, True)
             if val <= 0:
                 return None
@@ -1107,7 +1107,7 @@ class Utilities:
 
     def isTopLevelDocument(self, obj):
         result = self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
-        msg = "INFO: %s is top-level document: %s" % (obj, result)
+        msg = f"INFO: {obj} is top-level document: {result}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -1243,7 +1243,7 @@ class Utilities:
             result = object_properties.SORT_ORDER_OTHER
 
         if includeName and AXObject.get_name(obj):
-            result = "%s. %s" % (AXObject.get_name(obj), result)
+            result = f"{AXObject.get_name(obj)}. {result}"
 
         return result
 
@@ -1314,11 +1314,11 @@ class Utilities:
             try:
                 table = obj.queryTable()
             except NotImplementedError:
-                msg = 'ERROR: Table %s does not implement table interface' % obj
+                msg = f'ERROR: Table {obj} does not implement table interface'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
             except Exception:
-                msg = 'ERROR: Exception querying table interface of %s' % obj
+                msg = f'ERROR: Exception querying table interface of {obj}'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
             else:
@@ -1386,7 +1386,7 @@ class Utilities:
                 layoutOnly = True
 
         if layoutOnly:
-            msg = 'INFO: %s is deemed to be layout only' % obj
+            msg = f'INFO: {obj} is deemed to be layout only'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return layoutOnly
@@ -1515,7 +1515,7 @@ class Utilities:
                 and extents1.height > 0:
                 return True
         except Exception as e:
-            msg = "ERROR: Exception in isSameObject (%s vs %s): %s" % (obj1, obj2, e)
+            msg = f"ERROR: Exception in isSameObject ({obj1} vs {obj2}): {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return False
@@ -1715,11 +1715,11 @@ class Utilities:
             # infinite cycle of nodes.  Bon Echo has been seen to do
             # this (see bug 351847).
             if nodes.count(node):
-                msg = 'ERROR: %s is already in the list of nodes for %s' % (node, obj)
+                msg = f'ERROR: {node} is already in the list of nodes for {obj}'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 done = True
             if len(nodes) > 100:
-                msg = 'INFO: More than 100 nodes found for %s' % obj
+                msg = f'INFO: More than 100 nodes found for {obj}'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 done = True
             elif node:
@@ -1738,37 +1738,37 @@ class Utilities:
             return False
 
         if not self.isShowingAndVisible(obj):
-            msg = "INFO: %s is not showing and visible" % obj
+            msg = f"INFO: {obj} is not showing and visible"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         try:
             box = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting extents for %s" % obj
+            msg = f"ERROR: Exception getting extents for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "INFO: Extents for %s are: %s" % (obj, box)
+        msg = f"INFO: Extents for {obj} are: {box}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if box.x > 10000 or box.y > 10000:
-            msg = "INFO: %s seems to have bogus coordinates" % obj
+            msg = f"INFO: {obj} seems to have bogus coordinates"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
-            msg = "INFO: %s has negative coordinates" % obj
+            msg = f"INFO: {obj} has negative coordinates"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not (box.width or box.height):
             if not AXObject.get_child_count(obj):
-                msg = "INFO: %s has no size and no children" % obj
+                msg = f"INFO: {obj} has no size and no children"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
             if AXUtilities.is_menu(obj):
-                msg = "INFO: %s has no size" % obj
+                msg = f"INFO: {obj} has no size"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
@@ -1778,7 +1778,7 @@ class Utilities:
             return True
 
         if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
-            msg = "INFO: %s %s not in %s" % (obj, box, boundingbox)
+            msg = f"INFO: {obj} {box} not in {boundingbox}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -1857,7 +1857,7 @@ class Utilities:
             return [root]
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
-            msg = "INFO: %s is empty filler. Clearing cache." % root
+            msg = f"INFO: {root} is empty filler. Clearing cache."
             debug.println(debug.LEVEL_INFO, msg, True)
             AXObject.clear_cache(root)
             msg = "INFO: %s reports %i children" % (root, AXObject.get_child_count(root))
@@ -1868,7 +1868,7 @@ class Utilities:
                 component = root.queryComponent()
                 extents = component.getExtents(Atspi.CoordType.SCREEN)
             except Exception:
-                msg = "ERROR: Exception getting extents of %s" % root
+                msg = f"ERROR: Exception getting extents of {root}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 extents = 0, 0, 0, 0
 
@@ -2002,7 +2002,7 @@ class Utilities:
             self._script.pointOfReference['statusBarItems'] = items
 
         end = time.time()
-        msg = "INFO: Time getting status bar items: %.4f" % (end - start)
+        msg = f"INFO: Time getting status bar items: {end - start:.4f}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         return items
@@ -2024,7 +2024,7 @@ class Utilities:
             return False
 
         rv = orca_state.locusOfFocus == self.topLevelObject(orca_state.locusOfFocus)
-        msg = "INFO: %s is top-level object: %s" % (orca_state.locusOfFocus, rv)
+        msg = f"INFO: {orca_state.locusOfFocus} is top-level object: {rv}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -2041,11 +2041,11 @@ class Utilities:
         for i in range(AXObject.get_child_count(app)):
             window = AXObject.get_child(app, i)
             if AXObject.find_descendant(window, lambda x: x == child) is not None:
-                msg = "INFO: %s contains %s" % (window, child)
+                msg = f"INFO: {window} contains {child}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return window
 
-            msg = "INFO: %s does not contain %s" % (window, child)
+            msg = f"INFO: {window} does not contain {child}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return None
@@ -2067,7 +2067,7 @@ class Utilities:
         else:
             rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
 
-        msg = "INFO: %s is top-level object for: %s" % (rv, obj)
+        msg = f"INFO: {rv} is top-level object for: {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if rv is None and useFallbackSearch:
@@ -2179,7 +2179,7 @@ class Utilities:
         try:
             extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting range extents of %s" % obj
+            msg = f"ERROR: Exception getting range extents of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1, 0, 0
 
@@ -2189,7 +2189,7 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting extents of %s" % obj
+            msg = f"ERROR: Exception getting extents of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1, 0, 0
 
@@ -2205,7 +2205,7 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting extents for %s" % obj
+            msg = f"ERROR: Exception getting extents for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2407,7 +2407,7 @@ class Utilities:
                 selection, start, end = self.selectedText(prevObj)
                 if not selection:
                     break
-                textContents = "%s %s" % (selection, textContents)
+                textContents = f"{selection} {textContents}"
             prevObj = self.findPreviousObject(prevObj)
 
         nextObj = self.findNextObject(obj)
@@ -2416,7 +2416,7 @@ class Utilities:
                 selection, start, end = self.selectedText(nextObj)
                 if not selection:
                     break
-                textContents = "%s %s" % (textContents, selection)
+                textContents = f"{textContents} {selection}"
             nextObj = self.findNextObject(nextObj)
 
         return textContents, startOffset, endOffset
@@ -2453,11 +2453,11 @@ class Utilities:
         try:
             hypertext = obj.queryHypertext()
         except NotImplementedError:
-            msg = "INFO: %s does not implement the hypertext interface" % obj
+            msg = f"INFO: {obj} does not implement the hypertext interface"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
         except Exception:
-            msg = "INFO: Exception querying hypertext interface for %s" % obj
+            msg = f"INFO: Exception querying hypertext interface for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -2496,7 +2496,7 @@ class Utilities:
         try:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
-            msg = "INFO: %s does not implement the hyperlink interface" % obj
+            msg = f"INFO: {obj} does not implement the hyperlink interface"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             # We need to make sure that this is an embedded object in
@@ -2507,7 +2507,7 @@ class Utilities:
                 parent.queryText()
                 offset = hyperlink.startIndex
             except Exception:
-                msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, parent)
+                msg = f"ERROR: Exception getting startIndex for {obj} in parent {parent}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 msg = "INFO: startIndex of %s is %i" % (obj, offset)
@@ -2634,7 +2634,7 @@ class Utilities:
         except NotImplementedError:
             pass
         except Exception:
-            msg = "ERROR: Exception getting character count of %s" % obj
+            msg = f"ERROR: Exception getting character count of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             if charCount:
@@ -2657,7 +2657,7 @@ class Utilities:
             if text:
                 string = text.getText(0, -1)
                 if string:
-                    msg = "HACK: Returning last char in '%s'" % string
+                    msg = f"HACK: Returning last char in '{string}'"
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return string[-1]
 
@@ -2808,7 +2808,7 @@ class Utilities:
             offset = max(end, offset + 1)
 
         endTime = time.time()
-        msg = "INFO: %i attribute ranges found in %.4fs" % (len(rv), endTime - startTime)
+        msg = f"INFO: {len(rv)} attribute ranges found in {endTime - startTime:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -2875,7 +2875,7 @@ class Utilities:
         else:
             localizedValue = text_attribute_names.getTextAttributeName(value, self._script)
 
-        return "%s: %s" % (localizedKey, localizedValue)
+        return f"{localizedKey}: {localizedValue}"
 
     def splitSubstringByLanguage(self, obj, start, end):
         """Returns a list of (start, end, string, language, dialect) tuples."""
@@ -2980,7 +2980,7 @@ class Utilities:
                or (isPunctChar and (style <= level)):
                 repeatChar = chnames.getCharacterName(segment[0])
                 repeatSegment = messages.repeatedCharCount(repeatChar, count)
-                line = "%s %s" % (line, repeatSegment)
+                line = f"{line} {repeatSegment}"
             else:
                 line += segment
         else:
@@ -3004,7 +3004,7 @@ class Utilities:
     def verbalizeAllPunctuation(self, string):
         result = string
         for symbol in set(re.findall(self.PUNCTUATION, result)):
-            charName = " %s " % chnames.getCharacterName(symbol)
+            charName = f" {chnames.getCharacterName(symbol)} "
             result = re.sub(r"\%s" % symbol, charName, result)
 
         return result
@@ -3190,9 +3190,9 @@ class Utilities:
         spans = sorted(spaces + tabs)
         for (start, end) in spans:
             if (start, end) in spaces:
-                result += "%s " % messages.spacesCount(end-start)
+                result += f"{messages.spacesCount(end - start)} "
             else:
-                result += "%s " % messages.tabsCount(end-start)
+                result += f"{messages.tabsCount(end - start)} "
 
         return result
 
@@ -3512,25 +3512,25 @@ class Utilities:
             maxValue = value.maximumValue
         except (LookupError, RuntimeError):
             maxValue = 0.0
-            msg = 'ERROR: Exception getting maximumValue for %s' % obj
+            msg = f'ERROR: Exception getting maximumValue for {obj}'
             debug.println(debug.LEVEL_INFO, msg, True)
         try:
             minValue = value.minimumValue
         except (LookupError, RuntimeError):
             minValue = 0.0
-            msg = 'ERROR: Exception getting minimumValue for %s' % obj
+            msg = f'ERROR: Exception getting minimumValue for {obj}'
             debug.println(debug.LEVEL_INFO, msg, True)
         try:
             minIncrement = value.minimumIncrement
         except (LookupError, RuntimeError):
             minIncrement = (maxValue - minValue) / 100.0
-            msg = 'ERROR: Exception getting minimumIncrement for %s' % obj
+            msg = f'ERROR: Exception getting minimumIncrement for {obj}'
             debug.println(debug.LEVEL_INFO, msg, True)
         if minIncrement != 0.0:
             try:
                 decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
             except ValueError:
-                msg = 'ERROR: Exception calculating decimal places for %s' % obj
+                msg = f'ERROR: Exception calculating decimal places for {obj}'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return ""
         elif abs(currentValue) < 1:
@@ -3552,7 +3552,7 @@ class Utilities:
         """
 
         try:
-            return "%04x" % ord(character)
+            return f"{ord(character):04x}"
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             return ""
@@ -3590,11 +3590,11 @@ class Utilities:
             hyperlink = obj.queryHyperlink()
             start, end = hyperlink.startIndex, hyperlink.endIndex
         except NotImplementedError:
-            msg = "INFO: %s does not implement the hyperlink interface" % obj
+            msg = f"INFO: {obj} does not implement the hyperlink interface"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
         except Exception:
-            msg = "INFO: Exception getting hyperlink indices for %s" % obj
+            msg = f"INFO: Exception getting hyperlink indices for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
@@ -3840,7 +3840,7 @@ class Utilities:
         try:
             value = int(attrs.get('level', '0'))
         except ValueError:
-            msg = "ERROR: Exception getting value for %s (%s)" % (obj, attrs)
+            msg = f"ERROR: Exception getting value for {obj} ({attrs})"
             debug.println(debug.LEVEL_INFO, msg, True)
             return 0
 
@@ -3880,7 +3880,7 @@ class Utilities:
             try:
                 headers = tableCell.columnHeaderCells
             except Exception:
-                msg = "INFO: Exception getting column headers for %s" % obj
+                msg = f"INFO: Exception getting column headers for {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 return headers
@@ -3924,7 +3924,7 @@ class Utilities:
             try:
                 headers = tableCell.rowHeaderCells
             except Exception:
-                msg = "INFO: Exception getting row headers for %s" % obj
+                msg = f"INFO: Exception getting row headers for {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 return headers
@@ -3975,26 +3975,26 @@ class Utilities:
             try:
                 successful, row, col = tableCell.position
             except Exception:
-                msg = "INFO: Exception getting table cell position of %s" % obj
+                msg = f"INFO: Exception getting table cell position of {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if successful:
                     msg = "INFO: table cell position of %s is row: %i, col: %i" % (obj, row, col)
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return row, col
-                msg = "INFO: Failed to get table cell position of %s via table cell" % obj
+                msg = f"INFO: Failed to get table cell position of {obj} via table cell"
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         if not parent:
-            msg = "INFO: Couldn't find table-implementing ancestor for %s" % obj
+            msg = f"INFO: Couldn't find table-implementing ancestor for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         try:
             table = parent.queryTable()
         except Exception:
-            msg = "INFO: Exception querying table interface %s" % parent
+            msg = f"INFO: Exception querying table interface {parent}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
@@ -4003,7 +4003,7 @@ class Utilities:
             row = table.getRowAtIndex(index)
             col = table.getColumnAtIndex(index)
         except Exception:
-            msg = "INFO: Exception getting row and column at index from %s" % parent
+            msg = f"INFO: Exception getting row and column at index from {parent}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
@@ -4018,7 +4018,7 @@ class Utilities:
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
             except Exception:
-                msg = "INFO: Exception getting table row and col span of %s via table cell" % obj
+                msg = f"INFO: Exception getting table row and col span of {obj} via table cell"
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 return rowSpan, colSpan
@@ -4125,7 +4125,7 @@ class Utilities:
         try:
             component = root.queryComponent()
         except Exception:
-            msg = "INFO: Exception querying component of %s" % root
+            msg = f"INFO: Exception querying component of {root}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -4382,7 +4382,7 @@ class Utilities:
             component = obj.queryComponent()
             extents = component.getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = "ERROR: Exception getting extents of %s" % obj
+            msg = f"ERROR: Exception getting extents of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -4419,7 +4419,7 @@ class Utilities:
         try:
             component = parent.queryComponent()
         except Exception:
-            msg = "ERROR: Exception querying component interface of %s" % parent
+            msg = f"ERROR: Exception querying component interface of {parent}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return startIndex, endIndex
 
@@ -4441,7 +4441,7 @@ class Utilities:
         try:
             table = parent.queryTable()
         except Exception:
-            msg = "ERROR: Exception querying table interface of %s" % parent
+            msg = f"ERROR: Exception querying table interface of {parent}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -4520,7 +4520,7 @@ class Utilities:
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.SEPARATOR]
         if AXObject.get_role(obj) in menuRoles and self.isInOpenMenuBarMenu(obj):
-            msg = "HACK: Treating %s as showing and visible" % obj
+            msg = f"HACK: Treating {obj} as showing and visible"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -4532,7 +4532,7 @@ class Utilities:
             # latter intentionally handles exceptions.
             Atspi.Accessible.get_name(obj)
         except Exception:
-            debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj, True)
+            debug.println(debug.LEVEL_INFO, f"DEAD: {obj}", True)
             return True
 
         return False
@@ -4548,23 +4548,23 @@ class Utilities:
                          Atspi.Role.FRAME]
         role = AXObject.get_role(obj)
         if index == -1 and role not in topLevelRoles:
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj, True)
+            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj}'s index is -1", True)
             return True
 
         if AXUtilities.is_defunct(obj):
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj, True)
+            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} is defunct", True)
             return True
         if AXUtilities.is_invalid_state(obj):
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s has invalid state" % obj, True)
+            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} has invalid state", True)
             return True
         if AXUtilities.is_invalid_role(obj):
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s has invalid state" % obj, True)
+            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} has invalid state", True)
             return True
 
         return False
 
     def findReplicant(self, root, obj):
-        msg = "INFO: Searching for replicant for %s in %s" % (obj, root)
+        msg = f"INFO: Searching for replicant for {obj} in {root}"
         debug.println(debug.LEVEL_INFO, msg, True)
         if not (root and obj):
             return None
@@ -4580,7 +4580,7 @@ class Utilities:
         else:
             replicant = AXObject.find_descendant(root, isSame)
 
-        msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
+        msg = f"HACK: Returning {replicant} as replicant for Zombie {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return replicant
 
@@ -4693,11 +4693,11 @@ class Utilities:
         try:
             text = obj.queryText()
         except NotImplementedError:
-            msg = "ERROR: %s doesn't implement AtspiText" % obj
+            msg = f"ERROR: {obj} doesn't implement AtspiText"
             debug.println(debug.LEVEL_INFO, msg, True)
             text = None
         except Exception:
-            msg = "ERROR: Exception querying text interface for %s" % obj
+            msg = f"ERROR: Exception querying text interface for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             text = None
 
@@ -4723,7 +4723,7 @@ class Utilities:
             try:
                 start, end = text.getSelection(0)
             except Exception:
-                msg = "ERROR: Exception getting selected text for %s" % obj
+                msg = f"ERROR: Exception getting selected text for {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 start = end = 0
             if start != end:
@@ -4777,7 +4777,7 @@ class Utilities:
 
     def _appendTextToClipboardCallback(self, clipboard, text, newText, separator="\n"):
         text = text.rstrip("\n")
-        text = "%s%s%s" % (text, separator, newText)
+        text = f"{text}{separator}{newText}"
         clipboard.set_text(text, -1)
 
     def lastInputEventCameFromThisApp(self):
@@ -5302,7 +5302,7 @@ class Utilities:
 
         delta = time.time() - orca_state.lastInputEvent.time
         if delta > 1:
-            msg = "INFO: Not user triggered: Last input event %.2fs ago." % delta
+            msg = f"INFO: Not user triggered: Last input event {delta:.2f}s ago."
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 

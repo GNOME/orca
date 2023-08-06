@@ -84,7 +84,7 @@ class AXCollection:
                                        interface_match_type,
                                        invert)
         except Exception as e:
-            msg = "AXCollection: Exception in create_match_rule: %s" % e
+            msg = f"AXCollection: Exception in create_match_rule: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -106,11 +106,11 @@ class AXCollection:
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 0, True)
         except Exception as e:
-            msg = "AXCollection: Exception in get_all_matches: %s" % e
+            msg = f"AXCollection: Exception in get_all_matches: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        msg = "AXCollection: %i match(es) found in %.4fs" % (len(matches), time.time() - start)
+        msg = f"AXCollection: {len(matches)} match(es) found in {time.time() - start:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
@@ -130,7 +130,7 @@ class AXCollection:
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 1, True)
         except Exception as e:
-            msg = "AXCollection: Exception in get_first_match: %s" % e
+            msg = f"AXCollection: Exception in get_first_match: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -138,6 +138,6 @@ class AXCollection:
         if matches:
             match = matches[0]
 
-        msg = "AXCollection: found %s in %.4fs" % (match, time.time() - start)
+        msg = f"AXCollection: found {match} in {time.time() - start:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return match

@@ -47,7 +47,7 @@ class Utilities(script_utilities.Utilities):
         # get the children. The fallback search handles the latter scenario.
         result = super().topLevelObject(obj, useFallbackSearch=True)
         if result is not None and AXObject.get_role(result) not in self._topLevelRoles():
-            msg = "QT: Top level object %s lacks expected role." % result
+            msg = f"QT: Top level object {result} lacks expected role."
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return result

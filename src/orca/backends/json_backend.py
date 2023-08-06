@@ -67,7 +67,7 @@ class Backend:
         settingsFile.close()
 
     def getAppSettings(self, appName):
-        fileName = os.path.join(self.appPrefsDir, "%s.conf" % appName)
+        fileName = os.path.join(self.appPrefsDir, f"{appName}.conf")
         if os.path.exists(fileName):
             settingsFile = open(fileName, 'r')
             prefs = load(settingsFile)
@@ -85,7 +85,7 @@ class Backend:
                              'keybindings': keybindings}
         prefs['profiles'] = profiles
 
-        fileName = os.path.join(self.appPrefsDir, "%s.conf" % appName)
+        fileName = os.path.join(self.appPrefsDir, f"{appName}.conf")
         settingsFile = open(fileName, 'w')
         dump(prefs, settingsFile, indent=4)
         settingsFile.close()

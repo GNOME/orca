@@ -418,12 +418,12 @@ class Script(web.Script):
                 if self.utilities.isPopupMenuForCurrentItem(menu):
                     orca.setLocusOfFocus(event, menu, False)
 
-                msg = "CHROMIUM: Setting locusOfFocus to active item %s" % activeItem
+                msg = f"CHROMIUM: Setting locusOfFocus to active item {activeItem}"
                 orca.setLocusOfFocus(event, activeItem)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
-            msg = "CHROMIUM: Setting locusOfFocus to popup menu %s" % menu
+            msg = f"CHROMIUM: Setting locusOfFocus to popup menu {menu}"
             orca.setLocusOfFocus(event, menu)
             debug.println(debug.LEVEL_INFO, msg, True)
 

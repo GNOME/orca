@@ -72,10 +72,10 @@ class Utilities(script_utilities.Utilities):
         AXObject.clear_cache(obj)
 
         if self.isShowingAndVisible(obj):
-            msg = "SWITCHER: Ignoring bad index of %s" % obj
+            msg = f"SWITCHER: Ignoring bad index of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "SWITCHER: %s has bad index and isn't showing and visible" % obj
+        msg = f"SWITCHER: {obj} has bad index and isn't showing and visible"
         debug.println(debug.LEVEL_INFO, msg, True)
         return True

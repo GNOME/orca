@@ -58,7 +58,7 @@ class AXUtilities:
         try:
             desktop = Atspi.get_desktop(0)
         except Exception as e:
-            msg = "ERROR: Exception getting desktop from Atspi: %s" % e
+            msg = f"ERROR: Exception getting desktop from Atspi: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -92,7 +92,7 @@ class AXUtilities:
             if child == app:
                 return True
 
-        msg = "WARNING: %s is not in %s" % (app, desktop)
+        msg = f"WARNING: {app} is not in {desktop}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 

@@ -54,7 +54,7 @@ class AXUtilitiesCollection:
     def _get_frame_name(frame, string=""):
         name = frame.f_code.co_name.replace("get_all_", "Getting all ").replace("_", " ")
         if string:
-            name = "%s (%s)" % (name, string)
+            name = f"{name} ({string})"
         return name
 
     @staticmethod
@@ -143,7 +143,7 @@ class AXUtilitiesCollection:
             return []
 
         interface_list = list(interface_list)
-        string = "Root: %s Interfaces: %s" % (root, ", ".join(interface_list))
+        string = f"Root: {root} Interfaces: {', '.join(interface_list)}"
         msg = "AXUtilitiesCollection: %s" \
             % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
         debug.println(debug.LEVEL_INFO, msg, True)

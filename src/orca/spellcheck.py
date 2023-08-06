@@ -61,10 +61,10 @@ class SpellCheck:
         self.presentContextCheckButton = None
 
     def activate(self, window):
-        msg = 'SPELL CHECK: Attempting activation for %s' % window
+        msg = f'SPELL CHECK: Attempting activation for {window}'
         debug.println(debug.LEVEL_INFO, msg, True)
         if not self._isCandidateWindow(window):
-            msg = 'SPELL CHECK: %s is not spellcheck window' % window
+            msg = f'SPELL CHECK: {window} is not spellcheck window'
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -229,7 +229,7 @@ class SpellCheck:
 
         label = self._script.utilities.displayedLabel(entry) or AXObject.get_name(entry)
         string = self._script.utilities.substring(entry, 0, -1)
-        msg = "%s %s" % (label, string)
+        msg = f"{label} {string}"
         voice = self._script.speechGenerator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
@@ -256,7 +256,7 @@ class SpellCheck:
             label = ""
         string = AXObject.get_name(items[0])
 
-        msg = "%s %s" % (label, string)
+        msg = f"{label} {string}"
         voice = self._script.speechGenerator.voice(string=msg)
         self._script.speakMessage(msg.strip(), voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
@@ -297,7 +297,7 @@ class SpellCheck:
         from gi.repository import Gtk
 
         frame = Gtk.Frame()
-        label = Gtk.Label(label="<b>%s</b>" % guilabels.SPELL_CHECK)
+        label = Gtk.Label(label=f"<b>{guilabels.SPELL_CHECK}</b>")
         label.set_use_markup(True)
         frame.set_label_widget(label)
 

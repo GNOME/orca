@@ -343,7 +343,7 @@ class SpeechServer(speechserver.SpeechServer):
                 #
                 continue
 
-            charName = " %s " % chnames.getCharacterName(symbol)
+            charName = f" {chnames.getCharacterName(symbol)} "
             if action == punctuation_settings.PUNCTUATION_INSERT:
                 charName += symbol
             newText = re.sub(symbol, charName, newText)
@@ -460,7 +460,7 @@ class SpeechServer(speechserver.SpeechServer):
         ssml += "</speak>"
 
         self._apply_acss(acss)
-        self._debug_sd_values("Speaking '%s' " % ssml)
+        self._debug_sd_values(f"Speaking '{ssml}' ")
         self._send_command(self._client.speak, ssml, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
@@ -624,7 +624,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._apply_acss(acss)
             self._send_command(self._client.char, text)
         else:
-            msg = "SPEECH DISPATCHER: Speaking '%s' as string" % text
+            msg = f"SPEECH DISPATCHER: Speaking '{text}' as string"
             debug.println(debug.LEVEL_INFO, msg, True)
             self._speak(text, acss)
 
@@ -648,14 +648,14 @@ class SpeechServer(speechserver.SpeechServer):
     def speakKeyEvent(self, event, acss=None):
         event_string = event.getKeyName()
         lockingStateString = event.getLockingStateString()
-        event_string = ("%s %s" % (event_string, lockingStateString)).strip()
+        event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
-            msg = "SPEECH DISPATCHER: Speaking '%s' as key" % event_string
+            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"
             debug.println(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self._send_command(self._client.key, event_string)
         else:
-            msg = "SPEECH DISPATCHER: Speaking '%s' as string" % event_string
+            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
         self._lastKeyEchoTime = time.time()

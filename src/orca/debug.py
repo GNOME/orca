@@ -211,8 +211,8 @@ def println(level, text="", timestamp=False):
     if level >= debugLevel:
         text = text.replace("\ufffc", "[OBJ]")
         if timestamp:
-            text = text.replace("\n", "\n%s" % (" " * 18))
-            text = "%s - %s" % (datetime.now().strftime("%H:%M:%S.%f"), text)
+            text = text.replace("\n", f"\n{' ' * 18}")
+            text = f"{datetime.now().strftime('%H:%M:%S.%f')} - {text}"
         if debugFile:
             try:
                 debugFile.writelines([text, "\n"])
@@ -252,8 +252,8 @@ def printResult(level, result=None):
     callString = 'CALL:   %s.%s (line %s) -> %s.%s%s' % (
         inspect.getmodulename(prev[1]), prev[3], prev[2],
         inspect.getmodulename(current[1]), current[3], fArgs)
-    string = '%s\n%s %s' % (callString, 'RESULT:', result)
-    println(level, '%s' % string)
+    string = f'{callString}\nRESULT: {result}'
+    println(level, f'{string}')
 
 def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
     """Prints out an Python Event object.  The given level may be
@@ -274,14 +274,14 @@ def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
 
     anydata = event.any_data
     if isinstance(anydata, str) and len(anydata) > 100:
-        anydata = "%s (...)" % anydata[0:100]
+        anydata = f"{anydata[0:100]} (...)"
 
     text = "OBJECT EVENT: %s (%d, %d, %s)" \
            % (event.type, event.detail1, event.detail2, anydata)
     println(level, text, timestamp)
 
     if sourceInfo:
-        println(level, "%s%s" % (' ' * 18, sourceInfo), timestamp)
+        println(level, f"{' ' * 18}{sourceInfo}", timestamp)
 
 def printInputEvent(level, string, timestamp=False):
     """Prints out an input event.  The given level may be overridden
@@ -324,7 +324,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         return ""
 
     if includeApp:
-        string = indent + "app='%s' " % AXObject.application_as_string(acc)
+        string = indent + f"app='{AXObject.application_as_string(acc)}' "
     else:
         string = indent
 
@@ -335,13 +335,13 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     name_string = "name='%s'".replace("\n", "\\n") % AXObject.get_name(acc)
     desc_string = "%sdescription='%s'".replace("\n", "\\n") % \
         (indent, AXObject.get_description(acc))
-    role_string = "role='%s'" % AXObject.get_role_name(acc)
-    path_string = "%spath=%s" % (indent, AXObject.get_path(acc))
-    state_string = "%sstates='%s'" % (indent, AXObject.state_set_as_string(acc))
-    rel_string = "%srelations='%s'" % (indent, AXObject.relations_as_string(acc))
-    actions_string = "%sactions='%s'" % (indent, AXObject.actions_as_string(acc))
-    iface_string = "%sinterfaces='%s'" % (indent, AXObject.supported_interfaces_as_string(acc))
-    attr_string = "%sattributes='%s'" % (indent, AXObject.attributes_as_string(acc))
+    role_string = f"role='{AXObject.get_role_name(acc)}'"
+    path_string = f"{indent}path={AXObject.get_path(acc)}"
+    state_string = f"{indent}states='{AXObject.state_set_as_string(acc)}'"
+    rel_string = f"{indent}relations='{AXObject.relations_as_string(acc)}'"
+    actions_string = f"{indent}actions='{AXObject.actions_as_string(acc)}'"
+    iface_string = f"{indent}interfaces='{AXObject.supported_interfaces_as_string(acc)}'"
+    attr_string = f"{indent}attributes='{AXObject.attributes_as_string(acc)}'"
 
     string += "%s %s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
                   % (name_string, role_string, desc_string, state_string, rel_string,
@@ -414,7 +414,7 @@ def traceit(frame, event, arg):
 
     lineno = frame.f_lineno
     line = linecache.getline(filename, lineno).rstrip()
-    output = 'TRACE %s:%s: %s' % (module, lineno, line)
+    output = f'TRACE {module}:{lineno}: {line}'
 
     if event == 'call':
         argvals = inspect.getargvalues(frame)
@@ -427,13 +427,13 @@ def traceit(frame, event, arg):
             else:
                 return traceit
         for i, key in enumerate(keys):
-            output += '\n  ARG %s=%s' % (key, values[i])
+            output += f'\n  ARG {key}={values[i]}'
 
     lineElements = line.strip().split()
     if lineElements and lineElements[0] == 'return':
         if event == 'line':
             return traceit
-        output = '%s (rv: %s)' % (output, arg)
+        output = f'{output} (rv: {arg})'
 
     println(LEVEL_ALL, output)
 
@@ -448,7 +448,7 @@ def getOpenFDCount(pid):
 
 def getCmdline(pid):
     try:
-        openFile = os.popen('cat /proc/%s/cmdline' % pid)
+        openFile = os.popen(f'cat /proc/{pid}/cmdline')
         cmdline = openFile.read()
         openFile.close()
     except Exception:
@@ -458,7 +458,7 @@ def getCmdline(pid):
     return cmdline
 
 def pidOf(procName):
-    openFile = subprocess.Popen('pgrep %s' % procName,
+    openFile = subprocess.Popen(f'pgrep {procName}',
                                 shell=True,
                                 stdout=subprocess.PIPE).stdout
     pids = openFile.read()
@@ -488,7 +488,7 @@ def examineProcesses(force=False):
     for app in otherApps:
         pids = pidOf(app)
         if not pids:
-            println(level, 'INFO: no pid for %s' % app, True)
+            println(level, f'INFO: no pid for {app}', True)
             continue
 
         for pid in pids:

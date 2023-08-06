@@ -146,12 +146,12 @@ class SettingsManager(object):
         debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
         # Set the active profile and load its stored settings
-        msg = 'SETTINGS MANAGER: Current profile is %s' % self.profile
+        msg = f'SETTINGS MANAGER: Current profile is {self.profile}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.profile is None:
             self.profile = self.general.get('startingProfile')[1]
-            msg = 'SETTINGS MANAGER: Current profile is now %s' % self.profile
+            msg = f'SETTINGS MANAGER: Current profile is now {self.profile}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         self.setProfile(self.profile)
@@ -160,7 +160,7 @@ class SettingsManager(object):
         """Load specific backend for manage user settings"""
 
         try:
-            backend = '.backends.%s_backend' % self.backendName
+            backend = f'.backends.{self.backendName}_backend'
             self.backendModule = importlib.import_module(backend, 'orca')
             return True
         except Exception:
@@ -256,7 +256,7 @@ class SettingsManager(object):
             msg = "SETTINGS MANAGER: Attempt to load orca-customizations "
             (fileHnd, moduleName, desc) = \
                 imp.find_module("orca-customizations", pathList)
-            msg += "from %s " % moduleName
+            msg += f"from {moduleName} "
             imp.load_module("orca-customizations", fileHnd, moduleName, desc)
         except ImportError:
             success = True
@@ -285,7 +285,7 @@ class SettingsManager(object):
         lang = v.getLocale()
         dialect = v.getDialect()
         if dialect and len(str(dialect)) == 2:
-            lang = "%s_%s" % (lang, dialect.upper())
+            lang = f"{lang}_{dialect.upper()}"
         return lang
 
     def getSpeechServerFactories(self):
@@ -294,12 +294,12 @@ class SettingsManager(object):
         factories = []
         for moduleName in self.getSetting('speechFactoryModules'):
             try:
-                module = importlib.import_module('orca.%s' % moduleName)
+                module = importlib.import_module(f'orca.{moduleName}')
                 factories.append(module)
-                msg = "SETTINGS MANAGER: Valid speech server factory: %s" % moduleName
+                msg = f"SETTINGS MANAGER: Valid speech server factory: {moduleName}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             except Exception:
-                msg = "SETTINGS MANAGER: Invalid speech server factory: %s" % moduleName
+                msg = f"SETTINGS MANAGER: Invalid speech server factory: {moduleName}"
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         return factories
@@ -310,7 +310,7 @@ class SettingsManager(object):
         A profile can be passed as a parameter. This could be useful for
         change from one profile to another."""
 
-        msg = 'SETTINGS MANAGER: Loading settings for %s profile' % profile
+        msg = f'SETTINGS MANAGER: Loading settings for {profile} profile'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if profile is None:
@@ -319,7 +319,7 @@ class SettingsManager(object):
         self.profilePronunciations = self.getPronunciations(profile) or {}
         self.profileKeybindings = self.getKeybindings(profile) or {}
 
-        msg = 'SETTINGS MANAGER: Settings for %s profile loaded' % profile
+        msg = f'SETTINGS MANAGER: Settings for {profile} profile loaded'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def _mergeSettings(self):
@@ -370,7 +370,7 @@ class SettingsManager(object):
         return rv
 
     def setAccessibility(self, enable):
-        msg = 'SETTINGS MANAGER: Attempting to set accessibility to %s.' % enable
+        msg = f'SETTINGS MANAGER: Attempting to set accessibility to {enable}.'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not _proxy:
@@ -381,7 +381,7 @@ class SettingsManager(object):
         vEnable = GLib.Variant('b', enable)
         _proxy.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
 
-        msg = 'SETTINGS MANAGER: Finished setting accessibility to %s.' % enable
+        msg = f'SETTINGS MANAGER: Finished setting accessibility to {enable}.'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def isScreenReaderServiceEnabled(self):
@@ -414,7 +414,7 @@ class SettingsManager(object):
         Also the settings from that profile will be loading
         and updated the current settings with them."""
 
-        msg = 'SETTINGS MANAGER: Setting profile to: %s' % profile
+        msg = f'SETTINGS MANAGER: Setting profile to: {profile}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         oldVoiceLocale = self.getVoiceLocale('default')
@@ -433,7 +433,7 @@ class SettingsManager(object):
             orca_i18n.setLocaleForMessages(newVoiceLocale)
             orca_i18n.setLocaleForGUI(newVoiceLocale)
 
-        msg = 'SETTINGS MANAGER: Profile set to: %s' % profile
+        msg = f'SETTINGS MANAGER: Profile set to: {profile}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def removeProfile(self, profile):
@@ -552,7 +552,7 @@ class SettingsManager(object):
     def saveSettings(self, script, general, pronunciations, keybindings):
         """Save the settings provided for the script provided."""
 
-        msg = 'SETTINGS MANAGER: Saving settings for %s (app: %s)' % (script, script.app)
+        msg = f'SETTINGS MANAGER: Saving settings for {script} (app: {script.app})'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         app = script.app
@@ -574,7 +574,7 @@ class SettingsManager(object):
         self._setProfilePronunciations(pronunciations)
         self._setProfileKeybindings(keybindings)
 
-        msg = 'SETTINGS MANAGER: Saving for backend %s' % self._backend
+        msg = f'SETTINGS MANAGER: Saving for backend {self._backend}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         self._backend.saveProfileSettings(self.profile,
@@ -582,7 +582,7 @@ class SettingsManager(object):
                                           self.profilePronunciations,
                                           self.profileKeybindings)
 
-        msg = 'SETTINGS MANAGER: Settings for %s (app: %s) saved' % (script, script.app)
+        msg = f'SETTINGS MANAGER: Settings for {script} (app: {script.app}) saved'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         return self._enableAccessibility()

@@ -63,7 +63,7 @@ class Utilities(script_utilities.Utilities):
             if text:
                 string = text.getText(0, -1)
                 if string:
-                    msg = "HACK: Returning last char in '%s'" % string
+                    msg = f"HACK: Returning last char in '{string}'"
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return string[-1]
 
@@ -99,7 +99,7 @@ class Utilities(script_utilities.Utilities):
                 or AXUtilities.is_menu_item(x)
 
         if not hasRole(root) and AXObject.find_ancestor(root, hasRole) is None:
-            msg = "GNOME SHELL: Not seeking unrelated labels for %s" % root
+            msg = f"GNOME SHELL: Not seeking unrelated labels for {root}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -116,7 +116,7 @@ class Utilities(script_utilities.Utilities):
             if self.displayedLabel(obj) == AXObject.get_name(child) \
                and not AXUtilities.is_label(child):
                 rv = True
-                msg = "GNOME SHELL: %s is deemed to be layout only" % obj
+                msg = f"GNOME SHELL: {obj} is deemed to be layout only"
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         self._isLayoutOnly[hash(obj)] = rv

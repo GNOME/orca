@@ -243,7 +243,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         def objString(x):
-            return str.strip("%s %s" % (AXObject.get_name(x), self.getLocalizedRoleName(x)))
+            return str.strip(f"{AXObject.get_name(x)} {self.getLocalizedRoleName(x)}")
 
         toPresent = ", ".join(set(map(objString, objs)))
 
@@ -347,7 +347,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            msg = "WEB: %s is popup menu for current item." % obj
+            msg = f"WEB: {obj} is popup menu for current item."
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -813,11 +813,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            msg = "WEB: %s is not in document content. Calling default speech generator." % obj
+            msg = f"WEB: {obj} is not in document content. Calling default speech generator."
             debug.println(debug.LEVEL_INFO, msg, True)
             return super().generateSpeech(obj, **args)
 
-        msg = "WEB: Generating speech for document object %s" % obj
+        msg = f"WEB: Generating speech for document object {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         result = []
@@ -845,7 +845,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result = list(filter(lambda x: x, super().generateSpeech(obj, **args)))
 
         self._restoreRole(oldRole, args)
-        msg = "WEB: Speech generation for document object %s complete." % obj
+        msg = f"WEB: Speech generation for document object {obj} complete."
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -855,7 +855,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         contents = self._script.utilities.filterContentsForPresentation(contents, True)
-        msg = "WEB: Generating speech contents (length: %i)" % len(contents)
+        msg = f"WEB: Generating speech contents (length: {len(contents)})"
         debug.println(debug.LEVEL_INFO, msg, True)
         for i, content in enumerate(contents):
             obj, start, end, string = content

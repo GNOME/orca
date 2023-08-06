@@ -138,7 +138,7 @@ class Script:
         self.findCommandRun = False
         self._lastCommandWasStructNav = False
 
-        msg = 'SCRIPT: %s initialized' % self.name
+        msg = f'SCRIPT: {self.name} initialized'
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def getListeners(self):
@@ -382,7 +382,7 @@ class Script:
     def _getQueuedEvent(self, eventType, detail1=None, detail2=None, any_data=None):
         cachedEvent, eventTime = self.eventCache.get(eventType, [None, 0])
         if not cachedEvent:
-            msg = "SCRIPT: No queued event of type %s" % eventType
+            msg = f"SCRIPT: No queued event of type {eventType}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -454,7 +454,7 @@ class Script:
 
         if skip:
             eventDetails = '        %s' % str(cachedEvent).replace('\t', ' ' * 8)
-            msg = 'SCRIPT: Skipping object event due to %s\n%s' % (reason, eventDetails)
+            msg = f'SCRIPT: Skipping object event due to {reason}\n{eventDetails}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return skip

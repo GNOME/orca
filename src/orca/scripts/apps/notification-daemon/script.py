@@ -44,7 +44,7 @@ class Script(default.Script):
 
         allLabels = AXUtilities.find_all_labels(event.source)
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
-        text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
+        text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
         voice = self.speechGenerator.voice(obj=event.source, string=text)
         self.speakMessage(text, voice=voice)

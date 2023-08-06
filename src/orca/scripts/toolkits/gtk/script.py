@@ -202,7 +202,7 @@ class Script(default.Script):
         """Callback for object:text-changed:delete accessibility events."""
 
         if not self.utilities.isShowingAndVisible(event.source):
-            msg = "GTK: %s is not showing and visible" % event.source
+            msg = f"GTK: {event.source} is not showing and visible"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -212,7 +212,7 @@ class Script(default.Script):
         """Callback for object:text-changed:insert accessibility events."""
 
         if not self.utilities.isShowingAndVisible(event.source):
-            msg = "GTK: %s is not showing and visible" % event.source
+            msg = f"GTK: {event.source} is not showing and visible"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 

@@ -153,7 +153,7 @@ class Utilities(script_utilities.Utilities):
             elif node:
                 nodes.append(node)
                 debug.println(debug.LEVEL_FINEST,
-                              "pidgin.nodeLevel %d" % len(nodes))
+                              f"pidgin.nodeLevel {len(nodes)}")
             else:
                 done = True
 
@@ -180,6 +180,6 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) != Atspi.Role.TOGGLE_BUTTON:
             return True
 
-        msg = 'INFO: Hacking around broken index in parent for %s' % obj
+        msg = f'INFO: Hacking around broken index in parent for {obj}'
         debug.println(debug.LEVEL_INFO, msg, True)
         return AXObject.get_index_in_parent(obj) != -1

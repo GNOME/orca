@@ -237,7 +237,7 @@ class Bookmarks:
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         try:
             inputFile = open( os.path.join( orcaBookmarksDir, \
-                        '%s.pkl' %filename), "r")
+                        f'{filename}.pkl'), "r")
             bookmarks = pickle.load(inputFile.buffer)
             inputFile.close()
             return bookmarks
@@ -256,7 +256,7 @@ class Bookmarks:
         except OSError:
             os.mkdir(orcaBookmarksDir)
         output = open( os.path.join( orcaBookmarksDir, \
-                    '%s.pkl' %filename), "w", os.O_CREAT)
+                    f'{filename}.pkl'), "w", os.O_CREAT)
         pickle.dump(bookmarksObj, output.buffer)
         output.close()
 

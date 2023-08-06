@@ -265,7 +265,7 @@ class KeyBinding:
         mods = getModifierNames(self.modifiers)
         clickCount = getClickCountString(self.click_count)
         keysym = self.keysymstring
-        string = '%s%s %s' % (mods, keysym, clickCount)
+        string = f'{mods}{keysym} {clickCount}'
 
         return string.strip()
 
@@ -425,7 +425,7 @@ class KeyBindings:
             string = kb.asString()
             match = bindings.get(string)
             if match is not None:
-                msg = "WARNING: '%s' (%s) also matches: %s" % (string, kb.description(), match)
+                msg = f"WARNING: '{string}' ({kb.description()}) also matches: {match}"
                 debug.println(debug.LEVEL_INFO, msg, True)
             bindings[string] = kb.description()
 

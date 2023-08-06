@@ -139,7 +139,7 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         debug.println(debug.LEVEL_INFO, msg, True)
 
     if mode != orca_state.activeMode:
-        msg = "ORCA: Switching active mode from %s to %s" % (orca_state.activeMode, mode)
+        msg = f"ORCA: Switching active mode from {orca_state.activeMode} to {mode}"
         debug.println(debug.LEVEL_INFO, msg, True)
         orca_state.activeMode = mode
 
@@ -154,9 +154,9 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
     orca_state.objOfInterest = obj
 
 def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
-    msg = "ORCA: Request to set active window to %s" % frame
+    msg = f"ORCA: Request to set active window to {frame}"
     if app is not None:
-        msg += " in %s" % app
+        msg += f" in {app}"
     debug.println(debug.LEVEL_INFO, msg, True)
 
     if frame == orca_state.activeWindow:
@@ -167,7 +167,7 @@ def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=Fal
     else:
         real_app, real_frame = AXObject.find_real_app_and_window_for(frame, app)
         if real_frame != frame:
-            msg = "ORCA: Correcting active window to %s in %s" % (real_frame, real_app)
+            msg = f"ORCA: Correcting active window to {real_frame} in {real_app}"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca_state.activeWindow = real_frame
         else:
@@ -210,18 +210,18 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         return
 
     if orca_state.activeScript:
-        msg = "ORCA: Active script is: %s" % orca_state.activeScript
+        msg = f"ORCA: Active script is: {orca_state.activeScript}"
         debug.println(debug.LEVEL_INFO, msg, True)
         if orca_state.activeScript.utilities.isZombie(obj):
-            msg = "ERROR: New locusOfFocus (%s) is zombie. Not updating." % obj
+            msg = f"ERROR: New locusOfFocus ({obj}) is zombie. Not updating."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
         if orca_state.activeScript.utilities.isDead(obj):
-            msg = "ERROR: New locusOfFocus (%s) is dead. Not updating." % obj
+            msg = f"ERROR: New locusOfFocus ({obj}) is dead. Not updating."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-    msg = "ORCA: Changing locusOfFocus from %s to %s. Notify: %s" % (oldFocus, obj, notifyScript)
+    msg = f"ORCA: Changing locusOfFocus from {oldFocus} to {obj}. Notify: {notifyScript}"
     debug.println(debug.LEVEL_INFO, msg, True)
     orca_state.locusOfFocus = obj
 
@@ -753,7 +753,7 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    signalString = '(%s)' % signal.strsignal(signum)
+    signalString = f'({signal.strsignal(signum)})'
     msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
     debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -791,7 +791,7 @@ def shutdownOnSignal(signum, frame):
         die(EXIT_CODE_HANG)
 
 def crashOnSignal(signum, frame):
-    signalString = '(%s)' % signal.strsignal(signum)
+    signalString = f'({signal.strsignal(signum)})'
     msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
     debug.println(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
@@ -810,15 +810,15 @@ def main():
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
 
-    msg = "ORCA: Launching version %s" % orca_platform.version
+    msg = f"ORCA: Launching version {orca_platform.version}"
     if orca_platform.revision:
-        msg += " (rev %s)" % orca_platform.revision
+        msg += f" (rev {orca_platform.revision})"
 
     sessionType = os.environ.get('XDG_SESSION_TYPE') or ""
     sessionDesktop = os.environ.get('XDG_SESSION_DESKTOP') or ""
     session = "%s %s".strip() % (sessionType, sessionDesktop)
     if session:
-        msg += " session: %s" % session
+        msg += f" session: {session}"
 
     debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -869,7 +869,7 @@ def main():
             _scriptManager.setActiveScript(script, "Launching.")
 
             focusedObject = AXUtilities.get_focused_object(window)
-            msg = "ORCA: Focused object is: %s" % focusedObject
+            msg = f"ORCA: Focused object is: {focusedObject}"
             debug.println(debug.LEVEL_INFO, msg, True)
             if focusedObject:
                 setLocusOfFocus(None, focusedObject)

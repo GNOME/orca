@@ -94,7 +94,7 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.CHECKED):
-            msg = "AXUtilitiesState: %s is checked but lacks state checkable" % obj
+            msg = f"AXUtilitiesState: {obj} is checked but lacks state checkable"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -108,7 +108,7 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.CHECKABLE):
-            msg = "AXUtilitiesState: %s is checked but lacks state checkable" % obj
+            msg = f"AXUtilitiesState: {obj} is checked but lacks state checkable"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return True
@@ -151,7 +151,7 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.EXPANDED):
-            msg = "AXUtilitiesState: %s is expanded but lacks state expandable" % obj
+            msg = f"AXUtilitiesState: {obj} is expanded but lacks state expandable"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -165,7 +165,7 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.EXPANDABLE):
-            msg = "AXUtilitiesState: %s is expanded but lacks state expandable" % obj
+            msg = f"AXUtilitiesState: {obj} is expanded but lacks state expandable"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return True
@@ -178,7 +178,7 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.FOCUSED):
-            msg = "AXUtilitiesState: %s is focused but lacks state focusable" % obj
+            msg = f"AXUtilitiesState: {obj} is focused but lacks state focusable"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -192,7 +192,7 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
-            msg = "AXUtilitiesState: %s is focused but lacks state focusable" % obj
+            msg = f"AXUtilitiesState: {obj} is focused but lacks state focusable"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return True

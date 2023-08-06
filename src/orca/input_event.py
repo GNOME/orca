@@ -284,14 +284,14 @@ class KeyboardEvent(InputEvent):
             if not self._window:
                 orca.setActiveWindow(self._script.utilities.activeWindow())
                 self._window = orca_state.activeWindow
-                msg = 'INPUT EVENT: Updated window and active window to %s' % self._window
+                msg = f'INPUT EVENT: Updated window and active window to {self._window}'
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         if self._window and self._app != AXObject.get_application(self._window):
             self._script = script_manager.getManager().getScript(
                 AXObject.get_application(self._window))
             self._app = self._script.app
-            msg = 'INPUT EVENT: Updated script to %s' % self._script
+            msg = f'INPUT EVENT: Updated script to {self._script}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.is_duplicate:
@@ -461,17 +461,17 @@ class KeyboardEvent(InputEvent):
             keyval_name = self.keyval_name
             key_type = self.keyType
 
-        return ("KEYBOARD_EVENT:  type=%s\n" % self.type.value_name.upper()) \
-             + ("                 id=%s\n" % keyid) \
-             + ("                 hw_code=%s\n" % hw_code) \
-             + ("                 modifiers=%s\n" % modifiers) \
-             + ("                 event_string=(%s)\n" % event_string) \
-             + ("                 keyval_name=(%s)\n" % keyval_name) \
+        return (f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n") \
+             + f"                 id={keyid}\n" \
+             + f"                 hw_code={hw_code}\n" \
+             + f"                 modifiers={modifiers}\n" \
+             + f"                 event_string=({event_string})\n" \
+             + f"                 keyval_name=({keyval_name})\n" \
              + ("                 timestamp=%d\n" % self.timestamp) \
-             + ("                 time=%f\n" % time.time()) \
-             + ("                 keyType=%s\n" % key_type) \
-             + ("                 clickCount=%s\n" % self._clickCount) \
-             + ("                 shouldEcho=%s\n" % self.shouldEcho)
+             + f"                 time={time.time():f}\n" \
+             + f"                 keyType={key_type}\n" \
+             + f"                 clickCount={self._clickCount}\n" \
+             + f"                 shouldEcho={self.shouldEcho}\n"
 
     def _shouldObscure(self):
         if not AXUtilities.is_password_text(self._obj):
@@ -832,37 +832,37 @@ class KeyboardEvent(InputEvent):
         if self.is_duplicate:
             data = '%s DUPLICATE EVENT #%i' % (data, KeyboardEvent.duplicateCount)
 
-        msg = '\nvvvvv PROCESS %s: %s vvvvv' % (self.type.value_name.upper(), data)
+        msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
         debug.println(debug.LEVEL_INFO, msg, False)
 
-        msg = 'HOST_APP: %s' % self._app
+        msg = f'HOST_APP: {self._app}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = 'WINDOW:   %s' % self._window
+        msg = f'WINDOW:   {self._window}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = 'LOCATION: %s' % self._obj
+        msg = f'LOCATION: {self._obj}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = 'CONSUME:  %s (%s)' % (self._should_consume, self._consume_reason)
+        msg = f'CONSUME:  {self._should_consume} ({self._consume_reason})'
         debug.println(debug.LEVEL_INFO, msg, True)
 
         self._did_consume, self._result_reason = self._process()
 
         if self._should_consume != self._did_consume:
-            msg = 'CONSUMED: %s (%s)' % (self._did_consume, self._result_reason)
+            msg = f'CONSUMED: {self._did_consume} ({self._result_reason})'
             debug.println(debug.LEVEL_INFO, msg, True)
 
         if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
             attributes = orca_state.activeScript.getTransferableAttributes()
             for key, value in attributes.items():
-                msg = 'INPUT EVENT: %s: %s' % (key, value)
+                msg = f'INPUT EVENT: {key}: {value}'
                 debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = 'TOTAL PROCESSING TIME: %.4f' % (time.time() - startTime)
+        msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = '^^^^^ PROCESS %s: %s ^^^^^\n' % (self.type.value_name.upper(), data)
+        msg = f'^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n'
         debug.println(debug.LEVEL_INFO, msg, False)
 
         return self._did_consume
@@ -940,7 +940,7 @@ class KeyboardEvent(InputEvent):
         elif self.event_string == "Shift_Lock":
             modifier = 1 << Atspi.ModifierType.SHIFT
         else:
-            msg = "Unknown locking key %s" % self.event_string
+            msg = f"Unknown locking key {self.event_string}"
             debug.println(debug.LEVEL_WARNING, msg, True)
             return
         debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
@@ -949,25 +949,25 @@ class KeyboardEvent(InputEvent):
     def _consume(self):
         startTime = time.time()
         data = "'%s' (%d)" % (self.event_string, self.hw_code)
-        msg = 'vvvvv CONSUME %s: %s vvvvv' % (self.type.value_name.upper(), data)
+        msg = f'vvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
         debug.println(debug.LEVEL_INFO, msg, False)
 
         if self._consumer:
-            msg = 'INFO: Consumer is %s' % self._consumer.__name__
+            msg = f'INFO: Consumer is {self._consumer.__name__}'
             debug.println(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function:
-            msg = 'INFO: Handler is %s' % self._handler.description
+            msg = f'INFO: Handler is {self._handler.description}'
             debug.println(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
             msg = 'INFO: No handler or consumer'
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = 'TOTAL PROCESSING TIME: %.4f' % (time.time() - startTime)
+        msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = '^^^^^ CONSUME %s: %s ^^^^^' % (self.type.value_name.upper(), data)
+        msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^'
         debug.println(debug.LEVEL_INFO, msg, False)
 
         return False

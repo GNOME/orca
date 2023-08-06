@@ -94,7 +94,7 @@ class SearchQuery:
         self._wrapped = False
 
     def __str__(self):
-        string = "FIND QUERY: '%s'." % self.searchString
+        string = f"FIND QUERY: '{self.searchString}'."
         options = []
         if self.searchBackwards:
             options.append("search backwards")
@@ -107,9 +107,9 @@ class SearchQuery:
         if self.startAtTop:
             options.append("start at top")
         if options:
-            string += " Options: %s" % ", ".join(options)
+            string += f" Options: {', '.join(options)}"
         if self._match:
-            string += " Last match: %s" % self._match
+            string += f" Last match: {self._match}"
         return string
 
     def previousMatch(self):

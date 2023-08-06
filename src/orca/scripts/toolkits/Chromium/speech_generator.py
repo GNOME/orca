@@ -51,7 +51,7 @@ class SpeechGenerator(web.SpeechGenerator):
         # The new ancestors might technically be new, but they are not as far
         # as the user is concerned.
         if self._script.utilities.treatAsMenu(obj):
-            msg = "CHROMIUM: Not generating new ancestors for %s" % obj
+            msg = f"CHROMIUM: Not generating new ancestors for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -61,7 +61,7 @@ class SpeechGenerator(web.SpeechGenerator):
         # The list which descends from a combobox should be a menu, and its children
         # menuitems. We can remove this once that change is made in Chromium.
         if AXObject.find_ancestor(obj, AXUtilities.is_combo_box):
-            msg = "CHROMIUM: Not generating listbox item widgets for combobox child %s" % obj
+            msg = f"CHROMIUM: Not generating listbox item widgets for combobox child {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -88,7 +88,7 @@ class SpeechGenerator(web.SpeechGenerator):
 
         oldRole = None
         if self._script.utilities.treatAsMenu(obj):
-            msg = "CHROMIUM: HACK? Speaking menu item as menu %s" % obj
+            msg = f"CHROMIUM: HACK? Speaking menu item as menu {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             oldRole = self._overrideRole(Atspi.Role.MENU, args)
 

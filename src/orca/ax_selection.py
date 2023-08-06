@@ -55,7 +55,7 @@ class AXSelection:
         try:
             count = Atspi.Selection.get_n_selected_children(obj)
         except Exception as e:
-            msg = "ERROR: Exception in get_selected_child_count: %s" % e
+            msg = f"ERROR: Exception in get_selected_child_count: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return 0
 
@@ -80,12 +80,12 @@ class AXSelection:
         try:
             child = Atspi.Selection.get_selected_child(obj, index)
         except Exception as e:
-            msg = "ERROR: Exception in get_selected_child: %s" % e
+            msg = f"ERROR: Exception in get_selected_child: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if child == obj:
-            msg = "ERROR: %s claims to be its own selected child" % obj
+            msg = f"ERROR: {obj} claims to be its own selected child"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -103,7 +103,7 @@ class AXSelection:
             try:
                 child = Atspi.Selection.get_selected_child(obj, i)
             except Exception as e:
-                msg = "ERROR: Exception in get_selected_children: %s" % e
+                msg = f"ERROR: Exception in get_selected_children: {e}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return []
 
@@ -111,7 +111,7 @@ class AXSelection:
                 children.add(child)
 
         if obj in children:
-            msg = "ERROR: %s claims to be its own selected child" % obj
+            msg = f"ERROR: {obj} claims to be its own selected child"
             debug.println(debug.LEVEL_INFO, msg, True)
             children.remove(obj)
 

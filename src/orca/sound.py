@@ -62,7 +62,7 @@ class Player:
         elif message.type == Gst.MessageType.ERROR:
             self._player.set_state(Gst.State.NULL)
             error, info = message.parse_error()
-            msg = 'SOUND ERROR: %s' % error
+            msg = f'SOUND ERROR: {error}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def _onPipelineMessage(self, bus, message):
@@ -71,7 +71,7 @@ class Player:
         elif message.type == Gst.MessageType.ERROR:
             self._pipeline.set_state(Gst.State.NULL)
             error, info = message.parse_error()
-            msg = 'SOUND ERROR: %s' % error
+            msg = f'SOUND ERROR: {error}'
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def _onTimeout(self, element):
@@ -84,7 +84,7 @@ class Player:
         if interrupt:
             self._player.set_state(Gst.State.NULL)
 
-        self._player.set_property('uri', 'file://%s' % icon.path)
+        self._player.set_property('uri', f'file://{icon.path}')
         self._player.set_state(Gst.State.PLAYING)
 
     def _playTone(self, tone, interrupt=True):
@@ -143,7 +143,7 @@ class Player:
         elif isinstance(item, Tone):
             self._playTone(item, interrupt)
         else:
-            msg = 'SOUND ERROR: %s is not an Icon or Tone' % item
+            msg = f'SOUND ERROR: {item} is not an Icon or Tone'
             debug.println(debug.LEVEL_INFO, msg, True)
 
     def stop(self, element=None):

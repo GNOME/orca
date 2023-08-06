@@ -136,7 +136,7 @@ class FlatReviewPresenter:
             bindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
                 self._handlers.get("reviewBottomLeftHandler")
         except Exception as e:
-            msg = "FLAT REVIEW PRESENTER: Exception getting braille bindings: %s" % e
+            msg = f"FLAT REVIEW PRESENTER: Exception getting braille bindings: {e}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return {}
         return bindings

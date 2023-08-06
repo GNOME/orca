@@ -54,7 +54,7 @@ class Utilities(script_utilities.Utilities):
             return event.any_data
 
         adjusted = event.any_data[:match.start()]
-        msg = "TERMINAL: Adjusted deletion: '%s'" % adjusted
+        msg = f"TERMINAL: Adjusted deletion: '{adjusted}'"
         debug.println(debug.LEVEL_INFO, msg, True)
         return adjusted
 
@@ -71,7 +71,7 @@ class Utilities(script_utilities.Utilities):
         try:
             text = event.source.queryText()
         except Exception:
-            msg = "ERROR: Exception querying text for %s" % event.source
+            msg = f"ERROR: Exception querying text for {event.source}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return event.any_data
 
@@ -108,7 +108,7 @@ class Utilities(script_utilities.Utilities):
 
         adjusted = text.getText(start, end)
         if adjusted:
-            msg = "TERMINAL: Adjusted insertion: '%s'" % adjusted
+            msg = f"TERMINAL: Adjusted insertion: '{adjusted}'"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             msg = "TERMINAL: Adjustment failed. Returning any_data."
@@ -121,7 +121,7 @@ class Utilities(script_utilities.Utilities):
         try:
             text = event.source.queryText()
         except Exception:
-            msg = "ERROR: Exception querying text for %s" % event.source
+            msg = f"ERROR: Exception querying text for {event.source}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 

@@ -50,7 +50,7 @@ class Icon:
         self.path = os.path.join(location, filename)
 
     def __str__(self):
-        return 'Icon(path: %s, isValid: %s)' % (self.path, self.isValid())
+        return f'Icon(path: {self.path}, isValid: {self.isValid()})'
 
     def isValid(self):
         return os.path.isfile(self.path)

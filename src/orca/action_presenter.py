@@ -89,7 +89,7 @@ class ActionPresenter:
         """Attempts to perform the named action."""
 
         result = AXObject.do_named_action(self._obj, action)
-        msg = "ActionPresenter: Performing %s on %s succeeded: %s" % (action, self._obj, result)
+        msg = f"ActionPresenter: Performing {action} on {self._obj} succeeded: {result}"
         debug.println(debug.LEVEL_INFO, msg, True)
         self._gui = None
 

@@ -380,13 +380,13 @@ class Utilities(script_utilities.Utilities):
             try:
                 topLevel = self.topLevelObject(obj)
             except Exception:
-                msg = "ERROR: Exception getting top-level object for %s" % obj
+                msg = f"ERROR: Exception getting top-level object for {obj}"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
             if not topLevel:
                 return False
             if self.isDead(topLevel):
-                msg = "SOFFICE: Top level object %s is dead." % topLevel
+                msg = f"SOFFICE: Top level object {topLevel} is dead."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
             if AXObject.get_name(topLevel).endswith("Impress"):
@@ -635,7 +635,7 @@ class Utilities(script_utilities.Utilities):
         try:
             table = obj.queryTable()
         except Exception:
-            msg = "SOFFICE: Exception querying Table interface of %s" % obj
+            msg = f"SOFFICE: Exception querying Table interface of {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -649,13 +649,13 @@ class Utilities(script_utilities.Utilities):
         name = self.spreadSheetCellName(cell)
         if includeContents:
             text = self.displayedText(cell)
-            name = "%s %s" % (text, name)
+            name = f"{text} {name}"
 
         return name.strip()
 
     def _getCoordinatesForSelectedRange(self, obj):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
-            msg = "SOFFICE: %s does not implement both selection and table" % obj
+            msg = f"SOFFICE: {obj} does not implement both selection and table"
             debug.println(debug.LEVEL_INFO, msg, True)
             return (-1, -1), (-1, -1)
 

@@ -133,7 +133,7 @@ class BrailleGenerator(generator.Generator):
                 return self._isCandidateFocusedRegion(obj, x)
 
             candidates = list(filter(pred, result))
-            msg = 'INFO: Could not determine focused region. Candidates: %i' % len(candidates)
+            msg = f'INFO: Could not determine focused region. Candidates: {len(candidates)}'
             debug.println(debug.LEVEL_INFO, msg)
             if len(candidates) == 1:
                 focusedRegion = candidates[0]
@@ -348,7 +348,7 @@ class BrailleGenerator(generator.Generator):
         if count < 0:
             return []
 
-        return ["(%s)" % messages.valueCountForTerm(count)]
+        return [f"({messages.valueCountForTerm(count)})"]
 
     def _generateStatusBar(self, obj, **args):
         if not AXUtilities.is_status_bar(obj):
@@ -385,7 +385,7 @@ class BrailleGenerator(generator.Generator):
         acc, updateTime, updateValue = self._getMostRecentProgressBarUpdate()
         if acc != obj:
             number, count = self.getProgressBarNumberAndCount(obj)
-            return ['%s' % number]
+            return [f'{number}']
 
         return []
 
@@ -403,7 +403,7 @@ class BrailleGenerator(generator.Generator):
     def _generatePercentage(self, obj, **args):
         percent = self._script.utilities.getValueAsPercent(obj)
         if percent is not None:
-            return ['%s%%' % percent]
+            return [f'{percent}%']
 
         return []
 
