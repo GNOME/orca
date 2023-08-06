@@ -821,7 +821,7 @@ class Script(script.Script):
             if not movedCaret and AXUtilities.is_terminal(orca_state.locusOfFocus):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
-                self.reviewPreviousCharacter(inputEvent)
+                self.flatReviewPresenter.go_previous_character(self, inputEvent)
         else:
             self.panBrailleInDirection(panAmount, panToLeft=True)
             # We might be panning through a flashed message.
