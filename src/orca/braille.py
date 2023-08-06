@@ -356,7 +356,10 @@ class Region:
         else:
             if string.strip():
                 if not settings.enableContractedBraille:
-                    msg = f"BRAILLE: Not contracting '{string}'                            because contracted braille is not enabled."
+                    msg = (
+                        f"BRAILLE: Not contracting '{string}' "
+                        f"because contracted braille is not enabled."
+                    )
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
                     msg = f"BRAILLE: Not contracting '{string}' due to problem with liblouis."

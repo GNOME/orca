@@ -123,8 +123,10 @@ OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
 
 def getActiveModeAndObjectOfInterest():
-    msg = f"ORCA: Active mode: {orca_state.activeMode} Object of interest: {orca_state.objOfInterest}"
-
+    msg = (
+        f"ORCA: Active mode: {orca_state.activeMode} "
+        f"Object of interest: {orca_state.objOfInterest}"
+    )
     debug.println(debug.LEVEL_INFO, msg, True)
     return orca_state.activeMode, orca_state.objOfInterest
 

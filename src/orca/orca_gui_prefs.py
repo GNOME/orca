@@ -884,10 +884,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         combobox.set_model(self.speechServersModel)
         self._setSpeechServersChoice(self.prefsDict["speechServerInfo"])
 
-        debug.println(
-            debug.LEVEL_FINEST,
-            f"orca_gui_prefs._setupSpeechServers: speechServersChoice: {self.speechServersChoice.getInfo()}")
-
     def _setSpeechSystemsChoice(self, systemName):
         """Set the active item in the speech systems combo box to the
         given system name.

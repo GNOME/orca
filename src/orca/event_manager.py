@@ -147,7 +147,10 @@ class EventManager:
             msg = f"EVENT MANAGER: Suspended events: {', '.join(self._suspendableEvents)}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = f'EVENT MANAGER: {event.type} for {source} in {app} ({event.detail1}, {event.detail2}, {anydata})'
+        msg = (
+            f'EVENT MANAGER: {event.type} for {source} in {app} '
+            f'({event.detail1}, {event.detail2}, {anydata})'
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not self._active:
@@ -1034,7 +1037,10 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        msg = f'EVENT MANAGER: locusOfFocus: {orca_state.locusOfFocus} activeScript: {orca_state.activeScript}'
+        msg = (
+            f'EVENT MANAGER: locusOfFocus: {orca_state.locusOfFocus} '
+            f'activeScript: {orca_state.activeScript}'
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not orca_state.activeScript:

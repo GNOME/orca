@@ -638,7 +638,10 @@ class Script(script.Script):
         if not AXUtilities.is_table_cell(oldLocusOfFocus) \
            and not AXUtilities.is_table_cell(newLocusOfFocus) \
            and self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
-            msg = f'DEFAULT: old focus {oldLocusOfFocus} believed to be same as new focus {newLocusOfFocus}'
+            msg = (
+                f"DEFAULT: old focus {oldLocusOfFocus} believed to be "
+                f"same as new focus {newLocusOfFocus}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1235,15 +1238,24 @@ class Script(script.Script):
         if event.source != orca_state.locusOfFocus and AXUtilities.is_focused(event.source):
             topLevelObject = self.utilities.topLevelObject(event.source)
             if self.utilities.isSameObject(orca_state.activeWindow, topLevelObject):
-                msg = f"DEFAULT: Updating locusOfFocus from {orca_state.locusOfFocus} to {event.source}"
+                msg = (
+                    f"DEFAULT: Updating locusOfFocus from {orca_state.locusOfFocus} "
+                    f"to {event.source}"
+                )
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
             else:
-                msg = f"DEFAULT: Source window ({topLevelObject}) is not active window({orca_state.activeWindow})"
+                msg = (
+                    f"DEFAULT: Source window ({topLevelObject}) is not "
+                    f"active window({orca_state.activeWindow})"
+                )
                 debug.println(debug.LEVEL_INFO, msg, True)
 
         if event.source != orca_state.locusOfFocus:
-            msg = f"DEFAULT: Event source ({event.source}) is not locusOfFocus ({orca_state.locusOfFocus})"
+            msg = (
+                f"DEFAULT: Event source ({event.source}) is not "
+                f"locusOfFocus ({orca_state.locusOfFocus})"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 

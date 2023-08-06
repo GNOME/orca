@@ -2898,7 +2898,10 @@ class SpeechGenerator(generator.Generator):
 
         language = args.get('language')
         dialect = args.get('dialect')
-        msg = f"SPEECH GENERATOR: {key} voice requested with language='{language}', dialect='{dialect}'"
+        msg = (
+            f"SPEECH GENERATOR: {key} voice requested "
+            f"with language='{language}', dialect='{dialect}'"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if key in [None, DEFAULT]:

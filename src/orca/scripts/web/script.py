@@ -1149,7 +1149,10 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             if debugOutput:
-                msg = f"WEB: Not using caret navigation because {orca_state.locusOfFocus} is not in document content."
+                msg = (
+                    f"WEB: Not using caret navigation because {orca_state.locusOfFocus} "
+                    f"is not in document content."
+                )
                 debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -1160,7 +1163,10 @@ class Script(default.Script):
             return False
 
         if debugOutput:
-            msg = f"WEB: Using caret navigation. In browse mode and {orca_state.locusOfFocus} is in document content."
+            msg = (
+                f"WEB: Using caret navigation. In browse mode and {orca_state.locusOfFocus} "
+                f"is in document content."
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -1181,15 +1187,21 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             if debugOutput:
-                msg = f"WEB: Not using structural navigation: {orca_state.locusOfFocus} is not in document content."
+                msg = (
+                    f"WEB: Not using structural navigation: {orca_state.locusOfFocus} "
+                    f"is not in document content."
+                )
                 debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if debugOutput:
-            msg = f"WEB: Using structural navigation: browse mode and {orca_state.locusOfFocus} is in document content."
+            msg = (
+                f"WEB: Using structural navigation: browse mode and {orca_state.locusOfFocus} "
+                f"is in document content."
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
         return True
- 
+
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
@@ -2265,7 +2277,10 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) is not in document content"
+            msg = (
+                f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) "
+                f"is not in document content"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2534,7 +2549,10 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) is not in document content"
+            msg = (
+                f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) "
+                f"is not in document content"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 

@@ -249,9 +249,12 @@ def printResult(level, result=None):
         args.locals[key] = str(value)
     fArgs = str.replace(inspect.formatargvalues(*args), "'", "")
 
-    callString = f'CALL:   {inspect.getmodulename(prev[1])}.{prev[3]} (line {prev[2]}) -> {inspect.getmodulename(current[1])}.{current[3]}{fArgs}'
-    string = f'{callString}\nRESULT: {result}'
-    println(level, f'{string}')
+    callString = (
+        f"CALL:   {inspect.getmodulename(prev[1])}.{prev[3]} (line {prev[2]})"
+        f" -> {inspect.getmodulename(current[1])}.{current[3]}{fArgs}"
+    )
+    string = f"{callString}\nRESULT: {result}"
+    println(level, f"{string}")
 
 def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
     """Prints out an Python Event object.  The given level may be
@@ -340,8 +343,16 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     actions_string = f"{indent}actions='{AXObject.actions_as_string(acc)}'"
     iface_string = f"{indent}interfaces='{AXObject.supported_interfaces_as_string(acc)}'"
     attr_string = f"{indent}attributes='{AXObject.attributes_as_string(acc)}'"
-
-    string += f"{name_string} {role_string}\n{desc_string}\n{state_string}\n{rel_string}\n{actions_string}\n{iface_string}\n{attr_string}\n{path_string}\n"
+    string += (
+        f"{name_string} {role_string}\n"
+        f"{desc_string}\n"
+        f"{state_string}\n"
+        f"{rel_string}\n"
+        f"{actions_string}\n"
+        f"{iface_string}\n"
+        f"{attr_string}\n"
+        f"{path_string}\n"
+    )
     return string
 
 # The following code originated from the following URL:

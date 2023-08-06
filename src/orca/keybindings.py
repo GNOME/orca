@@ -329,7 +329,10 @@ class KeyBindings:
         """
 
         if keyBinding.keysymstring and self.hasKeyBinding(keyBinding, "keysNoMask"):
-           msg = f"WARNING: '{keyBinding.asString()}' ({keyBinding.description()}) already in keybindings"
+           msg = (
+               f"WARNING: '{keyBinding.asString()}' "
+               f"({keyBinding.description()}) already in keybindings"
+           )
            debug.println(debug.LEVEL_INFO, msg, True)
 
         self.keyBindings.append(keyBinding)
@@ -450,7 +453,10 @@ class KeyBindings:
         def toString(x):
             return "%s (%ix)" % (x.handler.description, x.click_count)
 
-        msg = f"WARNING: '{keyboardEvent.event_string}' matches multiple handlers: {', '.join(map(toString, result))}"
+        msg = (
+            f"WARNING: '{keyboardEvent.event_string}' "
+            f"matches multiple handlers: {', '.join(map(toString, result))}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def getInputHandler(self, keyboardEvent):

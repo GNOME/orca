@@ -239,7 +239,10 @@ class Generator:
                     formatting = f'{prefix} + {formatting} + {suffix}'
                 args['recursing'] = True
 
-            msg = f"{self._mode.upper()} GENERATOR: Starting {args.get('formatType')} generation for {obj} ({args.get('role')})"
+            msg = (
+                f"{self._mode.upper()} GENERATOR: Starting {args.get('formatType')} "
+                f"generation for {obj} ({args.get('role')})"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
 
             # Reset 'usedDescriptionFor*' if a previous generator used it.
@@ -270,8 +273,9 @@ class Generator:
                     if isinstance(globalsDict[arg], list):
                         stringResult = " ".join(filter(lambda x: x,
                                                         map(debuginfo, globalsDict[arg])))
-                        debug.println(debug.LEVEL_ALL,
-                                      f"{' ' * 18}GENERATION TIME: {duration}  ---->  {arg}=[{stringResult}]")
+                        debug.println(
+                            debug.LEVEL_ALL,
+                            f"{' ' * 18}GENERATION TIME: {duration} ----> {arg}=[{stringResult}]")
 
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)

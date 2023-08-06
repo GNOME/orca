@@ -791,7 +791,10 @@ class StructuralNavigation:
         modalDialog = self._script.utilities.getModalDialog(orca_state.locusOfFocus)
         inModalDialog = bool(modalDialog)
         if self._inModalDialog != inModalDialog:
-            msg = f"STRUCTURAL NAVIGATION: in modal dialog has changed from {self._inModalDialog} to {inModalDialog}"
+            msg = (
+                f"STRUCTURAL NAVIGATION: in modal dialog has changed from "
+                f"{self._inModalDialog} to {inModalDialog}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCache()
             self._inModalDialog = inModalDialog

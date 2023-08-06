@@ -340,7 +340,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         objName = AXObject.get_name(obj)
         descendant = args.get("ancestorOf")
         if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
-            msg = f"WEB: {descendant}'s ancestor {obj} has same name as priorObj {priorObj}.                    Not generating labelOrName."
+            msg = (
+                f"WEB: {descendant}'s ancestor {obj} has same name as priorObj {priorObj}. "
+                f"Not generating labelOrName."
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 

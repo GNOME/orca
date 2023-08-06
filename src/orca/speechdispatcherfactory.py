@@ -274,7 +274,16 @@ class SpeechServer(speechserver.SpeechServer):
                   settings.PUNCTUATION_STYLE_MOST: "MOST",
                   settings.PUNCTUATION_STYLE_ALL: "ALL"}
 
-        msg = f"SPEECH DISPATCHER: {prefix}\nORCA rate {self._current_voice_properties.get(ACSS.RATE)}, pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, volume {self._current_voice_properties.get(ACSS.GAIN)}, language {self._get_language_and_dialect(family)[0]}, punctuation: {styles.get(_settingsManager.getSetting('verbalizePunctuationStyle'))} \nSD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
+        msg = (
+            f"SPEECH DISPATCHER: {prefix}\n"
+            f"ORCA rate {self._current_voice_properties.get(ACSS.RATE)}, "
+            f"pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, "
+            f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
+            f"language {self._get_language_and_dialect(family)[0]}, "
+            f"punctuation: "
+            f"{styles.get(_settingsManager.getSetting('verbalizePunctuationStyle'))}\n"
+            f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss):

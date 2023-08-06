@@ -397,11 +397,18 @@ class Script:
             return None
 
         if any_data is not None and any_data != cachedEvent.any_data:
-            msg = f"SCRIPT: Queued event's any_data ({cachedEvent.any_data}) doesn't match {any_data}"
+            msg = (
+                f"SCRIPT: Queued event's any_data ({cachedEvent.any_data}) "
+                f"doesn't match {any_data}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = f"SCRIPT: Found matching queued event: {cachedEvent.type} ({cachedEvent.detail1},{cachedEvent.detail2},{cachedEvent.any_data}) on {cachedEvent.source}"
+        msg = (
+            f"SCRIPT: Found matching queued event: {cachedEvent.type} "
+            f"({cachedEvent.detail1},{cachedEvent.detail2},{cachedEvent.any_data}) "
+            f"on {cachedEvent.source}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
         return cachedEvent
 

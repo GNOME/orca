@@ -1141,7 +1141,10 @@ class Utilities(script_utilities.Utilities):
             endExtents = list(text.getRangeExtents(end - 1, end, 0))
             delta = max(startExtents[3], endExtents[3])
             if not self.extentsAreOnSameLine(startExtents, endExtents, delta):
-                msg = f"FAIL: Start {startExtents} and end {endExtents} of '{allText[start:end]}' not on same line"
+                msg = (
+                    f"FAIL: Start {startExtents} and end {endExtents} of "
+                    f"'{allText[start:end]}' not on same line"
+                )
                 debug.println(debug.LEVEL_INFO, msg, True)
                 startExtents = endExtents
 
@@ -4499,7 +4502,10 @@ class Utilities(script_utilities.Utilities):
 
         # There may be other roles where we need to do this. For now, solve the known one.
         if AXUtilities.is_page_tab_list(event.source):
-            msg = f"WEB: Selection changed event is irrelevant (unrelated {AXObject.get_role_name(event.source)})"
+            msg = (
+                f"WEB: Selection changed event is irrelevant "
+                f"(unrelated {AXObject.get_role_name(event.source)})"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -4916,19 +4922,28 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not self.isDead(orca_state.locusOfFocus):
-            msg = f"WEB: Not event from context replicant. locusOfFocus {orca_state.locusOfFocus} is not dead."
+            msg = (
+                f"WEB: Not event from context replicant. "
+                f"locusOfFocus {orca_state.locusOfFocus} is not dead."
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         path, role, name = self.getCaretContextPathRoleAndName()
         replicantPath = AXObject.get_path(replicant)
         if path != replicantPath:
-            msg = f"WEB: Not event from context replicant. Path {path} != replicant path {replicantPath}."
+            msg = (
+                f"WEB: Not event from context replicant. "
+                f"Path {path} != replicant path {replicantPath}."
+            )
             return False
 
         replicantRole = AXObject.get_role(replicant)
         if role != replicantRole:
-            msg = f"WEB: Not event from context replicant. Role {role} != replicant role {replicantRole}."
+            msg = (
+                f"WEB: Not event from context replicant. "
+                f"Role {role} != replicant role {replicantRole}."
+            )
             return False
 
         notify = AXObject.get_name(replicant) != name
@@ -5144,7 +5159,10 @@ class Utilities(script_utilities.Utilities):
                     msg = f"WEB: No next object found at end of contenteditable {obj}"
                     debug.println(debug.LEVEL_INFO, msg, True)
                 elif not self.isContentEditableWithEmbeddedObjects(nextObj):
-                    msg = f"WEB: Next object found at end of contenteditable {obj} is not editable {nextObj}"
+                    msg = (
+                        f"WEB: Next object found at end of contenteditable {obj} "
+                        f"is not editable {nextObj}"
+                    )
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
                     msg = "WEB: First caret context at end of contenteditable %s \

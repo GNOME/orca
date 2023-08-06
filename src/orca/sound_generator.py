@@ -79,7 +79,12 @@ class Tone:
         self.wave = wave
 
     def __str__(self):
-        return f'Tone(duration: {self.duration}, frequency: {self.frequency}, volume: {self.volume}, wave: {self.wave})'
+        return (
+            f'Tone(duration: {self.duration}, '
+            f'frequency: {self.frequency}, '
+            f'volume: {self.volume}, '
+            f'wave: {self.wave})'
+        )
 
 class SoundGenerator(generator.Generator):
     """Takes accessible objects and produces the sound(s) to be played."""

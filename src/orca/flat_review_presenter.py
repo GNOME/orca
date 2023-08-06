@@ -100,7 +100,10 @@ class FlatReviewPresenter:
         obj = obj or orca_state.locusOfFocus
         if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
            and not self._restrict:
-            msg = f"FLAT REVIEW PRESENTER: Attempting to update location from {self._context.getCurrentAccessible()} to {obj}"
+            msg = (
+                f"FLAT REVIEW PRESENTER: Attempting to update location from "
+                f"{self._context.getCurrentAccessible()} to {obj}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             self._context.setCurrentToZoneWithObject(obj)
 
