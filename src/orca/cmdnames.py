@@ -483,6 +483,11 @@ CHANGE_NUMBER_STYLE = _("Change spoken number style")
 # some, most, or all, punctuation will be spoken.
 CYCLE_PUNCTUATION_LEVEL = _("Cycle to the next speaking of punctuation level")
 
+# Translators: Orca allows users to cycle through the speech synthesizers
+# available on their system, such as espeak, voxin, mbrola, etc. This string
+# is the description of the command.
+CYCLE_SYNTHESIZER = _("Cycle to the next speech synthesizer")
+
 # Translators: Orca has a feature whereby users can set up different "profiles,"
 # which are collection of settings which apply to a given task, such as a
 # "Spanish" profile which would use Spanish text-to-speech and Spanish braille
