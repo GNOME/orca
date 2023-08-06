@@ -5521,6 +5521,11 @@ class Utilities:
         return True
 
     def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus, event=None):
+        if event is None:
+            msg = "INFO: Not interrupting for locusOfFocus change: event is None"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if event is not None and event.type.startswith("object:active-descendant-changed"):
             return self._script.stopSpeechOnActiveDescendantChanged(event)
 
