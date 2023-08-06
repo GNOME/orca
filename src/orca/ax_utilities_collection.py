@@ -34,10 +34,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
 import inspect
 import time
 
+import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -49,6 +49,7 @@ from .ax_utilities_state import AXUtilitiesState
 
 
 class AXUtilitiesCollection:
+    """Utilities for finding all objects that meet a certain criteria."""
 
     @staticmethod
     def _get_frame_name(frame, string=""):
@@ -61,21 +62,20 @@ class AXUtilitiesCollection:
     def _get_function_string(func):
         if func is None:
             return "None"
-        elif hasattr(func, '__self__'):
+        if hasattr(func, '__self__'):
             return f'{func.__module__}.{func.__self__.__class__.__name__}.{func.__name__}'
-        else:
-            return f'{func.__module__}.{func.__name__}'
+        return f'{func.__module__}.{func.__name__}'
 
     @staticmethod
     def _roles_as_string(role_list):
-        def as_string(x):
-            return x.value_name[11:].replace("_", "-").lower()
+        def as_string(role):
+            return role.value_name[11:].replace("_", "-").lower()
         return ", ".join(map(as_string, role_list))
 
     @staticmethod
     def _states_as_string(state_list):
-        def as_string(x):
-            return x.value_name[12:].replace("_", "-").lower()
+        def as_string(state):
+            return state.value_name[12:].replace("_", "-").lower()
         return ", ".join(map(as_string, state_list))
 
     @staticmethod
@@ -84,13 +84,14 @@ class AXUtilitiesCollection:
             return []
 
         start = time.time()
-        msg = "AXUtilitiesCollection: Applying predicate %s" \
-            % AXUtilitiesCollection._get_function_string(pred)
+        msg = (
+            f"AXUtilitiesCollection: Applying predicate "
+            f"{AXUtilitiesCollection._get_function_string(pred)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         matches = list(filter(pred, matches))
-        msg = "AXUtilitiesCollection: %i matches found in %.4fs" \
-            % (len(matches), time.time() - start)
+        msg = f"AXUtilitiesCollection: {len(matches)} matches found in {time.time() - start:.4f}s"
         debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
@@ -100,12 +101,14 @@ class AXUtilitiesCollection:
             return []
 
         state_list = list(state_list)
-        string = "Root: %s %s of: %s" % \
-              (root,
-               state_match_type.value_nick,
-               AXUtilitiesCollection._states_as_string(state_list))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} {state_match_type.value_nick} of: "
+            f"{AXUtilitiesCollection._states_as_string(state_list)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(states=state_list, state_match_type=state_match_type)
@@ -121,12 +124,14 @@ class AXUtilitiesCollection:
             return []
 
         role_list = list(role_list)
-        string = "Root: %s %s of: %s" % \
-              (root,
-               role_match_type.value_nick,
-               AXUtilitiesCollection._roles_as_string(role_list))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} {role_match_type.value_nick} of: "
+            f"{AXUtilitiesCollection._roles_as_string(role_list)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(roles=role_list, role_match_type=role_match_type)
@@ -145,8 +150,10 @@ class AXUtilitiesCollection:
 
         interface_list = list(interface_list)
         string = f"Root: {root} Interfaces: {', '.join(interface_list)}"
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(interfaces=interface_list)
@@ -179,12 +186,14 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = "Root: %s Roles: %s States: %s" % \
-              (root,
-               AXUtilitiesCollection._roles_as_string(role_list),
-               AXUtilitiesCollection._states_as_string(state_list))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
+            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(
@@ -204,12 +213,14 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = "Root: %s Roles: %s States: %s" % \
-              (root,
-               AXUtilitiesCollection._roles_as_string(role_list),
-               AXUtilitiesCollection._states_as_string(state_list))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
+            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(
@@ -229,12 +240,14 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = "Root: %s Roles: %s States: %s" % \
-              (root,
-               AXUtilitiesCollection._roles_as_string(role_list),
-               AXUtilitiesCollection._states_as_string(state_list))
-        msg = "AXUtilitiesCollection: %s" % \
-            AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
+            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         rule = AXCollection.create_match_rule(
@@ -386,23 +399,27 @@ class AXUtilitiesCollection:
         attributes = ["xml-roles:gridcell"]
         attribute_match_type = Atspi.CollectionMatchType.NONE
 
-        string = "Root: %s %s of: %s. pred: %s" % \
-              (root,
-               roles_match_type.value_nick,
-               AXUtilitiesCollection._roles_as_string(roles),
-               AXUtilitiesCollection._get_function_string(pred))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} {Atspi.CollectionMatchType(roles_match_type).value_nick} "
+            f"of: {AXUtilitiesCollection._roles_as_string(roles)}. "
+            f"pred: {AXUtilitiesCollection._get_function_string(pred)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        def is_match(x):
-            result = AXObject.has_action(x, "click")
-            msg = "AXUtilitiesCollection: %s %s has click Action: %s" % \
-                (x, AXObject.actions_as_string(x), result)
+        def is_match(obj):
+            result = AXObject.has_action(obj, "click")
+            msg = (
+                f"AXUtilitiesCollection: {obj} "
+                f"{AXObject.actions_as_string(obj)} has click Action: {result}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             if not result:
                 return False
-            return pred is None or pred(x)
+            return pred is None or pred(obj)
 
         rule = AXCollection.create_match_rule(
             interfaces=interfaces,
@@ -662,23 +679,27 @@ class AXUtilitiesCollection:
         roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
         roles_match_type = Atspi.CollectionMatchType.NONE
 
-        string = "Root: %s %s of: %s. pred: %s" % \
-              (root,
-               roles_match_type.value_nick,
-               AXUtilitiesCollection._roles_as_string(roles),
-               AXUtilitiesCollection._get_function_string(pred))
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = (
+            f"Root: {root} {Atspi.CollectionMatchType(roles_match_type).value_nick} "
+            f"of: {AXUtilitiesCollection._roles_as_string(roles)}. "
+            f"pred: {AXUtilitiesCollection._get_function_string(pred)}"
+        )
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        def is_match(x):
-            result = AXObject.has_action(x, "click-ancestor")
-            msg = "AXUtilitiesCollection: %s %s has click-ancestor Action: %s" % \
-                (x, AXObject.actions_as_string(x), result)
+        def is_match(obj):
+            result = AXObject.has_action(obj, "click-ancestor")
+            msg = (
+                f"AXUtilitiesCollection: {obj} {AXObject.actions_as_string(obj)} "
+                f"has click-ancestor Action: {result}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             if not result:
                 return False
-            return pred is None or pred(x)
+            return pred is None or pred(obj)
 
         rule = AXCollection.create_match_rule(
             interfaces=interfaces,
@@ -764,8 +785,10 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = "AXUtilitiesCollection: %s Searching for grids" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())} Searching for grids"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         roles = [Atspi.Role.TABLE]
@@ -788,8 +811,11 @@ class AXUtilitiesCollection:
         if not grids:
             return []
 
-        msg = "AXUtilitiesCollection: %s Searching for grid cells" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())} "
+            f"Searching for grid cells"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         cells = []
@@ -830,13 +856,15 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        string = "Level: %d" % level
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)
+        string = f"Level: {level}"
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         roles = [Atspi.Role.HEADING]
-        attributes = ["level:%d" % level]
+        attributes = [f"level:{level}"]
         rule = AXCollection.create_match_rule(roles=roles, attributes=attributes)
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
@@ -990,8 +1018,10 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = "AXUtilitiesCollection: %s" \
-            % AXUtilitiesCollection._get_frame_name(inspect.currentframe())
+        msg = (
+            f"AXUtilitiesCollection: "
+            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())}"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
 
         attributes = []
@@ -1624,11 +1654,12 @@ class AXUtilitiesCollection:
     def find_all_unrelated_labels(root, must_be_showing=True, pred=None):
         """Returns all the descendants of root that have a label role, but no relations"""
 
-        def _pred(x):
-            if AXObject.get_relations(x):
+        def _pred(obj):
+            if AXObject.get_relations(obj):
                 return False
             if pred is not None:
-                return pred(x)
+                return pred(obj)
+            return True
 
         roles = [Atspi.Role.LABEL, Atspi.Role.STATIC]
         if not must_be_showing:
@@ -1646,10 +1677,10 @@ class AXUtilitiesCollection:
 
         roles = [Atspi.Role.LINK]
         states = [Atspi.StateType.VISITED]
-        rv = AXUtilitiesCollection.find_all_with_role_without_states(root, roles, states, pred)
+        result = AXUtilitiesCollection.find_all_with_role_without_states(root, roles, states, pred)
         if must_be_focusable:
-            rv = list(filter(AXUtilitiesState.is_focusable, rv))
-        return rv
+            result = list(filter(AXUtilitiesState.is_focusable, result))
+        return result
 
     @staticmethod
     def find_all_vertical_scrollbars(root, pred=None):
