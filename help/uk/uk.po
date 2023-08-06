@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-07-26 20:29+0000\n"
-"PO-Revision-Date: 2023-07-28 21:41+0300\n"
+"POT-Creation-Date: 2023-08-05 19:09+0000\n"
+"PO-Revision-Date: 2023-08-06 15:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -57,7 +57,7 @@ msgstr "Команди для встановлення закладок і от�
 #: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
 #: C/howto_structural_navigation.page:12 C/howto_tables.page:10
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
 #: C/introduction.page:10 C/preferences_braille.page:11
 #: C/preferences_chat.page:11 C/preferences_web.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
@@ -87,7 +87,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
 #: C/preferences_web.page:16 C/preferences_general.page:15
 #: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
@@ -1298,7 +1298,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Команди <app>Orca</app>"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:36
+#: C/commands.page:17 C/index.page:35
 msgid "Getting Started"
 msgstr "Початкові зауваження"
 
@@ -1313,7 +1313,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Читання вебсторінок та інших документів"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:42
+#: C/commands.page:26 C/index.page:41
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Перегляд і взаємодія із вмістом екрана"
 
@@ -1976,9 +1976,6 @@ msgstr "Форми"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
-#| msgid ""
-#| "Next and previous image: <keyseq><key>G</key></keyseq> and "
-#| "<keyseq><key>Shift</key><key>G</key></keyseq>"
 msgid ""
 "Next and previous form field: <keyseq><key>F</key></keyseq> and "
 "<keyseq><key>Shift</key><key>F</key></keyseq>"
@@ -2551,7 +2548,6 @@ msgstr "Прочитати попереднє сповіщення: (не пов
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
-#| msgid "Present the previous notification message: (Unbound)"
 msgid "Present the next notification message: (Unbound)"
 msgstr "Прочитати наступне сповіщення: (не пов'язано)"
 
@@ -4966,18 +4962,27 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/index.page:6
+#| msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgctxt "text"
-msgid "Orca Screen Reader"
-msgstr "Інструмент читання з екрана «Orca»"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Інструмент читання з екрана <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/index.page:7
+#| msgid "<_:media-1/> <app>Orca</app> Screen Reader"
+msgctxt "link:trail"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Інструмент читання з екрана <app>Orca</app>"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+#| msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgctxt "link"
-msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr "Вступ до інструмента читання з екрана <app>Orca</app>"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Інструмент читання з екрана <app>Orca</app>"
 
 #. (itstool) path: info/desc
-#: C/index.page:16
+#: C/index.page:17
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -4987,23 +4992,18 @@ msgstr ""
 "графічної стільниці за допомогою технологій озвучування тексту та дисплея "
 "брайля."
 
-#. (itstool) path: media/span
-#: C/index.page:23
-msgid "<app>Orca</app>'s logo"
-msgstr "Логотип <app>Orca</app>"
-
 #. (itstool) path: page/title
-#: C/index.page:21
+#: C/index.page:22
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgstr "<_:media-1/> Інструмент читання з екрана <app>Orca</app>"
 
 #. (itstool) path: note/title
-#: C/index.page:28
+#: C/index.page:27
 msgid "Before You Begin"
 msgstr "Передмова"
 
 #. (itstool) path: note/p
-#: C/index.page:29
+#: C/index.page:28
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -5012,12 +5012,12 @@ msgstr ""
 "стільничному середовищі, вам варто спочатку прочитати цю документацію."
 
 #. (itstool) path: section/title
-#: C/index.page:39
+#: C/index.page:38
 msgid "Reading Documents and Web Pages"
 msgstr "Читання документів та вебсторінок"
 
 #. (itstool) path: section/title
-#: C/index.page:45
+#: C/index.page:44
 msgid "Quick Reference"
 msgstr "Короткий довідник"
 
@@ -8309,6 +8309,17 @@ msgstr ""
 "Якщо буде позначено пункт <gui>Вимовляти числа як цифри</gui>, <app>Orca</"
 "app> розбиватиме числа, наприклад «123», на окремі цифри («1», «2» і «3»), "
 "перш ніж передавати їх синтезатору мовлення."
+
+#~ msgctxt "text"
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Інструмент читання з екрана «Orca»"
+
+#~ msgctxt "link"
+#~ msgid "Introduction to the <app>Orca</app> Screen Reader"
+#~ msgstr "Вступ до інструмента читання з екрана <app>Orca</app>"
+
+#~ msgid "<app>Orca</app>'s logo"
+#~ msgstr "Логотип <app>Orca</app>"
 
 #~ msgid ""
 #~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
