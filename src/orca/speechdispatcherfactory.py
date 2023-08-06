@@ -678,6 +678,12 @@ class SpeechServer(speechserver.SpeechServer):
     def decreaseSpeechVolume(self, step=0.5):
         self._change_default_speech_volume(step, decrease=True)
 
+    def getOutputModule(self):
+        return self._client.get_output_module()
+
+    def setOutputModule(self, module):
+        self._client.set_output_module(module)
+
     def stop(self):
         self._cancel()
 

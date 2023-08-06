@@ -71,6 +71,11 @@ class SpeechAndVerbosityManager:
                 self.cycle_punctuation_level,
                 cmdnames.CYCLE_PUNCTUATION_LEVEL)
 
+        handlers["cycleSynthesizerHandler"] = \
+            input_event.InputEventHandler(
+                self.cycle_synthesizer,
+                cmdnames.CYCLE_SYNTHESIZER)
+
         handlers["cycleKeyEchoHandler"] = \
             input_event.InputEventHandler(
                 self.cycle_key_echo,
@@ -151,6 +156,13 @@ class SpeechAndVerbosityManager:
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("cycleSpeakingPunctuationLevelHandler")))
+
+        bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers.get("cycleSynthesizerHandler")))
 
         bindings.add(
             keybindings.KeyBinding(
@@ -335,6 +347,35 @@ class SpeechAndVerbosityManager:
             return True
 
         server.updatePunctuationLevel()
+        return True
+
+    def cycle_synthesizer(self, script, event=None):
+        """Cycle through the speech-dispatcher's available output modules."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        available = server.list_output_modules()
+        if not available:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get output modules."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        current = server.getOutputModule()
+        if not current:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get current output module."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        index = available.index(current) + 1
+        if index == len(available):
+            index = 0
+
+        server.setOutputModule(available[index])
+        script.presentMessage(available[index])
         return True
 
     def cycle_capitalization_style(self, script, event=None):
