@@ -94,6 +94,7 @@ class AXUtilitiesCollection:
         debug.println(debug.LEVEL_INFO, msg, True)
         return matches
 
+    @staticmethod
     def _find_all_with_states(root, state_list, state_match_type, pred=None):
         if not (root and state_list):
             return []
