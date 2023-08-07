@@ -411,7 +411,7 @@ class WhereAmIPresenter:
         msg = f"WHERE AM I PRESENTER: presenting selection for {obj}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        spreadsheet = AXObject.find_ancestor(obj, AXUtilities.is_document_spreadsheet)
+        spreadsheet = AXObject.find_ancestor(obj, script.utilities.isSpreadSheetTable)
         if spreadsheet is not None and script.utilities.speakSelectedCellRange(spreadsheet):
             return True
 
