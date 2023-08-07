@@ -119,8 +119,8 @@ class Word:
             if text:
                 try:
                     extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
-                except Exception as e:
-                    msg = f"FLAT REVIEW: Exception in getRangeExtents: {e}"
+                except Exception as error:
+                    msg = f"FLAT REVIEW: Exception in getRangeExtents: {error}"
                     debug.println(debug.LEVEL_INFO, msg, True)
             chars.append(Char(self, i, start, char, *extents))
 

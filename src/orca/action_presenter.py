@@ -107,8 +107,10 @@ class ActionPresenter:
         for i in range(AXObject.get_n_actions(obj)):
             name = AXObject.get_action_name(obj, i)
             description = AXObject.get_action_description(obj, i)
-            msg = "ActionPresenter: Action %i on %s: '%s' (localized description: '%s')" \
-                % (i, obj, name, description)
+            msg = (
+                f"ActionPresenter: Action {i} on {obj}: '{name}' "
+                f"(localized description: '{description}')"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             actions[name] = description or name
 
@@ -120,9 +122,11 @@ class ActionPresenter:
         self._obj = obj
         self._gui = ActionMenu(actions, self._perform_action)
         self._gui.show_gui()
+        return True
 
 
 class ActionMenu(Gtk.Menu):
+    """A simple Gtk.Menu containing a list of accessible actions."""
 
     def __init__(self, actions, handler):
         super().__init__()
@@ -133,14 +137,18 @@ class ActionMenu(Gtk.Menu):
             self.append(menu_item)
 
     def _on_activate(self, widget, option):
+        """Handler for the 'activate' menuitem signal"""
+
         self.on_option_selected(option)
 
     def show_gui(self):
+        """Shows the menu"""
+
         self.show_all()
-        ts = orca_state.lastInputEvent.timestamp
-        if ts == 0:
-            ts = Gtk.get_current_event_time()
-        self.popup(None, None, None, None, 0, ts)
+        time_stamp = orca_state.lastInputEvent.timestamp
+        if time_stamp == 0:
+            time_stamp = Gtk.get_current_event_time()
+        self.popup(None, None, None, None, 0, time_stamp)
 
 
 _presenter = ActionPresenter()

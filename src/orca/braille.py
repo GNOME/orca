@@ -535,8 +535,8 @@ class Component(Region):
         # the cursor routing key.
         try:
             result = AXEventSynthesizer.click_object(self.accessible, 1)
-        except Exception as e:
-            msg = f"ERROR: Could not process routing key: {e}"
+        except Exception as error:
+            msg = f"ERROR: Could not process routing key: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             if not result:

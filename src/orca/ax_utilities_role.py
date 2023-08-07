@@ -41,6 +41,7 @@ from gi.repository import Atspi
 from .ax_object import AXObject
 
 class AXUtilitiesRole:
+    """Utilities for obtaining role-related information."""
 
     @staticmethod
     def get_dialog_roles(include_alert_as_dialog=True):
@@ -1261,6 +1262,8 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_table_related(obj, role=None, include_caption=False):
+        """Returns True if obj has a table-related role"""
+
         roles = AXUtilitiesRole.get_table_related_roles(include_caption)
         if role is None:
             role = AXObject.get_role(obj)
@@ -1372,6 +1375,8 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_tree_related(obj, role=None):
+        """Returns True if obj has a tree-related role"""
+
         roles = [Atspi.Role.TREE,
                  Atspi.Role.TREE_ITEM,
                  Atspi.Role.TREE_TABLE]

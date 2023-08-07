@@ -57,8 +57,11 @@ class FlatReviewPresenter:
         self._handlers = self._setup_handlers()
         self._desktop_bindings = self._setup_desktop_bindings()
         self._laptop_bindings = self._setup_laptop_bindings()
+        self._gui = None
 
     def is_active(self):
+        """Returns True if the flat review presenter is active."""
+
         return self._context is not None
 
     def get_or_create_context(self, script=None):
@@ -100,8 +103,10 @@ class FlatReviewPresenter:
         obj = obj or orca_state.locusOfFocus
         if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
            and not self._restrict:
-            msg = "FLAT REVIEW PRESENTER: Attempting to update location from %s to %s" \
-                % (self._context.getCurrentAccessible(), obj)
+            msg = (
+                f"FLAT REVIEW PRESENTER: Attempting to update location from "
+                f"{self._context.getCurrentAccessible()} to {obj}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             self._context.setCurrentToZoneWithObject(obj)
 
@@ -135,8 +140,8 @@ class FlatReviewPresenter:
                 self._handlers.get("reviewHomeHandler")
             bindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
                 self._handlers.get("reviewBottomLeftHandler")
-        except Exception as e:
-            msg = f"FLAT REVIEW PRESENTER: Exception getting braille bindings: {e}"
+        except Exception as error:
+            msg = f"FLAT REVIEW PRESENTER: Exception getting braille bindings: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return {}
         return bindings
@@ -849,10 +854,10 @@ class FlatReviewPresenter:
             script.targetCursorCell = script.getBrailleCursorCell()
         return True
 
-    def present_item(self, script, event=None, targetCursorCell=0):
+    def present_item(self, script, event=None, target_cursor_cell=0):
         """Presents the current item/word."""
 
-        self._item_presentation(script, event, targetCursorCell, 1)
+        self._item_presentation(script, event, target_cursor_cell, 1)
         return True
 
     def go_next_item(self, script, event=None):
@@ -883,7 +888,7 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         if self._context.goPrevious(flat_review.Context.CHAR, flat_review.Context.WRAP_LINE):
             self.present_character(script, event)
-            self.targetCursorCell = script.getBrailleCursorCell()
+            script.targetCursorCell = script.getBrailleCursorCell()
         return True
 
     def present_character(self, script, event=None):
@@ -898,7 +903,7 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         if self._context.goNext(flat_review.Context.CHAR, flat_review.Context.WRAP_LINE):
             self.present_character(script, event)
-            self.targetCursorCell = script.getBrailleCursorCell()
+            script.targetCursorCell = script.getBrailleCursorCell()
         return True
 
     def spell_character(self, script, event=None):
@@ -1070,7 +1075,7 @@ class FlatReviewPresenter:
         self._current_contents = line_string
         return True
 
-    def _item_presentation(self, script, event, targetCursorCell=0, speech_type=1):
+    def _item_presentation(self, script, event, target_cursor_cell=0, speech_type=1):
         """Presents the current item/word."""
 
         self._context = self.get_or_create_context(script)
@@ -1096,7 +1101,7 @@ class FlatReviewPresenter:
                     script.speakMessage(word_string, voice)
 
         orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
-        script.updateBrailleReview(targetCursorCell)
+        script.updateBrailleReview(target_cursor_cell)
         self._current_contents = word_string
         return True
 
@@ -1125,12 +1130,15 @@ class FlatReviewPresenter:
         return True
 
 class FlatReviewContextGUI:
+    """Presents the entire flat review context in a text view"""
 
     def __init__(self, script, title, text):
         self._script = script
         self._gui = self._create_dialog(title, text)
 
     def _create_dialog(self, title, text):
+        """Creates the dialog."""
+
         dialog = Gtk.Dialog(title,
                             None,
                             Gtk.DialogFlags.MODAL,
@@ -1156,17 +1164,23 @@ class FlatReviewContextGUI:
         return dialog
 
     def on_response(self, dialog, response):
+        """Handler for the 'response' signal of the dialog."""
+
         if response == Gtk.ResponseType.CLOSE:
             self._gui.destroy()
 
     def show_gui(self):
+        """Shows the dialog."""
+
         self._gui.show_all()
-        ts = orca_state.lastInputEvent.timestamp
-        if ts == 0:
-            ts = Gtk.get_current_event_time()
-        self._gui.present_with_time(ts)
+        time_stamp = orca_state.lastInputEvent.timestamp
+        if time_stamp == 0:
+            time_stamp = Gtk.get_current_event_time()
+        self._gui.present_with_time(time_stamp)
 
 
 _presenter = FlatReviewPresenter()
 def getPresenter():
+    """Returns the Flat Review Presenter"""
+
     return _presenter

@@ -34,8 +34,8 @@ try:
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk
     CAIRO_AVAILABLE = True
-except Exception as e:
-    msg = f"HIGHLIGHTER: GtkHighlighter unavailable: {e}"
+except Exception as error:
+    msg = f"HIGHLIGHTER: GtkHighlighter unavailable: {error}"
     debug.println(debug.LEVEL_INFO, msg, True)
     CAIRO_AVAILABLE = False
 
@@ -73,7 +73,7 @@ class Highlighter:
 
     def _create_gui(self):
         """Creates the gui for the overlay."""
-        pass
+        return None
 
     def _draw_highlight(self, painter):
         """Called by highlight to draw a highlight over the item."""
@@ -198,8 +198,8 @@ class GtkHighlighter(Highlighter):
         try:
             self._gui.move(x - self._padding, y - self._padding)
             self._gui.resize(width + 2 * self._padding, height + 2 * self._padding)
-        except Exception as e:
-            msg = f"GTK HIGHLIGHTER: Exception: {e}"
+        except Exception as error:
+            msg = f"GTK HIGHLIGHTER: Exception: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
             self._gui.show_all()

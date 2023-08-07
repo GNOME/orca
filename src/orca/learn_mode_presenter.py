@@ -58,6 +58,8 @@ class LearnModePresenter:
         self._gui = None
 
     def is_active(self):
+        """Returns True if we're in learn mode"""
+
         return self._is_active
 
     def get_bindings(self):
@@ -247,6 +249,7 @@ class LearnModePresenter:
         column_headers = [guilabels.KB_HEADER_FUNCTION, guilabels.KB_HEADER_KEY_BINDING]
         self._gui = CommandListGUI(script, title, column_headers, bindings)
         self._gui.show_gui()
+        return True
 
     def show_help(self, script=None, event=None, page=""):
         """Displays Orca's documentation."""
@@ -259,6 +262,7 @@ class LearnModePresenter:
         return True
 
 class CommandListGUI:
+    """Shows a list of commands and their bindings."""
 
     def __init__(self, script, title, column_headers, bindings_dict):
         self._script = script
@@ -266,6 +270,8 @@ class CommandListGUI:
         self._gui = self._create_dialog(title, column_headers, bindings_dict)
 
     def _create_dialog(self, title, column_headers, bindings_dict):
+        """Creates the commands-list dialog."""
+
         dialog = Gtk.Dialog(title,
                             None,
                             Gtk.DialogFlags.MODAL,
@@ -297,9 +303,9 @@ class CommandListGUI:
         for group, bindings in bindings_dict.items():
             if not bindings:
                 continue
-            iter = self._model.append(None, [group, ""])
+            group_iter = self._model.append(None, [group, ""])
             for binding in bindings:
-                self._model.append(iter, [binding.handler.description, binding.asString()])
+                self._model.append(group_iter, [binding.handler.description, binding.asString()])
 
         tree.set_model(self._model)
         tree.expand_all()
@@ -307,18 +313,24 @@ class CommandListGUI:
         return dialog
 
     def on_response(self, dialog, response):
+        """Handler for the 'response' signal."""
+
         if response == Gtk.ResponseType.CLOSE:
             self._gui.destroy()
             return
 
     def show_gui(self):
+        """Shows the dialog."""
+
         self._gui.show_all()
-        ts = orca_state.lastInputEvent.timestamp
-        if ts == 0:
-            ts = Gtk.get_current_event_time()
-        self._gui.present_with_time(ts)
+        time_stamp = orca_state.lastInputEvent.timestamp
+        if time_stamp == 0:
+            time_stamp = Gtk.get_current_event_time()
+        self._gui.present_with_time(time_stamp)
 
 
 _presenter = LearnModePresenter()
 def getPresenter():
+    """Returns the Learn Mode Presenter"""
+
     return _presenter
