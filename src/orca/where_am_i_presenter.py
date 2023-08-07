@@ -290,15 +290,15 @@ class WhereAmIPresenter:
         else:
             obj = orca_state.locusOfFocus
 
-        x, y, width, height = script.utilities.getBoundingBox(obj)
-        if (x, y, width, height) == (-1, -1, 0, 0):
+        x_coord, y_coord, width, height = script.utilities.getBoundingBox(obj)
+        if (x_coord, y_coord, width, height) == (-1, -1, 0, 0):
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF
             script.presentMessage(full, brief)
             return True
 
-        full = messages.SIZE_AND_POSITION_FULL % (width, height, x, y)
-        brief = messages.SIZE_AND_POSITION_BRIEF % (width, height, x, y)
+        full = messages.SIZE_AND_POSITION_FULL % (width, height, x_coord, y_coord)
+        brief = messages.SIZE_AND_POSITION_BRIEF % (width, height, x_coord, y_coord)
         script.presentMessage(full, brief)
         return True
 
@@ -316,6 +316,7 @@ class WhereAmIPresenter:
         title = script.speechGenerator.generateTitle(obj)
         for (string, voice) in title:
             script.presentMessage(string, voice=voice)
+        return True
 
     def _present_default_button(self, script, event=None, dialog=None, error_messages=True):
         """Presents the default button of the current dialog."""
@@ -383,6 +384,8 @@ class WhereAmIPresenter:
         return self._do_where_am_i(script, event, True, link)
 
     def present_selected_text(self, script, event=None, obj=None):
+        """Presents the selected text."""
+
         obj = obj or orca_state.locusOfFocus
         if obj is None:
             script.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
@@ -448,14 +451,14 @@ class WhereAmIPresenter:
             return True
 
         if basic_only:
-            formatType = 'basicWhereAmI'
+            format_type = 'basicWhereAmI'
         else:
-            formatType = 'detailedWhereAmI'
+            format_type = 'detailedWhereAmI'
 
         script.presentObject(
             script.utilities.realActiveAncestor(obj),
             alreadyFocused=True,
-            formatType=formatType,
+            formatType=format_type,
             forceMnemonic=True,
             forceList=True,
             forceTutorial=True,
@@ -480,4 +483,6 @@ class WhereAmIPresenter:
 
 _presenter = WhereAmIPresenter()
 def getPresenter():
+    """Returns the Where Am I Presenter"""
+
     return _presenter

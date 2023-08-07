@@ -43,6 +43,7 @@ from .ax_object import AXObject
 
 
 class AXUtilitiesState:
+    """Utilities for obtaining state-related information."""
 
     @staticmethod
     def has_no_state(obj):

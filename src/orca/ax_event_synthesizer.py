@@ -51,21 +51,21 @@ class AXEventSynthesizer:
         """Returns the current mouse coordinates."""
 
         root_window = Gtk.Window().get_screen().get_root_window()
-        window, x, y, modifiers = root_window.get_pointer()
-        msg = f"AXEventSynthesizer: Mouse coordinates: {x}, {y}"
+        window, x_coord, y_coord, modifiers = root_window.get_pointer()
+        msg = f"AXEventSynthesizer: Mouse coordinates: {x_coord}, {y_coord}"
         debug.println(debug.LEVEL_INFO, msg, True)
-        return x, y
+        return x_coord, y_coord
 
     @staticmethod
-    def _generate_mouse_event(x, y, event):
+    def _generate_mouse_event(x_coord, y_coord, event):
         """Synthesize a mouse event at a specific screen coordinate."""
 
         old_x, old_y = AXEventSynthesizer._get_mouse_coordinates()
-        msg = f"AXEventSynthesizer: Generating {event} mouse event at {x}, {y}"
+        msg = f"AXEventSynthesizer: Generating {event} mouse event at {x_coord}, {y_coord}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
         try:
-            success = Atspi.generate_mouse_event(x, y, event)
+            success = Atspi.generate_mouse_event(x_coord, y_coord, event)
         except Exception as error:
             msg = f"AXEventSynthesizer: Exception in _generate_mouse_event: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -79,7 +79,7 @@ class AXEventSynthesizer:
         time.sleep(1)
 
         new_x, new_y = AXEventSynthesizer._get_mouse_coordinates()
-        if old_x == new_x and old_y == new_y and (old_x, old_y) != (x, y):
+        if old_x == new_x and old_y == new_y and (old_x, old_y) != (x_coord, y_coord):
             msg = "AXEventSynthesizer: Mouse event possible failure. Pointer didn't move"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
@@ -90,25 +90,25 @@ class AXEventSynthesizer:
     def _intersection(extents1, extents2):
         """Returns the bounding box containing the intersection of the two boxes."""
 
-        x1, y1, width1, height1 = extents1
-        x2, y2, width2, height2 = extents2
+        x_coord1, y_coord1, width1, height1 = extents1
+        x_coord2, y_coord2, width2, height2 = extents2
 
-        x_points1 = range(x1, x1 + width1 + 1)
-        x_points2 = range(x2, x2 + width2 + 1)
+        x_points1 = range(x_coord1, x_coord1 + width1 + 1)
+        x_points2 = range(x_coord2, x_coord2 + width2 + 1)
         x_intersection = sorted(set(x_points1).intersection(set(x_points2)))
 
-        y_points1 = range(y1, y1 + height1 + 1)
-        y_points2 = range(y2, y2 + height2 + 1)
+        y_points1 = range(y_coord1, y_coord1 + height1 + 1)
+        y_points2 = range(y_coord2, y_coord2 + height2 + 1)
         y_intersection = sorted(set(y_points1).intersection(set(y_points2)))
 
         if not (x_intersection and y_intersection):
             return 0, 0, 0, 0
 
-        x = x_intersection[0]
-        y = y_intersection[0]
-        width = x_intersection[-1] - x
-        height = y_intersection[-1] - y
-        return x, y, width, height
+        x_coord = x_intersection[0]
+        y_coord = y_intersection[0]
+        width = x_intersection[-1] - x_coord
+        height = y_intersection[-1] - y_coord
+        return x_coord, y_coord, width, height
 
     @staticmethod
     def _extents_at_caret(obj):
@@ -152,9 +152,9 @@ class AXEventSynthesizer:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
-        y = extents[1] + extents[3] / 2
-        return AXEventSynthesizer._generate_mouse_event(x, y, event)
+        x_coord = max(extents[0], extents[0] + (extents[2] / 2) - 1)
+        y_coord = extents[1] + extents[3] / 2
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, event)
 
     @staticmethod
     def _mouse_event_on_object(obj, event):
@@ -164,9 +164,9 @@ class AXEventSynthesizer:
         if extents == (0, 0, 0, 0):
             return False
 
-        x = extents.x + extents.width/2
-        y = extents.y + extents.height/2
-        return AXEventSynthesizer._generate_mouse_event(x, y, event)
+        x_coord = extents.x + extents.width/2
+        y_coord = extents.y + extents.height/2
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, event)
 
     @staticmethod
     def route_to_character(obj):
@@ -185,10 +185,10 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, "abs")
 
     @staticmethod
-    def route_to_point(x, y):
+    def route_to_point(x_coord, y_coord):
         """Routes the pointer to the specified coordinates."""
 
-        return AXEventSynthesizer._generate_mouse_event(x, y, "abs")
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, "abs")
 
     @staticmethod
     def click_character(obj, button=1):
@@ -203,10 +203,10 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}c")
 
     @staticmethod
-    def click_point(x, y, button=1):
+    def click_point(x_coord, y_coord, button=1):
         """Single click on the given point using the specified button."""
 
-        return AXEventSynthesizer._generate_mouse_event(x, y, f"b{button}c")
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}c")
 
     @staticmethod
     def double_click_character(obj, button=1):
@@ -221,10 +221,10 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}d")
 
     @staticmethod
-    def doubleClickPoint(x, y, button=1):
+    def double_click_point(x_coord, y_coord, button=1):
         """Double click on the given point using the specified button."""
 
-        return AXEventSynthesizer._generate_mouse_event(x, y, f"b{button}d")
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}d")
 
     @staticmethod
     def press_at_character(obj, button=1):
@@ -239,10 +239,10 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}p")
 
     @staticmethod
-    def press_at_point(x, y, button=1):
+    def press_at_point(x_coord, y_coord, button=1):
         """Performs a press on the given point using the specified button."""
 
-        return AXEventSynthesizer._generate_mouse_event(x, y, f"b{button}p")
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}p")
 
     @staticmethod
     def release_at_character(obj, button=1):
@@ -257,10 +257,10 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}r")
 
     @staticmethod
-    def release_at_point(x, y, button=1):
+    def release_at_point(x_coord, y_coord, button=1):
         """Performs a release on the given point using the specified button."""
 
-        return AXEventSynthesizer._generate_mouse_event(x, y, f"b{button}r")
+        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}r")
 
     @staticmethod
     def _scroll_substring_to_location(obj, location, start_offset, end_offset):
@@ -338,7 +338,7 @@ class AXEventSynthesizer:
         debug.println(debug.LEVEL_INFO, msg, True)
 
     @staticmethod
-    def _scroll_substring_to_point(obj, x, y, start_offset, end_offset):
+    def _scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset):
         """Attempts to scroll the given substring to the specified location."""
 
         try:
@@ -350,7 +350,7 @@ class AXEventSynthesizer:
             if end_offset is None:
                 end_offset = text.characterCount - 1
             result = text.scrollSubstringToPoint(
-                start_offset, end_offset, Atspi.CoordType.SCREEN, x, y)
+                start_offset, end_offset, Atspi.CoordType.SCREEN, x_coord, y_coord)
         except NotImplementedError:
             msg = f"AXEventSynthesizer: Text interface not implemented for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -358,37 +358,37 @@ class AXEventSynthesizer:
         except Exception:
             msg = (
                 f"AXEventSynthesizer: Exception scrolling {obj} ({start_offset}, {end_offset}) "
-                f"to {x}, {y}"
+                f"to {x_coord}, {y_coord}"
             )
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         msg = "AXEventSynthesizer: scrolled %s (%i, %i) to %i, %i: %s" % \
-            (obj, start_offset, end_offset, x, y, result)
+            (obj, start_offset, end_offset, x_coord, y_coord, result)
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
     @staticmethod
-    def _scroll_object_to_point(obj, x, y):
+    def _scroll_object_to_point(obj, x_coord, y_coord):
         """Attempts to scroll obj to the specified point."""
 
         try:
-            result = obj.queryComponent().scrollToPoint(Atspi.CoordType.SCREEN, x, y)
+            result = obj.queryComponent().scrollToPoint(Atspi.CoordType.SCREEN, x_coord, y_coord)
         except NotImplementedError:
             msg = f"AXEventSynthesizer: Component interface not implemented for {obj}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         except Exception:
-            msg = f"AXEventSynthesizer: Exception scrolling {obj} to {x}, {y}."
+            msg = f"AXEventSynthesizer: Exception scrolling {obj} to {x_coord}, {y_coord}."
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = f"AXEventSynthesizer: scrolled {obj} to {x}, {y}: {result}"
+        msg = f"AXEventSynthesizer: scrolled {obj} to {x_coord}, {y_coord}: {result}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
     @staticmethod
-    def _scroll_to_point(obj, x, y, start_offset=None, end_offset=None):
+    def _scroll_to_point(obj, x_coord, y_coord, start_offset=None, end_offset=None):
         """Attempts to scroll obj to the specified point."""
 
         try:
@@ -400,8 +400,9 @@ class AXEventSynthesizer:
 
         before = component.getExtents(Atspi.CoordType.SCREEN)
 
-        if not AXEventSynthesizer._scroll_substring_to_point(obj, x, y, start_offset, end_offset):
-            AXEventSynthesizer._scroll_object_to_point(obj, x, y)
+        if not AXEventSynthesizer._scroll_substring_to_point(
+           obj, x_coord, y_coord, start_offset, end_offset):
+            AXEventSynthesizer._scroll_object_to_point(obj, x_coord, y_coord)
 
         after = component.getExtents(Atspi.CoordType.SCREEN)
         msg = (
@@ -431,21 +432,25 @@ class AXEventSynthesizer:
         return document
 
     @staticmethod
-    def _get_accessible_at_point(root, x, y):
+    def _get_accessible_at_point(root, x_coord, y_coord):
         """"Returns the accessible in root at the specified point."""
 
         try:
-            result = root.queryComponent().getAccessibleAtPoint(x, y, Atspi.CoordType.SCREEN)
+            result = root.queryComponent().getAccessibleAtPoint(
+                x_coord, y_coord, Atspi.CoordType.SCREEN)
         except NotImplementedError:
             msg = f"AXEventSynthesizer: Component interface not implemented for {root}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
         except Exception:
-            msg = f"AXEventSynthesizer: Exception getting accessible at {x}, {y} for {root}"
+            msg = (
+                f"AXEventSynthesizer: Exception getting accessible at "
+                f"{x_coord}, {y_coord} for {root}"
+            )
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = f"AXEventSynthesizer: Accessible at {x}, {y} in {root}: {result}"
+        msg = f"AXEventSynthesizer: Accessible at {x_coord}, {y_coord} in {root}: {result}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -556,9 +561,9 @@ class AXEventSynthesizer:
         """Attempts to perform a click-like action if one is available."""
 
         actions = ["click", "press", "jump", "open"]
-        for a in actions:
-            if AXObject.do_named_action(obj, a):
-                msg = f"AXEventSynthesizer: '{a}' on {obj} performed successfully"
+        for action in actions:
+            if AXObject.do_named_action(obj, action):
+                msg = f"AXEventSynthesizer: '{action}' on {obj} performed successfully"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 

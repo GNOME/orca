@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Object for maintaining the state of the object navigator."""
+"""Provides ability to navigate objects hierarchically."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -39,6 +39,8 @@ from .ax_utilities import AXUtilities
 
 
 class ObjectNavigator:
+    """Provides ability to navigate objects hierarchically."""
+
     def __init__(self):
         self._navigator_focus = None
         self._last_navigator_focus = None
@@ -178,7 +180,7 @@ class ObjectNavigator:
         if not AXObject.get_child_count(obj):
             return []
 
-        children = [child for child in AXObject.iter_children(obj)]
+        children = list(AXObject.iter_children(obj))
         if not self._simplify:
             return children
 
@@ -316,4 +318,6 @@ class ObjectNavigator:
 
 _navigator = ObjectNavigator()
 def getNavigator():
+    """Returns the Object Navigator"""
+
     return _navigator

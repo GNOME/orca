@@ -34,9 +34,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
 import time
 
+import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -45,7 +45,11 @@ from .ax_object import AXObject
 
 
 class AXCollection:
+    """Utilities for obtaining objects via the collection interface."""
 
+    # Too many arguments and too many local variables.
+    # This function wraps Atspi.MatchRule.new which has all the arguments.
+    # pylint: disable=R0913,R0914
     @staticmethod
     def create_match_rule(states=[],
                           state_match_type=Atspi.CollectionMatchType.ALL,
@@ -83,12 +87,13 @@ class AXCollection:
                                        interfaces,
                                        interface_match_type,
                                        invert)
-        except Exception as e:
-            msg = f"AXCollection: Exception in create_match_rule: {e}"
+        except Exception as error:
+            msg = f"AXCollection: Exception in create_match_rule: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         return rule
+    # pylint: enable=R0913,R0914
 
     @staticmethod
     def get_all_matches(obj, rule, order=Atspi.CollectionSortOrder.CANONICAL):
@@ -105,8 +110,8 @@ class AXCollection:
             # 0 means no limit on the number of results
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 0, True)
-        except Exception as e:
-            msg = f"AXCollection: Exception in get_all_matches: {e}"
+        except Exception as error:
+            msg = f"AXCollection: Exception in get_all_matches: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -129,8 +134,8 @@ class AXCollection:
             # 1 means limit the number of results to 1
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 1, True)
-        except Exception as e:
-            msg = f"AXCollection: Exception in get_first_match: {e}"
+        except Exception as error:
+            msg = f"AXCollection: Exception in get_first_match: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 

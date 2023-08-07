@@ -34,9 +34,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
 import inspect
 
+import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -48,6 +48,7 @@ from .ax_utilities_state import AXUtilitiesState
 
 
 class AXUtilities:
+    """Utilities for performing tasks related to accessibility inspection."""
 
     COMPARE_COLLECTION_PERFORMANCE = False
 
@@ -57,8 +58,8 @@ class AXUtilities:
 
         try:
             desktop = Atspi.get_desktop(0)
-        except Exception as e:
-            msg = f"ERROR: Exception getting desktop from Atspi: {e}"
+        except Exception as error:
+            msg = f"ERROR: Exception getting desktop from Atspi: {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -73,12 +74,12 @@ class AXUtilities:
         if desktop is None:
             return []
 
-        def pred(x):
+        def pred(obj):
             if must_have_window:
-                return AXObject.get_child_count(x) > 0
+                return AXObject.get_child_count(obj) > 0
             return True
 
-        return [app for app in AXObject.iter_children(desktop, pred)]
+        return list(AXObject.iter_children(desktop, pred))
 
     @staticmethod
     def is_application_in_desktop(app):
@@ -108,7 +109,7 @@ class AXUtilities:
             if AXObject.get_process_id(app) == pid:
                 return app
 
-        msg = "WARNING: app with pid %i is not in %s" % (pid, desktop)
+        msg = f"WARNING: app with pid {pid} is not in {desktop}"
         debug.println(debug.LEVEL_INFO, msg, True)
         return None
 
@@ -117,8 +118,8 @@ class AXUtilities:
         """Returns all the descendants of obj that are static text leaf nodes"""
 
         roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
-        def is_not_element(x):
-            return AXObject.get_attribute(x, "tag") in (None, "", "br")
+        def is_not_element(acc):
+            return AXObject.get_attribute(acc, "tag") in (None, "", "br")
 
         result = None
         if AXObject.supports_collection(obj):
@@ -126,8 +127,8 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        def is_match(x):
-            return AXObject.get_role(x) in roles and is_not_element(x)
+        def is_match(acc):
+            return AXObject.get_role(acc) in roles and is_not_element(acc)
 
         return AXObject.find_all_descendants(obj, is_match)
 
@@ -148,11 +149,12 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        def is_match(x):
-            if AXObject.get_role(x) not in roles:
+        def is_match(acc):
+            if AXObject.get_role(acc) not in roles:
                 return False
             if must_be_showing_and_visible:
-                return AXUtilitiesState.is_showing(x) and AXUtilitiesState.is_visible(x)
+                return AXUtilitiesState.is_showing(acc) and AXUtilitiesState.is_visible(acc)
+            return True
 
         return AXObject.find_all_descendants(obj, is_match)
 

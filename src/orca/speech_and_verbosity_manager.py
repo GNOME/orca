@@ -549,4 +549,6 @@ class SpeechAndVerbosityManager:
 
 _manager = SpeechAndVerbosityManager()
 def getManager():
+    """Returns the Speech and Verbosity Manager"""
+
     return _manager

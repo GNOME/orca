@@ -1511,8 +1511,8 @@ class Utilities:
             if extents1.x >= 0 and extents1.y >= 0 and extents1.width > 0 \
                 and extents1.height > 0:
                 return True
-        except Exception as e:
-            msg = f"ERROR: Exception in isSameObject ({obj1} vs {obj2}): {e}"
+        except Exception as error:
+            msg = f"ERROR: Exception in isSameObject ({obj1} vs {obj2}): {error}"
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return False
