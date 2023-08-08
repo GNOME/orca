@@ -29,7 +29,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2013 The Orca Team"
 __license__   = "LGPL"
 
-from .orca_i18n import _, C_
+from .orca_i18n import _, C_, ngettext
 
 # Translators: This string appears on a button in a dialog. "Activating" the
 # selected item will perform the action that one would expect to occur if the
@@ -362,13 +362,6 @@ KEYBOARD_LAYOUT_DESKTOP = _("_Desktop")
 # column for the time of the notification. This string is a column header
 # for the text of the notifications.
 NOTIFICATIONS_COLUMN_HEADER = C_("notification presenter", "Notifications")
-
-# Translators: Orca has a feature to list all of the notification messages
-# received, similar to the functionality gnome-shell provides when you press
-# Super+M, but it works in all desktop environments. This string is the title
-# of the dialog that contains the list of notification messages. The string
-# substitution is for the number of messages in the list.
-NOTIFICATIONS_COUNT = C_("notification presenter", "%d Notifications")
 
 # Translators: Orca has a feature to list all of the notification messages
 # received, similar to the functionality gnome-shell provides when you press
@@ -934,3 +927,13 @@ USE_STRUCTURAL_NAVIGATION = _("Enable _structural navigation")
 # Translators: This refers to the amount of information Orca provides about a
 # particular object that receives focus.
 VERBOSITY_LEVEL_BRIEF = _("Brie_f")
+
+def notifications_count(count):
+    """Returns the gui label representing the notifications count."""
+
+    # Translators: Orca has a feature to list all of the notification messages
+    # received, similar to the functionality gnome-shell provides when you press
+    # Super+M, but it works in all desktop environments. This string is the title
+    # of the dialog that contains the list of notification messages. The string
+    # substitution is for the number of messages in the list.
+    return ngettext("%d notification", "%d notifications", count) % count
