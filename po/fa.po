@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-06 00:17+0000\n"
-"PO-Revision-Date: 2023-08-07 12:09+0330\n"
+"POT-Creation-Date: 2023-08-08 08:55+0000\n"
+"PO-Revision-Date: 2023-08-08 13:54+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -5380,7 +5380,7 @@ msgstr "عنوان‌ها"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:723
 msgctxt "structural navigation"
-msgid "Interal Frames"
+msgid "Internal Frames"
 msgstr "قاب‌های درونی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
@@ -5625,7 +5625,7 @@ msgstr ""
 #. how to navigate tables in document content.
 #: src/orca/guilabels.py:888
 msgid "Table Navigation"
-msgstr ""
+msgstr "پویش جدول"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
@@ -5830,13 +5830,13 @@ msgstr "پایین"
 #.
 #: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
-msgstr ""
+msgstr "چپ"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
 #: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
-msgstr ""
+msgstr "راست"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
@@ -5941,7 +5941,7 @@ msgstr ""
 #.
 #: src/orca/keynames.py:299
 msgid "minus"
-msgstr ""
+msgstr "منها"
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
@@ -6771,7 +6771,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1553
 msgctxt "math symbol"
 msgid "tilde"
-msgstr ""
+msgstr "مد"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
 #: src/orca/mathsymbols.py:1556
@@ -12791,11 +12791,11 @@ msgstr "پیش‌گزیده"
 
 #: src/orca/orca-setup.ui:32
 msgid "Uppercase"
-msgstr ""
+msgstr "حروف بزرگ"
 
 #: src/orca/orca-setup.ui:35
 msgid "Hyperlink"
-msgstr ""
+msgstr "فراپیوند"
 
 #: src/orca/orca-setup.ui:38
 msgid "System"
@@ -12811,7 +12811,7 @@ msgstr "پنجره‌"
 
 #: src/orca/orca-setup.ui:127
 msgid "Screen Reader Preferences"
-msgstr ""
+msgstr "ترجیحات صفحه‌خوان"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:144
@@ -12825,24 +12825,24 @@ msgstr "_اِعمال"
 
 #: src/orca/orca-setup.ui:258
 msgid "_Laptop"
-msgstr ""
+msgstr "_لپ‌تاپ"
 
 #: src/orca/orca-setup.ui:280
 msgid "Keyboard Layout"
-msgstr ""
+msgstr "چینش صفحه‌کلید"
 
 #: src/orca/orca-setup.ui:314
 msgid "Active _Profile:"
-msgstr ""
+msgstr "_نمایهٔ فعّال:"
 
 #: src/orca/orca-setup.ui:331
 msgid "Start-up Profile:"
-msgstr ""
+msgstr "نمایهٔ شروع به کار:"
 
 #. This button will load the selected settings profile in the application.
 #: src/orca/orca-setup.ui:379
 msgid "_Load"
-msgstr ""
+msgstr "_بار کردن"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/orca-setup.ui:393
@@ -12860,11 +12860,11 @@ msgstr "نمایه‌ها"
 
 #: src/orca/orca-setup.ui:465
 msgid "_Present tooltips"
-msgstr ""
+msgstr "_ارائه ایمای ابزار"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
-msgstr ""
+msgstr "گفتن شی زیر _موشی"
 
 #: src/orca/orca-setup.ui:504
 msgid "Mouse"
@@ -12872,25 +12872,25 @@ msgstr "موشی"
 
 #: src/orca/orca-setup.ui:538
 msgid "_Time format:"
-msgstr ""
+msgstr "قالب _زمان:"
 
 #: src/orca/orca-setup.ui:555
 msgid "Dat_e format:"
-msgstr ""
+msgstr "قالب _تاریخ:"
 
 #: src/orca/orca-setup.ui:611
 msgid "Time and Date"
-msgstr ""
+msgstr "تاریخ و زمان"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: src/orca/orca-setup.ui:640
 msgid "_Speak updates"
-msgstr ""
+msgstr "_گفتن به‌روز رسانی‌ها"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: src/orca/orca-setup.ui:659
 msgid "_Braille updates"
-msgstr ""
+msgstr "به‌روز رسانی‌های _بریل"
 
 #: src/orca/orca-setup.ui:684
 msgid "10"
@@ -12905,66 +12905,66 @@ msgstr "بسامد (ثانیه):"
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: src/orca/orca-setup.ui:714
 msgid "Applies to:"
-msgstr ""
+msgstr "اعمال می‌شود به:"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
 msgid "Bee_p updates"
-msgstr ""
+msgstr "_بوق به‌روز رسانی‌ها"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: src/orca/orca-setup.ui:775
 msgid "Progress Bar Updates"
-msgstr ""
+msgstr "به‌روز رسانی‌های نوار پیشرفت"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: src/orca/orca-setup.ui:805
 msgid "Enable _rewind and fast forward in Say All"
-msgstr ""
+msgstr "به کار انداختن _پس‌روی و پیش‌روی سریع در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: src/orca/orca-setup.ui:821
 msgid "Enable _structural navigation in Say All"
-msgstr ""
+msgstr "به کار انداختن پویش _ساختار یافته در گفتن همه"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: src/orca/orca-setup.ui:847
 msgid "Say All B_y:"
-msgstr ""
+msgstr "گفتن همه _با:"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: src/orca/orca-setup.ui:886
 msgid "Announce block_quotes in Say All"
-msgstr ""
+msgstr "اعلام _نقل قول‌ها در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a list with x items has been entered before speaking the content of that list. At the end of the list content, Orca will announce that the list is being exited.
 #: src/orca/orca-setup.ui:903
 msgid "Announce li_sts in Say All"
-msgstr ""
+msgstr "اعلام _سیاهه‌ها در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: src/orca/orca-setup.ui:920
 msgid "Announce _tables in Say All"
-msgstr ""
+msgstr "اعلام _جدول‌ها در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:937
 msgid "Announce _panels in Say All"
-msgstr ""
+msgstr "اعلام _تابلوها در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
 msgid "Announce _forms in Say All"
-msgstr ""
+msgstr "اعلام _فرم‌ها در گفتن همه"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
-msgstr ""
+msgstr "اعلام _نشانه‌ها در گفتن همه"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
-msgstr ""
+msgstr "گفتن همه"
 
 #: src/orca/orca-setup.ui:1013
 msgid "General"
@@ -12972,19 +12972,19 @@ msgstr "عمومی"
 
 #: src/orca/orca-setup.ui:1047
 msgid "Vo_lume:"
-msgstr ""
+msgstr "_حجم:"
 
 #: src/orca/orca-setup.ui:1095
 msgid "Pi_tch:"
-msgstr ""
+msgstr "_تن:"
 
 #: src/orca/orca-setup.ui:1126
 msgid "_Rate:"
-msgstr ""
+msgstr "_آهنگ:"
 
 #: src/orca/orca-setup.ui:1152
 msgid "_Person:"
-msgstr ""
+msgstr "_شخص:"
 
 #: src/orca/orca-setup.ui:1178
 msgid "_Language:"
@@ -12992,40 +12992,40 @@ msgstr "_زبان:"
 
 #: src/orca/orca-setup.ui:1204
 msgid "Speech synthesi_zer:"
-msgstr ""
+msgstr "_تحلیل صدا:"
 
 #: src/orca/orca-setup.ui:1230
 msgid "Speech _system:"
-msgstr ""
+msgstr "_سامانهٔ صدا:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: src/orca/orca-setup.ui:1263
 msgid "_Voice type:"
-msgstr ""
+msgstr "_گونهٔ صدا:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word 'capital' prior to presenting a capital letter (which Speech Dispatcher refers to as 'spell'), or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca refers to these things as 'capitalization style'. This string is the text of the label through which users can choose which of style they would prefer.
 #: src/orca/orca-setup.ui:1277
 msgid "_Capitalization style:"
-msgstr ""
+msgstr "سبک حروف _بزرگ:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #: src/orca/orca-setup.ui:1313
 msgid "Voice Type Settings"
-msgstr ""
+msgstr "تنظیمات گونهٔ صدا"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: src/orca/orca-setup.ui:1358
 msgid "Speak multicase strings as wor_ds"
-msgstr ""
+msgstr "گفتن رشته‌های چند موردی به شکل _واژکان"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: src/orca/orca-setup.ui:1374
 msgid "Speak _numbers as digits"
-msgstr ""
+msgstr "گفتار _شماره‌ها به رقم"
 
 #: src/orca/orca-setup.ui:1399
 msgid "Global Voice Settings"
-msgstr ""
+msgstr "تنظیمات صدای سراسری"
 
 #: src/orca/orca-setup.ui:1420
 msgid "Voice"
@@ -13033,36 +13033,36 @@ msgstr "صدا"
 
 #: src/orca/orca-setup.ui:1436
 msgid "_Enable speech"
-msgstr ""
+msgstr "_به کار انداختن گفتار"
 
 #: src/orca/orca-setup.ui:1496 src/orca/orca-setup.ui:2240
 msgid "Ver_bose"
-msgstr ""
+msgstr "_پرگو"
 
 #: src/orca/orca-setup.ui:1518 src/orca/orca-setup.ui:2262
 msgid "Verbosity"
-msgstr ""
+msgstr "پرگویی"
 
 #: src/orca/orca-setup.ui:1595
 msgid "_All"
-msgstr ""
+msgstr "_همه"
 
 #: src/orca/orca-setup.ui:1617
 msgid "Punctuation Level"
-msgstr ""
+msgstr "سطح نشانه‌گذاری"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "فقط گفتنمتن نمایشی"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
-msgstr ""
+msgstr "گفتن خط‌های خالی"
 
 #: src/orca/orca-setup.ui:1694
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "گفتن _تورفتگی‌ها و هم‌ترازی‌ها"
 
 #: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
@@ -13071,11 +13071,11 @@ msgstr ""
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1725
 msgid "Speak child p_osition"
-msgstr ""
+msgstr "گفتن _مکان فرزند"
 
 #: src/orca/orca-setup.ui:1741
 msgid "Speak tutorial messages"
-msgstr ""
+msgstr "گفتن پیام‌های خودآموز"
 
 #. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
 #: src/orca/orca-setup.ui:1757
@@ -14137,7 +14137,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:599
 msgctxt "textattr"
 msgid "Heading"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -14453,3 +14453,7 @@ msgid ""
 msgstr ""
 "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
 "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+
+#~ msgctxt "structural navigation"
+#~ msgid "Interal Frames"
+#~ msgstr "قاب‌های درونی"
