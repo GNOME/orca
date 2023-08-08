@@ -35,6 +35,7 @@ import urllib.request
 import urllib.error
 import urllib.parse
 
+from . import acss
 from . import chnames
 from . import debug
 from . import generator
@@ -42,8 +43,8 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
+from . import speech
 from . import text_attribute_names
-from . import acss
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -2897,10 +2898,20 @@ class SpeechGenerator(generator.Generator):
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT)))
 
         language = args.get('language')
-        dialect = args.get('dialect')
-        msg = "SPEECH GENERATOR: %s voice requested with language='%s', dialect='%s'" % \
-            (key, language, dialect)
+        dialect = args.get('dialect', '')
+        msg = (
+            f"SPEECH GENERATOR: {key} voice requested with "
+            f"language='{language}', dialect='{dialect}'"
+        )
         debug.println(debug.LEVEL_INFO, msg, True)
+
+        # This is purely for debugging. The code needed to actually switch voices
+        # does not yet exist due to some problems which need to be debugged and
+        # fixed.
+        checkVoicesForLanguage = False
+        if language and checkVoicesForLanguage:
+            server = speech.getSpeechServer()
+            server.shouldChangeVoiceForLanguage(language, dialect)
 
         if key in [None, DEFAULT]:
             string = args.get('string', '')

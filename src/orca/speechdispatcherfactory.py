@@ -147,7 +147,7 @@ class SpeechServer(speechserver.SpeechServer):
             }
 
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % serverId
-        
+
         try:
             self._init()
         except Exception:
@@ -677,6 +677,88 @@ class SpeechServer(speechserver.SpeechServer):
 
     def decreaseSpeechVolume(self, step=0.5):
         self._change_default_speech_volume(step, decrease=True)
+
+    def getLanguage(self):
+        """Returns the current language."""
+
+        return self._client.get_language()
+
+    def setLanguage(self, language, dialect):
+        """Sets the current language"""
+
+        if not language:
+            return
+
+        self._client.set_language(language)
+        if dialect:
+            self._client.set_language(language + "-" + dialect)
+
+    def _normalizedLanguageAndDialect(self, language, dialect=""):
+        """Attempts to ensure consistency across inconsistent formats."""
+
+        if "-" in language:
+            normalized_language = language.split("-", 1)[0].lower()
+            normalized_dialect = language.split("-", 1)[-1].lower()
+        else:
+            normalized_language = language.lower()
+            normalized_dialect = dialect.lower()
+
+        return normalized_language, normalized_dialect
+
+    def getVoiceFamiliesForLanguage(self, language, dialect, maximum=None):
+        """Returns the families for language available in the current synthesizer."""
+
+        start = time.time()
+        target_language, target_dialect = self._normalizedLanguageAndDialect(language, dialect)
+
+        result = []
+        voices = self._client.list_synthesis_voices()
+
+        for voice in voices:
+            normalized_language, normalized_dialect = self._normalizedLanguageAndDialect(voice[1])
+            if normalized_language != target_language:
+                continue
+            if normalized_dialect == target_dialect:
+                result.append(voice)
+            elif not normalized_dialect and target_dialect == normalized_language:
+                result.append(voice)
+            if maximum is not None and len(result) >= maximum:
+                break
+
+        msg = (
+            f"SPEECH DISPATCHER: Found {len(result)} match(es) for language='{language}' "
+            f"dialect='{dialect}' in {time.time() - start:.4f}s."
+        )
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def shouldChangeVoiceForLanguage(self, language, dialect=""):
+        """Returns True if we should change the voice for the specified language."""
+
+        current_language, current_dialect = self._normalizedLanguageAndDialect(self.getLanguage())
+        other_language, other_dialect = self._normalizedLanguageAndDialect(language, dialect)
+
+        msg = (
+            f"SPEECH DISPATCHER: Should change voice for language? "
+            f"Current: '{current_language}' '{current_dialect}' "
+            f"New: '{other_language}' '{other_dialect}'"
+        )
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if current_language == other_language and current_dialect == other_dialect:
+            msg ="SPEECH DISPATCHER: No. Language and dialect are the same."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        families = self.getVoiceFamiliesForLanguage(other_language, other_dialect, maximum=1)
+        if families:
+            msg = f"SPEECH DISPATCHER: Yes. Found matching family {families[0]}."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = f"SPEECH DISPATCHER: No. No matching family in {self.getOutputModule()}."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
 
     def getOutputModule(self):
         return self._client.get_output_module()
