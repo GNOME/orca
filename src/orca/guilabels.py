@@ -355,17 +355,27 @@ KB_MODIFIED = C_("keybindings", "Modified")
 # Translators: This label refers to the keyboard layout (desktop or laptop).
 KEYBOARD_LAYOUT_DESKTOP = _("_Desktop")
 
-# Translators: This is a column header for a list of notification messages.
-# It will appear over the message text.
+# Translators: Orca has a feature to list all of the notification messages
+# received, similar to the functionality gnome-shell provides when you press
+# Super+M, but it works in all desktop environments. Orca's list is a table
+# with two columns, one column for the text of the notification and one
+# column for the time of the notification. This string is a column header
+# for the text of the notifications.
 NOTIFICATIONS_COLUMN_HEADER = C_("notification presenter", "Notifications")
 
-# Translators: This is a title for a dialog that will present a list of
-# notification messages.
+# Translators: Orca has a feature to list all of the notification messages
+# received, similar to the functionality gnome-shell provides when you press
+# Super+M, but it works in all desktop environments. This string is the title
+# of the dialog that contains the list of notification messages. The string
+# substitution is for the number of messages in the list.
 NOTIFICATIONS_COUNT = C_("notification presenter", "%d Notifications")
 
-# Translators: This is a column header for a list of notification messages.
-# It will appear over the time a particular notification was received. The
-# time will be relative (e.g. "10 minutes ago") or absolute.
+# Translators: Orca has a feature to list all of the notification messages
+# received, similar to the functionality gnome-shell provides when you press
+# Super+M, but it works in all desktop environments. Orca's list is a table
+# with two columns, one column for the text of the notification and one
+# column for the time of the notification. This string is a column header
+# for the time, which will be relative (e.g. "10 minutes ago") or absolute.
 NOTIFICATIONS_RECEIVED_TIME = C_("notification presenter", "Received")
 
 # Translators: This string is a label for the group of Orca commands which
