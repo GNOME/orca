@@ -720,7 +720,7 @@ SN_TITLE_HEADING = C_("structural navigation", "Headings")
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title of such a dialog box.
-SN_TITLE_IFRAME = C_("structural navigation", "Interal Frames")
+SN_TITLE_IFRAME = C_("structural navigation", "Internal Frames")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
