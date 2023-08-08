@@ -137,6 +137,12 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return False
 
+        app_name = AXObject.get_name(AXObject.get_application(obj))
+        if app_name in ["soffice"]:
+            msg = f"AXObject: Treating {app_name} as not supporting collection."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         try:
             iface = Atspi.Accessible.get_collection_iface(obj)
         except Exception as error:
