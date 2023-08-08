@@ -258,7 +258,7 @@ class NotificationPresenter:
 
         rows = [(message, self._timestamp_to_string(timestamp)) \
                     for message, timestamp in reversed(self._notifications)]
-        title = guilabels.NOTIFICATIONS_COUNT % len(self._notifications)
+        title = guilabels.notifications_count(len(self._notifications))
         column_headers = [guilabels.NOTIFICATIONS_COLUMN_HEADER,
                           guilabels.NOTIFICATIONS_RECEIVED_TIME]
         self._gui = NotificationListGUI(script, title, column_headers, rows)
