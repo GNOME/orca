@@ -512,7 +512,9 @@ class EventManager:
         self._eventsSuspended = False
 
     def _shouldSuspendEventsFor(self, event):
-        if AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source):
+        if AXUtilities.is_frame(event.source) \
+           or (AXUtilities.is_window(event.source) \
+               and AXObject.get_application_toolkit_name(event.source) == "clutter"):
             if event.type.startswith("window"):
                 msg = "EVENT MANAGER: Should suspend events for window event."
                 debug.println(debug.LEVEL_INFO, msg, True)
