@@ -24,7 +24,7 @@ string and return a localized string for that string.
 """
 
 import gettext
-import imp
+import importlib
 import os
 import sys
 
@@ -68,7 +68,7 @@ def setModuleLocale(moduleName, newLocale=None):
         cgettext = gettext.gettext
     module = sys.modules.get(moduleName)
     if module:
-        imp.reload(module)
+        importlib.reload(module)
 
 def setLocaleForMessages(newLocale=None):
     modules = ['orca.tutorialgenerator', 'orca.messages']
