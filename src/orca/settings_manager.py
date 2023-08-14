@@ -28,7 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-import imp
 import importlib
 import os
 from gi.repository import Gio, GLib
@@ -252,21 +251,25 @@ class SettingsManager(object):
 
         success = False
         pathList = [self._prefsDir]
+        msg = "SETTINGS MANAGER: Attempt to load orca-customizations "
+        module_path = pathList[0] + "/orca-customizations.py"
+
         try:
-            msg = "SETTINGS MANAGER: Attempt to load orca-customizations "
-            (fileHnd, moduleName, desc) = \
-                imp.find_module("orca-customizations", pathList)
-            msg += f"from {moduleName} "
-            imp.load_module("orca-customizations", fileHnd, moduleName, desc)
-        except ImportError:
+            spec = importlib.util.spec_from_file_location("orca-customizations", module_path)
+            if spec is not None:
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                msg += f"from {module_path} succeeded."
+                success = True
+            else:
+                msg += f"from {module_path} failed. Spec not found."
+        except FileNotFoundError:
+            msg += f"from {module_path} failed. File not found."
+        except Exception as error:
+            # Treat this failure as a "success" so that we don't stomp on the existing file.
             success = True
-            msg += "failed due to ImportError. Giving up."
-        except AttributeError:
-            return False
-        else:
-            msg += "succeeded."
-            fileHnd.close()
-            success = True
+            msg += f"failed due to: {error}. Not loading customizations."
+
         debug.println(debug.LEVEL_ALL, msg, True)
         return success
 
