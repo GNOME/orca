@@ -40,6 +40,7 @@ class OrcaNavListGUI:
     def __init__(self, title, columnHeaders, rows, selectedRow):
         self._tree = None
         self._activateButton = None
+        self._jumpToButton = None
         self._gui = self._createNavListDialog(columnHeaders, rows, selectedRow)
         self._gui.set_title(title)
         self._gui.set_modal(True)
@@ -97,13 +98,13 @@ class OrcaNavListGUI:
         btn = dialog.add_button(guilabels.BTN_CANCEL, Gtk.ResponseType.CANCEL)
         btn.connect('clicked', self._onCancelClicked)
 
-        btn = dialog.add_button(guilabels.BTN_JUMP_TO, Gtk.ResponseType.APPLY)
-        btn.grab_default()
-        btn.connect('clicked', self._onJumpToClicked)
+        self._jumpToButton = dialog.add_button(guilabels.BTN_JUMP_TO, Gtk.ResponseType.APPLY)
+        self._jumpToButton.connect('clicked', self._onJumpToClicked)
 
         self._activateButton = dialog.add_button(
             guilabels.ACTIVATE, Gtk.ResponseType.OK)
         self._activateButton.connect('clicked', self._onActivateClicked)
+        self._activateButton.grab_default()
 
         self._tree.connect('key-release-event', self._onKeyRelease)
         self._tree.connect('cursor-changed', self._onCursorChanged)
@@ -127,6 +128,10 @@ class OrcaNavListGUI:
         obj, offset = self._getSelectedAccessibleAndOffset()
         n_actions = AXObject.get_n_actions(obj)
         self._activateButton.set_sensitive(n_actions > 0)
+        if n_actions > 0:
+            self._activateButton.grab_default()
+        else:
+            self._jumpToButton.grab_default()
 
     def _onKeyRelease(self, widget, event):
         keycode = event.hardware_keycode
