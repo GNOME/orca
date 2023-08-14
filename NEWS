@@ -1,3 +1,33 @@
+45.beta - 14 August 2023
+
+Bug Fixes:
+
+* Use importlib instead of imp. This is needed for Orca to work in
+  Python 3.12
+
+* Fix regression in flat review braille panning
+
+* Fix presentation of Calc selected cells
+
+* Fix the "screen reader on" message getting cut off
+
+* Treat LibreOffice as not supporting AtspiCollection (otherwise it can
+  become non-responsive)
+
+Feature Changes:
+
+* Change the default button in the list-of dialogs from "jump to" to
+  "activate"
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  eu              Basque                    Asier Sarasua Garmendia
+  gl              Galician                  Fran Dieguez
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  uk              Ukrainian                 Yuri Chornoivan
+
+=========
 45.alpha - 5 August 2023
 
 NOTE: A beta release will follow in a few days, hopefully including all
