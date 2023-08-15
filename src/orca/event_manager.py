@@ -244,6 +244,7 @@ class EventManager:
                         Atspi.Role.LABEL,      # gnome-shell spam
                         Atspi.Role.LIST_ITEM,  # Web app spam
                         Atspi.Role.LIST,       # Web app spam
+                        Atspi.Role.PANEL,      # TeamTalk5 spam
                         Atspi.Role.SECTION,    # Web app spam
                         Atspi.Role.TABLE_ROW,  # Thunderbird spam
                         Atspi.Role.TABLE_CELL, # Thunderbird spam
@@ -252,6 +253,15 @@ class EventManager:
                         Atspi.Role.MENU,
                         Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+            # TeamTalk5 is notoriously spammy here, and name change events on widgets are
+            # typically only presented if they are focused.
+            if not AXUtilities.is_focused(event.source) \
+               and role in [Atspi.Role.PUSH_BUTTON,
+                            Atspi.Role.CHECK_BOX,
+                            Atspi.Role.RADIO_BUTTON]:
+                msg = 'EVENT MANAGER: Ignoring event type due to role and state'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:property-change:accessible-value'):
