@@ -1,3 +1,15 @@
+45.gamma - 15 August 2023
+
+Distros should read the following:
+https://discourse.gnome.org/t/psa-for-distros-brltty-should-be-built-using-cython-0-29-x-not-cython-3
+
+Bug Fix:
+
+* Do not crash when BrlApi.Connection() crashes as a consequence of
+  BrlTTY having been built with Cython 3.
+
+=========
+
 45.beta - 14 August 2023
 
 Bug Fixes:
