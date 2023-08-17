@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-01-10 16:42+0000\n"
-"PO-Revision-Date: 2023-01-10 17:45+0100\n"
+"POT-Creation-Date: 2023-08-11 10:37+0000\n"
+"PO-Revision-Date: 2023-08-11 13:19+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1935,13 +1935,11 @@ msgstr "Formulär"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Nästa och föregående formulärfält: <keyseq><key>Orca-modifierare</"
-"key><key>Tabb</key></keyseq> och <keyseq><key>Orca-modifierare</"
-"key><key>Skift</key><key>Tabb</key></keyseq>"
+"Nästa och föregående formulärfält: <keyseq><key>F</key></keyseq> och "
+"<keyseq><key>Skift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2503,6 +2501,11 @@ msgstr "Presentera föregående aviseringsmeddelande: (Inte bunden)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Presentera nästa aviseringsmeddelande: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr "Presentera lista över alla aviseringsmeddelanden: (Inte bunden)"
 
@@ -8149,6 +8152,15 @@ msgstr ""
 "Att kryssa i kryssrutan <gui>Läs upp nummer som siffror</gui> får <app>Orca</"
 "app> att dela upp ett nummer som ”123” till enstaka siffror (”1”, ”2” och "
 "”3”) innan det skickas vidare till talsyntesen."
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Nästa och föregående formulärfält: <keyseq><key>Orca-modifierare</"
+#~ "key><key>Tabb</key></keyseq> och <keyseq><key>Orca-modifierare</"
+#~ "key><key>Skift</key><key>Tabb</key></keyseq>"
 
 #~ msgctxt "sort"
 #~ msgid "1. Gecko Navigation"
