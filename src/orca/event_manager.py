@@ -295,25 +295,11 @@ class EventManager:
                             Atspi.Role.MENU,
                             Atspi.Role.NOTIFICATION,
                             Atspi.Role.DIALOG,
-                            Atspi.Role.PANEL,
                             Atspi.Role.STATUS_BAR,
                             Atspi.Role.TOOL_TIP]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
-            if role == Atspi.Role.PANEL:
-                if not event.detail1:
-                    msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    return True
-                if AXObject.is_dead(event.source):
-                    msg = 'EVENT MANAGER: Ignoring event from dead source'
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    return True
-                if not AXObject.get_name(event.source):
-                    msg = 'EVENT MANAGER: Ignoring event type due to role and lack of name'
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    return True
 
         elif event.type.startswith('object:text-caret-moved'):
             if role in [Atspi.Role.LABEL] and not AXUtilities.is_focused(event.source):
