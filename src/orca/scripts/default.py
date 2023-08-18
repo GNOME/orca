@@ -1869,9 +1869,6 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        self.presentationInterrupt()
-        self.clearBraille()
-
         if self.flatReviewPresenter.is_active():
             self.flatReviewPresenter.quit()
 
