@@ -277,7 +277,6 @@ class EventManager:
         if event.type.startswith('object:property-change:accessible-name'):
             if role in [Atspi.Role.CANVAS,
                         Atspi.Role.ICON,
-                        Atspi.Role.LABEL,      # gnome-shell spam
                         Atspi.Role.LIST_ITEM,  # Web app spam
                         Atspi.Role.LIST,       # Web app spam
                         Atspi.Role.PANEL,      # TeamTalk5 spam
