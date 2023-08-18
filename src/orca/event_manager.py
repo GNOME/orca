@@ -67,9 +67,9 @@ class EventManager:
         #
         # Events we don't want to suspend include:
         # object:text-changed:insert - marco
+        # object:property-change:accessible-name - gnome-shell issue #6925
         self._suspendableEvents = ['object:children-changed:add',
                                    'object:children-changed:remove',
-                                   'object:property-change:accessible-name',
                                    'object:state-changed:sensitive',
                                    'object:state-changed:showing',
                                    'object:text-changed:delete']
