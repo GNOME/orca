@@ -51,3 +51,14 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return result
+
+    def hasMeaningfulToggleAction(self, obj):
+        """Returns True if obj has a meaningful toggle action."""
+
+        # https://bugreports.qt.io/browse/QTBUG-116204
+        if AXUtilities.is_table_cell_or_header(obj):
+            msg = f"QT: Ignoring toggle action on {obj}."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return super().hasMeaningfulToggleAction(obj)
