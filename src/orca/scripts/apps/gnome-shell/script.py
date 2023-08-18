@@ -26,10 +26,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
-import time
-
 import orca.debug as debug
 import orca.orca as orca
+import orca.orca_state as orca_state
 import orca.scripts.toolkits.clutter as clutter
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -41,8 +40,6 @@ class Script(clutter.Script):
 
     def __init__(self, app):
         clutter.Script.__init__(self, app)
-        self._activeDialog = (None, 0) # (Accessible, Timestamp)
-        self._activeDialogLabels = {}  # key == hash(obj), value == name
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -61,10 +58,6 @@ class Script(clutter.Script):
         """Determines whether or not this event should be skipped due to
         being redundant, part of an event flood, etc."""
 
-        # We must handle all dialogs ourselves in this script.
-        if AXUtilities.is_dialog(event.source):
-            return False
-
         if AXUtilities.is_window(event.source):
             return self.utilities.isBogusWindowFocusClaim(event)
 
@@ -81,61 +74,22 @@ class Script(clutter.Script):
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
-    def _presentDialogLabel(self, event):
-        activeDialog, timestamp = self._activeDialog
-        if not activeDialog or not AXUtilities.is_label(event.source):
-            return False
-
-        obj = hash(event.source)
-        name = AXObject.get_name(event.source)
-        if name == self._activeDialogLabels.get(obj):
-            return True
-
-        parentDialog = AXObject.find_ancestor(event.source, AXUtilities.is_dialog)
-        if activeDialog == parentDialog:
-            self.presentMessage(name)
-            self._activeDialogLabels[obj] = name
-            return True
-
-        return False
-
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if self._presentDialogLabel(event):
+        if not AXUtilities.is_label(event.source):
+            clutter.Script.onNameChanged(self, event)
             return
 
-        clutter.Script.onNameChanged(self, event)
-
-    def onShowingChanged(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
-
-        if not event.detail1:
-            return
-
-        # When entering overview with many open windows, we get quite
-        # a few state-changed:showing events for nameless panels. The
-        # act of processing these by the default script causes us to
-        # present nothing, and introduces a significant delay before
-        # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-        if AXUtilities.is_panel(event.source) and not AXObject.get_name(event.source):
-            return
-
-        # We cannot count on events or their order from dialog boxes.
-        # Therefore, the only way to reliably present a dialog is by
-        # ignoring the events of the dialog itself and keeping track
-        # of the current dialog.
-        activeDialog, timestamp = self._activeDialog
-        if not event.detail1 and event.source == activeDialog:
-            self._activeDialog = (None, 0)
-            self._activeDialogLabels = {}
-            return
-
-        if activeDialog and event.detail1 and AXUtilities.is_label(event.source):
-            if self._presentDialogLabel(event):
-                return
-
-        clutter.Script.onShowingChanged(self, event)
+        # If we're already in a dialog, and a label inside that dialog changes its name,
+        # present the new name. Example: the "Command not found" label in the Run dialog.
+        dialog = AXObject.find_ancestor(orca_state.locusOfFocus, AXUtilities.is_dialog)
+        msg = f"GNOME SHELL: focus {orca_state.locusOfFocus} is in dialog: {dialog}"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if dialog and AXObject.is_ancestor(event.source, dialog):
+            msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.presentMessage(AXObject.get_name(event.source))
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
@@ -160,10 +114,6 @@ class Script(clutter.Script):
         if not event.detail1:
             return
 
-        # The dialog will get presented when its first child gets focus.
-        if AXUtilities.is_dialog(event.source):
-            return
-
         # We're getting a spurious focus claim from the gnome-shell window after
         # the window switcher is used.
         if AXUtilities.is_window(event.source):
@@ -175,20 +125,6 @@ class Script(clutter.Script):
             if descendant is not None:
                 orca.setLocusOfFocus(event, descendant)
                 return
-
-        # This is to present dialog boxes which are, to the user, newly
-        # activated. And if something is claiming to be focused that is
-        # not in a dialog, that's good to know as well, so update our
-        # state regardless.
-        activeDialog, timestamp = self._activeDialog
-        if not activeDialog:
-            dialog = AXObject.find_ancestor(event.source, AXUtilities.is_dialog)
-            self._activeDialog = (dialog, time.time())
-            if dialog:
-                orca.setLocusOfFocus(None, dialog)
-                labels = self.utilities.unrelatedLabels(dialog)
-                for label in labels:
-                    self._activeDialogLabels[hash(label)] = AXObject.get_name(label)
 
         clutter.Script.onFocusedChanged(self, event)
 
