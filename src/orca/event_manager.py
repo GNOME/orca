@@ -726,12 +726,12 @@ class EventManager:
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
-        skipCheck = [
+        skipCheck = {
             "object:children-changed",
             "object:column-reordered",
             "object:row-reordered",
             "object:property-change",
-            "object:selection-changed"
+            "object:selection-changed",
             "object:state-changed:checked",
             "object:state-changed:expanded",
             "object:state-changed:indeterminate",
@@ -740,8 +740,9 @@ class EventManager:
             "object:state-changed:sensitive",
             "object:state-changed:showing",
             "object:text-changed",
-        ]
-        check = not list(filter(lambda x: event.type.startswith(x), skipCheck))
+        }
+
+        check = not any(event.type.startswith(x) for x in skipCheck)
         tokens = ["EVENT MANAGER: Getting script for", app, "check:", check]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
