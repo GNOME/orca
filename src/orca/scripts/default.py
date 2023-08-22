@@ -522,6 +522,9 @@ class Script(script.Script):
             msg += f": {reason}"
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        self.refreshModifierKeyGrab("Insert")
+        self.refreshModifierKeyGrab("KP_Insert")
+
         bound = self.getEnabledKeyBindings()
         for b in bound:
             for id in orca.addKeyGrab(b):
@@ -539,9 +542,19 @@ class Script(script.Script):
             orca.removeKeyGrab(id)
         self.grab_ids = []
 
+    def refreshModifierKeyGrab(self, modifier):
+        """ Refreshes the key grab for an Orca modifier. """
+        if modifier in settings.orcaModifierKeys and modifier not in orca_state.grabbedModifiers:
+            kd = Atspi.KeyDefinition()
+            kd.keycode = keybindings.getKeycode(modifier)
+            kd.modifiers = 0
+            orca_state.grabbedModifiers[modifier] = orca_state.device.add_key_grab(kd)
+        elif modifier in orca_state.grabbedModifiers and modifier not in settings.orcaModifierKeys:
+            orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
+            del orca_state.grabbedModifiers[modifier]
+
     def refreshKeyGrabs(self, reason=""):
         """ Refreshes the enabled key grabs for this script. """
-
         msg = "INFO: refreshing key grabs"
         if reason:
             msg += f": {reason}"

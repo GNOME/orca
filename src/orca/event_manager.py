@@ -79,6 +79,7 @@ class EventManager:
                                'object:property-change:accessible-parent']
         self._parentsOfDefunctDescendants = []
         orca_state.device = None
+        self.bypassedKey = None
         debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
@@ -1062,13 +1063,22 @@ class EventManager:
             event.event_string = ""
         event.timestamp = time.time()
 
-        if not pressed and text == "Num_Lock" and "KP_Insert" in settings.orcaModifierKeys \
-            and orca_state.activeScript is not None:
-            orca_state.activeScript.refreshKeyGrabs("num lock toggled")
-
         keyboardEvent = input_event.KeyboardEvent(event)
         if not keyboardEvent.is_duplicate:
             debug.println(debug.LEVEL_INFO, f"\n{keyboardEvent}")
+
+            # If pressing insert, then temporarily remove grab to allow toggling
+            # with a double press
+            if pressed and orca_state.activeScript is not None:
+                if keyboardEvent.keyval_name in orca_state.grabbedModifiers:
+                    device.remove_key_grab(orca_state.grabbedModifiers[keyboardEvent.keyval_name])
+                    del orca_state.grabbedModifiers[keyboardEvent.keyval_name]
+                    self.bypassedKey = keyboardEvent.keyval_name
+                elif self.bypassedKey is not None:
+                    # This is a second key press. Re-enable the grab
+                    orca_state.activeScript.refreshModifierKeyGrab(self.bypassedKey)
+                    self.bypassedKey = None
+
 
         keyboardEvent.process()
 

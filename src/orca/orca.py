@@ -578,12 +578,6 @@ def removeKeyGrab(id):
 
     orca_state.device.remove_key_grab(id)
 
-def mapModifier(keycode):
-    if orca_state.device is None:
-        return
-
-    return orca_state.device.map_modifier(keycode)
-
 def quitOrca(script=None, inputEvent=None):
     """Quit Orca. Check if the user wants to confirm this action.
     If so, show the confirmation GUI otherwise just shutdown.

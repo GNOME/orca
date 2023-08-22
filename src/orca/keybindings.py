@@ -273,8 +273,6 @@ class KeyBinding:
         """ return a list of Atspi key definitions for the given binding.
             This may return more than one binding if the Orca modifier is bound
             to more than one key.
-            If AT-SPI is older than 2.40, then this function will not work and
-            will return an empty set.
         """
         ret = []
         if not self.keycode:
@@ -286,16 +284,12 @@ class KeyBinding:
                 return ret
             modList = []
             otherMods = self.modifiers & ~ORCA_MODIFIER_MASK
-            numLockMod = device.get_modifier(getKeycode("Num_Lock"))
-            lockedMods = device.get_locked_modifiers()
-            numLockOn = lockedMods & numLockMod
             for key in settings.orcaModifierKeys:
                 keycode = getKeycode(key)
                 if keycode == 0 and key == "Shift_Lock":
                     keycode = getKeycode("Caps_Lock")
                 mod = device.map_modifier(keycode)
-                if key != "KP_Insert" or not numLockOn:
-                    modList.append(mod | otherMods)
+                modList.append(mod | otherMods)
         else:
             modList = [self.modifiers]
         for mod in modList:
