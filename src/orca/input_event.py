@@ -244,7 +244,7 @@ class KeyboardEvent(InputEvent):
         self.keyval_name = Gdk.keyval_name(event.id)
         if self.event_string  == "":
             self.event_string = self.keyval_name
-        self.timestamp = event.timestamp
+        self.timestamp = time.time()
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
         self._script = orca_state.activeScript

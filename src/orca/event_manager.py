@@ -1051,7 +1051,6 @@ class EventManager:
         event.event_string = text
         if event.event_string is None:
             event.event_string = ""
-        event.timestamp = time.time()
 
         keyboardEvent = input_event.KeyboardEvent(event)
         if not keyboardEvent.is_duplicate:
