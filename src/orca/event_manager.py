@@ -36,7 +36,6 @@ from . import debug
 from . import input_event
 from . import orca_state
 from . import script_manager
-from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
