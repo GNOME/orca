@@ -1032,10 +1032,7 @@ class EventManager:
                   "activeScript:", orca_state.activeScript]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not orca_state.activeScript:
-            return
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
+        if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
             attributes = orca_state.activeScript.getTransferableAttributes()
             for key, value in attributes.items():
                 msg = f"EVENT MANAGER: {key}: {value}"
