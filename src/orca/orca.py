@@ -116,10 +116,9 @@ OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
 
 def getActiveModeAndObjectOfInterest():
-    msg = "ORCA: Active mode: %s Object of interest: %s" % \
-        (orca_state.activeMode, orca_state.objOfInterest)
-
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["ORCA: Active mode:", orca_state.activeMode,
+              "Object of interest:", orca_state.objOfInterest]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
     return orca_state.activeMode, orca_state.objOfInterest
 
 def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
@@ -144,8 +143,8 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         orca_state.activeMode = mode
 
     try:
-        msg = "ORCA: Region of interest: %s (%i, %i)" % (obj, startOffset, endOffset)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA: Region of interest:", obj, "(", startOffset, ")", endOffset]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         obj.emit("region-changed", startOffset, endOffset)
     except Exception:
         msg = "ORCA: Exception emitting region-changed notification"
@@ -154,10 +153,10 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
     orca_state.objOfInterest = obj
 
 def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
-    msg = f"ORCA: Request to set active window to {frame}"
+    tokens = ["ORCA: Request to set active window to", frame]
     if app is not None:
-        msg += f" in {app}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+        tokens.extend(["in", app])
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if frame == orca_state.activeWindow:
         msg = "ORCA: Setting activeWindow to existing activeWindow"
@@ -754,8 +753,8 @@ def shutdownOnSignal(signum, frame):
     global exitCount
 
     signalString = f'({signal.strsignal(signum)})'
-    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
-    debug.println(debug.LEVEL_INFO, msg, True)
+    msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
@@ -792,8 +791,8 @@ def shutdownOnSignal(signum, frame):
 
 def crashOnSignal(signum, frame):
     signalString = f'({signal.strsignal(signum)})'
-    msg = 'ORCA: Shutting down and exiting due to signal=%d %s' % (signum, signalString)
-    debug.println(debug.LEVEL_SEVERE, msg, True)
+    msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
+    debug.printMessage(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
     _restoreXmodmap(_orcaModifiers)
     try:
@@ -819,8 +818,7 @@ def main():
     session = "%s %s".strip() % (sessionType, sessionDesktop)
     if session:
         msg += f" session: {session}"
-
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=True)
