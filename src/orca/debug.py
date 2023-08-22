@@ -212,6 +212,9 @@ def _asString(obj):
     return str(obj)
 
 def printTokens(level, tokens, timestamp=False):
+    if level < debugLevel:
+        return
+
     text = " ".join(map(_asString, tokens))
     println(level, text, timestamp)
 
