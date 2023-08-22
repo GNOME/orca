@@ -284,15 +284,15 @@ class KeyboardEvent(InputEvent):
             if not self._window:
                 orca.setActiveWindow(self._script.utilities.activeWindow())
                 self._window = orca_state.activeWindow
-                msg = f'INPUT EVENT: Updated window and active window to {self._window}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INPUT EVENT: Updated window and active window to", self._window]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._window and self._app != AXObject.get_application(self._window):
             self._script = script_manager.getManager().getScript(
                 AXObject.get_application(self._window))
             self._app = self._script.app
-            msg = f'INPUT EVENT: Updated script to {self._script}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INPUT EVENT: Updated script to", self._script]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
@@ -833,37 +833,37 @@ class KeyboardEvent(InputEvent):
             data = '%s DUPLICATE EVENT #%i' % (data, KeyboardEvent.duplicateCount)
 
         msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
-        debug.println(debug.LEVEL_INFO, msg, False)
+        debug.printMessage(debug.LEVEL_INFO, msg, False)
 
-        msg = f'HOST_APP: {self._app}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["HOST_APP:", self._app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f'WINDOW:   {self._window}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WINDOW:", self._window]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f'LOCATION: {self._obj}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["LOCATION:", self._obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f'CONSUME:  {self._should_consume} ({self._consume_reason})'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["CONSUME:", self._should_consume, self._consume_reason]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
 
         if self._should_consume != self._did_consume:
-            msg = f'CONSUMED: {self._did_consume} ({self._result_reason})'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["CONSUMED:", self._did_consume, self._result_reason]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
             attributes = orca_state.activeScript.getTransferableAttributes()
             for key, value in attributes.items():
-                msg = f'INPUT EVENT: {key}: {value}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                msg = f"INPUT EVENT: {key}: {value}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        msg = f'^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n'
-        debug.println(debug.LEVEL_INFO, msg, False)
+        msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
+        debug.printMessage(debug.LEVEL_INFO, msg, False)
 
         return self._did_consume
 
@@ -931,7 +931,7 @@ class KeyboardEvent(InputEvent):
                     Atspi.generate_keyboard_event(modifier, "", lock)
                     debug.printMessage(debug.LEVEL_INFO, "Done with capslock", True)
                 except Exception:
-                    debug.println(debug.LEVEL_INFO, "Could not trigger capslock, " \
+                    debug.printMessage(debug.LEVEL_INFO, "Could not trigger capslock, " \
                         "at-spi2-core >= 2.32 is needed for triggering capslock", True)
                     pass
             return lockit
@@ -950,15 +950,15 @@ class KeyboardEvent(InputEvent):
         startTime = time.time()
         data = "'%s' (%d)" % (self.event_string, self.hw_code)
         msg = f'vvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
-        debug.println(debug.LEVEL_INFO, msg, False)
+        debug.printMessage(debug.LEVEL_INFO, msg, False)
 
         if self._consumer:
             msg = f'INFO: Consumer is {self._consumer.__name__}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function:
             msg = f'INFO: Handler is {self._handler.description}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
             msg = 'INFO: No handler or consumer'
@@ -968,7 +968,7 @@ class KeyboardEvent(InputEvent):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^'
-        debug.println(debug.LEVEL_INFO, msg, False)
+        debug.printMessage(debug.LEVEL_INFO, msg, False)
 
         return False
 
