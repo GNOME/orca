@@ -158,7 +158,7 @@ class Utilities(script_utilities.Utilities):
             self._caretContexts[hash(documentFrameParent)] = context
 
     def clearCachedObjects(self):
-        debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
+        debug.printMessage(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._objectAttributes = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
@@ -277,7 +277,7 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         except Exception:
             msg = "ERROR: Exception getting script for active window"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
             if isinstance(script, type(self._script)):
                 attrs = script.getTransferableAttributes()
@@ -1579,7 +1579,7 @@ class Utilities(script_utilities.Utilities):
 
         if self.isDead(obj):
             msg = "ERROR: Cannot get object contents at offset for dead object."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         offset = max(0, offset)
@@ -1706,7 +1706,7 @@ class Utilities(script_utilities.Utilities):
 
         if self.isDead(obj):
             msg = "ERROR: Cannot get line contents at offset for dead object."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         offset = max(0, offset)
@@ -1822,7 +1822,7 @@ class Utilities(script_utilities.Utilities):
 
         prevEndTime = time.time()
         msg = f"INFO: Time to get line contents on left: {prevEndTime - prevStartTime:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # Check for things on the same line to the right of this object.
         nextStartTime = time.time()
@@ -1852,7 +1852,7 @@ class Utilities(script_utilities.Utilities):
 
         nextEndTime = time.time()
         msg = f"INFO: Time to get line contents on right: {nextEndTime - nextStartTime:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
         if firstString == "\n" and len(objects) > 1:
@@ -1862,7 +1862,7 @@ class Utilities(script_utilities.Utilities):
             self._currentLineContents = objects
 
         msg = f"INFO: Time to get line contents: {time.time() - startTime:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self._debugContentsInfo(obj, offset, objects, "Line (layout mode)")
 
@@ -2047,7 +2047,7 @@ class Utilities(script_utilities.Utilities):
 
         if self.isDead(startObj):
             msg = "INFO: Cannot get subtree: Start object is dead."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         def _include(x):
@@ -4480,7 +4480,7 @@ class Utilities(script_utilities.Utilities):
         if self.isZombie(focus) and not self.isZombie(source):
             if self.activeDocument() == source:
                 msg = "WEB: Treating active doc as locusOfFocus doc"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         return False
@@ -4490,15 +4490,15 @@ class Utilities(script_utilities.Utilities):
             return False
         if not orca_state.locusOfFocus:
             msg = "WEB: Selection changed event is relevant (no locusOfFocus)"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         if event.source == orca_state.locusOfFocus:
             msg = "WEB: Selection changed event is relevant (is locusOfFocus)"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         if AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
             msg = "WEB: Selection changed event is relevant (ancestor of locusOfFocus)"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         # There may be other roles where we need to do this. For now, solve the known one.
@@ -4511,7 +4511,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         msg = "WEB: Selection changed event is relevant (no reason found to ignore it)"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
     def textEventIsDueToDeletion(self, event):
@@ -4796,7 +4796,7 @@ class Utilities(script_utilities.Utilities):
 
         self._canHaveCaretContextDecision[hash(obj)] = rv
         msg = f"INFO: _canHaveCaretContext took {time.time() - startTime:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
     def isPseudoElement(self, obj):
@@ -4855,7 +4855,7 @@ class Utilities(script_utilities.Utilities):
         if not documentFrame:
             if not searchIfNeeded:
                 msg = "WEB: Returning None, -1: No document and no search requested."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return None, -1
 
             obj, offset = self._getCaretContextViaLocusOfFocus()
@@ -4880,7 +4880,7 @@ class Utilities(script_utilities.Utilities):
             return context
         elif self.isZombie(context[0]):
             msg = "WEB: Context is Zombie. Searching for replicant."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             obj, offset = self.findContextReplicant()
             if obj:
                 caretObj, caretOffset = self.searchForCaretContext(AXObject.get_parent(obj))
@@ -4919,7 +4919,7 @@ class Utilities(script_utilities.Utilities):
     def handleEventFromContextReplicant(self, event, replicant):
         if self.isDead(replicant):
             msg = "WEB: Context replicant is dead."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.isDead(orca_state.locusOfFocus):
@@ -4965,7 +4965,7 @@ class Utilities(script_utilities.Utilities):
             listBox = AXObject.find_ancestor(event.source, AXUtilities.is_list_box)
         if listBox is None:
             msg = "WEB: Could not find listbox to recover from removed child."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         tokens = ["WEB: Checking", listBox, "for focused child."]
@@ -4975,7 +4975,7 @@ class Utilities(script_utilities.Utilities):
         item = AXUtilities.get_focused_object(listBox)
         if not AXUtilities.is_list_item(item):
             msg = "WEB: Could not find focused list item to recover from removed child."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         names = self._script.pointOfReference.get('names', {})
@@ -4991,19 +4991,19 @@ class Utilities(script_utilities.Utilities):
     def handleEventForRemovedChild(self, event):
         if event.any_data == orca_state.locusOfFocus:
             msg = "WEB: Removed child is locusOfFocus."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locusOfFocus."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif self.isSameObject(event.any_data, orca_state.locusOfFocus, True, True):
             msg = "WEB: Removed child appears to be replicant of locusOfFocus."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
             return False
 
         if event.detail1 == -1:
             msg = "WEB: Event detail1 is useless."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._handleEventForRemovedListBoxChild(event):
@@ -5016,7 +5016,7 @@ class Utilities(script_utilities.Utilities):
         if keyString == "Up":
             if event.detail1 >= childCount:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.previousContext(event.source, -1)
             elif 0 <= event.detail1 - 1 < childCount:
                 child = AXObject.get_child(event.source, event.detail1 - 1)
@@ -5033,7 +5033,7 @@ class Utilities(script_utilities.Utilities):
         elif keyString == "Down":
             if event.detail1 == 0:
                 msg = "WEB: First child removed. Getting new location from start of parent."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 obj, offset = self.nextContext(event.source, -1)
             elif 0 < event.detail1 < childCount:
                 child = AXObject.get_child(event.source, event.detail1)
@@ -5278,7 +5278,7 @@ class Utilities(script_utilities.Utilities):
             parent = AXObject.get_parent(obj)
             if self.isZombie(parent):
                 msg = "WEB: Finding next caret in order. Parent is Zombie."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
@@ -5351,7 +5351,7 @@ class Utilities(script_utilities.Utilities):
             parent = AXObject.get_parent(obj)
             if self.isZombie(parent):
                 msg = "WEB: Finding previous caret in order. Parent is Zombie."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
@@ -5394,21 +5394,21 @@ class Utilities(script_utilities.Utilities):
         if not _settingsManager.getSetting('presentLiveRegionFromInactiveTab') \
            and self.getTopLevelDocumentForObject(event.source) != self.activeDocument():
             msg = "WEB: Live region source is not in active tab."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.type.startswith("object:text-changed:insert"):
             alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
             if alert and AXUtilities.get_focused_object(alert) == event.source:
                 msg = "WEB: Focused source will be presented as part of alert"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
 
             if self._lastQueuedLiveRegionEvent \
                and self._lastQueuedLiveRegionEvent.type == event.type \
                and self._lastQueuedLiveRegionEvent.any_data == event.any_data:
                 msg = "WEB: Event is believed to be duplicate message"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
 
         if isinstance(event.any_data, Atspi.Accessible):
@@ -5421,7 +5421,7 @@ class Utilities(script_utilities.Utilities):
             if self.lastQueuedLiveRegion() == event.any_data \
                and self._lastQueuedLiveRegionEvent.type != event.type:
                 msg = "WEB: Event is believed to be redundant live region notification"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
 
         self._lastQueuedLiveRegionEvent = event
