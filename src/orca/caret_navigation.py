@@ -39,8 +39,8 @@ class CaretNavigation:
 
     def __init__(self, script):
         if not (script and script.app):
-            msg = "INFO: Caret navigation requires a script and app."
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = "CARET NAVIGATION: Caret navigation requires a script and app."
+            debug.printMessage(debug.LEVEL_INFO, msg)
 
         self._script = script
         self._handlers = self._setup_handlers()
@@ -318,8 +318,8 @@ class CaretNavigation:
         if script.inSayAll():
             _settings_manager = settings_manager.getManager()
             if _settings_manager.getSetting('rewindAndFastForwardInSayAll'):
-                msg = "INFO: inSayAll and rewindAndFastforwardInSayAll is enabled"
-                debug.println(debug.LEVEL_INFO, msg)
+                msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
+                debug.printMessage(debug.LEVEL_INFO, msg)
                 return True
 
         obj, offset = script.utilities.getCaretContext()
@@ -347,8 +347,8 @@ class CaretNavigation:
         if script.inSayAll():
             _settings_manager = settings_manager.getManager()
             if _settings_manager.getSetting('rewindAndFastForwardInSayAll'):
-                msg = "INFO: inSayAll and rewindAndFastforwardInSayAll is enabled"
-                debug.println(debug.LEVEL_INFO, msg)
+                msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
+                debug.printMessage(debug.LEVEL_INFO, msg)
                 return True
 
 
