@@ -849,7 +849,7 @@ class AXObject:
         def as_string(state):
             return state.value_name[12:].replace("_", "-").lower()
 
-        return ", ".join(map(as_string, AXObject.get_state_set(obj).getStates()))
+        return ", ".join(map(as_string, AXObject.get_state_set(obj).get_states()))
 
     @staticmethod
     def get_relations(obj):
