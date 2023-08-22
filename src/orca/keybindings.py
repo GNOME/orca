@@ -421,8 +421,8 @@ class KeyBindings:
             string = kb.asString()
             match = bindings.get(string)
             if match is not None:
-                msg = f"WARNING: '{string}' ({kb.description()}) also matches: {match}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WARNING: '", string, "' (", kb.description(), ") also matches:", match]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             bindings[string] = kb.description()
 
         return bound

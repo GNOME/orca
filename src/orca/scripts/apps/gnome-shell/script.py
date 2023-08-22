@@ -84,8 +84,8 @@ class Script(clutter.Script):
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
         dialog = AXObject.find_ancestor(orca_state.locusOfFocus, AXUtilities.is_dialog)
-        msg = f"GNOME SHELL: focus {orca_state.locusOfFocus} is in dialog: {dialog}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["GNOME SHELL: focus", orca_state.locusOfFocus, "is in dialog:", dialog]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
             debug.println(debug.LEVEL_INFO, msg, True)

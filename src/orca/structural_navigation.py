@@ -804,8 +804,8 @@ class StructuralNavigation:
         key = f"{structuralNavigationObject.objType}:{arg}"
         matches = cache.get(key, [])
         if matches:
-            msg = f"STRUCTURAL NAVIGATION: Returning {len(matches)} matches from cache"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["STRUCTURAL NAVIGATION: Returning", len(matches), "matches from cache"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return matches.copy()
 
         if structuralNavigationObject.getter:
@@ -813,8 +813,8 @@ class StructuralNavigation:
         elif not structuralNavigationObject.criteria:
             return []
         elif not AXObject.supports_collection(document):
-            msg = f"STRUCTURAL NAVIGATION: {document} does not support collection"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["STRUCTURAL NAVIGATION:", document, "does not support collection"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
         else:
             rule = structuralNavigationObject.criteria(arg)
@@ -1164,13 +1164,13 @@ class StructuralNavigation:
         if not AXUtilities.is_defunct(obj):
             return obj, characterOffset
 
-        msg = f"STRUCTURAL NAVIGATION: {obj} became defunct after setting caret position"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATION:", obj, "became defunct after setting caret position"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         replicant = self._script.utilities.getObjectFromPath(objPath)
         if replicant and AXObject.get_role(replicant) == objRole:
-            msg = f"STRUCTURAL NAVIGATION: Updating obj to replicant {replicant}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["STRUCTURAL NAVIGATION: Updating obj to replicant", replicant]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             obj = replicant
 
         return obj, characterOffset

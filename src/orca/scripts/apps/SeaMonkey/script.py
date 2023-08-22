@@ -72,8 +72,8 @@ class Script(Gecko.Script):
 
         table = self.utilities.getTable(orca_state.locusOfFocus)
         if table and not self.utilities.isTextDocumentTable(table):
-            msg = f"SEAMONKEY: Ignoring, locusOfFocus is {orca_state.locusOfFocus}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SEAMONKEY: Ignoring, locusOfFocus is", orca_state.locusOfFocus]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         super().onBusyChanged(event)
@@ -103,12 +103,12 @@ class Script(Gecko.Script):
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
-            msg = f"SEAMONKEY: Using focus mode for editable message {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SEAMONKEY: Using focus mode for editable message", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        msg = f"SEAMONKEY: {obj} is not an editable message."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SEAMONKEY:", obj, "is not an editable message."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):

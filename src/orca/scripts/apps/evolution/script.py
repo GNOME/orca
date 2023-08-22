@@ -139,8 +139,8 @@ class Script(WebKitGtk.Script, gtk.Script):
 
         child = AXObject.get_active_descendant_checked(event.source, event.any_data)
         if child is not None and child != event.any_data:
-            msg = f"EVOLUTION: Bogus any_data suspected. Setting focus to {child}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVOLUTION: Bogus any_data suspected. Setting focus to", child]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             orca.setLocusOfFocus(event, child)
             return
 

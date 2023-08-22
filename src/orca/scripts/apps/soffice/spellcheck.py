@@ -50,33 +50,35 @@ class SpellCheck(spellcheck.SpellCheck):
 
     def _isCandidateWindow(self, window):
         if self._script.utilities.isDead(window):
-            msg = f"SOFFICE: {window} is not spellcheck window because it's dead."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE:", window, "is not spellcheck window because it's dead."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         rv = self._windows.get(hash(window))
         if rv is not None:
-            msg = f"SOFFICE: {window} is spellcheck window: {rv}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE:", window, "is spellcheck window:", rv]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
         dialog = self._findChildDialog(window)
         if not dialog:
             self._windows[hash(window)] = False
-            msg = f"SOFFICE: {window} is not spellcheck window because the dialog was not found."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE:", window,
+                      "is not spellcheck window because the dialog was not found."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXObject.find_descendant(dialog, AXUtilities.is_page_tab_list) is not None:
             self._windows[hash(window)] = False
             self._windows[hash(dialog)] = False
-            msg = f"SOFFICE: {dialog} is not spellcheck dialog because a page tab list was found."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE:", dialog,
+                      "is not spellcheck dialog because a page tab list was found."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         rv = AXObject.find_descendant(dialog, AXUtilities.is_combo_box) is not None
-        msg = f"SOFFICE: {dialog} is spellcheck dialog based on combobox descendant: {rv}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOFFICE:", dialog, "is spellcheck dialog based on combobox descendant:", rv]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self._windows[hash(dialog)] = rv
         return rv
 
@@ -87,8 +89,8 @@ class SpellCheck(spellcheck.SpellCheck):
             return AXUtilities.is_focusable(x) and AXUtilities.is_multi_line(x)
 
         rv = AXObject.find_descendant(root, isError)
-        msg = f"SOFFICE: Error widget for: {root} is: {rv}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOFFICE: Error widget for:", root, "is:", rv]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def _findSuggestionsList(self, root):
@@ -100,8 +102,8 @@ class SpellCheck(spellcheck.SpellCheck):
                 or AXUtilities.is_tree_table(x)
 
         rv = AXObject.find_descendant(root, isSelectableList)
-        msg = f"SOFFICE: Suggestions list for: {root} is: {rv}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOFFICE: Suggestions list for:", root, "is:", rv]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def _getSuggestionIndexAndPosition(self, suggestion):

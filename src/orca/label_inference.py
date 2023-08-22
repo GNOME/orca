@@ -98,8 +98,8 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self.inferFromTextLeft(obj, proximity=200)
-            msg = f"INFER - Text Left with proximity of 200: {result}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFER - Text Left with proximity of 200:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self.clearCache()
         return result, objects
@@ -222,8 +222,8 @@ class LabelInference:
                     try:
                         endOffset = text.characterCount
                     except Exception:
-                        msg = f"ERROR: Exception getting character count for {obj}"
-                        debug.println(debug.LEVEL_INFO, msg, True)
+                        tokens = ["ERROR: Exception getting character count for", obj]
+                        debug.printTokens(debug.LEVEL_INFO, tokens, True)
                         return extents
 
                 extents = text.getRangeExtents(startOffset, endOffset, 0)
@@ -232,11 +232,11 @@ class LabelInference:
             try:
                 ext = obj.queryComponent().getExtents(0)
             except NotImplementedError:
-                msg = f"INFO: {obj} does not implement the component interface"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO:", obj, "does not implement the component interface"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             except Exception:
-                msg = f"ERROR: Exception getting extents for {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["ERROR: Exception getting extents for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 extents = ext.x, ext.y, ext.width, ext.height
 

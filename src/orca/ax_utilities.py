@@ -59,8 +59,8 @@ class AXUtilities:
         try:
             desktop = Atspi.get_desktop(0)
         except Exception as error:
-            msg = f"ERROR: Exception getting desktop from Atspi: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting desktop from Atspi:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return desktop
@@ -93,8 +93,8 @@ class AXUtilities:
             if child == app:
                 return True
 
-        msg = f"WARNING: {app} is not in {desktop}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WARNING:", app, "is not in", desktop]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     @staticmethod
@@ -109,8 +109,8 @@ class AXUtilities:
             if AXObject.get_process_id(app) == pid:
                 return app
 
-        msg = f"WARNING: app with pid {pid} is not in {desktop}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WARNING: app with pid", pid, "is not in", desktop]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return None
 
     @staticmethod

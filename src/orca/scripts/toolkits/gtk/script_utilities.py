@@ -82,8 +82,8 @@ class Utilities(script_utilities.Utilities):
         rv = self._isLayoutOnly.get(hash(obj))
         if rv is not None:
             if rv:
-                msg = f"GTK: {obj} is deemed to be layout only"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["GTK:", obj, "is deemed to be layout only"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
         rv = super().isLayoutOnly(obj)
@@ -207,8 +207,8 @@ class Utilities(script_utilities.Utilities):
         if self.intersection(objBox, stringBox) != (0, 0, 0, 0):
             return x, y
 
-        msg = f"ERROR: text bounds {stringBox} not in obj bounds {objBox}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["ERROR: text bounds", stringBox, "not in obj bounds", objBox]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # This is where the string starts; not the widget.
         boxX, boxY = stringBox[0], stringBox[1]

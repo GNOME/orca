@@ -299,11 +299,11 @@ class SettingsManager(object):
             try:
                 module = importlib.import_module(f'orca.{moduleName}')
                 factories.append(module)
-                msg = f"SETTINGS MANAGER: Valid speech server factory: {moduleName}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SETTINGS MANAGER: Valid speech server factory:", moduleName]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             except Exception:
-                msg = f"SETTINGS MANAGER: Invalid speech server factory: {moduleName}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SETTINGS MANAGER: Invalid speech server factory:", moduleName]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return factories
 

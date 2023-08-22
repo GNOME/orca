@@ -380,14 +380,14 @@ class Utilities(script_utilities.Utilities):
             try:
                 topLevel = self.topLevelObject(obj)
             except Exception:
-                msg = f"ERROR: Exception getting top-level object for {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["ERROR: Exception getting top-level object for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
             if not topLevel:
                 return False
             if self.isDead(topLevel):
-                msg = f"SOFFICE: Top level object {topLevel} is dead."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SOFFICE: Top level object", topLevel, "is dead."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
             if AXObject.get_name(topLevel).endswith("Impress"):
                 return True
@@ -635,8 +635,8 @@ class Utilities(script_utilities.Utilities):
         try:
             table = obj.queryTable()
         except Exception:
-            msg = f"SOFFICE: Exception querying Table interface of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE: Exception querying Table interface of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         try:
@@ -655,8 +655,8 @@ class Utilities(script_utilities.Utilities):
 
     def _getCoordinatesForSelectedRange(self, obj):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
-            msg = f"SOFFICE: {obj} does not implement both selection and table"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return (-1, -1), (-1, -1)
 
         first = AXSelection.get_selected_child(obj, 0)

@@ -61,8 +61,8 @@ class AXObject:
         while True:
             time.sleep(60)
             with AXObject._lock:
-                msg = f"AXObject: Clearing {len(AXObject.KNOWN_DEAD)} known-dead objects"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXObject: Clearing", len(AXObject.KNOWN_DEAD), "known-dead objects"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.KNOWN_DEAD.clear()
 
                 msg = (
@@ -139,8 +139,8 @@ class AXObject:
 
         app_name = AXObject.get_name(AXObject.get_application(obj))
         if app_name in ["soffice"]:
-            msg = f"AXObject: Treating {app_name} as not supporting collection."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: Treating", app_name, "as not supporting collection."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         try:
@@ -406,8 +406,8 @@ class AXObject:
             return None
 
         if parent == obj:
-            msg = f"AXObject: {obj} claims to be its own parent"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own parent"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return parent
@@ -436,8 +436,9 @@ class AXObject:
         index = AXObject.get_index_in_parent(obj)
         n_children = AXObject.get_child_count(parent)
         if index < 0 or index >= n_children:
-            msg = f"AXObject: {obj} has index {index}; parent {parent} has {n_children} children"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "has index", index,
+                      "; parent", parent, "has", n_children, "children"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return parent
 
         # This performs our check and includes any errors. We don't need the return value here.
@@ -508,8 +509,8 @@ class AXObject:
             return None
 
         if child == obj:
-            msg = f"AXObject: {obj} claims to be its own child"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own child"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return child
@@ -527,8 +528,8 @@ class AXObject:
 
         parent = AXObject.get_parent(child)
         if obj != parent:
-            msg = f"AXObject: {obj} claims {child} as child; child's parent is {parent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims", child, "as child; child's parent is", parent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return child
 
@@ -735,8 +736,8 @@ class AXObject:
 
         sibling = AXObject.get_child(parent, index - 1)
         if sibling == obj:
-            msg = f"AXObject: {obj} claims to be its own sibling"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own sibling"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return sibling
@@ -758,8 +759,8 @@ class AXObject:
 
         sibling = AXObject.get_child(parent, index + 1)
         if sibling == obj:
-            msg = f"AXObject: {obj} claims to be its own sibling"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own sibling"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return sibling
@@ -783,8 +784,8 @@ class AXObject:
 
         next_object = AXObject.get_child(parent, index)
         if next_object == obj:
-            msg = f"AXObject: {obj} claims to be its own next object"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own next object"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return next_object
@@ -808,8 +809,8 @@ class AXObject:
 
         previous_object = AXObject.get_child(parent, index)
         if previous_object == obj:
-            msg = f"AXObject: {obj} claims to be its own previous object"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject:", obj, "claims to be its own previous object"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return previous_object
@@ -956,14 +957,14 @@ class AXObject:
         if real_app is not None and real_frame is not None:
             return real_app, real_frame
 
-        msg = f"AXObject: {app} is not valid app for {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXObject:", app, "is not valid app for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             desktop = Atspi.get_desktop(0)
         except Exception as error:
-            msg = f"AXObject: Exception getting desktop from Atspi: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: Exception getting desktop from Atspi:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None, None
 
         name = AXObject.get_name(obj)
@@ -975,8 +976,8 @@ class AXObject:
                     real_app = desktop_app
                     real_frame = frame
 
-        msg = f"AXObject: {real_app} is real app for {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXObject:", real_app, "is real app for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if real_frame != obj:
             msg = "AXObject: Updated frame to frame from real app"
@@ -1027,8 +1028,8 @@ class AXObject:
         try:
             name = Atspi.Accessible.get_toolkit_name(app)
         except Exception as error:
-            msg = f"AXObject: Exception in get_application_toolkit_name: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: Exception in get_application_toolkit_name:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         return name
@@ -1047,8 +1048,8 @@ class AXObject:
         try:
             version = Atspi.Accessible.get_toolkit_version(app)
         except Exception as error:
-            msg = f"AXObject: Exception in get_application_toolkit_version: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: Exception in get_application_toolkit_version:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         return version
@@ -1303,8 +1304,8 @@ class AXObject:
 
         index = AXObject.get_action_index(obj, action_name)
         if index == -1:
-            msg = f"INFO: {action_name} not an available action for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", action_name, "not an available action for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return AXObject.do_action(obj, index)

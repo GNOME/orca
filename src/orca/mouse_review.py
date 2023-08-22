@@ -118,8 +118,8 @@ class _StringContext:
         if not (self._string and self._string.strip() in other._string):
             return False
 
-        msg = f"MOUSE REVIEW: '{self._string}' is substring of '{other._string}'"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["MOUSE REVIEW: '", self._string, "' is substring of '", other._string, "'"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def getBoundingBox(self):
@@ -478,8 +478,8 @@ class MouseReviewer:
         obj = self._currentMouseOver.getObject()
 
         if time.time() - self._currentMouseOver.getTime() > 0.1:
-            msg = f"MOUSE REVIEW: Treating {obj} as stale"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["MOUSE REVIEW: Treating", obj, "as stale"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return obj
@@ -620,16 +620,16 @@ class MouseReviewer:
         script = _scriptManager.getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
-                msg = f"MOUSE REVIEW: {obj} believed to be under {menu}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
         objDocument = script.utilities.getTopLevelDocumentForObject(obj)
         if objDocument and script.utilities.inDocumentContent():
             document = script.utilities.activeDocument()
             if document != objDocument:
-                msg = f"MOUSE REVIEW: {obj} is not in active document {document}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["MOUSE REVIEW:", obj, "is not in active document", document]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
         screen, nowX, nowY = self._pointer.get_position()
@@ -657,8 +657,8 @@ class MouseReviewer:
         """Generic listener, mainly to output debugging info."""
 
         startTime = time.time()
-        msg = f"\nvvvvv PROCESS OBJECT EVENT {event.type} vvvvv"
-        debug.println(debug.LEVEL_INFO, msg, False)
+        tokens = ["\nvvvvv PROCESS OBJECT EVENT", event.type, "vvvvv"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, False)
 
         if event.type.startswith("mouse:abs"):
             self.inMouseEvent = True

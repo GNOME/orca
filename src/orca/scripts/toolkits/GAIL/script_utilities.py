@@ -71,8 +71,8 @@ class Utilities(script_utilities.Utilities):
         rv = self._isLayoutOnly.get(hash(obj))
         if rv is not None:
             if rv:
-                msg = f"GTK: {obj} is deemed to be layout only"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["GTK:", obj, "is deemed to be layout only"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
         rv = super().isLayoutOnly(obj)

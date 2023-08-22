@@ -52,8 +52,8 @@ class AXEventSynthesizer:
 
         root_window = Gtk.Window().get_screen().get_root_window()
         window, x_coord, y_coord, modifiers = root_window.get_pointer()
-        msg = f"AXEventSynthesizer: Mouse coordinates: {x_coord}, {y_coord}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Mouse coordinates:", x_coord, ",", y_coord]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return x_coord, y_coord
 
     @staticmethod
@@ -61,18 +61,18 @@ class AXEventSynthesizer:
         """Synthesize a mouse event at a specific screen coordinate."""
 
         old_x, old_y = AXEventSynthesizer._get_mouse_coordinates()
-        msg = f"AXEventSynthesizer: Generating {event} mouse event at {x_coord}, {y_coord}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Generating", event, "mouse event at", x_coord, ",", y_coord]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             success = Atspi.generate_mouse_event(x_coord, y_coord, event)
         except Exception as error:
-            msg = f"AXEventSynthesizer: Exception in _generate_mouse_event: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Exception in _generate_mouse_event:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             success = False
         else:
-            msg = f"AXEventSynthesizer: Atspi.generate_mouse_event returned {success}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Atspi.generate_mouse_event returned", success]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # There seems to be a timeout / lack of reply from this blocking call.
         # But often the mouse event is successful. Pause briefly before checking.
@@ -118,8 +118,8 @@ class AXEventSynthesizer:
             text = obj.queryText()
             extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting character extents for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting character extents for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return 0, 0, 0, 0
 
         return extents
@@ -131,8 +131,8 @@ class AXEventSynthesizer:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting extents for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting extents for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return 0, 0, 0, 0
 
         return extents
@@ -148,8 +148,8 @@ class AXEventSynthesizer:
         obj_extents = AXEventSynthesizer._object_extents(obj)
         intersection = AXEventSynthesizer._intersection(extents, obj_extents)
         if intersection == (0, 0, 0, 0):
-            msg = f"AXEventSynthesizer: {obj}'s caret {extents} not in obj {obj_extents}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer:", obj, "'s caret", extents, "not in obj", obj_extents]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         x_coord = max(extents[0], extents[0] + (extents[2] / 2) - 1)
@@ -172,16 +172,16 @@ class AXEventSynthesizer:
     def route_to_character(obj):
         """Routes the pointer to the current character in obj."""
 
-        msg = f"AXEventSynthesizer: Attempting to route to character in {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Attempting to route to character in", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return AXEventSynthesizer._mouse_event_on_character(obj, "abs")
 
     @staticmethod
     def route_to_object(obj):
         """Moves the mouse pointer to the center of obj."""
 
-        msg = f"AXEventSynthesizer: Attempting to route to {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Attempting to route to", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return AXEventSynthesizer._mouse_event_on_object(obj, "abs")
 
     @staticmethod
@@ -276,8 +276,8 @@ class AXEventSynthesizer:
                 end_offset = text.characterCount - 1
             result = text.scrollSubstringTo(start_offset, end_offset, location)
         except NotImplementedError:
-            msg = f"AXEventSynthesizer: Text interface not implemented for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Text interface not implemented for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
             msg = (
@@ -301,16 +301,17 @@ class AXEventSynthesizer:
         try:
             result = obj.queryComponent().scrollTo(location)
         except NotImplementedError:
-            msg = f"AXEventSynthesizer: Component interface not implemented for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Component interface not implemented for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
-            msg = f"AXEventSynthesizer: Exception scrolling {obj} to {location.value_name}."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Exception scrolling",
+                      obj, "to", location.value_name, "."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"AXEventSynthesizer: scrolled {obj} to {location.value_name}: {result}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: scrolled", obj, "to", location.value_name, ":", result]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -320,8 +321,8 @@ class AXEventSynthesizer:
         try:
             component = obj.queryComponent()
         except Exception:
-            msg = f"AXEventSynthesizer: Exception querying component of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Exception querying component of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         before = component.getExtents(Atspi.CoordType.SCREEN)
@@ -352,8 +353,8 @@ class AXEventSynthesizer:
             result = text.scrollSubstringToPoint(
                 start_offset, end_offset, Atspi.CoordType.SCREEN, x_coord, y_coord)
         except NotImplementedError:
-            msg = f"AXEventSynthesizer: Text interface not implemented for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Text interface not implemented for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
             msg = (
@@ -375,16 +376,16 @@ class AXEventSynthesizer:
         try:
             result = obj.queryComponent().scrollToPoint(Atspi.CoordType.SCREEN, x_coord, y_coord)
         except NotImplementedError:
-            msg = f"AXEventSynthesizer: Component interface not implemented for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Component interface not implemented for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
-            msg = f"AXEventSynthesizer: Exception scrolling {obj} to {x_coord}, {y_coord}."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Exception scrolling", obj, "to", x_coord, ",", y_coord]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"AXEventSynthesizer: scrolled {obj} to {x_coord}, {y_coord}: {result}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: scrolled", obj, "to", x_coord, ",", y_coord, ":", result]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -394,8 +395,8 @@ class AXEventSynthesizer:
         try:
             component = obj.queryComponent()
         except Exception:
-            msg = f"AXEventSynthesizer: Exception querying component of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Exception querying component of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         before = component.getExtents(Atspi.CoordType.SCREEN)
@@ -439,8 +440,8 @@ class AXEventSynthesizer:
             result = root.queryComponent().getAccessibleAtPoint(
                 x_coord, y_coord, Atspi.CoordType.SCREEN)
         except NotImplementedError:
-            msg = f"AXEventSynthesizer: Component interface not implemented for {root}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: Component interface not implemented for", root]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
         except Exception:
             msg = (
@@ -450,8 +451,9 @@ class AXEventSynthesizer:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
-        msg = f"AXEventSynthesizer: Accessible at {x_coord}, {y_coord} in {root}: {result}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Accessible at",
+                  x_coord, ",", y_coord, "in", root, ":", result]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -460,13 +462,13 @@ class AXEventSynthesizer:
 
         document = AXEventSynthesizer._containing_document(obj)
         if not document:
-            msg = f"AXEventSynthesizer: No obscuring banner found for {obj}. No document."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj, ". No document."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if not AXObject.supports_component(document):
-            msg = f"AXEventSynthesizer: No obscuring banner found for {obj}. No doc iface."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj, ". No doc iface."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         obj_x, obj_y, obj_width, obj_height = AXEventSynthesizer._object_extents(obj)
@@ -475,12 +477,12 @@ class AXEventSynthesizer:
         left = AXEventSynthesizer._get_accessible_at_point(document, doc_x, obj_y)
         right = AXEventSynthesizer._get_accessible_at_point(document, doc_x + doc_width, obj_y)
         if not (left and right and left == right != document):
-            msg = f"AXEventSynthesizer: No obscuring banner found for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        msg = f"AXEventSynthesizer: {obj} believed to be obscured by banner {left}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer:", obj, "believed to be obscured by banner", left]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return left
 
     @staticmethod
@@ -563,15 +565,15 @@ class AXEventSynthesizer:
         actions = ["click", "press", "jump", "open"]
         for action in actions:
             if AXObject.do_named_action(obj, action):
-                msg = f"AXEventSynthesizer: '{action}' on {obj} performed successfully"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXEventSynthesizer: '", action, "' on", obj, "performed successfully"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
         if debug.LEVEL_INFO < debug.debugLevel:
             return False
 
-        msg = f"AXEventSynthesizer: Actions on {obj}: {AXObject.actions_as_string(obj)}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXEventSynthesizer: Actions on", obj, ":", AXObject.actions_as_string(obj)]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return False
 
 _synthesizer = AXEventSynthesizer()

@@ -849,12 +849,12 @@ class Chat:
 
         if AXUtilities.is_showing(obj):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
-            msg = f"INFO: {obj}'s window is focused chat: {active}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "'s window is focused chat:", active]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return active
 
-        msg = f"INFO: {obj} is not focused chat (not showing)"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", obj, "is not focused chat (not showing)"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     def getChatRoomName(self, obj):

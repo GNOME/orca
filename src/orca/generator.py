@@ -414,8 +414,8 @@ class Generator:
 
         # If all of the words in the name are in the label, the name is redundant.
         if set(nameWords).issubset(set(labelWords)):
-            msg = f"GENERATOR: name '{name[0]}' is redundant to label '{label[0]}'"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["GENERATOR: name '", name[0], "' is redundant to label '", label[0], "'"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return result
 
         result.extend(name)
@@ -1252,8 +1252,8 @@ class Generator:
         percent = self._script.utilities.getValueAsPercent(obj)
         lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj, type=self)
         if percent == lastValue:
-            msg = f"GENERATOR: Not presenting update for {obj}. Value still {percent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["GENERATOR: Not presenting update for", obj, ". Value still", percent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if percent == 100:

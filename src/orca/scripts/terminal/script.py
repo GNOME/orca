@@ -136,8 +136,8 @@ class Script(default.Script):
         if string not in [prevChar, "space", char]:
             return False
 
-        msg = f"TERMINAL: Presenting keyboard event {string}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["TERMINAL: Presenting keyboard event", string]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.speakKeyEvent(event)
         return True
 
@@ -159,6 +159,6 @@ class Script(default.Script):
             return False
 
         data = "\n%s%s" % (" " * 11, str(newEvent).replace("\t", " " * 11))
-        msg = f"TERMINAL: Skipping due to more recent event at offset{data}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["TERMINAL: Skipping due to more recent event at offset", data]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
