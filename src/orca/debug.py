@@ -209,6 +209,13 @@ def _asString(obj):
             result += f": '{name}'"
         return f"[{result}]"
 
+    if isinstance(obj, Atspi.Event):
+        return (
+            f"{obj.type} for {_asString(obj.source)} in "
+            f"{_asString(AXObject.get_application(obj.source))} "
+            f"({obj.detail1}, {obj.detail2}, {_asString(obj.any_data)})"
+        )
+
     return str(obj)
 
 def printTokens(level, tokens, timestamp=False):
