@@ -1028,8 +1028,8 @@ class MouseButtonEvent(InputEvent):
             return
 
         msg = (
-            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. ",
-            f"Updating to ({x}, {y}"
+            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. "
+            f"Updating to ({x}, {y})"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.x, self.y = x, y
