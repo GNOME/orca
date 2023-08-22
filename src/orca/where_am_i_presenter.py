@@ -411,8 +411,8 @@ class WhereAmIPresenter:
             script.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        msg = f"WHERE AM I PRESENTER: presenting selection for {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         spreadsheet = AXObject.find_ancestor(obj, script.utilities.isSpreadSheetTable)
         if spreadsheet is not None and script.utilities.speakSelectedCellRange(spreadsheet):
@@ -420,8 +420,8 @@ class WhereAmIPresenter:
 
         container = script.utilities.getSelectionContainer(obj)
         if container is None:
-            msg = f"WHERE AM I PRESENTER: Selection container not found for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WHERE AM I PRESENTER: Selection container not found for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return self.present_selected_text(script, event, obj)
 
         selected_count = script.utilities.selectedChildCount(container)

@@ -158,8 +158,8 @@ class OrcaNavListGUI:
 
         self._script.utilities.setCaretPosition(obj, offset)
         if not AXEventSynthesizer.try_all_clickable_actions(obj):
-            msg = f"INFO: Attempting a synthesized click on {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Attempting a synthesized click on", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             AXEventSynthesizer.click_object(obj)
 
     def _getSelectedAccessibleAndOffset(self):

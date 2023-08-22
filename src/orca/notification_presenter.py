@@ -74,8 +74,8 @@ class NotificationPresenter:
     def save_notification(self, message):
         """Adds message to the list of notification messages."""
 
-        msg = f"NOTIFICATION PRESENTER: Adding '{message}'."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["NOTIFICATION PRESENTER: Adding '", message, "'."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         to_remove = max(len(self._notifications) - self._max_size + 1, 0)
         self._notifications = self._notifications[to_remove:]
         self._notifications.append([message, time.time()])

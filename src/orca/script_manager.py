@@ -212,14 +212,14 @@ class ScriptManager:
         if newScript:
             return newScript
 
-        msg = f"WARNING: Failed to get a replacement script for {script.app}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WARNING: Failed to get a replacement script for", script.app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
 
     def getScriptForMouseButtonEvent(self, event):
         isActive = AXUtilities.is_active(orca_state.activeWindow)
-        msg = f"SCRIPT MANAGER: {orca_state.activeWindow} is active: {isActive}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT MANAGER:", orca_state.activeWindow, "is active:", isActive]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if isActive and orca_state.activeScript:
             return orca_state.activeScript
@@ -332,8 +332,8 @@ class ScriptManager:
             if a != app and AXUtilities.is_application_in_desktop(a):
                 if script.app is None:
                     script.app = a
-                msg = f"SCRIPT MANAGER: Script for app replicant: {script} {script.app}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT MANAGER: Script for app replicant:", script, script.app]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return script
 
         return None
@@ -354,21 +354,21 @@ class ScriptManager:
             try:
                 appScript = self.appScripts.pop(app)
             except KeyError:
-                msg = f"SCRIPT MANAGER: {app} not found in appScripts"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT MANAGER:", app, "not found in appScripts"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
-            msg = f"SCRIPT MANAGER: Old script for app found: {appScript} {appScript.app}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT MANAGER: Old script for app found:", appScript, appScript.app]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             newScript = self._getScriptForAppReplicant(app)
             if newScript:
-                msg = f"SCRIPT MANAGER: Transferring attributes: {newScript} {newScript.app}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT MANAGER: Transferring attributes:", newScript, newScript.app]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 attrs = appScript.getTransferableAttributes()
                 for attr, value in attrs.items():
-                    msg = f"SCRIPT MANAGER: Setting {attr} to {value}"
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    tokens = ["SCRIPT MANAGER: Setting", attr, "to", value]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     setattr(newScript, attr, value)
 
             del appScript

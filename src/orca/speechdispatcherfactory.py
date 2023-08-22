@@ -624,8 +624,8 @@ class SpeechServer(speechserver.SpeechServer):
             self._apply_acss(acss)
             self._send_command(self._client.char, text)
         else:
-            msg = f"SPEECH DISPATCHER: Speaking '{text}' as string"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", text, "' as string"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._speak(text, acss)
 
     def sayAll(self, utteranceIterator, progressCallback):
@@ -650,13 +650,13 @@ class SpeechServer(speechserver.SpeechServer):
         lockingStateString = event.getLockingStateString()
         event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
-            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as key"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._apply_acss(acss)
             self._send_command(self._client.key, event_string)
         else:
-            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as string"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.speak(event_string, acss=acss)
         self._lastKeyEchoTime = time.time()
 
@@ -752,12 +752,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         families = self.getVoiceFamiliesForLanguage(other_language, other_dialect, maximum=1)
         if families:
-            msg = f"SPEECH DISPATCHER: Yes. Found matching family {families[0]}."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Yes. Found matching family", families[0], "."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        msg = f"SPEECH DISPATCHER: No. No matching family in {self.getOutputModule()}."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH DISPATCHER: No. No matching family in", self.getOutputModule(), "."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def getOutputModule(self):

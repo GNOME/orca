@@ -382,20 +382,20 @@ class Script:
     def _getQueuedEvent(self, eventType, detail1=None, detail2=None, any_data=None):
         cachedEvent, eventTime = self.eventCache.get(eventType, [None, 0])
         if not cachedEvent:
-            msg = f"SCRIPT: No queued event of type {eventType}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT: No queued event of type", eventType]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if detail1 is not None and detail1 != cachedEvent.detail1:
-            msg = "SCRIPT: Queued event's detail1 (%s) doesn't match %s" \
-                % (cachedEvent.detail1, detail1)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT: Queued event's detail1 (", cachedEvent.detail1,
+                      ") doesn't match", detail1]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if detail2 is not None and detail2 != cachedEvent.detail2:
-            msg = "SCRIPT: Queued event's detail2 (%s) doesn't match %s" \
-                % (cachedEvent.detail2, detail2)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT: Queued event's detail2 (", cachedEvent.detail2,
+                      ") doesn't match", detail2]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if any_data is not None and any_data != cachedEvent.any_data:

@@ -139,8 +139,8 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         debug.println(debug.LEVEL_INFO, msg, True)
 
     if mode != orca_state.activeMode:
-        msg = f"ORCA: Switching active mode from {orca_state.activeMode} to {mode}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA: Switching active mode from", orca_state.activeMode, "to", mode]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         orca_state.activeMode = mode
 
     try:
@@ -167,8 +167,8 @@ def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=Fal
     else:
         real_app, real_frame = AXObject.find_real_app_and_window_for(frame, app)
         if real_frame != frame:
-            msg = f"ORCA: Correcting active window to {real_frame} in {real_app}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ORCA: Correcting active window to", real_frame, "in", real_app]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             orca_state.activeWindow = real_frame
         else:
             orca_state.activeWindow = frame
@@ -210,19 +210,19 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         return
 
     if orca_state.activeScript:
-        msg = f"ORCA: Active script is: {orca_state.activeScript}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA: Active script is:", orca_state.activeScript]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if orca_state.activeScript.utilities.isZombie(obj):
-            msg = f"ERROR: New locusOfFocus ({obj}) is zombie. Not updating."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: New locusOfFocus (", obj, ") is zombie. Not updating."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
         if orca_state.activeScript.utilities.isDead(obj):
-            msg = f"ERROR: New locusOfFocus ({obj}) is dead. Not updating."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: New locusOfFocus (", obj, ") is dead. Not updating."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-    msg = f"ORCA: Changing locusOfFocus from {oldFocus} to {obj}. Notify: {notifyScript}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["ORCA: Changing locusOfFocus from", oldFocus, "to", obj, ". Notify:", notifyScript]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
     orca_state.locusOfFocus = obj
 
     if not notifyScript:
@@ -869,8 +869,8 @@ def main():
             _scriptManager.setActiveScript(script, "Launching.")
 
             focusedObject = AXUtilities.get_focused_object(window)
-            msg = f"ORCA: Focused object is: {focusedObject}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ORCA: Focused object is:", focusedObject]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if focusedObject:
                 setLocusOfFocus(None, focusedObject)
                 script = _scriptManager.getScript(

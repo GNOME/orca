@@ -154,8 +154,8 @@ class ObjectNavigator:
         """Returns True if obj should be excluded from simple navigation."""
 
         if self._include_in_simple_navigation(obj):
-            msg = f"OBJECT NAVIGATOR: Not excluding {obj}: explicit inclusion"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["OBJECT NAVIGATOR: Not excluding", obj, ": explicit inclusion"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         # isLayoutOnly should catch things that really should be skipped.
@@ -166,12 +166,12 @@ class ObjectNavigator:
         # You do not want to exclude table cells and headers because it will make the
         # selectable items in tables non-navigable (e.g. the mail folders in Evolution)
         if script.utilities.isLayoutOnly(obj):
-            msg = f"OBJECT NAVIGATOR: Excluding {obj}: is layout only"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["OBJECT NAVIGATOR: Excluding", obj, ": is layout only"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        msg = f"OBJECT NAVIGATOR: Not excluding {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["OBJECT NAVIGATOR: Not excluding", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     def _children(self, script, obj):
@@ -227,8 +227,8 @@ class ObjectNavigator:
     def present(self, script):
         """Presents the current navigator focus to the user."""
 
-        msg = f"OBJECT NAVIGATOR: Presenting {self._navigator_focus}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         orca.emitRegionChanged(self._navigator_focus, mode=orca.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 

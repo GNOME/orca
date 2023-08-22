@@ -115,18 +115,18 @@ class Utilities:
 
     def _isActiveAndShowingAndNotIconified(self, obj):
         if not AXUtilities.is_active(obj):
-            msg = f"INFO: {obj} lacks state active"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "lacks state active"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilities.is_iconified(obj):
-            msg = f"INFO: {obj} has state iconified"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "has state iconified"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not AXUtilities.is_showing(obj):
-            msg = f"INFO: {obj} lacks state showing"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "lacks state showing"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return True
@@ -139,8 +139,8 @@ class Utilities:
         try:
             pid = app.get_process_id()
         except Exception:
-            msg = f"ERROR: Exception getting process id of {app}. May be defunct."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting process id of", app, ". May be defunct."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         try:
@@ -155,19 +155,19 @@ class Utilities:
             return False
 
         app = AXObject.get_application(window)
-        msg = f"INFO: Looking at {window} from {app} {self._getAppCommandLine(app)}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO: Looking at", window, "from", app, self._getAppCommandLine(app)]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if clearCache:
             AXObject.clear_cache(window)
 
         if not self._isActiveAndShowingAndNotIconified(window):
-            msg = f"INFO: {window} is not active and showing, or is iconified"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", window, "is not active and showing, or is iconified"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"INFO: {window} can be active window"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", window, "can be active window"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def activeWindow(self, *apps):
@@ -179,32 +179,34 @@ class Utilities:
             candidates.extend([c for c in AXObject.iter_children(app, self.canBeActiveWindow)])
 
         if not candidates:
-            msg = f"ERROR: Unable to find active window from {list(map(str, apps))}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            # TODO - JD: This needs more tokenizing.
+            tokens = ["ERROR: Unable to find active window from", list(map(str, apps))]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if len(candidates) == 1:
-            msg = f"INFO: Active window is {candidates[0]}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Active window is", candidates[0]]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return candidates[0]
 
-        msg = f"WARNING: These windows all claim to be active: {list(map(str, candidates))}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        # TODO - JD: This needs more tokenizing.
+        tokens = ["WARNING: These windows all claim to be active:", list(map(str, candidates))]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         filtered = []
         for candidate in candidates:
             if self.isDesktop(candidate):
-                msg = f"INFO: Rejecting {candidate} because it's the desktop frame"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Rejecting", candidate, "because it's the desktop frame"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             elif AXObject.get_name(AXObject.get_application(candidate)) == "mutter-x11-frames":
-                msg = f"INFO: Rejecting {candidate} because app is mutter-x11-frames"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Rejecting", candidate, "because app is mutter-x11-frames"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 filtered.append(candidate)
 
         if len(filtered) == 1:
-            msg = f"INFO: Active window is believed to be {filtered[0]}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Active window is believed to be", filtered[0]]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return filtered[0]
 
         # Some electron apps running in the background claim to be active even when they
@@ -216,24 +218,24 @@ class Utilities:
         refiltered = []
         for frame in filtered:
             if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
-                msg = f"INFO: Suspecting {frame} might be a non-active Electron app"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Suspecting", frame, "might be a non-active Electron app"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 refiltered.append(frame)
 
         if len(refiltered) == 1:
-            msg = f"INFO: Active window is believed to be {refiltered[0]}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Active window is believed to be", refiltered[0]]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return refiltered[0]
 
         guess = None
         if refiltered:
-            msg = f"WARNING: Still have multiple active windows: {list(map(str, refiltered))}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WARNING: Still have multiple active windows:", list(map(str, refiltered))]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             guess = refiltered[0]
 
-        msg = f"INFO: Active window is: {guess}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO: Active window is:", guess]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return guess
 
     def objectAttributes(self, obj, useCache=True):
@@ -282,8 +284,8 @@ class Utilities:
             return AXObject.get_index_in_parent(x) >= 0
 
         nodes = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF, pred)
-        msg = f"INFO: {len(nodes)} child nodes for {obj} found via node-parent-of"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", len(nodes), "child nodes for", obj, "found via node-parent-of"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if nodes:
             return nodes
 
@@ -306,8 +308,8 @@ class Utilities:
             elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
 
-        msg = f"INFO: {len(nodes)} child nodes for {obj} found via node-child-of"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", len(nodes), "child nodes for", obj, "found via node-child-of"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
     def commonAncestor(self, a, b):
@@ -396,8 +398,8 @@ class Utilities:
 
         labels = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         if descriptions == labels:
-            msg = f"INFO: {obj}'s described-by targets are the same as labelled-by targets"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "'s described-by targets are the same as labelled-by targets"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         return descriptions
@@ -514,8 +516,8 @@ class Utilities:
 
         topLevel = self.topLevelObject(obj)
         if topLevel is None:
-            msg = f"ERROR: could not find top-level object for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: could not find top-level object for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return results
 
         dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
@@ -537,8 +539,8 @@ class Utilities:
             else:
                 results[1] = AXObject.find_ancestor(obj, isDialog)
 
-        msg = f"INFO: {obj} is in frame {results[0]} and dialog {results[1]}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", obj, "is in frame", results[0], "and dialog", results[1]]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return results
 
     def presentEventFromNonShowingObject(self, event):
@@ -985,22 +987,22 @@ class Utilities:
         try:
             value = obj.queryValue()
         except NotImplementedError:
-            msg = f"ERROR: {obj} doesn't implement AtspiValue"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR:", obj, "doesn't implement AtspiValue"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
-            msg = f"ERROR: Exception getting value for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting value for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         else:
             try:
                 if value.maximumValue == value.minimumValue:
-                    msg = f"INFO: {obj} is busy indicator"
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    tokens = ["INFO:", obj, "is busy indicator"]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     return False
             except Exception:
-                msg = f"INFO: {obj} is either busy indicator or broken"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO:", obj, "is either busy indicator or broken"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
         return True
@@ -1044,17 +1046,17 @@ class Utilities:
             value = obj.queryValue()
             minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
         except NotImplementedError:
-            msg = f"ERROR: {obj} doesn't implement AtspiValue"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR:", obj, "doesn't implement AtspiValue"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
         except Exception:
-            msg = f"ERROR: Exception getting value for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting value for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if AXUtilities.is_indeterminate(obj):
-            msg = f"INFO: {obj} has state indeterminate and value of {val}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "has state indeterminate and value of", val]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if val <= 0:
                 return None
 
@@ -1515,8 +1517,8 @@ class Utilities:
                 and extents1.height > 0:
                 return True
         except Exception as error:
-            msg = f"ERROR: Exception in isSameObject ({obj1} vs {obj2}): {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception in isSameObject (", obj1, "vs", obj2, "):", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return False
 
@@ -1738,38 +1740,38 @@ class Utilities:
             return False
 
         if not self.isShowingAndVisible(obj):
-            msg = f"INFO: {obj} is not showing and visible"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "is not showing and visible"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         try:
             box = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting extents for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting extents for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"INFO: Extents for {obj} are: {box}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO: Extents for", obj, "are:", box]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if box.x > 10000 or box.y > 10000:
-            msg = f"INFO: {obj} seems to have bogus coordinates"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "seems to have bogus coordinates"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
-            msg = f"INFO: {obj} has negative coordinates"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "has negative coordinates"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not (box.width or box.height):
             if not AXObject.get_child_count(obj):
-                msg = f"INFO: {obj} has no size and no children"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO:", obj, "has no size and no children"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
             if AXUtilities.is_menu(obj):
-                msg = f"INFO: {obj} has no size"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO:", obj, "has no size"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
             return True
@@ -1778,8 +1780,8 @@ class Utilities:
             return True
 
         if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
-            msg = f"INFO: {obj} {box} not in {boundingbox}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, box, "not in", boundingbox]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return True
@@ -1857,8 +1859,8 @@ class Utilities:
             return [root]
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
-            msg = f"INFO: {root} is empty filler. Clearing cache."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", root, "is empty filler. Clearing cache."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             AXObject.clear_cache(root)
             msg = "INFO: %s reports %i children" % (root, AXObject.get_child_count(root))
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1868,8 +1870,8 @@ class Utilities:
                 component = root.queryComponent()
                 extents = component.getExtents(Atspi.CoordType.SCREEN)
             except Exception:
-                msg = f"ERROR: Exception getting extents of {root}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["ERROR: Exception getting extents of", root]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 extents = 0, 0, 0, 0
 
         if AXObject.supports_table(root) and AXObject.supports_selection(root):
@@ -2024,8 +2026,8 @@ class Utilities:
             return False
 
         rv = orca_state.locusOfFocus == self.topLevelObject(orca_state.locusOfFocus)
-        msg = f"INFO: {orca_state.locusOfFocus} is top-level object: {rv}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", orca_state.locusOfFocus, "is top-level object:", rv]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def _findWindowWithDescendant(self, child):
@@ -2041,12 +2043,12 @@ class Utilities:
         for i in range(AXObject.get_child_count(app)):
             window = AXObject.get_child(app, i)
             if AXObject.find_descendant(window, lambda x: x == child) is not None:
-                msg = f"INFO: {window} contains {child}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO:", window, "contains", child]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return window
 
-            msg = f"INFO: {window} does not contain {child}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", window, "does not contain", child]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return None
 
@@ -2067,8 +2069,8 @@ class Utilities:
         else:
             rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
 
-        msg = f"INFO: {rv} is top-level object for: {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO:", rv, "is top-level object for:", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if rv is None and useFallbackSearch:
             msg = "INFO: Attempting to find top-level object via fallback search"
@@ -2179,8 +2181,8 @@ class Utilities:
         try:
             extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting range extents of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting range extents of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1, 0, 0
 
         return extents
@@ -2189,8 +2191,8 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting extents of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting extents of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1, 0, 0
 
         return extents.x, extents.y, extents.width, extents.height
@@ -2205,8 +2207,8 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting extents for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting extents for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return not (extents.width and extents.height)
@@ -2453,12 +2455,12 @@ class Utilities:
         try:
             hypertext = obj.queryHypertext()
         except NotImplementedError:
-            msg = f"INFO: {obj} does not implement the hypertext interface"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "does not implement the hypertext interface"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
         except Exception:
-            msg = f"INFO: Exception querying hypertext interface for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Exception querying hypertext interface for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         index = hypertext.getLinkIndex(offset)
@@ -2496,8 +2498,8 @@ class Utilities:
         try:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
-            msg = f"INFO: {obj} does not implement the hyperlink interface"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "does not implement the hyperlink interface"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             # We need to make sure that this is an embedded object in
             # some accessible text (as opposed to an imagemap link).
@@ -2507,8 +2509,8 @@ class Utilities:
                 parent.queryText()
                 offset = hyperlink.startIndex
             except Exception:
-                msg = f"ERROR: Exception getting startIndex for {obj} in parent {parent}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["ERROR: Exception getting startIndex for", obj, "in parent", parent]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 msg = "INFO: startIndex of %s is %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -2634,8 +2636,8 @@ class Utilities:
         except NotImplementedError:
             pass
         except Exception:
-            msg = f"ERROR: Exception getting character count of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting character count of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             if charCount:
                 return text
@@ -2657,8 +2659,8 @@ class Utilities:
             if text:
                 string = text.getText(0, -1)
                 if string:
-                    msg = f"HACK: Returning last char in '{string}'"
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    tokens = ["HACK: Returning last char in '", string, "'"]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     return string[-1]
 
         msg = "FAIL: Unable to correct broken text insertion event"
@@ -3590,12 +3592,12 @@ class Utilities:
             hyperlink = obj.queryHyperlink()
             start, end = hyperlink.startIndex, hyperlink.endIndex
         except NotImplementedError:
-            msg = f"INFO: {obj} does not implement the hyperlink interface"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO:", obj, "does not implement the hyperlink interface"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
         except Exception:
-            msg = f"INFO: Exception getting hyperlink indices for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Exception getting hyperlink indices for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         return start, end
@@ -3840,8 +3842,8 @@ class Utilities:
         try:
             value = int(attrs.get('level', '0'))
         except ValueError:
-            msg = f"ERROR: Exception getting value for {obj} ({attrs})"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting value for", obj, "(", attrs, ")"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
         return value
@@ -3880,8 +3882,8 @@ class Utilities:
             try:
                 headers = tableCell.columnHeaderCells
             except Exception:
-                msg = f"INFO: Exception getting column headers for {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Exception getting column headers for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return headers
 
@@ -3924,8 +3926,8 @@ class Utilities:
             try:
                 headers = tableCell.rowHeaderCells
             except Exception:
-                msg = f"INFO: Exception getting row headers for {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Exception getting row headers for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return headers
 
@@ -3975,27 +3977,27 @@ class Utilities:
             try:
                 successful, row, col = tableCell.position
             except Exception:
-                msg = f"INFO: Exception getting table cell position of {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Exception getting table cell position of", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 if successful:
                     msg = "INFO: table cell position of %s is row: %i, col: %i" % (obj, row, col)
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return row, col
-                msg = f"INFO: Failed to get table cell position of {obj} via table cell"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Failed to get table cell position of", obj, "via table cell"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         if not parent:
-            msg = f"INFO: Couldn't find table-implementing ancestor for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Couldn't find table-implementing ancestor for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         try:
             table = parent.queryTable()
         except Exception:
-            msg = f"INFO: Exception querying table interface {parent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Exception querying table interface", parent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         index = self.cellIndex(obj)
@@ -4003,8 +4005,8 @@ class Utilities:
             row = table.getRowAtIndex(index)
             col = table.getColumnAtIndex(index)
         except Exception:
-            msg = f"INFO: Exception getting row and column at index from {parent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Exception getting row and column at index from", parent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         return row, col
@@ -4018,8 +4020,9 @@ class Utilities:
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
             except Exception:
-                msg = f"INFO: Exception getting table row and col span of {obj} via table cell"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["INFO: Exception getting table row and col span of",
+                          obj, "via table cell"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return rowSpan, colSpan
 
@@ -4125,8 +4128,8 @@ class Utilities:
         try:
             component = root.queryComponent()
         except Exception:
-            msg = f"INFO: Exception querying component of {root}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Exception querying component of", root]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if coordType is None:
@@ -4382,8 +4385,8 @@ class Utilities:
             component = obj.queryComponent()
             extents = component.getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            msg = f"ERROR: Exception getting extents of {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception getting extents of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         rows = self.visibleRows(obj, extents)
@@ -4419,8 +4422,8 @@ class Utilities:
         try:
             component = parent.queryComponent()
         except Exception:
-            msg = f"ERROR: Exception querying component interface of {parent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception querying component interface of", parent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return startIndex, endIndex
 
         x, y, width, height = component.getExtents(Atspi.CoordType.SCREEN)
@@ -4441,8 +4444,8 @@ class Utilities:
         try:
             table = parent.queryTable()
         except Exception:
-            msg = f"ERROR: Exception querying table interface of {parent}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception querying table interface of", parent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         row, column = self.coordinatesForCell(obj, False)
@@ -4520,8 +4523,8 @@ class Utilities:
                      Atspi.Role.RADIO_MENU_ITEM,
                      Atspi.Role.SEPARATOR]
         if AXObject.get_role(obj) in menuRoles and self.isInOpenMenuBarMenu(obj):
-            msg = f"HACK: Treating {obj} as showing and visible"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["HACK: Treating", obj, "as showing and visible"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -4564,8 +4567,8 @@ class Utilities:
         return False
 
     def findReplicant(self, root, obj):
-        msg = f"INFO: Searching for replicant for {obj} in {root}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO: Searching for replicant for", obj, "in", root]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not (root and obj):
             return None
 
@@ -4580,8 +4583,8 @@ class Utilities:
         else:
             replicant = AXObject.find_descendant(root, isSame)
 
-        msg = f"HACK: Returning {replicant} as replicant for Zombie {obj}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["HACK: Returning", replicant, "as replicant for Zombie", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return replicant
 
     def getFunctionalChildCount(self, obj):
@@ -4693,12 +4696,12 @@ class Utilities:
         try:
             text = obj.queryText()
         except NotImplementedError:
-            msg = f"ERROR: {obj} doesn't implement AtspiText"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR:", obj, "doesn't implement AtspiText"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             text = None
         except Exception:
-            msg = f"ERROR: Exception querying text interface for {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Exception querying text interface for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             text = None
 
         if self._script.pointOfReference.get('entireDocumentSelected'):
@@ -4723,8 +4726,8 @@ class Utilities:
             try:
                 start, end = text.getSelection(0)
             except Exception:
-                msg = f"ERROR: Exception getting selected text for {obj}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["ERROR: Exception getting selected text for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 start = end = 0
             if start != end:
                 string = text.getText(start, end)

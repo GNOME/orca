@@ -47,8 +47,8 @@ class Utilities(script_utilities.Utilities):
         # get the children. The fallback search handles the latter scenario.
         result = super().topLevelObject(obj, useFallbackSearch=True)
         if result is not None and AXObject.get_role(result) not in self._topLevelRoles():
-            msg = f"QT: Top level object {result} lacks expected role."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["QT: Top level object", result, "lacks expected role."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -57,8 +57,8 @@ class Utilities(script_utilities.Utilities):
 
         # https://bugreports.qt.io/browse/QTBUG-116204
         if AXUtilities.is_table_cell_or_header(obj):
-            msg = f"QT: Ignoring toggle action on {obj}."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["QT: Ignoring toggle action on", obj, "."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return super().hasMeaningfulToggleAction(obj)

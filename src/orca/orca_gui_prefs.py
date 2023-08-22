@@ -692,8 +692,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         combobox.set_model(self.speechFamiliesModel)
         if i == 0:
-            msg = f"No speech family was available for {str(currentLanguage)}."
-            debug.println(debug.LEVEL_SEVERE, msg, True)
+            tokens = ["No speech family was available for", str(currentLanguage), "."]
+            debug.printTokens(debug.LEVEL_SEVERE, tokens, True)
             debug.printStack(debug.LEVEL_FINEST)
             self.speechFamiliesChoice = None
             return

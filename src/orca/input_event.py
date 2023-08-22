@@ -940,8 +940,8 @@ class KeyboardEvent(InputEvent):
         elif self.event_string == "Shift_Lock":
             modifier = 1 << Atspi.ModifierType.SHIFT
         else:
-            msg = f"Unknown locking key {self.event_string}"
-            debug.println(debug.LEVEL_WARNING, msg, True)
+            tokens = ["Unknown locking key", self.event_string]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return
         debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
         GLib.timeout_add(1, lock_mod(self.modifiers, modifier))

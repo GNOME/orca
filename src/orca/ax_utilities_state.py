@@ -95,8 +95,8 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.CHECKED):
-            msg = f"AXUtilitiesState: {obj} is checked but lacks state checkable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is checked but lacks state checkable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -109,8 +109,8 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.CHECKABLE):
-            msg = f"AXUtilitiesState: {obj} is checked but lacks state checkable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is checked but lacks state checkable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 
@@ -152,8 +152,8 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.EXPANDED):
-            msg = f"AXUtilitiesState: {obj} is expanded but lacks state expandable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is expanded but lacks state expandable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -166,8 +166,8 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.EXPANDABLE):
-            msg = f"AXUtilitiesState: {obj} is expanded but lacks state expandable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is expanded but lacks state expandable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 
@@ -179,8 +179,8 @@ class AXUtilitiesState:
             return True
 
         if AXObject.has_state(obj, Atspi.StateType.FOCUSED):
-            msg = f"AXUtilitiesState: {obj} is focused but lacks state focusable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is focused but lacks state focusable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -193,8 +193,8 @@ class AXUtilitiesState:
             return False
 
         if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
-            msg = f"AXUtilitiesState: {obj} is focused but lacks state focusable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesState:", obj, "is focused but lacks state focusable"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 

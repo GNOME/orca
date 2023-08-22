@@ -73,8 +73,8 @@ except Exception:
     _brlAPIRunning = False
     _brlAPIConnectable = False
 else:
-    msg = f"BRAILLE: brlapi imported {brlapi}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: brlapi imported", brlapi]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
 try:
     msg = "BRAILLE: About to import louis."
@@ -85,11 +85,11 @@ except Exception:
     debug.println(debug.LEVEL_WARNING, msg, True)
     louis = None
 else:
-    msg = f"BRAILLE: liblouis imported {louis}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: liblouis imported", louis]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    msg = f"BRAILLE: tables location: {tablesdir}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: tables location:", tablesdir]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     # TODO: Can we get the tablesdir info at runtime?
     if not tablesdir:
@@ -253,13 +253,13 @@ def listTables():
 
 def getDefaultTable():
     userLocale = locale.getlocale(locale.LC_MESSAGES)[0]
-    msg = f"BRAILLE: User locale is {userLocale}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: User locale is", userLocale]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if userLocale in (None, "C"):
         userLocale = locale.getdefaultlocale()[0]
-        msg = f"BRAILLE: Default locale is {userLocale}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Default locale is", userLocale]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if userLocale in (None, "C"):
         msg = "BRAILLE: Locale cannot be determined. Falling back on 'en-us'"
@@ -271,8 +271,8 @@ def getDefaultTable():
     try:
         tables = [x for x in os.listdir(tablesdir) if x[-4:] in (".utb", ".ctb")]
     except OSError:
-        msg = f"BRAILLE: Exception calling os.listdir for {tablesdir}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Exception calling os.listdir for", tablesdir]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return ""
 
     # Some of the tables are probably not a good choice for default table....
@@ -289,8 +289,8 @@ def getDefaultTable():
         return t.startswith(language) and not any(e in t for e in exclude)
 
     tables = list(filter(isCandidate, tables))
-    msg = f"BRAILLE: {len(tables)} candidate tables for locale found: {', '.join(tables)}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE:", len(tables), "candidate tables for locale found:", ', '.join(tables)]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if not tables:
         return ""
@@ -305,8 +305,8 @@ def getDefaultTable():
 
 if louis:
     _defaultContractionTable = getDefaultTable()
-    msg = f"BRAILLE: Default contraction table is: {_defaultContractionTable}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Default contraction table is:", _defaultContractionTable]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
 def _printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
@@ -350,8 +350,8 @@ class Region:
         if self.contracted:
             self.contractionTable = settings.brailleContractionTable or _defaultContractionTable
             if string.strip():
-                msg = f"BRAILLE: Contracting '{string}' with table {self.contractionTable}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["BRAILLE: Contracting '", string, "' with table", self.contractionTable]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             self.string, self.inPos, self.outPos, self.cursorOffset = \
                          self.contractLine(self.rawLine,
@@ -363,8 +363,9 @@ class Region:
                            because contracted braille is not enabled." % string
                     debug.println(debug.LEVEL_INFO, msg, True)
                 else:
-                    msg = f"BRAILLE: Not contracting '{string}' due to problem with liblouis."
-                    debug.println(debug.LEVEL_WARNING, msg, True)
+                    tokens = ["BRAILLE: Not contracting '", string,
+                              "' due to problem with liblouis."]
+                    debug.printTokens(debug.LEVEL_WARNING, tokens, True)
 
             self.string = self.rawLine
             self.cursorOffset = cursorOffset
@@ -539,8 +540,8 @@ class Component(Region):
         try:
             result = AXEventSynthesizer.click_object(self.accessible, 1)
         except Exception as error:
-            msg = f"ERROR: Could not process routing key: {error}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ERROR: Could not process routing key:", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             if not result:
                 msg = "INFO: Processing routing key failed"
@@ -1179,8 +1180,8 @@ def _enableBraille():
     """Re-enable Braille output after making it idle or clearing it"""
     global idle
 
-    msg = f"BRAILLE: Enabling braille. BrlAPI running: {_brlAPIRunning}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Enabling braille. BrlAPI running:", _brlAPIRunning]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if not _brlAPIRunning:
         msg = "BRAILLE: Need to initialize first."
@@ -1210,8 +1211,8 @@ def disableBraille():
 
     global idle
 
-    msg = f"BRAILLE: Disabling braille. BrlAPI running: {_brlAPIRunning}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Disabling braille. BrlAPI running:", _brlAPIRunning]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if _brlAPIRunning and not idle:
         msg = "BRAILLE: BrlApi running and not idle."
@@ -1888,8 +1889,8 @@ def _canConnect():
     if process_result.returncode not in known_errors:
         context_msg = "BRAILLE: Error while trying to establish BrlAPI connection:"
         error_msg = process_result.stderr.strip()
-        msg = f"{context_msg} {error_msg}"
-        debug.println(debug.LEVEL_WARNING, msg, True)
+        tokens = [context_msg, error_msg]
+        debug.printTokens(debug.LEVEL_WARNING, tokens, True)
         _brlAPIConnectable = False
 
     return _brlAPIConnectable
@@ -1916,8 +1917,8 @@ def init(callback=None):
     global _callback
     global _monitor
 
-    msg = f"BRAILLE: Initializing. Callback: {callback}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Initializing. Callback:", callback]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if _brlAPIRunning:
         msg = "BRAILLE: BrlAPI is already running."
@@ -1926,19 +1927,19 @@ def init(callback=None):
 
     _callback = callback
 
-    msg = f"BRAILLE: WINDOWPATH={os.environ.get('WINDOWPATH')}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: WINDOWPATH=", os.environ.get('WINDOWPATH')]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    msg = f"BRAILLE: XDG_VTNR={os.environ.get('XDG_VTNR')}"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: XDG_VTNR=", os.environ.get('XDG_VTNR')]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     try:
         msg = "BRAILLE: Attempting connection with BrlAPI."
         debug.println(debug.LEVEL_INFO, msg, True)
 
         _brlAPI = brlapi.Connection()
-        msg = f"BRAILLE: Connection established with BrlAPI: {_brlAPI}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Connection established with BrlAPI:", _brlAPI]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         msg = "BRAILLE: Attempting to enter TTY mode."
         debug.println(debug.LEVEL_INFO, msg, True)

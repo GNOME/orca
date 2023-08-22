@@ -821,8 +821,8 @@ class Script(default.Script):
             return
 
         if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
-            msg = f"SOFFICE: locusOfFocus {orca_state.locusOfFocus} is spreadsheet cell"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOFFICE: locusOfFocus", orca_state.locusOfFocus, "is spreadsheet cell"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             if not self.utilities.isCellBeingEdited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."

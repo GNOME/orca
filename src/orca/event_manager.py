@@ -182,8 +182,8 @@ class EventManager:
 
         debug.println(debug.LEVEL_INFO, '')
         if self._eventsSuspended:
-            msg = f"EVENT MANAGER: Suspended events: {', '.join(self._suspendableEvents)}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         msg = 'EVENT MANAGER: %s for %s in %s (%s, %s, %s)' % \
               (event.type, source, app, event.detail1,event.detail2, anydata)
@@ -883,8 +883,8 @@ class EventManager:
 
     def _eventSourceIsDead(self, event):
         if AXObject.is_dead(event.source):
-            msg = f"EVENT MANAGER: source of {event.type} is dead"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: source of", event.type, "is dead"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False

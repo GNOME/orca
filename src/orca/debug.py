@@ -36,6 +36,10 @@ import sys
 
 from datetime import datetime
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -196,6 +200,20 @@ def printStack(level):
         println(level)
         traceback.print_stack(None, 100, debugFile)
         println(level)
+
+def _asString(obj):
+    if isinstance(obj, Atspi.Accessible):
+        result = AXObject.get_role_name(obj)
+        name = AXObject.get_name(obj)
+        if name:
+            result += f": '{name}'"
+        return f"[{result}]"
+
+    return str(obj)
+
+def printTokens(level, tokens, timestamp=False):
+    text = " ".join(map(_asString, tokens))
+    println(level, text, timestamp)
 
 def println(level, text="", timestamp=False):
     """Prints the text to stderr unless debug is enabled.

@@ -132,12 +132,12 @@ class Script(Gecko.Script):
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
-            msg = f"THUNDERBIRD: Using focus mode for editable message {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["THUNDERBIRD: Using focus mode for editable message", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        msg = f"THUNDERBIRD: {obj} is not an editable message."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["THUNDERBIRD:", obj, "is not an editable message."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
@@ -352,8 +352,8 @@ class Script(Gecko.Script):
         self.updateBraille(obj)
 
         if _settingsManager.getSetting('pageSummaryOnLoad'):
-            msg = f"THUNDERBIRD: Getting page summary for obj {obj}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["THUNDERBIRD: Getting page summary for obj", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             summary = self.utilities.getPageSummary(obj)
             if summary:
                 self.presentMessage(summary)

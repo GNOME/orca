@@ -762,8 +762,8 @@ class TutorialGenerator:
         # will do, better to say nothing than to risk confusing the user with
         # bogus info.
         if self._script.utilities.inDocumentContent(obj):
-            msg = f"INFO: Not generating tutorial for document object {obj}."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["INFO: Not generating tutorial for document object", obj, "."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         utterances = []
