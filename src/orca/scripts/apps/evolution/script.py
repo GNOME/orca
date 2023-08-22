@@ -115,17 +115,17 @@ class Script(WebKitGtk.Script, gtk.Script):
 
         if not event.any_data:
             msg = "EVOLUTION: Ignoring event. No any_data."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isComposeAutocomplete(event.source):
             if AXUtilities.is_selected(event.any_data):
                 msg = "EVOLUTION: Source is compose autocomplete with selected child."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.any_data)
             else:
                 msg = "EVOLUTION: Source is compose autocomplete without selected child."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source)
             return
 
@@ -134,7 +134,7 @@ class Script(WebKitGtk.Script, gtk.Script):
                 orca_state.locusOfFocus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
                 msg = "EVOLUTION: Event is from a different tree or tree table."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
         child = AXObject.get_active_descendant_checked(event.source, event.any_data)
@@ -145,7 +145,7 @@ class Script(WebKitGtk.Script, gtk.Script):
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         super().onActiveDescendantChanged(event)
 
     def onBusyChanged(self, event):

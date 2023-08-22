@@ -46,7 +46,7 @@ class Script(default.Script):
 
         if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         super().onCaretMoved(event)
@@ -59,13 +59,13 @@ class Script(default.Script):
 
         if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         frame = self.utilities.topLevelObject(event.source)
         if not frame:
             msg = "QT: Ignoring event because we couldn't find an ancestor window."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         isActive = AXUtilities.is_active(frame)
@@ -83,5 +83,5 @@ class Script(default.Script):
             return
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, event.source)

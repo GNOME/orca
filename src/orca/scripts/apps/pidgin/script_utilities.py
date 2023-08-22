@@ -147,13 +147,10 @@ class Utilities(script_utilities.Utilities):
             # this (see bug 351847).
             #
             if (len(nodes) > 100) or nodes.count(node):
-                debug.println(debug.LEVEL_WARNING,
-                              "pidgin.nodeLevel detected a cycle!!!")
+                debug.printMessage(debug.LEVEL_WARNING, "PIDGIN: Detected a cycle of nodes")
                 done = True
             elif node:
                 nodes.append(node)
-                debug.println(debug.LEVEL_FINEST,
-                              f"pidgin.nodeLevel {len(nodes)}")
             else:
                 done = True
 

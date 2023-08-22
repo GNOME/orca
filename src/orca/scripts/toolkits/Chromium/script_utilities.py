@@ -269,7 +269,7 @@ class Utilities(web.Utilities):
             return True
 
         msg = "CHROMIUM: Event is believed to be redundant live region notification"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
     def getFindResultsCount(self, root=None):
@@ -377,7 +377,7 @@ class Utilities(web.Utilities):
         # the point is still within its bounds. Therefore, we need to call
         # accessibleAtPoint() twice to be safe.
         msg = "CHROMIUM: Getting accessibleAtPoint again due to async hit test result."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         result = super().accessibleAtPoint(root, x, y, coordType)
         return result
 

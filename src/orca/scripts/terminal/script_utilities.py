@@ -88,7 +88,7 @@ class Utilities(script_utilities.Utilities):
 
         if firstLine == lastLine:
             msg = "TERMINAL: Not adjusting single-line insertion."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return event.any_data
 
         currentLine = text.getTextAtOffset(text.caretOffset, boundary)
@@ -112,7 +112,7 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             msg = "TERMINAL: Adjustment failed. Returning any_data."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             adjusted = event.any_data
 
         return adjusted

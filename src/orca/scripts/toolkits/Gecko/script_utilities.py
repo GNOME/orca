@@ -311,7 +311,7 @@ class Utilities(web.Utilities):
            and time.time() - self._lastAutoTextEventTime < 0.5 \
            and orca_state.lastInputEvent.isReleaseFor(self._lastAutoTextInputEvent):
             msg = "GECKO: Event believed to be duplicate auto text event."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         self._lastAutoTextObjectEvent = event

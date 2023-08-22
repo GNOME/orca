@@ -46,8 +46,8 @@ class EventManager:
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
     def __init__(self, asyncMode=True):
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
-        debug.println(debug.LEVEL_INFO, f'EVENT MANAGER: Async Mode is {asyncMode}', True)
+        debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
+        debug.printMessage(debug.LEVEL_INFO, f'EVENT MANAGER: Async Mode is {asyncMode}', True)
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self._active = False
@@ -79,29 +79,29 @@ class EventManager:
         self._parentsOfDefunctDescendants = []
         orca_state.device = None
         self.bypassedKey = None
-        debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
+        debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
         """Called when this event manager is activated."""
 
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
+        debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
         orca_state.device = Atspi.Device.new()
         orca_state.device.event_count = 0
         orca_state.device.key_watcher = \
             orca_state.device.add_key_watcher(self._processKeyboardEvent)
 
         self._active = True
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
+        debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
+        debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
         self._active = False
         self._eventQueue = queue.Queue(0)
         self._scriptListenerCounts = {}
         orca_state.device = None
-        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
+        debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
@@ -142,7 +142,7 @@ class EventManager:
 
         app = AXObject.get_application(event.source)
 
-        debug.println(debug.LEVEL_INFO, '')
+        debug.printMessage(debug.LEVEL_INFO, '')
         if self._eventsSuspended:
             tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -155,33 +155,33 @@ class EventManager:
 
         if not self._active:
             msg = 'EVENT MANAGER: Ignoring because event manager is not active'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if list(filter(event.type.startswith, self._ignoredEvents)):
             msg = 'EVENT MANAGER: Ignoring because event type is ignored'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXObject.get_name(app) == 'gnome-shell':
             if event.type.startswith('object:children-changed:remove'):
                 msg = 'EVENT MANAGER: Ignoring event based on type and app'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         if event.type.startswith('window'):
             msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.type.startswith('mouse:button'):
             msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._isDuplicateEvent(event):
             msg = 'EVENT MANAGER: Ignoring duplicate event'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         # Thunderbird spams us with these when a message list thread is expanded or collapsed.
@@ -191,12 +191,12 @@ class EventManager:
               or AXUtilities.is_tree_related(event.source) \
               or AXUtilities.is_section(event.source):
                 msg = 'EVENT MANAGER: Ignoring system event based on role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         if self._inDeluge() and self._ignoreDuringDeluge(event):
             msg = 'EVENT MANAGER: Ignoring event type due to deluge'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         script = orca_state.activeScript
@@ -204,11 +204,11 @@ class EventManager:
            or event.type.startswith('object:state-changed:sensitive'):
             if not script:
                 msg = 'EVENT MANAGER: Ignoring because there is no active script'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if script.app != app:
                 msg = 'EVENT MANAGER: Ignoring because event is not from active app'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         if event.type.startswith('object:text-changed') \
@@ -217,7 +217,7 @@ class EventManager:
             # We should also get children-changed events telling us the same thing.
             # Getting a bunch of both can result in a flood that grinds us to a halt.
             msg = 'EVENT MANAGER: Ignoring because changed text is only embedded objects'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         # TODO - JD: For now we won't ask for the name. Simply asking for the name should
@@ -229,12 +229,12 @@ class EventManager:
 
         if AXUtilities.has_no_state(event.source):
             msg = 'EVENT MANAGER: Ignoring event due to empty state set'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_defunct(event.source):
             msg = 'EVENT MANAGER: Ignoreing event from defunct source'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         role = AXObject.get_role(event.source)
@@ -252,7 +252,7 @@ class EventManager:
                         Atspi.Role.MENU,
                         Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             # TeamTalk5 is notoriously spammy here, and name change events on widgets are
             # typically only presented if they are focused.
@@ -261,17 +261,17 @@ class EventManager:
                             Atspi.Role.CHECK_BOX,
                             Atspi.Role.RADIO_BUTTON]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:property-change:accessible-value'):
             if role == Atspi.Role.SPLIT_PANE and not AXUtilities.is_focused(event.source):
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:text-changed:insert') and event.detail2 > 1000 \
              and role in [Atspi.Role.TEXT, Atspi.Role.STATIC]:
             msg = 'EVENT MANAGER: Ignoring because inserted text has more than 1000 chars'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
         elif event.type.startswith('object:state-changed:sensitive'):
             if role in [Atspi.Role.MENU_ITEM,
@@ -281,12 +281,12 @@ class EventManager:
                         Atspi.Role.CHECK_MENU_ITEM,
                         Atspi.Role.RADIO_MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:state-changed:selected'):
             if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         elif event.type.startswith('object:state-changed:showing'):
             if role not in [Atspi.Role.ALERT,
@@ -298,24 +298,24 @@ class EventManager:
                             Atspi.Role.STATUS_BAR,
                             Atspi.Role.TOOL_TIP]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         elif event.type.startswith('object:text-caret-moved'):
             if role in [Atspi.Role.LABEL] and not AXUtilities.is_focused(event.source):
                 msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         elif event.type.startswith('object:selection-changed'):
             if event.source in self._parentsOfDefunctDescendants:
                 msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
             if AXObject.is_dead(event.source):
                 msg = 'EVENT MANAGER: Ignoring event from dead source'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         if event.type.startswith('object:children-changed') \
@@ -324,21 +324,21 @@ class EventManager:
                         Atspi.Role.LAYERED_PANE,
                         Atspi.Role.MENU_ITEM]:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event.any_data is None:
                 msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event.type.endswith('remove'):
                 if event.any_data == orca_state.locusOfFocus:
                     msg = 'EVENT MANAGER: Locus of focus is being destroyed'
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return False
 
                 if AXObject.is_dead(orca_state.locusOfFocus):
                     msg = 'EVENT MANAGER: Locus of focus is dead.'
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return False
 
                 msg = f'EVENT MANAGER: Locus of focus: {orca_state.locusOfFocus}'
@@ -347,7 +347,7 @@ class EventManager:
             defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
             if defunct:
                 msg = 'EVENT MANAGER: Ignoring event for potentially-defunct child/descendant'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 if AXUtilities.manages_descendants(event.source) \
                    and event.source not in self._parentsOfDefunctDescendants:
                     self._parentsOfDefunctDescendants.append(event.source)
@@ -363,7 +363,7 @@ class EventManager:
             # potential for event floods like we're seeing from matrix.org.
             if AXUtilities.is_image(event.any_data):
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
             # In normal apps we would have caught this from the parent role.
@@ -371,27 +371,27 @@ class EventManager:
             if event.type.startswith('object:children-changed'):
                 if AXUtilities.is_menu_item(event.any_data):
                     msg = 'EVENT MANAGER: Ignoring event type due to child role'
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return True
 
         msg = 'EVENT MANAGER: Not ignoring due to lack of cause'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
     def _addToQueue(self, event, asyncMode):
         debugging = debug.debugEventQueue
         if debugging:
-            debug.println(debug.LEVEL_ALL, "           acquiring lock...")
+            debug.printMessage(debug.LEVEL_ALL, "           acquiring lock...")
         self._gidleLock.acquire()
 
         if debugging:
-            debug.println(debug.LEVEL_ALL, "           ...acquired")
-            debug.println(debug.LEVEL_ALL, "           calling queue.put...")
-            debug.println(debug.LEVEL_ALL, f"           (full={self._eventQueue.full()})")
+            debug.printMessage(debug.LEVEL_ALL, "           ...acquired")
+            debug.printMessage(debug.LEVEL_ALL, "           calling queue.put...")
+            debug.printMessage(debug.LEVEL_ALL, f"           (full={self._eventQueue.full()})")
 
         self._eventQueue.put(event)
         if debugging:
-            debug.println(debug.LEVEL_ALL, "           ...put complete")
+            debug.printMessage(debug.LEVEL_ALL, "           ...put complete")
 
         if asyncMode and not self._gidleId:
             if self._gilSleepTime:
@@ -399,10 +399,10 @@ class EventManager:
             self._gidleId = GLib.idle_add(self._dequeue)
 
         if debugging:
-            debug.println(debug.LEVEL_ALL, "           releasing lock...")
+            debug.printMessage(debug.LEVEL_ALL, "           releasing lock...")
         self._gidleLock.release()
         if debug.debugEventQueue:
-            debug.println(debug.LEVEL_ALL, "           ...released")
+            debug.printMessage(debug.LEVEL_ALL, "           ...released")
 
     def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
         """Convenience method to output queue-related debugging info."""
@@ -436,11 +436,11 @@ class EventManager:
 
         if self._eventsSuspended:
             msg = "EVENT MANAGER: Events already suspended."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "EVENT MANAGER: Suspending events."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for event in self._suspendableEvents:
             self.deregisterListener(event)
@@ -453,16 +453,16 @@ class EventManager:
 
         if not self._eventsSuspended:
             msg = "EVENT MANAGER: Events already unsuspended."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self._eventsTriggeringSuspension:
             msg = "EVENT MANAGER: Events are suspended for another event."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "EVENT MANAGER: Unsuspending events."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for event in self._suspendableEvents:
             self.registerListener(event)
@@ -475,16 +475,16 @@ class EventManager:
                and AXObject.get_application_toolkit_name(event.source) == "clutter"):
             if event.type.startswith("window"):
                 msg = "EVENT MANAGER: Should suspend events for window event."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event.type.endswith("active"):
                 msg = "EVENT MANAGER: Should suspend events for active event on window."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         if AXUtilities.is_document(event.source):
             if event.type.endswith("busy"):
                 msg = "EVENT MANAGER: Should suspend events for busy event on document."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
         return False
@@ -501,9 +501,8 @@ class EventManager:
 
         if debug.debugEventQueue:
             if self._enqueueCount:
-                msg = "EVENT MANAGER: _enqueue entered before exiting (count = %d)" \
-                    % self._enqueueCount
-                debug.println(debug.LEVEL_ALL, msg, True)
+                msg = f"EVENT MANAGER: _enqueue entered before exiting (count={self._enqueueCount})"
+                debug.printMessage(debug.LEVEL_ALL, msg, True)
             self._enqueueCount += 1
 
         inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
@@ -524,7 +523,7 @@ class EventManager:
 
         if self._inFlood() and self._prioritizeDuringFlood(e):
             msg = 'EVENT MANAGER: Pruning event queue due to flood.'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._pruneEventsDuringFlood()
 
         if isObjectEvent and self._shouldSuspendEventsFor(e):
@@ -557,7 +556,7 @@ class EventManager:
             return False
 
         msg = 'EVENT MANAGER: No focus'
-        debug.println(debug.LEVEL_SEVERE, msg, True)
+        debug.printMessage(debug.LEVEL_SEVERE, msg, True)
         return True
 
     def _onNoFocus(self):
@@ -576,8 +575,8 @@ class EventManager:
         rerun = True
 
         if debug.debugEventQueue:
-            msg = 'EVENT MANAGER: Dequeue %d' % self._dequeueCount
-            debug.println(debug.LEVEL_ALL, msg, True)
+            msg = f"EVENT MANAGER: Dequeue {self._dequeueCount}"
+            debug.printMessage(debug.LEVEL_ALL, msg, True)
             self._dequeueCount += 1
 
         try:
@@ -600,9 +599,9 @@ class EventManager:
                     self._unsuspendEvents(event)
 
                 if debugging:
-                    debug.println(debug.eventDebugLevel,
+                    debug.printMessage(debug.eventDebugLevel,
                                   f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}")
-                    debug.println(debug.eventDebugLevel,
+                    debug.printMessage(debug.eventDebugLevel,
                                   f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n")
                 debug.objEvent = None
 
@@ -614,7 +613,7 @@ class EventManager:
             self._gidleLock.release()
         except queue.Empty:
             msg = 'EVENT MANAGER: Attempted dequeue, but the event queue is empty'
-            debug.println(debug.LEVEL_SEVERE, msg, True)
+            debug.printMessage(debug.LEVEL_SEVERE, msg, True)
             self._gidleId = 0
             rerun = False # destroy and don't call again
         except Exception:
@@ -622,8 +621,8 @@ class EventManager:
 
         if debug.debugEventQueue:
             self._dequeueCount -= 1
-            msg = 'EVENT MANAGER: Leaving _dequeue. Count: %d' % self._dequeueCount
-            debug.println(debug.LEVEL_ALL, msg, True)
+            msg = f"EVENT MANAGER: Leaving _dequeue. Count: {self._dequeueCount}"
+            debug.printMessage(debug.LEVEL_ALL, msg, True)
 
         return rerun
 
@@ -635,7 +634,7 @@ class EventManager:
         """
 
         msg = f'EVENT MANAGER: registering listener for: {eventType}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if eventType in self._scriptListenerCounts:
             self._scriptListenerCounts[eventType] += 1
@@ -651,7 +650,7 @@ class EventManager:
         """
 
         msg = f'EVENT MANAGER: deregistering listener for: {eventType}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if eventType not in self._scriptListenerCounts:
             return
@@ -715,7 +714,7 @@ class EventManager:
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             debug.printStack(debug.LEVEL_WARNING)
-        debug.println(debug.eventDebugLevel,
+        debug.printMessage(debug.eventDebugLevel,
                       f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}")
         debug.println(debug.eventDebugLevel,
                       f"^^^^^ PROCESS {eType} {data} ^^^^^\n")
@@ -853,8 +852,8 @@ class EventManager:
     def _inDeluge(self):
         size = self._eventQueue.qsize()
         if size > 100:
-            msg = 'EVENT MANAGER: DELUGE! Queue size is %i' % size
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = f"EVENT MANAGER: DELUGE! Queue size is {size}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -935,14 +934,14 @@ class EventManager:
         self._eventQueue = newQueue
         newSize = self._eventQueue.qsize()
 
-        msg = 'EVENT MANAGER: %i events pruned. New size: %i' % ((oldSize - newSize), newSize)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = f"EVENT MANAGER: {oldSize - newSize} events pruned. New size: {newSize}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _inFlood(self):
         size = self._eventQueue.qsize()
         if size > 50:
-            msg = 'EVENT MANAGER: FLOOD? Queue size is %i' % size
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = f"EVENT MANAGER: FLOOD? Queue size is {size}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -974,7 +973,7 @@ class EventManager:
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
                and orca_state.activeWindow == event.source:
                 msg = 'EVENT MANAGER: Clearing active window, script, and locus of focus'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
                 _scriptManager.setActiveScript(None, "Active window is dead or defunct")
@@ -988,17 +987,17 @@ class EventManager:
         if self._inFlood():
             if not self._processDuringFlood(event):
                 msg = 'EVENT MANAGER: Not processing this event due to flood.'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
             if self._prioritizeDuringFlood(event):
                 msg = 'EVENT MANAGER: Pruning event queue due to flood.'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self._pruneEventsDuringFlood()
 
         if eType.startswith('object:selection-changed') \
            and event.source in self._parentsOfDefunctDescendants:
             msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
@@ -1017,7 +1016,7 @@ class EventManager:
 
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
         msg = f'EVENT MANAGER: Change active script: {setNewActiveScript} ({reason})'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if setNewActiveScript:
             try:
@@ -1031,7 +1030,7 @@ class EventManager:
             script.processObjectEvent(event)
         except Exception:
             msg = f'ERROR: Could not process {event.type}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
         msg = (

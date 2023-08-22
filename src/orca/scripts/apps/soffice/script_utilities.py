@@ -287,7 +287,7 @@ class Utilities(script_utilities.Utilities):
 
         if toolbar is None:
             msg = "ERROR: Calc inputline toolbar not found."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return None
 
         allParagraphs = self.findAllDescendants(toolbar, AXUtilities.is_paragraph)
@@ -538,7 +538,7 @@ class Utilities(script_utilities.Utilities):
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if self.isComboBoxNoise(event):
             msg = "SOFFICE: Event is believed to be combo box noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         return super().isPresentableTextChangedEventForLocusOfFocus(event)

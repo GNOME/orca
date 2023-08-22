@@ -91,7 +91,7 @@ class Script(GAIL.Script):
            and self.utilities.lastInputEventWasUnmodifiedArrow() \
            and self.utilities.inMenu():
             msg = "ECLIPSE: Ignoring event. In menu."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         super().onFocus(event)

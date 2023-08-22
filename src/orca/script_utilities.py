@@ -511,7 +511,7 @@ class Utilities:
         obj = obj or orca_state.locusOfFocus
         if not obj:
             msg = "ERROR: frameAndDialog() called without valid object"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return results
 
         topLevel = self.topLevelObject(obj)
@@ -2002,7 +2002,7 @@ class Utilities:
 
         end = time.time()
         msg = f"INFO: Time getting status bar items: {end - start:.4f}"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         return items
 
@@ -2071,7 +2071,7 @@ class Utilities:
 
         if rv is None and useFallbackSearch:
             msg = "INFO: Attempting to find top-level object via fallback search"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             rv = self._findWindowWithDescendant(obj)
 
         return rv
@@ -2475,9 +2475,11 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if offset != hyperlink.startIndex:
-            msg = "ERROR: The hyperlink start index (%i) should match the offset (%i)" \
-                % (hyperlink.startIndex, offset)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = (
+                f"ERROR: Hyperlink start index {hyperlink.startIndex} "
+                f"should match the offset {offset}"
+            )
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         return child
 
@@ -2652,7 +2654,7 @@ class Utilities:
             return event.any_data
 
         msg = "ERROR: Broken text insertion event"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_password_text(event.source):
             text = self.queryNonEmptyText(event.source)
@@ -2664,7 +2666,7 @@ class Utilities:
                     return string[-1]
 
         msg = "FAIL: Unable to correct broken text insertion event"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return ""
 
     def selectedText(self, obj):
@@ -2800,9 +2802,9 @@ class Utilities:
                 attrList, start, end = text.getAttributeRun(offset)
                 msg = "INFO: Attributes at %i: %s (%i-%i)" % (offset, attrList, start, end)
                 debug.println(debug.LEVEL_INFO, msg, True)
-            except Exception:
-                msg = "ERROR: Exception getting attributes at %i" % (offset)
-                debug.println(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                msg = f"ERROR: Exception getting attributes at {offset}: {error}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return rv
 
             attrDict = dict([attr.split(':', 1) for attr in attrList])
@@ -2811,7 +2813,7 @@ class Utilities:
 
         endTime = time.time()
         msg = f"INFO: {len(rv)} attribute ranges found in {endTime - startTime:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
@@ -3608,7 +3610,7 @@ class Utilities:
             return children
 
         msg = "INFO: Selected children not retrieved via selection interface."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         role = AXObject.get_role(obj)
         if role == Atspi.Role.MENU and not children:
@@ -3874,7 +3876,7 @@ class Utilities:
     def _columnHeadersForCell(self, obj):
         if not obj:
             msg = "INFO: Attempted to get column headers for null cell"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         if AXObject.supports_table_cell(obj):
@@ -3918,7 +3920,7 @@ class Utilities:
     def _rowHeadersForCell(self, obj):
         if not obj:
             msg = "INFO: Attempted to get row headers for null cell"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         if AXObject.supports_table_cell(obj):
@@ -4745,7 +4747,7 @@ class Utilities:
 
         if time.time() - Utilities._last_clipboard_update < 0.05:
             msg = "INFO: Clipboard contents change notification believed to be duplicate"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         Utilities._last_clipboard_update = time.time()
@@ -5084,7 +5086,7 @@ class Utilities:
            or AXUtilities.is_spin_button(event.source) \
            or AXUtilities.is_label(event.source):
             msg = "INFO: Event is not being presented due to role"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_focused(event.source):
@@ -5096,14 +5098,14 @@ class Utilities:
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
             msg = "INFO: Event is not being presented due to role and states"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if orca_state.locusOfFocus in [event.source, AXObject.get_parent(event.source)]:
             return True
 
         msg = "INFO: Event is not being presented due to lack of cause"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
     def isBackSpaceCommandTextDeletionEvent(self, event):
@@ -5176,7 +5178,7 @@ class Utilities:
            and not AXUtilities.is_focused(event.source) \
            and event.source != orca_state.locusOfFocus:
             msg = "INFO: Not echoable text insertion event: focusable source is not focused"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_password_text(event.source):
@@ -5300,13 +5302,13 @@ class Utilities:
     def eventIsUserTriggered(self, event):
         if not orca_state.lastInputEvent:
             msg = "INFO: Not user triggered: No last input event."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         delta = time.time() - orca_state.lastInputEvent.time
         if delta > 1:
             msg = f"INFO: Not user triggered: Last input event {delta:.2f}s ago."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
@@ -5336,8 +5338,8 @@ class Utilities:
             if AXObject.get_parent(child) != obj:
                 return False
 
-            msg = "INFO: All %i children believed to be selected" % childCount
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = f"INFO: All {childCount} children believed to be selected"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if not AXObject.supports_table(obj):
@@ -5514,7 +5516,7 @@ class Utilities:
     def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus, event=None):
         if event is None:
             msg = "INFO: Not interrupting for locusOfFocus change: event is None"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if event is not None and event.type.startswith("object:active-descendant-changed"):
@@ -5523,12 +5525,12 @@ class Utilities:
         if AXUtilities.is_table_cell(oldLocusOfFocus) and AXUtilities.is_text(newLocusOfFocus) \
            and AXUtilities.is_editable(newLocusOfFocus):
             msg = "INFO: Not interrupting for locusOfFocus change, suspected editable cell"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
             msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         def isOld(target):
@@ -5540,11 +5542,11 @@ class Utilities:
         if AXObject.get_relation_targets(newLocusOfFocus,
                                          Atspi.RelationType.CONTROLLER_FOR, isOld):
             msg = "INFO: Not interrupting for locusOfFocus change, newLocusOfFocus controls old"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         if AXObject.get_relation_targets(oldLocusOfFocus,
                                          Atspi.RelationType.CONTROLLER_FOR, isNew):
             msg = "INFO: Not interrupting for locusOfFocus change, oldLocusOfFocus controls new"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         return True

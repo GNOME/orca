@@ -109,7 +109,7 @@ class GtkHighlighter(Highlighter):
                  fill_alpha=None):
         if not CAIRO_AVAILABLE:
             msg = "GTK HIGHLIGHTER: Unavailable. Is Cairo installed?"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         super().__init__(highlight_type, color, alpha, thickness, padding, fill_color, fill_alpha)
@@ -208,7 +208,7 @@ class GtkHighlighter(Highlighter):
         """Quits the highlighter."""
 
         msg = "GTK HIGHLIGHTER: Quitting."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._gui.destroy()
         self._drawing_area = None
         self._gui = None

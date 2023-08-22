@@ -182,13 +182,13 @@ class Utilities(script_utilities.Utilities):
 
         if not orca_state.activeWindow:
             msg = 'INFO: No active window'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         topLevel = self.topLevelObject(event.source)
         if not self.isSameObject(topLevel, orca_state.activeWindow):
             msg = 'INFO: Event is believed to be canvas noise'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -230,6 +230,6 @@ class Utilities(script_utilities.Utilities):
         newX = boxX + relX
         newY = boxY + relY
 
-        msg = "INFO: Adjusted (%i, %i) to (%i, %i)" % (x, y, newX, newY)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = f"GTK: Adjusted ({x}, {y}) to ({newX}, {newY})"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return newX, newY

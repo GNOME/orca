@@ -71,7 +71,7 @@ class Script(default.Script):
 
         if self.utilities.treatEventAsNoise(event):
             msg = "TERMINAL: Deletion is believed to be noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         super().onTextDeleted(event)
@@ -81,12 +81,12 @@ class Script(default.Script):
 
         if not self.utilities.treatEventAsCommand(event):
             msg = "TERMINAL: Passing along event to default script."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().onTextInserted(event)
             return
 
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.updateBraille(event.source)
 
@@ -99,7 +99,7 @@ class Script(default.Script):
 
         if self.flatReviewPresenter.is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         try:

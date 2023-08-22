@@ -924,12 +924,12 @@ class KeyboardEvent(InputEvent):
                 try:
                     if modifiers & modifier:
                         lock = Atspi.KeySynthType.UNLOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Unlocking capslock", True)
+                        debug.printMessage(debug.LEVEL_INFO, "Unlocking capslock", True)
                     else:
                         lock = Atspi.KeySynthType.LOCKMODIFIERS
-                        debug.println(debug.LEVEL_INFO, "Locking capslock", True)
+                        debug.printMessage(debug.LEVEL_INFO, "Locking capslock", True)
                     Atspi.generate_keyboard_event(modifier, "", lock)
-                    debug.println(debug.LEVEL_INFO, "Done with capslock", True)
+                    debug.printMessage(debug.LEVEL_INFO, "Done with capslock", True)
                 except Exception:
                     debug.println(debug.LEVEL_INFO, "Could not trigger capslock, " \
                         "at-spi2-core >= 2.32 is needed for triggering capslock", True)
@@ -943,7 +943,7 @@ class KeyboardEvent(InputEvent):
             tokens = ["Unknown locking key", self.event_string]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return
-        debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
+        debug.printMessage(debug.LEVEL_INFO, "Scheduling capslock", True)
         GLib.timeout_add(1, lock_mod(self.modifiers, modifier))
 
     def _consume(self):
@@ -962,10 +962,10 @@ class KeyboardEvent(InputEvent):
             self._handler.function(self._script, self)
         else:
             msg = 'INFO: No handler or consumer'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^'
         debug.println(debug.LEVEL_INFO, msg, False)
@@ -1027,9 +1027,11 @@ class MouseButtonEvent(InputEvent):
         if math.sqrt((self.x - x)**2 + (self.y - y)**2) < 25:
             return
 
-        msg = "WARNING: Event coordinates (%i, %i) may be bogus. " \
-              "Updating to (%i, %i)." % (self.x, self.y, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = (
+            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. ",
+            f"Updating to ({x}, {y}"
+        )
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.x, self.y = x, y
 
     def setClickCount(self):
