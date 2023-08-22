@@ -69,7 +69,7 @@ class Script(clutter.Script):
             queuedEvent = self._getQueuedEvent("object:state-changed:focused", True)
             if queuedEvent and queuedEvent.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
@@ -88,7 +88,7 @@ class Script(clutter.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentMessage(AXObject.get_name(event.source))
 
     def onSelectedChanged(self, event):

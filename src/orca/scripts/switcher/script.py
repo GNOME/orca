@@ -58,16 +58,16 @@ class Script(default.Script):
 
         if not self.utilities.isSwitcherContainer(event.source):
             msg = "SWITCHER: Event is not from switcher container"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.isSwitcherSelectionChangeEventType(event):
             msg = "SWITCHER: Not treating event as selection change."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "SWITCHER: Treating event as selection change"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.presentationInterrupt()
         orca.setActiveWindow(self.utilities.topLevelObject(event.source))

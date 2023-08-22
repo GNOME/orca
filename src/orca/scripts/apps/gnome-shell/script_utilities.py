@@ -57,7 +57,7 @@ class Utilities(script_utilities.Utilities):
 
         if event.detail1 == -1:
             msg = "GNOME SHELL: Broken text insertion event"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             text = self.queryNonEmptyText(event.source)
             if text:
@@ -68,7 +68,7 @@ class Utilities(script_utilities.Utilities):
                     return string[-1]
 
             msg = "GNOME SHELL: Unable to correct broken text insertion event"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         return ""
 
@@ -128,7 +128,7 @@ class Utilities(script_utilities.Utilities):
            and AXUtilities.is_window(event.source) \
            and not self.canBeActiveWindow(event.source):
             msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         return False

@@ -79,9 +79,9 @@ def _initSpeechServer(moduleName, speechServerInfo):
         raise Exception(f"ERROR: No speech server for factory: {moduleName}")
 
 def init():
-    debug.println(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
+    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
     if _speechserver:
-        debug.println(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
+        debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
         return
 
     try:
@@ -104,13 +104,13 @@ def init():
         debug.println(debug.LEVEL_INFO, msg, True)
     else:
         msg = 'SPEECH: Not available'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    debug.println(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
+    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
 def checkSpeechSetting():
     msg = "SPEECH: Checking speech setting."
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if not settings.enableSpeech:
         shutdown()
@@ -282,7 +282,7 @@ def stop():
         _speechserver.stop()
 
 def shutdown():
-    debug.println(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
+    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
     global _speechserver
     if _speechserver:
         _speechserver.shutdownActiveServers()

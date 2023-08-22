@@ -259,7 +259,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.decreaseSpeechRate()
@@ -271,7 +271,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.increaseSpeechRate()
@@ -283,7 +283,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.decreaseSpeechPitch()
@@ -295,7 +295,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.increaseSpeechPitch()
@@ -307,7 +307,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.decreaseSpeechVolume()
@@ -319,7 +319,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.increaseSpeechVolume()
@@ -331,7 +331,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.updateCapitalizationStyle()
@@ -343,7 +343,7 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         server.updatePunctuationLevel()
@@ -355,19 +355,19 @@ class SpeechAndVerbosityManager:
         server = self._get_server()
         if server is None:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         available = server.list_output_modules()
         if not available:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get output modules."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         current = server.getOutputModule()
         if not current:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get current output module."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         index = available.index(current) + 1

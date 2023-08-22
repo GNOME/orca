@@ -136,7 +136,7 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         obj.emit("mode-changed::" + mode, 1, "")
     except Exception:
         msg = "ORCA: Exception emitting mode-changed notification"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if mode != orca_state.activeMode:
         tokens = ["ORCA: Switching active mode from", orca_state.activeMode, "to", mode]
@@ -149,7 +149,7 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         obj.emit("region-changed", startOffset, endOffset)
     except Exception:
         msg = "ORCA: Exception emitting region-changed notification"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     orca_state.objOfInterest = obj
 
@@ -161,7 +161,7 @@ def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=Fal
 
     if frame == orca_state.activeWindow:
         msg = "ORCA: Setting activeWindow to existing activeWindow"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
     elif frame is None:
         orca_state.activeWindow = None
     else:
@@ -191,7 +191,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
     if not force and obj == orca_state.locusOfFocus:
         msg = "ORCA: Setting locusOfFocus to existing locusOfFocus"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return
 
     if event and (orca_state.activeScript and not orca_state.activeScript.app):
@@ -205,7 +205,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
     if obj is None:
         msg = "ORCA: New locusOfFocus is null (being cleared)"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         orca_state.locusOfFocus = None
         return
 
@@ -230,7 +230,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
     if not orca_state.activeScript:
         msg = "ORCA: Cannot notify active script because there isn't one"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return
 
     orca_state.activeScript.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
@@ -282,7 +282,7 @@ def deviceChangeHandler(deviceManager, device):
     source = device.get_source()
     if source == Gdk.InputSource.KEYBOARD:
         msg = "ORCA: Keyboard change detected, re-creating the xmodmap"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         _createOrcaXmodmap()
 
 def updateKeyMap(keyboardEvent):
@@ -392,7 +392,7 @@ def _restoreXmodmap(keyList=[]):
     """
 
     msg = "ORCA: Attempting to restore original xmodmap"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     global _capsLockCleared
     _capsLockCleared = False
@@ -401,7 +401,7 @@ def _restoreXmodmap(keyList=[]):
     p.communicate(_originalXmodmap)
 
     msg = "ORCA: Original xmodmap restored"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
 def setKeyHandling(new):
     """Toggle use of the new vs. legacy key handling mode.
@@ -415,7 +415,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     Returns True to indicate the input event has been consumed.
     """
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
 
     global _userSettings
 
@@ -455,7 +455,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     if _settingsManager.getSetting('enableSpeech'):
         msg = 'ORCA: About to enable speech'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
@@ -464,20 +464,20 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.printException(debug.LEVEL_SEVERE)
     else:
         msg = 'ORCA: Speech is not enabled in settings'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if _settingsManager.getSetting('enableBraille'):
         msg = 'ORCA: About to enable braille'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
             braille.init(_processBrailleEvent)
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
-            debug.println(debug.LEVEL_WARNING, msg, True)
+            debug.printMessage(debug.LEVEL_WARNING, msg, True)
     else:
         msg = 'ORCA: Braille is not enabled in settings'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
 
     if _settingsManager.getSetting('enableMouseReview'):
@@ -502,7 +502,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _scriptManager.activate()
     _eventManager.activate()
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
     return True
 
@@ -617,12 +617,12 @@ def init():
     module has already been initialized.
     """
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Initializing', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Initializing', True)
 
     global _initialized
 
     if _initialized and _settingsManager.isScreenReaderServiceEnabled():
-        debug.println(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
+        debug.printMessage(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
         return False
 
     # Do not hang on initialization if we can help it.
@@ -643,14 +643,14 @@ def init():
     if a11yAppSettings:
         a11yAppSettings.connect('changed', onEnabledChanged)
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Initialized', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Initialized', True)
 
     return True
 
 def start():
     """Starts Orca."""
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Starting', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Starting', True)
 
     if not _initialized:
         init()
@@ -675,9 +675,9 @@ def start():
 
     Gdk.notify_startup_complete()
     msg = 'ORCA: Startup complete notification made'
-    debug.println(debug.LEVEL_INFO, msg, True)
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Starting Atspi main event loop', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Starting Atspi main event loop', True)
     Atspi.event_main()
 
 def die(exitCode=1):
@@ -694,7 +694,7 @@ def die(exitCode=1):
 
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
-    debug.println(debug.LEVEL_SEVERE, msg, True)
+    debug.printMessage(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
     debug.examineProcesses(force=True)
     die(EXIT_CODE_HANG)
@@ -706,7 +706,7 @@ def shutdown(script=None, inputEvent=None):
     was never initialized.
     """
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
 
     global _initialized
 
@@ -743,9 +743,9 @@ def shutdown(script=None, inputEvent=None):
     _initialized = False
     _restoreXmodmap(_orcaModifiers)
 
-    debug.println(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
-    debug.println(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
+    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
 
     return True
 
@@ -839,13 +839,13 @@ def main():
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, crashOnSignal)
 
-    debug.println(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
+    debug.printMessage(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
-    debug.println(debug.LEVEL_INFO, "ORCA: Initializing.", True)
+    debug.printMessage(debug.LEVEL_INFO, "ORCA: Initializing.", True)
     init()
-    debug.println(debug.LEVEL_INFO, "ORCA: Initialized.", True)
+    debug.printMessage(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
     try:
         message = messages.START_ORCA
@@ -879,11 +879,11 @@ def main():
 
     try:
         msg = "ORCA: Starting ATSPI registry."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         start() # waits until we stop the registry
     except Exception:
         msg = "ORCA: Exception starting ATSPI registry."
-        debug.println(debug.LEVEL_SEVERE, msg, True)
+        debug.printMessage(debug.LEVEL_SEVERE, msg, True)
         die(EXIT_CODE_HANG)
     return 0
 

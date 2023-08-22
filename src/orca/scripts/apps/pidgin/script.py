@@ -195,12 +195,12 @@ class Script(GAIL.Script):
 
         if not settings.enableSadPidginHack:
             msg = "PIDGIN: Hack for missing events disabled"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             GAIL.Script.onWindowActivated(self, event)
             return
 
         msg = "PIDGIN: Starting hack for missing events"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
@@ -208,7 +208,7 @@ class Script(GAIL.Script):
         AXUtilities.find_all_page_tabs(event.source)
 
         msg = "PIDGIN: Hack to work around missing events complete"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         GAIL.Script.onWindowActivated(self, event)
 
     def onExpandedChanged(self, event):

@@ -84,7 +84,7 @@ class NotificationPresenter:
         """Clears the notifications list."""
 
         msg = "NOTIFICATION PRESENTER: Clearing list."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._notifications = []
         self._current_index = -1
 
@@ -174,7 +174,7 @@ class NotificationPresenter:
             return True
 
         msg = "NOTIFICATION PRESENTER: Presenting last notification."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         message, timestamp = self._notifications[-1]
         string = f"{message} {self._timestamp_to_string(timestamp)}"
@@ -193,7 +193,7 @@ class NotificationPresenter:
             f"NOTIFICATION PRESENTER: Presenting previous notification. "
             f"Current index: {self._current_index}"
         )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # This is the first (oldest) message in the list.
         if self._current_index == 0 :
@@ -206,7 +206,7 @@ class NotificationPresenter:
                 self._current_index -= 1
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 script.presentMessage(messages.NOTIFICATION_LIST_TOP)
                 message, timestamp = self._notifications[self._current_index]
 
@@ -225,7 +225,7 @@ class NotificationPresenter:
             f"NOTIFICATION PRESENTER: Presenting next notification. "
             f"Current index: {self._current_index}"
         )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # This is the last (newest) message in the list.
         if self._current_index == -1:
@@ -238,7 +238,7 @@ class NotificationPresenter:
                 self._current_index += 1
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 script.presentMessage(messages.NOTIFICATION_LIST_BOTTOM)
                 message, timestamp = self._notifications[self._current_index]
 
@@ -254,7 +254,7 @@ class NotificationPresenter:
             return True
 
         msg = "NOTIFICATION PRESENTER: Showing notification list."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         rows = [(message, self._timestamp_to_string(timestamp)) \
                     for message, timestamp in reversed(self._notifications)]

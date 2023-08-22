@@ -981,7 +981,7 @@ class AXObject:
 
         if real_frame != obj:
             msg = "AXObject: Updated frame to frame from real app"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         AXObject.REAL_APP_FOR_MUTTER_FRAME[hash(obj)] = real_app
         AXObject.REAL_FRAME_FOR_MUTTER_FRAME[hash(obj)] = real_frame
@@ -1088,7 +1088,7 @@ class AXObject:
                 pass
             else:
                 msg = "AXObject: clear_cache_single succeeded."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
         try:

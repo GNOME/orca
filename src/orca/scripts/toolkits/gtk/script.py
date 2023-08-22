@@ -67,12 +67,12 @@ class Script(default.Script):
 
         if not self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GTK: locusOfFocus is not typeahead. Passing along to default script."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().onActiveDescendantChanged(event)
             return
 
         msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.presentObject(event.any_data, interrupt=True)
 
     def onCheckedChanged(self, event):
@@ -104,7 +104,7 @@ class Script(default.Script):
 
         if event.source == self.mouseReviewer.getCurrentItem():
             msg = "GTK: Event source is current mouse review item"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
@@ -131,7 +131,7 @@ class Script(default.Script):
 
         if self.utilities.isUselessPanel(event.source):
             msg = "GTK: Event source believed to be useless panel"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         super().onFocusedChanged(event)
@@ -167,7 +167,7 @@ class Script(default.Script):
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             selectedChildren = self.utilities.selectedChildren(event.source)
             for child in selectedChildren:

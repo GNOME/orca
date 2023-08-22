@@ -241,8 +241,8 @@ class Zone:
         return self._extentsAreOnSameLine(zone)
 
     def getWordAtOffset(self, charOffset):
-        msg = "FLAT REVIEW: Searching for word at offset %i" % charOffset
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = f"FLAT REVIEW: Searching for word at offset {charOffset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for word in self.words:
             tokens = ["FLAT REVIEW: Checking", word]
@@ -537,9 +537,11 @@ class Context:
                     self.charIndex = offset
                 break
 
-        msg = "FLAT REVIEW: On line %i, zone %i, word %i, char %i" % \
-              (self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = (
+            f"FLAT REVIEW: On line {self.lineIndex}, zone {self.zoneIndex} ",
+            f"word {self.wordIndex}, char {self.charIndex}"
+        )
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
         """Traverses the string, splitting it up into separate zones if the
@@ -641,7 +643,7 @@ class Context:
             lowerMid = int((lowerMax - lowerMin) / 2) + lowerMin
 
         msg = "FLAT REVIEW: Getting lines for %s offsets %i-%i" % (accessible, upperMin, lowerMax)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         lines = self._getLines(accessible, upperMin, lowerMax)
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", accessible]
@@ -771,11 +773,11 @@ class Context:
                     self.wordIndex = word.index
                     self.charIndex = offset
                 msg = "FLAT REVIEW: Updated current zone."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 break
         else:
             msg = "FLAT REVIEW: Failed to update current zone."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         msg = "FLAT REVIEW: Updated %s (line: %i, zone: %i, word: %i, char: %i)" % \
@@ -1088,7 +1090,7 @@ class Context:
         """
 
         if not self.lines:
-            debug.println(debug.LEVEL_FINE, 'goPrevious(): no lines in context')
+            debug.printMessage(debug.LEVEL_INFO, 'goPrevious(): no lines in context')
             return False
 
         moved = False
@@ -1221,7 +1223,7 @@ class Context:
         """
 
         if not self.lines:
-            debug.println(debug.LEVEL_FINE, 'goNext(): no lines in context')
+            debug.printMessage(debug.LEVEL_INFO, 'goNext(): no lines in context')
             return False
 
         moved = False

@@ -612,7 +612,7 @@ class Script(default.Script):
 
         if not AXObject.get_parent(event.source):
             msg = "SOFFICE: Event source lacks parent"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         # Prevent this events from activating the find operation.
@@ -646,7 +646,7 @@ class Script(default.Script):
            and not AXUtilities.is_focused(event.any_data) \
            and not AXUtilities.is_focused(event.source) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             AXObject.clear_cache(event.source)
 
         default.Script.onActiveDescendantChanged(self, event)
@@ -742,13 +742,13 @@ class Script(default.Script):
 
         if self.utilities.isAnInputLine(event.source):
             msg = "SOFFICE: Event ignored: spam from inputLine"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if AXObject.get_child_count(event.source) \
             and self.utilities.isAnInputLine(AXObject.get_child(event.source, 0)):
             msg = "SOFFICE: Event ignored: spam from inputLine parent"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         role = AXObject.get_role(event.source)
@@ -789,13 +789,13 @@ class Script(default.Script):
         if self.utilities.isSpreadSheetTable(event.source) and orca_state.locusOfFocus:
             if self.utilities.isDead(orca_state.locusOfFocus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim. Dead locusOfFocus."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
                 return
             if AXUtilities.is_paragraph(orca_state.locusOfFocus) \
                or AXUtilities.is_table_cell(orca_state.locusOfFocus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
@@ -812,7 +812,7 @@ class Script(default.Script):
             AXObject.clear_cache(event.source)
             if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if self.utilities._flowsFromOrToSelection(event.source):
            return
@@ -826,7 +826,7 @@ class Script(default.Script):
 
             if not self.utilities.isCellBeingEdited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
         super().onCaretMoved(event)
@@ -871,11 +871,11 @@ class Script(default.Script):
         full, brief = "", ""
         if self.utilities.isSelectedTextDeletionEvent(event):
             msg = "SOFFICE: Change is believed to be due to deleting selected text"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             full = messages.SELECTION_DELETED
         elif self.utilities.isSelectedTextRestoredEvent(event):
             msg = "SOFFICE: Selection is believed to be due to restoring selected text"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             if self.utilities.handleUndoTextEvent(event):
                 full = messages.SELECTION_RESTORED
 
@@ -903,7 +903,7 @@ class Script(default.Script):
         if event.source == self.spellcheck.getSuggestionsList():
             if orca_state.locusOfFocus == orca_state.activeWindow:
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_focused(event.source):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
@@ -927,12 +927,12 @@ class Script(default.Script):
 
         if self.utilities.isComboBoxNoise(event):
             msg = "SOFFICE: Event is believed to be combo box noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isDead(event.source):
             msg = "SOFFICE: Ignoring event from dead source."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if event.source != orca_state.locusOfFocus \

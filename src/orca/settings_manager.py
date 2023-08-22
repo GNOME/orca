@@ -73,7 +73,7 @@ class SettingsManager(object):
         backend='json'
         """
 
-        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
+        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
 
         self.backendModule = None
         self._backend = None
@@ -116,10 +116,10 @@ class SettingsManager(object):
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
 
-        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
+        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
 
     def activate(self, prefsDir=None, customSettings={}):
-        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
+        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
 
         self.customizedSettings.update(customSettings)
         self._prefsDir = prefsDir \
@@ -142,7 +142,7 @@ class SettingsManager(object):
         #
         self._createDefaults()
 
-        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
+        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
         # Set the active profile and load its stored settings
         msg = f'SETTINGS MANAGER: Current profile is {self.profile}'
@@ -330,7 +330,7 @@ class SettingsManager(object):
         over the current and active settings"""
 
         msg = 'SETTINGS MANAGER: Merging settings.'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.profileGeneral.update(self._appGeneral)
         self.profilePronunciations.update(self._appPronunciations)
@@ -341,7 +341,7 @@ class SettingsManager(object):
         self.keybindings.update(self.profileKeybindings)
 
         msg = 'SETTINGS MANAGER: Settings merged.'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _enableAccessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and
@@ -359,7 +359,7 @@ class SettingsManager(object):
 
     def isAccessibilityEnabled(self):
         msg = 'SETTINGS MANAGER: Checking if accessibility is enabled.'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = 'SETTINGS MANAGER: Accessibility enabled: '
         if not _proxy:
@@ -378,7 +378,7 @@ class SettingsManager(object):
 
         if not _proxy:
             msg = 'SETTINGS MANAGER: Error (no proxy)'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         vEnable = GLib.Variant('b', enable)

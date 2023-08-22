@@ -627,7 +627,7 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
+            debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
             return
 
         if not obj:

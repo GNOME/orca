@@ -61,7 +61,7 @@ class Script(default.Script):
             return
 
         msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.presentObject(event.any_data, interrupt=True)
 
     def onFocus(self, event):
@@ -98,7 +98,7 @@ class Script(default.Script):
         isFocused = AXUtilities.is_focused(event.source)
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             selectedChildren = self.utilities.selectedChildren(event.source)
             for child in selectedChildren:

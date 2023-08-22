@@ -236,7 +236,7 @@ class LiveRegionManager:
         """
 
         if len(self.msg_queue) > 0:
-            debug.println(debug.eventDebugLevel, "\nvvvvv PRESENT LIVE REGION MESSAGE vvvvv")
+            debug.printMessage(debug.eventDebugLevel, "\nvvvvv PRESENT LIVE REGION MESSAGE vvvvv")
             self.msg_queue.purgeByKeepAlive()
             politeness, timestamp, message, obj = self.msg_queue.dequeue()
             # Form output message.  No need to repeat labels and content.
@@ -251,7 +251,7 @@ class LiveRegionManager:
                 self._script.presentMessage(utts)
             else:
                 msg = "INFO: Not presenting message because monitoring is off"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             # set the last live obj to be announced
             self.lastliveobj = obj
@@ -264,8 +264,8 @@ class LiveRegionManager:
             self.msg_queue.purgeByKeepAlive()
 
         msg = f'LIVE REGIONS: messages in queue: {len(self.msg_queue)}'
-        debug.println(debug.LEVEL_INFO, msg, True)
-        debug.println(debug.eventDebugLevel, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.eventDebugLevel, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
 
         # See you again soon, stay in event loop if we still have messages.
         return len(self.msg_queue) > 0
@@ -390,7 +390,7 @@ class LiveRegionManager:
         result = AXCollection.get_all_matches(document, rule)
 
         msg = f'LIVE REGIONS: {len(result)} regions found'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
 
     def generateLiveRegionDescription(self, obj, **args):

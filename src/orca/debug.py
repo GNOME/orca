@@ -218,6 +218,12 @@ def printTokens(level, tokens, timestamp=False):
     text = " ".join(map(_asString, tokens))
     println(level, text, timestamp)
 
+def printMessage(level, text, timestamp=False):
+    if level < debugLevel:
+        return
+
+    println(level, text, timestamp)
+
 def println(level, text="", timestamp=False):
     """Prints the text to stderr unless debug is enabled.
 

@@ -67,7 +67,7 @@ class Script(Gecko.Script):
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             msg = "SEAMONKEY: Ignoring, event source is content editable"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         table = self.utilities.getTable(orca_state.locusOfFocus)
@@ -92,11 +92,11 @@ class Script(Gecko.Script):
 
         if AXObject.get_role(event.source) == Atspi.Role.MENU:
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             if self.utilities.lastInputEventWasPrintableKey():
                 msg = "SEAMONKEY: Ignoring, believed to be result of printable input"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
         super().onFocus(event)
