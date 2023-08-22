@@ -49,7 +49,7 @@ class AXUtilitiesState:
     def has_no_state(obj):
         """Returns true if obj has an empty state set"""
 
-        return AXObject.get_state_set(obj).isEmpty()
+        return AXObject.get_state_set(obj).is_empty()
 
     @staticmethod
     def has_popup(obj):

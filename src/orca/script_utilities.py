@@ -320,8 +320,8 @@ class Utilities:
         - b: Accessible
         """
 
-        msg = f'INFO: Looking for common ancestor of {a} and {b}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["INFO: Looking for common ancestor of", a, "and", b]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # Don't do any Zombie checks here, as tempting and logical as it
         # may seem as it can lead to chattiness.

@@ -132,26 +132,13 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
-        anydata = event.any_data
-        if isinstance(anydata, str) and len(anydata) > 100:
-            anydata = f"{anydata[0:100]} (...)"
-
-        source = str(event.source)
-        if len(source) > 100:
-            source = f"{source[0:100]} (...) ]"
-
-        app = AXObject.get_application(event.source)
-
         debug.printMessage(debug.LEVEL_INFO, '')
         if self._eventsSuspended:
             tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = (
-            f'EVENT MANAGER: {event.type} for {source} in {app} '
-            f'({event.detail1}, {event.detail2}, {anydata})'
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER:", event]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active:
             msg = 'EVENT MANAGER: Ignoring because event manager is not active'
@@ -163,6 +150,7 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
+        app = AXObject.get_application(event.source)
         if AXObject.get_name(app) == 'gnome-shell':
             if event.type.startswith('object:children-changed:remove'):
                 msg = 'EVENT MANAGER: Ignoring event based on type and app'
@@ -341,8 +329,8 @@ class EventManager:
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return False
 
-                msg = f'EVENT MANAGER: Locus of focus: {orca_state.locusOfFocus}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Locus of focus:", orca_state.locusOfFocus]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
             if defunct:
@@ -407,29 +395,28 @@ class EventManager:
     def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
         """Convenience method to output queue-related debugging info."""
 
+        if debug.LEVEL_INFO < debug.debugLevel:
+            return
+
+        tokens = [e.type]
         if isinstance(e, input_event.KeyboardEvent):
-            data = "'%s' (%d)" % (e.event_string, e.hw_code)
+            tokens.extend([e.event_string, e.hw_code])
         elif isinstance(e, input_event.BrailleEvent):
-            data = f"'{repr(e.event)}'"
+            tokens.append(e.event)
         elif not debug.eventDebugFilter or debug.eventDebugFilter.match(e.type):
-            app = AXObject.get_application(e.source)
-            anydata = e.any_data
-            if isinstance(anydata, str) and len(anydata) > 100:
-                anydata = f"{anydata[0:100]} (...)"
-            data = f"{e.source} ({e.detail1},{e.detail2},{anydata}) from {app}"
+            tokens.append(e)
         else:
             return
 
         if isPrune:
-            string = f"EVENT MANAGER: Pruning {e.type} {data}"
+            tokens[0:0] = ["EVENT MANAGER: Pruning"]
         elif isPrune is not None:
-            string = f"EVENT MANAGER: Not pruning {e.type} {data}"
+            tokens[0:0] = ["EVENT MANAGER: Not pruning"]
         elif isEnqueue:
-            string = f"EVENT MANAGER: Queueing {e.type} {data}"
+            tokens[0:0] = ["EVENT MANAGER: Queueing"]
         else:
-            string = f"EVENT MANAGER: Dequeued {e.type} {data}"
-
-        debug.println(debug.LEVEL_INFO, string, True)
+            tokens[0:0] = ["EVENT MANAGER: Dequeued"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def _suspendEvents(self, triggeringEvent):
         self._eventsTriggeringSuspension.append(triggeringEvent)
@@ -510,9 +497,9 @@ class EventManager:
 
         try:
             ignore = isObjectEvent and self._ignore(e)
-        except Exception:
-            msg = f'ERROR: Exception evaluating event: {e}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+        except Exception as error:
+            tokens = ["EVENT MANAGER: Exception evaluating event:", e, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             ignore = True
         if ignore:
             if debug.debugEventQueue:
@@ -591,18 +578,22 @@ class EventManager:
                             or debug.eventDebugFilter.match(event.type)
                 if debugging:
                     startTime = time.time()
-                    debug.println(debug.eventDebugLevel,
-                                  "\nvvvvv PROCESS OBJECT EVENT %s (queue size: %i) vvvvv" \
-                                  % (event.type, self._eventQueue.qsize()))
+                    msg = (
+                        f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
+                        f"(queue size: {self._eventQueue.qsize()} vvvvv"
+                    )
+                    debug.printMessage(debug.eventDebugLevel, msg, False)
                 self._processObjectEvent(event)
                 if self._didSuspendEventsFor(event):
                     self._unsuspendEvents(event)
 
                 if debugging:
-                    debug.printMessage(debug.eventDebugLevel,
-                                  f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}")
-                    debug.printMessage(debug.eventDebugLevel,
-                                  f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n")
+                    msg = (
+                        f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+                        f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
+                    )
+                    debug.printMessage(debug.eventDebugLevel, msg, False)
+
                 debug.objEvent = None
 
             self._gidleLock.acquire()
@@ -668,8 +659,8 @@ class EventManager:
         - script: the script.
         """
 
-        msg = f'EVENT MANAGER: registering listeners for: {script}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: Registering listeners for:", script]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         for eventType in script.listeners.keys():
             self.registerListener(eventType)
@@ -682,8 +673,8 @@ class EventManager:
         - script: the script.
         """
 
-        msg = f'EVENT MANAGER: deregistering listeners for: {script}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: De-registering listeners for:", script]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         for eventType in script.listeners.keys():
             self.deregisterListener(eventType)
@@ -699,25 +690,27 @@ class EventManager:
         if not orca_state.activeScript:
             return
 
-        if isinstance(event, input_event.BrailleEvent):
-            function = orca_state.activeScript.processBrailleEvent
-            data = f"'{repr(event.event)}'"
-        else:
+        if not isinstance(event, input_event.BrailleEvent):
             return
 
+        data = f"'{repr(event.event)}'"
         eType = str(event.type).upper()
         startTime = time.time()
-        debug.println(debug.eventDebugLevel,
-                      f"\nvvvvv PROCESS {eType} {data} vvvvv")
+
+        msg = f"\nvvvvv PROCESS {eType} {data} vvvvv"
+        debug.printMessage(debug.eventDebugLevel, msg, False)
+
         try:
-            function(event)
-        except Exception:
-            debug.printException(debug.LEVEL_WARNING)
-            debug.printStack(debug.LEVEL_WARNING)
-        debug.printMessage(debug.eventDebugLevel,
-                      f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}")
-        debug.println(debug.eventDebugLevel,
-                      f"^^^^^ PROCESS {eType} {data} ^^^^^\n")
+            orca_state.activeScript.processBrailleEvent(event)
+        except Exception as error:
+            tokens = ["EVENT MANAGER: Exception processing event:", error]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+
+        msg = (
+            f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+            f"^^^^^ PROCESS {eType} {data} ^^^^^\n"
+        )
+        debug.printMessage(debug.eventDebugLevel, msg, False)
 
     @staticmethod
     def _getScriptForEvent(event):
@@ -729,8 +722,8 @@ class EventManager:
         script = None
         app = AXObject.get_application(event.source)
         if AXUtilities.is_defunct(app):
-            msg = f'WARNING: {app} is defunct. Cannot get script for event.'
-            debug.println(debug.LEVEL_WARNING, msg, True)
+            tokens = ["EVENT MANAGER:", app, "is defunct. Cannot get script for event."]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         skipCheck = [
@@ -749,12 +742,12 @@ class EventManager:
             "object:text-changed",
         ]
         check = not list(filter(lambda x: event.type.startswith(x), skipCheck))
-        msg = f'EVENT MANAGER: Getting script for {app} (check: {check})'
-        debug.println(debug.LEVEL_INFO, msg, True)
-        script = _scriptManager.getScript(app, event.source, sanityCheck=check)
+        tokens = ["EVENT MANAGER: Getting script for", app, "check:", check]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f'EVENT MANAGER: Script is {script}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        script = _scriptManager.getScript(app, event.source, sanityCheck=check)
+        tokens = ["EVENT MANAGER: Script is ", script]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
 
     def _isActivatableEvent(self, event, script=None):
@@ -968,8 +961,9 @@ class EventManager:
             _scriptManager.reclaimScripts()
 
         if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
-            msg = f'EVENT MANAGER: Ignoring defunct object: {event.source}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
                and orca_state.activeWindow == event.source:
                 msg = 'EVENT MANAGER: Clearing active window, script, and locus of focus'
@@ -980,8 +974,8 @@ class EventManager:
             return
 
         if AXUtilities.is_iconified(event.source):
-            msg = f'EVENT MANAGER: Ignoring iconified object: {event.source}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         if self._inFlood():
@@ -1005,13 +999,13 @@ class EventManager:
             indent = " " * 32
             debug.printDetails(debug.LEVEL_INFO, indent, event.source)
             if isinstance(event.any_data, Atspi.Accessible):
-                debug.println(debug.LEVEL_INFO, f'{indent}ANY DATA:')
+                debug.printMessage(debug.LEVEL_INFO, f"{indent}ANY DATA:")
                 debug.printDetails(debug.LEVEL_INFO, indent, event.any_data, includeApp=False)
 
         script = self._getScriptForEvent(event)
         if not script:
-            msg = f'ERROR: Could not get script for {event}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "ERROR: Could not get script for event"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
@@ -1021,31 +1015,31 @@ class EventManager:
         if setNewActiveScript:
             try:
                 _scriptManager.setActiveScript(script, reason)
-            except Exception:
-                msg = f'ERROR: Could not set active script for {event.source}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                tokens = ["EVENT MANAGER: Exception setting active script for",
+                          event.source, ":", error]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
         try:
             script.processObjectEvent(event)
-        except Exception:
-            msg = f'ERROR: Could not process {event.type}'
+        except Exception as error:
+            msg = f"EVENT MANAGER: Exception processing {event.type}: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        msg = (
-            f'EVENT MANAGER: locusOfFocus: {orca_state.locusOfFocus} '
-            f'activeScript: {orca_state.activeScript}'
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus,
+                  "activeScript:", orca_state.activeScript]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not orca_state.activeScript:
             return
 
-        attributes = orca_state.activeScript.getTransferableAttributes()
-        for key, value in attributes.items():
-            msg = f'EVENT MANAGER: {key}: {value}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            attributes = orca_state.activeScript.getTransferableAttributes()
+            for key, value in attributes.items():
+                msg = f"EVENT MANAGER: {key}: {value}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _processKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
         event = Atspi.DeviceEvent()
@@ -1063,7 +1057,7 @@ class EventManager:
 
         keyboardEvent = input_event.KeyboardEvent(event)
         if not keyboardEvent.is_duplicate:
-            debug.println(debug.LEVEL_INFO, f"\n{keyboardEvent}")
+            debug.printMessage(debug.LEVEL_INFO, f"\n{keyboardEvent}")
 
             # If pressing insert, then temporarily remove grab to allow toggling
             # with a double press
