@@ -538,7 +538,7 @@ class Context:
                 break
 
         msg = (
-            f"FLAT REVIEW: On line {self.lineIndex}, zone {self.zoneIndex} ",
+            f"FLAT REVIEW: On line {self.lineIndex}, zone {self.zoneIndex} "
             f"word {self.wordIndex}, char {self.charIndex}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
