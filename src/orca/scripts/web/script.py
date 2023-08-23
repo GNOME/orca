@@ -1346,8 +1346,9 @@ class Script(default.Script):
             msg = "WEB: Locus of focus changed to non-document obj"
             self._madeFindAnnouncement = False
             self._inFocusMode = False
+            msg = "locus of focus no longer in document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.refreshKeyGrabs("locus of focus no longer in document")
+            self.refreshKeyGrabs()
             return False
 
         if self.flatReviewPresenter.is_active():
