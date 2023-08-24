@@ -5528,6 +5528,13 @@ class Utilities:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
+        if not AXUtilities.is_menu_related(newLocusOfFocus) \
+           and (AXUtilities.is_check_menu_item(oldLocusOfFocus) \
+                or AXUtilities.is_radio_menu_item(oldLocusOfFocus)):
+            msg = "INFO: Not interrupting for locusOfFocus change, suspected menuitem state change"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
+
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
             msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
