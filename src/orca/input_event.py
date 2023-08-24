@@ -283,7 +283,7 @@ class KeyboardEvent(InputEvent):
         # trying to heuristically hack around this just by looking at the event
         # is not reliable. Ditto regarding asking Gdk for the numlock state.
         if self.keyval_name.startswith("KP"):
-            if event.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
+            if self.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
                 self._is_kp_with_numlock = True
 
         if self._script:
