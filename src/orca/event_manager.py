@@ -1040,19 +1040,7 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _processKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
-        event = Atspi.DeviceEvent()
-        if pressed:
-            event.type = Atspi.EventType.KEY_PRESSED_EVENT
-        else:
-            event.type = Atspi.EventType.KEY_RELEASED_EVENT
-        event.hw_code = keycode
-        event.id = keysym
-        event.modifiers = state
-        event.event_string = text
-        if event.event_string is None:
-            event.event_string = ""
-
-        keyboardEvent = input_event.KeyboardEvent(event)
+        keyboardEvent = input_event.KeyboardEvent(pressed, keycode, keysym, state, text)
         if not keyboardEvent.is_duplicate:
             debug.printMessage(debug.LEVEL_INFO, f"\n{keyboardEvent}")
 

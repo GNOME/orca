@@ -226,23 +226,30 @@ class KeyboardEvent(InputEvent):
                                 Gdk.KEY_Yacute,
                                 Gdk.KEY_yacute]
 
-    def __init__(self, event):
+    def __init__(self, pressed, keycode, keysym, modifiers, text):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
 
         Arguments:
-        - event: the AT-SPI keyboard event
+        - pressed: True if this is a key press, False for a release.
+        - keycode: the hardware keycode.
+        - keysym: the translated keysym.
+        - modifiers: a bitflag giving the active modifiers.
+        - text: the text that would be inserted if this key is pressed.
         """
 
         super().__init__(KEYBOARD_EVENT)
-        self.id = event.id
-        self.type = event.type
-        self.hw_code = event.hw_code
-        self.modifiers = event.modifiers & Gdk.ModifierType.MODIFIER_MASK
-        if event.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
+        self.id = keysym
+        if pressed:
+            self.type = Atspi.EventType.KEY_PRESSED_EVENT
+        else:
+            self.type = Atspi.EventType.KEY_RELEASED_EVENT
+        self.hw_code = keycode
+        self.modifiers = modifiers & Gdk.ModifierType.MODIFIER_MASK
+        if modifiers & (1 << Atspi.ModifierType.NUMLOCK):
             self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
-        self.event_string = event.event_string
-        self.keyval_name = Gdk.keyval_name(event.id)
-        if self.event_string  == "":
+        self.event_string = text
+        self.keyval_name = Gdk.keyval_name(keysym)
+        if self.event_string  == "" or self.event_string == " ":
             self.event_string = self.keyval_name
         self.timestamp = time.time()
         self.is_duplicate = self in [orca_state.lastInputEvent,
@@ -301,9 +308,8 @@ class KeyboardEvent(InputEvent):
 
         self.keyType = None
 
-        _isPressed = event.type == Atspi.EventType.KEY_PRESSED_EVENT
         role = AXObject.get_role(self._obj)
-        _mayEcho = _isPressed or role == Atspi.Role.TERMINAL
+        _mayEcho = pressed or role == Atspi.Role.TERMINAL
 
         if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
            and not KeyboardEvent.lastOrcaModifierAlone:
@@ -334,18 +340,18 @@ class KeyboardEvent(InputEvent):
             if self.isOrcaModifier() and not self.is_duplicate:
                 now = time.time()
                 if KeyboardEvent.lastOrcaModifierAlone:
-                    if _isPressed:
+                    if pressed:
                         KeyboardEvent.secondOrcaModifierTime = now
                     if (KeyboardEvent.secondOrcaModifierTime <
                         KeyboardEvent.lastOrcaModifierAloneTime + 0.5):
                         # double-orca, let the real action happen
                         self._bypassOrca = True
-                    if not _isPressed:
+                    if not pressed:
                         KeyboardEvent.lastOrcaModifierAlone = False
                         KeyboardEvent.lastOrcaModifierAloneTime = False
                 else:
-                    KeyboardEvent.orcaModifierPressed = _isPressed
-                    if _isPressed:
+                    KeyboardEvent.orcaModifierPressed = pressed
+                    if pressed:
                         KeyboardEvent.currentOrcaModifierAlone = True
                         KeyboardEvent.currentOrcaModifierAloneTime = now
                     else:
@@ -364,7 +370,7 @@ class KeyboardEvent(InputEvent):
             self.shouldEcho = settings.presentLockingKeys
             if self.shouldEcho is None:
                 self.shouldEcho = not settings.onlySpeakDisplayedText
-            self.shouldEcho = self.shouldEcho and _isPressed
+            self.shouldEcho = self.shouldEcho and pressed
         elif self.isAlphabeticKey():
             self.keyType = KeyboardEvent.TYPE_ALPHABETIC
             self.shouldEcho = _mayEcho \
@@ -391,7 +397,7 @@ class KeyboardEvent(InputEvent):
         if not self.isModifierKey():
             self.setClickCount()
 
-        if orca_state.bypassNextCommand and _isPressed:
+        if orca_state.bypassNextCommand and pressed:
             KeyboardEvent.orcaModifierPressed = False
 
         if KeyboardEvent.orcaModifierPressed:
