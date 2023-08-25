@@ -148,25 +148,23 @@ def sayAll(utteranceIterator, progressCallback):
 def _speak(text, acss, interrupt):
     """Speaks the individual string using the given ACSS."""
 
-    logLine = "SPEECH OUTPUT: '" + text + "'"
-    extraDebug = ""
-    if acss in list(settings.voices.values()):
-        for key in settings.voices:
-            if acss == settings.voices[key]:
-                if key != settings.DEFAULT_VOICE:
-                    extraDebug = f" voice={key}"
-                break
+    if not _speechserver:
+        logLine = f"SPEECH OUTPUT: '{text}' {acss}"
+        debug.println(debug.LEVEL_INFO, logLine, True)
+        log.info(logLine)
+        return
 
-    debug.println(debug.LEVEL_INFO, logLine + extraDebug + str(acss), True)
-    log.info(logLine + extraDebug)
+    voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
+    try:
+        voice.update(__resolveACSS(acss))
+    except Exception as error:
+        msg = f"SPEECH: Exception updated voice with {acss}: {error}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    if _speechserver:
-        voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
-        try:
-            voice.update(__resolveACSS(acss))
-        except Exception:
-            pass
-        _speechserver.speak(text, __resolveACSS(voice), interrupt)
+    resolvedVoice = __resolveACSS(voice)
+    msg = f"SPEECH OUTPUT: '{text}' {resolvedVoice}"
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    _speechserver.speak(text, resolvedVoice, interrupt)
 
 def speak(content, acss=None, interrupt=True):
     """Speaks the given content.  The content can be either a simple
@@ -190,13 +188,19 @@ def speak(content, acss=None, interrupt=True):
         debug.println(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
+    msg = f"SPEECH: Speak {content} (ACSS: {acss})"
+    debug.println(debug.LEVEL_INFO, msg, True)
+
     if isinstance(content, str):
         _speak(content, acss, interrupt)
     if not isinstance(content, list):
         return
 
     toSpeak = []
-    activeVoice = ACSS(acss)
+    activeVoice = acss
+    if acss is not None:
+        activeVoice = ACSS(acss)
+
     for element in content:
         if not isinstance(element, validTypes):
             debug.println(debug.LEVEL_WARNING, error % element, True)
@@ -213,8 +217,12 @@ def speak(content, acss=None, interrupt=True):
                     toSpeak[-1] += '.'
             elif isinstance(element, ACSS):
                 newVoice.update(element)
+                if activeVoice is None:
+                    activeVoice = newVoice
                 if newVoice == activeVoice:
                     continue
+                msg = f"SPEECH: New voice {newVoice} != active voice {activeVoice}"
+                debug.println(debug.LEVEL_INFO, msg, True)
                 newItemsToSpeak.append(toSpeak.pop())
 
             if toSpeak:
@@ -236,6 +244,12 @@ def speakKeyEvent(event, acss=None):
 
     if settings.silenceSpeech:
         return
+
+    global _timestamp
+    if _timestamp:
+        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
+        debug.println(debug.LEVEL_INFO, msg, True)
+    _timestamp = time.time()
 
     keyname = event.getKeyName()
     lockingStateString = event.getLockingStateString()
@@ -261,6 +275,12 @@ def speakCharacter(character, acss=None):
     """
     if settings.silenceSpeech:
         return
+
+    global _timestamp
+    if _timestamp:
+        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
+        debug.println(debug.LEVEL_INFO, msg, True)
+    _timestamp = time.time()
 
     acss = __resolveACSS(acss)
     msg = "SPEECH OUTPUT: '" + character + "' " + str(acss)
