@@ -5560,6 +5560,9 @@ class Utilities:
         return True
 
     def stringsAreRedundant(self, str1, str2, threshold=0.5):
+        if not (str1 and str2):
+            return False
+
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
         msg = f"INFO: Similarity between '{str1}', '{str2}': {similarity} (threshold: {threshold})"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
