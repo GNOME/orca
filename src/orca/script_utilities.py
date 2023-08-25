@@ -35,6 +35,7 @@ import math
 import re
 import subprocess
 import time
+from difflib import SequenceMatcher
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -5567,3 +5568,9 @@ class Utilities:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         return True
+
+    def stringsAreRedundant(self, str1, str2, threshold=0.5):
+        similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
+        msg = f"INFO: Similarity between '{str1}', '{str2}': {similarity} (threshold: {threshold})"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return similarity >= threshold
