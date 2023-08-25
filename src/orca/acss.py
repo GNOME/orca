@@ -81,6 +81,8 @@ class ACSS(dict):
             self['established'] = False
 
     def __eq__(self, other):
+        if not isinstance(other, ACSS):
+            return False
         if self.get(ACSS.FAMILY) != other.get(ACSS.FAMILY):
             return False
         if self.get(ACSS.RATE) != other.get(ACSS.RATE):
