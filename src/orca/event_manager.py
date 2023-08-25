@@ -583,7 +583,7 @@ class EventManager:
                     startTime = time.time()
                     msg = (
                         f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
-                        f"(queue size: {self._eventQueue.qsize()} vvvvv"
+                        f"(queue size: {self._eventQueue.qsize()}) vvvvv"
                     )
                     debug.printMessage(debug.eventDebugLevel, msg, False)
                 self._processObjectEvent(event)
