@@ -457,48 +457,36 @@ class Generator:
         if self._script.pointOfReference.get('usedDescriptionForUnrelatedLabels'):
             return []
 
-        role = args.get('role', AXObject.get_role(obj))
-
-        # Unity Panel Service menubar items are labels which claim focus and
-        # have an accessible description of the text + underscore symbol used
-        # to create the mnemonic. We'll work around that here for now.
-        if role == Atspi.Role.LABEL:
+        description = AXObject.get_description(obj) \
+            or self._script.utilities.displayedDescription(obj) or ""
+        if not description:
             return []
 
         name = AXObject.get_name(obj)
-        description = AXObject.get_description(obj)
+        role = args.get('role', AXObject.get_role(obj))
 
-        if role == Atspi.Role.ICON:
-            name = self._script.utilities.displayedText(obj) or ""
+        try:
+            tokens = self._script.formatting[self._mode][role][args.get('formatType')].split()
+            isLabelAndName = 'labelAndName' in tokens
+            isLabelOrName = 'labelOrName' in tokens
+        except Exception:
+            isLabelAndName = False
+            isLabelOrName = False
 
-        result = []
-        if description:
-            try:
-                tokens = self._script.formatting[self._mode][role][args.get('formatType')].split()
-                isLabelAndName = 'labelAndName' in tokens
-                isLabelOrName = 'labelOrName' in tokens
-            except Exception:
-                isLabelAndName = False
-                isLabelOrName = False
+        canUse = True
+        label = self._script.utilities.displayedLabel(obj) or ""
+        if isLabelAndName:
+            canUse = not self._script.utilities.stringsAreRedundant(name, description) \
+                     and not self._script.utilities.stringsAreRedundant(label, description)
+        elif isLabelOrName and label:
+            canUse = not self._script.utilities.stringsAreRedundant(label, description)
+        else:
+            canUse = not self._script.utilities.stringsAreRedundant(name, description)
 
-            label = self._script.utilities.displayedLabel(obj) or ""
-            desc = description.lower()
-            canUse = True
-            if isLabelAndName:
-                canUse = desc not in name.lower() and desc not in label.lower()
-            elif isLabelOrName and label:
-                canUse = desc not in label.lower()
-            elif isLabelOrName and name:
-                canUse = desc not in name.lower()
-            if canUse:
-                result.append(description)
+        if not canUse:
+            return []
 
-        if not result:
-            desc = self._script.utilities.displayedDescription(obj)
-            if desc:
-                result.append(desc)
-
-        return result
+        return [description]
 
     def _generateLabel(self, obj, **args):
         """Returns the label for an object as an array of strings for use by
