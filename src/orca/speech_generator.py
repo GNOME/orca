@@ -2895,7 +2895,7 @@ class SpeechGenerator(generator.Generator):
 
         voicename = voiceType.get(key) or voiceType.get(DEFAULT)
         voices = _settingsManager.getSetting('voices')
-        voice = acss.ACSS(voices.get(voiceType.get(DEFAULT)))
+        voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), {}))
 
         language = args.get('language')
         dialect = args.get('dialect', '')
@@ -2917,9 +2917,9 @@ class SpeechGenerator(generator.Generator):
             string = args.get('string', '')
             obj = args.get('obj')
             if AXUtilities.is_link(obj):
-                voice.update(voices.get(voiceType.get(HYPERLINK)))
+                voice.update(voices.get(voiceType.get(HYPERLINK), {}))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice.update(voices.get(voiceType.get(UPPERCASE)))
+                voice.update(voices.get(voiceType.get(UPPERCASE), {}))
         else:
             override = voices.get(voicename)
             if override and override.get('established', True):
