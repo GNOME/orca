@@ -3246,10 +3246,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # in case the user played with the sliders.
         #
         voices = _settingsManager.getSetting('voices')
-        defaultVoice = voices[settings.DEFAULT_VOICE]
-        defaultVoice[acss.ACSS.GAIN] = self.savedGain
-        defaultVoice[acss.ACSS.AVERAGE_PITCH] = self.savedPitch
-        defaultVoice[acss.ACSS.RATE] =  self.savedRate
+        defaultVoice = voices.get(settings.DEFAULT_VOICE)
+        if defaultVoice is not None:
+            defaultVoice[acss.ACSS.GAIN] = self.savedGain
+            defaultVoice[acss.ACSS.AVERAGE_PITCH] = self.savedPitch
+            defaultVoice[acss.ACSS.RATE] = self.savedRate
 
     def saveBasicSettings(self):
         if not self._isInitialSetup:
