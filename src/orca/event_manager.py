@@ -154,6 +154,9 @@ class EventManager:
     def _isDuplicateEvent(self, event):
         """Returns True if this event is already in the event queue."""
 
+        if self._inFlood() and self._prioritizeDuringFlood(event):
+            return False
+
         def isSame(x):
             return x.type == event.type \
                 and x.source == event.source \
