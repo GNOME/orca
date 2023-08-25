@@ -2460,7 +2460,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setRateForVoiceType(voiceType, rate)
         voices = _settingsManager.getSetting('voices')
-        voices[settings.DEFAULT_VOICE][acss.ACSS.RATE] = rate
+        voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.RATE] = rate
         _settingsManager.setSetting('voices', voices)
 
     def pitchValueChanged(self, widget):
@@ -2477,7 +2477,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setPitchForVoiceType(voiceType, pitch)
         voices = _settingsManager.getSetting('voices')
-        voices[settings.DEFAULT_VOICE][acss.ACSS.AVERAGE_PITCH] = pitch
+        voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.AVERAGE_PITCH] = pitch
         _settingsManager.setSetting('voices', voices)
 
     def volumeValueChanged(self, widget):
@@ -2494,7 +2494,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setVolumeForVoiceType(voiceType, volume)
         voices = _settingsManager.getSetting('voices')
-        voices[settings.DEFAULT_VOICE][acss.ACSS.GAIN] = volume
+        voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.GAIN] = volume
         _settingsManager.setSetting('voices', voices)
 
     def checkButtonToggled(self, widget):
