@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-27 10:13+0000\n"
-"PO-Revision-Date: 2023-08-27 14:02+0330\n"
+"POT-Creation-Date: 2023-08-27 10:32+0000\n"
+"PO-Revision-Date: 2023-08-27 14:10+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -11570,21 +11570,21 @@ msgstr[0] ""
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
+msgstr[0] "%d پرونده پیدا شد"
 
 #. Translators: This message presents the number of forms in a document.
 #: src/orca/messages.py:2603
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
-msgstr[0] ""
+msgstr[0] "%d فرم"
 
 #. Translators: This message presents the number of headings in a document.
 #: src/orca/messages.py:2610
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
-msgstr[0] ""
+msgstr[0] "%d عنوان"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
@@ -11601,7 +11601,7 @@ msgstr[0] "%d مورد"
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] ""
+msgstr[0] "%d نشانه"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -11610,7 +11610,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
-msgstr[0] ""
+msgstr[0] "%d مورد پیدا شد"
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
@@ -11619,7 +11619,7 @@ msgstr[0] ""
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] ""
+msgstr[0] "ترک %d نقل‌قول."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
@@ -11627,7 +11627,7 @@ msgstr[0] ""
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] ""
+msgstr[0] "ترک %d سیاهه."
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -11637,14 +11637,14 @@ msgstr[0] ""
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2651
 msgid "List of unknown size"
-msgstr ""
+msgstr "سیاهه‌ای با اندازهٔ ناعلوم"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2654
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] ""
+msgstr[0] "سیاهه‌ای با %d مورد"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -11653,7 +11653,7 @@ msgstr[0] ""
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2663
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "خوراکی با اندازهٔ نامعلوم"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -11661,7 +11661,7 @@ msgstr ""
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] ""
+msgstr[0] "خوراکی با %d مقاله"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
@@ -11670,7 +11670,7 @@ msgstr[0] ""
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
-msgstr[0] ""
+msgstr[0] "سیاههٔ شرحی با %d عبارت"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
@@ -11680,7 +11680,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
-msgstr[0] ""
+msgstr[0] "%d مقدار"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11688,7 +11688,7 @@ msgstr[0] ""
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] ""
+msgstr[0] "جدول ریاضی با %d ردیف"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11700,7 +11700,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] ""
+msgstr[0] "%d ردیف"
 
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
@@ -11709,7 +11709,7 @@ msgstr[0] ""
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] ""
+msgstr[0] "جدول ریاضی تودرتو با %d ردیف"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -14067,7 +14067,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:543
 msgctxt "textattr"
 msgid "expanded"
-msgstr ""
+msgstr "گسترده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
