@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-27 10:32+0000\n"
-"PO-Revision-Date: 2023-08-27 14:10+0330\n"
+"POT-Creation-Date: 2023-08-27 10:41+0000\n"
+"PO-Revision-Date: 2023-08-27 14:20+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -11454,7 +11454,7 @@ msgstr ""
 #: src/orca/messages.py:2504
 #, python-format
 msgid "Unicode %s"
-msgstr ""
+msgstr "%s یونی‌کد"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
@@ -11474,13 +11474,13 @@ msgstr "انجام دوباره"
 #: src/orca/messages.py:2515
 #, python-format
 msgid "Screen reader version %s."
-msgstr ""
+msgstr "صفحه‌خوان نگارش %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
 #: src/orca/messages.py:2519
 msgid "white space"
-msgstr ""
+msgstr "فضای خالی"
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. top of a page or list is reached without that object being found, we "wrap" to
@@ -11488,7 +11488,7 @@ msgstr ""
 #. is taking place.
 #: src/orca/messages.py:2525
 msgid "Wrapping to bottom."
-msgstr ""
+msgstr "پیچش به پایین."
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. bottom of a page or list is reached without that object being found, we "wrap"
@@ -11496,14 +11496,14 @@ msgstr ""
 #. this is taking place.
 #: src/orca/messages.py:2531
 msgid "Wrapping to top."
-msgstr ""
+msgstr "پیچش به بالا."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
 #: src/orca/messages.py:2536
 msgid "0 items"
-msgstr ""
+msgstr "۰ مورد"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -11519,7 +11519,7 @@ msgstr[0] ""
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
-msgstr[0] ""
+msgstr[0] "%d ستون"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -11537,7 +11537,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
-msgstr[0] ""
+msgstr[0] "%d نویسه بیش از حد طولانی"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -11546,7 +11546,7 @@ msgstr[0] ""
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
-msgstr[0] ""
+msgstr[0] "(%d گفت‌وگو)"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -11555,14 +11555,14 @@ msgstr[0] ""
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
-msgstr[0] ""
+msgstr[0] "%d گفت‌وگوی بدون تمرکز"
 
 #. Translators: This is the size of a file in bytes
 #: src/orca/messages.py:2591
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
-msgstr[0] ""
+msgstr[0] "%d بایت"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
@@ -11734,7 +11734,7 @@ msgstr[0] "%d درصد."
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
-msgstr[0] ""
+msgstr[0] "%d درصد از سند خوانده شد"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
@@ -11751,7 +11751,7 @@ msgstr[0] "%d پیکسل"
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
-msgstr[0] ""
+msgstr[0] "%(count)d نویسهٔ %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
@@ -11759,7 +11759,7 @@ msgstr[0] ""
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
-msgstr[0] ""
+msgstr[0] "%(index)d از %(total)d مورد گزیده شد"
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands which are not specific to the
@@ -11769,7 +11769,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
-msgstr[0] ""
+msgstr[0] "%d میان‌بر پیش‌گزیدهٔ صفحه‌خوان پیدا شد."
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
@@ -11778,7 +11778,7 @@ msgstr[0] ""
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-msgstr[0] ""
+msgstr[0] "%(count)d میان‌بر صفحه‌خوان برای %(application)s پیدا شد."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
