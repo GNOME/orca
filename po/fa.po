@@ -1,14 +1,14 @@
 # Persian translation for orca.
 # Copyright (C) 2022 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Danial Behzadi <dani.behzi@ubuntu.com>, 2022.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2022-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-26 15:31+0000\n"
-"PO-Revision-Date: 2023-08-27 13:53+0330\n"
+"POT-Creation-Date: 2023-08-27 10:24+0000\n"
+"PO-Revision-Date: 2023-08-27 14:07+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -2497,8 +2497,7 @@ msgstr ""
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:613
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room"
+msgid "Toggle whether we prefix chat room messages with the name of the chat room"
 msgstr ""
 
 #. Translators: this is a command for a button on a refreshable braille display
@@ -5016,9 +5015,9 @@ msgstr ""
 #: src/orca/guilabels.py:485
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved "
-"in this profile will be lost. Do you want to continue and remove this "
-"profile and all related settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in "
+"this profile will be lost. Do you want to continue and remove this profile and "
+"all related settings?"
 msgstr ""
 
 #. Translators: Orca has a setting which determines which progress bar updates
@@ -5540,7 +5539,7 @@ msgstr "پیش‌گزیده"
 #: src/orca/guilabels.py:831
 msgctxt "VoiceType"
 msgid "Hyperlink"
-msgstr ""
+msgstr "ابرپیوند"
 
 #. Translators: This refers to the voice used by Orca when presenting information
 #. which is not displayed on the screen as text, but is still being communicated
@@ -5558,7 +5557,7 @@ msgstr "سامانه"
 #: src/orca/guilabels.py:843
 msgctxt "VoiceType"
 msgid "Uppercase"
-msgstr ""
+msgstr "حروف بزرگ"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
@@ -5691,7 +5690,7 @@ msgstr ""
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
-msgstr[0] ""
+msgstr[0] "%d آگاهی"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
@@ -8371,8 +8370,7 @@ msgstr ""
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: src/orca/messages.py:244
-msgid ""
-"Cannot start the screen reader because it cannot connect to the Desktop."
+msgid "Cannot start the screen reader because it cannot connect to the Desktop."
 msgstr ""
 
 #. Translators: This message is presented to the user who attempts to launch Orca
@@ -9626,11 +9624,10 @@ msgstr ""
 #. Mode.
 #: src/orca/messages.py:1196
 msgid ""
-"Entering learn mode.  Press any key to hear its function.  To view the "
-"screen reader’s documentation, press F1. To get a list of the screen "
-"reader’s default shortcuts, press F2. To get a list of the screen reader’s "
-"shortcuts for the current application, press F3. To exit learn mode, press "
-"the escape key."
+"Entering learn mode.  Press any key to hear its function.  To view the screen "
+"reader’s documentation, press F1. To get a list of the screen reader’s default "
+"shortcuts, press F2. To get a list of the screen reader’s shortcuts for the "
+"current application, press F3. To exit learn mode, press the escape key."
 msgstr ""
 
 #. Translators: This message is presented when a user is navigating within a
@@ -11573,21 +11570,21 @@ msgstr[0] ""
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
+msgstr[0] "%d پرونده پیدا شد"
 
 #. Translators: This message presents the number of forms in a document.
 #: src/orca/messages.py:2603
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
-msgstr[0] ""
+msgstr[0] "%d فرم"
 
 #. Translators: This message presents the number of headings in a document.
 #: src/orca/messages.py:2610
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
-msgstr[0] ""
+msgstr[0] "%d عنوان"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
@@ -11604,7 +11601,7 @@ msgstr[0] "%d مورد"
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] ""
+msgstr[0] "%d نشانه"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -11613,7 +11610,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
-msgstr[0] ""
+msgstr[0] "%d مورد پیدا شد"
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
@@ -11622,7 +11619,7 @@ msgstr[0] ""
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] ""
+msgstr[0] "ترک %d نقل‌قول."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
@@ -11630,7 +11627,7 @@ msgstr[0] ""
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] ""
+msgstr[0] "ترک %d سیاهه."
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -11640,14 +11637,14 @@ msgstr[0] ""
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2651
 msgid "List of unknown size"
-msgstr ""
+msgstr "سیاهه‌ای با اندازهٔ ناعلوم"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2654
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] ""
+msgstr[0] "سیاهه‌ای با %d مورد"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -11656,7 +11653,7 @@ msgstr[0] ""
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2663
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "خوراکی با اندازهٔ نامعلوم"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -11664,7 +11661,7 @@ msgstr ""
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] ""
+msgstr[0] "خوراکی با %d مقاله"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
@@ -11673,7 +11670,7 @@ msgstr[0] ""
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
-msgstr[0] ""
+msgstr[0] "سیاههٔ شرحی با %d عبارت"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
@@ -11683,7 +11680,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
-msgstr[0] ""
+msgstr[0] "%d مقدار"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11691,7 +11688,7 @@ msgstr[0] ""
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] ""
+msgstr[0] "جدول ریاضی با %d ردیف"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11699,12 +11696,11 @@ msgstr[0] ""
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2691 src/orca/messages.py:2707
-#: src/orca/messages.py:2815
+#: src/orca/messages.py:2691 src/orca/messages.py:2707 src/orca/messages.py:2815
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] ""
+msgstr[0] "%d ردیف"
 
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
@@ -11713,7 +11709,7 @@ msgstr[0] ""
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] ""
+msgstr[0] "جدول ریاضی تودرتو با %d ردیف"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -11721,7 +11717,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] ""
+msgstr[0] "%d پیام.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
@@ -11729,7 +11725,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
-msgstr[0] ""
+msgstr[0] "%d درصد."
 
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
@@ -11790,7 +11786,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
-msgstr[0] ""
+msgstr[0] "%d فاصله"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
@@ -11798,14 +11794,14 @@ msgstr[0] ""
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] ""
+msgstr[0] "%d جهش"
 
 #. Translators: This message presents the number of tables in a document.
 #: src/orca/messages.py:2783
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
-msgstr[0] ""
+msgstr[0] "%d جدول"
 
 #. Translators: This message describes a table for which both the
 #. number of rows and the number of columns are unknown. Normally
@@ -11813,7 +11809,7 @@ msgstr[0] ""
 #. 15 columns"). When both counts are unknown, it presents this.
 #: src/orca/messages.py:2792
 msgid "table of unknown size"
-msgstr ""
+msgstr "جدولی با اندازهٔ نامعلوم"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
@@ -11822,7 +11818,7 @@ msgstr ""
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
-msgstr[0] ""
+msgstr[0] "جدولی با %d ستون، شمار ردیف‌ها نامعلوم"
 
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
@@ -11831,14 +11827,14 @@ msgstr[0] ""
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
-msgstr[0] ""
+msgstr[0] "جدولی با %d ردیف، شمار ستون‌ها نامعلوم"
 
 #. Translators: this represents the number of rows in a table.
 #: src/orca/messages.py:2810
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
-msgstr[0] ""
+msgstr[0] "جدولی با %d ردیف"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
@@ -11846,7 +11842,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] ""
+msgstr[0] "%d ثانیه پیش"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
@@ -11900,7 +11896,7 @@ msgstr "تغییر وضعیت"
 #: src/orca/object_properties.py:41
 #, python-format
 msgid "on %(index)d of %(total)d"
-msgstr ""
+msgstr "در %(index)d از %(total)d"
 
 #. Translators: this refers to the position of an item in a list or group of
 #. objects, such as menu items in a menu, radio buttons in a radio button group,
@@ -11908,7 +11904,7 @@ msgstr ""
 #: src/orca/object_properties.py:46
 #, python-format
 msgid "%(index)d of %(total)d"
-msgstr ""
+msgstr "%(index)d از %(total)d"
 
 #. Translators: this refers to the position of an item in a list for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -11920,7 +11916,7 @@ msgstr ""
 #: src/orca/object_properties.py:55
 #, python-format
 msgid "item %(index)d"
-msgstr ""
+msgstr "مورد %(index)d"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -11930,21 +11926,21 @@ msgstr ""
 #: src/orca/object_properties.py:67
 #, python-format
 msgid "LEVEL %d"
-msgstr ""
+msgstr "سطح  %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the spoken version.
 #: src/orca/object_properties.py:71
 #, python-format
 msgid "tree level %d"
-msgstr ""
+msgstr "سطح درخت %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the braille version.
 #: src/orca/object_properties.py:75
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "سطح درخت %d"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11961,7 +11957,7 @@ msgstr ""
 #: src/orca/object_properties.py:89
 #, python-format
 msgid "details for %s"
-msgstr ""
+msgstr "جزییات %s"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11979,7 +11975,7 @@ msgstr ""
 #: src/orca/object_properties.py:104
 #, python-format
 msgid "has details in %s"
-msgstr ""
+msgstr "جزییاتی در %s دارد"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11998,7 +11994,7 @@ msgstr ""
 #. typed or arrowed to.
 #: src/orca/object_properties.py:118
 msgid "editable combo box"
-msgstr ""
+msgstr "جعبهٔ بازشوندهٔ ویرایش‌پذیر"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12006,7 +12002,7 @@ msgstr ""
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:124
 msgid "editable content"
-msgstr ""
+msgstr "محتوای ویرایش‌پذیر"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12326,7 +12322,7 @@ msgstr ""
 #: src/orca/object_properties.py:339
 #, python-format
 msgid "h%d"
-msgstr ""
+msgstr "س%d"
 
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
@@ -12334,7 +12330,7 @@ msgstr ""
 #: src/orca/object_properties.py:344
 #, python-format
 msgid "%(role)s level %(level)d"
-msgstr ""
+msgstr "%(role)s سطح %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12343,7 +12339,7 @@ msgstr ""
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:351
 msgid "horizontal scroll bar"
-msgstr ""
+msgstr "نوار لغزش افقی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12352,7 +12348,7 @@ msgstr ""
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:358
 msgid "vertical scroll bar"
-msgstr ""
+msgstr "نوار لغزش عمودی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12363,7 +12359,7 @@ msgstr ""
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:367
 msgid "horizontal slider"
-msgstr ""
+msgstr "سرندهٔ افقی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12374,7 +12370,7 @@ msgstr ""
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:376
 msgid "vertical slider"
-msgstr ""
+msgstr "سرندهٔ عمودی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12388,7 +12384,7 @@ msgstr ""
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:388
 msgid "horizontal splitter"
-msgstr ""
+msgstr "جداساز افقی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12402,7 +12398,7 @@ msgstr ""
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:400
 msgid "vertical splitter"
-msgstr ""
+msgstr "جداساز عمودی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12417,7 +12413,7 @@ msgstr "کلید"
 #. of icons.
 #: src/orca/object_properties.py:410
 msgid "Icon panel"
-msgstr ""
+msgstr "تابلوی نقشک"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12499,7 +12495,7 @@ msgstr "جست‌وجو"
 #. already read.
 #: src/orca/object_properties.py:469
 msgid "visited link"
-msgstr ""
+msgstr "پیوند دیده شده"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12507,52 +12503,52 @@ msgstr ""
 #. activates the button.
 #: src/orca/object_properties.py:475
 msgid "menu button"
-msgstr ""
+msgstr "دکمهٔ فهرست"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
 #: src/orca/object_properties.py:479
 msgid "sorted ascending"
-msgstr ""
+msgstr "صعودی مرتّب شده"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to descending.
 #: src/orca/object_properties.py:483
 msgid "sorted descending"
-msgstr ""
+msgstr "نزولی مرتّب شده"
 
 #. Translators: This string refers to a row or column whose sort-order has been set,
 #. but the nature of the sort order is unknown or something other than ascending or
 #. descending.
 #: src/orca/object_properties.py:488
 msgid "sorted"
-msgstr ""
+msgstr "مرتّب شده"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
 #: src/orca/object_properties.py:492
 msgid "clickable"
-msgstr ""
+msgstr "قابل کلیک"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
 #: src/orca/object_properties.py:497
 msgid "collapsed"
-msgstr ""
+msgstr "جمع شده"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
 #: src/orca/object_properties.py:502
 msgid "expanded"
-msgstr ""
+msgstr "گسترده"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: src/orca/object_properties.py:506
 msgid "has long description"
-msgstr ""
+msgstr "توضیحات بلندی دارد"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
@@ -13382,10 +13378,10 @@ msgstr "ویژگی‌های متن"
 #.
 #: src/orca/phonnames.py:53
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
+"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
+"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
+"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
 
 #. Translators: this attribute specifies the background color of the text.
@@ -14071,7 +14067,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:543
 msgctxt "textattr"
 msgid "expanded"
-msgstr ""
+msgstr "گسترده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14365,8 +14361,7 @@ msgstr "فاصله را برای تغییر حالت بزنید."
 #. with a combobox.
 #: src/orca/tutorialgenerator.py:193
 msgid "Press space to expand, and use up and down to select an item."
-msgstr ""
-"برای گشایش فاصله را زده و برای گزینش مورد از بالا و پایین استفاده کنید."
+msgstr "برای گشایش فاصله را زده و برای گزینش مورد از بالا و پایین استفاده کنید."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
@@ -14436,8 +14431,8 @@ msgstr "برای فعال‌سازی کلید فاصله را بفشارید."
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
-"از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار "
-"دلخواه عددیتان را بنویسید."
+"از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه "
+"عددیتان را بنویسید."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: src/orca/tutorialgenerator.py:644
@@ -14447,11 +14442,11 @@ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید
 #. Translators: this is a tip for the user, how to navigate menus.
 #: src/orca/tutorialgenerator.py:669
 msgid ""
-"To navigate, press left or right arrow. To move through items press up or "
-"down arrow."
+"To navigate, press left or right arrow. To move through items press up or down "
+"arrow."
 msgstr ""
-"برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، "
-"کلیدهای بالا یا پایین را بفشارید."
+"برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، کلیدهای "
+"بالا یا پایین را بفشارید."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menus.
@@ -14463,8 +14458,8 @@ msgstr "برای ورود به زیرمنو، کلید جهت راست را فش
 #. on a slider.
 #: src/orca/tutorialgenerator.py:709
 msgid ""
-"To decrease press left arrow, to increase press right arrow. To go to "
-"minimum press home, and for maximum press end."
+"To decrease press left arrow, to increase press right arrow. To go to minimum "
+"press home, and for maximum press end."
 msgstr ""
 "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
 "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
