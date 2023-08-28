@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-27 10:38+0000\n"
-"PO-Revision-Date: 2023-08-27 14:20+0330\n"
+"POT-Creation-Date: 2023-08-27 10:51+0000\n"
+"PO-Revision-Date: 2023-08-28 11:40+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -109,7 +109,7 @@ msgstr ""
 #: src/orca/braille_rolenames.py:91
 msgctxt "shortbraille"
 msgid "dial"
-msgstr ""
+msgstr "شماره‌گیری"
 
 #. Translators: short braille for the rolename of a dialog.
 #: src/orca/braille_rolenames.py:94
@@ -2554,7 +2554,7 @@ msgstr ""
 #. button, the display scrolls to position containing the cursor.
 #: src/orca/cmdnames.py:654
 msgid "Cursor Position"
-msgstr ""
+msgstr "موقعیت مکان‌نما"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -4364,7 +4364,7 @@ msgstr ""
 #: src/orca/colornames.py:700
 msgctxt "color name"
 msgid "violet"
-msgstr ""
+msgstr "بنفش"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -5086,7 +5086,7 @@ msgstr ""
 #: src/orca/guilabels.py:531
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr ""
+msgstr "نقل نقول"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5095,7 +5095,7 @@ msgstr ""
 #: src/orca/guilabels.py:537
 msgctxt "structural navigation"
 msgid "Button"
-msgstr ""
+msgstr "دکمه"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5104,7 +5104,7 @@ msgstr ""
 #: src/orca/guilabels.py:543
 msgctxt "structural navigation"
 msgid "Caption"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5113,7 +5113,7 @@ msgstr ""
 #: src/orca/guilabels.py:549
 msgctxt "structural navigation"
 msgid "Check Box"
-msgstr ""
+msgstr "کادر"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5122,7 +5122,7 @@ msgstr ""
 #: src/orca/guilabels.py:555
 msgctxt "structural navigation"
 msgid "Clickable"
-msgstr ""
+msgstr "قابل کلیک"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5131,7 +5131,7 @@ msgstr ""
 #: src/orca/guilabels.py:561
 msgctxt "structural navigation"
 msgid "Combo Box"
-msgstr ""
+msgstr "جعبهٔ ترکیبی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5149,7 +5149,7 @@ msgstr "شرح"
 #: src/orca/guilabels.py:573
 msgctxt "structural navigation"
 msgid "Heading"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5158,7 +5158,7 @@ msgstr ""
 #: src/orca/guilabels.py:579
 msgctxt "structural navigation"
 msgid "Internal Frame"
-msgstr ""
+msgstr "قاب درونی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5187,7 +5187,7 @@ msgstr "برچسب"
 #: src/orca/guilabels.py:599
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr ""
+msgstr "نشانه"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5197,7 +5197,7 @@ msgstr ""
 #: src/orca/guilabels.py:606
 msgctxt "structural navigation"
 msgid "Level"
-msgstr ""
+msgstr "سطح"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5224,7 +5224,7 @@ msgstr "فهرست"
 #: src/orca/guilabels.py:624
 msgctxt "structural navigation"
 msgid "List Item"
-msgstr ""
+msgstr "مورد سیاهه"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5233,7 +5233,7 @@ msgstr ""
 #: src/orca/guilabels.py:630
 msgctxt "structural navigation"
 msgid "Object"
-msgstr ""
+msgstr "شئ"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5242,7 +5242,7 @@ msgstr ""
 #: src/orca/guilabels.py:636
 msgctxt "structural navigation"
 msgid "Paragraph"
-msgstr ""
+msgstr "پاراگراف"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5251,7 +5251,7 @@ msgstr ""
 #: src/orca/guilabels.py:642
 msgctxt "structural navigation"
 msgid "Radio Button"
-msgstr ""
+msgstr "دکمهٔ رادویی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5270,7 +5270,7 @@ msgstr "نقش"
 #: src/orca/guilabels.py:655
 msgctxt "structural navigation"
 msgid "Selected Item"
-msgstr ""
+msgstr "مورد گزیده"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5315,7 +5315,7 @@ msgstr "مقدار"
 #: src/orca/guilabels.py:685
 msgctxt "structural navigation"
 msgid "Blockquotes"
-msgstr ""
+msgstr "نقل قول‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5323,7 +5323,7 @@ msgstr ""
 #: src/orca/guilabels.py:690
 msgctxt "structural navigation"
 msgid "Buttons"
-msgstr ""
+msgstr "دکمه‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5331,7 +5331,7 @@ msgstr ""
 #: src/orca/guilabels.py:695
 msgctxt "structural navigation"
 msgid "Check Boxes"
-msgstr ""
+msgstr "کادرها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5340,7 +5340,7 @@ msgstr ""
 #: src/orca/guilabels.py:701
 msgctxt "structural navigation"
 msgid "Clickables"
-msgstr ""
+msgstr "کلیک‌پذیرها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5348,7 +5348,7 @@ msgstr ""
 #: src/orca/guilabels.py:706
 msgctxt "structural navigation"
 msgid "Combo Boxes"
-msgstr ""
+msgstr "جعبه‌های ترکیبی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5356,7 +5356,7 @@ msgstr ""
 #: src/orca/guilabels.py:711
 msgctxt "structural navigation"
 msgid "Entries"
-msgstr ""
+msgstr "ورودی‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5364,7 +5364,7 @@ msgstr ""
 #: src/orca/guilabels.py:716
 msgctxt "structural navigation"
 msgid "Form Fields"
-msgstr ""
+msgstr "زمینه‌های فرم"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5372,7 +5372,7 @@ msgstr ""
 #: src/orca/guilabels.py:721
 msgctxt "structural navigation"
 msgid "Headings"
-msgstr ""
+msgstr "عنوان‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5380,7 +5380,7 @@ msgstr ""
 #: src/orca/guilabels.py:726
 msgctxt "structural navigation"
 msgid "Internal Frames"
-msgstr ""
+msgstr "قاب‌های درونی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5398,7 +5398,7 @@ msgstr "تصاویر"
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
-msgstr ""
+msgstr "عنوان‌های با سطح %d"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5408,7 +5408,7 @@ msgstr ""
 #: src/orca/guilabels.py:744
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr ""
+msgstr "نشانه‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5418,7 +5418,7 @@ msgstr ""
 #: src/orca/guilabels.py:751
 msgctxt "structural navigation"
 msgid "Large Objects"
-msgstr ""
+msgstr "اشیای بزرگ"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5426,7 +5426,7 @@ msgstr ""
 #: src/orca/guilabels.py:756
 msgctxt "structural navigation"
 msgid "Links"
-msgstr ""
+msgstr "پیوندها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5434,7 +5434,7 @@ msgstr ""
 #: src/orca/guilabels.py:761
 msgctxt "structural navigation"
 msgid "Lists"
-msgstr ""
+msgstr "سیاهه‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5442,7 +5442,7 @@ msgstr ""
 #: src/orca/guilabels.py:766
 msgctxt "structural navigation"
 msgid "List Items"
-msgstr ""
+msgstr "موارد سیاهه"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5458,7 +5458,7 @@ msgstr "بند"
 #: src/orca/guilabels.py:776
 msgctxt "structural navigation"
 msgid "Radio Buttons"
-msgstr ""
+msgstr "دکمه‌های رادیویی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5466,7 +5466,7 @@ msgstr ""
 #: src/orca/guilabels.py:781
 msgctxt "structural navigation"
 msgid "Tables"
-msgstr ""
+msgstr "جدول‌ها"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5474,7 +5474,7 @@ msgstr ""
 #: src/orca/guilabels.py:786
 msgctxt "structural navigation"
 msgid "Unvisited Links"
-msgstr ""
+msgstr "پیوندهای دیده نشده"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5482,7 +5482,7 @@ msgstr ""
 #: src/orca/guilabels.py:791
 msgctxt "structural navigation"
 msgid "Visited Links"
-msgstr ""
+msgstr "پیوندهای دیده شده"
 
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
@@ -5624,7 +5624,7 @@ msgstr ""
 #. how to navigate tables in document content.
 #: src/orca/guilabels.py:891
 msgid "Table Navigation"
-msgstr ""
+msgstr "پویش جدول"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
@@ -5840,13 +5840,13 @@ msgstr "پایین"
 #.
 #: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
-msgstr ""
+msgstr "چپ"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
 #: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
-msgstr ""
+msgstr "راست"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
@@ -5951,7 +5951,7 @@ msgstr ""
 #.
 #: src/orca/keynames.py:299
 msgid "minus"
-msgstr ""
+msgstr "منها"
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
@@ -6022,7 +6022,7 @@ msgstr "تبدیل"
 #, python-format
 msgctxt "math symbol"
 msgid "bold %s"
-msgstr ""
+msgstr "%s پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6036,7 +6036,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "italic %s"
-msgstr ""
+msgstr "%s کج"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6050,7 +6050,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "bold italic %s"
-msgstr ""
+msgstr "%s کج پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6064,7 +6064,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "script %s"
-msgstr ""
+msgstr "%s کدنوشته"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6078,7 +6078,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "bold script %s"
-msgstr ""
+msgstr "%s کدنوشتهٔ پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6092,7 +6092,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "fraktur %s"
-msgstr ""
+msgstr "%s شکسته"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6106,7 +6106,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "double-struck %s"
-msgstr ""
+msgstr "%s دوخط دار"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6120,7 +6120,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "bold fraktur %s"
-msgstr ""
+msgstr "%s شکستهٔ پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6134,7 +6134,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
-msgstr ""
+msgstr "%s بدون سریف"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6148,7 +6148,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold %s"
-msgstr ""
+msgstr "%s بدون سریف پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6162,7 +6162,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif italic %s"
-msgstr ""
+msgstr "%s بدون سریف کج"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6176,7 +6176,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold italic %s"
-msgstr ""
+msgstr "%s بدون سریف کج پر"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6190,7 +6190,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "monospace %s"
-msgstr ""
+msgstr "%s تک‌عرض"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6204,157 +6204,157 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "dotless %s"
-msgstr ""
+msgstr "%s بی‌نقطه"
 
 #. Translators: this is the spoken representation for the character '←' (U+2190)
 #: src/orca/mathsymbols.py:1263
 msgctxt "math symbol"
 msgid "left arrow"
-msgstr ""
+msgstr "پیکان چپ"
 
 #. Translators: this is the spoken representation for the character '↑' (U+2191)
 #: src/orca/mathsymbols.py:1266
 msgctxt "math symbol"
 msgid "up arrow"
-msgstr ""
+msgstr "پیکان بالا"
 
 #. Translators: this is the spoken representation for the character '→' (U+2192)
 #: src/orca/mathsymbols.py:1269
 msgctxt "math symbol"
 msgid "right arrow"
-msgstr ""
+msgstr "پیکان راست"
 
 #. Translators: this is the spoken representation for the character '↓' (U+2193)
 #: src/orca/mathsymbols.py:1272
 msgctxt "math symbol"
 msgid "down arrow"
-msgstr ""
+msgstr "پیکان پایین"
 
 #. Translators: this is the spoken representation for the character '↔' (U+2194)
 #: src/orca/mathsymbols.py:1275
 msgctxt "math symbol"
 msgid "left right arrow"
-msgstr ""
+msgstr "پیکان راست پایین"
 
 #. Translators: this is the spoken representation for the character '↕' (U+2195)
 #: src/orca/mathsymbols.py:1278
 msgctxt "math symbol"
 msgid "up down arrow"
-msgstr ""
+msgstr "پیکان پایین بالا"
 
 #. Translators: this is the spoken representation for the character '↖' (U+2196)
 #: src/orca/mathsymbols.py:1281
 msgctxt "math symbol"
 msgid "north west arrow"
-msgstr ""
+msgstr "پیکان شمال غربی"
 
 #. Translators: this is the spoken representation for the character '↗' (U+2197)
 #: src/orca/mathsymbols.py:1284
 msgctxt "math symbol"
 msgid "north east arrow"
-msgstr ""
+msgstr "پیکان شمال شرقی"
 
 #. Translators: this is the spoken representation for the character '↘' (U+2198)
 #: src/orca/mathsymbols.py:1287
 msgctxt "math symbol"
 msgid "south east arrow"
-msgstr ""
+msgstr "پیکان جنوب شرقی"
 
 #. Translators: this is the spoken representation for the character '↤' (U+21a4)
 #: src/orca/mathsymbols.py:1290
 msgctxt "math symbol"
 msgid "left arrow from bar"
-msgstr ""
+msgstr "پیکان چپ از نوار"
 
 #. Translators: this is the spoken representation for the character '↥' (U+21a5)
 #: src/orca/mathsymbols.py:1293
 msgctxt "math symbol"
 msgid "up arrow from bar"
-msgstr ""
+msgstr "پیکان بالا از نوار"
 
 #. Translators: this is the spoken representation for the character '↦' (U+21a6)
 #: src/orca/mathsymbols.py:1296
 msgctxt "math symbol"
 msgid "right arrow from bar"
-msgstr ""
+msgstr "پیکان راست از نوار"
 
 #. Translators: this is the spoken representation for the character '↧' (U+21a7)
 #: src/orca/mathsymbols.py:1299
 msgctxt "math symbol"
 msgid "down arrow from bar"
-msgstr ""
+msgstr "پیکان پایین از نوار"
 
 #. Translators: this is the spoken representation for the character '⇐' (U+21d0)
 #: src/orca/mathsymbols.py:1302
 msgctxt "math symbol"
 msgid "left double arrow"
-msgstr ""
+msgstr "جفت پیکان چپ"
 
 #. Translators: this is the spoken representation for the character '⇑' (U+21d1)
 #: src/orca/mathsymbols.py:1305
 msgctxt "math symbol"
 msgid "up double arrow"
-msgstr ""
+msgstr "جفت پیکان بالا"
 
 #. Translators: this is the spoken representation for the character '⇒' (U+21d2)
 #: src/orca/mathsymbols.py:1308
 msgctxt "math symbol"
 msgid "right double arrow"
-msgstr ""
+msgstr "جفت پیکان راست"
 
 #. Translators: this is the spoken representation for the character '⇓' (U+21d3)
 #: src/orca/mathsymbols.py:1311
 msgctxt "math symbol"
 msgid "down double arrow"
-msgstr ""
+msgstr "جفت پیکان پایین"
 
 #. Translators: this is the spoken representation for the character '⇔' (U+21d4)
 #: src/orca/mathsymbols.py:1314
 msgctxt "math symbol"
 msgid "left right double arrow"
-msgstr ""
+msgstr "جفت پیکان راست چپ"
 
 #. Translators: this is the spoken representation for the character '⇕' (U+21d5)
 #: src/orca/mathsymbols.py:1317
 msgctxt "math symbol"
 msgid "up down double arrow"
-msgstr ""
+msgstr "جفت پیکان پایین بالا"
 
 #. Translators: this is the spoken representation for the character '⇖' (U+21d6)
 #: src/orca/mathsymbols.py:1320
 msgctxt "math symbol"
 msgid "north west double arrow"
-msgstr ""
+msgstr "جفت پیکان شمال غربی"
 
 #. Translators: this is the spoken representation for the character '⇗' (U+21d7)
 #: src/orca/mathsymbols.py:1323
 msgctxt "math symbol"
 msgid "north east double arrow"
-msgstr ""
+msgstr "جفت پیکان شمال شرقی"
 
 #. Translators: this is the spoken representation for the character '⇘' (U+21d8)
 #: src/orca/mathsymbols.py:1326
 msgctxt "math symbol"
 msgid "south east double arrow"
-msgstr ""
+msgstr "جفت پیکان جنوب شرقی"
 
 #. Translators: this is the spoken representation for the character '⇙' (U+21d9)
 #: src/orca/mathsymbols.py:1329
 msgctxt "math symbol"
 msgid "south west double arrow"
-msgstr ""
+msgstr "جفت پیکان جنوب غربی"
 
 #. Translators: this is the spoken representation for the character '➔' (U+2794)
 #: src/orca/mathsymbols.py:1332
 msgctxt "math symbol"
 msgid "right-pointing arrow"
-msgstr ""
+msgstr "پیکان رو به راست"
 
 #. Translators: this is the spoken representation for the character '➢' (U+27a2)
 #: src/orca/mathsymbols.py:1335
 msgctxt "math symbol"
 msgid "right-pointing arrowhead"
-msgstr ""
+msgstr "سر پیکان رو به راست"
 
 #. Translators: this is the spoken word for the character '-' (U+002d) when used
 #. as a MathML operator.
@@ -6362,21 +6362,21 @@ msgstr ""
 #: src/orca/mathsymbols.py:1339 src/orca/mathsymbols.py:1427
 msgctxt "math symbol"
 msgid "minus"
-msgstr ""
+msgstr "منها"
 
 #. Translators: this is the spoken word for the character '<' (U+003c) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1343
 msgctxt "math symbol"
 msgid "less than"
-msgstr ""
+msgstr "کوچک‌تر از"
 
 #. Translators: this is the spoken word for the character '>' (U+003e) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1347
 msgctxt "math symbol"
 msgid "greater than"
-msgstr ""
+msgstr "بزرگ‌تر از"
 
 #. Translators: this is the spoken word for the character '^' (U+005e) when used
 #. as a MathML operator.
@@ -6404,62 +6404,62 @@ msgstr ""
 #: src/orca/mathsymbols.py:1363
 msgctxt "math symbol"
 msgid "dot"
-msgstr ""
+msgstr "نقطه"
 
 #. Translators: this is the spoken word for the character '‖' (U+2016) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1367
 msgctxt "math symbol"
 msgid "double vertical line"
-msgstr ""
+msgstr "دو خط عمودی"
 
 #. Translators: this is the spoken representation for the character '…' (U+2026)
 #: src/orca/mathsymbols.py:1370
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr ""
+msgstr "بیضی افقی"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: src/orca/mathsymbols.py:1373
 msgctxt "math symbol"
 msgid "for all"
-msgstr ""
+msgstr "برای همه"
 
 #. Translators: this is the spoken representation for the character '∁' (U+2201)
 #: src/orca/mathsymbols.py:1376
 msgctxt "math symbol"
 msgid "complement"
-msgstr ""
+msgstr "متمّم"
 
 #. Translators: this is the spoken representation for the character '∂' (U+2202)
 #: src/orca/mathsymbols.py:1379
 msgctxt "math symbol"
 msgid "partial differential"
-msgstr ""
+msgstr "دیفرانسیل جزیی"
 
 #. Translators: this is the spoken representation for the character '∃' (U+2203)
 #: src/orca/mathsymbols.py:1382
 msgctxt "math symbol"
 msgid "there exists"
-msgstr ""
+msgstr "وجود دارد"
 
 #. Translators: this is the spoken representation for the character '∄' (U+2204)
 #: src/orca/mathsymbols.py:1385
 msgctxt "math symbol"
 msgid "there does not exist"
-msgstr ""
+msgstr "وجود ندارد"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
 #: src/orca/mathsymbols.py:1388
 msgctxt "math symbol"
 msgid "empty set"
-msgstr ""
+msgstr "مجموعهٔ خالی"
 
 #. Translators: this is the spoken representation for the character '∆' (U+2206)
 #: src/orca/mathsymbols.py:1391
 msgctxt "math symbol"
 msgid "increment"
-msgstr ""
+msgstr "افزایش"
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
 #: src/orca/mathsymbols.py:1394
@@ -6525,13 +6525,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1424
 msgctxt "math symbol"
 msgid "sum"
-msgstr ""
+msgstr "مجموع"
 
 #. Translators: this is the spoken representation for the character '∓' (U+2213)
 #: src/orca/mathsymbols.py:1430
 msgctxt "math symbol"
 msgid "minus or plus"
-msgstr ""
+msgstr "مثبت منها"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
 #: src/orca/mathsymbols.py:1433
@@ -6543,7 +6543,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1436
 msgctxt "math symbol"
 msgid "division slash"
-msgstr ""
+msgstr "تقسیم"
 
 #. Translators: this is the spoken representation for the character '∖' (U+2216)
 #: src/orca/mathsymbols.py:1439
@@ -6573,19 +6573,19 @@ msgstr ""
 #: src/orca/mathsymbols.py:1451
 msgctxt "math symbol"
 msgid "square root"
-msgstr ""
+msgstr "ریشهٔ مربّع"
 
 #. Translators: this is the spoken representation for the character '∛' (U+221b)
 #: src/orca/mathsymbols.py:1454
 msgctxt "math symbol"
 msgid "cube root"
-msgstr ""
+msgstr "ریشهٔ مکعّب"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
 #: src/orca/mathsymbols.py:1457
 msgctxt "math symbol"
 msgid "fourth root"
-msgstr ""
+msgstr "ریشهٔ چهارم"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
 #: src/orca/mathsymbols.py:1460
@@ -6597,19 +6597,19 @@ msgstr ""
 #: src/orca/mathsymbols.py:1463
 msgctxt "math symbol"
 msgid "infinity"
-msgstr ""
+msgstr "بی‌نهایت"
 
 #. Translators: this is the spoken representation for the character '∟' (U+221f)
 #: src/orca/mathsymbols.py:1466
 msgctxt "math symbol"
 msgid "right angle"
-msgstr ""
+msgstr "زاویهٔ قائمه"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: src/orca/mathsymbols.py:1469
 msgctxt "math symbol"
 msgid "angle"
-msgstr ""
+msgstr "زاویه"
 
 #. Translators: this is the spoken representation for the character '∡' (U+2221)
 #: src/orca/mathsymbols.py:1472
@@ -6652,14 +6652,14 @@ msgstr ""
 #: src/orca/mathsymbols.py:1490 src/orca/mathsymbols.py:1949
 msgctxt "math symbol"
 msgid "logical and"
-msgstr ""
+msgstr "و منطقی"
 
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
 #. Translators: this is the spoken representation for the character '⋁' (U+22c1)
 #: src/orca/mathsymbols.py:1493 src/orca/mathsymbols.py:1952
 msgctxt "math symbol"
 msgid "logical or"
-msgstr ""
+msgstr "یای منطقی"
 
 #. Translators: this is the spoken representation for the character '∩' (U+2229)
 #. Translators: this is the spoken representation for the character '⋂' (U+22c2)
@@ -6673,61 +6673,61 @@ msgstr ""
 #: src/orca/mathsymbols.py:1499 src/orca/mathsymbols.py:1958
 msgctxt "math symbol"
 msgid "union"
-msgstr ""
+msgstr "اجتماع"
 
 #. Translators: this is the spoken representation for the character '∫' (U+222b)
 #: src/orca/mathsymbols.py:1502
 msgctxt "math symbol"
 msgid "integral"
-msgstr ""
+msgstr "انتگرال"
 
 #. Translators: this is the spoken representation for the character '∬' (U+222c)
 #: src/orca/mathsymbols.py:1505
 msgctxt "math symbol"
 msgid "double integral"
-msgstr ""
+msgstr "انتگرال دوگانه"
 
 #. Translators: this is the spoken representation for the character '∭' (U+222d)
 #: src/orca/mathsymbols.py:1508
 msgctxt "math symbol"
 msgid "triple integral"
-msgstr ""
+msgstr "انتگرال سگانه"
 
 #. Translators: this is the spoken representation for the character '∮' (U+222e)
 #: src/orca/mathsymbols.py:1511
 msgctxt "math symbol"
 msgid "contour integral"
-msgstr ""
+msgstr "انتگرال کانتور"
 
 #. Translators: this is the spoken representation for the character '∯' (U+222f)
 #: src/orca/mathsymbols.py:1514
 msgctxt "math symbol"
 msgid "surface integral"
-msgstr ""
+msgstr "انتگرال سطح"
 
 #. Translators: this is the spoken representation for the character '∰' (U+2230)
 #: src/orca/mathsymbols.py:1517
 msgctxt "math symbol"
 msgid "volume integral"
-msgstr ""
+msgstr "انتگرال حجم"
 
 #. Translators: this is the spoken representation for the character '∱' (U+2231)
 #: src/orca/mathsymbols.py:1520
 msgctxt "math symbol"
 msgid "clockwise integral"
-msgstr ""
+msgstr "انتگرال ساعتگرد"
 
 #. Translators: this is the spoken representation for the character '∲' (U+2232)
 #: src/orca/mathsymbols.py:1523
 msgctxt "math symbol"
 msgid "clockwise contour integral"
-msgstr ""
+msgstr "انتگرال پادساعتگرد"
 
 #. Translators: this is the spoken representation for the character '∳' (U+2233)
 #: src/orca/mathsymbols.py:1526
 msgctxt "math symbol"
 msgid "anticlockwise contour integral"
-msgstr ""
+msgstr "انتگرال کانتور پادساعتگرد"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
 #: src/orca/mathsymbols.py:1529
@@ -6745,7 +6745,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1535
 msgctxt "math symbol"
 msgid "ratio"
-msgstr ""
+msgstr "نسبت"
 
 #. Translators: this is the spoken representation for the character '∷' (U+2237)
 #: src/orca/mathsymbols.py:1538
@@ -6781,7 +6781,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1553
 msgctxt "math symbol"
 msgid "tilde"
-msgstr ""
+msgstr "مد"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
 #: src/orca/mathsymbols.py:1556
@@ -7461,7 +7461,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1892
 msgctxt "math symbol"
 msgid "not true"
-msgstr ""
+msgstr "نادرست"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
 #: src/orca/mathsymbols.py:1895
@@ -7545,19 +7545,19 @@ msgstr ""
 #: src/orca/mathsymbols.py:1934
 msgctxt "math symbol"
 msgid "xor"
-msgstr ""
+msgstr "xor"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
 #: src/orca/mathsymbols.py:1937
 msgctxt "math symbol"
 msgid "nand"
-msgstr ""
+msgstr "nand"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: src/orca/mathsymbols.py:1940
 msgctxt "math symbol"
 msgid "nor"
-msgstr ""
+msgstr "nor"
 
 #. Translators: this is the spoken representation for the character '⊾' (U+22be)
 #: src/orca/mathsymbols.py:1943
@@ -7647,13 +7647,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1997
 msgctxt "math symbol"
 msgid "double subset"
-msgstr ""
+msgstr "زیرمجموعهٔ دوگانه"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
 #: src/orca/mathsymbols.py:2000
 msgctxt "math symbol"
 msgid "double superset"
-msgstr ""
+msgstr "فرامجموعهٔ دوگانه"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
 #: src/orca/mathsymbols.py:2003
@@ -7665,7 +7665,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:2006
 msgctxt "math symbol"
 msgid "double union"
-msgstr ""
+msgstr "اجتماع دوگانه"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
 #: src/orca/mathsymbols.py:2009
@@ -9563,7 +9563,7 @@ msgstr ""
 #: src/orca/messages.py:1149
 msgctxt "math table"
 msgid "table end"
-msgstr ""
+msgstr "پایان جدول"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table which is nested inside another
@@ -9571,7 +9571,7 @@ msgstr ""
 #: src/orca/messages.py:1154
 msgctxt "math table"
 msgid "nested table end"
-msgstr ""
+msgstr "پایان جدول تودرتو"
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
@@ -10342,7 +10342,7 @@ msgstr ""
 #. This string is the message presented when Orca switches to focus mode.
 #: src/orca/messages.py:1712
 msgid "Focus mode"
-msgstr ""
+msgstr "حالت تمرکز"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -11461,14 +11461,14 @@ msgstr "%s یونی‌کد"
 #: src/orca/messages.py:2508
 msgctxt "command"
 msgid "undo"
-msgstr ""
+msgstr "برگردان"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
 #: src/orca/messages.py:2512
 msgctxt "command"
 msgid "redo"
-msgstr ""
+msgstr "انجام دوباره"
 
 #. Translators: This message presents the Orca version number.
 #: src/orca/messages.py:2515
@@ -11519,7 +11519,7 @@ msgstr[0] ""
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
-msgstr[0] "%d ستون"
+msgstr[0] " %d ستون"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -12031,7 +12031,7 @@ msgstr ""
 #: src/orca/object_properties.py:144
 msgctxt "role"
 msgid "abstract"
-msgstr ""
+msgstr "خلاصه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12040,7 +12040,7 @@ msgstr ""
 #: src/orca/object_properties.py:150
 msgctxt "role"
 msgid "acknowledgments"
-msgstr ""
+msgstr "قدردانی‌ها"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12049,7 +12049,7 @@ msgstr ""
 #: src/orca/object_properties.py:156
 msgctxt "role"
 msgid "afterword"
-msgstr ""
+msgstr "خاتمه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12067,7 +12067,7 @@ msgstr "پیوست"
 #: src/orca/object_properties.py:168
 msgctxt "role"
 msgid "bibliography entry"
-msgstr ""
+msgstr "ورودی کتابشناسی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12076,7 +12076,7 @@ msgstr ""
 #: src/orca/object_properties.py:174
 msgctxt "role"
 msgid "bibliography"
-msgstr ""
+msgstr "کتابشناسی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12085,7 +12085,7 @@ msgstr ""
 #: src/orca/object_properties.py:180
 msgctxt "role"
 msgid "chapter"
-msgstr ""
+msgstr "فصل"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12103,7 +12103,7 @@ msgstr ""
 #: src/orca/object_properties.py:192
 msgctxt "role"
 msgid "conclusion"
-msgstr ""
+msgstr "نتیجه‌گیری"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12112,7 +12112,7 @@ msgstr ""
 #: src/orca/object_properties.py:198
 msgctxt "role"
 msgid "cover"
-msgstr ""
+msgstr "جلد"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12121,7 +12121,7 @@ msgstr ""
 #: src/orca/object_properties.py:204
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "اعتبار"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12130,7 +12130,7 @@ msgstr ""
 #: src/orca/object_properties.py:210
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "اعتبارها"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12139,7 +12139,7 @@ msgstr ""
 #: src/orca/object_properties.py:216
 msgctxt "role"
 msgid "dedication"
-msgstr ""
+msgstr "اهدا"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12148,7 +12148,7 @@ msgstr ""
 #: src/orca/object_properties.py:222
 msgctxt "role"
 msgid "endnote"
-msgstr ""
+msgstr "پی‌نوشت"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12157,7 +12157,7 @@ msgstr ""
 #: src/orca/object_properties.py:228
 msgctxt "role"
 msgid "endnotes"
-msgstr ""
+msgstr "پی‌نوشت‌ها"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12175,7 +12175,7 @@ msgstr ""
 #: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "پایان‌نامه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12184,7 +12184,7 @@ msgstr ""
 #: src/orca/object_properties.py:246
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "غلط‌نامه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12193,7 +12193,7 @@ msgstr ""
 #: src/orca/object_properties.py:252
 msgctxt "role"
 msgid "example"
-msgstr ""
+msgstr "مثال"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12202,7 +12202,7 @@ msgstr ""
 #: src/orca/object_properties.py:258
 msgctxt "role"
 msgid "foreword"
-msgstr ""
+msgstr "پیش‌گفتار"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12220,7 +12220,7 @@ msgstr "واژه‌نامه"
 #: src/orca/object_properties.py:270
 msgctxt "role"
 msgid "index"
-msgstr ""
+msgstr "نمایه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12238,7 +12238,7 @@ msgstr "مقدمه"
 #: src/orca/object_properties.py:282
 msgctxt "role"
 msgid "page break"
-msgstr ""
+msgstr "شکست صفحه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12247,7 +12247,7 @@ msgstr ""
 #: src/orca/object_properties.py:288
 msgctxt "role"
 msgid "page list"
-msgstr ""
+msgstr "سیاههٔ صفحه‌ها"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12256,7 +12256,7 @@ msgstr ""
 #: src/orca/object_properties.py:294
 msgctxt "role"
 msgid "part"
-msgstr ""
+msgstr "بخش"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12274,7 +12274,7 @@ msgstr "پیش‌درامد"
 #: src/orca/object_properties.py:306
 msgctxt "role"
 msgid "prologue"
-msgstr ""
+msgstr "دیباچه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12295,7 +12295,7 @@ msgstr ""
 #: src/orca/object_properties.py:321
 msgctxt "role"
 msgid "QNA"
-msgstr ""
+msgstr "پرسش و پاسخ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12304,7 +12304,7 @@ msgstr ""
 #: src/orca/object_properties.py:327
 msgctxt "role"
 msgid "subtitle"
-msgstr ""
+msgstr "زیرعنان"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12313,7 +12313,7 @@ msgstr ""
 #: src/orca/object_properties.py:333
 msgctxt "role"
 msgid "table of contents"
-msgstr ""
+msgstr "جدول محتویات"
 
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
@@ -12434,7 +12434,7 @@ msgstr "بیرق"
 #: src/orca/object_properties.py:425
 msgctxt "role"
 msgid "complementary content"
-msgstr ""
+msgstr "محتوی تکمیلی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12445,7 +12445,7 @@ msgstr ""
 #: src/orca/object_properties.py:433
 msgctxt "role"
 msgid "information"
-msgstr ""
+msgstr "اطّلاعات"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12454,7 +12454,7 @@ msgstr ""
 #: src/orca/object_properties.py:439
 msgctxt "role"
 msgid "main content"
-msgstr ""
+msgstr "محتوای اصلی"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12598,13 +12598,13 @@ msgstr "تقریبی بررسی شد"
 #: src/orca/object_properties.py:534
 msgctxt "togglebutton"
 msgid "pressed"
-msgstr ""
+msgstr "فشرده شده"
 
 #. Translators: This is a state which applies to a toggle button.
 #: src/orca/object_properties.py:537
 msgctxt "togglebutton"
 msgid "not pressed"
-msgstr ""
+msgstr "فشرده نشده"
 
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
@@ -12697,7 +12697,7 @@ msgstr "ورودی نامعتبر"
 #: src/orca/object_properties.py:602
 msgctxt "error"
 msgid "invalid"
-msgstr ""
+msgstr "نامعتبر"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
@@ -12870,7 +12870,7 @@ msgstr "نمایه‌ها"
 
 #: src/orca/orca-setup.ui:465
 msgid "_Present tooltips"
-msgstr ""
+msgstr "_ارائه ایمای ابزار"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
@@ -12986,7 +12986,7 @@ msgstr "_حجم:"
 
 #: src/orca/orca-setup.ui:1095
 msgid "Pi_tch:"
-msgstr ""
+msgstr "_تن:"
 
 #: src/orca/orca-setup.ui:1126
 msgid "_Rate:"
@@ -13059,12 +13059,12 @@ msgstr "_همه"
 
 #: src/orca/orca-setup.ui:1617
 msgid "Punctuation Level"
-msgstr ""
+msgstr "سطح نشانه‌گذاری"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "فقط گفتنمتن نمایشی"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
@@ -13392,7 +13392,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:61
 msgctxt "textattr"
 msgid "background color"
-msgstr ""
+msgstr "رنگ پس‌زمینه"
 
 #. Translators: this attribute specifies whether to make the background
 #. color for each character the height of the highest font used on the
@@ -13404,7 +13404,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:70
 msgctxt "textattr"
 msgid "background full height"
-msgstr ""
+msgstr "بلندای کامل پس‌زمینه"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the background color. It will be a "true" or "false" value.
@@ -13414,7 +13414,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:77
 msgctxt "textattr"
 msgid "background stipple"
-msgstr ""
+msgstr "پایهٔ پس‌زمینه"
 
 #. Translators: this attribute specifies the direction of the text.
 #. Values are "none", "ltr" or "rtl".
@@ -13424,7 +13424,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:84
 msgctxt "textattr"
 msgid "direction"
-msgstr ""
+msgstr "جهت"
 
 #. Translators: this attribute specifies whether the text is editable.
 #. It will be a "true" or "false" value.
@@ -13434,7 +13434,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:91
 msgctxt "textattr"
 msgid "editable"
-msgstr ""
+msgstr "ویرایش‌پذیر"
 
 #. Translators: this attribute specifies the font family name of the text.
 #. See:
@@ -13443,7 +13443,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:97
 msgctxt "textattr"
 msgid "family name"
-msgstr ""
+msgstr "نام خانوادگی"
 
 #. Translators: this attribute specifies the foreground color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -13453,7 +13453,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:104
 msgctxt "textattr"
 msgid "foreground color"
-msgstr ""
+msgstr "رنگ پیش‌زمینه"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the foreground color. It will be a "true" or "false" value.
@@ -13463,7 +13463,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:111
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr ""
+msgstr "پایهٔ پیش‌زمینه"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -13474,7 +13474,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:119
 msgctxt "textattr"
 msgid "font effect"
-msgstr ""
+msgstr "جلوهٔ قلم"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -13484,7 +13484,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:126
 msgctxt "textattr"
 msgid "indent"
-msgstr ""
+msgstr "تو رفتگی"
 
 #. Translators: this attribute specifies there is something "wrong" with
 #. the text, such as it being a misspelled word. See:
@@ -13493,7 +13493,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:132
 msgctxt "textattr"
 msgid "mistake"
-msgstr ""
+msgstr "اشتباه"
 
 #. Translators: this attribute specifies there is something "wrong" with
 #. the text, such as it being a misspelled word. See:
@@ -13507,7 +13507,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:143
 msgctxt "textattr"
 msgid "invisible"
-msgstr ""
+msgstr "نامریی"
 
 #. Translators: this attribute specifies how the justification of the text.
 #. Values are "left", "right", "center" or "fill".
@@ -13517,7 +13517,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:150
 msgctxt "textattr"
 msgid "justification"
-msgstr ""
+msgstr "هم‌ترازی"
 
 #. Translators: this attribute specifies the language that the text is
 #. written in.
@@ -13527,7 +13527,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:157
 msgctxt "textattr"
 msgid "language"
-msgstr ""
+msgstr "زبان"
 
 #. Translators: this attribute specifies the pixel width of the left margin.
 #. See:
@@ -13536,7 +13536,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:163
 msgctxt "textattr"
 msgid "left margin"
-msgstr ""
+msgstr "حاشیهٔ چپ"
 
 #. Translators: this attribute specifies the height of the line of text.
 #. See:
@@ -13546,7 +13546,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:170
 msgctxt "textattr"
 msgid "line height"
-msgstr ""
+msgstr "بلندای خط"
 
 #. Translators: this attribute refers to the named style which is associated
 #. with the entire paragraph and which controls the default formatting
@@ -13559,7 +13559,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:180
 msgctxt "textattr"
 msgid "paragraph style"
-msgstr ""
+msgstr "سبک بند"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave above each newline-terminated line.
@@ -13569,7 +13569,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:187
 msgctxt "textattr"
 msgid "pixels above lines"
-msgstr ""
+msgstr "پیکسل بالای خط‌ها"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave below each newline-terminated line.
@@ -13579,7 +13579,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:194
 msgctxt "textattr"
 msgid "pixels below lines"
-msgstr ""
+msgstr "پیکسل زیر خط‌ها"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave between wrapped lines inside the same newline-terminated line
@@ -13590,7 +13590,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:202
 msgctxt "textattr"
 msgid "pixels inside wrap"
-msgstr ""
+msgstr "پیشکل داخل پیچش"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
 #. See:
@@ -13599,7 +13599,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:208
 msgctxt "textattr"
 msgid "right margin"
-msgstr ""
+msgstr "حاشیهٔ راست"
 
 #. Translators: this attribute specifies the number of pixels that the
 #. text characters are risen above the baseline.
@@ -13609,7 +13609,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:215
 msgctxt "textattr"
 msgid "rise"
-msgstr ""
+msgstr "بالا بردن"
 
 #. Translators: this attribute specifies the scale of the characters. The
 #. value is a string representation of a double.
@@ -13619,7 +13619,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:222
 msgctxt "textattr"
 msgid "scale"
-msgstr ""
+msgstr "مقیاس"
 
 #. Translators: this attribute specifies the size of the text.
 #. See:
@@ -13628,7 +13628,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:228
 msgctxt "textattr"
 msgid "size"
-msgstr ""
+msgstr "اندازه"
 
 #. Translators: this attribute specifies the stretch of he text, if set.
 #. Values are "ultra_condensed", "extra_condensed", "condensed",
@@ -13640,7 +13640,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:237
 msgctxt "textattr"
 msgid "stretch"
-msgstr ""
+msgstr "کشیده"
 
 #. Translators: this attribute specifies whether the text is strike though
 #. (in other words, whether there is a line drawn through it). Values are
@@ -13651,7 +13651,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:245
 msgctxt "textattr"
 msgid "strike through"
-msgstr ""
+msgstr "خط‌خورده"
 
 #. Translators: this attribute specifies the slant style of the text,
 #. if set. Values are "normal", "oblique" or "italic".
@@ -13661,7 +13661,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:252
 msgctxt "textattr"
 msgid "style"
-msgstr ""
+msgstr "سبک"
 
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
@@ -13671,7 +13671,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:259
 msgctxt "textattr"
 msgid "text decoration"
-msgstr ""
+msgstr "تزیینات متن"
 
 #. Translators: this attribute specifies the angle at which the text is
 #. displayed (i.e. rotated from the norm) and is represented in degrees
@@ -13683,7 +13683,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:268
 msgctxt "textattr"
 msgid "text rotation"
-msgstr ""
+msgstr "چرخش متن"
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
 #. See:
@@ -13693,7 +13693,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:275
 msgctxt "textattr"
 msgid "text shadow"
-msgstr ""
+msgstr "سایهٔ متن"
 
 #. Translators: this attributes specifies whether the text is underlined.
 #. Values are "none", "single", "double" or "low".
@@ -13703,7 +13703,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:282
 msgctxt "textattr"
 msgid "underline"
-msgstr ""
+msgstr "زیرخط"
 
 #. Translators: this attribute specifies the capitalization variant of
 #. the text, if set. Values are "normal" or "small_caps".
@@ -13723,7 +13723,7 @@ msgstr "دگرگونه"
 #: src/orca/text_attribute_names.py:296
 msgctxt "textattr"
 msgid "vertical align"
-msgstr ""
+msgstr "جا گذاری عمودی"
 
 #. Translators: this attribute specifies the weight of the text.
 #. See:
@@ -13733,7 +13733,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:303
 msgctxt "textattr"
 msgid "weight"
-msgstr ""
+msgstr "وزن"
 
 #. Translators: this attribute specifies the wrap mode of the text, if any.
 #. Values are "none", "char" or "word".
@@ -13743,7 +13743,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:310
 msgctxt "textattr"
 msgid "wrap mode"
-msgstr ""
+msgstr "حالت پیچاندن"
 
 #. Translators: this attribute specifies the way the text is written.
 #. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
@@ -13755,7 +13755,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:319
 msgctxt "textattr"
 msgid "writing mode"
-msgstr ""
+msgstr "حالت نوشتن"
 
 #. The following are the known values of some of these text attributes.
 #. These values were found in the Atk documentation at:
@@ -13938,7 +13938,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:453
 msgctxt "textattr"
 msgid "ltr"
-msgstr ""
+msgstr "چپ به راست"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -13948,7 +13948,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:460
 msgctxt "textattr"
 msgid "rtl"
-msgstr ""
+msgstr "راست به چپ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -13958,7 +13958,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:467
 msgctxt "textattr"
 msgid "left"
-msgstr ""
+msgstr "چپ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -13968,7 +13968,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:474
 msgctxt "textattr"
 msgid "right"
-msgstr ""
+msgstr "راست"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -13978,7 +13978,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:481
 msgctxt "textattr"
 msgid "center"
-msgstr ""
+msgstr "مرکز"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification". In Gecko, when no justification has
@@ -13987,7 +13987,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:487
 msgctxt "textattr"
 msgid "no justification"
-msgstr ""
+msgstr "بدون هم‌ترازی"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -13997,7 +13997,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:494
 msgctxt "textattr"
 msgid "fill"
-msgstr ""
+msgstr "پر کردن"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14047,7 +14047,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:529
 msgctxt "textattr"
 msgid "normal"
-msgstr ""
+msgstr "معمولی"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14147,7 +14147,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:599
 msgctxt "textattr"
 msgid "Heading"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
