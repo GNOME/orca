@@ -415,6 +415,9 @@ class Utilities(web.Utilities):
         if self.isDescriptionListDescription(obj):
             return True
 
+        if self.inDocumentContent(obj):
+            return super()._shouldCalculatePositionAndSetSize(obj)
+
         # Chromium has accessible menu items which are not focusable and therefore do not
         # have a posinset and setsize calculated. But they may claim to be the selected
         # item when an accessible child is selected (e.g. "zoom" when "+" or "-" gains focus.
