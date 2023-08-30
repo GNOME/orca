@@ -846,6 +846,8 @@ class StructuralNavigation:
             structuralNavigationObject.present(obj, offset)
             return
 
+        # Unlike going to the start of the container, when we move to the next edge
+        # we pass beyond it on purpose. This makes us consistent with NVDA.
         obj, offset = self._script.utilities.lastContext(container)
         newObj, newOffset = self._script.utilities.nextContext(obj, offset)
         if not newObj:
