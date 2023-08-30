@@ -715,56 +715,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generatePositionInList(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
-            return []
-
-        if not args.get('forceList', False) \
-           and not _settingsManager.getSetting('enablePositionSpeaking'):
-            return []
-
-        if not self._script.utilities.inDocumentContent(obj):
-            return super()._generatePositionInList(obj, **args)
-
-        if AXUtilities.is_menu_related(obj):
-            return super()._generatePositionInList(obj, **args)
-
         if AXUtilities.is_list_item(obj):
             thisObjIndex = args.get('index', 0)
             objCount = args.get('total', 1)
             if thisObjIndex + 1 < objCount:
                 return []
 
-        if self._script.utilities.isEditableComboBox(obj):
-            return []
-
         if args.get('formatType') not in ['basicWhereAmI', 'detailedWhereAmI']:
             if args.get('priorObj') == obj:
                 return []
 
-        position = self._script.utilities.getPositionInSet(obj)
-        total = self._script.utilities.getSetSize(obj)
-        if position is None or total is None:
-            return super()._generatePositionInList(obj, **args)
-
-        position = int(position)
-        total = int(total)
-        if position < 0:
-            return []
-
-        stringType = 'groupindex'
-        if total < 0:
-            if not self._script.utilities.setSizeUnknown(obj):
-                return []
-            stringType += 'totalunknown'
-
-        result = []
-        result.append(self._script.formatting.getString(
-            mode='speech',
-            stringType=stringType) \
-            % {"index" : position,
-               "total" : total})
-        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        return result
+        return super()._generatePositionInList(obj, **args)
 
     def _generateUnselectedCell(self, obj, **args):
         if not self._script.inFocusMode():

@@ -2324,8 +2324,14 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         position, total = self._script.utilities.getPositionAndSetSize(obj, **args)
-        if position < 0 or total < 0:
+        if position < 0:
             return []
+
+        stringType = 'groupindex'
+        if total < 0:
+            if not self._script.utilities.setSizeUnknown(obj):
+                return []
+            stringType += 'totalunknown'
 
         if total == 1 and AXUtilities.is_menu(obj):
             return []
@@ -2333,7 +2339,7 @@ class SpeechGenerator(generator.Generator):
         position += 1
         result.append(self._script.formatting.getString(
                               mode='speech',
-                              stringType='groupindex') \
+                              stringType=stringType) \
                           % {"index" : position,
                              "total" : total})
         result.extend(self.voice(SYSTEM, obj=obj, **args))
