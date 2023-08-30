@@ -207,6 +207,9 @@ def _asString(obj):
         name = AXObject.get_name(obj)
         if name:
             result += f": '{name}'"
+        if not result:
+            result = "DEAD"
+
         return f"[{result}]"
 
     if isinstance(obj, Atspi.Event):

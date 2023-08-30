@@ -586,6 +586,19 @@ class AXObject:
         return result
 
     @staticmethod
+    def find_deepest_descendant(obj):
+        """Returns the deepest descendant of obj"""
+
+        if not AXObject.is_valid(obj):
+            return None
+
+        last_child = AXObject.get_child(obj, AXObject.get_child_count(obj) - 1)
+        if last_child is None:
+            return obj
+
+        return AXObject.find_deepest_descendant(last_child)
+
+    @staticmethod
     def _find_all_descendants(obj, include_if, exclude_if, matches):
         """Returns all descendants which match the specified inclusion and exclusion"""
 
