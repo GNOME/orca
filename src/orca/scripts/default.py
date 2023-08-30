@@ -1243,10 +1243,14 @@ class Script(script.Script):
             return
 
         if not AXUtilities.is_showing(event.source):
-            msg = "DEFAULT: Event source is not showing"
+            msg = "DEFAULT: Event source is not showing. Clearing cache."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            if not self.utilities.presentEventFromNonShowingObject(event):
-                return
+            AXObject.clear_cache(obj)
+            if not AXUtilities.is_showing(event.source):
+                msg = "DEFAULT: Event source is still not showing."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                if not self.utilities.presentEventFromNonShowingObject(event):
+                    return
 
         if event.source != orca_state.locusOfFocus and AXUtilities.is_focused(event.source):
             topLevelObject = self.utilities.topLevelObject(event.source)
@@ -1933,6 +1937,8 @@ class Script(script.Script):
         obj = otherObj or event.source
         self.updateBrailleForNewCaretPosition(obj)
         if self._inSayAll:
+            msg = "DEFAULT: Not presenting text because SayAll is active"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.lastInputEventWasLineNav():
