@@ -4496,14 +4496,14 @@ class Utilities:
         row, col = self.coordinatesForCell(obj)
         return row + 1 == table.nRows and col + 1 == table.nColumns
 
-    def isNonUniformTable(self, obj):
+    def isNonUniformTable(self, obj, maxRows=25, maxCols=25):
         try:
             table = obj.queryTable()
         except Exception:
             return False
 
-        for r in range(table.nRows):
-            for c in range(table.nColumns):
+        for r in range(min(maxRows, table.nRows)):
+            for c in range(min(maxCols, table.nColumns)):
                 if table.getRowExtentAt(r, c) > 1 \
                    or table.getColumnExtentAt(r, c) > 1:
                     return True
