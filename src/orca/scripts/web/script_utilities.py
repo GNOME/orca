@@ -436,18 +436,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def getLastObjectInDocument(self, documentFrame):
-        try:
-            lastChild = documentFrame[AXObject.get_child_count(documentFrame) - 1]
-        except Exception:
-            lastChild = documentFrame
-        while lastChild:
-            lastObj = self.getNextObjectInDocument(lastChild, documentFrame)
-            if lastObj and lastObj != lastChild:
-                lastChild = lastObj
-            else:
-                break
-
-        return lastChild
+        return AXObject.find_deepest_descendant(documentFrame)
 
     def objectAttributes(self, obj, useCache=True):
         if not (obj and self.inDocumentContent(obj)):

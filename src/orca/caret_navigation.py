@@ -428,7 +428,13 @@ class CaretNavigation:
             return False
 
         document = script.utilities.documentFrame()
+        tokens = ["CARET NAVIGATION: Go to end of", document]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         obj = script.utilities.getLastObjectInDocument(document)
+        tokens = ["CARET NAVIGATION: Last object in", document, "is", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         offset = 0
         text = script.utilities.queryNonEmptyText(obj)
         if text:
