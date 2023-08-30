@@ -437,7 +437,7 @@ class EventManager:
 
         self._eventsSuspended = True
 
-    def _unsuspendEvents(self, triggeringEvent):
+    def _unsuspendEvents(self, triggeringEvent, force=False):
         if triggeringEvent in self._eventsTriggeringSuspension:
             self._eventsTriggeringSuspension.remove(triggeringEvent)
 
@@ -446,7 +446,7 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if self._eventsTriggeringSuspension:
+        if self._eventsTriggeringSuspension and not force:
             msg = "EVENT MANAGER: Events are suspended for another event."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -472,8 +472,26 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
         if AXUtilities.is_document(event.source):
-            if event.type.endswith("busy"):
-                msg = "EVENT MANAGER: Should suspend events for busy event on document."
+            if event.type.endswith("busy") and event.detail1:
+                msg = "EVENT MANAGER: Should suspend events for busy:true event on document."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+
+        return False
+
+    def _shouldUnsuspendEventsFor(self, event):
+        if event.type.startswith("object:state-changed:focused") and event.detail1:
+            msg = "EVENT MANAGER: Should unsuspend events for newly-focused object."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if AXUtilities.is_document(event.source):
+            if event.type.endswith("busy") and not event.detail1:
+                msg = "EVENT MANAGER: Should unsuspend events for busy:false event on document."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            if event.type.startswith("document:load-complete"):
+                msg = "EVENT MANAGER: Should unsuspend events for load-complete event on document."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
@@ -589,6 +607,8 @@ class EventManager:
                 self._processObjectEvent(event)
                 if self._didSuspendEventsFor(event):
                     self._unsuspendEvents(event)
+                elif self._eventsSuspended and self._shouldUnsuspendEventsFor(event):
+                    self._unsuspendEvents(event, force=True)
 
                 if debugging:
                     msg = (
