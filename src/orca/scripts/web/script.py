@@ -637,9 +637,9 @@ class Script(default.Script):
             self._sayAllContents = contents
             for i, content in enumerate(contents):
                 obj, startOffset, endOffset, text = content
-                msg = "WEB SAY ALL CONTENT: %i. %s '%s' (%i-%i)" % \
-                      (i, obj, text, startOffset, endOffset)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WEB SAY ALL CONTENT:",
+                          i, ". ", obj, "'", text, "' (", startOffset, "-", endOffset, ")"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
                 if self.utilities.isInferredLabelForContents(content, contents):
                     continue
@@ -675,9 +675,9 @@ class Script(default.Script):
             if obj == lastObj and characterOffset <= lastOffset:
                 obj, characterOffset = self.utilities.findNextCaretInOrder(lastObj, lastOffset)
             if obj == lastObj and characterOffset <= lastOffset:
-                msg = "WEB: Cycle within object detected in textLines. Last: %s, %i Next: %s, %i" \
-                    % (lastObj, lastOffset, obj, characterOffset)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WEB: Cycle within object detected in textLines. Last:",
+                          lastObj, ", ", lastOffset, "Next:", obj, ", ", characterOffset]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 break
 
             done = obj is None
@@ -1137,37 +1137,33 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('caretNavigationEnabled'):
             if debugOutput:
-                msg = "WEB: Not using caret navigation because it's not enabled."
+                msg = "WEB: Not using caret navigation: it's not enabled."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._inFocusMode:
             if debugOutput:
-                msg = "WEB: Not using caret navigation because focus mode is active."
+                msg = "WEB: Not using caret navigation: focus mode is active."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent():
             if debugOutput:
-                msg = (
-                    f"WEB: Not using caret navigation because {orca_state.locusOfFocus} "
-                    f"is not in document content."
-                )
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WEB: Not using caret navigation: locusOfFocus",
+                          orca_state.locusOfFocus, "is not in document content."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if keyboardEvent and keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             if debugOutput:
-                msg = "WEB: Not using caret navigation because shift was used."
+                msg = "WEB: Not using caret navigation: shift was used."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if debugOutput:
-            msg = (
-                f"WEB: Using caret navigation. In browse mode and {orca_state.locusOfFocus} "
-                f"is in document content."
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Using caret navigation: in browse mode and locusOfFocus",
+                      orca_state.locusOfFocus, "is in document content."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def useStructuralNavigationModel(self, debugOutput=True):
@@ -1187,19 +1183,15 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             if debugOutput:
-                msg = (
-                    f"WEB: Not using structural navigation: {orca_state.locusOfFocus} "
-                    f"is not in document content."
-                )
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WEB: Not using structural navigation: locusOfFocus",
+                          orca_state.locusOfFocus, "is not in document content."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if debugOutput:
-            msg = (
-                f"WEB: Using structural navigation: browse mode and {orca_state.locusOfFocus} "
-                f"is in document content."
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Using structural navigation: in browse mode and locusOfFocus",
+                      orca_state.locusOfFocus, "is in document content."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
@@ -1658,8 +1650,8 @@ class Script(default.Script):
             return False
 
         obj, offset = self.utilities.getCaretContext(document, False, False)
-        msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WEB: Context: ", obj, ", ", offset, "(focus: ", orca_state.locusOfFocus, ")"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
@@ -1784,8 +1776,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
-        msg = "WEB: Setting context and focus to: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.setCaretContext(obj, offset, document)
         orca.setLocusOfFocus(event, obj, notify, force)
         return handled
@@ -1901,8 +1893,8 @@ class Script(default.Script):
             focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
                 notify = self.utilities.queryNonEmptyText(focused) is None
-                msg = f"WEB: Setting locusOfFocus and caret context to {focused}"
-                debug.println(debug.LEVEL_INFO, msg)
+                tokens = ["WEB: Setting locusOfFocus and caret context to", focused]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 orca.setLocusOfFocus(event, focused, notify)
                 self.utilities.setCaretContext(focused, 0)
             return True
@@ -2043,9 +2035,9 @@ class Script(default.Script):
             return False
 
         obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
-        msg = "WEB: Caret context is %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
+        tokens = ["WEB: Caret context is", obj, ", ", offset,
+                  "(focus: ", orca_state.locusOfFocus, ")"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not obj or self.utilities.isZombie(obj) and event.source == orca_state.locusOfFocus:
             msg = "WEB: Setting caret context to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2120,9 +2112,9 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        msg = "WEB: Caret context is %s, %i (focus: %s)" \
-              % (obj, offset, orca_state.locusOfFocus)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["WEB: Caret context is", obj, ", ", offset,
+                  "(focus: ", orca_state.locusOfFocus, ")"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not obj or self.utilities.isZombie(obj) or prevDocument != document:
             tokens = ["WEB: Clearing context - obj", obj, "is null or zombie or document changed"]
@@ -2132,8 +2124,8 @@ class Script(default.Script):
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
                 notify = self.utilities.inFindContainer(orca_state.locusOfFocus)
-                msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 orca.setLocusOfFocus(event, obj, notify)
                 if not notify and prevDocument is None:
                     self.refreshKeyGrabs("updating locus of focus without notification")
@@ -2283,11 +2275,9 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = (
-                f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) "
-                f"is not in document content"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Event ignored: locusOfFocus", orca_state.locusOfFocus,
+                      "is not in document content"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -2555,11 +2545,9 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = (
-                f"WEB: Event ignored: locusOfFocus ({orca_state.locusOfFocus}) "
-                f"is not in document content"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Event ignored: locusOfFocus", orca_state.locusOfFocus,
+                      "is not in document content"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):

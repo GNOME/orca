@@ -340,16 +340,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         objName = AXObject.get_name(obj)
         descendant = args.get("ancestorOf")
         if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
-            msg = (
-                f"WEB: {descendant}'s ancestor {obj} has same name as priorObj {priorObj}. "
-                f"Not generating labelOrName."
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: ", descendant, "'s ancestor", obj, "has same name as priorObj",
+                      priorObj, ". Not generating labelOrName."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            tokens = ["WEB:", obj, "is popup menu for current item."]
+            tokens = ["WEB: ", obj, "is popup menu for current item."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -822,9 +820,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         for i, content in enumerate(contents):
             obj, start, end, string = content
-            msg = "ITEM %i: %s, start: %i, end: %i, string: '%s'" \
-                  % (i, obj, start, end, string)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["ITEM", i, ": ", obj, "start: ", start, ", end: ", end, "'", string, "'"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             utterance = self.generateSpeech(
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)
