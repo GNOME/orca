@@ -731,6 +731,10 @@ class Text(Region):
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript
+        if script is None:
+            msg = "BRAILLE: Cannot get attribute mask without active script."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return ""
 
         if getLinkMask and linkIndicator != settings.BRAILLE_UNDERLINE_NONE:
             try:
