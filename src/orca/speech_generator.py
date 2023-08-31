@@ -1307,7 +1307,7 @@ class SpeechGenerator(generator.Generator):
             if charname != string:
                 result[0] = charname
 
-        result.extend(self.voice(DEFAULT, obj=obj, string=result[0], **args))
+        result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
     def _getCharacterAttributes(self,
