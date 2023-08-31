@@ -652,7 +652,7 @@ class EventManager:
                 if debugging:
                     msg = (
                         f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
-                        f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
+                        f"\n^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
                     )
                     debug.printMessage(debug.eventDebugLevel, msg, False)
 

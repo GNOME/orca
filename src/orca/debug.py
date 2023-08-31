@@ -31,6 +31,7 @@ __license__   = "LGPL"
 import inspect
 import traceback
 import os
+import re
 import subprocess
 import sys
 
@@ -226,6 +227,8 @@ def printTokens(level, tokens, timestamp=False):
         return
 
     text = " ".join(map(_asString, tokens))
+    text = re.sub(r"[ \u00A0]+", " ", text)
+    text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
     println(level, text, timestamp)
 
 def printMessage(level, text, timestamp=False):
