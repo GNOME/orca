@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-11 17:30+0000\n"
-"PO-Revision-Date: 2023-08-11 21:10+0200\n"
+"POT-Creation-Date: 2023-08-11 19:30+0000\n"
+"PO-Revision-Date: 2023-09-03 20:55+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -3111,25 +3111,25 @@ msgstr "Vai á última rexión que fixo un anuncio"
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1011
 msgid "Go to the parent of the object with navigator focus."
-msgstr "Ir ao pai do obxecto co foco de navegación"
+msgstr "Ir ao pai do obxecto co foco de navegación."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1015
 msgid "Go to the first child of the object with navigator focus."
-msgstr "Ir ao primeiro fillo do obxecto co foco de navegación"
+msgstr "Ir ao primeiro fillo do obxecto co foco de navegación."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1019
 msgid "Go to the next sibling of the object with navigator focus."
-msgstr "Ir ao seguinte irmán do obxecto co foco de navegación"
+msgstr "Ir ao seguinte irmán do obxecto co foco de navegación."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1023
 msgid "Go to the previous sibling of the object with navigator focus."
-msgstr "Ir ao anterior irmán do obxecto co foco de navegación"
+msgstr "Ir ao anterior irmán do obxecto co foco de navegación."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
@@ -3142,7 +3142,7 @@ msgstr "Premer o obxecto co foco de navegación."
 #. toggled on and off.
 #: src/orca/cmdnames.py:1032
 msgid "Toggle simplified object navigation."
-msgstr "Trocar a navegación de obxectos simplificada"
+msgstr "Trocar a navegación de obxectos simplificada."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1035
@@ -8749,7 +8749,7 @@ msgstr "O botón predeterminado é %s"
 #: src/orca/messages.py:501
 #, python-format
 msgid "Default button is %s. Grayed"
-msgstr "Os botóns predeterminados son %s. Agrisado."
+msgstr "Os botóns predeterminados son %s. Agrisado"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
@@ -8782,7 +8782,7 @@ msgstr " superíndice %s"
 #. a dialog.
 #: src/orca/messages.py:524
 msgid "Not in a dialog"
-msgstr "Non está nun diálogo."
+msgstr "Non está nun diálogo"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8974,7 +8974,7 @@ msgstr "abre un diálogo"
 #. will cause a grid to appear if activated. A grid is an interactive table.
 #: src/orca/messages.py:664
 msgid "opens grid"
-msgstr "abre a grella"
+msgstr "abre a grade"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a listbox to appear if activated.
@@ -10541,7 +10541,7 @@ msgstr "Non hai pai."
 #. has no previous sibling.
 #: src/orca/messages.py:1827
 msgid "No previous."
-msgstr "Non hai anterior"
+msgstr "Non hai anterior."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
