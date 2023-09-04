@@ -52,6 +52,21 @@ class Utilities(script_utilities.Utilities):
 
         return result
 
+    def frameAndDialog(self, obj):
+        """Returns the frame and (possibly) the dialog containing obj."""
+
+        frame, dialog = super().frameAndDialog(obj)
+        if frame or dialog:
+            return frame, dialog
+
+        tokens = ["QT: Could not find frame or dialog for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        topLevel = self.topLevelObject(obj, True)
+
+        tokens = ["QT: Returning", topLevel, "as frame for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return topLevel, None
+
     def hasMeaningfulToggleAction(self, obj):
         """Returns True if obj has a meaningful toggle action."""
 
