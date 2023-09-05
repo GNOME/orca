@@ -1,3 +1,38 @@
+45.rc - 5 September 2023
+
+Bug Fixes:
+
+* Fix several performance issues
+
+* Fix bug causing utterances to be split up unexpectedly
+
+* Filter out redundant descriptions to reduce chattiness
+
+* Fix tracebacks resulting from hand-editing user-settings.conf
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  da              Danish                    Alan Mortensen
+  de              German                    Jürgen Benvenuti
+  de              German                    Philipp Kiemle
+  es              Spanish                   Daniel Mustieles
+  fa              Persian                   Danial Behzadi
+  fi              Finnish                   Jiri Grönroos
+  gl              Galician                  Fran Dieguez
+  id              Indonesian                Andika Triwidada
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lt              Lithuanian                Aurimas Černius
+  pa              Punjabi                   Amn Alam
+  pl              Polish                    Piotr Drąg
+  ru              Russian                   Artur S0
+  ru              Russian                   Sergej A
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+
+=========
+
 45.beta2 (née 45.gamma) - 15 August 2023
 
 Distros should read the following:
