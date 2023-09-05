@@ -10,6 +10,15 @@ Bug Fixes:
 
 * Fix tracebacks resulting from hand-editing user-settings.conf
 
+* Fix speech getting cut off when focus changes away from checkable
+  item
+
+* Fix Orca failing to say "command not found" label in gnome-shell's
+  run dialog
+
+* Fix presentation of Qt tree cells with toggle action
+
+* Improve logic when suspending events
 
 New and updated translations (THANKS EVERYONE!!!):
 
