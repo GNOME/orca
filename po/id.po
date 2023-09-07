@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-45\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-11 17:30+0000\n"
-"PO-Revision-Date: 2023-08-15 18:23+0700\n"
+"POT-Creation-Date: 2023-08-15 11:25+0000\n"
+"PO-Revision-Date: 2023-09-07 13:54+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -1904,10 +1904,8 @@ msgstr "Masuk dan keluar mode tinjau rata"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:140
-#, fuzzy
-#| msgid "Move flat review to the end position"
 msgid "Toggle restricting flat review to the current object"
-msgstr "Pindahkan tinjau rata ke posisi akhir"
+msgstr "Jungkitkan tinjau rata ke objek saat ini"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2173,10 +2171,8 @@ msgstr "Tambahkan isi di bawah tinjau rata ke papan klip"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:363
-#, fuzzy
-#| msgid "Move flat review to the end position"
 msgid "Show flat review contents"
-msgstr "Pindahkan tinjau rata ke posisi akhir"
+msgstr "Tampilkan konten tinjau rata"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -4819,10 +4815,8 @@ msgstr "Bebas"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:329
-#, fuzzy
-#| msgid "Leaving flat review."
 msgid "Flat review"
-msgstr "Meninggalkan tinjau rata."
+msgstr "Tinjau rata"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -4830,10 +4824,8 @@ msgstr "Meninggalkan tinjau rata."
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:336
-#, fuzzy
-#| msgid "Toggle speech verbosity level"
 msgid "Speech and verbosity"
-msgstr "Jungkitkan aras kerincian ucapan"
+msgstr "Ucapan dan tingkat rincian"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -4845,11 +4837,8 @@ msgstr "Jungkitkan aras kerincian ucapan"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:347
-#, fuzzy
-#| msgctxt "role"
-#| msgid "main content"
 msgid "Flat review contents"
-msgstr "konten utama"
+msgstr "Konten tinjau rata"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -8729,7 +8718,7 @@ msgstr "Tombol baku adalah %s"
 #. the button (e.g. "OK" or "Close"). When translating "Grayed," please use
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:501
-#, fuzzy, python-format
+#, python-format
 msgid "Default button is %s. Grayed"
 msgstr "Tombol baku adalah %s. Kelabu"
 
@@ -8927,10 +8916,8 @@ msgstr "Meninggalkan tinjau rata."
 #. let the user know that flat review is being restricted to the current
 #. object of interest.
 #: src/orca/messages.py:644
-#, fuzzy
-#| msgid "Move flat review to the word above the current word"
 msgid "Flat review restricted to the current object"
-msgstr "Pindahkan tinjau rata ke kata di atas kata ini"
+msgstr "Tinjau rata dibatasi ke objek saat ini"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8940,7 +8927,7 @@ msgstr "Pindahkan tinjau rata ke kata di atas kata ini"
 #. that is, the entire window can be explored.
 #: src/orca/messages.py:652
 msgid "Flat review unrestricted"
-msgstr ""
+msgstr "Tinjau rata tak terbatas"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
