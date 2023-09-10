@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-11 19:30+0000\n"
-"PO-Revision-Date: 2023-08-12 05:38+0200\n"
+"POT-Creation-Date: 2023-09-08 22:56+0000\n"
+"PO-Revision-Date: 2023-09-10 05:53+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -1776,7 +1776,7 @@ msgstr "მაჩვენებლის მიმდინარე ელე�
 #. Left click means to generate a left mouse button click on the current item.
 #: src/orca/cmdnames.py:45
 msgid "Perform left click on current flat review item"
-msgstr ""
+msgstr "მარცხენა წკაპი მიმდინარე ბრტყელი გადახედვის ელემენტზე"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1786,7 +1786,7 @@ msgstr ""
 #. Right click means to generate a right mouse button click on the current item.
 #: src/orca/cmdnames.py:53
 msgid "Perform right click on current flat review item"
-msgstr ""
+msgstr "მარჯვენა წკაპი მიმდინარე ბრტყელი გადახედვის ელემენტზე"
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -1903,7 +1903,7 @@ msgstr "ბრტყელი გადახედვის რეჟიმშ�
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:140
 msgid "Toggle restricting flat review to the current object"
-msgstr ""
+msgstr "ბრტყელი გადახედვის მიმდინარე ობიექტზე შეზღუდვის გადართვა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1913,7 +1913,7 @@ msgstr ""
 #. The home position is the beginning of the content in the window.
 #: src/orca/cmdnames.py:148
 msgid "Move flat review to the home position"
-msgstr ""
+msgstr "ბრტყელი გადახედვის საწყის მდებარეობაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1923,7 +1923,7 @@ msgstr ""
 #. The home position is the last bit of information in the window.
 #: src/orca/cmdnames.py:156
 msgid "Move flat review to the end position"
-msgstr ""
+msgstr "ბრტყელი გადახედვის საბოლოო მდებარეობაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1932,7 +1932,7 @@ msgstr ""
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:164
 msgid "Move flat review to the beginning of the previous line"
-msgstr ""
+msgstr "ბრტყელი გადახედვის წინა ხაზის დასაწყისში გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1941,7 +1941,7 @@ msgstr ""
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:171
 msgid "Speak the current flat review line"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ხაზის წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1952,7 +1952,7 @@ msgstr ""
 #. by character.
 #: src/orca/cmdnames.py:180
 msgid "Spell the current flat review line"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ხაზის დამარცვლა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1963,7 +1963,7 @@ msgstr ""
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:190
 msgid "Phonetically spell the current flat review line"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ხაზის ფონეტიკური დამარცვლა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1972,7 +1972,7 @@ msgstr ""
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:197
 msgid "Move flat review to the beginning of the next line"
-msgstr ""
+msgstr "ბრტყელი გადახედვის შემდეგი ხაზის დასაწყისში გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1983,7 +1983,7 @@ msgstr ""
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:206
 msgid "Move flat review to the previous item or word"
-msgstr ""
+msgstr "ბრტყელი გადახედვის წინა ელემენტზე ან სიტყვაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1993,7 +1993,7 @@ msgstr ""
 #. This command will speak the current word or item.
 #: src/orca/cmdnames.py:214
 msgid "Speak the current flat review item or word"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ელემენტის ან სიტყვის წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2004,7 +2004,7 @@ msgstr ""
 #. character by character.
 #: src/orca/cmdnames.py:223
 msgid "Spell the current flat review item or word"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ელემენტის ან სიტყვის დამარცვლა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2016,7 +2016,7 @@ msgstr ""
 #. and so on.
 #: src/orca/cmdnames.py:234
 msgid "Phonetically spell the current flat review item or word"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ელემენტის ან სიტყვის ფონეტიკური დამარცვლა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2027,7 +2027,7 @@ msgstr ""
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:243
 msgid "Move flat review to the next item or word"
-msgstr ""
+msgstr "ბრტყელი გადახედვის შემდეგ ელემენტზე ან სიტყვაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2038,7 +2038,7 @@ msgstr ""
 #. line upward on the screen.
 #: src/orca/cmdnames.py:252
 msgid "Move flat review to the word above the current word"
-msgstr ""
+msgstr "ბრტყელი გადახედვის მიმდინარე სიტყვის ზედა სიტყვაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2050,7 +2050,7 @@ msgstr ""
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:262
 msgid "Speak the current flat review object"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის ობიექტის წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2061,7 +2061,7 @@ msgstr ""
 #. line downward on the screen.
 #: src/orca/cmdnames.py:271
 msgid "Move flat review to the word below the current word"
-msgstr ""
+msgstr "ბრტყელი გადახედვის მიმდინარე სიტყვის ქვედა სიტყვაზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2072,7 +2072,7 @@ msgstr ""
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:280
 msgid "Move flat review to the previous character"
-msgstr ""
+msgstr "ბრტყელი გადახედვის წინა სიმბოლოზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2082,7 +2082,7 @@ msgstr ""
 #. This command will speak the current character
 #: src/orca/cmdnames.py:288
 msgid "Speak the current flat review character"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის სიმბოლოს წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2093,7 +2093,7 @@ msgstr ""
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:298
 msgid "Phonetically speak the current flat review character"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის სიმბოლოს ფონეტიკური წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2104,7 +2104,7 @@ msgstr ""
 #. value.
 #: src/orca/cmdnames.py:308
 msgid "Speak unicode value of the current flat review character"
-msgstr ""
+msgstr "მიმდინარე ბრტყელი გადახედვის სიმბოლოს უნიკოდის მნიშვნელობის წარმოთქმა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2115,7 +2115,7 @@ msgstr ""
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:317
 msgid "Move flat review to the next character"
-msgstr ""
+msgstr "ბრტყელი გადახედვის შემდეგ სიმბოლოზე გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2125,7 +2125,7 @@ msgstr ""
 #. This command will move to and present the end of the line.
 #: src/orca/cmdnames.py:325
 msgid "Move flat review to the end of the line"
-msgstr ""
+msgstr "ბრტყელი გადახედვის ხაზის ბოლოში გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2135,7 +2135,7 @@ msgstr ""
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: src/orca/cmdnames.py:333
 msgid "Move flat review to the bottom left"
-msgstr ""
+msgstr "ბრტყელი გადახედვის ქვემოთ მარცხნივ გადატანა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2146,7 +2146,7 @@ msgstr ""
 #. clipboard.
 #: src/orca/cmdnames.py:342
 msgid "Copy the contents under flat review to the clipboard"
-msgstr ""
+msgstr "ბრტყელი გადახედვის ქვეშ არსებული შემცველობის ბუფერში კოპირება"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2158,6 +2158,8 @@ msgstr ""
 #: src/orca/cmdnames.py:352
 msgid "Append the contents under flat review to the clipboard"
 msgstr ""
+"ბრტყელი გადახედვის ქვეშ არსებული შემცველობის ბუფერის შემცველობისთვის ბოლოში "
+"მიწერა"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2170,7 +2172,7 @@ msgstr ""
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:363
 msgid "Show flat review contents"
-msgstr ""
+msgstr "ბრტყელი გადახედვის შემცველობის ჩვენება"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -2433,7 +2435,7 @@ msgstr "სანიშნების შენახვა"
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:559
 msgid "Toggle mouse review mode"
-msgstr ""
+msgstr "თაგუნას გადახედვის რეჟიმის გადართვა"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
@@ -2460,7 +2462,7 @@ msgstr "მიმდინარე ობიექტის ზომისა 
 #. application, bypassing Orca's interception of it.
 #: src/orca/cmdnames.py:579
 msgid "Pass the next command on to the current application"
-msgstr ""
+msgstr "მიმდინარე აპლიკაციისთვის შემდეგი ბრძანების გადაცემა"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
@@ -2754,7 +2756,7 @@ msgstr ""
 #. column headers.
 #: src/orca/cmdnames.py:798
 msgid "Clear the dynamic column headers"
-msgstr ""
+msgstr "დინამიკური სვეტის თავსართების გასუფთავება"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
@@ -2769,13 +2771,13 @@ msgstr ""
 #. as if it contained row headers.
 #: src/orca/cmdnames.py:809
 msgid "Clear the dynamic row headers"
-msgstr ""
+msgstr "დინამიკური მწკრივის თავსართების გასუფთავება"
 
 #. Translators: This string refers to an Orca command. The "input line" refers
 #. to the place where one enters formulas for a spreadsheet.
 #: src/orca/cmdnames.py:813
 msgid "Present the contents of the input line"
-msgstr ""
+msgstr "შეყვანის ხაზის შემცველობის გამოტანა"
 
 #. Translators: the structural navigation keys are designed to move the caret
 #. around the document content by object type. Thus H moves you to the next
@@ -2784,7 +2786,7 @@ msgstr ""
 #. writing functions.
 #: src/orca/cmdnames.py:820
 msgid "Toggle structural navigation keys"
-msgstr ""
+msgstr "სტრუქტურული ნავიგაციის ღილაკების გადართვა"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:823
@@ -2957,7 +2959,7 @@ msgstr "შემდეგ შიდა ჩარჩოზე გადასვ
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:926
 msgid "Display a list of internal frames"
-msgstr ""
+msgstr "შიდა ჩარჩოების სიის ჩვენება"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:929
@@ -2972,7 +2974,7 @@ msgstr "შემდეგ გამოსახულებაზე გად�
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:935
 msgid "Display a list of images"
-msgstr ""
+msgstr "გამოსახულებების სიის ჩვენება"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
@@ -3073,7 +3075,7 @@ msgstr ""
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:1002
 msgid "Go to next live region"
-msgstr ""
+msgstr "შემდეგ ცოცხალ რეგიონზე გადასვლა"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3117,7 +3119,7 @@ msgstr ""
 #. toggled on and off.
 #: src/orca/cmdnames.py:1032
 msgid "Toggle simplified object navigation."
-msgstr ""
+msgstr "გამარტივებული ობიექტის ნავიგაციის გადართვა."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1035
@@ -3137,17 +3139,17 @@ msgstr "პარაგრაფების სიის ჩვენება"
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1044
 msgid "Go to previous radio button"
-msgstr ""
+msgstr "წინა რადიო ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1047
 msgid "Go to next radio button"
-msgstr ""
+msgstr "შემდეგ რადიო ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1050
 msgid "Display a list of radio buttons"
-msgstr ""
+msgstr "ყველა რადიო ღილაკის სიის ჩვენება"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
@@ -3283,12 +3285,12 @@ msgstr "უნახავი ბმულების სიის ჩვენ
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1148
 msgid "Go to previous visited link"
-msgstr ""
+msgstr "წინა უკვე ნანახ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1151
 msgid "Go to next visited link"
-msgstr ""
+msgstr "შემდეგ უკვე ნანახ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1154
@@ -3389,7 +3391,7 @@ msgstr "ყავისფერი"
 #: src/orca/colornames.py:90
 msgctxt "color name"
 msgid "burlywood"
-msgstr ""
+msgstr "მოყვითალო-ყავისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3397,7 +3399,7 @@ msgstr ""
 #: src/orca/colornames.py:95
 msgctxt "color name"
 msgid "cadet blue"
-msgstr ""
+msgstr "ნაცრისფერ-ლურჯი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3405,7 +3407,7 @@ msgstr ""
 #: src/orca/colornames.py:100
 msgctxt "color name"
 msgid "chartreuse"
-msgstr ""
+msgstr "ბაცი მწვანე"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3429,7 +3431,7 @@ msgstr "მარჯნისფერი"
 #: src/orca/colornames.py:115
 msgctxt "color name"
 msgid "cornflower blue"
-msgstr ""
+msgstr "ღიღილოსფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3437,7 +3439,7 @@ msgstr ""
 #: src/orca/colornames.py:120
 msgctxt "color name"
 msgid "cornsilk"
-msgstr ""
+msgstr "ღია ყვითელი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3661,7 +3663,7 @@ msgstr "ფუქსიისფერი"
 #: src/orca/colornames.py:260
 msgctxt "color name"
 msgid "gainsboro"
-msgstr ""
+msgstr "ღია ნაცრისფერ-იისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3669,7 +3671,7 @@ msgstr ""
 #: src/orca/colornames.py:265
 msgctxt "color name"
 msgid "ghost white"
-msgstr ""
+msgstr "ნისლიანი თეთრი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3717,7 +3719,7 @@ msgstr "მომწვანო ყვითელი"
 #: src/orca/colornames.py:295
 msgctxt "color name"
 msgid "honeydew"
-msgstr ""
+msgstr "თეთრი მუსკატის ნესვი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3725,7 +3727,7 @@ msgstr ""
 #: src/orca/colornames.py:300
 msgctxt "color name"
 msgid "hot pink"
-msgstr ""
+msgstr "კაშკაშა ვარდისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3789,7 +3791,7 @@ msgstr "გაზონისფერი მწვანე"
 #: src/orca/colornames.py:340
 msgctxt "color name"
 msgid "lemon chiffon"
-msgstr ""
+msgstr "ლიმონისფერი-კრემისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3917,7 +3919,7 @@ msgstr "ლაიმის მწვანე"
 #: src/orca/colornames.py:420
 msgctxt "color name"
 msgid "linen"
-msgstr ""
+msgstr "სელისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4077,7 +4079,7 @@ msgstr "ზეთისხილი"
 #: src/orca/colornames.py:520
 msgctxt "color name"
 msgid "olive drab"
-msgstr ""
+msgstr "ნაზი ზეთისხილისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4141,7 +4143,7 @@ msgstr "მკრთალი იისფერი წითელი"
 #: src/orca/colornames.py:560
 msgctxt "color name"
 msgid "papaya whip"
-msgstr ""
+msgstr "პაპაიას გაქცევა"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4149,7 +4151,7 @@ msgstr ""
 #: src/orca/colornames.py:565
 msgctxt "color name"
 msgid "peach puff"
-msgstr ""
+msgstr "ატმისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4205,7 +4207,7 @@ msgstr "წითელი"
 #: src/orca/colornames.py:600
 msgctxt "color name"
 msgid "rosy brown"
-msgstr ""
+msgstr "ვარდისფერ-ყავისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4221,7 +4223,7 @@ msgstr "სამეფო ლურჯი"
 #: src/orca/colornames.py:610
 msgctxt "color name"
 msgid "saddle brown"
-msgstr ""
+msgstr "ძველი ტყავისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4237,7 +4239,7 @@ msgstr "ორაგული"
 #: src/orca/colornames.py:620
 msgctxt "color name"
 msgid "sandy brown"
-msgstr ""
+msgstr "ქვიშისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4253,7 +4255,7 @@ msgstr "ზღვისფერი მწვანე"
 #: src/orca/colornames.py:630
 msgctxt "color name"
 msgid "seashell"
-msgstr ""
+msgstr "ზღვის ქაფისფერი"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4730,7 +4732,7 @@ msgstr "ბრძანება"
 #. commands.
 #: src/orca/guilabels.py:270
 msgid "Key Binding"
-msgstr ""
+msgstr "ღილაკის მიბმა"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
@@ -4761,7 +4763,7 @@ msgstr "ქმედებები"
 #. buttons.
 #: src/orca/guilabels.py:291
 msgid "Braille Bindings"
-msgstr ""
+msgstr "ბრაილის მიბმები"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
@@ -4781,7 +4783,7 @@ msgstr "თარიღი და დრო"
 #. used in cmdnames.py.
 #: src/orca/guilabels.py:305
 msgid "Mouse review"
-msgstr ""
+msgstr "თაგუნას გადახედვა"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
@@ -4796,13 +4798,13 @@ msgstr "ობიექტის ნავიგაცია"
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:316
 msgid "Object details"
-msgstr ""
+msgstr "ობიექტის დეტალები"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
 #: src/orca/guilabels.py:320
 msgid "Unbound"
-msgstr ""
+msgstr "მითითებული არაა"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's "flat review" feature. This feature allows the blind
@@ -4813,7 +4815,7 @@ msgstr ""
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:329
 msgid "Flat review"
-msgstr ""
+msgstr "ბრტყელი გადახედვა"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -4835,7 +4837,7 @@ msgstr "საუბარი და გამართვა"
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:347
 msgid "Flat review contents"
-msgstr ""
+msgstr "ბრტყელი გადახედვის შემცველობა"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -4888,7 +4890,7 @@ msgstr "გაფრთხილებების წარმომდგე�
 #: src/orca/guilabels.py:384
 #, python-format
 msgid "Screen Reader Preferences for %s"
-msgstr ""
+msgstr "ეკრანის მკითხველის პარამეტრები %s-თვის"
 
 #. Translators: This is a table column header. This column consists of a single
 #. checkbox. If the checkbox is checked, Orca will indicate the associated item
@@ -4897,7 +4899,7 @@ msgstr ""
 #. "underlining" with braille dots 7-8 a word that is bold.
 #: src/orca/guilabels.py:391
 msgid "Mark in braille"
-msgstr ""
+msgstr "მონიშვნა ბრაილში"
 
 #. Translators: "Present Unless" is a column header of the text attributes panel
 #. of the Orca preferences dialog. On this panel, the user can select a set of
@@ -4929,7 +4931,7 @@ msgstr "ლაპარაკი"
 #. braille and selected when reading Spanish content.
 #: src/orca/guilabels.py:417
 msgid "Save Profile As Conflict"
-msgstr ""
+msgstr "პროფილის, როგორც კონფლიქტის შენახვა"
 
 #. Translators: This is the label of a message dialog informing the user that
 #. he/she attempted to save a new user profile under a name which already exists.
@@ -4938,7 +4940,7 @@ msgstr ""
 #. braille and selected when reading Spanish content.
 #: src/orca/guilabels.py:424
 msgid "User Profile Conflict!"
-msgstr ""
+msgstr "მომხმარებლის პროფილის კონფლიქტი!"
 
 #. Translators: This is the message in a dialog informing the user that he/she
 #. attempted to save a new user profile under a name which already exists.
@@ -4960,7 +4962,7 @@ msgstr ""
 #. reading Spanish content.
 #: src/orca/guilabels.py:441
 msgid "Load user profile"
-msgstr ""
+msgstr "მომხმარებლის პროფილის ჩატვირთვა"
 
 #. Translators: This text is displayed in a message dialog when a user indicates
 #. he/she wants to switch to a new user profile which will cause him/her to lose
@@ -5087,7 +5089,7 @@ msgstr "წინადადება"
 #: src/orca/guilabels.py:531
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr ""
+msgstr "ციტატის ბლოკი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5159,7 +5161,7 @@ msgstr "სათაური"
 #: src/orca/guilabels.py:579
 msgctxt "structural navigation"
 msgid "Internal Frame"
-msgstr ""
+msgstr "შიდა ჩარჩო"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5188,7 +5190,7 @@ msgstr "ჭდე"
 #: src/orca/guilabels.py:599
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr ""
+msgstr "ორიენტირი"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5399,7 +5401,7 @@ msgstr "გამოსახულებები"
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
-msgstr ""
+msgstr "სათაურები დონეზე %d"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5409,7 +5411,7 @@ msgstr ""
 #: src/orca/guilabels.py:744
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr ""
+msgstr "ორიენტირები"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5419,7 +5421,7 @@ msgstr ""
 #: src/orca/guilabels.py:751
 msgctxt "structural navigation"
 msgid "Large Objects"
-msgstr ""
+msgstr "დიდი ობიექტები"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5619,19 +5621,19 @@ msgstr ""
 #. header of a table cell in document content.
 #: src/orca/guilabels.py:887
 msgid "Announce cell _header"
-msgstr ""
+msgstr "უჯრედის _თავსართის გამოცადება"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
 #: src/orca/guilabels.py:891
 msgid "Table Navigation"
-msgstr ""
+msgstr "ცხრილის ნავიგაცია"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
 #: src/orca/guilabels.py:895
 msgid "Skip _blank cells"
-msgstr ""
+msgstr "ცარიელი _უჯრედების გამოტოვება"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
@@ -5651,7 +5653,7 @@ msgstr "_უჯრედის კოორდინატების წარ
 #. a particular table cell spans in a table).
 #: src/orca/guilabels.py:909
 msgid "Speak _multiple cell spans"
-msgstr ""
+msgstr "_მრავალი უჯრედის ზომის წარმოთქმა"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
@@ -5666,21 +5668,21 @@ msgstr "ატრიბუტის სახელი"
 #. label of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:920
 msgid "Control caret navigation"
-msgstr ""
+msgstr "კარეტის ნავიგაციის ონტროლი"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:925
 msgid "Enable _structural navigation"
-msgstr ""
+msgstr "სტრუქტურული _ნავიგაციის ჩართვა"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
 #: src/orca/guilabels.py:929 src/orca/orca-setup.ui:1480
 #: src/orca/orca-setup.ui:2224
 msgid "Brie_f"
-msgstr ""
+msgstr "_მოკლე"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
@@ -6107,7 +6109,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "double-struck %s"
-msgstr ""
+msgstr "ორმაგად გადახაზული %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6121,7 +6123,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "bold fraktur %s"
-msgstr ""
+msgstr "სქლად-გადახაზული %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6135,7 +6137,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
-msgstr ""
+msgstr "sans-serif %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6191,7 +6193,7 @@ msgstr "sans-serif სქელი კურსივი %s"
 #, python-format
 msgctxt "math symbol"
 msgid "monospace %s"
-msgstr ""
+msgstr "ერთსიგანიანი %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6241,7 +6243,7 @@ msgstr "მარცხეენა მარჯვენა ისარი"
 #: src/orca/mathsymbols.py:1278
 msgctxt "math symbol"
 msgid "up down arrow"
-msgstr ""
+msgstr "ზემოთ-ქვემოთ ისარი"
 
 #. Translators: this is the spoken representation for the character '↖' (U+2196)
 #: src/orca/mathsymbols.py:1281
@@ -6391,14 +6393,14 @@ msgstr "circumflex"
 #: src/orca/mathsymbols.py:1355
 msgctxt "math symbol"
 msgid "háček"
-msgstr ""
+msgstr "ჰაჩეკი"
 
 #. Translators: this is the spoken word for the character '˘' (U+02d8) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1359
 msgctxt "math symbol"
 msgid "breve"
-msgstr ""
+msgstr "ბრები"
 
 #. Translators: this is the spoken word for the character '˙' (U+02d9) when used
 #. as a MathML operator.
@@ -6418,43 +6420,43 @@ msgstr "ორმაგი ვერტიკალური ხაზი"
 #: src/orca/mathsymbols.py:1370
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr ""
+msgstr "ჰორიზონტალური მრავალწერტილი"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: src/orca/mathsymbols.py:1373
 msgctxt "math symbol"
 msgid "for all"
-msgstr ""
+msgstr "ყველასთვის"
 
 #. Translators: this is the spoken representation for the character '∁' (U+2201)
 #: src/orca/mathsymbols.py:1376
 msgctxt "math symbol"
 msgid "complement"
-msgstr ""
+msgstr "დამატება"
 
 #. Translators: this is the spoken representation for the character '∂' (U+2202)
 #: src/orca/mathsymbols.py:1379
 msgctxt "math symbol"
 msgid "partial differential"
-msgstr ""
+msgstr "ნაწილობრივი დიფერენციალი"
 
 #. Translators: this is the spoken representation for the character '∃' (U+2203)
 #: src/orca/mathsymbols.py:1382
 msgctxt "math symbol"
 msgid "there exists"
-msgstr ""
+msgstr "არსებობს"
 
 #. Translators: this is the spoken representation for the character '∄' (U+2204)
 #: src/orca/mathsymbols.py:1385
 msgctxt "math symbol"
 msgid "there does not exist"
-msgstr ""
+msgstr "არ არსებობს"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
 #: src/orca/mathsymbols.py:1388
 msgctxt "math symbol"
 msgid "empty set"
-msgstr ""
+msgstr "ცარიელი სიმრავლე"
 
 #. Translators: this is the spoken representation for the character '∆' (U+2206)
 #: src/orca/mathsymbols.py:1391
@@ -6466,49 +6468,49 @@ msgstr "გაზრდა"
 #: src/orca/mathsymbols.py:1394
 msgctxt "math symbol"
 msgid "nabla"
-msgstr ""
+msgstr "ნაბლა"
 
 #. Translators: this is the spoken representation for the character '∈' (U+2208)
 #: src/orca/mathsymbols.py:1397
 msgctxt "math symbol"
 msgid "element of"
-msgstr ""
+msgstr "ელემენტია"
 
 #. Translators: this is the spoken representation for the character '∉' (U+2209)
 #: src/orca/mathsymbols.py:1400
 msgctxt "math symbol"
 msgid "not an element of"
-msgstr ""
+msgstr "არაა ელემენტი"
 
 #. Translators: this is the spoken representation for the character '∊' (U+220a)
 #: src/orca/mathsymbols.py:1403
 msgctxt "math symbol"
 msgid "small element of"
-msgstr ""
+msgstr "მცირე ელემენტია"
 
 #. Translators: this is the spoken representation for the character '∋' (U+220b)
 #: src/orca/mathsymbols.py:1406
 msgctxt "math symbol"
 msgid "contains as a member"
-msgstr ""
+msgstr "შეიცავს, როგორც წევრს"
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
 #: src/orca/mathsymbols.py:1409
 msgctxt "math symbol"
 msgid "does not contain as a member"
-msgstr ""
+msgstr "არ შეიცავს, როგორც წევრს"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
 #: src/orca/mathsymbols.py:1412
 msgctxt "math symbol"
 msgid "small contains as a member"
-msgstr ""
+msgstr "მცირე შეიცავს, როგორც წევრს"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
 #: src/orca/mathsymbols.py:1415
 msgctxt "math symbol"
 msgid "end of proof"
-msgstr ""
+msgstr "მტკიცების დასასრული"
 
 #. Translators: this is the spoken representation for the character '∏' (U+220f)
 #: src/orca/mathsymbols.py:1418
@@ -6520,7 +6522,7 @@ msgstr "პროდუქტი"
 #: src/orca/mathsymbols.py:1421
 msgctxt "math symbol"
 msgid "coproduct"
-msgstr ""
+msgstr "თანაპროდუქტი"
 
 #. Translators: this is the spoken representation for the character '∑' (U+2211)
 #: src/orca/mathsymbols.py:1424
@@ -6532,7 +6534,7 @@ msgstr "ჯამი"
 #: src/orca/mathsymbols.py:1430
 msgctxt "math symbol"
 msgid "minus or plus"
-msgstr ""
+msgstr "პლუს-მინუსი"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
 #: src/orca/mathsymbols.py:1433
@@ -6544,31 +6546,31 @@ msgstr "წერტილთან არ-მიბმული პლუსი
 #: src/orca/mathsymbols.py:1436
 msgctxt "math symbol"
 msgid "division slash"
-msgstr ""
+msgstr "გაყოფის დახრილი ხაზი"
 
 #. Translators: this is the spoken representation for the character '∖' (U+2216)
 #: src/orca/mathsymbols.py:1439
 msgctxt "math symbol"
 msgid "set minus"
-msgstr ""
+msgstr "სიმრავლეების სხვაობა"
 
 #. Translators: this is the spoken representation for the character '∗' (U+2217)
 #: src/orca/mathsymbols.py:1442
 msgctxt "math symbol"
 msgid "asterisk operator"
-msgstr ""
+msgstr "ვარსკვლავის ოპერატორი"
 
 #. Translators: this is the spoken representation for the character '∘' (U+2218)
 #: src/orca/mathsymbols.py:1445
 msgctxt "math symbol"
 msgid "ring operator"
-msgstr ""
+msgstr "რგოლი ოპერატორი"
 
 #. Translators: this is the spoken representation for the character '∙' (U+2219)
 #: src/orca/mathsymbols.py:1448
 msgctxt "math symbol"
 msgid "bullet operator"
-msgstr ""
+msgstr "ოპერატორი სქელი წერტილი"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
 #: src/orca/mathsymbols.py:1451
@@ -6586,13 +6588,13 @@ msgstr "კუბური ფესვი"
 #: src/orca/mathsymbols.py:1457
 msgctxt "math symbol"
 msgid "fourth root"
-msgstr ""
+msgstr "მეოთხე ხარისხის ფესვი"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
 #: src/orca/mathsymbols.py:1460
 msgctxt "math symbol"
 msgid "proportional to"
-msgstr ""
+msgstr "პროპორციულია"
 
 #. Translators: this is the spoken representation for the character '∞' (U+221e)
 #: src/orca/mathsymbols.py:1463
@@ -6604,7 +6606,7 @@ msgstr "უსასრულობა"
 #: src/orca/mathsymbols.py:1466
 msgctxt "math symbol"
 msgid "right angle"
-msgstr ""
+msgstr "მარჯვენა კუთხე"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: src/orca/mathsymbols.py:1469
@@ -6616,51 +6618,51 @@ msgstr "კუთხე"
 #: src/orca/mathsymbols.py:1472
 msgctxt "math symbol"
 msgid "measured angle"
-msgstr ""
+msgstr "გაზომილი კუთხე"
 
 #. Translators: this is the spoken representation for the character '∢' (U+2222)
 #: src/orca/mathsymbols.py:1475
 msgctxt "math symbol"
 msgid "spherical angle"
-msgstr ""
+msgstr "სფერული კუთხე"
 
 #. Translators: this is the spoken representation for the character '∣' (U+2223)
 #: src/orca/mathsymbols.py:1478
 msgctxt "math symbol"
 msgid "divides"
-msgstr ""
+msgstr "ყოფს"
 
 #. Translators: this is the spoken representation for the character '∤' (U+2224)
 #: src/orca/mathsymbols.py:1481
 msgctxt "math symbol"
 msgid "does not divide"
-msgstr ""
+msgstr "არ ყოფს"
 
 #. Translators: this is the spoken representation for the character '∥' (U+2225)
 #: src/orca/mathsymbols.py:1484
 msgctxt "math symbol"
 msgid "parallel to"
-msgstr ""
+msgstr "პარალელურია"
 
 #. Translators: this is the spoken representation for the character '∦' (U+2226)
 #: src/orca/mathsymbols.py:1487
 msgctxt "math symbol"
 msgid "not parallel to"
-msgstr ""
+msgstr "პარალელური არაა"
 
 #. Translators: this is the spoken representation for the character '∧' (U+2227)
 #. Translators: this is the spoken representation for the character '⋀' (U+22c0)
 #: src/orca/mathsymbols.py:1490 src/orca/mathsymbols.py:1949
 msgctxt "math symbol"
 msgid "logical and"
-msgstr ""
+msgstr "ლოგიკური და"
 
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
 #. Translators: this is the spoken representation for the character '⋁' (U+22c1)
 #: src/orca/mathsymbols.py:1493 src/orca/mathsymbols.py:1952
 msgctxt "math symbol"
 msgid "logical or"
-msgstr ""
+msgstr "ლოგიკური ან"
 
 #. Translators: this is the spoken representation for the character '∩' (U+2229)
 #. Translators: this is the spoken representation for the character '⋂' (U+22c2)
@@ -6704,37 +6706,37 @@ msgstr "კონტურის ინტეგრალი"
 #: src/orca/mathsymbols.py:1514
 msgctxt "math symbol"
 msgid "surface integral"
-msgstr ""
+msgstr "ზედაპირული ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∰' (U+2230)
 #: src/orca/mathsymbols.py:1517
 msgctxt "math symbol"
 msgid "volume integral"
-msgstr ""
+msgstr "მოცულობითი ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∱' (U+2231)
 #: src/orca/mathsymbols.py:1520
 msgctxt "math symbol"
 msgid "clockwise integral"
-msgstr ""
+msgstr "საათის ისრის მიმართულებით ინტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∲' (U+2232)
 #: src/orca/mathsymbols.py:1523
 msgctxt "math symbol"
 msgid "clockwise contour integral"
-msgstr ""
+msgstr "საათის ისრის მიმართულებით კონტურის ნტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∳' (U+2233)
 #: src/orca/mathsymbols.py:1526
 msgctxt "math symbol"
 msgid "anticlockwise contour integral"
-msgstr ""
+msgstr "საათის ისრის მიმართულებით საწინააღმდეგო კონტურის ნტეგრალი"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
 #: src/orca/mathsymbols.py:1529
 msgctxt "math symbol"
 msgid "therefore"
-msgstr ""
+msgstr "აქედან გამომდინარე"
 
 #. Translators: this is the spoken representation for the character '∵' (U+2235)
 #: src/orca/mathsymbols.py:1532
@@ -6746,7 +6748,7 @@ msgstr "იმიტომ, რომ"
 #: src/orca/mathsymbols.py:1535
 msgctxt "math symbol"
 msgid "ratio"
-msgstr ""
+msgstr "მასშტაბი"
 
 #. Translators: this is the spoken representation for the character '∷' (U+2237)
 #: src/orca/mathsymbols.py:1538
@@ -6758,25 +6760,25 @@ msgstr "პროპორცია"
 #: src/orca/mathsymbols.py:1541
 msgctxt "math symbol"
 msgid "dot minus"
-msgstr ""
+msgstr "წერტილი მინუს"
 
 #. Translators: this is the spoken representation for the character '∹' (U+2239)
 #: src/orca/mathsymbols.py:1544
 msgctxt "math symbol"
 msgid "excess"
-msgstr ""
+msgstr "ზედმეტი"
 
 #. Translators: this is the spoken representation for the character '∺' (U+223a)
 #: src/orca/mathsymbols.py:1547
 msgctxt "math symbol"
 msgid "geometric proportion"
-msgstr ""
+msgstr "გეომეტრიული პროპორცია"
 
 #. Translators: this is the spoken representation for the character '∻' (U+223b)
 #: src/orca/mathsymbols.py:1550
 msgctxt "math symbol"
 msgid "homothetic"
-msgstr ""
+msgstr "ჰომოთეტიკური"
 
 #. Translators: this is the spoken representation for the character '∼' (U+223c)
 #: src/orca/mathsymbols.py:1553
@@ -6788,271 +6790,271 @@ msgstr "ტილდა"
 #: src/orca/mathsymbols.py:1556
 msgctxt "math symbol"
 msgid "reversed tilde"
-msgstr ""
+msgstr "შებრუნებული ტილდა"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
 #: src/orca/mathsymbols.py:1559
 msgctxt "math symbol"
 msgid "inverted lazy S"
-msgstr ""
+msgstr "მწოლიარე S"
 
 #. Translators: this is the spoken representation for the character '∿' (U+223f)
 #: src/orca/mathsymbols.py:1562
 msgctxt "math symbol"
 msgid "sine wave"
-msgstr ""
+msgstr "სინუსოიდალური ტალღა"
 
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
 #: src/orca/mathsymbols.py:1565
 msgctxt "math symbol"
 msgid "wreath product"
-msgstr ""
+msgstr "wreath product"
 
 #. Translators: this is the spoken representation for the character '≁' (U+2241)
 #: src/orca/mathsymbols.py:1568
 msgctxt "math symbol"
 msgid "not tilde"
-msgstr ""
+msgstr "ტილდა არაა"
 
 #. Translators: this is the spoken representation for the character '≂' (U+2242)
 #: src/orca/mathsymbols.py:1571
 msgctxt "math symbol"
 msgid "minus tilde"
-msgstr ""
+msgstr "მინუს ტილდა"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: src/orca/mathsymbols.py:1574
 msgctxt "math symbol"
 msgid "asymptotically equal to"
-msgstr ""
+msgstr "ასიმპტოტურად უდრის"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
 #: src/orca/mathsymbols.py:1577
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
-msgstr ""
+msgstr "ასიმპტოტურად არ უდრის"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
 #: src/orca/mathsymbols.py:1580
 msgctxt "math symbol"
 msgid "approximately equal to"
-msgstr ""
+msgstr "დაახლოებით უდრის"
 
 #. Translators: this is the spoken representation for the character '≆' (U+2246)
 #: src/orca/mathsymbols.py:1583
 msgctxt "math symbol"
 msgid "approximately but not actually equal to"
-msgstr ""
+msgstr "დაახლოებით არ უდრის"
 
 #. Translators: this is the spoken representation for the character '≇' (U+2247)
 #: src/orca/mathsymbols.py:1586
 msgctxt "math symbol"
 msgid "neither approximately nor actually equal to"
-msgstr ""
+msgstr "არც დაახლოებით, არც ზუსტად უდრის"
 
 #. Translators: this is the spoken representation for the character '≈' (U+2248)
 #: src/orca/mathsymbols.py:1589
 msgctxt "math symbol"
 msgid "almost equal to"
-msgstr ""
+msgstr "თითქმის უდრის"
 
 #. Translators: this is the spoken representation for the character '≉' (U+2249)
 #: src/orca/mathsymbols.py:1592
 msgctxt "math symbol"
 msgid "not almost equal to"
-msgstr ""
+msgstr "თითქმის არ უდროს"
 
 #. Translators: this is the spoken representation for the character '≊' (U+224a)
 #: src/orca/mathsymbols.py:1595
 msgctxt "math symbol"
 msgid "almost equal or equal to"
-msgstr ""
+msgstr "თითქმის ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '≋' (U+224b)
 #: src/orca/mathsymbols.py:1598
 msgctxt "math symbol"
 msgid "triple tilde"
-msgstr ""
+msgstr "სამმაგი ტილდა"
 
 #. Translators: this is the spoken representation for the character '≌' (U+224c)
 #: src/orca/mathsymbols.py:1601
 msgctxt "math symbol"
 msgid "all equal to"
-msgstr ""
+msgstr "ყველა ტოლია"
 
 #. Translators: this is the spoken representation for the character '≍' (U+224d)
 #: src/orca/mathsymbols.py:1604
 msgctxt "math symbol"
 msgid "equivalent to"
-msgstr ""
+msgstr "ეკვივალენტურია"
 
 #. Translators: this is the spoken representation for the character '≎' (U+224e)
 #: src/orca/mathsymbols.py:1607
 msgctxt "math symbol"
 msgid "geometrically equivalent to"
-msgstr ""
+msgstr "გეომეტრიულად ეკვივალენტურია"
 
 #. Translators: this is the spoken representation for the character '≏' (U+224f)
 #: src/orca/mathsymbols.py:1610
 msgctxt "math symbol"
 msgid "difference between"
-msgstr ""
+msgstr "სხვაობები შორის"
 
 #. Translators: this is the spoken representation for the character '≐' (U+2250)
 #: src/orca/mathsymbols.py:1613
 msgctxt "math symbol"
 msgid "approaches the limit"
-msgstr ""
+msgstr "უახლოვდება ზღვარს"
 
 #. Translators: this is the spoken representation for the character '≑' (U+2251)
 #: src/orca/mathsymbols.py:1616
 msgctxt "math symbol"
 msgid "geometrically equal to"
-msgstr ""
+msgstr "გეომეტრიულად უდრის"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
 #: src/orca/mathsymbols.py:1619
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
-msgstr ""
+msgstr "დაახლოებით უდრის ან ასლია"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
 #: src/orca/mathsymbols.py:1622
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
-msgstr ""
+msgstr "ასლია ან დაახლოებით უდრის"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
 #: src/orca/mathsymbols.py:1625
 msgctxt "math symbol"
 msgid "colon equals"
-msgstr ""
+msgstr "ორიწერტილი უდრის"
 
 #. Translators: this is the spoken representation for the character '≕' (U+2255)
 #: src/orca/mathsymbols.py:1628
 msgctxt "math symbol"
 msgid "equals colon"
-msgstr ""
+msgstr "ტოლობა ორიწერტილი"
 
 #. Translators: this is the spoken representation for the character '≖' (U+2256)
 #: src/orca/mathsymbols.py:1631
 msgctxt "math symbol"
 msgid "ring in equal to"
-msgstr ""
+msgstr "წრე ტოლობაში"
 
 #. Translators: this is the spoken representation for the character '≗' (U+2257)
 #: src/orca/mathsymbols.py:1634
 msgctxt "math symbol"
 msgid "ring equal to"
-msgstr ""
+msgstr "წრე უდრის"
 
 #. Translators: this is the spoken representation for the character '≘' (U+2258)
 #: src/orca/mathsymbols.py:1637
 msgctxt "math symbol"
 msgid "corresponds to"
-msgstr ""
+msgstr "შეესაბამება"
 
 #. Translators: this is the spoken representation for the character '≙' (U+2259)
 #: src/orca/mathsymbols.py:1640
 msgctxt "math symbol"
 msgid "estimates"
-msgstr ""
+msgstr "უტოლდება"
 
 #. Translators: this is the spoken representation for the character '≚' (U+225a)
 #: src/orca/mathsymbols.py:1643
 msgctxt "math symbol"
 msgid "equiangular to"
-msgstr ""
+msgstr "ტოლგვერდაა"
 
 #. Translators: this is the spoken representation for the character '≛' (U+225b)
 #: src/orca/mathsymbols.py:1646
 msgctxt "math symbol"
 msgid "star equals"
-msgstr ""
+msgstr "ვარსკვლავი უდრის"
 
 #. Translators: this is the spoken representation for the character '≜' (U+225c)
 #: src/orca/mathsymbols.py:1649
 msgctxt "math symbol"
 msgid "delta equal to"
-msgstr ""
+msgstr "დელტა უდრის"
 
 #. Translators: this is the spoken representation for the character '≝' (U+225d)
 #: src/orca/mathsymbols.py:1652
 msgctxt "math symbol"
 msgid "equal to by definition"
-msgstr ""
+msgstr "აღწერის მიხედვით უდრის"
 
 #. Translators: this is the spoken representation for the character '≞' (U+225e)
 #: src/orca/mathsymbols.py:1655
 msgctxt "math symbol"
 msgid "measured by"
-msgstr ""
+msgstr "გაზომილია"
 
 #. Translators: this is the spoken representation for the character '≟' (U+225f)
 #: src/orca/mathsymbols.py:1658
 msgctxt "math symbol"
 msgid "questioned equal to"
-msgstr ""
+msgstr "შეიძლება, უდრიდეს"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
 #: src/orca/mathsymbols.py:1661
 msgctxt "math symbol"
 msgid "not equal to"
-msgstr ""
+msgstr "არ უდრის"
 
 #. Translators: this is the spoken representation for the character '≡' (U+2261)
 #: src/orca/mathsymbols.py:1664
 msgctxt "math symbol"
 msgid "identical to"
-msgstr ""
+msgstr "იდენტური"
 
 #. Translators: this is the spoken representation for the character '≢' (U+2262)
 #: src/orca/mathsymbols.py:1667
 msgctxt "math symbol"
 msgid "not identical to"
-msgstr ""
+msgstr "არაა იდენტური"
 
 #. Translators: this is the spoken representation for the character '≣' (U+2263)
 #: src/orca/mathsymbols.py:1670
 msgctxt "math symbol"
 msgid "strictly equivalent to"
-msgstr ""
+msgstr "ზუსტად ეკვივალენტურია"
 
 #. Translators: this is the spoken representation for the character '≤' (U+2264)
 #: src/orca/mathsymbols.py:1673
 msgctxt "math symbol"
 msgid "less than or equal to"
-msgstr ""
+msgstr "ნაკლები ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '≥' (U+2265)
 #: src/orca/mathsymbols.py:1676
 msgctxt "math symbol"
 msgid "greater than or equal to"
-msgstr ""
+msgstr "მეტია ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '≦' (U+2266)
 #: src/orca/mathsymbols.py:1679
 msgctxt "math symbol"
 msgid "less than over equal to"
-msgstr ""
+msgstr "ნაკლები ვიდრე ზემოდან ტოლია"
 
 #. Translators: this is the spoken representation for the character '≧' (U+2267)
 #: src/orca/mathsymbols.py:1682
 msgctxt "math symbol"
 msgid "greater than over equal to"
-msgstr ""
+msgstr "მეტი ან ზემოდან ტოლია"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
 #: src/orca/mathsymbols.py:1685
 msgctxt "math symbol"
 msgid "less than but not equal to"
-msgstr ""
+msgstr "ნაკლებია, მაგრამ ტოლი არაა"
 
 #. Translators: this is the spoken representation for the character '≩' (U+2269)
 #: src/orca/mathsymbols.py:1688
 msgctxt "math symbol"
 msgid "greater than but not equal to"
-msgstr ""
+msgstr "მეტია, მაგრამ ტოლი არაა"
 
 #. Translators: this is the spoken representation for the character '≪' (U+226a)
 #: src/orca/mathsymbols.py:1691
@@ -7154,151 +7156,151 @@ msgstr "არც მეტი, არც ნაკლები, ვიდრე
 #: src/orca/mathsymbols.py:1739
 msgctxt "math symbol"
 msgid "precedes"
-msgstr ""
+msgstr "ჩამორჩება"
 
 #. Translators: this is the spoken representation for the character '≻' (U+227b)
 #: src/orca/mathsymbols.py:1742
 msgctxt "math symbol"
 msgid "succeeds"
-msgstr ""
+msgstr "წინ უსწრებს"
 
 #. Translators: this is the spoken representation for the character '≼' (U+227c)
 #: src/orca/mathsymbols.py:1745
 msgctxt "math symbol"
 msgid "precedes or equal to"
-msgstr ""
+msgstr "ჩამორჩება ან უდრის"
 
 #. Translators: this is the spoken representation for the character '≽' (U+227d)
 #: src/orca/mathsymbols.py:1748
 msgctxt "math symbol"
 msgid "succeeds or equal to"
-msgstr ""
+msgstr "წინ უსწრებს ან უდრის"
 
 #. Translators: this is the spoken representation for the character '≾' (U+227e)
 #: src/orca/mathsymbols.py:1751
 msgctxt "math symbol"
 msgid "precedes or equivalent to"
-msgstr ""
+msgstr "ჩამორჩება ან ეკვივალენტურია"
 
 #. Translators: this is the spoken representation for the character '≿' (U+227f)
 #: src/orca/mathsymbols.py:1754
 msgctxt "math symbol"
 msgid "succeeds or equivalent to"
-msgstr ""
+msgstr "წინ უსწრებს ეკვივალენტურია"
 
 #. Translators: this is the spoken representation for the character '⊀' (U+2280)
 #: src/orca/mathsymbols.py:1757
 msgctxt "math symbol"
 msgid "does not precede"
-msgstr ""
+msgstr "არ ჩამორჩება"
 
 #. Translators: this is the spoken representation for the character '⊁' (U+2281)
 #: src/orca/mathsymbols.py:1760
 msgctxt "math symbol"
 msgid "does not succeed"
-msgstr ""
+msgstr "წინ არ უსწრებს"
 
 #. Translators: this is the spoken representation for the character '⊂' (U+2282)
 #: src/orca/mathsymbols.py:1763
 msgctxt "math symbol"
 msgid "subset of"
-msgstr ""
+msgstr "ქვესეტია"
 
 #. Translators: this is the spoken representation for the character '⊃' (U+2283)
 #: src/orca/mathsymbols.py:1766
 msgctxt "math symbol"
 msgid "superset of"
-msgstr ""
+msgstr "სუპერსეტია"
 
 #. Translators: this is the spoken representation for the character '⊄' (U+2284)
 #: src/orca/mathsymbols.py:1769
 msgctxt "math symbol"
 msgid "not a subset of"
-msgstr ""
+msgstr "ქვესეტი არაა"
 
 #. Translators: this is the spoken representation for the character '⊅' (U+2285)
 #: src/orca/mathsymbols.py:1772
 msgctxt "math symbol"
 msgid "not a superset of"
-msgstr ""
+msgstr "სუპერსეტი არაა"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
 #: src/orca/mathsymbols.py:1775
 msgctxt "math symbol"
 msgid "subset of or equal to"
-msgstr ""
+msgstr "ქვესეტია ან უდრის"
 
 #. Translators: this is the spoken representation for the character '⊇' (U+2287)
 #: src/orca/mathsymbols.py:1778
 msgctxt "math symbol"
 msgid "superset of or equal to"
-msgstr ""
+msgstr "სუპერსეტია ან უდრის"
 
 #. Translators: this is the spoken representation for the character '⊈' (U+2288)
 #: src/orca/mathsymbols.py:1781
 msgctxt "math symbol"
 msgid "neither a subset of nor equal to"
-msgstr ""
+msgstr "არც ქვესეტია, არც უდრის"
 
 #. Translators: this is the spoken representation for the character '⊉' (U+2289)
 #: src/orca/mathsymbols.py:1784
 msgctxt "math symbol"
 msgid "neither a superset of nor equal to"
-msgstr ""
+msgstr "არც სუპერსეტია, არც უდრის"
 
 #. Translators: this is the spoken representation for the character '⊊' (U+228a)
 #: src/orca/mathsymbols.py:1787
 msgctxt "math symbol"
 msgid "subset of with not equal to"
-msgstr ""
+msgstr "ქვესეტია, რომელიც არ უდრის"
 
 #. Translators: this is the spoken representation for the character '⊋' (U+228b)
 #: src/orca/mathsymbols.py:1790
 msgctxt "math symbol"
 msgid "superset of with not equal to"
-msgstr ""
+msgstr "სუპერსეტია, რომელიც არ უდრის"
 
 #. Translators: this is the spoken representation for the character '⊌' (U+228c)
 #: src/orca/mathsymbols.py:1793
 msgctxt "math symbol"
 msgid "multiset"
-msgstr ""
+msgstr "მულტისიმრავლე"
 
 #. Translators: this is the spoken representation for the character '⊍' (U+228d)
 #: src/orca/mathsymbols.py:1796
 msgctxt "math symbol"
 msgid "multiset multiplication"
-msgstr ""
+msgstr "მულტისიმრავლის გამრავლება"
 
 #. Translators: this is the spoken representation for the character '⊎' (U+228e)
 #: src/orca/mathsymbols.py:1799
 msgctxt "math symbol"
 msgid "multiset union"
-msgstr ""
+msgstr "მულტისიმრავლის შეერთება"
 
 #. Translators: this is the spoken representation for the character '⊏' (U+228f)
 #: src/orca/mathsymbols.py:1802
 msgctxt "math symbol"
 msgid "square image of"
-msgstr ""
+msgstr "კვადრატული ასლი"
 
 #. Translators: this is the spoken representation for the character '⊐' (U+2290)
 #: src/orca/mathsymbols.py:1805
 msgctxt "math symbol"
 msgid "square original of"
-msgstr ""
+msgstr "კვადრატული ორიგინალი"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
 #: src/orca/mathsymbols.py:1808
 msgctxt "math symbol"
 msgid "square image of or equal to"
-msgstr ""
+msgstr "კვადრატული ასლია ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '⊒' (U+2292)
 #: src/orca/mathsymbols.py:1811
 msgctxt "math symbol"
 msgid "square original of or equal to"
-msgstr ""
+msgstr "კვადრატული ორიგინალია ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '⊓' (U+2293)
 #: src/orca/mathsymbols.py:1814
