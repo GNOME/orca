@@ -4,6 +4,7 @@
 #
 # scootergrisen, 2020-2022.
 # Gennemgået Ask Hjorth Larsen <asklarsen@gmail.com>, 2022.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2023.
 #
 # Ordliste:
 #
@@ -17,8 +18,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-01-25 21:42+0000\n"
-"PO-Revision-Date: 2023-02-25 15:42+0100\n"
+"POT-Creation-Date: 2023-08-11 17:31+0000\n"
+"PO-Revision-Date: 2023-09-08 18:02+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -34,6 +35,7 @@ msgid "translator-credits"
 msgstr ""
 "scootergrisen <>, 2020-2022<\n"
 "Ask Hjorth Larsen <asklarsen@gmail.com>, 2022\n"
+"Alan Mortensen <alanmortensen.am@gmail.com>, 2023\n"
 "\n"
 "Dansk-gruppen\n"
 "Webside http://dansk-gruppen.dk\n"
@@ -1941,13 +1943,11 @@ msgstr "Formularer"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Næste og forrige formularfelt: <keyseq><key>Orca-ændringstast</"
-"key><key>Tabulator</key></keyseq> og <keyseq><key>Orca-ændringstast</"
-"key><key>Skift</key><key>Tabulator</key></keyseq>"
+"Næste og forrige formularfelt: <keyseq><key>F</key></keyseq> og "
+"<keyseq><key>Skift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2511,6 +2511,11 @@ msgstr "Præsentér den forrige underretning: (Ubundet)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Præsentér den næste underretning: (Ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr "Præsentér liste over alle underretninger: (Ubundet)"
 
@@ -8186,3 +8191,12 @@ msgstr ""
 "Tilvalg af afkrydsningsboksen <gui>Oplæs tal som cifre</gui> får <app>Orca</"
 "app> til at opdele et tal såsom “123” i separate cifre (“1”, “2” og “3”) "
 "inden, de videregives til talesynthesizeren."
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Næste og forrige formularfelt: <keyseq><key>Orca-ændringstast</"
+#~ "key><key>Tabulator</key></keyseq> og <keyseq><key>Orca-ændringstast</"
+#~ "key><key>Skift</key><key>Tabulator</key></keyseq>"
