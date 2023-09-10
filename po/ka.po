@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-09-08 22:56+0000\n"
-"PO-Revision-Date: 2023-09-10 12:40+0200\n"
+"PO-Revision-Date: 2023-09-10 13:56+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2981,21 +2981,21 @@ msgstr "გამოსახულებების სიის ჩვენ�
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:940
 msgid "Go to previous landmark"
-msgstr ""
+msgstr "წინა ორიენტირზე გადასვლა"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:945
 msgid "Go to next landmark"
-msgstr ""
+msgstr "შემდეგ ორიენტირზე გადასვლა"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:950
 msgid "Display a list of landmarks"
-msgstr ""
+msgstr "ორიენტირების ჩამონათვლის ჩვენება"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -3068,7 +3068,7 @@ msgstr "სიის ელემენტების ჩამონათვ�
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:997
 msgid "Go to previous live region"
-msgstr ""
+msgstr "წინა ცოცხალ რეგიონზე გადასვლა"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -4643,7 +4643,7 @@ msgstr "სამმაგი წკაპი"
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
 #: src/orca/guilabels.py:205
 msgid "Default Synthesizer"
-msgstr ""
+msgstr "ნაგულისხმევი სინთეზატორი"
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -8150,7 +8150,7 @@ msgstr "სანიშნეების გარეშე."
 #. that index.
 #: src/orca/messages.py:82
 msgid "Bookmark not found."
-msgstr "სანიშნი ვერ ვიპოვე"
+msgstr "სანიშნი ვერ ვიპოვე."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -8342,7 +8342,7 @@ msgstr "გამოყენება: "
 #. the list of invalid items, as typed by the user, is displayed.
 #: src/orca/messages.py:220
 msgid "The following are not valid: "
-msgstr "შემდეგი არასწორია:"
+msgstr "შემდეგი არასწორია: "
 
 #. Translators: This is the description of command line option '-l, --list-apps'
 #. which prints the names of running applications which can be seen by assistive
@@ -8865,7 +8865,7 @@ msgstr "მიეწერა გაცვლის ბუფერის შმ
 #. review to the clipboard.
 #: src/orca/messages.py:614
 msgid "Copied contents to clipboard."
-msgstr "შემცველობა დაკოპირდა გაცვლის ბუფერში"
+msgstr "შემცველობა დაკოპირდა გაცვლის ბუფერში."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9006,7 +9006,7 @@ msgstr ""
 #. Orca command.
 #: src/orca/messages.py:716
 msgid "enter new key"
-msgstr ""
+msgstr "შეიყვანეთ ახალი ღილაკი"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9412,7 +9412,7 @@ msgstr "არაბული ფაქტორიალის სიმბო�
 #: src/orca/messages.py:1034
 msgctxt "math enclosure"
 msgid "and"
-msgstr ""
+msgstr "და"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
@@ -9639,7 +9639,7 @@ msgstr ""
 #. blockquote and then navigates out of it.
 #: src/orca/messages.py:1205
 msgid "leaving blockquote."
-msgstr ""
+msgstr "ციტატის ბლოკიდან გასვლა."
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -9652,7 +9652,7 @@ msgstr ""
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/messages.py:1216
 msgid "leaving details."
-msgstr ""
+msgstr "დეტალებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -9661,7 +9661,7 @@ msgstr ""
 #: src/orca/messages.py:1222
 msgctxt "role"
 msgid "leaving feed."
-msgstr ""
+msgstr "ლენტიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -9670,13 +9670,13 @@ msgstr ""
 #: src/orca/messages.py:1228
 msgctxt "role"
 msgid "leaving figure."
-msgstr ""
+msgstr "ფიგურიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: src/orca/messages.py:1232
 msgid "leaving form."
-msgstr ""
+msgstr "ფორმიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9685,7 +9685,7 @@ msgstr ""
 #: src/orca/messages.py:1238
 msgctxt "role"
 msgid "leaving banner."
-msgstr ""
+msgstr "ბანერიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9694,7 +9694,7 @@ msgstr ""
 #: src/orca/messages.py:1244
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr ""
+msgstr "შემცვლელი შემცველობიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9703,7 +9703,7 @@ msgstr ""
 #: src/orca/messages.py:1250
 msgctxt "role"
 msgid "leaving information."
-msgstr ""
+msgstr "ინფორმაციიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9712,7 +9712,7 @@ msgstr ""
 #: src/orca/messages.py:1256
 msgctxt "role"
 msgid "leaving main content."
-msgstr ""
+msgstr "მთავარი შემცველობიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9721,7 +9721,7 @@ msgstr ""
 #: src/orca/messages.py:1262
 msgctxt "role"
 msgid "leaving navigation."
-msgstr ""
+msgstr "ნავიგაციიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9730,7 +9730,7 @@ msgstr ""
 #: src/orca/messages.py:1268
 msgctxt "role"
 msgid "leaving region."
-msgstr ""
+msgstr "რეგიონიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9739,32 +9739,32 @@ msgstr ""
 #: src/orca/messages.py:1274
 msgctxt "role"
 msgid "leaving search."
-msgstr ""
+msgstr "ძებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: src/orca/messages.py:1278
 msgid "leaving list."
-msgstr ""
+msgstr "სიიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: src/orca/messages.py:1283
 msgid "leaving panel."
-msgstr ""
+msgstr "პანელიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
 #: src/orca/messages.py:1287
 msgid "leaving table."
-msgstr ""
+msgstr "ცხრილიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
 #: src/orca/messages.py:1291
 msgid "leaving tooltip."
-msgstr ""
+msgstr "მინიშნებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9773,7 +9773,7 @@ msgstr ""
 #: src/orca/messages.py:1297
 msgctxt "role"
 msgid "leaving abstract."
-msgstr ""
+msgstr "აბსტრაქტიდან გასვლა"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9782,7 +9782,7 @@ msgstr ""
 #: src/orca/messages.py:1303
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr ""
+msgstr "დადასტურებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9791,7 +9791,7 @@ msgstr ""
 #: src/orca/messages.py:1309
 msgctxt "role"
 msgid "leaving afterword."
-msgstr ""
+msgstr "ბოლოსიტყვიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9800,7 +9800,7 @@ msgstr ""
 #: src/orca/messages.py:1315
 msgctxt "role"
 msgid "leaving appendix."
-msgstr ""
+msgstr "დანართიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9809,7 +9809,7 @@ msgstr ""
 #: src/orca/messages.py:1321
 msgctxt "role"
 msgid "leaving bibliography."
-msgstr ""
+msgstr "ბიბლიოგრაფიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9818,7 +9818,7 @@ msgstr ""
 #: src/orca/messages.py:1327
 msgctxt "role"
 msgid "leaving chapter."
-msgstr ""
+msgstr "თავიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9827,7 +9827,7 @@ msgstr ""
 #: src/orca/messages.py:1333
 msgctxt "role"
 msgid "leaving colophon."
-msgstr ""
+msgstr "კოლოფონიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9836,7 +9836,7 @@ msgstr ""
 #: src/orca/messages.py:1339
 msgctxt "role"
 msgid "leaving conclusion."
-msgstr ""
+msgstr "დასკვნიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9863,7 +9863,7 @@ msgstr ""
 #: src/orca/messages.py:1357
 msgctxt "role"
 msgid "leaving dedication."
-msgstr ""
+msgstr "მიძღვნიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9872,7 +9872,7 @@ msgstr ""
 #: src/orca/messages.py:1363
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr ""
+msgstr "ბოლოსართებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9881,7 +9881,7 @@ msgstr ""
 #: src/orca/messages.py:1369
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr ""
+msgstr "ეპიგრაფიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9890,7 +9890,7 @@ msgstr ""
 #: src/orca/messages.py:1375
 msgctxt "role"
 msgid "leaving epilogue."
-msgstr ""
+msgstr "ეპილოგიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9899,7 +9899,7 @@ msgstr ""
 #: src/orca/messages.py:1381
 msgctxt "role"
 msgid "leaving errata."
-msgstr ""
+msgstr "მორჩენილი შეცდომებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9908,7 +9908,7 @@ msgstr ""
 #: src/orca/messages.py:1387
 msgctxt "role"
 msgid "leaving example."
-msgstr ""
+msgstr "მაგალითიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9917,7 +9917,7 @@ msgstr ""
 #: src/orca/messages.py:1393
 msgctxt "role"
 msgid "leaving foreword."
-msgstr ""
+msgstr "წინასიტყვაობიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9926,7 +9926,7 @@ msgstr ""
 #: src/orca/messages.py:1399
 msgctxt "role"
 msgid "leaving glossary."
-msgstr ""
+msgstr "სარჩევიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9935,7 +9935,7 @@ msgstr ""
 #: src/orca/messages.py:1405
 msgctxt "role"
 msgid "leaving index."
-msgstr ""
+msgstr "ინდექსიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9944,7 +9944,7 @@ msgstr ""
 #: src/orca/messages.py:1411
 msgctxt "role"
 msgid "leaving introduction."
-msgstr ""
+msgstr "შესავალიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9953,7 +9953,7 @@ msgstr ""
 #: src/orca/messages.py:1417
 msgctxt "role"
 msgid "leaving page list."
-msgstr ""
+msgstr "გვერდების სიიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9962,7 +9962,7 @@ msgstr ""
 #: src/orca/messages.py:1423
 msgctxt "role"
 msgid "leaving part."
-msgstr ""
+msgstr "ნაწილიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9971,7 +9971,7 @@ msgstr ""
 #: src/orca/messages.py:1429
 msgctxt "role"
 msgid "leaving preface."
-msgstr ""
+msgstr "შესავალიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9980,7 +9980,7 @@ msgstr ""
 #: src/orca/messages.py:1435
 msgctxt "role"
 msgid "leaving prologue."
-msgstr ""
+msgstr "პროლოგიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9989,7 +9989,7 @@ msgstr ""
 #: src/orca/messages.py:1441
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr ""
+msgstr "ციტატიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9998,7 +9998,7 @@ msgstr ""
 #: src/orca/messages.py:1447
 msgctxt "role"
 msgid "leaving QNA."
-msgstr ""
+msgstr "კდპ-დან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within a
 #. suggestion and then navigates out of it. A "suggestion" is a container with
@@ -10008,7 +10008,7 @@ msgstr ""
 #: src/orca/messages.py:1454
 msgctxt "role"
 msgid "leaving suggestion."
-msgstr ""
+msgstr "მინიშნებიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -10017,7 +10017,7 @@ msgstr ""
 #: src/orca/messages.py:1460
 msgctxt "role"
 msgid "leaving table of contents."
-msgstr ""
+msgstr "სარჩევიდან გასვლა."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10164,7 +10164,7 @@ msgstr ""
 #: src/orca/messages.py:1568
 #, python-format
 msgid "politeness level %s"
-msgstr ""
+msgstr "ზრდილობის დონე %s"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -10498,14 +10498,14 @@ msgstr "წინას გარეშე."
 #. message is spoken when the simplified view is enabled.
 #: src/orca/messages.py:1832
 msgid "Simplified navigation enabled."
-msgstr ""
+msgstr "გამარტივებული ნავიგაცია ჩართულია."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
 #: src/orca/messages.py:1837
 msgid "Simplified navigation disabled."
-msgstr ""
+msgstr "გამარტივებული ნავიგაცია გამორთულია."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -10513,7 +10513,7 @@ msgstr ""
 #: src/orca/messages.py:1842 src/orca/object_properties.py:60
 #, python-format
 msgid "Nesting level %d"
-msgstr ""
+msgstr "ჩადგმის დონეა %d"
 
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
@@ -10530,7 +10530,7 @@ msgstr ""
 #: src/orca/messages.py:1854
 #, python-format
 msgid "No actions found on: %s"
-msgstr ""
+msgstr "ქმედება არ არსებობს: %s"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
@@ -10542,14 +10542,14 @@ msgstr "ფოკუსის გარეშე"
 #. has keyboard focus.
 #: src/orca/messages.py:1862
 msgid "No application has focus."
-msgstr ""
+msgstr "ფოკუსის მქონე აპლიკაციის გარეშე."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
 #: src/orca/messages.py:1867
 msgid "No more blockquotes."
-msgstr ""
+msgstr "ბლოკბრჭყალების გარეშე."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
@@ -10637,7 +10637,7 @@ msgstr "მეტი გამოსახულება აღარაა."
 #. This is an indication that one was not found.
 #: src/orca/messages.py:1930
 msgid "No landmark found."
-msgstr ""
+msgstr "ორიენტირის გარეშე."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -10667,7 +10667,7 @@ msgstr "მეტი სიის ელემენტი აღარაა."
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/messages.py:1952
 msgid "No more live regions."
-msgstr ""
+msgstr "მეტი ცოცხალი რეგიონის გარეშე."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -10723,7 +10723,7 @@ msgstr "მეტი მონიშნული ბმული აღარა
 #. if the user performs this command when not on a link.
 #: src/orca/messages.py:1992
 msgid "Not on a link."
-msgstr ""
+msgstr "ბმულს არ წარმოადგენს."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
@@ -10749,7 +10749,7 @@ msgstr "ზემოთ"
 #. is empty.
 #: src/orca/messages.py:2008
 msgid "No notification messages"
-msgstr ""
+msgstr "გაფრთხილების შეტყობინებების გარეშე"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10768,7 +10768,7 @@ msgstr "ციფრები"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:2022
 msgid "Speak numbers as digits."
-msgstr ""
+msgstr "რიცხვების ციფრებად წარმოთქმა."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10787,7 +10787,7 @@ msgstr "სიტყვა"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:2036
 msgid "Speak numbers as words."
-msgstr ""
+msgstr "რიცხვების სიტყვებად წარმოთქმა."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10831,7 +10831,7 @@ msgstr "%s-ის ჩატვირთვა დასრულდა."
 #: src/orca/messages.py:2066
 #, python-format
 msgid "Page has %s."
-msgstr ""
+msgstr "გვერდს აქვს %s."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -11043,7 +11043,7 @@ msgstr ""
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2218
 msgid "Selection deleted."
-msgstr ""
+msgstr "მონიშნული წაიშალა."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -11055,14 +11055,14 @@ msgstr ""
 #. which was just inserted.
 #: src/orca/messages.py:2228
 msgid "Selection restored."
-msgstr ""
+msgstr "მონიშნული აღდგენილია."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2233
 msgid "Text unselected."
-msgstr ""
+msgstr "ტექსტის მონიშვნა გაუქმდა."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -11086,13 +11086,13 @@ msgstr ""
 #. has been temporarily turned off.
 #: src/orca/messages.py:2249
 msgid "Speech disabled."
-msgstr ""
+msgstr "საუბარი გამორთულია."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
 #: src/orca/messages.py:2253
 msgid "Speech enabled."
-msgstr ""
+msgstr "საუბარი ჩართულია."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2256
@@ -11155,17 +11155,17 @@ msgstr " წერტილი წერტილი წერტილი"
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2294
 msgid "Screen reader on."
-msgstr ""
+msgstr "ეკრანის მკითხველი ჩართულია."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: src/orca/messages.py:2297
 msgid "Screen reader off."
-msgstr ""
+msgstr "ეკრანის მკითხველი გამორთულია."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: src/orca/messages.py:2300
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "საუბარი მიუწვდომელია."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
@@ -11180,7 +11180,7 @@ msgstr "ნაპოვნი არაა"
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2310
 msgid "Status bar not found"
-msgstr ""
+msgstr "სტატუსის ზოლი ვერ ვიპოვე"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -11188,7 +11188,7 @@ msgstr ""
 #. for was not found.
 #: src/orca/messages.py:2316
 msgid "string not found"
-msgstr ""
+msgstr "სტრიქონი ვერ ვიპოვე"
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -11198,7 +11198,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2324
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "სტრუქტურული ნავიგაციის ღილაკები გამორთულია."
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -11208,7 +11208,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2332
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "სტრუქტურული ნავიგაციის ღილაკები ჩართულია."
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -11225,7 +11225,7 @@ msgstr "ნაპოვნი არაა"
 #: src/orca/messages.py:2343
 #, python-format
 msgid "Row %(row)d, column %(column)d."
-msgstr ""
+msgstr "მწკრივი %(row)d, სვეტი %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
@@ -11292,7 +11292,7 @@ msgstr "სვეტი %(index)d %(total)d-დან"
 #. the cell below the current cell and is already in the last row.
 #: src/orca/messages.py:2388
 msgid "Bottom of column."
-msgstr "სვეტის ბოლო"
+msgstr "სვეტის ბოლო."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
@@ -11642,7 +11642,7 @@ msgstr[0] ""
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2651
 msgid "List of unknown size"
-msgstr ""
+msgstr "უცნობი ზომის სია"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2654
@@ -11658,7 +11658,7 @@ msgstr[0] ""
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2663
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "უცნობი ზომის ელტა"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -11666,7 +11666,7 @@ msgstr ""
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] ""
+msgstr[0] "ლენტა %d სტატიით"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
@@ -11824,7 +11824,7 @@ msgstr "უცნობი ზომის ცხრილი"
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
-msgstr[0] ""
+msgstr[0] "ცხრილი %d სვეტით. მწკრივების რიცხვი უცნობია"
 
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
@@ -11833,14 +11833,14 @@ msgstr[0] ""
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
-msgstr[0] ""
+msgstr[0] "ცხრილი %d მწკრივით. სვეტების რიცხვი უცნობია"
 
 #. Translators: this represents the number of rows in a table.
 #: src/orca/messages.py:2810
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
-msgstr[0] ""
+msgstr[0] "ცხრილი %d მწკრივით"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
@@ -12988,7 +12988,7 @@ msgstr "მთავარი"
 
 #: src/orca/orca-setup.ui:1047
 msgid "Vo_lume:"
-msgstr "_ხმის სიმაღლე"
+msgstr "_ხმის სიმაღლე:"
 
 #: src/orca/orca-setup.ui:1095
 msgid "Pi_tch:"
@@ -13008,11 +13008,11 @@ msgstr "ე_ნა:"
 
 #: src/orca/orca-setup.ui:1204
 msgid "Speech synthesi_zer:"
-msgstr ""
+msgstr "საუბრის სინ_თესატორი:"
 
 #: src/orca/orca-setup.ui:1230
 msgid "Speech _system:"
-msgstr ""
+msgstr "საუბრის _სისტემა:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: src/orca/orca-setup.ui:1263
@@ -13027,7 +13027,7 @@ msgstr "_რეგისტრის სტილი:"
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #: src/orca/orca-setup.ui:1313
 msgid "Voice Type Settings"
-msgstr ""
+msgstr "ხმის ტიპის მორგება"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: src/orca/orca-setup.ui:1358
@@ -13037,11 +13037,11 @@ msgstr ""
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: src/orca/orca-setup.ui:1374
 msgid "Speak _numbers as digits"
-msgstr ""
+msgstr "რიცხვების ციფრებად _წარმოთქმა"
 
 #: src/orca/orca-setup.ui:1399
 msgid "Global Voice Settings"
-msgstr ""
+msgstr "გლობალურ ხმის პარამეტრები"
 
 #: src/orca/orca-setup.ui:1420
 msgid "Voice"
@@ -13049,7 +13049,7 @@ msgstr "ხმა"
 
 #: src/orca/orca-setup.ui:1436
 msgid "_Enable speech"
-msgstr ""
+msgstr "_საუბრის ჩართვა"
 
 #: src/orca/orca-setup.ui:1496 src/orca/orca-setup.ui:2240
 msgid "Ver_bose"
@@ -13065,7 +13065,7 @@ msgstr "_ყველა"
 
 #: src/orca/orca-setup.ui:1617
 msgid "Punctuation Level"
-msgstr ""
+msgstr "პუნქტუაციის დონე"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
@@ -13074,7 +13074,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
-msgstr ""
+msgstr "ცარიელი ხაზების წარმოთქმა"
 
 #: src/orca/orca-setup.ui:1694
 msgid "Speak _indentation and justification"
@@ -13190,7 +13190,7 @@ msgstr ""
 #. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
 #: src/orca/orca-setup.ui:2174
 msgid "Enable _word wrap"
-msgstr ""
+msgstr "სიტყვების _გადატანის ჩართვა"
 
 #: src/orca/orca-setup.ui:2195
 msgid "Display Settings"
@@ -13205,11 +13205,11 @@ msgstr "არ_ცერთი"
 
 #: src/orca/orca-setup.ui:2362
 msgid "Selection Indicator"
-msgstr ""
+msgstr "მონიშვნის მაჩვენებელი"
 
 #: src/orca/orca-setup.ui:2462
 msgid "Hyperlink Indicator"
-msgstr ""
+msgstr "ჰიპერბმულის მაჩვენებელი"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
 #: src/orca/orca-setup.ui:2491
@@ -13219,7 +13219,7 @@ msgstr ""
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
 #: src/orca/orca-setup.ui:2514
 msgid "D_uration (secs):"
-msgstr ""
+msgstr "_ხანგრძლივობა (წმ):"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
 #: src/orca/orca-setup.ui:2548
@@ -13944,7 +13944,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:453
 msgctxt "textattr"
 msgid "ltr"
-msgstr ""
+msgstr "მარცხნიდან მარჯვნივ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -13954,7 +13954,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:460
 msgctxt "textattr"
 msgid "rtl"
-msgstr ""
+msgstr "მარჯვნიდან მარცხნივ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -14003,7 +14003,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:494
 msgctxt "textattr"
 msgid "fill"
-msgstr ""
+msgstr "შევსება"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14013,7 +14013,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:501
 msgctxt "textattr"
 msgid "ultra condensed"
-msgstr ""
+msgstr "ულტრა შესქელებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14023,7 +14023,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:508
 msgctxt "textattr"
 msgid "extra condensed"
-msgstr ""
+msgstr "ექსტრა შესქელებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14033,7 +14033,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:515
 msgctxt "textattr"
 msgid "condensed"
-msgstr ""
+msgstr "შესქელებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14043,7 +14043,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:522
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr ""
+msgstr "ნახევრად-შესქელებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -14063,7 +14063,7 @@ msgstr "ნორმალური"
 #: src/orca/text_attribute_names.py:536
 msgctxt "textattr"
 msgid "semi expanded"
-msgstr ""
+msgstr "ნახევრად-გაფართოებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14073,7 +14073,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:543
 msgctxt "textattr"
 msgid "expanded"
-msgstr ""
+msgstr "გაფართოებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14083,7 +14083,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:550
 msgctxt "textattr"
 msgid "extra expanded"
-msgstr ""
+msgstr "ექსტრა გაფართოებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -14093,7 +14093,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:557
 msgctxt "textattr"
 msgid "ultra expanded"
-msgstr ""
+msgstr "ულტრა გაფართოებული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
@@ -14143,7 +14143,7 @@ msgstr "ნაგულისხმევი"
 #: src/orca/text_attribute_names.py:592
 msgctxt "textattr"
 msgid "Text body"
-msgstr ""
+msgstr "ტექსტის სხეული"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -14174,7 +14174,7 @@ msgstr "baseline"
 #: src/orca/text_attribute_names.py:614
 msgctxt "textattr"
 msgid "sub"
-msgstr ""
+msgstr "ქვე"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -14184,7 +14184,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:621
 msgctxt "textattr"
 msgid "super"
-msgstr ""
+msgstr "ზე"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -14343,7 +14343,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:732
 msgctxt "textattr"
 msgid "solid"
-msgstr ""
+msgstr "მყარი"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invalid". It is an indication that the text is not
@@ -14356,7 +14356,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:739 src/orca/text_attribute_names.py:744
 msgctxt "textattr"
 msgid "spelling"
-msgstr ""
+msgstr "მართლწერა"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: src/orca/tutorialgenerator.py:166
@@ -14417,7 +14417,7 @@ msgstr ""
 #. on text fields.
 #: src/orca/tutorialgenerator.py:420
 msgid "Type in text."
-msgstr ""
+msgstr "ჩაწერეთ ტექსტი."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
