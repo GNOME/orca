@@ -77,7 +77,6 @@ from .input_event import BrailleEvent
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
-_learnModePresenter = learn_mode_presenter.getPresenter()
 _logger = logger.getLogger()
 
 def onEnabledChanged(gsetting, key):
@@ -271,7 +270,7 @@ def _processBrailleEvent(event):
         debug.printException(debug.LEVEL_SEVERE)
 
     # TODO - JD: Is this still possible?
-    if not consumed and _learnModePresenter.is_active():
+    if not consumed and learn_mode_presenter.getPresenter().is_active():
         consumed = True
 
     return consumed
