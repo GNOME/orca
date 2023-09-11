@@ -53,7 +53,7 @@ class FlatReviewPresenter:
     def __init__(self):
         self._context = None
         self._current_contents = ""
-        self._restrict = False
+        self._restrict = _settingsManager.getSetting("flatReviewIsRestricted")
         self._handlers = self._setup_handlers()
         self._desktop_bindings = self._setup_desktop_bindings()
         self._laptop_bindings = self._setup_laptop_bindings()
@@ -1030,8 +1030,9 @@ class FlatReviewPresenter:
     def toggle_restrict(self, script, event=None):
         """ Toggles the restricting of flat review to the current object. """
 
-
         self._restrict = not self._restrict
+        _settingsManager.setSetting("flatReviewIsRestricted", self._restrict)
+
         if self._restrict:
             script.presentMessage(messages.FLAT_REVIEW_RESTRICTED)
         else:
