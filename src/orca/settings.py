@@ -301,6 +301,9 @@ presentLockingKeys           = None
 # Mouse review
 enableMouseReview          = False
 
+# Flat review
+flatReviewIsRestricted = False
+
 # Progressbars
 speakProgressBarUpdates    = True
 brailleProgressBarUpdates  = False
