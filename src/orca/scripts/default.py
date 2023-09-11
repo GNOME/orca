@@ -670,6 +670,9 @@ class Script(script.Script):
         if self.flatReviewPresenter.is_active():
             self.flatReviewPresenter.quit()
 
+        if self.learnModePresenter.is_active():
+            self.learnModePresenter.quit()
+
         topLevel = self.utilities.topLevelObject(newLocusOfFocus)
         if orca_state.activeWindow != topLevel:
             orca.setActiveWindow(topLevel)
@@ -1890,6 +1893,9 @@ class Script(script.Script):
         if self.flatReviewPresenter.is_active():
             self.flatReviewPresenter.quit()
 
+        if self.learnModePresenter.is_active():
+            self.learnModePresenter.quit()
+
         self.pointOfReference = {}
 
         if not self.utilities.eventIsUserTriggered(event):
@@ -1903,7 +1909,6 @@ class Script(script.Script):
         orca.setLocusOfFocus(event, None)
         orca.setActiveWindow(None)
         _scriptManager.setActiveScript(None, "Window deactivated")
-        self.learnModePresenter.quit()
 
     def onClipboardContentsChanged(self, *args):
         if self.flatReviewPresenter.is_active():

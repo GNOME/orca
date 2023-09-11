@@ -38,6 +38,7 @@ from gi.repository import GObject
 from gi.repository import Gtk
 
 from . import cmdnames
+from . import debug
 from . import guilabels
 from . import input_event
 from . import keybindings
@@ -46,7 +47,7 @@ from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
-from .script import Script
+
 
 class LearnModePresenter:
     """Provides implementation of learn mode"""
@@ -102,14 +103,24 @@ class LearnModePresenter:
         """Starts learn mode."""
 
         if self._is_active:
+            msg = "LEARN MODE PRESENTER: Start called when already active"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
+
+        if script is None:
+            script = orca_state.activeScript
 
         if script is not None:
             script.presentMessage(messages.VERSION)
             script.speakMessage(messages.LEARN_MODE_START_SPEECH)
             script.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
 
+        msg = "LEARN MODE PRESENTER: Grabbing keyboard"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         Atspi.Device.grab_keyboard(orca_state.device)
+
+        msg = "LEARN MODE PRESENTER: Is now active"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._is_active = True
         return True
 
@@ -117,13 +128,22 @@ class LearnModePresenter:
         """Quits learn mode."""
 
         if not self._is_active:
+            msg = "LEARN MODE PRESENTER: Quit called when already inactive"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not isinstance(script, Script):
+        if script is None:
             script = orca_state.activeScript
 
-        script.presentMessage(messages.LEARN_MODE_STOP)
+        if script is not None:
+            script.presentMessage(messages.LEARN_MODE_STOP)
+
+        msg = "LEARN MODE PRESENTER: Ungrabbing keyboard"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         Atspi.Device.ungrab_keyboard(orca_state.device)
+
+        msg = "LEARN MODE PRESENTER: Is now inactive"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._is_active = False
         return True
 
@@ -142,7 +162,7 @@ class LearnModePresenter:
             orca_state.activeScript.phoneticSpellCurrentItem(event.event_string)
 
         if event.event_string == "Escape":
-            self.quit(event)
+            self.quit(script=None, event=event)
             return True
 
         if event.event_string == "F1" and not event.modifiers:
@@ -240,7 +260,7 @@ class LearnModePresenter:
             script.presentMessage(title)
             return True
 
-        script.learnModePresenter.quit()
+        self.quit(script, event)
         column_headers = [guilabels.KB_HEADER_FUNCTION, guilabels.KB_HEADER_KEY_BINDING]
         self._gui = CommandListGUI(script, title, column_headers, bindings)
         self._gui.show_gui()
@@ -249,7 +269,7 @@ class LearnModePresenter:
     def show_help(self, script=None, event=None, page=""):
         """Displays Orca's documentation."""
 
-        self.quit()
+        self.quit(script, event)
         uri = "help:orca"
         if page:
             uri += f"/{page}"
