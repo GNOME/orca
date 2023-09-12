@@ -97,6 +97,12 @@ class SayAllContext:
         new.currentEndOffset = self.currentEndOffset
         return new
 
+    def __eq__(self, other):
+        return (self.startOffset == other.startOffset and
+                self.endOffset == other.endOffset and
+                self.obj == other.obj and
+                self.utterance == other.utterance)
+
 
 class SpeechServer(object):
     """Provides speech server abstraction."""
