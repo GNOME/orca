@@ -116,17 +116,17 @@ class Utilities:
 
     def _isActiveAndShowingAndNotIconified(self, obj):
         if not AXUtilities.is_active(obj):
-            tokens = ["INFO:", obj, "lacks state active"]
+            tokens = ["SCRIPT UTILITIES:", obj, "lacks state active"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilities.is_iconified(obj):
-            tokens = ["INFO:", obj, "has state iconified"]
+            tokens = ["SCRIPT UTILITIES:", obj, "has state iconified"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not AXUtilities.is_showing(obj):
-            tokens = ["INFO:", obj, "lacks state showing"]
+            tokens = ["SCRIPT UTILITIES:", obj, "lacks state showing"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -140,7 +140,7 @@ class Utilities:
         try:
             pid = app.get_process_id()
         except Exception:
-            tokens = ["ERROR: Exception getting process id of", app, ". May be defunct."]
+            tokens = ["SCRIPT UTILITIES: Exception getting process id of", app, ". May be defunct."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
@@ -156,18 +156,18 @@ class Utilities:
             return False
 
         app = AXObject.get_application(window)
-        tokens = ["INFO: Looking at", window, "from", app, self._getAppCommandLine(app)]
+        tokens = ["SCRIPT UTILITIES: Looking at", window, "from", app, self._getAppCommandLine(app)]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if clearCache:
             AXObject.clear_cache(window)
 
         if not self._isActiveAndShowingAndNotIconified(window):
-            tokens = ["INFO:", window, "is not active and showing, or is iconified"]
+            tokens = ["SCRIPT UTILITIES:", window, "is not active and showing, or is iconified"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["INFO:", window, "can be active window"]
+        tokens = ["SCRIPT UTILITIES:", window, "can be active window"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
@@ -180,33 +180,31 @@ class Utilities:
             candidates.extend([c for c in AXObject.iter_children(app, self.canBeActiveWindow)])
 
         if not candidates:
-            # TODO - JD: This needs more tokenizing.
-            tokens = ["ERROR: Unable to find active window from", list(map(str, apps))]
+            tokens = ["SCRIPT UTILITIES: Unable to find active window from", apps]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if len(candidates) == 1:
-            tokens = ["INFO: Active window is", candidates[0]]
+            tokens = ["SCRIPT UTILITIES: Active window is", candidates[0]]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return candidates[0]
 
-        # TODO - JD: This needs more tokenizing.
-        tokens = ["WARNING: These windows all claim to be active:", list(map(str, candidates))]
+        tokens = ["SCRIPT UTILITIES: These windows all claim to be active:", candidates]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         filtered = []
         for candidate in candidates:
             if self.isDesktop(candidate):
-                tokens = ["INFO: Rejecting", candidate, "because it's the desktop frame"]
+                tokens = ["SCRIPT UTILITIES: Rejecting", candidate, ": it's the desktop frame"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             elif AXObject.get_name(AXObject.get_application(candidate)) == "mutter-x11-frames":
-                tokens = ["INFO: Rejecting", candidate, "because app is mutter-x11-frames"]
+                tokens = ["SCRIPT UTILITIES: Rejecting", candidate, ": app is mutter-x11-frames"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 filtered.append(candidate)
 
         if len(filtered) == 1:
-            tokens = ["INFO: Active window is believed to be", filtered[0]]
+            tokens = ["SCRIPT UTILITIES: Active window is believed to be", filtered[0]]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return filtered[0]
 
@@ -219,23 +217,23 @@ class Utilities:
         refiltered = []
         for frame in filtered:
             if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
-                tokens = ["INFO: Suspecting", frame, "might be a non-active Electron app"]
+                tokens = ["SCRIPT UTILITIES: Suspecting", frame, "is a non-active Electron app"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 refiltered.append(frame)
 
         if len(refiltered) == 1:
-            tokens = ["INFO: Active window is believed to be", refiltered[0]]
+            tokens = ["SCRIPT UTILITIES: Active window is believed to be", refiltered[0]]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return refiltered[0]
 
         guess = None
         if refiltered:
-            tokens = ["WARNING: Still have multiple active windows:", list(map(str, refiltered))]
+            tokens = ["SCRIPT UTILITIES: Still have multiple active windows:", refiltered]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             guess = refiltered[0]
 
-        tokens = ["INFO: Active window is:", guess]
+        tokens = ["SCRIPT UTILITIES: Active window is:", guess]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return guess
 
@@ -285,7 +283,7 @@ class Utilities:
             return AXObject.get_index_in_parent(x) >= 0
 
         nodes = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF, pred)
-        tokens = ["INFO:", len(nodes), "child nodes for", obj, "found via node-parent-of"]
+        tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-parent-of"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if nodes:
             return nodes
@@ -309,7 +307,7 @@ class Utilities:
             elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
 
-        tokens = ["INFO:", len(nodes), "child nodes for", obj, "found via node-child-of"]
+        tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-child-of"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
@@ -321,7 +319,7 @@ class Utilities:
         - b: Accessible
         """
 
-        tokens = ["INFO: Looking for common ancestor of", a, "and", b]
+        tokens = ["SCRIPT UTILITIES: Looking for common ancestor of", a, "and", b]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # Don't do any Zombie checks here, as tempting and logical as it
@@ -356,8 +354,8 @@ class Utilities:
             else:
                 break
 
-        msg = f'INFO: Common ancestor of {a} and {b} is {commonAncestor}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: Common ancestor of", a, "and", b, "is", commonAncestor]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return commonAncestor
 
     def displayedLabel(self, obj):
@@ -399,7 +397,8 @@ class Utilities:
 
         labels = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         if descriptions == labels:
-            tokens = ["INFO:", obj, "'s described-by targets are the same as labelled-by targets"]
+            tokens = ["SCRIPT UTILITIES:", obj,
+                      "'s described-by targets are the same as labelled-by targets"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -511,13 +510,13 @@ class Utilities:
 
         obj = obj or orca_state.locusOfFocus
         if not obj:
-            msg = "ERROR: frameAndDialog() called without valid object"
+            msg = "SCRIPT UTILITIES: frameAndDialog() called without valid object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return results
 
         topLevel = self.topLevelObject(obj)
         if topLevel is None:
-            tokens = ["ERROR: could not find top-level object for", obj]
+            tokens = ["SCRIPT UTILITIES: could not find top-level object for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return results
 
@@ -540,7 +539,7 @@ class Utilities:
             else:
                 results[1] = AXObject.find_ancestor(obj, isDialog)
 
-        tokens = ["INFO:", obj, "is in frame", results[0], "and dialog", results[1]]
+        tokens = ["SCRIPT UTILITIES:", obj, "is in frame", results[0], "and dialog", results[1]]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return results
 
@@ -988,21 +987,21 @@ class Utilities:
         try:
             value = obj.queryValue()
         except NotImplementedError:
-            tokens = ["ERROR:", obj, "doesn't implement AtspiValue"]
+            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiValue"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         except Exception:
-            tokens = ["ERROR: Exception getting value for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
         else:
             try:
                 if value.maximumValue == value.minimumValue:
-                    tokens = ["INFO:", obj, "is busy indicator"]
+                    tokens = ["SCRIPT UTILITIES:", obj, "is busy indicator"]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     return False
             except Exception:
-                tokens = ["INFO:", obj, "is either busy indicator or broken"]
+                tokens = ["SCRIPT UTILITIES:", obj, "is either busy indicator or broken"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
@@ -1047,16 +1046,16 @@ class Utilities:
             value = obj.queryValue()
             minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
         except NotImplementedError:
-            tokens = ["ERROR:", obj, "doesn't implement AtspiValue"]
+            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiValue"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
         except Exception:
-            tokens = ["ERROR: Exception getting value for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if AXUtilities.is_indeterminate(obj):
-            tokens = ["INFO:", obj, "has state indeterminate and value of", val]
+            tokens = ["SCRIPT UTILITIES:", obj, "has state indeterminate and value of", val]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if val <= 0:
                 return None
@@ -1314,12 +1313,12 @@ class Utilities:
             try:
                 table = obj.queryTable()
             except NotImplementedError:
-                msg = f'ERROR: Table {obj} does not implement table interface'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT UTILITIES: Table", obj, "does not implement table interface"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 layoutOnly = True
-            except Exception:
-                msg = f'ERROR: Exception querying table interface of {obj}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                tokens = ["SCRIPT UTILITIES: Error querying table interface of", obj, ":", error]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 layoutOnly = True
             else:
                 if not (table.nRows and table.nColumns):
@@ -1386,8 +1385,8 @@ class Utilities:
                 layoutOnly = True
 
         if layoutOnly:
-            msg = f'INFO: {obj} is deemed to be layout only'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES:", obj, "is deemed to be layout only"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return layoutOnly
 
@@ -1515,7 +1514,8 @@ class Utilities:
                 and extents1.height > 0:
                 return True
         except Exception as error:
-            tokens = ["ERROR: Exception in isSameObject (", obj1, "vs", obj2, "):", error]
+            tokens = ["SCRIPT UTILITIES: Exception in isSameObject (",
+                      obj1, "vs", obj2, "):", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return False
@@ -1715,12 +1715,12 @@ class Utilities:
             # infinite cycle of nodes.  Bon Echo has been seen to do
             # this (see bug 351847).
             if nodes.count(node):
-                msg = f'ERROR: {node} is already in the list of nodes for {obj}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT UTILITIES:", node, "is already in the list of nodes for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 done = True
             if len(nodes) > 100:
-                msg = f'INFO: More than 100 nodes found for {obj}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT UTILITIES: More than 100 nodes found for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 done = True
             elif node:
                 nodes.append(node)
@@ -1738,37 +1738,37 @@ class Utilities:
             return False
 
         if not self.isShowingAndVisible(obj):
-            tokens = ["INFO:", obj, "is not showing and visible"]
+            tokens = ["SCRIPT UTILITIES:", obj, "is not showing and visible"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         try:
             box = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            tokens = ["ERROR: Exception getting extents for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["INFO: Extents for", obj, "are:", box]
+        tokens = ["SCRIPT UTILITIES: Extents for", obj, "are:", box]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if box.x > 10000 or box.y > 10000:
-            tokens = ["INFO:", obj, "seems to have bogus coordinates"]
+            tokens = ["SCRIPT UTILITIES:", obj, "seems to have bogus coordinates"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
-            tokens = ["INFO:", obj, "has negative coordinates"]
+            tokens = ["SCRIPT UTILITIES:", obj, "has negative coordinates"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not (box.width or box.height):
             if not AXObject.get_child_count(obj):
-                tokens = ["INFO:", obj, "has no size and no children"]
+                tokens = ["SCRIPT UTILITIES:", obj, "has no size and no children"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
             if AXUtilities.is_menu(obj):
-                tokens = ["INFO:", obj, "has no size"]
+                tokens = ["SCRIPT UTILITIES:", obj, "has no size"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
@@ -1778,7 +1778,7 @@ class Utilities:
             return True
 
         if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
-            tokens = ["INFO:", obj, box, "not in", boundingbox]
+            tokens = ["SCRIPT UTILITIES:", obj, box, "not in", boundingbox]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -1857,18 +1857,19 @@ class Utilities:
             return [root]
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
-            tokens = ["INFO:", root, "is empty filler. Clearing cache."]
+            tokens = ["SCRIPT UTILITIES:", root, "is empty filler. Clearing cache."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.clear_cache(root)
-            msg = "INFO: %s reports %i children" % (root, AXObject.get_child_count(root))
-            debug.println(debug.LEVEL_INFO, msg, True)
+            AXObject.clear_cache(root, recursive=True)
+            tokens = ["SCRIPT UTILITIES:", root, "now reports",
+                      AXObject.get_child_count(root), "children"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if extents is None:
             try:
                 component = root.queryComponent()
                 extents = component.getExtents(Atspi.CoordType.SCREEN)
             except Exception:
-                tokens = ["ERROR: Exception getting extents of", root]
+                tokens = ["SCRIPT UTILITIES: Exception getting extents of", root]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 extents = 0, 0, 0, 0
 
@@ -2002,7 +2003,7 @@ class Utilities:
             self._script.pointOfReference['statusBarItems'] = items
 
         end = time.time()
-        msg = f"INFO: Time getting status bar items: {end - start:.4f}"
+        msg = f"SCRIPT UTILITIES: Time getting status bar items: {end - start:.4f}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         return items
@@ -2024,7 +2025,7 @@ class Utilities:
             return False
 
         rv = orca_state.locusOfFocus == self.topLevelObject(orca_state.locusOfFocus)
-        tokens = ["INFO:", orca_state.locusOfFocus, "is top-level object:", rv]
+        tokens = ["SCRIPT UTILITIES:", orca_state.locusOfFocus, "is top-level object:", rv]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
@@ -2041,11 +2042,11 @@ class Utilities:
         for i in range(AXObject.get_child_count(app)):
             window = AXObject.get_child(app, i)
             if AXObject.find_descendant(window, lambda x: x == child) is not None:
-                tokens = ["INFO:", window, "contains", child]
+                tokens = ["SCRIPT UTILITIES:", window, "contains", child]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return window
 
-            tokens = ["INFO:", window, "does not contain", child]
+            tokens = ["SCRIPT UTILITIES:", window, "does not contain", child]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return None
@@ -2067,11 +2068,11 @@ class Utilities:
         else:
             rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
 
-        tokens = ["INFO:", rv, "is top-level object for:", obj]
+        tokens = ["SCRIPT UTILITIES:", rv, "is top-level object for:", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if rv is None and useFallbackSearch:
-            msg = "INFO: Attempting to find top-level object via fallback search"
+            msg = "SCRIPT UTILITIES: Attempting to find top-level object via fallback search"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             rv = self._findWindowWithDescendant(obj)
 
@@ -2179,7 +2180,7 @@ class Utilities:
         try:
             extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
         except Exception:
-            tokens = ["ERROR: Exception getting range extents of", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting range extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1, 0, 0
 
@@ -2189,7 +2190,7 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            tokens = ["ERROR: Exception getting extents of", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1, 0, 0
 
@@ -2205,7 +2206,7 @@ class Utilities:
         try:
             extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            tokens = ["ERROR: Exception getting extents for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
@@ -2453,11 +2454,11 @@ class Utilities:
         try:
             hypertext = obj.queryHypertext()
         except NotImplementedError:
-            tokens = ["INFO:", obj, "does not implement the hypertext interface"]
+            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hypertext interface"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
         except Exception:
-            tokens = ["INFO: Exception querying hypertext interface for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception querying hypertext interface for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -2467,17 +2468,17 @@ class Utilities:
 
         hyperlink = hypertext.getLink(index)
         if not hyperlink:
-            msg = "INFO: No hyperlink object at index %i for %s" % (index, obj)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: No hyperlink object at index", index, "for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         child = hyperlink.getObject(0)
-        msg = "INFO: Hyperlink object at index %i for %s is %s" % (index, obj, child)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: Hyperlink object at index", index, "for", obj, "is", child]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if offset != hyperlink.startIndex:
             msg = (
-                f"ERROR: Hyperlink start index {hyperlink.startIndex} "
+                f"SCRIPT UTILITIES: Hyperlink start index {hyperlink.startIndex} "
                 f"should match the offset {offset}"
             )
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2501,7 +2502,7 @@ class Utilities:
         try:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
-            tokens = ["INFO:", obj, "does not implement the hyperlink interface"]
+            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hyperlink interface"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             # We need to make sure that this is an embedded object in
@@ -2512,11 +2513,12 @@ class Utilities:
                 parent.queryText()
                 offset = hyperlink.startIndex
             except Exception:
-                tokens = ["ERROR: Exception getting startIndex for", obj, "in parent", parent]
+                tokens = ["SCRIPT UTILITIES: Exception getting startIndex for",
+                          obj, "in parent", parent]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
-                msg = "INFO: startIndex of %s is %i" % (obj, offset)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SCRIPT UTILITIES: startIndex of", obj, f"is {offset}"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return offset
 
@@ -2639,7 +2641,7 @@ class Utilities:
         except NotImplementedError:
             pass
         except Exception:
-            tokens = ["ERROR: Exception getting character count of", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting character count of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         else:
             if charCount:
@@ -2654,7 +2656,7 @@ class Utilities:
         if event.any_data:
             return event.any_data
 
-        msg = "ERROR: Broken text insertion event"
+        msg = "SCRIPT UTILITIES: Broken text insertion event"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_password_text(event.source):
@@ -2792,8 +2794,9 @@ class Utilities:
         if endOffset == -1:
             endOffset = text.characterCount
 
-        msg = "INFO: Getting text attributes for %s (chars: %i-%i)" % (obj, startOffset, endOffset)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: Getting text attributes for", obj,
+                  f"chars: {startOffset}-{endOffset}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         startTime = time.time()
 
         rv = []
@@ -2801,10 +2804,10 @@ class Utilities:
         while offset < endOffset:
             try:
                 attrList, start, end = text.getAttributeRun(offset)
-                msg = "INFO: Attributes at %i: %s (%i-%i)" % (offset, attrList, start, end)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = [f"SCRIPT UTILITIES: At {offset}:", attrList, f"({start}, {end})"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
             except Exception as error:
-                msg = f"ERROR: Exception getting attributes at {offset}: {error}"
+                msg = f"SCRIPT UTILITIES: Exception getting attributes at {offset}: {error}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return rv
 
@@ -2813,7 +2816,7 @@ class Utilities:
             offset = max(end, offset + 1)
 
         endTime = time.time()
-        msg = f"INFO: {len(rv)} attribute ranges found in {endTime - startTime:.4f}s"
+        msg = f"SCRIPT UTILITIES: {len(rv)} attribute ranges found in {endTime - startTime:.4f}s"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -3515,28 +3518,29 @@ class Utilities:
         # "The reports of my implementation are greatly exaggerated."
         try:
             maxValue = value.maximumValue
-        except (LookupError, RuntimeError):
+        except Exception as error:
             maxValue = 0.0
-            msg = f'ERROR: Exception getting maximumValue for {obj}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: Could not get maximum value for", obj, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         try:
             minValue = value.minimumValue
-        except (LookupError, RuntimeError):
+        except Exception as error:
             minValue = 0.0
-            msg = f'ERROR: Exception getting minimumValue for {obj}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: Could not get minimum value for", obj, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         try:
             minIncrement = value.minimumIncrement
-        except (LookupError, RuntimeError):
+        except Exception as error:
             minIncrement = (maxValue - minValue) / 100.0
-            msg = f'ERROR: Exception getting minimumIncrement for {obj}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: Could not get minimum increment for", obj, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if minIncrement != 0.0:
             try:
                 decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
-            except ValueError:
-                msg = f'ERROR: Exception calculating decimal places for {obj}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+            except ValueError as error:
+                tokens = ["SCRIPT UTILITIES: Could not calculate decimal places for",
+                          obj, ":", error]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return ""
         elif abs(currentValue) < 1:
             decimalPlaces = 1
@@ -3595,11 +3599,11 @@ class Utilities:
             hyperlink = obj.queryHyperlink()
             start, end = hyperlink.startIndex, hyperlink.endIndex
         except NotImplementedError:
-            tokens = ["INFO:", obj, "does not implement the hyperlink interface"]
+            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hyperlink interface"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
         except Exception:
-            tokens = ["INFO: Exception getting hyperlink indices for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting hyperlink indices for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
@@ -3610,7 +3614,7 @@ class Utilities:
         if children:
             return children
 
-        msg = "INFO: Selected children not retrieved via selection interface."
+        msg = "SCRIPT UTILITIES: Selected children not retrieved via selection interface."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         role = AXObject.get_role(obj)
@@ -3845,7 +3849,7 @@ class Utilities:
         try:
             value = int(attrs.get('level', '0'))
         except ValueError:
-            tokens = ["ERROR: Exception getting value for", obj, "(", attrs, ")"]
+            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj, "(", attrs, ")"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
@@ -3876,7 +3880,7 @@ class Utilities:
 
     def _columnHeadersForCell(self, obj):
         if not obj:
-            msg = "INFO: Attempted to get column headers for null cell"
+            msg = "SCRIPT UTILITIES: Attempted to get column headers for null cell"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -3885,7 +3889,7 @@ class Utilities:
             try:
                 headers = tableCell.columnHeaderCells
             except Exception:
-                tokens = ["INFO: Exception getting column headers for", obj]
+                tokens = ["SCRIPT UTILITIES: Exception getting column headers for", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return headers
@@ -3920,7 +3924,7 @@ class Utilities:
 
     def _rowHeadersForCell(self, obj):
         if not obj:
-            msg = "INFO: Attempted to get row headers for null cell"
+            msg = "SCRIPT UTILITIES: Attempted to get row headers for null cell"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
@@ -3929,7 +3933,7 @@ class Utilities:
             try:
                 headers = tableCell.rowHeaderCells
             except Exception:
-                tokens = ["INFO: Exception getting row headers for", obj]
+                tokens = ["SCRIPT UTILITIES: Exception getting row headers for", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return headers
@@ -3980,26 +3984,26 @@ class Utilities:
             try:
                 successful, row, col = tableCell.position
             except Exception:
-                tokens = ["INFO: Exception getting table cell position of", obj]
+                tokens = ["SCRIPT UTILITIES: Exception getting table cell position of", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 if successful:
-                    msg = "INFO: table cell position of %s is row: %i, col: %i" % (obj, row, col)
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    tokens = ["SCRIPT UTILITIES: position of", obj, f"is row: {row}, col: {col}"]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     return row, col
-                tokens = ["INFO: Failed to get table cell position of", obj, "via table cell"]
+                tokens = ["SCRIPT UTILITIES: Failed to get position of", obj, "via table cell"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         parent = AXObject.find_ancestor(obj, AXObject.supports_table)
         if not parent:
-            tokens = ["INFO: Couldn't find table-implementing ancestor for", obj]
+            tokens = ["SCRIPT UTILITIES: Couldn't find table-implementing ancestor for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         try:
             table = parent.queryTable()
         except Exception:
-            tokens = ["INFO: Exception querying table interface", parent]
+            tokens = ["SCRIPT UTILITIES: Exception querying table interface", parent]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
@@ -4008,7 +4012,7 @@ class Utilities:
             row = table.getRowAtIndex(index)
             col = table.getColumnAtIndex(index)
         except Exception:
-            tokens = ["INFO: Exception getting row and column at index from", parent]
+            tokens = ["SCRIPT UTILITIES: Exception getting row and column at index from", parent]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
@@ -4023,7 +4027,7 @@ class Utilities:
             try:
                 rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
             except Exception:
-                tokens = ["INFO: Exception getting table row and col span of",
+                tokens = ["SCRIPT UTILITIES: Exception getting table row and col span of",
                           obj, "via table cell"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
@@ -4082,8 +4086,8 @@ class Utilities:
 
         x1, y1 = x + margin, y + margin
         if component.contains(x1, y1, coordType):
-            msg = "INFO: %s contains (%i,%i); not (%i,%i)" % (obj, x1, y1, x, y)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: ", obj, f"contains ({x1},{y1}); not ({x},{y}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -4131,7 +4135,7 @@ class Utilities:
         try:
             component = root.queryComponent()
         except Exception:
-            tokens = ["INFO: Exception querying component of", root]
+            tokens = ["SCRIPT UTILITIES: Exception querying component of", root]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -4139,8 +4143,8 @@ class Utilities:
             coordType = Atspi.CoordType.SCREEN
 
         result = component.getAccessibleAtPoint(x, y, coordType)
-        msg = "INFO: %s is descendant of %s at (%i, %i)" % (result, root, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: ", result, "is descendant of", root, f"at ({x}, {y})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def descendantAtPoint(self, root, x, y, coordType=None):
@@ -4231,9 +4235,11 @@ class Utilities:
                 end = offset
 
             word = text.getText(start, end)
-            msg = "INFO: Adjusted word at offset %i for ongoing word nav is '%s' (%i-%i)" \
-                % (offset, word.replace("\n", "\\n"), start, end)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = (
+                f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
+                f"{word.replace('\n', '\\n')} ({start}-{end})"
+            )
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return word, start, end
 
         # Otherwise, attempt some smarts so that the user winds up with the same presentation
@@ -4277,9 +4283,11 @@ class Utilities:
             word = text.getText(start, end)
 
         word = text.getText(start, end)
-        msg = "INFO: Adjusted word at offset %i for new word nav is '%s' (%i-%i)" \
-            % (offset, word.replace("\n", "\\n"), start, end)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = (
+            f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
+            f"{word.replace('\n', '\\n')} ({start}-{end})"
+        )
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
     def getWordAtOffset(self, obj, offset=None):
@@ -4291,8 +4299,11 @@ class Utilities:
             return "", 0, 0
 
         word, start, end = text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
-        msg = "INFO: Word at %i is '%s' (%i-%i)" % (offset, word.replace("\n", "\\n"), start, end)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = (
+            f"SCRIPT UTILITIES: Word at offset {offset} is "
+            f"{word.replace('\n', '\\n')} ({start}-{end})"
+        )
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
     def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
@@ -4341,15 +4352,15 @@ class Utilities:
         except Exception:
             return []
 
-        msg = "INFO: %s has %i rows" % (obj, nRows)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: ", obj, f"has {nRows} rows"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         x, y, width, height = boundingbox
         cell = self.descendantAtPoint(obj, x, y + 1)
         row, col = self.coordinatesForCell(cell)
         startIndex = max(0, row)
-        msg = "INFO: First cell: %s (row: %i)" % (cell, row)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: First cell:", cell, f"(row: {row}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # Just in case the row above is a static header row in a scrollable table.
         try:
@@ -4360,13 +4371,13 @@ class Utilities:
             cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
             row, col = self.coordinatesForCell(cell)
             nextIndex = max(startIndex, row)
-            msg = "INFO: Next cell: %s (row: %i)" % (cell, row)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         cell = self.descendantAtPoint(obj, x, y + height - 1)
         row, col = self.coordinatesForCell(cell)
-        msg = "INFO: Last cell: %s (row: %i)" % (cell, row)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if row == -1:
             row = nRows
@@ -4388,7 +4399,7 @@ class Utilities:
             component = obj.queryComponent()
             extents = component.getExtents(Atspi.CoordType.SCREEN)
         except Exception:
-            tokens = ["ERROR: Exception getting extents of", obj]
+            tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -4425,7 +4436,7 @@ class Utilities:
         try:
             component = parent.queryComponent()
         except Exception:
-            tokens = ["ERROR: Exception querying component interface of", parent]
+            tokens = ["SCRIPT UTILITIES: Exception querying component interface of", parent]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return startIndex, endIndex
 
@@ -4447,7 +4458,7 @@ class Utilities:
         try:
             table = parent.queryTable()
         except Exception:
-            tokens = ["ERROR: Exception querying table interface of", parent]
+            tokens = ["SCRIPT UTILITIES: Exception querying table interface of", parent]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -4533,15 +4544,8 @@ class Utilities:
         return False
 
     def isDead(self, obj):
-        try:
-            # We use the Atspi function rather than the AXObject function because the
-            # latter intentionally handles exceptions.
-            Atspi.Accessible.get_name(obj)
-        except Exception:
-            debug.println(debug.LEVEL_INFO, f"DEAD: {obj}", True)
-            return True
-
-        return False
+        # TODO - JD: Callers of this function should call the AXObject function.
+        return AXObject.is_dead(obj)
 
     def isZombie(self, obj):
         index = AXObject.get_index_in_parent(obj)
@@ -4553,24 +4557,28 @@ class Utilities:
                          Atspi.Role.WINDOW,
                          Atspi.Role.FRAME]
         role = AXObject.get_role(obj)
+        tokens = ["SCRIPT UTILITIES: ", obj, "is zombie:"]
         if index == -1 and role not in topLevelRoles:
-            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj}'s index is -1", True)
+            tokens.append("index is -1")
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
-
         if AXUtilities.is_defunct(obj):
-            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} is defunct", True)
+            tokens.append("is defunct")
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
         if AXUtilities.is_invalid_state(obj):
-            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} has invalid state", True)
+            tokens.append("has invalid state")
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
         if AXUtilities.is_invalid_role(obj):
-            debug.println(debug.LEVEL_INFO, f"ZOMBIE: {obj} has invalid state", True)
+            tokens.append("has invalid role")
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
 
     def findReplicant(self, root, obj):
-        tokens = ["INFO: Searching for replicant for", obj, "in", root]
+        tokens = ["SCRIPT UTILITIES: Searching for replicant for", obj, "in", root]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not (root and obj):
             return None
@@ -4691,19 +4699,19 @@ class Utilities:
     def getCachedTextSelection(self, obj):
         textSelections = self._script.pointOfReference.get('textSelections', {})
         start, end, string = textSelections.get(hash(obj), (0, 0, ''))
-        msg = "INFO: Cached selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: Cached selection for", obj, f"is '{string}' ({start}, {end})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return start, end, string
 
     def updateCachedTextSelection(self, obj):
         try:
             text = obj.queryText()
         except NotImplementedError:
-            tokens = ["ERROR:", obj, "doesn't implement AtspiText"]
+            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiText"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             text = None
         except Exception:
-            tokens = ["ERROR: Exception querying text interface for", obj]
+            tokens = ["SCRIPT UTILITIES: Exception querying text interface for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             text = None
 
@@ -4729,14 +4737,14 @@ class Utilities:
             try:
                 start, end = text.getSelection(0)
             except Exception:
-                tokens = ["ERROR: Exception getting selected text for", obj]
+                tokens = ["SCRIPT UTILITIES: Exception getting selected text for", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 start = end = 0
             if start != end:
                 string = text.getText(start, end)
 
-        msg = "INFO: New selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT UTILITIES: New selection for", obj, f"is '{string}' ({start}, {end})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         textSelections[hash(obj)] = start, end, string
         self._script.pointOfReference['textSelections'] = textSelections
 
@@ -4747,7 +4755,7 @@ class Utilities:
             return
 
         if time.time() - Utilities._last_clipboard_update < 0.05:
-            msg = "INFO: Clipboard contents change notification believed to be duplicate"
+            msg = "SCRIPT UTILITIES: Clipboard contents change believed to be duplicate"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
@@ -5086,7 +5094,7 @@ class Utilities:
            or AXUtilities.is_slider(event.source) \
            or AXUtilities.is_spin_button(event.source) \
            or AXUtilities.is_label(event.source):
-            msg = "INFO: Event is not being presented due to role"
+            msg = "SCRIPT UTILITIES: Event is not being presented due to role"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5098,14 +5106,14 @@ class Utilities:
             if self.isDead(orca_state.locusOfFocus):
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
-            msg = "INFO: Event is not being presented due to role and states"
+            msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if orca_state.locusOfFocus in [event.source, AXObject.get_parent(event.source)]:
             return True
 
-        msg = "INFO: Event is not being presented due to lack of cause"
+        msg = "SCRIPT UTILITIES: Event is not being presented due to lack of cause"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
@@ -5178,7 +5186,8 @@ class Utilities:
         if AXUtilities.is_focusable(event.source) \
            and not AXUtilities.is_focused(event.source) \
            and event.source != orca_state.locusOfFocus:
-            msg = "INFO: Not echoable text insertion event: focusable source is not focused"
+            msg = "SCRIPT UTILITIES: Not echoable text insertion event: " \
+                 "focusable source is not focused"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5302,13 +5311,13 @@ class Utilities:
 
     def eventIsUserTriggered(self, event):
         if not orca_state.lastInputEvent:
-            msg = "INFO: Not user triggered: No last input event."
+            msg = "SCRIPT UTILITIES: Not user triggered: No last input event."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         delta = time.time() - orca_state.lastInputEvent.time
         if delta > 1:
-            msg = f"INFO: Not user triggered: Last input event {delta:.2f}s ago."
+            msg = f"SCRIPT UTILITIES: Not user triggered: Last input event {delta:.2f}s ago."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5339,7 +5348,7 @@ class Utilities:
             if AXObject.get_parent(child) != obj:
                 return False
 
-            msg = f"INFO: All {childCount} children believed to be selected"
+            msg = f"SCRIPT UTILITIES: All {childCount} children believed to be selected"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -5348,13 +5357,13 @@ class Utilities:
 
         table = obj.queryTable()
         if table.nSelectedRows == table.nRows:
-            msg = "INFO: All %i rows believed to be selected" % table.nRows
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = f"SCRIPT UTILITIES: All {table.nRows} rows believed to be selected"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if table.nSelectedColumns == table.nColumns:
-            msg = "INFO: All %i columns believed to be selected" % table.nColumns
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = f"SCRIPT UTILITIES: All {table.nColumns} columns believed to be selected"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -5515,8 +5524,9 @@ class Utilities:
         return True
 
     def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus, event=None):
+        msg = "SCRIPT UTILITIES: Not interrupting for locusOfFocus change: "
         if event is None:
-            msg = "INFO: Not interrupting for locusOfFocus change: event is None"
+            msg += "event is None"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5525,19 +5535,19 @@ class Utilities:
 
         if AXUtilities.is_table_cell(oldLocusOfFocus) and AXUtilities.is_text(newLocusOfFocus) \
            and AXUtilities.is_editable(newLocusOfFocus):
-            msg = "INFO: Not interrupting for locusOfFocus change, suspected editable cell"
+            msg += "suspected editable cell"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if not AXUtilities.is_menu_related(newLocusOfFocus) \
            and (AXUtilities.is_check_menu_item(oldLocusOfFocus) \
                 or AXUtilities.is_radio_menu_item(oldLocusOfFocus)):
-            msg = "INFO: Not interrupting for locusOfFocus change, suspected menuitem state change"
+            msg += "suspected menuitem state change"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
-            msg = "INFO: Not interrupting for locusOfFocus change: oldLocusOfFocus ancestor of new"
+            msg += "old locusOfFocus is ancestor of new locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -5549,12 +5559,12 @@ class Utilities:
 
         if AXObject.get_relation_targets(newLocusOfFocus,
                                          Atspi.RelationType.CONTROLLER_FOR, isOld):
-            msg = "INFO: Not interrupting for locusOfFocus change, newLocusOfFocus controls old"
+            msg += "new locusOfFocus controls old locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         if AXObject.get_relation_targets(oldLocusOfFocus,
                                          Atspi.RelationType.CONTROLLER_FOR, isNew):
-            msg = "INFO: Not interrupting for locusOfFocus change, oldLocusOfFocus controls new"
+            msg += "old locusOfFocus controls new locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         return True
@@ -5564,6 +5574,9 @@ class Utilities:
             return False
 
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
-        msg = f"INFO: Similarity between '{str1}', '{str2}': {similarity} (threshold: {threshold})"
+        msg = (
+            f"SCRIPT UTILITIES: Similarity between '{str1}', '{str2}': {similarity} "
+            f"(threshold: {threshold})"
+        )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return similarity >= threshold
