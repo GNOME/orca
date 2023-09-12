@@ -747,15 +747,10 @@ class Context:
     def setCurrentToZoneWithObject(self, obj):
         """Attempts to set the current zone to obj, if obj is in the current context."""
 
-        def _toString(x):
-            if AXObject.get_name(x):
-                return str(x)
-            return f"{x}: '{self.script.utilities.displayedText(x)}'"
-
-        msg = "FLAT REVIEW: Current %s (line: %i, zone: %i, word: %i, char: %i)" % \
-              (_toString(self.getCurrentAccessible()),
-               self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW: Current", self.getCurrentAccessible(),
+                  f"line: {self.lineIndex}, zone: {self.zoneIndex},",
+                  f"word: {self.wordIndex}, char: {self.charIndex})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         zone = self._findZoneWithObject(obj)
         tokens = ["FLAT REVIEW: Zone with", obj, "is", zone]
@@ -779,10 +774,10 @@ class Context:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = "FLAT REVIEW: Updated %s (line: %i, zone: %i, word: %i, char: %i)" % \
-              (_toString(self.getCurrentAccessible()),
-               self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW: Updated", self.getCurrentAccessible(),
+                  f"line: {self.lineIndex}, zone: {self.zoneIndex},",
+                  f"word: {self.wordIndex}, char: {self.charIndex})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def _findZoneWithObject(self, obj):

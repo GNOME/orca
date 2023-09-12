@@ -65,6 +65,9 @@ class LineBreak:
     def __init__(self):
         pass
 
+    def __str__(self):
+        return "LINE BREAK"
+
 LINE_BREAK = [LineBreak()]
 
 # [[[WDW - general note -- for all the _generate* methods, it would be great if

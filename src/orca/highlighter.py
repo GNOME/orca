@@ -192,15 +192,15 @@ class GtkHighlighter(Highlighter):
     def highlight(self, x, y, width, height):
         """Draws the desired indicator over the specified box."""
 
-        msg = "GTK HIGHLIGHTER: x:%i, y:%i, width:%i, height:%i" % (x, y, width, height)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = f"GTK HIGHLIGHTER: x:{x}, y:{y}, width:{width}, height:{height}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         try:
             self._gui.move(x - self._padding, y - self._padding)
             self._gui.resize(width + 2 * self._padding, height + 2 * self._padding)
-        except Exception as error:
-            tokens = ["GTK HIGHLIGHTER: Exception:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        except Exception as exc:
+            error_tokens = ["GTK HIGHLIGHTER: Exception:", exc]
+            debug.printTokens(debug.LEVEL_INFO, error_tokens, True)
         else:
             self._gui.show_all()
 

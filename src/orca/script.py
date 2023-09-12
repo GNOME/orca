@@ -139,7 +139,10 @@ class Script:
         self._lastCommandWasStructNav = False
 
         msg = f'SCRIPT: {self.name} initialized'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+    def __str__(self):
+        return f"{self.name}"
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -343,7 +346,7 @@ class Script:
         role = AXObject.get_role(event.source)
         if role == Atspi.Role.INVALID:
             msg = 'ERROR: Not processing object event for invalid object'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         # Check to see if we really want to process this event.
@@ -399,19 +402,13 @@ class Script:
             return None
 
         if any_data is not None and any_data != cachedEvent.any_data:
-            msg = (
-                f"SCRIPT: Queued event's any_data ({cachedEvent.any_data}) "
-                f"doesn't match {any_data}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT: Queued event's any_data (",
+                      cachedEvent.any_data, ") doesn't match", any_data]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        msg = (
-            f"SCRIPT: Found matching queued event: {cachedEvent.type} "
-            f"({cachedEvent.detail1},{cachedEvent.detail2},{cachedEvent.any_data}) "
-            f"on {cachedEvent.source}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT: Found matching queued event:", cachedEvent]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return cachedEvent
 
     def skipObjectEvent(self, event):
@@ -454,9 +451,8 @@ class Script:
             reason = "appears to be duplicate state-changed event"
 
         if skip:
-            eventDetails = '        %s' % str(cachedEvent).replace('\t', ' ' * 8)
-            msg = f'SCRIPT: Skipping object event due to {reason}\n{eventDetails}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT: Skipping object event:", reason, cachedEvent]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return skip
 

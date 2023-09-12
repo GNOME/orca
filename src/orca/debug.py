@@ -213,12 +213,18 @@ def _asString(obj):
 
         return f"[{result}]"
 
+    if isinstance(obj, Atspi.Role):
+        return obj.value_name[11:]
+
     if isinstance(obj, Atspi.Event):
         return (
             f"{obj.type} for {_asString(obj.source)} in "
             f"{_asString(AXObject.get_application(obj.source))} "
             f"({obj.detail1}, {obj.detail2}, {_asString(obj.any_data)})"
         )
+
+    if isinstance(obj, list):
+        return f"[{', '.join(map(_asString, obj))}]"
 
     return str(obj)
 

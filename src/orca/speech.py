@@ -72,8 +72,8 @@ def _initSpeechServer(moduleName, speechServerInfo):
     if not _speechserver:
         _speechserver = factory.SpeechServer.getSpeechServer()
         if speechServerInfo:
-            msg = f'SPEECH: Invalid speechServerInfo: {speechServerInfo}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH: Invalid speechServerInfo:", speechServerInfo]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if not _speechserver:
         raise Exception(f"ERROR: No speech server for factory: {moduleName}")
@@ -86,8 +86,7 @@ def init():
 
     try:
         moduleName = settings.speechServerFactory
-        _initSpeechServer(moduleName,
-                          settings.speechServerInfo)
+        _initSpeechServer(moduleName, settings.speechServerInfo)
     except Exception:
         moduleNames = settings.speechFactoryModules
         for moduleName in moduleNames:
@@ -100,8 +99,8 @@ def init():
                     debug.printException(debug.LEVEL_SEVERE)
 
     if _speechserver:
-        msg = f'SPEECH: Using speech server factory: {moduleName}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH: Using speech server factory:", moduleName]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
     else:
         msg = 'SPEECH: Not available'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -141,8 +140,8 @@ def sayAll(utteranceIterator, progressCallback):
         _speechserver.sayAll(utteranceIterator, progressCallback)
     else:
         for [context, acss] in utteranceIterator:
-            logLine = "SPEECH OUTPUT: '" + context.utterance + "'"
-            debug.println(debug.LEVEL_INFO, logLine, True)
+            logLine = f"SPEECH OUTPUT: '{context.utterance}'"
+            debug.printMessage(debug.LEVEL_INFO, logLine, True)
             log.info(logLine)
 
 def _speak(text, acss, interrupt):
@@ -150,7 +149,7 @@ def _speak(text, acss, interrupt):
 
     if not _speechserver:
         logLine = f"SPEECH OUTPUT: '{text}' {acss}"
-        debug.println(debug.LEVEL_INFO, logLine, True)
+        debug.printMessage(debug.LEVEL_INFO, logLine, True)
         log.info(logLine)
         return
 
@@ -178,18 +177,21 @@ def speak(content, acss=None, interrupt=True):
                   speech_generator.LineBreak, ACSS)
     error = "SPEECH: bad content sent to speak(): '%s'"
     if not isinstance(content, validTypes):
-        debug.printStack(debug.LEVEL_WARNING)
-        debug.println(debug.LEVEL_WARNING, error % content, True)
+        debug.printMessage(debug.LEVEL_INFO, error % content, True)
         return
 
     global _timestamp
     if _timestamp:
         msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
-    msg = f"SPEECH: Speak {content} (ACSS: {acss})"
-    debug.println(debug.LEVEL_INFO, msg, True)
+    if isinstance(content, str):
+        msg = f"SPEECH: Speak '{content}' acss: {acss}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+    else:
+        tokens = ["SPEECH: Speak", content, ", acss:", acss]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if isinstance(content, str):
         _speak(content, acss, interrupt)
@@ -203,7 +205,7 @@ def speak(content, acss=None, interrupt=True):
 
     for element in content:
         if not isinstance(element, validTypes):
-            debug.println(debug.LEVEL_WARNING, error % element, True)
+            debug.printMessage(debug.LEVEL_INFO, error % element, True)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
         elif isinstance(element, str):
@@ -221,8 +223,8 @@ def speak(content, acss=None, interrupt=True):
                     activeVoice = newVoice
                 if newVoice == activeVoice:
                     continue
-                msg = f"SPEECH: New voice {newVoice} != active voice {activeVoice}"
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["SPEECH: New voice", newVoice, " != active voice", activeVoice]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 newItemsToSpeak.append(toSpeak.pop())
 
             if toSpeak:
@@ -248,7 +250,7 @@ def speakKeyEvent(event, acss=None):
     global _timestamp
     if _timestamp:
         msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
     keyname = event.getKeyName()
@@ -256,7 +258,7 @@ def speakKeyEvent(event, acss=None):
     acss = __resolveACSS(acss)
     msg = f"{keyname} {lockingStateString}"
     logLine = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
-    debug.println(debug.LEVEL_INFO, logLine, True)
+    debug.printMessage(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
     if _speechserver:
@@ -279,12 +281,12 @@ def speakCharacter(character, acss=None):
     global _timestamp
     if _timestamp:
         msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
     acss = __resolveACSS(acss)
-    msg = "SPEECH OUTPUT: '" + character + "' " + str(acss)
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = [f"SPEECH OUTPUT: '{character}'", acss]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
     log.info(f"SPEECH OUTPUT: '{character}'")
 
     if _speechserver:

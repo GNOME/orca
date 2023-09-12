@@ -73,7 +73,7 @@ class FlatReviewPresenter:
 
         if not self._context:
             msg = "FLAT REVIEW PRESENTER: Creating new context"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             if self._restrict:
                 mode, obj = orca.getActiveModeAndObjectOfInterest()
@@ -88,7 +88,7 @@ class FlatReviewPresenter:
             return self._context
 
         msg = "FLAT REVIEW PRESENTER: Using existing context"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # If we are in unrestricted mode, update the context as below.
         # If the context already exists, but the active mode is not flat review, update
@@ -103,17 +103,15 @@ class FlatReviewPresenter:
         obj = obj or orca_state.locusOfFocus
         if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
            and not self._restrict:
-            msg = (
-                f"FLAT REVIEW PRESENTER: Attempting to update location from "
-                f"{self._context.getCurrentAccessible()} to {obj}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["FLAT REVIEW PRESENTER: Attempting to update location from",
+                      self._context.getCurrentAccessible(), "to", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._context.setCurrentToZoneWithObject(obj)
 
         # If we are restricting, and the current mode is not flat review, calculate a new context
         if self._restrict and mode != orca.FLAT_REVIEW:
             msg = "FLAT REVIEW PRESENTER: Creating new restricted context."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._context = flat_review.Context(script, obj)
 
         return self._context
@@ -715,11 +713,11 @@ class FlatReviewPresenter:
 
         if self._context:
             msg = "FLAT REVIEW PRESENTER: Already in flat review"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "FLAT REVIEW PRESENTER: Starting flat review"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if script is None:
             script = orca_state.activeScript
@@ -737,11 +735,11 @@ class FlatReviewPresenter:
 
         if self._context is None:
             msg = "FLAT REVIEW PRESENTER: Not in flat review"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "FLAT REVIEW PRESENTER: Quitting flat review"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self._context = None
         orca.emitRegionChanged(orca_state.locusOfFocus, mode=orca.FOCUS_TRACKING)
@@ -1002,7 +1000,7 @@ class FlatReviewPresenter:
         """Displays the entire flat review contents in a text view."""
 
         msg = "FLAT REVIEW PRESENTER: Showing contents."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         text = "\n".join(self._get_all_lines(script, event))
         title = guilabels.FLAT_REVIEW_CONTENTS
