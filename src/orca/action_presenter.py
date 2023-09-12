@@ -89,7 +89,7 @@ class ActionPresenter:
         """Attempts to perform the named action."""
 
         result = AXObject.do_named_action(self._obj, action)
-        tokens = ["ActionPresenter: Performing", action, "on", self._obj, "succeeded:", result]
+        tokens = ["ACTION PRESENTER: Performing", action, "on", self._obj, "succeeded:", result]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self._gui = None
 
@@ -107,11 +107,9 @@ class ActionPresenter:
         for i in range(AXObject.get_n_actions(obj)):
             name = AXObject.get_action_name(obj, i)
             description = AXObject.get_action_description(obj, i)
-            msg = (
-                f"ActionPresenter: Action {i} on {obj}: '{name}' "
-                f"(localized description: '{description}')"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = [f"ACTION PRESENTER: Action {i} on", obj,
+                      f": '{name}' localized description: '{description}'"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             actions[name] = description or name
 
         if not actions.items():

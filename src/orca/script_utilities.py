@@ -4235,9 +4235,10 @@ class Utilities:
                 end = offset
 
             word = text.getText(start, end)
+            debugString = word.replace("\n", "\\n")
             msg = (
                 f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
-                f"{word.replace('\n', '\\n')} ({start}-{end})"
+                f"'{debugString}' ({start}-{end})"
             )
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return word, start, end
@@ -4283,9 +4284,10 @@ class Utilities:
             word = text.getText(start, end)
 
         word = text.getText(start, end)
+        debugString = word.replace("\n", "\\n")
         msg = (
             f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
-            f"{word.replace('\n', '\\n')} ({start}-{end})"
+            f"'{debugString}' ({start}-{end})"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
@@ -4299,9 +4301,10 @@ class Utilities:
             return "", 0, 0
 
         word, start, end = text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
+        debugString = word.replace("\n", "\\n")
         msg = (
             f"SCRIPT UTILITIES: Word at offset {offset} is "
-            f"{word.replace('\n', '\\n')} ({start}-{end})"
+            f"'{debugString}' ({start}-{end})"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end

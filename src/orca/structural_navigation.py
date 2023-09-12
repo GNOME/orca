@@ -308,7 +308,7 @@ class StructuralNavigationObject:
 
         if self._dialogData is None:
             msg = "STRUCTURAL NAVIGATION: Cannot show list without dialog data"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         title, columnHeaders, rowData = self._dialogData()
@@ -709,7 +709,6 @@ class StructuralNavigation:
         else:
             string = messages.STRUCTURAL_NAVIGATION_KEYS_OFF
 
-        debug.println(debug.LEVEL_CONFIGURATION, string)
         if presentMessage:
             self._script.presentMessage(string)
 
@@ -795,7 +794,7 @@ class StructuralNavigation:
                 f"STRUCTURAL NAVIGATION: in modal dialog has changed from "
                 f"{self._inModalDialog} to {inModalDialog}"
             )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.clearCache()
             self._inModalDialog = inModalDialog
 
@@ -823,9 +822,9 @@ class StructuralNavigation:
         if inModalDialog:
             originalSize = len(matches)
             matches = [m for m in matches if AXObject.find_ancestor(m, lambda x: x == modalDialog)]
-            msg = "STRUCTURAL NAVIGATION: Removed %i objects outside of modal dialog %s" % \
-                (originalSize - len(matches), modalDialog)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["STRUCTURAL NAVIGATION: Removed", {originalSize - len(matches)},
+                      "objects outside of modal dialog", modalDialog]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rv = matches.copy()
         cache[key] = matches
@@ -2127,12 +2126,12 @@ class StructuralNavigation:
             self._script.presentMessage(self._getTableDescription(obj))
             cell = obj.queryTable().getAccessibleAt(0, 0)
             if not cell:
-                msg = f'ERROR: Broken table interface for {obj}'
-                debug.println(debug.LEVEL_INFO, msg)
+                tokens = ["STRUCTURAL NAVIGATION: Broken table interface for", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell)
                 if cell:
-                    msg = f'HACK: Located {cell} for first cell'
-                    debug.println(debug.LEVEL_INFO, msg)
+                    tokens = ["STRUCTURAL NAVIGATION: Located", cell, "for first cell"]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             self.lastTableCell = [0, 0]
             self._presentObject(cell, 0, priorObj=obj)

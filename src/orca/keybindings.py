@@ -323,11 +323,11 @@ class KeyBindings:
         """
 
         if keyBinding.keysymstring and self.hasKeyBinding(keyBinding, "keysNoMask"):
-           msg = (
-               f"WARNING: '{keyBinding.asString()}' "
+            msg = (
+               f"KEYBINDINGS: '{keyBinding.asString()}' "
                f"({keyBinding.description()}) already in keybindings"
-           )
-           debug.println(debug.LEVEL_INFO, msg, True)
+            )
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.keyBindings.append(keyBinding)
 
@@ -448,10 +448,10 @@ class KeyBindings:
             return "%s (%ix)" % (x.handler.description, x.click_count)
 
         msg = (
-            f"WARNING: '{keyboardEvent.event_string}' "
+            f"KEYBINDINGS: '{keyboardEvent.event_string}' "
             f"matches multiple handlers: {', '.join(map(toString, result))}"
         )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the
@@ -499,6 +499,8 @@ class KeyBindings:
            keybindings, any remaining functions will be unbound.
         """
 
+        # TODO - JD: This won't be needed once the remaining bindings have
+        # been removed from the keymap files.
 
         for i in keymap:
             keysymstring = i[0]
@@ -511,10 +513,8 @@ class KeyBindings:
                 clickCount = 1
 
             if handler in handlers:
-                # add the keybinding
-                self.add(KeyBinding( \
-                  keysymstring, modifierMask, modifiers, \
-                    handlers[handler], clickCount))
+                self.add(KeyBinding(
+                    keysymstring, modifierMask, modifiers, handlers[handler], clickCount))
             else:
-                debug.println(debug.LEVEL_WARNING, \
-                  f"WARNING: could not find {handler} handler to associate with keybinding.")
+                tokens = ["KEYBINDINGS: Could not find", handler, "handler for keybinding."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
