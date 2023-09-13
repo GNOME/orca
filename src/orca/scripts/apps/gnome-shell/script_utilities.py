@@ -63,8 +63,8 @@ class Utilities(script_utilities.Utilities):
             if text:
                 string = text.getText(0, -1)
                 if string:
-                    tokens = ["HACK: Returning last char in '", string, "'"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    msg = f"GNOME SHELL: Returning last char in '{string}'"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return string[-1]
 
             msg = "GNOME SHELL: Unable to correct broken text insertion event"
@@ -77,16 +77,16 @@ class Utilities(script_utilities.Utilities):
         if -1 not in [start, end]:
             return string, start, end
 
-        msg = "GNOME SHELL: Bogus selection range (%i, %i) for %s" % (start, end, obj)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = [f"GNOME SHELL: Bogus selection range ({start}, {end}) for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         text = self.queryNonEmptyText(obj)
         if text.getNSelections() > 0:
             string = text.getText(0, -1)
             start, end = 0, len(string)
-            msg = "HACK: Returning '%s' (%i, %i) for %s" % (string, start, end, obj)
-            debug.println(debug.LEVEL_INFO, msg, True)
 
+        tokens = [f"GNOME SHELL: Returning '{string}' ({start}, {end}) for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return string, start, end
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):

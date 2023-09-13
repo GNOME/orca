@@ -115,8 +115,8 @@ class SpeechGenerator(generator.Generator):
     def generateSpeech(self, obj, **args):
         rv = self.generate(obj, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
-            msg = f'SPEECH GENERATOR: Results for {obj} are pauses only'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = []
 
         return rv
@@ -186,8 +186,8 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            msg = f'SPEECH GENERATOR: {obj} is popup menu for current item.'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH GENERATOR:", obj, "is popup menu for current item."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         result = []
@@ -1279,7 +1279,7 @@ class SpeechGenerator(generator.Generator):
             args["language"], args["dialect"] = language, dialect
             if "string" in args:
                 msg = f"INFO: Found existing string '{args.get('string')}'; using '{string}'"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 args.pop("string")
 
             voice = self.voice(string=string, obj=obj, **args)
@@ -2592,8 +2592,8 @@ class SpeechGenerator(generator.Generator):
         if 'madruwb' in enclosures:
             strings.append(messages.MATH_ENCLOSURE_MADRUWB)
         if not strings:
-            msg = f'INFO: Could not get enclosure message for {enclosures}'
-            debug.println(debug.LEVEL_INFO, msg)
+            tokens = ["SPEECH GENERATOR: Could not get enclosure message for", enclosures]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if len(strings) == 1:
@@ -2912,7 +2912,7 @@ class SpeechGenerator(generator.Generator):
             f"SPEECH GENERATOR: {key} voice requested with "
             f"language='{language}', dialect='{dialect}'"
         )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # This is purely for debugging. The code needed to actually switch voices
         # does not yet exist due to some problems which need to be debugged and

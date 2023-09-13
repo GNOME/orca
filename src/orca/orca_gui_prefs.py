@@ -639,8 +639,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 break
 
         if not languageSet:
-            debug.println(debug.LEVEL_FINEST,
-                          f"Could not find speech language match for {familyName}")
+            tokens = ["PREFERENCES DIALOG: Could not find speech language match for", familyName]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.get_widget("speechLanguages").set_active(0)
             self.speechLanguagesChoice = self.speechLanguagesChoices[0]
 
@@ -648,8 +648,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.selectedLanguageChoices[self.speechServersChoice] = i
 
         if not familySet:
-            debug.println(debug.LEVEL_FINEST,
-                          f"Could not find speech family match for {familyName}")
+            tokens = ["PREFERENCES DIALOG: Could not find speech family match for", familyName]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.get_widget("speechFamilies").set_active(0)
             self.speechFamiliesChoice = self.speechFamiliesChoices[0]
 
@@ -732,8 +732,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         if not valueSet:
-            debug.println(debug.LEVEL_FINEST,
-                          f"Could not find speech language match for {languageName}")
+            tokens = ["PREFERENCES DIALOG: Could not find speech language match for", languageName]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.get_widget("speechLanguages").set_active(0)
             self.speechLanguagesChoice = self.speechLanguagesChoices[0]
 
@@ -845,8 +845,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         if not valueSet:
-            debug.println(debug.LEVEL_FINEST,
-                          f"Could not find speech server match for {repr(serverInfo)}")
+            tokens = ["PREFERENCES DIALOG: Could not find speech server match for", serverInfo]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.get_widget("speechServers").set_active(0)
             self.speechServersChoice = self.speechServersChoices[0]
 
@@ -912,8 +912,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         if not valueSet:
-            debug.println(debug.LEVEL_FINEST,
-                          f"Could not find speech system match for {systemName}")
+            tokens = ["PREFERENCES DIALOG: Could not find speech system match for", systemName]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.get_widget("speechSystems").set_active(0)
             self.speechSystemsChoice = self.speechSystemsChoices[0]
 
@@ -965,10 +965,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
         else:
             self.speechSystemsChoice = None
-
-        debug.println(
-            debug.LEVEL_FINEST,
-            f"orca_gui_prefs._setupSpeechSystems: speechSystemsChoice: {self.speechSystemsChoice}")
 
     def _initSpeechState(self):
         """Initialize the various speech components.

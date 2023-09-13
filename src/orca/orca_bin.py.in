@@ -212,13 +212,11 @@ def cleanup(sigval):
     """Tries to clean up any other running Orca instances owned by this user."""
 
     orcasToKill = otherOrcas()
-    debug.println(
-        debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
+    debug.printMessage(debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
 
     def onTimeout(signum, frame):
         orcasToKill = otherOrcas()
-        debug.println(
-            debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
+        debug.printMessage(debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
         for pid in orcasToKill:
             os.kill(pid, signal.SIGKILL)
 

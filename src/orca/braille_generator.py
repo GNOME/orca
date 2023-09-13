@@ -90,7 +90,7 @@ class BrailleGenerator(generator.Generator):
     def generateBraille(self, obj, **args):
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: generation disabled")
+            debug.printMessage(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
             return [[], None]
 
         if obj == orca_state.locusOfFocus \
@@ -133,8 +133,9 @@ class BrailleGenerator(generator.Generator):
                 return self._isCandidateFocusedRegion(obj, x)
 
             candidates = list(filter(pred, result))
-            msg = f'INFO: Could not determine focused region. Candidates: {len(candidates)}'
-            debug.println(debug.LEVEL_INFO, msg)
+            tokens = ["BRAILLE GENERATOR: Could not determine focused region for",
+                      obj, "Candidates:", candidates]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if len(candidates) == 1:
                 focusedRegion = candidates[0]
 
