@@ -28,8 +28,9 @@ __license__   = "LGPL"
 
 import gi
 
+gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 from . import cmdnames
 from . import debug
@@ -128,6 +129,7 @@ class ActionMenu(Gtk.Menu):
 
     def __init__(self, actions, handler):
         super().__init__()
+        self.connect("popped-up", self._on_popped_up)
         self.on_option_selected = handler
         for name, description in actions.items():
             menu_item = Gtk.MenuItem(label=description)
@@ -139,14 +141,36 @@ class ActionMenu(Gtk.Menu):
 
         self.on_option_selected(option)
 
+    def _on_popped_up(self, *args):
+        """Handler for the 'popped-up' menu signal"""
+
+        msg = "ACTION PRESENTER: ActionMenu popped up"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
     def show_gui(self):
         """Shows the menu"""
 
         self.show_all()
-        time_stamp = orca_state.lastInputEvent.timestamp
-        if time_stamp == 0:
-            time_stamp = Gtk.get_current_event_time()
-        self.popup(None, None, None, None, 0, time_stamp)
+        display = Gdk.Display.get_default()
+        seat = display.get_default_seat()
+        device = seat.get_pointer()
+        screen, x, y = device.get_position()
+
+        event = Gdk.Event.new(Gdk.EventType.BUTTON_PRESS)
+        event.set_screen(screen)
+        event.set_device(device)
+        event.time = Gtk.get_current_event_time()
+        event.x = x
+        event.y = y
+
+        rect = Gdk.Rectangle()
+        rect.x = x
+        rect.y = y
+        rect.width = 1
+        rect.height = 1
+
+        window = Gdk.get_default_root_window()
+        self.popup_at_rect(window, rect, Gdk.Gravity.NORTH_WEST, Gdk.Gravity.NORTH_WEST, event)
 
 
 _presenter = ActionPresenter()
