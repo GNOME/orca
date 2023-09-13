@@ -55,7 +55,8 @@ class Utilities(script_utilities.Utilities):
     #                                                                       #
     #########################################################################
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
+                     ignoreDescriptions=True):
         """Compares two objects to determine if they are functionally
         the same object. This is needed because some applications and
         toolkits kill and replace accessibles."""
@@ -97,7 +98,8 @@ class Utilities(script_utilities.Utilities):
         if parent1 and parent2 and parent1 == parent2:
             return True
 
-        return script_utilities.Utilities.isSameObject(self, obj1, obj2, comparePaths, ignoreNames)
+        return script_utilities.Utilities.isSameObject(
+            self, obj1, obj2, comparePaths, ignoreNames, ignoreDescriptions)
 
     def nodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree

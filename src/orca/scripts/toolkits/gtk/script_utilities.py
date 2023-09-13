@@ -146,6 +146,10 @@ class Utilities(script_utilities.Utilities):
     def isPopOver(self, obj):
         return AXObject.has_relation(obj, Atspi.RelationType.POPUP_FOR)
 
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
+                     ignoreDescriptions=True):
+        return super().isSameObject(obj1, obj2, comparePaths, ignoreNames, False)
+
     def isUselessPanel(self, obj):
         if not AXUtilities.is_panel(obj):
             return False
