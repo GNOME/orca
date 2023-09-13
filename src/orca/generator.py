@@ -191,7 +191,7 @@ class Generator:
           should force a tutorial to be spoken or not
         """
 
-        if self._script.utilities.isDead(obj):
+        if AXObject.is_dead(obj):
             msg = "GENERATOR: Cannot generate presentation for dead obj"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
@@ -1250,7 +1250,7 @@ class Generator:
 
     def _cleanUpCachedProgressBars(self):
         def isValid(x):
-            return not (self._script.utilities.isZombie(x) or self._script.utilities.isDead(x))
+            return not (self._script.utilities.isZombie(x) or AXObject.is_dead(x))
 
         bars = list(filter(isValid, self._activeProgressBars))
         self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}

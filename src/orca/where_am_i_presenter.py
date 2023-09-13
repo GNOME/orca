@@ -306,10 +306,10 @@ class WhereAmIPresenter:
         """Presents the title of the current window."""
 
         obj = orca_state.locusOfFocus
-        if script.utilities.isDead(obj):
+        if AXObject.is_dead(obj):
             obj = orca_state.activeWindow
 
-        if obj is None or script.utilities.isDead(obj):
+        if obj is None or AXObject.is_dead(obj):
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
@@ -443,10 +443,10 @@ class WhereAmIPresenter:
 
         if obj is None:
             obj = orca_state.locusOfFocus
-        if script.utilities.isDead(obj):
+        if AXObject.is_dead(obj):
             obj = orca_state.activeWindow
 
-        if obj is None or script.utilities.isDead(obj):
+        if obj is None or AXObject.is_dead(obj):
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 

@@ -933,7 +933,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def treatAsTextObject(self, obj, excludeNonEntryTextWidgets=True):
-        if not obj or self.isDead(obj):
+        if not obj or AXObject.is_dead(obj):
             return False
 
         rv = self._treatAsTextObject.get(hash(obj))
@@ -1559,7 +1559,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        if self.isDead(obj):
+        if AXObject.is_dead(obj):
             msg = "ERROR: Cannot get object contents at offset for dead object."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
@@ -1686,7 +1686,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        if self.isDead(obj):
+        if AXObject.is_dead(obj):
             msg = "ERROR: Cannot get line contents at offset for dead object."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
@@ -2027,7 +2027,7 @@ class Utilities(script_utilities.Utilities):
         if not (startObj and endObj):
             return []
 
-        if self.isDead(startObj):
+        if AXObject.is_dead(startObj):
             msg = "INFO: Cannot get subtree: Start object is dead."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
@@ -2798,7 +2798,7 @@ class Utilities(script_utilities.Utilities):
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
             obj, start, end, string = x
-            if not obj or self.isDead(obj):
+            if not obj or AXObject.is_dead(obj):
                 return False
 
             rv = self._shouldFilter.get(hash(obj))
@@ -4691,9 +4691,9 @@ class Utilities(script_utilities.Utilities):
 
         if obj is None:
             return False
-        if self.isDead(obj):
-            tokens = ["WEB: Dead object cannot have caret context", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if AXObject.is_dead(obj):
+            msg = "WEB: Dead object cannot have caret context"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
         if self.isZombie(obj):
             tokens = ["WEB: Zombie object cannot have caret context", obj]
@@ -4903,12 +4903,12 @@ class Utilities(script_utilities.Utilities):
         self._priorContexts.pop(hash(parent), None)
 
     def handleEventFromContextReplicant(self, event, replicant):
-        if self.isDead(replicant):
+        if AXObject.is_dead(replicant):
             msg = "WEB: Context replicant is dead."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.isDead(orca_state.locusOfFocus):
+        if not AXObject.is_dead(orca_state.locusOfFocus):
             tokens = ["WEB: Not event from context replicant. locusOfFocus",
                       orca_state.locusOfFocus, "is not dead."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -5039,7 +5039,7 @@ class Utilities(script_utilities.Utilities):
 
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
-            if obj and self.isDead(orca_state.locusOfFocus) \
+            if obj and AXObject.is_dead(orca_state.locusOfFocus) \
                and AXUtilities.is_focused(obj):
                 names = self._script.pointOfReference.get('names', {})
                 oldName = names.get(hash(orca_state.locusOfFocus))

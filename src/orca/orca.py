@@ -214,7 +214,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
             tokens = ["ERROR: New locusOfFocus (", obj, ") is zombie. Not updating."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
-        if orca_state.activeScript.utilities.isDead(obj):
+        if AXObject.is_dead(obj):
             tokens = ["ERROR: New locusOfFocus (", obj, ") is dead. Not updating."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return

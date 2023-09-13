@@ -297,7 +297,7 @@ class StructuralNavigationObject:
         objects = self.structuralNavigation._getAll(self)
 
         def _isValidMatch(x):
-            if script.utilities.isDead(x):
+            if AXObject.is_dead(x):
                 return False
             return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
 
@@ -836,7 +836,7 @@ class StructuralNavigation:
             obj, offset = self._script.utilities.getCaretContext()
             container = self.getContainerForObject(obj)
 
-        if container is None or self._script.utilities.isDead(container):
+        if container is None or AXObject.is_dead(container):
             structuralNavigationObject.present(None, arg)
             return
 
@@ -889,7 +889,7 @@ class StructuralNavigation:
             matches.reverse()
 
         def _isValidMatch(obj):
-            if self._script.utilities.isDead(obj):
+            if AXObject.is_dead(obj):
                 return False
             if self._script.utilities.isHidden(obj) or self._script.utilities.isEmpty(obj):
                 return False

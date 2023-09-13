@@ -849,7 +849,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if prevObj and self.utilities.isDead(prevObj):
+        if prevObj and AXObject.is_dead(prevObj):
             prevObj = None
 
         if not _settingsManager.getSetting('caretNavTriggersFocusMode') \
@@ -1325,9 +1325,9 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if newFocus and self.utilities.isDead(newFocus):
-            tokens = ["WEB: New focus is dead:", newFocus]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if newFocus and AXObject.is_dead(newFocus):
+            msg = "WEB: New focus is dead"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getTopLevelDocumentForObject(newFocus)
@@ -1421,9 +1421,9 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             args['priorObj'] = oldFocus
 
-        if newFocus and self.utilities.isDead(newFocus):
-            tokens = ["WEB: New focus has since died:", newFocus]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if newFocus and AXObject.is_dead(newFocus):
+            msg = "WEB: New focus has since died"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             if self._getQueuedEvent("object:state-changed:focused", True):
                 msg = "WEB: Have matching focused event. Not speaking contents"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1547,10 +1547,10 @@ class Script(default.Script):
             return True
 
         self.utilities.clearCachedObjects()
-        if self.utilities.isDead(obj):
+        if AXObject.is_dead(obj):
             obj = None
 
-        if not self.utilities.isDead(orca_state.locusOfFocus) \
+        if not AXObject.is_dead(orca_state.locusOfFocus) \
            and not self.utilities.inDocumentContent(orca_state.locusOfFocus) \
            and AXUtilities.is_focused(orca_state.locusOfFocus):
             msg = "WEB: Not presenting content, focus is outside of document"
@@ -1827,9 +1827,9 @@ class Script(default.Script):
                           orca_state.locusOfFocus]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif self.utilities.isDead(orca_state.locusOfFocus):
-                tokens = ["WEB: Dumping cache: dead focus", orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            elif AXObject.is_dead(orca_state.locusOfFocus):
+                msg = "WEB: Dumping cache: dead focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 tokens = ["WEB: Dumping cache: source is ancestor of focus",
@@ -1939,9 +1939,9 @@ class Script(default.Script):
                           orca_state.locusOfFocus]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif self.utilities.isDead(orca_state.locusOfFocus):
-                tokens = ["WEB: Dumping cache: dead focus", orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            elif AXObject.is_dead(orca_state.locusOfFocus):
+                msg = "WEB: Dumping cache: dead focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
                 tokens = ["WEB: Dumping cache: source is ancestor of focus",
@@ -2483,9 +2483,9 @@ class Script(default.Script):
         self.utilities.clearContentCache()
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
-        if self.utilities.isDead(orca_state.locusOfFocus):
-            tokens = ["WEB: Dumping cache: dead focus", orca_state.locusOfFocus]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if AXObject.is_dead(orca_state.locusOfFocus):
+            msg = "WEB: Dumping cache: dead focus"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.dumpCache(document, preserveContext=True)
 
             if AXUtilities.is_focused(event.source):

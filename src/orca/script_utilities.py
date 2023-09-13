@@ -1295,7 +1295,7 @@ class Utilities:
 
         layoutOnly = False
 
-        if self.isDead(obj) or self.isZombie(obj):
+        if AXObject.is_dead(obj) or self.isZombie(obj):
             return True
 
         attrs = self.objectAttributes(obj)
@@ -1731,7 +1731,7 @@ class Utilities:
         return self._script.generatorCache[self.NODE_LEVEL][obj]
 
     def isOnScreen(self, obj, boundingbox=None):
-        if self.isDead(obj):
+        if AXObject.is_dead(obj):
             return False
 
         if self.isHidden(obj):
@@ -1964,7 +1964,7 @@ class Utilities:
         manages its descendants.
         """
 
-        if self.isDead(obj):
+        if AXObject.is_dead(obj):
             return None
 
         if not AXUtilities.is_table_cell(obj):
@@ -4104,7 +4104,7 @@ class Utilities:
         return False
 
     def _treatAsLeafNode(self, obj):
-        if obj is None or self.isDead(obj):
+        if obj is None or AXObject.is_dead(obj):
             return False
 
         if not AXObject.get_child_count(obj):
@@ -4544,10 +4544,6 @@ class Utilities:
             return True
 
         return False
-
-    def isDead(self, obj):
-        # TODO - JD: Callers of this function should call the AXObject function.
-        return AXObject.is_dead(obj)
 
     def isZombie(self, obj):
         index = AXObject.get_index_in_parent(obj)
@@ -5105,7 +5101,7 @@ class Utilities:
                 return True
             if AXUtilities.is_password_text(event.source):
                 return True
-            if self.isDead(orca_state.locusOfFocus):
+            if AXObject.is_dead(orca_state.locusOfFocus):
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
             msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
@@ -5240,7 +5236,7 @@ class Utilities:
 
     def objectContentsAreInClipboard(self, obj=None):
         obj = obj or orca_state.locusOfFocus
-        if not obj or self.isDead(obj):
+        if not obj or AXObject.is_dead(obj):
             return False
 
         contents = self.getClipboardContents()
@@ -5252,7 +5248,7 @@ class Utilities:
             return True
 
         obj = self.realActiveDescendant(obj) or obj
-        if self.isDead(obj):
+        if AXObject.is_dead(obj):
             return False
 
         return obj and AXObject.get_name(obj) in contents

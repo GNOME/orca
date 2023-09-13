@@ -1026,7 +1026,7 @@ class Script(script.Script):
 
     def sayAll(self, inputEvent, obj=None, offset=None):
         obj = obj or orca_state.locusOfFocus
-        if not obj or self.utilities.isDead(obj):
+        if not obj or AXObject.is_dead(obj):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
