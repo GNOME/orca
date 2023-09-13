@@ -197,7 +197,8 @@ class Utilities(script_utilities.Utilities):
 
         return rowHeader, colHeader
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
+                     ignoreDescriptions=True):
         if obj1 == obj2:
             return True
 

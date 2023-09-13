@@ -91,8 +91,9 @@ class Utilities(web.Utilities):
 
         return False
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
-        if super().isSameObject(obj1, obj2, comparePaths, ignoreNames):
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
+                     ignoreDescriptions=True):
+        if super().isSameObject(obj1, obj2, comparePaths, ignoreNames, ignoreDescriptions):
             return True
 
         roles = self._topLevelRoles()

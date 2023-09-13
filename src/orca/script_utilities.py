@@ -1473,7 +1473,7 @@ class Utilities:
         return path1[0:index] == path2[0:index]
 
     def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=False):
+                     ignoreDescriptions=True):
         if obj1 == obj2:
             return True
 
