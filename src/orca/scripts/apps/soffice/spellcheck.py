@@ -49,7 +49,7 @@ class SpellCheck(spellcheck.SpellCheck):
         return self._findChildDialog(AXObject.get_child(root, 0))
 
     def _isCandidateWindow(self, window):
-        if self._script.utilities.isDead(window):
+        if AXObject.is_dead(window):
             tokens = ["SOFFICE:", window, "is not spellcheck window because it's dead."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False

@@ -664,7 +664,7 @@ class Script(default.Script):
             if activeRow < 0 or activeCol < 0:
                 return
 
-            if self.utilities.isDead(orca_state.locusOfFocus):
+            if AXObject.is_dead(orca_state.locusOfFocus):
                 orca.setLocusOfFocus(event, event.source, False)
 
             self.utilities.handleUndoTextEvent(event)
@@ -787,7 +787,7 @@ class Script(default.Script):
                 return
 
         if self.utilities.isSpreadSheetTable(event.source) and orca_state.locusOfFocus:
-            if self.utilities.isDead(orca_state.locusOfFocus):
+            if AXObject.is_dead(orca_state.locusOfFocus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim. Dead locusOfFocus."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source, False)
@@ -930,7 +930,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if self.utilities.isDead(event.source):
+        if AXObject.is_dead(event.source):
             msg = "SOFFICE: Ignoring event from dead source."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

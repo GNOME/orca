@@ -599,7 +599,7 @@ class MouseReviewer:
         if not script:
             return
 
-        if script.utilities.isDead(orca_state.locusOfFocus):
+        if AXObject.is_dead(orca_state.locusOfFocus):
             menu = None
         elif AXUtilities.is_menu(orca_state.locusOfFocus):
             menu = orca_state.locusOfFocus

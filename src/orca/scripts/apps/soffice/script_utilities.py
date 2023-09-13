@@ -385,7 +385,7 @@ class Utilities(script_utilities.Utilities):
                 return False
             if not topLevel:
                 return False
-            if self.isDead(topLevel):
+            if AXObject.is_dead(topLevel):
                 tokens = ["SOFFICE: Top level object", topLevel, "is dead."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
@@ -551,7 +551,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return self.isDead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
+            return AXObject.is_dead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
 
         return super().isSelectedTextDeletionEvent(event)
 

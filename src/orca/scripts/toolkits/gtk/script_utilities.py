@@ -107,7 +107,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isTypeahead(self, obj):
-        if not obj or self.isDead(obj):
+        if not obj or AXObject.is_dead(obj):
             return False
 
         if not AXUtilities.is_text(obj):

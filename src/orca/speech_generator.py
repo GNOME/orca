@@ -2052,7 +2052,7 @@ class SpeechGenerator(generator.Generator):
         else:
               priorObj = args.get('priorObj')
 
-        if priorObj and self._script.utilities.isDead(priorObj):
+        if priorObj and AXObject.is_dead(priorObj):
             return []
 
         if AXUtilities.is_tool_tip(priorObj):
