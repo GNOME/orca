@@ -2850,6 +2850,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
         orca_state.capturingKeys = True
+        for modifier in ["Insert", "KP_Insert"]:
+            if modifier in orca_state.grabbedModifiers:
+                orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
+                del orca_state.grabbedModifiers[modifier]
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 
