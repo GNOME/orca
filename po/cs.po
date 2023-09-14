@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-11 17:30+0000\n"
-"PO-Revision-Date: 2023-08-31 17:18+0200\n"
+"POT-Creation-Date: 2023-09-13 16:23+0000\n"
+"PO-Revision-Date: 2023-09-14 14:52+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1849,23 +1849,19 @@ msgstr "Přečíst podrobnosti k odkazu"
 #. box.
 #: src/orca/cmdnames.py:96
 msgid "Present the default button"
-msgstr ""
+msgstr "Prezentovat výchozí tlačítko"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
 #: src/orca/cmdnames.py:100
-#, fuzzy
-#| msgid "Speak the status bar"
 msgid "Present the status bar"
-msgstr "Přečíst stavový řádek"
+msgstr "Prezentovat stavový řádek"
 
 #. Translators: This command will cause the window's title to be spoken and
 #. displayed in braille.
 #: src/orca/cmdnames.py:104
-#, fuzzy
-#| msgid "Speak the title bar"
 msgid "Present the title bar"
-msgstr "Přečíst název okna"
+msgstr "Prezentovat název okna"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -2181,10 +2177,8 @@ msgstr "Připojit obsah pod plošným náhledem do schránky"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:363
-#, fuzzy
-#| msgid "Move flat review to the end position"
 msgid "Show flat review contents"
-msgstr "Přesunout plošný náhled na koncovou pozici"
+msgstr "Zobrazit obsah plošného náhledu"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -2355,10 +2349,8 @@ msgstr "Přejít na další úroveň čtení interpunkce"
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
 #: src/orca/cmdnames.py:489
-#, fuzzy
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next speech synthesizer"
-msgstr "Přejít na další úroveň oznamování kláves"
+msgstr "Přejít na další hlasový výstup"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2630,10 +2622,8 @@ msgstr "Prezentovat předchozí upozornění"
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:696
-#, fuzzy
-#| msgid "Present last notification message"
 msgid "Present next notification message"
-msgstr "Prezentovat poslední upozornění"
+msgstr "Prezentovat následující upozornění"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:699
@@ -3144,10 +3134,8 @@ msgstr "Vrátit se na objekt s aktivní klávesnicí"
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
 #: src/orca/cmdnames.py:1032
-#, fuzzy
-#| msgid "Toggle structural navigation keys"
 msgid "Toggle simplified object navigation."
-msgstr "Zapnout nebo vypnout strukturální navigaci"
+msgstr "Přepnout zjednodušenou navigaci objektů."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1035
@@ -4820,11 +4808,8 @@ msgstr "Zkoumání myší"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
 #: src/orca/guilabels.py:309
-#, fuzzy
-#| msgctxt "role"
-#| msgid "navigation"
 msgid "Object navigation"
-msgstr "ovládání"
+msgstr "Ovládání objektu"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting information about the current location, such as
@@ -4832,10 +4817,8 @@ msgstr "ovládání"
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:316
-#, fuzzy
-#| msgid "Object mode."
 msgid "Object details"
-msgstr "Objektový režim."
+msgstr "Podrobnosti o objektu"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
@@ -4860,10 +4843,8 @@ msgstr "Plošný náhled"
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:336
-#, fuzzy
-#| msgid "Toggle speech verbosity level"
 msgid "Speech and verbosity"
-msgstr "Přepnout úroveň upovídanosti"
+msgstr "Řeč a upovídanost"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -4875,11 +4856,8 @@ msgstr "Přepnout úroveň upovídanosti"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:347
-#, fuzzy
-#| msgctxt "role"
-#| msgid "main content"
 msgid "Flat review contents"
-msgstr "hlavní obsah"
+msgstr "Obsah plošného náhledu"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -4915,15 +4893,13 @@ msgstr "Oznámení"
 #: src/orca/guilabels.py:372
 msgctxt "notification presenter"
 msgid "Received"
-msgstr ""
+msgstr "Přijato"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:376
-#, fuzzy
-#| msgid "Notification"
 msgid "Notification presenter"
-msgstr "Oznámení"
+msgstr "Prezentátor oznámení"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -8776,10 +8752,9 @@ msgstr "Výchozí tlačítko je %s"
 #. the button (e.g. "OK" or "Close"). When translating "Grayed," please use
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:501
-#, fuzzy, python-format
-#| msgid "Default button is %s"
+#, python-format
 msgid "Default button is %s. Grayed"
-msgstr "Výchozí tlačítko je %s"
+msgstr "Výchozí tlačítko je %s. Zašedlé"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
@@ -8811,10 +8786,8 @@ msgstr " horní index %s"
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
 #: src/orca/messages.py:524
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a dialog"
-msgstr "Není v tabulce"
+msgstr "Není v dialogovém okně"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10515,10 +10488,8 @@ msgstr "Objektový režim."
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
 #: src/orca/messages.py:1784
-#, fuzzy
-#| msgid "No more large objects."
 msgid "Pointer moved to object."
-msgstr "Žádné další velké objekty."
+msgstr "Ukazatel přesunut na objekt."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -10563,7 +10534,7 @@ msgstr ""
 #. has no next sibling.
 #: src/orca/messages.py:1817
 msgid "No next."
-msgstr ""
+msgstr "Žádné následující."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
@@ -10579,24 +10550,22 @@ msgstr "%d procento."
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
 #: src/orca/messages.py:1827
-#, fuzzy
-#| msgid "Go to previous word"
 msgid "No previous."
-msgstr "Přejít na předchozí slovo"
+msgstr "Žádné předchozí."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
 #: src/orca/messages.py:1832
 msgid "Simplified navigation enabled."
-msgstr ""
+msgstr "Zjednodušená navigace zapnuta."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
 #: src/orca/messages.py:1837
 msgid "Simplified navigation disabled."
-msgstr ""
+msgstr "Zjednodušená navigace vypnuta."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -10619,10 +10588,9 @@ msgstr "Byla přidána nová položka"
 #. name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 #. localized rolename if it does not.
 #: src/orca/messages.py:1854
-#, fuzzy, python-format
-#| msgid "No application has focus."
+#, python-format
 msgid "No actions found on: %s"
-msgstr "Žádná aplikace není aktivní."
+msgstr "Žádné činnosti nebyly nalezeny na: %s"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
