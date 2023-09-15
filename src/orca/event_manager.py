@@ -401,7 +401,7 @@ class EventManager:
         if debug.LEVEL_INFO < debug.debugLevel:
             return
 
-        tokens = [e.type]
+        tokens = []
         if isinstance(e, input_event.KeyboardEvent):
             tokens.extend([e.event_string, e.hw_code])
         elif isinstance(e, input_event.BrailleEvent):
