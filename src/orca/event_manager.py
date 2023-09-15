@@ -744,8 +744,8 @@ class EventManager:
     def registerKeystrokeListener(self, function, mask=None, kind=None):
         """Register the keystroke listener on behalf of the caller."""
 
-        msg = f'EVENT MANAGER: registering keystroke listener function: {function}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: Registering keystroke listener function:", function]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if mask is None:
             mask = list(range(256))
@@ -758,8 +758,8 @@ class EventManager:
     def deregisterKeystrokeListener(self, function, mask=None, kind=None):
         """Deregister the keystroke listener on behalf of the caller."""
 
-        msg = f'EVENT MANAGER: deregistering keystroke listener function: {function}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: De-registering keystroke listener function:", function]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if mask is None:
             mask = list(range(256))

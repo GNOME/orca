@@ -52,47 +52,17 @@ class AXUtilitiesCollection:
     """Utilities for finding all objects that meet a certain criteria."""
 
     @staticmethod
-    def _get_frame_name(frame, string=""):
-        name = frame.f_code.co_name.replace("get_all_", "Getting all ").replace("_", " ")
-        if string:
-            name = f"{name} ({string})"
-        return name
-
-    @staticmethod
-    def _get_function_string(func):
-        if func is None:
-            return "None"
-        if hasattr(func, '__self__'):
-            return f'{func.__module__}.{func.__self__.__class__.__name__}.{func.__name__}'
-        return f'{func.__module__}.{func.__name__}'
-
-    @staticmethod
-    def _roles_as_string(role_list):
-        def as_string(role):
-            return role.value_name[11:].replace("_", "-").lower()
-        return ", ".join(map(as_string, role_list))
-
-    @staticmethod
-    def _states_as_string(state_list):
-        def as_string(state):
-            return state.value_name[12:].replace("_", "-").lower()
-        return ", ".join(map(as_string, state_list))
-
-    @staticmethod
     def _apply_predicate(matches, pred):
         if not matches:
             return []
 
         start = time.time()
-        msg = (
-            f"AXUtilitiesCollection: Applying predicate "
-            f"{AXUtilitiesCollection._get_function_string(pred)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection: Applying predicate ", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         matches = list(filter(pred, matches))
         msg = f"AXUtilitiesCollection: {len(matches)} matches found in {time.time() - start:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -101,15 +71,9 @@ class AXUtilitiesCollection:
             return []
 
         state_list = list(state_list)
-        string = (
-            f"Root: {root} {state_match_type.value_nick} of: "
-            f"{AXUtilitiesCollection._states_as_string(state_list)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, state_match_type, "of:", state_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(states=state_list, state_match_type=state_match_type)
         matches = AXCollection.get_all_matches(root, rule)
@@ -124,15 +88,9 @@ class AXUtilitiesCollection:
             return []
 
         role_list = list(role_list)
-        string = (
-            f"Root: {root} {role_match_type.value_nick} of: "
-            f"{AXUtilitiesCollection._roles_as_string(role_list)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, role_match_type, "of:", role_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(roles=role_list, role_match_type=role_match_type)
         matches = AXCollection.get_all_matches(root, rule)
@@ -149,12 +107,9 @@ class AXUtilitiesCollection:
             return []
 
         interface_list = list(interface_list)
-        string = f"Root: {root} Interfaces: {', '.join(interface_list)}"
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "all of:", interface_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(interfaces=interface_list)
         matches = AXCollection.get_all_matches(root, rule)
@@ -186,15 +141,9 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = (
-            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
-            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "Roles:", role_list, "States:", state_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ALL)
@@ -213,15 +162,9 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = (
-            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
-            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "Roles:", role_list, "States:", state_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ANY)
@@ -240,15 +183,9 @@ class AXUtilitiesCollection:
 
         role_list = list(role_list)
         state_list = list(state_list)
-        string = (
-            f"Root: {root} Roles: {AXUtilitiesCollection._roles_as_string(role_list)} "
-            f"States: {AXUtilitiesCollection._states_as_string(state_list)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "Roles:", role_list, "States:", state_list]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
             roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.NONE)
@@ -399,24 +336,15 @@ class AXUtilitiesCollection:
         attributes = ["xml-roles:gridcell"]
         attribute_match_type = Atspi.CollectionMatchType.NONE
 
-        string = (
-            f"Root: {root} {Atspi.CollectionMatchType(roles_match_type).value_nick} "
-            f"of: {AXUtilitiesCollection._roles_as_string(roles)}. "
-            f"pred: {AXUtilitiesCollection._get_function_string(pred)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, roles_match_type, "of:", roles, ". pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         def is_match(obj):
             result = AXObject.has_action(obj, "click")
-            msg = (
-                f"AXUtilitiesCollection: {obj} "
-                f"{AXObject.actions_as_string(obj)} has click Action: {result}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesCollection:", obj, AXObject.actions_as_string(obj),
+                      "has click Action:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if not result:
                 return False
             return pred is None or pred(obj)
@@ -679,24 +607,15 @@ class AXUtilitiesCollection:
         roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
         roles_match_type = Atspi.CollectionMatchType.NONE
 
-        string = (
-            f"Root: {root} {Atspi.CollectionMatchType(roles_match_type).value_nick} "
-            f"of: {AXUtilitiesCollection._roles_as_string(roles)}. "
-            f"pred: {AXUtilitiesCollection._get_function_string(pred)}"
-        )
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, roles_match_type, "of:", roles, ". pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         def is_match(obj):
             result = AXObject.has_action(obj, "click-ancestor")
-            msg = (
-                f"AXUtilitiesCollection: {obj} {AXObject.actions_as_string(obj)} "
-                f"has click-ancestor Action: {result}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesCollection:", obj, AXObject.actions_as_string(obj),
+                      "has click-ancestor Action:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if not result:
                 return False
             return pred is None or pred(obj)
@@ -785,11 +704,9 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())} Searching for grids"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         roles = [Atspi.Role.TABLE]
         attributes = ["xml-roles:grid"]
@@ -811,12 +728,9 @@ class AXUtilitiesCollection:
         if not grids:
             return []
 
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())} "
-            f"Searching for grid cells"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         cells = []
         for grid in grids:
@@ -825,7 +739,6 @@ class AXUtilitiesCollection:
         if pred is not None:
             AXUtilitiesCollection._apply_predicate(cells, pred)
 
-        print("grids:", len(grids), "cells:", len(cells))
         return cells
 
     @staticmethod
@@ -856,12 +769,9 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        string = f"Level: {level}"
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe(), string)}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "Level:", level, "pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         roles = [Atspi.Role.HEADING]
         attributes = [f"level:{level}"]
@@ -1018,11 +928,9 @@ class AXUtilitiesCollection:
         if root is None:
             return []
 
-        msg = (
-            f"AXUtilitiesCollection: "
-            f"{AXUtilitiesCollection._get_frame_name(inspect.currentframe())}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(),
+                  "Root:", root, "pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         attributes = []
         levels = ["off", "polite", "assertive"]

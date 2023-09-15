@@ -35,7 +35,7 @@ from .scripts import apps, toolkits
 class ScriptManager:
 
     def __init__(self):
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initializing', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Initializing", True)
         self.appScripts = {}
         self.toolkitScripts = {}
         self.customScripts = {}
@@ -62,22 +62,22 @@ class ScriptManager:
 
         self.setActiveScript(None, "__init__")
         self._active = False
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initialized', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Initialized", True)
 
     def activate(self):
         """Called when this script manager is activated."""
 
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Activating', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activating", True)
         self._defaultScript = self.getScript(None)
         self._defaultScript.registerEventListeners()
         self.setActiveScript(self._defaultScript, "activate")
         self._active = True
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Activated', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activated", True)
 
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivating', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivating", True)
         if self._defaultScript:
             self._defaultScript.deregisterEventListeners()
         self._defaultScript = None
@@ -86,20 +86,20 @@ class ScriptManager:
         self.toolkitScripts = {}
         self.customScripts = {}
         self._active = False
-        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivated', True)
+        debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivated", True)
 
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
 
         if app is None:
-            msg = 'ERROR: Cannot get module name for null app'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "SCRIPT MANAGER: Cannot get module name for null app"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return None
 
         name = AXObject.get_name(app)
         if not name:
-            msg = 'ERROR: Cannot get module name for nameless app'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "SCRIPT MANAGER: Cannot get module name for nameless app"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return None
 
         altNames = list(self._appNames.keys())
@@ -118,8 +118,8 @@ class ScriptManager:
                     name = names[0]
                     break
 
-        msg = f'SCRIPT MANAGER: mapped {AXObject.get_name(app)} to {name}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT MANAGER: Mapped", app, "to", "name"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return name
 
     def _toolkitForObject(self, obj):
@@ -151,17 +151,17 @@ class ScriptManager:
             except OSError:
                 debug.examineProcesses()
 
-            debug.println(debug.LEVEL_INFO, f'SCRIPT MANAGER: Found {moduleName}', True)
+            tokens = ["SCRIPT MANAGER: Found", moduleName]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             try:
                 if hasattr(module, 'getScript'):
                     script = module.getScript(app)
                 else:
                     script = module.Script(app)
                 break
-            except Exception:
-                debug.printException(debug.LEVEL_INFO)
-                msg = f'ERROR: Could not load {moduleName}'
-                debug.println(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                tokens = ["SCRIPT MANAGER: Could not load", moduleName, ":", error]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return script
 
@@ -184,8 +184,8 @@ class ScriptManager:
 
         if not script:
             script = self.getDefaultScript(app)
-            msg = 'SCRIPT MANAGER: Default script created'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SCRIPT MANAGER: Default script created for", app, "(obj: ", obj, ")"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return script
 
@@ -275,10 +275,9 @@ class ScriptManager:
             else:
                 appScript = self._createScript(app, None)
                 self.appScripts[app] = appScript
-        except Exception:
-            msg = 'WARNING: Exception getting app script.'
-            debug.printException(debug.LEVEL_ALL)
-            debug.println(debug.LEVEL_WARNING, msg, True)
+        except Exception as error:
+            tokens = ["SCRIPT MANAGER: Exception getting app script for", app, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             appScript = self.getDefaultScript()
 
         if customScript:
@@ -313,9 +312,8 @@ class ScriptManager:
             return
 
         newScript.activate()
-        msg = 'SCRIPT MANAGER: Setting active script: %s (reason=%s)' % \
-              (newScript.name, reason)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT MANAGER: Setting active script to", newScript, "reason:", reason]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def _getScriptForAppReplicant(self, app):
         if not self._active:
@@ -344,7 +342,7 @@ class ScriptManager:
         """
 
         msg = "SCRIPT MANAGER: Checking and cleaning up scripts."
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         appList = list(self.appScripts.keys())
         for app in appList:

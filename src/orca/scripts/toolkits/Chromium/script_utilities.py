@@ -161,7 +161,7 @@ class Utilities(web.Utilities):
             return None
 
         menu = AXObject.find_descendant(obj, AXUtilities.is_menu)
-        tokens = ["CHROMIUM: HACK: Popup menu for", obj, ":", menu]
+        tokens = ["CHROMIUM: Popup menu for", obj, ":", menu]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return menu
 

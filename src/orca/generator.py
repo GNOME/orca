@@ -192,8 +192,8 @@ class Generator:
         """
 
         if self._script.utilities.isDead(obj):
-            msg = 'ERROR: Cannot generate presentation dead obj'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "GENERATOR: Cannot generate presentation for dead obj"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
         startTime = time.time()
@@ -203,9 +203,9 @@ class Generator:
         globalsDict['obj'] = obj
         try:
             globalsDict['role'] = args.get('role', AXObject.get_role(obj))
-        except Exception:
-            msg = f'ERROR: Cannot generate presentation for: {obj}. Aborting'
-            debug.println(debug.LEVEL_INFO, msg, True)
+        except Exception as error:
+            tokens = ["GENERATOR: Cannot generate presentation for", obj, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return result
         try:
             # We sometimes want to override the role.  We'll keep the
@@ -239,9 +239,9 @@ class Generator:
                     formatting = f'{prefix} + {formatting} + {suffix}'
                 args['recursing'] = True
 
-            msg = '%s GENERATOR: Starting %s generation for %s (%s)' % \
-                (self._mode.upper(), args.get('formatType'), obj, args.get('role'))
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = [self._mode.upper(), "GENERATOR: Starting", args.get('formatType'),
+                      "generation for", obj, "(using role:", args.get('role'), ")"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             # Reset 'usedDescriptionFor*' if a previous generator used it.
             self._script.pointOfReference['usedDescriptionForName'] = False
@@ -271,7 +271,7 @@ class Generator:
                     if isinstance(globalsDict[arg], list):
                         stringResult = " ".join(filter(lambda x: x,
                                                         map(debuginfo, globalsDict[arg])))
-                        debug.println(debug.LEVEL_ALL,
+                        debug.printMessage(debug.LEVEL_ALL,
                                       "%sGENERATION TIME: %s  ---->  %s=[%s]" \
                                       % (" " * 18, duration, arg, stringResult))
 
@@ -280,7 +280,7 @@ class Generator:
             result = []
 
         duration = f"{time.time() - startTime:.4f}"
-        debug.println(debug.LEVEL_ALL, f"{' ' * 18}COMPLETION TIME: {duration}")
+        debug.printMessage(debug.LEVEL_ALL, f"{' ' * 18}COMPLETION TIME: {duration}")
         self._debugResultInfo(result)
         if args.get('isProgressBarUpdate') and result and result[0]:
             self.setProgressBarUpdateTimeAndValue(obj)
@@ -299,7 +299,7 @@ class Generator:
 
         info = f"{' ' * 18}{self._mode.upper()} GENERATOR: Results: "
         info += f"{' '.join(map(self._resultElementToString, result))}"
-        debug.println(debug.LEVEL_ALL, info)
+        debug.printMessage(debug.LEVEL_ALL, info)
 
     #####################################################################
     #                                                                   #

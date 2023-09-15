@@ -79,12 +79,12 @@ class Utilities(script_utilities.Utilities):
         boundary = Atspi.TextBoundaryType.LINE_START
 
         firstLine = text.getTextAtOffset(start, boundary)
-        msg = "TERMINAL: First line of insertion: '%s' (%i, %i)" % firstLine
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["TERMINAL: First line of insertion:", firstLine]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         lastLine = text.getTextAtOffset(end - 1, boundary)
-        msg = "TERMINAL: Last line of insertion: '%s' (%i, %i)" % lastLine
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["TERMINAL: Last line of insertion:", firstLine]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine == lastLine:
             msg = "TERMINAL: Not adjusting single-line insertion."
@@ -92,8 +92,8 @@ class Utilities(script_utilities.Utilities):
             return event.any_data
 
         currentLine = text.getTextAtOffset(text.caretOffset, boundary)
-        msg = "TERMINAL: Current line: '%s' (%i, %i)" % currentLine
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["TERMINAL: Current line:", firstLine]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine != ("", 0, 0):
             start = firstLine[1]

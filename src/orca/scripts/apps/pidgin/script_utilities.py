@@ -177,6 +177,6 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_role(obj) != Atspi.Role.TOGGLE_BUTTON:
             return True
 
-        msg = f'INFO: Hacking around broken index in parent for {obj}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["PIDGIN: Hacking around broken index in parent for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return AXObject.get_index_in_parent(obj) != -1

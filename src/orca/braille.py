@@ -1291,10 +1291,10 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         _lastTextInfo = (None, 0, 0, 0)
         return
 
-
     lastTextObj, lastCaretOffset, lastLineOffset, lastCursorCell = _lastTextInfo
-    msg = "BRAILLE: Last text obj: %s (Caret: %i, Line: %i, Cell: %i)" % _lastTextInfo
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Last text object:", lastTextObj,
+              f"(Caret: {lastCaretOffset}, Line: {lastLineOffset}, Cell: {lastCursorCell})"]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if _regionWithFocus and isinstance(_regionWithFocus, Text):
         currentTextObj = _regionWithFocus.accessible
@@ -1308,9 +1308,10 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
     onSameLine = currentTextObj and currentTextObj == lastTextObj \
         and currentLineOffset == lastLineOffset
 
-    msg = "BRAILLE: Current text obj: %s (Caret: %i, Line: %i). On same line: %s" % \
-        (currentTextObj, currentCaretOffset, currentLineOffset, bool(onSameLine))
-    debug.println(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Current text object:", currentTextObj,
+              f"(Caret: {currentCaretOffset}, Line: {currentLineOffset}). On same line:",
+              bool(onSameLine)]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if targetCursorCell < 0:
         targetCursorCell = _displaySize[0] + targetCursorCell + 1

@@ -143,8 +143,8 @@ class Player:
         elif isinstance(item, Tone):
             self._playTone(item, interrupt)
         else:
-            msg = f'SOUND ERROR: {item} is not an Icon or Tone'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOUND ERROR:", item, "is not an Icon or Tone"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def stop(self, element=None):
         """Stops play."""

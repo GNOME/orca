@@ -116,7 +116,7 @@ class AXCollection:
             return []
 
         msg = f"AXCollection: {len(matches)} match(es) found in {time.time() - start:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -144,5 +144,5 @@ class AXCollection:
             match = matches[0]
 
         msg = f"AXCollection: found {match} in {time.time() - start:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return match

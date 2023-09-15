@@ -61,11 +61,11 @@ class SpellCheck:
         self.presentContextCheckButton = None
 
     def activate(self, window):
-        msg = f'SPELL CHECK: Attempting activation for {window}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPELL CHECK: Attempting activation for", window]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not self._isCandidateWindow(window):
-            msg = f'SPELL CHECK: {window} is not spellcheck window'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPELL CHECK:", window, "is not spellcheck window"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if self._hasChangeToEntry:

@@ -59,30 +59,32 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
-        debug.println(debug.LEVEL_INFO, f"INFER label for: {obj}", True)
+        tokens = ["LABEL INFERENCE: Infer label for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not obj:
             return None, []
 
         if focusedOnly and not AXUtilities.is_focused(obj):
-            debug.println(debug.LEVEL_INFO, "INFER - object not focused", True)
+            tokens = ["LABEL INFERENCE:", obj, "is not focused"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None, []
 
         result, objects = None, []
         if not result:
             result, objects = self.inferFromTextLeft(obj)
-            debug.println(debug.LEVEL_INFO, f"INFER - Text Left: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Left: '{result}'", True)
         if not result or self._preferRight(obj):
             result, objects = self.inferFromTextRight(obj) or result
-            debug.println(debug.LEVEL_INFO, f"INFER - Text Right: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Right: '{result}'", True)
         if not result:
             result, objects = self.inferFromTable(obj)
-            debug.println(debug.LEVEL_INFO, f"INFER - Table: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Table: '{result}'", True)
         if not result:
             result, objects = self.inferFromTextAbove(obj)
-            debug.println(debug.LEVEL_INFO, f"INFER - Text Above: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Above: '{result}'", True)
         if not result:
             result, objects = self.inferFromTextBelow(obj)
-            debug.println(debug.LEVEL_INFO, f"INFER - Text Below: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Below: '{result}'", True)
 
         # TODO - We probably do not wish to "infer" from these. Instead, we
         # should ensure that this content gets presented as part of the widget.
@@ -90,7 +92,8 @@ class LabelInference:
         # are each something other than a label.)
         if not result:
             result, objects = AXObject.get_name(obj), []
-            debug.println(debug.LEVEL_INFO, f"INFER - Name: {result}", True)
+            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Name: '{result}'", True)
+
         if result:
             result = result.strip()
             result = result.replace("\n", " ")
@@ -98,8 +101,9 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self.inferFromTextLeft(obj, proximity=200)
-            tokens = ["INFER - Text Left with proximity of 200:", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.printMessage(
+                debug.LEVEL_INFO,
+                f"LABEL INFERENCE: Text Left with proximity of 200: '{result}'", True)
 
         self.clearCache()
         return result, objects
@@ -222,7 +226,7 @@ class LabelInference:
                     try:
                         endOffset = text.characterCount
                     except Exception:
-                        tokens = ["ERROR: Exception getting character count for", obj]
+                        tokens = ["LABEL INFERENCE: Exception getting character count for", obj]
                         debug.printTokens(debug.LEVEL_INFO, tokens, True)
                         return extents
 
@@ -232,10 +236,10 @@ class LabelInference:
             try:
                 ext = obj.queryComponent().getExtents(0)
             except NotImplementedError:
-                tokens = ["INFO:", obj, "does not implement the component interface"]
+                tokens = ["LABEL INFERENCE:", obj, "does not implement the component interface"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             except Exception:
-                tokens = ["ERROR: Exception getting extents for", obj]
+                tokens = ["LABEL INFERENCE: Exception getting extents for", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             else:
                 extents = ext.x, ext.y, ext.width, ext.height

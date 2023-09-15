@@ -118,7 +118,7 @@ class AXSelection:
 
         result = list(children)
         if len(result) != count:
-            msg = f"AXSelection: Selected child count of {obj} is {count}" % (obj, count)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXSelection: Selected child count of", obj, f"is {count}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return result

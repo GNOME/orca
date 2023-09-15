@@ -34,6 +34,7 @@ import os
 import re
 import subprocess
 import sys
+import types
 
 from datetime import datetime
 
@@ -219,6 +220,20 @@ def _asString(obj):
             f"{_asString(AXObject.get_application(obj.source))} "
             f"({obj.detail1}, {obj.detail2}, {_asString(obj.any_data)})"
         )
+
+    if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType)):
+        return obj.value_nick
+
+    if isinstance(obj, list):
+        return f"[{', '.join(map(_asString, obj))}]"
+
+    if isinstance(obj, types.FunctionType):
+        if hasattr(obj, "__self__"):
+            return f"{obj.__module__}.{obj.__self__.__class__.__name__}.{obj.__name__}"
+        return f"{obj.__module__}.{obj.__name__}"
+
+    if isinstance(obj, types.FrameType):
+        return obj.f_code.co_name
 
     return str(obj)
 

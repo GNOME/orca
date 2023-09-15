@@ -642,8 +642,8 @@ class Utilities(script_utilities.Utilities):
         try:
             cell = table.getAccessibleAt(row, col)
         except Exception:
-            msg = "SOFFICE: Exception getting cell (%i,%i) of %s" % (row, col, obj)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = [f"SOFFICE: Exception getting cell ({row},{col}) of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         name = self.spreadSheetCellName(cell)

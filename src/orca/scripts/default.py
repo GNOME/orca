@@ -423,10 +423,9 @@ class Script(script.Script):
 
         try:
             keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
-        except Exception:
-            msg = f'ERROR: Exception when overriding keybindings in {self}'
-            debug.println(debug.LEVEL_WARNING, msg, True)
-            debug.printException(debug.LEVEL_WARNING)
+        except Exception as error:
+            tokens = ["DEFAULT: Exception when overriding keybindings in", self, ":", error]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
 
         return keyBindings
 
@@ -486,12 +485,11 @@ class Script(script.Script):
             brailleBindings[braille.brlapi.KEY_CMD_HOME] = \
                 self.inputEventHandlers["goBrailleHomeHandler"]
         except AttributeError:
-            msg = f'DEFAULT: Braille bindings unavailable in {self}'
-            debug.println(debug.LEVEL_INFO, msg, True)
-        except Exception:
-            msg = f'ERROR: Exception getting braille bindings in {self}'
-            debug.println(debug.LEVEL_INFO, msg, True)
-            debug.printException(debug.LEVEL_CONFIGURATION)
+            tokens = ["DEFAULT: Braille bindings unavailable in", self]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        except Exception as error:
+            tokens = ["DEFAULT: Exception getting braille bindings in", self, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         reviewBindings = self.flatReviewPresenter.get_braille_bindings()
         brailleBindings.update(reviewBindings)
@@ -518,8 +516,8 @@ class Script(script.Script):
         """ Sets up the key grabs currently needed by this script. """
         if orca_state.device is None:
             return
-        msg = "INFO: adding key grabs"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = "DEFAULT: adding key grabs"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         bound = self.getEnabledKeyBindings()
         for b in bound:
             for id in orca.addKeyGrab(b):
@@ -527,8 +525,8 @@ class Script(script.Script):
 
     def removeKeyGrabs(self):
         """ Removes this script's AT-SPI key grabs. """
-        msg = "INFO: removing key grabs"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        msg = "DEFAULT: removing key grabs"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         for id in self.grab_ids:
             orca.removeKeyGrab(id)
         self.grab_ids = []
@@ -626,9 +624,9 @@ class Script(script.Script):
         if not AXUtilities.is_table_cell(oldLocusOfFocus) \
            and not AXUtilities.is_table_cell(newLocusOfFocus) \
            and self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
-            msg = 'DEFAULT: old focus %s believed to be same as new focus %s' \
-                % (oldLocusOfFocus, newLocusOfFocus)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: old focus", oldLocusOfFocus,
+                      "believed to be same as new focus", newLocusOfFocus]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         try:
@@ -663,8 +661,8 @@ class Script(script.Script):
     def activate(self):
         """Called when this script is activated."""
 
-        msg = f'DEFAULT: activating script for {self.app}'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Activating script for", self.app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         _settingsManager.loadAppSettings(self)
         braille.checkBrailleSetting()
@@ -682,8 +680,8 @@ class Script(script.Script):
 
         self.addKeyGrabs()
 
-        msg = f'DEFAULT: Script for {self.app} activated'
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Script for", self.app, "activated"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object.
@@ -1235,19 +1233,19 @@ class Script(script.Script):
         if event.source != orca_state.locusOfFocus and AXUtilities.is_focused(event.source):
             topLevelObject = self.utilities.topLevelObject(event.source)
             if self.utilities.isSameObject(orca_state.activeWindow, topLevelObject):
-                msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
-                      (orca_state.locusOfFocus, event.source)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["DEFAULT: Updating locusOfFocus from", orca_state.locusOfFocus,
+                          "to", event.source]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 orca.setLocusOfFocus(event, event.source, False)
             else:
-                msg = "DEFAULT: Source window (%s) is not active window(%s)" \
-                      % (topLevelObject, orca_state.activeWindow)
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["DEFAULT: Source window (", topLevelObject, ") is not active window (",
+                          orca_state.activeWindow]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if event.source != orca_state.locusOfFocus:
-            msg = "DEFAULT: Event source (%s) is not locusOfFocus (%s)" \
-                  % (event.source, orca_state.locusOfFocus)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: Event source (", event.source, ") is not locusOfFocus (",
+                      orca_state.locusOfFocus]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         if self.flatReviewPresenter.is_active():
@@ -1256,8 +1254,8 @@ class Script(script.Script):
         text = event.source.queryText()
         try:
             text.caretOffset
-        except Exception:
-            tokens = ["DEFAULT: Exception getting caretOffset for", event.source]
+        except Exception as error:
+            tokens = ["DEFAULT: Exception getting caretOffset for", event.source, ":", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
@@ -1637,7 +1635,7 @@ class Script(script.Script):
             msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
-            msg = "INFO: Event is not being presented due to lack of cause"
+            msg = "DEFAULT: Event is not being presented due to lack of cause"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1774,11 +1772,11 @@ class Script(script.Script):
             value = obj.queryValue()
             currentValue = value.currentValue
         except NotImplementedError:
-            tokens = ["ERROR:", obj, "doesn't implement AtspiValue"]
+            tokens = ["DEFAULT:", obj, "doesn't implement AtspiValue"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
         except Exception:
-            tokens = ["ERROR: Exception getting current value for", obj]
+            tokens = ["DEFAULT: Exception getting current value for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
@@ -1826,7 +1824,7 @@ class Script(script.Script):
         orca.setActiveWindow(window)
         if self.utilities.isKeyGrabEvent(event):
             msg = "DEFAULT: Ignoring event. Likely from key grab."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if AXObject.get_child_count(window) == 1:
@@ -1867,7 +1865,7 @@ class Script(script.Script):
 
         if self.utilities.isKeyGrabEvent(event):
             msg = "DEFAULT: Ignoring event. Likely from key grab."
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.flatReviewPresenter.is_active():
@@ -2458,8 +2456,8 @@ class Script(script.Script):
         self.setBrailleFocus(regionWithFocus, False)
         if regionWithFocus and not targetCursorCell:
             offset = regionWithFocus.brailleOffset + regionWithFocus.cursorOffset
-            msg = "DEFAULT: Update to %i in %s" % (offset, regionWithFocus)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: Update to", offset, "in", regionWithFocus]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.panBrailleToOffset(offset)
 
         if self.justEnteredFlatReviewMode:
@@ -2478,8 +2476,10 @@ class Script(script.Script):
 
         regions = self.flatReviewPresenter.get_braille_regions(self)[0]
         regions = list(filter(isTextOrComponent, regions))
-        msg = "DEFAULT: Text/Component regions on line:\n%s" % "\n".join(map(str, regions))
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Text/Component regions on line:"]
+        for region in regions:
+            tokens.extend(["\n", region])
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # TODO - JD: The current code was stopping on the first region which met the
         # following condition. Is that definitely the right thing to do? Assume so for now.
@@ -2493,8 +2493,11 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        msg = "DEFAULT: Candidates for start of display:\n%s" % "\n".join(map(str, regions))
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Candidates for start of display:"]
+        for region in regions:
+            tokens.extend(["\n", region])
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
 
         # TODO - JD: Again, for now we're preserving the original behavior of choosing the first.
         region = regions[0]
@@ -2510,8 +2513,8 @@ class Script(script.Script):
 
         [word, charOffset] = region.zone.getWordAtOffset(offset)
         if word:
-            msg = "DEFAULT: Setting start of display to %s, %i" % (str(word), charOffset)
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: Setting start of display to", word, ", ", charOffset]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             context = self.getFlatReviewContext()
             context.setCurrent(
                 word.zone.line.index,
@@ -2607,10 +2610,10 @@ class Script(script.Script):
                         text.getTextAtOffset(offset, mode)
 
                 if endOffset > text.characterCount:
-                    msg = "WARNING: endOffset: %i > characterCount: %i " \
-                          " resulting from text.getTextAtOffset(%i, %s) for %s" \
-                          % (endOffset, text.characterCount, offset, mode, obj)
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                    tokens = ["DEFAULT: end offset", endOffset, " > character count",
+                              text.characterCount,
+                              "resulting from text.getTextAtOffset(", offset, mode, ") for", obj]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     endOffset = text.characterCount
 
                 # [[[WDW - HACK: this is here because getTextAtOffset
@@ -2640,7 +2643,7 @@ class Script(script.Script):
 
                 context = speechserver.SayAllContext(
                     obj, lineString, startOffset, endOffset)
-                tokens = ["DEFAULT", context]
+                tokens = ["DEFAULT:", context]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 self._sayAllContexts.append(context)
                 self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)

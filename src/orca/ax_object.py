@@ -61,22 +61,19 @@ class AXObject:
         while True:
             time.sleep(60)
             with AXObject._lock:
-                tokens = ["AXObject: Clearing", len(AXObject.KNOWN_DEAD), "known-dead objects"]
+                tokens = ["AXObject: Clearing", len(AXObject.KNOWN_DEAD),
+                          "known-dead objects"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.KNOWN_DEAD.clear()
 
-                msg = (
-                    f"AXObject: Clearing {len(AXObject.REAL_APP_FOR_MUTTER_FRAME)} "
-                    f"real app for mutter frame"
-                )
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXObject: Clearing", len(AXObject.REAL_APP_FOR_MUTTER_FRAME),
+                          "real apps for mutter frames"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
 
-                msg = (
-                    f"AXObject: Clearing {len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME)} "
-                    "real frame for mutter frame"
-                )
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXObject: Clearing", len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME),
+                          "real frames for mutter frames"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
 
 
@@ -112,7 +109,7 @@ class AXObject:
             AXObject.KNOWN_DEAD.append(hash(obj))
             msg = msg.replace(error, "app no longer exists")
 
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     @staticmethod
     def supports_action(obj):
@@ -457,11 +454,9 @@ class AXObject:
         parent = AXObject.get_parent_checked(obj)
         while parent:
             if parent in objects:
-                msg = (
-                    f"AXObject: Circular tree suspected in find_ancestor. "
-                    f"{parent} already in: {' '.join(map(str, objects))}"
-                )
-                debug.println(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXObject: Circular tree suspected in find_ancestor. ",
+                          parent, "already in: ", objects]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return None
 
             if pred(parent):
@@ -549,11 +544,9 @@ class AXObject:
             return reported_child
 
         if real_child != reported_child:
-            msg = (
-                f"AXObject: {container}'s child at {index} is {real_child}; "
-                f"not reported child {reported_child}. "
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: ", container, f"'s child at {index} is ", real_child,
+                      "; not reported child", reported_child]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return real_child
 
@@ -581,8 +574,8 @@ class AXObject:
 
         start = time.time()
         result = AXObject._find_descendant(obj, pred)
-        msg = f"AXObject: find_descendant: found {result} in {time.time() - start:.4f}s"
-        debug.println(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXObject: find_descendant: found", result, f"in {time.time() - start:.4f}s"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -625,7 +618,7 @@ class AXObject:
             f"AXObject: find_all_descendants: {len(matches)} "
             f"matches found in {time.time() - start:.4f}s"
         )
-        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -924,8 +917,8 @@ class AXObject:
         # We want to avoid self-referential relationships.
         type_includes_object = [Atspi.RelationType.MEMBER_OF]
         if relation_type not in type_includes_object and obj in targets:
-            msg = f'ERROR: {obj} is in its own {relation_type} target list'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: ", obj, "is in its own", relation_type, "target list"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             targets.remove(obj)
 
         return list(targets)

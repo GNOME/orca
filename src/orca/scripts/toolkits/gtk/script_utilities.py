@@ -170,8 +170,8 @@ class Utilities(script_utilities.Utilities):
     def isZombie(self, obj):
         rv = super().isZombie(obj)
         if rv and self.isLink(obj) and AXObject.get_index_in_parent(obj) == -1:
-            msg = f'INFO: Hacking around bug 759736 for {obj}'
-            debug.println(debug.LEVEL_INFO, msg, True)
+            tokens = ["GTK: Hacking around bug 759736 for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return rv
@@ -181,13 +181,13 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not orca_state.activeWindow:
-            msg = 'INFO: No active window'
+            msg = "GTK: No active window"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         topLevel = self.topLevelObject(event.source)
         if not self.isSameObject(topLevel, orca_state.activeWindow):
-            msg = 'INFO: Event is believed to be canvas noise'
+            msg = "GTK: Event is believed to be canvas noise"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -207,7 +207,7 @@ class Utilities(script_utilities.Utilities):
         if self.intersection(objBox, stringBox) != (0, 0, 0, 0):
             return x, y
 
-        tokens = ["ERROR: text bounds", stringBox, "not in obj bounds", objBox]
+        tokens = ["GTK: text bounds", stringBox, "not in obj bounds", objBox]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # This is where the string starts; not the widget.
