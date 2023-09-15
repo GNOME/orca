@@ -149,7 +149,10 @@ def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
         msg = "ORCA: Exception emitting region-changed notification"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    orca_state.objOfInterest = obj
+    if obj != orca_state.objOfInterest:
+        tokens = ["ORCA: Switching object of interest from", orca_state.objOfInterest, "to", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        orca_state.objOfInterest = obj
 
 def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
     tokens = ["ORCA: Request to set active window to", frame]
