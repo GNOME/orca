@@ -72,14 +72,11 @@ class FlatReviewPresenter:
         # to prevent breakage.
 
         if not self._context:
-            msg = "FLAT REVIEW PRESENTER: Creating new context"
+            msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-            if self._restrict:
-                mode, obj = orca.getActiveModeAndObjectOfInterest()
-                self._context = flat_review.Context(script, root=obj)
-            else:
-                self._context = flat_review.Context(script)
+            mode, obj = orca.getActiveModeAndObjectOfInterest()
+            self._context = flat_review.Context(script, root=obj)
 
             orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
             if script is not None:
@@ -87,7 +84,7 @@ class FlatReviewPresenter:
                 script.targetCursorCell = script.getBrailleCursorCell()
             return self._context
 
-        msg = "FLAT REVIEW PRESENTER: Using existing context"
+        msg = f"FLAT REVIEW PRESENTER: Using existing context. Restrict: {self._restrict}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         # If we are in unrestricted mode, update the context as below.
