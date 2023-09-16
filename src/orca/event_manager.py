@@ -567,47 +567,40 @@ class EventManager:
         return False
 
     def _dequeue(self):
-        """Handles all events destined for scripts. Called by the GTK
-        idle thread."""
+        """Handles all object events destined for scripts."""
 
         rerun = True
-
         if debug.debugEventQueue:
             msg = f"EVENT MANAGER: Dequeue {self._dequeueCount}"
             debug.printMessage(debug.LEVEL_ALL, msg, True)
             self._dequeueCount += 1
-
         try:
             event = self._eventQueue.get_nowait()
             self._queuePrintln(event, isEnqueue=False)
-            inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
-            if isinstance(event, inputEvents):
-                self._processInputEvent(event)
-            else:
-                debug.objEvent = event
-                debugging = not debug.eventDebugFilter \
-                            or debug.eventDebugFilter.match(event.type)
-                if debugging:
-                    startTime = time.time()
-                    msg = (
-                        f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
-                        f"(queue size: {self._eventQueue.qsize()}) vvvvv"
-                    )
-                    debug.printMessage(debug.eventDebugLevel, msg, False)
-                self._processObjectEvent(event)
-                if self._didSuspendEventsFor(event):
-                    self._unsuspendEvents(event)
-                elif self._eventsSuspended and self._shouldUnsuspendEventsFor(event):
-                    self._unsuspendEvents(event, force=True)
+            debug.objEvent = event
+            debugging = not debug.eventDebugFilter \
+                        or debug.eventDebugFilter.match(event.type)
+            if debugging:
+                startTime = time.time()
+                msg = (
+                    f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
+                    f"(queue size: {self._eventQueue.qsize()}) vvvvv"
+                )
+                debug.printMessage(debug.eventDebugLevel, msg, False)
+            self._processObjectEvent(event)
+            if self._didSuspendEventsFor(event):
+                self._unsuspendEvents(event)
+            elif self._eventsSuspended and self._shouldUnsuspendEventsFor(event):
+                self._unsuspendEvents(event, force=True)
 
-                if debugging:
-                    msg = (
-                        f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
-                        f"\n^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
-                    )
-                    debug.printMessage(debug.eventDebugLevel, msg, False)
+            if debugging:
+                msg = (
+                    f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+                    f"\n^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
+                )
+                debug.printMessage(debug.eventDebugLevel, msg, False)
 
-                debug.objEvent = None
+            debug.objEvent = None
 
             self._gidleLock.acquire()
             if self._eventQueue.empty():
