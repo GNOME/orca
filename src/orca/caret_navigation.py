@@ -233,6 +233,7 @@ class CaretNavigation:
         else:
             string = messages.CARET_CONTROL_APP
 
+        script.refreshKeyGrabs("toggling caret navigation")
         script.presentMessage(string)
         _settings_manager.setSetting('caretNavigationEnabled', enabled)
         return True

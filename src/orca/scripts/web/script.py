@@ -1340,7 +1340,7 @@ class Script(default.Script):
             self._inFocusMode = False
             msg = "locus of focus no longer in document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.refreshKeyGrabs()
+            self.refreshKeyGrabs(msg)
             return False
 
         if self.flatReviewPresenter.is_active():
