@@ -517,8 +517,8 @@ class Script(default.Script):
 
         return super().skipObjectEvent(event)
 
-    def presentationInterrupt(self):
-        super().presentationInterrupt()
+    def presentationInterrupt(self, killFlash=True):
+        super().presentationInterrupt(killFlash)
         msg = "WEB: Flushing live region messages"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.liveRegionManager.flushMessages()
