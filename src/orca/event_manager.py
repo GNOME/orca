@@ -731,7 +731,7 @@ class EventManager:
 
         msg = (
             f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
-            f"^^^^^ PROCESS {eType} {data} ^^^^^\n"
+            f"\n^^^^^ PROCESS {eType} {data} ^^^^^\n"
         )
         debug.printMessage(debug.eventDebugLevel, msg, False)
 
@@ -1086,21 +1086,22 @@ class EventManager:
         from orca import orca
         orca.updateKeyMap(keyboardEvent)
 
-    def processBrailleEvent(self, brailleEvent):
-        """Called whenever a cursor key is pressed on the Braille display.
+    def processBrailleEvent(self, event):
+        """Called whenever a cursor key is pressed on the Braille display."""
 
-        Arguments:
-        - brailleEvent: an instance of input_event.BrailleEvent
+        if orca_state.activeScript is None:
+            return False
 
-        Returns True if the command was consumed; otherwise False
-        """
-
-        if orca_state.activeScript \
-           and orca_state.activeScript.consumesBrailleEvent(brailleEvent):
+        brailleEvent = input_event.BrailleEvent(event)
+        orca_state.lastInputEvent = brailleEvent
+        if orca_state.activeScript.consumesBrailleEvent(brailleEvent):
             self._enqueue(brailleEvent)
             return True
-        else:
-            return False
+
+        if orca_state.activeScript.learnModePresenter.is_active():
+            return True
+
+        return False
 
 _manager = EventManager()
 

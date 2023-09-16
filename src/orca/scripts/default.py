@@ -2838,14 +2838,15 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
-    def presentationInterrupt(self):
+    def presentationInterrupt(self, killFlash=True):
         """Convenience method to interrupt presentation of whatever is being
         presented at the moment."""
 
         msg = "DEFAULT: Interrupting presentation"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         speech.stop()
-        braille.killFlash()
+        if killFlash:
+            braille.killFlash()
 
     def presentKeyboardEvent(self, event):
         """Convenience method to present the KeyboardEvent event. Returns True

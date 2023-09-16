@@ -1772,6 +1772,13 @@ def _processBrailleEvent(event):
 
     _printBrailleEvent(debug.LEVEL_FINE, event)
 
+    if orca_state.activeScript and event['command'] not in dontInteruptSpeechKeys:
+        # We aren't killing flash here because we were not doing so before, when
+        # this logic was in orca.py; instead, we were calling speech.stop. But that
+        # code predated the existence of presentationInterrupt. Maybe flash should
+        # be killed as well?
+        orca_state.activeScript.presentationInterrupt(killFlash=False)
+
     consumed = False
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):

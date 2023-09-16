@@ -59,7 +59,6 @@ except Exception:
 from . import braille
 from . import debug
 from . import event_manager
-from . import learn_mode_presenter
 from . import logger
 from . import messages
 from . import mouse_review
@@ -242,41 +241,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         return
 
     orca_state.activeScript.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
-
-########################################################################
-#                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE EVENTS.             #
-#                                                                      #
-########################################################################
-
-def _processBrailleEvent(event):
-    """Called whenever a  key is pressed on the Braille display.
-
-    Arguments:
-    - command: the BrlAPI event for the key that was pressed.
-
-    Returns True if the event was consumed; otherwise False
-    """
-
-    consumed = False
-
-    # Braille key presses always interrupt speech.
-    #
-    event = BrailleEvent(event)
-    if event.event['command'] not in braille.dontInteruptSpeechKeys:
-        speech.stop()
-    orca_state.lastInputEvent = event
-
-    try:
-        consumed = _eventManager.processBrailleEvent(event)
-    except Exception:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    # TODO - JD: Is this still possible?
-    if not consumed and learn_mode_presenter.getPresenter().is_active():
-        consumed = True
-
-    return consumed
 
 ########################################################################
 #                                                                      #
@@ -473,7 +437,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         msg = 'ORCA: About to enable braille'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
-            braille.init(_processBrailleEvent)
+            braille.init(_eventManager.processBrailleEvent)
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'

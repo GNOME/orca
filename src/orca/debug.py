@@ -232,6 +232,11 @@ def _asString(obj):
             return f"{obj.__module__}.{obj.__self__.__class__.__name__}.{obj.__name__}"
         return f"{obj.__module__}.{obj.__name__}"
 
+    if isinstance(obj, types.MethodType):
+        if hasattr(obj, "__self__"):
+            return f"{obj.__self__.__class__.__name__}.{obj.__name__}"
+        return f"{obj.__name__}"
+
     if isinstance(obj, types.FrameType):
         return obj.f_code.co_name
 
