@@ -501,7 +501,7 @@ class EventManager:
         return event in self._eventsTriggeringSuspension
 
     def _enqueue(self, e):
-        """Handles the enqueueing of all events destined for scripts.
+        """Handles the enqueueing of all object events destined for scripts.
 
         Arguments:
         - e: an at-spi event.
@@ -513,16 +513,7 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_ALL, msg, True)
             self._enqueueCount += 1
 
-        inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
-        isObjectEvent = not isinstance(e, inputEvents)
-
-        try:
-            ignore = isObjectEvent and self._ignore(e)
-        except Exception as error:
-            tokens = ["EVENT MANAGER: Exception evaluating event:", e, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            ignore = True
-        if ignore:
+        if self._ignore(e):
             if debug.debugEventQueue:
                 self._enqueueCount -= 1
             return
@@ -534,23 +525,22 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._pruneEventsDuringFlood()
 
-        if isObjectEvent and self._shouldSuspendEventsFor(e):
+        if self._shouldSuspendEventsFor(e):
             self._suspendEvents(e)
 
         asyncMode = self._asyncMode
-        if isObjectEvent:
-            if isinstance(e, input_event.MouseButtonEvent):
-                asyncMode = True
-            elif AXObject.get_application_toolkit_name(e.source) in self._synchronousToolkits:
-                asyncMode = False
-            elif e.type.startswith("object:children-changed"):
-                asyncMode = AXUtilities.is_table(e.source)
-            elif AXUtilities.is_notification(e.source):
-                # To decrease the likelihood that the popup will be destroyed before we
-                # have its contents.
-                asyncMode = False
-            script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
-            script.eventCache[e.type] = (e, time.time())
+        if isinstance(e, input_event.MouseButtonEvent):
+            asyncMode = True
+        elif AXObject.get_application_toolkit_name(e.source) in self._synchronousToolkits:
+            asyncMode = False
+        elif e.type.startswith("object:children-changed"):
+            asyncMode = AXUtilities.is_table(e.source)
+        elif AXUtilities.is_notification(e.source):
+            # To decrease the likelihood that the popup will be destroyed before we
+            # have its contents.
+            asyncMode = False
+        script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
+        script.eventCache[e.type] = (e, time.time())
 
         self._addToQueue(e, asyncMode)
         if not asyncMode:
