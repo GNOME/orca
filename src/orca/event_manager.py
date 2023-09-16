@@ -1095,7 +1095,7 @@ class EventManager:
         brailleEvent = input_event.BrailleEvent(event)
         orca_state.lastInputEvent = brailleEvent
         if orca_state.activeScript.consumesBrailleEvent(brailleEvent):
-            self._enqueue(brailleEvent)
+            self._processInputEvent(brailleEvent)
             return True
 
         if orca_state.activeScript.learnModePresenter.is_active():
