@@ -8,8 +8,8 @@
   <shortdesc xml:lang="en">Screen reader for individuals who are blind or visually impaired</shortdesc>
   <description xml:lang="en">Screen reader for individuals who are blind or visually impaired</description>
   <homepage rdf:resource="https://wiki.gnome.org/Projects/Orca" />
-  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/orca-list" />
-  <download-page rdf:resource="http://download.gnome.org/sources/orca/" />
+  <mailing-list rdf:resource="https://www.freelists.org/list/orca" />
+  <download-page rdf:resource="https://download.gnome.org/sources/orca/" />
   <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/orca/issues" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
   <programming-language>Python</programming-language>
