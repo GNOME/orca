@@ -803,14 +803,6 @@ class KeyboardEvent(InputEvent):
 
         return scriptConsumes, 'Script indication'
 
-    def didConsume(self):
-        """Returns True if this event was consumed."""
-
-        if self._did_consume is not None:
-            return self._did_consume
-
-        return False
-
     def isHandledBy(self, method):
         if not self._handler:
             return False
