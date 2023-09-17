@@ -75,8 +75,11 @@ class FlatReviewPresenter:
             msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-            mode, obj = orca.getActiveModeAndObjectOfInterest()
-            self._context = flat_review.Context(script, root=obj)
+            if self._restrict:
+                mode, obj = orca.getActiveModeAndObjectOfInterest()
+                self._context = flat_review.Context(script, root=obj)
+            else:
+                self._context = flat_review.Context(script)
 
             orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
             if script is not None:
