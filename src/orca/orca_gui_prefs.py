@@ -2850,10 +2850,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
         orca_state.capturingKeys = True
-        for modifier in ["Insert", "KP_Insert"]:
-            if modifier in orca_state.grabbedModifiers:
-                orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
-                del orca_state.grabbedModifiers[modifier]
+        orca_state.activeScript.removeKeyGrabs()
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 
@@ -2862,6 +2859,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca_state.capturingKeys = False
         self._capturedKey = []
+        orca_state.activeScript.refreshKeyGrabs("Done capturing keys")
         return
 
     def _processKeyCaptured(self, keyPressedEvent):
@@ -2969,6 +2967,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca_state.capturingKeys = False
         self._capturedKey = []
+        orca_state.activeScript.refreshKeyGrabs("Done capturing keys")
         myiter = treeModel.get_iter_from_string(path)
         try:
             originalBinding = treeModel.get_value(myiter, text)
