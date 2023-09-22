@@ -521,7 +521,8 @@ class Script(script.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for modifier in ["Insert", "KP_Insert"]:
-            if modifier in settings.orcaModifierKeys and modifier not in orca_state.grabbedModifiers:
+            if modifier in settings.orcaModifierKeys \
+               and modifier not in orca_state.grabbedModifiers:
                 kd = Atspi.KeyDefinition()
                 kd.keycode = keybindings.getKeycode(modifier)
                 kd.modifiers = 0
