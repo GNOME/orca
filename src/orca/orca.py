@@ -196,6 +196,8 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
       current locusOfFocus
     """
 
+    AXObject.clear_cache(obj)
+
     if not force and obj == orca_state.locusOfFocus:
         msg = "ORCA: Setting locusOfFocus to existing locusOfFocus"
         debug.printMessage(debug.LEVEL_INFO, msg, True)

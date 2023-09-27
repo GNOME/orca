@@ -119,10 +119,6 @@ class Script(script.Script):
         self._sayAllContexts = []
         self.grab_ids = []
 
-        if app:
-            Atspi.Accessible.set_cache_mask(
-                app, Atspi.Cache.DEFAULT ^ Atspi.Cache.NAME ^ Atspi.Cache.DESCRIPTION)
-
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""

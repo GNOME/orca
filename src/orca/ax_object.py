@@ -1110,7 +1110,7 @@ class AXObject:
     def clear_cache(obj, recursive=False):
         """Clears the Atspi cached information associated with obj"""
 
-        if not AXObject.is_valid(obj):
+        if obj is None:
             return
 
         if not recursive:
