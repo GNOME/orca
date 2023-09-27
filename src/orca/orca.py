@@ -775,11 +775,13 @@ def main():
     if orca_platform.revision:
         msg += f" (rev {orca_platform.revision})"
 
+    atspiVersion = Atspi.get_version()
+    msg += f" AT-SPI2 version: {atspiVersion[0]}.{atspiVersion[1]}.{atspiVersion[2]}"
     sessionType = os.environ.get('XDG_SESSION_TYPE') or ""
     sessionDesktop = os.environ.get('XDG_SESSION_DESKTOP') or ""
     session = "%s %s".strip() % (sessionType, sessionDesktop)
     if session:
-        msg += f" session: {session}"
+        msg += f" Session: {session}"
     debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):

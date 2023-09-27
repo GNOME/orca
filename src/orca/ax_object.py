@@ -1116,14 +1116,10 @@ class AXObject:
         if not recursive:
             try:
                 Atspi.Accessible.clear_cache_single(obj)
-            except Exception:
-                # This is new API, added in 2.49.1. So log success rather than
-                # (likely) failure for now.
-                pass
-            else:
-                msg = "AXObject: clear_cache_single succeeded."
+            except Exception as error:
+                msg = f"AXObject: Exception in clear_cache_single: {error}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
+            return
 
         try:
             Atspi.Accessible.clear_cache(obj)
