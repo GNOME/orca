@@ -48,7 +48,7 @@ from . import debug
 class AXObject:
     """Utilities for obtaining information about accessible objects."""
 
-    KNOWN_DEAD = []
+    KNOWN_DEAD = {}
     REAL_APP_FOR_MUTTER_FRAME = {}
     REAL_FRAME_FOR_MUTTER_FRAME = {}
 
@@ -61,8 +61,8 @@ class AXObject:
         while True:
             time.sleep(60)
             with AXObject._lock:
-                tokens = ["AXObject: Clearing", len(AXObject.KNOWN_DEAD),
-                          "known-dead objects"]
+                tokens = ["AXObject: Clearing known dead-or-alive state for",
+                          len(AXObject.KNOWN_DEAD), "objects"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.KNOWN_DEAD.clear()
 
@@ -95,7 +95,28 @@ class AXObject:
     def object_is_known_dead(obj):
         """Returns True if we know for certain this object no longer exists"""
 
-        return hash(obj) in AXObject.KNOWN_DEAD
+        return obj and AXObject.KNOWN_DEAD.get(hash(obj)) is True
+
+    @staticmethod
+    def _set_known_dead_status(obj, is_dead):
+        """Updates the known-dead status of obj"""
+
+        if obj is None:
+            return
+
+        current_status = AXObject.KNOWN_DEAD.get(hash(obj))
+        if current_status == is_dead:
+            return
+
+        AXObject.KNOWN_DEAD[hash(obj)] = is_dead
+        if is_dead:
+            msg = "AXObject: Adding to known dead objects"
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            return
+
+        if current_status:
+            tokens = ["AXObject: Removing", obj, "from known-dead objects"]
+            debug.printTokens(debug.LEVEL_INFO, msg, tokens, True)
 
     @staticmethod
     def handle_error(obj, error, msg):
@@ -103,13 +124,17 @@ class AXObject:
 
         error = str(error)
         if re.search(r"accessible/\d+ does not exist", error):
-            AXObject.KNOWN_DEAD.append(hash(obj))
             msg = msg.replace(error, "object no longer exists")
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif re.search(r"The application no longer exists", error):
-            AXObject.KNOWN_DEAD.append(hash(obj))
             msg = msg.replace(error, "app no longer exists")
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+        else:
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        if AXObject.KNOWN_DEAD.get(hash(obj)) is False:
+            AXObject._set_known_dead_status(obj, True)
 
     @staticmethod
     def supports_action(obj):
@@ -635,6 +660,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return Atspi.Role.INVALID
 
+        AXObject._set_known_dead_status(obj, False)
         return role
 
     @staticmethod
@@ -667,6 +693,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return ""
 
+        AXObject._set_known_dead_status(obj, False)
         return name
 
     @staticmethod
@@ -835,6 +862,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return Atspi.StateSet()
 
+        AXObject._set_known_dead_status(obj, False)
         return state_set
 
     @staticmethod
@@ -1138,6 +1166,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return True
 
+        AXObject._set_known_dead_status(obj, False)
         return False
 
     @staticmethod
