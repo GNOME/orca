@@ -174,12 +174,12 @@ class EventManager:
         """Returns True if this event should be ignored."""
 
         debug.printMessage(debug.LEVEL_INFO, '')
+        tokens = ["EVENT MANAGER:", event]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         if self._eventsSuspended:
             tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        tokens = ["EVENT MANAGER:", event]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active:
             msg = 'EVENT MANAGER: Ignoring because event manager is not active'
