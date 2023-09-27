@@ -120,9 +120,13 @@ class Script(default.Script):
         if AXObject.supports_table(ancestor):
             return
 
-        if AXUtilities.is_menu(ancestor) \
-           and AXObject.find_ancestor(ancestor, AXUtilities.is_menu) is None:
-            return
+        if AXUtilities.is_menu(ancestor):
+            if AXUtilities.is_selected(orca_state.locusOfFocus):
+                msg = "GTK: Event source is ancestor of selected focus. Ignoring."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return
+            msg = "GTK: Event source is ancestor of unselected focus. Updating focus."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         orca.setLocusOfFocus(event, event.source)
 
