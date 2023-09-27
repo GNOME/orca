@@ -173,8 +173,9 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
+        app = AXObject.get_application(event.source)
         debug.printMessage(debug.LEVEL_INFO, '')
-        tokens = ["EVENT MANAGER:", event]
+        tokens = ["EVENT MANAGER:", event.type, "from", app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._eventsSuspended:
@@ -191,7 +192,6 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        app = AXObject.get_application(event.source)
         if AXObject.get_name(app) == 'gnome-shell':
             if event.type.startswith('object:children-changed:remove'):
                 msg = 'EVENT MANAGER: Ignoring event based on type and app'
@@ -262,7 +262,7 @@ class EventManager:
             return True
 
         if AXUtilities.is_defunct(event.source):
-            msg = 'EVENT MANAGER: Ignoreing event from defunct source'
+            msg = 'EVENT MANAGER: Ignoring event from defunct source'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
