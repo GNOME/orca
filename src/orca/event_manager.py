@@ -36,6 +36,7 @@ from . import debug
 from . import input_event
 from . import orca_state
 from . import script_manager
+from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -754,11 +755,11 @@ class EventManager:
         }
 
         check = not any(event.type.startswith(x) for x in skipCheck)
-        tokens = ["EVENT MANAGER: Getting script for", app, "check:", check]
+        tokens = ["EVENT MANAGER: Getting script for event for", app, "check:", check]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = _scriptManager.getScript(app, event.source, sanityCheck=check)
-        tokens = ["EVENT MANAGER: Script is ", script]
+        tokens = ["EVENT MANAGER: Script for event is ", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
 
@@ -951,6 +952,27 @@ class EventManager:
 
         return False
 
+    def _shouldProcessEvent(self, event, eventScript, activeScript):
+        if eventScript == activeScript:
+            msg = f"EVENT MANAGER: Processing {event.type}: script for event is active"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if eventScript.presentIfInactive:
+            msg = f"EVENT MANAGER: Processing {event.type}: script handles events when inactive"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if AXUtilities.is_progress_bar(event.source) \
+           and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
+            msg = f"EVENT MANAGER: Processing {event.type}: progress bar verbosity is 'all'"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = f"EVENT MANAGER: Not processing {event.type} due to lack of reason"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return False
+
     def _processObjectEvent(self, event):
         """Handles all object events destined for scripts.
 
@@ -1033,6 +1055,10 @@ class EventManager:
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
+        activeScript = _scriptManager.getActiveScript()
+        if not self._shouldProcessEvent(event, script, activeScript):
+            return
+
         try:
             script.processObjectEvent(event)
         except Exception as error:
@@ -1040,12 +1066,11 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        script = _scriptManager.getActiveScript()
-        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus, "activeScript:", script]
+        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if debug.LEVEL_INFO >= debug.debugLevel and script:
-            attributes = script.getTransferableAttributes()
+            attributes = activeScript.getTransferableAttributes()
             for key, value in attributes.items():
                 msg = f"EVENT MANAGER: {key}: {value}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)

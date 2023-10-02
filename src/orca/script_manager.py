@@ -298,7 +298,7 @@ class ScriptManager:
         """Returns the active script."""
 
         tokens = ["SCRIPT MANAGER: Active script is:", orca_state.activeScript]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
         return orca_state.activeScript
 
     def getActiveScriptApp(self):

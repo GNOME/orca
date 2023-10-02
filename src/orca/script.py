@@ -39,10 +39,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from . import ax_event_synthesizer
 from . import action_presenter
 from . import braille_generator
@@ -57,8 +53,6 @@ from . import learn_mode_presenter
 from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
-from . import orca_state
-from . import script_manager
 from . import script_utilities
 from . import settings
 from . import settings_manager
@@ -72,7 +66,6 @@ from . import where_am_i_presenter
 from .ax_object import AXObject
 
 _eventManager = event_manager.getManager()
-_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 class Script:
@@ -333,24 +326,6 @@ class Script:
         Arguments:
         - event: the Event
         """
-
-        role = AXObject.get_role(event.source)
-        if role == Atspi.Role.INVALID:
-            msg = 'ERROR: Not processing object event for invalid object'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        # Check to see if we really want to process this event.
-        #
-        processEvent = (orca_state.activeScript == self \
-                        or self.presentIfInactive)
-        if role == Atspi.Role.PROGRESS_BAR \
-           and not processEvent \
-           and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
-            processEvent = True
-
-        if not processEvent:
-            return
 
         if self.skipObjectEvent(event):
             return
