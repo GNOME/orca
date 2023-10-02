@@ -60,7 +60,7 @@ class ScriptManager:
         self._toolkitNames = \
             {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk'}
 
-        self.setActiveScript(None, "__init__")
+        self._activeScript = None
         self._active = False
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Initialized", True)
 
@@ -221,8 +221,8 @@ class ScriptManager:
         tokens = ["SCRIPT MANAGER:", orca_state.activeWindow, "is active:", isActive]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if isActive and orca_state.activeScript:
-            return orca_state.activeScript
+        if isActive and self._activeScript:
+            return self._activeScript
 
         script = self.getDefaultScript()
         activeWindow = script.utilities.activeWindow()
@@ -297,20 +297,19 @@ class ScriptManager:
     def getActiveScript(self):
         """Returns the active script."""
 
-        tokens = ["SCRIPT MANAGER: Active script is:", orca_state.activeScript]
+        tokens = ["SCRIPT MANAGER: Active script is:", self._activeScript]
         debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
-        return orca_state.activeScript
+        return self._activeScript
 
     def getActiveScriptApp(self):
         """Returns the app associated with the active script."""
 
-        script = self.getActiveScript()
-        if script is None:
+        if self._activeScript is None:
             return None
 
-        tokens = ["SCRIPT MANAGER: Active script is app:", script.app]
+        tokens = ["SCRIPT MANAGER: Active script app is:", self._activeScript.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return script.app
+        return self._activeScript.app
 
     def setActiveScript(self, newScript, reason=None):
         """Set the new active script.
@@ -319,20 +318,19 @@ class ScriptManager:
         - newScript: the new script to be made active.
         """
 
-        script = self.getActiveScript()
-        if script == newScript:
+        if self._activeScript == newScript:
             return
 
-        if script is not None:
-            script.deactivate()
+        if self._activeScript is not None:
+            self._activeScript.deactivate()
 
-        orca_state.activeScript = newScript
+        self._activeScript = newScript
         if newScript is None:
             return
 
-        newScript.activate()
         tokens = ["SCRIPT MANAGER: Setting active script to", newScript, "reason:", reason]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        newScript.activate()
 
     def _getScriptForAppReplicant(self, app):
         if not self._active:

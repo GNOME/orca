@@ -40,10 +40,6 @@ locusOfFocus = None
 #
 activeWindow = None
 
-# The currently active script.
-#
-activeScript = None
-
 # The currently active mode (focus, say all, flat review, etc.) and obj
 activeMode = None
 objOfInterest = None
