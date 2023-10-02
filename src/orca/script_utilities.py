@@ -54,6 +54,7 @@ from . import orca
 from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
+from . import script_manager
 from . import settings
 from . import settings_manager
 from . import text_attribute_names
@@ -61,6 +62,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
 
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 #############################################################################
@@ -1035,9 +1037,10 @@ class Utilities:
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
             app = AXObject.get_application(obj)
-            if app == orca_state.activeScript.app:
+            activeApp = _scriptManager.getActiveScriptApp()
+            if app == activeApp:
                 return True, "Verbosity is app"
-            return False, f"App {app} is not {orca_state.activeScript.app}"
+            return False, "App is not active app"
 
         return True, "Not handled by any other case"
 
@@ -4749,8 +4752,8 @@ class Utilities:
 
     @staticmethod
     def onClipboardContentsChanged(*args):
-        script = orca_state.activeScript
-        if not script:
+        script = _scriptManager.getActiveScript()
+        if script is None:
             return
 
         if time.time() - Utilities._last_clipboard_update < 0.05:

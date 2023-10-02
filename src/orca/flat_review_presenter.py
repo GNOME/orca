@@ -42,9 +42,11 @@ from . import keybindings
 from . import messages
 from . import orca
 from . import orca_state
+from . import script_manager
 from . import settings_manager
 from . import settings
 
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 class FlatReviewPresenter:
@@ -720,7 +722,7 @@ class FlatReviewPresenter:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if script is None:
-            script = orca_state.activeScript
+            script = _scriptManager.getActiveScript()
 
         self.get_or_create_context(script)
         if event is None:

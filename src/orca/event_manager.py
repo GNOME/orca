@@ -190,10 +190,10 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        script = orca_state.activeScript
+        script = _scriptManager.getActiveScript()
         if event.type.startswith('object:children-changed') \
            or event.type.startswith('object:state-changed:sensitive'):
-            if not script:
+            if script is None:
                 msg = 'EVENT MANAGER: Ignoring because there is no active script'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
@@ -550,7 +550,11 @@ class EventManager:
             self._enqueueCount -= 1
 
     def _isNoFocus(self):
-        if orca_state.locusOfFocus or orca_state.activeWindow or orca_state.activeScript:
+        script = _scriptManager.getActiveScript()
+        if script is not None:
+            return False
+
+        if orca_state.locusOfFocus or orca_state.activeWindow:
             return False
 
         msg = 'EVENT MANAGER: No focus'
@@ -693,7 +697,8 @@ class EventManager:
         - event: an instance of BrailleEvent or a KeyboardEvent
         """
 
-        if not orca_state.activeScript:
+        script = _scriptManager.getActiveScript()
+        if script is None:
             return
 
         if not isinstance(event, input_event.BrailleEvent):
@@ -707,7 +712,7 @@ class EventManager:
         debug.printMessage(debug.eventDebugLevel, msg, False)
 
         try:
-            orca_state.activeScript.processBrailleEvent(event)
+            script.processBrailleEvent(event)
         except Exception as error:
             tokens = ["EVENT MANAGER: Exception processing event:", error]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
@@ -774,7 +779,7 @@ class EventManager:
             if not script:
                 return False, "There is no script for this event."
 
-        if script == orca_state.activeScript:
+        if script == _scriptManager.getActiveScript():
             return False, "The script for this event is already active."
 
         if not script.isActivatableEvent(event):
@@ -1035,12 +1040,12 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus,
-                  "activeScript:", orca_state.activeScript]
+        script = _scriptManager.getActiveScript()
+        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus, "activeScript:", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
-            attributes = orca_state.activeScript.getTransferableAttributes()
+        if debug.LEVEL_INFO >= debug.debugLevel and script:
+            attributes = script.getTransferableAttributes()
             for key, value in attributes.items():
                 msg = f"EVENT MANAGER: {key}: {value}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1052,14 +1057,15 @@ class EventManager:
 
             # If pressing insert, then temporarily remove grab to allow toggling
             # with a double press
-            if pressed and orca_state.activeScript is not None:
+            script = _scriptManager.getActiveScript()
+            if pressed and script is not None:
                 if keyboardEvent.keyval_name in orca_state.grabbedModifiers:
                     device.remove_key_grab(orca_state.grabbedModifiers[keyboardEvent.keyval_name])
                     del orca_state.grabbedModifiers[keyboardEvent.keyval_name]
                     self.bypassedKey = keyboardEvent.keyval_name
                 elif self.bypassedKey is not None:
                     # This is a second key press. Re-enable the grab
-                    orca_state.activeScript.refreshModifierKeyGrab(self.bypassedKey)
+                    script.refreshModifierKeyGrab(self.bypassedKey)
                     self.bypassedKey = None
 
 
@@ -1072,16 +1078,17 @@ class EventManager:
     def processBrailleEvent(self, event):
         """Called whenever a cursor key is pressed on the Braille display."""
 
-        if orca_state.activeScript is None:
+        script = _scriptManager.getActiveScript()
+        if script is None:
             return False
 
         brailleEvent = input_event.BrailleEvent(event)
         orca_state.lastInputEvent = brailleEvent
-        if orca_state.activeScript.consumesBrailleEvent(brailleEvent):
+        if script.consumesBrailleEvent(brailleEvent):
             self._processInputEvent(brailleEvent)
             return True
 
-        if orca_state.activeScript.learnModePresenter.is_active():
+        if script.learnModePresenter.is_active():
             return True
 
         return False

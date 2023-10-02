@@ -47,6 +47,8 @@ from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_scriptManager = script_manager.getManager()
+
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
@@ -254,7 +256,7 @@ class KeyboardEvent(InputEvent):
         self.timestamp = time.time()
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
-        self._script = orca_state.activeScript
+        self._script = _scriptManager.getActiveScript()
         self._app = None
         self._window = orca_state.activeWindow
         self._obj = orca_state.locusOfFocus
@@ -295,8 +297,7 @@ class KeyboardEvent(InputEvent):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._window and self._app != AXObject.get_application(self._window):
-            self._script = script_manager.getManager().getScript(
-                AXObject.get_application(self._window))
+            self._script = _scriptManager.getScript(AXObject.get_application(self._window))
             self._app = self._script.app
             tokens = ["INPUT EVENT: Updated script to", self._script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -691,7 +692,7 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
-        script = orca_state.activeScript
+        script = _scriptManager.getActiveScript()
         return script and script.utilities.willEchoCharacter(self)
 
     def getLockingState(self):
@@ -851,8 +852,9 @@ class KeyboardEvent(InputEvent):
             tokens = ["CONSUMED:", self._did_consume, self._result_reason]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if debug.LEVEL_INFO >= debug.debugLevel and orca_state.activeScript:
-            attributes = orca_state.activeScript.getTransferableAttributes()
+        script = _scriptManager.getActiveScript()
+        if debug.LEVEL_INFO >= debug.debugLevel and script is not None:
+            attributes = script.getTransferableAttributes()
             for key, value in attributes.items():
                 msg = f"INPUT EVENT: {key}: {value}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -998,7 +1000,7 @@ class MouseButtonEvent(InputEvent):
         self.y = event.detail2
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
-        self._script = orca_state.activeScript
+        self._script = _scriptManager.getActiveScript()
         self.window = orca_state.activeWindow
         self.obj = None
 

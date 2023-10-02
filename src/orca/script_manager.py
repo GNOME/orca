@@ -294,6 +294,24 @@ class ScriptManager:
 
         return appScript
 
+    def getActiveScript(self):
+        """Returns the active script."""
+
+        tokens = ["SCRIPT MANAGER: Active script is:", orca_state.activeScript]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return orca_state.activeScript
+
+    def getActiveScriptApp(self):
+        """Returns the app associated with the active script."""
+
+        script = self.getActiveScript()
+        if script is None:
+            return None
+
+        tokens = ["SCRIPT MANAGER: Active script is app:", script.app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return script.app
+
     def setActiveScript(self, newScript, reason=None):
         """Set the new active script.
 
@@ -301,14 +319,15 @@ class ScriptManager:
         - newScript: the new script to be made active.
         """
 
-        if orca_state.activeScript == newScript:
+        script = self.getActiveScript()
+        if script == newScript:
             return
 
-        if orca_state.activeScript:
-            orca_state.activeScript.deactivate()
+        if script is not None:
+            script.deactivate()
 
         orca_state.activeScript = newScript
-        if not newScript:
+        if newScript is None:
             return
 
         newScript.activate()

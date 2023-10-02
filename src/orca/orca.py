@@ -203,7 +203,8 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return
 
-    if event and (orca_state.activeScript and not orca_state.activeScript.app):
+    script = _scriptManager.getActiveScript()
+    if event and (script and not script.app):
         app = AXObject.get_application(event.source)
         script = _scriptManager.getScript(app, event.source)
         _scriptManager.setActiveScript(script, "Setting locusOfFocus")
@@ -218,10 +219,8 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         orca_state.locusOfFocus = None
         return
 
-    if orca_state.activeScript:
-        tokens = ["ORCA: Active script is:", orca_state.activeScript]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if orca_state.activeScript.utilities.isZombie(obj):
+    if script is not None:
+        if script.utilities.isZombie(obj):
             tokens = ["ERROR: New locusOfFocus (", obj, ") is zombie. Not updating."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
@@ -237,12 +236,12 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     if not notifyScript:
         return
 
-    if not orca_state.activeScript:
+    if script is None:
         msg = "ORCA: Cannot notify active script because there isn't one"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return
 
-    orca_state.activeScript.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
+    script.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
 
 ########################################################################
 #                                                                      #
@@ -507,7 +506,8 @@ def showAppPreferencesGUI(script=None, inputEvent=None):
     for key in settings.userCustomizableSettings:
         prefs[key] = _settingsManager.getSetting(key)
 
-    script = script or orca_state.activeScript
+    if script is None:
+        script = _scriptManager.getActiveScript()
     _showPreferencesUI(script, prefs)
 
     return True
@@ -682,8 +682,10 @@ def shutdown(script=None, inputEvent=None):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    orca_state.activeScript.presentationInterrupt()
-    orca_state.activeScript.presentMessage(messages.STOP_ORCA, resetStyles=False)
+    script = _scriptManager.getActiveScript()
+    if script is not None:
+        script.presentationInterrupt()
+        script.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
     # Deactivate the event manager first so that it clears its queue and will not
     # accept new events. Then let the script manager unregister script event listeners.
@@ -759,11 +761,12 @@ def crashOnSignal(signum, frame):
     debug.printMessage(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
     _restoreXmodmap(_orcaModifiers)
-    try:
-        orca_state.activeScript.presentationInterrupt()
-        orca_state.activeScript.presentMessage(messages.STOP_ORCA, resetStyles=False)
-    except Exception:
-        pass
+
+    script = _scriptManager.getActiveScript()
+    if script is not None:
+        script.presentationInterrupt()
+        script.presentMessage(messages.STOP_ORCA, resetStyles=False)
+
     sys.exit(1)
 
 def main():
@@ -818,8 +821,8 @@ def main():
     except Exception:
         debug.printException(debug.LEVEL_SEVERE)
 
-    script = orca_state.activeScript
-    if script:
+    script = _scriptManager.getActiveScript()
+    if script is not None:
         window = script.utilities.activeWindow()
 
         if window and not orca_state.locusOfFocus:

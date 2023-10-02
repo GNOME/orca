@@ -44,10 +44,12 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import orca_state
+from . import script_manager
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 
+_scriptManager = script_manager.getManager()
 
 class LearnModePresenter:
     """Provides implementation of learn mode"""
@@ -108,7 +110,7 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = orca_state.activeScript
+            script = _scriptManager.getActiveScript()
 
         if script is not None:
             script.presentMessage(messages.VERSION)
@@ -133,7 +135,7 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = orca_state.activeScript
+            script = _scriptManager.getActiveScript()
 
         if script is not None:
             script.presentMessage(messages.LEARN_MODE_STOP)
@@ -156,21 +158,22 @@ class LearnModePresenter:
         if not isinstance(event, input_event.KeyboardEvent):
             return False
 
-        orca_state.activeScript.speakKeyEvent(event)
+        script = _scriptManager.getActiveScript()
+        script.speakKeyEvent(event)
         if event.isPrintableKey() and event.getClickCount() == 2 \
            and event.getHandler() is None:
-            orca_state.activeScript.phoneticSpellCurrentItem(event.event_string)
+            script.phoneticSpellCurrentItem(event.event_string)
 
         if event.event_string == "Escape":
             self.quit(script=None, event=event)
             return True
 
         if event.event_string == "F1" and not event.modifiers:
-            self.show_help(orca_state.activeScript, event)
+            self.show_help(script, event)
             return True
 
         if event.event_string in ["F2", "F3"] and not event.modifiers:
-            self.list_orca_shortcuts(orca_state.activeScript, event)
+            self.list_orca_shortcuts(script, event)
             return True
 
         self.present_command(event)
@@ -187,7 +190,8 @@ class LearnModePresenter:
             return True
 
         if handler.learnModeEnabled and handler.description:
-            orca_state.activeScript.presentMessage(handler.description)
+            script = _scriptManager.getActiveScript()
+            script.presentMessage(handler.description)
 
         return True
 

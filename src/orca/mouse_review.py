@@ -500,8 +500,9 @@ class MouseReviewer:
             self.activate()
             msg = messages.MOUSE_REVIEW_ENABLED
 
-        if orca_state.activeScript:
-            orca_state.activeScript.presentMessage(msg)
+        script = _scriptManager.getActiveScript()
+        if script is not None:
+            script.presentMessage(msg)
 
     def _update_workspace_windows(self):
         self._windows = [w for w in self._all_windows

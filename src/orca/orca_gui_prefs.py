@@ -46,6 +46,7 @@ from . import orca
 from . import orca_gtkbuilder
 from . import orca_gui_profile
 from . import orca_state
+from . import script_manager
 from . import settings
 from . import settings_manager
 from . import input_event
@@ -57,6 +58,7 @@ from . import speechserver
 from . import text_attribute_names
 from .ax_object import AXObject
 
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 try:
@@ -2850,7 +2852,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
         orca_state.capturingKeys = True
-        orca_state.activeScript.removeKeyGrabs()
+        _scriptManager.getActiveScript().removeKeyGrabs()
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 
@@ -2859,7 +2861,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca_state.capturingKeys = False
         self._capturedKey = []
-        orca_state.activeScript.refreshKeyGrabs("Done capturing keys")
+        _scriptManager.getActiveScript().refreshKeyGrabs("Done capturing keys")
         return
 
     def _processKeyCaptured(self, keyPressedEvent):
@@ -2967,7 +2969,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca_state.capturingKeys = False
         self._capturedKey = []
-        orca_state.activeScript.refreshKeyGrabs("Done capturing keys")
+        _scriptManager.getActiveScript().refreshKeyGrabs("Done capturing keys")
         myiter = treeModel.get_iter_from_string(path)
         try:
             originalBinding = treeModel.get_value(myiter, text)

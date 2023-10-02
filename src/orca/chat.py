@@ -32,11 +32,13 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import orca_state
+from . import script_manager
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 #############################################################################
@@ -582,7 +584,8 @@ class Chat:
         # wants chat messages spoken.
         #
         verbosity = _settingsManager.getAppSetting(self._script.app, 'chatMessageVerbosity')
-        if orca_state.activeScript.name != self._script.name \
+        script = _scriptManager.getActiveScript()
+        if script.name != self._script.name \
            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
             return
         elif not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:

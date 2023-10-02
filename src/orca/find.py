@@ -34,8 +34,11 @@ import re
 from . import debug
 from . import messages
 from . import orca_state
+from . import script_manager
 
 from .flat_review import Context
+
+_scriptManager = script_manager.getManager()
 
 
 class _SearchQueryMatch:
@@ -167,11 +170,12 @@ class SearchQuery:
             if not self.windowWrap or self._wrapped:
                 return False
             self._wrapped = True
+            script = _scriptManager.getActiveScript()
             if self.searchBackwards:
-                orca_state.activeScript.presentMessage(messages.WRAPPING_TO_BOTTOM)
+                script.presentMessage(messages.WRAPPING_TO_BOTTOM)
                 moved = context.goPrevious(Context.LINE, Context.WRAP_ALL)
             else:
-                orca_state.activeScript.presentMessage(messages.WRAPPING_TO_TOP)
+                script.presentMessage(messages.WRAPPING_TO_TOP)
                 moved = context.goNext(Context.LINE, Context.WRAP_ALL)
             return moved
 

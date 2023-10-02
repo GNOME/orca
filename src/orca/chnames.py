@@ -28,8 +28,10 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from . import mathsymbols
-from . import orca_state
+from . import script_manager
 from .orca_i18n import _
+
+_scriptManager = script_manager.getManager()
 
 # chnames is a dictionary where the keys represent a unicode character
 # and the values represent the common term used for the character.
@@ -810,8 +812,9 @@ def getCharacterName(character, preferMath=False):
     Returns a string representing the name for the character
     """
 
-    if not preferMath and orca_state.activeScript:
-        preferMath = orca_state.activeScript.utilities.isInMath()
+    script = _scriptManager.getActiveScript()
+    if not preferMath and script:
+        preferMath = script.utilities.isInMath()
     if not preferMath:
         return character
     return mathsymbols.getCharacterName(character) or character

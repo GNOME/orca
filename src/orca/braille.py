@@ -42,7 +42,7 @@ from . import brltablenames
 from . import cmdnames
 from . import debug
 from . import logger
-from . import orca_state
+from . import script_manager
 from . import settings
 from . import settings_manager
 
@@ -53,6 +53,7 @@ from .orca_platform import tablesdir
 _logger = logger.getLogger()
 log = _logger.newLog("braille")
 _monitor = None
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 try:
@@ -523,8 +524,8 @@ class Component(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
-        if orca_state.activeScript and orca_state.activeScript.utilities.\
-           grabFocusBeforeRouting(self.accessible, offset):
+        script = _scriptManager.getActiveScript()
+        if script and script.utilities.grabFocusBeforeRouting(self.accessible, offset):
             try:
                 self.accessible.queryComponent().grabFocus()
             except Exception:
@@ -593,9 +594,10 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        if orca_state.activeScript and self.accessible:
+        script = _scriptManager.getActiveScript()
+        if script and self.accessible:
             [string, self.caretOffset, self.lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(
+                 script.getTextLineAtCaret(
                      self.accessible, startOffset=startOffset, endOffset=endOffset)
         else:
             string = ""
@@ -654,9 +656,8 @@ class Text(Region):
         if not _regionWithFocus:
             return False
 
-        [string, caretOffset, lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
-
+        script = _scriptManager.getActiveScript()
+        [string, caretOffset, lineOffset] = script.getTextLineAtCaret(self.accessible)
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
         if lineOffset != self.lineOffset:
@@ -701,8 +702,8 @@ class Text(Region):
         if caretOffset < 0:
             return
 
-        orca_state.activeScript.utilities.setCaretOffset(
-            self.accessible, caretOffset)
+        script = _scriptManager.getActiveScript()
+        script.utilities.setCaretOffset(self.accessible, caretOffset)
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -730,7 +731,7 @@ class Text(Region):
         attrIndicator = settings.textAttributesBrailleIndicator
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
-        script = orca_state.activeScript
+        script = _scriptManager.getActiveScript()
         if script is None:
             msg = "BRAILLE: Cannot get attribute mask without active script."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -892,8 +893,8 @@ class ReviewText(Region):
         been scrolled off the display."""
 
         caretOffset = self.getCaretOffset(offset)
-        orca_state.activeScript.utilities.setCaretOffset(
-            self.accessible, caretOffset)
+        script = _scriptManager.getActiveScript()
+        script.utilities.setCaretOffset(self.accessible, caretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential
@@ -1772,12 +1773,13 @@ def _processBrailleEvent(event):
 
     _printBrailleEvent(debug.LEVEL_FINE, event)
 
-    if orca_state.activeScript and event['command'] not in dontInteruptSpeechKeys:
+    script = _scriptManager.getActiveScript()
+    if script and event['command'] not in dontInteruptSpeechKeys:
         # We aren't killing flash here because we were not doing so before, when
         # this logic was in orca.py; instead, we were calling speech.stop. But that
         # code predated the existence of presentationInterrupt. Maybe flash should
         # be killed as well?
-        orca_state.activeScript.presentationInterrupt(killFlash=False)
+        script.presentationInterrupt(killFlash=False)
 
     consumed = False
 

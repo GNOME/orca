@@ -35,10 +35,13 @@ import re
 from . import braille
 from . import debug
 from . import orca_state
+from . import script_manager
 from . import settings
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+
+_scriptManager = script_manager.getManager()
 
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
@@ -324,10 +327,11 @@ class StateZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
+        script = _scriptManager.getActiveScript()
         if attr == "string":
-            generator = orca_state.activeScript.speechGenerator
+            generator = script.speechGenerator
         else:
-            generator = orca_state.activeScript.brailleGenerator
+            generator = script.brailleGenerator
 
         result = generator.getStateIndicator(self.accessible, role=self.role)
         if result:
@@ -348,10 +352,11 @@ class ValueZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
+        script = _scriptManager.getActiveScript()
         if attr == "string":
-            generator = orca_state.activeScript.speechGenerator
+            generator = script.speechGenerator
         else:
-            generator = orca_state.activeScript.brailleGenerator
+            generator = script.brailleGenerator
 
         result = ""
 
