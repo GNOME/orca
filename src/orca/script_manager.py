@@ -118,7 +118,7 @@ class ScriptManager:
                     name = names[0]
                     break
 
-        tokens = ["SCRIPT MANAGER: Mapped", app, "to", "name"]
+        tokens = ["SCRIPT MANAGER: Mapped", app, "to", name]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return name
 
