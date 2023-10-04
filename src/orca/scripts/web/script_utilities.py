@@ -4022,6 +4022,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if self.isCustomElement(obj) and self.hasExplicitName(obj) \
+           and AXUtilities.is_section(obj) \
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in AXObject.iter_children(obj):
