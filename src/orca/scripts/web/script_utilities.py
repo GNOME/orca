@@ -4187,6 +4187,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         if self.isCustomElement(obj) and self.hasExplicitName(obj) \
+           and obj.getRole() == pyatspi.ROLE_SECTION \
            and 'Text' in pyatspi.listInterfaces(obj) \
            and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
             for child in obj:
