@@ -27,10 +27,10 @@ __license__   = "LGPL"
 import importlib
 
 from . import debug
-from . import orca_state
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, toolkits
+
 
 class ScriptManager:
 
@@ -215,25 +215,6 @@ class ScriptManager:
         tokens = ["WARNING: Failed to get a replacement script for", script.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
-
-    def getScriptForMouseButtonEvent(self, event):
-        isActive = AXUtilities.is_active(orca_state.activeWindow)
-        tokens = ["SCRIPT MANAGER:", orca_state.activeWindow, "is active:", isActive]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if isActive and self._activeScript:
-            return self._activeScript
-
-        script = self.getDefaultScript()
-        activeWindow = script.utilities.activeWindow()
-        if not activeWindow:
-            return script
-
-        focusedObject = AXUtilities.get_focused_object(activeWindow)
-        if focusedObject:
-            return self.getScript(AXObject.get_application(focusedObject), focusedObject)
-
-        return self.getScript(AXObject.get_application(activeWindow), activeWindow)
 
     def getScript(self, app, obj=None, sanityCheck=False):
         """Get a script for an app (and make it if necessary).  This is used

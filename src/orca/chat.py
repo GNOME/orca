@@ -27,17 +27,18 @@ __license__   = "LGPL"
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca_state
 from . import script_manager
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
@@ -558,7 +559,7 @@ class Chat:
         message, chatRoomName = None, None
 
         if _settingsManager.getSetting('chatRoomHistories'):
-            conversation = self.getConversation(orca_state.locusOfFocus)
+            conversation = self.getConversation(_focusManager.get_locus_of_focus())
             if conversation:
                 message = conversation.getNthMessage(messageNumber)
                 chatRoomName = conversation.name
@@ -897,7 +898,7 @@ class Chat:
                 if text.lower().strip() != self._script.name.lower().strip():
                     name = text
             except Exception:
-                pass     
+                pass
 
         return name
 

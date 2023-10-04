@@ -25,7 +25,7 @@ __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
 import gi
-gi.require_version('Atspi', '2.0') 
+gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
 from gi.repository import GLib
 import queue
@@ -33,6 +33,7 @@ import threading
 import time
 
 from . import debug
+from . import focus_manager
 from . import input_event
 from . import orca_state
 from . import script_manager
@@ -40,6 +41,7 @@ from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 
 class EventManager:
@@ -323,18 +325,13 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event.type.endswith('remove'):
-                if event.any_data == orca_state.locusOfFocus:
+                if _focusManager.focus_is_dead():
+                    return False
+
+                if event.any_data == _focusManager.get_locus_of_focus():
                     msg = 'EVENT MANAGER: Locus of focus is being destroyed'
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return False
-
-                if AXObject.is_dead(orca_state.locusOfFocus):
-                    msg = 'EVENT MANAGER: Locus of focus is dead.'
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
-                    return False
-
-                tokens = ["EVENT MANAGER: Locus of focus:", orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
             if defunct:
@@ -550,25 +547,15 @@ class EventManager:
         if debug.debugEventQueue:
             self._enqueueCount -= 1
 
-    def _isNoFocus(self):
-        script = _scriptManager.getActiveScript()
-        if script is not None:
-            return False
-
-        if orca_state.locusOfFocus or orca_state.activeWindow:
-            return False
-
-        msg = 'EVENT MANAGER: No focus'
-        debug.printMessage(debug.LEVEL_SEVERE, msg, True)
-        return True
-
     def _onNoFocus(self):
-        if not self._isNoFocus():
+        if _focusManager.focus_and_window_are_unknown():
             return False
 
-        defaultScript = _scriptManager.getDefaultScript()
-        _scriptManager.setActiveScript(defaultScript, 'No focus')
-        defaultScript.idleMessage()
+        if _scriptManager.getActiveScript() is None:
+            defaultScript = _scriptManager.getDefaultScript()
+            _scriptManager.setActiveScript(defaultScript, 'No focus')
+            defaultScript.idleMessage()
+
         return False
 
     def _dequeue(self):
@@ -729,7 +716,11 @@ class EventManager:
         """Returns the script associated with event."""
 
         if event.type.startswith("mouse:"):
-            return _scriptManager.getScriptForMouseButtonEvent(event)
+            mouseEvent = input_event.MouseButtonEvent(event)
+            script = _scriptManager.getScript(mouseEvent.app, mouseEvent.obj, False)
+            tokens = ["EVENT MANAGER: Script for event is", script]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return script
 
         script = None
         app = AXObject.get_application(event.source)
@@ -759,7 +750,7 @@ class EventManager:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = _scriptManager.getScript(app, event.source, sanityCheck=check)
-        tokens = ["EVENT MANAGER: Script for event is ", script]
+        tokens = ["EVENT MANAGER: Script for event is", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
 
@@ -798,7 +789,7 @@ class EventManager:
                 and event.detail1 and AXUtilities.is_frame(event.source)
 
         if windowActivation:
-            if event.source != orca_state.activeWindow:
+            if event.source != _focusManager.get_active_window():
                 return True, "Window activation"
             else:
                 return False, "Window activation for already-active window"
@@ -853,7 +844,7 @@ class EventManager:
         if event.type not in ignore:
             return False
 
-        return event.source != orca_state.locusOfFocus
+        return event.source != _focusManager.get_locus_of_focus()
 
     def _inDeluge(self):
         size = self._eventQueue.qsize()
@@ -864,7 +855,7 @@ class EventManager:
 
         return False
 
-    def _processDuringFlood(self, event):
+    def _processDuringFlood(self, event, focus=None):
         """Returns true if this event should be processed during a flood."""
 
         if self._eventSourceIsDead(event):
@@ -889,7 +880,8 @@ class EventManager:
         if event.type not in ignore:
             return True
 
-        return event.source == orca_state.locusOfFocus
+        focus = focus or _focusManager.get_locus_of_focus()
+        return event.source == focus
 
     def _prioritizeDuringFlood(self, event):
         """Returns true if this event should be prioritized during a flood."""
@@ -926,13 +918,14 @@ class EventManager:
         oldSize = self._eventQueue.qsize()
 
         newQueue = queue.Queue(0)
+        focus = _focusManager.get_locus_of_focus()
         while not self._eventQueue.empty():
             try:
                 event = self._eventQueue.get()
             except Exception:
                 continue
 
-            if self._processDuringFlood(event):
+            if self._processDuringFlood(event, focus):
                 newQueue.put(event)
                 self._queuePrintln(event, isPrune=False)
             self._eventQueue.task_done()
@@ -999,11 +992,8 @@ class EventManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
-               and orca_state.activeWindow == event.source:
-                msg = 'EVENT MANAGER: Clearing active window, script, and locus of focus'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca_state.locusOfFocus = None
-                orca_state.activeWindow = None
+               and _focusManager.get_active_window() == event.source:
+                _focusManager.clear_state("Active window is dead or defunct")
                 _scriptManager.setActiveScript(None, "Active window is dead or defunct")
             return
 
@@ -1066,11 +1056,8 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        tokens = ["EVENT MANAGER: locusOfFocus:", orca_state.locusOfFocus]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
         if debug.LEVEL_INFO >= debug.debugLevel and script:
-            attributes = activeScript.getTransferableAttributes()
+            attributes = script.getTransferableAttributes()
             for key, value in attributes.items():
                 msg = f"EVENT MANAGER: {key}: {value}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)

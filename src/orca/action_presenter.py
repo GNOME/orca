@@ -34,12 +34,13 @@ from gi.repository import Gdk, Gtk
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca
-from . import orca_state
 from .ax_object import AXObject
+
+_focusManager = focus_manager.getManager()
 
 class ActionPresenter:
     """Provides menu for performing accessible actions on an object."""
@@ -97,7 +98,8 @@ class ActionPresenter:
     def show_actions_menu(self, script, event=None):
         """Shows a menu with all the available accessible actions."""
 
-        obj = orca.getActiveModeAndObjectOfInterest()[1] or orca_state.locusOfFocus
+        obj = _focusManager.get_active_mode_and_object_of_interest()[1] \
+            or _focusManager.get_locus_of_focus()
         if obj is None:
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF

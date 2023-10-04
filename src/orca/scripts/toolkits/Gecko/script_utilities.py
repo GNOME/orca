@@ -38,10 +38,13 @@ import re
 import time
 
 from orca import debug
+from orca import focus_manager
 from orca import orca_state
 from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+
+_focusManager = focus_manager.getManager()
 
 
 class Utilities(web.Utilities):
@@ -173,11 +176,6 @@ class Utilities(web.Utilities):
 
         return False
 
-    def canBeActiveWindow(self, window, clearCache=False):
-        # We apparently having missing events from Gecko requiring
-        # we update the cache. This is not performant. :(
-        return super().canBeActiveWindow(window, True)
-
     def treatAsEntry(self, obj):
         if not obj or self.inDocumentContent(obj):
             return super().treatAsEntry(obj)
@@ -263,7 +261,7 @@ class Utilities(web.Utilities):
 
     def inFindContainer(self, obj=None):
         if not obj:
-            obj = orca_state.locusOfFocus
+            obj = _focusManager.get_locus_of_focus()
 
         if not obj or self.inDocumentContent(obj):
             return False

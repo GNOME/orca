@@ -32,18 +32,6 @@ __license__   = "LGPL"
 # easily cause circular imports.
 #
 
-# The Accessible that has visual focus.
-#
-locusOfFocus = None
-
-# The currently active window.
-#
-activeWindow = None
-
-# The currently active mode (focus, say all, flat review, etc.) and obj
-activeMode = None
-objOfInterest = None
-
 # Used to capture keys to redefine key bindings by the user.
 #
 capturingKeys   = False

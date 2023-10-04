@@ -25,12 +25,14 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team"
 __license__   = "LGPL"
 
+import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.gtk as gtk
-import orca.orca_state as orca_state
 from orca.ax_utilities import AXUtilities
 
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
+
+_focusManager = focus_manager.getManager()
 
 class Script(gtk.Script):
 
@@ -56,15 +58,16 @@ class Script(gtk.Script):
     def onNameChanged(self, event):
         """Callback for accessible name change events."""
 
+        focus = _focusManager.get_locus_of_focus()
+
         # Present page changes in the previewer.
-        if AXUtilities.is_label(event.source) \
-           and self.utilities.isDocument(orca_state.locusOfFocus):
+        if AXUtilities.is_label(event.source) and self.utilities.isDocument(focus):
             self.presentMessage(event.any_data)
 
             # HACK: Reposition the caret offset from the last character to the
             # first so that SayAll will say all.
             try:
-                text = orca_state.locusOfFocus.queryText()
+                text = focus.queryText()
             except NotImplementedError:
                 pass
             else:

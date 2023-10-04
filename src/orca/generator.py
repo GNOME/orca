@@ -105,7 +105,9 @@ class Generator:
         # Verify the formatting strings are OK.  This is only
         # for verification and does not effect the function of
         # Orca at all.
-
+        #
+        # TODO - JD: Given the above, can this just be killed?
+        #
         # Populate the entire globals with empty arrays
         # for the results of all the legal method names.
         #

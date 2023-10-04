@@ -28,15 +28,15 @@ __license__   = "LGPL"
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca
-from . import orca_state
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 
 class ObjectNavigator:
     """Provides ability to navigate objects hierarchically."""
@@ -216,9 +216,10 @@ class ObjectNavigator:
     def update(self):
         """Updates the navigator focus to Orca's object of interest."""
 
-        mode, region = orca.getActiveModeAndObjectOfInterest()
-        obj = region or orca_state.locusOfFocus
-        if self._last_locus_of_focus == obj or (region is None and mode == orca.FLAT_REVIEW):
+        mode, region = _focusManager.get_active_mode_and_object_of_interest()
+        obj = region or _focusManager.get_locus_of_focus()
+        if self._last_locus_of_focus == obj \
+           or (region is None and mode == focus_manager.FLAT_REVIEW):
             return
 
         self._navigator_focus = obj
@@ -229,7 +230,8 @@ class ObjectNavigator:
 
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        orca.emitRegionChanged(self._navigator_focus, mode=orca.OBJECT_NAVIGATOR)
+        _focusManager.emit_region_changed(
+            self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
     def up(self, script, event=None):

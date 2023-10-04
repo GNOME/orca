@@ -34,11 +34,11 @@ from orca import caret_navigation
 from orca import cmdnames
 from orca import keybindings
 from orca import debug
+from orca import focus_manager
 from orca import guilabels
 from orca import input_event
 from orca import liveregions
 from orca import messages
-from orca import orca
 from orca import orca_state
 from orca import settings
 from orca import settings_manager
@@ -57,6 +57,7 @@ from .speech_generator import SpeechGenerator
 from .tutorial_generator import TutorialGenerator
 from .script_utilities import Utilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 
@@ -567,16 +568,17 @@ class Script(default.Script):
     def getEnabledKeyBindings(self):
         all = super().getEnabledKeyBindings()
         ret = []
+        focus = _focusManager.get_locus_of_focus()
         for b in all:
             if b.handler and self.caretNavigation.handles_navigation(b.handler):
-                if self.useCaretNavigationModel(None, False):
+                if self.useCaretNavigationModel(None, False, focus=focus):
                     ret.append(b)
             elif b.handler and b.handler.function in self.structuralNavigation.functions:
-                if self.useStructuralNavigationModel(False):
+                if self.useStructuralNavigationModel(False, focus=focus):
                     ret.append(b)
             elif b.handler and b.handler.function in self.liveRegionManager.functions:
                 # This is temporary.
-                if self.useStructuralNavigationModel(False):
+                if self.useStructuralNavigationModel(False, focus=focus):
                     ret.append(b)
             else:
                 ret.append(b)
@@ -738,7 +740,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return super().sayAll(inputEvent, obj, offset)
 
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         tokens = ["WEB: SayAll called for document content", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
@@ -756,7 +758,7 @@ class Script(default.Script):
         except IndexError:
             return False
 
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.setCaretContext(obj, start)
 
         prevObj, prevOffset = self.utilities.findPreviousCaretInOrder(obj, start)
@@ -775,7 +777,7 @@ class Script(default.Script):
         except IndexError:
             return False
 
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.setCaretContext(obj, end)
 
         nextObj, nextOffset = self.utilities.findNextCaretInOrder(obj, end)
@@ -796,7 +798,7 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
-                    orca.emitRegionChanged(context.obj, context.currentOffset)
+                    _focusManager.emit_region_changed(context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
@@ -805,9 +807,10 @@ class Script(default.Script):
             self._sayAllContexts = []
             return
 
-        orca.setLocusOfFocus(None, context.obj, notifyScript=False)
-        orca.emitRegionChanged(
-            context.obj, context.currentOffset, context.currentEndOffset, orca.SAY_ALL)
+        _focusManager.set_locus_of_focus(None, context.obj, notify_script=False)
+        _focusManager.emit_region_changed(
+            context.obj, context.currentOffset, context.currentEndOffset,
+            focus_manager.SAY_ALL)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
     def inFocusMode(self):
@@ -1002,7 +1005,7 @@ class Script(default.Script):
         contents = self.utilities.getObjectContentsAtOffset(obj, offset, useCache)
         self.displayContents(contents)
         self.speakContents(contents, **args)
- 
+
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
 
@@ -1132,7 +1135,7 @@ class Script(default.Script):
         self.refreshBraille(False)
         return True
 
-    def useCaretNavigationModel(self, keyboardEvent, debugOutput=True):
+    def useCaretNavigationModel(self, keyboardEvent, debugOutput=True, focus=None):
         """Returns True if caret navigation should be used."""
 
         if not _settingsManager.getSetting('caretNavigationEnabled'):
@@ -1147,11 +1150,10 @@ class Script(default.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.utilities.inDocumentContent():
+        if not self.utilities.inDocumentContent(focus):
             if debugOutput:
-                tokens = ["WEB: Not using caret navigation: locusOfFocus",
-                          orca_state.locusOfFocus, "is not in document content."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                msg = "WEB: Not using caret navigation: not in document content."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if keyboardEvent and keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
@@ -1161,12 +1163,11 @@ class Script(default.Script):
             return False
 
         if debugOutput:
-            tokens = ["WEB: Using caret navigation: in browse mode and locusOfFocus",
-                      orca_state.locusOfFocus, "is in document content."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = "WEB: Using caret navigation: browse mode active in document content."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         return True
 
-    def useStructuralNavigationModel(self, debugOutput=True):
+    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
         """Returns True if structural navigation should be used."""
 
         if not self.structuralNavigation.enabled:
@@ -1181,17 +1182,15 @@ class Script(default.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.utilities.inDocumentContent():
+        if not self.utilities.inDocumentContent(focus):
             if debugOutput:
-                tokens = ["WEB: Not using structural navigation: locusOfFocus",
-                          orca_state.locusOfFocus, "is not in document content."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                msg = "WEB: Not using structural navigation: not in document content."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if debugOutput:
-            tokens = ["WEB: Using structural navigation: in browse mode and locusOfFocus",
-                      orca_state.locusOfFocus, "is in document content."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = "WEB: Using structural navigation: browse mode active in document content."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         return True
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
@@ -1348,7 +1347,8 @@ class Script(default.Script):
 
         caretOffset = 0
         if self.utilities.inFindContainer(oldFocus) \
-           or (self.utilities.isDocument(newFocus) and oldFocus == orca_state.activeWindow):
+           or (self.utilities.isDocument(newFocus) \
+               and oldFocus == _focusManager.get_active_window()):
             contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
             if contextObj and not self.utilities.isZombie(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
@@ -1364,7 +1364,6 @@ class Script(default.Script):
 
         self.utilities.setCaretContext(newFocus, caretOffset, document)
         self.updateBraille(newFocus, documentFrame=document)
-        orca.emitRegionChanged(newFocus, caretOffset)
 
         contents = None
         args = {}
@@ -1468,7 +1467,7 @@ class Script(default.Script):
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return True
 
         return False
@@ -1496,8 +1495,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
+        focus = _focusManager.get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) \
-           and not self.utilities.isOrDescendsFrom(orca_state.locusOfFocus, event.source):
+           and not self.utilities.isOrDescendsFrom(focus, event.source):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1550,9 +1550,9 @@ class Script(default.Script):
         if AXObject.is_dead(obj):
             obj = None
 
-        if not AXObject.is_dead(orca_state.locusOfFocus) \
-           and not self.utilities.inDocumentContent(orca_state.locusOfFocus) \
-           and AXUtilities.is_focused(orca_state.locusOfFocus):
+        if not _focusManager.focus_is_dead() \
+           and not self.utilities.inDocumentContent(focus) \
+           and AXUtilities.is_focused(focus):
             msg = "WEB: Not presenting content, focus is outside of document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1570,7 +1570,7 @@ class Script(default.Script):
            and self.utilities.isTopLevelWebApp(event.source):
             tokens = ["WEB: Setting locusOfFocus to", obj, "with sticky focus mode"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             self.enableStickyFocusMode(None, True)
             return True
 
@@ -1585,25 +1585,25 @@ class Script(default.Script):
         if self.utilities.isFocusModeWidget(obj):
             tokens = ["WEB: Setting locus of focus to focusModeWidget", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             return True
 
         if self.utilities.isLink(obj) and AXUtilities.is_focused(obj):
             tokens = ["WEB: Setting locus of focus to focused link", obj, ". No SayAll."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             return True
 
         if offset > 0:
             tokens = ["WEB: Setting locus of focus to context obj", obj, ". No SayAll"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             return True
 
-        if not AXUtilities.is_focused(orca_state.locusOfFocus):
+        if not AXUtilities.is_focused(_focusManager.get_locus_of_focus()):
             tokens = ["WEB: Setting locus of focus to context obj", obj, "(no notification)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, obj, False)
+            _focusManager.set_locus_of_focus(event, obj, False)
 
         self.updateBraille(obj)
         if self.utilities.documentFragment(event.source):
@@ -1650,7 +1650,7 @@ class Script(default.Script):
             return False
 
         obj, offset = self.utilities.getCaretContext(document, False, False)
-        tokens = ["WEB: Context: ", obj, ", ", offset, "(focus: ", orca_state.locusOfFocus, ")"]
+        tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._lastCommandWasCaretNav:
@@ -1683,9 +1683,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
             notify = not self.utilities.isEntryDescendant(event.source)
-            orca.setLocusOfFocus(event, event.source, notify, True)
-            if orca_state.locusOfFocus == event.source:
-                self.updateBraille(event.source)
+            _focusManager.set_locus_of_focus(event, event.source, notify, True)
             return True
 
         if self.utilities.lastInputEventWasTab():
@@ -1701,7 +1699,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Presenting find results"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
-            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
+            self._saveFocusedObjectInfo(_focusManager.get_locus_of_focus())
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -1721,7 +1719,8 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
-        if self.utilities.isItemForEditableComboBox(orca_state.locusOfFocus, event.source) \
+        focus = _focusManager.get_locus_of_focus()
+        if self.utilities.isItemForEditableComboBox(focus, event.source) \
            and not self.utilities.lastInputEventWasCharNav() \
            and not self.utilities.lastInputEventWasLineBoundaryNav():
             msg = "WEB: Event ignored: Editable combobox noise"
@@ -1771,7 +1770,7 @@ class Script(default.Script):
 
         elif self.utilities.isTextField(event.source) \
            and AXUtilities.is_focused(event.source) \
-           and event.source != orca_state.locusOfFocus:
+           and event.source != focus:
             msg = "WEB: Focused text field is not (yet) the locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
@@ -1779,7 +1778,7 @@ class Script(default.Script):
         tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.setCaretContext(obj, offset, document)
-        orca.setLocusOfFocus(event, obj, notify, force)
+        _focusManager.set_locus_of_focus(event, obj, notify, force)
         return handled
 
     def onCheckedChanged(self, event):
@@ -1822,23 +1821,22 @@ class Script(default.Script):
         isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document and not isLiveRegion:
-            if event.source == orca_state.locusOfFocus:
-                tokens = ["WEB: Dumping cache and context: source is focus",
-                          orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            focus = _focusManager.get_locus_of_focus()
+            if event.source == focus:
+                msg = "WEB: Dumping cache and context: source is focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif AXObject.is_dead(orca_state.locusOfFocus):
+            elif _focusManager.focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
-            elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
-                tokens = ["WEB: Dumping cache: source is ancestor of focus",
-                          orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            elif AXObject.find_ancestor(focus, lambda x: x == event.source):
+                msg = "WEB: Dumping cache and context: source is ancestor of focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
-                tokens = ["WEB: Not dumping full cache. Focus is", orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                msg = "WEB: Not dumping full cache"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
 
         elif isLiveRegion:
@@ -1895,7 +1893,7 @@ class Script(default.Script):
                 notify = self.utilities.queryNonEmptyText(focused) is None
                 tokens = ["WEB: Setting locusOfFocus and caret context to", focused]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                orca.setLocusOfFocus(event, focused, notify)
+                _focusManager.set_locus_of_focus(event, focused, notify)
                 self.utilities.setCaretContext(focused, 0)
             return True
 
@@ -1934,23 +1932,22 @@ class Script(default.Script):
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document:
-            if event.source == orca_state.locusOfFocus:
-                tokens = ["WEB: Dumping cache and context: source is focus",
-                          orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            focus = _focusManager.get_locus_of_focus()
+            if event.source == focus:
+                msg = "WEB: Dumping cache and context: source is focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif AXObject.is_dead(orca_state.locusOfFocus):
+            elif _focusManager.focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
-            elif AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
-                tokens = ["WEB: Dumping cache: source is ancestor of focus",
-                          orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            elif AXObject.find_ancestor(focus, lambda x: x == event.source):
+                msg = "WEB: Dumping cache and context: source is ancestor of focus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
-                tokens = ["WEB: Not dumping full cache. Focus is", orca_state.locusOfFocus]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                msg = "WEB: Not dumping full cache"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
 
         if self.utilities.handleEventForRemovedChild(event):
@@ -1968,14 +1965,15 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
-            tokens = ["WEB: locusOfFocus (", orca_state.locusOfFocus, ") is not in this table"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        focus = _focusManager.get_locus_of_focus()
+        if event.source != self.utilities.getTable(focus):
+            msg = "WEB: focus is not in this table"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
-        header = self.utilities.containingTableHeader(orca_state.locusOfFocus)
+        header = self.utilities.containingTableHeader(focus)
         if header:
             self.presentMessage(self.utilities.getSortOrderDescription(header, True))
 
@@ -2034,11 +2032,11 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
+        focus = _focusManager.get_locus_of_focus()
         obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
-        tokens = ["WEB: Caret context is", obj, ", ", offset,
-                  "(focus: ", orca_state.locusOfFocus, ")"]
+        tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if not obj or self.utilities.isZombie(obj) and event.source == orca_state.locusOfFocus:
+        if not obj or self.utilities.isZombie(obj) and event.source == focus:
             msg = "WEB: Setting caret context to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, 0)
@@ -2075,7 +2073,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        prevDocument = self.utilities.getDocumentForObject(orca_state.locusOfFocus)
+        focus = _focusManager.get_locus_of_focus()
+        prevDocument = self.utilities.getDocumentForObject(focus)
         if prevDocument != document:
             tokens = ["WEB: document changed from", prevDocument, "to", document]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2085,14 +2084,14 @@ class Script(default.Script):
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_tool_tip(event.source) \
-              and AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source):
+              and AXObject.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.source)
+                _focusManager.set_locus_of_focus(event, event.source)
                 return True
 
         if AXUtilities.is_editable(event.source):
@@ -2103,7 +2102,7 @@ class Script(default.Script):
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return True
 
         if self.utilities.handleEventFromContextReplicant(event, event.source):
@@ -2112,8 +2111,7 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        tokens = ["WEB: Caret context is", obj, ", ", offset,
-                  "(focus: ", orca_state.locusOfFocus, ")"]
+        tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not obj or self.utilities.isZombie(obj) or prevDocument != document:
@@ -2123,10 +2121,10 @@ class Script(default.Script):
 
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
-                notify = self.utilities.inFindContainer(orca_state.locusOfFocus)
+                notify = self.utilities.inFindContainer(focus)
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                orca.setLocusOfFocus(event, obj, notify)
+                _focusManager.set_locus_of_focus(event, obj, notify)
                 if not notify and prevDocument is None:
                     self.refreshKeyGrabs("updating locus of focus without notification")
                 self.utilities.setCaretContext(obj, offset)
@@ -2162,7 +2160,7 @@ class Script(default.Script):
         if self.utilities.lastInputEventWasPageNav():
             msg = "WEB: Event handled: Focus changed due to scrolling"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             self.utilities.setCaretContext(obj, offset)
             return True
 
@@ -2187,7 +2185,7 @@ class Script(default.Script):
 
         tokens = ["WEB: Event handled: Setting locusOfFocus to", obj, "(", cause, ")"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        orca.setLocusOfFocus(event, obj)
+        _focusManager.set_locus_of_focus(event, obj)
         return True
 
     def onMouseButton(self, event):
@@ -2216,14 +2214,15 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
-            tokens = ["WEB: locusOfFocus (", orca_state.locusOfFocus, ") is not in this table"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        focus = _focusManager.get_locus_of_focus()
+        if event.source != self.utilities.getTable(focus):
+            msg = "WEB: focus is not in this table"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
-        header = self.utilities.containingTableHeader(orca_state.locusOfFocus)
+        header = self.utilities.containingTableHeader(focus)
         if header:
             self.presentMessage(self.utilities.getSortOrderDescription(header, True))
 
@@ -2237,11 +2236,12 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
+        focus = _focusManager.get_locus_of_focus()
         if self.utilities.eventIsBrowserUIPageSwitch(event):
             msg = "WEB: Event believed to be browser UI page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             if event.detail1:
-                self.presentObject(event.source, priorObj=orca_state.locusOfFocus, interrupt=True)
+                self.presentObject(event.source, priorObj=focus, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
@@ -2249,7 +2249,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if orca_state.locusOfFocus != event.source:
+        if focus != event.source:
             msg = "WEB: Ignoring because event source is not locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2274,10 +2274,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            tokens = ["WEB: Event ignored: locusOfFocus", orca_state.locusOfFocus,
-                      "is not in document content"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not self.utilities.inDocumentContent(_focusManager.get_locus_of_focus()):
+            msg = "WEB: Event ignored: locusOfFocus is not in document content"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -2403,7 +2402,7 @@ class Script(default.Script):
 
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if obj:
-                orca.setLocusOfFocus(event, obj, notifyScript=False)
+                _focusManager.set_locus_of_focus(event, obj, notify_script=False)
 
         if self.utilities.isZombie(obj):
             msg = "WEB: Unable to get non-null, non-zombie context object"
@@ -2483,7 +2482,7 @@ class Script(default.Script):
         self.utilities.clearContentCache()
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
-        if AXObject.is_dead(orca_state.locusOfFocus):
+        if _focusManager.focus_is_dead():
             msg = "WEB: Dumping cache: dead focus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.dumpCache(document, preserveContext=True)
@@ -2491,7 +2490,7 @@ class Script(default.Script):
             if AXUtilities.is_focused(event.source):
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(None, event.source, force=True)
+                _focusManager.set_locus_of_focus(None, event.source, force=True)
                 return True
 
         else:
@@ -2505,8 +2504,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
+        sourceIsFocus = event.source == _focusManager.get_locus_of_focus()
         if not AXUtilities.is_editable(event.source):
-            if event.source != orca_state.locusOfFocus:
+            if not sourceIsFocus:
                 msg = "WEB: Done processing non-editable, non-locusOfFocus source"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
@@ -2514,12 +2514,11 @@ class Script(default.Script):
             if self.utilities.isClickableElement(event.source):
                 msg = "WEB: Event handled: Re-setting locusOfFocus to changed clickable"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(None, event.source, force=True)
+                _focusManager.set_locus_of_focus(None, event.source, force=True)
                 return True
 
-        if AXUtilities.is_text_input(event.source) \
-           and AXUtilities.is_focused(event.source) \
-           and event.source != orca_state.locusOfFocus:
+        if not sourceIsFocus and AXUtilities.is_text_input(event.source) \
+           and AXUtilities.is_focused(event.source):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2544,10 +2543,10 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            tokens = ["WEB: Event ignored: locusOfFocus", orca_state.locusOfFocus,
-                      "is not in document content"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        focus = _focusManager.get_locus_of_focus()
+        if not self.utilities.inDocumentContent(focus):
+            msg = "WEB: Locus of focus is not in document content"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
@@ -2571,9 +2570,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_text_input(event.source) \
-           and AXUtilities.is_focused(event.source) \
-           and event.source != orca_state.locusOfFocus:
+        if event.source != focus and AXUtilities.is_text_input(event.source) \
+           and AXUtilities.is_focused(event.source):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True

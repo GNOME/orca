@@ -37,16 +37,17 @@ from gi.repository import Gdk
 from gi.repository import GLib
 
 from . import debug
+from . import focus_manager
 from . import keybindings
 from . import keynames
 from . import messages
-from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 
 KEYBOARD_EVENT     = "keyboard"
@@ -258,8 +259,8 @@ class KeyboardEvent(InputEvent):
                                      orca_state.lastNonModifierKeyEvent]
         self._script = _scriptManager.getActiveScript()
         self._app = None
-        self._window = orca_state.activeWindow
-        self._obj = orca_state.locusOfFocus
+        self._window = _focusManager.get_active_window()
+        self._obj = _focusManager.get_locus_of_focus()
         self._handler = None
         self._consumer = None
         self._should_consume = None
@@ -290,11 +291,11 @@ class KeyboardEvent(InputEvent):
 
         if self._script:
             self._app = self._script.app
-            if not self._window:
-                orca.setActiveWindow(self._script.utilities.activeWindow())
-                self._window = orca_state.activeWindow
-                tokens = ["INPUT EVENT: Updated window and active window to", self._window]
+            if not _focusManager.can_be_active_window(self._window):
+                self._window = _focusManager.find_active_window()
+                tokens = ["INPUT EVENT: Updating window and active window to", self._window]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                _focusManager.set_active_window(self._window)
 
         if self._window and self._app != AXObject.get_application(self._window):
             self._script = _scriptManager.getScript(AXObject.get_application(self._window))
@@ -1001,8 +1002,9 @@ class MouseButtonEvent(InputEvent):
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
         self._script = _scriptManager.getActiveScript()
-        self.window = orca_state.activeWindow
+        self.window = _focusManager.get_active_window()
         self.obj = None
+        self.app = None
 
         if self.pressed:
             self._validateCoordinates()
@@ -1010,14 +1012,18 @@ class MouseButtonEvent(InputEvent):
         if not self._script:
             return
 
-        if not self._script.utilities.canBeActiveWindow(self.window):
-            self.window = self._script.utilities.activeWindow()
+        if not _focusManager.can_be_active_window(self.window):
+            self.window = _focusManager.find_active_window()
 
         if not self.window:
             return
 
         self.obj = self._script.utilities.descendantAtPoint(
             self.window, self.x, self.y, event.any_data)
+        if self.obj is None:
+            self.app = AXObject.get_application(self.window)
+        else:
+            self.app = AXObject.get_application(self.obj)
 
     def _validateCoordinates(self):
         if not self._pointer:

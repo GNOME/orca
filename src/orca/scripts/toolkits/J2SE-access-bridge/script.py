@@ -29,10 +29,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.scripts.default as default
+import orca.focus_manager as focus_manager
 import orca.input_event as input_event
-import orca.orca as orca
 import orca.orca_state as orca_state
+import orca.scripts.default as default
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities
@@ -40,6 +40,8 @@ from orca.ax_utilities import AXUtilities
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 from .formatting import Formatting
+
+_focusManager = focus_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -63,7 +65,7 @@ class Script(default.Script):
         # double-speak some items and/or set the locusOfFocus to a
         # parent it shouldn't. See bgo#616582. [[[TODO - JD: remove
         # this hack if and when we get a fix for that bug]]]
-        # 
+        #
         self.lastDescendantChangedSource = None
 
     def getSpeechGenerator(self):
@@ -126,7 +128,7 @@ class Script(default.Script):
            or AXUtilities.is_tree(event.source)) \
            and AXUtilities.is_focused(event.source):
             newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
-            orca.setLocusOfFocus(event, newFocus)
+            _focusManager.set_locus_of_focus(event, newFocus)
         else:
             default.Script.onSelectionChanged(self, event)
 
@@ -143,11 +145,11 @@ class Script(default.Script):
         # fingers and hope that's true.
         if AXUtilities.is_menu_related(event.source) \
            or AXUtilities.is_menu_related(AXObject.get_parent(event.source)):
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         if AXUtilities.is_root_pane(event.source) \
-           and AXUtilities.is_menu_related(orca_state.locusOfFocus):
+           and AXUtilities.is_menu_related(_focusManager.get_locus_of_focus()):
             return
 
         default.Script.onFocusedChanged(self, event)
@@ -176,10 +178,11 @@ class Script(default.Script):
         # just process the single value changed event.
         #
         if AXUtilities.is_spin_button(event.source):
-            parent = AXObject.get_parent(orca_state.locusOfFocus)
+            focus = _focusManager.get_locus_of_focus()
+            parent = AXObject.get_parent(focus)
             grandparent = AXObject.get_parent(parent)
             if grandparent == event.source:
-                self._presentTextAtNewCaretPosition(event, orca_state.locusOfFocus)
+                self._presentTextAtNewCaretPosition(event, focus)
                 return
 
         default.Script.onValueChanged(self, event)

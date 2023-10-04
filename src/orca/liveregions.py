@@ -10,14 +10,15 @@ from gi.repository import GLib
 from . import cmdnames
 from . import chnames
 from . import debug
+from . import focus_manager
 from . import keybindings
 from . import messages
 from . import input_event
-from . import orca_state
 from . import settings_manager
 from .ax_collection import AXCollection
 from .ax_object import AXObject
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 # define 'live' property types
@@ -107,7 +108,7 @@ class LiveRegionManager:
         self.lastliveobj = None
 
         # Used to track whether a user wants to monitor all live regions
-        # Not to be confused with the global Gecko.liveRegionsOn which 
+        # Not to be confused with the global Gecko.liveRegionsOn which
         # completely turns off live region support.  This one is based on
         # a user control by changing politeness levels to LIVE_OFF or back
         # to the bookmark or markup politeness value.
@@ -211,7 +212,7 @@ class LiveRegionManager:
             return
         if politeness == LIVE_NONE:
             # All the 'registered' LIVE_NONE objects will be set to off
-            # if not monitoring.  We will ignore LIVE_NONE objects that 
+            # if not monitoring.  We will ignore LIVE_NONE objects that
             # arrive after the user switches off monitoring.
             if not self.monitoring:
                 return
@@ -230,7 +231,7 @@ class LiveRegionManager:
             self.msg_queue.enqueue(message, politeness, event.source)
 
     def pumpMessages(self):
-        """ Main gobject callback for live region support.  Handles both 
+        """ Main gobject callback for live region support.  Handles both
         purging the message queue and outputting any queued messages that
         were queued up in the handleEvent() method.
         """
@@ -287,16 +288,16 @@ class LiveRegionManager:
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
-        obj = orca_state.locusOfFocus
+        obj = _focusManager.get_locus_of_focus()
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
         try:
             # The current priority is either a previous override or the
-            # live property.  If an exception is thrown, an override for 
+            # live property.  If an exception is thrown, an override for
             # this object has never occurred and the object does not have
             # live markup.  In either case, set the override to LIVE_NONE.
-            cur_priority = self._politenessOverrides[(uri, objectid)] 
+            cur_priority = self._politenessOverrides[(uri, objectid)]
         except KeyError:
             cur_priority = self._liveStringToType(obj)
 
@@ -315,7 +316,7 @@ class LiveRegionManager:
 
 
     def goLastLiveRegion(self):
-        """Move the caret to the last announced live region and speak the 
+        """Move the caret to the last announced live region and speak the
         contents of that object"""
         if self.lastliveobj:
             self._script.utilities.setCaretPosition(self.lastliveobj, 0)
@@ -348,7 +349,7 @@ class LiveRegionManager:
         # get the URI of the page.  It is used as a partial key.
         uri = self._script.bookmarks.getURIKey()
 
-        # The user is currently monitoring live regions but now wants to 
+        # The user is currently monitoring live regions but now wants to
         # change all live region politeness on page to LIVE_OFF
         if self.monitoring:
             self._script.presentMessage(messages.LIVE_REGIONS_ALL_OFF)
@@ -378,7 +379,7 @@ class LiveRegionManager:
                 self._politenessOverrides[key] = value
             self._script.presentMessage(messages.LIVE_REGIONS_ALL_RESTORED)
             # Toggle our flag
-            self.monitoring = True  
+            self.monitoring = True
 
     def getAllLiveRegions(self, document):
         attrs = []
@@ -394,7 +395,7 @@ class LiveRegionManager:
         return result
 
     def generateLiveRegionDescription(self, obj, **args):
-        """Used in conjunction with whereAmI to output description and 
+        """Used in conjunction with whereAmI to output description and
         politeness of the given live region object"""
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
@@ -425,7 +426,7 @@ class LiveRegionManager:
             liveprioritystr = 'none'
 
         # We will only output useful information
-        # 
+        #
         if results or liveprioritystr != 'none':
             results.append(messages.LIVE_REGIONS_LEVEL % liveprioritystr)
 
@@ -447,7 +448,7 @@ class LiveRegionManager:
         labels = ""
 
         # A message is divided into two parts: labels and content.  We
-        # will first try to get the content.  If there is None, 
+        # will first try to get the content.  If there is None,
         # assume it is an invalid message and return None
         if event.type.startswith('object:children-changed:add'):
             if attrs.get('container-atomic') == 'true':
@@ -530,13 +531,13 @@ class LiveRegionManager:
         """Returns the politeness enum for a given object"""
         attrs = attributes or self._getAttrDictionary(obj)
         try:
-            if attrs['container-live'] == 'off': 
+            if attrs['container-live'] == 'off':
                 return LIVE_OFF
-            elif attrs['container-live'] == 'polite':  
+            elif attrs['container-live'] == 'polite':
                 return LIVE_POLITE
-            elif attrs['container-live'] == 'assertive': 
+            elif attrs['container-live'] == 'assertive':
                 return LIVE_ASSERTIVE
-            elif attrs['container-live'] == 'rude': 
+            elif attrs['container-live'] == 'rude':
                 return LIVE_RUDE
             else:
                 return LIVE_NONE
@@ -545,15 +546,15 @@ class LiveRegionManager:
 
     def _liveTypeToString(self, politeness):
         """Returns the politeness level as a string given a politeness enum"""
-        if politeness == LIVE_OFF: 
+        if politeness == LIVE_OFF:
             return 'off'
-        elif politeness == LIVE_POLITE: 
+        elif politeness == LIVE_POLITE:
             return 'polite'
-        elif politeness == LIVE_ASSERTIVE: 
+        elif politeness == LIVE_ASSERTIVE:
             return 'assertive'
-        elif politeness == LIVE_RUDE: 
+        elif politeness == LIVE_RUDE:
             return 'rude'
-        elif politeness == LIVE_NONE: 
+        elif politeness == LIVE_NONE:
             return 'none'
         else:
             return 'unknown'
@@ -562,7 +563,7 @@ class LiveRegionManager:
         return self._script.utilities.objectAttributes(obj)
 
     def _getPath(self, obj):
-        """ Returns, as a tuple of integers, the path from the given object 
+        """ Returns, as a tuple of integers, the path from the given object
         to the document frame."""
         docframe = self._script.utilities.documentFrame()
         path = []

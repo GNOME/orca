@@ -33,13 +33,13 @@ from gi.repository import Atspi
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
-from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_collection import AXCollection
@@ -48,6 +48,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 ###########################################################################
@@ -719,7 +720,7 @@ class StructuralNavigation:
     #                                                                       #
     #########################################################################
 
-    def goCell(self, structuralNavigationObject, thisCell, 
+    def goCell(self, structuralNavigationObject, thisCell,
                currentCoordinates, desiredCoordinates):
         """The method used for navigation among cells in a table.
 
@@ -729,7 +730,7 @@ class StructuralNavigation:
         - thisCell: the accessible TABLE_CELL we're currently in
         - currentCoordinates: the [row, column] of thisCell.  Note, we
           cannot just get the coordinates because in table cells which
-          span multiple rows and/or columns, the value returned by 
+          span multiple rows and/or columns, the value returned by
           table.getRowAtIndex() is the first row the cell spans. Likewise,
           the value returned by table.getColumnAtIndex() is the left-most
           column.  Therefore, we keep track of the row and column from
@@ -788,7 +789,7 @@ class StructuralNavigation:
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
 
-        modalDialog = self._script.utilities.getModalDialog(orca_state.locusOfFocus)
+        modalDialog = self._script.utilities.getModalDialog(_focusManager.get_locus_of_focus())
         inModalDialog = bool(modalDialog)
         if self._inModalDialog != inModalDialog:
             msg = (
@@ -872,7 +873,7 @@ class StructuralNavigation:
         - structuralNavigationObject: the StructuralNavigationObject which
           represents the object of interest.
         - isNext: If True, we're interested in the next accessible object
-          which matches structuralNavigationObject.  If False, we're 
+          which matches structuralNavigationObject.  If False, we're
           interested in the previous accessible object which matches.
         - obj: the current object (typically the locusOfFocus).
         - arg: optional arguments which may need to be passed along to

@@ -33,11 +33,12 @@ from gi.repository import Atspi
 import re
 
 from orca import debug
-from orca import orca_state
+from orca import focus_manager
 from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 
 class Utilities(web.Utilities):
 
@@ -139,7 +140,8 @@ class Utilities(web.Utilities):
         # is opened/expanded, a menu with that same name appears. It would be
         # nice if there were a connection (parent/child or an accessible relation)
         # between the two....
-        return self.treatAsMenu(orca_state.locusOfFocus) and super().isPopupMenuForCurrentItem(obj)
+        return self.treatAsMenu(_focusManager.get_locus_of_focus()) \
+            and super().isPopupMenuForCurrentItem(obj)
 
     def isFrameForPopupMenu(self, obj):
         # The ancestry of a popup menu appears to be a menu bar (even though
@@ -333,7 +335,7 @@ class Utilities(web.Utilities):
         return True
 
     def inFindContainer(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
         if self.inDocumentContent(obj):
@@ -380,33 +382,6 @@ class Utilities(web.Utilities):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         result = super().accessibleAtPoint(root, x, y, coordType)
         return result
-
-    def _isActiveAndShowingAndNotIconified(self, obj):
-        if super()._isActiveAndShowingAndNotIconified(obj):
-            return True
-
-        if obj and AXObject.get_application(obj) != self._script.app:
-            return False
-
-        # FIXME: This can potentially be non-performant because AT-SPI2 will recursively
-        # clear the cache of all descendants. This is an attempt to work around what may
-        # be a lack of window:activate and object:state-changed events from Chromium
-        # windows in at least some environments.
-        try:
-            tokens = ["CHROMIUM: Clearing cache for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.clear_cache(obj)
-        except Exception:
-            tokens = ["CHROMIUM: Exception clearing cache for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if super()._isActiveAndShowingAndNotIconified(obj):
-            tokens = ["CHROMIUM:", obj, "deemed to be active and showing after cache clear"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
 
     def _shouldCalculatePositionAndSetSize(self, obj):
         # Chromium calculates posinset and setsize for description lists based on the

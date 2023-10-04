@@ -26,12 +26,14 @@ __copyright__ = "Copyright (c) 2013-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.debug as debug
-import orca.orca as orca
+import orca.focus_manager as focus_manager
 import orca.scripts.default as default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
+
+_focusManager = focus_manager.getManager()
 
 class Script(default.Script):
 
@@ -84,4 +86,4 @@ class Script(default.Script):
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        orca.setLocusOfFocus(event, event.source)
+        _focusManager.set_locus_of_focus(event, event.source)

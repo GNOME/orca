@@ -36,6 +36,7 @@ orca_python_PYTHON = \
 	find.py \
 	flat_review.py \
 	flat_review_presenter.py \
+	focus_manager.py \
 	formatting.py \
 	generator.py \
 	guilabels.py \

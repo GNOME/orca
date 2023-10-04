@@ -44,16 +44,16 @@ except Exception:
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import keybindings
 from . import input_event
 from . import messages
-from . import orca
-from . import orca_state
 from . import script_manager
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
@@ -148,7 +148,8 @@ class _StringContext:
         voice = self._script.speechGenerator.voice(obj=self._obj, string=self._string)
         string = self._script.utilities.adjustForRepeats(self._string)
 
-        orca.emitRegionChanged(self._obj, self._start, self._end, orca.MOUSE_REVIEW)
+        _focusManager.emit_region_changed(
+            self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)
         self._script.speakMessage(string, voice=voice, interrupt=False)
         self._script.displayBrailleMessage(self._string, -1)
         return True
@@ -316,7 +317,7 @@ class _ItemContext:
 
         if self._obj and self._obj != prior._obj and not self._isInlineChild(prior):
             priorObj = prior._obj or self._getContainer()
-            orca.emitRegionChanged(self._obj, mode=orca.MOUSE_REVIEW)
+            _focusManager.emit_region_changed(self._obj, mode=focus_manager.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
             if self._string.getString() == AXObject.get_name(self._obj):
                 return True
@@ -422,7 +423,7 @@ class MouseReviewer:
 
         # Set up the initial object as the one with the focus to avoid
         # presenting irrelevant info the first time.
-        obj = orca_state.locusOfFocus
+        obj = _focusManager.get_locus_of_focus()
         script = None
         frame = None
         if obj:
@@ -600,12 +601,13 @@ class MouseReviewer:
         if not script:
             return
 
-        if AXObject.is_dead(orca_state.locusOfFocus):
+        focus = _focusManager.get_locus_of_focus()
+        if AXObject.is_dead(focus):
             menu = None
-        elif AXUtilities.is_menu(orca_state.locusOfFocus):
-            menu = orca_state.locusOfFocus
+        elif AXUtilities.is_menu(focus):
+            menu = focus
         else:
-            menu = AXObject.find_ancestor(orca_state.locusOfFocus, AXUtilities.is_menu)
+            menu = AXObject.find_ancestor(focus, AXUtilities.is_menu)
 
         screen, nowX, nowY = self._pointer.get_position()
         if (pX, pY) != (nowX, nowY):

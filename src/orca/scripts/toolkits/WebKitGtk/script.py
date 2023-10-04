@@ -34,10 +34,10 @@ from gi.repository import Atspi
 import orca.scripts.default as default
 import orca.cmdnames as cmdnames
 import orca.debug as debug
+import orca.focus_manager as focus_manager
 import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.messages as messages
-import orca.orca as orca
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speechserver as speechserver
@@ -51,6 +51,7 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 ########################################################################
@@ -189,10 +190,11 @@ class Script(default.Script):
         if lastKey in ['Tab', 'ISO_Left_Tab']:
             return
 
+        focus = _focusManager.get_locus_of_focus()
         if lastKey == 'Down' \
-           and orca_state.locusOfFocus == AXObject.get_parent(event.source) \
            and AXObject.get_index_in_parent(event.source) == 0 \
-           and AXUtilities.is_link(orca_state.locusOfFocus):
+           and focus == AXObject.get_parent(event.source) \
+           and AXUtilities.is_link(focus):
             self.updateBraille(event.source)
             return
 
@@ -398,18 +400,19 @@ class Script(default.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+        focus = _focusManager.get_locus_of_focus()
+        if not self.utilities.isWebKitGtk(focus):
             return False
 
-        if AXUtilities.is_editable(orca_state.locusOfFocus):
+        if AXUtilities.is_editable(focus):
             return False
 
-        role = AXObject.get_role(orca_state.locusOfFocus)
+        role = AXObject.get_role(focus)
         if role in doNotHandleRoles:
             if role == Atspi.Role.LIST_ITEM:
-                return not AXUtilities.is_selectable(orca_state.locusOfFocus)
+                return not AXUtilities.is_selectable(focus)
 
-            if AXUtilities.is_focused(orca_state.locusOfFocus):
+            if AXUtilities.is_focused(focus):
                 return False
 
         return True
@@ -419,13 +422,14 @@ class Script(default.Script):
         entire document.
         """
 
+        focus = _focusManager.get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
-           or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+           or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
-        obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        obj = self.utilities.findPreviousObject(focus)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
@@ -442,13 +446,14 @@ class Script(default.Script):
         entire document.
         """
 
+        focus = _focusManager.get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
-           or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+           or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
-        obj = self.utilities.findNextObject(orca_state.locusOfFocus)
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        obj = self.utilities.findNextObject(focus)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
@@ -466,13 +471,11 @@ class Script(default.Script):
         been started on an object without text (such as an image).
         """
 
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not self.utilities.isWebKitGtk(obj):
             return default.Script.sayAll(self, inputEvent, obj, offset)
 
-        speech.sayAll(self.textLines(obj, offset),
-                      self.__sayAllProgressCallback)
-
+        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
     def getTextSegments(self, obj, boundary, offset=0):
@@ -556,12 +559,13 @@ class Script(default.Script):
 
     def __sayAllProgressCallback(self, context, progressType):
         if progressType == speechserver.SayAllContext.PROGRESS:
-            orca.emitRegionChanged(
-                context.obj, context.currentOffset, context.currentEndOffset, orca.SAY_ALL)
+            _focusManager.emit_region_changed(
+                context.obj, context.currentOffset, context.currentEndOffset,
+                focus_manager.SAY_ALL)
             return
 
         obj = context.obj
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
 
         offset = context.currentOffset
         text = obj.queryText()
@@ -579,7 +583,7 @@ class Script(default.Script):
             self._sayAllContexts = []
             if not self._lastCommandWasStructNav:
                 text.setCaretOffset(offset)
-            orca.emitRegionChanged(obj, offset)
+            _focusManager.emit_region_changed(obj, offset)
             return
 
         # SayAllContext.COMPLETED doesn't necessarily mean done with SayAll;
@@ -596,7 +600,7 @@ class Script(default.Script):
             if [link for link in links if link.startIndex <= offset <= link.endIndex]:
                 return
 
-        orca.emitRegionChanged(obj, offset, mode=orca.SAY_ALL)
+        _focusManager.emit_region_changed(obj, offset, mode=focus_manager.SAY_ALL)
         text.setCaretOffset(offset)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):

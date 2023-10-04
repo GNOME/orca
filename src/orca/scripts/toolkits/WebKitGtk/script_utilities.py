@@ -32,12 +32,14 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 import re
 
-import orca.script_utilities as script_utilities
+import orca.focus_manager as focus_manager
 import orca.keybindings as keybindings
-import orca.orca as orca
-import orca.orca_state as orca_state
+import orca.script_utilities as script_utilities
+
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+
+_focusManager = focus_manager.getManager()
 
 #############################################################################
 #                                                                           #
@@ -68,7 +70,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         obj, offset = self._script._lastCaretContext
-        if not obj and self.isWebKitGtk(orca_state.locusOfFocus):
+        if not obj and self.isWebKitGtk(_focusManager.get_locus_of_focus()):
             obj, offset = super().getCaretContext()
 
         return obj, offset
@@ -77,7 +79,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         self._script._lastCaretContext = obj, offset
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
 
     def setCaretPosition(self, obj, offset):
         self.setCaretContext(obj, offset)
@@ -282,5 +284,5 @@ class Utilities(script_utilities.Utilities):
         return self.isEmbeddedDocument(obj)
 
     def inDocumentContent(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         return self.isWebKitGtk(obj)

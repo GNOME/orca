@@ -27,14 +27,15 @@ __copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.debug as debug
-import orca.orca as orca
-import orca.orca_state as orca_state
+import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.clutter as clutter
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .formatting import Formatting
 from .script_utilities import Utilities
+
+_focusManager = focus_manager.getManager()
 
 class Script(clutter.Script):
 
@@ -83,8 +84,8 @@ class Script(clutter.Script):
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
-        dialog = AXObject.find_ancestor(orca_state.locusOfFocus, AXUtilities.is_dialog)
-        tokens = ["GNOME SHELL: focus", orca_state.locusOfFocus, "is in dialog:", dialog]
+        dialog = AXObject.find_ancestor(_focusManager.get_locus_of_focus(), AXUtilities.is_dialog)
+        tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
@@ -103,7 +104,7 @@ class Script(clutter.Script):
             if AXUtilities.is_panel(event.source):
                 AXObject.clear_cache(event.source)
             if AXUtilities.is_selected(event.source):
-                orca.setLocusOfFocus(event, event.source)
+                _focusManager.set_locus_of_focus(event, event.source)
             return
 
         clutter.Script.onSelectedChanged(self, event)
@@ -123,7 +124,7 @@ class Script(clutter.Script):
            and not self.utilities.labelsForObject(event.source):
             descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
             if descendant is not None:
-                orca.setLocusOfFocus(event, descendant)
+                _focusManager.set_locus_of_focus(event, descendant)
                 return
 
         clutter.Script.onFocusedChanged(self, event)

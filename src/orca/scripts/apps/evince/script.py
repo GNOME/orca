@@ -27,13 +27,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
+import orca.focus_manager as focus_manager
 import orca.keybindings as keybindings
-import orca.orca as orca
-import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
 from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
+_focusManager = focus_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -104,7 +104,7 @@ class Script(gtk.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        if AXUtilities.is_editable(orca_state.locusOfFocus):
+        if AXUtilities.is_editable(_focusManager.get_locus_of_focus()):
             return False
 
         return True
@@ -114,6 +114,6 @@ class Script(gtk.Script):
 
         obj = event.source
         if AXUtilities.is_focused(obj):
-            orca.setLocusOfFocus(event, event.source, False)
+            _focusManager.set_locus_of_focus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)

@@ -59,6 +59,7 @@ except Exception:
 from . import braille
 from . import debug
 from . import event_manager
+from . import focus_manager
 from . import logger
 from . import messages
 from . import mouse_review
@@ -70,10 +71,9 @@ from . import settings_manager
 from . import speech
 from . import sound
 from .ax_object import AXObject
-from .ax_utilities import AXUtilities
-from .input_event import BrailleEvent
 
 _eventManager = event_manager.getManager()
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 _logger = logger.getLogger()
@@ -106,148 +106,6 @@ _originalXmodmap = ""
 _orcaModifiers = settings.DESKTOP_MODIFIER_KEYS + settings.LAPTOP_MODIFIER_KEYS
 _capsLockCleared = False
 _restoreOrcaKeys = False
-
-########################################################################
-#                                                                      #
-# METHODS TO HANDLE APPLICATION LIST AND FOCUSED OBJECTS               #
-#                                                                      #
-########################################################################
-
-CARET_TRACKING = "caret-tracking"
-FOCUS_TRACKING = "focus-tracking"
-FLAT_REVIEW = "flat-review"
-MOUSE_REVIEW = "mouse-review"
-OBJECT_NAVIGATOR = "object-navigator"
-SAY_ALL = "say-all"
-
-def getActiveModeAndObjectOfInterest():
-    tokens = ["ORCA: Active mode:", orca_state.activeMode,
-              "Object of interest:", orca_state.objOfInterest]
-    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-    return orca_state.activeMode, orca_state.objOfInterest
-
-def emitRegionChanged(obj, startOffset=None, endOffset=None, mode=None):
-    """Notifies interested clients that the current region of interest has changed."""
-
-    if startOffset is None:
-        startOffset = 0
-    if endOffset is None:
-        endOffset = startOffset
-    if mode is None:
-        mode = FOCUS_TRACKING
-
-    try:
-        obj.emit("mode-changed::" + mode, 1, "")
-    except Exception:
-        msg = "ORCA: Exception emitting mode-changed notification"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    if mode != orca_state.activeMode:
-        tokens = ["ORCA: Switching active mode from", orca_state.activeMode, "to", mode]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        orca_state.activeMode = mode
-
-    try:
-        tokens = ["ORCA: Region of interest:", obj, "(", startOffset, ")", endOffset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        obj.emit("region-changed", startOffset, endOffset)
-    except Exception:
-        msg = "ORCA: Exception emitting region-changed notification"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    if obj != orca_state.objOfInterest:
-        tokens = ["ORCA: Switching object of interest from", orca_state.objOfInterest, "to", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        orca_state.objOfInterest = obj
-
-def setActiveWindow(frame, app=None, alsoSetLocusOfFocus=False, notifyScript=False):
-    tokens = ["ORCA: Request to set active window to", frame]
-    if app is not None:
-        tokens.extend(["in", app])
-    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-    if frame == orca_state.activeWindow:
-        msg = "ORCA: Setting activeWindow to existing activeWindow"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-    elif frame is None:
-        orca_state.activeWindow = None
-    else:
-        real_app, real_frame = AXObject.find_real_app_and_window_for(frame, app)
-        if real_frame != frame:
-            tokens = ["ORCA: Correcting active window to", real_frame, "in", real_app]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca_state.activeWindow = real_frame
-        else:
-            orca_state.activeWindow = frame
-
-    if alsoSetLocusOfFocus:
-        setLocusOfFocus(None, orca_state.activeWindow, notifyScript=notifyScript)
-
-def setLocusOfFocus(event, obj, notifyScript=True, force=False):
-    """Sets the locus of focus (i.e., the object with visual focus) and
-    notifies the script of the change should the script wish to present
-    the change to the user.
-
-    Arguments:
-    - event: if not None, the Event that caused this to happen
-    - obj: the Accessible with the new locus of focus.
-    - notifyScript: if True, propagate this event
-    - force: if True, don't worry if this is the same object as the
-      current locusOfFocus
-    """
-
-    AXObject.clear_cache(obj)
-
-    if not force and obj == orca_state.locusOfFocus:
-        msg = "ORCA: Setting locusOfFocus to existing locusOfFocus"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return
-
-    script = _scriptManager.getActiveScript()
-    if event and (script and not script.app):
-        app = AXObject.get_application(event.source)
-        script = _scriptManager.getScript(app, event.source)
-        _scriptManager.setActiveScript(script, "Setting locusOfFocus")
-
-    oldFocus = orca_state.locusOfFocus
-    if AXObject.is_dead(oldFocus):
-        oldFocus = None
-
-    if obj is None:
-        msg = "ORCA: New locusOfFocus is null (being cleared)"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        orca_state.locusOfFocus = None
-        return
-
-    if script is not None:
-        if script.utilities.isZombie(obj):
-            tokens = ["ERROR: New locusOfFocus (", obj, ") is zombie. Not updating."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-        if AXObject.is_dead(obj):
-            tokens = ["ERROR: New locusOfFocus (", obj, ") is dead. Not updating."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-    tokens = ["ORCA: Changing locusOfFocus from", oldFocus, "to", obj, ". Notify:", notifyScript]
-    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-    orca_state.locusOfFocus = obj
-
-    if not notifyScript:
-        return
-
-    if script is None:
-        msg = "ORCA: Cannot notify active script because there isn't one"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return
-
-    script.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
-
-########################################################################
-#                                                                      #
-# METHODS FOR HANDLING INITIALIZATION, SHUTDOWN, AND USE.              #
-#                                                                      #
-########################################################################
 
 def deviceChangeHandler(deviceManager, device):
     """New keyboards being plugged in stomp on our changes to the keymappings,
@@ -815,34 +673,30 @@ def main():
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
     try:
-        message = messages.START_ORCA
         script = _scriptManager.getDefaultScript()
-        script.presentMessage(message)
+        script.presentMessage(messages.START_ORCA)
     except Exception:
         debug.printException(debug.LEVEL_SEVERE)
 
-    script = _scriptManager.getActiveScript()
-    if script is not None:
-        window = script.utilities.activeWindow()
+    window = _focusManager.find_active_window()
+    if window and not _focusManager.get_locus_of_focus():
+        app = AXObject.get_application(window)
+        _focusManager.set_active_window(
+            window, app, set_window_as_focus=True, notify_script=True)
 
-        if window and not orca_state.locusOfFocus:
-            app = AXObject.get_application(window)
-            setActiveWindow(window, app, alsoSetLocusOfFocus=True, notifyScript=True)
+        # set_active_window does some corrective work needed thanks to
+        # mutter-x11-frames. So retrieve the window just in case.
+        window = _focusManager.get_active_window()
+        script = _scriptManager.getScript(app, window)
+        _scriptManager.setActiveScript(script, "Launching.")
 
-            # setActiveWindow does some corrective work needed thanks to
-            # mutter-x11-frames. So retrieve the window just in case.
-            window = orca_state.activeWindow
-            script = _scriptManager.getScript(app, window)
-            _scriptManager.setActiveScript(script, "Launching.")
-
-            focusedObject = AXUtilities.get_focused_object(window)
-            tokens = ["ORCA: Focused object is:", focusedObject]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            if focusedObject:
-                setLocusOfFocus(None, focusedObject)
-                script = _scriptManager.getScript(
-                    AXObject.get_application(focusedObject), focusedObject)
-                _scriptManager.setActiveScript(script, "Found focused object.")
+        # TODO - JD: Consider having the focus tracker update the active script.
+        focusedObject = _focusManager.find_focused_object()
+        if focusedObject:
+            _focusManager.set_locus_of_focus(None, focusedObject)
+            script = _scriptManager.getScript(
+                AXObject.get_application(focusedObject), focusedObject)
+            _scriptManager.setActiveScript(script, "Found focused object.")
 
     try:
         msg = "ORCA: Starting ATSPI registry."

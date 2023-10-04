@@ -33,14 +33,15 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.debug as debug
+import orca.focus_manager as focus_manager
 import orca.keybindings as keybindings
 import orca.messages as messages
-import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 
 #############################################################################
 #                                                                           #
@@ -232,7 +233,7 @@ class Utilities(script_utilities.Utilities):
             return super().isLayoutOnly(obj)
 
         if AXUtilities.is_frame(obj):
-            return name == AXObject.get_name(orca_state.activeWindow)
+            return name == AXObject.get_name(_focusManager.get_active_window())
 
         if AXUtilities.is_panel(obj) and AXObject.get_child_count(obj):
             if AXObject.get_name(AXObject.get_child(obj, 0)) == name:
@@ -272,8 +273,7 @@ class Utilities(script_utilities.Utilities):
         """
 
         if self._script.inputLineForCell is not None:
-            topLevel = self.topLevelObject(self._script.inputLineForCell)
-            if self.isSameObject(orca_state.activeWindow, topLevel):
+            if self.topLevelObjectIsActiveWindow(self._script.inputLineForCell):
                 return self._script.inputLineForCell
 
         scrollPane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
@@ -339,7 +339,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not obj:
             return False
 
@@ -356,9 +356,13 @@ class Utilities(script_utilities.Utilities):
     #                                                                       #
     #########################################################################
 
-    def drawingView(self, obj=orca_state.locusOfFocus):
+    def drawingView(self, obj=None):
         """Attempts to locate the Impress drawing view, which is the
         area in which slide editing occurs."""
+
+        obj = obj or _focusManager.get_locus_of_focus()
+        if not obj:
+            return None
 
         return AXObject.find_descendant(self.topLevelObject(obj), self.isDrawingView)
 
@@ -371,31 +375,34 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def isInImpress(self, obj=orca_state.locusOfFocus):
+    def isInImpress(self, obj=None):
         """Returns True if obj is in OOo Impress."""
+
+        obj = obj or _focusManager.get_locus_of_focus()
+        if obj is None:
+            return False
 
         # Having checked English, Spanish, and Arabic, it would seem
         # that the Frame name will end with "Impress", unlocalized.
         #
-        if obj:
-            try:
-                topLevel = self.topLevelObject(obj)
-            except Exception:
-                tokens = ["ERROR: Exception getting top-level object for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-            if not topLevel:
-                return False
-            if AXObject.is_dead(topLevel):
-                tokens = ["SOFFICE: Top level object", topLevel, "is dead."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-            if AXObject.get_name(topLevel).endswith("Impress"):
-                return True
+        try:
+            topLevel = self.topLevelObject(obj)
+        except Exception:
+            tokens = ["ERROR: Exception getting top-level object for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+        if not topLevel:
+            return False
+        if AXObject.is_dead(topLevel):
+            tokens = ["SOFFICE: Top level object", topLevel, "is dead."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+        if AXObject.get_name(topLevel).endswith("Impress"):
+            return True
 
         return False
 
-    def slideAndTaskPanes(self, obj=orca_state.locusOfFocus):
+    def slideAndTaskPanes(self, obj=None):
         """Attempts to locate the Impress slide pane and task pane."""
 
         drawingView = self.drawingView(obj)
@@ -552,7 +559,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return AXObject.is_dead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
+            return self.lastInputEventWasDelete() and _focusManager.focus_is_dead()
 
         return super().isSelectedTextDeletionEvent(event)
 
@@ -709,7 +716,7 @@ class Utilities(script_utilities.Utilities):
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
-        focusCoords = tuple(self.coordinatesForCell(orca_state.locusOfFocus))
+        focusCoords = tuple(self.coordinatesForCell(_focusManager.get_locus_of_focus()))
         if focusCoords in selected:
             selected.remove(focusCoords)
 

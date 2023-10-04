@@ -28,7 +28,7 @@ __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
-from orca import orca
+from orca import focus_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
@@ -37,6 +37,7 @@ from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 
+_focusManager = focus_manager.getManager()
 
 class Script(web.Script):
 
@@ -64,7 +65,7 @@ class Script(web.Script):
         """Returns True if this event should activate this script."""
 
         if event.type == "window:activate":
-            return self.utilities.canBeActiveWindow(event.source)
+            return _focusManager.can_be_active_window(event.source)
 
         return super().isActivatableEvent(event)
 
@@ -85,7 +86,7 @@ class Script(web.Script):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not self.utilities.canBeActiveWindow(event.source):
+           and not _focusManager.can_be_active_window(event.source):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
@@ -331,10 +332,10 @@ class Script(web.Script):
 
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source):
             topLevel = self.utilities.topLevelObject(event.source)
-            if self.utilities.canBeActiveWindow(topLevel):
-                orca.setActiveWindow(topLevel)
+            if _focusManager.can_be_active_window(topLevel):
+                _focusManager.set_active_window(topLevel)
                 self.presentObject(event.source)
-                orca.setLocusOfFocus(event, event.source, False)
+                _focusManager.set_locus_of_focus(event, event.source, False)
             return
 
         if super().onShowingChanged(event):
@@ -397,7 +398,7 @@ class Script(web.Script):
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not self.utilities.canBeActiveWindow(event.source):
+        if not _focusManager.can_be_active_window(event.source):
             return
 
         # If this is a frame for a popup menu, we don't want to treat
@@ -405,7 +406,7 @@ class Script(web.Script):
         # far as the end-user experience is concerned.
         menu = self.utilities.popupMenuForFrame(event.source)
         if menu:
-            orca.setActiveWindow(event.source)
+            _focusManager.set_active_window(event.source)
 
             activeItem = None
             selected = self.utilities.selectedChildren(menu)
@@ -416,16 +417,16 @@ class Script(web.Script):
                 # If this is the popup menu for the locusOfFocus, we don't want to
                 # present the popup menu as part of the new ancestry of activeItem.
                 if self.utilities.isPopupMenuForCurrentItem(menu):
-                    orca.setLocusOfFocus(event, menu, False)
+                    _focusManager.set_locus_of_focus(event, menu, False)
 
                 tokens = ["CHROMIUM: Setting locusOfFocus to active item", activeItem]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                orca.setLocusOfFocus(event, activeItem)
+                _focusManager.set_locus_of_focus(event, activeItem)
                 return
 
             tokens = ["CHROMIUM: Setting locusOfFocus to popup menu", menu]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, menu)
+            _focusManager.set_locus_of_focus(event, menu)
 
         if super().onWindowActivated(event):
             return

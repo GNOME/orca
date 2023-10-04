@@ -25,19 +25,19 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.orca as orca
 import orca.cmdnames as cmdnames
 import orca.debug as debug
+import orca.focus_manager as focus_manager
 import orca.input_event as input_event
 import orca.scripts.default as default
 import orca.settings_manager as settings_manager
-import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .spellcheck import SpellCheck
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 ########################################################################
@@ -123,7 +123,6 @@ class Script(Gecko.Script):
 
         if self.spellcheck.isSuggestionsItem(newFocus):
             includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
-            orca.emitRegionChanged(newFocus)
             self.updateBraille(newFocus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return
@@ -141,19 +140,20 @@ class Script(Gecko.Script):
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
             return
 
         super().enableStickyBrowseMode(inputEvent, forceMessage)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
             return
 
         super().enableStickyFocusMode(inputEvent, forceMessage)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
-        if self._inFocusMode and self.utilities.isEditableMessage(orca_state.locusOfFocus):
+        if self._inFocusMode \
+           and self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
             return
 
         super().togglePresentationMode(inputEvent, documentFrame)
@@ -161,7 +161,7 @@ class Script(Gecko.Script):
     def useStructuralNavigationModel(self, debugOutput=True):
         """Returns True if structural navigation should be enabled here."""
 
-        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
             return False
 
         return super().useStructuralNavigationModel(debugOutput)
@@ -175,8 +175,8 @@ class Script(Gecko.Script):
         self._lastAutoComplete = ""
         obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
-            orca.setLocusOfFocus(event, event.source, False)
-            self.updateBraille(orca_state.locusOfFocus)
+            _focusManager.set_locus_of_focus(event, event.source, False)
+            self.updateBraille(event.source)
 
         if not self.utilities.inDocumentContent(obj):
             super().onFocusedChanged(event)
@@ -199,10 +199,10 @@ class Script(Gecko.Script):
 
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
-            if AXObject.get_name(orca_state.locusOfFocus) \
-                and (AXUtilities.is_frame(orca_state.locusOfFocus) \
-                     or AXUtilities.is_page_tab(orca_state.locusOfFocus)):
-                orca.setLocusOfFocus(event, event.source, False)
+            focus = _focusManager.get_locus_of_focus()
+            if AXObject.get_name(focus) \
+                and (AXUtilities.is_frame(focus) or AXUtilities.is_page_tab(focus)):
+                _focusManager.set_locus_of_focus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
                 self.speakMessage(AXObject.get_name(obj))
@@ -251,9 +251,9 @@ class Script(Gecko.Script):
         # existent browsery autocompletes for Thunderbird.
 
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source) \
-           and orca_state.activeWindow == self.utilities.topLevelObject(event.source):
+           and self.utilities.topLevelObjectIsActiveWindow(event.source):
             self.presentObject(event.source)
-            orca.setLocusOfFocus(event, event.source, False)
+            _focusManager.set_locus_of_focus(event, event.source, False)
             return
 
         default.Script.onShowingChanged(self, event)
@@ -379,8 +379,9 @@ class Script(Gecko.Script):
             return
 
         self.spellcheck.presentErrorDetails()
-        orca.setLocusOfFocus(None, self.spellcheck.getChangeToEntry(), False)
-        self.updateBraille(orca_state.locusOfFocus)
+        entry = self.spellcheck.getChangeToEntry()
+        _focusManager.set_locus_of_focus(None, entry, False)
+        self.updateBraille(entry)
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""

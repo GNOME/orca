@@ -27,11 +27,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.orca_state as orca_state
+import orca.focus_manager as focus_manager
 import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 
 class SpellCheck(spellcheck.SpellCheck):
 
@@ -42,11 +43,12 @@ class SpellCheck(spellcheck.SpellCheck):
         if event.source != self._changeToEntry:
             return False
 
-        if not AXUtilities.is_push_button(orca_state.locusOfFocus):
+        focus = _focusManager.get_locus_of_focus()
+        if not AXUtilities.is_push_button(focus):
             return False
 
         lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        keys = self._script.utilities.mnemonicShortcutAccelerator(orca_state.locusOfFocus)
+        keys = self._script.utilities.mnemonicShortcutAccelerator(focus)
         for key in keys:
             if key.endswith(lastKey.upper()):
                 return True

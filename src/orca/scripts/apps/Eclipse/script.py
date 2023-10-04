@@ -27,9 +27,11 @@ __license__   = "LGPL"
 
 
 import orca.debug as debug
-import orca.orca as orca
+import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.GAIL as GAIL
 from orca.ax_utilities import AXUtilities
+
+_focusManager = focus_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -84,7 +86,7 @@ class Script(GAIL.Script):
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits.
         if AXUtilities.is_panel(event.source):
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         if AXUtilities.is_text(event.source) \

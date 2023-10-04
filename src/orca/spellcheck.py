@@ -34,14 +34,15 @@ from gi.repository import Atspi
 import re
 
 from orca import debug
+from orca import focus_manager
 from orca import guilabels
 from orca import messages
 from orca import object_properties
-from orca import orca_state
 from orca import settings_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 class SpellCheck:
@@ -263,7 +264,7 @@ class SpellCheck:
             self._script.spellCurrentItem(string)
 
         if _settingsManager.getSetting('enablePositionSpeaking') \
-           and items[0] == orca_state.locusOfFocus:
+           and items[0] == _focusManager.get_locus_of_focus():
             index, total = self._getSuggestionIndexAndPosition(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
             self._script.speakMessage(msg)

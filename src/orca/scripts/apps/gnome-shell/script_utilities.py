@@ -26,11 +26,13 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.debug as debug
+import orca.focus_manager as focus_manager
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 
 class Utilities(script_utilities.Utilities):
 
@@ -126,7 +128,7 @@ class Utilities(script_utilities.Utilities):
     def isBogusWindowFocusClaim(self, event):
         if event.type.startswith('object:state-changed:focused') and event.detail1 \
            and AXUtilities.is_window(event.source) \
-           and not self.canBeActiveWindow(event.source):
+           and not _focusManager.can_be_active_window(event.source):
             msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True

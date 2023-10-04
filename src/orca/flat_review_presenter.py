@@ -36,16 +36,17 @@ from . import braille
 from . import cmdnames
 from . import debug
 from . import flat_review
+from . import focus_manager
 from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca
 from . import orca_state
 from . import script_manager
 from . import settings_manager
 from . import settings
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
@@ -78,12 +79,13 @@ class FlatReviewPresenter:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             if self._restrict:
-                mode, obj = orca.getActiveModeAndObjectOfInterest()
+                mode, obj = _focusManager.get_active_mode_and_object_of_interest()
                 self._context = flat_review.Context(script, root=obj)
             else:
                 self._context = flat_review.Context(script)
 
-            orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+            _focusManager.emit_region_changed(
+                self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
             if script is not None:
                 script.justEnteredFlatReviewMode = True
                 script.targetCursorCell = script.getBrailleCursorCell()
@@ -101,9 +103,9 @@ class FlatReviewPresenter:
         # for this condition and if it can find a zone whose ancestor is the object of
         # interest, it will set the current zone to the descendant, causing Orca to
         # present the text at the location of the object of interest.
-        mode, obj = orca.getActiveModeAndObjectOfInterest()
-        obj = obj or orca_state.locusOfFocus
-        if mode != orca.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
+        mode, obj = _focusManager.get_active_mode_and_object_of_interest()
+        obj = obj or _focusManager.get_locus_of_focus()
+        if mode != focus_manager.FLAT_REVIEW and obj != self._context.getCurrentAccessible() \
            and not self._restrict:
             tokens = ["FLAT REVIEW PRESENTER: Attempting to update location from",
                       self._context.getCurrentAccessible(), "to", obj]
@@ -111,7 +113,7 @@ class FlatReviewPresenter:
             self._context.setCurrentToZoneWithObject(obj)
 
         # If we are restricting, and the current mode is not flat review, calculate a new context
-        if self._restrict and mode != orca.FLAT_REVIEW:
+        if self._restrict and mode != focus_manager.FLAT_REVIEW:
             msg = "FLAT REVIEW PRESENTER: Creating new restricted context."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._context = flat_review.Context(script, obj)
@@ -744,14 +746,14 @@ class FlatReviewPresenter:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self._context = None
-        orca.emitRegionChanged(orca_state.locusOfFocus, mode=orca.FOCUS_TRACKING)
-
+        focus = _focusManager.get_locus_of_focus()
+        _focusManager.emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
         if event is None or script is None:
             return
 
         if _settingsManager.getSetting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_BRIEF:
             script.presentMessage(messages.FLAT_REVIEW_STOP)
-        script.updateBraille(orca_state.locusOfFocus)
+        script.updateBraille(focus)
 
     def toggle_flat_review_mode(self, script, event=None):
         """Toggles between flat review mode and focus tracking mode."""
@@ -947,7 +949,8 @@ class FlatReviewPresenter:
         if not isinstance(event, input_event.BrailleEvent):
             script.presentObject(self._context.getCurrentAccessible(), speechonly=True)
 
-        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+        _focusManager.emit_region_changed(
+            self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
         return True
 
     def left_click_on_object(self, script, event=None):
@@ -1071,7 +1074,8 @@ class FlatReviewPresenter:
                 line_string = script.utilities.adjustForRepeats(line_string)
                 script.speakMessage(line_string, voice)
 
-        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+        _focusManager.emit_region_changed(
+            self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
         script.updateBrailleReview()
         self._current_contents = line_string
         return True
@@ -1101,7 +1105,8 @@ class FlatReviewPresenter:
                     word_string = script.utilities.adjustForRepeats(word_string)
                     script.speakMessage(word_string, voice)
 
-        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+        _focusManager.emit_region_changed(
+            self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
         script.updateBrailleReview(target_cursor_cell)
         self._current_contents = word_string
         return True
@@ -1125,7 +1130,8 @@ class FlatReviewPresenter:
                 else:
                     script.speakCharacter(char_string)
 
-        orca.emitRegionChanged(self._context.getCurrentAccessible(), mode=orca.FLAT_REVIEW)
+        _focusManager.emit_region_changed(
+            self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
         script.updateBrailleReview()
         self._current_contents = char_string
         return True

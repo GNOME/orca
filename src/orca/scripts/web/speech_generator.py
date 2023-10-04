@@ -33,15 +33,16 @@ from gi.repository import Atspi
 import urllib
 
 from orca import debug
+from orca import focus_manager
 from orca import messages
 from orca import object_properties
-from orca import orca_state
 from orca import settings
 from orca import settings_manager
 from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 
@@ -74,7 +75,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateAncestors(obj, **args)
 
-        if self._script.inSayAll() and obj == orca_state.locusOfFocus:
+        if self._script.inSayAll() and obj == _focusManager.get_locus_of_focus():
             return []
 
         result = []
@@ -118,7 +119,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateAllTextSelection(self, obj, **args):
         if self._script.utilities.isZombie(obj) \
-           or obj != orca_state.locusOfFocus:
+           or obj != _focusManager.get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -127,7 +128,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateAnyTextSelection(self, obj, **args):
         if self._script.utilities.isZombie(obj) \
-           or obj != orca_state.locusOfFocus:
+           or obj != _focusManager.get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -194,7 +195,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         role = args.get('role', AXObject.get_role(obj))
-        if obj != orca_state.locusOfFocus:
+        if obj != _focusManager.get_locus_of_focus():
             if role in [Atspi.Role.ALERT, Atspi.Role.DIALOG]:
                 return super()._generateDescription(obj, **args)
             if not args.get('inMouseReview'):
@@ -456,7 +457,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.inDocumentContent(obj) \
-           and not self._script.utilities.inDocumentContent(orca_state.locusOfFocus):
+           and not self._script.utilities.inDocumentContent(_focusManager.get_locus_of_focus()):
             result = ['']
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result

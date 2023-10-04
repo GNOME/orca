@@ -34,12 +34,12 @@ from gi.repository import Gtk
 
 import orca.cmdnames as cmdnames
 import orca.debug as debug
+import orca.focus_manager as focus_manager
 import orca.scripts.default as default
 import orca.guilabels as guilabels
 import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.messages as messages
-import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
@@ -52,6 +52,7 @@ from .script_utilities import Utilities
 from .spellcheck import SpellCheck
 from .speech_generator import SpeechGenerator
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 class Script(default.Script):
@@ -312,26 +313,27 @@ class Script(default.Script):
         entire document.
         """
 
+        focus = _focusManager.get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
-           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
-           or not self.utilities.isTextArea(orca_state.locusOfFocus):
+           or self.utilities.isSpreadSheetCell(focus) \
+           or not self.utilities.isTextArea(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
-        text = orca_state.locusOfFocus.queryText()
+        text = focus.queryText()
         string, startOffset, endOffset = text.getTextAtOffset(
             text.caretOffset, Atspi.TextBoundaryType.LINE_START)
         if 0 < startOffset:
             text.setCaretOffset(startOffset-1)
             return True
 
-        obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
+        obj = self.utilities.findPreviousObject(focus)
         try:
             text = obj.queryText()
         except Exception:
             pass
         else:
-            orca.setLocusOfFocus(None, obj, notifyScript=False)
+            _focusManager.set_locus_of_focus(None, obj, notify_script=False)
             text.setCaretOffset(text.characterCount)
             return True
 
@@ -342,26 +344,27 @@ class Script(default.Script):
         entire document.
         """
 
+        focus = _focusManager.get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
-           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
-           or not self.utilities.isTextArea(orca_state.locusOfFocus):
+           or self.utilities.isSpreadSheetCell(focus) \
+           or not self.utilities.isTextArea(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
-        text = orca_state.locusOfFocus.queryText()
+        text = focus.queryText()
         string, startOffset, endOffset = text.getTextAtOffset(
             text.caretOffset, Atspi.TextBoundaryType.LINE_START)
         if endOffset < text.characterCount:
             text.setCaretOffset(endOffset)
             return True
 
-        obj = self.utilities.findNextObject(orca_state.locusOfFocus)
+        obj = self.utilities.findNextObject(focus)
         try:
             text = obj.queryText()
         except Exception:
             pass
         else:
-            orca.setLocusOfFocus(None, obj, notifyScript=False)
+            _focusManager.set_locus_of_focus(None, obj, notify_script=False)
             text.setCaretOffset(0)
             return True
 
@@ -379,10 +382,11 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        if not self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
+        focus = _focusManager.get_locus_of_focus()
+        if not self.utilities.isSpreadSheetCell(focus):
             return
 
-        inputLine = self.utilities.locateInputLine(orca_state.locusOfFocus)
+        inputLine = self.utilities.locateInputLine(focus)
         if not inputLine:
             return
 
@@ -404,7 +408,7 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = orca_state.locusOfFocus
+        cell = _focusManager.get_locus_of_focus()
         parent = AXObject.get_parent(cell)
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
@@ -423,7 +427,7 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = orca_state.locusOfFocus
+        cell = _focusManager.get_locus_of_focus()
         parent = AXObject.get_parent(cell)
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
@@ -451,7 +455,7 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = orca_state.locusOfFocus
+        cell = _focusManager.get_locus_of_focus()
         parent = AXObject.get_parent(cell)
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
@@ -471,7 +475,7 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = orca_state.locusOfFocus
+        cell = _focusManager.get_locus_of_focus()
         parent = AXObject.get_parent(cell)
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
@@ -509,7 +513,6 @@ class Script(default.Script):
 
         if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
            and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):
-            orca.emitRegionChanged(newLocusOfFocus)
             self.updateBraille(newLocusOfFocus)
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return
@@ -619,7 +622,7 @@ class Script(default.Script):
         # See comment #18 of bug #354463.
         if self.findCommandRun:
             return
- 
+
         default.Script.onActiveChanged(self, event)
 
     def onActiveDescendantChanged(self, event):
@@ -630,13 +633,14 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if self.utilities.isSameObject(event.any_data, orca_state.locusOfFocus):
+        focus = _focusManager.get_locus_of_focus()
+        if self.utilities.isSameObject(event.any_data, focus):
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
             if AXUtilities.is_focused(event.source):
-                orca.setLocusOfFocus(event, event.any_data, False)
-                self.updateBraille(orca_state.locusOfFocus)
+                _focusManager.set_locus_of_focus(event, event.any_data, False)
+                self.updateBraille(focus)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()
@@ -655,7 +659,7 @@ class Script(default.Script):
         """Callback for object:children-changed:add accessibility events."""
 
         if self.utilities.isSpreadSheetCell(event.any_data):
-            orca.setLocusOfFocus(event, event.any_data)
+            _focusManager.set_locus_of_focus(event, event.any_data)
             return
 
         if self.utilities.isLastCell(event.any_data):
@@ -664,8 +668,8 @@ class Script(default.Script):
             if activeRow < 0 or activeCol < 0:
                 return
 
-            if AXObject.is_dead(orca_state.locusOfFocus):
-                orca.setLocusOfFocus(event, event.source, False)
+            if _focusManager.focus_is_dead():
+                _focusManager.set_locus_of_focus(event, event.source, False)
 
             self.utilities.handleUndoTextEvent(event)
             rowCount, colCount = self.utilities.rowAndColumnCount(event.source)
@@ -687,11 +691,12 @@ class Script(default.Script):
         # This callback remains just to handle bugs in applications and toolkits
         # during the remainder of the unstable (3.11) development cycle.
 
-        if self.utilities.isSameObject(orca_state.locusOfFocus, event.source):
+        focus = _focusManager.get_locus_of_focus()
+        if self.utilities.isSameObject(focus, event.source):
             return
 
         if self.utilities.isFocusableLabel(event.source):
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         role = AXObject.get_role(event.source)
@@ -700,32 +705,32 @@ class Script(default.Script):
            or role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
-                orca.setLocusOfFocus(event, comboBox, True)
+                _focusManager.set_locus_of_focus(event, comboBox, True)
                 return
 
         # This seems to be something we inherit from Gtk+
         if role in [Atspi.Role.TEXT, Atspi.Role.PASSWORD_TEXT]:
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         # Ditto.
         if role == Atspi.Role.PUSH_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         # Ditto.
         if role == Atspi.Role.TOGGLE_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         # Ditto.
         if role == Atspi.Role.COMBO_BOX:
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         # Ditto.
         if role == Atspi.Role.PANEL and AXObject.get_name(event.source):
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
     def onFocusedChanged(self, event):
@@ -755,7 +760,7 @@ class Script(default.Script):
         if role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
-                orca.setLocusOfFocus(event, comboBox, True)
+                _focusManager.set_locus_of_focus(event, comboBox, True)
                 return
 
         parent = AXObject.get_parent(event.source)
@@ -783,20 +788,21 @@ class Script(default.Script):
 
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString in ["Left", "Right"]:
-                orca.setLocusOfFocus(event, event.source, False)
+                _focusManager.set_locus_of_focus(event, event.source, False)
                 return
 
-        if self.utilities.isSpreadSheetTable(event.source) and orca_state.locusOfFocus:
-            if AXObject.is_dead(orca_state.locusOfFocus):
-                msg = "SOFFICE: Event believed to be post-editing focus claim. Dead locusOfFocus."
+        if self.utilities.isSpreadSheetTable(event.source):
+            if _focusManager.focus_is_dead():
+                msg = "SOFFICE: Event believed to be post-editing focus claim."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.source, False)
+                _focusManager.set_locus_of_focus(event, event.source, False)
                 return
-            if AXUtilities.is_paragraph(orca_state.locusOfFocus) \
-               or AXUtilities.is_table_cell(orca_state.locusOfFocus):
+
+            focus = _focusManager.get_locus_of_focus()
+            if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.source, False)
+                _focusManager.set_locus_of_focus(event, event.source, False)
                 return
 
         default.Script.onFocusedChanged(self, event)
@@ -820,10 +826,7 @@ class Script(default.Script):
         if self._lastCommandWasStructNav:
             return
 
-        if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
-            tokens = ["SOFFICE: locusOfFocus", orca_state.locusOfFocus, "is spreadsheet cell"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        if self.utilities.isSpreadSheetCell(_focusManager.get_locus_of_focus()):
             if not self.utilities.isCellBeingEdited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -843,7 +846,7 @@ class Script(default.Script):
             return
 
         sourceWindow = self.utilities.topLevelObject(obj)
-        focusWindow = self.utilities.topLevelObject(orca_state.locusOfFocus)
+        focusWindow = self.utilities.topLevelObject(_focusManager.get_locus_of_focus())
         if sourceWindow != focusWindow:
             return
 
@@ -901,12 +904,12 @@ class Script(default.Script):
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
-            if orca_state.locusOfFocus == orca_state.activeWindow:
+            if _focusManager.focus_is_active_window():
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_focused(event.source):
-                orca.setLocusOfFocus(event, event.any_data, False)
-                self.updateBraille(orca_state.locusOfFocus)
+                _focusManager.set_locus_of_focus(event, event.any_data, False)
+                self.updateBraille(event.any_data)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()
@@ -919,8 +922,8 @@ class Script(default.Script):
         selectedChildren = self.utilities.selectedChildren(event.source)
         if len(selectedChildren) == 1 \
            and self.utilities.containingComboBox(event.source) == \
-               self.utilities.containingComboBox(orca_state.locusOfFocus):
-            orca.setLocusOfFocus(event, selectedChildren[0], True)
+               self.utilities.containingComboBox(_focusManager.get_locus_of_focus()):
+            _focusManager.set_locus_of_focus(event, selectedChildren[0], True)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
@@ -935,9 +938,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if event.source != orca_state.locusOfFocus \
+        if event.source != _focusManager.get_locus_of_focus() \
            and AXUtilities.is_focused(event.source):
-            orca.setLocusOfFocus(event, event.source, False)
+            _focusManager.set_locus_of_focus(event, event.source, False)
 
         super().onTextSelectionChanged(event)
 
@@ -976,7 +979,7 @@ class Script(default.Script):
 
         child = AXObject.get_child(event.source, 0)
         if AXObject.get_role(child) == Atspi.Role.DIALOG:
-            orca.setLocusOfFocus(event, child, False)
+            _focusManager.set_locus_of_focus(event, child, False)
 
         self.spellcheck.presentErrorDetails()
 

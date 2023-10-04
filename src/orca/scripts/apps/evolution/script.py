@@ -29,8 +29,7 @@ __license__   = "LGPL"
 
 
 import orca.debug as debug
-import orca.orca as orca
-import orca.orca_state as orca_state
+import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
@@ -41,6 +40,7 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 ########################################################################
@@ -122,16 +122,16 @@ class Script(WebKitGtk.Script, gtk.Script):
             if AXUtilities.is_selected(event.any_data):
                 msg = "EVOLUTION: Source is compose autocomplete with selected child."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.any_data)
+                _focusManager.set_locus_of_focus(event, event.any_data)
             else:
                 msg = "EVOLUTION: Source is compose autocomplete without selected child."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.source)
+                _focusManager.set_locus_of_focus(event, event.source)
             return
 
-        if AXUtilities.is_table_cell(orca_state.locusOfFocus):
-            table = AXObject.find_ancestor(
-                orca_state.locusOfFocus, AXUtilities.is_tree_or_tree_table)
+        focus = _focusManager.get_locus_of_focus()
+        if AXUtilities.is_table_cell(focus):
+            table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
                 msg = "EVOLUTION: Event is from a different tree or tree table."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -141,7 +141,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         if child is not None and child != event.any_data:
             tokens = ["EVOLUTION: Bogus any_data suspected. Setting focus to", child]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            orca.setLocusOfFocus(event, child)
+            _focusManager.set_locus_of_focus(event, child)
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
@@ -162,7 +162,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         # up in the hierarchy or emit object:state-changed:focused events.
         if AXUtilities.is_layered_pane(event.source):
             obj = self.utilities.realActiveDescendant(event.source)
-            orca.setLocusOfFocus(event, obj)
+            _focusManager.set_locus_of_focus(event, obj)
             return
 
         gtk.Script.onFocus(self, event)

@@ -26,13 +26,13 @@ __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.debug as debug
-import orca.orca as orca
-import orca.orca_state as orca_state
+import orca.focus_manager as focus_manager
 import orca.scripts.default as default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-
 from .script_utilities import Utilities
+
+_focusManager = focus_manager.getManager()
 
 class Script(default.Script):
 
@@ -47,16 +47,15 @@ class Script(default.Script):
 
         if self.utilities.isInOpenMenuBarMenu(newFocus):
             window = self.utilities.topLevelObject(newFocus)
-            windowChanged = window and orca_state.activeWindow != window
-            if windowChanged:
-                orca.setActiveWindow(window)
+            if window and _focusManager.get_active_window() != window:
+                _focusManager.set_active_window(window)
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if not self.utilities.isTypeahead(orca_state.locusOfFocus):
+        if not self.utilities.isTypeahead(_focusManager.get_locus_of_focus()):
             super().onActiveDescendantChanged(event)
             return
 
@@ -73,14 +72,15 @@ class Script(default.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
-        if self.utilities.isTypeahead(orca_state.locusOfFocus) \
+        focus = _focusManager.get_locus_of_focus()
+        if self.utilities.isTypeahead(focus) \
            and AXObject.supports_table(event.source) \
            and not AXUtilities.is_focused(event.source):
             return
 
-        ancestor = AXObject.find_ancestor(orca_state.locusOfFocus, lambda x: x == event.source)
+        ancestor = AXObject.find_ancestor(focus, lambda x: x == event.source)
         if not ancestor:
-            orca.setLocusOfFocus(event, event.source)
+            _focusManager.set_locus_of_focus(event, event.source)
             return
 
         if AXObject.supports_table(ancestor):
@@ -90,13 +90,13 @@ class Script(default.Script):
            and not AXObject.find_ancestor(ancestor, AXUtilities.is_menu):
             return
 
-        orca.setLocusOfFocus(event, event.source)
+        _focusManager.set_locus_of_focus(event, event.source)
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        isFocused = AXUtilities.is_focused(event.source)
-        if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
+        if not AXUtilities.is_focused(event.source) \
+           and self.utilities.isTypeahead(_focusManager.get_locus_of_focus()):
             msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -115,8 +115,7 @@ class Script(default.Script):
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        obj = event.source
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+        if not self.utilities.isSameObject(event.source, _focusManager.get_locus_of_focus()):
             return
 
         default.Script.onTextSelectionChanged(self, event)

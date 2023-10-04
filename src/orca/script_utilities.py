@@ -33,7 +33,6 @@ import gi
 import locale
 import math
 import re
-import subprocess
 import time
 from difflib import SequenceMatcher
 
@@ -45,12 +44,12 @@ from gi.repository import Gtk
 from . import chnames
 from . import colornames
 from . import debug
+from . import focus_manager
 from . import keynames
 from . import keybindings
 from . import input_event
 from . import mathsymbols
 from . import messages
-from . import orca
 from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
@@ -62,6 +61,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
@@ -115,129 +115,6 @@ class Utilities:
     # Utilities for finding, identifying, and comparing accessibles         #
     #                                                                       #
     #########################################################################
-
-    def _isActiveAndShowingAndNotIconified(self, obj):
-        if not AXUtilities.is_active(obj):
-            tokens = ["SCRIPT UTILITIES:", obj, "lacks state active"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilities.is_iconified(obj):
-            tokens = ["SCRIPT UTILITIES:", obj, "has state iconified"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if not AXUtilities.is_showing(obj):
-            tokens = ["SCRIPT UTILITIES:", obj, "lacks state showing"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return True
-
-    @staticmethod
-    def _getAppCommandLine(app):
-        if not app:
-            return ""
-
-        try:
-            pid = app.get_process_id()
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting process id of", app, ". May be defunct."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return ""
-
-        try:
-            cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
-        except Exception:
-            return ""
-
-        return cmdline.replace("\x00", " ")
-
-    def canBeActiveWindow(self, window, clearCache=False):
-        if not window:
-            return False
-
-        app = AXObject.get_application(window)
-        tokens = ["SCRIPT UTILITIES: Looking at", window, "from", app, self._getAppCommandLine(app)]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if clearCache:
-            AXObject.clear_cache(window)
-
-        if not self._isActiveAndShowingAndNotIconified(window):
-            tokens = ["SCRIPT UTILITIES:", window, "is not active and showing, or is iconified"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["SCRIPT UTILITIES:", window, "can be active window"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return True
-
-    def activeWindow(self, *apps):
-        """Tries to locate the active window; may or may not succeed."""
-
-        candidates = []
-        apps = apps or AXUtilities.get_all_applications(must_have_window=True)
-        for app in apps:
-            candidates.extend([c for c in AXObject.iter_children(app, self.canBeActiveWindow)])
-
-        if not candidates:
-            tokens = ["SCRIPT UTILITIES: Unable to find active window from", apps]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if len(candidates) == 1:
-            tokens = ["SCRIPT UTILITIES: Active window is", candidates[0]]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return candidates[0]
-
-        tokens = ["SCRIPT UTILITIES: These windows all claim to be active:", candidates]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        filtered = []
-        for candidate in candidates:
-            if self.isDesktop(candidate):
-                tokens = ["SCRIPT UTILITIES: Rejecting", candidate, ": it's the desktop frame"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            elif AXObject.get_name(AXObject.get_application(candidate)) == "mutter-x11-frames":
-                tokens = ["SCRIPT UTILITIES: Rejecting", candidate, ": app is mutter-x11-frames"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                filtered.append(candidate)
-
-        if len(filtered) == 1:
-            tokens = ["SCRIPT UTILITIES: Active window is believed to be", filtered[0]]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return filtered[0]
-
-        # Some electron apps running in the background claim to be active even when they
-        # are not. Slack is one such example. We can add others as we go.
-        suspect_app_names = ["slack",
-                             "discord",
-                             "outline-client",
-                             "whatsapp-desktop-linux"]
-        refiltered = []
-        for frame in filtered:
-            if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
-                tokens = ["SCRIPT UTILITIES: Suspecting", frame, "is a non-active Electron app"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                refiltered.append(frame)
-
-        if len(refiltered) == 1:
-            tokens = ["SCRIPT UTILITIES: Active window is believed to be", refiltered[0]]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return refiltered[0]
-
-        guess = None
-        if refiltered:
-            tokens = ["SCRIPT UTILITIES: Still have multiple active windows:", refiltered]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            guess = refiltered[0]
-
-        tokens = ["SCRIPT UTILITIES: Active window is:", guess]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return guess
 
     def objectAttributes(self, obj, useCache=True):
         return AXObject.get_attributes_dict(obj)
@@ -495,10 +372,14 @@ class Utilities:
             obj, offset = self.getCaretContext()
 
         document = AXObject.find_ancestor(obj, AXUtilities.is_document)
-        if not document and AXUtilities.is_document(orca_state.locusOfFocus):
-            return orca_state.locusOfFocus
+        if document:
+            return document
 
-        return document
+        focus = _focusManager.get_locus_of_focus()
+        if AXUtilities.is_document(focus):
+            return focus
+
+        return None
 
     def documentFrameURI(self, documentFrame=None):
         """Returns the URI of the document frame that is active."""
@@ -510,7 +391,7 @@ class Utilities:
 
         results = [None, None]
 
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not obj:
             msg = "SCRIPT UTILITIES: frameAndDialog() called without valid object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -546,7 +427,7 @@ class Utilities:
         return results
 
     def presentEventFromNonShowingObject(self, event):
-        if event.source == orca_state.locusOfFocus:
+        if event.source == _focusManager.get_locus_of_focus():
             return True
 
         return False
@@ -564,7 +445,7 @@ class Utilities:
         """
 
         return AXUtilities.is_combo_box(obj) \
-            and not self.isSameObject(obj, orca_state.locusOfFocus)
+            and not self.isSameObject(obj, _focusManager.get_locus_of_focus())
 
     def hasMatchingHierarchy(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
@@ -606,7 +487,7 @@ class Utilities:
 
     def inFindContainer(self, obj=None):
         if obj is None:
-            obj = orca_state.locusOfFocus
+            obj = _focusManager.get_locus_of_focus()
 
         if not AXUtilities.is_entry(obj):
             return False
@@ -1009,6 +890,9 @@ class Utilities:
 
         return True
 
+    def topLevelObjectIsActiveWindow(self, obj):
+        return self.isSameObject(self.topLevelObject(obj), _focusManager.get_active_window())
+
     def isProgressBarUpdate(self, obj):
         if not _settingsManager.getSetting('speakProgressBarUpdates') \
            and not _settingsManager.getSetting('brailleProgressBarUpdates') \
@@ -1030,10 +914,9 @@ class Utilities:
             return True, "Verbosity is all"
 
         if verbosity == settings.PROGRESS_BAR_WINDOW:
-            topLevel = self.topLevelObject(obj)
-            if topLevel == orca_state.activeWindow:
+            if self.topLevelObjectIsActiveWindow(obj):
                 return True, "Verbosity is window"
-            return False, f"Window {topLevel} is not {orca_state.activeWindow}"
+            return False, "Top-level object is not active window"
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
             app = AXObject.get_application(obj)
@@ -1104,11 +987,11 @@ class Utilities:
         return AXUtilities.is_document(obj)
 
     def inDocumentContent(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         return self.getDocumentForObject(obj) is not None
 
     def activeDocument(self, window=None):
-        return self.getTopLevelDocumentForObject(orca_state.locusOfFocus)
+        return self.getTopLevelDocumentForObject(_focusManager.get_locus_of_focus())
 
     def isTopLevelDocument(self, obj):
         return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
@@ -1402,10 +1285,11 @@ class Utilities:
         - obj: an Accessible object
         """
 
-        if not obj or not orca_state.locusOfFocus:
+        focus = _focusManager.get_locus_of_focus()
+        if not (obj and focus):
             return False
 
-        return AXObject.get_application(orca_state.locusOfFocus) == AXObject.get_application(obj)
+        return AXObject.get_application(focus) == AXObject.get_application(obj)
 
     def isLink(self, obj):
         """Returns True if obj is a link."""
@@ -2024,11 +1908,12 @@ class Utilities:
         return roles
 
     def _locusOfFocusIsTopLevelObject(self):
-        if not orca_state.locusOfFocus:
+        focus = _focusManager.get_locus_of_focus()
+        if not focus:
             return False
 
-        rv = orca_state.locusOfFocus == self.topLevelObject(orca_state.locusOfFocus)
-        tokens = ["SCRIPT UTILITIES:", orca_state.locusOfFocus, "is top-level object:", rv]
+        rv = focus == self.topLevelObject(focus)
+        tokens = ["SCRIPT UTILITIES:", focus, "is top-level object:", rv]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
@@ -2082,7 +1967,7 @@ class Utilities:
         return rv
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         topLevel = self.topLevelObject(obj)
         if not topLevel:
             return False
@@ -2091,7 +1976,7 @@ class Utilities:
         if not AXUtilities.is_active(topLevel) or AXUtilities.is_defunct(topLevel):
             return False
 
-        if not self.isSameObject(topLevel, orca_state.activeWindow):
+        if not self.isSameObject(topLevel, _focusManager.get_active_window()):
             return False
 
         return True
@@ -2310,7 +2195,7 @@ class Utilities:
                 and (AXObject.get_name(x) or AXObject.get_child_count(x))
 
         def cannotBeActiveWindow(x):
-            return not self.canBeActiveWindow(x)
+            return not _focusManager.can_be_active_window(x)
 
         presentable = list(filter(isPresentable, set(dialogs)))
         unfocused = list(filter(cannotBeActiveWindow, presentable))
@@ -2706,7 +2591,7 @@ class Utilities:
         return [textContents, startOffset, endOffset]
 
     def getCaretContext(self):
-        obj = orca_state.locusOfFocus
+        obj = _focusManager.get_locus_of_focus()
         try:
             offset = obj.queryText().caretOffset
         except NotImplementedError:
@@ -2720,7 +2605,7 @@ class Utilities:
         return obj, 0
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
-        orca.setLocusOfFocus(None, obj, False)
+        _focusManager.set_locus_of_focus(None, obj, False)
         self.setCaretOffset(obj, offset)
 
     def setCaretOffset(self, obj, offset):
@@ -2942,17 +2827,18 @@ class Utilities:
         determine if the script is likely to echo it as a character.
         """
 
-        if not orca_state.locusOfFocus or not settings.enableEchoByCharacter:
+        focus = _focusManager.get_locus_of_focus()
+        if not focus or not settings.enableEchoByCharacter:
             return False
 
         if len(event.event_string) != 1 \
            or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
             return False
 
-        if AXUtilities.is_password_text(orca_state.locusOfFocus):
+        if AXUtilities.is_password_text(focus):
             return False
 
-        if AXUtilities.is_editable(orca_state.locusOfFocus):
+        if AXUtilities.is_editable(focus):
             return True
 
         return False
@@ -3556,10 +3442,10 @@ class Utilities:
     @staticmethod
     def unicodeValueString(character):
         """ Returns a four hex digit representation of the given character
-        
+
         Arguments:
         - The character to return representation
-        
+
         Returns a string representaition of the given character unicode vlue
         """
 
@@ -3708,7 +3594,8 @@ class Utilities:
         return AXUtilities.is_button(obj) and AXUtilities.has_popup(obj)
 
     def isPopupMenuForCurrentItem(self, obj):
-        if obj == orca_state.locusOfFocus:
+        focus = _focusManager.get_locus_of_focus()
+        if obj == focus:
             return False
 
         if not AXUtilities.is_menu(obj):
@@ -3718,7 +3605,7 @@ class Utilities:
         if not name:
             return False
 
-        return name == AXObject.get_name(orca_state.locusOfFocus)
+        return name == AXObject.get_name(focus)
 
     def isMenuWithNoSelectedChild(self, obj):
         return AXUtilities.is_menu(obj) and not self.selectedChildCount(obj)
@@ -3727,7 +3614,7 @@ class Utilities:
         return AXUtilities.is_button(obj) and self.popupMenuFor(obj) is not None
 
     def inMenu(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if obj is None:
             return False
 
@@ -3740,7 +3627,7 @@ class Utilities:
         return False
 
     def inContextMenu(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not self.inMenu(obj):
             return False
 
@@ -4880,7 +4767,7 @@ class Utilities:
         if keyString not in ["Up", "Down"]:
             return False
 
-        if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
+        if self.isEditableDescendantOfComboBox(_focusManager.get_locus_of_focus()):
             return False
 
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
@@ -4897,7 +4784,7 @@ class Utilities:
         if keyString not in ["Page_Up", "Page_Down"]:
             return False
 
-        if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
+        if self.isEditableDescendantOfComboBox(_focusManager.get_locus_of_focus()):
             return False
 
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
@@ -5073,10 +4960,10 @@ class Utilities:
                 if keyString not in ["Return", "space", " "]:
                     return False
 
-        return AXUtilities.is_table_header(orca_state.locusOfFocus)
+        return AXUtilities.is_table_header(_focusManager.get_locus_of_focus())
 
     def isPresentableExpandedChangedEvent(self, event):
-        if self.isSameObject(event.source, orca_state.locusOfFocus):
+        if self.isSameObject(event.source, _focusManager.get_locus_of_focus()):
             return True
 
         if AXUtilities.is_table_row(event.source) or AXUtilities.is_list_box(event.source):
@@ -5105,14 +4992,14 @@ class Utilities:
                 return True
             if AXUtilities.is_password_text(event.source):
                 return True
-            if AXObject.is_dead(orca_state.locusOfFocus):
+            if _focusManager.focus_is_dead():
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
             msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if orca_state.locusOfFocus in [event.source, AXObject.get_parent(event.source)]:
+        if _focusManager.get_locus_of_focus() in [event.source, AXObject.get_parent(event.source)]:
             return True
 
         msg = "SCRIPT UTILITIES: Event is not being presented due to lack of cause"
@@ -5187,7 +5074,7 @@ class Utilities:
 
         if AXUtilities.is_focusable(event.source) \
            and not AXUtilities.is_focused(event.source) \
-           and event.source != orca_state.locusOfFocus:
+           and event.source != _focusManager.get_locus_of_focus():
             msg = "SCRIPT UTILITIES: Not echoable text insertion event: " \
                  "focusable source is not focused"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -5239,7 +5126,7 @@ class Utilities:
         return False
 
     def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
+        obj = obj or _focusManager.get_locus_of_focus()
         if not obj or AXObject.is_dead(obj):
             return False
 
@@ -5379,7 +5266,7 @@ class Utilities:
         self._script.pointOfReference['allItemsSelected'] = allCurrentlySelected
         if self.lastInputEventWasSelectAll() and allCurrentlySelected:
             self._script.presentMessage(messages.CONTAINER_SELECTED_ALL)
-            orca.setLocusOfFocus(None, obj, False)
+            _focusManager.set_locus_of_focus(None, obj, False)
             return True
 
         return False

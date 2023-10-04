@@ -34,12 +34,14 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
-from . import orca_state
+from . import focus_manager
 from . import settings
 
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .orca_i18n import _         # for gettext support
+
+_focusManager = focus_manager.getManager()
 
 class TutorialGenerator:
     """Takes accessible objects and produces a tutorial string to speak
@@ -754,7 +756,7 @@ class TutorialGenerator:
         if not settings.enableTutorialMessages:
             return []
 
-        if not (obj and obj == orca_state.locusOfFocus):
+        if obj != _focusManager.get_locus_of_focus():
             return []
 
         # Widgets in document content don't necessarily have the same interaction

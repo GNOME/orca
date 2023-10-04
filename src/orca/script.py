@@ -539,7 +539,7 @@ class Script:
         information to the user.
 
         NOTE: scripts should not call this method directly.  Instead,
-        a script should call orca.setLocusOfFocus, which will eventually
+        a script should call _focusManager.set_locus_of_focus, which will eventually
         result in this method being called.
 
         Arguments:

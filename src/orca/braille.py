@@ -594,15 +594,15 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        script = _scriptManager.getActiveScript()
-        if script and self.accessible:
-            [string, self.caretOffset, self.lineOffset] = \
-                 script.getTextLineAtCaret(
-                     self.accessible, startOffset=startOffset, endOffset=endOffset)
-        else:
-            string = ""
-            self.caretOffset = 0
-            self.lineOffset = 0
+        string = ""
+        self.caretOffset = 0
+        self.lineOffset = 0
+        if self.accessible:
+            script = _scriptManager.getActiveScript()
+            if script:
+                [string, self.caretOffset, self.lineOffset] = \
+                     script.getTextLineAtCaret(
+                         self.accessible, startOffset=startOffset, endOffset=endOffset)
 
         try:
             endOffset = endOffset - self.lineOffset

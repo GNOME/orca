@@ -34,13 +34,14 @@ import re
 
 from . import braille
 from . import debug
-from . import orca_state
+from . import focus_manager
 from . import script_manager
 from . import settings
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+_focusManager = focus_manager.getManager()
 _scriptManager = script_manager.getManager()
 
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
@@ -417,13 +418,13 @@ class Line:
                 # to handle problems with Java text. See Bug 435553.
                 if isinstance(zone, TextZone) and \
                    ((AXObject.get_role(zone.accessible) in \
-                         (Atspi.Role.TEXT,  
+                         (Atspi.Role.TEXT,
                           Atspi.Role.PASSWORD_TEXT,
                           Atspi.Role.TERMINAL)) or \
-                    # [[[TODO: Eitan - HACK: 
+                    # [[[TODO: Eitan - HACK:
                     # This is just to get FF3 cursor key routing support.
                     # We really should not be determining all this stuff here,
-                    # it should be in the scripts. 
+                    # it should be in the scripts.
                     # Same applies to roles above.]]]
                     (AXObject.get_role(zone.accessible) in \
                          (Atspi.Role.PARAGRAPH,
@@ -494,7 +495,7 @@ class Context:
         self.targetCharInfo = None
         self.focusZone = None
         self.container = None
-        self.focusObj = orca_state.locusOfFocus
+        self.focusObj = _focusManager.get_locus_of_focus()
         self.topLevel = None
         self.bounds = 0, 0, 0, 0
 
@@ -1075,7 +1076,7 @@ class Context:
 
         return moved
 
-    def goPrevious(self, flatReviewType=ZONE, 
+    def goPrevious(self, flatReviewType=ZONE,
                    wrap=WRAP_ALL, omitWhitespace=True):
         """Moves this context's locus of interest to the first char
         of the previous type.

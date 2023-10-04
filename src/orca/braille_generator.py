@@ -31,16 +31,17 @@ from gi.repository import Atspi
 
 from . import braille
 from . import debug
+from . import focus_manager
 from . import generator
 from . import messages
 from . import object_properties
-from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .braille_rolenames import shortRoleNames
 
+_focusManager = focus_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 class Space:
@@ -93,8 +94,7 @@ class BrailleGenerator(generator.Generator):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
             return [[], None]
 
-        if obj == orca_state.locusOfFocus \
-           and not args.get('formatType', None):
+        if obj == _focusManager.get_locus_of_focus() and not args.get('formatType', None):
             args['formatType'] = 'focused'
         result = self.generate(obj, **args)
 
@@ -396,7 +396,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = self._generatePercentage(obj, **args)
-        if obj == orca_state.locusOfFocus and not result:
+        if obj == _focusManager.get_locus_of_focus() and not result:
             return ['']
 
         return result
