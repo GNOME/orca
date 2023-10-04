@@ -265,7 +265,7 @@ class Script:
     def getEventSynthesizer(self):
         return ax_event_synthesizer.getSynthesizer()
 
-    def useStructuralNavigationModel(self, debugOutput=True):
+    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
         """Returns True if we should use structural navigation. Most
         scripts will have no need to override this.  Gecko does however
         because within an HTML document there are times when we do want

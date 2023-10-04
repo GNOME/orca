@@ -384,7 +384,7 @@ class Script(default.Script):
 
         return default.Script.skipObjectEvent(self, event)
 
-    def useStructuralNavigationModel(self, debugOutput=True):
+    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
         """Returns True if we should do our own structural navigation.
         This should return False if we're in a form field, or not in
         document content.
