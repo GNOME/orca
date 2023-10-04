@@ -1,3 +1,29 @@
+44.2 - 4 October 2023
+
+Web:
+
+* Fix bug causing Orca to present some custom widgets as an image
+
+* Eliminate chattiness from navigation by cell
+
+* Fix / work around issue causing Orca to sometimes not present focus
+  changes in text fields from Electron applications
+
+General:
+
+* Fix rewind/fast-forward in SayAll
+
+* Improve performance when closing the preferences dialog
+
+* Don't treat Alt+Left/Right as character navigation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Bruce Cowan
+  ka              Georgian                  Ekaterine Papava
+
+=========
+
 44.1 - 25 May 2023
 
 Web:
