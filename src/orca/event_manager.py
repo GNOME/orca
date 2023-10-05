@@ -76,7 +76,6 @@ class EventManager:
                                    'object:state-changed:showing',
                                    'object:text-changed:delete']
         self._eventsTriggeringSuspension = []
-        self._parentsOfDefunctDescendants = []
         orca_state.device = None
         self.bypassedKey = None
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
@@ -284,11 +283,6 @@ class EventManager:
                 return True
 
         elif event.type.startswith('object:selection-changed'):
-            if event.source in self._parentsOfDefunctDescendants:
-                msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
             if AXObject.is_dead(event.source):
                 msg = 'EVENT MANAGER: Ignoring event from dead source'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -319,13 +313,7 @@ class EventManager:
             if defunct:
                 msg = 'EVENT MANAGER: Ignoring event for potentially-defunct child/descendant'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                if AXUtilities.manages_descendants(event.source) \
-                   and event.source not in self._parentsOfDefunctDescendants:
-                    self._parentsOfDefunctDescendants.append(event.source)
                 return True
-
-            if event.source in self._parentsOfDefunctDescendants:
-                self._parentsOfDefunctDescendants.remove(event.source)
 
             # This should be safe. We do not have a reason to present a newly-added,
             # but not focused image. We do not need to update live regions for images.
@@ -993,12 +981,6 @@ class EventManager:
                 msg = 'EVENT MANAGER: Pruning event queue due to flood.'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self._pruneEventsDuringFlood()
-
-        if eType.startswith('object:selection-changed') \
-           and event.source in self._parentsOfDefunctDescendants:
-            msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
