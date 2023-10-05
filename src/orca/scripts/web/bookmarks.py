@@ -33,7 +33,7 @@ class Bookmarks(bookmarks.Bookmarks):
         super().__init__(script)
         self._currentbookmarkindex = {}
 
-    def addBookmark(self, inputEvent):
+    def addBookmark(self, script, inputEvent):
         """Add an in-page accessible object bookmark for this key and URI."""
 
         index = (inputEvent.hw_code, self.getURIKey())
@@ -42,7 +42,7 @@ class Bookmarks(bookmarks.Bookmarks):
         self._bookmarks[index] = path, characterOffset
         self._script.presentMessage(messages.BOOKMARK_ENTERED)
 
-    def goToBookmark(self, inputEvent, index=None):
+    def goToBookmark(self, script, inputEvent, index=None):
         """Go to the bookmark indexed at this key and this page's URI."""
 
         index = index or (inputEvent.hw_code, self.getURIKey())
@@ -63,7 +63,7 @@ class Bookmarks(bookmarks.Bookmarks):
         self._script.displayContents(contents)
         self._currentbookmarkindex[index[1]] = index[0]
 
-    def saveBookmarks(self, inputEvent):
+    def saveBookmarks(self, script, inputEvent):
         """Save the bookmarks for this script."""
 
         saved = {}
@@ -79,7 +79,7 @@ class Bookmarks(bookmarks.Bookmarks):
         for o in self._saveObservers:
             o()
 
-    def goToNextBookmark(self, inputEvent):
+    def goToNextBookmark(self, script, inputEvent):
         """Go to the next bookmark location."""
 
         # The convenience of using a dictionary to add/goto a bookmark is offset
@@ -109,7 +109,7 @@ class Bookmarks(bookmarks.Bookmarks):
         except (ValueError, KeyError, IndexError):
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))
 
-    def goToPrevBookmark(self, inputEvent):
+    def goToPrevBookmark(self, script, inputEvent):
         """Go to the previous bookmark location."""
 
         bm_keys = list(self._bookmarks.keys())
