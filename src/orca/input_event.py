@@ -289,19 +289,22 @@ class KeyboardEvent(InputEvent):
             if self.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
                 self._is_kp_with_numlock = True
 
-        if self._script:
-            self._app = self._script.app
-            if not _focusManager.can_be_active_window(self._window):
-                self._window = _focusManager.find_active_window()
-                tokens = ["INPUT EVENT: Updating window and active window to", self._window]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                _focusManager.set_active_window(self._window)
+        # We typically do little to nothing in the case of a key release. Therefore skip doing
+        # this work.
+        if pressed:
+            if self._script:
+                self._app = self._script.app
+                if not _focusManager.can_be_active_window(self._window):
+                    self._window = _focusManager.find_active_window()
+                    tokens = ["INPUT EVENT: Updating window and active window to", self._window]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    _focusManager.set_active_window(self._window)
 
-        if self._window and self._app != AXObject.get_application(self._window):
-            self._script = _scriptManager.getScript(AXObject.get_application(self._window))
-            self._app = self._script.app
-            tokens = ["INPUT EVENT: Updated script to", self._script]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            if self._window and self._app != AXObject.get_application(self._window):
+                self._script = _scriptManager.getScript(AXObject.get_application(self._window))
+                self._app = self._script.app
+                tokens = ["INPUT EVENT: Updated script to", self._script]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
