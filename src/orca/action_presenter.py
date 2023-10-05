@@ -30,7 +30,7 @@ import gi
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, GLib, Gtk
 
 from . import cmdnames
 from . import debug
@@ -122,7 +122,10 @@ class ActionPresenter:
 
         self._obj = obj
         self._gui = ActionMenu(actions, self._perform_action)
-        self._gui.show_gui()
+        timeout = 100
+        msg = f"ACTION PRESENTER: Delaying popup {timeout}ms due to GtkMenu grab conflict."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        GLib.timeout_add(timeout, self._gui.show_gui)
         return True
 
 
