@@ -253,11 +253,6 @@ class FocusManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if self._is_desktop_frame(window):
-            tokens.append("is desktop frame")
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
         tokens.append("can be active window")
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
