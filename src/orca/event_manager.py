@@ -76,9 +76,6 @@ class EventManager:
                                    'object:state-changed:showing',
                                    'object:text-changed:delete']
         self._eventsTriggeringSuspension = []
-        self._ignoredEvents = ['object:bounds-changed',
-                               'object:state-changed:defunct',
-                               'object:property-change:accessible-parent']
         self._parentsOfDefunctDescendants = []
         orca_state.device = None
         self.bypassedKey = None
@@ -105,16 +102,6 @@ class EventManager:
         self._scriptListenerCounts = {}
         orca_state.device = None
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
-
-    def ignoreEventTypes(self, eventTypeList):
-        for eventType in eventTypeList:
-            if eventType not in self._ignoredEvents:
-                self._ignoredEvents.append(eventType)
-
-    def unignoreEventTypes(self, eventTypeList):
-        for eventType in eventTypeList:
-            if eventType in self._ignoredEvents:
-                self._ignoredEvents.remove(eventType)
 
     def _isDuplicateEvent(self, event):
         """Returns True if this event is already in the event queue."""
@@ -149,11 +136,6 @@ class EventManager:
 
         if not self._active:
             msg = 'EVENT MANAGER: Ignoring because event manager is not active'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if list(filter(event.type.startswith, self._ignoredEvents)):
-            msg = 'EVENT MANAGER: Ignoring because event type is ignored'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
