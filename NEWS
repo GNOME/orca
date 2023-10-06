@@ -1,3 +1,39 @@
+45.1 - 6 October 2023
+
+Web:
+
+* Fix regression in bookmark support.
+
+* Fix bug causing Orca to present some custom widgets as an image.
+
+General:
+
+* Fix bug causing Orca to ignore objects that are valid because they
+  had been defunct/invalid before.
+
+* Fix bug causing rewind and fast-forward in SayAll to fail.
+
+* Fix chattiness issue in mate-panel.
+
+* Only examine descriptions by default in isSameObject for Gtk apps
+  for performance reasons.
+
+* Use AXObject.is_dead instead of the script utility for performance
+  reasons.
+
+* Revert "Don't let brlapi crash us". This change was a workaround
+  put in place to give distros enough time to get the fixed brltty,
+  but it had a slight performance impact if braille was enabled but
+  not being used.
+
+* Stop using deprecated Gtk API in the accessible actions menu.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  eo              Esperanto                 Kristjan SCHMIDT
+
+=========
+
 45.0 - 15 September 2023
 
 New and updated translations (THANKS EVERYONE!!!):
