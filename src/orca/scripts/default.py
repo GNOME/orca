@@ -1402,7 +1402,7 @@ class Script(script.Script):
     def onAnnouncement(self, event):
         """Callback for object:announcement events."""
 
-        if isinstance(str, event.any_data):
+        if isinstance(event.any_data, str):
             self.presentMessage(event.any_data)
 
     def onNameChanged(self, event):
