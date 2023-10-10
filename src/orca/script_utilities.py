@@ -2150,8 +2150,8 @@ class Utilities:
 
         rootName = AXObject.get_name(root)
 
-        # Eliminate duplicates and things suspected to be labels for widgets
-        d = {}
+        # Eliminate things suspected to be labels for widgets
+        labels_filtered = []
         for label in labels:
             name = AXObject.get_name(label) or self.displayedText(label)
             if name and name in [rootName, AXObject.get_name(AXObject.get_parent(label))]:
@@ -2160,10 +2160,9 @@ class Utilities:
                 continue
             if rootName.find(name) >= 0:
                 continue
-            d[name] = label
-        labels = list(d.values())
+            labels_filtered.append(label)
 
-        return sorted(labels, key=functools.cmp_to_key(self.spatialComparison))
+        return sorted(labels_filtered, key=functools.cmp_to_key(self.spatialComparison))
 
     def _treatAlertsAsDialogs(self):
         return True
