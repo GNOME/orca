@@ -663,7 +663,8 @@ class SpeechGenerator(generator.Generator):
 
         minimumWords = 1
         role = args.get('role', AXObject.get_role(obj))
-        if role in [Atspi.Role.DIALOG, Atspi.Role.PANEL]:
+        if role == Atspi.Role.PANEL or \
+           (role == Atspi.Role.DIALOG and not AXUtilities.is_message_dialog(obj)):
             minimumWords = 3
 
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
