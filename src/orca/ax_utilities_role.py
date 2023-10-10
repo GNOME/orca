@@ -191,9 +191,12 @@ class AXUtilitiesRole:
 
         roles = [Atspi.Role.CHECK_BOX,
                  Atspi.Role.COMBO_BOX,
+                 Atspi.Role.ENTRY,
+                 Atspi.Role.PASSWORD_TEXT,
                  Atspi.Role.PUSH_BUTTON,
                  Atspi.Role.RADIO_BUTTON,
                  Atspi.Role.SLIDER,
+                 Atspi.Role.SPIN_BUTTON,
                  Atspi.Role.TEXT, # predicate recommended to check it is editable
                  Atspi.Role.TOGGLE_BUTTON]
         return roles

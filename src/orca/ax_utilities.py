@@ -133,10 +133,13 @@ class AXUtilities:
         return AXObject.find_all_descendants(obj, is_match)
 
     @staticmethod
-    def get_all_widgets(obj, must_be_showing_and_visible=True):
+    def get_all_widgets(obj, must_be_showing_and_visible=True, exclude_push_button=False):
         """Returns all the descendants of obj with a widget role"""
 
         roles = AXUtilitiesRole.get_widget_roles()
+        if exclude_push_button and Atspi.Role.PUSH_BUTTON in roles:
+            roles.remove(Atspi.Role.PUSH_BUTTON)
+
         result = None
         if AXObject.supports_collection(obj):
             if not must_be_showing_and_visible:
@@ -193,6 +196,16 @@ class AXUtilities:
                 return result
 
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
+
+    @staticmethod
+    def is_message_dialog(obj):
+        """Returns True if obj is a dialog should be treated as a message dialog"""
+
+        if not AXUtilities.is_dialog_or_alert(obj):
+            return False
+
+        widgets = AXUtilities.get_all_widgets(obj, exclude_push_button=True)
+        return not widgets
 
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
