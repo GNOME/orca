@@ -199,7 +199,7 @@ class AXUtilities:
 
     @staticmethod
     def is_message_dialog(obj):
-        """Returns True if obj is a dialog should be treated as a message dialog"""
+        """Returns True if obj is a dialog that should be treated as a message dialog"""
 
         if not AXUtilities.is_dialog_or_alert(obj):
             return False
