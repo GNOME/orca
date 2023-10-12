@@ -309,7 +309,9 @@ class SpeechGenerator(generator.Generator):
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
-        result = generator.Generator._generateHasPopup(self, obj, **args)
+        result = []
+        if AXUtilities.has_popup(obj):
+            result.append(messages.HAS_POPUP)
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
