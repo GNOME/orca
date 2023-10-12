@@ -1,7 +1,7 @@
 m4_define([orca_version], [46.alpha])
 
 m4_define(pygobject_required_version, 3.18)
-m4_define(atspi_required_version, 2.49.91)
+m4_define(atspi_required_version, 2.50.0)
 m4_define(atkbridge_required_version, 2.26)
 
 AC_INIT([orca],[orca_version],[https://gitlab.gnome.org/GNOME/orca/-/issues/],[orca])
