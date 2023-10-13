@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-09-08 22:56+0000\n"
-"PO-Revision-Date: 2023-09-10 13:56+0200\n"
+"PO-Revision-Date: 2023-10-13 23:13+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -7566,7 +7566,7 @@ msgstr "ან-არა"
 #: src/orca/mathsymbols.py:1943
 msgctxt "math symbol"
 msgid "right angle with arc"
-msgstr ""
+msgstr "მარჯვენა კუთხე რკალით"
 
 #. Translators: this is the spoken representation for the character '⊿' (U+22bf)
 #: src/orca/mathsymbols.py:1946
@@ -7578,31 +7578,31 @@ msgstr "მართხკუთხა სამკუთხედი"
 #: src/orca/mathsymbols.py:1961
 msgctxt "math symbol"
 msgid "diamond operator"
-msgstr ""
+msgstr "ოპერატორი რომბი"
 
 #. Translators: this is the spoken representation for the character '⋅' (U+22c5)
 #: src/orca/mathsymbols.py:1964
 msgctxt "math symbol"
 msgid "dot operator"
-msgstr ""
+msgstr "წერტილის ოპერატორი"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: src/orca/mathsymbols.py:1967
 msgctxt "math symbol"
 msgid "star operator"
-msgstr ""
+msgstr "ვარკსვლავის ოპერატორი"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: src/orca/mathsymbols.py:1970
 msgctxt "math symbol"
 msgid "division times"
-msgstr ""
+msgstr "გაყოფა გამრავლება"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: src/orca/mathsymbols.py:1973
 msgctxt "math symbol"
 msgid "bowtie"
-msgstr ""
+msgstr "ჰალსტუხი პეპელა"
 
 #. Translators: this is the spoken representation for the character '⋉' (U+22c9)
 #: src/orca/mathsymbols.py:1976
@@ -7650,25 +7650,25 @@ msgstr ""
 #: src/orca/mathsymbols.py:1997
 msgctxt "math symbol"
 msgid "double subset"
-msgstr ""
+msgstr "ორმაგი ქვესიმრავლე"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
 #: src/orca/mathsymbols.py:2000
 msgctxt "math symbol"
 msgid "double superset"
-msgstr ""
+msgstr "ორმაგი ზესიმრავლე"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
 #: src/orca/mathsymbols.py:2003
 msgctxt "math symbol"
 msgid "double intersection"
-msgstr ""
+msgstr "ორმაგი კვეთა"
 
 #. Translators: this is the spoken representation for the character '⋓' (U+22d3)
 #: src/orca/mathsymbols.py:2006
 msgctxt "math symbol"
 msgid "double union"
-msgstr ""
+msgstr "ორმაგი გაერთიანება"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
 #: src/orca/mathsymbols.py:2009
@@ -7680,139 +7680,139 @@ msgstr ""
 #: src/orca/mathsymbols.py:2012
 msgctxt "math symbol"
 msgid "equal and parallel to"
-msgstr ""
+msgstr "ტოლი ან პარალელურია"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
 #: src/orca/mathsymbols.py:2015
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr ""
+msgstr "ნაკლებია, ვიდრე წერტილით"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: src/orca/mathsymbols.py:2018
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr ""
+msgstr "მეტია, ვიდრე წერტილით"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: src/orca/mathsymbols.py:2021
 msgctxt "math symbol"
 msgid "very much less than"
-msgstr ""
+msgstr "გაცილებით ნაკლები, ვიდრე"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
 #: src/orca/mathsymbols.py:2024
 msgctxt "math symbol"
 msgid "very much greater than"
-msgstr ""
+msgstr "გაცილებით მეტი, ვიდრე"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
 #: src/orca/mathsymbols.py:2027
 msgctxt "math symbol"
 msgid "less than equal to or greater than"
-msgstr ""
+msgstr "ნაკლებია, ტოლია ან მეტია"
 
 #. Translators: this is the spoken representation for the character '⋛' (U+22db)
 #: src/orca/mathsymbols.py:2030
 msgctxt "math symbol"
 msgid "greater than equal to or less than"
-msgstr ""
+msgstr "მეტია, ტოლია ან ნაკლებია"
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
 #: src/orca/mathsymbols.py:2033
 msgctxt "math symbol"
 msgid "equal to or less than"
-msgstr ""
+msgstr "ტოლია ან ნაკლებია"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22dd)
 #: src/orca/mathsymbols.py:2036
 msgctxt "math symbol"
 msgid "equal to or greater than"
-msgstr ""
+msgstr "ტოლია ან მეტია"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22de)
 #: src/orca/mathsymbols.py:2039
 msgctxt "math symbol"
 msgid "equal to or precedes"
-msgstr ""
+msgstr "ტოლია ან ჩამორჩება"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22df)
 #: src/orca/mathsymbols.py:2042
 msgctxt "math symbol"
 msgid "equal to or succeeds"
-msgstr ""
+msgstr "ტოლია ან უსწრებს"
 
 #. Translators: this is the spoken representation for the character '⋠' (U+22e0)
 #: src/orca/mathsymbols.py:2045
 msgctxt "math symbol"
 msgid "does not precede or equal"
-msgstr ""
+msgstr "არ ჩამორჩება ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '⋡' (U+22e1)
 #: src/orca/mathsymbols.py:2048
 msgctxt "math symbol"
 msgid "does not succeed or equal"
-msgstr ""
+msgstr "არ უსწრებს ან ტოლია"
 
 #. Translators: this is the spoken representation for the character '⋢' (U+22e2)
 #: src/orca/mathsymbols.py:2051
 msgctxt "math symbol"
 msgid "not square image of or equal to"
-msgstr ""
+msgstr "არა კვადრატული გამოსახულება ან უდრის"
 
 #. Translators: this is the spoken representation for the character '⋣' (U+22e3)
 #: src/orca/mathsymbols.py:2054
 msgctxt "math symbol"
 msgid "not square original of or equal to"
-msgstr ""
+msgstr "რა კვადრატული ორიგინალი ან უდრის"
 
 #. Translators: this is the spoken representation for the character '⋤' (U+22e4)
 #: src/orca/mathsymbols.py:2057
 msgctxt "math symbol"
 msgid "square image of or not equal to"
-msgstr ""
+msgstr "კვადრატული გამოსახულება ან არ უდრის"
 
 #. Translators: this is the spoken representation for the character '⋥' (U+22e5)
 #: src/orca/mathsymbols.py:2060
 msgctxt "math symbol"
 msgid "square original of or not equal to"
-msgstr ""
+msgstr "კვადრატული ორიგინალი და არ უდრის"
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
 #: src/orca/mathsymbols.py:2063
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr ""
+msgstr "ნაკლებია, მაგრამ არა ეკვივალენტური"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: src/orca/mathsymbols.py:2066
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr ""
+msgstr "მეტია, მაგრამ არა ეკვივალენტური"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: src/orca/mathsymbols.py:2069
 msgctxt "math symbol"
 msgid "precedes but not equivalent to"
-msgstr ""
+msgstr "ჩამორჩება, მაგრამ ეკვივალენტური არაა"
 
 #. Translators: this is the spoken representation for the character '⋩' (U+22e9)
 #: src/orca/mathsymbols.py:2072
 msgctxt "math symbol"
 msgid "succeeds but not equivalent to"
-msgstr ""
+msgstr "უსწრებს, მაგრამ ეკვივალენტური არაა"
 
 #. Translators: this is the spoken representation for the character '⋪' (U+22ea)
 #: src/orca/mathsymbols.py:2075
 msgctxt "math symbol"
 msgid "not normal subgroup of"
-msgstr ""
+msgstr "არ წარმოადგენ ნორმალურ ქვეჯგუფს"
 
 #. Translators: this is the spoken representation for the character '⋫' (U+22eb)
 #: src/orca/mathsymbols.py:2078
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup"
-msgstr ""
+msgstr "არ შეიცავს, როგორც ნორმალურ ქვეჯგუფს"
 
 #. Translators: this is the spoken representation for the character '⋬' (U+22ec)
 #: src/orca/mathsymbols.py:2081
@@ -8562,7 +8562,7 @@ msgstr ""
 #: src/orca/messages.py:380
 #, python-format
 msgid "New chat tab %s"
-msgstr ""
+msgstr "ახალი ჩატის ჩანართი %s"
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -8875,7 +8875,7 @@ msgstr "შემცველობა დაკოპირდა გაცვ�
 #. not using flat review.
 #: src/orca/messages.py:622
 msgid "Not using flat review."
-msgstr ""
+msgstr "არ ვიყენებ ბრტყელ მიმოხილვას."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8884,7 +8884,7 @@ msgstr ""
 #. let the user know he/she just entered flat review.
 #: src/orca/messages.py:629
 msgid "Entering flat review."
-msgstr ""
+msgstr "შევდივარ ბრტყელ მიმოხილვაში."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8893,7 +8893,7 @@ msgstr ""
 #. let the user know he/she just entered flat review.
 #: src/orca/messages.py:636
 msgid "Leaving flat review."
-msgstr ""
+msgstr "გავდივარ ბრტყელი მიმოხილვიდან."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8913,7 +8913,7 @@ msgstr "მიმდინარე ობიექტზე შეზღუდ�
 #. that is, the entire window can be explored.
 #: src/orca/messages.py:652
 msgid "Flat review unrestricted"
-msgstr ""
+msgstr "ბრტყელი მიმოხილვა შეუზღუდავია"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -8960,7 +8960,7 @@ msgstr "ხსნის ხეს"
 #. and examples.
 #: src/orca/messages.py:685
 msgid "image map link"
-msgstr ""
+msgstr "გამოსახულების რუკის ბმული"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
@@ -8969,7 +8969,7 @@ msgstr ""
 #: src/orca/messages.py:691
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr ""
+msgstr "შეყვანილი ღილაკი უკვე მიბმულია %s-ზე"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
@@ -8977,7 +8977,7 @@ msgstr ""
 #: src/orca/messages.py:696
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
-msgstr ""
+msgstr "ჩაჭერილი ღილაკი: %s. დასადასტურებლად დააჭირეთ Enter-ს."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
@@ -8985,7 +8985,7 @@ msgstr ""
 #: src/orca/messages.py:701
 #, python-format
 msgid "The new key is: %s"
-msgstr ""
+msgstr "ახალი ღილაკია: %s"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
@@ -9773,7 +9773,7 @@ msgstr "მინიშნებიდან გასვლა."
 #: src/orca/messages.py:1297
 msgctxt "role"
 msgid "leaving abstract."
-msgstr "აბსტრაქტიდან გასვლა"
+msgstr "აბსტრაქტიდან გასვლა."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
