@@ -1,8 +1,8 @@
 ## Orca Version
-- [ ] master
-- [ ] 45.x
-- [ ] 44.x
-- [ ] 43.x
+*Note that versions prior to version 43.x are unsupported.*
+
+* Version of Orca where the bug is present
+* If known, version of Orca where the bug is not present
 
 ## Steps to Reproduce the Problem
 1. Step 1
@@ -14,7 +14,3 @@ Describe what you expect to happen
 
 ## Actual Behavior
 Describe what actually happens
-
-## Additional Information
-- [ ] This is a regression (Please let us know in what version things used to work)
-- [ ] I am attaching a debug.out file as described in [debugging](https://wiki.gnome.org/Projects/Orca/Debugging)
