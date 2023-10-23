@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-08-27 10:51+0000\n"
-"PO-Revision-Date: 2023-08-28 11:40+0330\n"
+"POT-Creation-Date: 2023-10-13 21:15+0000\n"
+"PO-Revision-Date: 2023-10-23 15:17+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -154,7 +154,7 @@ msgstr ""
 #: src/orca/braille_rolenames.py:118
 msgctxt "shortbraille"
 msgid "form"
-msgstr "از"
+msgstr "فرم"
 
 #. Translators: short braille for the rolename of a glass pane.
 #: src/orca/braille_rolenames.py:124
@@ -675,13 +675,13 @@ msgstr "آپاستروف"
 #.
 #: src/orca/chnames.py:81
 msgid "left paren"
-msgstr ""
+msgstr "پرانتز چپ"
 
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: src/orca/chnames.py:85
 msgid "right paren"
-msgstr ""
+msgstr "پرانتز راست"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
@@ -800,7 +800,7 @@ msgstr "زیرخط"
 #.
 #: src/orca/chnames.py:161 src/orca/keynames.py:260
 msgid "grave"
-msgstr ""
+msgstr "گور"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
@@ -840,7 +840,7 @@ msgstr "فاصلهٔ نشکن"
 #.
 #: src/orca/chnames.py:186
 msgid "inverted exclamation point"
-msgstr ""
+msgstr "علامت تعجب معکوس"
 
 #. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
@@ -909,13 +909,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:230
 msgid "logical not"
-msgstr ""
+msgstr "نات منطقی"
 
 #. Translators: this is the spoken word for the character '­' (U+00ad)
 #.
 #: src/orca/chnames.py:234
 msgid "soft hyphen"
-msgstr ""
+msgstr "خط ربط نرم"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
@@ -945,13 +945,13 @@ msgstr "مثبت یا منفی"
 #.
 #: src/orca/chnames.py:254
 msgid "superscript 2"
-msgstr "2 بالانویس"
+msgstr "۲ بالانویس"
 
 #. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: src/orca/chnames.py:258
 msgid "superscript 3"
-msgstr "3 بالانویس"
+msgstr "۳ بالانویس"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
@@ -960,7 +960,7 @@ msgstr "3 بالانویس"
 #.
 #: src/orca/chnames.py:262 src/orca/keynames.py:265
 msgid "acute"
-msgstr ""
+msgstr "حاده"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
@@ -993,13 +993,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:282
 msgid "superscript 1"
-msgstr "1 بالانویس"
+msgstr "۱ بالانویس"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
 #: src/orca/chnames.py:286
 msgid "ordinal"
-msgstr ""
+msgstr "ترتیبی"
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
@@ -1041,7 +1041,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:314
 msgid "A GRAVE"
-msgstr ""
+msgstr "گور"
 
 #. Translators: this is the spoken word for the character 'Á' (U+00c1)
 #.
@@ -1475,13 +1475,13 @@ msgstr ""
 #.
 #: src/orca/chnames.py:604
 msgid "dagger"
-msgstr "چلیپا"
+msgstr "خنجر"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: src/orca/chnames.py:608
 msgid "double dagger"
-msgstr "چلیپای جفت"
+msgstr "خنجر جفت"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
@@ -1523,7 +1523,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:636
 msgid "hyphen bullet"
-msgstr ""
+msgstr "گلوله خط نرم"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -1560,49 +1560,49 @@ msgstr "تیک قوی"
 #.
 #: src/orca/chnames.py:663
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "گلوله ضربدری"
 
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
 #: src/orca/chnames.py:667
 msgid "superscript 0"
-msgstr "0 بالانویس"
+msgstr "۰ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: src/orca/chnames.py:671
 msgid "superscript 4"
-msgstr "4 بالانویس"
+msgstr "۴ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: src/orca/chnames.py:675
 msgid "superscript 5"
-msgstr "5 بالانویس"
+msgstr "۵ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: src/orca/chnames.py:679
 msgid "superscript 6"
-msgstr "6 بالانویس"
+msgstr "۶ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: src/orca/chnames.py:683
 msgid "superscript 7"
-msgstr "7 بالانویس"
+msgstr "۷ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: src/orca/chnames.py:687
 msgid "superscript 8"
-msgstr "8 بالانویس"
+msgstr "۸ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: src/orca/chnames.py:691
 msgid "superscript 9"
-msgstr "9 بالانویس"
+msgstr "۹ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
@@ -1626,13 +1626,13 @@ msgstr "مساوی بالانویس"
 #.
 #: src/orca/chnames.py:707
 msgid "superscript left paren"
-msgstr ""
+msgstr "پرانتز چپ بالانویس"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: src/orca/chnames.py:711
 msgid "superscript right paren"
-msgstr ""
+msgstr "پرانتز راست بالانویس"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
@@ -1644,61 +1644,61 @@ msgstr "n بالانویس"
 #.
 #: src/orca/chnames.py:719
 msgid "subscript 0"
-msgstr "0 پایین‌نویس"
+msgstr "۰ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: src/orca/chnames.py:723
 msgid "subscript 1"
-msgstr "1 پایین‌نویس"
+msgstr "۱ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: src/orca/chnames.py:727
 msgid "subscript 2"
-msgstr "2 پایین‌نویس"
+msgstr "۲ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: src/orca/chnames.py:731
 msgid "subscript 3"
-msgstr "3 پایین‌نویس"
+msgstr "۳ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: src/orca/chnames.py:735
 msgid "subscript 4"
-msgstr "4 پایین‌نویس"
+msgstr "۴ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: src/orca/chnames.py:739
 msgid "subscript 5"
-msgstr "5 پایین‌نویس"
+msgstr "۵ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: src/orca/chnames.py:743
 msgid "subscript 6"
-msgstr "6 پایین‌نویس"
+msgstr "۶ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: src/orca/chnames.py:747
 msgid "subscript 7"
-msgstr "7 پایین‌نویس"
+msgstr "۷ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: src/orca/chnames.py:751
 msgid "subscript 8"
-msgstr "8 پایین‌نویس"
+msgstr "۸ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: src/orca/chnames.py:755
 msgid "subscript 9"
-msgstr "9 پایین‌نویس"
+msgstr "۹ پایین‌نویس"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
@@ -1736,7 +1736,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:781
 msgid "black square"
-msgstr ""
+msgstr "مربع سیاه"
 
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
@@ -1744,7 +1744,7 @@ msgstr ""
 #.
 #: src/orca/chnames.py:787
 msgid "black diamond"
-msgstr ""
+msgstr "الماس سیاه"
 
 #. Translators: This refers to U+FFFC, the "object replacement character."
 #. This character appears in the accessible text of documents and serves as
@@ -1794,7 +1794,7 @@ msgstr ""
 #. and the cursor will be positioned at the point where the speech was interrupted.
 #: src/orca/cmdnames.py:59
 msgid "Speak entire document"
-msgstr ""
+msgstr "کل پرونده را بخوان"
 
 #. Translators: the 'flat review' feature of Orca allows the user to explore the
 #. text in a window in a 2D fashion. That is, Orca treats all the text from all
@@ -1804,7 +1804,7 @@ msgstr ""
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: src/orca/cmdnames.py:67
 msgid "Speak entire window using flat review"
-msgstr ""
+msgstr "با بازنگری ساده کل پنجره را بخوان"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -4477,8 +4477,8 @@ msgstr ""
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:97 src/orca/orca-setup.ui:2308
-#: src/orca/orca-setup.ui:2408 src/orca/orca-setup.ui:3327
+#: src/orca/guilabels.py:97 src/orca/orca-setup.ui:2308 src/orca/orca-setup.ui:2408
+#: src/orca/orca-setup.ui:3327
 msgid "Dot _7"
 msgstr ""
 
@@ -14461,5 +14461,5 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to minimum "
 "press home, and for maximum press end."
 msgstr ""
-"برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
-"برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+"برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. برای "
+"حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
