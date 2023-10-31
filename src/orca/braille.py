@@ -1873,9 +1873,8 @@ def setBrlapiPriority(level=BRLAPI_PRIORITY_DEFAULT):
 
     global idle, brlapi_priority
 
-    if not _brlAPIAvailable \
-    or not _brlAPIRunning \
-    or not _settingsManager.getSetting('enableBraille'):
+    if not _brlAPIAvailable or not _brlAPIRunning \
+       or not _settingsManager.getSetting('enableBraille'):
         return
 
     if idle:
@@ -1888,8 +1887,8 @@ def setBrlapiPriority(level=BRLAPI_PRIORITY_DEFAULT):
         tokens = ["BRAILLE: Setting priority to:", level]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, level)
-    except Exception:
-        msg = "BRAILLE: Cannot set priority."
+    except Exception as error:
+        msg = f"BRAILLE: Cannot set priority: {error}"
         debug.printMessage(debug.LEVEL_WARNING, msg, True)
     else:
         msg = "BRAILLE: Priority set."
