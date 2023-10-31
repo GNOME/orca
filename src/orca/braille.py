@@ -199,6 +199,14 @@ _saved = None
 #
 idle = False
 
+# BRLAPI priority levels if Orca should have idle, normal or high priority
+BRLAPI_PRIORITY_IDLE = 0
+BRLAPI_PRIORITY_DEFAULT = 50
+BRLAPI_PRIORITY_HIGH = 70
+
+# Saved BRLAPI priority
+brlapi_priority = BRLAPI_PRIORITY_DEFAULT
+
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
 # http://en.wikipedia.org/wiki/Braille
@@ -1151,7 +1159,7 @@ def _idleBraille():
         try:
             msg = "BRAILLE: Attempting to idle braille."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 0)
+            _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, BRLAPI_PRIORITY_IDLE)
             idle = True
         except Exception:
             msg = "BRAILLE: Idling braille failled. This requires BrlAPI >= 0.8."
@@ -1200,7 +1208,7 @@ def _enableBraille():
                 # Restore default priority
                 msg = "BRAILLE: Attempting to de-idle braille."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, 50)
+                _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, brlapi_priority)
                 idle = False
             except Exception:
                 msg = "BRAILLE: could not restore priority"
@@ -1855,6 +1863,38 @@ def setupKeyRanges(keys):
 
     msg = "BRAILLE: Key ranges set up."
     debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+def setBrlapiPriority(level=BRLAPI_PRIORITY_DEFAULT):
+    """Set BRLAPI priority
+
+    Arguments:
+    -level: the priority level to apply, default to braille.PRIORITY_DEFAULT
+    """
+
+    global idle, brlapi_priority
+
+    if not _brlAPIAvailable \
+    or not _brlAPIRunning \
+    or not _settingsManager.getSetting('enableBraille'):
+        return
+
+    if idle:
+        msg = "BRAILLE: Braille is idle, don't change BRLAPI priority."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        brlapi_priority = level
+        return
+
+    try:
+        tokens = ["BRAILLE: Setting priority to:", level]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, level)
+    except Exception:
+        msg = "BRAILLE: Cannot set priority."
+        debug.printMessage(debug.LEVEL_WARNING, msg, True)
+    else:
+        msg = "BRAILLE: Priority set."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        brlapi_priority = level
 
 def init(callback=None):
     """Initializes the braille module, connecting to the BrlTTY driver.

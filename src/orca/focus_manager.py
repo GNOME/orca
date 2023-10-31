@@ -33,6 +33,7 @@ from . import debug
 from . import script_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .braille import setBrlapiPriority, BRLAPI_PRIORITY_HIGH
 
 CARET_TRACKING = "caret-tracking"
 FOCUS_TRACKING = "focus-tracking"
@@ -120,6 +121,10 @@ class FocusManager:
             tokens = ["FOCUS MANAGER: Switching mode from", self._active_mode, "to", mode]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
+            if mode == FLAT_REVIEW:
+                setBrlapiPriority(BRLAPI_PRIORITY_HIGH)
+            else:
+                setBrlapiPriority()
 
         try:
             tokens = ["FOCUS MANAGER: Region of interest:", obj, "(", start_offset, ")", end_offset]
