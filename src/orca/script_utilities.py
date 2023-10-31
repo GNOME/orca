@@ -3856,9 +3856,6 @@ class Utilities:
 
         return None
 
-    def _shouldUseTableCellInterfaceForCoordinates(self):
-        return True
-
     def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
         if not AXUtilities.is_table_cell_or_header(obj):
             if not findCellAncestor:
@@ -3867,8 +3864,7 @@ class Utilities:
             cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
             return self.coordinatesForCell(cell, preferAttribute, False)
 
-        if AXObject.supports_table_cell(obj) \
-           and self._shouldUseTableCellInterfaceForCoordinates():
+        if AXObject.supports_table_cell(obj):
             tableCell = obj.queryTableCell()
             try:
                 successful, row, col = tableCell.position
