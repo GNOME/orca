@@ -375,7 +375,7 @@ class Generator:
         the assumption being that the user was able to see the text prior
         to giving the widget focus.
         """
-        attrs = self._script.utilities.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         placeholder = attrs.get('placeholder-text')
         if placeholder and placeholder != AXObject.get_name(obj):
             return [placeholder]

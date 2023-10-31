@@ -494,7 +494,7 @@ class LabelInference:
         return None
 
     def _getTag(self, obj):
-        attrs = self._script.utilities.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('tag')
 
     def inferFromTable(self, obj, proximityForRight=50):

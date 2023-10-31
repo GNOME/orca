@@ -560,7 +560,7 @@ class LiveRegionManager:
             return 'unknown'
 
     def _getAttrDictionary(self, obj):
-        return self._script.utilities.objectAttributes(obj)
+        return AXObject.get_attributes_dict(obj)
 
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object

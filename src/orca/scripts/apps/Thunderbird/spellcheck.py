@@ -90,7 +90,7 @@ class SpellCheck(spellcheck.SpellCheck):
         return AXObject.find_descendant(root, isList)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
-        attrs = self._script.utilities.objectAttributes(suggestion)
+        attrs = AXObject.get_attributes_dict(suggestion)
         index = attrs.get("posinset")
         total = attrs.get("setsize")
         if index is None or total is None:

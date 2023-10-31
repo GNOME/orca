@@ -163,7 +163,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateName(obj, **args)
 
-        brailleLabel = self._script.utilities.objectAttributes(obj).get("braillelabel")
+        brailleLabel = AXObject.get_attributes_dict(obj).get("braillelabel")
         if brailleLabel:
             return [brailleLabel]
 

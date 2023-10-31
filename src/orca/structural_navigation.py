@@ -2109,7 +2109,7 @@ class StructuralNavigation:
                 return False
 
             # This should no longer be needed once Atspi 2.8.4 is released.
-            attrs = self._script.utilities.objectAttributes(obj)
+            attrs = AXObject.get_attributes_dict(obj)
             if attrs.get('layout-guess') == 'true':
                 return False
 

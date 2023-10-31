@@ -56,7 +56,6 @@ class Utilities(script_utilities.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
-        self._objectAttributes = {}
         self._currentTextAttrs = {}
         self._caretContexts = {}
         self._priorContexts = {}
@@ -160,7 +159,6 @@ class Utilities(script_utilities.Utilities):
 
     def clearCachedObjects(self):
         debug.printMessage(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
-        self._objectAttributes = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -441,21 +439,8 @@ class Utilities(script_utilities.Utilities):
     def getLastObjectInDocument(self, documentFrame):
         return AXObject.find_deepest_descendant(documentFrame)
 
-    def objectAttributes(self, obj, useCache=True):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().objectAttributes(obj)
-
-        if useCache:
-            rv = self._objectAttributes.get(hash(obj))
-            if rv is not None:
-                return rv
-
-        rv = AXObject.get_attributes_dict(obj)
-        self._objectAttributes[hash(obj)] = rv
-        return rv
-
     def getRoleDescription(self, obj, isBraille=False):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         rv = attrs.get('roledescription', '')
         if isBraille:
             rv = attrs.get('brailleroledescription', rv)
@@ -468,7 +453,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = -1
         if not (self.inMenu(obj) or AXUtilities.is_heading(obj)):
-            attrs = self.objectAttributes(obj)
+            attrs = AXObject.get_attributes_dict(obj)
             # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
             rv = int(attrs.get('level', 0)) -1
 
@@ -490,7 +475,7 @@ class Utilities(script_utilities.Utilities):
         return -1, -1
 
     def getPositionInSet(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         position = attrs.get('posinset')
         if position is not None:
             return int(position)
@@ -499,7 +484,7 @@ class Utilities(script_utilities.Utilities):
             rowindex = attrs.get('rowindex')
             if rowindex is None and AXObject.get_child_count(obj):
                 cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell_or_header)
-                rowindex = self.objectAttributes(cell, False).get('rowindex')
+                rowindex = AXObject.get_attributes_dict(cell, False).get('rowindex')
 
             if rowindex is not None:
                 return int(rowindex)
@@ -507,7 +492,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def getSetSize(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         setsize = attrs.get('setsize')
         if setsize is not None:
             return int(setsize)
@@ -520,19 +505,19 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def _getID(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('id')
 
     def _getDisplayStyle(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('display', '')
 
     def _getTag(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('tag')
 
     def _getXMLRoles(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('xml-roles', '').split()
 
     def inFindContainer(self, obj=None):
@@ -554,7 +539,7 @@ class Utilities(script_utilities.Utilities):
         return self.queryNonEmptyText(obj, False) is None
 
     def isHidden(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get('hidden', False)
 
     def _isOrIsIn(self, child, parent):
@@ -810,7 +795,7 @@ class Utilities(script_utilities.Utilities):
             return attrsForObj.get(offset)
 
         attrs = super().textAttributes(acc, offset, get_defaults)
-        objAttributes = self.objectAttributes(acc, False)
+        objAttributes = AXObject.get_attributes_dict(acc, False)
         for key in self._script.attributeNamesDict.keys():
             value = objAttributes.get(key)
             if value is not None:
@@ -2274,7 +2259,7 @@ class Utilities(script_utilities.Utilities):
         return roles
 
     def mnemonicShortcutAccelerator(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         keys = map(lambda x: x.replace("+", " "), attrs.get("keyshortcuts", "").split(" "))
         keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
         rv = ["", " ".join(keys), ""]
@@ -2602,7 +2587,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_math_fraction(obj):
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         linethickness = attrs.get('linethickness')
         if not linethickness:
             return False
@@ -2760,21 +2745,21 @@ class Utilities(script_utilities.Utilities):
         if not self.isMathEnclose(obj):
             return []
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('notation', 'longdiv').split()
 
     def getMathFencedSeparators(self, obj):
         if not self.isMathFenced(obj):
             return ['']
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return list(attrs.get('separators', ','))
 
     def getMathFences(self, obj):
         if not self.isMathFenced(obj):
             return ['', '']
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return [attrs.get('open', '('), attrs.get('close', ')')]
 
     def getMathNestingLevel(self, obj, test=None):
@@ -2889,21 +2874,21 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isSorted(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("sort") not in ("none", None)
 
     def isAscending(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("sort") == "ascending"
 
     def isDescending(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("sort") == "descending"
 
     def _rowAndColumnIndices(self, obj):
         rowindex = colindex = None
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         rowindex = attrs.get('rowindex')
         colindex = attrs.get('colindex')
         if rowindex is not None and colindex is not None:
@@ -2913,7 +2898,7 @@ class Utilities(script_utilities.Utilities):
         if row is None:
             return rowindex, colindex
 
-        attrs = self.objectAttributes(row)
+        attrs = AXObject.get_attributes_dict(row)
         rowindex = attrs.get('rowindex', rowindex)
         colindex = attrs.get('colindex', colindex)
         return rowindex, colindex
@@ -2937,7 +2922,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def labelForCellCoordinates(self, obj):
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
 
         # The ARIA feature is still in the process of being discussed.
         collabel = attrs.get('colindextext', attrs.get('coltext'))
@@ -2949,7 +2934,7 @@ class Utilities(script_utilities.Utilities):
         if row is None:
             return ''
 
-        attrs = self.objectAttributes(row)
+        attrs = AXObject.get_attributes_dict(row)
         collabel = attrs.get('colindextext', attrs.get('coltext', collabel))
         rowlabel = attrs.get('rowindextext', attrs.get('rowtext', rowlabel))
         if collabel is not None and rowlabel is not None:
@@ -2987,14 +2972,14 @@ class Utilities(script_utilities.Utilities):
         if super().setSizeUnknown(obj):
             return True
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('setsize') == '-1'
 
     def rowOrColumnCountUnknown(self, obj):
         if super().rowOrColumnCountUnknown(obj):
             return True
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('rowcount') == '-1' or attrs.get('colcount') == '-1'
 
     def rowAndColumnCount(self, obj, preferAttribute=True):
@@ -3002,7 +2987,7 @@ class Utilities(script_utilities.Utilities):
         if not preferAttribute:
             return rows, cols
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         rows = attrs.get('rowcount', rows)
         cols = attrs.get('colcount', cols)
         return int(rows), int(cols)
@@ -3594,7 +3579,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def getComboBoxValue(self, obj):
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("valuetext", super().getComboBoxValue(obj))
 
     def isEditableComboBox(self, obj):
@@ -3923,7 +3908,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return 'container-live' in attrs
 
     def isLink(self, obj):
@@ -4157,7 +4142,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('explicit-name') == 'true'
 
     def hasLongDesc(self, obj):
@@ -4234,7 +4219,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return 'false'
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('haspopup', 'false').lower()
 
     def inferLabelFor(self, obj):

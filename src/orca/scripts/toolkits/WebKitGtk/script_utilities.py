@@ -63,7 +63,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('toolkit', '') in ['WebKitGtk', 'WebKitGTK']
 
     def getCaretContext(self):

@@ -51,6 +51,7 @@ class AXObject:
     KNOWN_DEAD = {}
     REAL_APP_FOR_MUTTER_FRAME = {}
     REAL_FRAME_FOR_MUTTER_FRAME = {}
+    OBJECT_ATTRIBUTES = {}
 
     _lock = threading.Lock()
 
@@ -76,6 +77,10 @@ class AXObject:
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
 
+                tokens = ["AXObject: Clearing cached object attributes for",
+                          len(AXObject.OBJECT_ATTRIBUTES), "objects"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                AXObject.OBJECT_ATTRIBUTES.clear()
 
     @staticmethod
     def start_cache_clearing_thread():
@@ -1166,11 +1171,16 @@ class AXObject:
         return False
 
     @staticmethod
-    def get_attributes_dict(obj):
+    def get_attributes_dict(obj, use_cache=True):
         """Returns the object attributes of obj as a dictionary."""
 
         if not AXObject.is_valid(obj):
             return {}
+
+        if use_cache:
+            attributes = AXObject.OBJECT_ATTRIBUTES.get(hash(obj))
+            if attributes:
+                return attributes
 
         try:
             attributes = Atspi.Accessible.get_attributes(obj)
@@ -1182,6 +1192,7 @@ class AXObject:
         if attributes is None:
             return {}
 
+        AXObject.OBJECT_ATTRIBUTES[hash(obj)] = attributes
         return attributes
 
     @staticmethod

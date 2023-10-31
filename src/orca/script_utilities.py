@@ -116,9 +116,6 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    def objectAttributes(self, obj, useCache=True):
-        return AXObject.get_attributes_dict(obj)
-
     def cellIndex(self, obj):
         """Returns the index of the cell which should be used with the
         table interface.  This is necessary because in some apps we
@@ -128,7 +125,7 @@ class Utilities:
         -obj: the table cell whose index we need.
         """
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         index = attrs.get('table-cell-index')
         if index:
             return int(index)
@@ -510,14 +507,14 @@ class Utilities:
         if not AXUtilities.is_frame(obj):
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('window-type') == 'dock'
 
     def isDesktop(self, obj):
         if not AXUtilities.is_frame(obj):
             return False
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('is-desktop') == 'true'
 
     def isComboBoxWithToggleDescendant(self, obj):
@@ -1184,7 +1181,7 @@ class Utilities:
         if AXObject.is_dead(obj) or self.isZombie(obj):
             return True
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
         role = AXObject.get_role(obj)
         parentRole = AXObject.get_role(AXObject.get_parent(obj))
         firstChild = AXObject.get_child(obj, 0)
@@ -3391,7 +3388,7 @@ class Utilities:
         Returns a string representing the value.
         """
 
-        attrs = self.objectAttributes(obj, False)
+        attrs = AXObject.get_attributes_dict(obj, False)
         valuetext = attrs.get("valuetext")
         if valuetext:
             return valuetext
@@ -3733,7 +3730,7 @@ class Utilities:
         if not AXUtilities.is_heading(obj):
             return 0
 
-        attrs = self.objectAttributes(obj)
+        attrs = AXObject.get_attributes_dict(obj)
 
         try:
             value = int(attrs.get('level', '0'))
