@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-09-08 22:56+0000\n"
-"PO-Revision-Date: 2023-10-13 23:13+0200\n"
+"PO-Revision-Date: 2023-11-10 05:41+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -8457,19 +8457,19 @@ msgstr "FILE"
 #. Orca will need to be run from a terminal window.
 #: src/orca/messages.py:304
 msgid "Set up user preferences (text version)"
-msgstr ""
+msgstr "მომხმარებლის პარამეტრების მორგება (ტექსტური ვერსია)"
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences dialog.
 #: src/orca/messages.py:308
 msgid "Set up user preferences (GUI version)"
-msgstr ""
+msgstr "მომხმარებლის პარამეტრების მორგება (გრაფიკული ვერსია)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
 #: src/orca/messages.py:312
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "შეცდომების შესახებ მოიწერეთ orca-list@gnome.org."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -8479,7 +8479,7 @@ msgstr ""
 #. is the full/verbose indication.
 #: src/orca/messages.py:320
 msgid "Cut selection to clipboard."
-msgstr ""
+msgstr "მონიშნული ბუფერში ამოიჭრა."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -8496,7 +8496,7 @@ msgstr "ამოჭრა"
 #. of the clipboard have changed and match the current selection.
 #: src/orca/messages.py:332
 msgid "Copied selection to clipboard."
-msgstr ""
+msgstr "მონიშნული ბუფერში დაკოპირდა."
 
 #. Translators: This message is the brief message presented when the contents
 #. of the clipboard have changed and match the current selection.
@@ -8513,7 +8513,7 @@ msgstr "კოპირებულია"
 #. is the full/verbose indication.
 #: src/orca/messages.py:344
 msgid "Pasted contents from clipboard."
-msgstr ""
+msgstr "გაცვლის ბუფერიდან ჩასმული,"
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -8533,7 +8533,7 @@ msgstr "ჩასმულია"
 #. is presented when the value of the setting is toggled.
 #: src/orca/messages.py:359
 msgid "Do not announce when your buddies are typing."
-msgstr ""
+msgstr "არ გამოაქვეყნო, როცა მეგობარი კრეფს."
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -8542,7 +8542,7 @@ msgstr ""
 #. is presented when the value of the setting is toggled.
 #: src/orca/messages.py:366
 msgid "announce when your buddies are typing."
-msgstr ""
+msgstr "გამოქვეყნება, როცა მეგობარი კრეფს."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -8553,7 +8553,7 @@ msgstr ""
 #: src/orca/messages.py:374
 #, python-format
 msgid "Message from chat room %s"
-msgstr ""
+msgstr "შეტყობინება ჩატის ოთახიდან %s"
 
 #. Translators: This message is presented to inform the user that a new chat
 #. conversation has been added to the existing conversations. The "tab" here
@@ -8573,7 +8573,7 @@ msgstr "ახალი ჩატის ჩანართი %s"
 #. the value of the setting is toggled.
 #: src/orca/messages.py:389
 msgid "Do not speak chat room name."
-msgstr ""
+msgstr "არ წარმოთქვა სასაუბრო ოთახის სახელი."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -8584,7 +8584,7 @@ msgstr ""
 #. the value of the setting is toggled.
 #: src/orca/messages.py:398
 msgid "speak chat room name."
-msgstr ""
+msgstr "სასაუბრო ოთახის სახელის წარმოთქმა."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -8764,7 +8764,7 @@ msgstr "მთლიანი დოკუმენტის მონიშვ�
 #. current location to the end of the document by pressing Ctrl+Shift+End.
 #: src/orca/messages.py:543
 msgid "document selected from cursor position"
-msgstr ""
+msgstr "კურსორის პოზიციიდან მონიშნული დოკუმენტი"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8772,7 +8772,7 @@ msgstr ""
 #. selected text by pressing Ctrl+Shift+End.
 #: src/orca/messages.py:549
 msgid "document unselected from cursor position"
-msgstr ""
+msgstr "კურსორის პოზიციიდან მონიშვნამოხსნილი დოკუმენტი"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8780,7 +8780,7 @@ msgstr ""
 #. current location to the start of the document by pressing Ctrl+Shift+Home.
 #: src/orca/messages.py:555
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "კურსორის პოზიციამდე მონიშნული დოკუმენტი"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8788,7 +8788,7 @@ msgstr ""
 #. selected text by pressing Ctrl+Shift+Home.
 #: src/orca/messages.py:561
 msgid "document unselected to cursor position"
-msgstr ""
+msgstr "კურსორის პოზიციამდე მონიშვნამოხსნილი დოკუმენტი"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
@@ -9037,7 +9037,7 @@ msgstr "გასაღები"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:742
 msgid "Echo set to key."
-msgstr ""
+msgstr "ექო დაყენებულია ღილაკზე,"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9068,7 +9068,7 @@ msgstr "არც_ერთი"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:768
 msgid "Echo set to None."
-msgstr ""
+msgstr "ექო დაყენებულია არაფერზე."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9099,7 +9099,7 @@ msgstr "გასაღები და სიტყვა"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:794
 msgid "Echo set to key and word."
-msgstr ""
+msgstr "ექო დაყენებულია ღილაკზე და სიტყვაზე."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9130,7 +9130,7 @@ msgstr "წინადადება"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:820
 msgid "Echo set to sentence."
-msgstr ""
+msgstr "ექო დაყენებულია წინადადებაზე,"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9161,7 +9161,7 @@ msgstr "სიტყვა"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:846
 msgid "Echo set to word."
-msgstr ""
+msgstr "ექო დაყენებულია სიტყვაზე."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9192,7 +9192,7 @@ msgstr "სიტყვა და წინადადება"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:872
 msgid "Echo set to word and sentence."
-msgstr ""
+msgstr "ექო დაყენებულია სიტყვაზე და წინადადებაზე."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -10440,21 +10440,21 @@ msgstr ""
 #. mouse. If this command fails, Orca will present this message.
 #: src/orca/messages.py:1790
 msgid "Mouse over object not found."
-msgstr ""
+msgstr "თაგუნაგადატარებული ობიექტი არ არსებობს."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: src/orca/messages.py:1795
 msgid "Mouse review disabled."
-msgstr ""
+msgstr "თაგუნას გადახედვა გათიშულია."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: src/orca/messages.py:1800
 msgid "Mouse review enabled."
-msgstr ""
+msgstr "თაგუნას გადახედვა ჩართულია."
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -10463,7 +10463,7 @@ msgstr ""
 #. from getting these objects.
 #: src/orca/messages.py:1807
 msgid "Error: Could not create list of objects."
-msgstr ""
+msgstr "შეცდომა: ობიექტების სიის შექმნა შეუძლებელია."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
@@ -10520,7 +10520,7 @@ msgstr "ჩადგმის დონეა %d"
 #. such as a pop-up menu, we want to present that fact.
 #: src/orca/messages.py:1847
 msgid "New item has been added"
-msgstr ""
+msgstr "დამატებულია ახალი ელემენტები."
 
 #. Translators: Orca has a command which presents a menu with accessible actions
 #. that can be performed on the current object. This is the message that Orca
@@ -11034,7 +11034,7 @@ msgstr ""
 #: src/orca/messages.py:2211
 #, python-format
 msgid "Selected text is: %s"
-msgstr ""
+msgstr "მონიშნული ტექსტია: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -11307,7 +11307,7 @@ msgstr "სვეტის თავი."
 #: src/orca/messages.py:2398
 #, python-format
 msgid "Column %s selected"
-msgstr ""
+msgstr "მონიშნულია სვეტი %s"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11317,7 +11317,7 @@ msgstr ""
 #: src/orca/messages.py:2405
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "მონიშნულია სვეტები %s-დან %s-მდე"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -12767,11 +12767,11 @@ msgstr "ძებნა:"
 
 #: src/orca/orca-find.ui:166
 msgid "_Top of window"
-msgstr ""
+msgstr "_ფანჯრის ზედა ნაწილი"
 
 #: src/orca/orca-find.ui:175
 msgid "Top of window"
-msgstr ""
+msgstr "ფანჯრის ზედა ნაწილი"
 
 #: src/orca/orca-find.ui:193 src/orca/orca-find.ui:196
 msgid "Start from:"
@@ -13053,7 +13053,7 @@ msgstr "_საუბრის ჩართვა"
 
 #: src/orca/orca-setup.ui:1496 src/orca/orca-setup.ui:2240
 msgid "Ver_bose"
-msgstr ""
+msgstr "_მეტი შეტყობინება"
 
 #: src/orca/orca-setup.ui:1518 src/orca/orca-setup.ui:2262
 msgid "Verbosity"
@@ -13070,7 +13070,7 @@ msgstr "პუნქტუაციის დონე"
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "მხოლოდ ნაჩვენები ტექსტის წაკითხვა"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
@@ -13078,30 +13078,30 @@ msgstr "ცარიელი ხაზების წარმოთქმა"
 
 #: src/orca/orca-setup.ui:1694
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "შეწევისა და მტკიცებების წარმოთქმა"
 
 #: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
-msgstr ""
+msgstr "ობიექტის მნემონიკის _წარმოთქმა"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1725
 msgid "Speak child p_osition"
-msgstr ""
+msgstr "შვილის _მდებარეობის წარმოთქმა"
 
 #: src/orca/orca-setup.ui:1741
 msgid "Speak tutorial messages"
-msgstr ""
+msgstr "სახელმძღვანელოს შეტყობინებების წარმოთქმა"
 
 #. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
 #: src/orca/orca-setup.ui:1757
 msgid "_System messages are detailed"
-msgstr ""
+msgstr "_სისტემური შეტყობინებები დეტალურია"
 
 #. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
 #: src/orca/orca-setup.ui:1774
 msgid "S_peak colors as names"
-msgstr ""
+msgstr "_ფერის სახელების წარმოთქმა"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1791
@@ -13141,7 +13141,7 @@ msgstr ""
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: src/orca/orca-setup.ui:1910
 msgid "Speak _description"
-msgstr ""
+msgstr "_აღწერის წარმოთქმა"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1933
@@ -13160,7 +13160,7 @@ msgstr ""
 
 #: src/orca/orca-setup.ui:1990
 msgid "Spoken Context"
-msgstr ""
+msgstr "წარმოთქმული შემცველობა"
 
 #: src/orca/orca-setup.ui:2026
 msgid "Speech"
@@ -13168,20 +13168,20 @@ msgstr "საუბარი"
 
 #: src/orca/orca-setup.ui:2046
 msgid "Enable Braille _support"
-msgstr ""
+msgstr "_ბრაილის მხარდაჭერის ჩართვა"
 
 #: src/orca/orca-setup.ui:2089
 msgid "_Abbreviated role names"
-msgstr ""
+msgstr "როლების _აბრევიატურები"
 
 #: src/orca/orca-setup.ui:2104
 msgid "Disable _end of line symbol"
-msgstr ""
+msgstr "_ხაზის ბოლოს სიმბოლოს გამორთვა"
 
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
 #: src/orca/orca-setup.ui:2128
 msgid "Contraction _Table:"
-msgstr ""
+msgstr "შემოკლებების _ცხრილი:"
 
 #: src/orca/orca-setup.ui:2159
 msgid "_Enable Contracted Braille"
@@ -13224,12 +13224,12 @@ msgstr "_ხანგრძლივობა (წმ):"
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
 #: src/orca/orca-setup.ui:2548
 msgid "Messages are _persistent"
-msgstr ""
+msgstr "შეტყობინებები _მუდმივია"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer the brief alternative can uncheck this checkbox.
 #: src/orca/orca-setup.ui:2565
 msgid "Messages are _detailed"
-msgstr ""
+msgstr "_სისტემური შეტყობინებები დეტალურია"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
 #: src/orca/orca-setup.ui:2588
@@ -13336,21 +13336,21 @@ msgstr "_ბოლოში ჩამოტანა"
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3230
 msgid "Move _down one"
-msgstr ""
+msgstr "_ერთით დაბლა ჩატანა"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3245
 msgid "Move _up one"
-msgstr ""
+msgstr "ერთით _მაღლა ატანა"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3260
 msgid "Move to _top"
-msgstr ""
+msgstr "_თავში ატანა"
 
 #: src/orca/orca-setup.ui:3281
 msgid "Adjust selected attribute"
-msgstr ""
+msgstr "მონიშნული ატრიბუტის მორგება"
 
 #: src/orca/orca-setup.ui:3381
 msgid "Braille Indicator"
