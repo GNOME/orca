@@ -3730,7 +3730,8 @@ class Utilities:
         if not AXUtilities.is_heading(obj):
             return 0
 
-        attrs = AXObject.get_attributes_dict(obj)
+        use_cache = not AXUtilities.is_editable(obj)
+        attrs = AXObject.get_attributes_dict(obj, use_cache)
 
         try:
             value = int(attrs.get('level', '0'))
