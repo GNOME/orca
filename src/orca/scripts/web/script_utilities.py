@@ -44,6 +44,7 @@ from orca import script_manager
 from orca import settings_manager
 from orca.ax_collection import AXCollection
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -498,7 +499,7 @@ class Utilities(script_utilities.Utilities):
             return int(setsize)
 
         if AXUtilities.is_table_row(obj):
-            rows, cols = self.rowAndColumnCount(self.getTable(obj))
+            rows = AXTable.get_row_count(AXTable.get_table(obj))
             if rows != -1:
                 return rows
 
@@ -2168,7 +2169,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] \
-           and self.isLayoutOnly(self.getTable(obj)):
+           and AXTable.is_layout_table(AXTable.get_table(obj)):
             tokens = ["WEB:", obj, "is not focus mode widget because it's layout only"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -2885,24 +2886,6 @@ class Utilities(script_utilities.Utilities):
         attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("sort") == "descending"
 
-    def _rowAndColumnIndices(self, obj):
-        rowindex = colindex = None
-
-        attrs = AXObject.get_attributes_dict(obj)
-        rowindex = attrs.get('rowindex')
-        colindex = attrs.get('colindex')
-        if rowindex is not None and colindex is not None:
-            return rowindex, colindex
-
-        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
-        if row is None:
-            return rowindex, colindex
-
-        attrs = AXObject.get_attributes_dict(row)
-        rowindex = attrs.get('rowindex', rowindex)
-        colindex = attrs.get('colindex', colindex)
-        return rowindex, colindex
-
     def isCellWithNameFromHeader(self, obj):
         if not AXUtilities.is_table_cell(obj):
             return False
@@ -2911,62 +2894,17 @@ class Utilities(script_utilities.Utilities):
         if not name:
             return False
 
-        header = self.columnHeaderForCell(obj)
-        if header and AXObject.get_name(header) == name:
-            return True
+        headers = AXTable.get_column_headers(obj)
+        for header in headers:
+            if AXObject.get_name(header) == name:
+                return True
 
-        header = self.rowHeaderForCell(obj)
-        if header and AXObject.get_name(header) == name:
-            return True
+        headers = AXTable.get_row_headers(obj)
+        for header in headers:
+            if AXObject.get_name(header) == name:
+                return True
 
         return False
-
-    def labelForCellCoordinates(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-
-        # The ARIA feature is still in the process of being discussed.
-        collabel = attrs.get('colindextext', attrs.get('coltext'))
-        rowlabel = attrs.get('rowindextext', attrs.get('rowtext'))
-        if collabel is not None and rowlabel is not None:
-            return f'{collabel}{rowlabel}'
-
-        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
-        if row is None:
-            return ''
-
-        attrs = AXObject.get_attributes_dict(row)
-        collabel = attrs.get('colindextext', attrs.get('coltext', collabel))
-        rowlabel = attrs.get('rowindextext', attrs.get('rowtext', rowlabel))
-        if collabel is not None and rowlabel is not None:
-            return f'{collabel}{rowlabel}'
-
-        return ''
-
-    def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
-        if not AXUtilities.is_table_cell_or_header(obj):
-            if not findCellAncestor:
-                return -1, -1
-
-            cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
-            return self.coordinatesForCell(cell, preferAttribute, False)
-
-        if not preferAttribute:
-            return super().coordinatesForCell(obj, preferAttribute)
-
-        rvRow = rvCol = None
-        rowindex, colindex = self._rowAndColumnIndices(obj)
-        if rowindex is None or colindex is None:
-            nativeRowindex, nativeColindex = super().coordinatesForCell(obj, False)
-            if rowindex is not None:
-                rvRow = int(rowindex) - 1
-            else:
-                rvRow = nativeRowindex
-            if colindex is not None:
-                rvCol = int(colindex) - 1
-            else:
-                rvCol = nativeColindex
-
-        return rvRow, rvCol
 
     def setSizeUnknown(self, obj):
         if super().setSizeUnknown(obj):
@@ -2981,16 +2919,6 @@ class Utilities(script_utilities.Utilities):
 
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('rowcount') == '-1' or attrs.get('colcount') == '-1'
-
-    def rowAndColumnCount(self, obj, preferAttribute=True):
-        rows, cols = super().rowAndColumnCount(obj)
-        if not preferAttribute:
-            return rows, cols
-
-        attrs = AXObject.get_attributes_dict(obj)
-        rows = attrs.get('rowcount', rows)
-        cols = attrs.get('colcount', cols)
-        return int(rows), int(cols)
 
     def shouldReadFullRow(self, obj):
         if not (obj and self.inDocumentContent(obj)):

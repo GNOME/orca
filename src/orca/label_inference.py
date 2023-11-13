@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
 class LabelInference:
@@ -474,19 +475,6 @@ class LabelInference:
 
         return self._getTag(obj) in ['td', 'th']
 
-    def _getCellFromTable(self, table, rowindex, colindex):
-        if not AXObject.supports_table(table):
-            return None
-
-        if rowindex < 0 or colindex < 0:
-            return None
-
-        iface = table.queryTable()
-        if rowindex >= iface.nRows or colindex >= iface.nColumns:
-            return None
-
-        return table.queryTable().getAccessibleAt(rowindex, colindex)
-
     def _getCellFromRow(self, row, colindex):
         if 0 <= colindex < AXObject.get_child_count(row):
             return row[colindex]
@@ -523,12 +511,12 @@ class LabelInference:
 
         cellLeft = cellRight = cellAbove = cellBelow = None
         gridrow = AXObject.find_ancestor(cell, self._isRow)
-        rowindex, colindex = self._script.utilities.coordinatesForCell(cell)
+        rowindex, colindex = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
         if colindex > -1:
-            cellLeft = self._getCellFromTable(grid, rowindex, colindex - 1)
-            cellRight = self._getCellFromTable(grid, rowindex, colindex + 1)
-            cellAbove = self._getCellFromTable(grid, rowindex - 1, colindex)
-            cellBelow = self._getCellFromTable(grid, rowindex + 1, colindex)
+            cellLeft = AXTable.get_cell_at(grid, rowindex, colindex - 1)
+            cellRight = AXTable.get_cell_at(grid, rowindex, colindex + 1)
+            cellAbove = AXTable.get_cell_at(grid, rowindex - 1, colindex)
+            cellBelow = AXTable.get_cell_at(grid, rowindex + 1, colindex)
         elif gridrow and AXObject.get_parent(cell) == gridrow:
             cellindex = AXObject.get_index_in_parent(cell)
             cellLeft = self._getCellFromRow(gridrow, cellindex - 1)
@@ -584,12 +572,8 @@ class LabelInference:
         # as a functional label. Therefore, see if this table looks like a grid
         # of widgets with the functional labels in the first row.
 
-        try:
-            table = grid.queryTable()
-        except NotImplementedError:
-            return None, []
-
-        firstRow = [table.getAccessibleAt(0, i) for i in range(table.nColumns)]
+        columns = AXTable.get_column_count(grid)
+        firstRow = [AXTable.get_cell_at(grid, 0, i) for i in range(columns)]
         if not firstRow or list(filter(self._isWidget, firstRow)):
             return None, []
 
@@ -601,7 +585,8 @@ class LabelInference:
                 return False
             return not AXUtilities.have_same_role(AXObject.get_child(x, 0), obj)
 
-        cells = [table.getAccessibleAt(i, colindex) for i in range(1, table.nRows)]
+        rows = AXTable.get_row_count(grid)
+        cells = [AXTable.get_cell_at(grid, i, colindex) for i in range(1, rows)]
         if list(filter(isMatch, cells)):
             return None, []
 

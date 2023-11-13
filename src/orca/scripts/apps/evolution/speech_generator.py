@@ -91,9 +91,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isInNewRow")
         if rv is None:
-            row, column = self._script.utilities.coordinatesForCell(obj)
-            lastRow = self._script.pointOfReference.get("lastRow")
-            rv = row != lastRow
+            rv = self._script.utilities.cellRowChanged(obj)
             cached["isInNewRow"] = rv
             self._cache[hash(obj)] = cached
 

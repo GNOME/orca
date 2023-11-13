@@ -33,6 +33,7 @@ import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
@@ -359,17 +360,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateHasFormula(self, obj, **args):
-        inputLine = self._script.utilities.locateInputLine(obj)
-        if not inputLine:
+        formula = AXTable.get_cell_formula(obj)
+        if not formula:
             return []
 
-        text = self._script.utilities.displayedText(inputLine)
-        if text and text.startswith("="):
+        if args.get("formatType") == "basicWhereAmI":
+            result = [f"{messages.HAS_FORMULA}. {formula}"]
+        else:
             result = [messages.HAS_FORMULA]
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-            return result
 
-        return []
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+        return result
 
     def _generateRealTableCell(self, obj, **args):
         """Get the speech for a table cell. If this isn't inside a
@@ -397,13 +398,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
         speakCoordinates = _settingsManager.getSetting('speakSpreadsheetCoordinates')
-        if speakCoordinates and not isBasicWhereAmI:
+        if speakCoordinates or isBasicWhereAmI:
             result.append(self._script.utilities.spreadSheetCellName(obj))
 
         if self._script.utilities.shouldReadFullRow(obj):
-            row, col, table = self._script.utilities.getRowColumnAndTable(obj)
-            lastRow = self._script.pointOfReference.get("lastRow")
-            if row != lastRow:
+            if self._script.utilities.cellRowChanged(obj):
                 return result
 
         tooLong = self._generateTooLong(obj, **args)
@@ -415,6 +414,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if hasFormula:
             result.extend(self._generatePause(obj, **args))
             result.extend(hasFormula)
+
+        if result == speech_generator.PAUSE:
+            result = [messages.BLANK]
+            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
         return result
 
@@ -478,34 +481,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateOldAncestors(obj, **args)
 
     def _generateUnselectedCell(self, obj, **args):
-        if self._script.utilities.isSpreadSheetCell(obj):
-            return []
-
-        if self._script._lastCommandWasStructNav:
+        if not self._script.utilities.isGUICell(obj):
             return []
 
         return super()._generateUnselectedCell(obj, **args)
-
-    def generateSpeech(self, obj, **args):
-        result = []
-        if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
-           and self._script.utilities.isSpreadSheetCell(obj):
-            oldRole = self._overrideRole('ROLE_SPREADSHEET_CELL', args)
-            # In addition, if focus is in a cell being edited, we cannot
-            # query the accessible table interface for coordinates and the
-            # like because we're temporarily in an entirely different object
-            # which is outside of the table. This makes things difficult.
-            # However, odds are that if we're doing a whereAmI in a cell
-            # which we are editing, we have some pointOfReference info
-            # we can use to guess the coordinates.
-            #
-            args['guessCoordinates'] = AXObject.get_role(obj) == Atspi.Role.PARAGRAPH
-            result.extend(super().generateSpeech(obj, **args))
-            del args['guessCoordinates']
-            self._restoreRole(oldRole, args)
-        else:
-            oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
-            result.extend(super().generateSpeech(obj, **args))
-            self._restoreRole(oldRole, args)
-
-        return result

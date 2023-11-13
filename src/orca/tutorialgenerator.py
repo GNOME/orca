@@ -38,6 +38,7 @@ from . import focus_manager
 from . import settings
 
 from .ax_object import AXObject
+from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 from .orca_i18n import _         # for gettext support
 
@@ -607,14 +608,13 @@ class TutorialGenerator:
 
         utterances = []
 
-        if (not alreadyFocused):
-            parent = AXObject.get_parent(obj)
-            try:
-                parent_table = parent.queryTable()
-            except Exception:
-                parent_table = None
+        if not alreadyFocused:
+            parent = AXTable.get_table(obj)
+            if parent is None:
+                return []
+
             readFullRow = self._script.utilities.shouldReadFullRow(obj)
-            if readFullRow and parent_table and not self._script.utilities.isLayoutOnly(parent):
+            if readFullRow and not self._script.utilities.isLayoutOnly(parent):
                 utterances.extend(self._getTutorialForTableCell(obj,
                                                                 alreadyFocused, forceTutorial))
             else:

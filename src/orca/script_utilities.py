@@ -59,6 +59,7 @@ from . import settings_manager
 from . import text_attribute_names
 from .ax_object import AXObject
 from .ax_selection import AXSelection
+from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -116,23 +117,6 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    def cellIndex(self, obj):
-        """Returns the index of the cell which should be used with the
-        table interface.  This is necessary because in some apps we
-        cannot count on the index in parent being the index we need.
-
-        Arguments:
-        -obj: the table cell whose index we need.
-        """
-
-        attrs = AXObject.get_attributes_dict(obj)
-        index = attrs.get('table-cell-index')
-        if index:
-            return int(index)
-
-        obj = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header) or obj
-        return AXObject.get_index_in_parent(obj)
-
     def childNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
         to this expanded table cell.
@@ -143,14 +127,12 @@ class Utilities:
         Returns: a list of all the child nodes
         """
 
-        parent = AXObject.get_parent(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
+        if not AXUtilities.is_expanded(obj):
             return []
-        else:
-            if not AXUtilities.is_expanded(obj):
-                return []
+
+        parent = AXTable.get_table(obj)
+        if parent is None:
+            return []
 
         # First see if this accessible implements RELATION_NODE_PARENT_OF.
         # If it does, the full target list are the nodes. If it doesn't
@@ -169,10 +151,11 @@ class Utilities:
         # soon as the node level of a candidate is equal or less
         # than our current level.
         #
-        row, col = self.coordinatesForCell(obj)
+        row, col = AXTable.get_cell_coordinates(obj, prefer_attribute=False)
         nodeLevel = self.nodeLevel(obj)
-        for i in range(row+1, table.nRows):
-            cell = table.getAccessibleAt(i, col)
+
+        for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
+            cell = AXTable.get_cell_at(parent, i, col)
             relation = AXObject.get_relation(cell, Atspi.RelationType.NODE_CHILD_OF)
             if not relation:
                 continue
@@ -1023,20 +1006,6 @@ class Utilities:
 
         return self.getModalDialog(obj) is not None
 
-    def getTable(self, obj):
-        if not obj:
-            return None
-
-        def isTable(x):
-            if AXUtilities.is_table(x) or AXUtilities.is_tree_table(x) or AXUtilities.is_tree(x):
-                return AXObject.supports_table(x)
-            return False
-
-        if isTable(obj):
-            return obj
-
-        return AXObject.find_ancestor(obj, isTable)
-
     def isTextDocumentTable(self, obj):
         if not AXUtilities.is_table(obj):
             return False
@@ -1057,32 +1026,44 @@ class Utilities:
         if AXUtilities.is_document_spreadsheet(doc):
             return True
 
-        return obj.queryTable().nRows > 65536
+        return AXTable.get_row_count(obj) > 65536
 
     def isTextDocumentCell(self, obj):
         if not AXUtilities.is_table_cell_or_header(obj):
             return False
         return AXObject.find_ancestor(obj, self.isTextDocumentTable)
 
+    def isGUICell(self, obj):
+        if not AXUtilities.is_table_cell_or_header(obj):
+            return False
+        return AXObject.find_ancestor(obj, self.isGUITable)
+
     def isSpreadSheetCell(self, obj):
         if not AXUtilities.is_table_cell_or_header(obj):
             return False
         return AXObject.find_ancestor(obj, self.isSpreadSheetTable)
 
-    def cellColumnChanged(self, cell):
-        row, column = self.coordinatesForCell(cell)
+    def cellColumnChanged(self, cell, prevCell=None):
+        column = AXTable.get_cell_coordinates(cell)[1]
         if column == -1:
             return False
 
-        lastColumn = self._script.pointOfReference.get("lastColumn")
+        if prevCell is None:
+            lastColumn = self._script.pointOfReference.get("lastColumn")
+        else:
+            lastColumn = AXTable.get_cell_coordinates(prevCell)[1]
+
         return column != lastColumn
 
-    def cellRowChanged(self, cell):
-        row, column = self.coordinatesForCell(cell)
+    def cellRowChanged(self, cell, prevCell=None):
+        row = AXTable.get_cell_coordinates(cell)[0]
         if row == -1:
             return False
 
-        lastRow = self._script.pointOfReference.get("lastRow")
+        if prevCell is None:
+            lastRow = self._script.pointOfReference.get("lastRow")
+        else:
+            lastRow = AXTable.get_cell_coordinates(prevCell)[0]
         return row != lastRow
 
     def shouldReadFullRow(self, obj):
@@ -1092,8 +1073,8 @@ class Utilities:
         if not self.cellRowChanged(obj):
             return False
 
-        table = self.getTable(obj)
-        if not table:
+        table = AXTable.get_table(obj)
+        if table is None:
             return False
 
         if not self.getDocumentForObject(table):
@@ -1181,7 +1162,6 @@ class Utilities:
         if AXObject.is_dead(obj) or self.isZombie(obj):
             return True
 
-        attrs = AXObject.get_attributes_dict(obj)
         role = AXObject.get_role(obj)
         parentRole = AXObject.get_role(AXObject.get_parent(obj))
         firstChild = AXObject.get_child(obj, 0)
@@ -1192,24 +1172,8 @@ class Utilities:
                              Atspi.Role.LIST_ITEM,
                              Atspi.Role.TREE_ITEM]
 
-        if role == Atspi.Role.TABLE and attrs.get('layout-guess') != 'true':
-            try:
-                table = obj.queryTable()
-            except NotImplementedError:
-                tokens = ["SCRIPT UTILITIES: Table", obj, "does not implement table interface"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                layoutOnly = True
-            except Exception as error:
-                tokens = ["SCRIPT UTILITIES: Error querying table interface of", obj, ":", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                layoutOnly = True
-            else:
-                if not (table.nRows and table.nColumns):
-                    layoutOnly = not AXUtilities.is_focused(obj)
-                elif attrs.get('xml-roles') == 'table' or attrs.get('tag') == 'table':
-                    layoutOnly = False
-                elif not (AXObject.get_name(obj) or self.displayedLabel(obj)):
-                    layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
+        if role == Atspi.Role.TABLE:
+            layoutOnly = AXTable.is_layout_table(obj)
         elif role == Atspi.Role.TABLE_CELL and AXObject.get_child_count(obj):
             if parentRole == Atspi.Role.TREE_TABLE:
                 layoutOnly = not AXObject.get_name(obj)
@@ -3550,7 +3514,7 @@ class Utilities:
             return 0
 
         if AXObject.supports_table(obj):
-            rows, cols = self.rowAndColumnCount(obj)
+            rows = AXTable.get_row_count(obj)
             return max(0, rows)
 
         rolemap = {
@@ -3569,10 +3533,7 @@ class Utilities:
 
     def selectedChildCount(self, obj):
         if AXObject.supports_table(obj):
-            table = obj.queryTable()
-            if table.nSelectedRows:
-                return table.nSelectedRows
-
+            return AXTable.get_selected_row_count(obj)
         return AXSelection.get_selected_child_count(obj)
 
     def popupMenuFor(self, obj):
@@ -3753,194 +3714,20 @@ class Utilities:
         return AXObject.find_ancestor(obj, AXUtilities.is_table_header)
 
     def columnHeadersForCell(self, obj):
-        result = self._columnHeadersForCell(obj)
-        # There either are no headers, or we got all of them.
-        if len(result) != 1:
-            return result
-
-        others = self._columnHeadersForCell(result[0])
-        while len(others) == 1 and others[0] not in result:
-            result.insert(0, others[0])
-            others = self._columnHeadersForCell(result[0])
-
-        return result
-
-    def _columnHeadersForCell(self, obj):
-        if not obj:
-            msg = "SCRIPT UTILITIES: Attempted to get column headers for null cell"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return []
-
-        if AXObject.supports_table_cell(obj):
-            tableCell = obj.queryTableCell()
-            try:
-                headers = tableCell.columnHeaderCells
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting column headers for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                return headers
-
-        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            return []
-
-        row, col = self.coordinatesForCell(obj)
-        rowspan, colspan = self.rowAndColumnSpan(obj)
-
-        headers = []
-        for c in range(col, col+colspan):
-            headers.append(table.getColumnHeader(c))
-
-        return headers
+        # The reason we have this utility is that the soffice script overrides it
+        # for its dynamic header support.
+        return AXTable.get_column_headers(obj)
 
     def rowHeadersForCell(self, obj):
-        result = self._rowHeadersForCell(obj)
-        # There either are no headers, or we got all of them.
-        if len(result) != 1:
-            return result
-
-        others = self._rowHeadersForCell(result[0])
-        while len(others) == 1 and others[0] not in result:
-            result.insert(0, others[0])
-            others = self._rowHeadersForCell(result[0])
-
-        return result
-
-    def _rowHeadersForCell(self, obj):
-        if not obj:
-            msg = "SCRIPT UTILITIES: Attempted to get row headers for null cell"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return []
-
-        if AXObject.supports_table_cell(obj):
-            tableCell = obj.queryTableCell()
-            try:
-                headers = tableCell.rowHeaderCells
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting row headers for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                return headers
-
-        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            return []
-
-        row, col = self.coordinatesForCell(obj)
-        rowspan, colspan = self.rowAndColumnSpan(obj)
-
-        headers = []
-        for r in range(row, row+rowspan):
-            headers.append(table.getRowHeader(r))
-
-        return headers
-
-    def columnHeaderForCell(self, obj):
-        headers = self.columnHeadersForCell(obj)
-        if headers:
-            return headers[0]
-
-        return None
-
-    def rowHeaderForCell(self, obj):
-        headers = self.rowHeadersForCell(obj)
-        if headers:
-            return headers[0]
-
-        return None
-
-    def coordinatesForCell(self, obj, preferAttribute=True, findCellAncestor=False):
-        if not AXUtilities.is_table_cell_or_header(obj):
-            if not findCellAncestor:
-                return -1, -1
-
-            cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
-            return self.coordinatesForCell(cell, preferAttribute, False)
-
-        if AXObject.supports_table_cell(obj):
-            tableCell = obj.queryTableCell()
-            try:
-                successful, row, col = tableCell.position
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting table cell position of", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                if successful:
-                    tokens = ["SCRIPT UTILITIES: position of", obj, f"is row: {row}, col: {col}"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return row, col
-                tokens = ["SCRIPT UTILITIES: Failed to get position of", obj, "via table cell"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
-        if not parent:
-            tokens = ["SCRIPT UTILITIES: Couldn't find table-implementing ancestor for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1
-
-        try:
-            table = parent.queryTable()
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying table interface", parent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1
-
-        index = self.cellIndex(obj)
-        try:
-            row = table.getRowAtIndex(index)
-            col = table.getColumnAtIndex(index)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting row and column at index from", parent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1
-
-        return row, col
-
-    def rowAndColumnSpan(self, obj):
-        if not AXUtilities.is_table_cell_or_header(obj):
-            return -1, -1
-
-        if AXObject.supports_table_cell(obj):
-            tableCell = obj.queryTableCell()
-            try:
-                rowSpan, colSpan = tableCell.rowSpan, tableCell.columnSpan
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting table row and col span of",
-                          obj, "via table cell"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                return rowSpan, colSpan
-
-        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            return -1, -1
-
-        row, col = self.coordinatesForCell(obj)
-        if (row < 0 or col < 0):
-            return -1, -1
-
-        return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
+        # The reason we have this utility is that the soffice script overrides it
+        # for its dynamic header support.
+        return AXTable.get_row_headers(obj)
 
     def setSizeUnknown(self, obj):
         return AXUtilities.is_indeterminate(obj)
 
     def rowOrColumnCountUnknown(self, obj):
         return AXUtilities.is_indeterminate(obj)
-
-    def rowAndColumnCount(self, obj, preferAttribute=True):
-        try:
-            table = obj.queryTable()
-        except Exception:
-            return -1, -1
-
-        return table.nRows, table.nColumns
 
     def _objectBoundsMightBeBogus(self, obj):
         return False
@@ -4232,18 +4019,14 @@ class Utilities:
         return string, start, end
 
     def visibleRows(self, obj, boundingbox):
-        try:
-            table = obj.queryTable()
-            nRows = table.nRows
-        except Exception:
-            return []
+        nRows = AXTable.get_row_count(obj)
 
         tokens = ["SCRIPT UTILITIES: ", obj, f"has {nRows} rows"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         x, y, width, height = boundingbox
         cell = self.descendantAtPoint(obj, x, y + 1)
-        row, col = self.coordinatesForCell(cell)
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         startIndex = max(0, row)
         tokens = ["SCRIPT UTILITIES: First cell:", cell, f"(row: {row}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -4255,13 +4038,13 @@ class Utilities:
             nextIndex = startIndex
         else:
             cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
-            row, col = self.coordinatesForCell(cell)
+            row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
             nextIndex = max(startIndex, row)
             tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row}"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         cell = self.descendantAtPoint(obj, x, y + height - 1)
-        row, col = self.coordinatesForCell(cell)
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
@@ -4276,9 +4059,7 @@ class Utilities:
         return rows
 
     def getVisibleTableCells(self, obj):
-        try:
-            table = obj.queryTable()
-        except Exception:
+        if not (AXObject.supports_table(obj) and AXObject.supports_component(obj)):
             return []
 
         try:
@@ -4299,61 +4080,51 @@ class Utilities:
 
         cells = []
         for col in range(colStartIndex, colEndIndex):
-            colHeader = table.getColumnHeader(col)
-            if colHeader:
-                cells.append(colHeader)
             for row in rows:
-                try:
-                    cell = table.getAccessibleAt(row, col)
-                except Exception:
-                    continue
+                cell = AXTable.get_cell_at(obj, row, col)
                 if cell and self.isOnScreen(cell):
                     cells.append(cell)
 
         return cells
 
     def _getTableRowRange(self, obj):
-        rowCount, columnCount = self.rowAndColumnCount(obj)
+        table = AXTable.get_table(obj)
+        if table is None:
+            return -1, -1
+
+        columnCount = AXTable.get_column_count(table, False)
         startIndex, endIndex = 0, columnCount
         if not self.isSpreadSheetCell(obj):
             return startIndex, endIndex
 
-        parent = self.getTable(obj)
         try:
-            component = parent.queryComponent()
+            component = table.queryComponent()
         except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying component interface of", parent]
+            tokens = ["SCRIPT UTILITIES: Exception querying component interface of", table]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return startIndex, endIndex
 
         x, y, width, height = component.getExtents(Atspi.CoordType.SCREEN)
         cell = component.getAccessibleAtPoint(x+1, y, Atspi.CoordType.SCREEN)
         if cell:
-            row, column = self.coordinatesForCell(cell)
+            column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             startIndex = column
 
         cell = component.getAccessibleAtPoint(x+width-1, y, Atspi.CoordType.SCREEN)
         if cell:
-            row, column = self.coordinatesForCell(cell)
+            column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             endIndex = column + 1
 
         return startIndex, endIndex
 
     def getShowingCellsInSameRow(self, obj, forceFullRow=False):
-        parent = self.getTable(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying table interface of", parent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        row, column = self.coordinatesForCell(obj, False)
+        row = AXTable.get_cell_coordinates(obj, prefer_attribute=False)[0]
         if row == -1:
             return []
 
+        table = AXTable.get_table(obj)
         if forceFullRow:
-            startIndex, endIndex = 0, table.nColumns
+            startIndex, endIndex = 0, AXTable.get_column_count(table)
         else:
             startIndex, endIndex = self._getTableRowRange(obj)
         if startIndex == endIndex:
@@ -4361,53 +4132,11 @@ class Utilities:
 
         cells = []
         for i in range(startIndex, endIndex):
-            cell = table.getAccessibleAt(row, i)
+            cell = AXTable.get_cell_at(table, row, i)
             if AXUtilities.is_showing(cell):
                 cells.append(cell)
 
         return cells
-
-    def cellForCoordinates(self, obj, row, column, showingOnly=False):
-        try:
-            table = obj.queryTable()
-        except Exception:
-            return None
-
-        cell = table.getAccessibleAt(row, column)
-        if not showingOnly:
-            return cell
-
-        if AXUtilities.is_showing(cell):
-            return cell
-
-        return None
-
-    def isLastCell(self, obj):
-        if not AXUtilities.is_table_cell(obj):
-            return False
-
-        parent = AXObject.find_ancestor(obj, AXObject.supports_table)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            return False
-
-        row, col = self.coordinatesForCell(obj)
-        return row + 1 == table.nRows and col + 1 == table.nColumns
-
-    def isNonUniformTable(self, obj, maxRows=25, maxCols=25):
-        try:
-            table = obj.queryTable()
-        except Exception:
-            return False
-
-        for r in range(min(maxRows, table.nRows)):
-            for c in range(min(maxCols, table.nColumns)):
-                if table.getRowExtentAt(r, c) > 1 \
-                   or table.getColumnExtentAt(r, c) > 1:
-                    return True
-
-        return False
 
     def isShowingAndVisible(self, obj):
         if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
@@ -4507,8 +4236,8 @@ class Utilities:
             return -1, -1
 
         if AXUtilities.is_table_cell(obj) and args.get("readingRow"):
-            row, col = self.coordinatesForCell(obj)
-            rowcount, colcount = self.rowAndColumnCount(self.getTable(obj))
+            row = AXTable.get_cell_coordinates(obj)[0]
+            rowcount = AXTable.get_row_count(AXTable.get_table(obj))
             return row, rowcount
 
         if AXUtilities.is_combo_box(obj):
@@ -5234,21 +4963,7 @@ class Utilities:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not AXObject.supports_table(obj):
-            return False
-
-        table = obj.queryTable()
-        if table.nSelectedRows == table.nRows:
-            msg = f"SCRIPT UTILITIES: All {table.nRows} rows believed to be selected"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if table.nSelectedColumns == table.nColumns:
-            msg = f"SCRIPT UTILITIES: All {table.nColumns} columns believed to be selected"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
+        return AXTable.all_cells_are_selected(obj)
 
     def handleContainerSelectionChange(self, obj):
         allAlreadySelected = self._script.pointOfReference.get('allItemsSelected')

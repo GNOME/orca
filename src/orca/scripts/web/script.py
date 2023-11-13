@@ -48,6 +48,7 @@ from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 from .bookmarks import Bookmarks
@@ -984,8 +985,7 @@ class Script(default.Script):
             return
 
         priorObj = args.get("priorObj")
-        if self._lastCommandWasCaretNav or args.get("includeContext") \
-           or self.utilities.getTable(obj):
+        if self._lastCommandWasCaretNav or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
@@ -1384,7 +1384,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
         elif self.utilities.lastInputEventWasPageNav() \
-             and not self.utilities.getTable(newFocus) \
+             and not AXTable.get_table(newFocus) \
              and not self.utilities.isFeedArticle(newFocus):
             tokens = ["WEB: New focus", newFocus, "was scrolled to. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1813,6 +1813,9 @@ class Script(default.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
+
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1911,6 +1914,9 @@ class Script(default.Script):
     def onChildrenRemoved(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
+
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1966,7 +1972,7 @@ class Script(default.Script):
             return False
 
         focus = _focusManager.get_locus_of_focus()
-        if event.source != self.utilities.getTable(focus):
+        if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
@@ -2215,7 +2221,7 @@ class Script(default.Script):
             return False
 
         focus = _focusManager.get_locus_of_focus()
-        if event.source != self.utilities.getTable(focus):
+        if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False

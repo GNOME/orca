@@ -39,6 +39,7 @@ import orca.messages as messages
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -100,12 +101,14 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
         if AXUtilities.is_table_cell(obj) and text == name \
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
         # More bogusness from (at least) Calc combined with the aforementioned
         # fallback-to-name behavior....
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=158029
         if self.isDocument(obj) and text == name and text.startswith("file:///"):
             return ""
 
@@ -127,32 +130,6 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def getRowColumnAndTable(self, cell):
-        """Returns the (row, column, table) tuple for cell."""
-
-        if not AXUtilities.is_table_cell(cell):
-            return -1, -1, None
-
-        cellParent = AXObject.get_parent(cell)
-        if AXUtilities.is_table_cell(cellParent):
-            cell = cellParent
-            cellParent = AXObject.get_parent(cell)
-
-        table = cellParent
-        if table is not None and not AXUtilities.is_table(table):
-            table = AXObject.get_parent(table)
-
-        try:
-            iTable = table.queryTable()
-        except Exception:
-            return -1, -1, None
-
-        index = self.cellIndex(cell)
-        row = iTable.getRowAtIndex(index)
-        column = iTable.getColumnAtIndex(index)
-
-        return row, column, table
-
     def rowHeadersForCell(self, obj):
         rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
         if rowHeader:
@@ -168,13 +145,15 @@ class Utilities(script_utilities.Utilities):
         return super().columnHeadersForCell(obj)
 
     def getDynamicHeadersForCell(self, obj, onlyIfNew=False):
+        # TODO NEXT: MOVE THIS LOGIC OUT OF SOFFICE SO IT'S GLOBAL
         if not (self._script.dynamicRowHeaders or self._script.dynamicColumnHeaders):
             return None, None
 
-        objRow, objCol, table = self.getRowColumnAndTable(obj)
+        table = AXTable.get_table(obj)
         if not table:
             return None, None
 
+        objRow, objCol = AXTable.get_cell_coordinates(obj)
         headersRow = self._script.dynamicColumnHeaders.get(hash(table))
         headersCol = self._script.dynamicRowHeaders.get(hash(table))
         if headersRow == objRow or headersCol == objCol:
@@ -188,13 +167,12 @@ class Utilities(script_utilities.Utilities):
             getColHeader = \
                 getColHeader and objCol!= self._script.pointOfReference.get("lastColumn")
 
-        parentTable = table.queryTable()
         rowHeader, colHeader = None, None
         if getColHeader:
-            colHeader = parentTable.getAccessibleAt(headersRow, objCol)
+            colHeader = AXTable.get_cell_at(table, headersRow, objCol)
 
         if getRowHeader:
-            rowHeader = parentTable.getAccessibleAt(objRow, headersCol)
+            rowHeader = AXTable.get_cell_at(table, objRow, headersCol)
 
         return rowHeader, colHeader
 
@@ -240,62 +218,6 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return super().isLayoutOnly(obj)
-
-    def isAnInputLine(self, obj):
-        if not obj:
-            return False
-        if obj == self.locateInputLine(obj):
-            return True
-
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_panel(parent) or AXUtilities.is_extended(parent):
-            if self.spreadSheetCellName(parent):
-                return False
-
-        parent = AXObject.get_parent(parent)
-        if AXUtilities.is_text(parent):
-            return True
-
-        return False
-
-    def locateInputLine(self, obj):
-        """Return the spread sheet input line. This only needs to be found
-        the very first time a spread sheet table cell gets focus. We use the
-        table cell to work back up the component hierarchy until we have found
-        the common panel that both it and the input line reside in. We then
-        use that as the base component to search for a component which has a
-        paragraph role. This will be the input line.
-
-        Arguments:
-        - obj: the spread sheet table cell that has just got focus.
-
-        Returns the spread sheet input line component.
-        """
-
-        if self._script.inputLineForCell is not None:
-            if self.topLevelObjectIsActiveWindow(self._script.inputLineForCell):
-                return self._script.inputLineForCell
-
-        scrollPane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
-        if scrollPane is None:
-            return None
-
-        toolbar = None
-        for child in AXObject.iter_children(AXObject.get_parent(scrollPane),
-                                             AXUtilities.is_tool_bar):
-            toolbar = child
-            break
-
-        if toolbar is None:
-            msg = "ERROR: Calc inputline toolbar not found."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return None
-
-        allParagraphs = self.findAllDescendants(toolbar, AXUtilities.is_paragraph)
-        if len(allParagraphs) == 1:
-            self._script.inputLineForCell = allParagraphs[0]
-
-        return self._script.inputLineForCell
 
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
@@ -640,20 +562,8 @@ class Utilities(script_utilities.Utilities):
         return res
 
     def _getCellNameForCoordinates(self, obj, row, col, includeContents=False):
-        try:
-            table = obj.queryTable()
-        except Exception:
-            tokens = ["SOFFICE: Exception querying Table interface of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        try:
-            cell = table.getAccessibleAt(row, col)
-        except Exception:
-            tokens = [f"SOFFICE: Exception getting cell ({row},{col}) of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
+        cell = AXTable.get_cell_at(obj, row, col)
         name = self.spreadSheetCellName(cell)
         if includeContents:
             text = self.displayedText(cell)
@@ -669,9 +579,7 @@ class Utilities(script_utilities.Utilities):
 
         first = AXSelection.get_selected_child(obj, 0)
         last = AXSelection.get_selected_child(obj, -1)
-        firstCoords = self.coordinatesForCell(first)
-        lastCoords = self.coordinatesForCell(last)
-        return firstCoords, lastCoords
+        return AXTable.get_cell_coordinates(first), AXTable.get_cell_coordinates(last)
 
     def getSelectionContainer(self, obj):
         # Writer implements the selection interface on the document and all its
@@ -716,7 +624,7 @@ class Utilities(script_utilities.Utilities):
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
-        focusCoords = tuple(self.coordinatesForCell(_focusManager.get_locus_of_focus()))
+        focusCoords = AXTable.get_cell_coordinates(_focusManager.get_locus_of_focus())
         if focusCoords in selected:
             selected.remove(focusCoords)
 
@@ -751,9 +659,8 @@ class Utilities(script_utilities.Utilities):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             return True
 
-        table = obj.queryTable()
-        cols = set(table.getSelectedColumns())
-        rows = set(table.getSelectedRows())
+        cols = set(AXTable.get_selected_columns(obj))
+        rows = set(AXTable.get_selected_rows(obj))
 
         selectedCols = sorted(cols.difference(set(self._calcSelectedColumns)))
         unselectedCols = sorted(set(self._calcSelectedColumns).difference(cols))
@@ -776,11 +683,12 @@ class Utilities(script_utilities.Utilities):
         self._calcSelectedColumns = list(cols)
         self._calcSelectedRows = list(rows)
 
-        if len(cols) == table.nColumns:
+        columnCount = AXTable.get_column_count(obj)
+        if len(cols) == columnCount:
             self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
             return True
 
-        if not len(cols) and len(unselectedCols) == table.nColumns:
+        if not cols and len(unselectedCols) == columnCount:
             self._script.speakMessage(messages.DOCUMENT_UNSELECTED_ALL)
             return True
 

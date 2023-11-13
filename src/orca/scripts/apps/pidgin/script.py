@@ -35,6 +35,7 @@ import orca.messages as messages
 import orca.scripts.toolkits.GAIL as GAIL
 import orca.settings as settings
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 from .chat import Chat
@@ -111,6 +112,9 @@ class Script(GAIL.Script):
 
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
+
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
 
         # Check to see if a new chat room tab has been created and if it
         # has, then announce its name. See bug #469098 for more details.

@@ -57,6 +57,7 @@ import orca.sound as sound
 import orca.speech as speech
 import orca.speechserver as speechserver
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -622,7 +623,7 @@ class Script(script.Script):
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
         # we only present the changed location.
-        row, column = self.utilities.coordinatesForCell(obj, findCellAncestor=True)
+        row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
         self.pointOfReference['lastColumn'] = column
         self.pointOfReference['lastRow'] = row
 
@@ -1239,12 +1240,14 @@ class Script(script.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        pass
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
 
     def onChildrenRemoved(self, event):
         """Callback for object:children-changed:remove accessibility events."""
 
-        pass
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
@@ -1770,10 +1773,11 @@ class Script(script.Script):
     def onColumnReordered(self, event):
         """Callback for object:column-reordered accessibility events."""
 
+        AXTable.clear_cache_now("column-reordered event.")
         if not self.utilities.lastInputEventWasTableSort():
             return
 
-        if event.source != self.utilities.getTable(_focusManager.get_locus_of_focus()):
+        if event.source != AXTable.get_table(_focusManager.get_locus_of_focus()):
             return
 
         self.pointOfReference['last-table-sort-time'] = time.time()
@@ -1782,10 +1786,11 @@ class Script(script.Script):
     def onRowReordered(self, event):
         """Callback for object:row-reordered accessibility events."""
 
+        AXTable.clear_cache_now("row-reordered event.")
         if not self.utilities.lastInputEventWasTableSort():
             return
 
-        if event.source != self.utilities.getTable(_focusManager.get_locus_of_focus()):
+        if event.source != AXTable.get_table(_focusManager.get_locus_of_focus()):
             return
 
         self.pointOfReference['last-table-sort-time'] = time.time()

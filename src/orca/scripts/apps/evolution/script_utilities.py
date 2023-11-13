@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 
@@ -80,8 +81,11 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         if not self.isMessageListToggleCell(obj):
             return False
 
-        header = self.columnHeaderForCell(obj)
-        return header and AXObject.get_name(header) != AXObject.get_name(obj)
+        headers = AXTable.get_column_headers(obj)
+        if not headers:
+            return False
+
+        return headers[0] and AXObject.get_name(headers[0]) != AXObject.get_name(obj)
 
     def isMessageListToggleCell(self, obj):
         if self.isWebKitGtk(obj):

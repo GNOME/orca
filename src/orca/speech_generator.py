@@ -46,6 +46,7 @@ from . import settings_manager
 from . import speech
 from . import text_attribute_names
 from .ax_object import AXObject
+from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
 class Pause:
@@ -514,7 +515,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if args.get("leaving"):
-            return[]
+            return []
 
         if self._script.utilities.isTextDocumentTable(obj):
             role = args.get('role', AXObject.get_role(obj))
@@ -980,7 +981,7 @@ class SpeechGenerator(generator.Generator):
         previous object with focus.
         """
 
-        if not self._script.utilities.cellRowChanged(obj):
+        if not self._script.utilities.cellRowChanged(obj, args.get('priorObj')):
             return []
 
         if args.get('readingRow'):
@@ -988,12 +989,6 @@ class SpeechGenerator(generator.Generator):
 
         if not _settingsManager.getSetting('speakCellHeaders'):
             return []
-
-        if args.get('inMouseReview') and args.get('priorObj'):
-            thisrow, thiscol = self._script.utilities.coordinatesForCell(obj)
-            lastrow, lastcol = self._script.utilities.coordinatesForCell(args.get('priorObj'))
-            if thisrow == lastrow:
-                return []
 
         args['newOnly'] = True
         return self._generateRowHeader(obj, **args)
@@ -1009,7 +1004,7 @@ class SpeechGenerator(generator.Generator):
         previous object with focus.
         """
 
-        if not self._script.utilities.cellColumnChanged(obj):
+        if not self._script.utilities.cellColumnChanged(obj, args.get('priorObj')):
             return []
 
         if args.get('readingRow'):
@@ -1017,12 +1012,6 @@ class SpeechGenerator(generator.Generator):
 
         if not _settingsManager.getSetting('speakCellHeaders'):
             return []
-
-        if args.get('inMouseReview') and args.get('priorObj'):
-            thisrow, thiscol = self._script.utilities.coordinatesForCell(obj)
-            lastrow, lastcol = self._script.utilities.coordinatesForCell(args.get('priorObj'))
-            if thiscol == lastcol:
-                return []
 
         args['newOnly'] = True
         return self._generateColumnHeader(obj, **args)
@@ -1096,7 +1085,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_text(obj):
             return []
 
-        table = self._script.utilities.getTable(obj)
+        table = AXTable.get_table(obj)
         if table:
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
             if lastKey in ["Left", "Right"]:
@@ -1133,24 +1122,12 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        col = -1
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_table_cell(parent):
-            obj = parent
-        parent = self._script.utilities.getTable(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            if args.get('guessCoordinates', False):
-                col = self._script.pointOfReference.get('lastColumn', -1)
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            col = table.getColumnAtIndex(index)
-        if col >= 0:
-            result.append(messages.TABLE_COLUMN % (col + 1))
-        if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        col = AXTable.get_cell_coordinates(obj, find_cell=True)[1]
+        if col == -1:
+            return []
+
+        result = [messages.TABLE_COLUMN % (col + 1)]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateNewRow(self, obj, **args):
@@ -1172,24 +1149,12 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        row = -1
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_table_cell(parent):
-            obj = parent
-        parent = self._script.utilities.getTable(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            if args.get('guessCoordinates', False):
-                row = self._script.pointOfReference.get('lastRow', -1)
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            row = table.getRowAtIndex(index)
-        if row >= 0:
-            result.append(messages.TABLE_ROW % (row + 1))
-        if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        row = AXTable.get_cell_coordinates(obj, find_cell=True)[0]
+        if row == -1:
+            return []
+
+        result = [messages.TABLE_ROW % (row + 1)]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateColumnAndRow(self, obj, **args):
@@ -1201,27 +1166,21 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        row, col = AXTable.get_cell_coordinates(obj, find_cell=True)
+        if row == -1 or col == -1:
+            return []
+
+        table = AXTable.get_table(obj)
+        if table is None:
+            return []
+
         result = []
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_table_cell(parent):
-            obj = parent
-        parent = self._script.utilities.getTable(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
-            table = None
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            col = table.getColumnAtIndex(index)
-            row = table.getRowAtIndex(index)
-            result.append(messages.TABLE_COLUMN_DETAILED \
-                          % {"index" : (col + 1),
-                             "total" : table.nColumns})
-            result.append(messages.TABLE_ROW_DETAILED \
-                          % {"index" : (row + 1),
-                             "total" : table.nRows})
-        if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        rows = AXTable.get_row_count(table)
+        columns = AXTable.get_column_count(table)
+
+        result.append(messages.TABLE_COLUMN_DETAILED % {"index" : (col + 1), "total" : columns})
+        result.append(messages.TABLE_ROW_DETAILED % {"index" : (row + 1), "total" : rows})
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateEndOfTableIndicator(self, obj, **args):
@@ -1236,7 +1195,7 @@ class SpeechGenerator(generator.Generator):
            != settings.VERBOSITY_LEVEL_VERBOSE:
             return []
 
-        if self._script.utilities.isLastCell(obj):
+        if AXTable.is_last_cell(obj):
             result = [messages.TABLE_END]
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
@@ -2110,7 +2069,9 @@ class SpeechGenerator(generator.Generator):
             parentRole = self._getAlternativeRole(parent)
             if parentRole in stopAtRoles:
                 break
-            if parentRole in skipRoles:
+
+            # TODO - JD: Create an alternative role for this.
+            if parentRole in skipRoles and not self._script.utilities.isSpreadSheetTable(parent):
                 pass
             elif includeOnly and parentRole not in includeOnly:
                 pass
@@ -2833,16 +2794,16 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateMathTableStart(self, obj, **args):
-        try:
-            table = obj.queryTable()
-        except Exception:
+        if not AXObject.supports_table(obj):
             return []
 
+        rows = AXTable.get_row_count(obj)
+        columns = AXTable.get_column_count(obj)
         nestingLevel = self._script.utilities.getMathNestingLevel(obj)
         if nestingLevel > 0:
-            result = [messages.mathNestedTableSize(table.nRows, table.nColumns)]
+            result = [messages.mathNestedTableSize(rows, columns)]
         else:
-            result = [messages.mathTableSize(table.nRows, table.nColumns)]
+            result = [messages.mathTableSize(rows, columns)]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 

@@ -35,6 +35,7 @@ from gi.repository import Atspi
 import orca.debug as debug
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 #############################################################################
@@ -64,7 +65,7 @@ class Utilities(script_utilities.Utilities):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
         to this expanded table cell. Overridden here because the object
         which contains the relation is in a hidden column and thus doesn't
-        have a column number (necessary for using getAccessibleAt()).
+        have a column number.
 
         Arguments:
         -obj: the Accessible Object
@@ -75,19 +76,15 @@ class Utilities(script_utilities.Utilities):
         if not self._script.chat.isInBuddyList(obj):
             return script_utilities.Utilities.childNodes(self, obj)
 
-        parent = AXObject.get_parent(obj)
-        try:
-            table = parent.queryTable()
-        except Exception:
+        if not AXUtilities.is_expanded(obj):
             return []
-        else:
-            if not AXUtilities.is_expanded(obj):
-                return []
+
+        parent = AXTable.get_table(obj)
+        if parent is None:
+            return []
 
         nodes = []
-        index = self.cellIndex(obj)
-        row = table.getRowAtIndex(index)
-        col = table.getColumnAtIndex(index + 1)
+        row, col = AXTable.get_cell_coordinates(obj)
         nodeLevel = self.nodeLevel(obj)
 
         # Candidates will be in the rows beneath the current row.
@@ -95,8 +92,8 @@ class Utilities(script_utilities.Utilities):
         # soon as the node level of a candidate is equal or less
         # than our current level.
         #
-        for i in range(row+1, table.nRows):
-            cell = table.getAccessibleAt(i, col)
+        for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
+            cell = AXTable.get_cell_at(parent, i, col)
             nodeCell = AXObject.get_previous_sibling(cell)
             relation = AXObject.get_relation(nodeCell, Atspi.RelationType.NODE_CHILD_OF)
             if not relation:
@@ -127,11 +124,9 @@ class Utilities(script_utilities.Utilities):
             return script_utilities.Utilities.nodeLevel(self, obj)
 
         obj = AXObject.get_previous_sibling(obj)
-        parent = AXObject.get_parent(obj)
-        try:
-            parent.queryTable()
-        except Exception:
-            return -1
+        parent = AXTable.get_table(obj)
+        if parent is None:
+            return []
 
         nodes = []
         node = obj

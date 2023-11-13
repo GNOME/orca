@@ -44,10 +44,10 @@ import orca.orca_state as orca_state
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
-from .formatting import Formatting
 from .script_utilities import Utilities
 from .spellcheck import SpellCheck
 from .speech_generator import SpeechGenerator
@@ -73,10 +73,6 @@ class Script(default.Script):
         self.speakCellHeadersCheckButton = None
         self.speakCellSpanCheckButton = None
 
-        # The spreadsheet input line.
-        #
-        self.inputLineForCell = None
-
         # Dictionaries for the calc and writer dynamic row and column headers.
         #
         self.dynamicColumnHeaders = {}
@@ -96,10 +92,6 @@ class Script(default.Script):
         """Returns the spellcheck for this script."""
 
         return SpellCheck(self)
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def getUtilities(self):
         """Returns the utilities for this script."""
@@ -371,12 +363,7 @@ class Script(default.Script):
         return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
     def presentInputLine(self, inputEvent):
-        """Presents the contents of the spread sheet input line (assuming we
-        have a handle to it - generated when we first focus on a spread
-        sheet table cell.
-
-        This will be either the contents of the table cell that has focus
-        or the formula associated with it.
+        """Presents the contents of the input line for the current cell.
 
         Arguments:
         - inputEvent: if not None, the input event that caused this action.
@@ -384,17 +371,15 @@ class Script(default.Script):
 
         focus = _focusManager.get_locus_of_focus()
         if not self.utilities.isSpreadSheetCell(focus):
-            return
+            self.presentMessage(messages.SPREADSHEET_NOT_IN_A)
+            return True
 
-        inputLine = self.utilities.locateInputLine(focus)
-        if not inputLine:
-            return
-
-        text = self.utilities.displayedText(inputLine)
+        text = AXTable.get_cell_formula(focus)
         if not text:
-            text = messages.EMPTY
+            text = self.utilities.displayedText(focus) or messages.EMPTY
 
         self.presentMessage(text)
+        return True
 
     def setDynamicColumnHeaders(self, inputEvent):
         """Set the row for the dynamic header columns to use when speaking
@@ -413,10 +398,11 @@ class Script(default.Script):
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
 
-        row, column, table = self.utilities.getRowColumnAndTable(cell)
+        table = AXTable.get_table(cell)
         if table:
+            row = AXTable.get_cell_coordinates(cell)[0]
             self.dynamicColumnHeaders[hash(table)] = row
-            self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row+1))
+            self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
 
         return True
 
@@ -432,14 +418,15 @@ class Script(default.Script):
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
 
-        row, column, table = self.utilities.getRowColumnAndTable(cell)
-        try:
-            del self.dynamicColumnHeaders[hash(table)]
-            self.presentationInterrupt()
-            self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
-        except Exception:
-            pass
+        table = AXTable.get_table(cell)
+        if table:
+            self.dynamicColumnHeaders.pop(hash(table), None)
+            msg = messages.DYNAMIC_COLUMN_HEADER_CLEARED
+        else:
+            msg = messages.TABLE_NOT_IN_A
 
+        self.presentationInterrupt()
+        self.presentMessage(msg)
         return True
 
     def setDynamicRowHeaders(self, inputEvent):
@@ -460,11 +447,12 @@ class Script(default.Script):
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
 
-        row, column, table = self.utilities.getRowColumnAndTable(cell)
+        table = AXTable.get_table(cell)
         if table:
+            column = AXTable.get_cell_coordinates(cell)[1]
             self.dynamicRowHeaders[hash(table)] = column
             self.presentMessage(
-                messages.DYNAMIC_ROW_HEADER_SET % self.utilities.columnConvert(column+1))
+                messages.DYNAMIC_ROW_HEADER_SET % self.utilities.columnConvert(column + 1))
 
         return True
 
@@ -480,14 +468,15 @@ class Script(default.Script):
         if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
             cell = parent
 
-        row, column, table = self.utilities.getRowColumnAndTable(cell)
-        try:
-            del self.dynamicRowHeaders[hash(table)]
-            self.presentationInterrupt()
-            self.presentMessage(messages.DYNAMIC_ROW_HEADER_CLEARED)
-        except Exception:
-            pass
+        table = AXTable.get_table(cell)
+        if table:
+            self.dynamicColumnHeaders.pop(hash(table), None)
+            msg = messages.DYNAMIC_ROW_HEADER_CLEARED
+        else:
+            msg = messages.TABLE_NOT_IN_A
 
+        self.presentationInterrupt()
+        self.presentMessage(msg)
         return True
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
@@ -567,22 +556,6 @@ class Script(default.Script):
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
-        if not newLocusOfFocus:
-            return
-
-        parent = AXObject.get_parent(newLocusOfFocus)
-        if parent is None:
-            return
-
-        cell = None
-        if self.utilities.isTextDocumentCell(newLocusOfFocus):
-            cell = newLocusOfFocus
-        elif self.utilities.isTextDocumentCell(parent):
-            cell = parent
-        if cell:
-            row, column = self.utilities.coordinatesForCell(cell)
-            self.pointOfReference['lastRow'] = row
-            self.pointOfReference['lastColumn'] = column
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -662,7 +635,10 @@ class Script(default.Script):
             _focusManager.set_locus_of_focus(event, event.any_data)
             return
 
-        if self.utilities.isLastCell(event.any_data):
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("children-changed event.")
+
+        if AXTable.is_last_cell(event.any_data):
             activeRow = self.pointOfReference.get('lastRow', -1)
             activeCol = self.pointOfReference.get('lastColumn', -1)
             if activeRow < 0 or activeCol < 0:
@@ -672,7 +648,7 @@ class Script(default.Script):
                 _focusManager.set_locus_of_focus(event, event.source, False)
 
             self.utilities.handleUndoTextEvent(event)
-            rowCount, colCount = self.utilities.rowAndColumnCount(event.source)
+            rowCount = AXTable.get_row_count(event.source)
             if activeRow == rowCount:
                 full = messages.TABLE_ROW_DELETED_FROM_END
                 brief = messages.TABLE_ROW_DELETED
@@ -743,17 +719,6 @@ class Script(default.Script):
             return
 
         if not event.detail1:
-            return
-
-        if self.utilities.isAnInputLine(event.source):
-            msg = "SOFFICE: Event ignored: spam from inputLine"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        if AXObject.get_child_count(event.source) \
-            and self.utilities.isAnInputLine(AXObject.get_child(event.source, 0)):
-            msg = "SOFFICE: Event ignored: spam from inputLine parent"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         role = AXObject.get_role(event.source)

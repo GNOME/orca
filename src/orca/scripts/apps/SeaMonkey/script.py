@@ -36,6 +36,7 @@ from orca import debug
 from orca import focus_manager
 from orca import input_event
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.scripts.toolkits import Gecko
 
 _focusManager = focus_manager.getManager()
@@ -71,7 +72,7 @@ class Script(Gecko.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        table = self.utilities.getTable(_focusManager.get_locus_of_focus())
+        table = AXTable.get_table(_focusManager.get_locus_of_focus())
         if table and not self.utilities.isTextDocumentTable(table):
             msg = "SEAMONKEY: Ignoring, table is not text-document table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

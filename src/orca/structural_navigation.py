@@ -46,6 +46,7 @@ from .ax_collection import AXCollection
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_selection import AXSelection
+from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -429,7 +430,8 @@ class StructuralNavigationObject:
                 desiredCoordinates = [-1, -1]
                 table = self.structuralNavigation.getTableForCell(thisCell)
                 if table:
-                    nRows, nColumns = script.utilities.rowAndColumnCount(table, False)
+                    nRows = AXTable.get_row_count(table, False)
+                    nColumns = AXTable.get_column_count(table, False)
                     lastRow = nRows - 1
                     lastCol = nColumns - 1
                     desiredCoordinates = [lastRow, lastCol]
@@ -749,10 +751,11 @@ class StructuralNavigation:
         rowDiff = desiredRow - currentRow
         colDiff = desiredCol - currentCol
 
-        nRows, nColumns = self._script.utilities.rowAndColumnCount(table, False)
+        nRows = AXTable.get_row_count(table, False)
+        nColumns = AXTable.get_column_count(table, False)
         cell = thisCell
         while cell:
-            cell = self._script.utilities.cellForCoordinates(table, desiredRow, desiredCol)
+            cell = AXTable.get_cell_at(table, desiredRow, desiredCol)
             if not cell:
                 if desiredCol < 0:
                     self._script.presentMessage(messages.TABLE_ROW_BEGINNING)
@@ -781,10 +784,7 @@ class StructuralNavigation:
 
         self.lastTableCell = [desiredRow, desiredCol]
         if cell:
-            oldRowHeaders = self._script.utilities.rowHeadersForCell(thisCell)
-            oldColHeaders = self._script.utilities.columnHeadersForCell(thisCell)
-            arg = [rowDiff, colDiff, oldRowHeaders, oldColHeaders]
-            structuralNavigationObject.present(cell, arg)
+            structuralNavigationObject.present(cell, thisCell)
 
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
@@ -962,34 +962,6 @@ class StructuralNavigation:
 
         return messages.listItemCount(len(children))
 
-    def _getTableCaption(self, obj):
-        """Returns a string which contains the table caption, or
-        None if a caption could not be found.
-
-        Arguments:
-        - obj: the accessible table whose caption we want.
-        """
-
-        caption = obj.queryTable().caption
-        try:
-            caption.queryText()
-        except Exception:
-            return None
-        else:
-            return self._script.utilities.displayedText(caption)
-
-    def _getTableDescription(self, obj):
-        """Returns a string which describes the table."""
-
-        nonUniformString = ""
-        nonUniform = self._script.utilities.isNonUniformTable(obj)
-        if nonUniform:
-            nonUniformString = messages.TABLE_NON_UNIFORM + " "
-
-        nRows, nColumns = self._script.utilities.rowAndColumnCount(obj, True)
-        sizeString = messages.tableSize(nRows, nColumns)
-        return (nonUniformString + sizeString)
-
     def getCellForObj(self, obj):
         """Looks for a table cell in the ancestry of obj, if obj is not a
         table cell.
@@ -1079,38 +1051,6 @@ class StructuralNavigation:
 
         return text
 
-    def _presentCellHeaders(self, cell, oldCellInfo):
-        """Speaks the headers of the accessible table cell, cell.
-
-        Arguments:
-        - cell: the accessible table cell whose headers we wish to
-          present.
-        - oldCellInfo: [rowDiff, colDiff, oldRowHeaders, oldColHeaders]
-        """
-
-        if not cell or not oldCellInfo:
-            return
-
-        rowDiff, colDiff, oldRowHeaders, oldColHeaders = oldCellInfo
-        if not (oldRowHeaders or oldColHeaders):
-            return
-
-        if rowDiff:
-            rowHeaders = self._script.utilities.rowHeadersForCell(cell)
-            for header in rowHeaders:
-                if header not in oldRowHeaders:
-                    text = self._getCellText(header)
-                    voice = self._script.speechGenerator.voice(string=text)
-                    self._script.speakMessage(text, voice=voice, force=True)
-
-        if colDiff:
-            colHeaders = self._script.utilities.columnHeadersForCell(cell)
-            for header in colHeaders:
-                if header not in oldColHeaders:
-                    text = self._getCellText(header)
-                    voice = self._script.speechGenerator.voice(string=text)
-                    self._script.speakMessage(text, voice=voice, force=True)
-
     def getCellCoordinates(self, obj, preferAttribute=True):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
         if the coordinates cannot be found.
@@ -1122,7 +1062,7 @@ class StructuralNavigation:
 
         cell = self.getCellForObj(obj)
         table = self.getTableForCell(cell)
-        thisRow, thisCol = self._script.utilities.coordinatesForCell(cell, preferAttribute)
+        thisRow, thisCol = AXTable.get_cell_coordinates(cell, preferAttribute)
 
         # If preferAttribute is True, we are getting coordinates to be spoken,
         # and not to deal with the logic below.
@@ -1136,7 +1076,7 @@ class StructuralNavigation:
         # Therefore, if the lastTableCell and this table cell are the
         # same cell, we'll go with the stored coordinates.
         lastRow, lastCol = self.lastTableCell
-        lastCell = self._script.utilities.cellForCoordinates(table, lastRow, lastCol)
+        lastCell = AXTable.get_cell_at(table, lastRow, lastCol)
         if lastCell == cell:
             return lastRow, lastCol
 
@@ -2113,20 +2053,17 @@ class StructuralNavigation:
             if attrs.get('layout-guess') == 'true':
                 return False
 
-            try:
-                return obj.queryTable().nRows > 0
-            except Exception:
-                return False
+            return AXTable.get_row_count(obj) > 0
 
         return AXUtilities.find_all_tables(document, is_not_layout_or_empty)
 
     def _tablePresentation(self, obj, arg=None):
         if obj is not None:
-            caption = self._getTableCaption(obj)
+            caption = AXTable.get_caption(obj)
             if caption:
-                self._script.presentMessage(caption)
-            self._script.presentMessage(self._getTableDescription(obj))
-            cell = obj.queryTable().getAccessibleAt(0, 0)
+                self._script.presentMessage(self._script.utilities.displayedText(caption))
+            self._script.presentMessage(AXTable.get_table_description_for_presentation(obj))
+            cell = AXTable.get_cell_at(obj, 0, 0)
             if not cell:
                 tokens = ["STRUCTURAL NAVIGATION: Broken table interface for", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2149,8 +2086,12 @@ class StructuralNavigation:
         columnHeaders.append(guilabels.SN_HEADER_DESCRIPTION)
 
         def rowData(obj):
-            return [self._getTableCaption(obj) or '',
-                    self._getTableDescription(obj)]
+            caption = AXTable.get_caption(obj)
+            if caption:
+                name = self._script.utilities.displayedText(caption)
+            else:
+                name = AXObject.get_name(obj)
+            return [name, AXTable.get_table_description_for_presentation(obj)]
 
         return guilabels.SN_TITLE_TABLE, columnHeaders, rowData
 
@@ -2186,29 +2127,21 @@ class StructuralNavigation:
         # Actually, this doesn't seem to be getting used. Either use it or delete it.
         return AXUtilities.find_all_table_cells_and_headers(document)
 
-    def _tableCellPresentation(self, cell, arg):
+    def _tableCellPresentation(self, cell, prevCell):
         if cell is None:
             return
-
-        if settings.speakCellHeaders:
-            self._presentCellHeaders(cell, arg)
 
         [obj, characterOffset] = self._getCaretPosition(cell)
         obj, characterOffset = self._setCaretPosition(obj, characterOffset)
         self._script.updateBraille(obj)
 
-        blank = self._isBlankCell(cell)
-        if not blank:
-            self._presentObject(cell, 0)
-        else:
-            self._script.speakMessage(messages.BLANK)
-
+        self._presentObject(cell, 0, priorObj=prevCell)
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)
             self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
                                         % {"row" : row + 1, "column" : col + 1})
 
-        rowspan, colspan = self._script.utilities.rowAndColumnSpan(cell)
+        rowspan, colspan = AXTable.get_cell_spans(cell)
         spanString = messages.cellSpan(rowspan, colspan)
         if spanString and settings.speakCellSpan:
             self._script.presentMessage(spanString)

@@ -38,6 +38,7 @@ from orca import focus_manager
 from orca import messages
 from orca import object_properties
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -98,7 +99,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:
-            label = self._script.utilities.labelForCellCoordinates(obj)
+            label = AXTable.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
             else:

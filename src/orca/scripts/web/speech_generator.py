@@ -40,6 +40,7 @@ from orca import settings
 from orca import settings_manager
 from orca import speech_generator
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _focusManager = focus_manager.getManager()
@@ -86,7 +87,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if priorDoc != doc and not self._script.utilities.getDocumentForObject(doc):
                 result = [super()._generateName(doc)]
 
-        if not self._script.utilities.getTable(obj) \
+        if not AXTable.get_table(obj) \
            and (self._script.utilities.isLink(obj) \
                 or self._script.utilities.isLandmark(obj) \
                 or self._script.utilities.isMath(obj) \
@@ -738,13 +739,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         if _settingsManager.getSetting('speakCellCoordinates'):
-            label = self._script.utilities.labelForCellCoordinates(obj)
+            label = AXTable.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 return result
 
-            row, col = self._script.utilities.coordinatesForCell(obj)
+            row, col = AXTable.get_cell_coordinates(obj)
             if self._script.utilities.cellRowChanged(obj):
                 result.append(messages.TABLE_ROW % (row + 1))
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -766,12 +767,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return self.generate(row)
 
         return super()._generateTableCellRow(obj, **args)
-
-    def _generateRowHeader(self, obj, **args):
-        if self._script.utilities.lastInputEventWasLineNav():
-            return []
-
-        return super()._generateRowHeader(obj)
 
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
