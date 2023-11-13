@@ -34,6 +34,7 @@ import orca.braille_generator as braille_generator
 import orca.object_properties as object_properties
 import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 _settingsManager = settings_manager.getManager()
@@ -109,7 +110,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         try:
             objectText = self._script.utilities.substring(obj, 0, -1)
-            cellName = self._script.utilities.spreadSheetCellName(obj)
+            cellName = AXTable.get_label_for_cell_coordinates(obj) \
+                or self._script.utilities.spreadSheetCellName(obj)
         except Exception:
             return []
 

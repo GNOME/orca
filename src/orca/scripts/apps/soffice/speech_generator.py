@@ -399,7 +399,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
         speakCoordinates = _settingsManager.getSetting('speakSpreadsheetCoordinates')
         if speakCoordinates or isBasicWhereAmI:
-            result.append(self._script.utilities.spreadSheetCellName(obj))
+            label = AXTable.get_label_for_cell_coordinates(obj) \
+                or self._script.utilities.spreadSheetCellName(obj)
+            result.append(label)
 
         if self._script.utilities.shouldReadFullRow(obj):
             if self._script.utilities.cellRowChanged(obj):
