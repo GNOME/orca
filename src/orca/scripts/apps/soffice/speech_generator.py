@@ -42,54 +42,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def __overrideParagraph(self, obj, **args):
-        # Treat a paragraph which is serving as a text entry in a dialog
-        # as a text object.
-        #
-        role = args.get('role', AXObject.get_role(obj))
-        if role == "text frame":
-            return True
-        if role != Atspi.Role.PARAGRAPH:
-            return False
-        return AXObject.find_ancestor(obj, AXUtilities.is_dialog) is not None
-
-    def _generateRoleName(self, obj, **args):
-        result = []
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.TOGGLE_BUTTON \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
-            pass
-        else:
-            # Treat a paragraph which is serving as a text entry in a dialog
-            # as a text object.
-            #
-            override = self.__overrideParagraph(obj, **args)
-            if override:
-                oldRole = self._overrideRole(Atspi.Role.TEXT, args)
-            # Treat a paragraph which is inside of a spreadsheet cell as
-            # a spreadsheet cell.
-            #
-            elif role == 'ROLE_SPREADSHEET_CELL':
-                oldRole = self._overrideRole(Atspi.Role.TABLE_CELL, args)
-                override = True
-            result.extend(speech_generator.SpeechGenerator._generateRoleName(
-                          self, obj, **args))
-            if override:
-                self._restoreRole(oldRole, args)
-        return result
-
-    def _generateTextRole(self, obj, **args):
-        result = []
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.TEXT \
-            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
-            return []
-
-        if role != Atspi.Role.PARAGRAPH \
-           or self.__overrideParagraph(obj, **args):
-            result.extend(self._generateRoleName(obj, **args))
-        return result
-
     def _generateLabel(self, obj, **args):
         """Returns the label for an object as an array of strings (and
         possibly voice and audio specifications).  The label is
@@ -97,9 +49,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         and an empty array will be returned if no label can be found.
         """
         result = []
-        override = self.__overrideParagraph(obj, **args)
         label = self._script.utilities.displayedLabel(obj) or ""
-        if not label and override:
+        if not label:
             label = self._script.utilities.displayedLabel(AXObject.get_parent(obj)) or ""
         if label:
             result.append(label.strip())
@@ -148,38 +99,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(name)
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
 
-        return result
-
-    def _generateLabelOrName(self, obj, **args):
-        """Gets the label or the name if the label is not preset."""
-
-        result = []
-        override = self.__overrideParagraph(obj, **args)
-        # Treat a paragraph which is serving as a text entry in a dialog
-        # as a text object.
-        #
-        if override:
-            result.extend(self._generateLabel(obj, **args))
-            if len(result) == 0 and AXObject.get_parent(obj):
-                parentLabel = self._generateLabel(AXObject.get_parent(obj), **args)
-                # If we aren't already focused, we will have spoken the
-                # parent as part of the speech context and do not want
-                # to repeat it.
-                #
-                alreadyFocused = args.get('alreadyFocused', False)
-                if alreadyFocused:
-                    result.extend(parentLabel)
-                # If we still don't have a label, look to the name.
-                #
-                if not parentLabel:
-                    name = AXObject.get_name(obj)
-                    if name:
-                        result.append(name)
-                if result:
-                    result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-        else:
-            result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
-                self, obj, **args))
         return result
 
     def _generateAnyTextSelection(self, obj, **args):
