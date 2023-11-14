@@ -888,10 +888,6 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if event.source != _focusManager.get_locus_of_focus() \
-           and AXUtilities.is_focused(event.source):
-            _focusManager.set_locus_of_focus(event, event.source, False)
-
         super().onTextSelectionChanged(event)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
