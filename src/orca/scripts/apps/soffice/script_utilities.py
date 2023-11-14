@@ -130,52 +130,6 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def rowHeadersForCell(self, obj):
-        rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
-        if rowHeader:
-            return [rowHeader]
-
-        return super().rowHeadersForCell(obj)
-
-    def columnHeadersForCell(self, obj):
-        rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
-        if colHeader:
-            return [colHeader]
-
-        return super().columnHeadersForCell(obj)
-
-    def getDynamicHeadersForCell(self, obj, onlyIfNew=False):
-        # TODO NEXT: MOVE THIS LOGIC OUT OF SOFFICE SO IT'S GLOBAL
-        if not (self._script.dynamicRowHeaders or self._script.dynamicColumnHeaders):
-            return None, None
-
-        table = AXTable.get_table(obj)
-        if not table:
-            return None, None
-
-        objRow, objCol = AXTable.get_cell_coordinates(obj)
-        headersRow = self._script.dynamicColumnHeaders.get(hash(table))
-        headersCol = self._script.dynamicRowHeaders.get(hash(table))
-        if headersRow == objRow or headersCol == objCol:
-            return None, None
-
-        getRowHeader = headersCol is not None
-        getColHeader = headersRow is not None
-        if onlyIfNew:
-            getRowHeader = \
-                getRowHeader and objRow != self._script.pointOfReference.get("lastRow")
-            getColHeader = \
-                getColHeader and objCol!= self._script.pointOfReference.get("lastColumn")
-
-        rowHeader, colHeader = None, None
-        if getColHeader:
-            colHeader = AXTable.get_cell_at(table, headersRow, objCol)
-
-        if getRowHeader:
-            rowHeader = AXTable.get_cell_at(table, objRow, headersCol)
-
-        return rowHeader, colHeader
-
     def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
                      ignoreDescriptions=True):
         if obj1 == obj2:

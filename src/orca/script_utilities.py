@@ -3713,16 +3713,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, AXUtilities.is_table_header)
 
-    def columnHeadersForCell(self, obj):
-        # The reason we have this utility is that the soffice script overrides it
-        # for its dynamic header support.
-        return AXTable.get_column_headers(obj)
-
-    def rowHeadersForCell(self, obj):
-        # The reason we have this utility is that the soffice script overrides it
-        # for its dynamic header support.
-        return AXTable.get_row_headers(obj)
-
     def setSizeUnknown(self, obj):
         return AXUtilities.is_indeterminate(obj)
 

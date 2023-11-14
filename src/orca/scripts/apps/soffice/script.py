@@ -73,11 +73,6 @@ class Script(default.Script):
         self.speakCellHeadersCheckButton = None
         self.speakCellSpanCheckButton = None
 
-        # Dictionaries for the calc and writer dynamic row and column headers.
-        #
-        self.dynamicColumnHeaders = {}
-        self.dynamicRowHeaders = {}
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -401,7 +396,7 @@ class Script(default.Script):
         table = AXTable.get_table(cell)
         if table:
             row = AXTable.get_cell_coordinates(cell)[0]
-            self.dynamicColumnHeaders[hash(table)] = row
+            AXTable.set_dynamic_column_headers_row(table, row)
             self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
 
         return True
@@ -413,14 +408,9 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = _focusManager.get_locus_of_focus()
-        parent = AXObject.get_parent(cell)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
-            cell = parent
-
-        table = AXTable.get_table(cell)
+        table = AXTable.get_table(_focusManager.get_locus_of_focus())
         if table:
-            self.dynamicColumnHeaders.pop(hash(table), None)
+            AXTable.clear_dynamic_column_headers_row(table)
             msg = messages.DYNAMIC_COLUMN_HEADER_CLEARED
         else:
             msg = messages.TABLE_NOT_IN_A
@@ -450,7 +440,7 @@ class Script(default.Script):
         table = AXTable.get_table(cell)
         if table:
             column = AXTable.get_cell_coordinates(cell)[1]
-            self.dynamicRowHeaders[hash(table)] = column
+            AXTable.set_dynamic_row_headers_column(table, column)
             self.presentMessage(
                 messages.DYNAMIC_ROW_HEADER_SET % self.utilities.columnConvert(column + 1))
 
@@ -463,14 +453,9 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        cell = _focusManager.get_locus_of_focus()
-        parent = AXObject.get_parent(cell)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
-            cell = parent
-
-        table = AXTable.get_table(cell)
+        table = AXTable.get_table(_focusManager.get_locus_of_focus())
         if table:
-            self.dynamicColumnHeaders.pop(hash(table), None)
+            AXTable.clear_dynamic_row_headers_column(table)
             msg = messages.DYNAMIC_ROW_HEADER_CLEARED
         else:
             msg = messages.TABLE_NOT_IN_A

@@ -53,44 +53,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generateRoleName(obj, **args)
 
-    def _generateRowHeader(self, obj, **args):
-        """Returns an array of strings that represent the row header for an
-        object that is in a table, if it exists.  Otherwise, an empty
-        array is returned. Overridden here so that we can get the
-        dynamic row header(s).
-        """
-
-        newOnly = args.get('newOnly', False)
-        rowHeader, columnHeader = \
-            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
-        if not rowHeader:
-            return []
-
-        text = self._script.utilities.displayedText(rowHeader)
-        if text:
-            return [text]
-
-        return []
-
-    def _generateColumnHeader(self, obj, **args):
-        """Returns an array of strings that represent the column header for an
-        object that is in a table, if it exists.  Otherwise, an empty
-        array is returned. Overridden here so that we can get the
-        dynamic column header(s).
-        """
-
-        newOnly = args.get('newOnly', False)
-        rowHeader, columnHeader = \
-            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
-        if not columnHeader:
-            return []
-
-        text = self._script.utilities.displayedText(columnHeader)
-        if text:
-            return [text]
-
-        return []
-
     def _generateRealTableCell(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRealTableCell(obj, **args)

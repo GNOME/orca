@@ -239,11 +239,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateCurrentLineText(self, obj, **args):
-        if self._script.utilities.isTextDocumentCell(AXObject.get_parent(obj)):
-            priorObj = args.get('priorObj', None)
-            if priorObj and AXObject.get_parent(priorObj) != AXObject.get_parent(obj):
-                return []
-
         if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
             if entry:
@@ -276,53 +271,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif role == Atspi.Role.TOGGLE_BUTTON:
             result.extend(speech_generator.SpeechGenerator._generateToggleState(
                 self, obj, **args))
-        return result
-
-    def _generateRowHeader(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the row header for an object
-        that is in a table, if it exists.  Otherwise, an empty array
-        is returned. Overridden here so that we can get the dynamic
-        row header(s).
-        """
-
-        if self._script.utilities.shouldReadFullRow(obj):
-            return []
-
-        newOnly = args.get('newOnly', False)
-        rowHeader, columnHeader = \
-            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
-        if not rowHeader:
-            return super()._generateRowHeader(obj, **args)
-
-        result = []
-        text = self._script.utilities.displayedText(rowHeader)
-        if text:
-            result.append(text)
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-
-        return result
-
-    def _generateColumnHeader(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the column header for an object
-        that is in a table, if it exists.  Otherwise, an empty array
-        is returned. Overridden here so that we can get the dynamic
-        column header(s).
-        """
-
-        newOnly = args.get('newOnly', False)
-        rowHeader, columnHeader = \
-            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
-        if not columnHeader:
-            return super()._generateColumnHeader(obj, **args)
-
-        result = []
-        text = self._script.utilities.displayedText(columnHeader)
-        if text:
-            result.append(text)
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-
         return result
 
     def _generateTooLong(self, obj, **args):

@@ -51,6 +51,7 @@ from .ax_utilities import AXUtilities
 class AXTable:
     """Utilities for obtaining information about accessible tables."""
 
+    # Things we cache.
     CAPTIONS = {}
     PHYSICAL_COORDINATES_FROM_CELL = {}
     PHYSICAL_COORDINATES_FROM_TABLE = {}
@@ -65,6 +66,10 @@ class AXTable:
     PRESENTABLE_ROW_COUNT = {}
     COLUMN_HEADERS_FOR_CELL = {}
     ROW_HEADERS_FOR_CELL = {}
+
+    # Things which have to be explicitly cleared.
+    DYNAMIC_COLUMN_HEADERS_ROW = {}
+    DYNAMIC_ROW_HEADERS_COLUMN = {}
 
     _lock = threading.Lock()
 
@@ -562,6 +567,10 @@ class AXTable:
     def get_row_headers(cell):
         """Returns the row headers for cell, doing extra work to ensure we have them all."""
 
+        dynamic_header = AXTable.get_dynamic_row_header(cell)
+        if dynamic_header is not None:
+            return [dynamic_header]
+
         # Firefox has the following implementation:
         #   1. Only gives us the innermost/closest header for a cell
         #   2. Supports returning the header of a header
@@ -631,6 +640,10 @@ class AXTable:
     @staticmethod
     def get_column_headers(cell):
         """Returns the column headers for cell, doing extra work to ensure we have them all."""
+
+        dynamic_header = AXTable.get_dynamic_column_header(cell)
+        if dynamic_header is not None:
+            return [dynamic_header]
 
         # Firefox has the following implementation:
         #   1. Only gives us the innermost/closest header for a cell
@@ -1026,6 +1039,66 @@ class AXTable:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES_LABELS[hash(cell)] = result
         return result
+
+    @staticmethod
+    def get_dynamic_row_header(cell):
+        """Returns the user-set row header for cell."""
+
+        table = AXTable.get_table(cell)
+        headers_column = AXTable.DYNAMIC_ROW_HEADERS_COLUMN.get(hash(table))
+        if headers_column is None:
+            return None
+
+        cell_row, cell_column = AXTable.get_cell_coordinates(cell)
+        if cell_column == headers_column:
+            return None
+
+        return AXTable.get_cell_at(table, cell_row, headers_column)
+
+    @staticmethod
+    def get_dynamic_column_header(cell):
+        """Returns the user-set column header for cell."""
+
+        table = AXTable.get_table(cell)
+        headers_row = AXTable.DYNAMIC_COLUMN_HEADERS_ROW.get(hash(table))
+        if headers_row is None:
+            return None
+
+        cell_row, cell_column = AXTable.get_cell_coordinates(cell)
+        if cell_row == headers_row:
+            return None
+
+        return AXTable.get_cell_at(table, headers_row, cell_column)
+
+    @staticmethod
+    def set_dynamic_row_headers_column(table, column):
+        """Sets the dynamic row headers column of table to column."""
+
+        AXTable.DYNAMIC_ROW_HEADERS_COLUMN[hash(table)] = column
+
+    @staticmethod
+    def set_dynamic_column_headers_row(table, row):
+        """Sets the dynamic column headers row of table to row."""
+
+        AXTable.DYNAMIC_COLUMN_HEADERS_ROW[hash(table)] = row
+
+    @staticmethod
+    def clear_dynamic_row_headers_column(table):
+        """Clears the dynamic row headers column of table."""
+
+        if hash(table) not in AXTable.DYNAMIC_ROW_HEADERS_COLUMN:
+            return
+
+        AXTable.DYNAMIC_ROW_HEADERS_COLUMN.pop(hash(table))
+
+    @staticmethod
+    def clear_dynamic_column_headers_row(table):
+        """Clears the dynamic column headers row of table."""
+
+        if hash(table) not in AXTable.DYNAMIC_COLUMN_HEADERS_ROW:
+            return
+
+        AXTable.DYNAMIC_COLUMN_HEADERS_ROW.pop(hash(table))
 
 
 AXTable.start_cache_clearing_thread()
