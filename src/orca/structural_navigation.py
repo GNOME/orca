@@ -2133,8 +2133,6 @@ class StructuralNavigation:
 
         [obj, characterOffset] = self._getCaretPosition(cell)
         obj, characterOffset = self._setCaretPosition(obj, characterOffset)
-        self._script.updateBraille(obj)
-
         self._presentObject(cell, 0, priorObj=prevCell)
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)
