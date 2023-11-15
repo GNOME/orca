@@ -29,11 +29,11 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from . import braille
 from . import debug
 from . import script_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .braille import setBrlapiPriority, BRLAPI_PRIORITY_HIGH
 
 CARET_TRACKING = "caret-tracking"
 FOCUS_TRACKING = "focus-tracking"
@@ -122,9 +122,9 @@ class FocusManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
             if mode == FLAT_REVIEW:
-                setBrlapiPriority(BRLAPI_PRIORITY_HIGH)
+                braille.setBrlapiPriority(braille.BRLAPI_PRIORITY_HIGH)
             else:
-                setBrlapiPriority()
+                braille.setBrlapiPriority()
 
         try:
             tokens = ["FOCUS MANAGER: Region of interest:", obj, "(", start_offset, ")", end_offset]
