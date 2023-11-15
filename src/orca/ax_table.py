@@ -432,6 +432,7 @@ class AXTable:
             return -1, -1
 
         # Cells in a tree are expected to not span multiple rows or columns.
+        # Also this: https://bugreports.qt.io/browse/QTBUG-119167
         if AXUtilities.is_tree(table):
             return 1, 1
 
