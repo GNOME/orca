@@ -976,15 +976,15 @@ class AXTable:
     def is_end_of_row(cell):
         """Returns True if this is the last cell in its row."""
 
-        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
-        if row < 0:
+        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
+        if col < 0:
             return False
 
         table = AXTable.get_table(cell)
         if table is None:
             return False
 
-        return row + 1 == AXTable.get_row_count(table, prefer_attribute=False)
+        return col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
 
     @staticmethod
     def is_top_of_column(cell):
@@ -997,15 +997,15 @@ class AXTable:
     def is_bottom_of_column(cell):
         """Returns True if this is the last cell in its column."""
 
-        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-        if col < 0:
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        if row < 0:
             return False
 
         table = AXTable.get_table(cell)
         if table is None:
             return False
 
-        return col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
+        return row + 1 == AXTable.get_row_count(table, prefer_attribute=False)
 
     @staticmethod
     def is_layout_table(table):
