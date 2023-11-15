@@ -937,6 +937,38 @@ class AXTable:
         return AXTable.get_cell_at(AXTable.get_table(cell), row, col)
 
     @staticmethod
+    def get_start_of_row(cell):
+        """Returns the cell at the start of cell's row."""
+
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        return AXTable.get_cell_at(AXTable.get_table(cell), row, 0)
+
+    @staticmethod
+    def get_end_of_row(cell):
+        """Returns the cell at the end of cell's row."""
+
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        table = AXTable.get_table(cell)
+        col = AXTable.get_column_count(table) - 1
+        return AXTable.get_cell_at(AXTable.get_table(cell), row, col)
+
+    @staticmethod
+    def get_top_of_column(cell):
+        """Returns the cell at the top of cell's column."""
+
+        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
+        return AXTable.get_cell_at(AXTable.get_table(cell), 0, col)
+
+    @staticmethod
+    def get_bottom_of_column(cell):
+        """Returns the cell at the bottom of cell's column."""
+
+        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
+        table = AXTable.get_table(cell)
+        row = AXTable.get_row_count(table) - 1
+        return AXTable.get_cell_at(AXTable.get_table(cell), row, col)
+
+    @staticmethod
     def get_cell_formula(cell):
         """Returns the formula associated with this cell."""
 
