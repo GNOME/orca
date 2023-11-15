@@ -572,6 +572,8 @@ formatting = {
 
     'braille': {
         'prefix': {
+# TODO - JD: Figure out why we are globally getting table and radio button group properties.
+#
 #            'focused':   'ancestors\
 #                         + (rowHeader and [Region(" " + asString(rowHeader))])\
 #                         + (columnHeader and [Region(" " + asString(columnHeader))])\

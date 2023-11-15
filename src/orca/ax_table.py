@@ -567,6 +567,9 @@ class AXTable:
     def get_row_headers(cell):
         """Returns the row headers for cell, doing extra work to ensure we have them all."""
 
+        if not AXUtilities.is_table_cell(cell):
+            return []
+
         dynamic_header = AXTable.get_dynamic_row_header(cell)
         if dynamic_header is not None:
             return [dynamic_header]
@@ -640,6 +643,9 @@ class AXTable:
     @staticmethod
     def get_column_headers(cell):
         """Returns the column headers for cell, doing extra work to ensure we have them all."""
+
+        if not AXUtilities.is_table_cell(cell):
+            return []
 
         dynamic_header = AXTable.get_dynamic_column_header(cell)
         if dynamic_header is not None:
