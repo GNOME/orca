@@ -1079,11 +1079,11 @@ class Utilities:
             lastRow = AXTable.get_cell_coordinates(prevCell)[0]
         return row != lastRow
 
-    def shouldReadFullRow(self, obj):
+    def shouldReadFullRow(self, obj, prevObj=None):
         if self._script.inSayAll():
             return False
 
-        if not self.cellRowChanged(obj):
+        if not self.cellRowChanged(obj, prevObj):
             return False
 
         table = AXTable.get_table(obj)

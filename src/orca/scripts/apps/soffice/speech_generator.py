@@ -270,7 +270,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 or self._script.utilities.spreadSheetCellName(obj)
             result.append(label)
 
-        if self._script.utilities.shouldReadFullRow(obj):
+        if self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
             if self._script.utilities.cellRowChanged(obj):
                 return result
 
@@ -291,7 +291,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.shouldReadFullRow(obj):
+        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
             return self._generateRealTableCell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):

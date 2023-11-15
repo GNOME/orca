@@ -759,7 +759,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateTableCellRow(obj, **args)
 
-        if not self._script.utilities.shouldReadFullRow(obj):
+        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
             return self._generateRealTableCell(obj, **args)
 
         row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)

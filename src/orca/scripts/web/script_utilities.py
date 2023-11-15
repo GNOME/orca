@@ -2910,11 +2910,11 @@ class Utilities(script_utilities.Utilities):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('rowcount') == '-1' or attrs.get('colcount') == '-1'
 
-    def shouldReadFullRow(self, obj):
+    def shouldReadFullRow(self, obj, prevObj=None):
         if not (obj and self.inDocumentContent(obj)):
-            return super().shouldReadFullRow(obj)
+            return super().shouldReadFullRow(obj, prevObj)
 
-        if not super().shouldReadFullRow(obj):
+        if not super().shouldReadFullRow(obj, prevObj):
             return False
 
         if self.isGridDescendant(obj):

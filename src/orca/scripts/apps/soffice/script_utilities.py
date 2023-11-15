@@ -486,7 +486,7 @@ class Utilities(script_utilities.Utilities):
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         return self.getWordAtOffset(obj, offset)
 
-    def shouldReadFullRow(self, obj):
+    def shouldReadFullRow(self, obj, prevObj=None):
         if self._script._lastCommandWasStructNav:
             return False
 
@@ -494,7 +494,7 @@ class Utilities(script_utilities.Utilities):
         if lastKey in ["Tab", "ISO_Left_Tab"]:
             return False
 
-        return super().shouldReadFullRow(obj)
+        return super().shouldReadFullRow(obj, prevObj)
 
     def presentEventFromNonShowingObject(self, event):
         return self.inDocumentContent(event.source)

@@ -83,7 +83,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE)
 
     def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.shouldReadFullRow(obj):
+        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
             return self._generateRealTableCell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):

@@ -1005,7 +1005,7 @@ class Generator:
         presentAll = args.get('readingRow') is True \
             or args.get('formatType') == 'detailedWhereAmI' \
             or self._mode == 'braille' \
-            or self._script.utilities.shouldReadFullRow(obj)
+            or self._script.utilities.shouldReadFullRow(obj, args.get('priorObj'))
 
         if not presentAll:
             return self._generateRealTableCell(obj, **args)
