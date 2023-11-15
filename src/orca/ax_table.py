@@ -379,7 +379,7 @@ class AXTable:
         """Returns the row and column spans."""
 
         if not AXUtilities.is_table_cell_or_header(cell):
-            return []
+            return -1, -1
 
         if AXObject.supports_table_cell(cell):
             row_span, col_span = AXTable._get_cell_spans_from_table_cell(cell)
