@@ -969,8 +969,8 @@ class AXTable:
     def is_start_of_row(cell):
         """Returns True if this is the first cell in its row."""
 
-        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
-        return row == 0
+        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
+        return col == 0
 
     @staticmethod
     def is_end_of_row(cell):
@@ -990,8 +990,8 @@ class AXTable:
     def is_top_of_column(cell):
         """Returns True if this is the first cell in its column."""
 
-        col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-        return col == 0
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        return row == 0
 
     @staticmethod
     def is_bottom_of_column(cell):
