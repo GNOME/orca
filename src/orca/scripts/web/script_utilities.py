@@ -366,16 +366,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXUtilities.is_focusable(obj)
 
-    def grabFocus(self, obj):
-        try:
-            obj.queryComponent().grabFocus()
-        except NotImplementedError:
-            tokens = ["WEB:", obj, "does not implement the component interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        except Exception:
-            tokens = ["WEB: Exception grabbing focus on", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
     def setCaretPosition(self, obj, offset, documentFrame=None):
         if self._script.flatReviewPresenter.is_active():
             self._script.flatReviewPresenter.quit()

@@ -412,6 +412,19 @@ class Utilities:
 
         return False
 
+    def grabFocus(self, obj):
+        try:
+            obj.queryComponent().grabFocus()
+        except NotImplementedError:
+            tokens = ["ERROR:", obj, "does not implement the component interface"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        except Exception as error:
+            tokens = ["ERROR: Exception grabbing focus on", obj, error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+    def grabFocusWhenSettingCaret(self, obj):
+        return AXUtilities.is_focusable(obj)
+
     def grabFocusBeforeRouting(self, obj, offset):
         """Whether or not we should perform a grabFocus before routing
         the cursor via the braille cursor routing keys.
