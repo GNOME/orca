@@ -484,11 +484,14 @@ class AXTable:
         except Exception as error:
             msg = f"AXTable: Exception in _get_column_headers_from_table: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return None
+            return []
 
         tokens = [f"AXTable: Table iface header for column {column} of", table, "is", header]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return [header]
+        if header is not None:
+            return [header]
+
+        return []
 
     @staticmethod
     def _get_column_headers_from_table_cell(cell):
@@ -520,11 +523,14 @@ class AXTable:
         except Exception as error:
             msg = f"AXTable: Exception in _get_row_headers_from_table: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return None
+            return []
 
         tokens = [f"AXTable: Table iface header for row {row} of", table, "is", header]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return [header]
+        if header is not None:
+            return [header]
+
+        return []
 
     @staticmethod
     def _get_row_headers_from_table_cell(cell):
@@ -727,6 +733,9 @@ class AXTable:
         if not AXUtilities.is_table_cell_or_header(cell) and find_cell:
             cell = AXObject.find_ancestor(cell, AXUtilities.is_table_cell_or_header)
 
+        if not AXUtilities.is_table_cell_or_header(cell):
+            return -1, -1
+
         if AXObject.supports_table_cell(cell):
             row, col = AXTable._get_cell_coordinates_from_table_cell(cell)
         else:
@@ -770,6 +779,9 @@ class AXTable:
 
         tokens = ["AXTable: Table iface coords for", cell, f"are row: {row}, col: {column}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if row < 0 or column < 0:
+            return -1, -1
+
         AXTable.PHYSICAL_COORDINATES_FROM_TABLE[hash(cell)] = row, column
         return row, column
 

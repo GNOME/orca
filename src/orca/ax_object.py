@@ -121,7 +121,7 @@ class AXObject:
 
         if current_status:
             tokens = ["AXObject: Removing", obj, "from known-dead objects"]
-            debug.printTokens(debug.LEVEL_INFO, msg, tokens, True)
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
     def handle_error(obj, error, msg):
