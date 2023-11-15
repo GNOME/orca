@@ -428,6 +428,13 @@ class AXTable:
         if table is None:
             return -1, -1
 
+        if not AXObject.supports_table(table):
+            return -1, -1
+
+        # Cells in a tree are expected to not span multiple rows or columns.
+        if AXUtilities.is_tree(table):
+            return 1, 1
+
         try:
             result = Atspi.Table.get_row_column_extents_at_index(table, index)
         except Exception as error:
