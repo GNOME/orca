@@ -58,4 +58,4 @@ HELP_FILES = \
 	preferences_text_attributes.page \
 	preferences_voice.page
 
-HELP_LINGUAS = bg cs da de el es fa fr gl hu id pt_BR ru sl sv uk
+HELP_LINGUAS = bg cs da de el es eu fa fr gl hu id pt_BR ru sl sv uk
