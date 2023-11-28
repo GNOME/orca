@@ -137,6 +137,12 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
+        focus = focus_manager.getManager().get_locus_of_focus()
+        if AXObject.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
+            msg = "GTK: Ignoring focus change on ancestor of still-focused locusOfFocus"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         super().onFocusedChanged(event)
 
     def onSelectedChanged(self, event):
