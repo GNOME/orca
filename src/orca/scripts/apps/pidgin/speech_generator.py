@@ -24,37 +24,13 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.speech_generator as speech_generator
-from orca.ax_object import AXObject
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateExpandableState(self, obj, **args):
-        # TODO - JD: Is this still true?
-        # The Pidgin buddy list consists of two columns. The
-        # column which is set as the expander column and which
-        # also contains the node relationship is hidden.  Hidden
-        # columns are not included among a table's columns.  The
-        # hidden object of interest seems to always immediately
-        # precede the visible object.
-        if self._script.chat.isInBuddyList(obj):
-            expanderCell = AXObject.get_previous_sibling(obj)
-            if expanderCell:
-                return super()._generateExpandableState(expanderCell, **args)
-
-        return super()._generateExpandableState(obj, **args)
+        cell = self._script.utilities.getExpanderCellFor(obj) or obj
+        return super()._generateExpandableState(cell, **args)
 
     def _generateNumberOfChildren(self, obj, **args):
-        if self._script.chat.isInBuddyList(obj):
-            # TODO - JD: Is this still true?
-            # The Pidgin buddy list consists of two columns. The
-            # column which is set as the expander column and which
-            # also contains the node relationship is hidden.  Hidden
-            # columns are not included among a table's columns.  The
-            # hidden object of interest seems to always immediately
-            # precede the visible object.
-            #
-            expanderCell = AXObject.get_previous_sibling(obj)
-            if expanderCell:
-                return super()._generateNumberOfChildren(expanderCell, **args)
-
-        return super()._generateNumberOfChildren(obj, **args)
+        cell = self._script.utilities.getExpanderCellFor(obj) or obj
+        return super()._generateNumberOfChildren(cell, **args)

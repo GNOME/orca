@@ -40,6 +40,26 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(gtk.Utilities):
 
+    def getExpanderCellFor(self, obj):
+        if not self._script.chat.isInBuddyList(obj):
+            return None
+
+        if AXUtilities.is_expandable(obj):
+            return obj
+
+        if not AXUtilities.is_table_cell(obj):
+            return None
+
+        parent = AXObject.get_parent(obj)
+        if AXUtilities.is_table_cell(parent):
+            obj = parent
+
+        candidate = AXObject.get_previous_sibling(obj)
+        if AXUtilities.is_expandable(candidate):
+            return candidate
+
+        return None
+
     def childNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
         to this expanded table cell. Overridden here because the object
