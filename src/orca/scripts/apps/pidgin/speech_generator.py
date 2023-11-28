@@ -26,48 +26,26 @@ __license__   = "LGPL"
 import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
 
-########################################################################
-#                                                                      #
-# Custom SpeechGenerator                                               #
-#                                                                      #
-########################################################################
-
 class SpeechGenerator(speech_generator.SpeechGenerator):
-    """Overrides _generateExpandableState so that we can provide access
-    to the expanded/collapsed state and node count for the buddy list.
-    """
-
-    def __init__(self, script):
-        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _generateExpandableState(self, obj, **args):
-        result = []
+        # TODO - JD: Is this still true?
+        # The Pidgin buddy list consists of two columns. The
+        # column which is set as the expander column and which
+        # also contains the node relationship is hidden.  Hidden
+        # columns are not included among a table's columns.  The
+        # hidden object of interest seems to always immediately
+        # precede the visible object.
         if self._script.chat.isInBuddyList(obj):
-            # The Pidgin buddy list consists of two columns. The
-            # column which is set as the expander column and which
-            # also contains the node relationship is hidden.  Hidden
-            # columns are not included among a table's columns.  The
-            # hidden object of interest seems to always immediately
-            # precede the visible object.
-            #
             expanderCell = AXObject.get_previous_sibling(obj)
             if expanderCell:
-                result.extend(
-                    speech_generator.SpeechGenerator._generateExpandableState(
-                        self, expanderCell, **args))
-            else:
-                result.extend(
-                    speech_generator.SpeechGenerator._generateExpandableState(
-                        self, obj, **args))
-        else:
-            result.extend(
-                speech_generator.SpeechGenerator._generateExpandableState(
-                    self, obj, **args))
-        return result
+                return super()._generateExpandableState(expanderCell, **args)
+
+        return super()._generateExpandableState(obj, **args)
 
     def _generateNumberOfChildren(self, obj, **args):
-        result = []
         if self._script.chat.isInBuddyList(obj):
+            # TODO - JD: Is this still true?
             # The Pidgin buddy list consists of two columns. The
             # column which is set as the expander column and which
             # also contains the node relationship is hidden.  Hidden
@@ -77,15 +55,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             #
             expanderCell = AXObject.get_previous_sibling(obj)
             if expanderCell:
-                result.extend(
-                    speech_generator.SpeechGenerator._generateNumberOfChildren(
-                        self, expanderCell, **args))
-            else:
-                result.extend(
-                    speech_generator.SpeechGenerator._generateNumberOfChildren(
-                        self, obj, **args))
-        else:
-            result.extend(
-                speech_generator.SpeechGenerator._generateNumberOfChildren(
-                    self, obj, **args))
-        return result
+                return super()._generateNumberOfChildren(expanderCell, **args)
+
+        return super()._generateNumberOfChildren(obj, **args)

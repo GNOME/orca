@@ -28,7 +28,7 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.focus_manager as focus_manager
-import orca.scripts.toolkits.GAIL as GAIL
+import orca.scripts.toolkits.gtk as gtk
 from orca.ax_utilities import AXUtilities
 
 ########################################################################
@@ -36,11 +36,11 @@ from orca.ax_utilities import AXUtilities
 # The Eclipse script class.                                            #
 #                                                                      #
 ########################################################################
-class Script(GAIL.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""
-        GAIL.Script.__init__(self, app)
+        super().__init__(app)
         self.movementKeys = ["Up", "Down", "Left", "Right", "Page_Up",
                    "Page_Down", "Home", "End"]
 
@@ -51,7 +51,7 @@ class Script(GAIL.Script):
 
         # Let the default script's normal behavior do its thing
         #
-        GAIL.Script._presentTextAtNewCaretPosition(self, event, otherObj)
+        super()._presentTextAtNewCaretPosition(event, otherObj)
 
         # check if the obj was spoken in the default script
         lastKey, mods = self.utilities.lastKeyAndModifiers()
@@ -113,7 +113,7 @@ class Script(GAIL.Script):
                 # if not discarded, orca will speak all the text of the file.
                 return
             # Let the default script's normal behavior do its thing
-            GAIL.Script.onTextInserted(self, event)
+            super().onTextInserted(event)
             self._saveLastTextPosition(event.source)
 
     def onTextDeleted(self, event):
@@ -127,7 +127,7 @@ class Script(GAIL.Script):
 
         # Let the default script's normal behavior do its thing
         #
-        GAIL.Script.onTextDeleted(self, event)
+        super().onTextDeleted(event)
         self._saveLastTextPosition(event.source)
 
     def _saveLastTextPosition(self, obj):
@@ -142,5 +142,5 @@ class Script(GAIL.Script):
         if not (AXUtilities.is_focused(event.source) or AXUtilities.is_menu_bar(event.source)):
             return
 
-        GAIL.Script.onSelectionChanged(self, event)
+        super().onSelectionChanged(event)
 

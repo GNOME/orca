@@ -33,33 +33,12 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 import orca.debug as debug
-import orca.script_utilities as script_utilities
+import orca.scripts.toolkits.gtk as gtk
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
-
-class Utilities(script_utilities.Utilities):
-
-    def __init__(self, script):
-        """Creates an instance of the Utilities class.
-
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
-
-        script_utilities.Utilities.__init__(self, script)
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for finding, identifying, and comparing accessibles         #
-    #                                                                       #
-    #########################################################################
+class Utilities(gtk.Utilities):
 
     def childNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
@@ -74,7 +53,7 @@ class Utilities(script_utilities.Utilities):
         """
 
         if not self._script.chat.isInBuddyList(obj):
-            return script_utilities.Utilities.childNodes(self, obj)
+            return super().childNodes(obj)
 
         if not AXUtilities.is_expanded(obj):
             return []
@@ -121,7 +100,7 @@ class Utilities(script_utilities.Utilities):
             return -1
 
         if not self._script.chat.isInBuddyList(obj):
-            return script_utilities.Utilities.nodeLevel(self, obj)
+            return super().nodeLevel(obj)
 
         obj = AXObject.get_previous_sibling(obj)
         parent = AXTable.get_table(obj)
@@ -150,20 +129,6 @@ class Utilities(script_utilities.Utilities):
                 done = True
 
         return len(nodes) - 1
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
-
-
-
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################
 
     def isZombie(self, obj):
         if not super().isZombie(obj):

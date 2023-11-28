@@ -31,10 +31,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.scripts.toolkits.GAIL as GAIL
+import orca.scripts.toolkits.gtk as gtk
 from .chat import Chat
 
-class Script(GAIL.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""

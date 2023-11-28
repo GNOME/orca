@@ -58,7 +58,7 @@ class ScriptManager:
              'pluma': 'gedit',
             }
         self._toolkitNames = \
-            {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk'}
+            {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk', 'GAIL': 'gtk'}
 
         self._activeScript = None
         self._active = False

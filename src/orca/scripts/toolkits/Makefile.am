@@ -1,4 +1,4 @@
-SUBDIRS = Chromium GAIL Gecko J2SE-access-bridge Qt WebKitGtk clutter gtk
+SUBDIRS = Chromium Gecko J2SE-access-bridge Qt WebKitGtk clutter gtk
 
 orca_python_PYTHON = \
 	__init__.py \

@@ -18,10 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""The default Script for presenting information to the user using
-both speech and Braille.  This is based primarily on the de-facto
-standard implementation of the AT-SPI, which is the GAIL support
-for GTK."""
+"""The default Script for presenting information to the user."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
