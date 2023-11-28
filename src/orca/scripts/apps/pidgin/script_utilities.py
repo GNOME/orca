@@ -105,7 +105,7 @@ class Utilities(gtk.Utilities):
         obj = AXObject.get_previous_sibling(obj)
         parent = AXTable.get_table(obj)
         if parent is None:
-            return []
+            return -1
 
         nodes = []
         node = obj
