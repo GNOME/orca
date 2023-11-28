@@ -49,9 +49,6 @@ from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 ###########################################################################
 #                                                                         #
 # StructuralNavigationObject                                              #
@@ -789,7 +786,8 @@ class StructuralNavigation:
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
 
-        modalDialog = self._script.utilities.getModalDialog(_focusManager.get_locus_of_focus())
+        modalDialog = self._script.utilities.getModalDialog(
+            focus_manager.getManager().get_locus_of_focus())
         inModalDialog = bool(modalDialog)
         if self._inModalDialog != inModalDialog:
             msg = (
@@ -1154,7 +1152,7 @@ class StructuralNavigation:
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
-           and _settingsManager.getSetting('structNavInSayAll'):
+           and settings_manager.getManager().getSetting('structNavInSayAll'):
             self._script.sayAll(obj, offset)
             return True
 

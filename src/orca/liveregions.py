@@ -18,9 +18,6 @@ from . import settings_manager
 from .ax_collection import AXCollection
 from .ax_object import AXObject
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 # define 'live' property types
 LIVE_OFF       = -1
 LIVE_NONE      = 0
@@ -284,11 +281,11 @@ class LiveRegionManager:
     def advancePoliteness(self, script, inputEvent):
         """Advance the politeness level of the given object"""
 
-        if not _settingsManager.getSetting('inferLiveRegions'):
+        if not settings_manager.getManager().getSetting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
-        obj = _focusManager.get_locus_of_focus()
+        obj = focus_manager.getManager().get_locus_of_focus()
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
@@ -327,7 +324,7 @@ class LiveRegionManager:
         """Speak the given number cached message"""
 
         msgnum = int(inputEvent.event_string[1:])
-        if not _settingsManager.getSetting('inferLiveRegions'):
+        if not settings_manager.getManager().getSetting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
@@ -340,7 +337,7 @@ class LiveRegionManager:
         """User toggle to set all live regions to LIVE_OFF or back to their
         original politeness."""
 
-        if not _settingsManager.getSetting('inferLiveRegions'):
+        if not settings_manager.getManager().getSetting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
@@ -575,10 +572,10 @@ class LiveRegionManager:
             obj = AXObject.get_parent(obj)
 
     def toggleMonitoring(self, script, inputEvent):
-        if not _settingsManager.getSetting('inferLiveRegions'):
-            _settingsManager.setSetting('inferLiveRegions', True)
+        if not settings_manager.getManager().getSetting('inferLiveRegions'):
+            settings_manager.getManager().setSetting('inferLiveRegions', True)
             self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
         else:
-            _settingsManager.setSetting('inferLiveRegions', False)
+            settings_manager.getManager().setSetting('inferLiveRegions', False)
             self.flushMessages()
             self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)

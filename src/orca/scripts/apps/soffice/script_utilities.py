@@ -42,8 +42,6 @@ from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-
 #############################################################################
 #                                                                           #
 # Utilities                                                                 #
@@ -165,7 +163,7 @@ class Utilities(script_utilities.Utilities):
             return super().isLayoutOnly(obj)
 
         if AXUtilities.is_frame(obj):
-            return name == AXObject.get_name(_focusManager.get_active_window())
+            return name == AXObject.get_name(focus_manager.getManager().get_active_window())
 
         if AXUtilities.is_panel(obj) and AXObject.get_child_count(obj):
             if AXObject.get_name(AXObject.get_child(obj, 0)) == name:
@@ -215,7 +213,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if not obj:
             return False
 
@@ -236,7 +234,7 @@ class Utilities(script_utilities.Utilities):
         """Attempts to locate the Impress drawing view, which is the
         area in which slide editing occurs."""
 
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if not obj:
             return None
 
@@ -254,7 +252,7 @@ class Utilities(script_utilities.Utilities):
     def isInImpress(self, obj=None):
         """Returns True if obj is in OOo Impress."""
 
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if obj is None:
             return False
 
@@ -435,7 +433,7 @@ class Utilities(script_utilities.Utilities):
 
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return self.lastInputEventWasDelete() and _focusManager.focus_is_dead()
+            return self.lastInputEventWasDelete() and focus_manager.getManager().focus_is_dead()
 
         return super().isSelectedTextDeletionEvent(event)
 
@@ -578,7 +576,7 @@ class Utilities(script_utilities.Utilities):
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
-        focusCoords = AXTable.get_cell_coordinates(_focusManager.get_locus_of_focus())
+        focusCoords = AXTable.get_cell_coordinates(focus_manager.getManager().get_locus_of_focus())
         if focusCoords in selected:
             selected.remove(focusCoords)
 

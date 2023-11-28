@@ -39,8 +39,6 @@ import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_settingsManager = settings_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # Custom SpeechGenerator                                               #
@@ -96,7 +94,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateRoleName(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -176,10 +174,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         an empty array if no mnemonic can be found.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        if not (_settingsManager.getSetting('enableMnemonicSpeaking') \
+        if not (settings_manager.getManager().getSetting('enableMnemonicSpeaking') \
                 or args.get('forceMnemonic', False)):
             return []
 
@@ -191,7 +189,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         mnemonic, shortcut, accelerator = \
             self._script.utilities.mnemonicShortcutAccelerator(obj)
         if shortcut:
-            if _settingsManager.getSetting('speechVerbosityLevel') == \
+            if settings_manager.getManager().getSetting('speechVerbosityLevel') == \
                settings.VERBOSITY_LEVEL_VERBOSE:
                 shortcut = f'Alt Shift {shortcut}'
             result = [keynames.localizeKeySequence(shortcut)]

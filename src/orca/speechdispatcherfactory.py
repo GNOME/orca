@@ -41,9 +41,6 @@ from . import script_manager
 from . import settings_manager
 from .acss import ACSS
 
-_settingsManager = settings_manager.getManager()
-_scriptManager = script_manager.getManager()
-
 try:
     import speechd
 except Exception:
@@ -282,7 +279,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(_settingsManager.getSetting('verbalizePunctuationStyle'))}\n"
+            f"{styles.get(settings_manager.getManager().getSetting('verbalizePunctuationStyle'))}\n"
             f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -323,7 +320,7 @@ class SpeechServer(speechserver.SpeechServer):
         Returns a text string with the punctuation symbols adjusted accordingly.
         """
 
-        style = _settingsManager.getSetting("verbalizePunctuationStyle")
+        style = settings_manager.getManager().getSetting("verbalizePunctuationStyle")
         if style == settings.PUNCTUATION_STYLE_NONE:
             return oldText
 
@@ -346,7 +343,7 @@ class SpeechServer(speechserver.SpeechServer):
                 charName += symbol
             newText = re.sub(symbol, charName, newText)
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is not None:
             newText = script.utilities.adjustForDigits(newText)
 
@@ -415,7 +412,7 @@ class SpeechServer(speechserver.SpeechServer):
         text = marked_text
 
         text = self.__addVerbalizedPunctuation(text)
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is not None:
             text = script.utilities.adjustForPronunciation(text)
 
@@ -641,7 +638,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._send_command(self._client.char, character)
             return
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is not None:
             name = script.utilities.adjustForPronunciation(name)
         self.speak(name, acss)

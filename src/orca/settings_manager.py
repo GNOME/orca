@@ -34,7 +34,6 @@ from gi.repository import Gio, GLib
 
 from . import debug
 from . import orca_i18n
-from . import script_manager
 from . import settings
 from . import pronunciation_dict
 from .acss import ACSS
@@ -53,7 +52,6 @@ try:
 except Exception:
     _proxy = None
 
-_scriptManager = script_manager.getManager()
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings

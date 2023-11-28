@@ -41,8 +41,6 @@ from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 from .formatting import Formatting
 
-_focusManager = focus_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # The Java script class.                                               #
@@ -128,7 +126,7 @@ class Script(default.Script):
            or AXUtilities.is_tree(event.source)) \
            and AXUtilities.is_focused(event.source):
             newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
-            _focusManager.set_locus_of_focus(event, newFocus)
+            focus_manager.getManager().set_locus_of_focus(event, newFocus)
         else:
             default.Script.onSelectionChanged(self, event)
 
@@ -145,11 +143,11 @@ class Script(default.Script):
         # fingers and hope that's true.
         if AXUtilities.is_menu_related(event.source) \
            or AXUtilities.is_menu_related(AXObject.get_parent(event.source)):
-            _focusManager.set_locus_of_focus(event, event.source)
+            focus_manager.getManager().set_locus_of_focus(event, event.source)
             return
 
         if AXUtilities.is_root_pane(event.source) \
-           and AXUtilities.is_menu_related(_focusManager.get_locus_of_focus()):
+           and AXUtilities.is_menu_related(focus_manager.getManager().get_locus_of_focus()):
             return
 
         default.Script.onFocusedChanged(self, event)
@@ -178,7 +176,7 @@ class Script(default.Script):
         # just process the single value changed event.
         #
         if AXUtilities.is_spin_button(event.source):
-            focus = _focusManager.get_locus_of_focus()
+            focus = focus_manager.getManager().get_locus_of_focus()
             parent = AXObject.get_parent(focus)
             grandparent = AXObject.get_parent(parent)
             if grandparent == event.source:

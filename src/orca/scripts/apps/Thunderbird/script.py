@@ -37,9 +37,6 @@ from orca.ax_utilities import AXUtilities
 
 from .spellcheck import SpellCheck
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # The Thunderbird script class.                                        #
@@ -61,10 +58,10 @@ class Script(Gecko.Script):
         #
         self._lastAutoComplete = ""
 
-        if _settingsManager.getSetting('sayAllOnLoad') is None:
-            _settingsManager.setSetting('sayAllOnLoad', False)
-        if _settingsManager.getSetting('pageSummaryOnLoad') is None:
-            _settingsManager.setSetting('pageSummaryOnLoad', False)
+        if settings_manager.getManager().getSetting('sayAllOnLoad') is None:
+            settings_manager.getManager().setSetting('sayAllOnLoad', False)
+        if settings_manager.getManager().getSetting('pageSummaryOnLoad') is None:
+            settings_manager.getManager().setSetting('pageSummaryOnLoad', False)
 
         super().__init__(app)
 
@@ -98,9 +95,9 @@ class Script(Gecko.Script):
         grid = super().getAppPreferencesGUI()
 
         self._sayAllOnLoadCheckButton.set_active(
-            _settingsManager.getSetting('sayAllOnLoad'))
+            settings_manager.getManager().getSetting('sayAllOnLoad'))
         self._pageSummaryOnLoadCheckButton.set_active(
-            _settingsManager.getSetting('pageSummaryOnLoad'))
+            settings_manager.getManager().getSetting('pageSummaryOnLoad'))
 
         spellcheck = self.spellcheck.getAppPreferencesGUI()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
@@ -140,26 +137,26 @@ class Script(Gecko.Script):
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
+        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
             return
 
         super().enableStickyBrowseMode(inputEvent, forceMessage)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
+        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
             return
 
         super().enableStickyFocusMode(inputEvent, forceMessage)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
         if self._inFocusMode \
-           and self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
+           and self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
             return
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
     def useStructuralNavigationModel(self, debugOutput=True, focus=None):
-        if self.utilities.isEditableMessage(_focusManager.get_locus_of_focus()):
+        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
             return False
 
         return super().useStructuralNavigationModel(debugOutput, focus)
@@ -173,7 +170,7 @@ class Script(Gecko.Script):
         self._lastAutoComplete = ""
         obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
-            _focusManager.set_locus_of_focus(event, event.source, False)
+            focus_manager.getManager().set_locus_of_focus(event, event.source, False)
             self.updateBraille(event.source)
 
         if not self.utilities.inDocumentContent(obj):
@@ -197,10 +194,10 @@ class Script(Gecko.Script):
 
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
-            focus = _focusManager.get_locus_of_focus()
+            focus = focus_manager.getManager().get_locus_of_focus()
             if AXObject.get_name(focus) \
                 and (AXUtilities.is_frame(focus) or AXUtilities.is_page_tab(focus)):
-                _focusManager.set_locus_of_focus(event, event.source, False)
+                focus_manager.getManager().set_locus_of_focus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
                 self.speakMessage(AXObject.get_name(obj))
@@ -251,7 +248,7 @@ class Script(Gecko.Script):
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source) \
            and self.utilities.topLevelObjectIsActiveWindow(event.source):
             self.presentObject(event.source)
-            _focusManager.set_locus_of_focus(event, event.source, False)
+            focus_manager.getManager().set_locus_of_focus(event, event.source, False)
             return
 
         default.Script.onShowingChanged(self, event)
@@ -349,21 +346,21 @@ class Script(Gecko.Script):
         self.utilities.setCaretPosition(obj, offset)
         self.updateBraille(obj)
 
-        if _settingsManager.getSetting('pageSummaryOnLoad'):
+        if settings_manager.getManager().getSetting('pageSummaryOnLoad'):
             tokens = ["THUNDERBIRD: Getting page summary for obj", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             summary = self.utilities.getPageSummary(obj)
             if summary:
                 self.presentMessage(summary)
 
-        if not _settingsManager.getSetting('sayAllOnLoad'):
+        if not settings_manager.getManager().getSetting('sayAllOnLoad'):
             msg = "THUNDERBIRD: SayAllOnLoad is False. Presenting line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(obj, offset)
             self.speakContents(contents)
             return
 
-        if _settingsManager.getSetting('enableSpeech'):
+        if settings_manager.getManager().getSetting('enableSpeech'):
             msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
@@ -378,7 +375,7 @@ class Script(Gecko.Script):
 
         self.spellcheck.presentErrorDetails()
         entry = self.spellcheck.getChangeToEntry()
-        _focusManager.set_locus_of_focus(None, entry, False)
+        focus_manager.getManager().set_locus_of_focus(None, entry, False)
         self.updateBraille(entry)
 
     def onWindowDeactivated(self, event):

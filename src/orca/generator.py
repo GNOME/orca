@@ -74,8 +74,6 @@ def _formatExceptionInfo(maxTBlevel=5):
 #
 METHOD_PREFIX = "_generate"
 
-_settingsManager = settings_manager.getManager()
-
 class Generator:
     """Takes accessible objects and generates a presentation for those
     objects.  See the generate method, which is the primary entry
@@ -1250,7 +1248,7 @@ class Generator:
         return []
 
     def _getProgressBarUpdateInterval(self):
-        return int(_settingsManager.getSetting('progressBarUpdateInterval'))
+        return int(settings_manager.getManager().getSetting('progressBarUpdateInterval'))
 
     def _shouldPresentProgressBarUpdate(self, obj, **args):
         percent = self._script.utilities.getValueAsPercent(obj)

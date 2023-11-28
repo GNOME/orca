@@ -43,9 +43,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
@@ -76,7 +73,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateAncestors(obj, **args)
 
-        if self._script.inSayAll() and obj == _focusManager.get_locus_of_focus():
+        if self._script.inSayAll() and obj == focus_manager.getManager().get_locus_of_focus():
             return []
 
         result = []
@@ -120,7 +117,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateAllTextSelection(self, obj, **args):
         if self._script.utilities.isZombie(obj) \
-           or obj != _focusManager.get_locus_of_focus():
+           or obj != focus_manager.getManager().get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -129,7 +126,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateAnyTextSelection(self, obj, **args):
         if self._script.utilities.isZombie(obj) \
-           or obj != _focusManager.get_locus_of_focus():
+           or obj != focus_manager.getManager().get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -137,7 +134,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateAnyTextSelection(obj, **args)
 
     def _generateHasPopup(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -162,7 +159,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateClickable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -183,7 +180,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateDescription(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -196,7 +193,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         role = args.get('role', AXObject.get_role(obj))
-        if obj != _focusManager.get_locus_of_focus():
+        if obj != focus_manager.getManager().get_locus_of_focus():
             if role in [Atspi.Role.ALERT, Atspi.Role.DIALOG]:
                 return super()._generateDescription(obj, **args)
             if not args.get('inMouseReview'):
@@ -216,7 +213,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateDescription(obj, **args)
 
     def _generateHasLongDesc(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -234,7 +231,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateHasDetails(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -255,7 +252,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateAllDetails(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         objs = self._script.utilities.detailsIn(obj)
@@ -286,7 +283,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateDetailsFor(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -441,7 +438,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateLabel(obj, **args)
 
     def _generateNewNodeLevel(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if self._script.utilities.isTextBlockElement(obj) \
@@ -451,14 +448,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateNewNodeLevel(obj, **args)
 
     def _generateLeaving(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not args.get('leaving'):
             return []
 
         if self._script.utilities.inDocumentContent(obj) \
-           and not self._script.utilities.inDocumentContent(_focusManager.get_locus_of_focus()):
+           and not self._script.utilities.inDocumentContent(
+               focus_manager.getManager().get_locus_of_focus()):
             result = ['']
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
@@ -474,8 +472,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateNumberOfChildren(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
+               == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         # We handle things even for non-document content due to issues in
@@ -531,7 +530,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return self._generateDisplayedText(rad, **args)
 
     def _generateRoleName(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -738,7 +737,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.inFocusMode():
             return result
 
-        if _settingsManager.getSetting('speakCellCoordinates'):
+        if settings_manager.getManager().getSetting('speakCellCoordinates'):
             label = AXTable.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
@@ -832,7 +831,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not result:
             if self._script.inSayAll(treatInterruptedAsIn=False) \
-               or not _settingsManager.getSetting('speakBlankLines') \
+               or not settings_manager.getManager().getSetting('speakBlankLines') \
                or args.get('formatType') == 'ancestor':
                 string = ""
             else:

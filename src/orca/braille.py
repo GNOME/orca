@@ -53,8 +53,6 @@ from .orca_platform import tablesdir
 _logger = logger.getLogger()
 log = _logger.newLog("braille")
 _monitor = None
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
 
 try:
     msg = "BRAILLE: About to import brlapi."
@@ -532,7 +530,7 @@ class Component(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script and script.utilities.grabFocusBeforeRouting(self.accessible, offset):
             try:
                 self.accessible.queryComponent().grabFocus()
@@ -606,7 +604,7 @@ class Text(Region):
         self.caretOffset = 0
         self.lineOffset = 0
         if self.accessible:
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
             if script:
                 [string, self.caretOffset, self.lineOffset] = \
                      script.getTextLineAtCaret(
@@ -664,7 +662,7 @@ class Text(Region):
         if not _regionWithFocus:
             return False
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         [string, caretOffset, lineOffset] = script.getTextLineAtCaret(self.accessible)
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
@@ -710,7 +708,7 @@ class Text(Region):
         if caretOffset < 0:
             return
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         script.utilities.setCaretOffset(self.accessible, caretOffset)
 
     def getAttributeMask(self, getLinkMask=True):
@@ -739,7 +737,7 @@ class Text(Region):
         attrIndicator = settings.textAttributesBrailleIndicator
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is None:
             msg = "BRAILLE: Cannot get attribute mask without active script."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -901,7 +899,7 @@ class ReviewText(Region):
         been scrolled off the display."""
 
         caretOffset = self.getCaretOffset(offset)
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         script.utilities.setCaretOffset(self.accessible, caretOffset)
 
 class Line:
@@ -1230,7 +1228,7 @@ def disableBraille():
         msg = "BRAILLE: BrlApi running and not idle."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if not _idleBraille() and not _settingsManager.getSetting('enableBraille'):
+        if not _idleBraille() and not settings_manager.getManager().getSetting('enableBraille'):
             # BrlAPI before 0.8 and we really want to shut down
             msg = "BRAILLE: could not go idle, completely shut down"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1242,7 +1240,7 @@ def checkBrailleSetting():
     msg = "BRAILLE: Checking braille setting."
     debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    if not _settingsManager.getSetting('enableBraille'):
+    if not settings_manager.getManager().getSetting('enableBraille'):
         disableBraille()
 
 def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=True):
@@ -1282,8 +1280,8 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         killFlash(restoreSaved=False)
 
     # TODO - JD: This should be taken care of in orca.py.
-    if not _settingsManager.getSetting('enableBraille') \
-       and not _settingsManager.getSetting('enableBrailleMonitor'):
+    if not settings_manager.getManager().getSetting('enableBraille') \
+       and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
         if _brlAPIRunning:
             msg = "BRAILLE: FIXME - Braille disabled, but not properly shut down."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1431,10 +1429,10 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
 
     submask += '\x00' * (len(substring) - len(submask))
 
-    if _settingsManager.getSetting('enableBraille'):
+    if settings_manager.getManager().getSetting('enableBraille'):
         _enableBraille()
 
-    if _settingsManager.getSetting('enableBraille') and _brlAPIRunning:
+    if settings_manager.getManager().getSetting('enableBraille') and _brlAPIRunning:
         writeStruct = brlapi.WriteStruct()
         writeStruct.regionBegin = 1
         writeStruct.regionSize = len(substring)
@@ -1781,7 +1779,7 @@ def _processBrailleEvent(event):
 
     _printBrailleEvent(debug.LEVEL_FINE, event)
 
-    script = _scriptManager.getActiveScript()
+    script = script_manager.getManager().getActiveScript()
     if script and event['command'] not in dontInteruptSpeechKeys:
         # We aren't killing flash here because we were not doing so before, when
         # this logic was in orca.py; instead, we were calling speech.stop. But that
@@ -1874,7 +1872,7 @@ def setBrlapiPriority(level=BRLAPI_PRIORITY_DEFAULT):
     global idle, brlapi_priority
 
     if not _brlAPIAvailable or not _brlAPIRunning \
-       or not _settingsManager.getSetting('enableBraille'):
+       or not settings_manager.getManager().getSetting('enableBraille'):
         return
 
     if idle:

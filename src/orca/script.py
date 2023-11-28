@@ -65,8 +65,6 @@ from . import tutorialgenerator
 from . import where_am_i_presenter
 from .ax_object import AXObject
 
-_eventManager = event_manager.getManager()
-_settingsManager = settings_manager.getManager()
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -228,7 +226,7 @@ class Script:
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script."""
         types = self.getEnabledStructuralNavigationTypes()
-        enable = _settingsManager.getSetting('structuralNavigationEnabled')
+        enable = settings_manager.getManager().getSetting('structuralNavigationEnabled')
         return structural_navigation.StructuralNavigation(self, types, enable)
 
     def getLiveRegionManager(self):
@@ -302,7 +300,7 @@ class Script:
         - script: the script.
         """
 
-        _eventManager.registerScriptListeners(self)
+        event_manager.getManager().registerScriptListeners(self)
 
     def deregisterEventListeners(self):
         """Tells the event manager to stop listening for all the event types
@@ -312,7 +310,7 @@ class Script:
         - script: the script.
         """
 
-        _eventManager.deregisterScriptListeners(self)
+        event_manager.getManager().deregisterScriptListeners(self)
 
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this
@@ -533,14 +531,9 @@ class Script:
         return consumed
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        """Called when the visual object with focus changes.
-
-        The primary purpose of this method is to present locus of focus
-        information to the user.
-
-        NOTE: scripts should not call this method directly.  Instead,
-        a script should call _focusManager.set_locus_of_focus, which will eventually
-        result in this method being called.
+        """Updates state and presents changes to the user in response to a
+        notification from the FocusManager. Do not call this method outside
+        of the FocusManager.
 
         Arguments:
         - event: if not None, the Event that caused the change

@@ -58,9 +58,6 @@ from .speech_generator import SpeechGenerator
 from .tutorial_generator import TutorialGenerator
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 
 class Script(default.Script):
 
@@ -83,12 +80,12 @@ class Script(default.Script):
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
 
-        if _settingsManager.getSetting('caretNavigationEnabled') is None:
-            _settingsManager.setSetting('caretNavigationEnabled', True)
-        if _settingsManager.getSetting('sayAllOnLoad') is None:
-            _settingsManager.setSetting('sayAllOnLoad', True)
-        if _settingsManager.getSetting('pageSummaryOnLoad') is None:
-            _settingsManager.setSetting('pageSummaryOnLoad', True)
+        if settings_manager.getManager().getSetting('caretNavigationEnabled') is None:
+            settings_manager.getManager().setSetting('caretNavigationEnabled', True)
+        if settings_manager.getManager().getSetting('sayAllOnLoad') is None:
+            settings_manager.getManager().setSetting('sayAllOnLoad', True)
+        if settings_manager.getManager().getSetting('pageSummaryOnLoad') is None:
+            settings_manager.getManager().setSetting('pageSummaryOnLoad', True)
 
         self._changedLinesOnlyCheckButton = None
         self._controlCaretNavigationCheckButton = None
@@ -178,7 +175,7 @@ class Script(default.Script):
                 self.inputEventHandlers.get("toggleLayoutModeHandler")))
 
 
-        layout = _settingsManager.getSetting('keyboardLayout')
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
         if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             key = "KP_Multiply"
         else:
@@ -340,14 +337,14 @@ class Script(default.Script):
         generalAlignment.add(generalGrid)
 
         label = guilabels.USE_CARET_NAVIGATION
-        value = _settingsManager.getSetting('caretNavigationEnabled')
+        value = settings_manager.getManager().getSetting('caretNavigationEnabled')
         self._controlCaretNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._controlCaretNavigationCheckButton.set_active(value)
         generalGrid.attach(self._controlCaretNavigationCheckButton, 0, 0, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_CARET_NAV
-        value = _settingsManager.getSetting('caretNavTriggersFocusMode')
+        value = settings_manager.getManager().getSetting('caretNavTriggersFocusMode')
         self._autoFocusModeCaretNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._autoFocusModeCaretNavCheckButton.set_active(value)
         generalGrid.attach(self._autoFocusModeCaretNavCheckButton, 0, 1, 1, 1)
@@ -360,31 +357,31 @@ class Script(default.Script):
         generalGrid.attach(self._structuralNavigationCheckButton, 0, 2, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_STRUCT_NAV
-        value = _settingsManager.getSetting('structNavTriggersFocusMode')
+        value = settings_manager.getManager().getSetting('structNavTriggersFocusMode')
         self._autoFocusModeStructNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._autoFocusModeStructNavCheckButton.set_active(value)
         generalGrid.attach(self._autoFocusModeStructNavCheckButton, 0, 3, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_NATIVE_NAV
-        value = _settingsManager.getSetting('nativeNavTriggersFocusMode')
+        value = settings_manager.getManager().getSetting('nativeNavTriggersFocusMode')
         self._autoFocusModeNativeNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._autoFocusModeNativeNavCheckButton.set_active(value)
         generalGrid.attach(self._autoFocusModeNativeNavCheckButton, 0, 4, 1, 1)
 
         label = guilabels.READ_PAGE_UPON_LOAD
-        value = _settingsManager.getSetting('sayAllOnLoad')
+        value = settings_manager.getManager().getSetting('sayAllOnLoad')
         self._sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._sayAllOnLoadCheckButton.set_active(value)
         generalGrid.attach(self._sayAllOnLoadCheckButton, 0, 5, 1, 1)
 
         label = guilabels.PAGE_SUMMARY_UPON_LOAD
-        value = _settingsManager.getSetting('pageSummaryOnLoad')
+        value = settings_manager.getManager().getSetting('pageSummaryOnLoad')
         self._pageSummaryOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._pageSummaryOnLoadCheckButton.set_active(value)
         generalGrid.attach(self._pageSummaryOnLoadCheckButton, 0, 6, 1, 1)
 
         label = guilabels.CONTENT_LAYOUT_MODE
-        value = _settingsManager.getSetting('layoutMode')
+        value = settings_manager.getManager().getSetting('layoutMode')
         self._layoutModeCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._layoutModeCheckButton.set_active(value)
         generalGrid.attach(self._layoutModeCheckButton, 0, 7, 1, 1)
@@ -403,28 +400,28 @@ class Script(default.Script):
         tableAlignment.add(tableGrid)
 
         label = guilabels.TABLE_SPEAK_CELL_COORDINATES
-        value = _settingsManager.getSetting('speakCellCoordinates')
+        value = settings_manager.getManager().getSetting('speakCellCoordinates')
         self._speakCellCoordinatesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speakCellCoordinatesCheckButton.set_active(value)
         tableGrid.attach(self._speakCellCoordinatesCheckButton, 0, 0, 1, 1)
 
         label = guilabels.TABLE_SPEAK_CELL_SPANS
-        value = _settingsManager.getSetting('speakCellSpan')
+        value = settings_manager.getManager().getSetting('speakCellSpan')
         self._speakCellSpanCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speakCellSpanCheckButton.set_active(value)
         tableGrid.attach(self._speakCellSpanCheckButton, 0, 1, 1, 1)
 
         label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
-        value = _settingsManager.getSetting('speakCellHeaders')
+        value = settings_manager.getManager().getSetting('speakCellHeaders')
         self._speakCellHeadersCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speakCellHeadersCheckButton.set_active(value)
         tableGrid.attach(self._speakCellHeadersCheckButton, 0, 2, 1, 1)
 
         label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = _settingsManager.getSetting('skipBlankCells')
+        value = settings_manager.getManager().getSetting('skipBlankCells')
         self._skipBlankCellsCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._skipBlankCellsCheckButton.set_active(value)
@@ -443,7 +440,7 @@ class Script(default.Script):
         findGrid = Gtk.Grid()
         findAlignment.add(findGrid)
 
-        verbosity = _settingsManager.getSetting('findResultsVerbosity')
+        verbosity = settings_manager.getManager().getSetting('findResultsVerbosity')
 
         label = guilabels.FIND_SPEAK_RESULTS
         value = verbosity != settings.FIND_SPEAK_NONE
@@ -468,7 +465,7 @@ class Script(default.Script):
         hgrid.attach(self._minimumFindLengthLabel, 0, 0, 1, 1)
 
         self._minimumFindLengthAdjustment = \
-            Gtk.Adjustment(_settingsManager.getSetting(
+            Gtk.Adjustment(settings_manager.getManager().getSetting(
                 'findResultsMinimumLength'), 0, 20, 1)
         self._minimumFindLengthSpinButton = Gtk.SpinButton()
         self._minimumFindLengthSpinButton.set_adjustment(
@@ -569,7 +566,7 @@ class Script(default.Script):
     def getEnabledKeyBindings(self):
         all = super().getEnabledKeyBindings()
         ret = []
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         for b in all:
             if b.handler and self.caretNavigation.handles_navigation(b.handler):
                 if self.useCaretNavigationModel(None, False, focus=focus):
@@ -605,7 +602,7 @@ class Script(default.Script):
 
         self._sayAllIsInterrupted = False
 
-        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        sayAllStyle = settings_manager.getManager().getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         if offset is None:
             obj, characterOffset = self.utilities.getCaretContext()
@@ -708,10 +705,10 @@ class Script(default.Script):
         start, end = text.getSelection(0)
         offset = max(offset, start)
         self.utilities.setCaretContext(obj, offset, documentFrame=document)
-        if end - start < _settingsManager.getSetting('findResultsMinimumLength'):
+        if end - start < settings_manager.getManager().getSetting('findResultsMinimumLength'):
             return
 
-        verbosity = _settingsManager.getSetting('findResultsVerbosity')
+        verbosity = settings_manager.getManager().getSetting('findResultsVerbosity')
         if verbosity == settings.FIND_SPEAK_NONE:
             return
 
@@ -741,7 +738,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return super().sayAll(inputEvent, obj, offset)
 
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         tokens = ["WEB: SayAll called for document content", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
@@ -751,7 +748,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent():
             return super()._rewindSayAll(context, minCharCount)
 
-        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+        if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
             return False
 
         try:
@@ -759,7 +756,7 @@ class Script(default.Script):
         except IndexError:
             return False
 
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.setCaretContext(obj, start)
 
         prevObj, prevOffset = self.utilities.findPreviousCaretInOrder(obj, start)
@@ -770,7 +767,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent():
             return super()._fastForwardSayAll(context)
 
-        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+        if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
             return False
 
         try:
@@ -778,7 +775,7 @@ class Script(default.Script):
         except IndexError:
             return False
 
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.setCaretContext(obj, end)
 
         nextObj, nextOffset = self.utilities.findNextCaretInOrder(obj, end)
@@ -799,7 +796,8 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
-                    _focusManager.emit_region_changed(context.obj, context.currentOffset)
+                    focus_manager.getManager().emit_region_changed(
+                        context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
@@ -808,8 +806,8 @@ class Script(default.Script):
             self._sayAllContexts = []
             return
 
-        _focusManager.set_locus_of_focus(None, context.obj, notify_script=False)
-        _focusManager.emit_region_changed(
+        focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
+        focus_manager.getManager().emit_region_changed(
             context.obj, context.currentOffset, context.currentEndOffset,
             focus_manager.SAY_ALL)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
@@ -847,7 +845,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not _settingsManager.getSetting('structNavTriggersFocusMode') \
+        if not settings_manager.getManager().getSetting('structNavTriggersFocusMode') \
            and self._lastCommandWasStructNav:
             msg = "WEB: Not using focus mode due to struct nav settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -856,14 +854,14 @@ class Script(default.Script):
         if prevObj and AXObject.is_dead(prevObj):
             prevObj = None
 
-        if not _settingsManager.getSetting('caretNavTriggersFocusMode') \
+        if not settings_manager.getManager().getSetting('caretNavTriggersFocusMode') \
            and self._lastCommandWasCaretNav \
            and not self.utilities.isNavigableToolTipDescendant(prevObj):
             msg = "WEB: Not using focus mode due to caret nav settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not _settingsManager.getSetting('nativeNavTriggersFocusMode') \
+        if not settings_manager.getManager().getSetting('nativeNavTriggersFocusMode') \
            and not (self._lastCommandWasStructNav or self._lastCommandWasCaretNav):
             msg = "WEB: Not changing focus/browse mode due to native nav settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1019,8 +1017,8 @@ class Script(default.Script):
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
@@ -1062,8 +1060,8 @@ class Script(default.Script):
     def displayContents(self, contents, **args):
         """Displays contents in braille."""
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
@@ -1138,7 +1136,7 @@ class Script(default.Script):
     def useCaretNavigationModel(self, keyboardEvent, debugOutput=True, focus=None):
         """Returns True if caret navigation should be used."""
 
-        if not _settingsManager.getSetting('caretNavigationEnabled'):
+        if not settings_manager.getManager().getSetting('caretNavigationEnabled'):
             if debugOutput:
                 msg = "WEB: Not using caret navigation: it's not enabled."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1286,12 +1284,12 @@ class Script(default.Script):
         self.refreshKeyGrabs("enable sticky focus mode")
 
     def toggleLayoutMode(self, inputEvent):
-        layoutMode = not _settingsManager.getSetting('layoutMode')
+        layoutMode = not settings_manager.getManager().getSetting('layoutMode')
         if layoutMode:
             self.presentMessage(messages.MODE_LAYOUT)
         else:
             self.presentMessage(messages.MODE_OBJECT)
-        _settingsManager.setSetting('layoutMode', layoutMode)
+        settings_manager.getManager().setSetting('layoutMode', layoutMode)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
         [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
@@ -1348,7 +1346,7 @@ class Script(default.Script):
         caretOffset = 0
         if self.utilities.inFindContainer(oldFocus) \
            or (self.utilities.isDocument(newFocus) \
-               and oldFocus == _focusManager.get_active_window()):
+               and oldFocus == focus_manager.getManager().get_active_window()):
             contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
             if contextObj and not self.utilities.isZombie(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
@@ -1467,7 +1465,7 @@ class Script(default.Script):
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            _focusManager.set_locus_of_focus(event, event.source)
+            focus_manager.getManager().set_locus_of_focus(event, event.source)
             return True
 
         return False
@@ -1495,7 +1493,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) \
            and not self.utilities.isOrDescendsFrom(focus, event.source):
             msg = "WEB: Ignoring: Not document and not something we're in"
@@ -1527,7 +1525,7 @@ class Script(default.Script):
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not _settingsManager.getSetting('onlySpeakDisplayedText') and shouldPresent:
+        if not settings_manager.getManager().getSetting('onlySpeakDisplayedText') and shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
@@ -1550,14 +1548,14 @@ class Script(default.Script):
         if AXObject.is_dead(obj):
             obj = None
 
-        if not _focusManager.focus_is_dead() \
+        if not focus_manager.getManager().focus_is_dead() \
            and not self.utilities.inDocumentContent(focus) \
            and AXUtilities.is_focused(focus):
             msg = "WEB: Not presenting content, focus is outside of document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if _settingsManager.getSetting('pageSummaryOnLoad') and shouldPresent:
+        if settings_manager.getManager().getSetting('pageSummaryOnLoad') and shouldPresent:
             obj = obj or event.source
             tokens = ["WEB: Getting page summary for obj", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1570,7 +1568,7 @@ class Script(default.Script):
            and self.utilities.isTopLevelWebApp(event.source):
             tokens = ["WEB: Setting locusOfFocus to", obj, "with sticky focus mode"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, obj)
+            focus_manager.getManager().set_locus_of_focus(event, obj)
             self.enableStickyFocusMode(None, True)
             return True
 
@@ -1585,35 +1583,35 @@ class Script(default.Script):
         if self.utilities.isFocusModeWidget(obj):
             tokens = ["WEB: Setting locus of focus to focusModeWidget", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, obj)
+            focus_manager.getManager().set_locus_of_focus(event, obj)
             return True
 
         if self.utilities.isLink(obj) and AXUtilities.is_focused(obj):
             tokens = ["WEB: Setting locus of focus to focused link", obj, ". No SayAll."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, obj)
+            focus_manager.getManager().set_locus_of_focus(event, obj)
             return True
 
         if offset > 0:
             tokens = ["WEB: Setting locus of focus to context obj", obj, ". No SayAll"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, obj)
+            focus_manager.getManager().set_locus_of_focus(event, obj)
             return True
 
-        if not AXUtilities.is_focused(_focusManager.get_locus_of_focus()):
+        if not AXUtilities.is_focused(focus_manager.getManager().get_locus_of_focus()):
             tokens = ["WEB: Setting locus of focus to context obj", obj, "(no notification)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, obj, False)
+            focus_manager.getManager().set_locus_of_focus(event, obj, False)
 
         self.updateBraille(obj)
         if self.utilities.documentFragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-        elif not _settingsManager.getSetting('sayAllOnLoad'):
+        elif not settings_manager.getManager().getSetting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
-        elif _settingsManager.getSetting('enableSpeech'):
+        elif settings_manager.getManager().getSetting('enableSpeech'):
             msg = "WEB: Doing SayAll"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
@@ -1683,7 +1681,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
             notify = not self.utilities.isEntryDescendant(event.source)
-            _focusManager.set_locus_of_focus(event, event.source, notify, True)
+            focus_manager.getManager().set_locus_of_focus(event, event.source, notify, True)
             return True
 
         if self.utilities.lastInputEventWasTab():
@@ -1699,7 +1697,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Presenting find results"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
-            self._saveFocusedObjectInfo(_focusManager.get_locus_of_focus())
+            self._saveFocusedObjectInfo(focus_manager.getManager().get_locus_of_focus())
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -1719,7 +1717,7 @@ class Script(default.Script):
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.utilities.isItemForEditableComboBox(focus, event.source) \
            and not self.utilities.lastInputEventWasCharNav() \
            and not self.utilities.lastInputEventWasLineBoundaryNav():
@@ -1778,7 +1776,7 @@ class Script(default.Script):
         tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.setCaretContext(obj, offset, document)
-        _focusManager.set_locus_of_focus(event, obj, notify, force)
+        focus_manager.getManager().set_locus_of_focus(event, obj, notify, force)
         return handled
 
     def onCheckedChanged(self, event):
@@ -1824,12 +1822,12 @@ class Script(default.Script):
         isLiveRegion = self.utilities.isLiveRegion(event.source)
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document and not isLiveRegion:
-            focus = _focusManager.get_locus_of_focus()
+            focus = focus_manager.getManager().get_locus_of_focus()
             if event.source == focus:
                 msg = "WEB: Dumping cache and context: source is focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif _focusManager.focus_is_dead():
+            elif focus_manager.getManager().focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
@@ -1896,7 +1894,7 @@ class Script(default.Script):
                 notify = self.utilities.queryNonEmptyText(focused) is None
                 tokens = ["WEB: Setting locusOfFocus and caret context to", focused]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                _focusManager.set_locus_of_focus(event, focused, notify)
+                focus_manager.getManager().set_locus_of_focus(event, focused, notify)
                 self.utilities.setCaretContext(focused, 0)
             return True
 
@@ -1938,12 +1936,12 @@ class Script(default.Script):
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if document:
-            focus = _focusManager.get_locus_of_focus()
+            focus = focus_manager.getManager().get_locus_of_focus()
             if event.source == focus:
                 msg = "WEB: Dumping cache and context: source is focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=False)
-            elif _focusManager.focus_is_dead():
+            elif focus_manager.getManager().focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
@@ -1971,7 +1969,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2038,7 +2036,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
         tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2079,7 +2077,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         prevDocument = self.utilities.getDocumentForObject(focus)
         if prevDocument != document:
             tokens = ["WEB: document changed from", prevDocument, "to", document]
@@ -2097,7 +2095,7 @@ class Script(default.Script):
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _focusManager.set_locus_of_focus(event, event.source)
+                focus_manager.getManager().set_locus_of_focus(event, event.source)
                 return True
 
         if AXUtilities.is_editable(event.source):
@@ -2108,7 +2106,7 @@ class Script(default.Script):
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            _focusManager.set_locus_of_focus(event, event.source)
+            focus_manager.getManager().set_locus_of_focus(event, event.source)
             return True
 
         if self.utilities.handleEventFromContextReplicant(event, event.source):
@@ -2130,7 +2128,7 @@ class Script(default.Script):
                 notify = self.utilities.inFindContainer(focus)
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                _focusManager.set_locus_of_focus(event, obj, notify)
+                focus_manager.getManager().set_locus_of_focus(event, obj, notify)
                 if not notify and prevDocument is None:
                     self.refreshKeyGrabs("updating locus of focus without notification")
                 self.utilities.setCaretContext(obj, offset)
@@ -2166,7 +2164,7 @@ class Script(default.Script):
         if self.utilities.lastInputEventWasPageNav():
             msg = "WEB: Event handled: Focus changed due to scrolling"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            _focusManager.set_locus_of_focus(event, obj)
+            focus_manager.getManager().set_locus_of_focus(event, obj)
             self.utilities.setCaretContext(obj, offset)
             return True
 
@@ -2191,7 +2189,7 @@ class Script(default.Script):
 
         tokens = ["WEB: Event handled: Setting locusOfFocus to", obj, "(", cause, ")"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        _focusManager.set_locus_of_focus(event, obj)
+        focus_manager.getManager().set_locus_of_focus(event, obj)
         return True
 
     def onMouseButton(self, event):
@@ -2220,7 +2218,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2242,7 +2240,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.utilities.eventIsBrowserUIPageSwitch(event):
             msg = "WEB: Event believed to be browser UI page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2280,7 +2278,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self.utilities.inDocumentContent(_focusManager.get_locus_of_focus()):
+        if not self.utilities.inDocumentContent(focus_manager.getManager().get_locus_of_focus()):
             msg = "WEB: Event ignored: locusOfFocus is not in document content"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2408,7 +2406,7 @@ class Script(default.Script):
 
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if obj:
-                _focusManager.set_locus_of_focus(event, obj, notify_script=False)
+                focus_manager.getManager().set_locus_of_focus(event, obj, notify_script=False)
 
         if self.utilities.isZombie(obj):
             msg = "WEB: Unable to get non-null, non-zombie context object"
@@ -2488,7 +2486,7 @@ class Script(default.Script):
         self.utilities.clearContentCache()
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
-        if _focusManager.focus_is_dead():
+        if focus_manager.getManager().focus_is_dead():
             msg = "WEB: Dumping cache: dead focus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.dumpCache(document, preserveContext=True)
@@ -2496,7 +2494,7 @@ class Script(default.Script):
             if AXUtilities.is_focused(event.source):
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _focusManager.set_locus_of_focus(None, event.source, force=True)
+                focus_manager.getManager().set_locus_of_focus(None, event.source, force=True)
                 return True
 
         else:
@@ -2510,7 +2508,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        sourceIsFocus = event.source == _focusManager.get_locus_of_focus()
+        sourceIsFocus = event.source == focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_editable(event.source):
             if not sourceIsFocus:
                 msg = "WEB: Done processing non-editable, non-locusOfFocus source"
@@ -2520,7 +2518,7 @@ class Script(default.Script):
             if self.utilities.isClickableElement(event.source):
                 msg = "WEB: Event handled: Re-setting locusOfFocus to changed clickable"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _focusManager.set_locus_of_focus(None, event.source, force=True)
+                focus_manager.getManager().set_locus_of_focus(None, event.source, force=True)
                 return True
 
         if not sourceIsFocus and AXUtilities.is_text_input(event.source) \
@@ -2549,7 +2547,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not self.utilities.inDocumentContent(focus):
             msg = "WEB: Locus of focus is not in document content"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

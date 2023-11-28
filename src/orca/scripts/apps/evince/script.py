@@ -33,7 +33,6 @@ import orca.scripts.toolkits.gtk as gtk
 from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
-_focusManager = focus_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -104,7 +103,7 @@ class Script(gtk.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        if AXUtilities.is_editable(_focusManager.get_locus_of_focus()):
+        if AXUtilities.is_editable(focus_manager.getManager().get_locus_of_focus()):
             return False
 
         return True
@@ -114,6 +113,6 @@ class Script(gtk.Script):
 
         obj = event.source
         if AXUtilities.is_focused(obj):
-            _focusManager.set_locus_of_focus(event, event.source, False)
+            focus_manager.getManager().set_locus_of_focus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)

@@ -49,7 +49,6 @@ from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 
-_scriptManager = script_manager.getManager()
 
 class LearnModePresenter:
     """Provides implementation of learn mode"""
@@ -110,7 +109,7 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
 
         if script is not None:
             script.presentMessage(messages.VERSION)
@@ -135,7 +134,7 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
 
         if script is not None:
             script.presentMessage(messages.LEARN_MODE_STOP)
@@ -158,7 +157,7 @@ class LearnModePresenter:
         if not isinstance(event, input_event.KeyboardEvent):
             return False
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         script.speakKeyEvent(event)
         if event.isPrintableKey() and event.getClickCount() == 2 \
            and event.getHandler() is None:
@@ -190,7 +189,7 @@ class LearnModePresenter:
             return True
 
         if handler.learnModeEnabled and handler.description:
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
             script.presentMessage(handler.description)
 
         return True

@@ -38,7 +38,6 @@ from . import settings_manager
 from . import speech
 from .ax_table import AXTable
 
-_focusManager = focus_manager.getManager()
 _settings_manager = settings_manager.getManager()
 
 class SpeechAndVerbosityManager:
@@ -526,7 +525,7 @@ class SpeechAndVerbosityManager:
     def toggle_table_cell_reading_mode(self, script, event=None):
         """Toggles between speak cell and speak row."""
 
-        table = AXTable.get_table(_focusManager.get_locus_of_focus())
+        table = AXTable.get_table(focus_manager.getManager().get_locus_of_focus())
         if table is None:
             script.presentMessage(messages.TABLE_NOT_IN_A)
             return True

@@ -37,9 +37,6 @@ from orca import script_utilities
 from orca import settings_manager
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 
 class Utilities(script_utilities.Utilities):
 
@@ -181,7 +178,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def treatEventAsCommand(self, event):
-        if event.source != _focusManager.get_locus_of_focus():
+        if event.source != focus_manager.getManager().get_locus_of_focus():
             return False
 
         if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
@@ -220,7 +217,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def willEchoCharacter(self, event):
-        if not _settingsManager.getSetting("enableEchoByCharacter"):
+        if not settings_manager.getManager().getSetting("enableEchoByCharacter"):
             return False
 
         if len(event.event_string) != 1 \

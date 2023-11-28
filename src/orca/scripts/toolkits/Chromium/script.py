@@ -37,7 +37,6 @@ from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 
-_focusManager = focus_manager.getManager()
 
 class Script(web.Script):
 
@@ -65,7 +64,7 @@ class Script(web.Script):
         """Returns True if this event should activate this script."""
 
         if event.type == "window:activate":
-            return _focusManager.can_be_active_window(event.source)
+            return focus_manager.getManager().can_be_active_window(event.source)
 
         return super().isActivatableEvent(event)
 
@@ -86,7 +85,7 @@ class Script(web.Script):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not _focusManager.can_be_active_window(event.source):
+           and not focus_manager.getManager().can_be_active_window(event.source):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
@@ -332,10 +331,10 @@ class Script(web.Script):
 
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source):
             topLevel = self.utilities.topLevelObject(event.source)
-            if _focusManager.can_be_active_window(topLevel):
-                _focusManager.set_active_window(topLevel)
+            if focus_manager.getManager().can_be_active_window(topLevel):
+                focus_manager.getManager().set_active_window(topLevel)
                 self.presentObject(event.source)
-                _focusManager.set_locus_of_focus(event, event.source, False)
+                focus_manager.getManager().set_locus_of_focus(event, event.source, False)
             return
 
         if super().onShowingChanged(event):
@@ -398,7 +397,7 @@ class Script(web.Script):
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not _focusManager.can_be_active_window(event.source):
+        if not focus_manager.getManager().can_be_active_window(event.source):
             return
 
         # If this is a frame for a popup menu, we don't want to treat
@@ -406,7 +405,7 @@ class Script(web.Script):
         # far as the end-user experience is concerned.
         menu = self.utilities.popupMenuForFrame(event.source)
         if menu:
-            _focusManager.set_active_window(event.source)
+            focus_manager.getManager().set_active_window(event.source)
 
             activeItem = None
             selected = self.utilities.selectedChildren(menu)
@@ -417,16 +416,16 @@ class Script(web.Script):
                 # If this is the popup menu for the locusOfFocus, we don't want to
                 # present the popup menu as part of the new ancestry of activeItem.
                 if self.utilities.isPopupMenuForCurrentItem(menu):
-                    _focusManager.set_locus_of_focus(event, menu, False)
+                    focus_manager.getManager().set_locus_of_focus(event, menu, False)
 
                 tokens = ["CHROMIUM: Setting locusOfFocus to active item", activeItem]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                _focusManager.set_locus_of_focus(event, activeItem)
+                focus_manager.getManager().set_locus_of_focus(event, activeItem)
                 return
 
             tokens = ["CHROMIUM: Setting locusOfFocus to popup menu", menu]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _focusManager.set_locus_of_focus(event, menu)
+            focus_manager.getManager().set_locus_of_focus(event, menu)
 
         if super().onWindowActivated(event):
             return

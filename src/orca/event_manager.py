@@ -41,8 +41,6 @@ from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
 
 class EventManager:
 
@@ -174,7 +172,7 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if event.type.startswith('object:children-changed') \
            or event.type.startswith('object:state-changed:sensitive'):
             if script is None:
@@ -301,10 +299,10 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event.type.endswith('remove'):
-                if _focusManager.focus_is_dead():
+                if focus_manager.getManager().focus_is_dead():
                     return False
 
-                if event.any_data == _focusManager.get_locus_of_focus():
+                if event.any_data == focus_manager.getManager().get_locus_of_focus():
                     msg = 'EVENT MANAGER: Locus of focus is being destroyed'
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return False
@@ -507,7 +505,7 @@ class EventManager:
             # To decrease the likelihood that the popup will be destroyed before we
             # have its contents.
             asyncMode = False
-        script = _scriptManager.getScript(AXObject.get_application(e.source), e.source)
+        script = script_manager.getManager().getScript(AXObject.get_application(e.source), e.source)
         script.eventCache[e.type] = (e, time.time())
 
         self._addToQueue(e, asyncMode)
@@ -518,12 +516,12 @@ class EventManager:
             self._enqueueCount -= 1
 
     def _onNoFocus(self):
-        if _focusManager.focus_and_window_are_unknown():
+        if focus_manager.getManager().focus_and_window_are_unknown():
             return False
 
-        if _scriptManager.getActiveScript() is None:
-            defaultScript = _scriptManager.getDefaultScript()
-            _scriptManager.setActiveScript(defaultScript, 'No focus')
+        if script_manager.getManager().getActiveScript() is None:
+            defaultScript = script_manager.getManager().getDefaultScript()
+            script_manager.getManager().setActiveScript(defaultScript, 'No focus')
             defaultScript.idleMessage()
 
         return False
@@ -655,7 +653,7 @@ class EventManager:
         - event: an instance of BrailleEvent or a KeyboardEvent
         """
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is None:
             return
 
@@ -687,7 +685,7 @@ class EventManager:
 
         if event.type.startswith("mouse:"):
             mouseEvent = input_event.MouseButtonEvent(event)
-            script = _scriptManager.getScript(mouseEvent.app, mouseEvent.obj, False)
+            script = script_manager.getManager().getScript(mouseEvent.app, mouseEvent.obj, False)
             tokens = ["EVENT MANAGER: Script for event is", script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return script
@@ -719,7 +717,7 @@ class EventManager:
         tokens = ["EVENT MANAGER: Getting script for event for", app, "check:", check]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = _scriptManager.getScript(app, event.source, sanityCheck=check)
+        script = script_manager.getManager().getScript(app, event.source, sanityCheck=check)
         tokens = ["EVENT MANAGER: Script for event is", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
@@ -741,7 +739,7 @@ class EventManager:
             if not script:
                 return False, "There is no script for this event."
 
-        if script == _scriptManager.getActiveScript():
+        if script == script_manager.getManager().getActiveScript():
             return False, "The script for this event is already active."
 
         if not script.isActivatableEvent(event):
@@ -759,7 +757,7 @@ class EventManager:
                 and event.detail1 and AXUtilities.is_frame(event.source)
 
         if windowActivation:
-            if event.source != _focusManager.get_active_window():
+            if event.source != focus_manager.getManager().get_active_window():
                 return True, "Window activation"
             else:
                 return False, "Window activation for already-active window"
@@ -814,7 +812,7 @@ class EventManager:
         if event.type not in ignore:
             return False
 
-        return event.source != _focusManager.get_locus_of_focus()
+        return event.source != focus_manager.getManager().get_locus_of_focus()
 
     def _inDeluge(self):
         size = self._eventQueue.qsize()
@@ -850,7 +848,7 @@ class EventManager:
         if event.type not in ignore:
             return True
 
-        focus = focus or _focusManager.get_locus_of_focus()
+        focus = focus or focus_manager.getManager().get_locus_of_focus()
         return event.source == focus
 
     def _prioritizeDuringFlood(self, event):
@@ -888,7 +886,7 @@ class EventManager:
         oldSize = self._eventQueue.qsize()
 
         newQueue = queue.Queue(0)
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         while not self._eventQueue.empty():
             try:
                 event = self._eventQueue.get()
@@ -948,23 +946,24 @@ class EventManager:
 
         if eType.startswith("object:children-changed:remove") \
            and event.source == AXUtilities.get_desktop():
-            _scriptManager.reclaimScripts()
+            script_manager.getManager().reclaimScripts()
             return
 
         if eType.startswith("window:") and not eType.endswith("create"):
-            _scriptManager.reclaimScripts()
+            script_manager.getManager().reclaimScripts()
         elif eType.startswith("object:state-changed:active") \
            and AXUtilities.is_frame(event.source):
-            _scriptManager.reclaimScripts()
+            script_manager.getManager().reclaimScripts()
 
         if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
-               and _focusManager.get_active_window() == event.source:
-                _focusManager.clear_state("Active window is dead or defunct")
-                _scriptManager.setActiveScript(None, "Active window is dead or defunct")
+               and focus_manager.getManager().get_active_window() == event.source:
+                focus_manager.getManager().clear_state("Active window is dead or defunct")
+                script_manager.getManager().setActiveScript(
+                    None, "Active window is dead or defunct")
             return
 
         if AXUtilities.is_iconified(event.source):
@@ -1002,14 +1001,14 @@ class EventManager:
 
         if setNewActiveScript:
             try:
-                _scriptManager.setActiveScript(script, reason)
+                script_manager.getManager().setActiveScript(script, reason)
             except Exception as error:
                 tokens = ["EVENT MANAGER: Exception setting active script for",
                           event.source, ":", error]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
-        activeScript = _scriptManager.getActiveScript()
+        activeScript = script_manager.getManager().getActiveScript()
         if not self._shouldProcessEvent(event, script, activeScript):
             return
 
@@ -1033,7 +1032,7 @@ class EventManager:
 
             # If pressing insert, then temporarily remove grab to allow toggling
             # with a double press
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
             if pressed and script is not None:
                 if keyboardEvent.keyval_name in orca_state.grabbedModifiers:
                     device.remove_key_grab(orca_state.grabbedModifiers[keyboardEvent.keyval_name])
@@ -1054,7 +1053,7 @@ class EventManager:
     def processBrailleEvent(self, event):
         """Called whenever a cursor key is pressed on the Braille display."""
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is None:
             return False
 

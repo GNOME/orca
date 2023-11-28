@@ -41,8 +41,6 @@ from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
 
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
@@ -328,7 +326,7 @@ class StateZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if attr == "string":
             generator = script.speechGenerator
         else:
@@ -353,7 +351,7 @@ class ValueZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if attr == "string":
             generator = script.speechGenerator
         else:
@@ -495,7 +493,7 @@ class Context:
         self.targetCharInfo = None
         self.focusZone = None
         self.container = None
-        self.focusObj = _focusManager.get_locus_of_focus()
+        self.focusObj = focus_manager.getManager().get_locus_of_focus()
         self.topLevel = None
         self.bounds = 0, 0, 0, 0
 

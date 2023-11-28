@@ -28,10 +28,8 @@ __license__   = "LGPL"
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
-import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
 
-_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

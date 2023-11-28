@@ -31,12 +31,9 @@ from gi.repository import Atspi
 import re
 
 import orca.debug as debug
-import orca.focus_manager as focus_manager
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-
-_focusManager = focus_manager.getManager()
 
 class Utilities(script_utilities.Utilities):
 

@@ -36,7 +36,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
@@ -128,10 +127,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        if not _settingsManager.getSetting('speakDescription'):
+        if not settings_manager.getManager().getSetting('speakDescription'):
             return []
 
         if not args.get('formatType', '').endswith('WhereAmI'):
@@ -200,7 +199,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -259,12 +258,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script._lastCommandWasStructNav:
                 return result
 
-            if _settingsManager.getSetting('speakCellCoordinates'):
+            if settings_manager.getManager().getSetting('speakCellCoordinates'):
                 result.append(AXObject.get_name(obj))
             return result
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
-        speakCoordinates = _settingsManager.getSetting('speakSpreadsheetCoordinates')
+        speakCoordinates = settings_manager.getManager().getSetting('speakSpreadsheetCoordinates')
         if speakCoordinates or isBasicWhereAmI:
             label = AXTable.get_label_for_cell_coordinates(obj) \
                 or self._script.utilities.spreadSheetCellName(obj)

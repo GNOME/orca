@@ -38,10 +38,6 @@ from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 #############################################################################
 #                                                                           #
 # Ring List. A fixed size circular list by Flavio Catalani                  #
@@ -405,19 +401,19 @@ class Chat:
         grid.set_border_width(12)
 
         label = guilabels.CHAT_SPEAK_ROOM_NAME
-        value = _settingsManager.getSetting('chatSpeakRoomName')
+        value = settings_manager.getManager().getSetting('chatSpeakRoomName')
         self.speakNameCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.speakNameCheckButton.set_active(value)
         grid.attach(self.speakNameCheckButton, 0, 0, 1, 1)
 
         label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
-        value = _settingsManager.getSetting('chatAnnounceBuddyTyping')
+        value = settings_manager.getManager().getSetting('chatAnnounceBuddyTyping')
         self.buddyTypingCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.buddyTypingCheckButton.set_active(value)
         grid.attach(self.buddyTypingCheckButton, 0, 1, 1, 1)
 
         label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
-        value = _settingsManager.getSetting('chatRoomHistories')
+        value = settings_manager.getManager().getSetting('chatRoomHistories')
         self.chatRoomHistoriesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.chatRoomHistoriesCheckButton.set_active(value)
@@ -435,7 +431,7 @@ class Chat:
         messagesGrid = Gtk.Grid()
         messagesAlignment.add(messagesGrid)
 
-        value = _settingsManager.getSetting('chatMessageVerbosity')
+        value = settings_manager.getManager().getSetting('chatMessageVerbosity')
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ALL
         rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
@@ -495,8 +491,8 @@ class Chat:
         """
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
-        speakRoomName = _settingsManager.getSetting('chatSpeakRoomName')
-        _settingsManager.setSetting('chatSpeakRoomName', not speakRoomName)
+        speakRoomName = settings_manager.getManager().getSetting('chatSpeakRoomName')
+        settings_manager.getManager().setSetting('chatSpeakRoomName', not speakRoomName)
         if speakRoomName:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
         self._script.presentMessage(line)
@@ -512,8 +508,8 @@ class Chat:
         """
 
         line = messages.CHAT_BUDDY_TYPING_ON
-        announceTyping = _settingsManager.getSetting('chatAnnounceBuddyTyping')
-        _settingsManager.setSetting(
+        announceTyping = settings_manager.getManager().getSetting('chatAnnounceBuddyTyping')
+        settings_manager.getManager().setSetting(
             'chatAnnounceBuddyTyping', not announceTyping)
         if announceTyping:
             line = messages.CHAT_BUDDY_TYPING_OFF
@@ -530,8 +526,8 @@ class Chat:
         """
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON
-        roomHistories = _settingsManager.getSetting('chatRoomHistories')
-        _settingsManager.setSetting('chatRoomHistories', not roomHistories)
+        roomHistories = settings_manager.getManager().getSetting('chatRoomHistories')
+        settings_manager.getManager().setSetting('chatRoomHistories', not roomHistories)
         if roomHistories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
         self._script.presentMessage(line)
@@ -558,8 +554,8 @@ class Chat:
         messageNumber = self.messageListLength - (index + 1)
         message, chatRoomName = None, None
 
-        if _settingsManager.getSetting('chatRoomHistories'):
-            conversation = self.getConversation(_focusManager.get_locus_of_focus())
+        if settings_manager.getManager().getSetting('chatRoomHistories'):
+            conversation = self.getConversation(focus_manager.getManager().get_locus_of_focus())
             if conversation:
                 message = conversation.getNthMessage(messageNumber)
                 chatRoomName = conversation.name
@@ -584,8 +580,9 @@ class Chat:
         # Only speak/braille the new message if it matches how the user
         # wants chat messages spoken.
         #
-        verbosity = _settingsManager.getAppSetting(self._script.app, 'chatMessageVerbosity')
-        script = _scriptManager.getActiveScript()
+        verbosity = settings_manager.getManager().getAppSetting(
+            self._script.app, 'chatMessageVerbosity')
+        script = script_manager.getManager().getActiveScript()
         if script.name != self._script.name \
            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
             return
@@ -594,7 +591,7 @@ class Chat:
 
         text = ""
         if chatRoomName and \
-           _settingsManager.getAppSetting(self._script.app, 'chatSpeakRoomName'):
+           settings_manager.getManager().getAppSetting(self._script.app, 'chatSpeakRoomName'):
             text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
 
         if not settings.presentChatRoomLast:
@@ -702,7 +699,7 @@ class Chat:
         Returns True if we spoke the change; False otherwise
         """
 
-        if _settingsManager.getSetting('chatAnnounceBuddyTyping'):
+        if settings_manager.getManager().getSetting('chatAnnounceBuddyTyping'):
             conversation = self.getConversation(event.source)
             if conversation and (status != conversation.getTypingStatus()):
                 voice = self._script.speechGenerator.voice(string=status)

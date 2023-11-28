@@ -47,10 +47,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 
 class Utilities(script_utilities.Utilities):
 
@@ -245,7 +241,7 @@ class Utilities(script_utilities.Utilities):
 
     def inDocumentContent(self, obj=None):
         if not obj:
-            obj = _focusManager.get_locus_of_focus()
+            obj = focus_manager.getManager().get_locus_of_focus()
 
 
         if self.isDocument(obj):
@@ -265,7 +261,7 @@ class Utilities(script_utilities.Utilities):
 
     def sanityCheckActiveWindow(self):
         app = self._script.app
-        window = _focusManager.get_active_window()
+        window = focus_manager.getManager().get_active_window()
         if AXObject.get_parent(window) == app:
             return True
 
@@ -274,7 +270,7 @@ class Utilities(script_utilities.Utilities):
 
         # TODO - JD: Is this exception handling still needed?
         try:
-            script = _scriptManager.getScript(app, window)
+            script = script_manager.getManager().getScript(app, window)
             tokens = ["WEB: Script for active Window is", script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         except Exception:
@@ -288,15 +284,15 @@ class Utilities(script_utilities.Utilities):
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     setattr(self._script, attr, value)
 
-        window = _focusManager.find_active_window(app)
+        window = focus_manager.getManager().find_active_window(app)
         self._script.app = AXObject.get_application(window)
         tokens = ["WEB: updating script's app to", self._script.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        _focusManager.set_active_window(window)
+        focus_manager.getManager().set_active_window(window)
         return True
 
     def activeDocument(self, window=None):
-        window = window or _focusManager.get_active_window()
+        window = window or focus_manager.getManager().get_active_window()
         documents = self._getDocumentsEmbeddedBy(window)
         documents = list(filter(AXUtilities.is_showing, documents))
         if len(documents) == 1:
@@ -309,7 +305,7 @@ class Utilities(script_utilities.Utilities):
             if document:
                 return document
 
-        return self.getDocumentForObject(obj or _focusManager.get_locus_of_focus())
+        return self.getDocumentForObject(obj or focus_manager.getManager().get_locus_of_focus())
 
     def documentFrameURI(self, documentFrame=None):
         documentFrame = documentFrame or self.documentFrame()
@@ -376,9 +372,9 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
-        oldFocus = _focusManager.get_locus_of_focus()
+        oldFocus = focus_manager.getManager().get_locus_of_focus()
         self.clearTextSelection(oldFocus)
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         if grabFocus:
             self.grabFocus(obj)
 
@@ -513,7 +509,7 @@ class Utilities(script_utilities.Utilities):
 
     def inFindContainer(self, obj=None):
         if not obj:
-            obj = _focusManager.get_locus_of_focus()
+            obj = focus_manager.getManager().get_locus_of_focus()
 
         if self.inDocumentContent(obj):
             return False
@@ -548,7 +544,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         if not self._script.mouseReviewer.inMouseEvent:
-            if not self._isOrIsIn(_focusManager.get_locus_of_focus(), obj):
+            if not self._isOrIsIn(focus_manager.getManager().get_locus_of_focus(), obj):
                 return rv
 
             tokens = ["WEB:", obj, "contains locusOfFocus but not showing and visible"]
@@ -1685,7 +1681,8 @@ class Utilities(script_utilities.Utilities):
                 return self._currentLineContents
 
         if layoutMode is None:
-            layoutMode = _settingsManager.getSetting('layoutMode') or self._script.inFocusMode()
+            layoutMode = settings_manager.getManager().getSetting('layoutMode') \
+                or self._script.inFocusMode()
 
         objects = []
         if offset > 0 and self.treatAsEndOfLine(obj, offset):
@@ -2086,7 +2083,7 @@ class Utilities(script_utilities.Utilities):
 
     def inTopLevelWebApp(self, obj=None):
         if not obj:
-            obj = _focusManager.get_locus_of_focus()
+            obj = focus_manager.getManager().get_locus_of_focus()
 
         rv = self._inTopLevelWebApp.get(hash(obj))
         if rv is not None:
@@ -2508,11 +2505,11 @@ class Utilities(script_utilities.Utilities):
         return suggestion[-1] == obj
 
     def speakMathSymbolNames(self, obj=None):
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         return self.isMath(obj)
 
     def isInMath(self):
-        return self.isMath(_focusManager.get_locus_of_focus())
+        return self.isMath(focus_manager.getManager().get_locus_of_focus())
 
     def isMath(self, obj):
         tag = self._getTag(obj)
@@ -4309,7 +4306,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_menu_related(event.source):
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if AXUtilities.is_entry(focus) and AXUtilities.is_focused(focus):
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey not in ["Down", "Up"]:
@@ -4322,7 +4319,7 @@ class Utilities(script_utilities.Utilities):
            or not self.isSingleLineAutocompleteEntry(event.source):
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_selectable(focus):
             return False
 
@@ -4344,17 +4341,17 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(event.source):
             return False
 
-        if not self.inDocumentContent(_focusManager.get_locus_of_focus()):
+        if not self.inDocumentContent(focus_manager.getManager().get_locus_of_focus()):
             return False
 
         return True
 
     def eventIsFromLocusOfFocusDocument(self, event):
-        if _focusManager.focus_is_active_window():
+        if focus_manager.getManager().focus_is_active_window():
             focus = self.activeDocument()
             source = self.getTopLevelDocumentForObject(event.source)
         else:
-            focus = self.getDocumentForObject(_focusManager.get_locus_of_focus())
+            focus = self.getDocumentForObject(focus_manager.getManager().get_locus_of_focus())
             source = self.getDocumentForObject(event.source)
 
         tokens = ["WEB: Event doc:", source, ". Focus doc:", focus, "."]
@@ -4378,7 +4375,7 @@ class Utilities(script_utilities.Utilities):
         if event.type != "object:selection-changed":
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not focus:
             msg = "WEB: Selection changed event is relevant (no locusOfFocus)"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4422,7 +4419,7 @@ class Utilities(script_utilities.Utilities):
            or not AXUtilities.is_editable(event.source):
             return False
 
-        if event.source != _focusManager.get_locus_of_focus():
+        if event.source != focus_manager.getManager().get_locus_of_focus():
             return False
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
@@ -4451,7 +4448,7 @@ class Utilities(script_utilities.Utilities):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        oldFocus = oldFocus or _focusManager.get_locus_of_focus()
+        oldFocus = oldFocus or focus_manager.getManager().get_locus_of_focus()
         if not self.isGridDescendant(oldFocus):
             return False
 
@@ -4473,7 +4470,7 @@ class Utilities(script_utilities.Utilities):
         if sourceID and fragment == sourceID:
             return True
 
-        oldFocus = oldFocus or _focusManager.get_locus_of_focus()
+        oldFocus = oldFocus or focus_manager.getManager().get_locus_of_focus()
         if self.isLink(oldFocus):
             link = oldFocus
         else:
@@ -4723,7 +4720,7 @@ class Utilities(script_utilities.Utilities):
         return None, -1
 
     def _getCaretContextViaLocusOfFocus(self):
-        obj = _focusManager.get_locus_of_focus()
+        obj = focus_manager.getManager().get_locus_of_focus()
         msg = "WEB: Getting caret context via locusOfFocus"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         if not self.inDocumentContent(obj):
@@ -4819,7 +4816,7 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not _focusManager.focus_is_dead():
+        if not focus_manager.getManager().focus_is_dead():
             msg = "WEB: Not event from context replicant, locus of focus is not dead."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
@@ -4846,7 +4843,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Is event from context replicant. Notify:", notify]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        _focusManager.set_locus_of_focus(event, replicant, notify)
+        focus_manager.getManager().set_locus_of_focus(event, replicant, notify)
         self.setCaretContext(replicant, offset, documentFrame)
         return True
 
@@ -4871,17 +4868,17 @@ class Utilities(script_utilities.Utilities):
             return False
 
         names = self._script.pointOfReference.get('names', {})
-        oldName = names.get(hash(_focusManager.get_locus_of_focus()))
+        oldName = names.get(hash(focus_manager.getManager().get_locus_of_focus()))
         notify = AXObject.get_name(item) != oldName
 
         tokens = ["WEB: Recovered from removed child. New focus is: ", item, "0"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        _focusManager.set_locus_of_focus(event, item, notify)
+        focus_manager.getManager().set_locus_of_focus(event, item, notify)
         self.setCaretContext(item, 0)
         return True
 
     def handleEventForRemovedChild(self, event):
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if event.any_data == focus:
             msg = "WEB: Removed child is locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4950,14 +4947,14 @@ class Utilities(script_utilities.Utilities):
 
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
-            if obj and _focusManager.focus_is_dead() and AXUtilities.is_focused(obj):
+            if obj and focus_manager.getManager().focus_is_dead() and AXUtilities.is_focused(obj):
                 names = self._script.pointOfReference.get('names', {})
-                oldName = names.get(hash(_focusManager.get_locus_of_focus()))
+                oldName = names.get(hash(focus_manager.getManager().get_locus_of_focus()))
                 notify = AXObject.get_name(obj) != oldName
 
         if obj:
             msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
-            _focusManager.set_locus_of_focus(event, obj, notify)
+            focus_manager.getManager().set_locus_of_focus(event, obj, notify)
             self.setCaretContext(obj, offset)
             return True
 
@@ -5272,13 +5269,13 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def handleAsLiveRegion(self, event):
-        if not _settingsManager.getSetting('inferLiveRegions'):
+        if not settings_manager.getManager().getSetting('inferLiveRegions'):
             return False
 
         if not self.isLiveRegion(event.source):
             return False
 
-        if not _settingsManager.getSetting('presentLiveRegionFromInactiveTab') \
+        if not settings_manager.getManager().getSetting('presentLiveRegionFromInactiveTab') \
            and self.getTopLevelDocumentForObject(event.source) != self.activeDocument():
             msg = "WEB: Live region source is not in active tab."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -5406,7 +5403,7 @@ class Utilities(script_utilities.Utilities):
         if not self.topLevelObjectIsActiveAndCurrent():
             return False
 
-        if AXObject.supports_action(_focusManager.get_locus_of_focus()):
+        if AXObject.supports_action(focus_manager.getManager().get_locus_of_focus()):
             msg = "WEB: Treating locus of focus as source of copy"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True

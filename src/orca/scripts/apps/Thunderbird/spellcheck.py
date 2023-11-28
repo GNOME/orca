@@ -32,7 +32,6 @@ import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
 
 class SpellCheck(spellcheck.SpellCheck):
 
@@ -43,7 +42,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if event.source != self._changeToEntry:
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_push_button(focus):
             return False
 

@@ -42,7 +42,6 @@ MOUSE_REVIEW = "mouse-review"
 OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
 
-_scriptManager = script_manager.getManager()
 
 class FocusManager:
     """Manages the focused object, window, etc."""
@@ -168,11 +167,11 @@ class FocusManager:
             return
 
         # TODO - JD: Consider always updating the active script here.
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if event and (script and not script.app):
             app = AXObject.get_application(event.source)
-            script = _scriptManager.getScript(app, event.source)
-            _scriptManager.setActiveScript(script, "Setting locus of focus")
+            script = script_manager.getManager().getScript(app, event.source)
+            script_manager.getManager().setActiveScript(script, "Setting locus of focus")
 
         old_focus = self._focus
         if AXObject.is_dead(old_focus):

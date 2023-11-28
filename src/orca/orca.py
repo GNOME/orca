@@ -72,10 +72,6 @@ from . import speech
 from . import sound
 from .ax_object import AXObject
 
-_eventManager = event_manager.getManager()
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
 _logger = logger.getLogger()
 
 def onEnabledChanged(gsetting, key):
@@ -88,7 +84,7 @@ def onEnabledChanged(gsetting, key):
         shutdown()
 
 def getSettingsManager():
-    return _settingsManager
+    return settings_manager.getManager()
 
 def getLogger():
     return _logger
@@ -252,34 +248,34 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     speech.shutdown()
     braille.shutdown()
 
-    _scriptManager.deactivate()
+    script_manager.getManager().deactivate()
 
     reloaded = False
     if _userSettings:
-        _profile = _settingsManager.getSetting('activeProfile')[1]
+        _profile = settings_manager.getManager().getSetting('activeProfile')[1]
         try:
-            _userSettings = _settingsManager.getGeneralSettings(_profile)
-            _settingsManager.setProfile(_profile)
+            _userSettings = settings_manager.getManager().getGeneralSettings(_profile)
+            settings_manager.getManager().setProfile(_profile)
             reloaded = True
         except ImportError:
             debug.printException(debug.LEVEL_INFO)
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
     else:
-        _profile = _settingsManager.profile
+        _profile = settings_manager.getManager().profile
         try:
-            _userSettings = _settingsManager.getGeneralSettings(_profile)
+            _userSettings = settings_manager.getManager().getGeneralSettings(_profile)
         except ImportError:
             debug.printException(debug.LEVEL_INFO)
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
     if not script:
-        script = _scriptManager.getDefaultScript()
+        script = script_manager.getManager().getDefaultScript()
 
-    _settingsManager.loadAppSettings(script)
+    settings_manager.getManager().loadAppSettings(script)
 
-    if _settingsManager.getSetting('enableSpeech'):
+    if settings_manager.getManager().getSetting('enableSpeech'):
         msg = 'ORCA: About to enable speech'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
@@ -292,11 +288,11 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         msg = 'ORCA: Speech is not enabled in settings'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    if _settingsManager.getSetting('enableBraille'):
+    if settings_manager.getManager().getSetting('enableBraille'):
         msg = 'ORCA: About to enable braille'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
-            braille.init(_eventManager.processBrailleEvent)
+            braille.init(event_manager.getManager().processBrailleEvent)
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
@@ -306,12 +302,12 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
 
-    if _settingsManager.getSetting('enableMouseReview'):
+    if settings_manager.getManager().getSetting('enableMouseReview'):
         mouse_review.getReviewer().activate()
     else:
         mouse_review.getReviewer().deactivate()
 
-    if _settingsManager.getSetting('enableSound'):
+    if settings_manager.getManager().getSetting('enableSound'):
         player.init()
 
     global _orcaModifiers
@@ -325,8 +321,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _storeXmodmap(_orcaModifiers)
     _createOrcaXmodmap()
 
-    _eventManager.activate()
-    _scriptManager.activate()
+    event_manager.getManager().activate()
+    script_manager.getManager().activate()
 
     debug.printMessage(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
@@ -362,10 +358,10 @@ def showAppPreferencesGUI(script=None, inputEvent=None):
 
     prefs = {}
     for key in settings.userCustomizableSettings:
-        prefs[key] = _settingsManager.getSetting(key)
+        prefs[key] = settings_manager.getManager().getSetting(key)
 
     if script is None:
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
     _showPreferencesUI(script, prefs)
 
     return True
@@ -377,8 +373,8 @@ def showPreferencesGUI(script=None, inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    prefs = _settingsManager.getGeneralSettings(_settingsManager.profile)
-    script = _scriptManager.getDefaultScript()
+    prefs = settings_manager.getManager().getGeneralSettings(settings_manager.getManager().profile)
+    script = script_manager.getManager().getDefaultScript()
     _showPreferencesUI(script, prefs)
 
     return True
@@ -442,7 +438,7 @@ def init():
 
     global _initialized
 
-    if _initialized and _settingsManager.isScreenReaderServiceEnabled():
+    if _initialized and settings_manager.getManager().isScreenReaderServiceEnabled():
         debug.printMessage(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
         return False
 
@@ -540,15 +536,15 @@ def shutdown(script=None, inputEvent=None):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    script = _scriptManager.getActiveScript()
+    script = script_manager.getManager().getActiveScript()
     if script is not None:
         script.presentationInterrupt()
         script.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
     # Deactivate the event manager first so that it clears its queue and will not
     # accept new events. Then let the script manager unregister script event listeners.
-    _eventManager.deactivate()
-    _scriptManager.deactivate()
+    event_manager.getManager().deactivate()
+    script_manager.getManager().deactivate()
 
     # Shutdown all the other support.
     #
@@ -620,7 +616,7 @@ def crashOnSignal(signum, frame):
     debug.printStack(debug.LEVEL_SEVERE)
     _restoreXmodmap(_orcaModifiers)
 
-    script = _scriptManager.getActiveScript()
+    script = script_manager.getManager().getActiveScript()
     if script is not None:
         script.presentationInterrupt()
         script.presentMessage(messages.STOP_ORCA, resetStyles=False)
@@ -665,38 +661,38 @@ def main():
     signal.signal(signal.SIGSEGV, crashOnSignal)
 
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
-    if not _settingsManager.isAccessibilityEnabled():
-        _settingsManager.setAccessibility(True)
+    if not settings_manager.getManager().isAccessibilityEnabled():
+        settings_manager.getManager().setAccessibility(True)
 
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Initializing.", True)
     init()
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
     try:
-        script = _scriptManager.getDefaultScript()
+        script = script_manager.getManager().getDefaultScript()
         script.presentMessage(messages.START_ORCA)
     except Exception:
         debug.printException(debug.LEVEL_SEVERE)
 
-    window = _focusManager.find_active_window()
-    if window and not _focusManager.get_locus_of_focus():
+    window = focus_manager.getManager().find_active_window()
+    if window and not focus_manager.getManager().get_locus_of_focus():
         app = AXObject.get_application(window)
-        _focusManager.set_active_window(
+        focus_manager.getManager().set_active_window(
             window, app, set_window_as_focus=True, notify_script=True)
 
         # set_active_window does some corrective work needed thanks to
         # mutter-x11-frames. So retrieve the window just in case.
-        window = _focusManager.get_active_window()
-        script = _scriptManager.getScript(app, window)
-        _scriptManager.setActiveScript(script, "Launching.")
+        window = focus_manager.getManager().get_active_window()
+        script = script_manager.getManager().getScript(app, window)
+        script_manager.getManager().setActiveScript(script, "Launching.")
 
         # TODO - JD: Consider having the focus tracker update the active script.
-        focusedObject = _focusManager.find_focused_object()
+        focusedObject = focus_manager.getManager().find_focused_object()
         if focusedObject:
-            _focusManager.set_locus_of_focus(None, focusedObject)
-            script = _scriptManager.getScript(
+            focus_manager.getManager().set_locus_of_focus(None, focusedObject)
+            script = script_manager.getManager().getScript(
                 AXObject.get_application(focusedObject), focusedObject)
-            _scriptManager.setActiveScript(script, "Found focused object.")
+            script_manager.getManager().setActiveScript(script, "Found focused object.")
 
     try:
         msg = "ORCA: Starting ATSPI registry."

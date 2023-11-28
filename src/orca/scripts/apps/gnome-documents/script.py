@@ -32,7 +32,6 @@ from orca.ax_utilities import AXUtilities
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
 
 class Script(gtk.Script):
 
@@ -58,7 +57,7 @@ class Script(gtk.Script):
     def onNameChanged(self, event):
         """Callback for accessible name change events."""
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
 
         # Present page changes in the previewer.
         if AXUtilities.is_label(event.source) and self.utilities.isDocument(focus):

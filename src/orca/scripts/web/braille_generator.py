@@ -41,8 +41,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
@@ -94,7 +92,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             level = self._script.utilities.headingLevel(obj)
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
-        elif self._script.utilities.isLink(obj) and obj == _focusManager.get_locus_of_focus():
+        elif self._script.utilities.isLink(obj) \
+                and obj == focus_manager.getManager().get_locus_of_focus():
             if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
 

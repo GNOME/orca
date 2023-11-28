@@ -2,7 +2,6 @@ import orca.scripts.default as default
 import orca.focus_manager as focus_manager
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
 
 class Script(default.Script):
 
@@ -26,7 +25,8 @@ class Script(default.Script):
             value = obj.queryValue()
             current_value = int(value.currentValue)/1000
             if current_value in range(self._last_seek_value, self._last_seek_value + 4):
-                if self.utilities.isSameObject(obj, _focusManager.get_locus_of_focus()):
+                if self.utilities.isSameObject(
+                   obj, focus_manager.getManager().get_locus_of_focus()):
                     self.updateBraille(obj)
                 return
 

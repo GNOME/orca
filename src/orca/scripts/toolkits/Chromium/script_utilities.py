@@ -38,7 +38,6 @@ from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
 
 class Utilities(web.Utilities):
 
@@ -140,7 +139,7 @@ class Utilities(web.Utilities):
         # is opened/expanded, a menu with that same name appears. It would be
         # nice if there were a connection (parent/child or an accessible relation)
         # between the two....
-        return self.treatAsMenu(_focusManager.get_locus_of_focus()) \
+        return self.treatAsMenu(focus_manager.getManager().get_locus_of_focus()) \
             and super().isPopupMenuForCurrentItem(obj)
 
     def isFrameForPopupMenu(self, obj):
@@ -335,7 +334,7 @@ class Utilities(web.Utilities):
         return True
 
     def inFindContainer(self, obj=None):
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
         if self.inDocumentContent(obj):

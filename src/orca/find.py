@@ -38,8 +38,6 @@ from . import script_manager
 
 from .flat_review import Context
 
-_scriptManager = script_manager.getManager()
-
 
 class _SearchQueryMatch:
     """Represents a SearchQuery match."""
@@ -170,7 +168,7 @@ class SearchQuery:
             if not self.windowWrap or self._wrapped:
                 return False
             self._wrapped = True
-            script = _scriptManager.getActiveScript()
+            script = script_manager.getManager().getActiveScript()
             if self.searchBackwards:
                 script.presentMessage(messages.WRAPPING_TO_BOTTOM)
                 moved = context.goPrevious(Context.LINE, Context.WRAP_ALL)

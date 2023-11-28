@@ -31,7 +31,6 @@ import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 
-_focusManager = focus_manager.getManager()
 
 class Script(WebKitGtk.Script):
 
@@ -45,7 +44,7 @@ class Script(WebKitGtk.Script):
 
         obj = self.utilities.getCaretContext()[0]
         if obj:
-            _focusManager.set_locus_of_focus(None, obj)
+            focus_manager.getManager().set_locus_of_focus(None, obj)
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""

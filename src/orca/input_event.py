@@ -47,9 +47,6 @@ from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
@@ -257,10 +254,10 @@ class KeyboardEvent(InputEvent):
         self.timestamp = time.time()
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
-        self._script = _scriptManager.getActiveScript()
+        self._script = script_manager.getManager().getActiveScript()
         self._app = None
-        self._window = _focusManager.get_active_window()
-        self._obj = _focusManager.get_locus_of_focus()
+        self._window = focus_manager.getManager().get_active_window()
+        self._obj = focus_manager.getManager().get_locus_of_focus()
         self._handler = None
         self._consumer = None
         self._should_consume = None
@@ -294,14 +291,15 @@ class KeyboardEvent(InputEvent):
         if pressed:
             if self._script:
                 self._app = self._script.app
-                if not _focusManager.can_be_active_window(self._window):
-                    self._window = _focusManager.find_active_window()
+                if not focus_manager.getManager().can_be_active_window(self._window):
+                    self._window = focus_manager.getManager().find_active_window()
                     tokens = ["INPUT EVENT: Updating window and active window to", self._window]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    _focusManager.set_active_window(self._window)
+                    focus_manager.getManager().set_active_window(self._window)
 
             if self._window and self._app != AXObject.get_application(self._window):
-                self._script = _scriptManager.getScript(AXObject.get_application(self._window))
+                self._script = script_manager.getManager().getScript(
+                    AXObject.get_application(self._window))
                 self._app = self._script.app
                 tokens = ["INPUT EVENT: Updated script to", self._script]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -696,7 +694,7 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         return script and script.utilities.willEchoCharacter(self)
 
     def getLockingState(self):
@@ -856,7 +854,7 @@ class KeyboardEvent(InputEvent):
             tokens = ["CONSUMED:", self._did_consume, self._result_reason]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if debug.LEVEL_INFO >= debug.debugLevel and script is not None:
             attributes = script.getTransferableAttributes()
             for key, value in attributes.items():
@@ -1004,8 +1002,8 @@ class MouseButtonEvent(InputEvent):
         self.y = event.detail2
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
-        self._script = _scriptManager.getActiveScript()
-        self.window = _focusManager.get_active_window()
+        self._script = script_manager.getManager().getActiveScript()
+        self.window = focus_manager.getManager().get_active_window()
         self.obj = None
         self.app = None
 
@@ -1015,8 +1013,8 @@ class MouseButtonEvent(InputEvent):
         if not self._script:
             return
 
-        if not _focusManager.can_be_active_window(self.window):
-            self.window = _focusManager.find_active_window()
+        if not focus_manager.getManager().can_be_active_window(self.window):
+            self.window = focus_manager.getManager().find_active_window()
 
         if not self.window:
             return

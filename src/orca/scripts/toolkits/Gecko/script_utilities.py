@@ -44,8 +44,6 @@ from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-
 
 class Utilities(web.Utilities):
 
@@ -261,7 +259,7 @@ class Utilities(web.Utilities):
 
     def inFindContainer(self, obj=None):
         if not obj:
-            obj = _focusManager.get_locus_of_focus()
+            obj = focus_manager.getManager().get_locus_of_focus()
 
         if not obj or self.inDocumentContent(obj):
             return False

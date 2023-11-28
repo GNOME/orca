@@ -31,7 +31,6 @@ from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from .spellcheck import SpellCheck
 
-_focusManager = focus_manager.getManager()
 
 class Script(gtk.Script):
 
@@ -121,7 +120,7 @@ class Script(gtk.Script):
 
         # If we're here, the locusOfFocus was in the selection list when
         # that list got destroyed and repopulated. Focus is still there.
-        _focusManager.set_locus_of_focus(event, event.source, False)
+        focus_manager.getManager().set_locus_of_focus(event, event.source, False)
         self.updateBraille(event.source)
 
     def onSensitiveChanged(self, event):
@@ -136,7 +135,7 @@ class Script(gtk.Script):
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if event.source == focus:
             gtk.Script.onTextSelectionChanged(self, event)
             return
@@ -163,7 +162,7 @@ class Script(gtk.Script):
 
         self.spellcheck.presentErrorDetails()
         entry = self.spellcheck.getChangeToEntry()
-        _focusManager.set_locus_of_focus(None, entry, False)
+        focus_manager.getManager().set_locus_of_focus(None, entry, False)
         self.updateBraille(entry)
 
     def onWindowDeactivated(self, event):

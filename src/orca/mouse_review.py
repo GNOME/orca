@@ -53,9 +53,6 @@ from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
 
 class _StringContext:
     """The textual information associated with an _ItemContext."""
@@ -148,7 +145,7 @@ class _StringContext:
         voice = self._script.speechGenerator.voice(obj=self._obj, string=self._string)
         string = self._script.utilities.adjustForRepeats(self._string)
 
-        _focusManager.emit_region_changed(
+        focus_manager.getManager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)
         self._script.speakMessage(string, voice=voice, interrupt=False)
         self._script.displayBrailleMessage(self._string, -1)
@@ -317,7 +314,8 @@ class _ItemContext:
 
         if self._obj and self._obj != prior._obj and not self._isInlineChild(prior):
             priorObj = prior._obj or self._getContainer()
-            _focusManager.emit_region_changed(self._obj, mode=focus_manager.MOUSE_REVIEW)
+            focus_manager.getManager().emit_region_changed(
+                self._obj, mode=focus_manager.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
             if self._string.getString() == AXObject.get_name(self._obj):
                 return True
@@ -337,7 +335,7 @@ class MouseReviewer:
     """Main class for the mouse-review feature."""
 
     def __init__(self):
-        self._active = _settingsManager.getSetting("enableMouseReview")
+        self._active = settings_manager.getManager().getSetting("enableMouseReview")
         self._currentMouseOver = _ItemContext()
         self._pointer = None
         self._workspace = None
@@ -423,11 +421,11 @@ class MouseReviewer:
 
         # Set up the initial object as the one with the focus to avoid
         # presenting irrelevant info the first time.
-        obj = _focusManager.get_locus_of_focus()
+        obj = focus_manager.getManager().get_locus_of_focus()
         script = None
         frame = None
         if obj:
-            script = _scriptManager.getScript(AXObject.get_application(obj), obj)
+            script = script_manager.getManager().getScript(AXObject.get_application(obj), obj)
         if script:
             frame = script.utilities.topLevelObject(obj)
         self._currentMouseOver = _ItemContext(obj=obj, frame=frame, script=script)
@@ -492,7 +490,7 @@ class MouseReviewer:
             return
 
         self._active = not self._active
-        _settingsManager.setSetting("enableMouseReview", self._active)
+        settings_manager.getManager().setSetting("enableMouseReview", self._active)
 
         if not self._active:
             self.deactivate()
@@ -501,7 +499,7 @@ class MouseReviewer:
             self.activate()
             msg = messages.MOUSE_REVIEW_ENABLED
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is not None:
             script.presentMessage(msg)
 
@@ -597,11 +595,11 @@ class MouseReviewer:
         if not window:
             return
 
-        script = _scriptManager.getScript(AXObject.get_application(window))
+        script = script_manager.getManager().getScript(AXObject.get_application(window))
         if not script:
             return
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if AXObject.is_dead(focus):
             menu = None
         elif AXUtilities.is_menu(focus):
@@ -620,7 +618,7 @@ class MouseReviewer:
         tokens = [f"MOUSE REVIEW: Object at ({pX}, {pY}) is", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = _scriptManager.getScript(AXObject.get_application(window), obj)
+        script = script_manager.getManager().getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]

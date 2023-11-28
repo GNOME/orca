@@ -31,8 +31,6 @@ from . import mathsymbols
 from . import script_manager
 from .orca_i18n import _
 
-_scriptManager = script_manager.getManager()
-
 # chnames is a dictionary where the keys represent a unicode character
 # and the values represent the common term used for the character.
 #
@@ -812,7 +810,7 @@ def getCharacterName(character, preferMath=False):
     Returns a string representing the name for the character
     """
 
-    script = _scriptManager.getActiveScript()
+    script = script_manager.getManager().getActiveScript()
     if not preferMath and script:
         preferMath = script.utilities.isInMath()
     if not preferMath:

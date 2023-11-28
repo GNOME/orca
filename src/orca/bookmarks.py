@@ -30,7 +30,6 @@ from . import messages
 from . import settings_manager
 from .ax_object import AXObject
 
-_settingsManager = settings_manager.getManager()
 
 class Bookmarks:
     """Represents a default bookmark handler."""
@@ -230,7 +229,7 @@ class Bookmarks:
         """ Read saved bookmarks from disk.  Currently an unpickled object
         that represents a bookmark """
         filename = filename or self._script.name.split(' ')[0]
-        orcaDir = _settingsManager.getPrefsDir()
+        orcaDir = settings_manager.getManager().getPrefsDir()
         if not orcaDir:
             return
 
@@ -248,7 +247,7 @@ class Bookmarks:
         """ Write bookmarks to disk.  bookmarksObj must be a pickleable 
         object. """
         filename = filename or self._script.name.split(' ')[0]
-        orcaDir = _settingsManager.getPrefsDir()
+        orcaDir = settings_manager.getManager().getPrefsDir()
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         # create directory if it does not exist.  correct place??
         try:

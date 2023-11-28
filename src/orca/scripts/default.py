@@ -60,10 +60,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_scriptManager = script_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # The Default script class.                                            #
@@ -356,7 +352,7 @@ class Script(script.Script):
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        layout = _settingsManager.getSetting('keyboardLayout')
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         bindings = self.flatReviewPresenter.get_bindings(isDesktop)
         for keyBinding in bindings.keyBindings:
@@ -421,7 +417,7 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         try:
-            keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
+            keyBindings = settings_manager.getManager().overrideKeyBindings(self, keyBindings)
         except Exception as error:
             tokens = ["DEFAULT: Exception when overriding keybindings in", self, ":", error]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
@@ -434,7 +430,7 @@ class Script(script.Script):
 
         keyBindings = keybindings.KeyBindings()
 
-        layout = _settingsManager.getSetting('keyboardLayout')
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
         if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             for keyBinding in self.__getDesktopBindings().keyBindings:
                 keyBindings.add(keyBinding)
@@ -599,7 +595,7 @@ class Script(script.Script):
         name = AXObject.get_name(obj)
         names = self.pointOfReference.get('names', {})
         names[hash(obj)] = name
-        window = _focusManager.get_active_window()
+        window = focus_manager.getManager().get_active_window()
         if window:
             names[hash(window)] = AXObject.get_name(window)
         self.pointOfReference['names'] = names
@@ -681,7 +677,7 @@ class Script(script.Script):
         if self.learnModePresenter.is_active():
             self.learnModePresenter.quit()
 
-        _focusManager.set_active_window(self.utilities.topLevelObject(newLocusOfFocus))
+        focus_manager.getManager().set_active_window(self.utilities.topLevelObject(newLocusOfFocus))
         self.updateBraille(newLocusOfFocus)
 
         utterances = self.speechGenerator.generateSpeech(
@@ -700,7 +696,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        _settingsManager.loadAppSettings(self)
+        settings_manager.getManager().loadAppSettings(self)
         braille.checkBrailleSetting()
         braille.setupKeyRanges(self.brailleBindings.keys())
         speech.checkSpeechSetting()
@@ -718,8 +714,8 @@ class Script(script.Script):
         - obj: the Accessible
         """
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
             return
 
@@ -805,8 +801,8 @@ class Script(script.Script):
         associated with cell 0."""
 
         if isinstance(inputEvent, input_event.KeyboardEvent) \
-           and not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+           and not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -823,7 +819,7 @@ class Script(script.Script):
             self.updateBrailleReview(self.targetCursorCell)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.isBrailleBeginningShowing() and self.utilities.isTextArea(focus):
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
@@ -878,8 +874,8 @@ class Script(script.Script):
         associated with cell 0."""
 
         if isinstance(inputEvent, input_event.KeyboardEvent) \
-           and not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+           and not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -897,7 +893,7 @@ class Script(script.Script):
             self.updateBrailleReview(self.targetCursorCell)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.isBrailleEndShowing() and self.utilities.isTextArea(focus):
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
@@ -990,7 +986,7 @@ class Script(script.Script):
             self.flatReviewPresenter.route_pointer_to_object(self, inputEvent)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.eventSynthesizer.route_to_character(focus) \
            or self.eventSynthesizer.route_to_object(focus):
             self.presentMessage(messages.MOUSE_MOVED_SUCCESS)
@@ -1010,7 +1006,7 @@ class Script(script.Script):
                 return True
             return self.flatReviewPresenter.left_click_on_object(self, inputEvent)
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.eventSynthesizer.try_all_clickable_actions(focus):
             return True
 
@@ -1033,7 +1029,7 @@ class Script(script.Script):
             self.flatReviewPresenter.right_click_on_object(self, inputEvent)
             return True
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.eventSynthesizer.click_character(focus, 3):
             return True
 
@@ -1056,7 +1052,7 @@ class Script(script.Script):
             self.speakCharacter(character)
 
     def sayAll(self, inputEvent, obj=None, offset=None):
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if not obj or AXObject.is_dead(obj):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
@@ -1080,13 +1076,13 @@ class Script(script.Script):
     def cycleSettingsProfile(self, inputEvent=None):
         """Cycle through the user's existing settings profiles."""
 
-        profiles = _settingsManager.availableProfiles()
+        profiles = settings_manager.getManager().availableProfiles()
         if not (profiles and profiles[0]):
             self.presentMessage(messages.PROFILE_NOT_FOUND)
             return True
 
         def isMatch(x):
-            return x is not None and x[1] == _settingsManager.getProfile()
+            return x is not None and x[1] == settings_manager.getManager().getProfile()
 
         current = list(filter(isMatch, profiles))[0]
         try:
@@ -1094,7 +1090,7 @@ class Script(script.Script):
         except IndexError:
             name, profileID = profiles[0]
 
-        _settingsManager.setProfile(profileID, updateLocale=True)
+        settings_manager.getManager().setProfile(profileID, updateLocale=True)
 
         braille.checkBrailleSetting()
 
@@ -1156,11 +1152,11 @@ class Script(script.Script):
             window = AXObject.find_real_app_and_window_for(event.source)[1]
 
         if AXUtilities.is_dialog_or_alert(window) or AXUtilities.is_frame(window):
-            if event.detail1 and not _focusManager.can_be_active_window(window):
+            if event.detail1 and not focus_manager.getManager().can_be_active_window(window):
                 return
 
             sourceIsActiveWindow = self.utilities.isSameObject(
-                window, _focusManager.get_active_window())
+                window, focus_manager.getManager().get_active_window())
             if sourceIsActiveWindow and not event.detail1:
                 if self.utilities.inMenu():
                     msg = "DEFAULT: Ignoring event. In menu."
@@ -1174,13 +1170,13 @@ class Script(script.Script):
 
                 msg = "DEFAULT: Event is for active window. Clearing state."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _focusManager.set_active_window(None)
+                focus_manager.getManager().set_active_window(None)
                 return
 
             if not sourceIsActiveWindow and event.detail1:
                 msg = "DEFAULT: Updating active window."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                _focusManager.set_active_window(
+                focus_manager.getManager().set_active_window(
                     window, set_window_as_focus=True, notify_script=True)
 
         if self.findCommandRun:
@@ -1206,7 +1202,7 @@ class Script(script.Script):
 
         tokens = ["DEFAULT: Setting locus of focus to any_data", event.any_data]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        _focusManager.set_locus_of_focus(event, event.any_data)
+        focus_manager.getManager().set_locus_of_focus(event, event.any_data)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
@@ -1215,7 +1211,8 @@ class Script(script.Script):
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        if not self.utilities.isSameObject(event.source, _focusManager.get_locus_of_focus()):
+        if not self.utilities.isSameObject(
+           event.source, focus_manager.getManager().get_locus_of_focus()):
             return
 
         if AXUtilities.is_expandable(event.source):
@@ -1268,12 +1265,12 @@ class Script(script.Script):
                 if not self.utilities.presentEventFromNonShowingObject(event):
                     return
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if event.source != focus and AXUtilities.is_focused(event.source):
             if self.utilities.topLevelObjectIsActiveWindow(event.source):
                 tokens = ["DEFAULT: Updating locusOfFocus to", event.source]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                _focusManager.set_locus_of_focus(event, event.source, False)
+                focus_manager.getManager().set_locus_of_focus(event, event.source, False)
             else:
                 msg = "DEFAULT: Source window is not active window"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1322,7 +1319,7 @@ class Script(script.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        if obj != _focusManager.get_locus_of_focus():
+        if obj != focus_manager.getManager().get_locus_of_focus():
             msg = "DEFAULT: Event is for object other than the locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -1376,7 +1373,7 @@ class Script(script.Script):
             return
 
         obj = event.source
-        if not self.utilities.isSameObject(obj, _focusManager.get_locus_of_focus()):
+        if not self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
             return
 
         oldObj, oldState = self.pointOfReference.get('indeterminateChange', (None, 0))
@@ -1394,13 +1391,14 @@ class Script(script.Script):
         if not mouseEvent.pressed:
             return
 
-        windowChanged = _focusManager.get_active_window() != mouseEvent.window
+        windowChanged = focus_manager.getManager().get_active_window() != mouseEvent.window
         if windowChanged:
-            _focusManager.set_active_window(mouseEvent.window, set_window_as_focus=True)
+            focus_manager.getManager().set_active_window(
+                mouseEvent.window, set_window_as_focus=True)
 
         self.presentationInterrupt()
         if AXUtilities.is_focused(mouseEvent.obj):
-            _focusManager.set_locus_of_focus(None, mouseEvent.obj, windowChanged)
+            focus_manager.getManager().set_locus_of_focus(None, mouseEvent.obj, windowChanged)
 
     def onAnnouncement(self, event):
         """Callback for object:announcement events."""
@@ -1424,11 +1422,11 @@ class Script(script.Script):
             return
 
         if AXUtilities.is_frame(event.source):
-            if event.source != _focusManager.get_active_window():
+            if event.source != focus_manager.getManager().get_active_window():
                 msg = "DEFAULT: Event is for frame other than the active window"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
-        elif event.source != _focusManager.get_locus_of_focus():
+        elif event.source != focus_manager.getManager().get_locus_of_focus():
             msg = "DEFAULT: Event is for object other than the locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -1442,7 +1440,7 @@ class Script(script.Script):
         """Callback for object:state-changed:pressed accessibility events."""
 
         obj = event.source
-        if not self.utilities.isSameObject(obj, _focusManager.get_locus_of_focus()):
+        if not self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
             return
 
         oldObj, oldState = self.pointOfReference.get('pressedChange', (None, 0))
@@ -1461,12 +1459,13 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if not self.utilities.isSameObject(_focusManager.get_locus_of_focus(), event.source):
+        if not self.utilities.isSameObject(
+           focus_manager.getManager().get_locus_of_focus(), event.source):
             msg = "DEFAULT: Event is not for locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return
 
         isSelected = AXUtilities.is_selected(event.source)
@@ -1508,7 +1507,7 @@ class Script(script.Script):
 
         if self.utilities.handlePasteLocusOfFocusChange():
             if self.utilities.topLevelObjectIsActiveAndCurrent(event.source):
-                _focusManager.set_locus_of_focus(event, event.source, False)
+                focus_manager.getManager().set_locus_of_focus(event, event.source, False)
         elif self.utilities.handleContainerSelectionChange(event.source):
             return
         elif AXUtilities.manages_descendants(event.source):
@@ -1532,7 +1531,7 @@ class Script(script.Script):
 
         mouseReviewItem = self.mouseReviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(event.source)
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         for child in selectedChildren:
             if AXObject.find_ancestor(focus, lambda x: x == child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
@@ -1553,7 +1552,7 @@ class Script(script.Script):
                 break
 
             if not self.utilities.isLayoutOnly(child):
-                _focusManager.set_locus_of_focus(event, child)
+                focus_manager.getManager().set_locus_of_focus(event, child)
                 break
 
     def onSensitiveChanged(self, event):
@@ -1576,7 +1575,7 @@ class Script(script.Script):
 
         obj = event.source
         window, dialog = self.utilities.frameAndDialog(obj)
-        if window and not _focusManager.can_be_active_window(window) and not dialog:
+        if window and not focus_manager.getManager().can_be_active_window(window) and not dialog:
             return
 
         if AXObject.get_child_count(obj) and not AXUtilities.is_combo_box(obj):
@@ -1584,7 +1583,7 @@ class Script(script.Script):
             if selectedChildren:
                 obj = selectedChildren[0]
 
-        _focusManager.set_locus_of_focus(event, obj)
+        focus_manager.getManager().set_locus_of_focus(event, obj)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -1604,13 +1603,13 @@ class Script(script.Script):
         if role == Atspi.Role.TOOL_TIP:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString != "F1" \
-               and not _settingsManager.getSetting('presentToolTips'):
+               and not settings_manager.getManager().getSetting('presentToolTips'):
                 return
             if event.detail1:
                 self.presentObject(obj, interrupt=True)
                 return
 
-            focus = _focusManager.get_locus_of_focus()
+            focus = focus_manager.getManager().get_locus_of_focus()
             if focus and keyString == "F1":
                 obj = focus
                 self.presentObject(obj, priorObj=event.source, interrupt=True)
@@ -1628,7 +1627,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if _settingsManager.getSetting('speakMisspelledIndicator'):
+        if settings_manager.getManager().getSetting('speakMisspelledIndicator'):
             offset = text.caretOffset
             if not text.getText(offset, offset+1).isalnum():
                 offset -= 1
@@ -1644,7 +1643,7 @@ class Script(script.Script):
 
         self.utilities.handleUndoTextEvent(event)
 
-        _focusManager.set_locus_of_focus(event, event.source, False)
+        focus_manager.getManager().set_locus_of_focus(event, event.source, False)
         self.updateBraille(event.source)
 
         full, brief = "", ""
@@ -1690,10 +1689,10 @@ class Script(script.Script):
 
         self.utilities.handleUndoTextEvent(event)
 
-        if event.source == _focusManager.get_locus_of_focus() \
+        if event.source == focus_manager.getManager().get_locus_of_focus() \
            and self.utilities.isAutoTextEvent(event):
             self._saveFocusedObjectInfo(event.source)
-        _focusManager.set_locus_of_focus(event, event.source, False)
+        focus_manager.getManager().set_locus_of_focus(event, event.source, False)
         self.updateBraille(event.source)
 
         full, brief = "", ""
@@ -1751,11 +1750,11 @@ class Script(script.Script):
         if len(string) != 1:
             return
 
-        if _settingsManager.getSetting('enableEchoBySentence') \
+        if settings_manager.getManager().getSetting('enableEchoBySentence') \
            and self.echoPreviousSentence(event.source):
             return
 
-        if _settingsManager.getSetting('enableEchoByWord'):
+        if settings_manager.getManager().getSetting('enableEchoByWord'):
             self.echoPreviousWord(event.source)
 
     def onTextSelectionChanged(self, event):
@@ -1777,7 +1776,7 @@ class Script(script.Script):
         if not self.utilities.lastInputEventWasTableSort():
             return
 
-        if event.source != AXTable.get_table(_focusManager.get_locus_of_focus()):
+        if event.source != AXTable.get_table(focus_manager.getManager().get_locus_of_focus()):
             return
 
         self.pointOfReference['last-table-sort-time'] = time.time()
@@ -1790,7 +1789,7 @@ class Script(script.Script):
         if not self.utilities.lastInputEventWasTableSort():
             return
 
-        if event.source != AXTable.get_table(_focusManager.get_locus_of_focus()):
+        if event.source != AXTable.get_table(focus_manager.getManager().get_locus_of_focus()):
             return
 
         self.pointOfReference['last-table-sort-time'] = time.time()
@@ -1827,7 +1826,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Is progress bar update:", isProgressBarUpdate, ",", msg]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not isProgressBarUpdate and obj != _focusManager.get_locus_of_focus():
+        if not isProgressBarUpdate and obj != focus_manager.getManager().get_locus_of_focus():
             msg = "DEFAULT: Source != locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -1850,10 +1849,10 @@ class Script(script.Script):
         """
 
         window = AXObject.find_real_app_and_window_for(event.source)[1]
-        if not _focusManager.can_be_active_window(window):
+        if not focus_manager.getManager().can_be_active_window(window):
             return
 
-        activeWindow = _focusManager.get_active_window()
+        activeWindow = focus_manager.getManager().get_active_window()
         if self.utilities.isSameObject(window, activeWindow):
             msg = "DEFAULT: Event is for active window."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1861,14 +1860,14 @@ class Script(script.Script):
 
         self.pointOfReference = {}
 
-        _focusManager.set_active_window(window)
+        focus_manager.getManager().set_active_window(window)
         if AXObject.get_child_count(window) == 1:
             child = AXObject.get_child(window, 0)
             if AXObject.get_role(child) == Atspi.Role.MENU:
-                _focusManager.set_locus_of_focus(event, child)
+                focus_manager.getManager().set_locus_of_focus(event, child)
                 return
 
-        _focusManager.set_locus_of_focus(event, window)
+        focus_manager.getManager().set_locus_of_focus(event, window)
 
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
@@ -1892,7 +1891,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if event.source != _focusManager.get_active_window():
+        if event.source != focus_manager.getManager().get_active_window():
             msg = "DEFAULT: Ignoring event. Not for active window"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -1910,8 +1909,8 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        _focusManager.clear_state("Window deactivated")
-        _scriptManager.setActiveScript(None, "Window deactivated")
+        focus_manager.getManager().clear_state("Window deactivated")
+        script_manager.getManager().setActiveScript(None, "Window deactivated")
 
     def onClipboardContentsChanged(self, *args):
         if self.flatReviewPresenter.is_active():
@@ -1930,7 +1929,7 @@ class Script(script.Script):
         if not self.utilities.lastInputEventWasCut():
             return
 
-        if AXUtilities.is_editable(_focusManager.get_locus_of_focus()):
+        if AXUtilities.is_editable(focus_manager.getManager().get_locus_of_focus()):
             return
 
         self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
@@ -1995,7 +1994,7 @@ class Script(script.Script):
                 return
 
     def _rewindSayAll(self, context, minCharCount=10):
-        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+        if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
             return False
 
         index = self._sayAllContexts.index(context)
@@ -2010,14 +2009,14 @@ class Script(script.Script):
         except Exception:
             pass
         else:
-            _focusManager.set_locus_of_focus(None, context.obj, notify_script=False)
+            focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
             text.setCaretOffset(context.startOffset)
 
         self.sayAll(None, context.obj, context.startOffset)
         return True
 
     def _fastForwardSayAll(self, context):
-        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+        if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
             return False
 
         try:
@@ -2025,7 +2024,7 @@ class Script(script.Script):
         except Exception:
             pass
         else:
-            _focusManager.set_locus_of_focus(None, context.obj, notify_script=False)
+            focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
             text.setCaretOffset(context.endOffset)
 
         self.sayAll(None, context.obj, context.endOffset)
@@ -2049,7 +2048,7 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
-            _focusManager.emit_region_changed(
+            focus_manager.getManager().emit_region_changed(
                 context.obj, context.currentOffset, context.currentEndOffset,
                 focus_manager.SAY_ALL)
             return
@@ -2065,11 +2064,11 @@ class Script(script.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
-            _focusManager.emit_region_changed(context.obj, context.currentOffset)
+            focus_manager.getManager().emit_region_changed(context.obj, context.currentOffset)
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
-            _focusManager.set_locus_of_focus(None, context.obj, notify_script=False)
-            _focusManager.emit_region_changed(
+            focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
+            focus_manager.getManager().emit_region_changed(
                 context.obj, context.currentOffset, mode=focus_manager.SAY_ALL)
             text.setCaretOffset(context.currentOffset)
 
@@ -2263,13 +2262,13 @@ class Script(script.Script):
 
         character, startOffset, endOffset = text.getTextAtOffset(
             offset, Atspi.TextBoundaryType.CHAR)
-        _focusManager.emit_region_changed(
+        focus_manager.getManager().emit_region_changed(
             obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
         if not character or character == '\r':
             character = "\n"
 
-        speakBlankLines = _settingsManager.getSetting('speakBlankLines')
+        speakBlankLines = settings_manager.getManager().getSetting('speakBlankLines')
         if character == "\n":
             line = text.getTextAtOffset(max(0, offset),
                                         Atspi.TextBoundaryType.LINE_START)
@@ -2308,7 +2307,7 @@ class Script(script.Script):
                 self.speakMessage(indentationDescription)
 
             endOffset = startOffset + len(line)
-            _focusManager.emit_region_changed(
+            focus_manager.getManager().emit_region_changed(
                 obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
             utterance = []
@@ -2360,7 +2359,7 @@ class Script(script.Script):
             if result:
                 self.speakMessage(result)
 
-            _focusManager.emit_region_changed(
+            focus_manager.getManager().emit_region_changed(
                 obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
             voice = self.speechGenerator.voice(obj=obj, string=phrase)
@@ -2391,7 +2390,7 @@ class Script(script.Script):
 
         # Announce when we cross a hard line boundary.
         if "\n" in word:
-            if _settingsManager.getSetting('enableSpeechIndentation'):
+            if settings_manager.getManager().getSetting('enableSpeechIndentation'):
                 self.speakCharacter("\n")
             if word.startswith("\n"):
                 startOffset += 1
@@ -2449,7 +2448,7 @@ class Script(script.Script):
         # be sure not to cut of the presentation of the name-change
         # event.
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if focus == event.any_data:
             names = self.pointOfReference.get('names', {})
             oldName = names.get(hash(focus), '')
@@ -2473,8 +2472,8 @@ class Script(script.Script):
         at that cell.  Otherwise, we will pan in display-sized increments
         to show the review cursor."""
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
             return
 
@@ -2612,7 +2611,7 @@ class Script(script.Script):
 
         # Determine the correct "say all by" mode to use.
         #
-        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        sayAllStyle = settings_manager.getManager().getSetting('sayAllStyle')
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             mode = Atspi.TextBoundaryType.SENTENCE_START
         elif sayAllStyle == settings.SAYALL_STYLE_LINE:
@@ -2824,7 +2823,7 @@ class Script(script.Script):
           attributes.
         """
 
-        if _settingsManager.getSetting('speakMisspelledIndicator'):
+        if settings_manager.getManager().getSetting('speakMisspelledIndicator'):
             try:
                 text = obj.queryText()
             except Exception:
@@ -2877,11 +2876,11 @@ class Script(script.Script):
         if not event.shouldEcho or event.isOrcaModified():
             return False
 
-        role = AXObject.get_role(_focusManager.get_locus_of_focus())
+        role = AXObject.get_role(focus_manager.getManager().get_locus_of_focus())
         if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
-            focusedObject = _focusManager.find_focused_object()
+            focusedObject = focus_manager.getManager().find_focused_object()
             if focusedObject:
-                _focusManager.set_locus_of_focus(None, focusedObject, False)
+                focus_manager.getManager().set_locus_of_focus(None, focusedObject, False)
                 role = AXObject.get_role(focusedObject)
 
         if role == Atspi.Role.PASSWORD_TEXT and not event.isLockingKey():
@@ -2923,18 +2922,18 @@ class Script(script.Script):
         if briefMessage is None:
             briefMessage = fullMessage
 
-        if _settingsManager.getSetting('enableSpeech'):
-            if not _settingsManager.getSetting('messagesAreDetailed'):
+        if settings_manager.getManager().getSetting('enableSpeech'):
+            if not settings_manager.getManager().getSetting('messagesAreDetailed'):
                 message = briefMessage
             else:
                 message = fullMessage
             if message:
                 self.speakMessage(message, voice=voice, resetStyles=resetStyles, force=force)
 
-        if (_settingsManager.getSetting('enableBraille') \
-             or _settingsManager.getSetting('enableBrailleMonitor')) \
-           and _settingsManager.getSetting('enableFlashMessages'):
-            if not _settingsManager.getSetting('flashIsDetailed'):
+        if (settings_manager.getManager().getSetting('enableBraille') \
+             or settings_manager.getManager().getSetting('enableBrailleMonitor')) \
+           and settings_manager.getManager().getSetting('enableFlashMessages'):
+            if not settings_manager.getManager().getSetting('flashIsDetailed'):
                 message = briefMessage
             else:
                 message = fullMessage
@@ -2947,10 +2946,10 @@ class Script(script.Script):
                 message = [i for i in message if isinstance(i, str)]
                 message = " ".join(message)
 
-            if _settingsManager.getSetting('flashIsPersistent'):
+            if settings_manager.getManager().getSetting('flashIsPersistent'):
                 duration = -1
             else:
-                duration = _settingsManager.getSetting('brailleFlashTime')
+                duration = settings_manager.getManager().getSetting('brailleFlashTime')
 
             braille.displayMessage(message, flashTime=duration)
 
@@ -3049,8 +3048,8 @@ class Script(script.Script):
           a cursor routing key.
         """
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: display message disabled", True)
             return
 
@@ -3073,8 +3072,8 @@ class Script(script.Script):
           a cursor routing key.
         """
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: display regions disabled", True)
             return
 
@@ -3236,8 +3235,8 @@ class Script(script.Script):
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update caret disabled", True)
             return
 
@@ -3346,31 +3345,32 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        if not _settingsManager.getSetting('enableSpeech') \
-           or (_settingsManager.getSetting('onlySpeakDisplayedText') and not force):
+        if not settings_manager.getManager().getSetting('enableSpeech') \
+           or (settings_manager.getManager().getSetting('onlySpeakDisplayedText') and not force):
             return
 
-        voices = _settingsManager.getSetting('voices')
+        voices = settings_manager.getManager().getSetting('voices')
         systemVoice = voices.get(settings.SYSTEM_VOICE)
 
         voice = voice or systemVoice
         if voice == systemVoice and resetStyles:
-            capStyle = _settingsManager.getSetting('capitalizationStyle')
-            _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
+            capStyle = settings_manager.getManager().getSetting('capitalizationStyle')
+            settings_manager.getManager().setSetting(
+                'capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
             self.speechAndVerbosityManager.update_capitalization_style()
 
-            punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
-            _settingsManager.setSetting('verbalizePunctuationStyle',
+            punctStyle = settings_manager.getManager().getSetting('verbalizePunctuationStyle')
+            settings_manager.getManager().setSetting('verbalizePunctuationStyle',
                                          settings.PUNCTUATION_STYLE_NONE)
             self.speechAndVerbosityManager.update_punctuation_level()
 
         speech.speak(string, voice, interrupt)
 
         if voice == systemVoice and resetStyles:
-            _settingsManager.setSetting('capitalizationStyle', capStyle)
+            settings_manager.getManager().setSetting('capitalizationStyle', capStyle)
             self.speechAndVerbosityManager.update_capitalization_style()
 
-            _settingsManager.setSetting('verbalizePunctuationStyle', punctStyle)
+            settings_manager.getManager().setSetting('verbalizePunctuationStyle', punctStyle)
             self.speechAndVerbosityManager.update_punctuation_level()
 
     @staticmethod

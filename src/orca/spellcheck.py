@@ -42,8 +42,6 @@ from orca import settings_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
 
 class SpellCheck:
 
@@ -195,7 +193,7 @@ class SpellCheck:
 
         if self.presentMistake(detailed):
             self.presentSuggestion(detailed)
-            if detailed or _settingsManager.getSetting('spellcheckPresentContext'):
+            if detailed or settings_manager.getManager().getSetting('spellcheckPresentContext'):
                 self.presentContext()
             return True
 
@@ -212,7 +210,7 @@ class SpellCheck:
         msg = messages.MISSPELLED_WORD % word
         voice = self._script.speechGenerator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
-        if detailed or _settingsManager.getSetting('spellcheckSpellError'):
+        if detailed or settings_manager.getManager().getSetting('spellcheckSpellError'):
             self._script.spellCurrentItem(word)
 
         return True
@@ -233,7 +231,7 @@ class SpellCheck:
         msg = f"{label} {string}"
         voice = self._script.speechGenerator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
-        if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
+        if detailed or settings_manager.getManager().getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
         return True
@@ -260,11 +258,11 @@ class SpellCheck:
         msg = f"{label} {string}"
         voice = self._script.speechGenerator.voice(string=msg)
         self._script.speakMessage(msg.strip(), voice=voice)
-        if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
+        if detailed or settings_manager.getManager().getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
-        if _settingsManager.getSetting('enablePositionSpeaking') \
-           and items[0] == _focusManager.get_locus_of_focus():
+        if settings_manager.getManager().getSetting('enablePositionSpeaking') \
+           and items[0] == focus_manager.getManager().get_locus_of_focus():
             index, total = self._getSuggestionIndexAndPosition(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
             self._script.speakMessage(msg)
@@ -310,19 +308,19 @@ class SpellCheck:
         alignment.add(grid)
 
         label = guilabels.SPELL_CHECK_SPELL_ERROR
-        value = _settingsManager.getSetting('spellcheckSpellError')
+        value = settings_manager.getManager().getSetting('spellcheckSpellError')
         self.spellErrorCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.spellErrorCheckButton.set_active(value)
         grid.attach(self.spellErrorCheckButton, 0, 0, 1, 1)
 
         label = guilabels.SPELL_CHECK_SPELL_SUGGESTION
-        value = _settingsManager.getSetting('spellcheckSpellSuggestion')
+        value = settings_manager.getManager().getSetting('spellcheckSpellSuggestion')
         self.spellSuggestionCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.spellSuggestionCheckButton.set_active(value)
         grid.attach(self.spellSuggestionCheckButton, 0, 1, 1, 1)
 
         label = guilabels.SPELL_CHECK_PRESENT_CONTEXT
-        value = _settingsManager.getSetting('spellcheckPresentContext')
+        value = settings_manager.getManager().getSetting('spellcheckPresentContext')
         self.presentContextCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.presentContextCheckButton.set_active(value)
         grid.attach(self.presentContextCheckButton, 0, 2, 1, 1)

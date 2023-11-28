@@ -39,8 +39,6 @@ import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_focusManager = focus_manager.getManager()
-
 #############################################################################
 #                                                                           #
 # Utilities                                                                 #
@@ -70,7 +68,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         obj, offset = self._script._lastCaretContext
-        if not obj and self.isWebKitGtk(_focusManager.get_locus_of_focus()):
+        if not obj and self.isWebKitGtk(focus_manager.getManager().get_locus_of_focus()):
             obj, offset = super().getCaretContext()
 
         return obj, offset
@@ -79,7 +77,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         self._script._lastCaretContext = obj, offset
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
 
     def setCaretPosition(self, obj, offset):
         self.setCaretContext(obj, offset)
@@ -284,5 +282,5 @@ class Utilities(script_utilities.Utilities):
         return self.isEmbeddedDocument(obj)
 
     def inDocumentContent(self, obj=None):
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         return self.isWebKitGtk(obj)

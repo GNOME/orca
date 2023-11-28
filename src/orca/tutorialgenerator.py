@@ -42,7 +42,6 @@ from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 from .orca_i18n import _         # for gettext support
 
-_focusManager = focus_manager.getManager()
 
 class TutorialGenerator:
     """Takes accessible objects and produces a tutorial string to speak
@@ -756,7 +755,7 @@ class TutorialGenerator:
         if not settings.enableTutorialMessages:
             return []
 
-        if obj != _focusManager.get_locus_of_focus():
+        if obj != focus_manager.getManager().get_locus_of_focus():
             return []
 
         # Widgets in document content don't necessarily have the same interaction

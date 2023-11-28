@@ -32,12 +32,10 @@ from gi.repository import Atspi
 import orca.braille as braille
 import orca.braille_generator as braille_generator
 import orca.object_properties as object_properties
-import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-_settingsManager = settings_manager.getManager()
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 

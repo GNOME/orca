@@ -34,7 +34,6 @@ from . import input_event
 from . import keybindings
 from . import settings_manager
 
-_settingsManager = settings_manager.getManager()
 
 class DateAndTimePresenter:
     """Provides commands to present the date and time."""
@@ -96,14 +95,14 @@ class DateAndTimePresenter:
     def present_time(self, script, event=None):
         """Presents the current time."""
 
-        format = _settingsManager.getSetting('presentTimeFormat')
+        format = settings_manager.getManager().getSetting('presentTimeFormat')
         script.presentMessage(time.strftime(format, time.localtime()))
         return True
 
     def present_date(self, script, event=None):
         """Presents the current date."""
 
-        format = _settingsManager.getSetting('presentDateFormat')
+        format = settings_manager.getManager().getSetting('presentDateFormat')
         script.presentMessage(time.strftime(format, time.localtime()))
         return True
 

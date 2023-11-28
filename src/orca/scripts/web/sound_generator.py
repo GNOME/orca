@@ -34,8 +34,6 @@ from gi.repository import Atspi
 from orca import settings_manager
 from orca import sound_generator
 
-_settingsManager = settings_manager.getManager()
-
 
 class SoundGenerator(sound_generator.SoundGenerator):
 
@@ -45,7 +43,7 @@ class SoundGenerator(sound_generator.SoundGenerator):
     def _generateClickable(self, obj, **args):
         """Returns an array of sounds indicating obj is clickable."""
 
-        if not _settingsManager.getSetting('playSoundForState'):
+        if not settings_manager.getManager().getSetting('playSoundForState'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -66,7 +64,7 @@ class SoundGenerator(sound_generator.SoundGenerator):
     def _generateHasLongDesc(self, obj, **args):
         """Returns an array of sounds indicating obj has a longdesc."""
 
-        if not _settingsManager.getSetting('playSoundForState'):
+        if not settings_manager.getManager().getSetting('playSoundForState'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):

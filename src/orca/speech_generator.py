@@ -96,8 +96,6 @@ voiceType = {
     VALUE: settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
 }
 
-_settingsManager = settings_manager.getManager()
-
 class SpeechGenerator(generator.Generator):
     """Takes accessible objects and produces a string to speak for
     those objects.  See the generateSpeech method, which is the primary
@@ -155,7 +153,7 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         if role == Atspi.Role.LAYERED_PANE \
-           and _settingsManager.getSetting('onlySpeakDisplayedText'):
+           and settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateName(self, obj, **args)
@@ -257,13 +255,15 @@ class SpeechGenerator(generator.Generator):
         if alreadyUsed:
             return []
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        if not _settingsManager.getSetting('speakDescription') and not args.get('alerttext'):
+        if not settings_manager.getManager().getSetting('speakDescription') \
+           and not args.get('alerttext'):
             return []
 
-        if args.get('inMouseReview') and not _settingsManager.getSetting('presentToolTips'):
+        if args.get('inMouseReview') \
+           and not settings_manager.getManager().getSetting('presentToolTips'):
             return []
 
         priorObj = args.get('priorObj')
@@ -282,10 +282,10 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings for use by speech and braille that
         represent the description of the image on the object."""
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        if not _settingsManager.getSetting('speakDescription'):
+        if not settings_manager.getManager().getSetting('speakDescription'):
             return []
 
         result = generator.Generator._generateImageDescription(self, obj, **args)
@@ -305,8 +305,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateHasPopup(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or _settingsManager.getSetting('speechVerbosityLevel') \
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
@@ -318,8 +318,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateClickable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or _settingsManager.getSetting('speechVerbosityLevel') \
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
@@ -329,7 +329,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateHasLongDesc(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateHasLongDesc(self, obj, **args)
@@ -338,7 +338,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateHasDetails(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateHasDetails(self, obj, **args)
@@ -347,7 +347,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateDetailsFor(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateDetailsFor(self, obj, **args)
@@ -356,7 +356,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateAllDetails(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateAllDetails(self, obj, **args)
@@ -365,7 +365,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateDeletionStart(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         startOffset = args.get('startOffset', 0)
@@ -383,7 +383,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateDeletionEnd(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         endOffset = args.get('endOffset')
@@ -408,7 +408,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateInsertionStart(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         startOffset = args.get('startOffset', 0)
@@ -426,7 +426,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateInsertionEnd(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         endOffset = args.get('endOffset')
@@ -451,7 +451,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateMarkStart(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         startOffset = args.get('startOffset', 0)
@@ -470,7 +470,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateMarkEnd(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         endOffset = args.get('endOffset')
@@ -484,7 +484,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateAvailability(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateAvailability(self, obj, **args)
@@ -493,7 +493,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateInvalid(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateInvalid(self, obj, **args)
@@ -502,7 +502,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateRequired(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateRequired(self, obj, **args)
@@ -511,7 +511,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateTable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if args.get("leaving"):
@@ -523,7 +523,8 @@ class SpeechGenerator(generator.Generator):
             if role in disabled:
                 return []
 
-        if _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
+        if settings_manager.getManager().getSetting('speechVerbosityLevel') \
+           == settings.VERBOSITY_LEVEL_BRIEF:
             return self._generateRoleName(obj, **args)
 
         result = generator.Generator._generateTable(self, obj, **args)
@@ -543,7 +544,7 @@ class SpeechGenerator(generator.Generator):
         of a speech generator that we can update and the user can
         override.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -559,7 +560,7 @@ class SpeechGenerator(generator.Generator):
         Note that a 'role' attribute in args will override the
         accessible role of the obj.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if self._script.utilities.isStatusBarNotification(obj):
@@ -599,7 +600,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isStatusBarDescendant(obj):
             doNotPresent.append(Atspi.Role.LABEL)
 
-        if _settingsManager.getSetting('speechVerbosityLevel') \
+        if settings_manager.getManager().getSetting('speechVerbosityLevel') \
                 == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
@@ -694,7 +695,7 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateCheckedState(self, obj, **args)
@@ -708,7 +709,7 @@ class SpeechGenerator(generator.Generator):
         tree node. If the object is not expandable, an empty array
         will be returned.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateExpandableState(self, obj, **args)
@@ -717,7 +718,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = super()._generateCheckedStateIfCheckable(obj, **args)
@@ -730,7 +731,7 @@ class SpeechGenerator(generator.Generator):
         represent the checked state of the menu item, only if it is
         checked. Otherwise, and empty array will be returned.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator.\
@@ -745,7 +746,7 @@ class SpeechGenerator(generator.Generator):
         the object.  This is typically for list boxes. If the object
         is not multiselectable, an empty array will be returned.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = super()._generateMultiselectableState(obj, **args)
@@ -759,7 +760,7 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateRadioState(self, obj, **args)
@@ -769,7 +770,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateSwitchState(self, obj, **args):
         """Returns an array of strings indicating the on/off state of obj."""
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateSwitchState(self, obj, **args)
@@ -783,7 +784,7 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateToggleState(self, obj, **args)
@@ -987,7 +988,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
-        if not _settingsManager.getSetting('speakCellHeaders'):
+        if not settings_manager.getManager().getSetting('speakCellHeaders'):
             return []
 
         args['newOnly'] = True
@@ -1010,7 +1011,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
-        if not _settingsManager.getSetting('speakCellHeaders'):
+        if not settings_manager.getManager().getSetting('speakCellHeaders'):
             return []
 
         args['newOnly'] = True
@@ -1028,7 +1029,7 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.generate(obj, **args))
         self._restoreRole(oldRole, args)
         if not (result and result[0]) \
-           and _settingsManager.getSetting('speakBlankLines') \
+           and settings_manager.getManager().getSetting('speakBlankLines') \
            and not args.get('readingRow', False) \
            and args.get('formatType') != 'ancestor':
             result.append(messages.BLANK)
@@ -1038,7 +1039,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateUnselectedStateIfSelectable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if args.get('inMouseReview'):
@@ -1066,7 +1067,7 @@ class SpeechGenerator(generator.Generator):
         returned.  [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if args.get('inMouseReview'):
@@ -1110,7 +1111,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
-        if not _settingsManager.getSetting('speakCellCoordinates'):
+        if not settings_manager.getManager().getSetting('speakCellCoordinates'):
             return []
 
         return self._generateColumn(obj, **args)
@@ -1119,7 +1120,7 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the column number of a cell.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         col = AXTable.get_cell_coordinates(obj, find_cell=True)[1]
@@ -1137,7 +1138,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
-        if not _settingsManager.getSetting('speakCellCoordinates'):
+        if not settings_manager.getManager().getSetting('speakCellCoordinates'):
             return []
 
         return self._generateRow(obj, **args)
@@ -1146,7 +1147,7 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the row number of a cell.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         row = AXTable.get_cell_coordinates(obj, find_cell=True)[0]
@@ -1163,7 +1164,7 @@ class SpeechGenerator(generator.Generator):
         of its column number, the total number of columns, its row,
         and the total number of rows.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         row, col = AXTable.get_cell_coordinates(obj, find_cell=True)
@@ -1188,10 +1189,10 @@ class SpeechGenerator(generator.Generator):
         specifications) indicating that this cell is the last cell
         in the table.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        if _settingsManager.getSetting('speechVerbosityLevel') \
+        if settings_manager.getManager().getSetting('speechVerbosityLevel') \
            != settings.VERBOSITY_LEVEL_VERBOSE:
             return []
 
@@ -1224,7 +1225,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        if text == '\n' and _settingsManager.getSetting('speakBlankLines') \
+        if text == '\n' and settings_manager.getManager().getSetting('speakBlankLines') \
            and not self._script.inSayAll() and args.get('total', 1) == 1 \
            and args.get('formatType') != 'ancestor':
             result = [messages.BLANK]
@@ -1453,7 +1454,7 @@ class SpeechGenerator(generator.Generator):
         object is selected. [[[WDW - I wonder if this string should be
         moved to settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         try:
@@ -1475,7 +1476,7 @@ class SpeechGenerator(generator.Generator):
         object is selected. [[[WDW - I wonder if this string should be
         moved to settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -1499,7 +1500,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines') \
+        if result[0] in ['\n', ''] and settings_manager.getManager().getSetting('speakBlankLines') \
            and not self._script.inSayAll() and args.get('total', 1) == 1 \
            and args.get('formatType') != 'ancestor':
             result[0] = messages.BLANK
@@ -1517,7 +1518,7 @@ class SpeechGenerator(generator.Generator):
         - obj: the text object.
         """
 
-        if not _settingsManager.getSetting('enableSpeechIndentation'):
+        if not settings_manager.getManager().getSetting('enableSpeechIndentation'):
             return []
 
         line, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
@@ -1551,7 +1552,7 @@ class SpeechGenerator(generator.Generator):
         is typically set by Orca to be the previous object with
         focus.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -1581,7 +1582,7 @@ class SpeechGenerator(generator.Generator):
         object.  This is typically for progress bars. [[[WDW - we
         should consider returning an empty array if there is no value.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         percentValue = self._script.utilities.getValueAsPercent(obj)
@@ -1646,8 +1647,9 @@ class SpeechGenerator(generator.Generator):
         be moved to settings.py.]]]
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
+               == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         result = []
@@ -1678,7 +1680,7 @@ class SpeechGenerator(generator.Generator):
         apply?]]] [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -1696,7 +1698,7 @@ class SpeechGenerator(generator.Generator):
         apply?]]] [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -1730,7 +1732,7 @@ class SpeechGenerator(generator.Generator):
         panel or a layered pane.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         container = obj
@@ -1758,7 +1760,7 @@ class SpeechGenerator(generator.Generator):
         This object will be an icon panel or a layered pane.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         container = obj
@@ -1780,7 +1782,7 @@ class SpeechGenerator(generator.Generator):
         [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -1818,15 +1820,15 @@ class SpeechGenerator(generator.Generator):
 
         enabled, disabled = [], []
         if self._script.inSayAll():
-            if _settingsManager.getSetting('sayAllContextBlockquote'):
+            if settings_manager.getManager().getSetting('sayAllContextBlockquote'):
                 enabled.append(Atspi.Role.BLOCK_QUOTE)
-            if _settingsManager.getSetting('sayAllContextLandmark'):
+            if settings_manager.getManager().getSetting('sayAllContextLandmark'):
                 enabled.extend([Atspi.Role.LANDMARK, 'ROLE_DPUB_LANDMARK'])
-            if _settingsManager.getSetting('sayAllContextList'):
+            if settings_manager.getManager().getSetting('sayAllContextList'):
                 enabled.append(Atspi.Role.LIST)
                 enabled.append(Atspi.Role.DESCRIPTION_LIST)
                 enabled.append('ROLE_FEED')
-            if _settingsManager.getSetting('sayAllContextPanel'):
+            if settings_manager.getManager().getSetting('sayAllContextPanel'):
                 enabled.extend([Atspi.Role.PANEL,
                                 Atspi.Role.TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
@@ -1834,20 +1836,20 @@ class SpeechGenerator(generator.Generator):
                                 'ROLE_CONTENT_MARK',
                                 'ROLE_CONTENT_SUGGESTION',
                                 'ROLE_DPUB_SECTION'])
-            if _settingsManager.getSetting('sayAllContextNonLandmarkForm'):
+            if settings_manager.getManager().getSetting('sayAllContextNonLandmarkForm'):
                 enabled.append(Atspi.Role.FORM)
-            if _settingsManager.getSetting('sayAllContextTable'):
+            if settings_manager.getManager().getSetting('sayAllContextTable'):
                 enabled.append(Atspi.Role.TABLE)
         else:
-            if _settingsManager.getSetting('speakContextBlockquote'):
+            if settings_manager.getManager().getSetting('speakContextBlockquote'):
                 enabled.append(Atspi.Role.BLOCK_QUOTE)
-            if _settingsManager.getSetting('speakContextLandmark'):
+            if settings_manager.getManager().getSetting('speakContextLandmark'):
                 enabled.extend([Atspi.Role.LANDMARK, 'ROLE_DPUB_LANDMARK', 'ROLE_REGION'])
-            if _settingsManager.getSetting('speakContextList'):
+            if settings_manager.getManager().getSetting('speakContextList'):
                 enabled.append(Atspi.Role.LIST)
                 enabled.append(Atspi.Role.DESCRIPTION_LIST)
                 enabled.append('ROLE_FEED')
-            if _settingsManager.getSetting('speakContextPanel'):
+            if settings_manager.getManager().getSetting('speakContextPanel'):
                 enabled.extend([Atspi.Role.PANEL,
                                 Atspi.Role.TOOL_TIP,
                                 'ROLE_CONTENT_DELETION',
@@ -1855,9 +1857,9 @@ class SpeechGenerator(generator.Generator):
                                 'ROLE_CONTENT_MARK',
                                 'ROLE_CONTENT_SUGGESTION',
                                 'ROLE_DPUB_SECTION'])
-            if _settingsManager.getSetting('speakContextNonLandmarkForm'):
+            if settings_manager.getManager().getSetting('speakContextNonLandmarkForm'):
                 enabled.append(Atspi.Role.FORM)
-            if _settingsManager.getSetting('speakContextTable'):
+            if settings_manager.getManager().getSetting('speakContextTable'):
                 enabled.append(Atspi.Role.TABLE)
 
         disabled = list(set(allRoles).symmetric_difference(enabled))
@@ -2111,7 +2113,7 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the text of the ancestors for
         the object being left."""
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if self._script.utilities.inFindContainer():
@@ -2177,7 +2179,7 @@ class SpeechGenerator(generator.Generator):
         with focus.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         if self._script.utilities.inFindContainer():
@@ -2243,7 +2245,7 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the relative position of an
         object in a group.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         # TODO - JD: We need other ways to determine group membership. Not all
@@ -2278,8 +2280,8 @@ class SpeechGenerator(generator.Generator):
         object in a list.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or not (_settingsManager.getSetting('enablePositionSpeaking') \
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or not (settings_manager.getManager().getSetting('enablePositionSpeaking') \
                    or args.get('forceList', False)):
             return []
 
@@ -2340,14 +2342,14 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _getProgressBarUpdateInterval(self):
-        interval = _settingsManager.getSetting('progressBarSpeechInterval')
+        interval = settings_manager.getManager().getSetting('progressBarSpeechInterval')
         if interval is None:
             interval = super()._getProgressBarUpdateInterval()
 
         return int(interval)
 
     def _shouldPresentProgressBarUpdate(self, obj, **args):
-        if not _settingsManager.getSetting('speakProgressBarUpdates'):
+        if not settings_manager.getManager().getSetting('speakProgressBarUpdates'):
             return False
 
         return super()._shouldPresentProgressBarUpdate(obj, **args)
@@ -2422,7 +2424,7 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the accelerator for the object,
         or an empty array if no accelerator can be found.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -2439,11 +2441,11 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the mnemonic for the object, or
         an empty array if no mnemonic can be found.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
-        if _settingsManager.getSetting('enableMnemonicSpeaking') \
+        if settings_manager.getManager().getSetting('enableMnemonicSpeaking') \
            or args.get('forceMnemonic', False):
             [mnemonic, shortcut, accelerator] = \
                 self._script.utilities.mnemonicShortcutAccelerator(obj)
@@ -2471,7 +2473,7 @@ class SpeechGenerator(generator.Generator):
         tutorial generator.  A tutorial can be forced by setting the
         'forceTutorial' attribute of the args dictionary to True.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -2846,11 +2848,11 @@ class SpeechGenerator(generator.Generator):
     #####################################################################
 
     def _generatePause(self, obj, **args):
-        if not _settingsManager.getSetting('enablePauseBreaks') \
+        if not settings_manager.getManager().getSetting('enablePauseBreaks') \
            or args.get('eliminatePauses', False):
             return []
 
-        if _settingsManager.getSetting('verbalizePunctuationStyle') == \
+        if settings_manager.getManager().getSetting('verbalizePunctuationStyle') == \
            settings.PUNCTUATION_STYLE_ALL:
             return []
 
@@ -2867,7 +2869,7 @@ class SpeechGenerator(generator.Generator):
         """
 
         voicename = voiceType.get(key) or voiceType.get(DEFAULT)
-        voices = _settingsManager.getSetting('voices')
+        voices = settings_manager.getManager().getSetting('voices')
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), {}))
 
         language = args.get('language')

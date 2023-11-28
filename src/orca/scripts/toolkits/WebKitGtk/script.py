@@ -51,9 +51,6 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
-_settingsManager = settings_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # The WebKitGtk script class.                                          #
@@ -74,8 +71,8 @@ class Script(default.Script):
         self._lastCaretContext = None, -1
         self.sayAllOnLoadCheckButton = None
 
-        if _settingsManager.getSetting('sayAllOnLoad') is None:
-            _settingsManager.setSetting('sayAllOnLoad', True)
+        if settings_manager.getManager().getSetting('sayAllOnLoad') is None:
+            settings_manager.getManager().setSetting('sayAllOnLoad', True)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -120,7 +117,7 @@ class Script(default.Script):
         self.sayAllOnLoadCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(
-            _settingsManager.getSetting('sayAllOnLoad'))
+            settings_manager.getManager().getSetting('sayAllOnLoad'))
         grid.attach(self.sayAllOnLoadCheckButton, 0, 0, 1, 1)
 
         grid.show_all()
@@ -190,7 +187,7 @@ class Script(default.Script):
         if lastKey in ['Tab', 'ISO_Left_Tab']:
             return
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if lastKey == 'Down' \
            and AXObject.get_index_in_parent(event.source) == 0 \
            and focus == AXObject.get_parent(event.source) \
@@ -222,8 +219,8 @@ class Script(default.Script):
         self.utilities.setCaretContext(obj, offset)
 
         self.updateBraille(obj)
-        if _settingsManager.getSetting('sayAllOnLoad') \
-           and _settingsManager.getSetting('enableSpeech'):
+        if settings_manager.getManager().getSetting('sayAllOnLoad') \
+           and settings_manager.getManager().getSetting('enableSpeech'):
             self.sayAll(None)
 
     def onDocumentLoadStopped(self, event):
@@ -400,7 +397,7 @@ class Script(default.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if not self.utilities.isWebKitGtk(focus):
             return False
 
@@ -422,14 +419,14 @@ class Script(default.Script):
         entire document.
         """
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
         obj = self.utilities.findPreviousObject(focus)
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
@@ -446,14 +443,14 @@ class Script(default.Script):
         entire document.
         """
 
-        focus = _focusManager.get_locus_of_focus()
+        focus = focus_manager.getManager().get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
         obj = self.utilities.findNextObject(focus)
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
@@ -471,7 +468,7 @@ class Script(default.Script):
         been started on an object without text (such as an image).
         """
 
-        obj = obj or _focusManager.get_locus_of_focus()
+        obj = obj or focus_manager.getManager().get_locus_of_focus()
         if not self.utilities.isWebKitGtk(obj):
             return default.Script.sayAll(self, inputEvent, obj, offset)
 
@@ -531,11 +528,11 @@ class Script(default.Script):
             return
 
         boundary = Atspi.TextBoundaryType.LINE_START
-        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        sayAllStyle = settings_manager.getManager().getSetting('sayAllStyle')
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             boundary = Atspi.TextBoundaryType.SENTENCE_START
 
-        voices = _settingsManager.getSetting('voices')
+        voices = settings_manager.getManager().getSetting('voices')
         systemVoice = voices.get(settings.SYSTEM_VOICE)
 
         self._inSayAll = True
@@ -559,13 +556,13 @@ class Script(default.Script):
 
     def __sayAllProgressCallback(self, context, progressType):
         if progressType == speechserver.SayAllContext.PROGRESS:
-            _focusManager.emit_region_changed(
+            focus_manager.getManager().emit_region_changed(
                 context.obj, context.currentOffset, context.currentEndOffset,
                 focus_manager.SAY_ALL)
             return
 
         obj = context.obj
-        _focusManager.set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
 
         offset = context.currentOffset
         text = obj.queryText()
@@ -583,7 +580,7 @@ class Script(default.Script):
             self._sayAllContexts = []
             if not self._lastCommandWasStructNav:
                 text.setCaretOffset(offset)
-            _focusManager.emit_region_changed(obj, offset)
+            focus_manager.getManager().emit_region_changed(obj, offset)
             return
 
         # SayAllContext.COMPLETED doesn't necessarily mean done with SayAll;
@@ -600,7 +597,7 @@ class Script(default.Script):
             if [link for link in links if link.startIndex <= offset <= link.endIndex]:
                 return
 
-        _focusManager.emit_region_changed(obj, offset, mode=focus_manager.SAY_ALL)
+        focus_manager.getManager().emit_region_changed(obj, offset, mode=focus_manager.SAY_ALL)
         text.setCaretOffset(offset)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
@@ -629,8 +626,8 @@ class Script(default.Script):
         - obj: the Accessible
         """
 
-        if not _settingsManager.getSetting('enableBraille') \
-           and not _settingsManager.getSetting('enableBrailleMonitor'):
+        if not settings_manager.getManager().getSetting('enableBraille') \
+           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
             return
 

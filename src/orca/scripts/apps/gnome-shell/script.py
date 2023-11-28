@@ -35,7 +35,6 @@ from orca.ax_utilities import AXUtilities
 from .formatting import Formatting
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
 
 class Script(clutter.Script):
 
@@ -84,7 +83,8 @@ class Script(clutter.Script):
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
-        dialog = AXObject.find_ancestor(_focusManager.get_locus_of_focus(), AXUtilities.is_dialog)
+        dialog = AXObject.find_ancestor(
+            focus_manager.getManager().get_locus_of_focus(), AXUtilities.is_dialog)
         tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):
@@ -104,7 +104,7 @@ class Script(clutter.Script):
             if AXUtilities.is_panel(event.source):
                 AXObject.clear_cache(event.source)
             if AXUtilities.is_selected(event.source):
-                _focusManager.set_locus_of_focus(event, event.source)
+                focus_manager.getManager().set_locus_of_focus(event, event.source)
             return
 
         clutter.Script.onSelectedChanged(self, event)
@@ -124,7 +124,7 @@ class Script(clutter.Script):
            and not self.utilities.labelsForObject(event.source):
             descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
             if descendant is not None:
-                _focusManager.set_locus_of_focus(event, descendant)
+                focus_manager.getManager().set_locus_of_focus(event, descendant)
                 return
 
         clutter.Script.onFocusedChanged(self, event)

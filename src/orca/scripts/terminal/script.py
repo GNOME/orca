@@ -32,8 +32,6 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
-
 
 class Script(default.Script):
 
@@ -66,7 +64,7 @@ class Script(default.Script):
         """Callback for focus: accessibility events."""
 
         # https://bugzilla.gnome.org/show_bug.cgi?id=748311
-        _focusManager.set_locus_of_focus(event, event.source)
+        focus_manager.getManager().set_locus_of_focus(event, event.source)
 
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""

@@ -36,8 +36,6 @@ import orca.speech_generator as speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-_settingsManager = settings_manager.getManager()
-
 ########################################################################
 #                                                                      #
 # Speech Generator                                                     #
@@ -88,8 +86,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represents the number of children the
         object has."""
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText') \
-           or _settingsManager.getSetting('speechVerbosityLevel') == settings.VERBOSITY_LEVEL_BRIEF:
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
+           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
+               == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         result = []
@@ -110,7 +109,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         object in a list.
         """
 
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         listObj = None
@@ -140,7 +139,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if nextName == name:
                 position = index
 
-        if (_settingsManager.getSetting('enablePositionSpeaking') \
+        if (settings_manager.getManager().getSetting('enablePositionSpeaking') \
             or args.get('forceList', False)) \
            and position >= 0:
             result.append(self._script.formatting.getString(

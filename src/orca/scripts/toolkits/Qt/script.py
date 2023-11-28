@@ -33,7 +33,6 @@ from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
-_focusManager = focus_manager.getManager()
 
 class Script(default.Script):
 
@@ -86,4 +85,4 @@ class Script(default.Script):
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        _focusManager.set_locus_of_focus(event, event.source)
+        focus_manager.getManager().set_locus_of_focus(event, event.source)

@@ -34,8 +34,6 @@ from gi.repository import Gtk
 from . import script_manager
 from .input_event import BrailleEvent
 
-_scriptManager = script_manager.getManager()
-
 # Attribute/Selection mask strings:
 #
 DOT_7 =   '\x40' # 01000000
@@ -114,7 +112,7 @@ class BrlCell(Gtk.Button):
         to what occurs when a user presses the cursor routing key on his/her
         hardware braille display."""
 
-        script = _scriptManager.getActiveScript()
+        script = script_manager.getManager().getActiveScript()
         if script is None:
             return
 
