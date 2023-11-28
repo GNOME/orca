@@ -87,48 +87,10 @@ class Utilities(gtk.Utilities):
         return nodes
 
     def nodeLevel(self, obj):
-        """Determines the node level of this object if it is in a tree
-        relation, with 0 being the top level node.  If this object is
-        not in a tree relation, then -1 will be returned. Overridden
-        here because the accessible we need is in a hidden column.
-
-        Arguments:
-        -obj: the Accessible object
-        """
-
-        if not obj:
-            return -1
-
         if not self._script.chat.isInBuddyList(obj):
             return super().nodeLevel(obj)
 
-        obj = AXObject.get_previous_sibling(obj)
-        parent = AXTable.get_table(obj)
-        if parent is None:
-            return -1
-
-        nodes = []
-        node = obj
-        done = False
-        while not done:
-            relation = AXObject.get_relation(node, Atspi.RelationType.NODE_CHILD_OF)
-            node = None
-            if relation:
-                node = relation.get_target(0)
-
-            # We want to avoid situations where something gives us an
-            # infinite cycle of nodes.  Bon Echo has been seen to do
-            # this (see bug 351847).
-            #
-            if (len(nodes) > 100) or nodes.count(node):
-                debug.printMessage(debug.LEVEL_WARNING, "PIDGIN: Detected a cycle of nodes")
-                done = True
-            elif node:
-                nodes.append(node)
-            else:
-                done = True
-
-        return len(nodes) - 1
+        return super().nodeLevel(AXObject.get_previous_sibling(obj))
 
     def isZombie(self, obj):
         if not super().isZombie(obj):
