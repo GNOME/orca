@@ -84,6 +84,9 @@ class Utilities(gtk.Utilities):
 
         nodes = []
         row, col = AXTable.get_cell_coordinates(obj)
+
+        # increment the column because the expander cell is hidden.
+        col += 1
         nodeLevel = self.nodeLevel(obj)
 
         # Candidates will be in the rows beneath the current row.

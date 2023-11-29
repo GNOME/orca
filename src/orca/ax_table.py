@@ -787,9 +787,6 @@ class AXTable:
 
         tokens = ["AXTable: Table iface coords for", cell, f"are row: {row}, col: {column}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if row < 0 or column < 0:
-            return -1, -1
-
         AXTable.PHYSICAL_COORDINATES_FROM_TABLE[hash(cell)] = row, column
         return row, column
 
