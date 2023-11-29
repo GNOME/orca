@@ -309,7 +309,7 @@ CLI_GUI_SETUP = _("Set up user preferences (GUI version)")
 
 # Translators: This text is the description displayed when Orca is launched
 # from the command line and the help text is displayed.
-CLI_EPILOG = _("Report bugs to orca-list@gnome.org.")
+CLI_EPILOG = _("Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues.")
 
 # Translators: Orca normal speaks the text which was just deleted from a
 # document via command. Depending on the circumstances, that might be a
