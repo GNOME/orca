@@ -487,6 +487,9 @@ class AXTable:
         if not AXObject.supports_table(table):
             return []
 
+        if column < 0:
+            return []
+
         try:
             header = Atspi.Table.get_column_header(table, column)
         except Exception as error:
@@ -524,6 +527,9 @@ class AXTable:
         """Returns the row headers of the indexed row via the table interface."""
 
         if not AXObject.supports_table(table):
+            return []
+
+        if row < 0:
             return []
 
         try:
@@ -628,8 +634,8 @@ class AXTable:
         if AXObject.supports_table_cell(cell):
             return AXTable._get_row_headers_from_table_cell(cell)
 
-        row = AXTable._get_cell_coordinates_from_table(cell)[0]
-        if row < 0:
+        row, column = AXTable._get_cell_coordinates_from_table(cell)
+        if row < 0 or column < 0:
             return []
 
         table = AXTable.get_table(cell)
@@ -705,8 +711,8 @@ class AXTable:
         if AXObject.supports_table_cell(cell):
             return AXTable._get_column_headers_from_table_cell(cell)
 
-        column = AXTable._get_cell_coordinates_from_table(cell)[1]
-        if column < 0:
+        row, column = AXTable._get_cell_coordinates_from_table(cell)
+        if row < 0 or column < 0:
             return []
 
         table = AXTable.get_table(cell)
