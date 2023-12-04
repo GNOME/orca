@@ -253,35 +253,6 @@ class StructuralNavigationObject:
 
             self.functions.append(handler)
 
-    def addHandlerAndBinding(self, binding, handlerName, function):
-        """Adds a custom inputEventHandler and keybinding to the object's
-        handlers and bindings.  Right now this is unused, but here in
-        case a creator of a StructuralNavigationObject had some other
-        desired functionality in mind.
-
-        Arguments:
-        - binding: [keysymstring, modifiers, description]
-        - handlerName: a string uniquely identifying the handler
-        - function: the function associated with the binding
-        """
-
-        [keysymstring, modifiers, description] = binding
-        handler = input_event.InputEventHandler(function, description)
-        keyBinding = keybindings.KeyBinding(
-                         keysymstring,
-                         keybindings.defaultModifierMask,
-                         modifiers,
-                         handler)
-
-        self.inputEventHandlers[handlerName] = handler
-        self.structuralNavigation.inputEventHandlers[handlerName] = handler
-
-        self.functions.append(function)
-        self.structuralNavigation.functions.append(function)
-
-        self.keyBindings.add(keyBinding)
-        self.structuralNavigation.keyBindings.add(keyBinding)
-
     def goPrevious(self, script, inputEvent):
         """Go to the previous object."""
         self.structuralNavigation.goObject(self, False)
