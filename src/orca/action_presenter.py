@@ -133,7 +133,7 @@ class ActionPresenter:
 
         self._obj = obj
         self._gui = ActionMenu(actions, self._perform_action)
-        timeout = 100
+        timeout = 500
         msg = f"ACTION PRESENTER: Delaying popup {timeout}ms due to GtkMenu grab conflict."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(timeout, self._gui.show_gui)
