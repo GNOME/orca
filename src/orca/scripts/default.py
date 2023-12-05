@@ -501,6 +501,10 @@ class Script(script.Script):
 
         self.removeKeyGrabs("script deactivation")
 
+    def getEnabledKeyBindings(self):
+        """ Returns the key bindings that are currently active. """
+        return self.getKeyBindings().getBoundBindings()
+
     def addKeyGrabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
@@ -517,10 +521,7 @@ class Script(script.Script):
                 kd.modifiers = 0
                 orca_state.grabbedModifiers[modifier] = orca_state.device.add_key_grab(kd)
 
-        msg = "DEFAULT: Setting up key bindings"
-        self.keyBindings = self.getKeyBindings()
-
-        bound = self.keyBindings.getBoundBindings()
+        bound = self.getEnabledKeyBindings()
         for b in bound:
             for id in orca.addKeyGrab(b):
                 self.grab_ids.append(id)
@@ -536,9 +537,6 @@ class Script(script.Script):
         for id in self.grab_ids:
             orca.removeKeyGrab(id)
         self.grab_ids = []
-
-        msg = "DEFAULT: Clearing key bindings"
-        self.keyBindings = keybindings.KeyBindings()
 
         for modifier in ["Insert", "KP_Insert"]:
             if modifier in orca_state.grabbedModifiers:

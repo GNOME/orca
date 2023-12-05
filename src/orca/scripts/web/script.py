@@ -564,6 +564,25 @@ class Script(default.Script):
 
         return super().consumesKeyboardEvent(keyboardEvent)
 
+    def getEnabledKeyBindings(self):
+        all = super().getEnabledKeyBindings()
+        ret = []
+        focus = focus_manager.getManager().get_locus_of_focus()
+        for b in all:
+            if b.handler and self.caretNavigation.handles_navigation(b.handler):
+                if self.useCaretNavigationModel(None, False, focus=focus):
+                    ret.append(b)
+            elif b.handler and b.handler.function in self.structuralNavigation.functions:
+                if self.useStructuralNavigationModel(False, focus=focus):
+                    ret.append(b)
+            elif b.handler and b.handler.function in self.liveRegionManager.functions:
+                # This is temporary.
+                if self.useStructuralNavigationModel(False, focus=focus):
+                    ret.append(b)
+            else:
+                ret.append(b)
+        return ret
+
     def consumesBrailleEvent(self, brailleEvent):
         """Returns True if the script will consume this braille event."""
 
