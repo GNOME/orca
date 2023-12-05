@@ -115,7 +115,7 @@ class Script(default.Script):
         """
 
         default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
 
         self.inputEventHandlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
@@ -200,7 +200,7 @@ class Script(default.Script):
 
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        bindings = self.structuralNavigation.get_bindings(is_desktop=isDesktop)
+        bindings = self.structuralNavigation.get_bindings(refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 

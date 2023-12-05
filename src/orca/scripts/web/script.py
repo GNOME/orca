@@ -135,15 +135,18 @@ class Script(default.Script):
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        structNavBindings = self.structuralNavigation.get_bindings(is_desktop=isDesktop)
+        structNavBindings = self.structuralNavigation.get_bindings(
+            refresh=True, is_desktop=isDesktop)
         for keyBinding in structNavBindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        caretNavBindings = self.caretNavigation.get_bindings(is_desktop=isDesktop)
+        caretNavBindings = self.caretNavigation.get_bindings(
+            refresh=True, is_desktop=isDesktop)
         for keyBinding in caretNavBindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        liveRegionBindings = self.liveRegionManager.get_bindings(is_desktop=isDesktop)
+        liveRegionBindings = self.liveRegionManager.get_bindings(
+            refresh=True, is_desktop=isDesktop)
         for keyBinding in liveRegionBindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -197,9 +200,9 @@ class Script(default.Script):
         """Defines InputEventHandlers for this script."""
 
         super().setupInputEventHandlers()
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
-        self.inputEventHandlers.update(self.caretNavigation.get_handlers())
-        self.inputEventHandlers.update(self.liveRegionManager.get_handlers())
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
+        self.inputEventHandlers.update(self.caretNavigation.get_handlers(True))
+        self.inputEventHandlers.update(self.liveRegionManager.get_handlers(True))
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(

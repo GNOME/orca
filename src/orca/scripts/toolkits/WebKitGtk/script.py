@@ -79,7 +79,7 @@ class Script(default.Script):
         called by the key and braille bindings."""
 
         default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
@@ -103,7 +103,7 @@ class Script(default.Script):
 
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        return self.structuralNavigation.get_bindings(is_desktop=isDesktop)
+        return self.structuralNavigation.get_bindings(refresh=True, is_desktop=isDesktop)
 
     def getAppPreferencesGUI(self):
         """Return a GtkGrid containing the application unique configuration

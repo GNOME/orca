@@ -58,7 +58,7 @@ class Script(gtk.Script):
         called by the key and braille bindings."""
 
         gtk.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
@@ -68,7 +68,8 @@ class Script(gtk.Script):
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        structNavBindings = self.structuralNavigation.get_bindings(is_desktop=isDesktop)
+        structNavBindings = self.structuralNavigation.get_bindings(
+            refresh=True, is_desktop=isDesktop)
         for keyBinding in structNavBindings.keyBindings:
             keyBindings.add(keyBinding)
 
