@@ -41,6 +41,7 @@ import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.messages as messages
 import orca.orca_state as orca_state
+import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
@@ -114,8 +115,7 @@ class Script(default.Script):
         """
 
         default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(
-            self.structuralNavigation.inputEventHandlers)
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
 
         self.inputEventHandlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
@@ -198,7 +198,9 @@ class Script(default.Script):
                 self.inputEventHandlers["clearDynamicRowHeadersHandler"],
                 2))
 
-        bindings = self.structuralNavigation.keyBindings
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        bindings = self.structuralNavigation.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 

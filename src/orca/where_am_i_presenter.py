@@ -42,101 +42,118 @@ class WhereAmIPresenter:
     """Module for commands related to the current accessible object."""
 
     def __init__(self):
-        self._handlers = self._setup_handlers()
-        self._desktop_bindings = self._setup_desktop_bindings()
-        self._laptop_bindings = self._setup_laptop_bindings()
+        self._handlers = self.get_handlers(True)
+        self._desktop_bindings = self.get_bindings(True, True)
+        self._laptop_bindings = self.get_bindings(True, False)
 
-    def get_bindings(self, is_desktop):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the where-am-i-presenter keybindings."""
+
+        if refresh:
+            msg = "WHERE AM I PRESENTER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         if is_desktop:
             return self._desktop_bindings
         return self._laptop_bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the where-am-i-presenter handlers."""
+
+        if refresh:
+            msg = "WHERE AM I PRESENTER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
+    def _setup_bindings(self):
+        """Sets up the where-am-i-presenter key bindings."""
+
+        self._setup_desktop_bindings()
+        self._setup_laptop_bindings()
+
     def _setup_handlers(self):
-        """Sets up and returns the where-am-i-presenter input event handlers."""
+        """Sets up the where-am-i-presenter input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["readCharAttributesHandler"] = \
+        self._handlers["readCharAttributesHandler"] = \
             input_event.InputEventHandler(
                 self.present_character_attributes,
                 cmdnames.READ_CHAR_ATTRIBUTES)
 
-        handlers["presentSizeAndPositionHandler"] = \
+        self._handlers["presentSizeAndPositionHandler"] = \
             input_event.InputEventHandler(
                 self.present_size_and_position,
                 cmdnames.PRESENT_SIZE_AND_POSITION)
 
-        handlers["getTitleHandler"] = \
+        self._handlers["getTitleHandler"] = \
             input_event.InputEventHandler(
                 self.present_title,
                 cmdnames.PRESENT_TITLE)
 
-        handlers["getStatusBarHandler"] = \
+        self._handlers["getStatusBarHandler"] = \
             input_event.InputEventHandler(
                 self.present_status_bar,
                 cmdnames.PRESENT_STATUS_BAR)
 
-        handlers["present_default_button"] = \
+        self._handlers["present_default_button"] = \
             input_event.InputEventHandler(
                 self.present_default_button,
                 cmdnames.PRESENT_DEFAULT_BUTTON)
 
-        handlers["whereAmIBasicHandler"] = \
+        self._handlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
                 self.where_am_i_basic,
                 cmdnames.WHERE_AM_I_BASIC)
 
-        handlers["whereAmIDetailedHandler"] = \
+        self._handlers["whereAmIDetailedHandler"] = \
             input_event.InputEventHandler(
                 self.where_am_i_detailed,
                 cmdnames.WHERE_AM_I_DETAILED)
 
-        handlers["whereAmILinkHandler"] = \
+        self._handlers["whereAmILinkHandler"] = \
             input_event.InputEventHandler(
                 self.present_link,
                 cmdnames.WHERE_AM_I_LINK)
 
-        handlers["whereAmISelectionHandler"] = \
+        self._handlers["whereAmISelectionHandler"] = \
             input_event.InputEventHandler(
                 self.present_selection,
                 cmdnames.WHERE_AM_I_SELECTION)
 
-        return handlers
+        msg = "WHERE AM I PRESENTER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_desktop_bindings(self):
-        """Sets up and returns the where-am-i-presenter desktop key bindings."""
+        """Sets up the where-am-i-presenter desktop key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._desktop_bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "f",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("readCharAttributesHandler")))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "e",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("present_default_button")))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("presentSizeAndPositionHandler")))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 keybindings.defaultModifierMask,
@@ -144,7 +161,7 @@ class WhereAmIPresenter:
                 self._handlers.get("getTitleHandler"),
                 1))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 keybindings.defaultModifierMask,
@@ -152,7 +169,7 @@ class WhereAmIPresenter:
                 self._handlers.get("getStatusBarHandler"),
                 2))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 keybindings.defaultModifierMask,
@@ -160,7 +177,7 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmIBasicHandler"),
                 1))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 keybindings.defaultModifierMask,
@@ -168,49 +185,50 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmIDetailedHandler"),
                 2))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("whereAmILinkHandler")))
 
-        bindings.add(
+        self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("whereAmISelectionHandler")))
 
-        return bindings
+        msg = "WHERE AM I PRESENTER: Desktop bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_laptop_bindings(self):
-        """Sets up and returns the where-am-i-presenter laptop key bindings."""
+        """Sets up the where-am-i-presenter laptop key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._laptop_bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "f",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("readCharAttributesHandler")))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "e",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("present_default_button")))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("presentSizeAndPositionHandler")))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "slash",
                 keybindings.defaultModifierMask,
@@ -218,7 +236,7 @@ class WhereAmIPresenter:
                 self._handlers.get("getTitleHandler"),
                 1))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "slash",
                 keybindings.defaultModifierMask,
@@ -226,7 +244,7 @@ class WhereAmIPresenter:
                 self._handlers.get("getStatusBarHandler"),
                 2))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Return",
                 keybindings.defaultModifierMask,
@@ -234,7 +252,7 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmIBasicHandler"),
                 1))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Return",
                 keybindings.defaultModifierMask,
@@ -242,21 +260,22 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmIDetailedHandler"),
                 2))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("whereAmILinkHandler")))
 
-        bindings.add(
+        self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("whereAmISelectionHandler")))
 
-        return bindings
+        msg = "WHERE AM I PRESENTER: Laptop bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def present_character_attributes(self, script, event=None):
         """Presents the font and formatting details for the current character."""

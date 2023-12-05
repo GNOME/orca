@@ -24,6 +24,7 @@ import os
 import urllib.parse
 
 from . import cmdnames
+from . import debug
 from . import keybindings
 from . import input_event
 from . import messages
@@ -40,71 +41,82 @@ class Bookmarks:
         self._loadObservers = []
         self._loadBookmarks() 
         self._currentbookmarkindex = None
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the bookmark keybindings."""
+
+        if refresh:
+            msg = "BOOKMARKS: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the bookmark handlers."""
+
+        if refresh:
+            msg = "BOOKMARKS: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the bookmark input event handlers."""
+        """Sets up the bookmark input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["goToPrevBookmark"] = \
+        self._handlers["goToPrevBookmark"] = \
             input_event.InputEventHandler(
                 self.goToPrevBookmark,
                 cmdnames.BOOKMARK_GO_TO_PREVIOUS)
 
-        handlers["goToNextBookmark"] = \
+        self._handlers["goToNextBookmark"] = \
             input_event.InputEventHandler(
                 self.goToNextBookmark,
                 cmdnames.BOOKMARK_GO_TO_NEXT)
 
-        handlers["goToBookmark"] = \
+        self._handlers["goToBookmark"] = \
             input_event.InputEventHandler(
                 self.goToBookmark,
                 cmdnames.BOOKMARK_GO_TO)
 
-        handlers["addBookmark"] = \
+        self._handlers["addBookmark"] = \
             input_event.InputEventHandler(
                 self.addBookmark,
                 cmdnames.BOOKMARK_ADD)
 
-        handlers["saveBookmarks"] = \
+        self._handlers["saveBookmarks"] = \
             input_event.InputEventHandler(
                 self.saveBookmarks,
                 cmdnames.BOOKMARK_SAVE)
 
-        return handlers
+        msg = "BOOKMARKS: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the date-and-time-presenter key bindings."""
+        """Sets up the bookmark key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "b",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("goToNextBookmark")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "b",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("goToPrevBookmark")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "b",
                 keybindings.defaultModifierMask,
@@ -112,21 +124,22 @@ class Bookmarks:
                 self._handlers.get("saveBookmarks")))
 
         for i in range(6):
-            bindings.add(
+            self._bindings.add(
                 keybindings.KeyBinding(
                     str(i + 1),
                     keybindings.defaultModifierMask,
                     keybindings.ORCA_MODIFIER_MASK,
                     self._handlers.get("goToBookmark")))
 
-            bindings.add(
+            self._bindings.add(
                 keybindings.KeyBinding(
                     str(i + 1),
                     keybindings.defaultModifierMask,
                     keybindings.ORCA_ALT_MODIFIER_MASK,
                     self._handlers.get("addBookmark")))
 
-        return bindings
+        msg = "BOOKMARKS: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def addSaveObserver(self, observer):
         self._saveObservers.append(observer)

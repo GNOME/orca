@@ -45,104 +45,116 @@ class ObjectNavigator:
         self._last_navigator_focus = None
         self._last_locus_of_focus = None
         self._simplify = True
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the object-navigator keybindings."""
+
+        if refresh:
+            msg = "OBJECT NAVIGATOR: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the object-navigator handlers."""
+
+        if refresh:
+            msg = "OBJECT NAVIGATOR: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_bindings(self):
-        """Sets up and returns the object-navigator key bindings."""
+        """Sets up the object-navigator key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_up")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_down")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_next")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_previous")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Return",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_perform_action")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "s",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_toggle_simplify")))
 
-        return bindings
+        msg = "OBJECT NAVIGATOR: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_handlers(self):
-        """Sets up and returns the object-navigator input event handlers."""
+        """Sets up the object-navigator input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["object_navigator_up"] = \
+        self._handlers["object_navigator_up"] = \
             input_event.InputEventHandler(
                 self.up,
                 cmdnames.NAVIGATOR_UP)
 
-        handlers["object_navigator_down"] = \
+        self._handlers["object_navigator_down"] = \
             input_event.InputEventHandler(
                 self.down,
                 cmdnames.NAVIGATOR_DOWN)
 
-        handlers["object_navigator_next"] = \
+        self._handlers["object_navigator_next"] = \
             input_event.InputEventHandler(
                 self.next,
                 cmdnames.NAVIGATOR_NEXT)
 
-        handlers["object_navigator_previous"] = \
+        self._handlers["object_navigator_previous"] = \
             input_event.InputEventHandler(
                 self.previous,
                 cmdnames.NAVIGATOR_PREVIOUS)
 
-        handlers["object_navigator_perform_action"] = \
+        self._handlers["object_navigator_perform_action"] = \
             input_event.InputEventHandler(
                 self.perform_action,
                 cmdnames.NAVIGATOR_PERFORM_ACTION)
 
-        handlers["object_navigator_toggle_simplify"] = \
+        self._handlers["object_navigator_toggle_simplify"] = \
             input_event.InputEventHandler(
                 self.toggle_simplify,
                 cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED)
 
-        return handlers
+        msg = "OBJECT NAVIGATOR: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _include_in_simple_navigation(self, obj):
         """Returns True if obj should be included in simple navigation."""

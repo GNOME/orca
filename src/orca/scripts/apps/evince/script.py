@@ -27,9 +27,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
-import orca.focus_manager as focus_manager
-import orca.keybindings as keybindings
-import orca.scripts.toolkits.gtk as gtk
+from orca import focus_manager
+from orca import keybindings
+from orca import settings
+from orca import settings_manager
+from orca.scripts.toolkits import gtk
 from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
@@ -56,15 +58,18 @@ class Script(gtk.Script):
         called by the key and braille bindings."""
 
         gtk.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(
-            self.structuralNavigation.inputEventHandlers)
+        self.inputEventHandlers.update(self.structuralNavigation.get_handlers())
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
-        bindings = self.structuralNavigation.keyBindings
-        for keyBinding in bindings.keyBindings:
+
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+
+        structNavBindings = self.structuralNavigation.get_bindings(is_desktop=isDesktop)
+        for keyBinding in structNavBindings.keyBindings:
             keyBindings.add(keyBinding)
 
         return keyBindings

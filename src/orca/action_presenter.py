@@ -45,46 +45,58 @@ class ActionPresenter:
     """Provides menu for performing accessible actions on an object."""
 
     def __init__(self):
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
         self._gui = None
         self._obj = None
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the action-presenter keybindings."""
+
+        if refresh:
+            msg = "ACTION PRESENTER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the action-presenter handlers."""
+
+        if refresh:
+            msg = "ACTION PRESENTER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the action-presenter input event handlers."""
+        """Sets up the action-presenter input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["show_actions_menu"] = \
+        self._handlers["show_actions_menu"] = \
             input_event.InputEventHandler(
                 self.show_actions_menu,
                 cmdnames.SHOW_ACTIONS_MENU)
 
-        return handlers
+        msg = "ACTION PRESENTER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the action-presenter key bindings."""
+        """Sets up the action-presenter key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "a",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("show_actions_menu")))
 
-        return bindings
+        msg = "ACTION PRESENTER: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _perform_action(self, action):
         """Attempts to perform the named action."""

@@ -30,6 +30,7 @@ __license__   = "LGPL"
 import time
 
 from . import cmdnames
+from . import debug
 from . import input_event
 from . import keybindings
 from . import settings_manager
@@ -39,42 +40,53 @@ class DateAndTimePresenter:
     """Provides commands to present the date and time."""
 
     def __init__(self):
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the date-and-time-presenter keybindings."""
+
+        if refresh:
+            msg = "DATE AND TIME PRESENTER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the date-and-time-presenter handlers."""
+
+        if refresh:
+            msg = "DATE AND TIME PRESENTER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the date-and-time-presenter input event handlers."""
+        """Sets up the date-and-time-presenter input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["presentTimeHandler"] = \
+        self._handlers["presentTimeHandler"] = \
             input_event.InputEventHandler(
                 self.present_time,
                 cmdnames.PRESENT_CURRENT_TIME)
 
-        handlers["presentDateHandler"] = \
+        self._handlers["presentDateHandler"] = \
             input_event.InputEventHandler(
                 self.present_date,
                 cmdnames.PRESENT_CURRENT_DATE)
 
-        return handlers
+        msg = "DATE AND TIME PRESENTER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the date-and-time-presenter key bindings."""
+        """Sets up the date-and-time-presenter key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "t",
                 keybindings.defaultModifierMask,
@@ -82,7 +94,7 @@ class DateAndTimePresenter:
                 self._handlers.get("presentTimeHandler"),
                 1))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "t",
                 keybindings.defaultModifierMask,
@@ -90,20 +102,21 @@ class DateAndTimePresenter:
                 self._handlers.get("presentDateHandler"),
                 2))
 
-        return bindings
+        msg = "DATE AND TIME PRESENTER: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def present_time(self, script, event=None):
         """Presents the current time."""
 
-        format = settings_manager.getManager().getSetting('presentTimeFormat')
-        script.presentMessage(time.strftime(format, time.localtime()))
+        time_format = settings_manager.getManager().getSetting('presentTimeFormat')
+        script.presentMessage(time.strftime(time_format, time.localtime()))
         return True
 
     def present_date(self, script, event=None):
         """Presents the current date."""
 
-        format = settings_manager.getManager().getSetting('presentDateFormat')
-        script.presentMessage(time.strftime(format, time.localtime()))
+        data_format = settings_manager.getManager().getSetting('presentDateFormat')
+        script.presentMessage(time.strftime(data_format, time.localtime()))
         return True
 
 

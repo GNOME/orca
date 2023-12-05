@@ -43,8 +43,8 @@ class CaretNavigation:
             debug.printMessage(debug.LEVEL_INFO, msg)
 
         self._script = script
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
     def handles_navigation(self, handler):
         """Returns True if handler is a navigation command."""
@@ -57,167 +57,177 @@ class CaretNavigation:
 
         return True
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the caret-navigation keybindings."""
+
+        if refresh:
+            msg = "CARET NAVIGATION: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the caret-navigation handlers."""
+
+        if refresh:
+            msg = "CARET NAVIGATION: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the caret-navigation input event handlers."""
+        """Sets up the caret-navigation input event handlers."""
 
-        handlers = {}
-
+        self._handlers = {}
         if not (self._script and self._script.app):
-            return handlers
+            return
 
-        handlers["toggle_enabled"] = \
+        self._handlers["toggle_enabled"] = \
             input_event.InputEventHandler(
                 self._toggle_enabled,
                 cmdnames.CARET_NAVIGATION_TOGGLE)
 
-        handlers["next_character"] = \
+        self._handlers["next_character"] = \
             input_event.InputEventHandler(
                 self._next_character,
                 cmdnames.CARET_NAVIGATION_NEXT_CHAR)
 
-        handlers["previous_character"] = \
+        self._handlers["previous_character"] = \
             input_event.InputEventHandler(
                 self._previous_character,
                 cmdnames.CARET_NAVIGATION_PREV_CHAR)
 
-        handlers["next_word"] = \
+        self._handlers["next_word"] = \
             input_event.InputEventHandler(
                 self._next_word,
                 cmdnames.CARET_NAVIGATION_NEXT_WORD)
 
-        handlers["previous_word"] = \
+        self._handlers["previous_word"] = \
             input_event.InputEventHandler(
                 self._previous_word,
                 cmdnames.CARET_NAVIGATION_PREV_WORD)
 
-        handlers["next_line"] = \
+        self._handlers["next_line"] = \
             input_event.InputEventHandler(
                 self._next_line,
                 cmdnames.CARET_NAVIGATION_NEXT_LINE)
 
-        handlers["previous_line"] = \
+        self._handlers["previous_line"] = \
             input_event.InputEventHandler(
                 self._previous_line,
                 cmdnames.CARET_NAVIGATION_PREV_LINE)
 
-        handlers["start_of_file"] = \
+        self._handlers["start_of_file"] = \
             input_event.InputEventHandler(
                 self._start_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_START)
 
-        handlers["end_of_file"] = \
+        self._handlers["end_of_file"] = \
             input_event.InputEventHandler(
                 self._end_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_END)
 
-        handlers["start_of_line"] = \
+        self._handlers["start_of_line"] = \
             input_event.InputEventHandler(
                 self._start_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_START)
 
-        handlers["end_of_line"] = \
+        self._handlers["end_of_line"] = \
             input_event.InputEventHandler(
                 self._end_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_END)
 
-        return handlers
+        msg = "CARET NAVIGATION: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the caret-navigation key bindings."""
+        """Sets up the caret-navigation key bindings."""
 
-        bindings = keybindings.KeyBindings()
-
+        self._bindings = keybindings.KeyBindings()
         if not (self._script and self._script.app):
-            return bindings
+            return
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "F12",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("toggle_enabled")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("next_character")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("previous_character")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("next_word")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("previous_word")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("next_line")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("previous_line")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "End",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("end_of_line")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("start_of_line")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "End",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("end_of_file")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("start_of_file")))
 
-        return bindings
+        msg = "CARET NAVIGATION: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     @staticmethod
     def _toggle_enabled(script, event):

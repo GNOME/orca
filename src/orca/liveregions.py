@@ -84,8 +84,8 @@ class LiveRegionManager:
         # message priority queue
         self.msg_queue = PriorityQueue()
 
-        self.inputEventHandlers = self._getInputEventHandlers()
-        self.keyBindings = self._getKeyBindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
         # This is temporary.
         self.functions = [self.advancePoliteness,
@@ -120,64 +120,90 @@ class LiveRegionManager:
         script.bookmarks.addSaveObserver(self.bookmarkSaveHandler)
         script.bookmarks.addLoadObserver(self.bookmarkLoadHandler)
 
-    def _getInputEventHandlers(self):
-        handlers = {}
+    def get_bindings(self, refresh=False, is_desktop=True):
+        """Returns the live-region-manager keybindings."""
 
-        handlers["advanceLivePoliteness"] = \
+        if refresh:
+            msg = "LIVE REGION MANAGER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+
+        return self._bindings
+
+    def get_handlers(self, refresh=False):
+        """Returns the live-region-manager handlers."""
+
+        if refresh:
+            msg = "LIVE REGION MANAGER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
+
+        return self._handlers
+
+    def _setup_handlers(self):
+        """Sets up the live-region-manager input event handlers."""
+
+        self._handlers = {}
+
+        self._handlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 self.advancePoliteness,
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS)
 
-        handlers["setLivePolitenessOff"] = \
+        self._handlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 self.setLivePolitenessOff,
                 cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF)
 
-        handlers["monitorLiveRegions"] = \
+        self._handlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 self.toggleMonitoring,
                 cmdnames.LIVE_REGIONS_MONITOR)
 
-        handlers["reviewLiveAnnouncement"] = \
+        self._handlers["reviewLiveAnnouncement"] = \
             input_event.InputEventHandler(
                 self.reviewLiveAnnouncement,
                 cmdnames.LIVE_REGIONS_REVIEW)
 
-        return handlers
+        msg = "LIVE REGION MANAGER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _getKeyBindings(self):
-        keyBindings = keybindings.KeyBindings()
+    def _setup_bindings(self):
+        """Sets up the live-region-manager key bindings."""
 
-        keyBindings.add(
+        self._bindings = keybindings.KeyBindings()
+
+        self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("advanceLivePoliteness")))
+                self._handlers.get("advanceLivePoliteness")))
 
-        keyBindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers.get("setLivePolitenessOff")))
+                self._handlers.get("setLivePolitenessOff")))
 
-        keyBindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers.get("monitorLiveRegions")))
+                self._handlers.get("monitorLiveRegions")))
 
         for key in ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]:
-            keyBindings.add(
+            self._bindings.add(
                 keybindings.KeyBinding(
                     key,
                     keybindings.defaultModifierMask,
                     keybindings.ORCA_MODIFIER_MASK,
-                    self.inputEventHandlers.get("reviewLiveAnnouncement")))
+                    self._handlers.get("reviewLiveAnnouncement")))
 
-        return keyBindings
+        msg = "LIVE REGION MANAGER: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def reset(self):
         # First we will purge our politeness override dictionary of LIVE_NONE

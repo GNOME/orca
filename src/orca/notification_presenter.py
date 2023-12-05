@@ -50,8 +50,8 @@ class NotificationPresenter:
 
     def __init__(self):
         self._gui = None
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
         self._max_size = 55
 
         # The list is arranged with the most recent message being at the end of
@@ -61,13 +61,23 @@ class NotificationPresenter:
         self._notifications = []
         self._current_index = -1
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the notification-presenter keybindings."""
+
+        if refresh:
+            msg = "NOTIFICATION PRESENTER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the notification-presenter handlers."""
+
+        if refresh:
+            msg = "NOTIFICATION PRESENTER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
@@ -89,66 +99,68 @@ class NotificationPresenter:
         self._current_index = -1
 
     def _setup_handlers(self):
-        """Sets up and returns the notification-presenter input event handlers."""
+        """Sets up the notification-presenter input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["present_last_notification"] = \
+        self._handlers["present_last_notification"] = \
             input_event.InputEventHandler(
                 self._present_last_notification,
                 cmdnames.NOTIFICATION_MESSAGES_LAST)
 
-        handlers["present_next_notification"] = \
+        self._handlers["present_next_notification"] = \
             input_event.InputEventHandler(
                 self._present_next_notification,
                 cmdnames.NOTIFICATION_MESSAGES_NEXT)
 
-        handlers["present_previous_notification"] = \
+        self._handlers["present_previous_notification"] = \
             input_event.InputEventHandler(
                 self._present_previous_notification,
                 cmdnames.NOTIFICATION_MESSAGES_PREVIOUS)
 
-        handlers["show_notification_list"] = \
+        self._handlers["show_notification_list"] = \
             input_event.InputEventHandler(
                 self._show_notification_list,
                 cmdnames.NOTIFICATION_MESSAGES_LIST)
 
-        return handlers
+        msg = "NOTIFICATION PRESENTER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the notification-presenter key bindings."""
+        """Sets up the notification-presenter key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("present_last_notification")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("present_next_notification")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("present_previous_notification")))
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("show_notification_list")))
 
-        return bindings
+        msg = "NOTIFICATION PRESENTER: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _timestamp_to_string(self, timestamp):
         diff = time.time() - timestamp

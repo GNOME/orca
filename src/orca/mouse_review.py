@@ -344,8 +344,8 @@ class MouseReviewer:
         self._handlerIds = {}
         self._eventListener = Atspi.EventListener.new(self._listener)
         self.inMouseEvent = False
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
         if not _mouseReviewCapable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
@@ -375,41 +375,53 @@ class MouseReviewer:
 
         self.activate()
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the mouse-review keybindings."""
+
+        if refresh:
+            msg = "MOUSE REVIEW: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the mouse-review handlers."""
+
+        if refresh:
+            msg = "MOUSE REVIEW: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the mouse-review input event handlers."""
+        """Sets up the mouse-review input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["toggleMouseReviewHandler"] = \
+        self._handlers["toggleMouseReviewHandler"] = \
             input_event.InputEventHandler(
                 self.toggle,
                 cmdnames.MOUSE_REVIEW_TOGGLE)
 
-        return handlers
+        msg = "MOUSE REVIEW: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the mouse-review key bindings."""
+        """Sets up the mouse-review key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("toggleMouseReviewHandler")))
 
-        return bindings
+        msg = "MOUSE REVIEW: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def activate(self):
         """Activates mouse review."""

@@ -546,9 +546,8 @@ class StructuralNavigation:
                 self.structuralNavigationObjectCreator(objType)
 
         self.functions = []
-        self.inputEventHandlers = {}
-        self.setupInputEventHandlers()
-        self.keyBindings = self.getKeyBindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
         # When navigating in a non-uniform table, one can move to a
         # cell which spans multiple rows and/or columns.  When moving
@@ -623,52 +622,68 @@ class StructuralNavigation:
 
         self.enabledObjects[objType] = structuralNavigationObject
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for a script."""
+    def get_handlers(self, refresh=False):
+        """Returns the structural navigation input event handlers."""
+
+        if refresh:
+            msg = "STRUCTURAL NAVIGATION: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
+
+        return self._handlers
+
+    def _setup_handlers(self):
+        """Sets up the structural navigation input event handlers."""
+
+        self._handlers = {}
+        self.functions = []
+        if not len(self.enabledObjects):
+            return
+
+        self._handlers["toggleStructuralNavigationHandler"] = \
+            input_event.InputEventHandler(
+                self.toggleStructuralNavigation,
+                 cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
+
+        for structuralNavigationObject in self.enabledObjects.values():
+            self._handlers.update(structuralNavigationObject.inputEventHandlers)
+            self.functions.extend(structuralNavigationObject.functions)
+
+        msg = "STRUCTURAL NAVIGATION: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+    def get_bindings(self, refresh=False, is_desktop=True):
+        """Returns the structural navigation keybindings."""
+
+        if refresh:
+            msg = "STRUCTURAL NAVIGATION: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+
+        return self._bindings
+
+    def _setup_bindings(self):
+        """Sets up the structural navigation keybindings."""
+
+        self._bindings = keybindings.KeyBindings()
 
         if not len(self.enabledObjects):
             return
 
-        self.inputEventHandlers["toggleStructuralNavigationHandler"] = \
-            input_event.InputEventHandler(
-                self.toggleStructuralNavigation,
-                cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
-
-        for structuralNavigationObject in self.enabledObjects.values():
-            self.inputEventHandlers.update(\
-                structuralNavigationObject.inputEventHandlers)
-            self.functions.extend(structuralNavigationObject.functions)
-
-    def getKeyBindings(self):
-        """Defines the structural navigation key bindings for a script.
-
-        Returns: an instance of keybindings.KeyBindings.
-        """
-
-        keyBindings = keybindings.KeyBindings()
-
-        if not len(self.enabledObjects):
-            return keyBindings
-
-        keyBindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "z",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleStructuralNavigationHandler"]))
+                self._handlers["toggleStructuralNavigationHandler"]))
 
         for structuralNavigationObject in self.enabledObjects.values():
             bindings = structuralNavigationObject.keyBindings.keyBindings
             for keybinding in bindings:
-                keyBindings.add(keybinding)
+                self._bindings.add(keybinding)
 
-        return keyBindings
-
-    #########################################################################
-    #                                                                       #
-    # Input Event Handler Methods                                           #
-    #                                                                       #
-    #########################################################################
+        msg = "STRUCTURAL NAVIGATION: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def toggleStructuralNavigation(self, script, inputEvent, presentMessage=True):
         """Toggles structural navigation keys."""

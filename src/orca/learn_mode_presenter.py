@@ -54,8 +54,8 @@ class LearnModePresenter:
     """Provides implementation of learn mode"""
 
     def __init__(self):
-        self._handlers = self._setup_handlers()
-        self._bindings = self._setup_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
         self._is_active = False
         self._gui = None
 
@@ -64,41 +64,53 @@ class LearnModePresenter:
 
         return self._is_active
 
-    def get_bindings(self):
+    def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the learn-mode-presenter keybindings."""
+
+        if refresh:
+            msg = "LEARN MODE PRESENTER: Refreshing bindings."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
 
         return self._bindings
 
-    def get_handlers(self):
+    def get_handlers(self, refresh=False):
         """Returns the learn-mode-presenter handlers."""
+
+        if refresh:
+            msg = "LEARN MODE PRESENTER: Refreshing handlers."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
         return self._handlers
 
     def _setup_handlers(self):
-        """Sets up and returns the learn-mode-presenter input event handlers."""
+        """Sets up the learn-mode-presenter input event handlers."""
 
-        handlers = {}
+        self._handlers = {}
 
-        handlers["enterLearnModeHandler"] = \
+        self._handlers["enterLearnModeHandler"] = \
             input_event.InputEventHandler(
                 self.start,
                 cmdnames.ENTER_LEARN_MODE)
 
-        return handlers
+        msg = "LEARN MODE PRESENTER: Handlers set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
-        """Sets up and returns the learn-mode-presenter key bindings."""
+        """Sets up the learn-mode-presenter key bindings."""
 
-        bindings = keybindings.KeyBindings()
+        self._bindings = keybindings.KeyBindings()
 
-        bindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "h",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("enterLearnModeHandler")))
 
-        return bindings
+        msg = "LEARN MODE PRESENTER: Bindings set up."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def start(self, script=None, event=None):
         """Starts learn mode."""
@@ -206,47 +218,57 @@ class LearnModePresenter:
         items = 0
         bindings = {}
         if event is None or event.event_string == "F2":
-            bound = script.getLearnModePresenter().get_bindings().getBoundBindings()
-            bindings[guilabels.KB_GROUP_LEARN_MODE] = bound
-            items += len(bound)
-
             bound = script.getDefaultKeyBindings().getBoundBindings()
             bindings[guilabels.KB_GROUP_DEFAULT] = bound
             items += len(bound)
 
-            bound = script.getWhereAmIPresenter().get_bindings(is_desktop).getBoundBindings()
+            bound = script.getLearnModePresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
+            bindings[guilabels.KB_GROUP_LEARN_MODE] = bound
+            items += len(bound)
+
+            bound = script.getWhereAmIPresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_WHERE_AM_I] = bound
             items += len(bound)
 
-            bound = script.getSpeechAndVerbosityManager().get_bindings().getBoundBindings()
+            bound = script.getSpeechAndVerbosityManager().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_SPEECH_VERBOSITY] = bound
             items += len(bound)
 
-            bound = script.getFlatReviewPresenter().get_bindings(is_desktop).getBoundBindings()
+            bound = script.getFlatReviewPresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound
             items += len(bound)
 
-            bound = script.getObjectNavigator().get_bindings().getBoundBindings()
+            bound = script.getObjectNavigator().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
             items += len(bound)
 
-            bound = script.getDateAndTimePresenter().get_bindings().getBoundBindings()
+            bound = script.getDateAndTimePresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_DATE_AND_TIME] = bound
             items += len(bound)
 
-            bound = script.getNotificationPresenter().get_bindings().getBoundBindings()
+            bound = script.getNotificationPresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
             items += len(bound)
 
-            bound = script.getBookmarks().get_bindings().getBoundBindings()
+            bound = script.getBookmarks().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_BOOKMARKS] = bound
             items += len(bound)
 
-            bound = script.getMouseReviewer().get_bindings().getBoundBindings()
+            bound = script.getMouseReviewer().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
             items += len(bound)
 
-            bound = script.getActionPresenter().get_bindings().getBoundBindings()
+            bound = script.getActionPresenter().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_ACTIONS] = bound
             items += len(bound)
 

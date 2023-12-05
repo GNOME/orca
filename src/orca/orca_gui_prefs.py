@@ -2194,23 +2194,33 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterActionPresenter = self._createNode(guilabels.KB_GROUP_ACTIONS)
 
         if not self.kbindings:
+            layout = settings_manager.getManager().getSetting('keyboardLayout')
+            isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+
             self.kbindings = keybindings.KeyBindings()
             self.script.setupInputEventHandlers()
             allKeyBindings = self.script.getKeyBindings()
             defKeyBindings = self.script.getDefaultKeyBindings()
-            npKeyBindings = self.script.getNotificationPresenter().get_bindings()
-            svKeyBindings = self.script.getSpeechAndVerbosityManager().get_bindings()
-            dtKeyBindings = self.script.getDateAndTimePresenter().get_bindings()
-            bmKeyBindings = self.script.getBookmarks().get_bindings()
-            onKeyBindings = self.script.getObjectNavigator().get_bindings()
-            lmKeyBindings = self.script.getLearnModePresenter().get_bindings()
-            mrKeyBindings = self.script.getMouseReviewer().get_bindings()
-            acKeyBindings = self.script.getActionPresenter().get_bindings()
-
-            layout = settings_manager.getManager().getSetting('keyboardLayout')
-            isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-            frKeyBindings = self.script.getFlatReviewPresenter().get_bindings(isDesktop)
-            waiKeyBindings = self.script.getWhereAmIPresenter().get_bindings(isDesktop)
+            npKeyBindings = self.script.getNotificationPresenter().get_bindings(
+                is_desktop=isDesktop)
+            svKeyBindings = self.script.getSpeechAndVerbosityManager().get_bindings(
+                is_desktop=isDesktop)
+            dtKeyBindings = self.script.getDateAndTimePresenter().get_bindings(
+                is_desktop=isDesktop)
+            bmKeyBindings = self.script.getBookmarks().get_bindings(
+                is_desktop=isDesktop)
+            onKeyBindings = self.script.getObjectNavigator().get_bindings(
+                is_desktop=isDesktop)
+            lmKeyBindings = self.script.getLearnModePresenter().get_bindings(
+                is_desktop=isDesktop)
+            mrKeyBindings = self.script.getMouseReviewer().get_bindings(
+                is_desktop=isDesktop)
+            acKeyBindings = self.script.getActionPresenter().get_bindings(
+                is_desktop=isDesktop)
+            frKeyBindings = self.script.getFlatReviewPresenter().get_bindings(
+                is_desktop=isDesktop)
+            waiKeyBindings = self.script.getWhereAmIPresenter().get_bindings(
+                is_desktop=isDesktop)
 
             for kb in allKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):

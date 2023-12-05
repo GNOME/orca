@@ -345,45 +345,46 @@ class Script(script.Script):
     def getExtensionBindings(self):
         keyBindings = keybindings.KeyBindings()
 
+        layout = settings_manager.getManager().getSetting('keyboardLayout')
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+
         bindings = self.notificationPresenter.get_bindings()
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        layout = settings_manager.getManager().getSetting('keyboardLayout')
-        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        bindings = self.flatReviewPresenter.get_bindings(isDesktop)
+        bindings = self.flatReviewPresenter.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.whereAmIPresenter.get_bindings(isDesktop)
+        bindings = self.whereAmIPresenter.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.learnModePresenter.get_bindings()
+        bindings = self.learnModePresenter.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.speechAndVerbosityManager.get_bindings()
+        bindings = self.speechAndVerbosityManager.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.dateAndTimePresenter.get_bindings()
+        bindings = self.dateAndTimePresenter.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.objectNavigator.get_bindings()
+        bindings = self.objectNavigator.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.bookmarks.get_bindings()
+        bindings = self.bookmarks.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.mouseReviewer.get_bindings()
+        bindings = self.mouseReviewer.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.actionPresenter.get_bindings()
+        bindings = self.actionPresenter.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
