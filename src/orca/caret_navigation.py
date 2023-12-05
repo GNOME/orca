@@ -52,7 +52,7 @@ class CaretNavigation:
         if handler not in self._handlers.values():
             return False
 
-        if handler.function == self._toggle_enabled:
+        if handler.function == self.toggle_enabled:
             return False
 
         return True
@@ -86,7 +86,7 @@ class CaretNavigation:
 
         self._handlers["toggle_enabled"] = \
             input_event.InputEventHandler(
-                self._toggle_enabled,
+                self.toggle_enabled,
                 cmdnames.CARET_NAVIGATION_TOGGLE)
 
         self._handlers["next_character"] = \
@@ -230,7 +230,7 @@ class CaretNavigation:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     @staticmethod
-    def _toggle_enabled(script, event):
+    def toggle_enabled(script, event):
         """Toggles caret navigation."""
 
         if not event:
