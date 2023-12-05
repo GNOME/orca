@@ -1313,6 +1313,10 @@ class Script(default.Script):
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
+
+        self.caretNavigation.suspend_navigation(self._inFocusMode)
+        self.structuralNavigation.suspend_navigation(self._inFocusMode)
+
         self.refreshKeyGrabs("toggling focus/browse mode")
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
