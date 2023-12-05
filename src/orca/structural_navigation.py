@@ -537,6 +537,10 @@ class StructuralNavigation:
         self._script = script
         self.enabled = enabled
 
+        # To make it possible for focus mode to suspend this navigation without
+        # changing the user's preferred setting.
+        self._suspended = False
+
         # Create all of the StructuralNavigationObject's in which the
         # script is interested, using the convenience method
         #
@@ -640,10 +644,20 @@ class StructuralNavigation:
         if not len(self.enabledObjects):
             return
 
+        if self._suspended:
+            msg = "STRUCTURAL NAVIGATION: No handlers to set up (suspended)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         self._handlers["toggleStructuralNavigationHandler"] = \
             input_event.InputEventHandler(
                 self.toggleStructuralNavigation,
                  cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
+
+        if not self.enabled:
+            msg = "STRUCTURAL NAVIGATION: Not setting up navigation handlers (disabled)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
         for structuralNavigationObject in self.enabledObjects.values():
             self._handlers.update(structuralNavigationObject.inputEventHandlers)
@@ -670,12 +684,22 @@ class StructuralNavigation:
         if not len(self.enabledObjects):
             return
 
+        if self._suspended:
+            msg = "STRUCTURAL NAVIGATION: No bindings to set up (suspended)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         self._bindings.add(
             keybindings.KeyBinding(
                 "z",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["toggleStructuralNavigationHandler"]))
+
+        if not self.enabled:
+            msg = "STRUCTURAL NAVIGATION: Not setting up navigation bindings (disabled)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
         for structuralNavigationObject in self.enabledObjects.values():
             bindings = structuralNavigationObject.keyBindings.keyBindings
@@ -698,6 +722,15 @@ class StructuralNavigation:
         self._script.refreshKeyGrabs("toggling structural navigation")
         if presentMessage:
             self._script.presentMessage(string)
+
+        return True
+
+    def suspend_navigation(self, suspended):
+        """Suspends structural navigation independent of the enabled setting."""
+
+        msg = f"STRUCTURAL NAVIGATION: Suspended: {suspended}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._suspended = suspended
 
     #########################################################################
     #                                                                       #

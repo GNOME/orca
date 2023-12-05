@@ -43,6 +43,11 @@ class CaretNavigation:
             debug.printMessage(debug.LEVEL_INFO, msg)
 
         self._script = script
+
+        # To make it possible for focus mode to suspend this navigation without
+        # changing the user's preferred setting.
+        self._suspended = False
+
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
@@ -84,10 +89,21 @@ class CaretNavigation:
         if not (self._script and self._script.app):
             return
 
+        if self._suspended:
+            msg = "CARET NAVIGATION: No handlers to set up (suspended)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         self._handlers["toggle_enabled"] = \
             input_event.InputEventHandler(
                 self.toggle_enabled,
                 cmdnames.CARET_NAVIGATION_TOGGLE)
+
+        _settings_manager = settings_manager.getManager()
+        if not _settings_manager.getSetting('caretNavigationEnabled'):
+            msg = "CARET NAVIGATION: Not setting up navigation handlers (disabled)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
         self._handlers["next_character"] = \
             input_event.InputEventHandler(
@@ -149,12 +165,23 @@ class CaretNavigation:
         if not (self._script and self._script.app):
             return
 
+        if self._suspended:
+            msg = "CARET NAVIGATION: No bindings to set up (suspended)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         self._bindings.add(
             keybindings.KeyBinding(
                 "F12",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("toggle_enabled")))
+
+        _settings_manager = settings_manager.getManager()
+        if not _settings_manager.getSetting('caretNavigationEnabled'):
+            msg = "CARET NAVIGATION: Not setting up navigation bindings (disabled)."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
         self._bindings.add(
             keybindings.KeyBinding(
@@ -243,10 +270,17 @@ class CaretNavigation:
         else:
             string = messages.CARET_CONTROL_APP
 
-        script.refreshKeyGrabs("toggling caret navigation")
         script.presentMessage(string)
         _settings_manager.setSetting('caretNavigationEnabled', enabled)
+        script.refreshKeyGrabs("toggling caret navigation")
         return True
+
+    def suspend_navigation(self, suspended):
+        """Suspends caret navigation independent of the enabled setting."""
+
+        msg = f"CARET NAVIGATION: Suspended: {suspended}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._suspended = suspended
 
     @staticmethod
     def _next_character(script, event):
