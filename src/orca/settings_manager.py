@@ -603,12 +603,20 @@ class SettingsManager(object):
             if not handler:
                 continue
 
+            if not scriptKeyBindings.hasHandler(handler):
+                tokens = ["SETTINGS MANAGER:", handler.function,
+                          "is in user bindings as but not in script bindings. Not overriding."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                continue
+
             scriptKeyBindings.removeByHandler(handler)
             for bindingTuple in bindingTuples:
                 bindingTuple = self._adjustBindingTupleValues(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
                 newBinding = KeyBinding(keysym, mask, mods, handler, clicks)
                 scriptKeyBindings.add(newBinding)
+                tokens = ["SETTINGS MANAGER:", handler.function, f"is rebound to {bindingTuple}"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return scriptKeyBindings
 

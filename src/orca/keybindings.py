@@ -351,6 +351,15 @@ class KeyBindings:
                 del self.keyBindings[i - 1]
             i = i - 1
 
+    def hasHandler(self, handler):
+        """Returns True if the handler is found in this set of keybindings."""
+
+        for binding in self.keyBindings:
+            if binding.handler == handler:
+                return True
+
+        return False
+
     def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
         """Return True if keyBinding is already in self.keyBindings.
 
