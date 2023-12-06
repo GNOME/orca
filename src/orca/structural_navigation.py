@@ -728,9 +728,15 @@ class StructuralNavigation:
     def suspend_navigation(self, suspended):
         """Suspends structural navigation independent of the enabled setting."""
 
+        if suspended == self._suspended:
+            return
+
         msg = f"STRUCTURAL NAVIGATION: Suspended: {suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
+
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
     #########################################################################
     #                                                                       #

@@ -564,25 +564,6 @@ class Script(default.Script):
 
         return super().consumesKeyboardEvent(keyboardEvent)
 
-    def getEnabledKeyBindings(self):
-        all = super().getEnabledKeyBindings()
-        ret = []
-        focus = focus_manager.getManager().get_locus_of_focus()
-        for b in all:
-            if b.handler and self.caretNavigation.handles_navigation(b.handler):
-                if self.useCaretNavigationModel(None, False, focus=focus):
-                    ret.append(b)
-            elif b.handler and b.handler.function in self.structuralNavigation.functions:
-                if self.useStructuralNavigationModel(False, focus=focus):
-                    ret.append(b)
-            elif b.handler and b.handler.function in self.liveRegionManager.functions:
-                # This is temporary.
-                if self.useStructuralNavigationModel(False, focus=focus):
-                    ret.append(b)
-            else:
-                ret.append(b)
-        return ret
-
     def consumesBrailleEvent(self, brailleEvent):
         """Returns True if the script will consume this braille event."""
 
@@ -1273,6 +1254,8 @@ class Script(default.Script):
         self._inFocusMode = False
         self._focusModeIsSticky = False
         self._browseModeIsSticky = True
+        self.caretNavigation.suspend_navigation(self._inFocusMode)
+        self.structuralNavigation.suspend_navigation(self._inFocusMode)
         self.refreshKeyGrabs("enable sticky browse mode")
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
@@ -1282,6 +1265,8 @@ class Script(default.Script):
         self._inFocusMode = True
         self._focusModeIsSticky = True
         self._browseModeIsSticky = False
+        self.caretNavigation.suspend_navigation(self._inFocusMode)
+        self.structuralNavigation.suspend_navigation(self._inFocusMode)
         self.refreshKeyGrabs("enable sticky focus mode")
 
     def toggleLayoutMode(self, inputEvent):
@@ -1316,7 +1301,6 @@ class Script(default.Script):
 
         self.caretNavigation.suspend_navigation(self._inFocusMode)
         self.structuralNavigation.suspend_navigation(self._inFocusMode)
-
         self.refreshKeyGrabs("toggling focus/browse mode")
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
@@ -1342,6 +1326,9 @@ class Script(default.Script):
             self._inFocusMode = False
             msg = "locus of focus no longer in document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+            self.caretNavigation.suspend_navigation(True)
+            self.structuralNavigation.suspend_navigation(True)
             self.refreshKeyGrabs(msg)
             return False
 
@@ -1450,6 +1437,8 @@ class Script(default.Script):
             self.togglePresentationMode(None, document)
 
         if not self.utilities.inDocumentContent(oldFocus):
+            self.caretNavigation.suspend_navigation(self._inFocusMode)
+            self.structuralNavigation.suspend_navigation(self._inFocusMode)
             self.refreshKeyGrabs("locus of focus now in document")
 
         return True
@@ -2135,6 +2124,8 @@ class Script(default.Script):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.getManager().set_locus_of_focus(event, obj, notify)
                 if not notify and prevDocument is None:
+                    self.caretNavigation.suspend_navigation(self._inFocusMode)
+                    self.structuralNavigation.suspend_navigation(self._inFocusMode)
                     self.refreshKeyGrabs("updating locus of focus without notification")
                 self.utilities.setCaretContext(obj, offset)
             else:
