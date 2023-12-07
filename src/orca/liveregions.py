@@ -84,6 +84,10 @@ class LiveRegionManager:
         # message priority queue
         self.msg_queue = PriorityQueue()
 
+        # To make it possible for focus mode to suspend commands without changing
+        # the user's preferred setting.
+        self._suspended = False
+
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
@@ -148,22 +152,26 @@ class LiveRegionManager:
         self._handlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 self.advancePoliteness,
-                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS)
+                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
+                not self._suspended)
 
         self._handlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 self.setLivePolitenessOff,
-                cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF)
+                cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF,
+                not self._suspended)
 
         self._handlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 self.toggleMonitoring,
-                cmdnames.LIVE_REGIONS_MONITOR)
+                cmdnames.LIVE_REGIONS_MONITOR,
+                not self._suspended)
 
         self._handlers["reviewLiveAnnouncement"] = \
             input_event.InputEventHandler(
                 self.reviewLiveAnnouncement,
-                cmdnames.LIVE_REGIONS_REVIEW)
+                cmdnames.LIVE_REGIONS_REVIEW,
+                not self._suspended)
 
         msg = "LIVE REGION MANAGER: Handlers set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -178,21 +186,27 @@ class LiveRegionManager:
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("advanceLivePoliteness")))
+                self._handlers.get("advanceLivePoliteness"),
+                1,
+                not self._suspended))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers.get("setLivePolitenessOff")))
+                self._handlers.get("setLivePolitenessOff"),
+                1,
+                not self._suspended))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("monitorLiveRegions")))
+                self._handlers.get("monitorLiveRegions"),
+                1,
+                not self._suspended))
 
         for key in ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]:
             self._bindings.add(
@@ -200,10 +214,25 @@ class LiveRegionManager:
                     key,
                     keybindings.defaultModifierMask,
                     keybindings.ORCA_MODIFIER_MASK,
-                    self._handlers.get("reviewLiveAnnouncement")))
+                    self._handlers.get("reviewLiveAnnouncement"),
+                    1,
+                    not self._suspended))
 
         msg = "LIVE REGION MANAGER: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+    def suspend_commands(self, suspended):
+        """Suspends live region commands independent of the enabled setting."""
+
+        if suspended == self._suspended:
+            return
+
+        msg = f"LIVE REGION MANAGER: Commands suspended: {suspended}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._suspended = suspended
+
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
 
     def reset(self):
         # First we will purge our politeness override dictionary of LIVE_NONE

@@ -292,7 +292,7 @@ class CaretNavigation:
         script.refreshKeyGrabs("toggling caret navigation")
         return True
 
-    def suspend_navigation(self, suspended):
+    def suspend_commands(self, suspended):
         """Suspends caret navigation independent of the enabled setting."""
 
         if suspended == self._suspended:

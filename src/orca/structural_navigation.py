@@ -711,7 +711,7 @@ class StructuralNavigation:
 
         return True
 
-    def suspend_navigation(self, suspended):
+    def suspend_commands(self, suspended):
         """Suspends structural navigation independent of the enabled setting."""
 
         if suspended == self._suspended:
