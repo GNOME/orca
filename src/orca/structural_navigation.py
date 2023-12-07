@@ -965,11 +965,16 @@ class StructuralNavigation:
     #########################################################################
 
     def _getListDescription(self, obj):
-        children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
-        if not children:
-            return ""
+        if AXUtilities.is_list(obj):
+            children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
+            if children:
+                return messages.listItemCount(len(children))
+        elif AXUtilities.is_description_list(obj):
+            children = AXUtilities.find_all_description_terms(obj)
+            if children:
+                return messages.descriptionListTermCount(len(children))
 
-        return messages.listItemCount(len(children))
+        return ""
 
     def getCellForObj(self, obj):
         """Looks for a table cell in the ancestry of obj, if obj is not a
@@ -1822,7 +1827,9 @@ class StructuralNavigation:
         return bindings
 
     def _listGetter(self, document, arg=None):
-        return AXUtilities.find_all_lists(document)
+        results = AXUtilities.find_all_lists(document)
+        results.extend(AXUtilities.find_all_description_lists(document))
+        return results
 
     def _listPresentation(self, obj, arg=None):
         if obj is not None:
@@ -1862,7 +1869,9 @@ class StructuralNavigation:
         return bindings
 
     def _listItemGetter(self, document, arg=None):
-        return AXUtilities.find_all_list_items(document)
+        results = AXUtilities.find_all_list_items(document)
+        results.extend(AXUtilities.find_all_description_terms(document))
+        return results
 
     def _listItemPresentation(self, obj, arg=None):
         if obj is not None:
