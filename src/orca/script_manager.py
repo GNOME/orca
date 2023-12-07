@@ -226,6 +226,9 @@ class ScriptManager:
         Returns an instance of a Script.
         """
 
+        tokens = ["SCRIPT MANAGER: Getting script for", app, obj, f"sanity check: {sanityCheck}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         customScript = None
         appScript = None
         toolkitScript = None
@@ -262,17 +265,23 @@ class ScriptManager:
             appScript = self.getDefaultScript()
 
         if customScript:
+            tokens = ["SCRIPT MANAGER: Script is custom script", customScript]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return customScript
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
         if toolkitScript and not (AXUtilities.is_frame(obj) or AXUtilities.is_status_bar(obj)) \
            and not issubclass(appScript.__class__, toolkitScript.__class__):
+            tokens = ["SCRIPT MANAGER: Script is toolkit script", toolkitScript]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return toolkitScript
 
         if app and sanityCheck:
             appScript = self.sanityCheckScript(appScript)
 
+        tokens = ["SCRIPT MANAGER: Script is app script", appScript]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return appScript
 
     def getActiveScript(self):

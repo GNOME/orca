@@ -402,6 +402,8 @@ class EventManager:
             self.deregisterListener(event)
 
         self._eventsSuspended = True
+        msg = "EVENT MANAGER: Events suspended."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _unsuspendEvents(self, triggeringEvent, force=False):
         if triggeringEvent in self._eventsTriggeringSuspension:
@@ -505,7 +507,15 @@ class EventManager:
             # To decrease the likelihood that the popup will be destroyed before we
             # have its contents.
             asyncMode = False
-        script = script_manager.getManager().getScript(AXObject.get_application(e.source), e.source)
+
+        msg = f"EVENT MANAGER: Use async mode: {asyncMode}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        app = AXObject.get_application(e.source)
+        tokens = ["EVENT MANAGER: App for event source is", app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        script = script_manager.getManager().getScript(app, e.source)
         script.eventCache[e.type] = (e, time.time())
 
         self._addToQueue(e, asyncMode)
