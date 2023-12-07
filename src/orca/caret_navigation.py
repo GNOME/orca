@@ -89,71 +89,74 @@ class CaretNavigation:
         if not (self._script and self._script.app):
             return
 
-        if self._suspended:
-            msg = "CARET NAVIGATION: No handlers to set up (suspended)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
         self._handlers["toggle_enabled"] = \
             input_event.InputEventHandler(
                 self.toggle_enabled,
-                cmdnames.CARET_NAVIGATION_TOGGLE)
+                cmdnames.CARET_NAVIGATION_TOGGLE,
+                not self._suspended)
 
-        _settings_manager = settings_manager.getManager()
-        if not _settings_manager.getSetting('caretNavigationEnabled'):
-            msg = "CARET NAVIGATION: Not setting up navigation handlers (disabled)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+        enabled = settings_manager.getManager().getSetting('caretNavigationEnabled') \
+            and not self._suspended
 
         self._handlers["next_character"] = \
             input_event.InputEventHandler(
                 self._next_character,
-                cmdnames.CARET_NAVIGATION_NEXT_CHAR)
+                cmdnames.CARET_NAVIGATION_NEXT_CHAR,
+                enabled)
 
         self._handlers["previous_character"] = \
             input_event.InputEventHandler(
                 self._previous_character,
-                cmdnames.CARET_NAVIGATION_PREV_CHAR)
+                cmdnames.CARET_NAVIGATION_PREV_CHAR,
+                enabled)
 
         self._handlers["next_word"] = \
             input_event.InputEventHandler(
                 self._next_word,
-                cmdnames.CARET_NAVIGATION_NEXT_WORD)
+                cmdnames.CARET_NAVIGATION_NEXT_WORD,
+                enabled)
 
         self._handlers["previous_word"] = \
             input_event.InputEventHandler(
                 self._previous_word,
-                cmdnames.CARET_NAVIGATION_PREV_WORD)
+                cmdnames.CARET_NAVIGATION_PREV_WORD,
+                enabled)
 
         self._handlers["next_line"] = \
             input_event.InputEventHandler(
                 self._next_line,
-                cmdnames.CARET_NAVIGATION_NEXT_LINE)
+                cmdnames.CARET_NAVIGATION_NEXT_LINE,
+                enabled)
 
         self._handlers["previous_line"] = \
             input_event.InputEventHandler(
                 self._previous_line,
-                cmdnames.CARET_NAVIGATION_PREV_LINE)
+                cmdnames.CARET_NAVIGATION_PREV_LINE,
+                enabled)
 
         self._handlers["start_of_file"] = \
             input_event.InputEventHandler(
                 self._start_of_file,
-                cmdnames.CARET_NAVIGATION_FILE_START)
+                cmdnames.CARET_NAVIGATION_FILE_START,
+                enabled)
 
         self._handlers["end_of_file"] = \
             input_event.InputEventHandler(
                 self._end_of_file,
-                cmdnames.CARET_NAVIGATION_FILE_END)
+                cmdnames.CARET_NAVIGATION_FILE_END,
+                enabled)
 
         self._handlers["start_of_line"] = \
             input_event.InputEventHandler(
                 self._start_of_line,
-                cmdnames.CARET_NAVIGATION_LINE_START)
+                cmdnames.CARET_NAVIGATION_LINE_START,
+                enabled)
 
         self._handlers["end_of_line"] = \
             input_event.InputEventHandler(
                 self._end_of_line,
-                cmdnames.CARET_NAVIGATION_LINE_END)
+                cmdnames.CARET_NAVIGATION_LINE_END,
+                enabled)
 
         msg = "CARET NAVIGATION: Handlers set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -165,93 +168,107 @@ class CaretNavigation:
         if not (self._script and self._script.app):
             return
 
-        if self._suspended:
-            msg = "CARET NAVIGATION: No bindings to set up (suspended)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
         self._bindings.add(
             keybindings.KeyBinding(
                 "F12",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("toggle_enabled")))
+                self._handlers.get("toggle_enabled"),
+                1,
+                not self._suspended))
 
-        _settings_manager = settings_manager.getManager()
-        if not _settings_manager.getSetting('caretNavigationEnabled'):
-            msg = "CARET NAVIGATION: Not setting up navigation bindings (disabled)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+        enabled = settings_manager.getManager().getSetting('caretNavigationEnabled') \
+            and not self._suspended
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("next_character")))
+                self._handlers.get("next_character"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("previous_character")))
+                self._handlers.get("previous_character"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("next_word")))
+                self._handlers.get("next_word"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("previous_word")))
+                self._handlers.get("previous_word"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("next_line")))
+                self._handlers.get("next_line"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("previous_line")))
+                self._handlers.get("previous_line"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("end_of_line")))
+                self._handlers.get("end_of_line"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("start_of_line")))
+                self._handlers.get("start_of_line"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("end_of_file")))
+                self._handlers.get("end_of_file"),
+                1,
+                enabled))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
                 keybindings.defaultModifierMask,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("start_of_file")))
+                self._handlers.get("start_of_file"),
+                1,
+                enabled))
 
         msg = "CARET NAVIGATION: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)

@@ -644,23 +644,17 @@ class StructuralNavigation:
         if not len(self.enabledObjects):
             return
 
-        if self._suspended:
-            msg = "STRUCTURAL NAVIGATION: No handlers to set up (suspended)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
         self._handlers["toggleStructuralNavigationHandler"] = \
             input_event.InputEventHandler(
                 self.toggleStructuralNavigation,
-                 cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
-
-        if not self.enabled:
-            msg = "STRUCTURAL NAVIGATION: Not setting up navigation handlers (disabled)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+                 cmdnames.STRUCTURAL_NAVIGATION_TOGGLE,
+                 not self._suspended)
 
         for structuralNavigationObject in self.enabledObjects.values():
-            self._handlers.update(structuralNavigationObject.inputEventHandlers)
+            handlers = structuralNavigationObject.inputEventHandlers
+            for key in handlers:
+                handlers[key].set_enabled(not self._suspended and self.enabled)
+            self._handlers.update(handlers)
             self.functions.extend(structuralNavigationObject.functions)
 
         msg = "STRUCTURAL NAVIGATION: Handlers set up."
@@ -680,13 +674,7 @@ class StructuralNavigation:
         """Sets up the structural navigation keybindings."""
 
         self._bindings = keybindings.KeyBindings()
-
         if not len(self.enabledObjects):
-            return
-
-        if self._suspended:
-            msg = "STRUCTURAL NAVIGATION: No bindings to set up (suspended)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         self._bindings.add(
@@ -694,16 +682,14 @@ class StructuralNavigation:
                 "z",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggleStructuralNavigationHandler"]))
-
-        if not self.enabled:
-            msg = "STRUCTURAL NAVIGATION: Not setting up navigation bindings (disabled)."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+                self._handlers["toggleStructuralNavigationHandler"],
+                1,
+                not self._suspended))
 
         for structuralNavigationObject in self.enabledObjects.values():
             bindings = structuralNavigationObject.keyBindings.keyBindings
             for keybinding in bindings:
+                keybinding.set_enabled(self.enabled and not self._suspended)
                 self._bindings.add(keybinding)
 
         msg = "STRUCTURAL NAVIGATION: Bindings set up."

@@ -596,29 +596,36 @@ class SettingsManager(object):
 
         return bindingTuple
 
-    def overrideKeyBindings(self, script, scriptKeyBindings):
+    def overrideKeyBindings(self, script, bindings, enabledOnly=True):
         keybindingsSettings = self.profileKeybindings
         for handlerString, bindingTuples in keybindingsSettings.items():
             handler = script.inputEventHandlers.get(handlerString)
             if not handler:
                 continue
 
-            if not scriptKeyBindings.hasHandler(handler):
-                tokens = ["SETTINGS MANAGER:", handler.function,
-                          "is in user bindings as but not in script bindings. Not overriding."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                continue
+            if enabledOnly:
+                if not bindings.hasHandler(handler):
+                    tokens = ["SETTINGS MANAGER:", handler.function,
+                              "is not in the bindings provided. Not overriding."]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    continue
 
-            scriptKeyBindings.removeByHandler(handler)
+                if not bindings.hasEnabledHandler(handler):
+                    tokens = ["SETTINGS MANAGER:", handler.function,
+                              "is not enabled. Not overriding."]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    continue
+
+            bindings.removeByHandler(handler)
             for bindingTuple in bindingTuples:
                 bindingTuple = self._adjustBindingTupleValues(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
                 newBinding = KeyBinding(keysym, mask, mods, handler, clicks)
-                scriptKeyBindings.add(newBinding)
+                bindings.add(newBinding)
                 tokens = ["SETTINGS MANAGER:", handler.function, f"is rebound to {bindingTuple}"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        return scriptKeyBindings
+        return bindings
 
     def isFirstStart(self):
         """Check if the firstStart key is True or false"""

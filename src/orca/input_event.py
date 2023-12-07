@@ -1063,7 +1063,7 @@ class MouseButtonEvent(InputEvent):
 
 class InputEventHandler:
 
-    def __init__(self, function, description, learnModeEnabled=True):
+    def __init__(self, function, description, learnModeEnabled=True, enabled=True):
         """Creates a new InputEventHandler instance.  All bindings
         (e.g., key bindings and braille bindings) will be handled
         by an instance of an InputEventHandler.
@@ -1078,11 +1078,14 @@ class InputEventHandler:
         - learnModeEnabled: if True, the description will be spoken and
                             brailled if learn mode is enabled.  If False,
                             the function will be called no matter what.
+        - enabled: Whether this hander can be used, i.e. based on mode, the
+          feature being enabled/active, etc.
         """
 
         self.function = function
         self.description = description
         self.learnModeEnabled = learnModeEnabled
+        self._enabled = enabled
 
     def __eq__(self, other):
         """Compares one input handler to another."""
@@ -1091,6 +1094,16 @@ class InputEventHandler:
             return False
 
         return (self.function == other.function)
+
+    def is_enabled(self):
+        """Returns True if this handler is enabled."""
+
+        return self._enabled
+
+    def set_enabled(self, enabled):
+        """Sets this handler's enabled state."""
+
+        self._enabled = enabled
 
     def processInputEvent(self, script, inputEvent):
         """Processes an input event.
@@ -1103,6 +1116,11 @@ class InputEventHandler:
         - inputEvent: the input event to pass to the function bound
                       to this InputEventHandler instance.
         """
+
+        if not self._enabled:
+            msg = f"INPUT EVENT HANDLER: {self.description} is not enabled."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
 
         consumed = False
         try:

@@ -211,7 +211,7 @@ class KeyBinding:
     """
 
     def __init__(self, keysymstring, modifier_mask, modifiers, handler,
-                 click_count = 1):
+                 click_count = 1, enabled=True):
         """Creates a new key binding.
 
         Arguments:
@@ -224,6 +224,8 @@ class KeyBinding:
           this key binding to match an input event (see also
           Atspi.ModifierType.*)
         - handler: the InputEventHandler for this key binding
+        - enabled: Whether this binding can be bound and used, i.e. based
+          on mode, the feature being enabled/active, etc.
         """
 
         self.keysymstring = keysymstring
@@ -232,6 +234,7 @@ class KeyBinding:
         self.handler = handler
         self.click_count = click_count
         self.keycode = None
+        self._enabled = enabled
 
     def matches(self, keycode, modifiers):
         """Returns true if this key binding matches the given keycode and
@@ -250,6 +253,16 @@ class KeyBinding:
             return result == self.modifiers
         else:
             return False
+
+    def is_enabled(self):
+        """Returns True if this KeyBinding is enabled."""
+
+        return self._enabled
+
+    def set_enabled(self, enabled):
+        """Set this KeyBinding's enabled state."""
+
+        self._enabled = enabled
 
     def description(self):
         """Returns the description of this binding's functionality."""
@@ -360,6 +373,15 @@ class KeyBindings:
 
         return False
 
+    def hasEnabledHandler(self, handler):
+        """Returns True if the handler is found in this set of keybindings and is enabled."""
+
+        for binding in self.keyBindings:
+            if binding.handler == handler and binding.handler.is_enabled():
+                return True
+
+        return False
+
     def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
         """Return True if keyBinding is already in self.keyBindings.
 
@@ -435,6 +457,21 @@ class KeyBindings:
             bindings[string] = kb.description()
 
         return bound
+
+    def getEnabledBindings(self, boundOnly=False):
+        """Returns the KeyBindings instances which can be bound and used."""
+
+        if boundOnly:
+            bindings = [kb for kb in self.keyBindings if kb.keysymstring]
+            boundString = "bound bindings"
+        else:
+            bindings = self.keyBindings
+            boundString = "bindings"
+
+        enabled = [kb for kb in bindings if kb.is_enabled()]
+        msg = f"KEY BINDINGS: {len(enabled)} {boundString} found out of {len(self.keyBindings)}."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return enabled
 
     def getBindingsForHandler(self, handler):
         """Returns the KeyBinding instances associated with handler."""

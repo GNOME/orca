@@ -390,7 +390,7 @@ class Script(script.Script):
 
         return keyBindings
 
-    def getKeyBindings(self):
+    def getKeyBindings(self, enabledOnly=True):
         """Defines the key bindings for this script.
 
         Returns an instance of keybindings.KeyBindings.
@@ -415,7 +415,8 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         try:
-            keyBindings = settings_manager.getManager().overrideKeyBindings(self, keyBindings)
+            keyBindings = settings_manager.getManager().overrideKeyBindings(
+                self, keyBindings, enabledOnly)
         except Exception as error:
             tokens = ["DEFAULT: Exception when overriding keybindings in", self, ":", error]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
@@ -520,7 +521,7 @@ class Script(script.Script):
         msg = "DEFAULT: Setting up key bindings"
         self.keyBindings = self.getKeyBindings()
 
-        bound = self.keyBindings.getBoundBindings()
+        bound = self.keyBindings.getEnabledBindings(boundOnly=True)
         for b in bound:
             for id in orca.addKeyGrab(b):
                 self.grab_ids.append(id)

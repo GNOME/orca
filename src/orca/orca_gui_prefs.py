@@ -2145,7 +2145,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         try:
             self.script.setupInputEventHandlers()
             keyBinds = keybindings.KeyBindings()
-            keyBinds = settings_manager.getManager().overrideKeyBindings(self.script, keyBinds)
+            keyBinds = settings_manager.getManager().overrideKeyBindings(
+                self.script, keyBinds, enabledOnly=False)
             keyBind = keybindings.KeyBinding(None, None, None, None)
             treeModel = self.keyBindingsModel
 
@@ -2199,7 +2200,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
             self.kbindings = keybindings.KeyBindings()
             self.script.setupInputEventHandlers()
-            allKeyBindings = self.script.getKeyBindings()
+            allKeyBindings = self.script.getKeyBindings(False)
             defKeyBindings = self.script.getDefaultKeyBindings()
             npKeyBindings = self.script.getNotificationPresenter().get_bindings(
                 is_desktop=isDesktop)

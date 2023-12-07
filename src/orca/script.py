@@ -148,7 +148,7 @@ class Script:
         called by the key and braille bindings."""
         pass
 
-    def getKeyBindings(self):
+    def getKeyBindings(self, enabledOnly=True):
         """Defines the key bindings for this script.
 
         Returns an instance of keybindings.KeyBindings.
