@@ -1692,7 +1692,8 @@ class Utilities(script_utilities.Utilities):
             return []
 
         offset = max(0, offset)
-        if AXUtilities.is_tool_bar(obj) and not self._treatObjectAsWhole(obj):
+        if (AXUtilities.is_tool_bar(obj) or AXUtilities.is_menu_bar(obj)) \
+                and not self._treatObjectAsWhole(obj):
             child = self.getChildAtOffset(obj, offset)
             if child:
                 obj = child
