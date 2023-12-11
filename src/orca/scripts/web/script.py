@@ -2614,7 +2614,6 @@ class Script(default.Script):
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
-        self.removeKeyGrabs("window deactivated")
         return False
 
     def getTransferableAttributes(self):
