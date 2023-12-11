@@ -447,7 +447,21 @@ class AXTable:
             return -1, -1
 
         row_span = result.row_extents
+        row_count = AXTable.get_row_count(table, False)
+        if row_span > row_count:
+            tokens = ["AXTable: Table iface row span for", cell,
+                      f"{row_span} is greater than row count: {row_count}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            row_span = 1
+
         col_span = result.col_extents
+        col_count = AXTable.get_column_count(table, False)
+        if col_span > col_count:
+            tokens = ["AXTable: Table iface col span for", cell,
+                      f"{col_span} is greater than col count: {col_count}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            col_span = 1
+
         tokens = ["AXTable: Table iface spans for", cell,
                   f"are rowspan: {row_span}, colspan: {col_span}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
