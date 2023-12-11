@@ -620,6 +620,7 @@ class Script(default.Script):
             focus_manager.getManager().set_locus_of_focus(event, event.any_data)
             return
 
+        AXObject.clear_cache_now("children-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("children-changed event.")
 

@@ -1810,6 +1810,7 @@ class Script(default.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("children-changed event.")
 
@@ -1911,6 +1912,7 @@ class Script(default.Script):
     def onChildrenRemoved(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("children-changed event.")
 
