@@ -60,22 +60,36 @@ class AXObject:
 
         while True:
             time.sleep(60)
-            with AXObject._lock:
-                tokens = ["AXObject: Clearing known dead-or-alive state for",
-                          len(AXObject.KNOWN_DEAD), "objects"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                AXObject.KNOWN_DEAD.clear()
+            AXObject._clear_all_dictionaries()
 
-                tokens = ["AXObject: Clearing", len(AXObject.REAL_APP_FOR_MUTTER_FRAME),
-                          "real apps for mutter frames"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
+    @staticmethod
+    def _clear_all_dictionaries(reason=""):
+        msg = "AXObject: Clearing cache."
+        if reason:
+            msg += f" Reason: {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-                tokens = ["AXObject: Clearing", len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME),
-                          "real frames for mutter frames"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
+        with AXObject._lock:
+            tokens = ["AXObject: Clearing known dead-or-alive state for",
+                        len(AXObject.KNOWN_DEAD), "objects"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.KNOWN_DEAD.clear()
 
+            tokens = ["AXObject: Clearing", len(AXObject.REAL_APP_FOR_MUTTER_FRAME),
+                        "real apps for mutter frames"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
+
+            tokens = ["AXObject: Clearing", len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME),
+                        "real frames for mutter frames"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
+
+    @staticmethod
+    def clear_cache_now(reason=""):
+        """Clears all cached information immediately."""
+
+        AXObject._clear_all_dictionaries(reason)
 
     @staticmethod
     def start_cache_clearing_thread():

@@ -1814,6 +1814,7 @@ class Script(default.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1913,6 +1914,7 @@ class Script(default.Script):
     def onChildrenRemoved(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content."
             debug.printMessage(debug.LEVEL_INFO, msg, True)

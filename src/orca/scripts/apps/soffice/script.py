@@ -654,6 +654,8 @@ class Script(default.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
+
         if self.utilities.isSpreadSheetCell(event.any_data):
             orca.setLocusOfFocus(event, event.any_data)
             return

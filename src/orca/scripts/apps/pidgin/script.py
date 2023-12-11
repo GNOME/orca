@@ -112,6 +112,8 @@ class Script(GAIL.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
+        AXObject.clear_cache_now("children-changed event.")
+
         # Check to see if a new chat room tab has been created and if it
         # has, then announce its name. See bug #469098 for more details.
         #
