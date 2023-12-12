@@ -273,8 +273,7 @@ class CaretNavigation:
         msg = "CARET NAVIGATION: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    @staticmethod
-    def toggle_enabled(script, event):
+    def toggle_enabled(self, script, event):
         """Toggles caret navigation."""
 
         if not event:
@@ -289,6 +288,8 @@ class CaretNavigation:
 
         script.presentMessage(string)
         _settings_manager.setSetting('caretNavigationEnabled', enabled)
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
         script.refreshKeyGrabs("toggling caret navigation")
         return True
 

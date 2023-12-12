@@ -705,6 +705,8 @@ class StructuralNavigation:
         else:
             string = messages.STRUCTURAL_NAVIGATION_KEYS_OFF
 
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
         self._script.refreshKeyGrabs("toggling structural navigation")
         if presentMessage:
             self._script.presentMessage(string)

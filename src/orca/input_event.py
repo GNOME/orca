@@ -804,6 +804,9 @@ class KeyboardEvent(InputEvent):
         if not self._handler:
             return False, 'No handler'
 
+        if not self._handler.is_enabled():
+            return False, 'Handler is disabled'
+
         return scriptConsumes, 'Script indication'
 
     def isHandledBy(self, method):
