@@ -127,7 +127,6 @@ class Script:
         self.tutorialGenerator = self.getTutorialGenerator()
 
         self.findCommandRun = False
-        self._lastCommandWasStructNav = False
 
         msg = f'SCRIPT: {self.name} initialized'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -437,14 +436,11 @@ class Script:
             user_bindings = user_bindings_map["default"]
 
         consumes = False
-        self._lastCommandWasStructNav = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
             if handler \
                  and handler.function in self.structuralNavigation.functions:
                 consumes = self.useStructuralNavigationModel()
-                if consumes:
-                    self._lastCommandWasStructNav = True
             else:
                 consumes = handler is not None
         if not consumes:
@@ -452,8 +448,6 @@ class Script:
             if handler \
                  and handler.function in self.structuralNavigation.functions:
                 consumes = self.useStructuralNavigationModel()
-                if consumes:
-                    self._lastCommandWasStructNav = True
             else:
                 consumes = handler is not None
         return consumes

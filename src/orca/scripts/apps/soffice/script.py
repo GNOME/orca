@@ -701,7 +701,7 @@ class Script(default.Script):
         if self._inSayAll:
             return
 
-        if self._lastCommandWasStructNav:
+        if self.structuralNavigation.last_input_event_was_navigation_command():
             return
 
         if not event.detail1:
@@ -774,7 +774,7 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
-        if self._lastCommandWasStructNav:
+        if self.structuralNavigation.last_input_event_was_navigation_command():
             return
 
         if self.utilities.isSpreadSheetCell(focus_manager.getManager().get_locus_of_focus()):
@@ -932,8 +932,6 @@ class Script(default.Script):
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
-
-        self._lastCommandWasStructNav = False
 
         super().onWindowDeactivated(event)
         self.spellcheck.deactivate()

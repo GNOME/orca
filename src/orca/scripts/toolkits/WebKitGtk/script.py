@@ -579,7 +579,7 @@ class Script(default.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
-            if not self._lastCommandWasStructNav:
+            if not self.structuralNavigation.last_input_event_was_navigation_command():
                 text.setCaretOffset(offset)
             focus_manager.getManager().emit_region_changed(obj, offset)
             return

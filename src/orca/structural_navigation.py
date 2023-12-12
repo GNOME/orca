@@ -40,6 +40,7 @@ from . import keybindings
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
+from . import orca_state
 from . import settings
 from . import settings_manager
 from .ax_collection import AXCollection
@@ -255,11 +256,11 @@ class StructuralNavigationObject:
 
     def goPrevious(self, script, inputEvent):
         """Go to the previous object."""
-        self.structuralNavigation.goObject(self, False)
+        self.structuralNavigation.goObject(self, False, inputEvent)
 
     def goNext(self, script, inputEvent):
         """Go to the next object."""
-        self.structuralNavigation.goObject(self, True)
+        self.structuralNavigation.goObject(self, True, inputEvent)
 
     def showList(self, script, inputEvent):
         """Show a list of all the items with this object type."""
@@ -308,7 +309,7 @@ class StructuralNavigationObject:
         """
 
         def goPreviousAtLevel(script, inputEvent):
-            self.structuralNavigation.goObject(self, False, arg=level)
+            self.structuralNavigation.goObject(self, False, inputEvent, arg=level)
         return goPreviousAtLevel
 
     def goNextAtLevelFactory(self, level):
@@ -323,7 +324,7 @@ class StructuralNavigationObject:
         """
 
         def goNextAtLevel(script, inputEvent):
-            self.structuralNavigation.goObject(self, True, arg=level)
+            self.structuralNavigation.goObject(self, True, inputEvent, arg=level)
         return goNextAtLevel
 
     def showListAtLevelFactory(self, level):
@@ -404,6 +405,7 @@ class StructuralNavigationObject:
                     lastCol = nColumns - 1
                     desiredCoordinates = [lastRow, lastCol]
             self.structuralNavigation.goCell(self,
+                                             inputEvent,
                                              thisCell,
                                              currentCoordinates,
                                              desiredCoordinates)
@@ -417,7 +419,7 @@ class StructuralNavigationObject:
 
         def goContainerEdge(script, inputEvent):
             isStart = direction == "Start"
-            self.structuralNavigation.goEdge(self, isStart)
+            self.structuralNavigation.goEdge(self, isStart, inputEvent)
 
         if self.objType == StructuralNavigation.CONTAINER:
             return goContainerEdge
@@ -550,6 +552,7 @@ class StructuralNavigation:
                 self.structuralNavigationObjectCreator(objType)
 
         self.functions = []
+        self._last_input_event = None
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
@@ -695,6 +698,22 @@ class StructuralNavigation:
         msg = "STRUCTURAL NAVIGATION: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
+    def last_input_event_was_navigation_command(self):
+        """Returns true if the last input event was a navigation command."""
+
+        result = self._last_input_event is not None \
+            and (self._last_input_event == orca_state.lastNonModifierKeyEvent \
+                or orca_state.lastNonModifierKeyEvent.isReleaseFor(self._last_input_event))
+
+        if self._last_input_event is not None:
+            string = self._last_input_event.asSingleLineString()
+        else:
+            string = "None"
+
+        msg = f"STRUCTURAL NAVIGATION: Last navigation event ({string}) was last key event: {result}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return result
+
     def toggleStructuralNavigation(self, script, inputEvent, presentMessage=True):
         """Toggles structural navigation keys."""
 
@@ -732,13 +751,14 @@ class StructuralNavigation:
     #                                                                       #
     #########################################################################
 
-    def goCell(self, structuralNavigationObject, thisCell,
+    def goCell(self, structuralNavigationObject, event, thisCell,
                currentCoordinates, desiredCoordinates):
         """The method used for navigation among cells in a table.
 
         Arguments:
         - structuralNavigationObject: the StructuralNavigationObject which
           represents the table cell.
+        - event: the input event triggering navigation.
         - thisCell: the accessible TABLE_CELL we're currently in
         - currentCoordinates: the [row, column] of thisCell.  Note, we
           cannot just get the coordinates because in table cells which
@@ -751,6 +771,7 @@ class StructuralNavigation:
           be.
         """
 
+        self._last_input_event = event
         table = self.getTableForCell(thisCell)
         if not table:
             self._script.presentMessage(messages.TABLE_NOT_IN_A)
@@ -844,7 +865,8 @@ class StructuralNavigation:
         self._objectCache[hash(document)] = cache
         return rv
 
-    def goEdge(self, structuralNavigationObject, isStart, container=None, arg=None):
+    def goEdge(self, structuralNavigationObject, isStart, event, container=None, arg=None):
+        self._last_input_event = event
         if container is None:
             obj, offset = self._script.utilities.getCaretContext()
             container = self.getContainerForObject(obj)
@@ -876,7 +898,7 @@ class StructuralNavigation:
 
         structuralNavigationObject.present(obj, sameContainer=True)
 
-    def goObject(self, structuralNavigationObject, isNext, obj=None, arg=None):
+    def goObject(self, structuralNavigationObject, isNext, event, obj=None, arg=None):
         """The method used for navigation among StructuralNavigationObjects
         which are not table cells.
 
@@ -886,6 +908,7 @@ class StructuralNavigation:
         - isNext: If True, we're interested in the next accessible object
           which matches structuralNavigationObject.  If False, we're
           interested in the previous accessible object which matches.
+        - event: The input event triggering this navigation
         - obj: the current object (typically the locusOfFocus).
         - arg: optional arguments which may need to be passed along to
           the predicate, presentation method, etc. For instance, in the
@@ -893,6 +916,7 @@ class StructuralNavigation:
           is needed and passed in as arg.
         """
 
+        self._last_input_event = event
         matches = self._getAll(structuralNavigationObject, arg)
         if not matches:
             structuralNavigationObject.present(None, arg)

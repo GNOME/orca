@@ -1391,7 +1391,6 @@ class Script(script.Script):
 
         mouseEvent = input_event.MouseButtonEvent(event)
         orca_state.lastInputEvent = mouseEvent
-        self._lastCommandWasStructNav = False
         if not mouseEvent.pressed:
             return
 

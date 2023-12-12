@@ -485,7 +485,7 @@ class Utilities(script_utilities.Utilities):
         return self.getWordAtOffset(obj, offset)
 
     def shouldReadFullRow(self, obj, prevObj=None):
-        if self._script._lastCommandWasStructNav:
+        if self._script.structuralNavigation.last_input_event_was_navigation_command():
             return False
 
         lastKey, mods = self.lastKeyAndModifiers()

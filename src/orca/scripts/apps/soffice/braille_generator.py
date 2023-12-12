@@ -120,13 +120,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def _generateAncestors(self, obj, **args):
-        if self._script._lastCommandWasStructNav:
+        if self._script.structuralNavigation.last_input_event_was_navigation_command():
             return []
 
         return super()._generateAncestors(obj, **args)
 
     def _generateIncludeContext(self, obj, **args):
-        if self._script._lastCommandWasStructNav:
+        if self._script.structuralNavigation.last_input_event_was_navigation_command():
             return False
 
         return super()._generateIncludeContext(obj, **args)
