@@ -1114,8 +1114,6 @@ class InputEventHandler:
     def is_enabled(self):
         """Returns True if this handler is enabled."""
 
-        msg = f"INPUT EVENT HANDLER: {self.description} is enabled: {self._enabled}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
         return self._enabled
 
     def set_enabled(self, enabled):
@@ -1136,6 +1134,8 @@ class InputEventHandler:
         """
 
         if not self._enabled:
+            msg = f"INPUT EVENT HANDLER: {self.description} is not enabled."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         consumed = False

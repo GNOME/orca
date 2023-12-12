@@ -517,6 +517,25 @@ class Script(default.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.liveRegionManager.flushMessages()
 
+    def consumesKeyboardEvent(self, keyboardEvent):
+        """Returns True if the script will consume this keyboard event."""
+
+        handler = self.keyBindings.getInputHandler(keyboardEvent)
+        if self.caretNavigation.handles_navigation(handler):
+            consumes = self.useCaretNavigationModel(keyboardEvent)
+            return consumes
+
+        if handler and handler.function in self.structuralNavigation.functions:
+            consumes = self.useStructuralNavigationModel()
+            return consumes
+
+        if handler and handler.function in self.liveRegionManager.functions:
+            # This is temporary.
+            consumes = self.useStructuralNavigationModel()
+            return consumes
+
+        return super().consumesKeyboardEvent(keyboardEvent)
+
     def consumesBrailleEvent(self, brailleEvent):
         """Returns True if the script will consume this braille event."""
 

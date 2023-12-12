@@ -438,12 +438,18 @@ class Script:
         consumes = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
-            consumes = handler is not None and handler.is_enabled()
-
+            if handler \
+                 and handler.function in self.structuralNavigation.functions:
+                consumes = self.useStructuralNavigationModel()
+            else:
+                consumes = handler is not None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
-            consumes = handler is not None and handler.is_enabled()
-
+            if handler \
+                 and handler.function in self.structuralNavigation.functions:
+                consumes = self.useStructuralNavigationModel()
+            else:
+                consumes = handler is not None
         return consumes
 
     def consumesBrailleEvent(self, brailleEvent):
