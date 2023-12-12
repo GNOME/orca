@@ -103,17 +103,6 @@ class Script(gtk.Script):
 
         return enabledTypes
 
-    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
-        """Returns True if we should do our own structural navigation."""
-
-        if not self.structuralNavigation.enabled:
-            return False
-
-        if AXUtilities.is_editable(focus_manager.getManager().get_locus_of_focus()):
-            return False
-
-        return True
-
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 

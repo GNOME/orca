@@ -382,39 +382,6 @@ class Script(default.Script):
 
         return default.Script.skipObjectEvent(self, event)
 
-    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
-        """Returns True if we should do our own structural navigation.
-        This should return False if we're in a form field, or not in
-        document content.
-        """
-
-        doNotHandleRoles = [Atspi.Role.ENTRY,
-                            Atspi.Role.TEXT,
-                            Atspi.Role.PASSWORD_TEXT,
-                            Atspi.Role.LIST,
-                            Atspi.Role.LIST_ITEM,
-                            Atspi.Role.MENU_ITEM]
-
-        if not self.structuralNavigation.enabled:
-            return False
-
-        focus = focus_manager.getManager().get_locus_of_focus()
-        if not self.utilities.isWebKitGtk(focus):
-            return False
-
-        if AXUtilities.is_editable(focus):
-            return False
-
-        role = AXObject.get_role(focus)
-        if role in doNotHandleRoles:
-            if role == Atspi.Role.LIST_ITEM:
-                return not AXUtilities.is_selectable(focus)
-
-            if AXUtilities.is_focused(focus):
-                return False
-
-        return True
-
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.

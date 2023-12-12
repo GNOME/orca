@@ -1073,64 +1073,6 @@ class Script(default.Script):
         self.refreshBraille(False)
         return True
 
-    def useCaretNavigationModel(self, keyboardEvent, debugOutput=True, focus=None):
-        """Returns True if caret navigation should be used."""
-
-        if not settings_manager.getManager().getSetting('caretNavigationEnabled'):
-            if debugOutput:
-                msg = "WEB: Not using caret navigation: it's not enabled."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self._inFocusMode:
-            if debugOutput:
-                msg = "WEB: Not using caret navigation: focus mode is active."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not self.utilities.inDocumentContent(focus):
-            if debugOutput:
-                msg = "WEB: Not using caret navigation: not in document content."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if keyboardEvent and keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
-            if debugOutput:
-                msg = "WEB: Not using caret navigation: shift was used."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if debugOutput:
-            msg = "WEB: Using caret navigation: browse mode active in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
-        """Returns True if structural navigation should be used."""
-
-        if not self.structuralNavigation.enabled:
-            if debugOutput:
-                msg = "WEB: Not using structural navigation: it's not enabled."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self._inFocusMode:
-            if debugOutput:
-                msg = "WEB: Not using structural navigation: focus mode is active."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not self.utilities.inDocumentContent(focus):
-            if debugOutput:
-                msg = "WEB: Not using structural navigation: not in document content."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if debugOutput:
-            msg = "WEB: Using structural navigation: browse mode active in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return True
-
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 

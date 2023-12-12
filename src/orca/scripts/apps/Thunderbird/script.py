@@ -155,12 +155,6 @@ class Script(Gecko.Script):
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
-    def useStructuralNavigationModel(self, debugOutput=True, focus=None):
-        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
-            return False
-
-        return super().useStructuralNavigationModel(debugOutput, focus)
-
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
