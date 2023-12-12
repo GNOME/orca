@@ -2318,7 +2318,7 @@ class Utilities(script_utilities.Utilities):
 
     def _advanceCaretInEmptyObject(self, obj):
         if AXUtilities.is_table_cell(obj) and not self.queryNonEmptyText(obj):
-            return not self._script._lastCommandWasStructNav
+            return not self._script.caretNavigation.last_input_event_was_navigation_command()
 
         return True
 
@@ -4155,7 +4155,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = self._shouldInferLabelFor.get(hash(obj))
-        if rv and not self._script._lastCommandWasCaretNav:
+        if rv and not self._script.caretNavigation.last_input_event_was_navigation_command():
             return not self._script.inSayAll()
         if rv is False:
             return rv
@@ -4177,8 +4177,7 @@ class Utilities(script_utilities.Utilities):
 
         self._shouldInferLabelFor[hash(obj)] = rv
 
-        # TODO - JD: This is private.
-        if self._script._lastCommandWasCaretNav \
+        if self._script.caretNavigation.last_input_event_was_navigation_command() \
            and role not in [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]:
             return False
 

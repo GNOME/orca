@@ -70,6 +70,11 @@ class InputEvent:
 
         pass
 
+    def asSingleLineString(self):
+        """Returns a single-line string representation of this event."""
+
+        return f"{self.type}"
+
 def _getXkbStickyKeysState():
     from subprocess import check_output
 
@@ -481,6 +486,14 @@ class KeyboardEvent(InputEvent):
              + f"                 keyType={key_type}\n" \
              + f"                 clickCount={self._clickCount}\n" \
              + f"                 shouldEcho={self.shouldEcho}\n"
+
+    def asSingleLineString(self):
+        """Returns a single-line string representation of this event."""
+
+        if self._shouldObscure():
+            return "(obscured)"
+
+        return f"{self.event_string} mods: {self.modifiers} {self.type.value_nick}"
 
     def _shouldObscure(self):
         if not AXUtilities.is_password_text(self._obj):

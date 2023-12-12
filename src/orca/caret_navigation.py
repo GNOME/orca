@@ -31,6 +31,7 @@ from . import debug
 from . import input_event
 from . import keybindings
 from . import messages
+from . import orca_state
 from . import settings_manager
 
 
@@ -50,6 +51,7 @@ class CaretNavigation:
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
+        self._last_input_event = None
 
     def handles_navigation(self, handler):
         """Returns True if handler is a navigation command."""
@@ -273,6 +275,22 @@ class CaretNavigation:
         msg = "CARET NAVIGATION: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
+    def last_input_event_was_navigation_command(self):
+        """Returns true if the last input event was a navigation command."""
+
+        result = self._last_input_event is not None \
+            and (self._last_input_event == orca_state.lastNonModifierKeyEvent \
+                or orca_state.lastNonModifierKeyEvent.isReleaseFor(self._last_input_event))
+
+        if self._last_input_event is not None:
+            string = self._last_input_event.asSingleLineString()
+        else:
+            string = "None"
+
+        msg = f"CARET NAVIGATION: Last navigation event ({string}) was last key event: {result}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return result
+
     def toggle_enabled(self, script, event):
         """Toggles caret navigation."""
 
@@ -288,6 +306,7 @@ class CaretNavigation:
 
         script.presentMessage(string)
         _settings_manager.setSetting('caretNavigationEnabled', enabled)
+        self._last_input_event = None
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
         script.refreshKeyGrabs("toggling caret navigation")
@@ -306,8 +325,7 @@ class CaretNavigation:
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
-    @staticmethod
-    def _next_character(script, event):
+    def _next_character(self, script, event):
         """Moves to the next character."""
 
         if not event:
@@ -317,13 +335,13 @@ class CaretNavigation:
         if not obj:
             return False
 
+        self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
         script.updateBraille(obj)
         script.sayCharacter(obj)
         return True
 
-    @staticmethod
-    def _previous_character(script, event):
+    def _previous_character(self, script, event):
         """Moves to the previous character."""
 
         if not event:
@@ -333,13 +351,13 @@ class CaretNavigation:
         if not obj:
             return False
 
+        self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
         script.updateBraille(obj)
         script.sayCharacter(obj)
         return True
 
-    @staticmethod
-    def _next_word(script, event):
+    def _next_word(self, script, event):
         """Moves to the next word."""
 
         if not event:
@@ -354,13 +372,13 @@ class CaretNavigation:
         if string and string[-1].isspace():
             end -= 1
 
+        self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
         script.updateBraille(obj)
         script.sayWord(obj)
         return True
 
-    @staticmethod
-    def _previous_word(script, event):
+    def _previous_word(self, script, event):
         """Moves to the previous word."""
 
         if not event:
@@ -371,14 +389,14 @@ class CaretNavigation:
         if not contents:
             return False
 
+        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.updateBraille(obj)
         script.sayWord(obj)
         return True
 
-    @staticmethod
-    def _next_line(script, event):
+    def _next_line(self, script, event):
         """Moves to the next line."""
 
         if not event:
@@ -400,14 +418,14 @@ class CaretNavigation:
         if not contents:
             return False
 
+        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.speakContents(contents, priorObj=line[-1][0])
         script.displayContents(contents)
         return True
 
-    @staticmethod
-    def _previous_line(script, event):
+    def _previous_line(self, script, event):
         """Moves to the previous line."""
 
         if not event:
@@ -425,14 +443,14 @@ class CaretNavigation:
         if not contents:
             return False
 
+        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.speakContents(contents)
         script.displayContents(contents)
         return True
 
-    @staticmethod
-    def _start_of_line(script, event):
+    def _start_of_line(self, script, event):
         """Moves to the start of the line."""
 
         if not event:
@@ -443,14 +461,14 @@ class CaretNavigation:
         if not (line and line[0]):
             return False
 
+        self._last_input_event = event
         obj, start = line[0][0], line[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.sayCharacter(obj)
         script.displayContents(line)
         return True
 
-    @staticmethod
-    def _end_of_line(script, event):
+    def _end_of_line(self, script, event):
         """Moves to the end of the line."""
 
         if not event:
@@ -465,13 +483,13 @@ class CaretNavigation:
         if string.strip() and string[-1].isspace():
             end -= 1
 
+        self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
         script.sayCharacter(obj)
         script.displayContents(line)
         return True
 
-    @staticmethod
-    def _start_of_file(script, event):
+    def _start_of_file(self, script, event):
         """Moves to the start of the file."""
 
         if not event:
@@ -483,14 +501,14 @@ class CaretNavigation:
         if not contents:
             return False
 
+        self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, offset)
         script.speakContents(contents)
         script.displayContents(contents)
         return True
 
-    @staticmethod
-    def _end_of_file(script, event):
+    def _end_of_file(self, script, event):
         """Moves to the end of the file."""
 
         if not event:
@@ -519,6 +537,7 @@ class CaretNavigation:
         if not contents:
             return False
 
+        self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
         script.utilities.setCaretPosition(obj, offset)
         script.speakContents(contents)

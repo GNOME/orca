@@ -206,8 +206,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role == Atspi.Role.TEXT and formatType != 'basicWhereAmI':
             return []
 
-        # TODO - JD: This is private.
-        if role == Atspi.Role.LINK and self._script._lastCommandWasCaretNav:
+        if role == Atspi.Role.LINK \
+           and self._script.caretNavigation.last_input_event_was_navigation_command():
             return []
 
         return super()._generateDescription(obj, **args)

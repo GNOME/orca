@@ -69,7 +69,6 @@ class Script(default.Script):
         self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
-        self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
@@ -117,7 +116,6 @@ class Script(default.Script):
         self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
-        self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
@@ -535,16 +533,14 @@ class Script(default.Script):
         self._lastMouseButtonContext = None, -1
 
         handler = self.keyBindings.getInputHandler(keyboardEvent)
-        if handler and self.caretNavigation.handles_navigation(handler):
+        if self.caretNavigation.handles_navigation(handler):
             consumes = self.useCaretNavigationModel(keyboardEvent)
-            self._lastCommandWasCaretNav = consumes
             self._lastCommandWasStructNav = False
             self._lastCommandWasMouseButton = False
             return consumes
 
         if handler and handler.function in self.structuralNavigation.functions:
             consumes = self.useStructuralNavigationModel()
-            self._lastCommandWasCaretNav = False
             self._lastCommandWasStructNav = consumes
             self._lastCommandWasMouseButton = False
             return consumes
@@ -552,13 +548,11 @@ class Script(default.Script):
         if handler and handler.function in self.liveRegionManager.functions:
             # This is temporary.
             consumes = self.useStructuralNavigationModel()
-            self._lastCommandWasCaretNav = False
             self._lastCommandWasStructNav = consumes
             self._lastCommandWasMouseButton = False
             return consumes
 
         if not keyboardEvent.isModifierKey():
-            self._lastCommandWasCaretNav = False
             self._lastCommandWasStructNav = False
             self._lastCommandWasMouseButton = False
 
@@ -567,7 +561,6 @@ class Script(default.Script):
     def consumesBrailleEvent(self, brailleEvent):
         """Returns True if the script will consume this braille event."""
 
-        self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         return super().consumesBrailleEvent(brailleEvent)
@@ -836,15 +829,16 @@ class Script(default.Script):
         if prevObj and AXObject.is_dead(prevObj):
             prevObj = None
 
+        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
         if not settings_manager.getManager().getSetting('caretNavTriggersFocusMode') \
-           and self._lastCommandWasCaretNav \
+           and  lastCommandWasCaretNav \
            and not self.utilities.isNavigableToolTipDescendant(prevObj):
             msg = "WEB: Not using focus mode due to caret nav settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if not settings_manager.getManager().getSetting('nativeNavTriggersFocusMode') \
-           and not (self._lastCommandWasStructNav or self._lastCommandWasCaretNav):
+           and not (self._lastCommandWasStructNav or lastCommandWasCaretNav):
             msg = "WEB: Not changing focus/browse mode due to native nav settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return self._inFocusMode
@@ -883,7 +877,7 @@ class Script(default.Script):
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
 
-        if not self._lastCommandWasCaretNav \
+        if not self.caretNavigation.last_input_event_was_navigation_command() \
            and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
             super().sayCharacter(obj)
             return
@@ -921,7 +915,7 @@ class Script(default.Script):
         """Speaks the word at the current caret position."""
 
         isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
-        if not self._lastCommandWasCaretNav and not isEditable:
+        if not self.caretNavigation.last_input_event_was_navigation_command() and not isEditable:
             super().sayWord(obj)
             return
 
@@ -940,14 +934,15 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
+        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
         isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
-        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) and not isEditable:
+        if not (lastCommandWasCaretNav or self._lastCommandWasStructNav) and not isEditable:
             super().sayLine(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
         priorObj = None
-        if self._lastCommandWasCaretNav or isEditable:
+        if lastCommandWasCaretNav or isEditable:
             priorObj, priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
@@ -965,7 +960,8 @@ class Script(default.Script):
             return
 
         priorObj = args.get("priorObj")
-        if self._lastCommandWasCaretNav or args.get("includeContext") or AXTable.get_table(obj):
+        if self.caretNavigation.last_input_event_was_navigation_command() \
+           or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
@@ -1019,7 +1015,7 @@ class Script(default.Script):
 
         isContentEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
 
-        if not self._lastCommandWasCaretNav \
+        if not self.caretNavigation.last_input_event_was_navigation_command() \
            and not self._lastCommandWasStructNav \
            and not isContentEditable \
            and not self.utilities.isPlainText() \
@@ -1291,7 +1287,7 @@ class Script(default.Script):
                 self.presentMessage(messages.MODE_BROWSE)
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
-               and (self._lastCommandWasCaretNav \
+               and (self.caretNavigation.last_input_event_was_navigation_command() \
                     or self._lastCommandWasStructNav \
                     or inputEvent):
                 self.utilities.grabFocus(obj)
@@ -1361,6 +1357,7 @@ class Script(default.Script):
 
         contents = None
         args = {}
+        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
         if self._lastCommandWasMouseButton and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
@@ -1368,7 +1365,7 @@ class Script(default.Script):
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             args['priorObj'] = oldFocus
         elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
-           and (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
+           and (lastCommandWasCaretNav or self._lastCommandWasStructNav) \
            and not (AXUtilities.is_table_cell(newFocus) and AXObject.get_name(newFocus)):
             tokens = ["WEB: New focus", newFocus, "content editable. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1650,7 +1647,7 @@ class Script(default.Script):
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if self._lastCommandWasCaretNav:
+        if self.caretNavigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1798,7 +1795,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not (self._lastCommandWasCaretNav and AXUtilities.is_radio_button(obj)):
+        if not (self.caretNavigation.last_input_event_was_navigation_command() \
+           and AXUtilities.is_radio_button(obj)):
             msg = "WEB: Event is something default can handle"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
@@ -2140,7 +2138,7 @@ class Script(default.Script):
                 msg = "WEB: Search for caret context failed"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if self._lastCommandWasCaretNav:
+        if self.caretNavigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2199,7 +2197,6 @@ class Script(default.Script):
     def onMouseButton(self, event):
         """Callback for mouse:button accessibility events."""
 
-        self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = True
         return False
@@ -2612,15 +2609,13 @@ class Script(default.Script):
 
         msg = "WEB: Clearing command state"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
         return False
 
     def getTransferableAttributes(self):
-        return {"_lastCommandWasCaretNav": self._lastCommandWasCaretNav,
-                "_lastCommandWasStructNav": self._lastCommandWasStructNav,
+        return {"_lastCommandWasStructNav": self._lastCommandWasStructNav,
                 "_lastCommandWasMouseButton": self._lastCommandWasMouseButton,
                 "_inFocusMode": self._inFocusMode,
                 "_focusModeIsSticky": self._focusModeIsSticky,
