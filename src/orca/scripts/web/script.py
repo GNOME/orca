@@ -522,8 +522,6 @@ class Script(default.Script):
     def consumesKeyboardEvent(self, keyboardEvent):
         """Returns True if the script will consume this keyboard event."""
 
-        self._lastMouseButtonContext = None, -1
-
         handler = self.keyBindings.getInputHandler(keyboardEvent)
         if self.caretNavigation.handles_navigation(handler):
             consumes = self.useCaretNavigationModel(keyboardEvent)
