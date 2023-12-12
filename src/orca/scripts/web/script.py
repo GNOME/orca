@@ -70,7 +70,6 @@ class Script(default.Script):
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
         self._lastMouseOverObject = None
         self._preMouseOverContext = None, -1
@@ -117,7 +116,6 @@ class Script(default.Script):
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
         self._lastMouseOverObject = None
         self._preMouseOverContext = None, -1
@@ -536,25 +534,21 @@ class Script(default.Script):
         if self.caretNavigation.handles_navigation(handler):
             consumes = self.useCaretNavigationModel(keyboardEvent)
             self._lastCommandWasStructNav = False
-            self._lastCommandWasMouseButton = False
             return consumes
 
         if handler and handler.function in self.structuralNavigation.functions:
             consumes = self.useStructuralNavigationModel()
             self._lastCommandWasStructNav = consumes
-            self._lastCommandWasMouseButton = False
             return consumes
 
         if handler and handler.function in self.liveRegionManager.functions:
             # This is temporary.
             consumes = self.useStructuralNavigationModel()
             self._lastCommandWasStructNav = consumes
-            self._lastCommandWasMouseButton = False
             return consumes
 
         if not keyboardEvent.isModifierKey():
             self._lastCommandWasStructNav = False
-            self._lastCommandWasMouseButton = False
 
         return super().consumesKeyboardEvent(keyboardEvent)
 
@@ -562,7 +556,6 @@ class Script(default.Script):
         """Returns True if the script will consume this braille event."""
 
         self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
         return super().consumesBrailleEvent(brailleEvent)
 
     # TODO - JD: This needs to be moved out of the scripts.
@@ -1358,7 +1351,7 @@ class Script(default.Script):
         contents = None
         args = {}
         lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
-        if self._lastCommandWasMouseButton and event \
+        if self.utilities.lastInputEventWasMouseButton() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1657,8 +1650,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self._lastCommandWasMouseButton:
-            msg = "WEB: Last command was mouse button"
+        if self.utilities.lastInputEventWasMouseButton():
+            msg = "WEB: Last input event was mouse button"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             if (event.source, event.detail1) == (obj, offset):
@@ -2197,8 +2190,6 @@ class Script(default.Script):
     def onMouseButton(self, event):
         """Callback for mouse:button accessibility events."""
 
-        self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = True
         return False
 
     def onNameChanged(self, event):
@@ -2610,13 +2601,11 @@ class Script(default.Script):
         msg = "WEB: Clearing command state"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
         self._lastMouseButtonContext = None, -1
         return False
 
     def getTransferableAttributes(self):
         return {"_lastCommandWasStructNav": self._lastCommandWasStructNav,
-                "_lastCommandWasMouseButton": self._lastCommandWasMouseButton,
                 "_inFocusMode": self._inFocusMode,
                 "_focusModeIsSticky": self._focusModeIsSticky,
                 "_browseModeIsSticky": self._browseModeIsSticky,
