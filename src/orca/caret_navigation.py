@@ -93,7 +93,7 @@ class CaretNavigation:
             input_event.InputEventHandler(
                 self.toggle_enabled,
                 cmdnames.CARET_NAVIGATION_TOGGLE,
-                not self._suspended)
+                enabled = not self._suspended)
 
         enabled = settings_manager.getManager().getSetting('caretNavigationEnabled') \
             and not self._suspended
@@ -102,61 +102,61 @@ class CaretNavigation:
             input_event.InputEventHandler(
                 self._next_character,
                 cmdnames.CARET_NAVIGATION_NEXT_CHAR,
-                enabled)
+                enabled = enabled)
 
         self._handlers["previous_character"] = \
             input_event.InputEventHandler(
                 self._previous_character,
                 cmdnames.CARET_NAVIGATION_PREV_CHAR,
-                enabled)
+                enabled = enabled)
 
         self._handlers["next_word"] = \
             input_event.InputEventHandler(
                 self._next_word,
                 cmdnames.CARET_NAVIGATION_NEXT_WORD,
-                enabled)
+                enabled = enabled)
 
         self._handlers["previous_word"] = \
             input_event.InputEventHandler(
                 self._previous_word,
                 cmdnames.CARET_NAVIGATION_PREV_WORD,
-                enabled)
+                enabled = enabled)
 
         self._handlers["next_line"] = \
             input_event.InputEventHandler(
                 self._next_line,
                 cmdnames.CARET_NAVIGATION_NEXT_LINE,
-                enabled)
+                enabled = enabled)
 
         self._handlers["previous_line"] = \
             input_event.InputEventHandler(
                 self._previous_line,
                 cmdnames.CARET_NAVIGATION_PREV_LINE,
-                enabled)
+                enabled = enabled)
 
         self._handlers["start_of_file"] = \
             input_event.InputEventHandler(
                 self._start_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_START,
-                enabled)
+                enabled = enabled)
 
         self._handlers["end_of_file"] = \
             input_event.InputEventHandler(
                 self._end_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_END,
-                enabled)
+                enabled = enabled)
 
         self._handlers["start_of_line"] = \
             input_event.InputEventHandler(
                 self._start_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_START,
-                enabled)
+                enabled = enabled)
 
         self._handlers["end_of_line"] = \
             input_event.InputEventHandler(
                 self._end_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_END,
-                enabled)
+                enabled = enabled)
 
         msg = "CARET NAVIGATION: Handlers set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
