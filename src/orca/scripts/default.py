@@ -1401,7 +1401,7 @@ class Script(script.Script):
 
         self.presentationInterrupt()
         if AXUtilities.is_focused(mouseEvent.obj):
-            focus_manager.getManager().set_locus_of_focus(None, mouseEvent.obj, windowChanged)
+            focus_manager.getManager().set_locus_of_focus(None, mouseEvent.obj, True)
 
     def onAnnouncement(self, event):
         """Callback for object:announcement events."""

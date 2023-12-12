@@ -1286,14 +1286,13 @@ class Script(default.Script):
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
 
+        tokens = ["WEB: Focus changing from", oldFocus, "to", newFocus]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         if newFocus and self.utilities.isZombie(newFocus):
-            tokens = ["WEB: New focus is Zombie:", newFocus]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if newFocus and AXObject.is_dead(newFocus):
-            msg = "WEB: New focus is dead"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getTopLevelDocumentForObject(newFocus)
@@ -1302,15 +1301,14 @@ class Script(default.Script):
 
         if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._madeFindAnnouncement = False
             self._inFocusMode = False
-            msg = "locus of focus no longer in document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
             self.caretNavigation.suspend_commands(True)
             self.structuralNavigation.suspend_commands(True)
             self.liveRegionManager.suspend_commands(True)
-            self.refreshKeyGrabs(msg)
+            self.refreshKeyGrabs("locus of focus no longer in document")
             return False
 
         if self.flatReviewPresenter.is_active():
