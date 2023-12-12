@@ -522,12 +522,6 @@ class Script(default.Script):
     def consumesKeyboardEvent(self, keyboardEvent):
         """Returns True if the script will consume this keyboard event."""
 
-        # We need to do this here. Orca caret and structural navigation
-        # often result in the user being repositioned without our getting
-        # a corresponding AT-SPI event. Without an AT-SPI event, script.py
-        # won't know to dump the generator cache. See bgo#618827.
-        self.generatorCache = {}
-
         self._lastMouseButtonContext = None, -1
 
         handler = self.keyBindings.getInputHandler(keyboardEvent)
