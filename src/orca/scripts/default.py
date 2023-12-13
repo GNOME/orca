@@ -519,6 +519,7 @@ class Script(script.Script):
                 orca_state.grabbedModifiers[modifier] = orca_state.device.add_key_grab(kd)
 
         msg = "DEFAULT: Setting up key bindings"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = self.getKeyBindings()
 
         bound = self.keyBindings.getEnabledBindings(boundOnly=True)
@@ -539,6 +540,7 @@ class Script(script.Script):
         self.grab_ids = []
 
         msg = "DEFAULT: Clearing key bindings"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = keybindings.KeyBindings()
 
         for modifier in ["Insert", "KP_Insert"]:

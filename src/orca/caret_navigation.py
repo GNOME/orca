@@ -287,7 +287,7 @@ class CaretNavigation:
         else:
             string = "None"
 
-        msg = f"CARET NAVIGATION: Last navigation event ({string}) was last key event: {result}"
+        msg = f"CARET NAVIGATION: Last navigation event ({string}) is last key event: {result}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
 

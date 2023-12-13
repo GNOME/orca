@@ -865,10 +865,8 @@ class KeyboardEvent(InputEvent):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
-
-        if self._should_consume != self._did_consume:
-            tokens = ["CONSUMED:", self._did_consume, self._result_reason]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        tokens = ["CONSUMED:", self._did_consume, self._result_reason]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.getManager().getActiveScript()
         if debug.LEVEL_INFO >= debug.debugLevel and script is not None:
@@ -967,25 +965,25 @@ class KeyboardEvent(InputEvent):
     def _consume(self):
         startTime = time.time()
         data = "'%s' (%d)" % (self.event_string, self.hw_code)
-        msg = f'vvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
+        msg = f'\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
 
         if self._consumer:
-            msg = f'INFO: Consumer is {self._consumer.__name__}'
+            msg = f'KEYBOARD EVENT: Consumer is {self._consumer.__name__}'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function:
-            msg = f'INFO: Handler is {self._handler.description}'
+            msg = f'KEYBOARD EVENT: Handler is {self._handler.description}'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
-            msg = 'INFO: No handler or consumer'
+            msg = 'KEYBOARD EVENT: No handler or consumer'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^'
+        msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^\n'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
 
         return False

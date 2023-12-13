@@ -710,7 +710,7 @@ class StructuralNavigation:
         else:
             string = "None"
 
-        msg = f"STRUCTURAL NAVIGATION: Last navigation event ({string}) was last key event: {result}"
+        msg = f"STRUCTURAL NAVIGATION: Last navigation event ({string}) is last key event: {result}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
 
