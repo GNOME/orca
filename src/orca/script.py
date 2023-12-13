@@ -410,33 +410,6 @@ class Script:
 
         return skip
 
-    def consumesKeyboardEvent(self, keyboardEvent):
-        """Called when a key is pressed on the keyboard.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-
-        Returns True if the event is of interest.
-        """
-
-        user_bindings = None
-        user_bindings_map = settings.keyBindingsMap
-        if self.__module__ in user_bindings_map:
-            user_bindings = user_bindings_map[self.__module__]
-        elif "default" in user_bindings_map:
-            user_bindings = user_bindings_map["default"]
-
-        consumes = False
-        if user_bindings:
-            handler = user_bindings.getInputHandler(keyboardEvent)
-            consumes = handler is not None and handler.is_enabled()
-
-        if not consumes:
-            handler = self.keyBindings.getInputHandler(keyboardEvent)
-            consumes = handler is not None and handler.is_enabled()
-
-        return consumes
-
     def consumesBrailleEvent(self, brailleEvent):
         """Called when a key is pressed on the braille display.
 

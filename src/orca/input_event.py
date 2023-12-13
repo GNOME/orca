@@ -797,10 +797,7 @@ class KeyboardEvent(InputEvent):
         self._handler = self._getUserHandler() \
             or self._script.keyBindings.getInputHandler(self)
 
-        # TODO - JD: Right now we need to always call consumesKeyboardEvent()
-        # because that method is updating state, even in instances where there
-        # is no handler.
-        scriptConsumes = self._script.consumesKeyboardEvent(self)
+        scriptConsumes = self._handler is not None and self._handler.is_enabled()
 
         if self._isReleaseForLastNonModifierKeyEvent():
             return scriptConsumes, 'Is release for last non-modifier keyevent'
