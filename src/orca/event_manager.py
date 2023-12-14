@@ -129,7 +129,7 @@ class EventManager:
                 and x.detail2 == event.detail2 \
                 and x.any_data == event.any_data
 
-        def isRedundantIfSameTypeAndObject(x):
+        def obsoletesIfSameTypeAndObject(x):
             skippable = {
                 "object:active-descendant-changed",
                 "object:children-changed",
@@ -144,7 +144,7 @@ class EventManager:
                 return False
             return x.source == event.source and x.type == event.type
 
-        def isRedundantIfSameTypeInSibling(x):
+        def obsoletesIfSameTypeInSibling(x):
             if x.type != event.type or x.detail1 != event.detail1 or x.detail2 != event.detail2 \
                or x.any_data != event.any_data:
                 return False
@@ -157,12 +157,14 @@ class EventManager:
                 return False
             return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
 
-        def isRedundantWindowEvent(x):
+        def obsoletesWindowEvent(x):
             skippable = {
                 "window:activate",
                 "window:deactivate",
             }
             if not any(x.type.startswith(etype) for etype in skippable):
+                return False
+            if not any(event.type.startswith(etype) for etype in skippable):
                 return False
             if x.source == event.source:
                 return True
@@ -186,17 +188,17 @@ class EventManager:
                           "more recent duplicate"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if isRedundantIfSameTypeAndObject(e):
+            if obsoletesIfSameTypeAndObject(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent event of same type for same object"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if isRedundantIfSameTypeInSibling(e):
+            if obsoletesIfSameTypeInSibling(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent event of same type from sibling"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if isRedundantWindowEvent(e):
+            if obsoletesWindowEvent(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent window (de)activation event"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
