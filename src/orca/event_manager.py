@@ -157,6 +157,17 @@ class EventManager:
                 return False
             return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
 
+        def isRedundantWindowEvent(x):
+            skippable = {
+                "window:activate",
+                "window:deactivate",
+            }
+            if not any(x.type.startswith(etype) for etype in skippable):
+                return False
+            if x.source == event.source:
+                return True
+            return False
+
         self._eventQueue.mutex.acquire()
         try:
             events = list(reversed(self._eventQueue.queue))
@@ -183,6 +194,11 @@ class EventManager:
             if isRedundantIfSameTypeInSibling(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent event of same type from sibling"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return e
+            if isRedundantWindowEvent(e):
+                tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
+                          "more recent window (de)activation event"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
 
