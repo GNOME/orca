@@ -119,6 +119,75 @@ class EventManager:
 
         return False
 
+    def _isObsoletedBy(self, event):
+        """Returns the event which renders this one no longer worthy of being processed."""
+
+        def isSame(x):
+            return x.type == event.type \
+                and x.source == event.source \
+                and x.detail1 == event.detail1 \
+                and x.detail2 == event.detail2 \
+                and x.any_data == event.any_data
+
+        def isRedundantIfSameTypeAndObject(x):
+            skippable = {
+                "object:state-changed",
+                "object:property-change",
+                "object:children-changed",
+                "object:selection-changed",
+                "object:text-caret-moved",
+                "object:text-selection-changed",
+            }
+            if not any(x.type.startswith(etype) for etype in skippable):
+                return False
+            return x.source == event.source and x.type == event.type
+
+        def isRedundantIfSameTypeInSibling(x):
+            if x.type != event.type or x.detail1 != event.detail1 or x.detail2 != event.detail2 \
+               or x.any_data != event.any_data:
+                return False
+
+            skippable = {
+                "focus",
+                "object:state-changed:focused",
+            }
+            if not any(x.type.startswith(etype) for etype in skippable):
+                return False
+            return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
+
+        self._eventQueue.mutex.acquire()
+        try:
+            events = list(reversed(self._eventQueue.queue))
+        except Exception as error:
+            msg = f"EVENT MANAGER: Exception in _isObsoletedBy: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            events = []
+        finally:
+            self._eventQueue.mutex.release()
+
+        for e in events:
+            if e == event:
+                return None
+            if isSame(e):
+                tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
+                          "more recent duplicate"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return e
+            if isRedundantIfSameTypeAndObject(e):
+                tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
+                          "more recent event of same type for same object"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return e
+            if isRedundantIfSameTypeInSibling(e):
+                tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
+                          "more recent event of same type from sibling"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return e
+
+        tokens = ["EVENT MANAGER:", event, "is not obsoleted"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return None
+
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
@@ -950,6 +1019,9 @@ class EventManager:
         Arguments:
         - e: an at-spi event.
         """
+
+        if self._isObsoletedBy(event):
+            return
 
         debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         eType = event.type
