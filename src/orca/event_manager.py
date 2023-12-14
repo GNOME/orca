@@ -131,12 +131,14 @@ class EventManager:
 
         def isRedundantIfSameTypeAndObject(x):
             skippable = {
-                "object:state-changed",
-                "object:property-change",
+                "object:active-descendant-changed",
                 "object:children-changed",
+                "object:property-change",
+                "object:state-changed",
                 "object:selection-changed",
                 "object:text-caret-moved",
                 "object:text-selection-changed",
+                "window",
             }
             if not any(x.type.startswith(etype) for etype in skippable):
                 return False
