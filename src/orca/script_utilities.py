@@ -4040,12 +4040,12 @@ class Utilities:
             cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
             row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
             nextIndex = max(startIndex, row)
-            tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row}"]
+            tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row})"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         cell = self.descendantAtPoint(obj, x, y + height - 1)
         row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
-        tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row}"]
+        tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if row == -1:
@@ -4080,9 +4080,21 @@ class Utilities:
 
         cells = []
         for col in range(colStartIndex, colEndIndex):
+            headers = []
             for row in rows:
                 cell = AXTable.get_cell_at(obj, row, col)
-                if cell and self.isOnScreen(cell):
+                if cell is None:
+                    continue
+                if not headers:
+                    # TODO - JD: This is needed for flat review to include the column headers
+                    # above the message list in Thunderbird v110. It does not appear necessary
+                    # for more recent versions of Thunderbird (e.g. v115). Looks like a potential
+                    # case of broken table support in (at least) Thunderbird 110. Who else might
+                    # have this same bug?
+                    headers = AXTable.get_column_headers(cell)
+                    if headers and self.isOnScreen(headers[0]):
+                        cells.append(headers[0])
+                if self.isOnScreen(cell):
                     cells.append(cell)
 
         return cells
