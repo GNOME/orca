@@ -153,25 +153,25 @@ class LiveRegionManager:
             input_event.InputEventHandler(
                 self.advancePoliteness,
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
-                not self._suspended)
+                enabled = not self._suspended)
 
         self._handlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 self.setLivePolitenessOff,
                 cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF,
-                not self._suspended)
+                enabled = not self._suspended)
 
         self._handlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 self.toggleMonitoring,
                 cmdnames.LIVE_REGIONS_MONITOR,
-                not self._suspended)
+                enabled = not self._suspended)
 
         self._handlers["reviewLiveAnnouncement"] = \
             input_event.InputEventHandler(
                 self.reviewLiveAnnouncement,
                 cmdnames.LIVE_REGIONS_REVIEW,
-                not self._suspended)
+                enabled = not self._suspended)
 
         msg = f"LIVE REGION MANAGER: Handlers set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
