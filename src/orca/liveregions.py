@@ -173,7 +173,7 @@ class LiveRegionManager:
                 cmdnames.LIVE_REGIONS_REVIEW,
                 not self._suspended)
 
-        msg = "LIVE REGION MANAGER: Handlers set up."
+        msg = f"LIVE REGION MANAGER: Handlers set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
@@ -218,8 +218,11 @@ class LiveRegionManager:
                     1,
                     not self._suspended))
 
-        msg = "LIVE REGION MANAGER: Bindings set up."
+        msg = f"LIVE REGION MANAGER: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        tokens = [self._bindings]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def suspend_commands(self, suspended):
         """Suspends live region commands independent of the enabled setting."""

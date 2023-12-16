@@ -236,6 +236,15 @@ class KeyBinding:
         self.keycode = None
         self._enabled = enabled
 
+    def __str__(self):
+        if not self.keysymstring:
+            return f"UNBOUND BINDING for '{self.handler}'"
+        if self._enabled:
+            string = f"ENABLED BINDING for '{self.handler}'"
+        else:
+            string = f"DISABLED BINDING for '{self.handler}'"
+        return f"{string}: {self.keysymstring} mods:{self.modifiers} clicks:{self.click_count}"
+
     def matches(self, keycode, modifiers):
         """Returns true if this key binding matches the given keycode and
         modifier state.
@@ -320,15 +329,9 @@ class KeyBindings:
         self.keyBindings = []
 
     def __str__(self):
-        result = "[\n"
+        result = ""
         for keyBinding in self.keyBindings:
-            result += "  [%x %x %s %d %s]\n" % \
-                      (keyBinding.modifier_mask,
-                       keyBinding.modifiers,
-                       keyBinding.keysymstring,
-                       keyBinding.click_count,
-                       keyBinding.handler.description)
-        result += "]"
+            result += f"{keyBinding}\n"
         return result
 
     def add(self, keyBinding):
@@ -491,10 +494,10 @@ class KeyBindings:
             return
 
         def toString(x):
-            return "%s (%ix)" % (x.handler.description, x.click_count)
+            return f"{x.handler} ({x.click_count}x)"
 
         msg = (
-            f"KEYBINDINGS: '{keyboardEvent.event_string}' "
+            f"KEYBINDINGS: '{keyboardEvent.asSingleLineString()}' "
             f"matches multiple handlers: {', '.join(map(toString, result))}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -518,12 +521,19 @@ class KeyBindings:
                 if keyBinding.keysymstring:
                     candidates.append(keyBinding)
 
+        tokens = [f"KEYBINDINGS: {keyboardEvent.asSingleLineString()} matches", matches]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         self._checkMatchingBindings(keyboardEvent, matches)
         if matches:
             return matches[0].handler
 
         if keyboardEvent.isKeyPadKeyWithNumlockOn():
             return None
+
+        tokens = [f"KEYBINDINGS: {keyboardEvent.asSingleLineString()} fallback candidates",
+                  candidates]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # If we're still here, we don't have an exact match. Prefer
         # the one whose click count is closest to, but does not exceed,

@@ -160,7 +160,7 @@ class CaretNavigation:
                 cmdnames.CARET_NAVIGATION_LINE_END,
                 enabled = enabled)
 
-        msg = "CARET NAVIGATION: Handlers set up."
+        msg = f"CARET NAVIGATION: Handlers set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
@@ -272,8 +272,11 @@ class CaretNavigation:
                 1,
                 enabled))
 
-        msg = "CARET NAVIGATION: Bindings set up."
+        msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        tokens = [self._bindings]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""

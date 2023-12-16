@@ -493,7 +493,10 @@ class KeyboardEvent(InputEvent):
         if self._shouldObscure():
             return "(obscured)"
 
-        return f"{self.event_string} mods: {self.modifiers} {self.type.value_nick}"
+        return (
+            f"'{self.event_string}' ({self.keyval_name}) mods: {self.modifiers} "
+            f"{self.type.value_nick}"
+        )
 
     def _shouldObscure(self):
         if not AXUtilities.is_password_text(self._obj):
@@ -970,7 +973,7 @@ class KeyboardEvent(InputEvent):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function:
-            msg = f'KEYBOARD EVENT: Handler is {self._handler.description}'
+            msg = f'KEYBOARD EVENT: Handler is {self._handler}'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
@@ -1105,6 +1108,9 @@ class InputEventHandler:
             return False
 
         return (self.function == other.function)
+
+    def __str__(self):
+        return f"{self.description} (enabled: {self._enabled})"
 
     def is_enabled(self):
         """Returns True if this handler is enabled."""

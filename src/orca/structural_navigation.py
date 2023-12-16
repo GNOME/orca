@@ -660,7 +660,7 @@ class StructuralNavigation:
             self._handlers.update(handlers)
             self.functions.extend(structuralNavigationObject.functions)
 
-        msg = "STRUCTURAL NAVIGATION: Handlers set up."
+        msg = f"STRUCTURAL NAVIGATION: Handlers set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def get_bindings(self, refresh=False, is_desktop=True):
@@ -695,8 +695,11 @@ class StructuralNavigation:
                 keybinding.set_enabled(self.enabled and not self._suspended)
                 self._bindings.add(keybinding)
 
-        msg = "STRUCTURAL NAVIGATION: Bindings set up."
+        msg = f"STRUCTURAL NAVIGATION: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        tokens = [self._bindings]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
