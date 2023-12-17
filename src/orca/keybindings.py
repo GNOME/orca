@@ -235,6 +235,7 @@ class KeyBinding:
         self.click_count = click_count
         self.keycode = None
         self._enabled = enabled
+        self._grab_ids = []
 
     def __str__(self):
         if not self.keysymstring:
@@ -321,6 +322,36 @@ class KeyBinding:
             ret.append(kd)
         return ret
 
+    def hasGrabs(self):
+        """Returns True if there are existing grabs associated with this KeyBinding."""
+
+        return bool(self._grab_ids)
+
+    def addGrabs(self):
+        """Adds key grabs for this KeyBinding."""
+
+        if not self.keysymstring:
+            return
+
+        msg = f"ADDING: {self}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for kd in self.keyDefs():
+            self._grab_ids.append(orca_state.device.add_key_grab(kd, None))
+
+    def removeGrabs(self):
+        """Removes key grabs for this KeyBinding."""
+
+        if not self.keysymstring:
+            return
+
+        msg = f"REMOVING: {self}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for id in self._grab_ids:
+            orca_state.device.remove_key_grab(id)
+        self._grab_ids = []
+
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.
     """
@@ -357,6 +388,30 @@ class KeyBindings:
             pass
         else:
             del self.keyBindings[i]
+
+    def addKeyGrabs(self, reason=""):
+        """Adds grabs for all enabled bindings in this set of keybindings."""
+
+        msg = "KEYBINDINGS: Adding key grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for binding in self.keyBindings:
+            if binding.is_enabled() and not binding.hasGrabs():
+                binding.addGrabs()
+
+    def removeKeyGrabs(self, reason=""):
+        """Removes all grabs for this set of keybindings."""
+
+        msg = "KEYBINDINGS: Removing key grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for binding in self.keyBindings:
+            if binding.hasGrabs():
+                binding.removeGrabs()
 
     def removeByHandler(self, handler):
         """Removes the given KeyBinding instance from this set of keybindings.

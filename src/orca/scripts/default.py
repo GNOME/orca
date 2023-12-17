@@ -505,11 +505,6 @@ class Script(script.Script):
     def addKeyGrabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
-        msg = "DEFAULT: adding key grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
         for modifier in ["Insert", "KP_Insert"]:
             if modifier in settings.orcaModifierKeys \
                and modifier not in orca_state.grabbedModifiers:
@@ -521,23 +516,12 @@ class Script(script.Script):
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = self.getKeyBindings()
-
-        bound = self.keyBindings.getEnabledBindings(boundOnly=True)
-        for b in bound:
-            for id in orca.addKeyGrab(b):
-                self.grab_ids.append(id)
+        self.keyBindings.addKeyGrabs()
 
     def removeKeyGrabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
 
-        msg = "DEFAULT: removing key grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        for id in self.grab_ids:
-            orca.removeKeyGrab(id)
-        self.grab_ids = []
+        self.keyBindings.removeKeyGrabs(reason)
 
         msg = "DEFAULT: Clearing key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
