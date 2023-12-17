@@ -71,7 +71,7 @@ def setModuleLocale(moduleName, newLocale=None):
         importlib.reload(module)
 
 def setLocaleForMessages(newLocale=None):
-    modules = ['orca.tutorialgenerator', 'orca.messages']
+    modules = ['orca.messages']
     for module in modules:
         setModuleLocale(module, newLocale)
 

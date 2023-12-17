@@ -83,7 +83,6 @@ orca_python_PYTHON = \
 	speechserver.py \
 	structural_navigation.py \
 	text_attribute_names.py \
-	tutorialgenerator.py \
 	where_am_i_presenter.py
 
 orca_pythondir=$(pkgpythondir)

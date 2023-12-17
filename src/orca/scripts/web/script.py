@@ -55,7 +55,6 @@ from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
 from .sound_generator import SoundGenerator
 from .speech_generator import SpeechGenerator
-from .tutorial_generator import TutorialGenerator
 from .script_utilities import Utilities
 
 
@@ -301,11 +300,6 @@ class Script(default.Script):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
-
-    def getTutorialGenerator(self):
-        """Returns the tutorial generator for this script."""
-
-        return TutorialGenerator(self)
 
     def getUtilities(self):
         """Returns the utilities for this script."""

@@ -2459,43 +2459,19 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
-    #####################################################################
-    #                                                                   #
-    # Tutorial information                                              #
-    #                                                                   #
-    #####################################################################
-
     def _generateTutorial(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the tutorial for the object.
-        The tutorial will only be generated if the user has requested
-        tutorials, and will then be generated according to the
-        tutorial generator.  A tutorial can be forced by setting the
-        'forceTutorial' attribute of the args dictionary to True.
-        """
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        specifications) that represent the tutorial for the object."""
+
+        if not settings_manager.getManager().getSetting('enableTutorialMessages') \
+           and not args.get('formatType', '').endswith('WhereAmI'):
             return []
 
-        result = []
-        alreadyFocused = args.get('alreadyFocused', False)
-        forceTutorial = args.get('forceTutorial', False)
-        role = args.get('role', AXObject.get_role(obj))
-        result.extend(self._script.tutorialGenerator.getTutorial(
-                obj,
-                alreadyFocused,
-                forceTutorial,
-                role))
-        if args.get('role', AXObject.get_role(obj)) == Atspi.Role.ICON \
-            and args.get('formatType', 'unfocused') == 'basicWhereAmI':
-            frame, dialog = self._script.utilities.frameAndDialog(obj)
-            if frame:
-                result.extend(self._script.tutorialGenerator.getTutorial(
-                        frame,
-                        alreadyFocused,
-                        forceTutorial))
-        if result and result[0]:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
-        return result
+        text = AXObject.get_help_text(obj)
+        if not text:
+            return []
+
+        return [text, self.voice(SYSTEM, obj=obj, **args)]
 
     # Math
 

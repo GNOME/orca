@@ -743,6 +743,23 @@ class AXObject:
         return description
 
     @staticmethod
+    def get_help_text(obj):
+        """Returns the accessible help text of obj"""
+
+        if not AXObject.is_valid(obj):
+            return ""
+
+        try:
+            # This is not yet a thing. But hopefully it will become one.
+            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/146
+            text = Atspi.Accessible.get_help_text(obj)
+        except Exception:
+            # This is for prototyping in the meantime.
+            text = AXObject.get_attribute(obj, "helptext") or ""
+
+        return text
+
+    @staticmethod
     def get_child_count(obj):
         """Returns the child count of obj"""
 

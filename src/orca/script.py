@@ -61,7 +61,6 @@ from . import speech_and_verbosity_manager
 from . import speech_generator
 from . import structural_navigation
 from . import bookmarks
-from . import tutorialgenerator
 from . import where_am_i_presenter
 from .ax_object import AXObject
 
@@ -124,7 +123,6 @@ class Script:
         self.generatorCache = {}
         self.eventCache = {}
         self.spellcheck = self.getSpellCheck()
-        self.tutorialGenerator = self.getTutorialGenerator()
 
         self.findCommandRun = False
 
@@ -189,11 +187,6 @@ class Script:
         """Returns the speech generator for this script.
         """
         return speech_generator.SpeechGenerator(self)
-
-    def getTutorialGenerator(self):
-        """Returns the tutorial generator for this script.
-        """
-        return tutorialgenerator.TutorialGenerator(self)
 
     def getChat(self):
         """Returns the 'chat' class for this script.

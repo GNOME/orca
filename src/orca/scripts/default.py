@@ -1064,7 +1064,6 @@ class Script(script.Script):
             text = obj.queryText()
         except NotImplementedError:
             utterances = self.speechGenerator.generateSpeech(obj)
-            utterances.extend(self.tutorialGenerator.getTutorial(obj, False))
             speech.speak(utterances)
         except AttributeError:
             pass

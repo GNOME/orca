@@ -16,4 +16,3 @@ src/orca/orca-find.ui
 src/orca/orca-setup.ui
 src/orca/phonnames.py
 src/orca/text_attribute_names.py
-src/orca/tutorialgenerator.py
