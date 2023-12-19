@@ -312,19 +312,6 @@ if louis:
     tokens = ["BRAILLE: Default contraction table is:", _defaultContractionTable]
     debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-def _printBrailleEvent(level, command):
-    """Prints out a Braille event.  The given level may be overridden
-    if the eventDebugLevel (see debug.setEventDebugLevel) is greater in
-    debug.py.
-
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    debug.printInputEvent(
-        level,
-        f"BRAILLE EVENT: {repr(command)}")
-
 class Region:
     """A Braille region to be displayed on the display.  The width of
     each region is determined by its string.
@@ -1777,7 +1764,8 @@ def _processBrailleEvent(event):
     - event: the BrlAPI input event (expanded)
     """
 
-    _printBrailleEvent(debug.LEVEL_FINE, event)
+    tokens = ["BRAILLE: Processing event", event]
+    debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     script = script_manager.getManager().getActiveScript()
     if script and event['command'] not in dontInteruptSpeechKeys:

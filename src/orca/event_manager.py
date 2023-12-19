@@ -52,15 +52,13 @@ class EventManager:
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self._active = False
-        self._enqueueCount = 0
-        self._dequeueCount = 0
         self._eventQueue     = queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self._gilSleepTime = 0.00001
         self._synchronousToolkits = ['VCL']
         self._eventsSuspended = False
-        self._listener = Atspi.EventListener.new(self._enqueue)
+        self._listener = Atspi.EventListener.new(self._enqueue_object_event)
 
         # Note: These must match what the scripts registered for, otherwise
         # Atspi might segfault.
@@ -424,32 +422,6 @@ class EventManager:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _addToQueue(self, event, asyncMode):
-        debugging = debug.debugEventQueue
-        if debugging:
-            debug.printMessage(debug.LEVEL_ALL, "           acquiring lock...")
-        self._gidleLock.acquire()
-
-        if debugging:
-            debug.printMessage(debug.LEVEL_ALL, "           ...acquired")
-            debug.printMessage(debug.LEVEL_ALL, "           calling queue.put...")
-            debug.printMessage(debug.LEVEL_ALL, f"           (full={self._eventQueue.full()})")
-
-        self._eventQueue.put(event)
-        if debugging:
-            debug.printMessage(debug.LEVEL_ALL, "           ...put complete")
-
-        if asyncMode and not self._gidleId:
-            if self._gilSleepTime:
-                time.sleep(self._gilSleepTime)
-            self._gidleId = GLib.idle_add(self._dequeue)
-
-        if debugging:
-            debug.printMessage(debug.LEVEL_ALL, "           releasing lock...")
-        self._gidleLock.release()
-        if debug.debugEventQueue:
-            debug.printMessage(debug.LEVEL_ALL, "           ...released")
-
     def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
         """Convenience method to output queue-related debugging info."""
 
@@ -557,22 +529,10 @@ class EventManager:
     def _didSuspendEventsFor(self, event):
         return event in self._eventsTriggeringSuspension
 
-    def _enqueue(self, e):
-        """Handles the enqueueing of all object events destined for scripts.
-
-        Arguments:
-        - e: an at-spi event.
-        """
-
-        if debug.debugEventQueue:
-            if self._enqueueCount:
-                msg = f"EVENT MANAGER: _enqueue entered before exiting (count={self._enqueueCount})"
-                debug.printMessage(debug.LEVEL_ALL, msg, True)
-            self._enqueueCount += 1
+    def _enqueue_object_event(self, e):
+        """Callback for Atspi object events."""
 
         if self._ignore(e):
-            if debug.debugEventQueue:
-                self._enqueueCount -= 1
             return
 
         self._queuePrintln(e)
@@ -607,12 +567,16 @@ class EventManager:
         script = script_manager.getManager().getScript(app, e.source)
         script.eventCache[e.type] = (e, time.time())
 
-        self._addToQueue(e, asyncMode)
-        if not asyncMode:
-            self._dequeue()
+        self._gidleLock.acquire()
+        self._eventQueue.put(e)
+        if asyncMode and not self._gidleId:
+            if self._gilSleepTime:
+                time.sleep(self._gilSleepTime)
+            self._gidleId = GLib.idle_add(self._dequeue_object_event)
+        self._gidleLock.release()
 
-        if debug.debugEventQueue:
-            self._enqueueCount -= 1
+        if not asyncMode:
+            self._dequeue_object_event()
 
     def _onNoFocus(self):
         if focus_manager.getManager().focus_and_window_are_unknown():
@@ -625,14 +589,10 @@ class EventManager:
 
         return False
 
-    def _dequeue(self):
+    def _dequeue_object_event(self):
         """Handles all object events destined for scripts."""
 
         rerun = True
-        if debug.debugEventQueue:
-            msg = f"EVENT MANAGER: Dequeue {self._dequeueCount}"
-            debug.printMessage(debug.LEVEL_ALL, msg, True)
-            self._dequeueCount += 1
         try:
             event = self._eventQueue.get_nowait()
             self._queuePrintln(event, isEnqueue=False)
@@ -674,11 +634,6 @@ class EventManager:
             rerun = False # destroy and don't call again
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
-
-        if debug.debugEventQueue:
-            self._dequeueCount -= 1
-            msg = f"EVENT MANAGER: Leaving _dequeue. Count: {self._dequeueCount}"
-            debug.printMessage(debug.LEVEL_ALL, msg, True)
 
         return rerun
 
@@ -744,19 +699,11 @@ class EventManager:
         for eventType in script.listeners.keys():
             self.deregisterListener(eventType)
 
-    def _processInputEvent(self, event):
-        """Processes the given input event based on the keybinding from the
-        currently-active script.
-
-        Arguments:
-        - event: an instance of BrailleEvent or a KeyboardEvent
-        """
+    def _process_braille_event(self, event):
+        """Processes this BrailleEvent."""
 
         script = script_manager.getManager().getActiveScript()
         if script is None:
-            return
-
-        if not isinstance(event, input_event.BrailleEvent):
             return
 
         data = f"'{repr(event.event)}'"
@@ -1162,7 +1109,7 @@ class EventManager:
         brailleEvent = input_event.BrailleEvent(event)
         orca_state.lastInputEvent = brailleEvent
         if script.consumesBrailleEvent(brailleEvent):
-            self._processInputEvent(brailleEvent)
+            self._process_braille_event(brailleEvent)
             return True
 
         if script.learnModePresenter.is_active():

@@ -126,12 +126,6 @@ debugFile = None
 eventDebugLevel  = LEVEL_FINEST
 eventDebugFilter = None
 
-# If True, we output debug information for the event queue.  We
-# use this in addition to log level to prevent debug logic from
-# bogging down event handling.
-#
-debugEventQueue = False
-
 # What module(s) should be traced if traceit is being used. By default
 # we'll just attend to ourself. (And by default, we will not enable
 # traceit.) Note that enabling this functionality will drag your system
@@ -371,17 +365,6 @@ def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
 
     if sourceInfo:
         println(level, f"{' ' * 18}{sourceInfo}", timestamp)
-
-def printInputEvent(level, string, timestamp=False):
-    """Prints out an input event.  The given level may be overridden
-    if the eventDebugLevel (see setEventDebugLevel) is greater.
-
-    Arguments:
-    - level: the accepted debug level
-    - string: the string representing the input event
-    """
-
-    println(max(level, eventDebugLevel), string, timestamp)
 
 def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
     """Lists the details of the given accessible with the given
