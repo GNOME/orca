@@ -463,6 +463,12 @@ class KeyboardEvent(InputEvent):
             return
 
         if self._clickCount < 3:
+            if doubleEvent._obj != doubleEvent._obj_after_consuming:
+                tokens = ["KEYBOARD EVENT: Resetting click count due to focus change from",
+                          doubleEvent._obj, "to", doubleEvent._obj_after_consuming]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                self._clickCount = 1
+                return
             self._clickCount += 1
             return
 
