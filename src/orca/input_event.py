@@ -259,10 +259,11 @@ class KeyboardEvent(InputEvent):
         self.timestamp = time.time()
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
-        self._script = script_manager.getManager().getActiveScript()
+        self._script = None
         self._app = None
-        self._window = focus_manager.getManager().get_active_window()
-        self._obj = focus_manager.getManager().get_locus_of_focus()
+        self._window = None
+        self._obj = None
+        self._obj_after_consuming = None
         self._handler = None
         self._consumer = None
         self._should_consume = None
@@ -294,6 +295,9 @@ class KeyboardEvent(InputEvent):
         # We typically do little to nothing in the case of a key release. Therefore skip doing
         # this work.
         if pressed:
+            self._script = script_manager.getManager().getActiveScript()
+            self._window = focus_manager.getManager().get_active_window()
+            self._obj = focus_manager.getManager().get_locus_of_focus()
             if self._script:
                 self._app = self._script.app
                 if not focus_manager.getManager().can_be_active_window(self._window):
@@ -308,6 +312,15 @@ class KeyboardEvent(InputEvent):
                 self._app = self._script.app
                 tokens = ["INPUT EVENT: Updated script to", self._script]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        elif self._isReleaseForLastNonModifierKeyEvent():
+            self._script = orca_state.lastNonModifierKeyEvent._script
+            self._window = orca_state.lastNonModifierKeyEvent._window
+            self._obj = orca_state.lastNonModifierKeyEvent._obj
+            self._obj_after_consuming = orca_state.lastNonModifierKeyEvent._obj_after_consuming
+        else:
+            self._script = script_manager.getManager().getActiveScript()
+            self._window = focus_manager.getManager().get_active_window()
+            self._obj = focus_manager.getManager().get_locus_of_focus()
 
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
@@ -858,7 +871,7 @@ class KeyboardEvent(InputEvent):
         tokens = ["WINDOW:", self._window]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        tokens = ["LOCATION:", self._obj]
+        tokens = ["LOCATION:", self._obj_after_consuming or self._obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["CONSUME:", self._should_consume, self._consume_reason]
@@ -979,6 +992,12 @@ class KeyboardEvent(InputEvent):
         else:
             msg = 'KEYBOARD EVENT: No handler or consumer'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        self._obj_after_consuming = focus_manager.getManager().get_locus_of_focus()
+        if (self._obj != self._obj_after_consuming):
+            tokens = ["KEYBOARD EVENT: Consumer changed focus from", self._obj, "to",
+                      self._obj_after_consuming]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
