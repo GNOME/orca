@@ -2189,6 +2189,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterDateAndTime = self._createNode(guilabels.KB_GROUP_DATE_AND_TIME)
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
         iterObjectNav = self._createNode(guilabels.KB_GROUP_OBJECT_NAVIGATION)
+        iterTableNav = self._createNode(guilabels.KB_GROUP_TABLE_NAVIGATION)
         iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
         iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
         iterMouseReviewer = self._createNode(guilabels.KB_GROUP_MOUSE_REVIEW)
@@ -2212,6 +2213,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             onKeyBindings = self.script.getObjectNavigator().get_bindings(
                 is_desktop=isDesktop)
+            tnKeyBindings = self.script.getTableNavigator().get_bindings(
+                is_desktop=isDesktop)
             lmKeyBindings = self.script.getLearnModePresenter().get_bindings(
                 is_desktop=isDesktop)
             mrKeyBindings = self.script.getMouseReviewer().get_bindings(
@@ -2230,6 +2233,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterNotificationPresenter)
                     elif onKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterObjectNav)
+                    elif tnKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterTableNav)
                     elif frKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterFlatReviewPresenter)
                     elif waiKeyBindings.hasKeyBinding(kb, "description"):

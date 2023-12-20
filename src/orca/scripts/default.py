@@ -227,6 +227,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
+        self.inputEventHandlers.update(self.tableNavigator.get_handlers())
         self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
         self.inputEventHandlers.update(self.learnModePresenter.get_handlers())
         self.inputEventHandlers.update(self.mouseReviewer.get_handlers())
@@ -373,6 +374,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.objectNavigator.get_bindings(is_desktop=isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.tableNavigator.get_bindings(is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 

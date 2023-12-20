@@ -366,49 +366,7 @@ class StructuralNavigationObject:
         return showListAtLevel
 
     def goDirectionFactory(self, direction):
-        """Generates the methods for navigation in a particular direction
-        (i.e. left, right, up, down, first, last).  Right now, this is
-        primarily for table cells, but it may have applicability for other
-        objects.  For example, when navigating in an outline, one might
-        want the ability to navigate to the next item at a given level,
-        but then work his/her way up/down in the hierarchy.
-
-        Arguments:
-        - direction: the direction in which to navigate as a string.
-        """
-
-        def goCell(script, inputEvent):
-            obj, offset = script.utilities.getCaretContext()
-            thisCell = self.structuralNavigation.getCellForObj(obj)
-            currentCoordinates = self.structuralNavigation.getCellCoordinates(thisCell, False)
-            if direction == "Left":
-                desiredCoordinates = [currentCoordinates[0],
-                                      currentCoordinates[1] - 1]
-            elif direction == "Right":
-                desiredCoordinates = [currentCoordinates[0],
-                                      currentCoordinates[1] + 1]
-            elif direction == "Up":
-                desiredCoordinates = [currentCoordinates[0] - 1,
-                                      currentCoordinates[1]]
-            elif direction == "Down":
-                desiredCoordinates = [currentCoordinates[0] + 1,
-                                      currentCoordinates[1]]
-            elif direction == "First":
-                desiredCoordinates = [0, 0]
-            else:
-                desiredCoordinates = [-1, -1]
-                table = self.structuralNavigation.getTableForCell(thisCell)
-                if table:
-                    nRows = AXTable.get_row_count(table, False)
-                    nColumns = AXTable.get_column_count(table, False)
-                    lastRow = nRows - 1
-                    lastCol = nColumns - 1
-                    desiredCoordinates = [lastRow, lastCol]
-            self.structuralNavigation.goCell(self,
-                                             inputEvent,
-                                             thisCell,
-                                             currentCoordinates,
-                                             desiredCoordinates)
+        """Generates the methods for navigation in a particular direction."""
 
         def goLastLiveRegion(script, inputEvent):
             """Go to the last liveRegion."""
@@ -423,8 +381,6 @@ class StructuralNavigationObject:
 
         if self.objType == StructuralNavigation.CONTAINER:
             return goContainerEdge
-        if self.objType == StructuralNavigation.TABLE_CELL:
-            return goCell
         elif self.objType == StructuralNavigation.LIVE_REGION \
              and direction == "Last":
             return goLastLiveRegion
@@ -479,7 +435,6 @@ class StructuralNavigation:
     RADIO_BUTTON    = "radioButton"
     SEPARATOR       = "separator"
     TABLE           = "table"
-    TABLE_CELL      = "tableCell"
     UNVISITED_LINK  = "unvisitedLink"
     VISITED_LINK    = "visitedLink"
 
@@ -773,72 +728,6 @@ class StructuralNavigation:
     #                                                                       #
     #########################################################################
 
-    def goCell(self, structuralNavigationObject, event, thisCell,
-               currentCoordinates, desiredCoordinates):
-        """The method used for navigation among cells in a table.
-
-        Arguments:
-        - structuralNavigationObject: the StructuralNavigationObject which
-          represents the table cell.
-        - event: the input event triggering navigation.
-        - thisCell: the accessible TABLE_CELL we're currently in
-        - currentCoordinates: the [row, column] of thisCell.  Note, we
-          cannot just get the coordinates because in table cells which
-          span multiple rows and/or columns, the value returned by
-          table.getRowAtIndex() is the first row the cell spans. Likewise,
-          the value returned by table.getColumnAtIndex() is the left-most
-          column.  Therefore, we keep track of the row and column from
-          our perspective to ensure we stay in the correct row and column.
-        - desiredCoordinates: the [row, column] where we think we'd like to
-          be.
-        """
-
-        self._last_input_event = event
-        table = self.getTableForCell(thisCell)
-        if not table:
-            self._script.presentMessage(messages.TABLE_NOT_IN_A)
-            return None
-
-        currentRow, currentCol = currentCoordinates
-        desiredRow, desiredCol = desiredCoordinates
-        rowDiff = desiredRow - currentRow
-        colDiff = desiredCol - currentCol
-
-        nRows = AXTable.get_row_count(table, False)
-        nColumns = AXTable.get_column_count(table, False)
-        cell = thisCell
-        while cell:
-            cell = AXTable.get_cell_at(table, desiredRow, desiredCol)
-            if not cell:
-                if desiredCol < 0:
-                    self._script.presentMessage(messages.TABLE_ROW_BEGINNING)
-                    desiredCol = 0
-                elif desiredCol > nColumns - 1:
-                    self._script.presentMessage(messages.TABLE_ROW_END)
-                    desiredCol = nColumns - 1
-                if desiredRow < 0:
-                    self._script.presentMessage(messages.TABLE_COLUMN_TOP)
-                    desiredRow = 0
-                elif desiredRow > nRows - 1:
-                    self._script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
-                    desiredRow = nRows - 1
-            elif (thisCell == cell and (colDiff or rowDiff)) \
-                 or (settings.skipBlankCells and self._isBlankCell(cell)):
-                if colDiff < 0:
-                    desiredCol -= 1
-                elif colDiff > 0:
-                    desiredCol += 1
-                if rowDiff < 0:
-                    desiredRow -= 1
-                elif rowDiff > 0:
-                    desiredRow += 1
-            else:
-                break
-
-        self.lastTableCell = [desiredRow, desiredCol]
-        if cell:
-            structuralNavigationObject.present(cell, thisCell)
-
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
 
@@ -1024,25 +913,6 @@ class StructuralNavigation:
 
         return ""
 
-    def getCellForObj(self, obj):
-        """Looks for a table cell in the ancestry of obj, if obj is not a
-        table cell.
-
-        Arguments:
-        - obj: the accessible object of interest.
-        """
-
-        if not AXUtilities.is_table_cell_or_header(obj):
-            obj = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
-
-        while obj and self._script.utilities.isLayoutOnly(self.getTableForCell(obj)):
-            cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
-            if cell is None:
-                break
-            obj = cell
-
-        return obj
-
     def _isContainer(self, obj):
         role = AXObject.get_role(obj)
         if role not in self.CONTAINER_ROLES:
@@ -1075,74 +945,6 @@ class StructuralNavigation:
             obj = AXObject.find_ancestor(obj, AXUtilities.is_table)
 
         return obj
-
-    def _isBlankCell(self, obj):
-        """Returns True if the table cell is empty or consists of whitespace.
-
-        Arguments:
-        - obj: the accessible table cell to examine
-        """
-
-        if obj and (AXObject.get_name(obj) or AXObject.get_child_count(obj)):
-            return False
-
-        try:
-            text = obj.queryText()
-        except Exception:
-            pass
-        else:
-            if text.getText(0, -1).strip():
-                return False
-
-        return True
-
-    def _getCellText(self, obj):
-        """Looks at the table cell and tries to get its text.
-
-        Arguments:
-        - obj: the accessible table cell to examine
-        """
-
-        text = ""
-        if obj and not AXObject.get_child_count(obj):
-            text = self._script.utilities.displayedText(obj)
-        else:
-            for child in AXObject.iter_children(obj):
-                childText = self._script.utilities.displayedText(child)
-                text = self._script.utilities.appendString(text, childText)
-
-        return text
-
-    def getCellCoordinates(self, obj, preferAttribute=True):
-        """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
-        if the coordinates cannot be found.
-
-        Arguments:
-        - obj: the accessible table cell whose coordinates we want.
-        - preferAttribute: If True, prefer object attribute over table interface
-        """
-
-        cell = self.getCellForObj(obj)
-        table = self.getTableForCell(cell)
-        thisRow, thisCol = AXTable.get_cell_coordinates(cell, preferAttribute)
-
-        # If preferAttribute is True, we are getting coordinates to be spoken,
-        # and not to deal with the logic below.
-        if preferAttribute:
-            return thisRow, thisCol
-
-        # If we're in a cell that spans multiple rows and/or columns,
-        # thisRow and thisCol will refer to the upper left cell in
-        # the spanned range(s).  We're storing the lastTableCell that
-        # we're aware of in order to facilitate more linear movement.
-        # Therefore, if the lastTableCell and this table cell are the
-        # same cell, we'll go with the stored coordinates.
-        lastRow, lastCol = self.lastTableCell
-        lastCell = AXTable.get_cell_at(table, lastRow, lastCol)
-        if lastCell == cell:
-            return lastRow, lastCol
-
-        return thisRow, thisCol
 
     def _getCaretPosition(self, obj):
         """Returns the [obj, characterOffset] where the caret should be
@@ -2160,55 +1962,6 @@ class StructuralNavigation:
             return [name, AXTable.get_table_description_for_presentation(obj)]
 
         return guilabels.SN_TITLE_TABLE, columnHeaders, rowData
-
-    ########################
-    #                      #
-    # Table Cells          #
-    #                      #
-    ########################
-
-    def _tableCellBindings(self):
-        bindings = {}
-        desc = cmdnames.TABLE_CELL_LEFT
-        bindings["left"] = ["Left", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-
-        desc = cmdnames.TABLE_CELL_RIGHT
-        bindings["right"] = ["Right", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-
-        desc = cmdnames.TABLE_CELL_UP
-        bindings["up"] = ["Up", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-
-        desc = cmdnames.TABLE_CELL_DOWN
-        bindings["down"] = ["Down", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-
-        desc = cmdnames.TABLE_CELL_FIRST
-        bindings["first"] = ["Home", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-
-        desc = cmdnames.TABLE_CELL_LAST
-        bindings["last"] = ["End", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
-        return bindings
-
-    def _tableCellGetter(self, document, arg=None):
-        # TODO - JD: It would be more performant to set the root to the table.
-        # Actually, this doesn't seem to be getting used. Either use it or delete it.
-        return AXUtilities.find_all_table_cells_and_headers(document)
-
-    def _tableCellPresentation(self, cell, prevCell):
-        if cell is None:
-            return
-
-        [obj, characterOffset] = self._getCaretPosition(cell)
-        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
-        self._presentObject(cell, 0, priorObj=prevCell)
-        if settings.speakCellCoordinates:
-            [row, col] = self.getCellCoordinates(cell)
-            self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
-                                        % {"row" : row + 1, "column" : col + 1})
-
-        rowspan, colspan = AXTable.get_cell_spans(cell)
-        spanString = messages.cellSpan(rowspan, colspan)
-        if spanString and settings.speakCellSpan:
-            self._script.presentMessage(spanString)
 
     ########################
     #                      #

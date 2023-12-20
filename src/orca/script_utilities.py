@@ -1016,6 +1016,9 @@ class Utilities:
 
         return self.getModalDialog(obj) is not None
 
+    def columnConvert(self, column):
+        return column
+
     def isTextDocumentTable(self, obj):
         if not AXUtilities.is_table(obj):
             return False
@@ -1078,6 +1081,9 @@ class Utilities:
 
     def shouldReadFullRow(self, obj, prevObj=None):
         if self._script.inSayAll():
+            return False
+
+        if self._script.getTableNavigator().last_input_event_was_navigation_command():
             return False
 
         if not self.cellRowChanged(obj, prevObj):

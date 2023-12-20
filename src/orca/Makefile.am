@@ -82,6 +82,7 @@ orca_python_PYTHON = \
 	speech_generator.py \
 	speechserver.py \
 	structural_navigation.py \
+	table_navigator.py \
 	text_attribute_names.py \
 	where_am_i_presenter.py
 

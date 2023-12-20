@@ -60,6 +60,7 @@ from . import sound_generator
 from . import speech_and_verbosity_manager
 from . import speech_generator
 from . import structural_navigation
+from . import table_navigator
 from . import bookmarks
 from . import where_am_i_presenter
 from .ax_object import AXObject
@@ -103,6 +104,7 @@ class Script:
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
         self.dateAndTimePresenter = self.getDateAndTimePresenter()
         self.objectNavigator = self.getObjectNavigator()
+        self.tableNavigator = self.getTableNavigator()
         self.whereAmIPresenter = self.getWhereAmIPresenter()
         self.learnModePresenter = self.getLearnModePresenter()
         self.mouseReviewer = self.getMouseReviewer()
@@ -236,6 +238,9 @@ class Script:
 
     def getObjectNavigator(self):
         return object_navigator.getNavigator()
+
+    def getTableNavigator(self):
+        return table_navigator.getNavigator()
 
     def getSpeechAndVerbosityManager(self):
         return speech_and_verbosity_manager.getManager()

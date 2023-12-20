@@ -2375,6 +2375,16 @@ TABLE_NON_UNIFORM = _("Non-uniform")
 # table, presents this message.
 TABLE_NOT_IN_A = _("Not in a table.")
 
+# Translators: Orca has commands for navigating within a table, e.g. to the
+# next cell in a given direction. This string is the message that will be
+# presented when those commands are disabled.
+TABLE_NAVIGATION_DISABLED = _("Table navigation disabled.")
+
+# Translators: Orca has commands for navigating within a table, e.g. to the
+# next cell in a given direction. This string is the message that will be
+# presented when those commands are enabled.
+TABLE_NAVIGATION_ENABLED = _("Table navigation enabled.")
+
 # Translators: This is a message presented to users when the columns in a table
 # have been reordered.
 TABLE_REORDERED_COLUMNS = _("Columns reordered")

@@ -97,7 +97,6 @@ class Script(gtk.Script):
                         StructuralNavigation.PARAGRAPH,
                         StructuralNavigation.RADIO_BUTTON,
                         StructuralNavigation.TABLE,
-                        StructuralNavigation.TABLE_CELL,
                         StructuralNavigation.UNVISITED_LINK,
                         StructuralNavigation.VISITED_LINK]
 

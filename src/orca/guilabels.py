@@ -309,6 +309,11 @@ KB_GROUP_MOUSE_REVIEW = _("Mouse review")
 KB_GROUP_OBJECT_NAVIGATION = _("Object navigation")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to table navigation, such as moving to the next cell in a
+# given direction.
+KB_GROUP_TABLE_NAVIGATION = _("Table navigation")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to presenting information about the current location, such as
 # the title, status bar, and default button of the current window; the
 # name, role, and location of the currently-focused object; the selected

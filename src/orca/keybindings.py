@@ -57,6 +57,9 @@ ORCA_CTRL_ALT_MODIFIER_MASK   = (1 << MODIFIER_ORCA |
                                  1 << Atspi.ModifierType.ALT)
 ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
                                  1 << Atspi.ModifierType.SHIFT)
+ORCA_ALT_SHIFT_MODIFIER_MASK  = (1 << MODIFIER_ORCA |
+                                 1 << Atspi.ModifierType.ALT |
+                                 1 << Atspi.ModifierType.SHIFT)
 SHIFT_MODIFIER_MASK           =  1 << Atspi.ModifierType.SHIFT
 SHIFT_ALT_MODIFIER_MASK       = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.ALT)

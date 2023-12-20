@@ -165,7 +165,6 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.RADIO_BUTTON,
                 structural_navigation.StructuralNavigation.SEPARATOR,
                 structural_navigation.StructuralNavigation.TABLE,
-                structural_navigation.StructuralNavigation.TABLE_CELL,
                 structural_navigation.StructuralNavigation.UNVISITED_LINK,
                 structural_navigation.StructuralNavigation.VISITED_LINK]
 

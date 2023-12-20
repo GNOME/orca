@@ -41,9 +41,7 @@ import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.messages as messages
 import orca.orca_state as orca_state
-import orca.settings as settings
 import orca.settings_manager as settings_manager
-import orca.structural_navigation as structural_navigation
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -92,21 +90,6 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def getStructuralNavigation(self):
-        """Returns the 'structural navigation' class for this script.
-        """
-        types = self.getEnabledStructuralNavigationTypes()
-        return structural_navigation.StructuralNavigation(self, types, enabled=False)
-
-    def getEnabledStructuralNavigationTypes(self):
-        """Returns a list of the structural navigation object types
-        enabled in this script.
-        """
-
-        enabledTypes = [structural_navigation.StructuralNavigation.TABLE_CELL]
-
-        return enabledTypes
-
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings. In this particular case,
@@ -115,32 +98,10 @@ class Script(default.Script):
         """
 
         default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
-
         self.inputEventHandlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
                 Script.presentInputLine,
                 cmdnames.PRESENT_INPUT_LINE)
-
-        self.inputEventHandlers["setDynamicColumnHeadersHandler"] = \
-            input_event.InputEventHandler(
-                Script.setDynamicColumnHeaders,
-                cmdnames.DYNAMIC_COLUMN_HEADER_SET)
-
-        self.inputEventHandlers["clearDynamicColumnHeadersHandler"] = \
-            input_event.InputEventHandler(
-                Script.clearDynamicColumnHeaders,
-                cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR)
-
-        self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
-            input_event.InputEventHandler(
-                Script.setDynamicRowHeaders,
-                cmdnames.DYNAMIC_ROW_HEADER_SET)
-
-        self.inputEventHandlers["clearDynamicRowHeadersHandler"] = \
-            input_event.InputEventHandler(
-                Script.clearDynamicRowHeaders,
-                cmdnames.DYNAMIC_ROW_HEADER_CLEAR)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
@@ -166,43 +127,6 @@ class Script(default.Script):
                 keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["presentInputLineHandler"]))
 
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.defaultModifierMask,
-                keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["setDynamicColumnHeadersHandler"],
-                1))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.defaultModifierMask,
-                keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["clearDynamicColumnHeadersHandler"],
-                2))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.defaultModifierMask,
-                keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["setDynamicRowHeadersHandler"],
-                1))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.defaultModifierMask,
-                keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["clearDynamicRowHeadersHandler"],
-                2))
-
-        layout = settings_manager.getManager().getSetting('keyboardLayout')
-        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        bindings = self.structuralNavigation.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
 
         return keyBindings
 
@@ -374,94 +298,6 @@ class Script(default.Script):
             text = self.utilities.displayedText(focus) or messages.EMPTY
 
         self.presentMessage(text)
-        return True
-
-    def setDynamicColumnHeaders(self, inputEvent):
-        """Set the row for the dynamic header columns to use when speaking
-        calc cell entries. In order to set the row, the user should first set
-        focus to the row that they wish to define and then press Insert-r.
-
-        Once the user has defined the row, it will be used to first speak
-        this header when moving between columns.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        cell = focus_manager.getManager().get_locus_of_focus()
-        parent = AXObject.get_parent(cell)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
-            cell = parent
-
-        table = AXTable.get_table(cell)
-        if table:
-            row = AXTable.get_cell_coordinates(cell)[0]
-            AXTable.set_dynamic_column_headers_row(table, row)
-            self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
-
-        return True
-
-    def clearDynamicColumnHeaders(self, inputEvent):
-        """Clear the dynamic header column.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        table = AXTable.get_table(focus_manager.getManager().get_locus_of_focus())
-        if table:
-            AXTable.clear_dynamic_column_headers_row(table)
-            msg = messages.DYNAMIC_COLUMN_HEADER_CLEARED
-        else:
-            msg = messages.TABLE_NOT_IN_A
-
-        self.presentationInterrupt()
-        self.presentMessage(msg)
-        return True
-
-    def setDynamicRowHeaders(self, inputEvent):
-        """Set the column for the dynamic header rows to use when speaking
-        calc cell entries. In order to set the column, the user should first
-        set focus to the column that they wish to define and then press
-        Insert-c.
-
-        Once the user has defined the column, it will be used to first speak
-        this header when moving between rows.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        cell = focus_manager.getManager().get_locus_of_focus()
-        parent = AXObject.get_parent(cell)
-        if AXObject.get_role(parent) == Atspi.Role.TABLE_CELL:
-            cell = parent
-
-        table = AXTable.get_table(cell)
-        if table:
-            column = AXTable.get_cell_coordinates(cell)[1]
-            AXTable.set_dynamic_row_headers_column(table, column)
-            self.presentMessage(
-                messages.DYNAMIC_ROW_HEADER_SET % self.utilities.columnConvert(column + 1))
-
-        return True
-
-    def clearDynamicRowHeaders(self, inputEvent):
-        """Clear the dynamic row headers.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        table = AXTable.get_table(focus_manager.getManager().get_locus_of_focus())
-        if table:
-            AXTable.clear_dynamic_row_headers_column(table)
-            msg = messages.DYNAMIC_ROW_HEADER_CLEARED
-        else:
-            msg = messages.TABLE_NOT_IN_A
-
-        self.presentationInterrupt()
-        self.presentMessage(msg)
         return True
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
@@ -701,8 +537,9 @@ class Script(default.Script):
         if self._inSayAll:
             return
 
-        if self.structuralNavigation.last_input_event_was_navigation_command():
-            return
+        if self.tableNavigator.last_input_event_was_navigation_command():
+            msg = "SOFFICE: Event ignored: Last input event was table navigation."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if not event.detail1:
             return
@@ -774,7 +611,9 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
-        if self.structuralNavigation.last_input_event_was_navigation_command():
+        if self.tableNavigator.last_input_event_was_navigation_command():
+            msg = "SOFFICE: Event ignored: Last input event was table navigation."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isSpreadSheetCell(focus_manager.getManager().get_locus_of_focus()):

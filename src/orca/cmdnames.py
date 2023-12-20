@@ -819,6 +819,11 @@ PRESENT_INPUT_LINE = _("Present the contents of the input line")
 # writing functions.
 STRUCTURAL_NAVIGATION_TOGGLE = _("Toggle structural navigation keys")
 
+# Translators: Orca has commands for navigating within a table, e.g. to the
+# next cell in a given direction. This string is the description of the command
+# which enables/disables this support.
+TABLE_NAVIGATION_TOGGLE = _("Toggle table navigation keys")
+
 # Translators: this is for navigating among blockquotes in a document.
 BLOCKQUOTE_PREV = _("Go to previous blockquote")
 
@@ -1083,6 +1088,18 @@ TABLE_CELL_RIGHT = _("Go right one cell")
 
 # Translators: this is for navigating among table cells in a document.
 TABLE_CELL_UP = _("Go up one cell")
+
+# Translators: this is for navigating among table cells in a document.
+TABLE_CELL_BEGINNING_OF_ROW = _("Go to the beginning of the row")
+
+# Translators: this is for navigating among table cells in a document.
+TABLE_CELL_END_OF_ROW = _("Go to the end of the row")
+
+# Translators: this is for navigating among table cells in a document.
+TABLE_CELL_TOP_OF_COLUMN = _("Go to the top of the column")
+
+# Translators: this is for navigating among table cells in a document.
+TABLE_CELL_BOTTOM_OF_COLUMN = _("Go to the bottom of the column")
 
 # Translators: When presenting the content of a line on a web page, Orca by
 # default presents the full line, including any links or form fields on that

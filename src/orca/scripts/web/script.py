@@ -282,7 +282,6 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.RADIO_BUTTON,
                 structural_navigation.StructuralNavigation.SEPARATOR,
                 structural_navigation.StructuralNavigation.TABLE,
-                structural_navigation.StructuralNavigation.TABLE_CELL,
                 structural_navigation.StructuralNavigation.UNVISITED_LINK,
                 structural_navigation.StructuralNavigation.VISITED_LINK]
 
@@ -721,7 +720,8 @@ class Script(default.Script):
                     return
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
-                elif not self.structuralNavigation.last_input_event_was_navigation_command():
+                elif not self.structuralNavigation.last_input_event_was_navigation_command() \
+                     and not self.tableNavigator.last_input_event_was_navigation_command():
                     focus_manager.getManager().emit_region_changed(
                         context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
@@ -772,7 +772,8 @@ class Script(default.Script):
             return False
 
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command()
+            self.structuralNavigation.last_input_event_was_navigation_command() \
+            or self.tableNavigator.last_input_event_was_navigation_command()
         if not settings_manager.getManager().getSetting('structNavTriggersFocusMode') \
            and lastCommandWasStructNav:
             msg = "WEB: Not using focus mode due to struct nav settings"
@@ -889,7 +890,8 @@ class Script(default.Script):
 
         lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command()
+            self.structuralNavigation.last_input_event_was_navigation_command() \
+            or self.tableNavigator.last_input_event_was_navigation_command()
 
         isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
         if not (lastCommandWasCaretNav or lastCommandWasStructNav) and not isEditable:
@@ -973,6 +975,7 @@ class Script(default.Script):
 
         if not self.caretNavigation.last_input_event_was_navigation_command() \
            and not self.structuralNavigation.last_input_event_was_navigation_command() \
+           and not self.tableNavigator.last_input_event_was_navigation_command() \
            and not isContentEditable \
            and not self.utilities.isPlainText() \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
@@ -1152,6 +1155,7 @@ class Script(default.Script):
         self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
+        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
@@ -1164,6 +1168,7 @@ class Script(default.Script):
         self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
+        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
 
     def toggleLayoutMode(self, inputEvent):
         layoutMode = not settings_manager.getManager().getSetting('layoutMode')
@@ -1187,6 +1192,7 @@ class Script(default.Script):
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
                and (self.caretNavigation.last_input_event_was_navigation_command() \
                     or self.structuralNavigation.last_input_event_was_navigation_command() \
+                    or self.tableNavigator.last_input_event_was_navigation_command() \
                     or inputEvent):
                 self.utilities.grabFocus(obj)
 
@@ -1199,6 +1205,7 @@ class Script(default.Script):
         self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
         self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
+        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
@@ -1226,6 +1233,7 @@ class Script(default.Script):
             self.caretNavigation.suspend_commands(self, True, reason)
             self.structuralNavigation.suspend_commands(self, True, reason)
             self.liveRegionManager.suspend_commands(self, True, reason)
+            self.tableNavigator.suspend_commands(self, True, reason)
             return False
 
         if self.flatReviewPresenter.is_active():
@@ -1255,7 +1263,8 @@ class Script(default.Script):
         args = {}
         lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command()
+            self.structuralNavigation.last_input_event_was_navigation_command() \
+            or self.tableNavigator.last_input_event_was_navigation_command()
         if self.utilities.lastInputEventWasMouseButton() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
@@ -1340,6 +1349,7 @@ class Script(default.Script):
             self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
             self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
             self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
+            self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
 
         return True
 
@@ -1552,6 +1562,11 @@ class Script(default.Script):
 
         if self.structuralNavigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.tableNavigator.last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was table nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2031,6 +2046,7 @@ class Script(default.Script):
                     self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
                     self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
                     self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
+                    self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
@@ -2043,6 +2059,11 @@ class Script(default.Script):
 
         if self.structuralNavigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.tableNavigator.last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was table nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
