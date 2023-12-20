@@ -597,6 +597,9 @@ class SettingsManager(object):
         return bindingTuple
 
     def overrideKeyBindings(self, script, bindings, enabledOnly=True):
+        # TODO - JD: See about moving this logic, along with any callers, into KeyBindings.
+        # Establishing and maintaining grabs should JustWork(tm) as part of the overall
+        # keybinding/command process.
         keybindingsSettings = self.profileKeybindings
         for handlerString, bindingTuples in keybindingsSettings.items():
             handler = script.inputEventHandlers.get(handlerString)
@@ -605,8 +608,7 @@ class SettingsManager(object):
 
             if enabledOnly:
                 if not bindings.hasHandler(handler):
-                    tokens = ["SETTINGS MANAGER:", handler.function,
-                              "is not in the bindings provided. Not overriding."]
+                    tokens = ["SETTINGS MANAGER:", handler, "is not in the bindings provided."]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
@@ -617,17 +619,24 @@ class SettingsManager(object):
                     continue
 
             oldBindings = bindings.getBindingsForHandler(handler)
+            wasEnabled = None
             for b in oldBindings:
                 tokens = ["SETTINGS MANAGER: Removing old binding for", b]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+                if wasEnabled is not None and b.is_enabled() != wasEnabled:
+                    msg = "SETTINGS MANAGER: Warning, different enabled values found for binding"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+                wasEnabled = b.is_enabled()
                 bindings.remove(b, True)
 
             for bindingTuple in bindingTuples:
                 bindingTuple = self._adjustBindingTupleValues(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
-                newBinding = KeyBinding(keysym, mask, mods, handler, clicks)
+                newBinding = KeyBinding(keysym, mask, mods, handler, clicks, enabled=wasEnabled)
                 bindings.add(newBinding)
-                tokens = ["SETTINGS MANAGER:", handler.function, f"is rebound to {bindingTuple}"]
+                tokens = ["SETTINGS MANAGER:", handler, f"is rebound to {bindingTuple}"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return bindings

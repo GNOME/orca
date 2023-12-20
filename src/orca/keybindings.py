@@ -247,7 +247,10 @@ class KeyBinding:
             string = f"ENABLED BINDING for '{self.handler}'"
         else:
             string = f"DISABLED BINDING for '{self.handler}'"
-        return f"{string}: {self.keysymstring} mods:{self.modifiers} clicks:{self.click_count}"
+        return (
+            f"{string}: {self.keysymstring} mods={self.modifiers} clicks={self.click_count} "
+            f"grab ids={self._grab_ids}"
+        )
 
     def matches(self, keycode, modifiers):
         """Returns true if this key binding matches the given keycode and
@@ -336,25 +339,27 @@ class KeyBinding:
         if not (self.keysymstring and self._enabled):
             return
 
-        msg = f"ADDING GRAB: {self}"
+        msg = f"ADDING GRABS: {self}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for kd in self.keyDefs():
             self._grab_ids.append(orca_state.device.add_key_grab(kd, None))
 
+        msg = f"GRABS ADDED: {self}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
     def removeGrabs(self):
         """Removes key grabs for this KeyBinding."""
 
-        if not self.keysymstring:
-            return
-
-        msg = f"REMOVING GRAB: {self}"
+        msg = f"REMOVING GRABS: {self}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for id in self._grab_ids:
             orca_state.device.remove_key_grab(id)
         self._grab_ids = []
 
+        msg = f"GRABS REMOVED: {self}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.
@@ -386,6 +391,17 @@ class KeyBindings:
     def remove(self, keyBinding, includeGrabs=False):
         """Removes KeyBinding from this set of keybindings, optionally updating grabs."""
 
+        # TODO - JD: This shouldn't happen, but it does when trying to remove an overridden
+        # binding. This function gets called with the original binding.
+        if keyBinding not in self.keyBindings:
+            candidates = self.getBindingsForHandler(keyBinding.handler)
+            tokens = ["KEYBINDINGS: Warning: No binding in set to remove for", keyBinding,
+                      "Alternates:", candidates]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+            for candidate in self.getBindingsForHandler(keyBinding.handler):
+                self.remove(candidate, includeGrabs)
+            return
+
         if keyBinding.hasGrabs():
             if includeGrabs:
                 keyBinding.removeGrabs()
@@ -394,8 +410,7 @@ class KeyBindings:
                 tokens = ["KEYBINDINGS: Warning:", keyBinding, "will be removed but has grabs."]
                 debug.printTokens(debug.LEVEL_WARNING, tokens, True)
 
-        if keyBinding in self.keyBindings:
-            self.keyBindings.remove(keyBinding)
+        self.keyBindings.remove(keyBinding)
 
     def addKeyGrabs(self, reason=""):
         """Adds grabs for all enabled bindings in this set of keybindings."""
