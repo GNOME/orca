@@ -321,6 +321,7 @@ class KeyboardEvent(InputEvent):
             self._script = script_manager.getManager().getActiveScript()
             self._window = focus_manager.getManager().get_active_window()
             self._obj = focus_manager.getManager().get_locus_of_focus()
+            self._obj_after_consuming = self._obj
 
         if self.is_duplicate:
             KeyboardEvent.duplicateCount += 1
