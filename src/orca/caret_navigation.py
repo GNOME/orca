@@ -272,6 +272,10 @@ class CaretNavigation:
                 1,
                 enabled))
 
+        # This pulls in the user's overrides to alternative keys.
+        self._bindings = settings_manager.getManager().overrideKeyBindings(
+            self._script, self._bindings, False)
+
         msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 

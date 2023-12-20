@@ -421,19 +421,6 @@ class KeyBindings:
             if binding.hasGrabs():
                 binding.removeGrabs()
 
-    def removeByHandler(self, handler):
-        """Removes the given KeyBinding instance from this set of keybindings."""
-
-        # TODO - JD: This logic should probably call remove to do any grab-related
-        # clean-up. The settings manager seems to be the only caller for the purpose
-        # of handling user-modified bindings. That call may be (or soon become)
-        # obsolete.
-        i = len(self.keyBindings)
-        while i > 0:
-            if self.keyBindings[i - 1].handler == handler:
-                del self.keyBindings[i - 1]
-            i = i - 1
-
     def hasHandler(self, handler):
         """Returns True if the handler is found in this set of keybindings."""
 

@@ -616,7 +616,12 @@ class SettingsManager(object):
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
-            bindings.removeByHandler(handler)
+            oldBindings = bindings.getBindingsForHandler(handler)
+            for b in oldBindings:
+                tokens = ["SETTINGS MANAGER: Removing old binding for", b]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                bindings.remove(b, True)
+
             for bindingTuple in bindingTuples:
                 bindingTuple = self._adjustBindingTupleValues(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
