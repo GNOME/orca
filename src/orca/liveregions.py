@@ -224,18 +224,35 @@ class LiveRegionManager:
         tokens = [self._bindings]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    def suspend_commands(self, suspended):
+    def refresh_bindings_and_grabs(self, script, reason=""):
+        """Refreshes live region bindings and grabs for script."""
+
+        msg = "LIVE REGION MANAGER: Refreshing bindings and grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.remove(binding, includeGrabs=True)
+
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.add(binding, includeGrabs=not self._suspended)
+
+    def suspend_commands(self, script, suspended, reason=""):
         """Suspends live region commands independent of the enabled setting."""
 
         if suspended == self._suspended:
             return
 
         msg = f"LIVE REGION MANAGER: Commands suspended: {suspended}"
+        if reason:
+            msg += f": {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
     def reset(self):
         # First we will purge our politeness override dictionary of LIVE_NONE

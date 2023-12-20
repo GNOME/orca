@@ -294,6 +294,23 @@ class CaretNavigation:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
 
+    def refresh_bindings_and_grabs(self, script, reason=""):
+        """Refreshes caret navigation bindings and grabs for script."""
+
+        msg = "CARET NAVIGATION: Refreshing bindings and grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.remove(binding, includeGrabs=True)
+
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.add(binding, includeGrabs=not self._suspended)
+
     def toggle_enabled(self, script, event):
         """Toggles caret navigation."""
 
@@ -310,23 +327,22 @@ class CaretNavigation:
         script.presentMessage(string)
         _settings_manager.setSetting('caretNavigationEnabled', enabled)
         self._last_input_event = None
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
-        script.refreshKeyGrabs("toggling caret navigation")
+        self.refresh_bindings_and_grabs(script, "toggling caret navigation")
         return True
 
-    def suspend_commands(self, suspended):
+    def suspend_commands(self, script, suspended, reason=""):
         """Suspends caret navigation independent of the enabled setting."""
 
         if suspended == self._suspended:
             return
 
-        msg = f"CARET NAVIGATION: Suspended: {suspended}"
+        msg = f"CARET NAVIGATION: Commands suspended: {suspended}"
+        if reason:
+            msg += f": {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self._suspended = suspended
 
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._suspended = suspended
+        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
     def _next_character(self, script, event):
         """Moves to the next character."""

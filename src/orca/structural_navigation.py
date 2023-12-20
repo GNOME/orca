@@ -651,7 +651,7 @@ class StructuralNavigation:
             input_event.InputEventHandler(
                 self.toggleStructuralNavigation,
                  cmdnames.STRUCTURAL_NAVIGATION_TOGGLE,
-                 not self._suspended)
+                 enabled = not self._suspended)
 
         for structuralNavigationObject in self.enabledObjects.values():
             handlers = structuralNavigationObject.inputEventHandlers
@@ -717,6 +717,23 @@ class StructuralNavigation:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
 
+    def refresh_bindings_and_grabs(self, script, reason=""):
+        """Refreshes structural navigation bindings and grabs for script."""
+
+        msg = "STRUCTURAL NAVIGATION: Refreshing bindings and grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.remove(binding, includeGrabs=True)
+
+        self._handlers = self.get_handlers(True)
+        self._bindings = self.get_bindings(True)
+
+        for binding in self._bindings.keyBindings:
+            script.keyBindings.add(binding, includeGrabs=not self._suspended)
+
     def toggleStructuralNavigation(self, script, inputEvent, presentMessage=True):
         """Toggles structural navigation keys."""
 
@@ -729,24 +746,26 @@ class StructuralNavigation:
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
-        self._script.refreshKeyGrabs("toggling structural navigation")
+        self.refresh_bindings_and_grabs(script, "toggling structural navigation")
         if presentMessage:
             self._script.presentMessage(string)
 
         return True
 
-    def suspend_commands(self, suspended):
+    def suspend_commands(self, script, suspended, reason=""):
         """Suspends structural navigation independent of the enabled setting."""
 
         if suspended == self._suspended:
             return
 
         msg = f"STRUCTURAL NAVIGATION: Suspended: {suspended}"
+        if reason:
+            msg += f": {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
     #########################################################################
     #                                                                       #
