@@ -596,13 +596,13 @@ class SettingsManager(object):
 
         return bindingTuple
 
-    def overrideKeyBindings(self, script, bindings, enabledOnly=True):
+    def overrideKeyBindings(self, handlers, bindings, enabledOnly=True):
         # TODO - JD: See about moving this logic, along with any callers, into KeyBindings.
         # Establishing and maintaining grabs should JustWork(tm) as part of the overall
         # keybinding/command process.
         keybindingsSettings = self.profileKeybindings
         for handlerString, bindingTuples in keybindingsSettings.items():
-            handler = script.inputEventHandlers.get(handlerString)
+            handler = handlers.get(handlerString)
             if not handler:
                 continue
 
@@ -697,7 +697,8 @@ class SettingsManager(object):
         self._mergeSettings()
         self._setSettingsRuntime(self.general)
         self._setPronunciationsRuntime(self.pronunciations)
-        script.keyBindings = self.overrideKeyBindings(script, script.getKeyBindings())
+        script.keyBindings = self.overrideKeyBindings(
+            script.inputEventHandlers, script.getKeyBindings())
 
 _manager = SettingsManager()
 

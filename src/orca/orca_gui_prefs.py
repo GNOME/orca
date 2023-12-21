@@ -2146,7 +2146,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.script.setupInputEventHandlers()
             keyBinds = keybindings.KeyBindings()
             keyBinds = settings_manager.getManager().overrideKeyBindings(
-                self.script, keyBinds, enabledOnly=False)
+                self.script.inputEventHandlers, keyBinds, enabledOnly=False)
             keyBind = keybindings.KeyBinding(None, None, None, None)
             treeModel = self.keyBindingsModel
 

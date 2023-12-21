@@ -354,6 +354,11 @@ class KeyBinding:
         msg = f"REMOVING GRABS: {self}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
+        if self._grab_ids and not orca_state.device:
+            msg = "WARNING: Have grab to remove but no device."
+            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
+            return
+
         for id in self._grab_ids:
             orca_state.device.remove_key_grab(id)
         self._grab_ids = []

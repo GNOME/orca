@@ -421,7 +421,7 @@ class Script(script.Script):
 
         try:
             keyBindings = settings_manager.getManager().overrideKeyBindings(
-                self, keyBindings, enabledOnly)
+                self.inputEventHandlers, keyBindings, enabledOnly)
         except Exception as error:
             tokens = ["DEFAULT: Exception when overriding keybindings in", self, ":", error]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
@@ -531,6 +531,11 @@ class Script(script.Script):
         msg = "DEFAULT: Clearing key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = keybindings.KeyBindings()
+
+        if not orca_state.device:
+            msg = "WARNING: Attempting to remove key grabs without a device."
+            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
+            return
 
         for modifier in ["Insert", "KP_Insert"]:
             if modifier in orca_state.grabbedModifiers:

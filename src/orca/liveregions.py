@@ -220,7 +220,7 @@ class LiveRegionManager:
 
         # This pulls in the user's overrides to alternative keys.
         self._bindings = settings_manager.getManager().overrideKeyBindings(
-            self._script, self._bindings, False)
+            self._handlers, self._bindings, False)
 
         msg = f"LIVE REGION MANAGER: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
