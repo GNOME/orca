@@ -118,7 +118,12 @@ class Script(default.Script):
         self._preMouseOverContext = None, -1
         self._inMouseOverObject = False
         self.utilities.clearCachedObjects()
-        self.removeKeyGrabs("script deactivation")
+        reason = "script deactivation"
+        self.caretNavigation.suspend_commands(self, False, reason)
+        self.structuralNavigation.suspend_commands(self, False, reason)
+        self.liveRegionManager.suspend_commands(self, False, reason)
+        self.tableNavigator.suspend_commands(self, False, reason)
+        self.removeKeyGrabs(reason)
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
