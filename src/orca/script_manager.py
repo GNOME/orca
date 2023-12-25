@@ -270,6 +270,11 @@ class ScriptManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             appScript = self.getDefaultScript()
 
+        if self._appNames.get(AXObject.get_name(app)) == "sleepmode":
+            tokens = ["SCRIPT MANAGER: Script is sleep-mode script", appScript]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return appScript
+
         if customScript:
             tokens = ["SCRIPT MANAGER: Script is custom script", customScript]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
