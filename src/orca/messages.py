@@ -2256,6 +2256,36 @@ SPEECH_DISABLED = _("Speech disabled.")
 # has been turned back on.
 SPEECH_ENABLED = _("Speech enabled.")
 
+# Translators: Orca has a sleep mode which causes Orca to essentially behave as
+# if it were not running for a given application. Some use cases include self-
+# voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former
+# case, the self-voicing app is expected to provide all needed commands as well
+# as speech and braille. In the latter case, we want to ensure that Orca's
+# commands and speech/braille do not interfere with that of the VM and any
+# screen reader being used in that VM. Thus when an application is being used
+# in sleep mode, nearly all Orca commands become unbound/free, and nothing is
+# spoken or brailled. But if the user toggles sleep mode off or switches to
+# another application window, Orca commands, speech, and braille immediately
+# resume working. This string is the message Orca presents when sleep mode is
+# disabled by the user. The string substitution is the name of the application.
+# For example "Sleep mode disabled for VirtualBox."
+SLEEP_MODE_DISABLED_FOR = _("Sleep mode disabled for %s.")
+
+# Translators: Orca has a sleep mode which causes Orca to essentially behave as
+# if it were not running for a given application. Some use cases include self-
+# voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former
+# case, the self-voicing app is expected to provide all needed commands as well
+# as speech and braille. In the latter case, we want to ensure that Orca's
+# commands and speech/braille do not interfere with that of the VM and any
+# screen reader being used in that VM. Thus when an application is being used
+# in sleep mode, nearly all Orca commands become unbound/free, and nothing is
+# spoken or brailled. But if the user toggles sleep mode off or switches to
+# another application window, Orca commands, speech, and braille immediately
+# resume working. This string is the message Orca presents when sleep mode is
+# enabled by the user. The string substitution is the name of the application.
+# For example "Sleep mode enabled for VirtualBox."
+SLEEP_MODE_ENABLED_FOR = _("Sleep mode enabled for %s.")
+
 # Translators: This string announces speech rate change.
 SPEECH_FASTER = _("faster.")
 

@@ -27,6 +27,7 @@ __license__   = "LGPL"
 import importlib
 
 from . import debug
+from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, toolkits
@@ -71,6 +72,11 @@ class ScriptManager:
         self._defaultScript = self.getScript(None)
         self._defaultScript.registerEventListeners()
         self.setActiveScript(self._defaultScript, "activate")
+
+        # TODO - JD: This is temporary/experimental.
+        for app in settings.sleepmodeApps:
+            self._appNames[app] = "sleepmode"
+
         self._active = True
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activated", True)
 

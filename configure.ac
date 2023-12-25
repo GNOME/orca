@@ -106,6 +106,7 @@ src/orca/scripts/apps/smuxi-frontend-gnome/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/xfwm4/Makefile
 src/orca/scripts/switcher/Makefile
+src/orca/scripts/sleepmode/Makefile
 src/orca/scripts/terminal/Makefile
 src/orca/scripts/web/Makefile
 src/orca/scripts/toolkits/Makefile

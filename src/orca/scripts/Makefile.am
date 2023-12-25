@@ -1,4 +1,4 @@
-SUBDIRS = apps toolkits switcher terminal web
+SUBDIRS = apps toolkits switcher sleepmode terminal web
 
 orca_python_PYTHON = \
 	__init__.py \
