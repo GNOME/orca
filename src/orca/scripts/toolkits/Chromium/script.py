@@ -329,14 +329,6 @@ class Script(web.Script):
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
-        if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source):
-            topLevel = self.utilities.topLevelObject(event.source)
-            if focus_manager.getManager().can_be_active_window(topLevel):
-                focus_manager.getManager().set_active_window(topLevel)
-                self.presentObject(event.source)
-                focus_manager.getManager().set_locus_of_focus(event, event.source, False)
-            return
-
         if super().onShowingChanged(event):
             return
 
