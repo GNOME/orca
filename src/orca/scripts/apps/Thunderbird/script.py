@@ -241,8 +241,7 @@ class Script(Gecko.Script):
 
         if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source) \
            and self.utilities.topLevelObjectIsActiveWindow(event.source):
-            self.presentObject(event.source)
-            focus_manager.getManager().set_locus_of_focus(event, event.source, False)
+            focus_manager.getManager().set_locus_of_focus(event, event.source, True)
             return
 
         default.Script.onShowingChanged(self, event)
