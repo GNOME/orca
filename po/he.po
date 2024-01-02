@@ -3090,35 +3090,27 @@ msgstr ""
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:955
-#, fuzzy
-#| msgid "Goes to previous large object."
 msgid "Go to previous large object"
-msgstr "עובר לאובייקט הגדול קודם."
+msgstr "מעבר לעצם הגדול הקודם"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:960
-#, fuzzy
-#| msgid "Goes to next large object."
 msgid "Go to next large object"
-msgstr "עובר לאובייקט הגדול הבא."
+msgstr "מעבר לעצם הגדול הבא"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:965
-#, fuzzy
-#| msgid "No more large objects."
 msgid "Display a list of large objects"
-msgstr "אין יותר אובייקטים גדולים."
+msgstr "הצגת רשימה של עצמים גדולים"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:968
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous link"
-msgstr "עובר לשורה הקודמת."
+msgstr "מעבר לקישור הקודם"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:971
@@ -3164,19 +3156,15 @@ msgstr "הצגת רשימת פריטי רשימה"
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:997
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous live region"
-msgstr "עובר לשורה הקודמת."
+msgstr "מעבר לאזור החי הקודם"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:1002
-#, fuzzy
-#| msgid "Goes to next line."
 msgid "Go to next live region"
-msgstr "עובר לשורה הבאה."
+msgstr "מעבר לאזור החי הבא"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3219,10 +3207,8 @@ msgstr ""
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
 #: src/orca/cmdnames.py:1032
-#, fuzzy
-#| msgid "Enable _navigation keys"
 msgid "Toggle simplified object navigation."
-msgstr "הפעל מקשי _תנועה"
+msgstr "מחליף מצב ניווט עצמים פשוט."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1035
@@ -3387,18 +3373,13 @@ msgstr "להציג רשימה של קישורים שטרם ביקרת בהם"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1148
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous visited link"
-msgstr "עובר לשורה הקודמת."
+msgstr "מעבר לקישור הקודם שכבר ביקרת בו"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1151
-#, fuzzy
-#| msgid "%d unvisited link"
-#| msgid_plural "%d unvisited links"
 msgid "Go to next visited link"
-msgstr "‏‏%d קישורים שלא נלחצו"
+msgstr "מעבר לקישור הבא שכבר ביקרת בו"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1154
@@ -3929,11 +3910,9 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:355
-#, fuzzy
-#| msgid "Right Half"
 msgctxt "color name"
 msgid "light cyan"
-msgstr "חצי ימני"
+msgstr "ציאן בהיר"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -5799,10 +5778,8 @@ msgstr "שם המאפיין"
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:920
-#, fuzzy
-#| msgid "Use _Orca Caret Navigation"
 msgid "Control caret navigation"
-msgstr "השתמש בניווט הסמן של _Orca"
+msgstr "שליטה בניווט הסמן"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
@@ -5826,14 +5803,13 @@ msgstr "קצ_ר"
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
 #: src/orca/guilabels.py:939
-#, fuzzy, python-format
-#| msgid "Notification"
+#, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
-msgstr[0] "התראה"
-msgstr[1] "התראה"
-msgstr[2] "התראה"
-msgstr[3] "התראה"
+msgstr[0] "התראה %d"
+msgstr[1] "%d התראות"
+msgstr[2] "%d התראות"
+msgstr[3] "%d התראות"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
@@ -7604,11 +7580,9 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: src/orca/mathsymbols.py:1892
-#, fuzzy
-#| msgid "not pressed"
 msgctxt "math symbol"
 msgid "not true"
-msgstr "לא לחוץ"
+msgstr "לא אמת"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
 #: src/orca/mathsymbols.py:1895
@@ -8222,12 +8196,10 @@ msgstr "ריבוע בינוני-קטן שחור"
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: src/orca/mathsymbols.py:2215
-#, fuzzy, python-format
-#| msgctxt "textattr"
-#| msgid "underline"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with underline"
-msgstr "קו תחתי"
+msgstr "%s עם קו תחתי"
 
 #. Translators: this is the spoken representation for the character '̸' (U+0338)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -8244,12 +8216,10 @@ msgstr ""
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: src/orca/mathsymbols.py:2227
-#, fuzzy, python-format
-#| msgctxt "textattr"
-#| msgid "vertical align"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with vertical line"
-msgstr "יישור אנכי"
+msgstr "%s עם קו אנכי"
 
 #. Translators: Sometimes when we attempt to get the name of an accessible
 #. software application, we fail because the app or one of its elements is
@@ -9504,11 +9474,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:972
-#, fuzzy
-#| msgid "right arrow"
 msgctxt "math enclosure"
 msgid "a northeast arrow"
-msgstr "חץ ימני"
+msgstr "חץ לצפון־מזרח"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9517,11 +9485,9 @@ msgstr "חץ ימני"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:980
-#, fuzzy
-#| msgid "Wrapping to bottom."
 msgctxt "math enclosure"
 msgid "a line at the bottom"
-msgstr "גלישת למטה."
+msgstr "שורה בחתית"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9541,11 +9507,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:996
-#, fuzzy
-#| msgid "textattr|line height"
 msgctxt "math enclosure"
 msgid "a line on the right"
-msgstr "גובה קו"
+msgstr "שורה מימין"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -10700,10 +10664,8 @@ msgstr "מצב עצמים."
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
 #: src/orca/messages.py:1784
-#, fuzzy
-#| msgid "No more large objects."
 msgid "Pointer moved to object."
-msgstr "אין יותר פריטים גדולים."
+msgstr "הסמן עבר לפריט."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -10717,19 +10679,15 @@ msgstr "עכבר על גבי עצם לא נמצא."
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: src/orca/messages.py:1795
-#, fuzzy
-#| msgid "Magnifier disabled."
 msgid "Mouse review disabled."
-msgstr "זכוכית המגדלת מכובה."
+msgstr "סקירת עכבר הושבתה."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: src/orca/messages.py:1800
-#, fuzzy
-#| msgid "Magnifier enabled."
 msgid "Mouse review enabled."
-msgstr "זכוכית המגדלת מופעלת."
+msgstr "סקירת עכבר הופעלה."
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -11349,19 +11307,15 @@ msgstr "הבחירה נמחקה."
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
 #: src/orca/messages.py:2228
-#, fuzzy
-#| msgid "Select desired voice:"
 msgid "Selection restored."
-msgstr "Select desired voice:"
+msgstr "הבחירה שוחזרה."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2233
-#, fuzzy
-#| msgid "text|unselected"
 msgid "Text unselected."
-msgstr "הבחירה בוטלה"
+msgstr "בחירת הטקסט בוטלה."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -14806,25 +14760,25 @@ msgstr "רווח להחלפת מצב."
 #. with a combobox.
 #: src/orca/tutorialgenerator.py:193
 msgid "Press space to expand, and use up and down to select an item."
-msgstr ""
+msgstr "יש ללחוץ על רווח להרחבה ולהשתמש בלמעלה ולמטה כדי לבחור פריט."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: src/orca/tutorialgenerator.py:221
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
+msgstr "יש ללחוץ על alt+f6 כדי להעביר את המיקוד לחלונות הצאצאיים."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
 #: src/orca/tutorialgenerator.py:283
 msgid "To move to items, use either the arrow keys or type ahead searching."
-msgstr ""
+msgstr "כדי להעביר פריטים, להשתמש או במקשי החצים או להקליד טרום חיפוש."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
 #: src/orca/tutorialgenerator.py:289
 msgid "To get to the system menus press the alt+f1 key."
-msgstr ""
+msgstr "כדי להגיע לתפריטי המערכת יש ללחוץ על הצירוף alt+f1."
 
 #. Translators: this is the tutorial string when navigating lists.
 #: src/orca/tutorialgenerator.py:323
