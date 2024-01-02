@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-12-01 13:45+0000\n"
+"POT-Creation-Date: 2023-12-09 21:21+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
@@ -1848,10 +1848,8 @@ msgstr "אומר את שורת משטח הסקירה הנוכחית."
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: src/orca/cmdnames.py:90
-#, fuzzy
-#| msgid "Speak blank lines"
 msgid "Speak link details"
-msgstr "דבר שורות ריקות"
+msgstr "הקראת פרטי קישור"
 
 #. Translators: This command will cause the dialog's default button name to be
 #. spoken and displayed in braille. The "default" button in a dialog box is the
@@ -4501,7 +4499,7 @@ msgstr ""
 #: src/orca/colornames.py:705
 msgctxt "color name"
 msgid "wheat"
-msgstr ""
+msgstr "חיטה"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4719,7 +4717,7 @@ msgstr ""
 #. whether the chat application has focus.
 #: src/orca/guilabels.py:173
 msgid "A channel only if its _window is active"
-msgstr ""
+msgstr "ערוץ רק אם החלון שלו _פעיל"
 
 #. Translators: If this checkbox is checked, then Orca will speak the name of the
 #. chat room prior to presenting an incoming message.
@@ -4739,7 +4737,7 @@ msgstr "_דבר את שם החדר"
 #. both for presentation and navigation.
 #: src/orca/guilabels.py:189
 msgid "Enable layout mode for content"
-msgstr ""
+msgstr "הפעלת מצב פריסה לתוכן"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -4838,7 +4836,7 @@ msgstr "אפשרויות חיפוש"
 #. which contained the last match.
 #: src/orca/guilabels.py:254
 msgid "Onl_y speak changed lines during find"
-msgstr ""
+msgstr "לה_קריא רק שורות שהשתנו במהלך איתור"
 
 #. Translators: This is the label for a checkbox. This option controls whether or
 #. not Orca will automatically speak the line that contains the match while the
@@ -4846,7 +4844,7 @@ msgstr ""
 #. Firefox.
 #: src/orca/guilabels.py:260
 msgid "Speak results during _find"
-msgstr ""
+msgstr "הקראת תוצאות במהלך _איתור"
 
 #. Translators: Command is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
@@ -5001,7 +4999,7 @@ msgstr "התראות"
 #: src/orca/guilabels.py:372
 msgctxt "notification presenter"
 msgid "Received"
-msgstr ""
+msgstr "התקבל"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
@@ -5081,6 +5079,8 @@ msgid ""
 "Profile %s already exists.\n"
 "Continue updating the existing profile with these new changes?"
 msgstr ""
+"הפרופיל %s כבר קיים.\n"
+"להמשיך לעדכן את הפרופיל הקיים עם השינויים החדשים האלה?"
 
 #. Translators: This text is displayed in a message dialog when a user indicates
 #. he/she wants to switch to a new user profile which will cause him/her to lose
@@ -5150,6 +5150,8 @@ msgid ""
 "in this profile will be lost. Do you want to continue and remove this "
 "profile and all related settings?"
 msgstr ""
+"פעולה זו תסיר את הפרופיל %s. כל ההגדרות שלא נשמרו והגדרות שנשמרו בפרופיל הזה "
+"תאבדנה. להמשיך להסיר את הפרופיל ואת כל ההגדרות שקשורות אליו?"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "All" means that Orca will present progress bar
@@ -6531,7 +6533,7 @@ msgstr "גג"
 #: src/orca/mathsymbols.py:1355
 msgctxt "math symbol"
 msgid "háček"
-msgstr ""
+msgstr "וי קטן"
 
 #. Translators: this is the spoken word for the character '˘' (U+02d8) when used
 #. as a MathML operator.
@@ -8172,21 +8174,21 @@ msgstr ""
 #: src/orca/mathsymbols.py:2186
 msgctxt "math symbol"
 msgid "black square"
-msgstr ""
+msgstr "ריבוע שחור"
 
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2190
 msgctxt "math symbol"
 msgid "white square"
-msgstr ""
+msgstr "ריבוע לבן"
 
 #. Translators: this is the spoken representation for the character '◆' (U+25c6)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2194
 msgctxt "math symbol"
 msgid "black diamond"
-msgstr ""
+msgstr "יהלום שחור"
 
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -8213,7 +8215,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:2209
 msgctxt "math symbol"
 msgid "black medium small square"
-msgstr ""
+msgstr "ריבוע בינוני-קטן שחור"
 
 #. Translators: this is the spoken representation for the character '̱' (U+0331)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -12527,7 +12529,7 @@ msgstr "פרק"
 #: src/orca/object_properties.py:186
 msgctxt "role"
 msgid "colophon"
-msgstr ""
+msgstr "קולופון"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12545,7 +12547,7 @@ msgstr "מסקנה"
 #: src/orca/object_properties.py:198
 msgctxt "role"
 msgid "cover"
-msgstr ""
+msgstr "כריכה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12554,7 +12556,7 @@ msgstr ""
 #: src/orca/object_properties.py:204
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "הוקרה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12563,7 +12565,7 @@ msgstr ""
 #: src/orca/object_properties.py:210
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "הוקרות"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12599,7 +12601,7 @@ msgstr ""
 #: src/orca/object_properties.py:234
 msgctxt "role"
 msgid "epigraph"
-msgstr ""
+msgstr "אפיגרף"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12608,7 +12610,7 @@ msgstr ""
 #: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "אפילוג"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12617,7 +12619,7 @@ msgstr ""
 #: src/orca/object_properties.py:246
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "אראטה"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12707,7 +12709,7 @@ msgstr "הקדמה"
 #: src/orca/object_properties.py:306
 msgctxt "role"
 msgid "prologue"
-msgstr ""
+msgstr "פרולוג"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13986,7 +13988,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:170
 msgctxt "textattr"
 msgid "line height"
-msgstr ""
+msgstr "גובה שורה"
 
 #. Translators: this attribute refers to the named style which is associated
 #. with the entire paragraph and which controls the default formatting
