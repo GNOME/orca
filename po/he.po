@@ -6449,19 +6449,19 @@ msgstr "חץ כפול לצפון מערב"
 #: src/orca/mathsymbols.py:1323
 msgctxt "math symbol"
 msgid "north east double arrow"
-msgstr ""
+msgstr "חץ כפול לצפון־מזרח"
 
 #. Translators: this is the spoken representation for the character '⇘' (U+21d8)
 #: src/orca/mathsymbols.py:1326
 msgctxt "math symbol"
 msgid "south east double arrow"
-msgstr ""
+msgstr "חץ כפול לדרום־מזרח"
 
 #. Translators: this is the spoken representation for the character '⇙' (U+21d9)
 #: src/orca/mathsymbols.py:1329
 msgctxt "math symbol"
 msgid "south west double arrow"
-msgstr ""
+msgstr "חץ כפול לדרום־מערב"
 
 #. Translators: this is the spoken representation for the character '➔' (U+2794)
 #: src/orca/mathsymbols.py:1332
@@ -6771,14 +6771,14 @@ msgstr ""
 #: src/orca/mathsymbols.py:1490 src/orca/mathsymbols.py:1949
 msgctxt "math symbol"
 msgid "logical and"
-msgstr ""
+msgstr "וגם לוגי"
 
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
 #. Translators: this is the spoken representation for the character '⋁' (U+22c1)
 #: src/orca/mathsymbols.py:1493 src/orca/mathsymbols.py:1952
 msgctxt "math symbol"
 msgid "logical or"
-msgstr ""
+msgstr "או לוגי"
 
 #. Translators: this is the spoken representation for the character '∩' (U+2229)
 #. Translators: this is the spoken representation for the character '⋂' (U+22c2)
@@ -7200,73 +7200,73 @@ msgstr ""
 #: src/orca/mathsymbols.py:1703
 msgctxt "math symbol"
 msgid "not less than"
-msgstr ""
+msgstr "לא קטן מאשר"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
 #: src/orca/mathsymbols.py:1706
 msgctxt "math symbol"
 msgid "not greater than"
-msgstr ""
+msgstr "לא גדול מאשר"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: src/orca/mathsymbols.py:1709
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr ""
+msgstr "לא קטן או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: src/orca/mathsymbols.py:1712
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr ""
+msgstr "לא גדול או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: src/orca/mathsymbols.py:1715
 msgctxt "math symbol"
 msgid "less than or equivalent to"
-msgstr ""
+msgstr "קטן מאשר או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: src/orca/mathsymbols.py:1718
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
-msgstr ""
+msgstr "גדול מאשר או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
 #: src/orca/mathsymbols.py:1721
 msgctxt "math symbol"
 msgid "neither less than nor equivalent to"
-msgstr ""
+msgstr "לא קטן מאשר או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≵' (U+2275)
 #: src/orca/mathsymbols.py:1724
 msgctxt "math symbol"
 msgid "neither greater than nor equivalent to"
-msgstr ""
+msgstr "לא גדול מאשר או שווה ל־"
 
 #. Translators: this is the spoken representation for the character '≶' (U+2276)
 #: src/orca/mathsymbols.py:1727
 msgctxt "math symbol"
 msgid "less than or greater than"
-msgstr ""
+msgstr "קטן מאשר או גדול מאשר"
 
 #. Translators: this is the spoken representation for the character '≷' (U+2277)
 #: src/orca/mathsymbols.py:1730
 msgctxt "math symbol"
 msgid "greater than or less than"
-msgstr ""
+msgstr "גודל מאשר או קטן מאשר"
 
 #. Translators: this is the spoken representation for the character '≸' (U+2278)
 #: src/orca/mathsymbols.py:1733
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr ""
+msgstr "לא קטן ולא גדול מאשר"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: src/orca/mathsymbols.py:1736
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr ""
+msgstr "לא גדול או קטן מאשר"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: src/orca/mathsymbols.py:1739
