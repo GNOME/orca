@@ -4847,23 +4847,27 @@ class Utilities(script_utilities.Utilities):
         self.setCaretContext(replicant, offset, documentFrame)
         return True
 
-    def _handleEventForRemovedListBoxChild(self, event):
+    def _handleEventForRemovedSelectableChild(self, event):
+        container = None
         if AXUtilities.is_list_box(event.source):
-            listBox = event.source
+            container = event.source
+        elif AXUtilities.is_tree(event.source):
+            container = event.source
         else:
-            listBox = AXObject.find_ancestor(event.source, AXUtilities.is_list_box)
-        if listBox is None:
-            msg = "WEB: Could not find listbox to recover from removed child."
+            container = AXObject.find_ancestor(event.source, AXUtilities.is_list_box) \
+                or AXObject.find_ancestor(event.source, AXUtilities.is_tree)
+        if container is None:
+            msg = "WEB: Could not find listbox or tree to recover from removed child."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = ["WEB: Checking", listBox, "for focused child."]
+        tokens = ["WEB: Checking", container, "for focused child."]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        AXObject.clear_cache(listBox)
-        item = AXUtilities.get_focused_object(listBox)
-        if not AXUtilities.is_list_item(item):
-            msg = "WEB: Could not find focused list item to recover from removed child."
+        AXObject.clear_cache(container)
+        item = AXUtilities.get_focused_object(container)
+        if not (AXUtilities.is_list_item(item) or AXUtilities.is_tree_item):
+            msg = "WEB: Could not find focused item to recover from removed child."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -4896,7 +4900,7 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self._handleEventForRemovedListBoxChild(event):
+        if self._handleEventForRemovedSelectableChild(event):
             return True
 
         obj, offset = None, -1
