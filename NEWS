@@ -1,3 +1,27 @@
+45.2 - 6 January 2024
+
+Web:
+
+* Fix bug causing us to get stuck in menu bar during caret navigation.
+
+General:
+
+* Dump our cached information in response to children-changed events
+  so that we do not present stale information.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Bruce Cowan
+  fa              Persian                   Sina Aghighi
+  fr              French                    Guillaume Bernard
+  he              Hebrew                    Yaron Shahrabani
+  ka              Georgian                  Ekaterine Papava
+  pt_BR           Brazilian Portuguese      Alex Jr
+  ro              Romanian                  Daniel Șerbănescu
+  tr              Turkish                   Sabri Ünal
+
+=========
+
 45.1 - 6 October 2023
 
 Web:
