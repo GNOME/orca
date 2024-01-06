@@ -98,25 +98,6 @@ class EventManager:
         orca_state.device = None
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
-    def _isDuplicateEvent(self, event):
-        """Returns True if this event is already in the event queue."""
-
-        if self._inFlood() and self._prioritizeDuringFlood(event):
-            return False
-
-        def isSame(x):
-            return x.type == event.type \
-                and x.source == event.source \
-                and x.detail1 == event.detail1 \
-                and x.detail2 == event.detail2 \
-                and x.any_data == event.any_data
-
-        for e in self._eventQueue.queue:
-            if isSame(e):
-                return True
-
-        return False
-
     def _isObsoletedBy(self, event):
         """Returns the event which renders this one no longer worthy of being processed."""
 
@@ -238,11 +219,6 @@ class EventManager:
             msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
-
-        if self._isDuplicateEvent(event):
-            msg = 'EVENT MANAGER: Ignoring duplicate event'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
 
         # Thunderbird spams us with these when a message list thread is expanded or collapsed.
         if event.type.endswith('system') \
