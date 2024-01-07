@@ -1,5 +1,7 @@
 # Orca v46.alpha
 
+[TOC]
+
 ## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
@@ -40,8 +42,7 @@ Orca also has the following dependencies:
 You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 46.x release.
 
-
-## Note for Braille Users:
+## Note for Braille Users
 
 Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
