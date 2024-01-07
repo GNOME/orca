@@ -1,19 +1,5 @@
 # Orca v46.alpha
 
-## Important information about keyboard-related regressions
-
-TL;DR: You should use the gnome-45 branch. It is the branch in which
-development related to Orca v45 is taking place.
-
-Orca's `master` branch contains work-in-progress development to use new
-key handling support. There are currently a number of regressions that
-make this branch unsuitable for regular use. In order to facilitate
-work continuing in this area, without disrupting Orca users who want
-to try the development version of Orca, we have already branched for
-the GNOME 45 release. The `gnome-45` branch is being actively developed
-and lacks the new key handling support. Thus it is suitable for end-user
-testing. Apologies for this temporary inconvenience.
-
 ## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
@@ -55,7 +41,7 @@ You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 46.x release.
 
 
-## NOTE FOR BRLTTY USERS:
+## Note for Braille Users:
 
 Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
@@ -81,8 +67,96 @@ a "Key Bindings" tab that lists the keyboard binding for Orca.
 For more information, see the Orca documentation which is available
 within Orca as well as at: <https://help.gnome.org/users/orca/stable/>
 
-## Scripting Orca
+## Orca's Scripts and Features
 
-So, you want to write a script for Orca?  The best thing to do is 
-start by looking at other scripts under the src/orca/scripts/ hierarchy
-of the source tree.
+Orca's scripts provide access to applications and toolkits by responding to
+accessible events. For instance, when focus changes in an application, that
+application will emit an accessible event, `object:state-changed:focused`,
+which is then handled by the script associated with the application or toolkit.
+
+If you have an application or toolkit that is accessible, but poorly supported
+by Orca, writing a custom script for that application might be the correct
+solution. (The correct solution might instead be to fix a bug in Orca and/or the
+application.) To see examples of scripts, look in `src/orca/scripts` of the
+source tree.
+
+Scripts can also import features, but the features themselves should not live
+inside the script. Some examples of features imported by scripts include:
+
+* `src/orca/data_and_time_presenter.py`
+* `src/orca/flat_review_presenter.py`
+* `src/orca/notification-presenter.py`
+* `src/orca/object_navigator.py`
+
+Please note: Historically features were implemented directly inside the scripts.
+Moving features outside of scripts is still a work in progress. Thus if you're
+wondering why some features are inside `src/orca/scripts/default.py` and others
+are not, the answer is that we haven't yet gotten around to migrating the features
+outside of `default.py`.
+
+## Getting Orca to Speak Your Application's Custom Message
+
+AT-SPI2 v2.46 added support for the `announcement` signal which can be used with
+Orca v45.2 and later. Here's a simple example:
+
+```python
+#!/usr/bin/python3
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
+def on_button_clicked(button):
+    button.get_accessible().emit("announcement", "Hello world. I am an announcement.")
+
+def on_activate(application):
+    window = Gtk.ApplicationWindow(application=application)
+    button = Gtk.Button(label="Make an announcement")
+    button.connect("clicked", on_button_clicked)
+    window.add(button)
+    window.show_all()
+
+app = Gtk.Application()
+app.connect("activate", on_activate)
+app.run(None)
+```
+
+If you are running Orca v45.2 or later, launch the sample application above and press the
+"Make an announcement" button. You should hear Orca say "Hello world. I am an announcement."
+
+Beginning with AT-SPI2 v2.50, the `announcement` signal was deprecated in favor of a new
+`notification` signal to provide native applications similar functionality to ARIA's live
+regions which allow web applications to specify that a notification is urgent/"assertive."
+
+Here is an example of using the `notification` signal:
+
+```python
+#!/usr/bin/python3
+
+import gi
+gi.require_version("Atk", "1.0")
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Atk, Gtk
+
+def on_button_clicked(button):
+    button.get_accessible().emit("notification", "Hello world. I am a notification.", Atk.Live.POLITE)
+
+def on_activate(application):
+    window = Gtk.ApplicationWindow(application=application)
+    button = Gtk.Button(label="Make a notification")
+    button.connect("clicked", on_button_clicked)
+    window.add(button)
+    window.show_all()
+
+app = Gtk.Application()
+app.connect("activate", on_activate)
+app.run(None)
+```
+
+**Please note:** Because "assertive" messages can be disruptive if presented at the wrong
+time, Orca *currently* treats an "assertive" notification from non-web applications the
+same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
+applications is planned and depends on Orca's
+[live-region support being made global](https://gitlab.gnome.org/GNOME/orca/-/issues/431)
+so that users have full control over when and how notifications are presented to them.
