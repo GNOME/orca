@@ -35,7 +35,7 @@ Orca also has the following dependencies:
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY (<https://mielke.cc/brltty/>) support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
-* liblouis         - Liblouis (<http://liblouis.org/>) support for contracted braille (optional)
+* liblouis         - Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
