@@ -4894,10 +4894,13 @@ class Utilities(script_utilities.Utilities):
         elif AXObject.find_ancestor(focus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-        elif self.isSameObject(event.any_data, focus, True, True):
+        elif focus_manager.getManager().focus_is_dead() \
+           and self.isSameObject(event.any_data, focus, True, True):
             msg = "WEB: Removed child appears to be replicant of locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
+            msg = "WEB: Removed child is not locus of focus nor ancestor of locus of focus."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.detail1 == -1:
