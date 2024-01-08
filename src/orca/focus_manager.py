@@ -160,7 +160,8 @@ class FocusManager:
         tokens = ["FOCUS MANAGER: Request to set locus of focus to", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
 
-        AXObject.clear_cache(obj)
+        # TODO - JD: Is this still needed?
+        AXObject.clear_cache(obj, False, "Setting locus of focus.")
         if not force and obj == self._focus:
             msg = "FOCUS MANAGER: Setting locus of focus to existing locus of focus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -213,7 +214,7 @@ class FocusManager:
     def active_window_is_active(self):
         """Returns True if the window we think is currently active is actually active."""
 
-        AXObject.clear_cache(self._window)
+        AXObject.clear_cache(self._window, False, "Ensuring the active window is really active.")
         is_active = AXUtilities.is_active(self._window)
         tokens = ["FOCUS MANAGER:", self._window, "is active:", is_active]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -233,7 +234,7 @@ class FocusManager:
         if window is None:
             return False
 
-        AXObject.clear_cache(window)
+        AXObject.clear_cache(window, False, "Checking if window can be the active window")
         app = AXObject.get_application(window)
         tokens = ["FOCUS MANAGER:", window, "from", app]
 

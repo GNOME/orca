@@ -65,7 +65,7 @@ class AXObject:
 
     @staticmethod
     def _clear_all_dictionaries(reason=""):
-        msg = "AXObject: Clearing cache."
+        msg = "AXObject: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1144,11 +1144,16 @@ class AXObject:
         return string
 
     @staticmethod
-    def clear_cache(obj, recursive=False):
+    def clear_cache(obj, recursive=False, reason=""):
         """Clears the Atspi cached information associated with obj"""
 
         if obj is None:
             return
+
+        tokens = ["AXObject: Clearing AT-SPI cache on", obj, f"Recursive: {recursive}."]
+        if reason:
+            tokens.append(f" Reason: {reason}")
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not recursive:
             try:

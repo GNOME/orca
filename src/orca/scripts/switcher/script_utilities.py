@@ -69,7 +69,8 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_index_in_parent(obj) >= 0:
             return True
 
-        AXObject.clear_cache(obj)
+        # TODO - JD: Is this still needed?
+        AXObject.clear_cache(obj, False, "Ensuring we have correct state.")
 
         if self.isShowingAndVisible(obj):
             tokens = ["SWITCHER: Ignoring bad index of", obj]

@@ -392,8 +392,9 @@ class Utilities(script_utilities.Utilities):
         if self._script.useFocusMode(obj, oldFocus) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
 
+        # TODO - JD: Can we remove this?
         if obj:
-            AXObject.clear_cache(obj)
+            AXObject.clear_cache(obj, False, "Set caret in object.")
 
         # TODO - JD: This is private.
         self._script._saveFocusedObjectInfo(obj)
@@ -550,7 +551,8 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB:", obj, "contains locusOfFocus but not showing and visible"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        AXObject.clear_cache(obj)
+        # TODO - JD: Can we remove this?
+        AXObject.clear_cache(obj, False, "Ensuring we have correct state.")
         rv = super().isShowingAndVisible(obj)
         if rv:
             tokens = ["WEB: Clearing cache fixed state of", obj, ". Missing event?"]
@@ -3121,7 +3123,8 @@ class Utilities(script_utilities.Utilities):
         if len(eocs)/nChars > 0.3:
             return False
 
-        AXObject.clear_cache(obj)
+        # TODO - JD: Can we remove this?
+        AXObject.clear_cache(obj, False, "Checking if element lines are single words.")
         tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", text.getText(0, -1))))
 
         # Note: We cannot check for the editable-text interface, because Gecko
@@ -3170,7 +3173,8 @@ class Utilities(script_utilities.Utilities):
         if len(eocs)/nChars > 0.3:
             return False
 
-        AXObject.clear_cache(obj)
+        # TODO - JD: Can we remove this?
+        AXObject.clear_cache(obj, False, "Checking if element lines are single chars.")
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
@@ -4864,7 +4868,8 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Checking", container, "for focused child."]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        AXObject.clear_cache(container)
+        # TODO - JD: Can we remove this? If it's needed, should it be recursive?
+        AXObject.clear_cache(container, False, "Handling event for removed selectable child.")
         item = AXUtilities.get_focused_object(container)
         if not (AXUtilities.is_list_item(item) or AXUtilities.is_tree_item):
             msg = "WEB: Could not find focused item to recover from removed child."
@@ -4944,7 +4949,10 @@ class Utilities(script_utilities.Utilities):
 
         else:
             notify = False
-            AXObject.clear_cache(event.source)
+            # TODO - JD: Can we remove this? Even if it is needed, we now also clear the
+            # cache in _handleEventForRemovedSelectableChild. Also, if it is needed, should
+            # it be recursive?
+            AXObject.clear_cache(event.source, False, "Handling event for removed child.")
             obj, offset = self.searchForCaretContext(event.source)
             if obj is None:
                 obj = AXUtilities.get_focused_object(event.source)

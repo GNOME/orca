@@ -74,7 +74,7 @@ class Script(default.Script):
             tokens = ["QT: Event came from inactive top-level object", frame]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-            AXObject.clear_cache(frame)
+            AXObject.clear_cache(frame, False, "Ensuring we have correct active state.")
             isActive = AXUtilities.is_active(frame)
             tokens = ["QT: Cleared cache of", frame, ". Frame is now active:", isActive]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)

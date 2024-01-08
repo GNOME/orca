@@ -1255,8 +1255,7 @@ class Script(script.Script):
 
         if not AXUtilities.is_showing(event.source):
             msg = "DEFAULT: Event source is not showing. Clearing cache."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            AXObject.clear_cache(obj)
+            AXObject.clear_cache(obj, False, msg)
             if not AXUtilities.is_showing(event.source):
                 msg = "DEFAULT: Event source is still not showing."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1451,7 +1450,8 @@ class Script(script.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        AXObject.clear_cache(event.source)
+        # TODO - JD: Is this still needed?
+        AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
         if not AXUtilities.is_focused(event.source):
             msg = "DEFAULT: Event is not toggling of currently-focused object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

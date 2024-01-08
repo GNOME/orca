@@ -971,7 +971,10 @@ class StructuralNavigation:
             return obj, characterOffset
 
         self._script.utilities.setCaretPosition(obj, characterOffset)
-        AXObject.clear_cache(obj)
+        AXObject.clear_cache(
+            obj,
+            False,
+            "Structural navigation workaround for object destruction when setting caret.")
         if not AXUtilities.is_defunct(obj):
             return obj, characterOffset
 

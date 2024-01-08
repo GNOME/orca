@@ -294,7 +294,7 @@ class Utilities(web.Utilities):
             return ""
 
         label = labels[0]
-        AXObject.clear_cache(label)
+        AXObject.clear_cache(label, False, "Ensuring we have correct name for find results.")
         return AXObject.get_name(label)
 
     def isAutoTextEvent(self, event):

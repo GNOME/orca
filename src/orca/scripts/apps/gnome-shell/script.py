@@ -100,9 +100,11 @@ class Script(clutter.Script):
         # event switcher, seem to have the right state. Since the ones with
         # the wrong state seem to be things we don't want to present anyway
         # we'll stop doing so and hope we are right.
+        # TODO - JD: 1) Is this logic still needed? 2) If so, is clearing the
+        # cache still needed?
         if event.detail1:
             if AXUtilities.is_panel(event.source):
-                AXObject.clear_cache(event.source)
+                AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
             if AXUtilities.is_selected(event.source):
                 focus_manager.getManager().set_locus_of_focus(event, event.source)
             return

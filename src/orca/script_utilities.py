@@ -1659,7 +1659,8 @@ class Utilities:
             return None
 
         for menu in AXObject.iter_children(menubar):
-            AXObject.clear_cache(menu)
+            # TODO - JD: Can we remove this?
+            AXObject.clear_cache(menu, False, "Ensuring we have the correct state.")
             if AXUtilities.is_expanded(menu) or AXUtilities.is_selected(menu):
                 return menu
 
@@ -1721,9 +1722,7 @@ class Utilities:
             return [root]
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
-            tokens = ["SCRIPT UTILITIES:", root, "is empty filler. Clearing cache."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.clear_cache(root, recursive=True)
+            AXObject.clear_cache(root, True, "Root is empty filler.")
             tokens = ["SCRIPT UTILITIES:", root, "now reports",
                       AXObject.get_child_count(root), "children"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1949,7 +1948,7 @@ class Utilities:
         if not topLevel:
             return False
 
-        AXObject.clear_cache(topLevel)
+        AXObject.clear_cache(topLevel, False, "Ensuring we have the correct state.")
         if not AXUtilities.is_active(topLevel) or AXUtilities.is_defunct(topLevel):
             return False
 
@@ -3123,7 +3122,7 @@ class Utilities:
             if not AXUtilities.is_showing(event.source):
                 return False
             if AXUtilities.is_focusable(event.source):
-                AXObject.clear_cache(event.source)
+                AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
                 if not AXUtilities.is_focused(event.source):
                     return False
 

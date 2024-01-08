@@ -1664,7 +1664,7 @@ class Script(default.Script):
 
         obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
         notify = force = handled = False
-        AXObject.clear_cache(event.source)
+        AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
 
         if self.utilities.lastInputEventWasPageNav():
             msg = "WEB: Caret moved due to scrolling."
@@ -2094,8 +2094,9 @@ class Script(default.Script):
             self.utilities.setCaretContext(obj, offset)
             return True
 
+        # TODO - JD: Can this logic be removed?
         wasFocused = AXUtilities.is_focused(obj)
-        AXObject.clear_cache(obj)
+        AXObject.clear_cache(obj, False, "Sanity-checking focused state.")
         isFocused = AXUtilities.is_focused(obj)
         if wasFocused != isFocused:
             tokens = ["WEB: Focused state of", obj, "changed to", isFocused]
@@ -2215,7 +2216,9 @@ class Script(default.Script):
             if self._inFocusMode:
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
-                AXObject.clear_cache(event.source)
+                AXObject.clear_cache(event.source,
+                                     True,
+                                     "Workaround for missing events on descendants.")
                 msg = "WEB: Event source is web app descendant and we're in focus mode"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False

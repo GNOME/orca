@@ -444,8 +444,7 @@ class Script(default.Script):
            and not AXUtilities.is_focused(event.any_data) \
            and not AXUtilities.is_focused(event.source) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            AXObject.clear_cache(event.source)
+            AXObject.clear_cache(event.source, False, msg)
 
         default.Script.onActiveDescendantChanged(self, event)
 
@@ -603,7 +602,10 @@ class Script(default.Script):
 
         if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
            and not AXUtilities.is_focused(event.source):
-            AXObject.clear_cache(event.source)
+            # TODO - JD: Can we remove this?
+            AXObject.clear_cache(event.source,
+                                 False,
+                                 "Caret-moved event from object which lacks focused state.")
             if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)

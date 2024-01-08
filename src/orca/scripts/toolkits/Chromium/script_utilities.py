@@ -283,7 +283,8 @@ class Utilities(web.Utilities):
             return ""
 
         bar = statusBars[0]
-        AXObject.clear_cache(bar)
+        # TODO - JD: Is this still needed?
+        AXObject.clear_cache(bar, False, "Ensuring we have correct name for find results.")
         if len(re.findall(r"\d+", AXObject.get_name(bar))) == 2:
             return AXObject.get_name(bar)
 
