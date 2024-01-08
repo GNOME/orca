@@ -160,8 +160,12 @@ class FocusManager:
         tokens = ["FOCUS MANAGER: Request to set locus of focus to", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
 
-        # TODO - JD: Is this still needed?
-        AXObject.clear_cache(obj, False, "Setting locus of focus.")
+
+        # We clear the cache on the locus of focus because too many apps and toolkits fail
+        # to emit the correct accessibility events. We do so recursively on table cells
+        # to handle bugs like https://gitlab.gnome.org/GNOME/nautilus/-/issues/3253.
+        recursive = AXUtilities.is_table_cell(obj)
+        AXObject.clear_cache(obj, recursive, "Setting locus of focus.")
         if not force and obj == self._focus:
             msg = "FOCUS MANAGER: Setting locus of focus to existing locus of focus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
