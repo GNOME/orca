@@ -697,8 +697,6 @@ class SettingsManager(object):
         self._mergeSettings()
         self._setSettingsRuntime(self.general)
         self._setPronunciationsRuntime(self.pronunciations)
-        script.keyBindings = self.overrideKeyBindings(
-            script.inputEventHandlers, script.getKeyBindings())
 
 _manager = SettingsManager()
 
