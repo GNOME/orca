@@ -779,7 +779,10 @@ class EventManager:
                 and event.detail1 and AXUtilities.is_frame(event.source)
 
         if windowActivation:
-            return True, "Window activation"
+            if event.source != focus_manager.getManager().get_active_window():
+                return True, "Window activation"
+            else:
+                return False, "Window activation for already-active window"
 
         if eType.startswith('focus') \
            or (eType.startswith('object:state-changed:focused')
