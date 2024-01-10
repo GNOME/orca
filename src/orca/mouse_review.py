@@ -345,7 +345,7 @@ class MouseReviewer:
         self._eventListener = Atspi.EventListener.new(self._listener)
         self.inMouseEvent = False
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
 
         if not _mouseReviewCapable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
@@ -381,6 +381,8 @@ class MouseReviewer:
         if refresh:
             msg = "MOUSE REVIEW: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

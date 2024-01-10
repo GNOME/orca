@@ -43,8 +43,8 @@ class WhereAmIPresenter:
 
     def __init__(self):
         self._handlers = self.get_handlers(True)
-        self._desktop_bindings = self.get_bindings(True, True)
-        self._laptop_bindings = self.get_bindings(True, False)
+        self._desktop_bindings = keybindings.KeyBindings()
+        self._laptop_bindings = keybindings.KeyBindings()
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the where-am-i-presenter keybindings."""
@@ -52,6 +52,10 @@ class WhereAmIPresenter:
         if refresh:
             msg = "WHERE AM I PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif is_desktop and self._desktop_bindings.isEmpty():
+            self._setup_bindings()
+        elif not is_desktop and self._laptop_bindings.isEmpty():
             self._setup_bindings()
 
         if is_desktop:

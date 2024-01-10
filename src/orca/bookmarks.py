@@ -42,7 +42,7 @@ class Bookmarks:
         self._loadBookmarks() 
         self._currentbookmarkindex = None
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the bookmark keybindings."""
@@ -50,6 +50,8 @@ class Bookmarks:
         if refresh:
             msg = "BOOKMARKS: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

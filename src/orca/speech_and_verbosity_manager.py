@@ -45,7 +45,7 @@ class SpeechAndVerbosityManager:
 
     def __init__(self):
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the speech and verbosity manager keybindings."""
@@ -53,6 +53,8 @@ class SpeechAndVerbosityManager:
         if refresh:
             msg = "SPEECH AND VERBOSITY MANAGER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

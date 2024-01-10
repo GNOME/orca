@@ -50,7 +50,7 @@ class CaretNavigation:
         self._suspended = False
 
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
         self._last_input_event = None
 
     def handles_navigation(self, handler):
@@ -70,6 +70,8 @@ class CaretNavigation:
         if refresh:
             msg = "CARET NAVIGATION: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

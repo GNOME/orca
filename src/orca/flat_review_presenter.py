@@ -55,8 +55,8 @@ class FlatReviewPresenter:
         self._current_contents = ""
         self._restrict = settings_manager.getManager().getSetting("flatReviewIsRestricted")
         self._handlers = self.get_handlers(True)
-        self._desktop_bindings = self.get_bindings(True, True)
-        self._laptop_bindings = self.get_bindings(True, False)
+        self._desktop_bindings = keybindings.KeyBindings()
+        self._laptop_bindings = keybindings.KeyBindings()
         self._gui = None
 
     def is_active(self):
@@ -123,6 +123,10 @@ class FlatReviewPresenter:
         if refresh:
             msg = "FLAT REVIEW PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif is_desktop and self._desktop_bindings.isEmpty():
+            self._setup_bindings()
+        elif not is_desktop and self._laptop_bindings.isEmpty():
             self._setup_bindings()
 
         if is_desktop:

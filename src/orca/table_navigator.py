@@ -57,7 +57,7 @@ class TableNavigator:
         self._suspended = False
 
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the table-navigator keybindings."""
@@ -65,6 +65,8 @@ class TableNavigator:
         if refresh:
             msg = "TABLE NAVIGATOR: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

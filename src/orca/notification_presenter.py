@@ -51,7 +51,7 @@ class NotificationPresenter:
     def __init__(self):
         self._gui = None
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
         self._max_size = 55
 
         # The list is arranged with the most recent message being at the end of
@@ -67,6 +67,8 @@ class NotificationPresenter:
         if refresh:
             msg = "NOTIFICATION PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

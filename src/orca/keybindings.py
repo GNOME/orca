@@ -417,6 +417,11 @@ class KeyBindings:
 
         self.keyBindings.remove(keyBinding)
 
+    def isEmpty(self):
+        """Returns True if there are no bindings in this set of keybindings."""
+
+        return not self.keyBindings
+
     def addKeyGrabs(self, reason=""):
         """Adds grabs for all enabled bindings in this set of keybindings."""
 

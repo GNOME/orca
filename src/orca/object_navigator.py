@@ -46,7 +46,7 @@ class ObjectNavigator:
         self._last_locus_of_focus = None
         self._simplify = True
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the object-navigator keybindings."""
@@ -54,6 +54,8 @@ class ObjectNavigator:
         if refresh:
             msg = "OBJECT NAVIGATOR: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings

@@ -46,7 +46,7 @@ class ActionPresenter:
 
     def __init__(self):
         self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
+        self._bindings = keybindings.KeyBindings()
         self._gui = None
         self._obj = None
 
@@ -56,6 +56,8 @@ class ActionPresenter:
         if refresh:
             msg = "ACTION PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._setup_bindings()
+        elif self._bindings.isEmpty():
             self._setup_bindings()
 
         return self._bindings
