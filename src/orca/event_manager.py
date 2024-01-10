@@ -966,19 +966,11 @@ class EventManager:
         if self._isObsoletedBy(event):
             return
 
-        debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         eType = event.type
-
         if eType.startswith("object:children-changed:remove") \
            and event.source == AXUtilities.get_desktop():
             script_manager.getManager().reclaimScripts()
             return
-
-        if eType.startswith("window:") and not eType.endswith("create"):
-            script_manager.getManager().reclaimScripts()
-        elif eType.startswith("object:state-changed:active") \
-           and AXUtilities.is_frame(event.source):
-            script_manager.getManager().reclaimScripts()
 
         if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
@@ -990,6 +982,12 @@ class EventManager:
                 script_manager.getManager().setActiveScript(
                     None, "Active window is dead or defunct")
             return
+
+        if eType.startswith("window:") and not eType.endswith("create"):
+            script_manager.getManager().reclaimScripts()
+        elif eType.startswith("object:state-changed:active") \
+           and AXUtilities.is_frame(event.source):
+            script_manager.getManager().reclaimScripts()
 
         if AXUtilities.is_iconified(event.source):
             tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
@@ -1006,6 +1004,7 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self._pruneEventsDuringFlood()
 
+        debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
             indent = " " * 32
