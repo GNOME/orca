@@ -297,7 +297,6 @@ class KeyboardEvent(InputEvent):
         if pressed:
             self._script = script_manager.getManager().getActiveScript()
             self._window = focus_manager.getManager().get_active_window()
-            self._obj = focus_manager.getManager().get_locus_of_focus()
             if self._script:
                 self._app = self._script.app
                 if not focus_manager.getManager().can_be_active_window(self._window):
@@ -306,12 +305,17 @@ class KeyboardEvent(InputEvent):
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     focus_manager.getManager().set_active_window(self._window)
 
+            # We set this after getting the window because changing the window can cause focus to
+            # be updated if the current locus of focus is not in the window we just set as active.
+            self._obj = focus_manager.getManager().get_locus_of_focus()
+
             if self._window and self._app != AXObject.get_application(self._window):
                 self._script = script_manager.getManager().getScript(
                     AXObject.get_application(self._window))
                 self._app = self._script.app
                 tokens = ["INPUT EVENT: Updated script to", self._script]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         elif self._isReleaseForLastNonModifierKeyEvent():
             self._script = orca_state.lastNonModifierKeyEvent._script
             self._window = orca_state.lastNonModifierKeyEvent._window
