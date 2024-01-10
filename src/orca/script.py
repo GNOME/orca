@@ -115,7 +115,7 @@ class Script:
         self.inputEventHandlers = {}
         self.pointOfReference = {}
         self.setupInputEventHandlers()
-        self.keyBindings = self.getKeyBindings()
+        self.keyBindings = keybindings.KeyBindings()
         self.brailleBindings = self.getBrailleBindings()
 
         self.formatting = self.getFormatting()

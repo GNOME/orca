@@ -401,6 +401,9 @@ class Script(script.Script):
         Returns an instance of keybindings.KeyBindings.
         """
 
+        tokens = ["DEFAULT: Getting keybindings for", self]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+
         keyBindings = script.Script.getKeyBindings(self)
 
         bindings = self.getDefaultKeyBindings()
