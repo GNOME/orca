@@ -34,6 +34,7 @@ from orca import debug
 from orca import focus_manager
 from orca import keybindings
 from orca import messages
+from orca import orca_modifier_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
 
@@ -49,12 +50,14 @@ class Script(default.Script):
 
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        orca_modifier_manager.getManager().unset_orca_modifiers("Entering sleep mode.")
 
     def deactivate(self):
         """Called when this script is deactivated."""
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        orca_modifier_manager.getManager().refresh_orca_modifiers("Exiting sleep mode.")
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""

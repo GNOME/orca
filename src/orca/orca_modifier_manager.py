@@ -114,7 +114,7 @@ class OrcaModifierManager:
             msg += f": {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.unset_orca_modifiers()
+        self.unset_orca_modifiers(reason)
         self._original_xmodmap = subprocess.check_output(['xkbcomp', os.environ['DISPLAY'], '-'])
         self._create_orca_xmodmap()
 
@@ -148,10 +148,12 @@ class OrcaModifierManager:
             self.set_caps_lock_as_orca_modifier(False)
             self._caps_lock_cleared = False
 
-    def unset_orca_modifiers(self):
+    def unset_orca_modifiers(self, reason=""):
         """Turns the Orca modifiers back into their original purpose."""
 
         msg = "ORCA MODIFIER MANAGER: Attempting to restore original xmodmap"
+        if reason:
+            msg += f": {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if not self._original_xmodmap:

@@ -401,7 +401,7 @@ def shutdown(script=None, inputEvent=None):
         signal.alarm(0)
 
     _initialized = False
-    orca_modifier_manager.getManager().unset_orca_modifiers()
+    orca_modifier_manager.getManager().unset_orca_modifiers("Shutting down.")
 
     debug.printMessage(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
@@ -455,7 +455,7 @@ def crashOnSignal(signum, frame):
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
     debug.printMessage(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
-    orca_modifier_manager.getManager().unset_orca_modifiers()
+    orca_modifier_manager.getManager().unset_orca_modifiers(f"Shutting down: {signalString}.")
 
     script = script_manager.getManager().getActiveScript()
     if script is not None:
