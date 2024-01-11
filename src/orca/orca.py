@@ -40,9 +40,7 @@ import faulthandler
 import gi
 import importlib
 import os
-import re
 import signal
-import subprocess
 import sys
 
 gi.require_version("Atspi", "2.0")
@@ -63,6 +61,7 @@ from . import focus_manager
 from . import logger
 from . import messages
 from . import mouse_review
+from . import orca_modifier_manager
 from . import orca_state
 from . import orca_platform
 from . import script_manager
@@ -95,140 +94,12 @@ EXIT_CODE_HANG = 50
 #
 _userSettings = None
 
-# A subset of the original Xmodmap info prior to our stomping on it.
-# Right now, this is just for the user's chosen Orca modifier(s).
-#
-_originalXmodmap = ""
-_orcaModifiers = settings.DESKTOP_MODIFIER_KEYS + settings.LAPTOP_MODIFIER_KEYS
-_capsLockCleared = False
-_restoreOrcaKeys = False
-
 def deviceChangeHandler(deviceManager, device):
-    """New keyboards being plugged in stomp on our changes to the keymappings,
-       so we have to re-apply"""
+    """Handles device-* signals."""
+
     source = device.get_source()
     if source == Gdk.InputSource.KEYBOARD:
-        msg = "ORCA: Keyboard change detected, re-creating the xmodmap"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        _createOrcaXmodmap()
-
-def updateKeyMap(keyboardEvent):
-    """Unsupported convenience method to call sad hacks which should go away."""
-
-    global _restoreOrcaKeys
-    if keyboardEvent.isPressedKey():
-        return
-
-    if keyboardEvent.event_string in settings.orcaModifierKeys \
-       and orca_state.bypassNextCommand:
-        _restoreXmodmap()
-        _restoreOrcaKeys = True
-        return
-
-    if _restoreOrcaKeys and not orca_state.bypassNextCommand:
-        _createOrcaXmodmap()
-        _restoreOrcaKeys = False
-
-def _setXmodmap(xkbmap):
-    """Set the keyboard map using xkbcomp."""
-    p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
-        stdin=subprocess.PIPE, stdout=None, stderr=None)
-    p.communicate(xkbmap)
-
-def _setCapsLockAsOrcaModifier(enable):
-    """Enable or disable use of the caps lock key as an Orca modifier key."""
-    interpretCapsLineProg = re.compile(
-        r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
-    normalCapsLineProg = re.compile(
-        r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$', re.I)
-    interpretShiftLineProg = re.compile(
-        r'^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$', re.I)
-    normalShiftLineProg = re.compile(
-        r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$', re.I)
-    disabledModLineProg = re.compile(
-        r'^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$', re.I)
-    normalCapsLine = '        action= LockMods(modifiers=Lock);'
-    normalShiftLine = '        action= LockMods(modifiers=Shift);'
-    disabledModLine = '        action= NoAction();'
-    lines = _originalXmodmap.decode('UTF-8').split('\n')
-    foundCapsInterpretSection = False
-    foundShiftInterpretSection = False
-    modified = False
-    for i, line in enumerate(lines):
-        if not foundCapsInterpretSection and not foundShiftInterpretSection:
-            if interpretCapsLineProg.match(line):
-                foundCapsInterpretSection = True
-            elif interpretShiftLineProg.match(line):
-                foundShiftInterpretSection = True
-        elif foundCapsInterpretSection:
-            if enable:
-                if normalCapsLineProg.match(line):
-                    lines[i] = disabledModLine
-                    modified = True
-            else:
-                if disabledModLineProg.match(line):
-                    lines[i] = normalCapsLine
-                    modified = True
-            if line.find('}'):
-                foundCapsInterpretSection = False
-        else: # foundShiftInterpretSection
-            if enable:
-                if normalShiftLineProg.match(line):
-                    lines[i] = disabledModLine
-                    modified = True
-            else:
-                if disabledModLineProg.match(line):
-                    lines[i] = normalShiftLine
-                    modified = True
-            if line.find('}'):
-                foundShiftInterpretSection = False
-    if modified:
-        _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
-
-def _createOrcaXmodmap():
-    """Makes an Orca-specific Xmodmap so that the keys behave as we
-    need them to do. This is especially the case for the Orca modifier.
-    """
-
-    global _capsLockCleared
-
-    if "Caps_Lock" in settings.orcaModifierKeys \
-       or "Shift_Lock" in settings.orcaModifierKeys:
-        _setCapsLockAsOrcaModifier(True)
-        _capsLockCleared = True
-    elif _capsLockCleared:
-        _setCapsLockAsOrcaModifier(False)
-        _capsLockCleared = False
-
-def _storeXmodmap(keyList):
-    """Save the original xmodmap for the keys in keyList before we alter it.
-
-    Arguments:
-    - keyList: A list of named keys to look for.
-    """
-
-    global _originalXmodmap
-    _originalXmodmap = subprocess.check_output(['xkbcomp', os.environ['DISPLAY'], '-'])
-
-def _restoreXmodmap(keyList=[]):
-    """Restore the original xmodmap values for the keys in keyList.
-
-    Arguments:
-    - keyList: A list of named keys to look for. An empty list means
-      to restore the entire saved xmodmap.
-    """
-
-    msg = "ORCA: Attempting to restore original xmodmap"
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    global _capsLockCleared
-    _capsLockCleared = False
-    p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
-        stdin=subprocess.PIPE, stdout=None, stderr=None)
-    p.communicate(_originalXmodmap)
-
-    msg = "ORCA: Original xmodmap restored"
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+        orca_modifier_manager.getManager().refresh_orca_modifiers("Keyboard change detected.")
 
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
@@ -310,16 +181,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     if settings_manager.getManager().getSetting('enableSound'):
         player.init()
 
-    global _orcaModifiers
-    custom = [k for k in settings.orcaModifierKeys if k not in _orcaModifiers]
-    _orcaModifiers += custom
     # Handle the case where a change was made in the Orca Preferences dialog.
-    #
-    if _originalXmodmap:
-        _restoreXmodmap(_orcaModifiers)
-
-    _storeXmodmap(_orcaModifiers)
-    _createOrcaXmodmap()
+    orca_modifier_manager.getManager().refresh_orca_modifiers("Loading user settings.")
 
     event_manager.getManager().activate()
     script_manager.getManager().activate()
@@ -463,9 +326,6 @@ def start():
         signal.alarm(0)
 
     # Event handlers for input devices being plugged in/unplugged.
-    # Used to re-create the Xmodmap when a new keyboard is plugged in.
-    # Necessary, because plugging in a new keyboard resets the Xmodmap
-    # and stomps our changes
     display = Gdk.Display.get_default()
     devmanager=display.get_device_manager()
     devmanager.connect("device-added", deviceChangeHandler)
@@ -541,7 +401,7 @@ def shutdown(script=None, inputEvent=None):
         signal.alarm(0)
 
     _initialized = False
-    _restoreXmodmap(_orcaModifiers)
+    orca_modifier_manager.getManager().unset_orca_modifiers()
 
     debug.printMessage(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
@@ -595,7 +455,7 @@ def crashOnSignal(signum, frame):
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
     debug.printMessage(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_SEVERE)
-    _restoreXmodmap(_orcaModifiers)
+    orca_modifier_manager.getManager().unset_orca_modifiers()
 
     script = script_manager.getManager().getActiveScript()
     if script is not None:

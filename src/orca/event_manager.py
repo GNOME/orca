@@ -35,6 +35,7 @@ import time
 from . import debug
 from . import focus_manager
 from . import input_event
+from . import orca_modifier_manager
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -1070,9 +1071,8 @@ class EventManager:
 
         keyboardEvent.process()
 
-        # Do any needed xmodmap crap. Hopefully this can die soon.
-        from orca import orca
-        orca.updateKeyMap(keyboardEvent)
+        # TODO - JD: Figure out exactly why this is here.
+        orca_modifier_manager.getManager().update_key_map(keyboardEvent)
 
     def processBrailleEvent(self, event):
         """Called whenever a cursor key is pressed on the Braille display."""
