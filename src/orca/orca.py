@@ -518,14 +518,12 @@ def main():
     window = focus_manager.getManager().find_active_window()
     if window and not focus_manager.getManager().get_locus_of_focus():
         app = AXObject.get_application(window)
-        focus_manager.getManager().set_active_window(
-            window, app, set_window_as_focus=True, notify_script=True)
 
-        # set_active_window does some corrective work needed thanks to
-        # mutter-x11-frames. So retrieve the window just in case.
-        window = focus_manager.getManager().get_active_window()
+        # TODO - JD: Consider having the focus tracker update the active script.
         script = script_manager.getManager().getScript(app, window)
         script_manager.getManager().setActiveScript(script, "Launching.")
+        focus_manager.getManager().set_active_window(
+            window, app, set_window_as_focus=True, notify_script=True)
 
         # TODO - JD: Consider having the focus tracker update the active script.
         focusedObject = focus_manager.getManager().find_focused_object()

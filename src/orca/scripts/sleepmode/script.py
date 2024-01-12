@@ -37,6 +37,7 @@ from orca import messages
 from orca import orca_modifier_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -112,6 +113,14 @@ class Script(default.Script):
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
+
+        tokens = ["SLEEP MODE: focus changed from", oldFocus, "to", newFocus, "due to", event]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if oldFocus is None and AXUtilities.is_application(AXObject.get_parent(newFocus)):
+            focus_manager.getManager().clear_state("Sleep mode enabled for this app.")
+            self.clearBraille()
+            self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
+            return
 
         msg = "SLEEP MODE: Ignoring event."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
