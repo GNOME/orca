@@ -27,7 +27,6 @@ __license__   = "LGPL"
 import importlib
 
 from . import debug
-from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, toolkits

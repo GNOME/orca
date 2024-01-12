@@ -32,7 +32,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import focus_manager
-from orca import keybindings
 from orca import messages
 from orca import orca_modifier_manager
 from orca.scripts import default

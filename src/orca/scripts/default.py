@@ -346,12 +346,12 @@ class Script(script.Script):
     def getExtensionBindings(self):
         keyBindings = keybindings.KeyBindings()
 
-        bindings = self.sleepModeManager.get_bindings()
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+
+        bindings = self.sleepModeManager.get_bindings(refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
 
         bindings = self.notificationPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
