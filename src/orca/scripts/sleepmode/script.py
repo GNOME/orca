@@ -111,6 +111,12 @@ class Script(default.Script):
         msg = "SLEEP MODE: Not updating braille."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
+    def presentKeyboardEvent(self, event):
+        """Presents the keyboard event to the user."""
+
+        msg = "SLEEP MODE: Not presenting keyboard event."
+        debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
 
