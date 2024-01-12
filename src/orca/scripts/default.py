@@ -346,6 +346,10 @@ class Script(script.Script):
     def getExtensionBindings(self):
         keyBindings = keybindings.KeyBindings()
 
+        bindings = self.sleepModeManager.get_bindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
         layout = settings_manager.getManager().getSetting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 

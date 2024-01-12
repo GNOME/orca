@@ -239,6 +239,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_SPEECH_VERBOSITY] = bound
             items += len(bound)
 
+            bound = script.getSleepModeManager().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
+            bindings[guilabels.KB_GROUP_SLEEP_MODE] = bound
+            items += len(bound)
+
             bound = script.getFlatReviewPresenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound

@@ -65,6 +65,9 @@ SHIFT_ALT_MODIFIER_MASK       = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.ALT)
 CTRL_ALT_MODIFIER_MASK        = (1 << Atspi.ModifierType.CONTROL |
                                  1 << Atspi.ModifierType.ALT)
+SHIFT_ALT_CTRL_MODIFIER_MASK  = (1 << Atspi.ModifierType.SHIFT |
+                                 1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.ALT)
 COMMAND_MODIFIER_MASK         = (1 << Atspi.ModifierType.ALT |
                                  1 << Atspi.ModifierType.CONTROL |
                                  1 << Atspi.ModifierType.META2 |

@@ -2187,6 +2187,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
         iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
         iterDateAndTime = self._createNode(guilabels.KB_GROUP_DATE_AND_TIME)
+        iterSleepMode = self._createNode(guilabels.KB_GROUP_SLEEP_MODE)
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
         iterObjectNav = self._createNode(guilabels.KB_GROUP_OBJECT_NAVIGATION)
         iterTableNav = self._createNode(guilabels.KB_GROUP_TABLE_NAVIGATION)
@@ -2208,6 +2209,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             svKeyBindings = self.script.getSpeechAndVerbosityManager().get_bindings(
                 is_desktop=isDesktop)
             dtKeyBindings = self.script.getDateAndTimePresenter().get_bindings(
+                is_desktop=isDesktop)
+            smKeyBindings = self.script.getSleepModeManager().get_bindings(
                 is_desktop=isDesktop)
             bmKeyBindings = self.script.getBookmarks().get_bindings(
                 is_desktop=isDesktop)
@@ -2243,6 +2246,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterSpeechAndVerbosity)
                     elif dtKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterDateAndTime)
+                    elif smKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterSleepMode)
                     elif bmKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterBookmarks)
                     elif lmKeyBindings.hasKeyBinding(kb, "description"):

@@ -404,6 +404,3 @@ structNavInSayAll = False
 enableSadPidginHack = False
 presentChatRoomLast = False
 presentLiveRegionFromInactiveTab = False
-
-# N.B. This is temporary/experimental.
-sleepmodeApps = []

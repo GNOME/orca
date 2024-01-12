@@ -56,6 +56,7 @@ from . import object_navigator
 from . import script_utilities
 from . import settings
 from . import settings_manager
+from . import sleep_mode_manager
 from . import sound_generator
 from . import speech_and_verbosity_manager
 from . import speech_generator
@@ -110,6 +111,7 @@ class Script:
         self.mouseReviewer = self.getMouseReviewer()
         self.eventSynthesizer = self.getEventSynthesizer()
         self.actionPresenter = self.getActionPresenter()
+        self.sleepModeManager = self.getSleepModeManager()
 
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -253,6 +255,9 @@ class Script:
 
     def getActionPresenter(self):
         return action_presenter.getPresenter()
+
+    def getSleepModeManager(self):
+        return sleep_mode_manager.getManager()
 
     def getMouseReviewer(self):
         return mouse_review.getReviewer()

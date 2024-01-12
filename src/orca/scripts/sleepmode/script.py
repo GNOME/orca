@@ -52,12 +52,14 @@ class Script(default.Script):
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         orca_modifier_manager.getManager().unset_orca_modifiers("Entering sleep mode.")
+        self.addKeyGrabs("script activation")
 
     def deactivate(self):
         """Called when this script is deactivated."""
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        self.removeKeyGrabs("script deactivation")
         orca_modifier_manager.getManager().refresh_orca_modifiers("Exiting sleep mode.")
 
     def getBrailleGenerator(self):
@@ -85,25 +87,21 @@ class Script(default.Script):
     def getKeyBindings(self, enabledOnly=True):
         """Returns the keybindings for this script."""
 
-        msg = "SLEEP MODE: Has no bindings."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return keybindings.KeyBindings()
+        return self.sleepModeManager.get_bindings()
 
     def addKeyGrabs(self, reason=""):
         """Adds key grabs for this script."""
 
-        msg = "SLEEP MODE: Has no keygrabs to add."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self.keyBindings = self.getKeyBindings()
+        self.keyBindings.addKeyGrabs()
 
     def removeKeyGrabs(self, reason=""):
         """Adds key grabs for this script."""
 
-        msg = "SLEEP MODE: Has no keygrabs to remove."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self.keyBindings.removeKeyGrabs(reason)
 
     def setupInputEventHandlers(self):
-        msg = "SLEEP MODE: Has no handlers."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return self.sleepModeManager.get_handlers()
 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object."""

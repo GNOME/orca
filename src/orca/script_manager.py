@@ -40,6 +40,7 @@ class ScriptManager:
         self.appScripts = {}
         self.toolkitScripts = {}
         self.customScripts = {}
+        self._sleepModeScripts = {}
         self._appModules = apps.__all__
         self._toolkitModules = toolkits.__all__
         self._defaultScript = None
@@ -72,11 +73,6 @@ class ScriptManager:
         self._defaultScript = self.getScript(None)
         self._defaultScript.registerEventListeners()
         self.setActiveScript(self._defaultScript, "activate")
-
-        # TODO - JD: This is temporary/experimental.
-        for app in settings.sleepmodeApps:
-            self._appNames[app] = "sleepmode"
-
         self._active = True
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activated", True)
 
@@ -207,6 +203,16 @@ class ScriptManager:
 
         return script
 
+    def getOrCreateSleepModeScript(self, app):
+        script = self._sleepModeScripts.get(app)
+        if script is not None:
+            return script
+
+        from .scripts import sleepmode
+        script = sleepmode.Script(app)
+        self._sleepModeScripts[app] = script
+        return script
+
     def sanityCheckScript(self, script):
         if not self._active:
             return script
@@ -270,10 +276,10 @@ class ScriptManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             appScript = self.getDefaultScript()
 
-        if self._appNames.get(AXObject.get_name(app)) == "sleepmode":
-            tokens = ["SCRIPT MANAGER: Script is sleep-mode script", appScript]
+        if appScript.getSleepModeManager().is_active_for_app(app):
+            tokens = ["SCRIPT MANAGER: Sleep-mode toggled on for", appScript, app]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return appScript
+            return self.getOrCreateSleepModeScript(app)
 
         if customScript:
             tokens = ["SCRIPT MANAGER: Script is custom script", customScript]
@@ -388,6 +394,15 @@ class ScriptManager:
                     setattr(newScript, attr, value)
 
             del appScript
+
+            try:
+                script = self._sleepModeScripts.pop(app)
+            except KeyError:
+                pass
+            else:
+                tokens = ["SCRIPT MANAGER: Deleting sleep mode script for", app]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                del script
 
             try:
                 toolkitScripts = self.toolkitScripts.pop(app)
