@@ -355,6 +355,12 @@ class ScriptManager:
                     script.app = a
                 tokens = ["SCRIPT MANAGER: Script for app replicant:", script, script.app]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+                sleepModeScript = self._sleepModeScripts.get(a)
+                if sleepModeScript:
+                    tokens = ["SCRIPT MANAGER: Replicant", a, "has sleep mode script. Using it."]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    return sleepModeScript
                 return script
 
         return None
