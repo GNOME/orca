@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2023-12-09 21:21+0000\n"
+"POT-Creation-Date: 2024-01-02 22:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -2377,18 +2377,14 @@ msgstr "יציאה ממקריא המסך"
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
 #: src/orca/cmdnames.py:464
-#, fuzzy
-#| msgid "Displays the preferences configuration dialog."
 msgid "Display the preferences configuration dialog"
-msgstr "מציג את חלון ההגדרות."
+msgstr "הצגת חלונית הגדרות ההעדפה"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:469
-#, fuzzy
-#| msgid "Displays the application preferences configuration dialog."
 msgid "Display the application preferences configuration dialog"
-msgstr "מציג את חלון העדפות היישום."
+msgstr "הצגת חלונית הגדרות ההעדפה של היישום"
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
@@ -2478,10 +2474,8 @@ msgstr "שמור את המיקום בסימניות ביחס למיקום הנו
 #. the "bookmark" is storing the location of an accessible object, typically on
 #. a web page.
 #: src/orca/cmdnames.py:536
-#, fuzzy
-#| msgid "Go to previous bookmark location."
 msgid "Go to previous bookmark location"
-msgstr "מעבר למיקום הקודם הסימניות."
+msgstr "מעבר למיקום הקודם בסימניות"
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
@@ -2495,10 +2489,8 @@ msgstr "מעבר לסימנייה"
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
 #: src/orca/cmdnames.py:547
-#, fuzzy
-#| msgid "Go to next bookmark location."
 msgid "Go to next bookmark location"
-msgstr "מעבר למיקום הבא בסימניות."
+msgstr "מעבר למיקום הבא בסימניות"
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
@@ -8995,7 +8987,7 @@ msgstr "לא נמצאו קבצים."
 #. flat review onto the existing contents of the clipboard.
 #: src/orca/messages.py:606
 msgid "Appended contents to clipboard."
-msgstr ""
+msgstr "התוכן נוסף ללוח הגזירים."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9005,7 +8997,7 @@ msgstr ""
 #. review to the clipboard.
 #: src/orca/messages.py:614
 msgid "Copied contents to clipboard."
-msgstr ""
+msgstr "התוכן הועתק ללוח הגזירים."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -11180,10 +11172,8 @@ msgstr "הפרופיל הוגדר לכדי %s."
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
 #: src/orca/messages.py:2141
-#, fuzzy
-#| msgid "No files found."
 msgid "No profiles found."
-msgstr "לא נמצאו קבצים."
+msgstr "לא נמצא פרופיל."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
@@ -11374,10 +11364,8 @@ msgstr "בקול רם יותר."
 
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2271
-#, fuzzy
-#| msgid "faster."
 msgid "softer."
-msgstr "מהיר יותר."
+msgstr "רך יותר."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
