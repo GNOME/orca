@@ -2913,6 +2913,16 @@ def daysAgo(count):
     # place in terms of days.
     return ngettext("%d day ago", "%d days ago", count) % count
 
+def memoryUsageGB(used, total):
+    # Translators: Orca has a command to report CPU and memory usage levels. This
+    # message presents the amount of memory used and total amount in GB.
+    return f"{used:.1f} of {total:.1f} GB used."
+
+def memoryUsageMB(used, total):
+    # Translators: Orca has a command to report CPU and memory usage levels. This
+    # message presents the amount of memory used and total amount in MB.
+    return f"{used:.1f} of {total:.1f} MB used."
+
 def unvisitedLinkCount(count, onlyIfFound=True):
     if not count and onlyIfFound:
         return ""

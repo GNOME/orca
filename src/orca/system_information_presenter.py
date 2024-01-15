@@ -179,8 +179,15 @@ class SystemInformationPresenter:
             return True
 
         cpu_usage = round(psutil.cpu_percent())
-        memory_usage = round(psutil.virtual_memory().percent)
-        msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_usage)}"
+
+        memory = psutil.virtual_memory()
+        memory_percent= round(memory.percent)
+        if memory.total > 1024 ** 3:
+            details = messages.memoryUsageGB(memory.used / (1024 ** 3), memory.total / (1024 ** 3))
+        else:
+            details = messages.memoryUsageMB(memory.used / (1024 ** 2), memory.total / (1024 ** 2))
+
+        msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
         script.presentMessage(msg)
         return True
 
