@@ -572,6 +572,14 @@ BOOKMARK_SAVE = _("Save bookmarks")
 # the feature without the need to get into a GUI.
 MOUSE_REVIEW_TOGGLE = _("Toggle mouse review mode")
 
+# Translators: Orca has a command to present the battery status (e.g. level, whether
+# or not it is plugged in, etc.). This string is the name of that command.
+PRESENT_BATTERY_STATUS = _("Present battery status")
+
+# Translators: Orca has a command to present the CPU and memory usage as percents.
+# This string is the name of that command.
+PRESENT_CPU_AND_MEMORY_USAGE = _("Present CPU and memory usage")
+
 # Translators: Orca has a command to present the current time in speech and in
 # braille.
 PRESENT_CURRENT_TIME = _("Present current time")

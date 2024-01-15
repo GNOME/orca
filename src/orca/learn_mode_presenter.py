@@ -259,9 +259,9 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_TABLE_NAVIGATION] = bound
             items += len(bound)
 
-            bound = script.getDateAndTimePresenter().get_bindings(
+            bound = script.getSystemInfoPresenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
-            bindings[guilabels.KB_GROUP_DATE_AND_TIME] = bound
+            bindings[guilabels.KB_GROUP_SYSTEM_INFORMATION] = bound
             items += len(bound)
 
             bound = script.getNotificationPresenter().get_bindings(

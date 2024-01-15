@@ -471,53 +471,38 @@ class KeyBindings:
         """Return True if keyBinding is already in self.keyBindings.
 
            The typeOfSearch can be:
-              "strict":      matches description, modifiers, key, and
-                             click count
-              "description": matches only description.
-              "keys":        matches the modifiers, key, and modifier mask,
-                             and click count
+              "strict":      matches description, modifiers, key, and click count
+              "description": matches only description
+              "keys":        matches the modifiers, key, modifier mask, and click count
               "keysNoMask":  matches the modifiers, key, and click count
         """
 
-        hasIt = False
-
         for keyBinding in self.keyBindings:
             if typeOfSearch == "strict":
-                if (keyBinding.handler.description \
-                    == newKeyBinding.handler.description) \
-                    and (keyBinding.keysymstring \
-                         == newKeyBinding.keysymstring) \
-                    and (keyBinding.modifier_mask \
-                         == newKeyBinding.modifier_mask) \
-                    and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers) \
-                    and (keyBinding.click_count \
-                         == newKeyBinding.click_count):
-                    hasIt = True
+                if keyBinding.handler and newKeyBinding.handler \
+                   and keyBinding.handler.description == newKeyBinding.handler.description \
+                   and keyBinding.keysymstring == newKeyBinding.keysymstring \
+                   and keyBinding.modifier_mask == newKeyBinding.modifier_mask \
+                   and keyBinding.modifiers == newKeyBinding.modifiers \
+                   and keyBinding.click_count == newKeyBinding.click_count:
+                    return True
             elif typeOfSearch == "description":
-                if keyBinding.handler.description \
-                    == newKeyBinding.handler.description:
-                    hasIt = True
+                if keyBinding.handler and newKeyBinding.handler \
+                   and keyBinding.handler.description == newKeyBinding.handler.description:
+                    return True
             elif typeOfSearch == "keys":
-                if (keyBinding.keysymstring \
-                    == newKeyBinding.keysymstring) \
-                    and (keyBinding.modifier_mask \
-                         == newKeyBinding.modifier_mask) \
-                    and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers) \
-                    and (keyBinding.click_count \
-                         == newKeyBinding.click_count):
-                    hasIt = True
+                if keyBinding.keysymstring == newKeyBinding.keysymstring \
+                   and keyBinding.modifier_mask == newKeyBinding.modifier_mask \
+                   and keyBinding.modifiers == newKeyBinding.modifiers \
+                   and keyBinding.click_count == newKeyBinding.click_count:
+                    return True
             elif typeOfSearch == "keysNoMask":
-                if (keyBinding.keysymstring \
-                    == newKeyBinding.keysymstring) \
-                    and (keyBinding.modifiers \
-                         == newKeyBinding.modifiers) \
-                    and (keyBinding.click_count \
-                         == newKeyBinding.click_count):
-                    hasIt = True
+                if keyBinding.keysymstring == newKeyBinding.keysymstring \
+                   and keyBinding.modifiers == newKeyBinding.modifiers \
+                   and keyBinding.click_count == newKeyBinding.click_count:
+                    return True
 
-        return hasIt
+        return False
 
     def getBoundBindings(self, uniqueOnly=False):
         """Returns the KeyBinding instances which are bound to a keystroke.

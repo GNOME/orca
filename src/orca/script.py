@@ -42,7 +42,6 @@ __license__   = "LGPL"
 from . import ax_event_synthesizer
 from . import action_presenter
 from . import braille_generator
-from . import date_and_time_presenter
 from . import debug
 from . import event_manager
 from . import flat_review_presenter
@@ -61,6 +60,7 @@ from . import sound_generator
 from . import speech_and_verbosity_manager
 from . import speech_generator
 from . import structural_navigation
+from . import system_information_presenter
 from . import table_navigator
 from . import bookmarks
 from . import where_am_i_presenter
@@ -103,7 +103,7 @@ class Script:
         self.notificationPresenter = self.getNotificationPresenter()
         self.flatReviewPresenter = self.getFlatReviewPresenter()
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
-        self.dateAndTimePresenter = self.getDateAndTimePresenter()
+        self.systemInformationPresenter = self.getSystemInformationPresenter()
         self.objectNavigator = self.getObjectNavigator()
         self.tableNavigator = self.getTableNavigator()
         self.whereAmIPresenter = self.getWhereAmIPresenter()
@@ -235,8 +235,8 @@ class Script:
     def getFlatReviewPresenter(self):
         return flat_review_presenter.getPresenter()
 
-    def getDateAndTimePresenter(self):
-        return date_and_time_presenter.getPresenter()
+    def getSystemInformationPresenter(self):
+        return system_information_presenter.getPresenter()
 
     def getObjectNavigator(self):
         return object_navigator.getNavigator()

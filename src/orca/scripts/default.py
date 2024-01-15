@@ -224,7 +224,7 @@ class Script(script.Script):
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
-        self.inputEventHandlers.update(self.dateAndTimePresenter.get_handlers())
+        self.inputEventHandlers.update(self.systemInformationPresenter.get_handlers())
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
         self.inputEventHandlers.update(self.tableNavigator.get_handlers())
@@ -373,7 +373,7 @@ class Script(script.Script):
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.dateAndTimePresenter.get_bindings(refresh=True, is_desktop=isDesktop)
+        bindings = self.systemInformationPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 

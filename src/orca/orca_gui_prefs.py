@@ -2077,6 +2077,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = self.keyBindingsModel
 
+        if not kb.handler:
+            return None
+
         if parent is None:
             parent = self._getIterOf(guilabels.KB_GROUP_DEFAULT)
 
@@ -2186,7 +2189,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
         iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
-        iterDateAndTime = self._createNode(guilabels.KB_GROUP_DATE_AND_TIME)
+        iterSystemInfo = self._createNode(guilabels.KB_GROUP_SYSTEM_INFORMATION)
         iterSleepMode = self._createNode(guilabels.KB_GROUP_SLEEP_MODE)
         iterBookmarks = self._createNode(guilabels.KB_GROUP_BOOKMARKS)
         iterObjectNav = self._createNode(guilabels.KB_GROUP_OBJECT_NAVIGATION)
@@ -2208,7 +2211,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             svKeyBindings = self.script.getSpeechAndVerbosityManager().get_bindings(
                 is_desktop=isDesktop)
-            dtKeyBindings = self.script.getDateAndTimePresenter().get_bindings(
+            sysKeyBindings = self.script.getSystemInformationPresenter().get_bindings(
                 is_desktop=isDesktop)
             smKeyBindings = self.script.getSleepModeManager().get_bindings(
                 is_desktop=isDesktop)
@@ -2244,8 +2247,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterWhereAmIPresenter)
                     elif svKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterSpeechAndVerbosity)
-                    elif dtKeyBindings.hasKeyBinding(kb, "description"):
-                        self._insertRow(handl, kb, iterDateAndTime)
+                    elif sysKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterSystemInfo)
                     elif smKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterSleepMode)
                     elif bmKeyBindings.hasKeyBinding(kb, "description"):

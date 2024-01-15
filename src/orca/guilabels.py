@@ -322,6 +322,11 @@ KB_GROUP_MOUSE_REVIEW = _("Mouse review")
 # are related to object navigation.
 KB_GROUP_OBJECT_NAVIGATION = _("Object navigation")
 
+# Translators: This string is a label for a group of Orca commands which are
+# related to presenting information about the system, such as date, time,
+# battery status, CPU status, etc.
+KB_GROUP_SYSTEM_INFORMATION = _("System information")
+
 # Translators: This string is a label for the group of Orca commands which
 # are related to table navigation, such as moving to the next cell in a
 # given direction.

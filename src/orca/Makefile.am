@@ -30,7 +30,6 @@ orca_python_PYTHON = \
 	cmdnames.py \
 	colornames.py \
 	common_keyboardmap.py \
-	date_and_time_presenter.py \
 	debug.py \
 	desktop_keyboardmap.py \
 	event_manager.py \
@@ -84,6 +83,7 @@ orca_python_PYTHON = \
 	speech_generator.py \
 	speechserver.py \
 	structural_navigation.py \
+	system_information_presenter.py \
 	table_navigator.py \
 	text_attribute_names.py \
 	where_am_i_presenter.py

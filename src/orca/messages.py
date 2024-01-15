@@ -39,6 +39,23 @@ from .orca_platform import version
 # in messages.
 APPLICATION_NO_NAME = C_("generic name", "application")
 
+# Translators: Orca has a command to report the battery status. This message
+# is presented to the user when they use this command but Orca was unable to
+# retrieve any information about the battery.
+BATTERY_STATUS_UNKNOWN = _("Battery status unknown")
+
+# Translators: Orca has a command to report the battery status. This message
+# presents the battery level as a percent.
+BATTERY_LEVEL = _("Battery: %d%%")
+
+# Translators: Orca has a command to report the battery status. This message
+# presents the plugged-in status to the user.
+BATTERY_PLUGGED_IN_TRUE = C_("Battery", "plugged in")
+
+# Translators: Orca has a command to report the battery status. This message
+# presents the plugged-in status to the user.
+BATTERY_PLUGGED_IN_FALSE = C_("Battery", "not plugged in")
+
 # Translators: This is presented when the user has navigated to an empty line.
 BLANK = _("blank")
 
@@ -486,6 +503,15 @@ CONTAINER_NOT_IN_A = _("Not in a container.")
 # Translators: This message is presented when the user selects all of the items
 # in a container that supports selection, such as a GUI table or a list of icons.
 CONTAINER_SELECTED_ALL = _("all items selected")
+
+# Translators: Orca has a command to report CPU and memory usage. This message
+# is presented to the user when they use this command but Orca was unable to
+# retrieve this information.
+CPU_AND_MEMORY_USAGE_UNKNOWN = _("CPU and memory usage unknown")
+
+# Translators: Orca has a command to report CPU and memory usage levels. This
+# message presents the levels to the user.
+CPU_AND_MEMORY_USAGE_LEVELS = _("CPU: %d%%. Memory: %d%%")
 
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box. The string
