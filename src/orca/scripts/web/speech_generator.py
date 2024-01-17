@@ -78,8 +78,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result = [super()._generateName(doc)]
 
         if not AXTable.get_table(obj) \
-           and (self._script.utilities.isLink(obj) \
-                or self._script.utilities.isLandmark(obj) \
+           and (self._script.utilities.isLandmark(obj) \
                 or self._script.utilities.isMath(obj) \
                 or AXUtilities.is_tool_tip(obj) \
                 or AXUtilities.is_status_bar(obj)):
