@@ -911,7 +911,10 @@ class StructuralNavigation:
         if AXUtilities.is_list(obj):
             children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             if children:
-                return messages.listItemCount(len(children))
+                if self._script.utilities.nestingLevel(obj):
+                    return messages.nestedListItemCount(len(children))
+                else:
+                    return messages.listItemCount(len(children))
         elif AXUtilities.is_description_list(obj):
             children = AXUtilities.find_all_description_terms(obj)
             if children:

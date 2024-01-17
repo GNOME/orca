@@ -2728,6 +2728,11 @@ def listItemCount(count):
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count
 
+def nestedListItemCount(count):
+    # Translators: This message describes the number of items of a bulleted or numbered list
+    # that is inside of another list.
+    return ngettext("Nested list with %d item", "Nested list with %d items", count) % count
+
 def feedArticleCount(count):
     if count == -1:
         # Translators: This message describes a news/article feed whose size is
