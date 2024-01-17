@@ -1736,14 +1736,27 @@ class StructuralNavigation:
         return results
 
     def _listItemPresentation(self, obj, arg=None):
-        if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
-            self._presentLine(obj, characterOffset)
-        else:
+        if obj is None:
             full = messages.NO_MORE_LIST_ITEMS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
+            return
+
+        thisList = None
+        priorList = None
+        focus = focus_manager.getManager().get_locus_of_focus()
+        if AXUtilities.is_list_item(obj):
+            thisList = AXObject.find_ancestor(obj, AXUtilities.is_list)
+            priorList = AXObject.find_ancestor(focus, AXUtilities.is_list)
+        else:
+            thisList = AXObject.find_ancestor(obj, AXUtilities.is_description_list)
+            priorList = AXObject.find_ancestor(focus, AXUtilities.is_description_list)
+        if thisList is not None and priorList != thisList:
+            self._script.speakMessage(self._getListDescription(thisList))
+
+        [obj, characterOffset] = self._getCaretPosition(obj)
+        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
+        self._presentLine(obj, characterOffset)
 
     def _listItemDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LIST_ITEM]
