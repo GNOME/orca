@@ -3061,6 +3061,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isGrid(obj):
             rv = False
+        elif self.isInlineIframe(obj):
+            rv = not self.hasExplicitName(obj)
         elif AXUtilities.is_table_header(obj):
             rv = False
         elif AXUtilities.is_separator(obj):
