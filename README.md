@@ -38,6 +38,7 @@ Orca also has the following dependencies:
 * liblouis         - Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
+* python3-psutil   - Process and system utilities (optional)
 
 You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 46.x release.

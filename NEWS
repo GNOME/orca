@@ -1,3 +1,141 @@
+46.alpha - 18 January 2024
+
+New and Updated Features:
+
+* The much-requested "sleep mode" has arrived! You can cause Orca to
+  act as if it were not running on an as-needed, per-app basis with
+  Ctrl+Alt+Shift+Q. This makes it much easier to use VMs in which
+  another screen reader is being used as well as self-voicing apps.
+  Orca should remember what apps are currently in sleep mode so it is
+  only necessary to enable it once per app in a given session. Note
+  that Orca does not currently store the setting permanently. This is
+  intentional, and is the same behavior as NVDA, but an option may be
+  created in the future to permanently store the setting.
+
+* Orca now has commands to present information about the system without
+  having to navigate to the bar or widget that displays them:
+    * Present CPU and memory usage (unbound, requires psutil)
+    * Present battery status (unbound, requires psutil)
+
+* Table navigation commands now work everywhere; not just in web
+  browsers and LibreOffice. In addition to the existing commands,
+  the following commands have been added:
+    * Orca+Shift+T: toggle table navigation (it's enabled by default)
+    * Orca+Alt+Shift+Left/Right/Up/Down: move to the final cell in
+      the specified direction.
+
+  In addition, Orca's dynamic header commands from LO should now work
+  everywhere, including Google Docs and other web-based editors. These
+  bindings have changed. The new bindings are:
+    * Orca+Shift+R: Set the cells to be treated as column headers to
+      this row.
+    * Orca+Shift+R double-click: Unset the dynamic column headers row.
+    * Orca+Shift+C: Set the cells to be treated as row headers to this
+      column.
+    * Orca+Shift+C double-click: Unset the dynamic row headers row.
+
+* Orca's outdated tutorial message feature has been removed. In its
+  place is support for customized help messages which application and
+  toolkit developers can provide via ATK/AT-SPI2's new "help text"
+  API. At the present time, we are unaware of any implementations
+  and thus have not enabled these new tutorial messages by default.
+  Developers seeking to test their implementation can enable Orca's
+  presentation of tutorial messages in the Orca Preferences dialog.
+
+* We now always use Atspi's device API for Orca commands. This was
+  initially in place only for Gtk 4 apps, which do not report keystrokes
+  to us for optional construction. Having addressed the majority of
+  issues with this new API, we believe it is ready to be used for all
+  applications and toolkits.
+
+Web and Electron Apps Improvements:
+
+* Include DLs in list navigation and DTs in list item navigation.
+  Also improve presentation of nested lists.
+
+* Improve presentation of VSCode's selection containers.
+
+* Web: Improve performance of navigation to end of document
+
+LibreOffice Bug Fix:
+
+* Ensure the entire word count dialog is presented when the dialog
+  is shown.
+
+General Improvements and Fixes:
+
+* Improve performance by identifying and quickly dismissing obsolete
+  accessible events.
+
+* Improve performance by using AT-SPI2's cache for everything.
+
+* Fix bug causing utterances to be split up unexpectedly
+
+* Announce the has popup state even in non-web contexts.
+
+* Lots of code clean-up and more work to eliminate our dependency
+  on pyatspi.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Daniel Rusek
+  de              German                    Jürgen Benvenuti
+  de              German                    Philipp Kiemle
+  en_GB           British English           Bruce Cowan
+  eo              Esperanto                 Kristjan SCHMIDT
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  fa              Persian                   Sina Aghighi
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Guillaume Bernard
+  gl              Galician                  Fran Dieguez
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Andika Triwidada
+  ka              Georgian                  Ekaterine Papava
+  lt              Lithuanian                Aurimas Černius
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Alex Jr
+  pt              Portuguese                Hugo Carvalho
+  ro              Romanian                  Daniel Șerbănescu
+  ro              Romanian                  Florentina Mușat
+  ru              Russian                   Artur S0
+  ru              Russian                   Artur So
+  ru              Russian                   Sergej A
+  sl              Slovenian                 Matej Urbančič
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
+45.2 - 6 January 2024
+
+Web:
+
+* Fix bug causing us to get stuck in menu bar during caret navigation.
+
+General:
+
+* Dump our cached information in response to children-changed events
+  so that we do not present stale information.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Bruce Cowan
+  fa              Persian                   Sina Aghighi
+  fr              French                    Guillaume Bernard
+  he              Hebrew                    Yaron Shahrabani
+  ka              Georgian                  Ekaterine Papava
+  pt_BR           Brazilian Portuguese      Alex Jr
+  ro              Romanian                  Daniel Șerbănescu
+  tr              Turkish                   Sabri Ünal
+
+=========
+
 45.1 - 6 October 2023
 
 Web:
