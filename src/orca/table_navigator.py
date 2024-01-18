@@ -747,7 +747,6 @@ class TableNavigator:
         if AXObject.supports_text(obj) and not script.utilities.isGUICell(cell):
             script.utilities.setCaretPosition(obj, offset)
 
-        script.updateBraille(obj)
         script.presentObject(cell, offset=offset, priorObj=previous_cell, interrupt=True)
 
         # TODO - JD: This should be part of the normal table cell presentation.

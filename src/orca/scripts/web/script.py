@@ -989,6 +989,10 @@ class Script(default.Script):
             super().updateBraille(obj, **args)
             return
 
+        # TODO - JD: Getting the caret context can, by side effect, update it. This in turn
+        # can prevent us from presenting table column headers when braille is enabled because
+        # we think they are not "new." Commit bd877203f0 addressed that, but we need to stop
+        # such side effects from happening in the first place.
         obj, offset = self.utilities.getCaretContext(
             documentFrame=document, getZombieReplicant=True)
         if offset > 0 and isContentEditable:
