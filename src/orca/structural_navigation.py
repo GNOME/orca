@@ -45,6 +45,7 @@ from . import settings
 from . import settings_manager
 from .ax_collection import AXCollection
 from .ax_event_synthesizer import AXEventSynthesizer
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
@@ -873,7 +874,7 @@ class StructuralNavigation:
                 continue
 
             if AXObject.get_parent(match) == obj:
-                comparison = self._script.utilities.characterOffsetInParent(match) - offset
+                comparison = AXHypertext.get_character_offset_in_parent(match) - offset
             else:
                 path = AXObject.get_path(match)
                 comparison = self._script.utilities.pathComparison(path, currentPath)
@@ -1072,7 +1073,7 @@ class StructuralNavigation:
             if not text:
                 parent = AXObject.get_parent(obj)
                 if AXUtilities.is_link(parent):
-                    text = self._script.utilities.linkBasename(parent)
+                    text = AXHypertext.get_link_basename(parent)
         if not text and AXUtilities.is_list(obj):
             children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             text = " ".join(list(map(self._getText, children)))
@@ -2025,7 +2026,7 @@ class StructuralNavigation:
         columnHeaders.append(guilabels.SN_HEADER_URI)
 
         def rowData(obj):
-            return [self._getText(obj), self._script.utilities.uri(obj)]
+            return [self._getText(obj), AXHypertext.get_link_uri(obj)]
 
         return guilabels.SN_TITLE_UNVISITED_LINK, columnHeaders, rowData
 
@@ -2066,7 +2067,7 @@ class StructuralNavigation:
         columnHeaders.append(guilabels.SN_HEADER_URI)
 
         def rowData(obj):
-            return [self._getText(obj), self._script.utilities.uri(obj)]
+            return [self._getText(obj), AXHypertext.get_link_uri(obj)]
 
         return guilabels.SN_TITLE_VISITED_LINK, columnHeaders, rowData
 
@@ -2109,7 +2110,7 @@ class StructuralNavigation:
         def rowData(obj):
             return [self._getText(obj),
                     self._getState(obj),
-                    self._script.utilities.uri(obj)]
+                    AXHypertext.get_link_uri(obj)]
 
         return guilabels.SN_TITLE_LINK, columnHeaders, rowData
 

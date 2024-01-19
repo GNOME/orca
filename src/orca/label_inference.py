@@ -32,6 +32,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
@@ -275,7 +276,7 @@ class LabelInference:
 
         key = hash(obj)
         if self._isWidget(obj):
-            start, end = self._script.utilities.getHyperlinkRange(obj)
+            start = AXHypertext.get_link_start_offset(obj)
             obj = AXObject.get_parent(obj)
 
         rv = self._script.utilities.getLineContentsAtOffset(obj, start, True, False)
