@@ -43,6 +43,7 @@ from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
 from orca.ax_collection import AXCollection
+from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -410,7 +411,7 @@ class Utilities(script_utilities.Utilities):
         if obj == documentFrame:
             obj, offset = self.getCaretContext(documentFrame)
             for child in AXObject.iter_children(documentFrame):
-                if self.characterOffsetInParent(child) > offset:
+                if AXHypertext.get_character_offset_in_parent(child) > offset:
                     return child
 
         if AXObject.get_child_count(obj):
@@ -819,7 +820,8 @@ class Utilities(script_utilities.Utilities):
         if parent is None:
             return rv
 
-        start, end = self.getHyperlinkRange(obj)
+        start = AXHypertext.get_link_start_offset(obj)
+        end = AXHypertext.get_link_end_offset(obj)
         language, dialect = self.getLanguageAndDialectForSubstring(parent, start, end)
         rv.append((0, 1, language, dialect))
 
@@ -842,7 +844,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isTextBlockElement(obj):
             return -1
 
-        child = self.getChildAtOffset(obj, offset)
+        child = AXHypertext.get_child_at_offset(obj, offset)
         if child and not self.isTextBlockElement(child):
             matches = [x for x in contents if x[0] == child]
             if len(matches) == 1:
@@ -1323,7 +1325,7 @@ class Utilities(script_utilities.Utilities):
             pass
         else:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
-                child = self.getChildAtOffset(obj, offset)
+                child = AXHypertext.get_child_at_offset(obj, offset)
                 if child:
                     return self._getContentsForObj(child, 0, boundary)
 
@@ -1387,7 +1389,7 @@ class Utilities(script_utilities.Utilities):
                 if firstStart == 0:
                     break
             elif self.isTextBlockElement(AXObject.get_parent(firstObj)):
-                if self.characterOffsetInParent(firstObj) == 0:
+                if AXHypertext.get_character_offset_in_parent(firstObj) == 0:
                     break
 
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
@@ -1671,7 +1673,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
         if (AXUtilities.is_tool_bar(obj) or AXUtilities.is_menu_bar(obj)) \
                 and not self._treatObjectAsWhole(obj):
-            child = self.getChildAtOffset(obj, offset)
+            child = AXHypertext.get_child_at_offset(obj, offset)
             if child:
                 obj = child
                 offset = 0
@@ -1878,11 +1880,10 @@ class Utilities(script_utilities.Utilities):
             contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
 
         if line == contents:
-            start, end = self.getHyperlinkRange(obj)
-            parent = AXObject.get_parent(obj)
-            tokens = ["WEB: Got same line. ", obj, "has range in", parent, "of", start, "-", end]
+            start = AXHypertext.get_link_start_offset(obj)
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             if start >= 0:
+                parent = AXObject.get_parent(obj)
                 obj, offset = self.previousContext(parent, start, True)
                 tokens = ["WEB: Trying again with", obj, ", ", offset]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1937,11 +1938,9 @@ class Utilities(script_utilities.Utilities):
             contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
 
         if line == contents:
-            start, end = self.getHyperlinkRange(obj)
-            parent = AXObject.get_parent(obj)
-            tokens = ["WEB: Got same line. ", obj, "has range in", parent, "of", start, "-", end]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            end = AXHypertext.get_link_end_offset(obj)
             if end >= 0:
+                parent = AXObject.get_parent(obj)
                 obj, offset = self.nextContext(parent, end, True)
                 tokens = ["WEB: Trying again with", obj, ", ", offset]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2333,7 +2332,7 @@ class Utilities(script_utilities.Utilities):
 
         string, start, end = super().textAtPoint(obj, x, y, coordType, boundary)
         if string == self.EMBEDDED_OBJECT_CHARACTER:
-            child = self.getChildAtOffset(obj, start)
+            child = AXHypertext.get_child_at_offset(obj, start)
             if child:
                 return self.textAtPoint(child, x, y, coordType, boundary)
 
@@ -3962,7 +3961,7 @@ class Utilities(script_utilities.Utilities):
         if rv and AXUtilities.is_focusable(obj):
             rv = False
         if rv and AXUtilities.is_link(AXObject.get_parent(obj)) and not self.hasExplicitName(obj):
-            uri = self.uri(AXObject.get_parent(obj))
+            uri = AXHypertext.get_link_uri(AXObject.get_parent(obj))
             if uri and not uri.startswith('javascript'):
                 rv = False
         if rv and AXObject.supports_image(obj):
@@ -4482,7 +4481,7 @@ class Utilities(script_utilities.Utilities):
         else:
             link = AXObject.find_ancestor(oldFocus, self.isLink)
 
-        return link and self.uri(link) == docURI
+        return link and AXHypertext.get_link_uri(link) == docURI
 
     def isChildOfCurrentFragment(self, obj):
         parseResult = urllib.parse.urlparse(self.documentFrameURI())
@@ -4524,10 +4523,6 @@ class Utilities(script_utilities.Utilities):
         self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
         return rv
 
-    def characterOffsetInParent(self, obj):
-        start, end, length = self._rangeInParentWithLength(obj)
-        return start
-
     def _rangeInParentWithLength(self, obj):
         if not obj:
             return -1, -1, 0
@@ -4536,7 +4531,8 @@ class Utilities(script_utilities.Utilities):
         if not text:
             return -1, -1, 0
 
-        start, end = self.getHyperlinkRange(obj)
+        start = AXHypertext.get_link_start_offset(obj)
+        end = AXHypertext.get_link_end_offset(obj)
         return start, end, text.characterCount
 
     def getError(self, obj):
@@ -4711,7 +4707,7 @@ class Utilities(script_utilities.Utilities):
                 obj = None
             else:
                 contextObj, contextOffset = obj, offset
-                child = self.getChildAtOffset(obj, offset)
+                child = AXHypertext.get_child_at_offset(obj, offset)
                 if child:
                     obj = child
                 else:
@@ -5094,7 +5090,7 @@ class Utilities(script_utilities.Utilities):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
-        child = self.getChildAtOffset(obj, offset)
+        child = AXHypertext.get_child_at_offset(obj, offset)
         if not child:
             msg = "WEB: Child at offset is null. Returning context unchanged."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -5105,7 +5101,7 @@ class Utilities(script_utilities.Utilities):
                 tokens = ["WEB: Child", child, "of", obj, "at offset", offset, "cannot be context."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 offset += 1
-                child = self.getChildAtOffset(obj, offset)
+                child = AXHypertext.get_child_at_offset(obj, offset)
 
         if self.isListItemMarker(child):
             tokens = ["WEB: First caret context is next offset in", obj, ":",
@@ -5150,7 +5146,7 @@ class Utilities(script_utilities.Utilities):
             if text:
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
-                    child = self.getChildAtOffset(obj, i)
+                    child = AXHypertext.get_child_at_offset(obj, i)
                     if child and allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         tokens = ["ERROR: Child", child, "found at offset with char '",
                                   allText[i].replace("\n", "\\n"), "'"]
@@ -5222,7 +5218,7 @@ class Utilities(script_utilities.Utilities):
                 if offset == -1 or offset > len(allText):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
-                    child = self.getChildAtOffset(obj, i)
+                    child = AXHypertext.get_child_at_offset(obj, i)
                     if child and allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         tokens = ["ERROR: Child", child, "found at offset with char '",
                                   allText[i].replace("\n", "\\n"), "'"]
