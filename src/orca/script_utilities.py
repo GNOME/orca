@@ -57,6 +57,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from . import text_attribute_names
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
@@ -2440,7 +2441,7 @@ class Utilities:
         toBuild = list(string)
         for i, char in enumerate(toBuild):
             if char == self.EMBEDDED_OBJECT_CHARACTER:
-                child = self.getChildAtOffset(obj, i + startOffset)
+                child = AXHypertext.get_child_at_offset(obj, i + startOffset)
                 result = self.expandEOCs(child)
                 if child and AXObject.get_role(child) in blockRoles:
                     result += " "
@@ -2893,46 +2894,18 @@ class Utilities:
         text which is also a link.
         """
 
-        from . import punctuation_settings
-
         endOffset = startOffset + len(line)
-        try:
-            hyperText = obj.queryHypertext()
-            nLinks = hyperText.getNLinks()
-        except Exception:
-            nLinks = 0
+        links = AXHypertext.get_all_links_in_range(obj, startOffset, endOffset)
+        offsets = [AXHypertext.get_link_end_offset(link) for link in links]
+        offsets = sorted([offset - startOffset for offset in offsets], reverse=True)
+        tokens = list(line)
+        for o in offsets:
+            string = f" {messages.LINK}"
+            if o < len(tokens) and tokens[o].isalnum():
+                string += " "
+            tokens[o:o] = string
 
-        adjustedLine = list(line)
-        for n in range(nLinks, 0, -1):
-            link = hyperText.getLink(n - 1)
-            if not link:
-                continue
-
-            # We only care about links in the string, line:
-            #
-            if startOffset < link.endIndex <= endOffset:
-                index = link.endIndex - startOffset
-            elif startOffset <= link.startIndex < endOffset:
-                index = len(line)
-                if link.endIndex < endOffset:
-                    index -= 1
-            else:
-                continue
-
-            linkString = " " + messages.LINK
-
-            # If the link was not followed by a whitespace or punctuation
-            # character, then add in a space to make it more presentable.
-            #
-            nextChar = ""
-            if index < len(line):
-                nextChar = adjustedLine[index]
-            if not (nextChar in self._script.whitespace \
-                    or punctuation_settings.getPunctuationInfo(nextChar)):
-                linkString += " "
-            adjustedLine[index:index] = linkString
-
-        return "".join(adjustedLine)
+        return "".join(tokens)
 
     @staticmethod
     def _processMultiCaseString(string):
@@ -5039,14 +5012,14 @@ class Utilities:
                 if oldString.endswith(self.EMBEDDED_OBJECT_CHARACTER) and oldEnd == changeStart:
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became selected.
-                    child = self.getChildAtOffset(obj, oldEnd - 1)
+                    child = AXHypertext.get_child_at_offset(obj, oldEnd - 1)
                     self.handleTextSelectionChange(child, False)
             else:
                 changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
                 if newString.endswith(self.EMBEDDED_OBJECT_CHARACTER):
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became unselected.
-                    child = self.getChildAtOffset(obj, newEnd - 1)
+                    child = AXHypertext.get_child_at_offset(obj, newEnd - 1)
                     self.handleTextSelectionChange(child, False)
 
         speakMessage = speakMessage \
@@ -5063,7 +5036,7 @@ class Utilities:
                 self._script.speakMessage(message, interrupt=False)
 
             if endsWithChild:
-                child = self.getChildAtOffset(obj, end)
+                child = AXHypertext.get_child_at_offset(obj, end)
                 self.handleTextSelectionChange(child, speakMessage)
 
         return True
