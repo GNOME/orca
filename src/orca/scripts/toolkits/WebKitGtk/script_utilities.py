@@ -36,6 +36,7 @@ import orca.focus_manager as focus_manager
 import orca.keybindings as keybindings
 import orca.script_utilities as script_utilities
 
+from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -112,7 +113,7 @@ class Utilities(script_utilities.Utilities):
             children = [x for x in AXObject.iter_children(obj)]
             text = ' '.join(map(self.displayedText, children))
             if not text:
-                text = self.linkBasename(obj)
+                text = AXHypertext.get_link_basename(obj, remove_extension=True)
 
         return text
 
@@ -135,12 +136,10 @@ class Utilities(script_utilities.Utilities):
         Returns a list of (obj, startOffset, endOffset, string) tuples.
         """
 
-        try:
-            text = obj.queryText()
-            htext = obj.queryHypertext()
-        except (AttributeError, NotImplementedError):
+        if not (AXObject.supports_text(obj) and AXObject.supports_hypertext(obj)):
             return [(obj, 0, 1, '')]
 
+        text = obj.queryText()
         string = text.getText(0, -1)
         if not string:
             return [(obj, 0, 1, '')]
@@ -162,11 +161,16 @@ class Utilities(script_utilities.Utilities):
         offsets = [x for x in offsets if start <= x < end]
 
         objects = []
-        try:
-            objs = [obj[htext.getLinkIndex(offset)] for offset in offsets]
-        except Exception:
-            objs = []
-        ranges = [self.getHyperlinkRange(x) for x in objs]
+        objs = []
+        for offset in offsets:
+            child = AXHypertext.get_child_at_offset(obj, offset)
+            if child:
+                objs.append(child)
+
+        def _get_range(obj):
+            return AXHypertext.get_link_start_offset(obj), AXHypertext.get_link_end_offset(obj)
+
+        ranges = [_get_range(x) for x in objs]
         for i, (first, last) in enumerate(ranges):
             objects.append((obj, start, first, string[start:first]))
             objects.append((objs[i], first, last, ''))

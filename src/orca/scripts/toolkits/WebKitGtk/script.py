@@ -44,6 +44,8 @@ import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.structural_navigation as structural_navigation
+
+from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -554,15 +556,9 @@ class Script(default.Script):
         # just done with the current object. If we're still in SayAll, we do
         # not want to set the caret (and hence set focus) in a link we just
         # passed by.
-        try:
-            hypertext = obj.queryHypertext()
-        except NotImplementedError:
-            pass
-        else:
-            linkCount = hypertext.getNLinks()
-            links = [hypertext.getLink(x) for x in range(linkCount)]
-            if [link for link in links if link.startIndex <= offset <= link.endIndex]:
-                return
+        links = AXHypertext.get_all_links(obj)
+        if [link for link in links if link.startIndex <= offset <= link.endIndex]:
+            return
 
         focus_manager.getManager().emit_region_changed(obj, offset, mode=focus_manager.SAY_ALL)
         text.setCaretOffset(offset)
