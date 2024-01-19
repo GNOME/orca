@@ -1410,112 +1410,6 @@ class Utilities:
         result = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         return list(filter(isNotAncestor, result))
 
-    def linkBasenameToName(self, obj):
-        basename = self.linkBasename(obj)
-        if not basename:
-            return ""
-
-        basename = re.sub(r"[-_]", " ", basename)
-        tokens = basename.split()
-        for token in tokens:
-            if not token.isalpha():
-                return ""
-
-        return basename
-
-    @staticmethod
-    def linkBasename(obj):
-        """Returns the relevant information from the URI.  The idea is
-        to attempt to strip off all prefix and suffix, much like the
-        basename command in a shell."""
-
-        basename = None
-
-        try:
-            hyperlink = obj.queryHyperlink()
-        except Exception:
-            pass
-        else:
-            uri = hyperlink.getURI(0)
-            if uri and len(uri):
-                # Sometimes the URI is an expression that includes a URL.
-                # Currently that can be found at the bottom of safeway.com.
-                # It can also be seen in the backwards.html test file.
-                #
-                expression = uri.split(',')
-                if len(expression) > 1:
-                    for item in expression:
-                        if item.find('://') >=0:
-                            if not item[0].isalnum():
-                                item = item[1:-1]
-                            if not item[-1].isalnum():
-                                item = item[0:-2]
-                            uri = item
-                            break
-
-                # We're assuming that there IS a base name to be had.
-                # What if there's not? See backwards.html.
-                #
-                uri = uri.split('://')[-1]
-                if not uri:
-                    return basename
-
-                # Get the last thing after all the /'s, unless it ends
-                # in a /.  If it ends in a /, we'll look to the stuff
-                # before the ending /.
-                #
-                if uri[-1] == "/":
-                    basename = uri[0:-1]
-                    basename = basename.split('/')[-1]
-                elif not uri.count("/"):
-                    basename = uri
-                else:
-                    basename = uri.split('/')[-1]
-                    if basename.startswith("index"):
-                        basename = uri.split('/')[-2]
-
-                    # Now, try to strip off the suffixes.
-                    #
-                    basename = basename.split('.')[0]
-                    basename = basename.split('?')[0]
-                    basename = basename.split('#')[0]
-                    basename = basename.split('%')[0]
-
-        return basename
-
-    @staticmethod
-    def linkIndex(obj, characterIndex):
-        """A brute force method to see if an offset is a link.  This
-        is provided because not all Accessible Hypertext implementations
-        properly support the getLinkIndex method.  Returns an index of
-        0 or greater of the characterIndex is on a hyperlink.
-
-        Arguments:
-        -obj: the object with the Accessible Hypertext specialization
-        -characterIndex: the text position to check
-        """
-
-        if not obj:
-            return -1
-
-        try:
-            obj.queryText()
-        except NotImplementedError:
-            return -1
-
-        try:
-            hypertext = obj.queryHypertext()
-        except NotImplementedError:
-            return -1
-
-        for i in range(hypertext.getNLinks()):
-            link = hypertext.getLink(i)
-            if (characterIndex >= link.startIndex) \
-               and (characterIndex <= link.endIndex):
-                return i
-
-        return -1
-
     def nestingLevel(self, obj):
         """Determines the nesting level of this object.
 
@@ -2177,18 +2071,6 @@ class Utilities:
         unfocused = list(filter(cannotBeActiveWindow, presentable))
         return len(unfocused)
 
-    def uri(self, obj):
-        """Return the URI for a given link object.
-
-        Arguments:
-        - obj: the Accessible object.
-        """
-
-        try:
-            return obj.queryHyperlink().getURI(0)
-        except Exception:
-            return None
-
     #########################################################################
     #                                                                       #
     # Utilities for working with the accessible text interface              #
@@ -2313,78 +2195,6 @@ class Utilities:
             rv.append(text.getSelection(i))
 
         return rv
-
-    def getChildAtOffset(self, obj, offset):
-        try:
-            hypertext = obj.queryHypertext()
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hypertext interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying hypertext interface for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        index = hypertext.getLinkIndex(offset)
-        if index == -1:
-            return None
-
-        hyperlink = hypertext.getLink(index)
-        if not hyperlink:
-            tokens = ["SCRIPT UTILITIES: No hyperlink object at index", index, "for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        child = hyperlink.getObject(0)
-        tokens = ["SCRIPT UTILITIES: Hyperlink object at index", index, "for", obj, "is", child]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if offset != hyperlink.startIndex:
-            msg = (
-                f"SCRIPT UTILITIES: Hyperlink start index {hyperlink.startIndex} "
-                f"should match the offset {offset}"
-            )
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        return child
-
-    def characterOffsetInParent(self, obj):
-        """Returns the character offset of the embedded object
-        character for this object in its parent's accessible text.
-
-        Arguments:
-        - obj: an Accessible that should implement the accessible
-          hyperlink specialization.
-
-        Returns an integer representing the character offset of the
-        embedded object character for this hyperlink in its parent's
-        accessible text, or -1 something was amuck.
-        """
-
-        offset = -1
-        try:
-            hyperlink = obj.queryHyperlink()
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hyperlink interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        else:
-            # We need to make sure that this is an embedded object in
-            # some accessible text (as opposed to an imagemap link).
-            #
-            parent = AXObject.get_parent(obj)
-            try:
-                parent.queryText()
-                offset = hyperlink.startIndex
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting startIndex for",
-                          obj, "in parent", parent]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                tokens = ["SCRIPT UTILITIES: startIndex of", obj, f"is {offset}"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        return offset
 
     def clearTextSelection(self, obj):
         """Clears the text selection if the object supports it.
@@ -3428,23 +3238,6 @@ class Utilities:
             offset = text.characterCount - 1
 
         return root, offset
-
-    def getHyperlinkRange(self, obj):
-        """Returns the text range in parent associated with obj."""
-
-        try:
-            hyperlink = obj.queryHyperlink()
-            start, end = hyperlink.startIndex, hyperlink.endIndex
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "does not implement the hyperlink interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting hyperlink indices for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1
-
-        return start, end
 
     def selectedChildren(self, obj):
         children = AXSelection.get_selected_children(obj)
