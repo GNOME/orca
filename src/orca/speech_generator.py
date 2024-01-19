@@ -47,6 +47,7 @@ from . import speech
 from . import text_attribute_names
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_hypertext import AXHypertext
 from .ax_utilities import AXUtilities
 
 class Pause:
@@ -808,7 +809,7 @@ class SpeechGenerator(generator.Generator):
         # URI is returned as a tuple containing six components:
         # scheme://netloc/path;parameters?query#fragment.
         #
-        link_uri = self._script.utilities.uri(obj)
+        link_uri = AXHypertext.get_link_uri(obj)
         if not link_uri:
             # [[[TODO - JD: For some reason, this is failing for certain
             # links. The current whereAmI code says, "It might be an anchor.
@@ -839,7 +840,7 @@ class SpeechGenerator(generator.Generator):
                     # If there's no text for the link, expose part of the
                     # URI to the user.
                     #
-                    text = self._script.utilities.linkBasename(obj)
+                    text = AXHypertext.get_link_basename(obj)
                 if text:
                     linkOutput += " " + text
                 result.append(linkOutput)
@@ -856,7 +857,7 @@ class SpeechGenerator(generator.Generator):
         pointed to by the URI of the link associated with obj.
         """
         result = []
-        link_uri = self._script.utilities.uri(obj)
+        link_uri = AXHypertext.get_link_uri(obj)
         if link_uri:
             link_uri_info = urllib.parse.urlparse(link_uri)
         else:
@@ -893,7 +894,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         sizeString = ""
-        uri = self._script.utilities.uri(obj)
+        uri = AXHypertext.get_link_uri(obj)
         if not uri:
             return result
         try:
@@ -1325,7 +1326,7 @@ class SpeechGenerator(generator.Generator):
 
             # Also check to see if this is a hypertext link.
             #
-            if self._script.utilities.linkIndex(obj, textOffset) >= 0:
+            if AXHypertext.get_all_links_in_range(obj, textOffset, textOffset + 1):
                 attribStr += f" {messages.LINK}"
 
         return attribStr

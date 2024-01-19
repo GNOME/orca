@@ -39,6 +39,7 @@ from orca import object_properties
 from orca import settings
 from orca import settings_manager
 from orca import speech_generator
+from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -662,7 +663,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
-        link_uri = self._script.utilities.uri(obj)
+        link_uri = AXHypertext.get_link_uri(obj)
         if not link_uri:
             return []
 

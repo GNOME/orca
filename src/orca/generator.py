@@ -45,6 +45,7 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
@@ -357,7 +358,7 @@ class Generator:
                 elif AXUtilities.is_link(parent):
                     link = parent
                 if link:
-                    basename = self._script.utilities.linkBasenameToName(link)
+                    basename = AXHypertext.get_link_basename(link, remove_extension=True)
                     if basename:
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.

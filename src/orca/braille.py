@@ -47,6 +47,7 @@ from . import settings
 from . import settings_manager
 
 from .ax_event_synthesizer import AXEventSynthesizer
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .orca_platform import tablesdir
 
@@ -731,22 +732,14 @@ class Text(Region):
             return ""
 
         if getLinkMask and linkIndicator != settings.BRAILLE_UNDERLINE_NONE:
-            try:
-                hyperText = self.accessible.queryHypertext()
-                nLinks = hyperText.getNLinks()
-            except Exception:
-                nLinks = 0
-
-            n = 0
-            while n < nLinks:
-                link = hyperText.getLink(n)
-                if self.lineOffset <= link.startIndex:
-                    for i in range(link.startIndex, link.endIndex):
-                        try:
-                            regionMask[i] |= linkIndicator
-                        except Exception:
-                            pass
-                n += 1
+            links = AXHypertext.get_all_links(self.accessible)
+            for link in links:
+                startOffset = AXHypertext.get_link_start_offset(link)
+                endOffset = AXHypertext.get_link_end_offset(link)
+                maskStart = max(startOffset - self.lineOffset, 0)
+                maskEnd = min(endOffset - self.lineOffset, stringLength)
+                for i in range(maskStart, maskEnd):
+                  regionMask[i] |= linkIndicator
 
         if attrIndicator:
             keys, enabledAttributes = script.utilities.stringToKeysAndDict(
