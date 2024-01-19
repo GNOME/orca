@@ -11,6 +11,7 @@ orca_python_PYTHON = \
 	action_presenter.py \
 	ax_collection.py \
 	ax_event_synthesizer.py \
+	ax_hypertext.py \
 	ax_object.py \
 	ax_selection.py \
 	ax_table.py \
