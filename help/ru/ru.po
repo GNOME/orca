@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-07-26 20:29+0000\n"
-"PO-Revision-Date: 2023-07-31 00:44+1000\n"
-"Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
-"Language-Team: Basealt Translation Team\n"
+"POT-Creation-Date: 2024-01-10 13:09+0000\n"
+"PO-Revision-Date: 2024-01-13 12:39+0300\n"
+"Last-Translator: Artur So <arturios2005@mail.ru>\n"
+"Language-Team: ru\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -57,7 +57,7 @@ msgstr "Команды для добавления в закладки и пол
 #: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
 #: C/howto_structural_navigation.page:12 C/howto_tables.page:10
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
 #: C/introduction.page:10 C/preferences_braille.page:11
 #: C/preferences_chat.page:11 C/preferences_web.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
@@ -87,7 +87,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
 #: C/preferences_web.page:16 C/preferences_general.page:15
 #: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
@@ -1283,7 +1283,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Команды <app>Orca</app>"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:36
+#: C/commands.page:17 C/index.page:35
 msgid "Getting Started"
 msgstr "Начало работы"
 
@@ -1298,7 +1298,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Чтение веб-страниц и других документов"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:42
+#: C/commands.page:26 C/index.page:41
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Просмотр и взаимодействие с содержимым экрана"
 
@@ -4932,17 +4932,23 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/index.page:6
 msgctxt "text"
-msgid "Orca Screen Reader"
-msgstr "Экранный диктор Orca"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Экранный диктор <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/index.page:7
+msgctxt "link:trail"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Экранный диктор <app>Orca</app>"
+
+#. (itstool) path: info/title
+#: C/index.page:8
 msgctxt "link"
-msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr "Введение в работу с экранным диктором <app>Orca</app>"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Экранный диктор <app>Orca</app>"
 
 #. (itstool) path: info/desc
-#: C/index.page:16
+#: C/index.page:17
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -4951,23 +4957,18 @@ msgstr ""
 "широкими возможностями настройки и предоставляет доступ к графическому "
 "рабочему столу с помощью озвучивания и обновляемого брайлевского дисплея."
 
-#. (itstool) path: media/span
-#: C/index.page:23
-msgid "<app>Orca</app>'s logo"
-msgstr "Логотип <app>Orca</app>"
-
 #. (itstool) path: page/title
-#: C/index.page:21
+#: C/index.page:22
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgstr "<_:media-1/> Экранный диктор <app>Orca</app>"
 
 #. (itstool) path: note/title
-#: C/index.page:28
+#: C/index.page:27
 msgid "Before You Begin"
 msgstr "Перед началом работы"
 
 #. (itstool) path: note/p
-#: C/index.page:29
+#: C/index.page:28
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -4977,12 +4978,12 @@ msgstr ""
 "соответствующей документацией."
 
 #. (itstool) path: section/title
-#: C/index.page:39
+#: C/index.page:38
 msgid "Reading Documents and Web Pages"
 msgstr "Чтение документов и веб-страниц"
 
 #. (itstool) path: section/title
-#: C/index.page:45
+#: C/index.page:44
 msgid "Quick Reference"
 msgstr "Краткий справочник"
 
@@ -8255,6 +8256,17 @@ msgstr ""
 "Если флажок <gui>Произносить числа цифрами</gui> установлен, <app>Orca</app> "
 "будет разбивать такие числа, как «123», на отдельные цифры («1», «2» и «3») "
 "перед их передачей синтезатору речи."
+
+#~ msgctxt "text"
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Экранный диктор Orca"
+
+#~ msgctxt "link"
+#~ msgid "Introduction to the <app>Orca</app> Screen Reader"
+#~ msgstr "Введение в работу с экранным диктором <app>Orca</app>"
+
+#~ msgid "<app>Orca</app>'s logo"
+#~ msgstr "Логотип <app>Orca</app>"
 
 #~ msgid ""
 #~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
