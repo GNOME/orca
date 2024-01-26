@@ -4938,9 +4938,11 @@ class Utilities:
             return False
 
         if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
-            msg += "old locusOfFocus is ancestor of new locusOfFocus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
+            if AXObject.get_name(oldLocusOfFocus):
+                msg += "old locusOfFocus is ancestor with name of new locusOfFocus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return False
+            return True
 
         def isOld(target):
             return target == oldLocusOfFocus
