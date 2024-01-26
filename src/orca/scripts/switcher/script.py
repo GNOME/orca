@@ -29,6 +29,8 @@ __license__   = "LGPL"
 from orca import debug
 from orca import focus_manager
 from orca.scripts import default
+from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
@@ -75,6 +77,14 @@ class Script(default.Script):
         self.presentMessage(self.utilities.getSelectionName(event.source),
                             resetStyles=False, force=True)
         return True
+
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        if AXUtilities.is_window(newLocusOfFocus) and not AXObject.get_name(newLocusOfFocus):
+            msg = "SWITCHER: Not presenting newly-focused nameless window."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
