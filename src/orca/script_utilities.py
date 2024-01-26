@@ -2484,9 +2484,13 @@ class Utilities:
                 msg = f"SCRIPT UTILITIES: Exception getting attributes at {offset}: {error}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return rv
-
-            attrDict = dict([attr.split(':', 1) for attr in attrList])
-            rv.append((max(start, offset), end, attrDict))
+            if start <= end:
+                attrDict = dict([attr.split(':', 1) for attr in attrList])
+                rv.append((max(start, offset), end, attrDict))
+            else:
+                # TODO - JD: We're sometimes seeing this from WebKit, e.g. in Evo gitlab messages.
+                msg = f"SCRIPT UTILITIES: Start offset {start} > end offset {end}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
             offset = max(end, offset + 1)
 
         endTime = time.time()
@@ -4702,6 +4706,12 @@ class Utilities:
                 self._script.pointOfReference['paste'] = True
             return True
 
+        return False
+
+    def eventIsCanvasNoise(self, event):
+        return False
+
+    def eventIsSpinnerNoise(self, event):
         return False
 
     def eventIsUserTriggered(self, event):

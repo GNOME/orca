@@ -355,7 +355,7 @@ class FocusManager:
         elif self._window and self._focus and not self.focus_is_in_active_window():
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
             debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
-            self.set_locus_of_focus(None, self._window, notify_script)
+            self.set_locus_of_focus(None, self._window, notify_script=True)
 
 
 _manager = FocusManager()

@@ -817,7 +817,7 @@ class Utilities(script_utilities.Utilities):
         # Embedded objects such as images and certain widgets won't implement the text interface
         # and thus won't expose text attributes. Therefore try to get the info from the parent.
         parent = AXObject.get_parent(obj)
-        if parent is None:
+        if parent is None or not self.inDocumentContent(parent):
             return rv
 
         start = AXHypertext.get_link_start_offset(obj)
@@ -1273,6 +1273,8 @@ class Utilities(script_utilities.Utilities):
         return string, start, end
 
     def _getContentsForObj(self, obj, offset, boundary):
+        tokens = ["WEB: Attempting to get contents for", obj, boundary]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not obj:
             return []
 
@@ -1321,8 +1323,9 @@ class Utilities(script_utilities.Utilities):
         stringOffset = offset - start
         try:
             char = string[stringOffset]
-        except Exception:
-            pass
+        except Exception as error:
+            msg = f"WEB: Could not get char {stringOffset} for '{string}': {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = AXHypertext.get_child_at_offset(obj, offset)
@@ -1575,6 +1578,11 @@ class Utilities(script_utilities.Utilities):
             return _isInObject(xObj)
 
         objects = self._getContentsForObj(obj, offset, None)
+        if not objects:
+            tokens = ["ERROR: Cannot get object contents for", obj, f"at offset {offset}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
         while nextObj:
@@ -1747,6 +1755,11 @@ class Utilities(script_utilities.Utilities):
 
             self._debugContentsInfo(obj, offset, objects, "Line (not layout mode)")
             return objects
+
+        if not (objects and objects[0]):
+            tokens = ["WEB: Error. No objects found for", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return []
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
         if (extents[2] == 0 and extents[3] == 0) or self.isMath(firstObj):
