@@ -1154,10 +1154,9 @@ class Utilities:
             if labels and labels not in tokens:
                 tokens.append(labels)
 
-        if not tokens:
-            description = AXObject.get_description(obj)
-            if description:
-                tokens.append(description)
+        description = AXObject.get_description(obj)
+        if description and description not in tokens:
+            tokens.append(description)
 
         return " ".join(tokens)
 
