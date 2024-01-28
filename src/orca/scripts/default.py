@@ -1351,6 +1351,9 @@ class Script(script.Script):
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("expanded-changed event.")
+
         if not self.utilities.isPresentableExpandedChangedEvent(event):
             return
 
