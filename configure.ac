@@ -129,10 +129,6 @@ if test "x$brlapi_available" = "xno" ; then
 echo
 echo "NOTE: Braille support requires BrlTTY >= 3.9 and BrlAPI >= 0.5.1."
 fi
-if test "x$wnck_available" = "xno" ; then
-echo
-echo "NOTE: Mouse review requires wnck, which was not found."
-fi
 
 if test "x$speechd_available" = "xno" ; then
 echo
