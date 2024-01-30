@@ -2752,6 +2752,8 @@ class Utilities:
             words = self.WORDS_RE.split(line)
             line = ''.join(map(self._convertWordToDigits, words))
 
+        line = self.adjustForDigits(line)
+
         if len(line) == 1 and not self._script.inSayAll():
             charname = chnames.getCharacterName(line)
             if charname != line:
