@@ -2637,37 +2637,23 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    def _addRepeatSegment(self, segment, line, respectPunctuation=True):
+    def _addRepeatSegment(self, segment, line):
         """Add in the latest line segment, adjusting for repeat characters
         and punctuation.
 
         Arguments:
         - segment: the segment of repeated characters.
         - line: the current built-up line to characters to speak.
-        - respectPunctuation: if False, ignore punctuation level.
 
         Returns: the current built-up line plus the new segment, after
         adjusting for repeat character counts and punctuation.
         """
 
-        from . import punctuation_settings
-
-        style = settings.verbalizePunctuationStyle
-        isPunctChar = True
-        try:
-            level, action = punctuation_settings.getPunctuationInfo(segment[0])
-        except Exception:
-            isPunctChar = False
         count = len(segment)
-        if (count >= settings.repeatCharacterLimit) \
-           and (segment[0] not in self._script.whitespace):
-            if (not respectPunctuation) \
-               or (isPunctChar and (style <= level)):
-                repeatChar = segment[0]
-                repeatSegment = messages.repeatedCharCount(repeatChar, count)
-                line = f"{line} {repeatSegment}"
-            else:
-                line += segment
+        if count >= settings.repeatCharacterLimit and segment[0] not in self._script.whitespace:
+            repeatChar = segment[0]
+            repeatSegment = messages.repeatedCharCount(repeatChar, count)
+            line = f"{line} {repeatSegment}"
         else:
             line += segment
 
@@ -2795,18 +2781,16 @@ class Utilities:
         newLine = ''
         segment = lastChar = line[0]
 
-        multipleChars = False
         for i in range(1, len(line)):
             if line[i] == lastChar:
                 segment += line[i]
             else:
-                multipleChars = True
                 newLine = self._addRepeatSegment(segment, newLine)
                 segment = line[i]
 
             lastChar = line[i]
 
-        return self._addRepeatSegment(segment, newLine, multipleChars)
+        return self._addRepeatSegment(segment, newLine)
 
     def adjustForDigits(self, string):
         """Adjusts the string to convert digit-like text, such as subscript

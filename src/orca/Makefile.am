@@ -67,7 +67,6 @@ orca_python_PYTHON = \
 	orca_modifier_manager.py \
 	orca_platform.py \
 	pronunciation_dict.py \
-	punctuation_settings.py \
 	script.py \
 	script_manager.py \
 	script_utilities.py \
