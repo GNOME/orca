@@ -29,8 +29,7 @@ Each mode is defined below. The 4 bits of information listed here are:
 
   - The actual printed symbol.
 
-  - How the symbol should be pronounced (in the chnames dictionary in
-    chnames.py keyed by symbol).
+  - How the symbol should be pronounced.
 
   - The level at which the symbol should be spoken. Note that this
     denotes the level containing all lower levels.

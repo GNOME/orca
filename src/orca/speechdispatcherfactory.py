@@ -27,12 +27,11 @@ __copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
 
 from gi.repository import GLib
-import re
 import time
 
-from . import chnames
 from . import debug
 from . import guilabels
+from . import mathsymbols
 from . import messages
 from . import speechserver
 from . import settings
@@ -583,7 +582,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def speakCharacter(self, character, acss=None):
         self._apply_acss(acss)
-        name = chnames.getCharacterName(character)
+        name = mathsymbols.getCharacterName(character)
         if not name or name == character:
             tokens = ["SPEECH DISPATCHER: Speaking '", character.replace("\n", "\\n"), "' as char"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)

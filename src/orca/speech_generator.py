@@ -36,9 +36,9 @@ import urllib.error
 import urllib.parse
 
 from . import acss
-from . import chnames
 from . import debug
 from . import generator
+from . import mathsymbols
 from . import messages
 from . import object_properties
 from . import settings
@@ -675,8 +675,8 @@ class SpeechGenerator(generator.Generator):
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
         for label in labels:
             name = self._generateName(label, **args)
-            if name and len(name[0]) == 1:
-                charname = chnames.getCharacterName(name[0])
+            if name and len(name[0]) == 1 and self._script.utilities.isMath(obj):
+                charname = mathsymbols.getCharacterName(name[0])
                 if charname:
                     name[0] = charname
             result.extend(name)
@@ -1270,7 +1270,7 @@ class SpeechGenerator(generator.Generator):
 
         string = result[0].strip()
         if len(string) == 1 and self._script.utilities.isMath(obj):
-            charname = chnames.getCharacterName(string, preferMath=True)
+            charname = mathsymbols.getCharacterName(string)
             if charname != string:
                 result[0] = charname
 
@@ -2554,7 +2554,7 @@ class SpeechGenerator(generator.Generator):
     def _generateFencedStart(self, obj, **args):
         fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
         if fenceStart:
-            result = [chnames.getCharacterName(fenceStart)]
+            result = [mathsymbols.getCharacterName(fenceStart)]
             result.extend(self.voice(DEFAULT, obj=obj, **args))
             return result
 
@@ -2569,7 +2569,7 @@ class SpeechGenerator(generator.Generator):
 
         for i, child in enumerate(obj):
             result.extend(self._generateMath(child, **args))
-            separatorName = chnames.getCharacterName(separators[i])
+            separatorName = mathsymbols.getCharacterName(separators[i])
             result.append(separatorName)
             result.extend(self.voice(DEFAULT, obj=obj, **args))
             if separatorName:
@@ -2580,7 +2580,7 @@ class SpeechGenerator(generator.Generator):
     def _generateFencedEnd(self, obj, **args):
         fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
         if fenceEnd:
-            result = [chnames.getCharacterName(fenceEnd)]
+            result = [mathsymbols.getCharacterName(fenceEnd)]
             result.extend(self.voice(DEFAULT, obj=obj, **args))
             return result
 

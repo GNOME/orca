@@ -27,7 +27,6 @@ orca_python_PYTHON = \
 	brltablenames.py \
 	caret_navigation.py \
 	chat.py \
-	chnames.py \
 	cmdnames.py \
 	colornames.py \
 	common_keyboardmap.py \

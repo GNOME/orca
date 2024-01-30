@@ -41,7 +41,6 @@ from gi.repository import Atspi
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-from . import chnames
 from . import colornames
 from . import debug
 from . import focus_manager
@@ -2664,7 +2663,7 @@ class Utilities:
            and (segment[0] not in self._script.whitespace):
             if (not respectPunctuation) \
                or (isPunctChar and (style <= level)):
-                repeatChar = chnames.getCharacterName(segment[0])
+                repeatChar = segment[0]
                 repeatSegment = messages.repeatedCharCount(repeatChar, count)
                 line = f"{line} {repeatSegment}"
             else:
@@ -2690,7 +2689,7 @@ class Utilities:
     def verbalizeAllPunctuation(self, string):
         result = string
         for symbol in set(re.findall(self.PUNCTUATION, result)):
-            charName = f" {chnames.getCharacterName(symbol)} "
+            charName = f" {symbol} "
             result = re.sub(r"\%s" % symbol, charName, result)
 
         return result
@@ -2754,8 +2753,8 @@ class Utilities:
 
         line = self.adjustForDigits(line)
 
-        if len(line) == 1 and not self._script.inSayAll():
-            charname = chnames.getCharacterName(line)
+        if len(line) == 1 and not self._script.inSayAll() and self.isInMath():
+            charname = mathsymbols.getCharacterName(line)
             if charname != line:
                 return charname
 
@@ -3055,8 +3054,6 @@ class Utilities:
                (not newSequence.endswith('+') or newSequence.endswith('++')):
                 sequence = newSequence
         except Exception:
-            if sequence.endswith(" "):
-                sequence += chnames.getCharacterName(" ")
             sequence = sequence.replace("<", "")
             sequence = sequence.replace(">", " ").strip()
 
