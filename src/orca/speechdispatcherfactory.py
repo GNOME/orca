@@ -36,7 +36,6 @@ from . import guilabels
 from . import messages
 from . import speechserver
 from . import settings
-from . import punctuation_settings
 from . import script_manager
 from . import settings_manager
 from .acss import ACSS
@@ -53,9 +52,6 @@ else:
         _speechd_version_ok = False
     else:
         _speechd_version_ok = True
-
-PUNCTUATION = re.compile(r'[^\w\s]', re.UNICODE)
-ELLIPSIS = re.compile('(\342\200\246|(?<!\\.)\\.{3,4}(?=(\\s|\\Z)))')
 
 class SpeechServer(speechserver.SpeechServer):
     # See the parent class for documentation.
@@ -307,48 +303,6 @@ class SpeechServer(speechserver.SpeechServer):
                 method({})
                 current[acss_property] = {}
 
-    def __addVerbalizedPunctuation(self, oldText):
-        """Depending upon the users verbalized punctuation setting,
-        adjust punctuation symbols in the given text to their pronounced
-        equivalents. The pronounced text will either replace the
-        punctuation symbol or be inserted before it. In the latter case,
-        this is to retain spoken prosity.
-
-        Arguments:
-        - oldText: text to be parsed for punctuation.
-
-        Returns a text string with the punctuation symbols adjusted accordingly.
-        """
-
-        style = settings_manager.getManager().getSetting("verbalizePunctuationStyle")
-        if style == settings.PUNCTUATION_STYLE_NONE:
-            return oldText
-
-        spokenEllipsis = messages.SPOKEN_ELLIPSIS + " "
-        newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
-        symbols = set(re.findall(PUNCTUATION, newText))
-        for symbol in symbols:
-            try:
-                level, action = punctuation_settings.getPunctuationInfo(symbol)
-            except Exception:
-                continue
-
-            if level != punctuation_settings.LEVEL_NONE:
-                # Speech Dispatcher should handle it.
-                #
-                continue
-
-            charName = f" {chnames.getCharacterName(symbol)} "
-            if action == punctuation_settings.PUNCTUATION_INSERT:
-                charName += symbol
-            newText = re.sub(symbol, charName, newText)
-
-        script = script_manager.getManager().getActiveScript()
-        if script is not None:
-            newText = script.utilities.adjustForDigits(newText)
-
-        return newText
-
     def _speak(self, text, acss, **kwargs):
         if isinstance(text, ACSS):
             text = ''
@@ -410,8 +364,6 @@ class SpeechServer(speechserver.SpeechServer):
             marks_endoffsets.append(i + 1)
 
         text = marked_text
-
-        text = self.__addVerbalizedPunctuation(text)
         script = script_manager.getManager().getActiveScript()
         if script is not None:
             text = script.utilities.adjustForPronunciation(text)
