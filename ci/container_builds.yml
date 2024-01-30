@@ -52,4 +52,4 @@ opensuse-container@x86_64:
       yelp-devel
       yelp-tools
     FDO_DISTRIBUTION_EXEC: >-
-      pip3 install ruff
+      bash ci/install-python-tools.sh
