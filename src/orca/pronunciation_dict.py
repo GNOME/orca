@@ -29,10 +29,9 @@ __license__   = "LGPL"
 def getPronunciation(word, pronunciations=None):
     """Given a word, return a string that represents what this word
     sounds like. Note: This code does not handle the pronunciation
-    of character names. If you want a character name to be spoken,
-    treat it as a punctuation character at LEVEL_NONE in
-    punctuation_settings.py. See, for example, the left_arrow and
-    right_arrow characters.
+    of character names. That should be handled at the speech provider
+    or synthesizer level. For instance the symbols.dic files installed
+    in /usr/share/speech-dispatcher.
 
     Arguments:
     - word: the word to get the "sounds like" representation for.
