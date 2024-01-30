@@ -8,7 +8,6 @@ import time
 from gi.repository import GLib
 
 from . import cmdnames
-from . import chnames
 from . import debug
 from . import focus_manager
 from . import keybindings
@@ -549,8 +548,6 @@ class LiveRegionManager:
             return None
 
         content = content.strip()
-        if len(content) == 1:
-            content = chnames.getCharacterName(content)
 
         # Proper live regions typically come with proper aria labels. These
         # labels are typically exposed as names. Failing that, descriptions.
