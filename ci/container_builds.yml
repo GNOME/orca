@@ -4,7 +4,7 @@ include:
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2023-06-09.0-master"
+  BASE_TAG: "2024-01-30.0-master"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -31,6 +31,7 @@ opensuse-container@x86_64:
       gobject-introspection-devel
       gsettings-desktop-schemas
       gstreamer-devel
+      gtk3-devel
       itstool
       libtool
       libXi-devel
