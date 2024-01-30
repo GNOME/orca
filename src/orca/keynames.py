@@ -26,8 +26,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from . import chnames
-
 from .orca_i18n import _
 from .orca_i18n import C_
 
@@ -313,7 +311,7 @@ def getKeyName(key):
     Returns a string representing the name for the key
     """
 
-    return __keynames.get(key, chnames.getCharacterName(key))
+    return __keynames.get(key, key)
 
 def localizeKeySequence(keys):
     """Given a sequence of keys, such as 'Shift Control A', localize the
