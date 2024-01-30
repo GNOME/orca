@@ -3,7 +3,6 @@
 orca-autostart.desktop.in
 src/orca/braille_rolenames.py
 src/orca/brltablenames.py
-src/orca/chnames.py
 src/orca/cmdnames.py
 src/orca/colornames.py
 src/orca/guilabels.py
