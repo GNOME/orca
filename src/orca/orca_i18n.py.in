@@ -76,7 +76,7 @@ def setLocaleForMessages(newLocale=None):
         setModuleLocale(module, newLocale)
 
 def setLocaleForNames(newLocale=None):
-    modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
+    modules = ['orca.keynames', 'orca.phonnames',
                'orca.text_attribute_names', 'orca.object_properties',
                'orca.cmdnames', 'orca.keybindings', 'orca.colornames',
                'orca.mathsymbols']
