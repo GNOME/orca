@@ -16,7 +16,7 @@ endif
 # Hard dependencies (checked via pkg-config)
 dependency_atspi = dependency('atspi-2', version: '>= 2.50.0')
 dependency_atkbridge = dependency('atk-bridge-2.0', version: '>= 2.50.0')
-dependency_gtk = dependency('gtk+-3.0', version: '>= 3.24')
+#dependency_gtk = dependency('gtk+-3.0', version: '>= 3.24')
 dependency_pygobject = dependency('pygobject-3.0', version: '>= 3.18')
 
 # Optional python modules with their descriptions

@@ -32,7 +32,6 @@ opensuse-container@x86_64:
       gobject-introspection-devel
       gsettings-desktop-schemas
       gstreamer-devel
-      gtk3-devel
       itstool
       libtool
       libXi-devel
@@ -53,5 +52,6 @@ opensuse-container@x86_64:
       xvfb-run
       yelp-devel
       yelp-tools
+      pkgconfig(gtk3)
     FDO_DISTRIBUTION_EXEC: >-
       pip3 install ruff
