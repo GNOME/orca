@@ -52,5 +52,6 @@ ruff lint:
     - job: opensuse-container@x86_64
       artifacts: false
   script:
+    - source ci/env.sh
     - ruff check src/orca
   allow_failure: true
