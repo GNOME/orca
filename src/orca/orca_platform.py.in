@@ -26,6 +26,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import os
+
 # $ORCA_VERSION
 #
 version     = "@VERSION@"
@@ -44,7 +46,7 @@ package     = "@PACKAGE@"
 
 # The location of the data directory (usually "share").
 #
-datadir = "@datadir@".replace('${prefix}', '@prefix@')
+datadir = os.path.join('@prefix@','@datadir@')
 
 # The directory where we could find liblouis translation tables.
 #
