@@ -16,8 +16,11 @@ endif
 # Hard dependencies (checked via pkg-config)
 dependency_atspi = dependency('atspi-2', version: '>= 2.50.0')
 dependency_atkbridge = dependency('atk-bridge-2.0', version: '>= 2.50.0')
-#dependency_gtk = dependency('gtk+-3.0', version: '>= 3.24')
 dependency_pygobject = dependency('pygobject-3.0', version: '>= 3.18')
+
+# FIXME: Re-enable this check. It works just fine in (at least) Fedora,
+# but fails in the SUSE CI bot.
+# dependency_gtk = dependency('gtk+-3.0', version: '>= 3.24')
 
 # Optional python modules with their descriptions
 optional_modules = {

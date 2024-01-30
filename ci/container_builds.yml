@@ -21,7 +21,6 @@ opensuse-container@x86_64:
     FDO_DISTRIBUTION_PACKAGES: >-
       autoconf
       automake
-      cmake
       dbus-1
       dbus-1-devel
       gcc
