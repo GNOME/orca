@@ -32,7 +32,7 @@ opensuse-container@x86_64:
       gobject-introspection-devel
       gsettings-desktop-schemas
       gstreamer-devel
-      gtk3
+      gtk3-devel
       itstool
       libtool
       libXi-devel
