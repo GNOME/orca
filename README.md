@@ -58,7 +58,7 @@ If you get an error, the Python bindings for BrlAPI are not installed.
 
 ## Building and Installing Orca
 
-If you want to build orca in a directory called `_build` and install Orca using
+If you want to build Orca in a directory called `_build` and install Orca using
 your distro's default locations (e.g `/usr/local`):
 
 ```sh
