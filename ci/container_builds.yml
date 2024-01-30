@@ -51,5 +51,6 @@ opensuse-container@x86_64:
       xvfb-run
       yelp-devel
       yelp-tools
+      pkgconfig(gtk3)
     FDO_DISTRIBUTION_EXEC: >-
       bash ci/install-python-tools.sh
