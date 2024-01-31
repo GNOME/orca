@@ -1,8 +1,0 @@
-orca_python_PYTHON = \
-	__init__.py \
-	braille_generator.py \
-	script.py \
-	speech_generator.py \
-	script_utilities.py
-
-orca_pythondir=$(pkgpythondir)/scripts/toolkits/WebKitGtk

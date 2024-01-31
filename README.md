@@ -28,6 +28,7 @@ infrastructure and application bug fixes that help Orca work better.
 
 Orca also has the following dependencies:
 
+* meson            - The build system used by Orca
 * Python 3         - Python platform
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - GTK+ toolkit
@@ -54,6 +55,30 @@ python -c "import brlapi"
 ```
 
 If you get an error, the Python bindings for BrlAPI are not installed.
+
+## Building and Installing Orca
+
+If you want to build Orca in a directory called `_build` and install Orca using
+your distro's default location (e.g `/usr/local`):
+
+```sh
+meson setup _build
+meson compile -C _build
+meson install -C _build
+```
+
+The installer will prompt you for `sudo` permission if needed.
+
+To specify an alternative install location, use `-D prefix=` during setup
+(e.g. `meson setup -D prefix=$HOME/orca-test _build`).
+
+To rebuild, either remove the build directory you created before (e.g. `_build`)
+or add the `--reconfigure` flag to your existing `meson setup` command.
+
+To uninstall, `cd` into the build directory you created and use `ninja uninstall`,
+or `sudo ninja uninstall` if you had installed Orca with `sudo` permission.
+Note that this will not remove the bytecode files in `__pycache__`. See this
+[meson issue](https://github.com/mesonbuild/meson/issues/12798).
 
 ## Running Orca
 

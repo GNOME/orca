@@ -49,7 +49,8 @@ configure.ac and README are accurate.
 BUILD THE RELEASE:
 -----------------
 
-./autogen.sh --prefix=`pwd`/bld && make && make install && make distcheck
+meson setup builddir
+meson dist -C builddir
 
 COMMIT RELEASE CHANGES AND TAG THE RELEASE:
 -------------------------------------------
