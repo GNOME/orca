@@ -75,6 +75,11 @@ To specify an alternative install location, use `-D prefix=` during setup
 To rebuild, either remove the build directory you created before (e.g. `_build`)
 or add the `--reconfigure` flag to your existing `meson setup` command.
 
+To uninstall, `cd` into the build directory you created and use `ninja uninstall`,
+or `sudo ninja uninstall` if you had installed Orca with `sudo` permission.
+Note that this will not remove the bytecode files in `__pycache__`. See this
+[meson issue](https://github.com/mesonbuild/meson/issues/12798).
+
 ## Running Orca
 
 If you wish to modify your Orca preferences, you can press "Insert+space"
