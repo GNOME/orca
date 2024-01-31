@@ -1,7 +1,7 @@
 lib_sources = [
   '__init__.py',
-  'script_utilities.py',
   'script.py',
+  'script_utilities.py',
 ]
 
 python3.install_sources(
