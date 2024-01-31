@@ -73,7 +73,7 @@ To specify an alternative install location, use `-D prefix=` during setup
 (e.g. `meson setup -D prefix=$HOME/orca-test _build`).
 
 To rebuild, either remove the build directory you created before (e.g. `_build`)
-or add the `--reconfigure` flag to your existing `meson setup` command.
+or add the `--reconfigure` flag to the end of your existing `meson setup` command.
 
 To uninstall, `cd` into the build directory you created and use `ninja uninstall`,
 or `sudo ninja uninstall` if you had installed Orca with `sudo` permission.
