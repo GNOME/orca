@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import re
 import unicodedata
 
+from . import debug
 from .orca_i18n import C_
 
 fallbackOnUnicodeData = False
@@ -2301,7 +2302,10 @@ def _getSpokenName(symbol, includeStyle):
     return name
 
 def getCharacterName(symbol):
-    return _getSpokenName(symbol, speakStyle != SPEAK_NEVER)
+    result = _getSpokenName(symbol, speakStyle != SPEAK_NEVER)
+    msg = f"MATHSYMBOLS: Name of '{symbol}' is '{result}'"
+    debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+    return result
 
 def adjustForSpeech(string):
     if _RE is None:

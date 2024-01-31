@@ -568,13 +568,13 @@ class SpeechServer(speechserver.SpeechServer):
             interrupt = interrupt and (time.time() - self._lastKeyEchoTime) > 0.5
 
         if len(text) == 1:
-            tokens = ["SPEECH DISPATCHER: Speaking '", text.replace("\n", "\\n"), "' as char"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"SPEECH DISPATCHER: Speaking '{text}' as char"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self._send_command(self._client.char, text)
         else:
-            tokens = ["SPEECH DISPATCHER: Speaking '", text, "' as string"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"SPEECH DISPATCHER: Speaking '{text}' as string"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._speak(text, acss)
 
     def sayAll(self, utteranceIterator, progressCallback):
@@ -582,16 +582,18 @@ class SpeechServer(speechserver.SpeechServer):
 
     def speakCharacter(self, character, acss=None):
         self._apply_acss(acss)
-        name = mathsymbols.getCharacterName(character)
+
+        name = character
+        script = script_manager.getManager().getActiveScript()
+        if script and script.utilities.speakMathSymbolNames():
+            name = mathsymbols.getCharacterName(character)
+
         if not name or name == character:
-            tokens = ["SPEECH DISPATCHER: Speaking '", character.replace("\n", "\\n"), "' as char"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._send_command(self._client.char, character)
             return
 
-        script = script_manager.getManager().getActiveScript()
-        if script is not None:
-            name = script.utilities.adjustForPronunciation(name)
         self.speak(name, acss)
 
     def speakKeyEvent(self, event, acss=None):
@@ -599,13 +601,13 @@ class SpeechServer(speechserver.SpeechServer):
         lockingStateString = event.getLockingStateString()
         event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
-            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as key"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self._send_command(self._client.key, event_string)
         else:
-            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as string"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
         self._lastKeyEchoTime = time.time()
 
