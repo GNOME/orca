@@ -36,7 +36,7 @@ cgettext = gettext.gettext
 
 # Tell gettext where to find localized strings.
 #
-localedir = "@localedir@".replace('${prefix}', '@prefix@')
+localedir = os.path.join('@prefix@','@localedir@')
 gettext.bindtextdomain ("@GETTEXT_PACKAGE@", localedir)
 gettext.textdomain("orca")
 

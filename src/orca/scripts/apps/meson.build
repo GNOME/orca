@@ -1,0 +1,27 @@
+subdir('Banshee')
+subdir('Eclipse')
+subdir('evince')
+subdir('evolution')
+subdir('gajim')
+subdir('gcalctool')
+subdir('gedit')
+subdir('gnome-documents')
+subdir('gnome-shell')
+subdir('kwin')
+subdir('notification-daemon')
+subdir('notify-osd')
+subdir('pidgin')
+subdir('soffice')
+subdir('SeaMonkey')
+subdir('smuxi-frontend-gnome')
+subdir('Thunderbird')
+subdir('xfwm4')
+
+lib_sources = [
+  '__init__.py',
+]
+
+python3.install_sources(
+  lib_sources,
+  subdir: meson.project_name() / 'scripts' / 'apps'
+)

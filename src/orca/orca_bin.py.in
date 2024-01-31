@@ -38,10 +38,7 @@ import sys
 import time
 
 sys.prefix = '@prefix@'
-pythondir = '@pythondir@'
-pythondir = pythondir.replace('${PYTHON_PREFIX}', '@PYTHON_PREFIX@')
-pythondir = pythondir.replace('${prefix}', '@prefix@')
-sys.path.insert(1, pythondir)
+sys.path.insert(1, '@libdir@')
 
 # Do not import Orca here. It is imported in main(). The reason why is that
 # start-up failures due to imports in orca.py are not getting output, making
