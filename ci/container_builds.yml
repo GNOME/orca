@@ -4,7 +4,7 @@ include:
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2024-01-30.0-master"
+  BASE_TAG: "2024-01-30.1-master"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -47,8 +47,8 @@ opensuse-container@x86_64:
       python3-louis      
       python3-pip
       python3-speechd
-      python310-gobject-devel
-      python310-simplejson
+      python311-gobject-devel
+      python311-simplejson
       xvfb-run
       yelp-devel
       yelp-tools
