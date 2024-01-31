@@ -452,6 +452,11 @@ class AXObject:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
+        if parent is None \
+           and AXObject.get_role(obj) not in [Atspi.Role.INVALID, Atspi.Role.DESKTOP_FRAME]:
+            tokens = ["AXObject:", obj, "claims to have no parent"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         return parent
 
     @staticmethod
