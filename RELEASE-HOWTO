@@ -43,7 +43,7 @@ Short list of non-translation commits:
   git log ORCA_40_BETA.. --grep translation --invert-grep --pretty=format:" * %s%n"
 
 NOTE: You should also make sure the external dependencies listed in
-configure.ac and README are accurate.
+meson.build and README.md are accurate.
 
 
 BUILD THE RELEASE:
@@ -72,9 +72,9 @@ ftpadmin install orca-40.rc.tar.xz
 BUMP THE VERSION:
 -----------------
 
-Modify this line in ./configure.ac:
+Modify this line in ./meson.build:
 
-    m4_define([orca_version], [40.rc])
+    version: '40.rc'
 
 The major version (40) increments by 1 each new GNOME release cycle.
 The minor version proceeds as follows: alpha, beta, rc, 0, 1, 2, 3, etc.
