@@ -17,7 +17,23 @@ endif
 dependency_atspi = dependency('atspi-2', version: '>= 2.50.0')
 dependency_atkbridge = dependency('atk-bridge-2.0', version: '>= 2.50.0')
 dependency_pygobject = dependency('pygobject-3.0', version: '>= 3.18')
-dependency_gtk = dependency('gtk+-3.0', version: '>= 3.24')
+
+# End users might not have the Gtk development libraries installed, making pkg-config fail.
+# Therefore, check this dependency via python.
+gtk_major_version = '3'
+gtk_minor_version = '24'
+gtk_command = ' '.join([
+  'import gi; gi.require_version("Gtk", "3.0"); from gi.repository import Gtk;',
+  'print(f"{Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}");',
+  f'failed = Gtk.get_major_version() != @gtk_major_version@ or Gtk.get_minor_version() < @gtk_minor_version@;',
+  'exit(failed)'
+])
+gtk_test = run_command(python3, '-c', gtk_command, check: false)
+description = f'GTK @gtk_major_version@.@gtk_minor_version@'
+version = gtk_test.stdout().strip()
+if gtk_test.returncode() != 0
+  error(f'@description@ failed (found @version@)')
+endif
 
 # Optional python modules with their descriptions
 optional_modules = {
