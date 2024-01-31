@@ -14,9 +14,9 @@ if not python3.language_version().version_compare(f'>= @python_minimum_version@'
 endif
 
 # Hard dependencies (checked via pkg-config)
-dependency_atspi = dependency('atspi-2', version: '>= 2.50.0')
-dependency_atkbridge = dependency('atk-bridge-2.0', version: '>= 2.50.0')
-dependency_pygobject = dependency('pygobject-3.0', version: '>= 3.18')
+dependency('atspi-2', version: '>= 2.50.0')
+dependency('atk-bridge-2.0', version: '>= 2.50.0')
+dependency('pygobject-3.0', version: '>= 3.18')
 
 # End users might not have the Gtk development libraries installed, making pkg-config fail.
 # Therefore, check this dependency via python.
