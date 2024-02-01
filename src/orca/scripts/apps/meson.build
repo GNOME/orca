@@ -1,4 +1,3 @@
-subdir('Banshee')
 subdir('Eclipse')
 subdir('evince')
 subdir('evolution')
