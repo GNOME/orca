@@ -1064,12 +1064,7 @@ class StructuralNavigation:
             if item:
                 text = AXObject.get_name(item)
         if not text and AXUtilities.is_image(obj):
-            try:
-                image = obj.queryImage()
-            except Exception:
-                text = AXObject.get_description(obj)
-            else:
-                text = image.imageDescription or AXObject.get_description(obj)
+            text = AXObject.get_image_description(obj) or AXObject.get_description(obj)
             if not text:
                 parent = AXObject.get_parent(obj)
                 if AXUtilities.is_link(parent):

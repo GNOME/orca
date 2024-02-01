@@ -521,16 +521,11 @@ class Generator:
         represent the description of the image on the object, if it
         exists.  Otherwise, an empty array is returned.
         """
-        result = []
-        try:
-            image = obj.queryImage()
-        except NotImplementedError:
-            pass
-        else:
-            description = image.imageDescription
-            if description and len(description):
-                result.append(description)
-        return result
+
+        description = AXObject.get_image_description(obj)
+        if description:
+            return [description]
+        return []
 
     #####################################################################
     #                                                                   #

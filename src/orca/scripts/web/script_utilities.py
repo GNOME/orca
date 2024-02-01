@@ -3978,11 +3978,10 @@ class Utilities(script_utilities.Utilities):
             if uri and not uri.startswith('javascript'):
                 rv = False
         if rv and AXObject.supports_image(obj):
-            image = obj.queryImage()
-            if image.imageDescription:
+            if AXObject.get_image_description(obj):
                 rv = False
             elif not self.hasExplicitName(obj) and not self.isRedundantSVG(obj):
-                width, height = image.getImageSize()
+                width, height = AXObject.get_image_size(obj)
                 if width > 25 and height > 25:
                     rv = False
         if rv and AXObject.supports_text(obj):

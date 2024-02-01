@@ -928,16 +928,12 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the image on the object, if
         it exists.  Otherwise, an empty array is returned.
         """
-        result = []
-        try:
-            obj.queryImage()
-        except Exception:
-            pass
-        else:
-            args['role'] = Atspi.Role.IMAGE
-            result.extend(self.generate(obj, **args))
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
-        return result
+
+        if not AXObject.supports_image(obj):
+            return []
+
+        args['role'] = Atspi.Role.IMAGE
+        return self.generate(obj, **args)
 
     #####################################################################
     #                                                                   #

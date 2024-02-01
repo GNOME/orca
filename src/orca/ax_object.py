@@ -748,6 +748,39 @@ class AXObject:
         return description
 
     @staticmethod
+    def get_image_description(obj):
+        """Returns the accessible image description of obj"""
+
+        if not AXObject.supports_image(obj):
+            return ""
+
+        try:
+            description = Atspi.Image.get_image_description(obj)
+        except Exception as error:
+            msg = f"AXObject: Exception in get_image_description: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return ""
+
+        return description
+
+    @staticmethod
+    def get_image_size(obj):
+        """Returns a (width, height) tuple of the image in obj"""
+
+        if not AXObject.supports_image(obj):
+            return 0, 0
+
+        try:
+            result = Atspi.Image.get_image_size(obj)
+        except Exception as error:
+            msg = f"AXObject: Exception in get_image_size: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return 0, 0
+
+        # The return value is an AtspiPoint, hence x and y.
+        return result.x, result.y
+
+    @staticmethod
     def get_help_text(obj):
         """Returns the accessible help text of obj"""
 
@@ -755,8 +788,7 @@ class AXObject:
             return ""
 
         try:
-            # This is not yet a thing. But hopefully it will become one.
-            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/146
+            # Added in Atspi 2.52.
             text = Atspi.Accessible.get_help_text(obj)
         except Exception:
             # This is for prototyping in the meantime.
