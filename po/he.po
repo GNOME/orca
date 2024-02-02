@@ -4516,7 +4516,7 @@ msgstr "ה_פעלה"
 #. a navigation command to move amongst entries.
 #: src/orca/guilabels.py:58
 msgid "Automatic focus mode during structural navigation"
-msgstr ""
+msgstr "מצב מיקוד אוטומטי במהלך ניווט מבני"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4536,7 +4536,7 @@ msgstr ""
 #. of the entry.
 #: src/orca/guilabels.py:76
 msgid "Automatic focus mode during caret navigation"
-msgstr ""
+msgstr "מצב מיקוד אוטומטית במהלך ניווט סמן"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4553,7 +4553,7 @@ msgstr ""
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
 msgid "Automatic focus mode during native navigation"
-msgstr ""
+msgstr "מצב מיקוד אוטומטית במהלך ניווט טבעי"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -5061,6 +5061,11 @@ msgid ""
 "\n"
 "Continue loading profile discarding previous changes?"
 msgstr ""
+"פעולה זו תשנה את הפרופיל הפעיל. אם ערכת\n"
+"שינויים בהעדפות שלך, הן תושמטנה\n"
+"עם טעינת הפרופיל.\n"
+"\n"
+"להמשיך לטעון את הפרופיל ולהתעלם מהשינויים הקודמים?"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -5810,37 +5815,37 @@ msgstr "קונטרול"
 #.
 #: src/orca/keynames.py:54
 msgid "left shift"
-msgstr ""
+msgstr "shift שמאלי"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
 #: src/orca/keynames.py:58
 msgid "left alt"
-msgstr ""
+msgstr "alt שמאלי"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
 #: src/orca/keynames.py:62
 msgid "left control"
-msgstr ""
+msgstr "control שמאלי"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
 #: src/orca/keynames.py:66
 msgid "right shift"
-msgstr ""
+msgstr "shift ימני"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
 #: src/orca/keynames.py:70
 msgid "right alt"
-msgstr ""
+msgstr "alt ימני"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
 #: src/orca/keynames.py:74
 msgid "right control"
-msgstr ""
+msgstr "control ימני"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
@@ -5858,88 +5863,88 @@ msgstr ""
 #.
 #: src/orca/keynames.py:86
 msgid "num lock"
-msgstr ""
+msgstr "num lock"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
 #: src/orca/keynames.py:90
 msgid "caps lock"
-msgstr ""
+msgstr "caps lock"
 
 #. Translators: this is how someone would speak the name of the shift lock key
 #. There is no reason to make it different from the translation for "caps lock"
 #.
 #: src/orca/keynames.py:95
 msgid "shift lock"
-msgstr ""
+msgstr "נעילת shift"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
 #: src/orca/keynames.py:99
 msgid "scroll lock"
-msgstr ""
+msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
 #: src/orca/keynames.py:103 src/orca/keynames.py:107 src/orca/keynames.py:111
 #: src/orca/keynames.py:115
 msgid "page up"
-msgstr ""
+msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
 #: src/orca/keynames.py:119 src/orca/keynames.py:123 src/orca/keynames.py:127
 #: src/orca/keynames.py:131
 msgid "page down"
-msgstr ""
+msgstr "page down"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
 #: src/orca/keynames.py:139
 msgid "left tab"
-msgstr ""
+msgstr "tab שמאלי"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
 #: src/orca/keynames.py:147
 msgid "backspace"
-msgstr ""
+msgstr "backspace"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: src/orca/keynames.py:151
 msgid "return"
-msgstr ""
+msgstr "return"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
 #: src/orca/keynames.py:155
 msgid "enter"
-msgstr ""
+msgstr "אנטר"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
 #: src/orca/keynames.py:159 src/orca/keynames.py:163
 msgid "up"
-msgstr ""
+msgstr "למעלה"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
 #: src/orca/keynames.py:167 src/orca/keynames.py:171
 msgid "down"
-msgstr ""
+msgstr "למטה"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
 #: src/orca/keynames.py:175 src/orca/keynames.py:179
 msgid "left"
-msgstr ""
+msgstr "שמאלה"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
 #: src/orca/keynames.py:183 src/orca/keynames.py:187
 msgid "right"
-msgstr ""
+msgstr "ימינה"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
@@ -5957,19 +5962,19 @@ msgstr ""
 #.
 #: src/orca/keynames.py:199
 msgid "menu"
-msgstr ""
+msgstr "תפריט"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
 #: src/orca/keynames.py:203
 msgid "Alt Gr"
-msgstr ""
+msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
 #: src/orca/keynames.py:207
 msgid "help"
-msgstr ""
+msgstr "עזרה"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
@@ -5981,43 +5986,43 @@ msgstr ""
 #.
 #: src/orca/keynames.py:215
 msgid "mode switch"
-msgstr ""
+msgstr "החלפת מצב"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: src/orca/keynames.py:219
 msgid "escape"
-msgstr ""
+msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
 #: src/orca/keynames.py:223 src/orca/keynames.py:227
 msgid "insert"
-msgstr ""
+msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
 #: src/orca/keynames.py:231 src/orca/keynames.py:235
 msgid "delete"
-msgstr ""
+msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
 #: src/orca/keynames.py:239 src/orca/keynames.py:243
 msgid "home"
-msgstr ""
+msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
 #: src/orca/keynames.py:247 src/orca/keynames.py:251
 msgid "end"
-msgstr ""
+msgstr "end"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
 #: src/orca/keynames.py:255
 msgid "begin"
-msgstr ""
+msgstr "התחלה"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
@@ -6050,7 +6055,7 @@ msgstr "מינוס"
 #. "insert" key when used as the Orca modifier.
 #: src/orca/keybindings.py:144
 msgid "Insert"
-msgstr ""
+msgstr "Insert"
 
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
@@ -6094,14 +6099,14 @@ msgstr "Alt_L"
 #.
 #: src/orca/keybindings.py:182
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
 #: src/orca/keybindings.py:187
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -7640,13 +7645,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1934
 msgctxt "math symbol"
 msgid "xor"
-msgstr ""
+msgstr "או בלעדי"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
 #: src/orca/mathsymbols.py:1937
 msgctxt "math symbol"
 msgid "nand"
-msgstr ""
+msgstr "לא וגם"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: src/orca/mathsymbols.py:1940
@@ -7658,13 +7663,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1943
 msgctxt "math symbol"
 msgid "right angle with arc"
-msgstr ""
+msgstr "זווית ימנית עם קשת"
 
 #. Translators: this is the spoken representation for the character '⊿' (U+22bf)
 #: src/orca/mathsymbols.py:1946
 msgctxt "math symbol"
 msgid "right triangle"
-msgstr ""
+msgstr "משולש ימני"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: src/orca/mathsymbols.py:1961
