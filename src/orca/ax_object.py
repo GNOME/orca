@@ -1270,13 +1270,13 @@ class AXObject:
         return attributes
 
     @staticmethod
-    def get_attribute(obj, attribute_name):
+    def get_attribute(obj, attribute_name, use_cache=True):
         """Returns the value of the specified attribute as a string."""
 
         if not AXObject.is_valid(obj):
             return ""
 
-        attributes = AXObject.get_attributes_dict(obj)
+        attributes = AXObject.get_attributes_dict(obj, use_cache)
         return attributes.get(attribute_name, "")
 
     @staticmethod

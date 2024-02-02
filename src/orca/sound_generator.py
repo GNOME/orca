@@ -37,6 +37,7 @@ from . import generator
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 
 METHOD_PREFIX = "_generate"
 
@@ -294,7 +295,7 @@ class SoundGenerator(generator.Generator):
         if not settings_manager.getManager().getSetting('playSoundForValue'):
             return []
 
-        percent = self._script.utilities.getValueAsPercent(obj)
+        percent = AXValue.get_value_as_percent(obj)
         if percent is None:
             return []
 
@@ -309,7 +310,7 @@ class SoundGenerator(generator.Generator):
         elif not settings_manager.getManager().getSetting('playSoundForValue'):
             return []
 
-        percent = self._script.utilities.getValueAsPercent(obj)
+        percent = AXValue.get_value_as_percent(obj)
         if percent is None:
             return []
 

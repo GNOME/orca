@@ -27,8 +27,8 @@ __license__   = "LGPL"
 
 import orca.messages as messages
 import orca.scripts.default as default
-import orca.settings as settings
 from orca.ax_object import AXObject
+from orca.ax_value import AXValue
 
 
 ########################################################################
@@ -39,40 +39,27 @@ from orca.ax_object import AXObject
 
 class Script(default.Script):
     def onValueChanged(self, event):
-        try:
-            ivalue = event.source.queryValue()
-            value = int(ivalue.currentValue)
-        except NotImplementedError:
-            value = -1
+        if not AXValue.did_value_change(event.source):
+            return
 
-        if value >= 0:
-            string = str(value)
-            voice = self.speechGenerator.voice(obj=event.source, string=string)
-            self.speakMessage(string, voice=voice)
-            self.displayBrailleMessage(string,
-                                       flashTime=settings.brailleFlashTime)
+        # TODO - JD: See if this can be merged into the default script.
+        value = AXValue.get_current_value(event.source)
+        string = str(value)
+        voice = self.speechGenerator.voice(obj=event.source, string=string)
+        self.presentMessage(string, voice=voice)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        try:
-            ivalue = event.source.queryValue()
-            value = ivalue.currentValue
-        except NotImplementedError:
-            value = -1
-
         message = ""
-        if value < 0:
+        if not AXObject.supports_value(event.source):
             self.speakMessage(messages.NOTIFICATION)
-            message = f'{AXObject.get_name(event.source)} {AXObject.get_description(event.source)}'
+            message = f"{AXObject.get_name(event.source)} {AXObject.get_description(event.source)}"
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.
-            #
-            message = '%s %d' % (AXObject.get_name(event.source), value)
-            self.speakMessage(message)
+            message = f"{AXObject.get_name(event.source)} {AXValue.get_current_value(event.source)}"
 
         voice = self.speechGenerator.voice(obj=event.source, string=message)
-        self.speakMessage(message, voice=voice)
-        self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
+        self.presentMessage(message, voice=voice)
         self.notificationPresenter.save_notification(message)

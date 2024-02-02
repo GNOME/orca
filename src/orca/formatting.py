@@ -470,8 +470,8 @@ formatting = {
             },
         Atspi.Role.SPLIT_PANE: {
             'focused': 'value',
-            'unfocused': 'labelAndName + roleName + value + availability + ' + MNEMONIC,
-            'basicWhereAmI' : 'labelAndName + roleName + value'
+            'unfocused': 'labelAndName + roleName + value + percentage + availability + ' + MNEMONIC,
+            'basicWhereAmI' : 'labelAndName + roleName + value + percentage'
             },
         Atspi.Role.STATIC: {
             'unfocused': '(displayedText or name) + roleName',

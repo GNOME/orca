@@ -31,7 +31,6 @@ __license__   = "LGPL"
 import functools
 import gi
 import locale
-import math
 import re
 import time
 from difflib import SequenceMatcher
@@ -61,6 +60,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 
 #############################################################################
 #                                                                           #
@@ -855,29 +855,7 @@ class Utilities:
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False
-
-        try:
-            value = obj.queryValue()
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiValue"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-        else:
-            try:
-                if value.maximumValue == value.minimumValue:
-                    tokens = ["SCRIPT UTILITIES:", obj, "is busy indicator"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return False
-            except Exception:
-                tokens = ["SCRIPT UTILITIES:", obj, "is either busy indicator or broken"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
-        return True
+        return AXValue.get_value_as_percent(obj) is not None
 
     def topLevelObjectIsActiveWindow(self, obj):
         return self.isSameObject(
@@ -916,32 +894,6 @@ class Utilities:
             return False, "App is not active app"
 
         return True, "Not handled by any other case"
-
-    def getValueAsPercent(self, obj):
-        try:
-            value = obj.queryValue()
-            minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiValue"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if AXUtilities.is_indeterminate(obj):
-            tokens = ["SCRIPT UTILITIES:", obj, "has state indeterminate and value of", val]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            if val <= 0:
-                return None
-
-        if maxval == minval == val:
-            if 1 <= val <= 100:
-                return int(val)
-            return None
-
-        return int((val / (maxval - minval)) * 100)
 
     def isBlockquote(self, obj):
         return AXUtilities.is_block_quote(obj)
@@ -3126,62 +3078,6 @@ class Utilities:
             return [], {}
 
         return [keys, dictionary]
-
-    def textForValue(self, obj):
-        """Returns the text to be displayed for the object's current value.
-
-        Arguments:
-        - obj: the Accessible object that may or may not have a value.
-
-        Returns a string representing the value.
-        """
-
-        attrs = AXObject.get_attributes_dict(obj, False)
-        valuetext = attrs.get("valuetext")
-        if valuetext:
-            return valuetext
-
-        try:
-            value = obj.queryValue()
-        except NotImplementedError:
-            return ""
-        else:
-            currentValue = value.currentValue
-
-        # "The reports of my implementation are greatly exaggerated."
-        try:
-            maxValue = value.maximumValue
-        except Exception as error:
-            maxValue = 0.0
-            tokens = ["SCRIPT UTILITIES: Could not get maximum value for", obj, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        try:
-            minValue = value.minimumValue
-        except Exception as error:
-            minValue = 0.0
-            tokens = ["SCRIPT UTILITIES: Could not get minimum value for", obj, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        try:
-            minIncrement = value.minimumIncrement
-        except Exception as error:
-            minIncrement = (maxValue - minValue) / 100.0
-            tokens = ["SCRIPT UTILITIES: Could not get minimum increment for", obj, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if minIncrement != 0.0:
-            try:
-                decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
-            except ValueError as error:
-                tokens = ["SCRIPT UTILITIES: Could not calculate decimal places for",
-                          obj, ":", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return ""
-        elif abs(currentValue) < 1:
-            decimalPlaces = 1
-        else:
-            decimalPlaces = 0
-
-        formatter = "%%.%df" % decimalPlaces
-        return formatter % currentValue
 
     @staticmethod
     def unicodeValueString(character):

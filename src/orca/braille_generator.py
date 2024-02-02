@@ -39,6 +39,7 @@ from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 from .braille_rolenames import shortRoleNames
 
 
@@ -401,7 +402,7 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _generatePercentage(self, obj, **args):
-        percent = self._script.utilities.getValueAsPercent(obj)
+        percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
             return [f'{percent}%']
 

@@ -49,6 +49,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 
 # Python 3.10 compatibility:
 try:
@@ -1127,7 +1128,10 @@ class Generator:
         if role == Atspi.Role.SEPARATOR and not AXUtilities.is_focused(obj):
             return []
 
-        return [self._script.utilities.textForValue(obj)]
+        result = AXValue.get_current_value_text(obj)
+        if result:
+            return [result]
+        return []
 
     #####################################################################
     #                                                                   #
@@ -1247,7 +1251,7 @@ class Generator:
         return int(settings_manager.getManager().getSetting('progressBarUpdateInterval'))
 
     def _shouldPresentProgressBarUpdate(self, obj, **args):
-        percent = self._script.utilities.getValueAsPercent(obj)
+        percent = AXValue.get_value_as_percent(obj)
         lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj, type=self)
         if percent == lastValue:
             tokens = ["GENERATOR: Not presenting update for", obj, ". Value still", percent]
@@ -1293,7 +1297,7 @@ class Generator:
 
     def setProgressBarUpdateTimeAndValue(self, obj, lastTime=None, lastValue=None):
         lastTime = lastTime or time.time()
-        lastValue = lastValue or self._script.utilities.getValueAsPercent(obj)
+        lastValue = lastValue or AXValue.get_value_as_percent(obj)
         self._activeProgressBars[obj] = lastTime, lastValue
 
     def _getAlternativeRole(self, obj, **args):

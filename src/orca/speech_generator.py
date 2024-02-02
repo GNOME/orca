@@ -49,6 +49,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_hypertext import AXHypertext
 from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -1582,7 +1583,7 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        percentValue = self._script.utilities.getValueAsPercent(obj)
+        percentValue = AXValue.get_value_as_percent(obj)
         if percentValue is not None:
             result = [messages.percentage(percentValue)]
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -2331,7 +2332,7 @@ class SpeechGenerator(generator.Generator):
             return ['']
 
         result = []
-        percent = self._script.utilities.getValueAsPercent(obj)
+        percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
             result.append(messages.percentage(percent))
             result.extend(self.voice(SYSTEM, obj=obj, **args))

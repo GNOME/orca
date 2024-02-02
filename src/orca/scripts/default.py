@@ -56,6 +56,7 @@ import orca.speechserver as speechserver
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
+from orca.ax_value import AXValue
 
 ########################################################################
 #                                                                      #
@@ -1815,43 +1816,27 @@ class Script(script.Script):
         - event: the Event
         """
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-
-        try:
-            value = obj.queryValue()
-            currentValue = value.currentValue
-        except NotImplementedError:
-            tokens = ["DEFAULT:", obj, "doesn't implement AtspiValue"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-        except Exception:
-            tokens = ["DEFAULT: Exception getting current value for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not AXValue.did_value_change(event.source):
             return
 
-        if "oldValue" in self.pointOfReference \
-           and (currentValue == self.pointOfReference["oldValue"]):
-            return
-
-        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj)
+        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(event.source)
         tokens = ["DEFAULT: Is progress bar update:", isProgressBarUpdate, ",", msg]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not isProgressBarUpdate and obj != focus_manager.getManager().get_locus_of_focus():
+        if not isProgressBarUpdate \
+           and event.source != focus_manager.getManager().get_locus_of_focus():
             msg = "DEFAULT: Source != locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if role == Atspi.Role.SPIN_BUTTON:
+        if AXUtilities.is_spin_button(event.source):
             self._saveFocusedObjectInfo(event.source)
 
-        self.pointOfReference["oldValue"] = currentValue
-        self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
+        self.updateBraille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speechGenerator.generateSpeech(
-            obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
+            event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
         self.__play(self.soundGenerator.generateSound(
-            obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
+            event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
