@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-01-02 22:02+0000\n"
+"POT-Creation-Date: 2024-01-14 07:04+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -1763,10 +1763,8 @@ msgstr "עובר לתו הבא."
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: src/orca/cmdnames.py:37
-#, fuzzy
-#| msgid "Routes the pointer to the current item."
 msgid "Route the pointer to the current item"
-msgstr "הזזת הסמן לפריט  הנוכחי."
+msgstr "הפניית הסמן לפריט הנוכחי"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1797,10 +1795,8 @@ msgstr "ביצוע לחיצת עכבר ימנית על פריט משטח הסק�
 #. user presses any key during a SayAll operation, the speech will be interrupted
 #. and the cursor will be positioned at the point where the speech was interrupted.
 #: src/orca/cmdnames.py:59
-#, fuzzy
-#| msgid "Speaks entire document."
 msgid "Speak entire document"
-msgstr "הקראת כל המסמך."
+msgstr "הקראת המסמך כולו"
 
 #. Translators: the 'flat review' feature of Orca allows the user to explore the
 #. text in a window in a 2D fashion. That is, Orca treats all the text from all
@@ -1840,10 +1836,8 @@ msgstr "מבצע את פקודת איפה אני בצורה מפורטת."
 #. refers to the selected/highlighted cells. In an file manager, it refers to
 #. the selected/highlighted icons. Etc.
 #: src/orca/cmdnames.py:86
-#, fuzzy
-#| msgid "Speaks the current flat review line."
 msgid "Speak the current selection"
-msgstr "אומר את שורת משטח הסקירה הנוכחית."
+msgstr "הקראת הבחירה הנוכחית"
 
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
@@ -2329,18 +2323,14 @@ msgstr "הגברת קצב הדיבור"
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:434
-#, fuzzy
-#| msgid "Decreases the speech rate."
 msgid "Decrease the speech pitch"
-msgstr "הפחתת את קצב הדיבור."
+msgstr "הגבהת צליל קצב הדיבור"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:438
-#, fuzzy
-#| msgid "Increases the speech rate."
 msgid "Increase the speech pitch"
-msgstr "הגבר את קצב הדיבור."
+msgstr "הנמכת צליל קצב הדיבור"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
@@ -2412,10 +2402,8 @@ msgstr ""
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
 #: src/orca/cmdnames.py:489
-#, fuzzy
-#| msgid "Speech synthesi_zer:"
 msgid "Cycle to the next speech synthesizer"
-msgstr "מסנ_תז דיבור:"
+msgstr "מעבר בלולאה למעבד הדיבור הבא"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2464,10 +2452,8 @@ msgstr ""
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
 #: src/orca/cmdnames.py:530
-#, fuzzy
-#| msgid "Bookmark where am I with respect to current position."
 msgid "Bookmark where am I with respect to current position"
-msgstr "שמור את המיקום בסימניות ביחס למיקום הנוכחי."
+msgstr "סימון המקום שלי בהתחשב במקום הנוכחי"
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the previous bookmark location. Note that in this context,
@@ -2534,10 +2520,8 @@ msgstr "הצגת גודל ומקום העצם הנוכחי"
 #. command causes the next command issued to be passed along to the current
 #. application, bypassing Orca's interception of it.
 #: src/orca/cmdnames.py:579
-#, fuzzy
-#| msgid "Passes the next command on to the current application."
 msgid "Pass the next command on to the current application"
-msgstr "מעביר את הפקודה הבאה ליישום הנוכחי."
+msgstr "העברת הפקודה הבאה קדימה ליישום הנוכחי"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
@@ -3215,7 +3199,7 @@ msgstr "לעבור לפסקה הבאה"
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1041
 msgid "Display a list of paragraphs"
-msgstr ""
+msgstr "הצגת רשימת פסקאות"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1044
@@ -3257,7 +3241,7 @@ msgstr "לעבור לטבלה הבאה"
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1067
 msgid "Display a list of tables"
-msgstr ""
+msgstr "הצגת רשימת טבלאות"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1070
@@ -3302,7 +3286,7 @@ msgstr "לעלות תא אחד למעלה"
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1098
 msgid "Toggle layout mode"
-msgstr ""
+msgstr "החלפת מצב פריסה"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -3320,7 +3304,7 @@ msgstr ""
 #. between these two modes.
 #: src/orca/cmdnames.py:1114
 msgid "Switch between browse mode and focus mode"
-msgstr ""
+msgstr "החלפה בין מצב עיון למצב מיקוד"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -5777,10 +5761,8 @@ msgstr "שליטה בניווט הסמן"
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:925
-#, fuzzy
-#| msgid "Enable _navigation keys"
 msgid "Enable _structural navigation"
-msgstr "הפעל מקשי _תנועה"
+msgstr "הפעלת ניווט מ_בני"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
@@ -7632,11 +7614,9 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊷' (U+22b7)
 #: src/orca/mathsymbols.py:1922
-#, fuzzy
-#| msgid "Image"
 msgctxt "math symbol"
 msgid "image of"
-msgstr "צמונה"
+msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: src/orca/mathsymbols.py:1925
@@ -12707,7 +12687,7 @@ msgstr "h%d"
 #: src/orca/object_properties.py:344
 #, python-format
 msgid "%(role)s level %(level)d"
-msgstr ""
+msgstr "%(role)s ברמה %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13344,7 +13324,7 @@ msgstr ""
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
 msgid "Announce _forms in Say All"
-msgstr ""
+msgstr "הכרזה על _רשימות בזמן הניווט"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
@@ -13484,12 +13464,12 @@ msgstr ""
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1808
 msgid "Announce _lists during navigation"
-msgstr ""
+msgstr "הכרזה על _רשימות בזמן הניווט"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered as the user arrows into it and before speaking the table content. Upon navigating out of the table, Orca will announce that the table has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1825
 msgid "Announce _tables during navigation"
-msgstr ""
+msgstr "הכרזה על _טבלאות בזמן הניווט"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: src/orca/orca-setup.ui:1842
@@ -13499,7 +13479,7 @@ msgstr ""
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:1859
 msgid "Announce _panels during navigation"
-msgstr ""
+msgstr "הכרזה על _לוחות בזמן הניווט"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:1876
@@ -13509,7 +13489,7 @@ msgstr ""
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: src/orca/orca-setup.ui:1893
 msgid "Announce _forms during navigation"
-msgstr ""
+msgstr "הכרזה על _צורות בזמן הניווט"
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: src/orca/orca-setup.ui:1910
@@ -13519,17 +13499,17 @@ msgstr "הקראת ה_תיאור"
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1933
 msgid "Speak full row in sp_readsheets"
-msgstr ""
+msgstr "הקראת השורה במלואה ב_גיליונות נתונים"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1950
 msgid "Speak full row in _document tables"
-msgstr ""
+msgstr "הקראת השורה במלואה בטבלאות במ_סמכים"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a GUI table, such as a GtkTreeView. Document tables, such as those found in Writer and web content, and spreadsheet tables such as those found in Calc are not considered GUI tables. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/orca-setup.ui:1967
 msgid "Speak full row in _GUI tables"
-msgstr ""
+msgstr "הקראת השורה במלואה בטבלאות במ_נשק המשתמש"
 
 #: src/orca/orca-setup.ui:1990
 msgid "Spoken Context"
