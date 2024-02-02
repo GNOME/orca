@@ -2653,7 +2653,7 @@ class Utilities:
         if count >= settings.repeatCharacterLimit and segment[0] not in self._script.whitespace:
             repeatChar = segment[0]
             repeatSegment = messages.repeatedCharCount(repeatChar, count)
-            line = f"{line} {repeatSegment}"
+            line = f"{line} {repeatSegment} "
         else:
             line += segment
 
