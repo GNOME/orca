@@ -8186,7 +8186,7 @@ msgstr "%s עם קו תחתי"
 #, python-format
 msgctxt "math symbol"
 msgid "%s with slash"
-msgstr ""
+msgstr "%s עם לוכסן"
 
 #. Translators: this is the spoken representation for the character '⃒' (U+20D2)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -8269,7 +8269,7 @@ msgstr "לא נמצאה סימנייה."
 #. application, bypassing Orca's interception of it.
 #: src/orca/messages.py:88
 msgid "Bypass mode enabled."
-msgstr ""
+msgstr "מצב מעקף מופעל."
 
 #. Translators: this is an indication that Orca is unable to obtain the display/
 #. results area of the calculator being used (e.g. gcalctool).
@@ -8300,7 +8300,7 @@ msgstr "סמל"
 #. to get into a GUI.
 #: src/orca/messages.py:112
 msgid "Capitalization style set to icon."
-msgstr ""
+msgstr "סגנון רישיות הוגדל לסמל."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8325,7 +8325,7 @@ msgstr "ללא"
 #. to get into a GUI.
 #: src/orca/messages.py:132
 msgid "Capitalization style set to none."
-msgstr ""
+msgstr "סגנון רישיות הוגדר לבלי."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8350,7 +8350,7 @@ msgstr "הקראה"
 #. to get into a GUI.
 #: src/orca/messages.py:152
 msgid "Capitalization style set to spell."
-msgstr ""
+msgstr "סגנון רישיות הוגדר לאיות."
 
 #. Translators: Native application caret navigation does not always work as the
 #. Orca user wants. As such, Orca offers the user the ability to toggle between
@@ -8359,7 +8359,7 @@ msgstr ""
 #. active / not being overridden by Orca.
 #: src/orca/messages.py:159
 msgid "The application is controlling the caret."
-msgstr ""
+msgstr "היישום שולט בסמן הטקסט."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -8367,7 +8367,7 @@ msgstr ""
 #. the user the ability to toggle which application is controlling the caret.
 #: src/orca/messages.py:165
 msgid "The screen reader is controlling the caret."
-msgstr ""
+msgstr "קורא המסך שולט בסמן הטקסט."
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: src/orca/messages.py:168
@@ -8507,6 +8507,8 @@ msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
 msgstr ""
+"תהליך קורא מסך אחר כבר פועל בהפעלה הזאת.\n"
+"יש להריץ את הפקודה „orca --replace” כדי להחליף את התהליך הזה באחד חדש."
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
@@ -8537,7 +8539,7 @@ msgstr "גרסת היישום"
 #. which tells Orca to replace any existing Orca process that might be running.
 #: src/orca/messages.py:277
 msgid "Replace a currently running instance of this screen reader"
-msgstr ""
+msgstr "החלפת העותק הפעיל הנוכחי של מקריא המסך הזה"
 
 #. Translators: this is the description of command line option '-h, --help'
 #. which lists all the available command line options.
@@ -8553,14 +8555,14 @@ msgstr "הצגת הודעת העזרה הזאת ולצאת"
 #. start with 'debug' and end with '.out', regardless of the locale.).
 #: src/orca/messages.py:289
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
+msgstr "שליחת פלט ניפוי שגיאות אל debug-YYYY-MM-DD-HH:MM:SS.out"
 
 #. Translators: This is the description of command line option '--debug-file'
 #. which allows the user to override the default date-based name of the debugging
 #. output file.
 #: src/orca/messages.py:294
 msgid "Send debug output to the specified file"
-msgstr ""
+msgstr "שליחת פלט ניפוי שגיאות לקובץ מסוים"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--debug-file' command line option.
@@ -8630,7 +8632,7 @@ msgstr "מועתק"
 #. is the full/verbose indication.
 #: src/orca/messages.py:344
 msgid "Pasted contents from clipboard."
-msgstr ""
+msgstr "הודבק תוכן מלוח הגזירים."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -8711,7 +8713,7 @@ msgstr "הקראת שם חדר צ׳אט."
 #. translated is presented when the value of the setting is toggled.
 #: src/orca/messages.py:407
 msgid "Do not provide chat room specific message histories."
-msgstr ""
+msgstr "לא לספק היסטוריות הודעות לחדרי צ׳אט מסוימים."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -8721,7 +8723,7 @@ msgstr ""
 #. translated is presented when the value of the setting is toggled.
 #: src/orca/messages.py:415
 msgid "Provide chat room specific message histories."
-msgstr ""
+msgstr "אספקת היסטוריות הודעות לחדרי צ׳אט מסוימים."
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for deletion in a document, such as content which
@@ -8897,7 +8899,7 @@ msgstr "בחירת המסמך ממקום הסמן בוטלה"
 #. current location to the start of the document by pressing Ctrl+Shift+Home.
 #: src/orca/messages.py:555
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "המסמך נבחר למקום הסמן"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8905,7 +8907,7 @@ msgstr ""
 #. selected text by pressing Ctrl+Shift+Home.
 #: src/orca/messages.py:561
 msgid "document unselected to cursor position"
-msgstr ""
+msgstr "הבחירה במסמך בוטלה עד למקום הסמן"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
@@ -8913,7 +8915,7 @@ msgstr ""
 #: src/orca/messages.py:566
 #, python-format
 msgid "Dynamic column header set for row %d"
-msgstr ""
+msgstr "כותרת עמודות דינמית הוגדרה לשורה %d"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
@@ -8921,7 +8923,7 @@ msgstr ""
 #. contained column headers.
 #: src/orca/messages.py:572
 msgid "Dynamic column header cleared."
-msgstr ""
+msgstr "כותרת עמודה דינמית פונתה."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
@@ -8930,7 +8932,7 @@ msgstr ""
 #: src/orca/messages.py:578
 #, python-format
 msgid "Dynamic row header set for column %s"
-msgstr ""
+msgstr "כותרת שורה דינמית הוגדרה לעמודה %s"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
@@ -8938,7 +8940,7 @@ msgstr ""
 #. treated as if it contained row headers.
 #: src/orca/messages.py:584
 msgid "Dynamic row header cleared."
-msgstr ""
+msgstr "כותרת שורה דינמית פונתה."
 
 #. Translators: this is used to announce that the current input line in a
 #. spreadsheet is blank/empty.
@@ -9327,7 +9329,7 @@ msgstr "ההד הוגדר למילה ולמשפט."
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr ""
+msgstr "תחום ב־: %s"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
