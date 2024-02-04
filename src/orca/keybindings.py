@@ -342,9 +342,6 @@ class KeyBinding:
         if not (self.keysymstring and self._enabled):
             return
 
-        msg = f"ADDING GRABS: {self}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
         for kd in self.keyDefs():
             self._grab_ids.append(orca_state.device.add_key_grab(kd, None))
 
@@ -353,9 +350,6 @@ class KeyBinding:
 
     def removeGrabs(self):
         """Removes key grabs for this KeyBinding."""
-
-        msg = f"REMOVING GRABS: {self}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if self._grab_ids and not orca_state.device:
             msg = "WARNING: Have grab to remove but no device."
@@ -399,10 +393,17 @@ class KeyBindings:
     def remove(self, keyBinding, includeGrabs=False):
         """Removes KeyBinding from this set of keybindings, optionally updating grabs."""
 
-        # TODO - JD: This shouldn't happen, but it does when trying to remove an overridden
-        # binding. This function gets called with the original binding.
         if keyBinding not in self.keyBindings:
             candidates = self.getBindingsForHandler(keyBinding.handler)
+            # If there are no candidates, we could be in a situation where we went from outside
+            # of web content to inside web content in focus mode. When that occurs, refreshing
+            # keybindings will attempt to remove grabs for browse-mode commands that were already
+            # removed due to leaving document content. That should be harmless.
+            if not candidates:
+                return
+
+            # TODO - JD: This shouldn't happen, but it does when trying to remove an overridden
+            # binding. This function gets called with the original binding.
             tokens = ["KEYBINDINGS: Warning: No binding in set to remove for", keyBinding,
                       "Alternates:", candidates]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
