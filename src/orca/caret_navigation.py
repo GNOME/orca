@@ -38,13 +38,7 @@ from . import settings_manager
 class CaretNavigation:
     """Implements the caret navigation support available to scripts."""
 
-    def __init__(self, script):
-        if not (script and script.app):
-            msg = "CARET NAVIGATION: Caret navigation requires a script and app."
-            debug.printMessage(debug.LEVEL_INFO, msg)
-
-        self._script = script
-
+    def __init__(self):
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended = False
@@ -90,8 +84,6 @@ class CaretNavigation:
         """Sets up the caret-navigation input event handlers."""
 
         self._handlers = {}
-        if not (self._script and self._script.app):
-            return
 
         self._handlers["toggle_enabled"] = \
             input_event.InputEventHandler(
@@ -169,8 +161,6 @@ class CaretNavigation:
         """Sets up the caret-navigation key bindings."""
 
         self._bindings = keybindings.KeyBindings()
-        if not (self._script and self._script.app):
-            return
 
         self._bindings.add(
             keybindings.KeyBinding(

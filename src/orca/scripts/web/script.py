@@ -261,7 +261,7 @@ class Script(default.Script):
     def getCaretNavigation(self):
         """Returns the caret navigation support for this script."""
 
-        return caret_navigation.CaretNavigation(self)
+        return caret_navigation.CaretNavigation()
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns the structural navigation object types for this script."""
