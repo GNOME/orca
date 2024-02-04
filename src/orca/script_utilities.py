@@ -1466,8 +1466,8 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if box.x < 0 and box.y < 0 and tuple(box) != (-1, -1, -1, -1):
-            tokens = ["SCRIPT UTILITIES:", obj, "has negative coordinates"]
+        if box.x + box.width < 0 and box.y + box.height < 0 and tuple(box) != (-1, -1, -1, -1):
+            tokens = ["SCRIPT UTILITIES:", obj, "position plus extents are negative"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
