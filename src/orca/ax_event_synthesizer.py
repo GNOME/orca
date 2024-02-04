@@ -116,7 +116,7 @@ class AXEventSynthesizer:
 
         try:
             text = obj.queryText()
-            extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.SCREEN)
+            extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["ERROR: Exception getting character extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -129,7 +129,7 @@ class AXEventSynthesizer:
         """Returns the bounding box associated with obj."""
 
         try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["ERROR: Exception getting extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -325,13 +325,13 @@ class AXEventSynthesizer:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        before = component.getExtents(Atspi.CoordType.SCREEN)
+        before = component.getExtents(Atspi.CoordType.WINDOW)
 
         if not AXEventSynthesizer._scroll_substring_to_location(
            obj, location, start_offset, end_offset):
             AXEventSynthesizer._scroll_object_to_location(obj, location)
 
-        after = component.getExtents(Atspi.CoordType.SCREEN)
+        after = component.getExtents(Atspi.CoordType.WINDOW)
         msg = (
             f"AXEventSynthesizer: Before scroll: {before[0]}, {before[1]}. "
             f"After scroll: {after[0]}, {after[1]}."
@@ -351,7 +351,7 @@ class AXEventSynthesizer:
             if end_offset is None:
                 end_offset = text.characterCount - 1
             result = text.scrollSubstringToPoint(
-                start_offset, end_offset, Atspi.CoordType.SCREEN, x_coord, y_coord)
+                start_offset, end_offset, Atspi.CoordType.WINDOW, x_coord, y_coord)
         except NotImplementedError:
             tokens = ["AXEventSynthesizer: Text interface not implemented for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -374,7 +374,7 @@ class AXEventSynthesizer:
         """Attempts to scroll obj to the specified point."""
 
         try:
-            result = obj.queryComponent().scrollToPoint(Atspi.CoordType.SCREEN, x_coord, y_coord)
+            result = obj.queryComponent().scrollToPoint(Atspi.CoordType.WINDOW, x_coord, y_coord)
         except NotImplementedError:
             tokens = ["AXEventSynthesizer: Component interface not implemented for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -399,13 +399,13 @@ class AXEventSynthesizer:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        before = component.getExtents(Atspi.CoordType.SCREEN)
+        before = component.getExtents(Atspi.CoordType.WINDOW)
 
         if not AXEventSynthesizer._scroll_substring_to_point(
            obj, x_coord, y_coord, start_offset, end_offset):
             AXEventSynthesizer._scroll_object_to_point(obj, x_coord, y_coord)
 
-        after = component.getExtents(Atspi.CoordType.SCREEN)
+        after = component.getExtents(Atspi.CoordType.WINDOW)
         msg = (
             f"AXEventSynthesizer: Before scroll: {before[0]}, {before[1]}. "
             f"After scroll: {after[0]}, {after[1]}."
@@ -438,7 +438,7 @@ class AXEventSynthesizer:
 
         try:
             result = root.queryComponent().getAccessibleAtPoint(
-                x_coord, y_coord, Atspi.CoordType.SCREEN)
+                x_coord, y_coord, Atspi.CoordType.WINDOW)
         except NotImplementedError:
             tokens = ["AXEventSynthesizer: Component interface not implemented for", root]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)

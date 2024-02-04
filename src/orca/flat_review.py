@@ -119,7 +119,7 @@ class Word:
             start = i + self.startOffset
             if text:
                 try:
-                    extents = text.getRangeExtents(start, start+1, Atspi.CoordType.SCREEN)
+                    extents = text.getRangeExtents(start, start+1, Atspi.CoordType.WINDOW)
                 except Exception as error:
                     tokens = ["FLAT REVIEW: Exception in getRangeExtents:", error]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -289,7 +289,7 @@ class TextZone(Zone):
         words = []
         for i, word in enumerate(re.finditer(self.WORDS_RE, string)):
             start, end = map(lambda x: x + self.startOffset, word.span())
-            extents = self._itext.getRangeExtents(start, end, Atspi.CoordType.SCREEN)
+            extents = self._itext.getRangeExtents(start, end, Atspi.CoordType.WINDOW)
             words.append(Word(self, i, start, word.group(), *extents))
 
         self._string = string
@@ -509,7 +509,7 @@ class Context:
 
         try:
             component = self.topLevel.queryComponent()
-            self.bounds = component.getExtents(Atspi.CoordType.SCREEN)
+            self.bounds = component.getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["ERROR: Exception getting extents of", self.topLevel]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -565,7 +565,7 @@ class Context:
         substrings = [(*m.span(), m.group(0))  for m in re.finditer(r"[^\ufffc]+", string)]
         substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
         for (start, end, substring) in substrings:
-            extents = accessible.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
+            extents = accessible.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
             if self.script.utilities.containsRegion(extents, cliprect):
                 clipping = self.script.utilities.intersection(extents, cliprect)
                 zones.append(TextZone(accessible, start, substring, *clipping))
@@ -611,7 +611,7 @@ class Context:
         # of the text-related mess.
         if AXObject.supports_editable_text(accessible) \
            and AXUtilities.is_single_line(accessible):
-            extents = accessible.queryComponent().getExtents(0)
+            extents = accessible.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 
         upperMax = lowerMax = text.characterCount
@@ -624,7 +624,7 @@ class Context:
             oldMid = upperMid
             [x, y, width, height] = text.getRangeExtents(upperMid,
                                                          upperMid+1,
-                                                         0)
+                                                         Atspi.CoordType.WINDOW)
             if y > cliprect.y:
                 upperMax = upperMid
             else:
@@ -638,7 +638,7 @@ class Context:
             oldMid = lowerMid
             [x, y, width, height] = text.getRangeExtents(lowerMid,
                                                          lowerMid+1,
-                                                         0)
+                                                         Atspi.CoordType.WINDOW)
             if y > limit:
                 lowerMax = lowerMid
             else:
@@ -709,7 +709,7 @@ class Context:
 
         try:
             component = accessible.queryComponent()
-            extents = component.getExtents(Atspi.CoordType.SCREEN)
+            extents = component.getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             return []
 

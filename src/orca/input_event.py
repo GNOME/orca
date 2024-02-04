@@ -1063,8 +1063,7 @@ class MouseButtonEvent(InputEvent):
         if not self.window:
             return
 
-        self.obj = self._script.utilities.descendantAtPoint(
-            self.window, self.x, self.y, event.any_data)
+        self.obj = self._script.utilities.descendantAtPoint(self.window, self.x, self.y)
         if self.obj is None:
             self.app = AXObject.get_application(self.window)
         else:

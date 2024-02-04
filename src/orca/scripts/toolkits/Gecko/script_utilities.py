@@ -71,8 +71,8 @@ class Utilities(web.Utilities):
 
         return super()._treatAsLeafNode(obj)
 
-    def containsPoint(self, obj, x, y, coordType, margin=2):
-        if not super().containsPoint(obj, x, y, coordType, margin):
+    def containsPoint(self, obj, x, y, margin=2):
+        if not super().containsPoint(obj, x, y, margin):
             return False
 
         if (AXUtilities.is_menu(obj) or AXUtilities.is_tool_tip(obj)) \

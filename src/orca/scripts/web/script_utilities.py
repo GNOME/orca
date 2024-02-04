@@ -682,7 +682,7 @@ class Utilities(script_utilities.Utilities):
         try:
             text = obj.queryText()
             if text.characterCount and 0 <= startOffset < endOffset:
-                result = list(text.getRangeExtents(startOffset, endOffset, 0))
+                result = list(text.getRangeExtents(startOffset, endOffset, Atspi.CoordType.WINDOW))
         except NotImplementedError:
             pass
         except Exception:
@@ -702,7 +702,7 @@ class Utilities(script_utilities.Utilities):
         if (AXUtilities.is_menu(obj) or AXUtilities.is_list_item(obj)) \
             and (AXUtilities.is_combo_box(parent) or AXUtilities.is_list_box(parent)):
             try:
-                ext = parent.queryComponent().getExtents(0)
+                ext = parent.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             except NotImplementedError:
                 tokens = ["WEB:", parent, "does not implement the component interface"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -713,7 +713,7 @@ class Utilities(script_utilities.Utilities):
                 return [0, 0, 0, 0]
         else:
             try:
-                ext = obj.queryComponent().getExtents(0)
+                ext = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             except NotImplementedError:
                 tokens = ["WEB:", obj, "does not implement the component interface"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -725,16 +725,13 @@ class Utilities(script_utilities.Utilities):
 
         return [ext.x, ext.y, ext.width, ext.height]
 
-    def descendantAtPoint(self, root, x, y, coordType=None):
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
+    def descendantAtPoint(self, root, x, y):
         result = None
         if self.isDocument(root):
-            result = self.accessibleAtPoint(root, x, y, coordType)
+            result = self.accessibleAtPoint(root, x, y)
 
         if result is None:
-            result = super().descendantAtPoint(root, x, y, coordType)
+            result = super().descendantAtPoint(root, x, y)
 
         if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
             return AXObject.get_parent(result)
@@ -1099,15 +1096,15 @@ class Utilities(script_utilities.Utilities):
 
             return string, offset, offset + 1
 
-        extents = list(text.getRangeExtents(offset, offset + 1, 0))
+        extents = list(text.getRangeExtents(offset, offset + 1, Atspi.CoordType.WINDOW))
 
         def _inThisSpan(span):
             return span[0] <= offset <= span[1]
 
         def _onThisLine(span):
             start, end = span
-            startExtents = list(text.getRangeExtents(start, start + 1, 0))
-            endExtents = list(text.getRangeExtents(end - 1, end, 0))
+            startExtents = list(text.getRangeExtents(start, start + 1, Atspi.CoordType.WINDOW))
+            endExtents = list(text.getRangeExtents(end - 1, end, Atspi.CoordType.WINDOW))
             delta = max(startExtents[3], endExtents[3])
             if not self.extentsAreOnSameLine(startExtents, endExtents, delta):
                 tokens = ["FAIL: Start", startExtents, "and end", endExtents,
@@ -2336,18 +2333,15 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
+    def textAtPoint(self, obj, x, y, boundary=None):
         if boundary is None:
             boundary = Atspi.TextBoundaryType.LINE_START
 
-        string, start, end = super().textAtPoint(obj, x, y, coordType, boundary)
+        string, start, end = super().textAtPoint(obj, x, y, boundary)
         if string == self.EMBEDDED_OBJECT_CHARACTER:
             child = AXHypertext.get_child_at_offset(obj, start)
             if child:
-                return self.textAtPoint(child, x, y, coordType, boundary)
+                return self.textAtPoint(child, x, y, boundary)
 
         return string, start, end
 
@@ -3279,8 +3273,9 @@ class Utilities(script_utilities.Utilities):
             return False
 
         text = obj.queryText()
-        start = list(text.getRangeExtents(0, 1, 0))
-        end = list(text.getRangeExtents(text.characterCount - 1, text.characterCount, 0))
+        start = list(text.getRangeExtents(0, 1, Atspi.CoordType.WINDOW))
+        end = list(text.getRangeExtents(
+            text.characterCount - 1, text.characterCount, Atspi.CoordType.WINDOW))
         if self.extentsAreOnSameLine(start, end):
             return False
 

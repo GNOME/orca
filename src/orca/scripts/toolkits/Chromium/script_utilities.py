@@ -370,8 +370,8 @@ class Utilities(web.Utilities):
 
         return super().findAllDescendants(root, includeIf, excludeIf)
 
-    def accessibleAtPoint(self, root, x, y, coordType=None):
-        result = super().accessibleAtPoint(root, x, y, coordType)
+    def accessibleAtPoint(self, root, x, y):
+        result = super().accessibleAtPoint(root, x, y)
 
         # Chromium cannot do a hit test of web content synchronously. So what it
         # does is return a guess, then fire off an async hit test. The next time
@@ -380,7 +380,7 @@ class Utilities(web.Utilities):
         # accessibleAtPoint() twice to be safe.
         msg = "CHROMIUM: Getting accessibleAtPoint again due to async hit test result."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        result = super().accessibleAtPoint(root, x, y, coordType)
+        result = super().accessibleAtPoint(root, x, y)
         return result
 
     def _shouldCalculatePositionAndSetSize(self, obj):

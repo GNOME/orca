@@ -232,11 +232,11 @@ class LabelInference:
                         debug.printTokens(debug.LEVEL_INFO, tokens, True)
                         return extents
 
-                extents = text.getRangeExtents(startOffset, endOffset, 0)
+                extents = text.getRangeExtents(startOffset, endOffset, Atspi.CoordType.WINDOW)
 
         if not (extents[2] and extents[3]):
             try:
-                ext = obj.queryComponent().getExtents(0)
+                ext = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             except NotImplementedError:
                 tokens = ["LABEL INFERENCE:", obj, "does not implement the component interface"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)

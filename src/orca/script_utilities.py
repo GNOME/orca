@@ -1452,7 +1452,7 @@ class Utilities:
             return False
 
         try:
-            box = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            box = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1575,7 +1575,7 @@ class Utilities:
         if extents is None:
             try:
                 component = root.queryComponent()
-                extents = component.getExtents(Atspi.CoordType.SCREEN)
+                extents = component.getExtents(Atspi.CoordType.WINDOW)
             except Exception:
                 tokens = ["SCRIPT UTILITIES: Exception getting extents of", root]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1807,8 +1807,8 @@ class Utilities:
         """Determines if obj1 and obj2 are on the same line."""
 
         try:
-            bbox1 = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
-            bbox2 = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            bbox1 = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+            bbox2 = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             return False
 
@@ -1840,13 +1840,13 @@ class Utilities:
     @staticmethod
     def sizeComparison(obj1, obj2):
         try:
-            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             width1, height1 = bbox.width, bbox.height
         except Exception:
             width1, height1 = 0, 0
 
         try:
-            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             width2, height2 = bbox.width, bbox.height
         except Exception:
             width2, height2 = 0, 0
@@ -1860,13 +1860,13 @@ class Utilities:
         place as, or is after obj2."""
 
         try:
-            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             x1, y1 = bbox.x, bbox.y
         except Exception:
             x1, y1 = 0, 0
 
         try:
-            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             x2, y2 = bbox.x, bbox.y
         except Exception:
             x2, y2 = 0, 0
@@ -1887,7 +1887,7 @@ class Utilities:
 
     def getTextBoundingBox(self, obj, start, end):
         try:
-            extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.SCREEN)
+            extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["SCRIPT UTILITIES: Exception getting range extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1897,7 +1897,7 @@ class Utilities:
 
     def getBoundingBox(self, obj):
         try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1913,7 +1913,7 @@ class Utilities:
             return False
 
         try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2902,15 +2902,12 @@ class Utilities:
                or character in r'!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
 
-    def intersectingRegion(self, obj1, obj2, coordType=None):
+    def intersectingRegion(self, obj1, obj2):
         """Returns the extents of the intersection of obj1 and obj2."""
 
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
         try:
-            extents1 = obj1.queryComponent().getExtents(coordType)
-            extents2 = obj2.queryComponent().getExtents(coordType)
+            extents1 = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+            extents2 = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             return 0, 0, 0, 0
 
@@ -3388,9 +3385,8 @@ class Utilities:
     def _objectMightBeBogus(self, obj):
         return False
 
-    def containsPoint(self, obj, x, y, coordType, margin=2):
-        if self._objectBoundsMightBeBogus(obj) \
-           and self.textAtPoint(obj, x, y, coordType) == ("", 0, 0):
+    def containsPoint(self, obj, x, y, margin=2):
+        if self._objectBoundsMightBeBogus(obj) and self.textAtPoint(obj, x, y) == ("", 0, 0):
             return False
 
         if self._objectMightBeBogus(obj):
@@ -3401,14 +3397,11 @@ class Utilities:
         except Exception:
             return False
 
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
-        if component.contains(x, y, coordType):
+        if component.contains(x, y, Atspi.CoordType.WINDOW):
             return True
 
         x1, y1 = x + margin, y + margin
-        if component.contains(x1, y1, coordType):
+        if component.contains(x1, y1, Atspi.CoordType.WINDOW):
             tokens = ["SCRIPT UTILITIES: ", obj, f"contains ({x1},{y1}); not ({x},{y}"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -3451,7 +3444,7 @@ class Utilities:
 
         return False
 
-    def accessibleAtPoint(self, root, x, y, coordType=None):
+    def accessibleAtPoint(self, root, x, y):
         if self.isHidden(root):
             return None
 
@@ -3462,34 +3455,28 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
-        result = component.getAccessibleAtPoint(x, y, coordType)
+        result = component.getAccessibleAtPoint(x, y, Atspi.CoordType.WINDOW)
         tokens = ["SCRIPT UTILITIES: ", result, "is descendant of", root, f"at ({x}, {y})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def descendantAtPoint(self, root, x, y, coordType=None):
+    def descendantAtPoint(self, root, x, y):
         if not root:
             return None
 
         if not self.isShowingAndVisible(root):
             return None
 
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
-        if self.containsPoint(root, x, y, coordType):
+        if self.containsPoint(root, x, y):
             if self._treatAsLeafNode(root) or not self._boundsIncludeChildren(root):
                 return root
         elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
             return None
 
         if AXObject.supports_table(root):
-            child = self.accessibleAtPoint(root, x, y, coordType)
+            child = self.accessibleAtPoint(root, x, y)
             if child and child != root:
-                cell = self.descendantAtPoint(child, x, y, coordType)
+                cell = self.descendantAtPoint(child, x, y)
                 if cell:
                     return cell
                 return child
@@ -3497,10 +3484,10 @@ class Utilities:
         candidates_showing = []
         candidates = []
         for child in AXObject.iter_children(root):
-            obj = self.descendantAtPoint(child, x, y, coordType)
+            obj = self.descendantAtPoint(child, x, y)
             if obj:
                 return obj
-            if not self.containsPoint(child, x, y, coordType):
+            if not self.containsPoint(child, x, y):
                 continue
             if self.queryNonEmptyText(child):
                 string = child.queryText().getText(0, -1)
@@ -3517,7 +3504,7 @@ class Utilities:
 
         return None
 
-    def _adjustPointForObj(self, obj, x, y, coordType):
+    def _adjustPointForObj(self, obj, x, y):
         return x, y
 
     def isMultiParagraphObject(self, obj):
@@ -3632,19 +3619,16 @@ class Utilities:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
-    def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
+    def textAtPoint(self, obj, x, y, boundary=None):
         text = self.queryNonEmptyText(obj)
         if not text:
             return "", 0, 0
 
-        if coordType is None:
-            coordType = Atspi.CoordType.SCREEN
-
         if boundary is None:
             boundary = Atspi.TextBoundaryType.LINE_START
 
-        x, y = self._adjustPointForObj(obj, x, y, coordType)
-        offset = text.getOffsetAtPoint(x, y, coordType)
+        x, y = self._adjustPointForObj(obj, x, y)
+        offset = text.getOffsetAtPoint(x, y, Atspi.CoordType.WINDOW)
         if not 0 <= offset < text.characterCount:
             return "", 0, 0
 
@@ -3655,7 +3639,7 @@ class Utilities:
         if boundary == Atspi.TextBoundaryType.WORD_START and not string.strip():
             return "", 0, 0
 
-        extents = text.getRangeExtents(start, end, coordType)
+        extents = text.getRangeExtents(start, end, Atspi.CoordType.WINDOW)
         if not self.containsRegion(extents, (x, y, 1, 1)) and string != "\n":
             return "", 0, 0
 
@@ -3665,7 +3649,7 @@ class Utilities:
         if boundary == Atspi.TextBoundaryType.CHAR:
             return string, start, end
 
-        char = self.textAtPoint(obj, x, y, coordType, Atspi.TextBoundaryType.CHAR)
+        char = self.textAtPoint(obj, x, y, Atspi.TextBoundaryType.CHAR)
         if char[0] == "\n" and char[2] - char[1] == 1:
             return char
 
@@ -3686,7 +3670,7 @@ class Utilities:
 
         # Just in case the row above is a static header row in a scrollable table.
         try:
-            extents = cell.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents = cell.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             nextIndex = startIndex
         else:
@@ -3717,7 +3701,7 @@ class Utilities:
 
         try:
             component = obj.queryComponent()
-            extents = component.getExtents(Atspi.CoordType.SCREEN)
+            extents = component.getExtents(Atspi.CoordType.WINDOW)
         except Exception:
             tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -3769,13 +3753,13 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return startIndex, endIndex
 
-        x, y, width, height = component.getExtents(Atspi.CoordType.SCREEN)
-        cell = component.getAccessibleAtPoint(x+1, y, Atspi.CoordType.SCREEN)
+        x, y, width, height = component.getExtents(Atspi.CoordType.WINDOW)
+        cell = component.getAccessibleAtPoint(x+1, y, Atspi.CoordType.WINDOW)
         if cell:
             column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             startIndex = column
 
-        cell = component.getAccessibleAtPoint(x+width-1, y, Atspi.CoordType.SCREEN)
+        cell = component.getAccessibleAtPoint(x+width-1, y, Atspi.CoordType.WINDOW)
         if cell:
             column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             endIndex = column + 1

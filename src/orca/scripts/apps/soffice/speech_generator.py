@@ -207,13 +207,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             text = obj.queryText()
             objectText = \
                 self._script.utilities.substring(obj, 0, -1)
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.SCREEN)
+            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
         except NotImplementedError:
             pass
         else:
             tooLongCount = 0
             for i in range(0, len(objectText)):
-                [x, y, width, height] = text.getRangeExtents(i, i + 1, 0)
+                [x, y, width, height] = text.getRangeExtents(i, i + 1, Atspi.CoordType.WINDOW)
                 if x < extents.x:
                     tooLongCount += 1
                 elif (x + width) > extents.x + extents.width:

@@ -189,17 +189,16 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def _adjustPointForObj(self, obj, x, y, coordType):
-        if not AXUtilities.is_single_line(obj) \
-           or not AXObject.supports_editable_text(obj):
+    def _adjustPointForObj(self, obj, x, y):
+        if not AXUtilities.is_single_line(obj) or not AXObject.supports_editable_text(obj):
             return x, y
 
         text = self.queryNonEmptyText(obj)
         if not text:
             return x, y
 
-        objBox = obj.queryComponent().getExtents(coordType)
-        stringBox = text.getRangeExtents(0, text.characterCount, coordType)
+        objBox = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+        stringBox = text.getRangeExtents(0, text.characterCount, Atspi.CoordType.WINDOW)
         if self.intersection(objBox, stringBox) != (0, 0, 0, 0):
             return x, y
 

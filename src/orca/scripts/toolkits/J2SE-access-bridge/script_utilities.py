@@ -28,6 +28,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -76,8 +80,8 @@ class Utilities(script_utilities.Utilities):
         #
         if AXUtilities.is_label(obj1) and AXUtilities.is_label(obj2):
             try:
-                ext1 = obj1.queryComponent().getExtents(0)
-                ext2 = obj2.queryComponent().getExtents(0)
+                ext1 = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+                ext2 = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
             except Exception:
                 pass
             else:
