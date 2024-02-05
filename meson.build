@@ -66,6 +66,8 @@ gnome.post_install(
   gtk_update_icon_cache: true,
 )
 
+summary += {'Install dir': python.find_installation('python3').get_install_dir()}
+
 subdir('docs')
 subdir('help')
 subdir('icons')
