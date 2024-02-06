@@ -47,6 +47,24 @@ class AXEventSynthesizer:
     _banner = None
 
     @staticmethod
+    def _window_coordinates_to_screen_coordinates(x, y):
+        # TODO - JD: This is a workaround to keep things working until we have something like
+        # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/158
+        active_window = Gtk.Window().get_screen().get_active_window()
+        if active_window is None:
+            msg = "AXEventSynthesizer: Could not get active window to adjust coordinates"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return x, y
+
+        window_x, window_y = active_window.get_position()
+        msg = f"AXEventSynthesizer: Active window position: {window_x}, {window_y}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        msg = f"AXEventSynthesizer: x: {x}->{x + window_x}, y: {y}->{y + window_y}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return x + window_x, y + window_y
+
+    @staticmethod
     def _get_mouse_coordinates():
         """Returns the current mouse coordinates."""
 
@@ -64,8 +82,11 @@ class AXEventSynthesizer:
         tokens = ["AXEventSynthesizer: Generating", event, "mouse event at", x_coord, ",", y_coord]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
+        screen_x, screen_y = AXEventSynthesizer._window_coordinates_to_screen_coordinates(
+            x_coord, y_coord)
+
         try:
-            success = Atspi.generate_mouse_event(x_coord, y_coord, event)
+            success = Atspi.generate_mouse_event(screen_x, screen_y, event)
         except Exception as error:
             tokens = ["AXEventSynthesizer: Exception in _generate_mouse_event:", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -79,7 +100,7 @@ class AXEventSynthesizer:
         time.sleep(1)
 
         new_x, new_y = AXEventSynthesizer._get_mouse_coordinates()
-        if old_x == new_x and old_y == new_y and (old_x, old_y) != (x_coord, y_coord):
+        if old_x == new_x and old_y == new_y and (old_x, old_y) != (screen_x, screen_y):
             msg = "AXEventSynthesizer: Mouse event possible failure. Pointer didn't move"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
