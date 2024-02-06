@@ -178,9 +178,9 @@ def getModifierNames(mods):
     #    text += _("Meta") + "+"
     if mods & ALT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
-        # "left alt" modifier.
+        # "alt" modifier.
         #
-        text += _("Alt_L") + "+"
+        text += _("Alt") + "+"
     if mods & CTRL_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "control" modifier.
