@@ -649,6 +649,9 @@ class MouseReviewer:
             self._currentMouseOver = new
 
     def _process_event(self):
+        if not self._event_queue:
+            return
+
         event = self._event_queue.popleft()
         if len(self._event_queue):
             return
