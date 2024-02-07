@@ -131,7 +131,7 @@ class FocusManager:
                 braille.setBrlapiPriority()
 
         try:
-            tokens = ["FOCUS MANAGER: Region of interest:", obj, "(", start_offset, ")", end_offset]
+            tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             obj.emit("region-changed", start_offset, end_offset)
         except Exception as error:

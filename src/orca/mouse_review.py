@@ -27,14 +27,15 @@ __copyright__ = "Copyright (c) 2008 Eitan Isaacson" \
                 "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import math
+import time
+from collections import deque
+
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
-import math
-import time
-
-from gi.repository import Gdk
 try:
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck
@@ -229,8 +230,14 @@ class _ItemContext:
         if self._treatAsSingleObject():
             return _StringContext(self._obj, self._script)
 
-        string, start, end = self._script.utilities.textAtPoint(
-            self._obj, self._x, self._y, self._boundary)
+        try:
+            string, start, end = self._script.utilities.textAtPoint(
+                self._obj, self._x, self._y, self._boundary)
+        except Exception as error:
+            msg = f"MOUSE REVIEW: Exception getting text at point: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return _StringContext(self._obj, self._script)
+
         if string:
             string = self._script.utilities.expandEOCs(self._obj, start, end)
 
@@ -337,36 +344,18 @@ class MouseReviewer:
     def __init__(self):
         self._active = settings_manager.getManager().getSetting("enableMouseReview")
         self._currentMouseOver = _ItemContext()
-        self._pointer = None
         self._workspace = None
         self._windows = []
         self._all_windows = []
         self._handlerIds = {}
         self._eventListener = Atspi.EventListener.new(self._listener)
         self.inMouseEvent = False
+        self._event_queue = deque()
         self._handlers = self.get_handlers(True)
         self._bindings = keybindings.KeyBindings()
 
         if not _mouseReviewCapable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        display = Gdk.Display.get_default()
-        try:
-            seat = Gdk.Display.get_default_seat(display)
-            self._pointer = seat.get_pointer()
-        except AttributeError:
-            msg = "MOUSE REVIEW ERROR: Gtk+ 3.20 is not available"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-        except Exception:
-            msg = "MOUSE REVIEW ERROR: Exception getting pointer for default seat."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        if not self._pointer:
-            msg = "MOUSE REVIEW ERROR: No pointer for default seat."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
@@ -476,7 +465,7 @@ class MouseReviewer:
         self._workspace = None
         self._windows = []
         self._all_windows = []
-
+        self._event_queue.clear()
         self._active = False
 
     def getCurrentItem(self):
@@ -600,7 +589,7 @@ class MouseReviewer:
     def _on_mouse_moved(self, event):
         """Callback for mouse:abs events."""
 
-        screen, pX, pY = self._pointer.get_position()
+        pX, pY = event.detail1, event.detail2
         window, windowX, windowY = self._accessible_window_at_point(pX, pY)
         tokens = [f"MOUSE REVIEW: Window at ({pX}, {pY}) is", window]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -618,12 +607,6 @@ class MouseReviewer:
             menu = focus
         else:
             menu = AXObject.find_ancestor(focus, AXUtilities.is_menu)
-
-        screen, nowX, nowY = self._pointer.get_position()
-        if (pX, pY) != (nowX, nowY):
-            msg = f"MOUSE REVIEW: Pointer moved again: ({nowX}, {nowY})"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
 
         obj = script.utilities.descendantAtPoint(menu, windowX, windowY) \
             or script.utilities.descendantAtPoint(window, windowX, windowY)
@@ -645,12 +628,6 @@ class MouseReviewer:
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
-        screen, nowX, nowY = self._pointer.get_position()
-        if (pX, pY) != (nowX, nowY):
-            msg = f"MOUSE REVIEW: Pointer moved again: ({nowX}, {nowY})"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
         boundary = None
         x, y, width, height = self._currentMouseOver.getBoundingBox()
         if y <= windowY <= y + height and self._currentMouseOver.getString():
@@ -662,25 +639,38 @@ class MouseReviewer:
         elif script.utilities.isMultiParagraphObject(obj):
             boundary = Atspi.TextBoundaryType.LINE_START
 
+        if len(self._event_queue):
+            msg = "MOUSE REVIEW: Mouse moved again."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         new = _ItemContext(windowX, windowY, obj, boundary, window, script)
         if new.present(self._currentMouseOver):
             self._currentMouseOver = new
 
-    def _listener(self, event):
-        """Generic listener, mainly to output debugging info."""
+    def _process_event(self):
+        event = self._event_queue.popleft()
+        if len(self._event_queue):
+            return
 
         startTime = time.time()
         tokens = ["\nvvvvv PROCESS OBJECT EVENT", event.type, "vvvvv"]
         debug.printTokens(debug.LEVEL_INFO, tokens, False)
 
-        if event.type.startswith("mouse:abs"):
-            self.inMouseEvent = True
-            self._on_mouse_moved(event)
-            self.inMouseEvent = False
+        self.inMouseEvent = True
+        self._on_mouse_moved(event)
+        self.inMouseEvent = False
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}\n"
         msg += f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
         debug.printMessage(debug.LEVEL_INFO, msg, False)
+
+    def _listener(self, event):
+        """Generic listener for events of interest."""
+
+        if event.type.startswith("mouse:abs"):
+            self._event_queue.append(event)
+            GLib.timeout_add(50, self._process_event)
 
 
 _reviewer = MouseReviewer()
