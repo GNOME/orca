@@ -47,6 +47,7 @@ from orca import speechserver
 from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -982,7 +983,7 @@ class Script(default.Script):
            and not self.structuralNavigation.last_input_event_was_navigation_command() \
            and not self.tableNavigator.last_input_event_was_navigation_command() \
            and not isContentEditable \
-           and not self.utilities.isPlainText() \
+           and not AXDocument.is_plain_text(document) \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1429,7 +1430,7 @@ class Script(default.Script):
             shouldPresent = False
             msg = "WEB: Not presenting because source is not showing or visible"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-        elif not self.utilities.documentFrameURI(event.source):
+        elif not AXDocument.get_uri(event.source):
             shouldPresent = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1469,10 +1470,9 @@ class Script(default.Script):
             return True
 
         if settings_manager.getManager().getSetting('pageSummaryOnLoad') and shouldPresent:
-            obj = obj or event.source
-            tokens = ["WEB: Getting page summary for obj", obj]
+            tokens = ["WEB: Getting page summary for", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            summary = self.utilities.getPageSummary(obj)
+            summary = AXDocument.get_document_summary(event.source)
             if summary:
                 self.presentMessage(summary)
 
@@ -1517,7 +1517,7 @@ class Script(default.Script):
             focus_manager.getManager().set_locus_of_focus(event, obj, False)
 
         self.updateBraille(obj)
-        if self.utilities.documentFragment(event.source):
+        if AXDocument.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif not settings_manager.getManager().getSetting('sayAllOnLoad'):
@@ -2113,7 +2113,7 @@ class Script(default.Script):
             cause = "Context is not a non-focused link"
         elif self.utilities.isChildOfCurrentFragment(obj):
             cause = "Context is child of current fragment"
-        elif document == event.source and self.utilities.documentFragment(event.source):
+        elif document == event.source and AXDocument.get_document_uri_fragment(event.source):
             cause = "Document URI is fragment"
         else:
             return False

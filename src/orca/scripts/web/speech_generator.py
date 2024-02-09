@@ -39,6 +39,7 @@ from orca import object_properties
 from orca import settings
 from orca import settings_manager
 from orca import speech_generator
+from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -650,8 +651,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         onlyIfFound = args.get('formatType') != 'detailedWhereAmI'
-
-        string = self._script.utilities.getPageSummary(obj, onlyIfFound)
+        document = self._script.utilities.getTopLevelDocumentForObject(obj)
+        string = AXDocument.get_document_summary(document, onlyIfFound)
         if not string:
             return []
 

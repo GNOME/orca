@@ -42,7 +42,7 @@ from orca import orca_state
 from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
-from orca.ax_collection import AXCollection
+from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -112,7 +112,6 @@ class Utilities(script_utilities.Utilities):
         self._descriptionListTerms = {}
         self._valuesForTerm = {}
         self._displayedLabelText = {}
-        self._mimeType = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -209,7 +208,6 @@ class Utilities(script_utilities.Utilities):
         self._descriptionListTerms = {}
         self._valuesForTerm = {}
         self._displayedLabelText = {}
-        self._mimeType = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -307,48 +305,6 @@ class Utilities(script_utilities.Utilities):
                 return document
 
         return self.getDocumentForObject(obj or focus_manager.getManager().get_locus_of_focus())
-
-    def documentFrameURI(self, documentFrame=None):
-        documentFrame = documentFrame or self.documentFrame()
-        if documentFrame:
-            try:
-                document = documentFrame.queryDocument()
-            except NotImplementedError:
-                tokens = ["WEB:", documentFrame, "does not implement document interface"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            except Exception:
-                tokens = ["ERROR: Exception querying document interface of", documentFrame]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                return document.getAttributeValue('DocURL') or document.getAttributeValue('URI')
-
-        return ""
-
-    def isPlainText(self, documentFrame=None):
-        return self.mimeType(documentFrame) == "text/plain"
-
-    def mimeType(self, documentFrame=None):
-        documentFrame = documentFrame or self.documentFrame()
-        rv = self._mimeType.get(hash(documentFrame))
-        if rv is not None:
-            return rv
-
-        try:
-            document = documentFrame.queryDocument()
-            attrs = dict([attr.split(":", 1) for attr in document.getAttributes()])
-        except NotImplementedError:
-            tokens = ["WEB:", documentFrame, "does not implement document interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        except Exception:
-            tokens = ["ERROR: Exception getting document attributes of", documentFrame]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        else:
-            rv = attrs.get("MimeType")
-            tokens = ["WEB: MimeType of", documentFrame, "is '", rv, "'"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            self._mimeType[hash(documentFrame)] = rv
-
-        return rv
 
     def grabFocusWhenSettingCaret(self, obj):
         # To avoid triggering popup lists.
@@ -1231,7 +1187,8 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             needSadHack = True
         elif not (start <= offset < end) \
-                and not (self.isPlainText() or self.elementIsPreformattedText(obj)):
+                and not (AXDocument.is_plain_text(self.documentFrame()) \
+                    or self.elementIsPreformattedText(obj)):
             s1 = stringForDebug(string)
             tokens = ["FAIL: Text at offset", offset, "for", obj, "using", boundary, ":\n",
                       "      String: '", s1, "', Start: ", start, ", End: ", end, ".\n",
@@ -2089,10 +2046,6 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def inPDFViewer(self, obj=None):
-        uri = self.documentFrameURI()
-        return uri.lower().endswith(".pdf")
-
     def inTopLevelWebApp(self, obj=None):
         if not obj:
             obj = focus_manager.getManager().get_locus_of_focus()
@@ -2112,7 +2065,7 @@ class Utilities(script_utilities.Utilities):
     def isTopLevelWebApp(self, obj):
         if AXUtilities.is_embedded(obj) \
            and not self.getDocumentForObject(AXObject.get_parent(obj)):
-            uri = self.documentFrameURI()
+            uri = AXDocument.get_uri(obj)
             rv = bool(uri and uri.startswith("http"))
             tokens = ["WEB:", obj, "is top-level web application:", rv, "(URI:", uri, ")"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -2192,7 +2145,7 @@ class Utilities(script_utilities.Utilities):
         if role in focusModeRoles \
            and not self.isTextBlockElement(obj) \
            and not self.hasNameAndActionAndNoUsefulChildren(obj) \
-           and not self.inPDFViewer(obj):
+           and not AXDocument.is_pdf(self.documentFrame()):
             tokens = ["WEB:", obj, "is focus mode widget based on presumed functionality"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -4473,8 +4426,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_editable(event.source):
             return False
 
-        docURI = self.documentFrameURI()
-        fragment = urllib.parse.urlparse(docURI).fragment
+        fragment = AXDocument.get_document_uri_fragment(self.documentFrame())
         if not fragment:
             return False
 
@@ -4488,21 +4440,17 @@ class Utilities(script_utilities.Utilities):
         else:
             link = AXObject.find_ancestor(oldFocus, self.isLink)
 
-        return link and AXHypertext.get_link_uri(link) == docURI
+        return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(self.documentFrame())
 
     def isChildOfCurrentFragment(self, obj):
-        parseResult = urllib.parse.urlparse(self.documentFrameURI())
-        if not parseResult.fragment:
+        fragment = AXDocument.get_document_uri_fragment(self.documentFrame(obj))
+        if not fragment:
             return False
 
         def isSameFragment(x):
-            return self._getID(x) == parseResult.fragment
+            return self._getID(x) == fragment
 
         return AXObject.find_ancestor(obj, isSameFragment) is not None
-
-    def documentFragment(self, documentFrame):
-        parseResult = urllib.parse.urlparse(self.documentFrameURI(documentFrame))
-        return parseResult.fragment
 
     def isContentEditableWithEmbeddedObjects(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -5330,60 +5278,6 @@ class Utilities(script_utilities.Utilities):
 
         self._lastQueuedLiveRegionEvent = event
         return True
-
-    def getPageObjectCount(self, obj):
-        result = {'landmarks': 0,
-                  'headings': 0,
-                  'forms': 0,
-                  'tables': 0,
-                  'visitedLinks': 0,
-                  'unvisitedLinks': 0}
-
-        docframe = self.documentFrame(obj)
-        tokens = ["WEB: Document frame for", obj, "is", docframe]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        roles = [Atspi.Role.HEADING,
-                 Atspi.Role.LINK,
-                 Atspi.Role.TABLE,
-                 Atspi.Role.FORM,
-                 Atspi.Role.LANDMARK]
-
-        rule = AXCollection.create_match_rule(roles=roles)
-        matches = AXCollection.get_all_matches(docframe, rule)
-
-        for obj in matches:
-            if AXUtilities.is_heading(obj):
-                result['headings'] += 1
-            elif AXUtilities.is_form(obj):
-                result['forms'] += 1
-            elif AXUtilities.is_table(obj) and not self.isLayoutOnly(obj):
-                result['tables'] += 1
-            elif AXUtilities.is_link(obj):
-                if self.isLink(obj):
-                    if AXUtilities.is_visited(obj):
-                        result['visitedLinks'] += 1
-                    else:
-                        result['unvisitedLinks'] += 1
-            elif self.isLandmark(obj):
-                result['landmarks'] += 1
-
-        return result
-
-    def getPageSummary(self, obj, onlyIfFound=True):
-        result = []
-        counts = self.getPageObjectCount(obj)
-        result.append(messages.landmarkCount(counts.get('landmarks', 0), onlyIfFound))
-        result.append(messages.headingCount(counts.get('headings', 0), onlyIfFound))
-        result.append(messages.formCount(counts.get('forms', 0), onlyIfFound))
-        result.append(messages.tableCount(counts.get('tables', 0), onlyIfFound))
-        result.append(messages.visitedLinkCount(counts.get('visitedLinks', 0), onlyIfFound))
-        result.append(messages.unvisitedLinkCount(counts.get('unvisitedLinks', 0), onlyIfFound))
-        result = list(filter(lambda x: x, result))
-        if not result:
-            return ""
-
-        return messages.PAGE_SUMMARY_PREFIX % ", ".join(result)
 
     def preferDescriptionOverName(self, obj):
         if not self.inDocumentContent(obj):
