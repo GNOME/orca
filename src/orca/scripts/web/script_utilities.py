@@ -333,7 +333,7 @@ class Utilities(script_utilities.Utilities):
         self.clearTextSelection(oldFocus)
         focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         if grabFocus:
-            self.grabFocus(obj)
+            AXObject.grab_focus(obj)
 
         # Don't use queryNonEmptyText() because we need to try to force-update focus.
         if AXObject.supports_text(obj):

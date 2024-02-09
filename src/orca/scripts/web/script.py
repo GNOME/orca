@@ -1136,7 +1136,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_focusable(obj):
-            obj.queryComponent().grabFocus()
+            AXObject.grab_focus(obj)
 
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.utilities.setCaretPosition(obj, offset)
@@ -1204,7 +1204,7 @@ class Script(default.Script):
                     or self.structuralNavigation.last_input_event_was_navigation_command() \
                     or self.tableNavigator.last_input_event_was_navigation_command() \
                     or inputEvent):
-                self.utilities.grabFocus(obj)
+                AXObject.grab_focus(obj)
 
             self.presentMessage(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode

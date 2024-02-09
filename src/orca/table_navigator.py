@@ -740,7 +740,7 @@ class TableNavigator:
         self._previous_reported_col = col
 
         if script.utilities.grabFocusWhenSettingCaret(cell):
-            script.utilities.grabFocus(cell)
+            AXObject.grab_focus(cell)
 
         obj, offset = script.utilities.getFirstCaretPosition(cell)
         focus_manager.getManager().set_locus_of_focus(None, obj, False)

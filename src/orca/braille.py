@@ -520,10 +520,7 @@ class Component(Region):
 
         script = script_manager.getManager().getActiveScript()
         if script and script.utilities.grabFocusBeforeRouting(self.accessible, offset):
-            try:
-                self.accessible.queryComponent().grabFocus()
-            except Exception:
-                pass
+            AXObject.grab_focus(self.accessible)
 
         if AXObject.do_action(self.accessible, 0):
             return

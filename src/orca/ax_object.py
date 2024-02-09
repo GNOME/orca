@@ -1440,4 +1440,27 @@ class AXObject:
 
         return "; ".join(results)
 
+    @staticmethod
+    def grab_focus(obj):
+        """Attempts to grab focus on obj. Returns true if successful."""
+
+        if not AXObject.supports_component(obj):
+            return False
+
+        try:
+            result = Atspi.Component.grab_focus(obj)
+        except Exception as error:
+            msg = f"AXObject: Exception in grab_focus: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return False
+
+        if debug.LEVEL_INFO < debug.debugLevel:
+            return result
+
+        if result and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
+            tokens = ["AXObject:", obj, "lacks focused state after focus grab"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        return result
+
 AXObject.start_cache_clearing_thread()

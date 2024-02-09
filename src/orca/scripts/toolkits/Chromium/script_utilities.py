@@ -247,11 +247,12 @@ class Utilities(web.Utilities):
     def setCaretPosition(self, obj, offset, documentFrame=None):
         super().setCaretPosition(obj, offset, documentFrame)
 
+        # TODO - JD: Is this hack still needed?
         link = AXObject.find_ancestor(obj, AXUtilities.is_link)
         if link is not None:
             tokens = ["CHROMIUM: HACK: Grabbing focus on", obj, "'s ancestor", link]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            self.grabFocus(link)
+            AXObject.grab_focus(link)
 
     def handleAsLiveRegion(self, event):
         if not super().handleAsLiveRegion(event):
