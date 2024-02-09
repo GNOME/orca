@@ -256,6 +256,8 @@ class Script(script.Script):
         #    self.noOp
         listeners["document:reload"]                        = \
             self.onDocumentReload
+        listeners["document:attributes-changed"]            = \
+            self.onDocumentAttributesChanged
         listeners["document:load-complete"]                 = \
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
@@ -266,6 +268,8 @@ class Script(script.Script):
             self.onMouseButton
         listeners["object:announcement"]                    = \
             self.onAnnouncement
+        listeners["object:attributes-changed"]              = \
+            self.onObjectAttributesChanged
         listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
         listeners["object:property-change:accessible-description"] = \
@@ -1337,6 +1341,11 @@ class Script(script.Script):
         if event.any_data:
             self.presentMessage(event.any_data)
 
+    def onDocumentAttributesChanged(self, event):
+        """Callback for document:attributes-changed accessibility events."""
+
+        pass
+
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
 
@@ -1457,6 +1466,13 @@ class Script(script.Script):
         self.pointOfReference['names'] = names
         if event.any_data:
             self.presentMessage(event.any_data)
+
+    def onObjectAttributesChanged(self, event):
+        """Callback for object:attributes-changed accessibility events."""
+
+        AXObject.clear_cache_now("object-attributes-changed event.")
+        if AXUtilities.is_table_related(event.source):
+            AXTable.clear_cache_now("object-attributes-changed event.")
 
     def onPressedChanged(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
