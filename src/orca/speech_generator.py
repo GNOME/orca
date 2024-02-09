@@ -45,6 +45,7 @@ from . import settings
 from . import settings_manager
 from . import speech
 from . import text_attribute_names
+from .ax_document import AXDocument
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_hypertext import AXHypertext
@@ -853,38 +854,38 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateSiteDescription(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that describe the site (same or different)
-        pointed to by the URI of the link associated with obj.
-        """
-        result = []
+        if not self._script.utilities.inDocumentContent(obj):
+            return []
+
         link_uri = AXHypertext.get_link_uri(obj)
-        if link_uri:
-            link_uri_info = urllib.parse.urlparse(link_uri)
-        else:
-            return result
-        doc_uri = self._script.utilities.documentFrameURI()
-        if doc_uri:
-            doc_uri_info = urllib.parse.urlparse(doc_uri)
-            if link_uri_info[1] == doc_uri_info[1]:
-                if link_uri_info[2] == doc_uri_info[2]:
-                    result.append(messages.LINK_SAME_PAGE)
-                else:
-                    result.append(messages.LINK_SAME_SITE)
+        if not link_uri:
+            return []
+
+        link_uri_info = urllib.parse.urlparse(link_uri)
+        doc_uri = AXDocument.get_uri(self._script.utilities.documentFrame())
+        if not doc_uri:
+            return []
+
+        result = []
+        doc_uri_info = urllib.parse.urlparse(doc_uri)
+        if link_uri_info[1] == doc_uri_info[1]:
+            if link_uri_info[2] == doc_uri_info[2]:
+                result.append(messages.LINK_SAME_PAGE)
             else:
-                # check for different machine name on same site
-                #
-                linkdomain = link_uri_info[1].split('.')
-                docdomain = doc_uri_info[1].split('.')
-                if len(linkdomain) > 1 and len(docdomain) > 1  \
-                    and linkdomain[-1] == docdomain[-1]  \
-                    and linkdomain[-2] == docdomain[-2]:
-                    result.append(messages.LINK_SAME_SITE)
-                else:
-                    result.append(messages.LINK_DIFFERENT_SITE)
+                result.append(messages.LINK_SAME_SITE)
+        else:
+            linkdomain = link_uri_info[1].split('.')
+            docdomain = doc_uri_info[1].split('.')
+            if len(linkdomain) > 1 and len(docdomain) > 1  \
+               and linkdomain[-1] == docdomain[-1]  \
+               and linkdomain[-2] == docdomain[-2]:
+                result.append(messages.LINK_SAME_SITE)
+            else:
+                result.append(messages.LINK_DIFFERENT_SITE)
 
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
+
         return result
 
     def _generateFileSize(self, obj, **args):

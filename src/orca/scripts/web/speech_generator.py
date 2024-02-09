@@ -30,7 +30,6 @@ __license__   = "LGPL"
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-import urllib
 
 from orca import debug
 from orca import focus_manager
@@ -40,7 +39,6 @@ from orca import settings
 from orca import settings_manager
 from orca import speech_generator
 from orca.ax_document import AXDocument
-from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -658,41 +656,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = [string]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        return result
-
-    def _generateSiteDescription(self, obj, **args):
-        if not self._script.utilities.inDocumentContent(obj):
-            return []
-
-        link_uri = AXHypertext.get_link_uri(obj)
-        if not link_uri:
-            return []
-
-        link_uri_info = urllib.parse.urlparse(link_uri)
-        doc_uri = self._script.utilities.documentFrameURI()
-        if not doc_uri:
-            return []
-
-        result = []
-        doc_uri_info = urllib.parse.urlparse(doc_uri)
-        if link_uri_info[1] == doc_uri_info[1]:
-            if link_uri_info[2] == doc_uri_info[2]:
-                result.append(messages.LINK_SAME_PAGE)
-            else:
-                result.append(messages.LINK_SAME_SITE)
-        else:
-            linkdomain = link_uri_info[1].split('.')
-            docdomain = doc_uri_info[1].split('.')
-            if len(linkdomain) > 1 and len(docdomain) > 1  \
-               and linkdomain[-1] == docdomain[-1]  \
-               and linkdomain[-2] == docdomain[-2]:
-                result.append(messages.LINK_SAME_SITE)
-            else:
-                result.append(messages.LINK_DIFFERENT_SITE)
-
-        if result:
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-
         return result
 
     def _generateExpandedEOCs(self, obj, **args):
