@@ -357,11 +357,6 @@ class Utilities:
 
         return None
 
-    def documentFrameURI(self, documentFrame=None):
-        """Returns the URI of the document frame that is active."""
-
-        return None
-
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing obj."""
 
