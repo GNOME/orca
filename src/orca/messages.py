@@ -2088,6 +2088,11 @@ PAGE_LOADING_END = _("Finished loading.")
 # object which has just finished loading (most likely the page's title).
 PAGE_LOADING_END_NAMED = _("Finished loading %s.")
 
+# Translators: This message is presented to the user when the page of the
+# current document changes, e.g. as a result of navigation or scrolling.
+# The string substitution is the number of the current page.
+PAGE_NUMBER = _("Page %d")
+
 # Translators: When the user loads a new web page, they can optionally have Orca
 # automatically summarize details about the page, such as the number of elements
 # (landmarks, forms, links, tables, etc.). The following string precedes the

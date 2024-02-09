@@ -53,6 +53,7 @@ import orca.settings_manager as settings_manager
 import orca.sound as sound
 import orca.speech as speech
 import orca.speechserver as speechserver
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -259,6 +260,8 @@ class Script(script.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
+        listeners["document:page-changed"]                  = \
+            self.onDocumentPageChanged
         listeners["mouse:button"]                           = \
             self.onMouseButton
         listeners["object:announcement"]                    = \
@@ -1348,6 +1351,17 @@ class Script(script.Script):
         """Callback for document:load-stopped accessibility events."""
 
         pass
+
+    def onDocumentPageChanged(self, event):
+        """Callback for document:page-changed accessibility events."""
+
+        if event.detail1 < 0:
+            return
+
+        if not AXDocument.did_page_change(event.source):
+            return
+
+        self.presentMessage(messages.PAGE_NUMBER % event.detail1)
 
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""

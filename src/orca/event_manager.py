@@ -111,6 +111,7 @@ class EventManager:
 
         def obsoletesIfSameTypeAndObject(x):
             skippable = {
+                "document:page-changed",
                 "object:active-descendant-changed",
                 "object:children-changed",
                 "object:property-change",
