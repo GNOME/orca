@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import focus_manager
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
@@ -102,7 +103,7 @@ class Script(web.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if not self.utilities.documentFrameURI(event.source):
+        if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -187,7 +188,7 @@ class Script(web.Script):
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        if not self.utilities.documentFrameURI(event.source):
+        if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -202,7 +203,7 @@ class Script(web.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        if not self.utilities.documentFrameURI(event.source):
+        if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -217,7 +218,7 @@ class Script(web.Script):
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
 
-        if not self.utilities.documentFrameURI(event.source):
+        if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -256,7 +257,7 @@ class Script(web.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         if self.utilities.isDocument(event.source) \
-           and not self.utilities.documentFrameURI(event.source):
+           and not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from document with no URI."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

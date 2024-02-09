@@ -32,6 +32,7 @@ import orca.input_event as input_event
 import orca.scripts.default as default
 import orca.settings_manager as settings_manager
 import orca.scripts.toolkits.Gecko as Gecko
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -340,9 +341,9 @@ class Script(Gecko.Script):
         self.updateBraille(obj)
 
         if settings_manager.getManager().getSetting('pageSummaryOnLoad'):
-            tokens = ["THUNDERBIRD: Getting page summary for obj", obj]
+            tokens = ["THUNDERBIRD: Getting page summary for", documentFrame]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            summary = self.utilities.getPageSummary(obj)
+            summary = AXDocument.get_document_summary(documentFrame)
             if summary:
                 self.presentMessage(summary)
 

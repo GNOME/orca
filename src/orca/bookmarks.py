@@ -29,6 +29,7 @@ from . import keybindings
 from . import input_event
 from . import messages
 from . import settings_manager
+from .ax_document import AXDocument
 from .ax_object import AXObject
 
 
@@ -293,7 +294,7 @@ class Bookmarks:
     def getURIKey(self):
         """Returns the URI key for a given page as a URI stripped of
         parameters?query#fragment as seen in urlparse."""
-        uri = self._script.utilities.documentFrameURI()
+        uri = AXDocument.get_uri(self._script.utilities.documentFrame())
         if uri:
             parsed_uri = urllib.parse.urlparse(uri)
             return ''.join(parsed_uri[0:3])

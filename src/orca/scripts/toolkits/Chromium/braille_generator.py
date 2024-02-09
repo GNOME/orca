@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 from orca import debug
 from orca.scripts import web
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 
 
@@ -44,7 +45,7 @@ class BrailleGenerator(web.BrailleGenerator):
     def _generateLabelOrName(self, obj, **args):
         if AXObject.get_role(obj) == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)
-            if document and not self._script.utilities.documentFrameURI(document):
+            if document and not AXDocument.get_uri(document):
                 # Eliminates including "untitled" in the frame name.
                 return super()._generateLabelOrName(AXObject.get_parent(obj))
 

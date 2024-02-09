@@ -41,6 +41,7 @@ from orca import debug
 from orca import focus_manager
 from orca import orca_state
 from orca.scripts import web
+from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -157,7 +158,7 @@ class Utilities(web.Utilities):
         if "self-repair.mozilla.org" in name:
             return True
 
-        uri = self.documentFrameURI(obj)
+        uri = AXDocument.get_uri(obj)
         if uri.startswith("moz-extension"):
             return True
 
