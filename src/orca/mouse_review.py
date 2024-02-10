@@ -531,16 +531,6 @@ class MouseReviewer:
         except Exception:
             return False
 
-    def _has_bounds(self, obj, bounds):
-        """Returns True if the bounding box of obj is bounds."""
-
-        try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            return False
-
-        return list(extents) == list(bounds)
-
     def _accessible_window_at_point(self, pX, pY):
         """Returns the accessible window and window based coordinates for the screen coordinates."""
 
@@ -580,7 +570,7 @@ class MouseReviewer:
         if len(matches) == 1:
             return matches[0], relativeX, relativeY
 
-        matches = [o for o in candidates if self._has_bounds(o, (x, y, width, height))]
+        matches = [o for o in matches if AXUtilities.is_active(o)]
         if len(matches) == 1:
             return matches[0],relativeX, relativeY
 
@@ -608,10 +598,16 @@ class MouseReviewer:
         else:
             menu = AXObject.find_ancestor(focus, AXUtilities.is_menu)
 
-        obj = script.utilities.descendantAtPoint(menu, windowX, windowY) \
-            or script.utilities.descendantAtPoint(window, windowX, windowY)
-        tokens = [f"MOUSE REVIEW: Object at ({windowX}, {windowY}) is", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        obj = None
+        if menu:
+            obj = script.utilities.descendantAtPoint(menu, windowX, windowY)
+            tokens = ["MOUSE REVIEW: Object in", menu, f"at ({windowX}, {windowY}) is", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        if obj is None:
+            obj = script.utilities.descendantAtPoint(window, windowX, windowY)
+            tokens = ["MOUSE REVIEW: Object in", window, f"at ({windowX}, {windowY}) is", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.getManager().getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
