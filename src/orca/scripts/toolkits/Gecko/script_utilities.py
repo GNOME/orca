@@ -66,12 +66,6 @@ class Utilities(web.Utilities):
 
         return True
 
-    def _treatAsLeafNode(self, obj):
-        if AXUtilities.is_table_row(obj):
-            return not AXObject.get_child_count(obj)
-
-        return super()._treatAsLeafNode(obj)
-
     def containsPoint(self, obj, x, y, margin=2):
         if not super().containsPoint(obj, x, y, margin):
             return False
@@ -106,19 +100,6 @@ class Utilities(web.Utilities):
         tokens = ["GECKO: Treating", obj1, "and", obj2, "as same object:", rv]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
-
-    def isOnScreen(self, obj, boundingbox=None):
-        if not super().isOnScreen(obj, boundingbox):
-            return False
-        if not AXUtilities.is_unknown(obj):
-            return True
-
-        if self.topLevelObject(obj) == AXObject.get_parent(obj):
-            tokens = ["INFO:", obj, "is suspected to be off screen object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return True
 
     def getOnScreenObjects(self, root, extents=None):
         objects = super().getOnScreenObjects(root, extents)
