@@ -219,6 +219,16 @@ class SpeechServer(object):
         """
         pass
 
+    def increaseSpeechVolume(self, step=0.5):
+        """Increases the speech volume.
+        """
+        pass
+
+    def decreaseSpeechVolume(self, step=0.5):
+        """Decreases the speech volume.
+        """
+        pass
+
     def updateCapitalizationStyle(self):
         """Updates the capitalization style used by the speech server."""
         pass
