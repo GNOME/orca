@@ -3489,9 +3489,6 @@ class Utilities:
 
         return None
 
-    def _adjustPointForObj(self, obj, x, y):
-        return x, y
-
     def isMultiParagraphObject(self, obj):
         if not obj:
             return False
@@ -3612,7 +3609,6 @@ class Utilities:
         if boundary is None:
             boundary = Atspi.TextBoundaryType.LINE_START
 
-        x, y = self._adjustPointForObj(obj, x, y)
         offset = text.getOffsetAtPoint(x, y, Atspi.CoordType.WINDOW)
         if not 0 <= offset < text.characterCount:
             return "", 0, 0
