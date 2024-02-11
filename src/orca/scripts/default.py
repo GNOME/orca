@@ -2709,7 +2709,7 @@ class Script(script.Script):
             relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
             if relation:
                 priorObj = obj
-                obj = relation.getTarget(0)
+                obj = relation.get_target(0)
 
                 try:
                     text = obj.queryText()

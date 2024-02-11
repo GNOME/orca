@@ -482,7 +482,7 @@ class LiveRegionManager:
         # get the description if there is one.
         relation = AXObject.get_relation(obj, Atspi.RelationType.DESCRIBED_BY)
         if relation:
-            targetobj = relation.getTarget(0)
+            targetobj = relation.get_target(0)
             try:
                 # We will add on descriptions if they don't duplicate
                 # what's already in the object's description.

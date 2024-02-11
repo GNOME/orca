@@ -100,7 +100,7 @@ class Utilities(gtk.Utilities):
             if not relation:
                 continue
 
-            nodeOf = relation.getTarget(0)
+            nodeOf = relation.get_target(0)
             if self.isSameObject(obj, nodeOf):
                 nodes.append(cell)
             elif self.nodeLevel(nodeOf) <= nodeLevel:

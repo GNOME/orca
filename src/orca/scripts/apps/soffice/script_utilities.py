@@ -196,8 +196,8 @@ class Utilities(script_utilities.Utilities):
     def _flowsFromOrToSelection(obj):
         relationSet = AXObject.get_relations(obj)
         flows = [Atspi.RelationType.FLOWS_FROM, Atspi.RelationType.FLOWS_TO]
-        relations = filter(lambda r: r.getRelationType() in flows, relationSet)
-        targets = [r.getTarget(0) for r in relations]
+        relations = filter(lambda r: r.get_relation_type() in flows, relationSet)
+        targets = [r.get_target(0) for r in relations]
         for target in targets:
             try:
                 nSelections = target.queryText().getNSelections()
