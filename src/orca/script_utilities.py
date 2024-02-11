@@ -177,8 +177,6 @@ class Utilities:
         tokens = ["SCRIPT UTILITIES: Looking for common ancestor of", a, "and", b]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        # Don't do any Zombie checks here, as tempting and logical as it
-        # may seem as it can lead to chattiness.
         if not (a and b):
             return None
 
@@ -1111,7 +1109,7 @@ class Utilities:
 
         layoutOnly = False
 
-        if AXObject.is_dead(obj) or self.isZombie(obj):
+        if not AXObject.is_valid(obj):
             return True
 
         role = AXObject.get_role(obj)
@@ -2043,7 +2041,7 @@ class Utilities:
     def findPreviousObject(self, obj):
         """Finds the object before this one."""
 
-        if not obj or self.isZombie(obj):
+        if not AXObject.is_valid(obj):
             return None
 
         relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
@@ -2055,7 +2053,7 @@ class Utilities:
     def findNextObject(self, obj):
         """Finds the object after this one."""
 
-        if not obj or self.isZombie(obj):
+        if not AXObject.is_valid(obj):
             return None
 
         relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
@@ -3769,36 +3767,6 @@ class Utilities:
 
         return cells
 
-    def isZombie(self, obj):
-        index = AXObject.get_index_in_parent(obj)
-        topLevelRoles = [Atspi.Role.APPLICATION,
-                         Atspi.Role.ALERT,
-                         Atspi.Role.DIALOG,
-                         Atspi.Role.LABEL, # For Unity Panel Service bug
-                         Atspi.Role.PAGE, # For Evince bug
-                         Atspi.Role.WINDOW,
-                         Atspi.Role.FRAME]
-        role = AXObject.get_role(obj)
-        tokens = ["SCRIPT UTILITIES: ", obj, "is zombie:"]
-        if index == -1 and role not in topLevelRoles:
-            tokens.append("index is -1")
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-        if AXUtilities.is_defunct(obj):
-            tokens.append("is defunct")
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-        if AXUtilities.is_invalid_state(obj):
-            tokens.append("has invalid state")
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-        if AXUtilities.is_invalid_role(obj):
-            tokens.append("has invalid role")
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
-
     def findReplicant(self, root, obj):
         tokens = ["SCRIPT UTILITIES: Searching for replicant for", obj, "in", root]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -3816,7 +3784,7 @@ class Utilities:
         else:
             replicant = AXObject.find_descendant(root, isSame)
 
-        tokens = ["HACK: Returning", replicant, "as replicant for Zombie", obj]
+        tokens = ["HACK: Returning", replicant, "as replicant for invalid object", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return replicant
 
@@ -3875,7 +3843,7 @@ class Utilities:
             layoutRoles = [Atspi.Role.SEPARATOR, Atspi.Role.TEAROFF_MENU_ITEM]
 
             def isNotLayoutOnly(x):
-                return not (self.isZombie(x) or AXObject.get_role(x) in layoutRoles)
+                return AXObject.is_valid(x) and AXObject.get_role(x) not in layoutRoles
 
             siblings = list(filter(isNotLayoutOnly, siblings))
 

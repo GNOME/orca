@@ -994,8 +994,7 @@ class Script(default.Script):
         # can prevent us from presenting table column headers when braille is enabled because
         # we think they are not "new." Commit bd877203f0 addressed that, but we need to stop
         # such side effects from happening in the first place.
-        obj, offset = self.utilities.getCaretContext(
-            documentFrame=document, getZombieReplicant=True)
+        obj, offset = self.utilities.getCaretContext(documentFrame=document, getReplicant=True)
         if offset > 0 and isContentEditable:
             text = self.utilities.queryNonEmptyText(obj)
             if text:
@@ -1223,7 +1222,7 @@ class Script(default.Script):
         tokens = ["WEB: Focus changing from", oldFocus, "to", newFocus]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if newFocus and self.utilities.isZombie(newFocus):
+        if newFocus and not AXObject.is_valid(newFocus):
             return True
 
         if newFocus and AXObject.is_dead(newFocus):
@@ -1254,7 +1253,7 @@ class Script(default.Script):
            or (self.utilities.isDocument(newFocus) \
                and oldFocus == focus_manager.getManager().get_active_window()):
             contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
-            if contextObj and not self.utilities.isZombie(contextObj):
+            if contextObj and AXObject.is_valid(contextObj):
                 newFocus, caretOffset = contextObj, contextOffset
 
         if AXUtilities.is_unknown_or_redundant(newFocus):
@@ -1314,8 +1313,8 @@ class Script(default.Script):
             tokens = ["WEB: New focus", newFocus,
                       "is recovery from removed child. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        elif self.utilities.lastInputEventWasLineNav() and self.utilities.isZombie(oldFocus):
-            msg = "WEB: Last input event was line nav; oldFocus is zombie. Generating line."
+        elif self.utilities.lastInputEventWasLineNav() and not AXObject.is_valid(oldFocus):
+            msg = "WEB: Last input event was line nav; oldFocus is invalid. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
         elif self.utilities.lastInputEventWasLineNav() and event \
@@ -1422,7 +1421,7 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        if not obj or self.utilities.isZombie(obj):
+        if not AXObject.is_valid(obj):
             self.utilities.clearCaretContext()
 
         shouldPresent = True
@@ -1434,7 +1433,7 @@ class Script(default.Script):
             shouldPresent = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-        elif not event.detail1 and self._inFocusMode and not self.utilities.isZombie(obj):
+        elif not event.detail1 and self._inFocusMode and AXObject.is_valid(obj):
             shouldPresent = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1539,8 +1538,8 @@ class Script(default.Script):
 
         self.utilities.sanityCheckActiveWindow()
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1779,8 +1778,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isZombie(document):
-            tokens = ["WEB: Ignoring because", document, "is zombified."]
+        if not AXObject.is_valid(document):
+            tokens = ["WEB: Ignoring because", document, "is not valid."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
@@ -1789,8 +1788,8 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if not event.any_data or self.utilities.isZombie(event.any_data):
-            msg = "WEB: Ignoring because any data is null or zombified."
+        if not AXObject.is_valid(event.any_data):
+            msg = "WEB: Ignoring because any data is not valid."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1947,8 +1946,8 @@ class Script(default.Script):
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1961,7 +1960,7 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
         tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if not obj or self.utilities.isZombie(obj) and event.source == focus:
+        if not AXObject.is_valid(obj) and event.source == focus:
             msg = "WEB: Setting caret context to event source"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, 0)
@@ -1987,8 +1986,8 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2039,8 +2038,8 @@ class Script(default.Script):
         tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not obj or self.utilities.isZombie(obj) or prevDocument != document:
-            tokens = ["WEB: Clearing context - obj", obj, "is null or zombie or document changed"]
+        if not AXObject.is_valid(obj) or prevDocument != document:
+            tokens = ["WEB: Clearing context - obj", obj, "is not valid or document changed"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.utilities.clearCaretContext()
 
@@ -2087,7 +2086,7 @@ class Script(default.Script):
             return False
 
         if not obj:
-            msg = "WEB: Unable to get non-null, non-zombie context object"
+            msg = "WEB: Unable to get valid context object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -2272,8 +2271,8 @@ class Script(default.Script):
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2321,25 +2320,25 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        obj, offset = self.utilities.getCaretContext(getReplicant=False)
         if obj and obj != event.source \
            and not AXObject.find_ancestor(obj, lambda x: x == event.source):
             tokens = ["WEB: Ignoring event because it isn't", obj, "or its ancestor"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if self.utilities.isZombie(obj):
+        if not AXObject.is_valid(obj):
             if self.utilities.isLink(obj):
                 msg = "WEB: Focused link deleted. Taking no further action."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
-            obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
+            obj, offset = self.utilities.getCaretContext(getReplicant=True)
             if obj:
                 focus_manager.getManager().set_locus_of_focus(event, obj, notify_script=False)
 
-        if self.utilities.isZombie(obj):
-            msg = "WEB: Unable to get non-null, non-zombie context object"
+        if not AXObject.is_valid(obj):
+            msg = "WEB: Unable to get valid context object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         document = self.utilities.getDocumentForObject(event.source)
@@ -2350,8 +2349,7 @@ class Script(default.Script):
 
         if not AXUtilities.is_editable(event.source) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
-            if self._inMouseOverObject \
-               and self.utilities.isZombie(self._lastMouseOverObject):
+            if self._inMouseOverObject and not AXObject.is_valid(self._lastMouseOverObject):
                 msg = "WEB: Restoring pre-mouseover context"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.restorePreMouseOverContext()
@@ -2365,8 +2363,8 @@ class Script(default.Script):
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2462,8 +2460,8 @@ class Script(default.Script):
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        if self.utilities.isZombie(event.source):
-            msg = "WEB: Event source is Zombie"
+        if not AXObject.is_valid(event.source):
+            msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 

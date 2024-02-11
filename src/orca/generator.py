@@ -1265,10 +1265,7 @@ class Generator:
         return interval >= self._getProgressBarUpdateInterval()
 
     def _cleanUpCachedProgressBars(self):
-        def isValid(x):
-            return not (self._script.utilities.isZombie(x) or AXObject.is_dead(x))
-
-        bars = list(filter(isValid, self._activeProgressBars))
+        bars = list(filter(AXObject.is_valid, self._activeProgressBars))
         self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}
 
     def _getMostRecentProgressBarUpdate(self):

@@ -498,8 +498,7 @@ class Script(default.Script):
 
         role = AXObject.get_role(event.source)
 
-        if self.utilities.isZombie(event.source) \
-           or role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
+        if role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
                 focus_manager.getManager().set_locus_of_focus(event, comboBox, True)

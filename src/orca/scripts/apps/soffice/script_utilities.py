@@ -140,12 +140,8 @@ class Utilities(script_utilities.Utilities):
             return False
 
         name = AXObject.get_name(obj1)
-        if name == AXObject.get_name(obj2):
-            if AXUtilities.is_frame(obj1):
-                return True
-            if AXUtilities.is_table_cell(obj1) and not name:
-                if self.isZombie(obj1) and self.isZombie(obj2):
-                    return False
+        if name == AXObject.get_name(obj2) and AXUtilities.is_frame(obj1):
+            return True
 
         return super().isSameObject(obj1, obj2, comparePaths, ignoreNames)
 
@@ -386,7 +382,7 @@ class Utilities(script_utilities.Utilities):
         if not comboBox:
             return None
 
-        if not self.isZombie(comboBox):
+        if AXObject.is_valid(comboBox):
             return comboBox
 
         parent = AXObject.get_parent(comboBox)
@@ -394,7 +390,7 @@ class Utilities(script_utilities.Utilities):
             return comboBox
 
         replicant = self.findReplicant(parent, comboBox)
-        if replicant and not self.isZombie(replicant):
+        if replicant and AXObject.is_valid(replicant):
             comboBox = replicant
 
         return comboBox
@@ -465,7 +461,7 @@ class Utilities(script_utilities.Utilities):
             return super().selectedChildren(obj)
 
         # We will need to special case this due to the possibility of there
-        # being lots of children (which may also prove to be zombie objects).
+        # being lots of children (which may also prove to be invalid objects).
         # This is why we can't have nice things.
         if self.isSpreadSheetTable(obj):
             return []

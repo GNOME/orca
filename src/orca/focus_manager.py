@@ -199,8 +199,8 @@ class FocusManager:
             return
 
         if script is not None:
-            if script.utilities.isZombie(obj):
-                tokens = ["FOCUS MANAGER: New locus of focus (", obj, ") is zombie. Not updating."]
+            if not AXObject.is_valid(obj):
+                tokens = ["FOCUS MANAGER: New locus of focus (", obj, ") is invalid. Not updating."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 

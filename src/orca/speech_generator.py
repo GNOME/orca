@@ -2119,7 +2119,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         priorObj = args.get('priorObj')
-        if not priorObj or obj == priorObj or self._script.utilities.isZombie(priorObj):
+        if not priorObj or obj == priorObj or not AXObject.is_valid(priorObj):
             return []
 
         if AXUtilities.is_page_tab(obj):

@@ -32,7 +32,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.debug as debug
 import orca.scripts.toolkits.gtk as gtk
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -114,14 +113,3 @@ class Utilities(gtk.Utilities):
             return super().nodeLevel(obj)
 
         return super().nodeLevel(AXObject.get_previous_sibling(obj))
-
-    def isZombie(self, obj):
-        if not super().isZombie(obj):
-            return False
-
-        if AXObject.get_role(obj) != Atspi.Role.TOGGLE_BUTTON:
-            return True
-
-        tokens = ["PIDGIN: Hacking around broken index in parent for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return AXObject.get_index_in_parent(obj) != -1

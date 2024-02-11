@@ -169,15 +169,6 @@ class Utilities(script_utilities.Utilities):
 
         return int(red) >> 8, int(green) >> 8, int(blue) >> 8
 
-    def isZombie(self, obj):
-        rv = super().isZombie(obj)
-        if rv and self.isLink(obj) and AXObject.get_index_in_parent(obj) == -1:
-            tokens = ["GTK: Hacking around bug 759736 for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return rv
-
     def eventIsCanvasNoise(self, event):
         if not AXUtilities.is_canvas(event.source):
             return False

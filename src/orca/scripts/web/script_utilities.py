@@ -129,14 +129,14 @@ class Utilities(script_utilities.Utilities):
     def _cleanupContexts(self):
         toRemove = []
         for key, [obj, offset] in self._caretContexts.items():
-            if self.isZombie(obj):
+            if not AXObject.is_valid(obj):
                 toRemove.append(key)
 
         for key in toRemove:
             self._caretContexts.pop(key, None)
 
     def dumpCache(self, documentFrame=None, preserveContext=False):
-        if not documentFrame or self.isZombie(documentFrame):
+        if not AXObject.is_valid(documentFrame):
             documentFrame = self.documentFrame()
 
         documentFrameParent = AXObject.get_parent(documentFrame)
@@ -1785,8 +1785,8 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Current context is: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if obj and self.isZombie(obj):
-            tokens = ["WEB: Current context obj", obj, "is zombie. Clearing cache."]
+        if not AXObject.is_valid(obj):
+            tokens = ["WEB: Current context obj", obj, "is not valid. Clearing cache."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
 
@@ -1844,8 +1844,8 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Current context is: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if obj and self.isZombie(obj):
-            tokens = ["WEB: Current context obj", obj, "is zombie. Clearing cache."]
+        if not AXObject.is_valid(obj):
+            tokens = ["WEB: Current context obj", obj, "is not valid. Clearing cache."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
 
@@ -3178,12 +3178,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isDetachedDocument(self, obj):
-        if AXUtilities.is_document(obj):
-            parent = AXObject.get_parent(obj)
-            if parent is None or self.isZombie(parent):
-                tokens = ["WEB:", obj, "is a detached document"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return True
+        if AXUtilities.is_document(obj) and not AXObject.is_valid(AXObject.get_parent(obj)):
+            tokens = ["WEB:", obj, "is a detached document"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return True
 
         return False
 
@@ -4308,7 +4306,7 @@ class Utilities(script_utilities.Utilities):
         if source == focus:
             return True
 
-        if self.isZombie(focus) and not self.isZombie(source):
+        if not AXObject.is_valid(focus) and AXObject.is_valid(source):
             if self.activeDocument() == source:
                 msg = "WEB: Treating active doc as locusOfFocus doc"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4540,8 +4538,8 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Dead object cannot have caret context"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
-        if self.isZombie(obj):
-            tokens = ["WEB: Zombie object cannot have caret context", obj]
+        if not AXObject.is_valid(obj):
+            tokens = ["WEB: Invalid object cannot have caret context", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -4672,11 +4670,11 @@ class Utilities(script_utilities.Utilities):
 
         return obj, offset
 
-    def getCaretContext(self, documentFrame=None, getZombieReplicant=False, searchIfNeeded=True):
+    def getCaretContext(self, documentFrame=None, getReplicant=False, searchIfNeeded=True):
         tokens = ["WEB: Getting caret context for", documentFrame]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not documentFrame or self.isZombie(documentFrame):
+        if not AXObject.is_valid(documentFrame):
             documentFrame = self.documentFrame()
             tokens = ["WEB: Now getting caret context for", documentFrame]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -4708,15 +4706,15 @@ class Utilities(script_utilities.Utilities):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return None, -1
             obj, offset = self.searchForCaretContext(documentFrame)
-        elif not getZombieReplicant:
+        elif not getReplicant:
             obj, offset = context
-        elif self.isZombie(context[0]):
-            msg = "WEB: Context is Zombie. Searching for replicant."
+        elif not AXObject.is_valid(context[0]):
+            msg = "WEB: Context is not valid. Searching for replicant."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             obj, offset = self.findContextReplicant()
             if obj:
                 caretObj, caretOffset = self.searchForCaretContext(AXObject.get_parent(obj))
-                if caretObj and not self.isZombie(caretObj):
+                if caretObj and AXObject.is_valid(caretObj):
                     obj, offset = caretObj, caretOffset
         else:
             obj, offset = context
@@ -4928,7 +4926,7 @@ class Utilities(script_utilities.Utilities):
         return obj, offset
 
     def getPriorContext(self, documentFrame=None):
-        if not documentFrame or self.isZombie(documentFrame):
+        if not AXObject.is_valid(documentFrame):
             documentFrame = self.documentFrame()
 
         if documentFrame:
@@ -5108,11 +5106,11 @@ class Utilities(script_utilities.Utilities):
                 continue
 
             parent = AXObject.get_parent(obj)
-            if self.isZombie(parent):
-                msg = "WEB: Finding next caret in order. Parent is Zombie."
+            if not AXObject.is_valid(parent):
+                msg = "WEB: Finding next caret in order. Parent is not valid."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
-                if replicant and not self.isZombie(replicant):
+                if AXObject.is_valid(replicant):
                     parent = replicant
                 elif AXObject.get_parent(parent):
                     obj = parent
@@ -5181,11 +5179,11 @@ class Utilities(script_utilities.Utilities):
                 continue
 
             parent = AXObject.get_parent(obj)
-            if self.isZombie(parent):
-                msg = "WEB: Finding previous caret in order. Parent is Zombie."
+            if not AXObject.is_valid(parent):
+                msg = "WEB: Finding previous caret in order. Parent is not valid."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 replicant = self.findReplicant(self.documentFrame(), parent)
-                if replicant and not self.isZombie(replicant):
+                if AXObject.is_valid(replicant):
                     parent = replicant
                 elif AXObject.get_parent(parent):
                     obj = parent

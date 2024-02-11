@@ -28,10 +28,8 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import debug
 from orca import script_utilities
 from orca.ax_object import AXObject
-from orca.ax_utilities import AXUtilities
 
 
 class Utilities(script_utilities.Utilities):
@@ -62,22 +60,3 @@ class Utilities(script_utilities.Utilities):
             return AXObject.get_name(container)
 
         return ""
-
-    def isZombie(self, obj):
-        if not super().isZombie(obj):
-            return False
-
-        if AXObject.get_index_in_parent(obj) >= 0:
-            return True
-
-        # TODO - JD: Is this still needed?
-        AXObject.clear_cache(obj, False, "Ensuring we have correct state.")
-
-        if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
-            tokens = ["SWITCHER: Ignoring bad index of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["SWITCHER:", obj, "has bad index and isn't showing and visible"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return True

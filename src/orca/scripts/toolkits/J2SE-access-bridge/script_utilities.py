@@ -115,7 +115,7 @@ class Utilities(script_utilities.Utilities):
         """
 
         newObj = obj
-        if newObj and self.isZombie(newObj):
+        if newObj and not AXObject.is_valid(newObj):
             newObj = self.findReplicant(self._script.lastDescendantChangedSource, obj)
 
         if not newObj:

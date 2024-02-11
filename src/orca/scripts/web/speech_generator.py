@@ -108,8 +108,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateAllTextSelection(self, obj, **args):
-        if self._script.utilities.isZombie(obj) \
-           or obj != focus_manager.getManager().get_locus_of_focus():
+        if not AXObject.is_valid(obj) or obj != focus_manager.getManager().get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -117,8 +116,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateAllTextSelection(obj, **args)
 
     def _generateAnyTextSelection(self, obj, **args):
-        if self._script.utilities.isZombie(obj) \
-           or obj != focus_manager.getManager().get_locus_of_focus():
+        if not AXObject.is_valid(obj) or obj != focus_manager.getManager().get_locus_of_focus():
             return []
 
         # TODO - JD: These (and the default script's) need to
@@ -178,7 +176,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateDescription(obj, **args)
 
-        if self._script.utilities.isZombie(obj):
+        if not AXObject.is_valid(obj):
             return []
 
         if self._script.utilities.preferDescriptionOverName(obj):
