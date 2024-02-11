@@ -215,7 +215,8 @@ def _asString(obj):
             f"({obj.detail1}, {obj.detail2}, {_asString(obj.any_data)})"
         )
 
-    if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType)):
+    if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType,
+                        Atspi.TextBoundaryType)):
         return obj.value_nick
 
     if isinstance(obj, list):

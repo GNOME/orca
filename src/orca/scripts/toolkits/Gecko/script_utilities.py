@@ -32,7 +32,6 @@ __license__   = "LGPL"
 
 import gi
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 import re
 import time
@@ -53,18 +52,6 @@ class Utilities(web.Utilities):
         self._lastAutoTextObjectEvent = None
         self._lastAutoTextInputEvent = None
         self._lastAutoTextEventTime = 0
-
-    def _attemptBrokenTextRecovery(self, obj, **args):
-        boundary = args.get('boundary')
-
-        # Gecko fails to implement this boundary type.
-        if boundary == Atspi.TextBoundaryType.SENTENCE_START:
-            return True
-
-        if self.isContentEditableWithEmbeddedObjects(obj):
-            return boundary == Atspi.TextBoundaryType.WORD_START
-
-        return True
 
     def containsPoint(self, obj, x, y, margin=2):
         if not super().containsPoint(obj, x, y, margin):

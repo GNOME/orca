@@ -1018,108 +1018,55 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def __findRange(self, text, offset, start, end, boundary):
-        # We should not have to do any of this. Seriously. This is why
-        # We can't have nice things.
-
-        allText = text.getText(0, -1)
-        if boundary == Atspi.TextBoundaryType.CHAR:
-            try:
-                string = allText[offset]
-            except IndexError:
-                string = ""
-
-            return string, offset, offset + 1
-
-        extents = list(text.getRangeExtents(offset, offset + 1, Atspi.CoordType.WINDOW))
-
-        def _inThisSpan(span):
-            return span[0] <= offset <= span[1]
-
-        def _onThisLine(span):
-            start, end = span
-            startExtents = list(text.getRangeExtents(start, start + 1, Atspi.CoordType.WINDOW))
-            endExtents = list(text.getRangeExtents(end - 1, end, Atspi.CoordType.WINDOW))
-            delta = max(startExtents[3], endExtents[3])
-            if not self.extentsAreOnSameLine(startExtents, endExtents, delta):
-                tokens = ["FAIL: Start", startExtents, "and end", endExtents,
-                          "of '", allText[start:end], "' not on same line"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                startExtents = endExtents
-
-            return self.extentsAreOnSameLine(extents, startExtents)
-
+    def __findSentence(self, text, offset):
         spans = []
+        allText = text.getText(0, -1)
         charCount = text.characterCount
-        if boundary == Atspi.TextBoundaryType.SENTENCE_START:
-            spans = [m.span() for m in re.finditer(
-                r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
-        elif boundary is not None:
-            spans = [m.span() for m in re.finditer("[^\n\r]+", allText)]
-        if not spans:
-            spans = [(0, charCount)]
+        spans = [m.span() for m in re.finditer(
+            r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
 
         rangeStart, rangeEnd = 0, charCount
         for span in spans:
-            if _inThisSpan(span):
+            if span[0] <= offset <= span[1]:
                 rangeStart, rangeEnd = span[0], span[1] + 1
                 break
 
         string = allText[rangeStart:rangeEnd]
-        if string and boundary in [Atspi.TextBoundaryType.SENTENCE_START, None]:
-            return string, rangeStart, rangeEnd
-
-        words = [m.span() for m in re.finditer("[^\\s\ufffc]+", string)]
-        words = list(map(lambda x: (x[0] + rangeStart, x[1] + rangeStart), words))
-        if boundary == Atspi.TextBoundaryType.WORD_START:
-            spans = list(filter(_inThisSpan, words))
-        if boundary == Atspi.TextBoundaryType.LINE_START:
-            spans = list(filter(_onThisLine, words))
-        if spans:
-            rangeStart, rangeEnd = spans[0][0], spans[-1][1] + 1
-            string = allText[rangeStart:rangeEnd]
-
-        if not (rangeStart <= offset <= rangeEnd):
-            return allText[start:end], start, end
-
         return string, rangeStart, rangeEnd
-
-    def _attemptBrokenTextRecovery(self, obj, **args):
-        return False
 
     def _getTextAtOffset(self, obj, offset, boundary):
         def stringForDebug(x):
             return x.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
 
         if not obj:
-            tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "     String: '', Start: 0, End: 0. (obj is None)"]
+            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                      "'', Start: 0, End: 0. (obj is None)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 0
 
         text = self.queryNonEmptyText(obj)
         if not text:
-            tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "     String: '', Start: 0, End: 1. (queryNonEmptyText() returned None)"]
+            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                      "'', Start: 0, End: 1. (queryNonEmptyText() returned None)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 1
 
         if boundary is None:
             string, start, end = text.getText(0, -1), 0, text.characterCount
             s = stringForDebug(string)
-            tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "     String: '", s, "', Start: ", start, ", End: ", end, "."]
+            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                      f"'{s}', Start: {start}, End: {end}."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return string, start, end
 
+        allText = text.getText(0, -1)
         if boundary == Atspi.TextBoundaryType.SENTENCE_START and not AXUtilities.is_editable(obj):
-            allText = text.getText(0, -1)
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
                 string, start, end = allText, 0, text.characterCount
                 s = stringForDebug(string)
-                tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                          "     String: '", s, "', Start: ", start, ", End: ", end, "."]
+                tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                          f"'{s}', Start: {start}, End: {end}."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return string, start, end
 
@@ -1131,78 +1078,23 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
         string, start, end = text.getTextAtOffset(offset, boundary)
+        s = stringForDebug(string)
+        tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                  f"'{s}', Start: {start}, End: {end}."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        # The above should be all that we need to do, but....
-        if not self._attemptBrokenTextRecovery(obj, boundary=boundary):
-            s = stringForDebug(string)
-            tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "     String: '", s, "', Start: ", start, ", End: ", end, ".\n",
-                      "     Not checking for broken text."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return string, start, end
-
-        needSadHack = False
-        testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
-        if (string, start, end) != (testString, testStart, testEnd):
-            s1 = stringForDebug(string)
-            s2 = stringForDebug(testString)
-            tokens = ["FAIL: Text at offset for", obj, "using", boundary, "\n",
-                      "      For offset", offset, " - String: '", s1, "', Start: ", start,
-                      ", End: ", end, ".\n",
-                      "      For offset", start, " - String: '", s2, "', Start: ", testStart,
-                      ", End: ", testEnd, ".\n",
-                      "      The bug is the above results should be the same.\n",
-                      "      This very likely needs to be fixed by the toolkit."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            needSadHack = True
-        elif not string and 0 <= offset < text.characterCount:
-            s1 = stringForDebug(string)
-            s2 = stringForDebug(text.getText(0, -1))
-            tokens = ["FAIL: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "      String: '", s1, "', Start: ", start, ", End: ", end, ".\n",
-                      "      The bug is no text reported for a valid offset.\n",
-                      "      Character count: ", text.characterCount, "Full text: '", s2, "'\n",
-                      "      This very likely needs to be fixed by the toolkit."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            needSadHack = True
-        elif not (start <= offset < end) \
-                and not (AXDocument.is_plain_text(self.documentFrame()) \
-                    or self.elementIsPreformattedText(obj)):
-            s1 = stringForDebug(string)
-            tokens = ["FAIL: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "      String: '", s1, "', Start: ", start, ", End: ", end, ".\n",
-                      "      The bug is the range returned is outside of the offset.\n" ,
-                      "      This very likely needs to be fixed by the toolkit." ]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            needSadHack = True
-        elif len(string) < end - start:
-            s1 = stringForDebug(string)
-            tokens = ["FAIL: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "      String: '", s1, "', Start: ", start, ", End: ", end, ".\n",
-                      "      The bug is that the length of string is less than the text range.\n",
-                      "      This very likely needs to be fixed by the toolkit."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            needSadHack = True
-        elif boundary == Atspi.TextBoundaryType.CHAR and string == "\ufffd":
-            tokens = ["FAIL: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                      "      String: '", string, "', Start: ", start, ", End: ", end, ".\n",
-                      "      The bug is that we didn't seem to get a valid character.\n",
-                      "      This very likely needs to be fixed by the toolkit."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            needSadHack = True
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1141181
+        needSadHack = boundary == Atspi.TextBoundaryType.SENTENCE_START and allText \
+           and (string, start, end) == ("", 0, 0)
 
         if needSadHack:
-            sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
+            sadString, sadStart, sadEnd = self.__findSentence(text, offset)
             s = stringForDebug(sadString)
-            tokens = ["HACK: Attempting to recover from above failure.\n",
-                      "      String: '", s, "', Start: ", sadStart, ", End: ", sadEnd, "."]
+            tokens = ["HACK: Attempting to recover from above failure. Result:",
+                      f"'{s}', Start: {sadStart}, End: {sadEnd}."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return sadString, sadStart, sadEnd
 
-        s = stringForDebug(string)
-        tokens = ["WEB: Text at offset", offset, "for", obj, "using", boundary, ":\n",
-                  "     String: '", s, "', Start: ", start, ", End: ", end, "."]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return string, start, end
 
     def _getContentsForObj(self, obj, offset, boundary):
