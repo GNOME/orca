@@ -51,6 +51,7 @@ from . import input_event
 from . import messages
 from . import script_manager
 from . import settings_manager
+from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -178,7 +179,8 @@ class _ItemContext:
         self._time = time.time()
         self._boundingBox = 0, 0, 0, 0
         if script:
-            self._boundingBox = script.utilities.getBoundingBox(obj)
+            rect = AXComponent.get_rect(obj)
+            self._boundingBox = rect.x, rect.y, rect.width, rect.height
 
     def __eq__(self, other):
         return other is not None \
@@ -525,12 +527,6 @@ class MouseReviewer:
         self._workspace = screen.get_active_workspace()
         self._update_workspace_windows()
 
-    def _contains_point(self, obj, x, y):
-        try:
-            return obj.queryComponent().contains(x, y, Atspi.CoordType.WINDOW)
-        except Exception:
-            return False
-
     def _accessible_window_at_point(self, pX, pY):
         """Returns the accessible window and window based coordinates for the screen coordinates."""
 
@@ -561,7 +557,7 @@ class MouseReviewer:
         relativeY = pY - y
 
         candidates = [o for o in AXObject.iter_children(
-            app, lambda x: self._contains_point(x, relativeX, relativeY))]
+            app, lambda x: AXComponent.object_contains_point(x, relativeX, relativeY))]
         if len(candidates) == 1:
             return candidates[0], relativeX, relativeY
 
@@ -572,7 +568,7 @@ class MouseReviewer:
 
         matches = [o for o in matches if AXUtilities.is_active(o)]
         if len(matches) == 1:
-            return matches[0],relativeX, relativeY
+            return matches[0], relativeX, relativeY
 
         return None, -1, -1
 
@@ -600,18 +596,18 @@ class MouseReviewer:
 
         obj = None
         if menu:
-            obj = script.utilities.descendantAtPoint(menu, windowX, windowY)
+            obj = AXComponent.get_descendant_at_point(menu, windowX, windowY)
             tokens = ["MOUSE REVIEW: Object in", menu, f"at ({windowX}, {windowY}) is", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if obj is None:
-            obj = script.utilities.descendantAtPoint(window, windowX, windowY)
+            obj = AXComponent.get_descendant_at_point(window, windowX, windowY)
             tokens = ["MOUSE REVIEW: Object in", window, f"at ({windowX}, {windowY}) is", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.getManager().getScript(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
-            if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
+            if AXComponent.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return

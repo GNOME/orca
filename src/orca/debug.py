@@ -216,8 +216,11 @@ def _asString(obj):
         )
 
     if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType,
-                        Atspi.TextBoundaryType)):
+                        Atspi.TextBoundaryType, Atspi.ScrollType)):
         return obj.value_nick
+
+    if isinstance(obj, Atspi.Rect):
+        return f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
 
     if isinstance(obj, list):
         return f"[{', '.join(map(_asString, obj))}]"

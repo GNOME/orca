@@ -33,6 +33,7 @@ from . import debug
 from . import guilabels
 from . import orca_state
 from . import script_manager
+from .ax_component import AXComponent
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 
@@ -116,9 +117,9 @@ class OrcaNavListGUI:
 
     def showGUI(self):
         self._document = self._script.utilities.documentFrame()
-        x, y, width, height = self._script.utilities.getBoundingBox(self._document)
-        if (width and height):
-            self._gui.move(x + 100, y + 100)
+        rect = AXComponent.get_rect(self._document)
+        if (rect.width and rect.height):
+            self._gui.move(rect.x + 100, rect.y + 100)
 
         self._gui.show_all()
         ts = orca_state.lastInputEvent.timestamp

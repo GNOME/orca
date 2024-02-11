@@ -32,6 +32,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
+from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -235,16 +236,8 @@ class LabelInference:
                 extents = text.getRangeExtents(startOffset, endOffset, Atspi.CoordType.WINDOW)
 
         if not (extents[2] and extents[3]):
-            try:
-                ext = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            except NotImplementedError:
-                tokens = ["LABEL INFERENCE:", obj, "does not implement the component interface"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            except Exception:
-                tokens = ["LABEL INFERENCE: Exception getting extents for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                extents = ext.x, ext.y, ext.width, ext.height
+            ext = AXComponent.get_rect(obj)
+            extents = ext.x, ext.y, ext.width, ext.height
 
         self._extentsCache[(hash(obj), startOffset, endOffset)] = extents
         return extents
