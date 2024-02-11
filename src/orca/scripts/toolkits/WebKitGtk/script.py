@@ -45,6 +45,7 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.structural_navigation as structural_navigation
 
+from orca.ax_component import AXComponent
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -605,7 +606,7 @@ class Script(default.Script):
 
         brailleLine = self.getNewBrailleLine(clearBraille=True, addLine=True)
         for child in AXObject.iter_children(obj):
-            if not self.utilities.onSameLine(child, AXObject.get_child(obj, 0)):
+            if not AXComponent.on_same_line(child, AXObject.get_child(obj, 0)):
                 break
             [regions, fRegion] = self.brailleGenerator.generateBraille(child)
             self.addBrailleRegionsToLine(regions, brailleLine)

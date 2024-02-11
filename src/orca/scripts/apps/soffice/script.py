@@ -647,6 +647,7 @@ class Script(default.Script):
         if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
             x = orca_state.lastInputEvent.x
             y = orca_state.lastInputEvent.y
+            # TODO - JD: We need to convert absolute coordinates to relative ones.
             weToggledIt = obj.queryComponent().contains(x, y, 0)
         elif AXUtilities.is_focused(obj):
             weToggledIt = True

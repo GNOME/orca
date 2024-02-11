@@ -42,6 +42,7 @@ from orca import orca_state
 from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
+from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
@@ -1559,9 +1560,9 @@ class Utilities(script_utilities.Utilities):
                     return False
                 elif AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(xObj):
                     return False
-                elif AXUtilities.is_heading(obj) and self.hasNoSize(obj):
+                elif AXUtilities.is_heading(obj) and AXComponent.has_no_size(obj):
                     return False
-                elif AXUtilities.is_heading(xObj) and self.hasNoSize(xObj):
+                elif AXUtilities.is_heading(xObj) and AXComponent.has_no_size(xObj):
                     return False
 
             if self.isMathTopLevel(xObj) or self.isMath(obj):
@@ -2617,7 +2618,7 @@ class Utilities(script_utilities.Utilities):
             if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
                or (self.isContentEditableWithEmbeddedObjects(obj) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
-               or (self.hasNoSize(obj) and not displayedText) \
+               or (AXComponent.has_no_size(obj) and not displayedText) \
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
@@ -3740,11 +3741,12 @@ class Utilities(script_utilities.Utilities):
         parent = AXObject.get_parent(obj)
         children = [x for x in AXObject.iter_children(parent, self.isSVG)]
         if len(children) == AXObject.get_child_count(parent):
-            sortedChildren = sorted(children, key=functools.cmp_to_key(self.sizeComparison))
+            sortedChildren = AXComponent.sort_objects_by_size(children)
             if obj != sortedChildren[-1]:
-                objExtents = self.getExtents(obj, 0, -1)
-                largestExtents = self.getExtents(sortedChildren[-1], 0, -1)
-                rv = self.intersection(objExtents, largestExtents) == tuple(objExtents)
+                objExtents = AXComponent.get_rect(obj)
+                largestExtents = AXComponent.get_rect(sortedChildren[-1])
+                intersection = AXComponent.get_rect_intersection(objExtents, largestExtents)
+                rv = intersection == objExtents
 
         self._isRedundantSVG[hash(obj)] = rv
         return rv
@@ -4500,7 +4502,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Hidden object cannot have caret context", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif self.hasNoSize(obj):
+        elif AXComponent.has_no_size(obj):
             tokens = ["WEB: Allowing sizeless object to have caret context", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = True

@@ -32,6 +32,7 @@ from gi.repository import Atspi
 import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
+from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -205,13 +206,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         try:
             text = obj.queryText()
-            objectText = \
-                self._script.utilities.substring(obj, 0, -1)
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+            objectText = self._script.utilities.substring(obj, 0, -1)
         except NotImplementedError:
             pass
         else:
             tooLongCount = 0
+            extents = AXComponent.get_rect(obj)
             for i in range(0, len(objectText)):
                 [x, y, width, height] = text.getRangeExtents(i, i + 1, Atspi.CoordType.WINDOW)
                 if x < extents.x:

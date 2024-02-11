@@ -36,6 +36,7 @@ import orca.focus_manager as focus_manager
 import orca.keybindings as keybindings
 import orca.script_utilities as script_utilities
 
+from orca.ax_component import AXComponent
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -231,7 +232,8 @@ class Utilities(script_utilities.Utilities):
 
         if AXUtilities.is_section(obj):
             if AXObject.get_child_count(obj) > 1:
-                return self.onSameLine(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
+                return AXComponent.on_same_line(
+                    AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
             return False
 
         if AXUtilities.is_list(obj):
@@ -242,7 +244,7 @@ class Utilities(script_utilities.Utilities):
                 return AXObject.supports_text(obj)
             if childCount == 1:
                 return False
-            return self.onSameLine(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
+            return AXComponent.on_same_line(AXObject.get_child(obj, 0), AXObject.get_child(obj, 1))
 
         return False
 
