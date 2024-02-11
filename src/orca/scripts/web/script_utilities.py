@@ -496,27 +496,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXObject.find_ancestor(child, lambda x: x == parent)
 
-    def isShowingAndVisible(self, obj):
-        rv = super().isShowingAndVisible(obj)
-        if rv or not self.inDocumentContent(obj):
-            return rv
-
-        if not self._script.mouseReviewer.inMouseEvent:
-            if not self._isOrIsIn(focus_manager.getManager().get_locus_of_focus(), obj):
-                return rv
-
-            tokens = ["WEB:", obj, "contains locusOfFocus but not showing and visible"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        # TODO - JD: Can we remove this?
-        AXObject.clear_cache(obj, False, "Ensuring we have correct state.")
-        rv = super().isShowingAndVisible(obj)
-        if rv:
-            tokens = ["WEB: Clearing cache fixed state of", obj, ". Missing event?"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        return rv
-
     def isTextArea(self, obj):
         if not self.inDocumentContent(obj):
             return super().isTextArea(obj)
@@ -4052,7 +4031,8 @@ class Utilities(script_utilities.Utilities):
         labels = self.labelsForObject(obj)
 
         def isVisibleCaption(x):
-            return AXUtilities.is_caption(x) and self.isShowingAndVisible(x)
+            return AXUtilities.is_caption(x) \
+                and AXUtilities.is_showing(x) and AXUtilities.is_visible(x)
 
         rv = bool(list(filter(isVisibleCaption, labels)))
         self._hasVisibleCaption[hash(obj)] = rv

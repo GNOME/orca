@@ -31,6 +31,7 @@ from gi.repository import Atspi
 from orca import debug
 from orca import script_utilities
 from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 
 
 class Utilities(script_utilities.Utilities):
@@ -72,7 +73,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: Is this still needed?
         AXObject.clear_cache(obj, False, "Ensuring we have correct state.")
 
-        if self.isShowingAndVisible(obj):
+        if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
             tokens = ["SWITCHER: Ignoring bad index of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False

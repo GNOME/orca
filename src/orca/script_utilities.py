@@ -1431,7 +1431,7 @@ class Utilities:
         if self.isHidden(obj):
             return False
 
-        if not self.isShowingAndVisible(obj):
+        if not (AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj)):
             tokens = ["SCRIPT UTILITIES:", obj, "is not showing and visible"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -1996,7 +1996,7 @@ class Utilities:
         dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])
 
         def isPresentable(x):
-            return self.isShowingAndVisible(x) \
+            return AXUtilities.is_showing(x) and AXUtilities.is_visible(x) \
                 and (AXObject.get_name(x) or AXObject.get_child_count(x))
 
         def cannotBeActiveWindow(x):
@@ -3449,7 +3449,8 @@ class Utilities:
         if not root:
             return None
 
-        if not self.isShowingAndVisible(root):
+        AXObject.clear_cache(root)
+        if not (AXUtilities.is_showing(root) and AXUtilities.is_visible(root)):
             return None
 
         if self.containsPoint(root, x, y):
@@ -3767,26 +3768,6 @@ class Utilities:
                 cells.append(cell)
 
         return cells
-
-    def isShowingAndVisible(self, obj):
-        if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
-            return True
-
-        # TODO - JD: This really should be in the toolkit scripts. But it
-        # seems to be present in multiple toolkits, so it's either being
-        # inherited (e.g. from Gtk in Firefox Chrome, LO, Eclipse) or it
-        # may be an AT-SPI2 bug. For now, handling it here.
-        menuRoles = [Atspi.Role.MENU,
-                     Atspi.Role.MENU_ITEM,
-                     Atspi.Role.CHECK_MENU_ITEM,
-                     Atspi.Role.RADIO_MENU_ITEM,
-                     Atspi.Role.SEPARATOR]
-        if AXObject.get_role(obj) in menuRoles and self.isInOpenMenuBarMenu(obj):
-            tokens = ["HACK: Treating", obj, "as showing and visible"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
 
     def isZombie(self, obj):
         index = AXObject.get_index_in_parent(obj)

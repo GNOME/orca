@@ -1551,7 +1551,7 @@ class Script(script.Script):
             return
         elif AXUtilities.manages_descendants(event.source):
             return
-        elif not self.utilities.isShowingAndVisible(event.source):
+        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
             tokens = ["DEFAULT: Ignoring event: source is not showing and visible", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return

@@ -143,7 +143,7 @@ class Script(gtk.Script):
         if not self.utilities.isSearchEntry(focus, True):
             return
 
-        if not self.utilities.isShowingAndVisible(event.source):
+        if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
             return
 
         # To avoid extreme chattiness.
