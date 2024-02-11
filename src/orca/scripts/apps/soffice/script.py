@@ -40,7 +40,6 @@ import orca.guilabels as guilabels
 import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.messages as messages
-import orca.orca_state as orca_state
 import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable

@@ -44,7 +44,6 @@ from . import messages
 from . import orca_state
 from . import script_manager
 from . import settings
-from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -1049,7 +1048,6 @@ class MouseButtonEvent(InputEvent):
         self.button = event.type[len("mouse:button:"):-1]
         self._script = script_manager.getManager().getActiveScript()
         self.window = focus_manager.getManager().get_active_window()
-        self.obj = None
         self.app = None
 
         if self.pressed:
@@ -1064,11 +1062,7 @@ class MouseButtonEvent(InputEvent):
         if not self.window:
             return
 
-        self.obj = AXComponent.get_descendant_at_point(self.window, self.x, self.y)
-        if self.obj is None:
-            self.app = AXObject.get_application(self.window)
-        else:
-            self.app = AXObject.get_application(self.obj)
+        self.app = AXObject.get_application(self.window)
 
     def _validateCoordinates(self):
         if not self._pointer:
