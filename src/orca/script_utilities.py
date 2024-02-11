@@ -3348,7 +3348,7 @@ class Utilities:
         if obj is None:
             return False
 
-        if self.hasNoSize(obj):
+        if AXComponent.has_no_size(obj):
             return False
 
         return not (AXUtilities.is_menu(obj) or AXUtilities.is_page_tab(obj))

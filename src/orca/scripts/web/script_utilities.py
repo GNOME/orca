@@ -637,27 +637,9 @@ class Utilities(script_utilities.Utilities):
         parent = AXObject.get_parent(obj)
         if (AXUtilities.is_menu(obj) or AXUtilities.is_list_item(obj)) \
             and (AXUtilities.is_combo_box(parent) or AXUtilities.is_list_box(parent)):
-            try:
-                ext = parent.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            except NotImplementedError:
-                tokens = ["WEB:", parent, "does not implement the component interface"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return [0, 0, 0, 0]
-            except Exception:
-                tokens = ["WEB: Exception getting extents for", parent]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return [0, 0, 0, 0]
+            ext = AXComponent.get_rect(parent)
         else:
-            try:
-                ext = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            except NotImplementedError:
-                tokens = ["WEB:", obj, "does not implement the component interface"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return [0, 0, 0, 0]
-            except Exception:
-                tokens = ["WEB: Exception getting extents for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return [0, 0, 0, 0]
+            ext = AXComponent.get_rect(obj)
 
         return [ext.x, ext.y, ext.width, ext.height]
 
