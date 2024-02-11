@@ -28,7 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import functools
 import gi
 import locale
 import re
@@ -55,6 +54,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from . import text_attribute_names
+from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
@@ -853,7 +853,7 @@ class Utilities:
         if not self.isProgressBar(obj):
             return False, "Is not progress bar"
 
-        if self.hasNoSize(obj):
+        if AXComponent.has_no_size(obj):
             return False, "Has no size"
 
         if settings_manager.getManager().getSetting('ignoreStatusBarProgressBars'):
@@ -1291,30 +1291,13 @@ class Utilities:
         if comparePaths and self._hasSamePath(obj1, obj2):
             return True
 
-        try:
-            # Comparing the extents of objects which claim to be different
-            # addresses both managed descendants and implementations which
-            # recreate accessibles for the same widget.
-            extents1 = \
-                obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            extents2 = \
-                obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+        # Objects which claim to be different and which are in different
+        # locations are almost certainly not recreated objects.
+        if not AXComponent.objects_have_same_rect(obj1, obj2):
+            return False
 
-            # Objects which claim to be different and which are in different
-            # locations are almost certainly not recreated objects.
-            if extents1 != extents2:
-                return False
-
-            # Objects which claim to have the same role, the same name, and
-            # the same size and position are highly likely to be the same
-            # functional object -- if they have valid, on-screen extents.
-            if extents1.x >= 0 and extents1.y >= 0 and extents1.width > 0 \
-                and extents1.height > 0:
-                return True
-        except Exception as error:
-            tokens = ["SCRIPT UTILITIES: Exception in isSameObject (",
-                      obj1, "vs", obj2, "):", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not AXComponent.has_no_size(obj1):
+            return True
 
         return False
 
@@ -1434,43 +1417,19 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        try:
-            box = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
+        if AXComponent.has_no_size_or_invalid_rect(obj):
+            tokens = ["SCRIPT UTILITIES: Rect of", obj, "is unhelpful. Treating as onscreen"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["SCRIPT UTILITIES: Extents for", obj, "are:", box]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if box.x > 10000 or box.y > 10000:
-            tokens = ["SCRIPT UTILITIES:", obj, "seems to have bogus coordinates"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if box.x + box.width < 0 and box.y + box.height < 0 and tuple(box) != (-1, -1, -1, -1):
-            tokens = ["SCRIPT UTILITIES:", obj, "position plus extents are negative"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if not (box.width or box.height):
-            if not AXObject.get_child_count(obj):
-                tokens = ["SCRIPT UTILITIES:", obj, "has no size and no children"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-            if AXUtilities.is_menu(obj):
-                tokens = ["SCRIPT UTILITIES:", obj, "has no size"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
             return True
 
-        if boundingbox is None or not self._boundsIncludeChildren(AXObject.get_parent(obj)):
+        if AXComponent.object_is_off_screen(obj):
+            return False
+
+        if boundingbox is None:
             return True
 
-        if not self.containsRegion(box, boundingbox) and tuple(box) != (-1, -1, -1, -1):
-            tokens = ["SCRIPT UTILITIES:", obj, box, "not in", boundingbox]
+        if not AXComponent.object_intersects_rect(obj, boundingbox):
+            tokens = ["SCRIPT UTILITIES:", obj, "not in", boundingbox]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -1556,13 +1515,7 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if extents is None:
-            try:
-                component = root.queryComponent()
-                extents = component.getExtents(Atspi.CoordType.WINDOW)
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting extents of", root]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                extents = 0, 0, 0, 0
+            extents = AXComponent.get_rect(root)
 
         if AXObject.supports_table(root) and AXObject.supports_selection(root):
             visibleCells = self.getVisibleTableCells(root)
@@ -1966,7 +1919,7 @@ class Utilities:
                 continue
             labels_filtered.append(label)
 
-        return sorted(labels_filtered, key=functools.cmp_to_key(self.spatialComparison))
+        return AXComponent.sort_objects_by_position(labels_filtered)
 
     def _treatAlertsAsDialogs(self):
         return True
@@ -3619,8 +3572,14 @@ class Utilities:
         if boundary == Atspi.TextBoundaryType.WORD_START and not string.strip():
             return "", 0, 0
 
-        extents = text.getRangeExtents(start, end, Atspi.CoordType.WINDOW)
-        if not self.containsRegion(extents, (x, y, 1, 1)) and string != "\n":
+        extents = Atspi.Rect()
+        extents.x, extents.y, extents.width, extents.height = text.getRangeExtents(
+            start, end, Atspi.CoordType.WINDOW)
+        rect = Atspi.Rect()
+        rect.x = x
+        rect.y = y
+        rect.width = rect.height = 0
+        if not AXComponent.get_rect_intersection(extents, rect) and string != "\n":
             return "", 0, 0
 
         if not string.endswith("\n") or string == "\n":
@@ -3635,32 +3594,29 @@ class Utilities:
 
         return string, start, end
 
-    def visibleRows(self, obj, boundingbox):
+    def visibleRows(self, obj, table_rect):
         nRows = AXTable.get_row_count(obj)
 
         tokens = ["SCRIPT UTILITIES: ", obj, f"has {nRows} rows"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        x, y, width, height = boundingbox
-        cell = self.descendantAtPoint(obj, x, y + 1)
+        cell = AXComponent.get_descendant_at_point(obj, table_rect.x, table_rect.y + 1)
         row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         startIndex = max(0, row)
         tokens = ["SCRIPT UTILITIES: First cell:", cell, f"(row: {row}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # Just in case the row above is a static header row in a scrollable table.
-        try:
-            extents = cell.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            nextIndex = startIndex
-        else:
-            cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
-            row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
-            nextIndex = max(startIndex, row)
-            tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row})"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        cell_rect = AXComponent.get_rect(cell)
+        cell = AXComponent.get_descendant_at_point(
+            obj, table_rect.x, table_rect.y + cell_rect.height + 1)
+        row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        nextIndex = max(startIndex, row)
+        tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        cell = self.descendantAtPoint(obj, x, y + height - 1)
+        cell = AXComponent.get_descendant_at_point(
+            obj, table_rect.x, table_rect.y + table_rect.height - 1)
         row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -3676,18 +3632,10 @@ class Utilities:
         return rows
 
     def getVisibleTableCells(self, obj):
-        if not (AXObject.supports_table(obj) and AXObject.supports_component(obj)):
+        if not AXObject.supports_table(obj):
             return []
 
-        try:
-            component = obj.queryComponent()
-            extents = component.getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        rows = self.visibleRows(obj, extents)
+        rows = self.visibleRows(obj, AXComponent.get_rect(obj))
         if not rows:
             return []
 
@@ -3726,20 +3674,13 @@ class Utilities:
         if not self.isSpreadSheetCell(obj):
             return startIndex, endIndex
 
-        try:
-            component = table.queryComponent()
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying component interface of", table]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return startIndex, endIndex
-
-        x, y, width, height = component.getExtents(Atspi.CoordType.WINDOW)
-        cell = component.getAccessibleAtPoint(x+1, y, Atspi.CoordType.WINDOW)
+        rect = AXComponent.get_rect(table)
+        cell = AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y)
         if cell:
             column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             startIndex = column
 
-        cell = component.getAccessibleAtPoint(x+width-1, y, Atspi.CoordType.WINDOW)
+        cell = AXComponent.get_descendant_at_point(table, rect.x + rect.width - 1, rect.y)
         if cell:
             column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
             endIndex = column + 1

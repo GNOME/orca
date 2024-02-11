@@ -37,6 +37,7 @@ from . import debug
 from . import focus_manager
 from . import script_manager
 from . import settings
+from .ax_component import AXComponent
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -495,7 +496,7 @@ class Context:
         self.container = None
         self.focusObj = focus_manager.getManager().get_locus_of_focus()
         self.topLevel = None
-        self.bounds = 0, 0, 0, 0
+        self.bounds = Atspi.Rect()
 
         frame, dialog = script.utilities.frameAndDialog(self.focusObj)
         if root is not None:
@@ -507,12 +508,7 @@ class Context:
         tokens = ["FLAT REVIEW: Frame:", frame, "Dialog:", dialog, ". Top level:", self.topLevel]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        try:
-            component = self.topLevel.queryComponent()
-            self.bounds = component.getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["ERROR: Exception getting extents of", self.topLevel]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        self.bounds = AXComponent.get_rect(self.topLevel)
 
         containerRoles = [Atspi.Role.MENU]
 
@@ -566,8 +562,11 @@ class Context:
         substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
         for (start, end, substring) in substrings:
             extents = accessible.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
-            if self.script.utilities.containsRegion(extents, cliprect):
-                clipping = self.script.utilities.intersection(extents, cliprect)
+            rect = Atspi.Rect()
+            rect.x, rect.y, rect.width, rect.height = extents
+            intersection = AXComponent.get_rect_intersection(rect, cliprect)
+            if not AXComponent.is_empty_rect(intersection):
+                clipping = intersection.x, intersection.y, intersection.width, intersection.height
                 zones.append(TextZone(accessible, start, substring, *clipping))
 
         return zones
@@ -609,9 +608,9 @@ class Context:
 
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
-        if AXObject.supports_editable_text(accessible) \
-           and AXUtilities.is_single_line(accessible):
-            extents = accessible.queryComponent().getExtents(Atspi.CoordType.WINDOW)
+        if AXObject.supports_editable_text(accessible) and AXUtilities.is_single_line(accessible):
+            rect = AXComponent.get_rect(accessible)
+            extents = rect.x, rect.y, rect.width, rect.height
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 
         upperMax = lowerMax = text.characterCount
@@ -665,7 +664,7 @@ class Context:
         # TODO - JD: This whole thing is pretty hacky. Either do it
         # right or nuke it.
 
-        indicatorExtents = [extents.x, extents.y, 1, extents.height]
+        indicatorExtents = [extents[0], extents[1], 1, extents[3]]
         role = AXObject.get_role(accessible)
         if role == Atspi.Role.TOGGLE_BUTTON:
             zone = StateZone(accessible, *indicatorExtents, role=role)
@@ -689,7 +688,7 @@ class Context:
         if len(zones) == 1 and isinstance(zones[0], TextZone):
             textZone = zones[0]
             textToLeftEdge = textZone.x - extents.x
-            textToRightEdge = (extents.x + extents.width) - (textZone.x + textZone.width)
+            textToRightEdge = (extents[0] + extents[2]) - (textZone.x + textZone.width)
             stateOnLeft = textToLeftEdge > 20
             if stateOnLeft:
                 indicatorExtents[2] = textToLeftEdge
@@ -707,17 +706,9 @@ class Context:
     def getZonesFromAccessible(self, accessible, cliprect):
         """Returns a list of Zones for the given accessible."""
 
-        try:
-            component = accessible.queryComponent()
-            extents = component.getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            return []
-
-        try:
-            role = AXObject.get_role(accessible)
-        except Exception:
-            return []
-
+        rect = AXComponent.get_rect(accessible)
+        extents = rect.x, rect.y, rect.width, rect.height
+        role = AXObject.get_role(accessible)
         zones = self.getZonesFromText(accessible, cliprect)
         if not zones and role in [Atspi.Role.SCROLL_BAR,
                                   Atspi.Role.SLIDER,
