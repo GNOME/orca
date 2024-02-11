@@ -53,18 +53,6 @@ class Utilities(web.Utilities):
         self._lastAutoTextInputEvent = None
         self._lastAutoTextEventTime = 0
 
-    def containsPoint(self, obj, x, y, margin=2):
-        if not super().containsPoint(obj, x, y, margin):
-            return False
-
-        if (AXUtilities.is_menu(obj) or AXUtilities.is_tool_tip(obj)) \
-           and self.topLevelObject(obj) == AXObject.get_parent(obj):
-            tokens = ["GECKO:", obj, "is suspected to be off screen object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return True
-
     def isLayoutOnly(self, obj):
         if super().isLayoutOnly(obj):
             return True
@@ -131,14 +119,6 @@ class Utilities(web.Utilities):
             return True
 
         if not uri and "pixels" in name:
-            return True
-
-        return False
-
-    def _objectMightBeBogus(self, obj):
-        if AXUtilities.is_section(obj) and AXUtilities.is_frame(AXObject.get_parent(obj)):
-            tokens = ["GECKO:", obj, "is believed to be a bogus object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False

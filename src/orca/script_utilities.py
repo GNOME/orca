@@ -1739,21 +1739,6 @@ class Utilities:
         return True
 
     @staticmethod
-    def onSameLine(obj1, obj2, delta=0):
-        """Determines if obj1 and obj2 are on the same line."""
-
-        try:
-            bbox1 = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            bbox2 = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            return False
-
-        center1 = bbox1.y + bbox1.height / 2
-        center2 = bbox2.y + bbox2.height / 2
-
-        return abs(center1 - center2) <= delta
-
-    @staticmethod
     def pathComparison(path1, path2):
         """Compares the two paths and returns -1, 0, or 1 to indicate if path1
         is before, the same, or after path2."""
@@ -1773,54 +1758,6 @@ class Utilities:
 
         return 0
 
-    @staticmethod
-    def sizeComparison(obj1, obj2):
-        try:
-            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            width1, height1 = bbox.width, bbox.height
-        except Exception:
-            width1, height1 = 0, 0
-
-        try:
-            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            width2, height2 = bbox.width, bbox.height
-        except Exception:
-            width2, height2 = 0, 0
-
-        return (width1 * height1) - (width2 * height2)
-
-    @staticmethod
-    def spatialComparison(obj1, obj2):
-        """Compares the physical locations of obj1 and obj2 and returns -1,
-        0, or 1 to indicate if obj1 physically is before, is in the same
-        place as, or is after obj2."""
-
-        try:
-            bbox = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            x1, y1 = bbox.x, bbox.y
-        except Exception:
-            x1, y1 = 0, 0
-
-        try:
-            bbox = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            x2, y2 = bbox.x, bbox.y
-        except Exception:
-            x2, y2 = 0, 0
-
-        rv = y1 - y2 or x1 - x2
-
-        # If the objects claim to have the same coordinates, there is either
-        # a horrible design crime or we've been given bogus extents. Fall back
-        # on the index in the parent. This is seen with GtkListBox items which
-        # had been scrolled off-screen.
-        if not rv and AXObject.get_parent(obj1) == AXObject.get_parent(obj2):
-            rv = AXObject.get_index_in_parent(obj1) - AXObject.get_index_in_parent(obj2)
-
-        rv = max(rv, -1)
-        rv = min(rv, 1)
-
-        return rv
-
     def getTextBoundingBox(self, obj, start, end):
         try:
             extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
@@ -1830,32 +1767,6 @@ class Utilities:
             return -1, -1, 0, 0
 
         return extents
-
-    def getBoundingBox(self, obj):
-        try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting extents of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1, 0, 0
-
-        return extents.x, extents.y, extents.width, extents.height
-
-    def hasNoSize(self, obj):
-        if not obj:
-            return False
-
-        if AXUtilities.is_application(obj):
-            return False
-
-        try:
-            extents = obj.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting extents for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return not (extents.width and extents.height)
 
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
         return AXObject.find_all_descendants(root, includeIf, excludeIf)
@@ -2838,42 +2749,6 @@ class Utilities:
                or character in r'!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
 
-    def intersectingRegion(self, obj1, obj2):
-        """Returns the extents of the intersection of obj1 and obj2."""
-
-        try:
-            extents1 = obj1.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-            extents2 = obj2.queryComponent().getExtents(Atspi.CoordType.WINDOW)
-        except Exception:
-            return 0, 0, 0, 0
-
-        return self.intersection(extents1, extents2)
-
-    def intersection(self, extents1, extents2):
-        x1, y1, width1, height1 = extents1
-        x2, y2, width2, height2 = extents2
-
-        xPoints1 = range(x1, x1 + width1 + 1)
-        xPoints2 = range(x2, x2 + width2 + 1)
-        xIntersection = sorted(set(xPoints1).intersection(set(xPoints2)))
-
-        yPoints1 = range(y1, y1 + height1 + 1)
-        yPoints2 = range(y2, y2 + height2 + 1)
-        yIntersection = sorted(set(yPoints1).intersection(set(yPoints2)))
-
-        if not (xIntersection and yIntersection):
-            return 0, 0, 0, 0
-
-        x = xIntersection[0]
-        y = yIntersection[0]
-        width = xIntersection[-1] - x
-        height = yIntersection[-1] - y
-
-        return x, y, width, height
-
-    def containsRegion(self, extents1, extents2):
-        return self.intersection(extents1, extents2) != (0, 0, 0, 0)
-
     @staticmethod
     def _allNamesForKeyCode(keycode):
         keymap = Gdk.Keymap.get_default()
@@ -3315,35 +3190,6 @@ class Utilities:
     def rowOrColumnCountUnknown(self, obj):
         return AXUtilities.is_indeterminate(obj)
 
-    def _objectBoundsMightBeBogus(self, obj):
-        return False
-
-    def _objectMightBeBogus(self, obj):
-        return False
-
-    def containsPoint(self, obj, x, y, margin=2):
-        if self._objectBoundsMightBeBogus(obj) and self.textAtPoint(obj, x, y) == ("", 0, 0):
-            return False
-
-        if self._objectMightBeBogus(obj):
-            return False
-
-        try:
-            component = obj.queryComponent()
-        except Exception:
-            return False
-
-        if component.contains(x, y, Atspi.CoordType.WINDOW):
-            return True
-
-        x1, y1 = x + margin, y + margin
-        if component.contains(x1, y1, Atspi.CoordType.WINDOW):
-            tokens = ["SCRIPT UTILITIES: ", obj, f"contains ({x1},{y1}); not ({x},{y}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
-
     def _boundsIncludeChildren(self, obj):
         if obj is None:
             return False
@@ -3379,67 +3225,6 @@ class Utilities:
             return True
 
         return False
-
-    def accessibleAtPoint(self, root, x, y):
-        if self.isHidden(root):
-            return None
-
-        try:
-            component = root.queryComponent()
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying component of", root]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        result = component.getAccessibleAtPoint(x, y, Atspi.CoordType.WINDOW)
-        tokens = ["SCRIPT UTILITIES: ", result, "is descendant of", root, f"at ({x}, {y})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return result
-
-    def descendantAtPoint(self, root, x, y):
-        if not root:
-            return None
-
-        AXObject.clear_cache(root)
-        if not (AXUtilities.is_showing(root) and AXUtilities.is_visible(root)):
-            return None
-
-        if self.containsPoint(root, x, y):
-            if self._treatAsLeafNode(root) or not self._boundsIncludeChildren(root):
-                return root
-        elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
-            return None
-
-        if AXObject.supports_table(root):
-            child = self.accessibleAtPoint(root, x, y)
-            if child and child != root:
-                cell = self.descendantAtPoint(child, x, y)
-                if cell:
-                    return cell
-                return child
-
-        candidates_showing = []
-        candidates = []
-        for child in AXObject.iter_children(root):
-            obj = self.descendantAtPoint(child, x, y)
-            if obj:
-                return obj
-            if not self.containsPoint(child, x, y):
-                continue
-            if self.queryNonEmptyText(child):
-                string = child.queryText().getText(0, -1)
-                if re.search(r"[^\ufffc\s]", string):
-                    candidates.append(child)
-                    if AXUtilities.is_showing(child):
-                        candidates_showing.append(child)
-
-        if len(candidates_showing) == 1:
-            return candidates_showing[0]
-        if len(candidates) == 1:
-            # It should have had state "showing" actually
-            return candidates[0]
-
-        return None
 
     def isMultiParagraphObject(self, obj):
         if not obj:

@@ -82,7 +82,6 @@ class Utilities(script_utilities.Utilities):
         self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
-        self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasVisibleCaption = {}
         self._hasDetails = {}
@@ -178,7 +177,6 @@ class Utilities(script_utilities.Utilities):
         self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
-        self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasVisibleCaption = {}
         self._hasDetails = {}
@@ -642,19 +640,6 @@ class Utilities(script_utilities.Utilities):
             ext = AXComponent.get_rect(obj)
 
         return [ext.x, ext.y, ext.width, ext.height]
-
-    def descendantAtPoint(self, root, x, y):
-        result = None
-        if self.isDocument(root):
-            result = self.accessibleAtPoint(root, x, y)
-
-        if result is None:
-            result = super().descendantAtPoint(root, x, y)
-
-        if self.isListItemMarker(result) or self.isStaticTextLeaf(result):
-            return AXObject.get_parent(result)
-
-        return result
 
     def _preserveTree(self, obj):
         if not (obj and AXObject.get_child_count(obj)):
@@ -3070,27 +3055,6 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def _objectBoundsMightBeBogus(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super()._objectBoundsMightBeBogus(obj)
-
-        if not AXUtilities.is_link(obj) or not AXObject.supports_text(obj):
-            return False
-
-        text = obj.queryText()
-        start = list(text.getRangeExtents(0, 1, Atspi.CoordType.WINDOW))
-        end = list(text.getRangeExtents(
-            text.characterCount - 1, text.characterCount, Atspi.CoordType.WINDOW))
-        if self.extentsAreOnSameLine(start, end):
-            return False
-
-        if not self.hasPresentableText(AXObject.get_parent(obj)):
-            return False
-
-        tokens = ["WEB: Objects bounds of", obj, "might be bogus"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return True
-
     def targetsForLabel(self, obj):
         return AXObject.get_relation_targets(obj, Atspi.RelationType.LABEL_FOR)
 
@@ -4390,18 +4354,6 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
-
-    def hasNoSize(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().hasNoSize(obj)
-
-        rv = self._hasNoSize.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().hasNoSize(obj)
-        self._hasNoSize[hash(obj)] = rv
-        return rv
 
     def _canHaveCaretContext(self, obj):
         rv = self._canHaveCaretContextDecision.get(hash(obj))
