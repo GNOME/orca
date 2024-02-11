@@ -106,6 +106,23 @@ class AXObject:
         thread.start()
 
     @staticmethod
+    def is_bogus(obj):
+        """Hack to ignore certain objects. All entries must have a bug."""
+
+        # TODO - JD: Periodically check for fixes and remove hacks which are no
+        # longer needed.
+
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1879750
+        if AXObject.get_role(obj) == Atspi.Role.SECTION \
+           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME \
+           and Atspi.Accessible.get_toolkit_name(obj).lower() == "gecko":
+            tokens = ["AXObject:", obj, "is bogus. See mozilla bug 1879750."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            return True
+
+        return False
+
+    @staticmethod
     def is_valid(obj):
         """Returns False if we know for certain this object is invalid"""
 

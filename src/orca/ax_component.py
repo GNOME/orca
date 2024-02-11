@@ -169,6 +169,9 @@ class AXComponent:
         if not AXObject.supports_component(obj):
             return False
 
+        if AXObject.is_bogus(obj):
+            return False
+
         try:
             result = Atspi.Component.contains(obj, x, y, Atspi.CoordType.WINDOW)
         except Exception as error:
