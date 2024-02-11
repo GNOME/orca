@@ -111,7 +111,11 @@ class _StringContext:
             if thisNewLineCount and thisBox[3] / thisNewLineCount == otherBox[3]:
                 thisBox = *thisBox[0:3], otherBox[3]
 
-        if self._script.utilities.intersection(thisBox, otherBox) != thisBox:
+        thisRect = Atspi.Rect()
+        thisRect.x, thisRect.y, thisRect.width, thisRect.height = thisBox
+        otherRect = Atspi.Rect()
+        otherRect.x, otherRect.y, otherRect.width, otherRect.height = otherBox
+        if AXComponent.get_rect_intersection(thisRect, otherRect) != thisRect:
             return False
 
         if not (self._string and self._string.strip() in other._string):
