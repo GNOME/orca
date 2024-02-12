@@ -372,11 +372,6 @@ class SpeechServer(speechserver.SpeechServer):
         #
         text = text.replace('\u00a0', ' ')
 
-        # Replace newline followed by full stop, since
-        # this seems to crash sd, see bgo#618334.
-        #
-        text = text.replace('\n.', '\n')
-
         # Transcribe to SSML, translating U+E000 into marks
         # Note: we need to do this after all mangling otherwise the ssml markup
         # would get mangled too
