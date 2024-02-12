@@ -342,6 +342,9 @@ class KeyBinding:
         if not (self.keysymstring and self._enabled):
             return
 
+        if orca_state.device is None:
+            return
+
         for kd in self.keyDefs():
             self._grab_ids.append(orca_state.device.add_key_grab(kd, None))
 
