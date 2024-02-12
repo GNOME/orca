@@ -181,6 +181,33 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
+You can fire the announcement signal in GTK 4 starting from 4.14 as well:
+
+```python
+#!/usr/bin/python3
+
+import gi
+gi.require_version("Gtk", "4.0")
+
+from gi.repository import Gtk
+
+def on_button_clicked(button):
+    button.announce("Hello world. I am a notification.", Gtk.AccessibleAnnouncementPriority.MEDIUM)
+
+def on_activate(application):
+    window = Gtk.ApplicationWindow(application=application)
+    button = Gtk.Button(label="Make a notification")
+    button.connect("clicked", on_button_clicked)
+    window.set_child(button)
+    window.present()
+
+app = Gtk.Application()
+app.connect("activate", on_activate)
+app.run(None)
+```
+
+Note that in older GTK 4 releases there is no way how to do this, as you can't emit raw AT-SPI2 events, or do similar platform-specific things.
+
 **Please note:** Because "assertive" messages can be disruptive if presented at the wrong
 time, Orca *currently* treats an "assertive" notification from non-web applications the
 same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
