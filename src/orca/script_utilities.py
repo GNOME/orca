@@ -2526,6 +2526,12 @@ class Utilities:
         dictionary.
         """
 
+        # TODO - JD: We had been making this change in response to bgo#591734.
+        # It may or may not still be needed or wanted to replace no-break-space
+        # characters with plain spaces. Surely modern synthesizers can cope with
+        # both types of spaces.
+        line = line.replace("\u00a0", " ")
+
         if settings.speakMultiCaseStringsAsWords:
             line = self._processMultiCaseString(line)
 

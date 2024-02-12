@@ -367,11 +367,6 @@ class SpeechServer(speechserver.SpeechServer):
         if script is not None:
             text = script.utilities.adjustForPronunciation(text)
 
-        # Replace no break space characters with plain spaces since some
-        # synthesizers cannot handle them.  See bug #591734.
-        #
-        text = text.replace('\u00a0', ' ')
-
         # Transcribe to SSML, translating U+E000 into marks
         # Note: we need to do this after all mangling otherwise the ssml markup
         # would get mangled too
