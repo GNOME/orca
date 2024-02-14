@@ -122,7 +122,7 @@ class Script(default.Script):
         # We have no reliable way of knowing a password is being entered into
         # a terminal -- other than the fact that the text typed isn't there.
         char, start = AXText.get_character_at_offset(event.getObject())[0:2]
-        prevChar = AXText.get_character_at_offset(start - 1)
+        prevChar = AXText.get_character_at_offset(event.getObject(), start - 1)[0]
         string = event.event_string
         if string not in [prevChar, "space", char]:
             return False
