@@ -1065,19 +1065,15 @@ class Script(script.Script):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
+        if AXText.is_whitespace_or_empty(obj):
             utterances = self.speechGenerator.generateSpeech(obj)
             speech.speak(utterances)
-        except AttributeError:
-            pass
-        else:
-            if offset is None:
-                offset = text.caretOffset
-            speech.sayAll(self.textLines(obj, offset),
-                          self.__sayAllProgressCallback)
+            return True
 
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
     def cycleSettingsProfile(self, inputEvent=None):
@@ -2012,13 +2008,9 @@ class Script(script.Script):
             if context.endOffset - context.startOffset > minCharCount:
                 break
 
-        try:
-            text = context.obj.queryText()
-        except Exception:
-            pass
-        else:
+        # TODO - JD: Why do we only update focus if text is supported?
+        if AXText.set_caret_offset(context.obj, context.startOffset):
             focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
-            text.setCaretOffset(context.startOffset)
 
         self.sayAll(None, context.obj, context.startOffset)
         return True
@@ -2027,32 +2019,19 @@ class Script(script.Script):
         if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
             return False
 
-        try:
-            text = context.obj.queryText()
-        except Exception:
-            pass
-        else:
+        # TODO - JD: Why do we only update focus if text is supported?
+        if AXText.set_caret_offset(context.obj, context.endOffset):
             focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
-            text.setCaretOffset(context.endOffset)
 
         self.sayAll(None, context.obj, context.endOffset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
-        # [[[TODO: WDW - this needs work.  Need to be able to manage
-        # the monitoring of progress and couple that with both updating
-        # the visual progress of what is being spoken as well as
-        # positioning the cursor when speech has stopped.]]]
-        #
-        try:
-            text = context.obj.queryText()
-            char = text.getText(context.currentOffset, context.currentOffset+1)
-        except Exception:
-            return
+        # TODO - JD: Can we scroll the content into view instead of setting
+        # the caret?
 
-        # Setting the caret at the offset of an embedded object results in
-        # focus changes.
-        if char == self.EMBEDDED_OBJECT_CHARACTER:
+        # TODO - JD: This condition shouldn't happen. Make sure of that.
+        if AXText.character_at_offset_is_eoc(context.obj, context.currentOffset):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
@@ -2073,17 +2052,17 @@ class Script(script.Script):
             self._inSayAll = False
             self._sayAllContexts = []
             focus_manager.getManager().emit_region_changed(context.obj, context.currentOffset)
-            text.setCaretOffset(context.currentOffset)
+            AXText.set_caret_offset(context.obj, context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             focus_manager.getManager().set_locus_of_focus(None, context.obj, notify_script=False)
             focus_manager.getManager().emit_region_changed(
                 context.obj, context.currentOffset, mode=focus_manager.SAY_ALL)
-            text.setCaretOffset(context.currentOffset)
+            AXText.set_caret_offset(context.obj, context.currentOffset)
 
-        # If there is a selection, clear it. See bug #489504 for more details.
-        #
-        if text.getNSelections() > 0:
-            text.setSelection(0, context.currentOffset, context.currentOffset)
+        # TODO - JD: This was in place for bgo#489504. But setting the caret should cause
+        # the selection to be cleared by the implementation. Find out where that's not the
+        # case and see if they'll fix it.
+        AXText.clear_all_selected_text(context.obj)
 
     def inSayAll(self, treatInterruptedAsIn=True):
         if self._inSayAll:
@@ -2492,107 +2471,40 @@ class Script(script.Script):
         """
 
         self._sayAllIsInterrupted = False
-        try:
-            text = obj.queryText()
-        except Exception:
-            self._inSayAll = False
-            self._sayAllContexts = []
-            return
-
         self._inSayAll = True
-        length = text.characterCount
-        if offset is None:
-            offset = text.caretOffset
-
-        # Determine the correct "say all by" mode to use.
-        #
-        sayAllStyle = settings_manager.getManager().getSetting('sayAllStyle')
-        if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = Atspi.TextBoundaryType.SENTENCE_START
-        elif sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = Atspi.TextBoundaryType.LINE_START
-        else:
-            mode = Atspi.TextBoundaryType.LINE_START
-
         priorObj = obj
+        document = self.utilities.getDocumentForObject(obj)
 
-        # Get the next line of text to read
-        #
-        done = False
-        while not done:
+        while obj:
             speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))
 
-            lastEndOffset = -1
-            while offset < length:
-                [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    offset, mode)
+            style = settings_manager.getManager().getSetting('sayAllStyle')
+            if style == settings.SAYALL_STYLE_SENTENCE and AXText.supports_sentence_iteration(obj):
+                iterator = AXText.iter_sentence
+            else:
+                iterator = AXText.iter_line
 
-                # Some applications that don't support sentence boundaries
-                # will provide the line boundary results instead; others
-                # will return nothing.
-                #
-                if not lineString:
-                    mode = Atspi.TextBoundaryType.LINE_START
-                    [lineString, startOffset, endOffset] = \
-                        text.getTextAtOffset(offset, mode)
-
-                if endOffset > text.characterCount:
-                    tokens = ["DEFAULT: end offset", endOffset, " > character count",
-                              text.characterCount,
-                              "resulting from text.getTextAtOffset(", offset, mode, ") for", obj]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    endOffset = text.characterCount
-
-                # [[[WDW - HACK: this is here because getTextAtOffset
-                # tends not to be implemented consistently across toolkits.
-                # Sometimes it behaves properly (i.e., giving us an endOffset
-                # that is the beginning of the next line), sometimes it
-                # doesn't (e.g., giving us an endOffset that is the end of
-                # the current line).  So...we hack.  The whole 'max' deal
-                # is to account for lines that might be a brazillion lines
-                # long.]]]
-                #
-                if endOffset == lastEndOffset:
-                    offset = max(offset + 1, lastEndOffset + 1)
-                    lastEndOffset = endOffset
-                    continue
-
-                lastEndOffset = endOffset
-                offset = endOffset
-
-                voice = self.speechGenerator.voice(obj=obj, string=lineString)
+            for string, start, end in iterator(obj, offset):
+                voice = self.speechGenerator.voice(obj=obj, string=string)
                 if voice and isinstance(voice, list):
                     voice = voice[0]
 
-                lineString = \
-                    self.utilities.adjustForLinks(obj, lineString, startOffset)
-                lineString = self.utilities.adjustForRepeats(lineString)
+                string = self.utilities.adjustForLinks(obj, string, start)
+                string = self.utilities.adjustForRepeats(string)
 
-                context = speechserver.SayAllContext(
-                    obj, lineString, startOffset, endOffset)
+                context = speechserver.SayAllContext(obj, string, start, end)
                 tokens = ["DEFAULT:", context]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
                 self._sayAllContexts.append(context)
-                self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)
+                self.eventSynthesizer.scroll_into_view(obj, start, end)
                 yield [context, voice]
 
-            moreLines = False
-            relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
-            if relation:
-                priorObj = obj
-                obj = relation.get_target(0)
-
-                try:
-                    text = obj.queryText()
-                except NotImplementedError:
-                    return
-
-                length = text.characterCount
-                offset = 0
-                moreLines = True
+            priorObj = obj
+            offset = 0
+            obj = self.utilities.findNextObject(obj)
+            if document != self.utilities.getDocumentForObject(obj):
                 break
-            if not moreLines:
-                done = True
 
         self._inSayAll = False
         self._sayAllContexts = []
