@@ -47,6 +47,7 @@ from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -329,22 +330,12 @@ class Utilities(script_utilities.Utilities):
             return
 
         oldFocus = focus_manager.getManager().get_locus_of_focus()
-        self.clearTextSelection(oldFocus)
+        AXText.clear_all_selected_text(oldFocus)
         focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
         if grabFocus:
             AXObject.grab_focus(obj)
 
-        # Don't use queryNonEmptyText() because we need to try to force-update focus.
-        if AXObject.supports_text(obj):
-            try:
-                obj.queryText().setCaretOffset(offset)
-            except Exception as error:
-                tokens = ["WEB: Exception setting caret to", offset, "in", obj, ":", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                tokens = ["WEB: Caret set to", offset, "in", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        AXText.set_caret_offset(obj, offset)
         if self._script.useFocusMode(obj, oldFocus) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
 
@@ -613,23 +604,15 @@ class Utilities(script_utilities.Utilities):
             return [0, 0, 0, 0]
 
         result = [0, 0, 0, 0]
-        try:
-            text = obj.queryText()
-            if text.characterCount and 0 <= startOffset < endOffset:
-                result = list(text.getRangeExtents(startOffset, endOffset, Atspi.CoordType.WINDOW))
-        except NotImplementedError:
-            pass
-        except Exception:
-            tokens = ["WEB: Exception getting range extents for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return [0, 0, 0, 0]
-        else:
+        if AXText.get_character_count and 0 <= startOffset < endOffset:
+            rect = AXText.get_range_rect(obj, startOffset, endOffset)
+            result = [rect.x, rect.y, rect.width, rect.height]
             if result[0] and result[1] and result[2] == 0 and result[3] == 0 \
-               and text.getText(startOffset, endOffset).strip():
+               and AXText.get_substring(obj, startOffset, endOffset).strip():
                 tokens = ["WEB: Suspected bogus range extents for",
                           obj, "(chars:", startOffset, ",", endOffset, "):", result]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            elif text.characterCount:
+            else:
                 return result
 
         parent = AXObject.get_parent(obj)
@@ -679,7 +662,7 @@ class Utilities(script_utilities.Utilities):
 
         return ""
 
-    def textAttributes(self, acc, offset, get_defaults=False):
+    def textAttributes(self, acc, offset=None, get_defaults=False):
         attrsForObj = self._currentTextAttrs.get(hash(acc)) or {}
         if offset in attrsForObj:
             return attrsForObj.get(offset)
@@ -1431,8 +1414,7 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(obj):
             return False
 
-        text = obj.queryText()
-        if offset == text.characterCount:
+        if offset == AXText.get_character_count(obj):
             tokens = ["WEB: ", obj, "offset", offset, "is end of line: offset is characterCount"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1442,8 +1424,7 @@ class Utilities(script_utilities.Utilities):
         # for the line at that offset. Here we are trying to figure out where asking
         # for the line at offset will give us the next line rather than the line where
         # the cursor is physically blinking.
-
-        char = text.getText(offset, offset + 1)
+        char = AXText.get_character_at_offset(obj, offset)
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             prevExtents = self.getExtents(obj, offset - 1, offset)
             thisExtents = self.getExtents(obj, offset, offset + 1)
@@ -1768,18 +1749,7 @@ class Utilities(script_utilities.Utilities):
             super().updateCachedTextSelection(obj)
 
     def _findSelectionBoundaryObject(self, root, findStart=True):
-        try:
-            text = root.queryText()
-        except Exception:
-            tokens = ["ERROR: Exception querying text for", root]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if not text.getNSelections():
-            return None
-
-        start, end = text.getSelection(0)
-        string = text.getText(start, end)
+        string = AXText.get_selected_text(root)[0]
         if not string:
             return None
 
@@ -3025,11 +2995,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         targets = self.labelTargets(obj)
         if targets:
-            try:
-                text = obj.queryText()
-                end = text.characterCount
-            except Exception:
-                end = 1
+            end = max(1, AXText.get_character_count(obj))
             x, y, width, height = self.getExtents(obj, 0, end)
             if x < 0 or y < 0:
                 rv = True
@@ -3203,8 +3169,7 @@ class Utilities(script_utilities.Utilities):
                 rv = AXObject.has_action(obj, "click-ancestor")
 
         if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
-            string = obj.queryText().getText(0, -1)
-            if not string.strip():
+            if not AXText.get_all_text(obj).strip():
                 rv = not (AXUtilities.is_static(obj) or AXUtilities.is_link(obj))
 
         self._isClickableElement[hash(obj)] = rv
@@ -3462,10 +3427,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         def _isMatch(x):
-            try:
-                string = x.queryText().getText(0, -1).strip()
-            except Exception:
-                return False
+            string = AXText.get_all_text(x).strip()
             if entryName != string:
                 return False
             return AXUtilities.is_section(x) or AXUtilities.is_static(x)
@@ -3709,7 +3671,7 @@ class Utilities(script_utilities.Utilities):
         if self.isCustomElement(obj) and self.hasExplicitName(obj) \
            and AXUtilities.is_section(obj) \
            and AXObject.supports_text(obj) \
-           and not re.search(r'[^\s\ufffc]', obj.queryText().getText(0, -1)):
+           and not re.search(r'[^\s\ufffc]', AXText.get_all_text(obj)):
             for child in AXObject.iter_children(obj):
                 if not (AXUtilities.is_image_or_canvas(child) or self.isSVG(child)):
                     break
@@ -3803,8 +3765,7 @@ class Utilities(script_utilities.Utilities):
         elif self.hasValidName(obj) \
                 or AXObject.get_description(obj) or AXObject.get_child_count(obj):
             rv = False
-        elif AXObject.supports_text(obj) and obj.queryText().characterCount \
-             and obj.queryText().getText(0, -1) != AXObject.get_name(obj):
+        elif AXText.get_character_count(obj) and AXText.get_all_text(obj) != AXObject.get_name(obj):
             rv = False
         elif AXObject.supports_action(obj):
             names = AXObject.get_action_names(obj)
@@ -4460,11 +4421,8 @@ class Utilities(script_utilities.Utilities):
         container = obj
         contextObj, contextOffset = None, -1
         while obj:
-            try:
-                offset = obj.queryText().caretOffset
-            except Exception:
-                tokens = ["WEB: Exception getting caret offset of", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            offset = AXText.get_caret_offset(obj)
+            if offset < 0:
                 obj = None
             else:
                 contextObj, contextOffset = obj, offset
@@ -4489,14 +4447,10 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return None, -1
 
-        try:
-            offset = obj.queryText().caretOffset
-        except NotImplementedError:
-            offset = 0
-        except Exception:
-            offset = -1
+        if not AXObject.supports_text(obj):
+            return obj, 0
 
-        return obj, offset
+        return obj, AXText.get_caret_offset(obj)
 
     def getCaretContext(self, documentFrame=None, getReplicant=False, searchIfNeeded=True):
         tokens = ["WEB: Getting caret context for", documentFrame]

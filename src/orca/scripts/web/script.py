@@ -50,6 +50,7 @@ from orca.scripts import default
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 from .bookmarks import Bookmarks
@@ -624,18 +625,19 @@ class Script(default.Script):
     def presentFindResults(self, obj, offset):
         """Updates the context and presents the find results if appropriate."""
 
-        text = self.utilities.queryNonEmptyText(obj)
-        if not (text and text.getNSelections() > 0):
-            return
-
         document = self.utilities.getDocumentForObject(obj)
         if not document:
             return
 
-        context = self.utilities.getCaretContext(documentFrame=document)
-        start, end = text.getSelection(0)
+        start = AXText.get_selection_start_offset(obj)
+        if start < 0:
+            return
+
         offset = max(offset, start)
+        context = self.utilities.getCaretContext(documentFrame=document)
         self.utilities.setCaretContext(obj, offset, documentFrame=document)
+
+        end = AXText.get_selection_end_offset(obj)
         if end - start < settings_manager.getManager().getSetting('findResultsMinimumLength'):
             return
 
@@ -849,7 +851,7 @@ class Script(default.Script):
 
         contents = None
         if self.utilities.treatAsEndOfLine(obj, offset) and AXObject.supports_text(obj):
-            char = obj.queryText().getText(offset, offset + 1)
+            char = AXText.get_character_at_offset(offset)
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 char = ""
             contents = [[obj, offset, offset + 1, char]]

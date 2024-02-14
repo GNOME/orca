@@ -39,6 +39,7 @@ import orca.script_utilities as script_utilities
 from orca.ax_component import AXComponent
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 #############################################################################
@@ -266,22 +267,9 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def setCaretAtStart(self, obj):
-        def implementsText(obj):
-            return not AXUtilities.is_list(obj) and AXObject.supports_text(obj)
-
-        child = obj
-        if not implementsText(obj):
-            child = AXObject.find_descendant(obj, implementsText)
-            if not child:
-                return None, -1
-
-        index = -1
-        text = child.queryText()
-        for i in range(text.characterCount):
-            if text.setCaretOffset(i):
-                index = i
-                break
-
+        child, index = self.getFirstCaretPosition(obj)
+        if child is not None:
+            AXText.set_caret_offset(child, index)
         return child, index
 
     def treatAsBrowser(self, obj):
