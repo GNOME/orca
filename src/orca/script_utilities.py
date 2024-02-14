@@ -1752,16 +1752,6 @@ class Utilities:
 
         return 0
 
-    def getTextBoundingBox(self, obj, start, end):
-        try:
-            extents = obj.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting range extents of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return -1, -1, 0, 0
-
-        return extents
-
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
         return AXObject.find_all_descendants(root, includeIf, excludeIf)
 
@@ -1868,34 +1858,6 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    @staticmethod
-    def adjustTextSelection(obj, offset):
-        """Adjusts the end point of a text selection
-
-        Arguments:
-        - obj: the Accessible object.
-        - offset: the new end point - can be to the left or to the right
-          depending on the direction of selection
-        """
-
-        try:
-            text = obj.queryText()
-        except Exception:
-            return
-
-        if text.getNSelections() <= 0:
-            caretOffset = text.caretOffset
-            startOffset = min(offset, caretOffset)
-            endOffset = max(offset, caretOffset)
-            text.addSelection(startOffset, endOffset)
-        else:
-            startOffset, endOffset = text.getSelection(0)
-            if offset < startOffset:
-                startOffset = offset
-            else:
-                endOffset = offset
-            text.setSelection(0, startOffset, endOffset)
-
     def findPreviousObject(self, obj):
         """Finds the object before this one."""
 
@@ -1960,57 +1922,6 @@ class Utilities:
 
         return textContents, startOffset, endOffset
 
-    @staticmethod
-    def allTextSelections(obj):
-        """Get a list of text selections in the given accessible object,
-        equivalent to getNSelections()*texti.getSelection()
-
-        Arguments:
-        - obj: An accessible.
-
-        Returns list of start and end offsets for multiple selections, or an
-        empty list if nothing is selected or if the accessible does not support
-        the text interface.
-        """
-
-        try:
-            text = obj.queryText()
-        except Exception:
-            return []
-
-        rv = []
-        try:
-            nSelections = text.getNSelections()
-        except Exception:
-            nSelections = 0
-        for i in range(nSelections):
-            rv.append(text.getSelection(i))
-
-        return rv
-
-    def clearTextSelection(self, obj):
-        """Clears the text selection if the object supports it.
-
-        Arguments:
-        - obj: the Accessible object.
-        """
-
-        try:
-            text = obj.queryText()
-        except Exception:
-            return
-
-        for i in range(text.getNSelections()):
-            text.removeSelection(i)
-
-    def containsOnlyEOCs(self, obj):
-        try:
-            string = obj.queryText().getText(0, -1)
-        except Exception:
-            return False
-
-        return string and not re.search(r"[^\ufffc]", string)
-
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with their text.
@@ -2050,30 +1961,6 @@ class Utilities:
                 toBuild[i] = result
 
         return "".join(toBuild)
-
-    def isWordMisspelled(self, obj, offset):
-        """Identifies if the current word is flagged as misspelled by the
-        application. Different applications and toolkits flag misspelled
-        words differently. Thus each script will likely need to implement
-        its own version of this method.
-
-        Arguments:
-        - obj: An accessible which implements the accessible text interface.
-        - offset: Offset in the accessible's text for which to retrieve the
-          attributes.
-
-        Returns True if the word is flagged as misspelled.
-        """
-
-        attributes, start, end  = self.textAttributes(obj, offset, True)
-        if attributes.get("invalid") == "spelling":
-            return True
-        if attributes.get("text-spelling") == "misspelled":
-            return True
-        if attributes.get("underline") in ["error", "spelling"]:
-            return True
-
-        return False
 
     def getError(self, obj):
         return AXUtilities.is_invalid_entry(obj)
@@ -2138,36 +2025,6 @@ class Utilities:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return ""
 
-    def selectedText(self, obj):
-        """Get the text selection for the given object.
-
-        Arguments:
-        - obj: the text object to extract the selected text from.
-
-        Returns: the selected text contents plus the start and end
-        offsets within the text.
-        """
-
-        textContents = ""
-        startOffset = endOffset = 0
-        try:
-            textObj = obj.queryText()
-        except Exception:
-            nSelections = 0
-        else:
-            nSelections = textObj.getNSelections()
-
-        for i in range(0, nSelections):
-            [startOffset, endOffset] = textObj.getSelection(i)
-            if startOffset == endOffset:
-                continue
-            selectedText = self.expandEOCs(obj, startOffset, endOffset)
-            if i > 0:
-                textContents += " "
-            textContents += selectedText
-
-        return [textContents, startOffset, endOffset]
-
     def getCaretContext(self):
         obj = focus_manager.getManager().get_locus_of_focus()
         offset = AXText.get_caret_offset(obj)
@@ -2226,46 +2083,6 @@ class Utilities:
         """
 
         return self._script.attributeNamesDict.get(attribName, attribName)
-
-    def getAllTextAttributesForObject(self, obj, startOffset=0, endOffset=-1):
-        """Returns a list of (start, end, attrsDict) tuples for obj."""
-        try:
-            text = obj.queryText()
-        except Exception:
-            return []
-
-        if endOffset == -1:
-            endOffset = text.characterCount
-
-        tokens = ["SCRIPT UTILITIES: Getting text attributes for", obj,
-                  f"chars: {startOffset}-{endOffset}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        startTime = time.time()
-
-        rv = []
-        offset = startOffset
-        while offset < endOffset:
-            try:
-                attrList, start, end = text.getAttributeRun(offset)
-                tokens = [f"SCRIPT UTILITIES: At {offset}:", attrList, f"({start}, {end})"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            except Exception as error:
-                msg = f"SCRIPT UTILITIES: Exception getting attributes at {offset}: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return rv
-            if start <= end:
-                attrDict = dict([attr.split(':', 1) for attr in attrList])
-                rv.append((max(start, offset), end, attrDict))
-            else:
-                # TODO - JD: We're sometimes seeing this from WebKit, e.g. in Evo gitlab messages.
-                msg = f"SCRIPT UTILITIES: Start offset {start} > end offset {end}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            offset = max(end, offset + 1)
-
-        endTime = time.time()
-        msg = f"SCRIPT UTILITIES: {len(rv)} attribute ranges found in {endTime - startTime:.4f}s"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return rv
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
         # TODO - JD: Replace all calls to this function with the one below
