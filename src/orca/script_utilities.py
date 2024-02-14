@@ -275,7 +275,9 @@ class Utilities:
 
         textObjects = []
         for detail in details:
-            textObjects.extend(self.findAllDescendants(detail, self.queryNonEmptyText))
+
+            textObjects.extend(self.findAllDescendants(
+                detail, lambda x: not AXText.is_whitespace_or_empty(x)))
 
         return textObjects
 
@@ -1535,7 +1537,7 @@ class Utilities:
         if objects:
             return objects
 
-        if AXUtilities.is_label(root) and not hasNameOrDesc and not self.queryNonEmptyText(root):
+        if AXUtilities.is_label(root) and not hasNameOrDesc and AXText.is_whitespace_or_empty(root):
             return []
 
         containers = [Atspi.Role.CANVAS,
@@ -1904,20 +1906,18 @@ class Utilities:
 
         prevObj = self.findPreviousObject(obj)
         while prevObj:
-            if self.queryNonEmptyText(prevObj):
-                selection = AXText.get_selected_text(prevObj)[0]
-                if not selection:
-                    break
-                textContents = f"{selection} {textContents}"
+            selection = AXText.get_selected_text(prevObj)[0]
+            if not selection:
+                 break
+            textContents = f"{selection} {textContents}"
             prevObj = self.findPreviousObject(prevObj)
 
         nextObj = self.findNextObject(obj)
         while nextObj:
-            if self.queryNonEmptyText(nextObj):
-                selection = AXText.get_selected_text(nextObj)[0]
-                if not selection:
-                    break
-                textContents = f"{textContents} {selection}"
+            selection = AXText.get_selected_text(nextObj)[0]
+            if not selection:
+                break
+            textContents = f"{textContents} {selection}"
             nextObj = self.findNextObject(nextObj)
 
         return textContents, startOffset, endOffset
@@ -1972,13 +1972,8 @@ class Utilities:
         return False
 
     def getCharacterAtOffset(self, obj, offset=None):
-        text = self.queryNonEmptyText(obj)
-        if text:
-            if offset is None:
-                offset = text.caretOffset
-            return text.getText(offset, offset + 1)
-
-        return ""
+        # TODO - JD: All callers should use the following function instead.
+        return AXText.get_character_at_offset(obj, offset)
 
     def queryNonEmptyText(self, obj):
         """Get the text interface associated with an object, if it is
@@ -2013,13 +2008,11 @@ class Utilities:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_password_text(event.source):
-            text = self.queryNonEmptyText(event.source)
-            if text:
-                string = text.getText(0, -1)
-                if string:
-                    tokens = ["HACK: Returning last char in '", string, "'"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return string[-1]
+            string = AXText.get_all_text(event.source)
+            if string:
+                tokens = ["HACK: Returning last char in '", string, "'"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return string[-1]
 
         msg = "FAIL: Unable to correct broken text insertion event"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -2684,11 +2677,7 @@ class Utilities:
         return obj, offset + 1
 
     def lastContext(self, root):
-        offset = 0
-        text = self.queryNonEmptyText(root)
-        if text:
-            offset = text.characterCount - 1
-
+        offset = max(0, AXText.get_character_count(root) - 1)
         return root, offset
 
     def selectedChildren(self, obj):

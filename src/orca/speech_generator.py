@@ -392,8 +392,8 @@ class SpeechGenerator(generator.Generator):
 
         endOffset = args.get('endOffset')
         if endOffset is not None:
-            text = self._script.utilities.queryNonEmptyText(obj)
-            if text  and text.characterCount != endOffset:
+            length = AXText.get_character_count(obj)
+            if length and length != endOffset:
                 return []
 
         result = [messages.CONTENT_DELETION_END]
@@ -435,8 +435,8 @@ class SpeechGenerator(generator.Generator):
 
         endOffset = args.get('endOffset')
         if endOffset is not None:
-            text = self._script.utilities.queryNonEmptyText(obj)
-            if text and text.characterCount != endOffset:
+            length = AXText.get_character_count(obj)
+            if length and length != endOffset:
                 return []
 
         result = [messages.CONTENT_INSERTION_END]
@@ -479,8 +479,8 @@ class SpeechGenerator(generator.Generator):
 
         endOffset = args.get('endOffset')
         if endOffset is not None:
-            text = self._script.utilities.queryNonEmptyText(obj)
-            if text and text.characterCount != endOffset:
+            length = AXText.get_character_count(obj)
+            if length and length != endOffset:
                 return []
 
         result = [messages.CONTENT_MARK_END]

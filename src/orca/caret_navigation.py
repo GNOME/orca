@@ -34,6 +34,7 @@ from . import messages
 from . import orca_state
 from . import settings_manager
 
+from .ax_text import AXText
 
 class CaretNavigation:
     """Implements the caret navigation support available to scripts."""
@@ -537,11 +538,7 @@ class CaretNavigation:
         tokens = ["CARET NAVIGATION: Last object in", document, "is", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        offset = 0
-        text = script.utilities.queryNonEmptyText(obj)
-        if text:
-            offset = text.characterCount - 1
-
+        offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
             lastobj, lastoffset = script.utilities.nextContext(obj, offset)
             if not lastobj:

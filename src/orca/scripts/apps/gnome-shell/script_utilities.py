@@ -32,6 +32,7 @@ from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities
 
+from orca.ax_text import AXText
 
 class Utilities(script_utilities.Utilities):
 
@@ -60,13 +61,11 @@ class Utilities(script_utilities.Utilities):
             msg = "GNOME SHELL: Broken text insertion event"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-            text = self.queryNonEmptyText(event.source)
-            if text:
-                string = text.getText(0, -1)
-                if string:
-                    msg = f"GNOME SHELL: Returning last char in '{string}'"
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
-                    return string[-1]
+            string = AXText.get_all_text(event.source)
+            if string:
+                msg = f"GNOME SHELL: Returning last char in '{string}'"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return string[-1]
 
             msg = "GNOME SHELL: Unable to correct broken text insertion event"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

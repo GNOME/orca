@@ -1018,7 +1018,7 @@ class Script(script.Script):
         if self.eventSynthesizer.try_all_clickable_actions(focus):
             return True
 
-        if self.utilities.queryNonEmptyText(focus):
+        if AXText.get_character_count(focus):
             if self.eventSynthesizer.click_character(focus, 1):
                 return True
 
