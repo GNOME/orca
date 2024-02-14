@@ -40,6 +40,7 @@ from . import settings
 from .ax_component import AXComponent
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 
@@ -106,24 +107,11 @@ class Word:
         if attr != "chars":
             return super().__getattribute__(attr)
 
-        # TODO - JD: For now, don't fake character and word extents.
-        # The main goal is to improve reviewability.
-        extents = self.x, self.y, self.width, self.height
-
-        try:
-            text = self.zone.accessible.queryText()
-        except Exception:
-            text = None
-
         chars = []
         for i, char in enumerate(self.string):
             start = i + self.startOffset
-            if text:
-                try:
-                    extents = text.getRangeExtents(start, start+1, Atspi.CoordType.WINDOW)
-                except Exception as error:
-                    tokens = ["FLAT REVIEW: Exception in getRangeExtents:", error]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            rect1 = AXText.get_character_rect(self.zone.accessible, start)
+            extents = rect1.x, rect1.y, rect1.width, rect1.height
             chars.append(Char(self, i, start, char, *extents))
 
         return chars
@@ -278,7 +266,6 @@ class TextZone(Zone):
 
         self.startOffset = startOffset
         self.endOffset = self.startOffset + len(string)
-        self._itext = self.accessible.queryText()
 
     def __getattribute__(self, attr):
         """To ensure we update the content."""
@@ -286,11 +273,12 @@ class TextZone(Zone):
         if attr not in ["words", "string"]:
             return super().__getattribute__(attr)
 
-        string = self._itext.getText(self.startOffset, self.endOffset)
+        string = AXText.get_substring(self.accessible, self.startOffset, self.endOffset)
         words = []
         for i, word in enumerate(re.finditer(self.WORDS_RE, string)):
             start, end = map(lambda x: x + self.startOffset, word.span())
-            extents = self._itext.getRangeExtents(start, end, Atspi.CoordType.WINDOW)
+            rect = AXText.get_range_rect(self.accessible, start, end)
+            extents = rect.x, rect.y, rect.width, rect.height
             words.append(Word(self, i, start, word.group(), *extents))
 
         self._string = string
@@ -300,11 +288,10 @@ class TextZone(Zone):
     def hasCaret(self):
         """Returns True if this Zone contains the caret."""
 
-        offset = self._itext.caretOffset
-        if self.startOffset <= offset < self.endOffset:
+        if self.startOffset <= AXText.get_caret_offset(self.accessible) < self.endOffset:
             return True
 
-        return self.endOffset == self._itext.characterCount
+        return self.endOffset == AXText.get_character_count(self.accessible)
 
     def wordWithCaret(self):
         """Returns the Word and relative offset with the caret."""
@@ -312,7 +299,7 @@ class TextZone(Zone):
         if not self.hasCaret():
             return None, -1
 
-        return self.getWordAtOffset(self._itext.caretOffset)
+        return self.getWordAtOffset(AXText.get_caret_offset(self.accessible))
 
 
 class StateZone(Zone):
@@ -561,33 +548,13 @@ class Context:
         substrings = [(*m.span(), m.group(0))  for m in re.finditer(r"[^\ufffc]+", string)]
         substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
         for (start, end, substring) in substrings:
-            extents = accessible.queryText().getRangeExtents(start, end, Atspi.CoordType.WINDOW)
-            rect = Atspi.Rect()
-            rect.x, rect.y, rect.width, rect.height = extents
+            rect = AXText.get_range_rect(accessible, start, end)
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
             if not AXComponent.is_empty_rect(intersection):
                 clipping = intersection.x, intersection.y, intersection.width, intersection.height
                 zones.append(TextZone(accessible, start, substring, *clipping))
 
         return zones
-
-    def _getLines(self, accessible, startOffset, endOffset):
-        # TODO - JD: Move this into the script utilities so we can better handle
-        # app and toolkit quirks and also reuse this (e.g. for SayAll).
-        try:
-            text = accessible.queryText()
-        except NotImplementedError:
-            return []
-
-        lines = []
-        offset = startOffset
-        while offset < min(endOffset, text.characterCount):
-            result = text.getTextAtOffset(offset, Atspi.TextBoundaryType.LINE_START)
-            if result[0] and result not in lines:
-                lines.append(result)
-            offset = max(result[2], offset + 1)
-
-        return lines
 
     def getZonesFromText(self, accessible, cliprect):
         """Gets a list of Zones from an object that implements the
@@ -604,50 +571,38 @@ class Context:
             return []
 
         zones = []
-        text = accessible.queryText()
 
-        # TODO - JD: This is here temporarily whilst I sort out the rest
-        # of the text-related mess.
+        def _is_container(x):
+            return AXUtilities.is_scroll_pane(x) or AXUtilities.is_document(x)
+
+        container = AXObject.find_ancestor(accessible, _is_container)
+        if container:
+            rect = AXComponent.get_rect(container)
+            intersection = AXComponent.get_rect_intersection(rect, cliprect)
+            if AXComponent.is_same_rect(rect, intersection):
+                tokens = ["FLAT REVIEW: Cliprect", cliprect, "->", rect, "from", container]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                cliprect = rect
+
         if AXObject.supports_editable_text(accessible) and AXUtilities.is_single_line(accessible):
             rect = AXComponent.get_rect(accessible)
             extents = rect.x, rect.y, rect.width, rect.height
-            return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
+            return [TextZone(accessible, 0, AXText.get_all_text(accessible), *extents)]
 
-        upperMax = lowerMax = text.characterCount
-        upperMid = lowerMid = int(upperMax / 2)
-        upperMin = lowerMin = 0
-        oldMid = 0
+        first_visible = AXText.find_first_visible_line(accessible, cliprect)
+        last_visible = AXText.find_last_visible_line(accessible, cliprect)
+        first = first_visible[1]
+        last = last_visible[2]
+        length = AXText.get_character_count(accessible)
+        tokens = ["FLAT REVIEW: Getting lines for", accessible, f"offsets {first}-{last}",
+                  f"text length: {length}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        # performing binary search to locate first line inside clipped area
-        while oldMid != upperMid:
-            oldMid = upperMid
-            [x, y, width, height] = text.getRangeExtents(upperMid,
-                                                         upperMid+1,
-                                                         Atspi.CoordType.WINDOW)
-            if y > cliprect.y:
-                upperMax = upperMid
-            else:
-                upperMin = upperMid
-            upperMid = int((upperMax - upperMin) / 2) + upperMin
+        lines = []
+        for string, start, end in AXText.iter_line(accessible, first):
+            if start < min(last, length):
+                lines.append((string, start, end))
 
-        # performing binary search to locate last line inside clipped area
-        oldMid = 0
-        limit = cliprect.y+cliprect.height
-        while oldMid != lowerMid:
-            oldMid = lowerMid
-            [x, y, width, height] = text.getRangeExtents(lowerMid,
-                                                         lowerMid+1,
-                                                         Atspi.CoordType.WINDOW)
-            if y > limit:
-                lowerMax = lowerMid
-            else:
-                lowerMin = lowerMid
-            lowerMid = int((lowerMax - lowerMin) / 2) + lowerMin
-
-        msg = "FLAT REVIEW: Getting lines for %s offsets %i-%i" % (accessible, upperMin, lowerMax)
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        lines = self._getLines(accessible, upperMin, lowerMax)
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", accessible]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
