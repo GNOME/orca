@@ -1651,18 +1651,12 @@ class Script(script.Script):
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
-            msg = "DEFAULT: Querying non-empty text returned None"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
         if settings_manager.getManager().getSetting('speakMisspelledIndicator'):
-            offset = text.caretOffset
-            if not text.getText(offset, offset+1).isalnum():
+            offset = AXText.get_caret_offset(event.source)
+            if not AXText.get_substring(event.source, offset, offset + 1).isalnum():
                 offset -= 1
-            if AXText.is_word_misspelled(event.source, offset-1) \
-               or AXText.is_word_misspelled(event.source, offset+1):
+            if AXText.is_word_misspelled(event.source, offset - 1) \
+               or AXText.is_word_misspelled(event.source, offset + 1):
                 self.speakMessage(messages.MISSPELLED)
 
     def onTextDeleted(self, event):
@@ -2107,71 +2101,16 @@ class Script(script.Script):
         return False
 
     def echoPreviousSentence(self, obj):
-        """Speaks the sentence prior to the caret, as long as there is
-        a sentence prior to the caret and there is no intervening sentence
-        delimiter between the caret and the end of the sentence.
+        """Speaks the sentence prior to the caret if at a sentence boundary."""
 
-        The entry condition for this method is that the character
-        prior to the current caret position is a sentence delimiter,
-        and it's what caused this method to be called in the first
-        place.
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-        interface.
-        """
-
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
+        char, start = AXText.get_character_at_offset(obj)[0:-1]
+        previousChar, previousStart = AXText.get_character_at_offset(obj, start - 1)[0:-1]
+        if not self.utilities.isSentenceDelimiter(char, previousChar):
             return False
 
-        offset = text.caretOffset - 1
-        previousOffset = text.caretOffset - 2
-        if (offset < 0 or previousOffset < 0):
+        sentence = AXText.get_sentence_at_offset(obj, previousStart)[0]
+        if not sentence:
             return False
-
-        [currentChar, startOffset, endOffset] = \
-            text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
-        [previousChar, startOffset, endOffset] = \
-            text.getTextAtOffset(previousOffset, Atspi.TextBoundaryType.CHAR)
-        if not self.utilities.isSentenceDelimiter(currentChar, previousChar):
-            return False
-
-        # OK - we seem to be cool so far.  So...starting with what
-        # should be the last character in the sentence (caretOffset - 2),
-        # work our way to the beginning of the sentence, stopping when
-        # we hit another sentence delimiter.
-        #
-        sentenceEndOffset = text.caretOffset - 2
-        sentenceStartOffset = sentenceEndOffset
-
-        while sentenceStartOffset >= 0:
-            [currentChar, startOffset, endOffset] = \
-                text.getTextAtOffset(sentenceStartOffset,
-                                     Atspi.TextBoundaryType.CHAR)
-            [previousChar, startOffset, endOffset] = \
-                text.getTextAtOffset(sentenceStartOffset-1,
-                                     Atspi.TextBoundaryType.CHAR)
-            if self.utilities.isSentenceDelimiter(currentChar, previousChar):
-                break
-            else:
-                sentenceStartOffset -= 1
-
-        # If we came across a sentence delimiter before hitting any
-        # text, we really don't have a previous sentence.
-        #
-        # Otherwise, get the sentence.  Remember we stopped when we
-        # hit a sentence delimiter, so the sentence really starts at
-        # sentenceStartOffset + 1.  getText also does not include
-        # the character at sentenceEndOffset, so we need to adjust
-        # for that, too.
-        #
-        if sentenceStartOffset == sentenceEndOffset:
-            return False
-        else:
-            sentence = self.utilities.substring(obj, sentenceStartOffset + 1,
-                                         sentenceEndOffset + 1)
 
         voice = self.speechGenerator.voice(obj=obj, string=sentence)
         sentence = self.utilities.adjustForRepeats(sentence)
@@ -2179,75 +2118,21 @@ class Script(script.Script):
         return True
 
     def echoPreviousWord(self, obj, offset=None):
-        """Speaks the word prior to the caret, as long as there is
-        a word prior to the caret and there is no intervening word
-        delimiter between the caret and the end of the word.
+        """Speaks the word prior to the caret if at a word boundary."""
 
-        The entry condition for this method is that the character
-        prior to the current caret position is a word delimiter,
-        and it's what caused this method to be called in the first
-        place.
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface.
-        - offset: if not None, the offset within the text to use as the
-                  end of the word.
-        """
-
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
+        start = AXText.get_character_at_offset(obj, offset)[1]
+        previousChar, previousStart = AXText.get_character_at_offset(obj, start - 1)[0:-1]
+        if not self.utilities.isWordDelimiter(previousChar):
             return False
 
-        if not offset:
-            if text.caretOffset == -1:
-                offset = text.characterCount
-            else:
-                offset = text.caretOffset - 1
-
-        if (offset < 0):
+        # Two back-to-back delimiters should not result in a re-echo.
+        previousChar, previousStart = AXText.get_character_at_offset(obj, previousStart - 1)[0:-1]
+        if self.utilities.isWordDelimiter(previousChar):
             return False
 
-        [char, startOffset, endOffset] = \
-            text.getTextAtOffset( \
-                offset,
-                Atspi.TextBoundaryType.CHAR)
-        if not self.utilities.isWordDelimiter(char):
+        word = AXText.get_word_at_offset(obj, previousStart)[0]
+        if not word:
             return False
-
-        # OK - we seem to be cool so far.  So...starting with what
-        # should be the last character in the word (caretOffset - 2),
-        # work our way to the beginning of the word, stopping when
-        # we hit another word delimiter.
-        #
-        wordEndOffset = offset - 1
-        wordStartOffset = wordEndOffset
-
-        while wordStartOffset >= 0:
-            [char, startOffset, endOffset] = \
-                text.getTextAtOffset( \
-                    wordStartOffset,
-                    Atspi.TextBoundaryType.CHAR)
-            if self.utilities.isWordDelimiter(char):
-                break
-            else:
-                wordStartOffset -= 1
-
-        # If we came across a word delimiter before hitting any
-        # text, we really don't have a previous word.
-        #
-        # Otherwise, get the word.  Remember we stopped when we
-        # hit a word delimiter, so the word really starts at
-        # wordStartOffset + 1.  getText also does not include
-        # the character at wordEndOffset, so we need to adjust
-        # for that, too.
-        #
-        if wordStartOffset == wordEndOffset:
-            return False
-        else:
-            word = self.utilities.\
-                substring(obj, wordStartOffset + 1, wordEndOffset + 1)
 
         voice = self.speechGenerator.voice(obj=obj, string=word)
         word = self.utilities.adjustForRepeats(word)
@@ -2823,30 +2708,26 @@ class Script(script.Script):
           attributes.
         """
 
-        if settings_manager.getManager().getSetting('speakMisspelledIndicator'):
-            try:
-                text = obj.queryText()
-            except Exception:
-                return
-            # If we're on whitespace, we cannot be on a misspelled word.
-            #
-            charAndOffsets = \
-                text.getTextAtOffset(offset, Atspi.TextBoundaryType.CHAR)
-            if not charAndOffsets[0].strip() \
-               or self.utilities.isWordDelimiter(charAndOffsets[0]):
-                self._lastWordCheckedForSpelling = charAndOffsets[0]
-                return
+        if not settings_manager.getManager().getSetting('speakMisspelledIndicator'):
+            return
 
-            wordAndOffsets = \
-                text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
-            if self.utilities.isWordMisspelled(obj, offset) \
-               and wordAndOffsets[0] != self._lastWordCheckedForSpelling:
-                self.speakMessage(messages.MISSPELLED)
-            # Store this word so that we do not continue to present the
-            # presence of the red squiggly as the user arrows amongst
-            # the characters.
-            #
-            self._lastWordCheckedForSpelling = wordAndOffsets[0]
+        # If we're on whitespace, we cannot be on a misspelled word.
+        char = AXText.get_character_at_offset(obj, offset)[0]
+        if not char.strip() or self.utilities.isWordDelimiter(char):
+            self._lastWordCheckedForSpelling = char[0]
+            return
+
+        if not AXText.is_word_misspelled(obj, offset):
+            return
+
+        word = AXText.get_word_at_offset(obj, offset)[0]
+        if word != self._lastWordCheckedForSpelling:
+            self.speakMessage(messages.MISSPELLED)
+
+        # Store this word so that we do not continue to present the
+        # presence of the red squiggly as the user arrows amongst
+        # the characters.
+        self._lastWordCheckedForSpelling = word
 
     ############################################################################
     #                                                                          #
