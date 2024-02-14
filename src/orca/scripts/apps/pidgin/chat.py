@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import orca.chat as chat
+from orca.ax_text import AXText
 
 ########################################################################
 #                                                                      #
@@ -53,12 +54,5 @@ class Chat(chat.Chat):
         # user is typing. We seem able to (more or less) reliably distinguish
         # this text via its attributes because these attributes are absent
         # from user inserted text -- no matter how that text is formatted.
-        #
-        attr, start, end = \
-            self._script.utilities.textAttributes(event.source, event.detail1)
-
-        if float(attr.get('scale', '1')) < 1 \
-           or int(attr.get('weight', '400')) < 400:
-            return True
-
-        return False
+        attr = AXText.get_text_attributes_at_offset(event.source, event.detail1)[0]
+        return float(attr.get('scale', '1')) < 1 or int(attr.get('weight', '400')) < 400

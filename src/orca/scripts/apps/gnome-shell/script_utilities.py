@@ -73,23 +73,6 @@ class Utilities(script_utilities.Utilities):
 
         return ""
 
-    def selectedText(self, obj):
-        string, start, end = super().selectedText(obj)
-        if -1 not in [start, end]:
-            return string, start, end
-
-        tokens = [f"GNOME SHELL: Bogus selection range ({start}, {end}) for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        text = self.queryNonEmptyText(obj)
-        if text.getNSelections() > 0:
-            string = text.getText(0, -1)
-            start, end = 0, len(string)
-
-        tokens = [f"GNOME SHELL: Returning '{string}' ({start}, {end}) for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return string, start, end
-
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         if not root:
             return []
