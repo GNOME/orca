@@ -59,6 +59,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
@@ -313,12 +314,9 @@ class Utilities:
         if role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LABEL] and name:
             return name
 
-        if AXObject.supports_text(obj):
-            # We should be able to use -1 for the final offset, but that crashes Nautilus.
-            text = obj.queryText()
-            displayedText = text.getText(0, text.characterCount)
-            if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
-                displayedText = None
+        displayedText = AXText.get_all_text(obj)
+        if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
+            displayedText = None
 
         if not displayedText and role not in [Atspi.Role.COMBO_BOX, Atspi.Role.SPIN_BUTTON]:
             # TODO - JD: This should probably get nuked. But all sorts of
@@ -1485,11 +1483,7 @@ class Utilities:
     def hasPresentableText(self, obj):
         if self.isStaticTextLeaf(obj):
             return False
-
-        if not AXObject.supports_text(obj):
-            return False
-
-        return bool(re.search(r"\w+", obj.queryText().getText(0, -1)))
+        return bool(re.search(r"\w+", AXText.get_all_text(obj)))
 
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
@@ -1938,7 +1932,8 @@ class Utilities:
         offsets within the text for the given object.
         """
 
-        textContents, startOffset, endOffset = self.selectedText(obj)
+        # TODO - JD: Move to AXText if possible
+        textContents, startOffset, endOffset = AXText.get_selected_text(obj)
         if textContents and self._script.pointOfReference.get('entireDocumentSelected'):
             return textContents, startOffset, endOffset
 
@@ -1948,7 +1943,7 @@ class Utilities:
         prevObj = self.findPreviousObject(obj)
         while prevObj:
             if self.queryNonEmptyText(prevObj):
-                selection, start, end = self.selectedText(prevObj)
+                selection = AXText.get_selected_text(prevObj)[0]
                 if not selection:
                     break
                 textContents = f"{selection} {textContents}"
@@ -1957,7 +1952,7 @@ class Utilities:
         nextObj = self.findNextObject(obj)
         while nextObj:
             if self.queryNonEmptyText(nextObj):
-                selection, start, end = self.selectedText(nextObj)
+                selection = AXText.get_selected_text(nextObj)[0]
                 if not selection:
                     break
                 textContents = f"{textContents} {selection}"
@@ -2175,16 +2170,17 @@ class Utilities:
 
     def getCaretContext(self):
         obj = focus_manager.getManager().get_locus_of_focus()
-        try:
-            offset = obj.queryText().caretOffset
-        except NotImplementedError:
-            offset = 0
-        except Exception:
-            offset = -1
-
+        offset = AXText.get_caret_offset(obj)
         return obj, offset
 
     def getFirstCaretPosition(self, obj):
+        # TODO - JD: Do we still need this function?
+        if AXObject.supports_text(obj):
+            return obj, 0
+
+        if AXObject.get_child_count(obj):
+            return self.getFirstCaretPosition(AXObject.get_child(obj, 0))
+
         return obj, 0
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
@@ -2192,36 +2188,12 @@ class Utilities:
         self.setCaretOffset(obj, offset)
 
     def setCaretOffset(self, obj, offset):
-        """Set the caret offset on a given accessible. Similar to
-        Accessible.setCaretOffset()
-
-        Arguments:
-        - obj: Given accessible object.
-        - offset: Offset to hich to set the caret.
-        """
-        try:
-            texti = obj.queryText()
-        except Exception:
-            return None
-
-        texti.setCaretOffset(offset)
+        # TODO - JD. Remove this function if the web override can be adjusted
+        AXText.set_caret_offset(obj, offset)
 
     def substring(self, obj, startOffset, endOffset):
-        """Returns the substring of the given object's text specialization.
-
-        Arguments:
-        - obj: an accessible supporting the accessible text specialization
-        - startOffset: the starting character position
-        - endOffset: the ending character position. Note that an end offset
-          of -1 means the last character
-        """
-
-        try:
-            text = obj.queryText()
-        except Exception:
-            return ""
-
-        return text.getText(startOffset, endOffset)
+        # TODO - JD. Remove this function if the web override can be adjusted
+        return AXText.get_substring(obj, startOffset, endOffset)
 
     def getAppNameForAttribute(self, attribName):
         """Converts the given Atk attribute name into the application's
@@ -2296,41 +2268,8 @@ class Utilities:
         return rv
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
-        """Get the text attributes run for a given offset in a given accessible
-
-        Arguments:
-        - acc: An accessible.
-        - offset: Offset in the accessible's text for which to retrieve the
-        attributes.
-        - get_defaults: Get the default attributes as well as the unique ones.
-        Default is True
-
-        Returns a dictionary of attributes, a start offset where the attributes
-        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
-        supprt the text attribute.
-        """
-
-        rv = {}
-        try:
-            text = acc.queryText()
-        except Exception:
-            return rv, 0, 0
-
-        if get_defaults:
-            stringAndDict = self.stringToKeysAndDict(text.getDefaultAttributes())
-            rv.update(stringAndDict[1])
-
-        if offset is None:
-            offset = text.caretOffset
-
-        attrString, start, end = text.getAttributes(offset)
-        stringAndDict = self.stringToKeysAndDict(attrString)
-        rv.update(stringAndDict[1])
-
-        start = min(start, offset)
-        end = max(end, offset + 1)
-
-        return rv, start, end
+        # TODO - JD: Replace all calls to this function with the one below
+        return AXText.get_text_attributes_at_offset(acc, offset)
 
     def localizeTextAttribute(self, key, value):
         if key == "weight" and (value == "bold" or int(value) > 400):
@@ -2394,7 +2333,7 @@ class Utilities:
         based on what is exposed via text attributes."""
 
         rv = []
-        attributeSet = self.getAllTextAttributesForObject(obj, startOffset, endOffset)
+        attributeSet = AXText.get_all_text_attributes(obj, startOffset, endOffset)
         lastLanguage = lastDialect = ""
         for (start, end, attrs) in attributeSet:
             language = attrs.get("language", "")
@@ -2712,9 +2651,9 @@ class Utilities:
             if not self.lastInputEventWasPrintableKey():
                 return False
 
-            string = event.source.queryText().getText(0, -1)
+            string = AXText.get_all_text(event.source)
             if string.endswith(event.any_data):
-                selection, start, end = self.selectedText(event.source)
+                selection, start, end = AXText.get_selected_text(event.source)
                 if selection == event.any_data:
                     return True
                 if string == event.any_data and string.endswith(selection):
@@ -2964,6 +2903,9 @@ class Utilities:
 
     def getSelectionContainer(self, obj):
         if not obj:
+            return None
+
+        if self.isTextArea(obj):
             return None
 
         if AXObject.supports_selection(obj):
@@ -3239,20 +3181,12 @@ class Utilities:
         if not AXObject.supports_text(obj):
             return False
 
-        text = obj.queryText()
-        string = text.getText(0, -1)
+        string = AXText.get_all_text(obj)
         chunks = list(filter(lambda x: x.strip(), string.split("\n\n")))
         return len(chunks) > 1
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
-        try:
-            text = obj.queryText()
-            if offset is None:
-                offset = text.caretOffset
-        except Exception:
-            return "", 0, 0
-
-        word, start, end = self.getWordAtOffset(obj, offset)
+        word, start, end = AXText.get_word_at_offset(obj, offset)
         prevObj, prevOffset = self._script.pointOfReference.get(
             "penultimateCursorPosition", (None, -1))
         if prevObj != obj:
@@ -3260,7 +3194,7 @@ class Utilities:
 
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
-        prevWord, prevStart, prevEnd = self.getWordAtOffset(prevObj, prevOffset)
+        prevWord, prevStart, prevEnd = AXText.get_word_at_offset(prevObj, prevOffset)
         if self._script.pointOfReference.get("lastTextUnitSpoken") == "word":
             if self.lastInputEventWasPrevWordNav():
                 start = offset
@@ -3269,7 +3203,7 @@ class Utilities:
                 start = prevOffset
                 end = offset
 
-            word = text.getText(start, end)
+            word = AXText.get_substring(obj, start, end)
             debugString = word.replace("\n", "\\n")
             msg = (
                 f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
@@ -3303,11 +3237,11 @@ class Utilities:
             # If the character to the left of our present position is neither a space, nor
             # an alphanumeric character, then suspect that character is a navigation boundary
             # where we would have landed before via the native next word command.
-            lastChar = text.getText(offset - 1, offset)
+            lastChar = AXText.get_substring(obj, offset - 1, offset)
             if not (lastChar.isspace() or lastChar.isalnum()):
                 start = offset - 1
 
-        word = text.getText(start, end)
+        word = AXText.get_substring(obj, start, end)
 
         # We only want to present the newline character when we cross a boundary moving from one
         # word to another. If we're in the same word, strip it out.
@@ -3316,9 +3250,8 @@ class Utilities:
                 start += 1
             elif word.endswith("\n"):
                 end -= 1
-            word = text.getText(start, end)
 
-        word = text.getText(start, end)
+        word = AXText.get_substring(obj, start, end)
         debugString = word.replace("\n", "\\n")
         msg = (
             f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
@@ -3345,27 +3278,26 @@ class Utilities:
         return word, start, end
 
     def textAtPoint(self, obj, x, y, boundary=None):
-        text = self.queryNonEmptyText(obj)
-        if not text:
+        # TODO - JD: Audit callers so we don't have to use boundaries.
+        # Also, can the logic be entirely moved to AXText?
+        if boundary in (None, Atspi.TextBoundaryType.LINE_START):
+            string, start, end = AXText.get_line_at_point(obj, x, y)
+        elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
+            string, start, end = AXText.get_sentence_at_point(obj, x, y)
+        elif boundary == Atspi.TextBoundaryType.WORD_START:
+            string, start, end = AXText.get_word_at_point(obj, x, y)
+        elif boundary == Atspi.TextBoundaryType.CHAR:
+            string, start, end = AXText.get_character_at_point(obj, x, y)
+        else:
             return "", 0, 0
 
-        if boundary is None:
-            boundary = Atspi.TextBoundaryType.LINE_START
-
-        offset = text.getOffsetAtPoint(x, y, Atspi.CoordType.WINDOW)
-        if not 0 <= offset < text.characterCount:
-            return "", 0, 0
-
-        string, start, end = text.getTextAtOffset(offset, boundary)
         if not string:
             return "", start, end
 
         if boundary == Atspi.TextBoundaryType.WORD_START and not string.strip():
             return "", 0, 0
 
-        extents = Atspi.Rect()
-        extents.x, extents.y, extents.width, extents.height = text.getRangeExtents(
-            start, end, Atspi.CoordType.WINDOW)
+        extents = AXText.get_range_rect(obj, start, end)
         rect = Atspi.Rect()
         rect.x = x
         rect.y = y
@@ -3626,19 +3558,8 @@ class Utilities:
         return start, end, string
 
     def updateCachedTextSelection(self, obj):
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            tokens = ["SCRIPT UTILITIES:", obj, "doesn't implement AtspiText"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            text = None
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception querying text interface for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            text = None
-
         if self._script.pointOfReference.get('entireDocumentSelected'):
-            selectedText, selectedStart, selectedEnd = self.allSelectedText(obj)
+            selectedText = self.allSelectedText(obj)[0]
             if not selectedText:
                 self._script.pointOfReference['entireDocumentSelected'] = False
                 self._script.pointOfReference['textSelections'] = {}
@@ -3652,19 +3573,7 @@ class Utilities:
             for x in [k for k in textSelections.keys() if textSelections.get(k) == value]:
                 textSelections.pop(x)
 
-        # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
-        # selections in a single accessible object.
-        start, end, string = 0, 0, ''
-        if text:
-            try:
-                start, end = text.getSelection(0)
-            except Exception:
-                tokens = ["SCRIPT UTILITIES: Exception getting selected text for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                start = end = 0
-            if start != end:
-                string = text.getText(start, end)
-
+        string, start, end = AXText.get_selected_text(obj)
         tokens = ["SCRIPT UTILITIES: New selection for", obj, f"is '{string}' ({start}, {end})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         textSelections[hash(obj)] = start, end, string
@@ -4168,7 +4077,7 @@ class Utilities:
         if not contents:
             return False
 
-        string, start, end = self.selectedText(obj)
+        string, start, end = AXText.get_selected_text(obj)
         if string and string in contents:
             return True
 
@@ -4351,9 +4260,8 @@ class Utilities:
 
         speakMessage = speakMessage \
             and not settings_manager.getManager().getSetting('onlySpeakDisplayedText')
-        text = obj.queryText()
         for start, end, message in changes:
-            string = text.getText(start, end)
+            string = AXText.get_substring(obj, start, end)
             endsWithChild = string.endswith(self.EMBEDDED_OBJECT_CHARACTER)
             if endsWithChild:
                 end -= 1
