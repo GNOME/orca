@@ -38,6 +38,7 @@ from . import object_properties
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 from .braille_rolenames import shortRoleNames
@@ -465,18 +466,9 @@ class BrailleGenerator(generator.Generator):
         include = settings_manager.getManager().getSetting('enableBrailleContext')
         if not include:
             return include
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            text = None
-        if text and (self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj)):
-            try:
-                [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    text.caretOffset, Atspi.TextBoundaryType.LINE_START)
-            except Exception:
-                return include
 
-            include = startOffset == 0
+        if self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj):
+            include = AXText.get_line_at_offset(obj)[1] == 0
             if include:
                 relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
                 if relation:

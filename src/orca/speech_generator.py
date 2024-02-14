@@ -46,9 +46,10 @@ from . import settings_manager
 from . import speech
 from . import text_attribute_names
 from .ax_document import AXDocument
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
-from .ax_hypertext import AXHypertext
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
@@ -1275,60 +1276,6 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
-    def _getCharacterAttributes(self,
-                                obj,
-                                text,
-                                textOffset,
-                                lineIndex,
-                                keys=["style", "weight", "underline"]):
-        """Helper function that returns a string containing the
-        given attributes from keys for the given character.
-        """
-        attribStr = ""
-
-        defaultAttributes = text.getDefaultAttributes()
-        keyList, attributesDictionary = \
-            self._script.utilities.stringToKeysAndDict(defaultAttributes)
-
-        charAttributes = text.getAttributes(textOffset)
-        if charAttributes[0]:
-            keyList, charDict = \
-                self._script.utilities.stringToKeysAndDict(charAttributes[0])
-            for key in keyList:
-                attributesDictionary[key] = charDict[key]
-
-        if attributesDictionary:
-            for key in keys:
-                localizedKey = text_attribute_names.getTextAttributeName(
-                    key, self._script)
-                if key in attributesDictionary:
-                    attribute = attributesDictionary[key]
-                    localizedValue = text_attribute_names.getTextAttributeName(
-                        attribute, self._script)
-                    if attribute:
-                        # If it's the 'weight' attribute and greater than 400,
-                        # just speak it as bold, otherwise speak the weight.
-                        #
-                        if key == "weight":
-                            if int(attribute) > 400:
-                                attribStr += f" {messages.BOLD}"
-                        elif key == "underline":
-                            if attribute != "none":
-                                attribStr += f" {localizedKey}"
-                        elif key == "style":
-                            if attribute != "normal":
-                                attribStr += f" {localizedValue}"
-                        else:
-                            attribStr += " "
-                            attribStr += (localizedKey + " " + localizedValue)
-
-            # Also check to see if this is a hypertext link.
-            #
-            if AXHypertext.get_all_links_in_range(obj, textOffset, textOffset + 1):
-                attribStr += f" {messages.LINK}"
-
-        return attribStr
-
     def _getTextInformation(self, obj):
         """Returns [textContents, startOffset, endOffset, selected] as
         follows:
@@ -1347,26 +1294,18 @@ class SpeechGenerator(generator.Generator):
         except Exception:
             pass
 
-        textObj = obj.queryText()
-        caretOffset = textObj.caretOffset
-
         textContents, startOffset, endOffset = self._script.utilities.allSelectedText(obj)
         selected = textContents != ""
 
         if not selected:
-            # Get the line containing the caret
-            #
-            [line, startOffset, endOffset] = textObj.getTextAtOffset(
-                textObj.caretOffset,
-                Atspi.TextBoundaryType.LINE_START)
-            if len(line):
+            line, startOffset, endOffset = AXText.get_line_at_offset(obj)
+            if line:
                 line = self._script.utilities.adjustForRepeats(line)
                 textContents = line
             else:
-                char = textObj.getTextAtOffset(caretOffset,
-                    Atspi.TextBoundaryType.CHAR)
-                if char[0] == "\n" and startOffset == caretOffset:
-                    textContents = char[0]
+                char = AXText.get_character_at_offset(obj)[0]
+                if char == "\n":
+                    textContents = char
 
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
             textContents = self._script.utilities.verbalizeAllPunctuation(textContents)
@@ -1386,22 +1325,44 @@ class SpeechGenerator(generator.Generator):
         if result:
             return result
 
-        try:
-            obj.queryText()
-        except NotImplementedError:
+        line = self._getTextInformation(obj)[0]
+        if not line:
             return []
 
-        result = []
-        [line, startOffset, endOffset, selected] = self._getTextInformation(obj)
-
-        # The empty string seems to be messing with using 'or' in
-        # formatting strings.
-        #
-        if line:
-            result.append(line)
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
-
+        result = [line]
+        result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
+
+    def _getAttributesStringAndOffsets(self, obj, offset, keys=["style", "weight", "underline"]):
+        attrs, start, end = AXText.get_text_attributes_at_offset(obj, offset)
+        if not attrs:
+            return ""
+
+        result = ""
+        for key in keys:
+            attribute = attrs.get(key)
+            if not attribute:
+                continue
+
+            localizedKey = text_attribute_names.getTextAttributeName(key, self._script)
+            localizedValue = text_attribute_names.getTextAttributeName(attribute, self._script)
+            if key == "weight":
+                if int(attribute) > 400:
+                    result += f" {messages.BOLD}"
+            elif key == "underline":
+                if attribute != "none":
+                    result += f" {localizedKey}"
+            elif key == "style":
+                if attribute != "normal":
+                    result += f" {localizedValue}"
+            else:
+                result += " "
+                result += (localizedKey + " " + localizedValue)
+
+        if AXHypertext.get_all_links_in_range(obj, offset, offset + 1):
+            result += f" {messages.LINK}"
+
+        return result, start, end
 
     def _generateTextContentWithAttributes(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -1411,37 +1372,17 @@ class SpeechGenerator(generator.Generator):
         called prior to this method.
         """
 
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return []
-
         [line, startOffset, endOffset, selected] = self._getTextInformation(obj)
-
         newLine = ""
-        lastAttribs = None
         textOffset = startOffset
-        for i in range(0, len(line)):
-            attribs = self._getCharacterAttributes(obj, text, textOffset, i)
-            if attribs and attribs != lastAttribs:
-                if newLine:
-                    newLine += " ; "
-                newLine += attribs
-                newLine += " "
-            lastAttribs = attribs
-            newLine += line[i]
-            textOffset += 1
+        while textOffset < endOffset:
+            attribs, start, end = self._getAttributesStringAndOffsets(obj, textOffset)
+            newLine += f" {attribs} {AXText.get_substring(obj, start, end)}"
+            textOffset = end
 
-        attribs = self._getCharacterAttributes(obj,
-                                               text,
-                                               startOffset,
-                                               0,
-                                               ["paragraph-style"])
-
+        attribs = self._getAttributesStringAndOffsets(obj, startOffset, ["paragraph-style"])[0]
         if attribs:
-            if newLine:
-                newLine += " ; "
-            newLine += attribs
+            newLine += f" {attribs}"
 
         result = [newLine]
         result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -1456,17 +1397,11 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        try:
-            obj.queryText()
-        except NotImplementedError:
+        if not AXText.has_selected_text(obj):
             return []
 
-        result = []
-        [line, startOffset, endOffset, selected] = self._getTextInformation(obj)
-
-        if selected:
-            result.append(messages.TEXT_SELECTED)
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result = [messages.TEXT_SELECTED]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateAllTextSelection(self, obj, **args):
@@ -1478,19 +1413,11 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        try:
-            textObj = obj.queryText()
-        except Exception:
-            pass
-        else:
-            noOfSelections = textObj.getNSelections()
-            if noOfSelections == 1:
-                [string, startOffset, endOffset] = \
-                   textObj.getTextAtOffset(0, Atspi.TextBoundaryType.LINE_START)
-                if startOffset == 0 and endOffset == len(string):
-                    result = [messages.TEXT_SELECTED]
-                    result.extend(self.voice(SYSTEM, obj=obj, **args))
+        if not AXText.is_all_text_selected(obj):
+            return []
+
+        result = [messages.TEXT_SELECTED]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateSubstring(self, obj, **args):
