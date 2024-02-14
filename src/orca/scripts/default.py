@@ -56,6 +56,7 @@ import orca.speechserver as speechserver
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_value import AXValue
 
@@ -619,14 +620,9 @@ class Script(script.Script):
         # We want to save the offset for text objects because some apps and
         # toolkits emit caret-moved events immediately after a text object
         # gains focus, even though the caret has not actually moved.
-        try:
-            text = obj.queryText()
-            caretOffset = text.caretOffset
-        except Exception:
-            pass
-        else:
-            self._saveLastCursorPosition(obj, max(0, caretOffset))
-            self.utilities.updateCachedTextSelection(obj)
+        caretOffset = AXText.get_caret_offset(obj)
+        self._saveLastCursorPosition(obj, max(0, caretOffset))
+        self.utilities.updateCachedTextSelection(obj)
 
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
@@ -841,13 +837,10 @@ class Script(script.Script):
             # caret position, we will get a caret event, which will
             # then update the braille.
             #
-            text = focus.queryText()
-            [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                text.caretOffset,
-                Atspi.TextBoundaryType.LINE_START)
+            startOffset = AXText.get_line_at_offset(focus)[1]
             movedCaret = False
             if startOffset > 0:
-                movedCaret = text.setCaretOffset(startOffset - 1)
+                movedCaret = AXText.set_caret_offset(focus, startOffset - 1)
 
             # If we didn't move the caret and we're in a terminal, we
             # jump into flat review to review the text.  See
@@ -914,12 +907,9 @@ class Script(script.Script):
             # tacking mode.  When we set the caret position, we will get a
             # caret event, which will then update the braille.
             #
-            text = focus.queryText()
-            [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                text.caretOffset,
-                Atspi.TextBoundaryType.LINE_START)
-            if endOffset < text.characterCount:
-                text.setCaretOffset(endOffset)
+            endOffset = AXText.get_line_at_offset(focus)[2]
+            if endOffset < AXText.get_character_count(focus):
+                AXText.set_caret_offset(focus, endOffset)
         else:
             self.panBrailleInDirection(panAmount, panToLeft=False)
             # We might be panning through a flashed message.
@@ -964,26 +954,32 @@ class Script(script.Script):
         active text area.
         """
 
-        obj, caretOffset = self.getBrailleCaretContext(inputEvent)
+        obj, offset = self.getBrailleCaretContext(inputEvent)
+        if offset < 0:
+            return True
 
-        if caretOffset >= 0:
-            self.utilities.clearTextSelection(obj)
-            self.utilities.setCaretOffset(obj, caretOffset)
-
+        AXText.clear_all_selected_text(obj)
+        self.utilities.setCaretOffset(obj, offset)
         return True
 
     def processBrailleCutLine(self, inputEvent=None):
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
-        obj, caretOffset = self.getBrailleCaretContext(inputEvent)
+        obj, offset = self.getBrailleCaretContext(inputEvent)
+        if offset < 0:
+            return True
 
-        if caretOffset >= 0:
-            self.utilities.adjustTextSelection(obj, caretOffset)
-            texti = obj.queryText()
-            startOffset, endOffset = texti.getSelection(0)
-            self.utilities.setClipboardText(texti.getText(startOffset, endOffset))
+        startOffset = AXText.get_selection_start_offset(obj)
+        endOffset = AXText.get_selection_end_offset(obj)
+        if (startOffset < 0 or endOffset < 0):
+            caretOffset = AXText.get_caret_offset(obj)
+            startOffset = min(offset, caretOffset)
+            endOffset = max(offset, caretOffset)
 
+        AXText.set_selected_text(obj, startOffset, endOffset)
+        text = AXText.get_selected_text(obj)[0]
+        self.utilities.setClipboardText(text)
         return True
 
     def routePointerToItem(self, inputEvent=None):
@@ -1295,26 +1291,20 @@ class Script(script.Script):
         if self.flatReviewPresenter.is_active():
             self.flatReviewPresenter.quit()
 
-        text = event.source.queryText()
-        try:
-            text.caretOffset
-        except Exception as error:
-            tokens = ["DEFAULT: Exception getting caretOffset for", event.source, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
 
-        self._saveLastCursorPosition(event.source, text.caretOffset)
-        if text.getNSelections() > 0:
+        offset = AXText.get_caret_offset(event.source)
+        self._saveLastCursorPosition(event.source, offset)
+        if AXText.has_selected_text(event.source):
             msg = "DEFAULT: Event source has text selections"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.utilities.handleTextSelectionChange(event.source)
             return
-        else:
-            start, end, string = self.utilities.getCachedTextSelection(obj)
-            if string and self.utilities.handleTextSelectionChange(obj):
-                msg = "DEFAULT: Event handled as text selection change"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
+
+        string = self.utilities.getCachedTextSelection(obj)[2]
+        if string and self.utilities.handleTextSelectionChange(obj):
+            msg = "DEFAULT: Event handled as text selection change"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
 
         msg = "DEFAULT: Presenting text at new caret position"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1671,8 +1661,8 @@ class Script(script.Script):
             offset = text.caretOffset
             if not text.getText(offset, offset+1).isalnum():
                 offset -= 1
-            if self.utilities.isWordMisspelled(event.source, offset-1) \
-               or self.utilities.isWordMisspelled(event.source, offset+1):
+            if AXText.is_word_misspelled(event.source, offset-1) \
+               or AXText.is_word_misspelled(event.source, offset+1):
                 self.speakMessage(messages.MISSPELLED)
 
     def onTextDeleted(self, event):
@@ -2272,8 +2262,7 @@ class Script(script.Script):
                interface
         """
 
-        text = obj.queryText()
-        offset = text.caretOffset
+        offset = AXText.get_caret_offset(obj)
 
         # If we have selected text and the last event was a move to the
         # right, then speak the character to the left of where the text
@@ -2284,8 +2273,7 @@ class Script(script.Script):
            and eventString in ["Right", "Down"]:
             offset -= 1
 
-        character, startOffset, endOffset = text.getTextAtOffset(
-            offset, Atspi.TextBoundaryType.CHAR)
+        character, startOffset, endOffset = AXText.get_character_at_offset(obj, offset)
         focus_manager.getManager().emit_region_changed(
             obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
@@ -2294,9 +2282,8 @@ class Script(script.Script):
 
         speakBlankLines = settings_manager.getManager().getSetting('speakBlankLines')
         if character == "\n":
-            line = text.getTextAtOffset(max(0, offset),
-                                        Atspi.TextBoundaryType.LINE_START)
-            if not line[0] or line[0] == "\n":
+            lineString = AXText.get_line_at_offset(obj, max(0, offset))[0]
+            if not lineString or lineString == "\n":
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
                 if speakBlankLines:
@@ -2402,10 +2389,9 @@ class Script(script.Script):
     def sayWord(self, obj):
         """Speaks the word at the caret, taking into account the previous caret position."""
 
-        try:
-            text = obj.queryText()
-            offset = text.caretOffset
-        except Exception:
+
+        offset = AXText.get_caret_offset(obj)
+        if offset < 1:
             self.sayCharacter(obj)
             return
 
@@ -2420,7 +2406,7 @@ class Script(script.Script):
                 startOffset += 1
             elif word.endswith("\n"):
                 endOffset -= 1
-            word = text.getText(startOffset, endOffset)
+            word = AXText.get_substring(obj, startOffset, endOffset)
 
         # sayPhrase is useful because it handles punctuation verbalization, but we don't want
         # to trigger its whitespace presentation.
@@ -2428,7 +2414,7 @@ class Script(script.Script):
         if matches:
             startOffset += matches[0].start()
             endOffset -= len(word) - matches[-1].end()
-            word = text.getText(startOffset, endOffset)
+            word = AXText.get_substring(obj, startOffset, endOffset)
 
         string = word.replace("\n", "\\n")
         msg = (
@@ -2733,20 +2719,13 @@ class Script(script.Script):
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        try:
-            text = obj.queryText()
-            offset = text.caretOffset
-            characterCount = text.characterCount
-        except NotImplementedError:
-            return ["", 0, 0]
-        except Exception:
-            tokens = ["DEFAULT: Exception getting offset and length for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return ["", 0, 0]
+        # TODO - JD: Audit all callers and see if we can finally remove this function.
 
+        characterCount = AXText.get_character_count(obj)
         if characterCount == 0:
             return ["", 0, 0]
 
+        offset = AXText.get_caret_offset(obj)
         targetOffset = startOffset
         if targetOffset is None:
             targetOffset = max(0, offset)
@@ -2767,7 +2746,7 @@ class Script(script.Script):
         #
         if targetOffset == characterCount:
             fixedTargetOffset = max(0, targetOffset - 1)
-            character = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
+            character = AXText.get_substring(obj, fixedTargetOffset, fixedTargetOffset + 1)
         else:
             fixedTargetOffset = targetOffset
             character = None
@@ -2783,16 +2762,13 @@ class Script(script.Script):
             # is broken if there is just one character in the string.]]]
             #
             if (characterCount == 1):
-                lineString = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
+                lineString = AXText.get_substring(obj, fixedTargetOffset, fixedTargetOffset + 1)
                 startOffset = fixedTargetOffset
             else:
                 if fixedTargetOffset == -1:
                     fixedTargetOffset = characterCount
-                try:
-                    [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                        fixedTargetOffset, Atspi.TextBoundaryType.LINE_START)
-                except Exception:
-                    return ["", 0, 0]
+                lineString, startOffset, endOffset = \
+                    AXText.get_line_at_offset(obj, fixedTargetOffset)
 
             # Sometimes we get the trailing line-feed-- remove it
             # It is important that these are in order.
@@ -2804,7 +2780,7 @@ class Script(script.Script):
             lineString = lineString.rstrip('\n')
             lineString = lineString.rstrip('\r')
 
-        return [lineString, text.caretOffset, startOffset]
+        return [lineString, offset, startOffset]
 
     def phoneticSpellCurrentItem(self, itemString):
         """Phonetically spell the current flat review word or line.
