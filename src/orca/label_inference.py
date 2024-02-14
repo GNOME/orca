@@ -36,6 +36,7 @@ from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 class LabelInference:
@@ -158,12 +159,7 @@ class LabelInference:
         if len(children) > 1:
             return False
 
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return True
-
-        string = text.getText(0, -1).strip()
+        string = AXText.get_all_text(obj).strip()
         if string.count(self._script.EMBEDDED_OBJECT_CHARACTER) > 1:
             return False
 
@@ -222,18 +218,12 @@ class LabelInference:
             return rv
 
         extents = 0, 0, 0, 0
-        text = self._script.utilities.queryNonEmptyText(obj)
-        if text:
+        if AXObject.supports_text(obj):
             if not AXUtilities.is_text_input(obj):
                 if endOffset == -1:
-                    try:
-                        endOffset = text.characterCount
-                    except Exception:
-                        tokens = ["LABEL INFERENCE: Exception getting character count for", obj]
-                        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                        return extents
-
-                extents = text.getRangeExtents(startOffset, endOffset, Atspi.CoordType.WINDOW)
+                    endOffset = AXText.get_character_count(obj)
+                rect = AXText.get_range_rect(obj, startOffset, endOffset)
+                extents = rect.x, rect.y, rect.width, rect.height
 
         if not (extents[2] and extents[3]):
             ext = AXComponent.get_rect(obj)

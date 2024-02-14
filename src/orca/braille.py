@@ -49,6 +49,7 @@ from . import settings_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
+from .ax_text import AXText
 from .orca_platform import tablesdir
 
 _logger = logger.getLogger()
@@ -708,10 +709,8 @@ class Text(Region):
           unreasonable amount of time (AKA Gecko).
         """
 
-        try:
-            self.accessible.queryText()
-        except NotImplementedError:
-            return ''
+        if AXText.is_whitespace_or_empty(self.accessible):
+            return ""
 
         # Start with an empty mask.
         #
@@ -745,8 +744,7 @@ class Text(Region):
             offset = self.lineOffset
             while offset < lineEndOffset:
                 attributes, startOffset, endOffset = \
-                    script.utilities.textAttributes(self.accessible,
-                                                    offset, True)
+                    AXText.get_text_attributes_at_offset(self.accessible, offset)
                 if endOffset <= offset:
                     break
                 mask = settings.BRAILLE_UNDERLINE_NONE
@@ -763,7 +761,7 @@ class Text(Region):
                         regionMask[i] |= attrIndicator
 
         if selIndicator:
-            selections = script.utilities.allTextSelections(self.accessible)
+            selections = AXText.get_selected_ranges(self.accessible)
             for startOffset, endOffset in selections:
                 maskStart = max(startOffset - self.lineOffset, 0)
                 maskEnd = min(endOffset - self.lineOffset, stringLength)

@@ -40,6 +40,7 @@ from gi.repository import Gtk
 from . import debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 class AXEventSynthesizer:
@@ -109,29 +110,10 @@ class AXEventSynthesizer:
         return True
 
     @staticmethod
-    def _extents_at_caret(obj):
-        """Returns the character extents of obj at the current caret offset."""
-
-        result = Atspi.Rect()
-        try:
-            text = obj.queryText()
-            extents = text.getCharacterExtents(text.caretOffset, Atspi.CoordType.WINDOW)
-        except Exception:
-            tokens = ["ERROR: Exception getting character extents for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return result
-
-        result.x = extents[0]
-        result.y = extents[1]
-        result.width = extents[2]
-        result.height = extents[3]
-        return result
-
-    @staticmethod
     def _mouse_event_on_character(obj, event):
         """Performs the specified mouse event on the current character in obj."""
 
-        extents = AXEventSynthesizer._extents_at_caret(obj)
+        extents = AXText.get_character_rect(obj)
         if AXComponent.is_empty_rect(extents):
             return False
 
@@ -248,44 +230,11 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}r")
 
     @staticmethod
-    def _scroll_substring_to_location(obj, location, start_offset, end_offset):
-        """Attempts to scroll the given substring to the specified location."""
-
-        try:
-            text = obj.queryText()
-            if not text.characterCount:
-                return False
-            if start_offset is None:
-                start_offset = 0
-            if end_offset is None:
-                end_offset = text.characterCount - 1
-            result = text.scrollSubstringTo(start_offset, end_offset, location)
-        except NotImplementedError:
-            tokens = ["AXEventSynthesizer: Text interface not implemented for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-        except Exception:
-            msg = (
-                f"AXEventSynthesizer: Exception scrolling {obj} ({start_offset}, {end_offset}) "
-                f"to {location.value_name}."
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        msg = (
-            f"AXEventSynthesizer: scrolled {obj} substring ({start_offset}, {end_offset}) "
-            f"to {location.value_name}: {result}"
-        )
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return result
-
-    @staticmethod
     def _scroll_to_location(obj, location, start_offset=None, end_offset=None):
         """Attempts to scroll to the specified location."""
 
         before = AXComponent.get_position(obj)
-        if not AXEventSynthesizer._scroll_substring_to_location(
-           obj, location, start_offset, end_offset):
+        if not AXText.scroll_substring_to_location(obj, location, start_offset, end_offset):
             AXComponent.scroll_object_to_location(obj, location)
 
         after = AXComponent.get_position(obj)
@@ -293,43 +242,11 @@ class AXEventSynthesizer:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
-    def _scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset):
-        """Attempts to scroll the given substring to the specified location."""
-
-        try:
-            text = obj.queryText()
-            if not text.characterCount:
-                return False
-            if start_offset is None:
-                start_offset = 0
-            if end_offset is None:
-                end_offset = text.characterCount - 1
-            result = text.scrollSubstringToPoint(
-                start_offset, end_offset, Atspi.CoordType.WINDOW, x_coord, y_coord)
-        except NotImplementedError:
-            tokens = ["AXEventSynthesizer: Text interface not implemented for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-        except Exception:
-            msg = (
-                f"AXEventSynthesizer: Exception scrolling {obj} ({start_offset}, {end_offset}) "
-                f"to {x_coord}, {y_coord}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        msg = "AXEventSynthesizer: scrolled %s (%i, %i) to %i, %i: %s" % \
-            (obj, start_offset, end_offset, x_coord, y_coord, result)
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return result
-
-    @staticmethod
     def _scroll_to_point(obj, x_coord, y_coord, start_offset=None, end_offset=None):
         """Attempts to scroll obj to the specified point."""
 
         before = AXComponent.get_position(obj)
-        if not AXEventSynthesizer._scroll_substring_to_point(
-           obj, x_coord, y_coord, start_offset, end_offset):
+        if not AXText.scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset):
             AXComponent.scroll_object_to_point(obj, x_coord, y_coord)
 
         after = AXComponent.get_position(obj)

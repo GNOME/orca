@@ -36,6 +36,7 @@ from . import messages
 from . import settings_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 
@@ -286,7 +287,7 @@ class WhereAmIPresenter:
         """Presents the font and formatting details for the current character."""
 
         focus = focus_manager.getManager().get_locus_of_focus()
-        attrs = script.utilities.textAttributes(focus, None, True)[0]
+        attrs = AXText.get_text_attributes_at_offset(focus)[0]
 
         # Get a dictionary of text attributes that the user cares about.
         [user_attr_list, user_attr_dict] = script.utilities.stringToKeysAndDict(

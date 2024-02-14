@@ -16,6 +16,7 @@ from . import input_event
 from . import settings_manager
 from .ax_collection import AXCollection
 from .ax_object import AXObject
+from .ax_text import AXText
 
 # define 'live' property types
 LIVE_OFF       = -1
@@ -483,17 +484,13 @@ class LiveRegionManager:
         relation = AXObject.get_relation(obj, Atspi.RelationType.DESCRIBED_BY)
         if relation:
             targetobj = relation.get_target(0)
-            try:
-                # We will add on descriptions if they don't duplicate
-                # what's already in the object's description.
-                # See http://bugzilla.gnome.org/show_bug.cgi?id=568467
-                # for more information.
-                #
-                description = targetobj.queryText().getText(0, -1)
-                if description.strip() != AXObject.get_description(obj).strip():
-                    results.append(description)
-            except NotImplementedError:
-                pass
+            # We will add on descriptions if they don't duplicate
+            # what's already in the object's description.
+            # See http://bugzilla.gnome.org/show_bug.cgi?id=568467
+            # for more information.
+            description = AXText.get_all_text(targetobj)
+            if description.strip() != AXObject.get_description(obj).strip():
+                results.append(description)
 
         # get the politeness level as a string
         try:

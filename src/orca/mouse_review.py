@@ -53,6 +53,7 @@ from . import script_manager
 from . import settings_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 
@@ -75,9 +76,7 @@ class _StringContext:
         self._string = string
         self._start = start
         self._end = end
-        self._boundingBox = 0, 0, 0, 0
-        if script:
-            self._boundingBox = script.utilities.getTextBoundingBox(obj, start, end)
+        self._rect = AXText.get_range_rect(obj, start, end)
 
     def __eq__(self, other):
         return other is not None \
@@ -128,7 +127,7 @@ class _StringContext:
     def getBoundingBox(self):
         """Returns the bounding box associated with this context's range."""
 
-        return self._boundingBox
+        return self._rect.x, self._rect.y, self._rect.width, self._rect.height
 
     def getString(self):
         """Returns the string associated with this context."""
@@ -181,10 +180,7 @@ class _ItemContext:
         self._script = script
         self._string = self._getStringContext()
         self._time = time.time()
-        self._boundingBox = 0, 0, 0, 0
-        if script:
-            rect = AXComponent.get_rect(obj)
-            self._boundingBox = rect.x, rect.y, rect.width, rect.height
+        self._rect = AXComponent.get_rect(obj)
 
     def __eq__(self, other):
         return other is not None \
@@ -219,13 +215,7 @@ class _ItemContext:
         return True
 
     def _treatAsSingleObject(self):
-        if not AXObject.supports_text(self._obj):
-            return True
-
-        if not self._obj.queryText().characterCount:
-            return True
-
-        return False
+        return AXText.is_whitespace_or_empty(self._obj)
 
     def _getStringContext(self):
         """Returns the _StringContext associated with the specified point."""
@@ -274,7 +264,7 @@ class _ItemContext:
 
         x, y, width, height = self._string.getBoundingBox()
         if not (width or height):
-            return self._boundingBox
+            return self._rect.x, self._rect.y, self._rect.width, self._rect.height
 
         return x, y, width, height
 
@@ -320,8 +310,8 @@ class _ItemContext:
                                         inMouseReview=True,
                                         interrupt=True)
 
-        if self._script.utilities.containsOnlyEOCs(self._obj):
-            msg = "MOUSE REVIEW: Not presenting object which contains only EOCs"
+        if not self._script.utilities.hasPresentableText(self._obj):
+            msg = "MOUSE REVIEW: Not presenting object which lacks presentable text."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
