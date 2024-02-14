@@ -27,6 +27,7 @@ __license__   = "LGPL"
 from orca import debug
 from orca import focus_manager
 from orca.scripts import default
+from orca.ax_text import AXText
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -102,13 +103,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        try:
-            text = event.source.queryText()
-        except Exception:
-            pass
-        else:
-            self._saveLastCursorPosition(event.source, text.caretOffset)
-            self.utilities.updateCachedTextSelection(event.source)
+        offset = AXText.get_caret_offset(event.source)
+        self._saveLastCursorPosition(event.source, offset)
+        self.utilities.updateCachedTextSelection(event.source)
 
     def presentKeyboardEvent(self, event):
         if not event.isPrintableKey():
@@ -124,14 +121,8 @@ class Script(default.Script):
 
         # We have no reliable way of knowing a password is being entered into
         # a terminal -- other than the fact that the text typed isn't there.
-        try:
-            text = event.getObject().queryText()
-            offset = text.caretOffset
-            prevChar = text.getText(offset - 1, offset)
-            char = text.getText(offset, offset + 1)
-        except Exception:
-            return False
-
+        char, start = AXText.get_character_at_offset(event.source)[0:2]
+        prevChar = AXText.get_character_at_offset(start - 1)
         string = event.event_string
         if string not in [prevChar, "space", char]:
             return False

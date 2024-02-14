@@ -24,10 +24,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import re
 
 from orca import debug
@@ -35,6 +31,7 @@ from orca import focus_manager
 from orca import keybindings
 from orca import script_utilities
 from orca import settings_manager
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -66,22 +63,13 @@ class Utilities(script_utilities.Utilities):
         if self.isClipboardTextChangedEvent(event):
             return event.any_data
 
-        try:
-            text = event.source.queryText()
-        except Exception:
-            tokens = ["ERROR: Exception querying text for", event.source]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return event.any_data
-
         start, end = event.detail1, event.detail1 + len(event.any_data)
-        boundary = Atspi.TextBoundaryType.LINE_START
-
-        firstLine = text.getTextAtOffset(start, boundary)
+        firstLine = AXText.get_line_at_offset(event.source, start)
         tokens = ["TERMINAL: First line of insertion:", firstLine]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        lastLine = text.getTextAtOffset(end - 1, boundary)
-        tokens = ["TERMINAL: Last line of insertion:", firstLine]
+        lastLine = AXText.get_line_at_offset(event.source, end - 1)
+        tokens = ["TERMINAL: Last line of insertion:", lastLine]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine == lastLine:
@@ -89,8 +77,8 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return event.any_data
 
-        currentLine = text.getTextAtOffset(text.caretOffset, boundary)
-        tokens = ["TERMINAL: Current line:", firstLine]
+        currentLine = AXText.get_line_at_offset(event.source, None)
+        tokens = ["TERMINAL: Current line:", currentLine]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine != ("", 0, 0):
@@ -104,7 +92,7 @@ class Utilities(script_utilities.Utilities):
             if lastLine[0].endswith("\n"):
                 end -= 1
 
-        adjusted = text.getText(start, end)
+        adjusted = AXText.get_substring(event.source, start, end)
         if adjusted:
             tokens = ["TERMINAL: Adjusted insertion: '", adjusted, "'"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -116,14 +104,7 @@ class Utilities(script_utilities.Utilities):
         return adjusted
 
     def insertionEndsAtCaret(self, event):
-        try:
-            text = event.source.queryText()
-        except Exception:
-            tokens = ["ERROR: Exception querying text for", event.source]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return text.caretOffset == event.detail1 + event.detail2
+        return AXText.get_caret_offset(event.source) == event.detail1 + event.detail2
 
     def isEditableTextArea(self, obj):
         if AXUtilities.is_terminal(obj):
@@ -196,7 +177,7 @@ class Utilities(script_utilities.Utilities):
                 return True
             if self.lastInputEventWasPrintableKey():
                 return len(event.any_data) > 1
-            if self.insertionEndsAtCaret(event):
+            if AXText.get_caret_offset(event.source) == event.detail1 + event.detail2:
                 return True
 
         return False
