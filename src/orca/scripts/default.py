@@ -2082,9 +2082,10 @@ class Script(script.Script):
     def echoPreviousSentence(self, obj):
         """Speaks the sentence prior to the caret if at a sentence boundary."""
 
-        char, start = AXText.get_character_at_offset(obj)[0:-1]
+        offset = AXText.get_caret_offset(obj)
+        char, start = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
         previousChar, previousStart = AXText.get_character_at_offset(obj, start - 1)[0:-1]
-        if not self.utilities.isSentenceDelimiter(char, previousChar):
+        if not (previousChar and self.utilities.isSentenceDelimiter(char, previousChar)):
             return False
 
         sentence = AXText.get_sentence_at_offset(obj, previousStart)[0]
