@@ -31,6 +31,7 @@ from orca import debug
 from orca import messages
 from orca import spellcheck
 from orca.ax_object import AXObject
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 class SpellCheck(spellcheck.SpellCheck):
@@ -111,17 +112,12 @@ class SpellCheck(spellcheck.SpellCheck):
         return index + 1, total
 
     def getMisspelledWord(self):
-        try:
-            text = self._errorWidget.queryText()
-        except Exception:
-            return ""
-
+        length = AXText.get_character_count(self._errorWidget)
         offset, string = 0, ""
-        while 0 <= offset < text.characterCount:
-            attributes, start, end = text.getAttributeRun(offset, False)
-            attrs = dict([attr.split(":", 1) for attr in attributes])
+        while 0 <= offset < length:
+            attrs, start, end = AXText.get_text_attributes_at_offset(self._errorWidget, offset)
             if attrs.get("fg-color", "").replace(" ", "") == "255,0,0":
-                return text.getText(start, end)
+                return AXText.get_substring(self._errorWidget, start, end)
             offset = max(end, offset + 1)
 
         return string
@@ -130,12 +126,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not self.isActive():
             return False
 
-        try:
-            text = self._errorWidget.queryText()
-        except Exception:
-            return False
-
-        string = text.getText(0, -1)
+        string = AXText.get_all_text(self._errorWidget)
         if not string:
             return False
 

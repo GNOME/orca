@@ -35,6 +35,7 @@ import orca.speech_generator as speech_generator
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -203,24 +204,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
+        # TODO - JD: Can this be moved to AXText?
         result = []
-        try:
-            text = obj.queryText()
-            objectText = self._script.utilities.substring(obj, 0, -1)
-        except NotImplementedError:
-            pass
-        else:
-            tooLongCount = 0
-            extents = AXComponent.get_rect(obj)
-            for i in range(0, len(objectText)):
-                [x, y, width, height] = text.getRangeExtents(i, i + 1, Atspi.CoordType.WINDOW)
-                if x < extents.x:
-                    tooLongCount += 1
-                elif (x + width) > extents.x + extents.width:
-                    tooLongCount += len(objectText) - i
-                    break
-            if tooLongCount > 0:
-                result = [messages.charactersTooLong(tooLongCount)]
+        length = AXText.get_character_count(obj)
+        tooLongCount = 0
+        extents = AXComponent.get_rect(obj)
+        for i in range(length):
+            rect = AXText.get_character_rect(obj, i)
+            if rect.x < extents.x:
+                tooLongCount += 1
+            elif rect.x + rect.width > extents.x + extents.width:
+                tooLongCount += length - i
+                break
+        if tooLongCount > 0:
+            result = [messages.charactersTooLong(tooLongCount)]
         if result:
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result

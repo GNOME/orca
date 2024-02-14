@@ -43,6 +43,7 @@ import orca.messages as messages
 import orca.settings_manager as settings_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
@@ -230,21 +231,15 @@ class Script(default.Script):
            or not self.utilities.isTextArea(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
-        text = focus.queryText()
-        string, startOffset, endOffset = text.getTextAtOffset(
-            text.caretOffset, Atspi.TextBoundaryType.LINE_START)
+        startOffset = AXText.get_line_at_offset(focus)[1]
         if 0 < startOffset:
-            text.setCaretOffset(startOffset-1)
+            AXText.set_caret_offset(focus, startOffset - 1)
             return True
 
         obj = self.utilities.findPreviousObject(focus)
-        try:
-            text = obj.queryText()
-        except Exception:
-            pass
-        else:
+        if obj is not None:
             focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
-            text.setCaretOffset(text.characterCount)
+            AXText.set_caret_offset_to_end(obj)
             return True
 
         return default.Script.panBrailleLeft(self, inputEvent, panAmount)
@@ -261,21 +256,15 @@ class Script(default.Script):
            or not self.utilities.isTextArea(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
-        text = focus.queryText()
-        string, startOffset, endOffset = text.getTextAtOffset(
-            text.caretOffset, Atspi.TextBoundaryType.LINE_START)
-        if endOffset < text.characterCount:
-            text.setCaretOffset(endOffset)
+        endOffset = AXText.get_line_at_offset(focus)[2]
+        if endOffset < AXText.get_character_count(focus):
+            AXText.set_caret_offset(focus, endOffset)
             return True
 
         obj = self.utilities.findNextObject(focus)
-        try:
-            text = obj.queryText()
-        except Exception:
-            pass
-        else:
+        if obj is not None:
             focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
-            text.setCaretOffset(0)
+            AXText.set_caret_offset_to_start(obj)
             return True
 
         return default.Script.panBrailleRight(self, inputEvent, panAmount)
@@ -365,12 +354,8 @@ class Script(default.Script):
                     voice = self.speechGenerator.voice(obj=newLocusOfFocus, string=string)
                     self.speakMessage(string, voice=voice)
                     self.updateBraille(newLocusOfFocus)
-                    try:
-                        text = newLocusOfFocus.queryText()
-                    except Exception:
-                        pass
-                    else:
-                        self._saveLastCursorPosition(newLocusOfFocus, text.caretOffset)
+                    offset = AXText.get_caret_offset(newLocusOfFocus)
+                    self._saveLastCursorPosition(newLocusOfFocus,offset)
                     return
 
         # Pass the event onto the parent class to be handled in the default way.
@@ -730,14 +715,8 @@ class Script(default.Script):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
         if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
-            try:
-                text = obj.queryText()
-            except NotImplementedError:
-                return ["", 0, 0]
-
-            if text.caretOffset < 0:
-                [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    0, Atspi.TextBoundaryType.LINE_START)
+            if AXText.get_caret_offset(obj) < 0:
+                lineString, startOffset, endOffset = AXText.get_line_at_offset(obj, 0)
 
                 # Sometimes we get the trailing line-feed -- remove it
                 #
