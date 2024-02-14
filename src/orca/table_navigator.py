@@ -40,6 +40,7 @@ from . import orca_state
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 
@@ -415,7 +416,7 @@ class TableNavigator:
                     return False
             return True
 
-        if AXObject.supports_text(obj) and obj.queryText().getText(0, -1).strip():
+        if not AXText.is_whitespace_or_empty(obj):
             tokens = ["TABLE NAVIGATOR:", obj, "is not blank: it has text"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False

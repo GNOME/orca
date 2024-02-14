@@ -27,10 +27,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import re
 
 from orca import debug
@@ -40,6 +36,7 @@ from orca import messages
 from orca import object_properties
 from orca import settings_manager
 from orca.ax_object import AXObject
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -151,18 +148,10 @@ class SpellCheck:
         if not (obj and offset >= 0):
             return False
 
-        try:
-            text = obj.queryText()
-        except Exception:
-            return False
-
         # This should work, but some toolkits are broken.
-        boundary = Atspi.TextBoundaryType.SENTENCE_START
-        string, start, end = text.getTextAtOffset(offset, boundary)
-
+        string = AXText.get_sentence_at_offset(obj, offset)[0]
         if not string:
-            boundary = Atspi.TextBoundaryType.LINE_START
-            string, start, end = text.getTextAtOffset(offset, boundary)
+            string = AXText.get_line_at_offset(obj, offset)[0]
             sentences = re.split(r'(?:\.|\!|\?)', string)
             word = self.getMisspelledWord()
             if string.count(word) == 1:

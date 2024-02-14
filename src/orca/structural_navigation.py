@@ -49,6 +49,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 ###########################################################################
@@ -1815,16 +1816,11 @@ class StructuralNavigation:
         def has_at_least_three_characters(obj):
             if AXUtilities.is_heading(obj):
                 return True
-
-            try:
-                text = obj.queryText()
-                # We're choosing 3 characters as the minimum because some
-                # paragraphs contain a single image or link and a text
-                # of length 2: An embedded object character and a space.
-                # We want to skip these.
-                return text.characterCount > 2
-            except Exception:
-                return False
+            # We're choosing 3 characters as the minimum because some
+            # paragraphs contain a single image or link and a text
+            # of length 2: An embedded object character and a space.
+            # We want to skip these.
+            return AXText.get_character_count(obj) > 2
 
         return AXUtilities.find_all_paragraphs(document, True, has_at_least_three_characters)
 
