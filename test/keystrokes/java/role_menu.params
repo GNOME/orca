@@ -1,1 +1,0 @@
-PARAMS="-jar $JDK_DEMO_DIR/jfc/SwingSet2/SwingSet2.jar"
