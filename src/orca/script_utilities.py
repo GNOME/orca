@@ -1415,6 +1415,14 @@ class Utilities:
         if not (AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj)):
             tokens = ["SCRIPT UTILITIES:", obj, "is not showing and visible"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+            if AXUtilities.is_filler(obj):
+                AXObject.clear_cache(obj, False, "Suspecting filler might have wrong state")
+                if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
+                    tokens = ["WARNING: Now", obj, "is showing and visible"]
+                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    return True
+
             return False
 
         if AXComponent.has_no_size_or_invalid_rect(obj):
