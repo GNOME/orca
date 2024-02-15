@@ -758,15 +758,7 @@ class AXText:
             line, start, end = AXText.get_line_at_offset(obj, mid)
             text_rect = AXText.get_range_rect(obj, start, end)
 
-            if AXText._line_comparison(text_rect, clip_rect) < 0:
-                low = mid + 1
-                continue
-
-            if AXText._line_comparison(text_rect, clip_rect) > 0:
-                high = mid
-                continue
-
-            if line and start == 0:
+            if start == 0:
                 return line, start, end
 
             previous_start, previous_end = AXText.get_line_at_offset(obj, start - 1)[-2:]
@@ -774,6 +766,14 @@ class AXText:
                 tokens = [f"AXText: No previous line found at offset {start - 1} in", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return line, start, end
+
+            if AXText._line_comparison(text_rect, clip_rect) < 0:
+                low = mid + 1
+                continue
+
+            if AXText._line_comparison(text_rect, clip_rect) > 0:
+                high = mid
+                continue
 
             previous_rect = AXText.get_range_rect(obj, previous_start, previous_end)
             if AXText._line_comparison(previous_rect, clip_rect) != 0:
@@ -792,14 +792,6 @@ class AXText:
             line, start, end = AXText.get_line_at_offset(obj, mid)
             text_rect = AXText.get_range_rect(obj, start, end)
 
-            if AXText._line_comparison(text_rect, clip_rect) < 0:
-                low = mid + 1
-                continue
-
-            if AXText._line_comparison(text_rect, clip_rect) > 0:
-                high = mid
-                continue
-
             if end >= AXText.get_character_count(obj):
                 return line, start, end
 
@@ -808,6 +800,14 @@ class AXText:
                 tokens = [f"AXText: No next line found at offset {end} in", obj]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return line, start, end
+
+            if AXText._line_comparison(text_rect, clip_rect) < 0:
+                low = mid + 1
+                continue
+
+            if AXText._line_comparison(text_rect, clip_rect) > 0:
+                high = mid
+                continue
 
             next_rect = AXText.get_range_rect(obj, next_start, next_end)
             if AXText._line_comparison(next_rect, clip_rect) != 0:
