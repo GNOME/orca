@@ -817,21 +817,22 @@ class AXText:
     def find_last_visible_line(obj, clip_rect):
         """Returns the last visible line of obj inside clip_rect."""
 
-        low, high = 0, AXText.get_character_count(obj)
+        result = "", 0, 0
+        length = AXText.get_character_count(obj)
+        low, high = 0, length
         while low < high:
             mid = (low + high) // 2
             line, start, end = AXText.get_line_at_offset(obj, mid)
             text_rect = AXText.get_range_rect(obj, start, end)
 
-            if end >= AXText.get_character_count(obj):
-                return line, start, end
+            if end <= 0 or end >= length:
+                return result
 
             next_start, next_end = AXText.get_line_at_offset(obj, end)[-2:]
             if next_start <= 0 and next_end <= 0:
-                tokens = [f"AXText: No next line found at offset {end} in", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return line, start, end
+                return result
 
+            result = line, start, end
             if AXText._line_comparison(text_rect, clip_rect) < 0:
                 low = mid + 1
                 continue
@@ -842,10 +843,10 @@ class AXText:
 
             next_rect = AXText.get_range_rect(obj, next_start, next_end)
             if AXText._line_comparison(next_rect, clip_rect) != 0:
-                return line, start, end
+                return result
             low = mid + 1
 
-        return "", 0, 0
+        return result
 
     @staticmethod
     def is_word_misspelled(obj, offset=None):
