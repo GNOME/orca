@@ -175,9 +175,9 @@ def speak(content, acss=None, interrupt=True):
 
     validTypes = (str, list, speech_generator.Pause,
                   speech_generator.LineBreak, ACSS)
-    error = "SPEECH: bad content sent to speak(): '%s'"
+    error = "SPEECH: Bad content sent to speak():"
     if not isinstance(content, validTypes):
-        debug.printMessage(debug.LEVEL_INFO, error % content, True)
+        debug.printMessage(debug.LEVEL_INFO, error + str(content), True, True)
         return
 
     global _timestamp
@@ -205,7 +205,7 @@ def speak(content, acss=None, interrupt=True):
 
     for element in content:
         if not isinstance(element, validTypes):
-            debug.printMessage(debug.LEVEL_INFO, error % element, True)
+            debug.printMessage(debug.LEVEL_INFO, error + str(element), True, True)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
         elif isinstance(element, str):

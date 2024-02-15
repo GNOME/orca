@@ -1982,10 +1982,6 @@ class Utilities:
     def isErrorMessage(self, obj):
         return False
 
-    def getCharacterAtOffset(self, obj, offset=None):
-        # TODO - JD: All callers should use the following function instead.
-        return AXText.get_character_at_offset(obj, offset)
-
     def queryNonEmptyText(self, obj):
         """Get the text interface associated with an object, if it is
         non-empty.

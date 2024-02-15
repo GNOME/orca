@@ -1685,7 +1685,7 @@ class Script(script.Script):
         if self.utilities.isDeleteCommandTextDeletionEvent(event):
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            string = self.utilities.getCharacterAtOffset(event.source)
+            string = AXText.get_character_at_offset(event.source)[0]
         elif self.utilities.isBackSpaceCommandTextDeletionEvent(event):
             msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
