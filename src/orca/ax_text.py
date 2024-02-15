@@ -794,8 +794,6 @@ class AXText:
 
             previous_start, previous_end = AXText.get_line_at_offset(obj, start - 1)[-2:]
             if previous_start <= 0 and previous_end <= 0:
-                tokens = [f"AXText: No previous line found at offset {start - 1} in", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return line, start, end
 
             if AXText._line_comparison(text_rect, clip_rect) < 0:
