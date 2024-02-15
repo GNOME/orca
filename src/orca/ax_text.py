@@ -787,8 +787,6 @@ class AXText:
         while low < high:
             mid = (low + high) // 2
             line, start, end = AXText.get_line_at_offset(obj, mid)
-            text_rect = AXText.get_range_rect(obj, start, end)
-
             if start == 0:
                 return line, start, end
 
@@ -796,6 +794,7 @@ class AXText:
             if previous_start <= 0 and previous_end <= 0:
                 return line, start, end
 
+            text_rect = AXText.get_range_rect(obj, start, end)
             if AXText._line_comparison(text_rect, clip_rect) < 0:
                 low = mid + 1
                 continue
@@ -821,16 +820,15 @@ class AXText:
         while low < high:
             mid = (low + high) // 2
             line, start, end = AXText.get_line_at_offset(obj, mid)
-            text_rect = AXText.get_range_rect(obj, start, end)
-
             if end <= 0 or end >= length:
-                return result
+                return line, start, end
 
+            result = line, start, end
             next_start, next_end = AXText.get_line_at_offset(obj, end)[-2:]
             if next_start <= 0 and next_end <= 0:
                 return result
 
-            result = line, start, end
+            text_rect = AXText.get_range_rect(obj, start, end)
             if AXText._line_comparison(text_rect, clip_rect) < 0:
                 low = mid + 1
                 continue
