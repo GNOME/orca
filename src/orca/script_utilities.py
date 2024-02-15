@@ -3066,23 +3066,6 @@ class Utilities:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
-    def getWordAtOffset(self, obj, offset=None):
-        try:
-            text = obj.queryText()
-            if offset is None:
-                offset = text.caretOffset
-        except Exception:
-            return "", 0, 0
-
-        word, start, end = text.getTextAtOffset(offset, Atspi.TextBoundaryType.WORD_START)
-        debugString = word.replace("\n", "\\n")
-        msg = (
-            f"SCRIPT UTILITIES: Word at offset {offset} is "
-            f"'{debugString}' ({start}-{end})"
-        )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return word, start, end
-
     def textAtPoint(self, obj, x, y, boundary=None):
         # TODO - JD: Audit callers so we don't have to use boundaries.
         # Also, can the logic be entirely moved to AXText?
