@@ -770,6 +770,11 @@ class AXText:
                 return line, start, end
 
             previous_start, previous_end = AXText.get_line_at_offset(obj, start - 1)[-2:]
+            if previous_start <= 0 and previous_end <= 0:
+                tokens = [f"AXText: No previous line found at offset {start - 1} in", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return line, start, end
+
             previous_rect = AXText.get_range_rect(obj, previous_start, previous_end)
             if AXText._line_comparison(previous_rect, clip_rect) != 0:
                 return line, start, end
@@ -799,6 +804,11 @@ class AXText:
                 return line, start, end
 
             next_start, next_end = AXText.get_line_at_offset(obj, end)[-2:]
+            if next_start <= 0 and next_end <= 0:
+                tokens = [f"AXText: No next line found at offset {end} in", obj]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return line, start, end
+
             next_rect = AXText.get_range_rect(obj, next_start, next_end)
             if AXText._line_comparison(next_rect, clip_rect) != 0:
                 return line, start, end

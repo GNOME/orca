@@ -1506,9 +1506,12 @@ class Utilities:
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
             AXObject.clear_cache(root, True, "Root is empty filler.")
-            tokens = ["SCRIPT UTILITIES:", root, "now reports",
-                      AXObject.get_child_count(root), "children"]
+            count = AXObject.get_child_count(root)
+            tokens = ["SCRIPT UTILITIES:", root, f"now reports {count} children"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            if not count:
+                tokens = ["WARNING: unexpectedly empty filler", root]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if extents is None:
             extents = AXComponent.get_rect(root)
