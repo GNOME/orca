@@ -820,7 +820,10 @@ class AXText:
         while low < high:
             mid = (low + high) // 2
             line, start, end = AXText.get_line_at_offset(obj, mid)
-            if end <= 0 or end >= length:
+            if end >= length:
+                return line, start, end
+
+            if end <= 0:
                 return result
 
             next_start, next_end = AXText.get_line_at_offset(obj, end)[-2:]
