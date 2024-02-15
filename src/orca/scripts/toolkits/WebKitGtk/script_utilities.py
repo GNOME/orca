@@ -141,22 +141,25 @@ class Utilities(script_utilities.Utilities):
         if not (AXObject.supports_text(obj) and AXObject.supports_hypertext(obj)):
             return [(obj, 0, 1, '')]
 
-        text = obj.queryText()
-        string = text.getText(0, -1)
+        string = AXText.get_all_text(obj)
         if not string:
             return [(obj, 0, 1, '')]
 
         if offset is None:
-            offset = text.caretOffset
-        if boundary is None:
-            start = 0
-            end = text.characterCount
+            offset = AXText.get_caret_offset(obj)
+        if boundary == Atspi.TextBoundaryType.CHAR:
+            key, mods = self.lastKeyAndModifiers()
+            if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
+                offset -= 1
+            segment, start, end = AXText.get_character_at_offset(obj, offset)
+        elif boundary in (None, Atspi.TextBoundaryType.LINE_START):
+            segment, start, end = AXText.get_line_at_offset(obj, offset)
+        elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
+            segment, start, end = AXText.get_sentence_at_offset(obj, offset)
+        elif boundary == Atspi.TextBoundaryType.WORD_START:
+            segment, start, end = AXText.get_word_at_offset(obj, offset)
         else:
-            if boundary == Atspi.TextBoundaryType.CHAR:
-                key, mods = self.lastKeyAndModifiers()
-                if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
-                    offset -= 1
-            segment, start, end = text.getTextAtOffset(offset, boundary)
+            segment, start, end = string, 0, AXText.get_character_count(obj)
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
         offsets = [m.start(0) for m in re.finditer(pattern, string)]

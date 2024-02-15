@@ -442,46 +442,6 @@ class Script(default.Script):
         speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
-    def getTextSegments(self, obj, boundary, offset=0):
-        segments = []
-        text = obj.queryText()
-        length = text.characterCount
-        string, start, end = text.getTextAtOffset(offset, boundary)
-        while string and offset < length:
-            string = self.utilities.adjustForRepeats(string)
-            voice = self.speechGenerator.getVoiceForString(obj, string)
-            string = self.utilities.adjustForLinks(obj, string, start)
-            # Incrementing the offset should cause us to eventually reach
-            # the end of the text as indicated by a 0-length string and
-            # start and end offsets of 0. Sometimes WebKitGtk returns the
-            # final text segment instead.
-            if segments and [string, start, end, voice] == segments[-1]:
-                break
-
-            segments.append([string, start, end, voice])
-            offset = end + 1
-            string, start, end = text.getTextAtOffset(offset, boundary)
-        return segments
-
-    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
-        """To-be-removed. Returns the string, caretOffset, startOffset."""
-
-        textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
-        string = textLine[0]
-        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1 \
-           and AXUtilities.is_focused(obj):
-            return textLine
-
-        textLine[0] = self.utilities.displayedText(obj)
-        try:
-            text = obj.queryText()
-        except Exception:
-            pass
-        else:
-            textLine[1] = min(textLine[1], text.characterCount)
-
-        return textLine
-
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object.
 
