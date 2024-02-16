@@ -748,8 +748,8 @@ class AXText:
         try:
             rect = Atspi.Text.get_range_extents(obj, start, end, Atspi.CoordType.WINDOW)
         except Exception as error:
-            msg = f"AXText: Exception in get_range_rect: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXText: Exception in get_range_rect for", obj, f":{ error}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return Atspi.Rect()
 
         tokens = [f"AXText: Range {start}-{end} in", obj, "has rect", rect]
