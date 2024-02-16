@@ -151,15 +151,15 @@ class Utilities(script_utilities.Utilities):
             key, mods = self.lastKeyAndModifiers()
             if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
                 offset -= 1
-            segment, start, end = AXText.get_character_at_offset(obj, offset)
+            start, end = AXText.get_character_at_offset(obj, offset)[1:]
         elif boundary in (None, Atspi.TextBoundaryType.LINE_START):
-            segment, start, end = AXText.get_line_at_offset(obj, offset)
+            start, end = AXText.get_line_at_offset(obj, offset)[1:]
         elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
-            segment, start, end = AXText.get_sentence_at_offset(obj, offset)
+            start, end = AXText.get_sentence_at_offset(obj, offset)[1:]
         elif boundary == Atspi.TextBoundaryType.WORD_START:
-            segment, start, end = AXText.get_word_at_offset(obj, offset)
+            start, end = AXText.get_word_at_offset(obj, offset)[1:]
         else:
-            segment, start, end = string, 0, AXText.get_character_count(obj)
+            start, end = string, 0, AXText.get_character_count(obj)
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
         offsets = [m.start(0) for m in re.finditer(pattern, string)]
