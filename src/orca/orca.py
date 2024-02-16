@@ -382,10 +382,13 @@ def shutdown(script=None, inputEvent=None):
         script.presentationInterrupt()
         script.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
-    # Deactivate the event manager first so that it clears its queue and will not
-    # accept new events. Then let the script manager unregister script event listeners.
-    event_manager.getManager().deactivate()
+    # Pause event queuing first so that it clears its queue and will not accept new
+    # events. Then let the script manager unregister script event listeners as well
+    # as key grabs. Finally deactivate the event manager, which will also cause the
+    # Atspi.Device to be set to None.
+    event_manager.getManager().pauseQueuing(True, True, "Shutting down.")
     script_manager.getManager().deactivate()
+    event_manager.getManager().deactivate()
 
     # Shutdown all the other support.
     #

@@ -53,6 +53,7 @@ class EventManager:
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self._active = False
+        self._paused = False
         self._eventQueue     = queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
@@ -98,6 +99,15 @@ class EventManager:
         self._scriptListenerCounts = {}
         orca_state.device = None
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
+
+    def pauseQueuing(self, pause=True, clearQueue=False, reason=""):
+        """Pauses/unpauses event queuing."""
+
+        msg = f"EVENT MANAGER: Pause queueing: {pause}. Clear queue: {clearQueue}. {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._paused = pause
+        if clearQueue:
+            self._eventQueue = queue.Queue(0)
 
     def _isObsoletedBy(self, event):
         """Returns the event which renders this one no longer worthy of being processed."""
@@ -203,6 +213,11 @@ class EventManager:
 
         if not self._active:
             msg = 'EVENT MANAGER: Ignoring because event manager is not active'
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self._paused:
+            msg = 'EVENT MANAGER: Ignoring because event queueing is paused'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
