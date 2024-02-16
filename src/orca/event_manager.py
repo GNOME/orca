@@ -45,8 +45,6 @@ from .ax_utilities import AXUtilities
 
 class EventManager:
 
-    EMBEDDED_OBJECT_CHARACTER = '\ufffc'
-
     def __init__(self, asyncMode=True):
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
         debug.printMessage(debug.LEVEL_INFO, f'EVENT MANAGER: Async Mode is {asyncMode}', True)
@@ -202,217 +200,161 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
-        app = AXObject.get_application(event.source)
         debug.printMessage(debug.LEVEL_INFO, '')
-        tokens = ["EVENT MANAGER:", event.type, "from", app]
+        tokens = ["EVENT MANAGER:", event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._eventsSuspended:
             tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not self._active:
-            msg = 'EVENT MANAGER: Ignoring because event manager is not active'
+        if not self._active or self._paused:
+            msg = 'EVENT MANAGER: Ignoring because manager is not active or queueing is paused'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self._paused:
-            msg = 'EVENT MANAGER: Ignoring because event queueing is paused'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if AXObject.get_name(app) == 'gnome-shell':
-            if event.type.startswith('object:children-changed:remove'):
-                msg = 'EVENT MANAGER: Ignoring event based on type and app'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        if event.type.startswith('window'):
-            msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+        event_type = event.type
+        if event_type.startswith('window') or event_type.startswith('mouse:button'):
             return False
-
-        if event.type.startswith('mouse:button'):
-            msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        # Thunderbird spams us with these when a message list thread is expanded or collapsed.
-        if event.type.endswith('system') \
-           and AXObject.get_name(app).lower().startswith('thunderbird'):
-            if AXUtilities.is_table_related(event.source) \
-              or AXUtilities.is_tree_related(event.source) \
-              or AXUtilities.is_section(event.source):
-                msg = 'EVENT MANAGER: Ignoring system event based on role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
 
         if self._inDeluge() and self._ignoreDuringDeluge(event):
             msg = 'EVENT MANAGER: Ignoring event type due to deluge'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        script = script_manager.getManager().getActiveScript()
-        if event.type.startswith('object:children-changed') \
-           or event.type.startswith('object:state-changed:sensitive'):
-            if script is None:
-                msg = 'EVENT MANAGER: Ignoring because there is no active script'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            if script.app != app:
-                msg = 'EVENT MANAGER: Ignoring because event is not from active app'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
+        # Keep these checks early in the process so we can assume them throughout
+        # the rest of our checks.
+        focus = focus_manager.getManager().get_locus_of_focus()
+        if focus == event.source or AXUtilities.is_focused(event.source):
+            return False
+        if focus == event.any_data:
+            return False
 
-        if event.type.startswith('object:text-changed') \
-           and self.EMBEDDED_OBJECT_CHARACTER in event.any_data \
-           and not event.any_data.replace(self.EMBEDDED_OBJECT_CHARACTER, ""):
-            # We should also get children-changed events telling us the same thing.
-            # Getting a bunch of both can result in a flood that grinds us to a halt.
-            msg = 'EVENT MANAGER: Ignoring because changed text is only embedded objects'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        # TODO - JD: For now we won't ask for the name. Simply asking for the name should
-        # not break anything, and should be a reliable way to quickly identify defunct
-        # objects. But apparently the mere act of asking for the name causes Orca to stop
-        # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
-        # issue, but until we know for certain....
-        #name = Atspi.Accessible.get_name(event.source)
-
-        if AXUtilities.has_no_state(event.source):
-            msg = 'EVENT MANAGER: Ignoring event due to empty state set'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if AXUtilities.is_defunct(event.source):
-            msg = 'EVENT MANAGER: Ignoring event from defunct source'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        role = AXObject.get_role(event.source)
-        if event.type.startswith('object:property-change:accessible-name'):
-            if role in [Atspi.Role.CANVAS,
-                        Atspi.Role.ICON,
-                        Atspi.Role.LIST_ITEM,  # Web app spam
-                        Atspi.Role.LIST,       # Web app spam
-                        Atspi.Role.PANEL,      # TeamTalk5 spam
-                        Atspi.Role.SECTION,    # Web app spam
-                        Atspi.Role.TABLE_ROW,  # Thunderbird spam
-                        Atspi.Role.TABLE_CELL, # Thunderbird spam
-                        Atspi.Role.TREE_ITEM,  # Thunderbird spam
-                        Atspi.Role.IMAGE,      # Thunderbird spam
-                        Atspi.Role.MENU,
-                        Atspi.Role.MENU_ITEM]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            # TeamTalk5 is notoriously spammy here, and name change events on widgets are
-            # typically only presented if they are focused.
-            if not AXUtilities.is_focused(event.source) \
-               and role in [Atspi.Role.PUSH_BUTTON,
-                            Atspi.Role.CHECK_BOX,
-                            Atspi.Role.RADIO_BUTTON]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-        elif event.type.startswith('object:property-change:accessible-value'):
-            if role == Atspi.Role.SPLIT_PANE and not AXUtilities.is_focused(event.source):
-                msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-        elif event.type.startswith('object:text-changed:insert') and event.detail2 > 1000 \
-             and role in [Atspi.Role.TEXT, Atspi.Role.STATIC]:
-            msg = 'EVENT MANAGER: Ignoring because inserted text has more than 1000 chars'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-        elif event.type.startswith('object:state-changed:sensitive'):
-            if role in [Atspi.Role.MENU_ITEM,
-                        Atspi.Role.MENU,
-                        Atspi.Role.FILLER,
-                        Atspi.Role.PANEL,
-                        Atspi.Role.CHECK_MENU_ITEM,
-                        Atspi.Role.RADIO_MENU_ITEM]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-        elif event.type.startswith('object:state-changed:selected'):
-            if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role and detail1'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-        elif event.type.startswith('object:state-changed:showing'):
-            if role not in [Atspi.Role.ALERT,
-                            Atspi.Role.ANIMATION,
-                            Atspi.Role.INFO_BAR,
-                            Atspi.Role.MENU,
-                            Atspi.Role.NOTIFICATION,
-                            Atspi.Role.DIALOG,
-                            Atspi.Role.STATUS_BAR,
-                            Atspi.Role.TOOL_TIP]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        elif event.type.startswith('object:text-caret-moved'):
-            if role in [Atspi.Role.LABEL] and not AXUtilities.is_focused(event.source):
-                msg = 'EVENT MANAGER: Ignoring event type due to role and state'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        elif event.type.startswith('object:selection-changed'):
-            if AXObject.is_dead(event.source):
-                msg = 'EVENT MANAGER: Ignoring event from dead source'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        if event.type.startswith('object:children-changed') \
-           or event.type.startswith('object:active-descendant-changed'):
-            if role in [Atspi.Role.MENU,
-                        Atspi.Role.LAYERED_PANE,
-                        Atspi.Role.MENU_ITEM]:
-                msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            if event.any_data is None:
+        if event_type.startswith("object:children-changed"):
+            child = event.any_data
+            if child is None:
                 msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
-            if event.type.endswith('remove'):
-                if focus_manager.getManager().focus_is_dead():
-                    return False
-
-                if event.any_data == focus_manager.getManager().get_locus_of_focus():
-                    msg = 'EVENT MANAGER: Locus of focus is being destroyed'
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
-                    return False
-
-            defunct = AXObject.is_dead(event.any_data) or AXUtilities.is_defunct(event.any_data)
-            if defunct:
-                msg = 'EVENT MANAGER: Ignoring event for potentially-defunct child/descendant'
+            if "remove" in event_type and AXObject.is_dead(focus):
+                return False
+            if AXObject.is_dead(child):
+                msg = 'EVENT_MANAGER: Ignoring due to dead event.any_data'
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
+                msg = 'EVENT_MANAGER: Ignoring due to role of event.any_data'
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            app = AXObject.get_application(event.source)
+            if "remove" in event_type and AXObject.get_name(app).lower() == "gnome-shell":
+                msg = "EVENT MANAGER: Ignoring event based on type and app"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            script = script_manager.getManager().getActiveScript()
+            if script is None:
+                msg = "EVENT MANAGER: Ignoring because there is no active script"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            if script.app != AXObject.get_application(event.source):
+                msg = "EVENT MANAGER: Ignoring because event is not from active app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
 
-            # This should be safe. We do not have a reason to present a newly-added,
-            # but not focused image. We do not need to update live regions for images.
-            # This is very likely a completely and utterly useless event for us. The
-            # reason for ignoring it here rather than quickly processing it is the
-            # potential for event floods like we're seeing from matrix.org.
-            if AXUtilities.is_image(event.any_data):
-                msg = 'EVENT MANAGER: Ignoring event type due to role'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-            # In normal apps we would have caught this from the parent role.
-            # But gnome-shell has panel parents adding/removing menu items.
-            if event.type.startswith('object:children-changed'):
-                if AXUtilities.is_menu_item(event.any_data):
-                    msg = 'EVENT MANAGER: Ignoring event type due to child role'
+        if event_type.startswith("object:property-change"):
+            role = AXObject.get_role(event.source)
+            if "name" in event_type:
+                if role in [Atspi.Role.CANVAS,
+                            Atspi.Role.CHECK_BOX,    # TeamTalk5 spam
+                            Atspi.Role.ICON,
+                            Atspi.Role.IMAGE,        # Thunderbird spam
+                            Atspi.Role.LIST,         # Web app spam
+                            Atspi.Role.LIST_ITEM,    # Web app spam
+                            Atspi.Role.MENU,
+                            Atspi.Role.MENU_ITEM,
+                            Atspi.Role.PANEL,        # TeamTalk5 spam
+                            Atspi.Role.RADIO_BUTTON, # TeamTalk5 spam
+                            Atspi.Role.SECTION,      # Web app spam
+                            Atspi.Role.TABLE_ROW,    # Thunderbird spam
+                            Atspi.Role.TABLE_CELL,   # Thunderbird spam
+                            Atspi.Role.TREE_ITEM]:   # Thunderbird spam
+                    msg = "EVENT MANAGER: Ignoring event type due to role of unfocused source"
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return True
+                return False
+            if "value" in event_type:
+                if role in [Atspi.Role.SPLIT_PANE, Atspi.Role.SCROLL_BAR]:
+                    msg = "EVENT MANAGER: Ignoring event type due to role of unfocused source"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+                return False
 
-        msg = 'EVENT MANAGER: Not ignoring due to lack of cause'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        if event_type.startswith('object:selection-changed'):
+            if AXObject.is_dead(event.source):
+                msg = "EVENT MANAGER: Ignoring event from dead source"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+
+        if event_type.startswith("object:state-changed"):
+            role = AXObject.get_role(event.source)
+            if event_type.endswith("system"):
+                # Thunderbird spams us with these when a message list thread is expanded/collapsed.
+                if role in [Atspi.Role.TABLE,
+                            Atspi.Role.TABLE_CELL,
+                            Atspi.Role.TABLE_ROW,
+                            Atspi.Role.TREE,
+                            Atspi.Role.TREE_ITEM,
+                            Atspi.Role.TREE_TABLE]:
+                    msg = 'EVENT MANAGER: Ignoring system event based on role'
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+            if "selected" in event_type:
+                if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
+                    msg = "EVENT MANAGER: Ignoring event type due to role of source and detail1"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+                return False
+            if "sensitive" in event_type:
+                # The Gedit and Thunderbird scripts pay attention to this event for spellcheck.
+                if role not in [Atspi.Role.TEXT, Atspi.Role.ENTRY]:
+                    msg = "EVENT MANAGER: Ignoring event type due to role of unfocused source"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+                return False
+            if "showing" in event_type:
+                if role not in [Atspi.Role.ALERT,
+                                Atspi.Role.ANIMATION,
+                                Atspi.Role.DIALOG,
+                                Atspi.Role.INFO_BAR,
+                                Atspi.Role.MENU,
+                                Atspi.Role.NOTIFICATION,
+                                Atspi.Role.STATUS_BAR,
+                                Atspi.Role.TOOL_TIP]:
+                    msg = "EVENT MANAGER: Ignoring event type due to role"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+                return False
+
+        if event_type.startswith('object:text-caret-moved'):
+            role = AXObject.get_role(event.source)
+            if role in [Atspi.Role.LABEL]:
+                msg = "EVENT MANAGER: Ignoring event type due to role of unfocused source"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+
+        if event_type.startswith('object:text-changed'):
+            if "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
+                msg = "EVENT MANAGER: Ignoring because changed text is only embedded objects"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            if "insert" in event_type and event.detail2 > 1000:
+                msg = "EVENT MANAGER: Ignoring because inserted text has more than 1000 chars"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+
         return False
 
     def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
