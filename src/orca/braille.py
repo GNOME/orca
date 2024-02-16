@@ -1775,9 +1775,9 @@ def _processBrailleEvent(event):
             # the command was consumed.
             #
             consumed = _callback(event)
-        except Exception:
-            debug.printMessage(debug.LEVEL_WARNING, "Issue processing event:")
-            debug.printException(debug.LEVEL_WARNING)
+        except Exception as error:
+            msg = f"WARNING: Could not process braille event: {error}"
+            debug.printMessage(debug.LEVEL_WARNING, msg, True)
             consumed = False
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
@@ -1791,9 +1791,9 @@ def _brlAPIKeyReader(source, condition):
     """
     try:
         key = _brlAPI.readKey(False)
-    except Exception:
-        debug.printMessage(debug.LEVEL_WARNING, "BrlTTY seems to have disappeared:")
-        debug.printException(debug.LEVEL_WARNING)
+    except Exception as error:
+        msg = f"WARNING: Could not read BrlApi key: {error}"
+        debug.printMessage(debug.LEVEL_WARNING, msg, True)
         shutdown()
         return
     if key:
@@ -1939,10 +1939,9 @@ def init(callback=None):
         msg = "BRAILLE: Initialization failed: BrlApi is not defined."
         debug.printMessage(debug.LEVEL_WARNING, msg, True)
         return False
-    except Exception:
-        msg = "BRAILLE: Initialization failed."
+    except Exception as error:
+        msg = f"WARNING: Braille initialization failed: {error}"
         debug.printMessage(debug.LEVEL_WARNING, msg, True)
-        debug.printException(debug.LEVEL_WARNING)
 
         _brlAPIRunning = False
 
