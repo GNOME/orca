@@ -309,6 +309,13 @@ class EventManager:
                     msg = 'EVENT MANAGER: Ignoring system event based on role'
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return True
+            if "checked" in event_type:
+                # Gtk 3 apps. See https://gitlab.gnome.org/GNOME/gtk/-/issues/6449
+                if not AXUtilities.is_showing(event.source):
+                    msg = "EVENT MANAGER: Ignoring event type of unfocused, non-showing source"
+                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    return True
+                return False
             if "selected" in event_type:
                 if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
                     msg = "EVENT MANAGER: Ignoring event type due to role of source and detail1"
