@@ -130,6 +130,9 @@ class Parser(argparse.ArgumentParser):
             "-u", "--user-prefs", action="store",
             help=messages.CLI_LOAD_PREFS, metavar=messages.CLI_PREFS_DIR)
         self.add_argument(
+            "--speech-system", action="store",
+            help=messages.CLI_SPEECH_SYSTEM, metavar=messages.CLI_SPEECH_SYSTEM_NAME)
+        self.add_argument(
             "--debug-file", action="store",
             help=messages.CLI_DEBUG_FILE, metavar=messages.CLI_DEBUG_FILE_NAME)
         self.add_argument(
@@ -263,6 +266,17 @@ def main():
         except Exception:
             print(messages.CLI_LOAD_PROFILE_ERROR % args.profile)
             manager.setProfile()
+
+    if args.speech_system:
+        try:
+            # Check factory modules ("orca.<speech system>") that loaded successfully
+            factories = [f.__name__[5:] for f in manager.getSpeechServerFactories()]
+            if args.speech_system not in factories:
+                raise KeyError
+            
+            manager.setSetting('speechServerFactory', args.speech_system)
+        except Exception:
+            print(messages.CLI_SPEECH_SYSTEM_ERROR % (args.speech_system, ', '.join(factories)))
 
     if args.setup:
         cleanup(signal.SIGKILL)
