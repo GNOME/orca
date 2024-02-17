@@ -3159,7 +3159,7 @@ class Utilities(script_utilities.Utilities):
         if self.hasGridDescendant(obj):
             tokens = ["WEB:", obj, "is not clickable: has grid descendant"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return ""
+            return False
 
         rv = False
         if not self.isFocusModeWidget(obj):
@@ -3169,7 +3169,12 @@ class Utilities(script_utilities.Utilities):
                 rv = AXObject.has_action(obj, "click-ancestor")
 
         if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
-            if not AXText.get_all_text(obj).strip():
+            text = AXText.get_all_text(obj)
+            if not text.replace("\ufffc", ""):
+                tokens = ["WEB:", obj, "is not clickable: its text is just EOCs"]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                rv = False
+            elif not text.strip():
                 rv = not (AXUtilities.is_static(obj) or AXUtilities.is_link(obj))
 
         self._isClickableElement[hash(obj)] = rv
