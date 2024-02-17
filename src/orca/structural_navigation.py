@@ -1929,18 +1929,7 @@ class StructuralNavigation:
         return bindings
 
     def _tableGetter(self, document, arg=None):
-        def is_not_layout_or_empty(obj):
-            if not AXObject.get_child_count(obj):
-                return False
-
-            # This should no longer be needed once Atspi 2.8.4 is released.
-            attrs = AXObject.get_attributes_dict(obj)
-            if attrs.get('layout-guess') == 'true':
-                return False
-
-            return AXTable.get_row_count(obj) > 0
-
-        return AXUtilities.find_all_tables(document, is_not_layout_or_empty)
+        return AXUtilities.find_all_tables(document)
 
     def _tablePresentation(self, obj, arg=None):
         if obj is not None:

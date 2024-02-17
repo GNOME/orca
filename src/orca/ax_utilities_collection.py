@@ -1408,8 +1408,25 @@ class AXUtilitiesCollection:
     def find_all_tables(root, pred=None):
         """Returns all descendants of root with the table role"""
 
+        if root is None:
+            return []
+
+        tokens = ["AXUtilitiesCollection:", inspect.currentframe(), "Root:", root, "pred:", pred]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         roles = [Atspi.Role.TABLE]
-        return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
+        attributes = ["layout-guess:true"]
+        attribute_match_type = Atspi.CollectionMatchType.NONE
+        rule = AXCollection.create_match_rule(
+            roles=roles,
+            attributes=attributes,
+            attribute_match_type=attribute_match_type)
+
+        tables = AXCollection.get_all_matches(root, rule)
+        if pred is not None:
+            AXUtilitiesCollection._apply_predicate(tables, pred)
+
+        return tables
 
     @staticmethod
     def find_all_table_cells(root, pred=None):
