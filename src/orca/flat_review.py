@@ -589,20 +589,10 @@ class Context:
             extents = rect.x, rect.y, rect.width, rect.height
             return [TextZone(accessible, 0, AXText.get_all_text(accessible), *extents)]
 
-        first_visible = AXText.find_first_visible_line(accessible, cliprect)
-        last_visible = AXText.find_last_visible_line(accessible, cliprect)
-        first = first_visible[1]
-        last = last_visible[2]
-        length = AXText.get_character_count(accessible)
-        tokens = ["FLAT REVIEW: Getting lines for", accessible, f"offsets {first}-{last}",
-                  f"text length: {length}"]
+        tokens = ["FLAT REVIEW: Getting lines for", accessible]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        lines = []
-        for string, start, end in AXText.iter_line(accessible, first):
-            if start < min(last, length):
-                lines.append((string, start, end))
-
+        lines = AXText.get_visible_lines(accessible, cliprect)
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", accessible]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 

@@ -780,8 +780,34 @@ class AXText:
         return 0
 
     @staticmethod
+    def get_visible_lines(obj, clip_rect):
+        """Returns a list of (string, start, end) for lines of obj inside clip_rect."""
+
+        tokens = ["AXText: Getting visible lines for", obj, "inside", clip_rect]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        line, start, end = AXText.find_first_visible_line(obj, clip_rect)
+        debug_string = line.replace("\n", "\\n")
+        tokens = ["AXText: First visible line in", obj, f"is: '{debug_string}' ({start}-{end})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        result = [(line, start, end)]
+        offset = end
+        for line, start, end in AXText.iter_line(obj, offset):
+            line_rect = AXText.get_range_rect(obj, start, end)
+            if AXText._line_comparison(line_rect, clip_rect) > 0:
+                break
+            result.append((line, start, end))
+
+        line, start, end = result[-1]
+        debug_string = line.replace("\n", "\\n")
+        tokens = ["AXText: Last visible line in", obj, f"is: '{debug_string}' ({start}-{end})"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
     def find_first_visible_line(obj, clip_rect):
-        """Returns the first visible line of obj inside clip_rect."""
+        """Returns the first (string, start, end) visible line of obj inside clip_rect."""
 
         result = "", 0, 0
         length = AXText.get_character_count(obj)
@@ -823,7 +849,7 @@ class AXText:
 
     @staticmethod
     def find_last_visible_line(obj, clip_rect):
-        """Returns the last visible line of obj inside clip_rect."""
+        """Returns the last (string, start, end) visible line of obj inside clip_rect."""
 
         result = "", 0, 0
         length = AXText.get_character_count(obj)
