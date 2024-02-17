@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2024-02-16 20:25+0000\n"
-"PO-Revision-Date: 2024-02-17 16:56+0330\n"
+"PO-Revision-Date: 2024-02-17 17:22+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -1372,8 +1372,7 @@ msgstr ""
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:635
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room"
+msgid "Toggle whether we prefix chat room messages with the name of the chat room"
 msgstr ""
 
 #. Translators: this is a command for a button on a refreshable braille display
@@ -2219,7 +2218,7 @@ msgstr "سفید آنتیک"
 #: src/orca/colornames.py:45
 msgctxt "color name"
 msgid "aquamarine"
-msgstr ""
+msgstr "کبود"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2227,7 +2226,7 @@ msgstr ""
 #: src/orca/colornames.py:50
 msgctxt "color name"
 msgid "azure"
-msgstr ""
+msgstr "لاجوردی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2235,7 +2234,7 @@ msgstr ""
 #: src/orca/colornames.py:55
 msgctxt "color name"
 msgid "beige"
-msgstr ""
+msgstr "بژ"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2347,7 +2346,7 @@ msgstr ""
 #: src/orca/colornames.py:125
 msgctxt "color name"
 msgid "crimson"
-msgstr ""
+msgstr "زرشکی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2411,7 +2410,7 @@ msgstr "خاکی تیره"
 #: src/orca/colornames.py:165
 msgctxt "color name"
 msgid "dark magenta"
-msgstr ""
+msgstr "ارغوانی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2459,7 +2458,7 @@ msgstr ""
 #: src/orca/colornames.py:195
 msgctxt "color name"
 msgid "dark sea green"
-msgstr ""
+msgstr "سبز دریایی تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2483,7 +2482,7 @@ msgstr ""
 #: src/orca/colornames.py:210
 msgctxt "color name"
 msgid "dark turquoise"
-msgstr ""
+msgstr "فیروزه‌ای تیره"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2515,7 +2514,7 @@ msgstr "آبی آسمانی عمیق"
 #: src/orca/colornames.py:230
 msgctxt "color name"
 msgid "dim gray"
-msgstr ""
+msgstr "خاکستری تاریک"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2539,7 +2538,7 @@ msgstr "آجری آتشسن"
 #: src/orca/colornames.py:245
 msgctxt "color name"
 msgid "floral white"
-msgstr ""
+msgstr "سفید گلی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2619,7 +2618,7 @@ msgstr "زرد سبز"
 #: src/orca/colornames.py:295
 msgctxt "color name"
 msgid "honeydew"
-msgstr ""
+msgstr "عسلی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2643,7 +2642,7 @@ msgstr "قرمز هندی"
 #: src/orca/colornames.py:310
 msgctxt "color name"
 msgid "indigo"
-msgstr ""
+msgstr "نیلی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2683,7 +2682,7 @@ msgstr ""
 #: src/orca/colornames.py:335
 msgctxt "color name"
 msgid "lawn green"
-msgstr ""
+msgstr "سبز چمنی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2707,7 +2706,7 @@ msgstr "آبی روشن"
 #: src/orca/colornames.py:350
 msgctxt "color name"
 msgid "light coral"
-msgstr ""
+msgstr "مرجانی روشن"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2819,7 +2818,7 @@ msgstr "سبز لیمویی"
 #: src/orca/colornames.py:420
 msgctxt "color name"
 msgid "linen"
-msgstr ""
+msgstr "کتانی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2835,7 +2834,7 @@ msgstr "سرخ"
 #: src/orca/colornames.py:430
 msgctxt "color name"
 msgid "maroon"
-msgstr ""
+msgstr "خرمایی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2843,7 +2842,7 @@ msgstr ""
 #: src/orca/colornames.py:435
 msgctxt "color name"
 msgid "medium aquamarine"
-msgstr ""
+msgstr "خرمایی متوسّط"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -2899,7 +2898,7 @@ msgstr "سبز بهاری متوسّط"
 #: src/orca/colornames.py:470
 msgctxt "color name"
 msgid "medium turquoise"
-msgstr ""
+msgstr "فیروزه‌ای متوسّط"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3027,7 +3026,7 @@ msgstr "سبز رنگ‌پریده"
 #: src/orca/colornames.py:550
 msgctxt "color name"
 msgid "pale turquoise"
-msgstr ""
+msgstr "فیروزه‌ای کم‌رنگ"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3075,7 +3074,7 @@ msgstr "صورتی"
 #: src/orca/colornames.py:580
 msgctxt "color name"
 msgid "plum"
-msgstr ""
+msgstr "آلویی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3107,7 +3106,7 @@ msgstr "قرمز"
 #: src/orca/colornames.py:600
 msgctxt "color name"
 msgid "rosy brown"
-msgstr ""
+msgstr "قهوه‌ای گلگون"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3155,7 +3154,7 @@ msgstr "سبز دریایی"
 #: src/orca/colornames.py:630
 msgctxt "color name"
 msgid "seashell"
-msgstr ""
+msgstr "صدفی"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3251,7 +3250,7 @@ msgstr ""
 #: src/orca/colornames.py:690
 msgctxt "color name"
 msgid "tomato"
-msgstr ""
+msgstr "گوجه‌ای"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3259,7 +3258,7 @@ msgstr ""
 #: src/orca/colornames.py:695
 msgctxt "color name"
 msgid "turquoise"
-msgstr ""
+msgstr "فیروزه‌ای"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3380,8 +3379,8 @@ msgstr ""
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:97 src/orca/orca-setup.ui:2308
-#: src/orca/orca-setup.ui:2408 src/orca/orca-setup.ui:3327
+#: src/orca/guilabels.py:97 src/orca/orca-setup.ui:2308 src/orca/orca-setup.ui:2408
+#: src/orca/orca-setup.ui:3327
 msgid "Dot _7"
 msgstr ""
 
@@ -3955,9 +3954,9 @@ msgstr "برداشتن نمایهٔ کاربری"
 #: src/orca/guilabels.py:509
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved "
-"in this profile will be lost. Do you want to continue and remove this "
-"profile and all related settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in "
+"this profile will be lost. Do you want to continue and remove this profile and "
+"all related settings?"
 msgstr ""
 "دارید نمایهٔ %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نمایه "
 "ذخیره شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نمایه را با همهٔ "
@@ -7394,8 +7393,7 @@ msgstr ""
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: src/orca/messages.py:261
-msgid ""
-"Cannot start the screen reader because it cannot connect to the Desktop."
+msgid "Cannot start the screen reader because it cannot connect to the Desktop."
 msgstr ""
 
 #. Translators: This message is presented to the user who attempts to launch Orca
@@ -8587,7 +8585,7 @@ msgstr "رونویس"
 #: src/orca/messages.py:1167
 msgctxt "math script"
 msgid "pre-subscript"
-msgstr ""
+msgstr "پیش‌زیرنویس"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text which precedes the base in a mathematical
@@ -8597,7 +8595,7 @@ msgstr ""
 #: src/orca/messages.py:1174
 msgctxt "math script"
 msgid "pre-superscript"
-msgstr ""
+msgstr "پیش‌رونویس"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is underscripted text in a mathematical expression. Note that the
@@ -8689,11 +8687,10 @@ msgstr ""
 #. Mode.
 #: src/orca/messages.py:1243
 msgid ""
-"Entering learn mode.  Press any key to hear its function.  To view the "
-"screen reader’s documentation, press F1. To get a list of the screen "
-"reader’s default shortcuts, press F2. To get a list of the screen reader’s "
-"shortcuts for the current application, press F3. To exit learn mode, press "
-"the escape key."
+"Entering learn mode.  Press any key to hear its function.  To view the screen "
+"reader’s documentation, press F1. To get a list of the screen reader’s default "
+"shortcuts, press F2. To get a list of the screen reader’s shortcuts for the "
+"current application, press F3. To exit learn mode, press the escape key."
 msgstr ""
 
 #. Translators: This message is presented when a user is navigating within a
@@ -10835,8 +10832,7 @@ msgstr[0] "جدول ریاضی با %d ردیف"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2793 src/orca/messages.py:2809
-#: src/orca/messages.py:2917
+#: src/orca/messages.py:2793 src/orca/messages.py:2809 src/orca/messages.py:2917
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -12518,10 +12514,10 @@ msgstr "ویژگی‌های متن"
 #.
 #: src/orca/phonnames.py:53
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
+"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
+"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
+"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
 
 #. Translators: this attribute specifies the background color of the text.
@@ -13781,15 +13777,13 @@ msgstr "نوشتار"
 #~ msgstr "فاصله را برای تغییر حالت بزنید."
 
 #~ msgid "Press space to expand, and use up and down to select an item."
-#~ msgstr ""
-#~ "برای گشایش فاصله را زده و برای گزینش مورد از بالا و پایین استفاده کنید."
+#~ msgstr "برای گشایش فاصله را زده و برای گزینش مورد از بالا و پایین استفاده کنید."
 
 #~ msgid "Press alt+f6 to give focus to child windows."
 #~ msgstr "دگرساز+F6 را برای دادن تمرکز به پنجرهٔ فرزند بزنید."
 
 #~ msgid "To move to items, use either the arrow keys or type ahead searching."
-#~ msgstr ""
-#~ "برای جابه‌جایی موارد از کلیدهای جهت‌دار یا جست‌وجو با نوشتن استفاده کنید."
+#~ msgstr "برای جابه‌جایی موارد از کلیدهای جهت‌دار یا جست‌وجو با نوشتن استفاده کنید."
 
 #~ msgid "To get to the system menus press the alt+f1 key."
 #~ msgstr "برای دریافت فهرست‌های سیستم کلید تعویض+تابع۱ را بفشارید."
@@ -13816,11 +13810,10 @@ msgstr "نوشتار"
 #~ msgstr "برای فعال‌سازی کلید فاصله را بفشارید."
 
 #~ msgid ""
-#~ "Use up or down arrow to select value. Or type in the desired numerical "
-#~ "value."
+#~ "Use up or down arrow to select value. Or type in the desired numerical value."
 #~ msgstr ""
-#~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار "
-#~ "دلخواه عددیتان را بنویسید."
+#~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه "
+#~ "عددیتان را بنویسید."
 
 #~ msgid "Use arrow keys to change."
 #~ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید."
@@ -13836,11 +13829,11 @@ msgstr "نوشتار"
 #~ msgstr "برای ورود به زیرمنو، کلید جهت راست را فشار دهید."
 
 #~ msgid ""
-#~ "To decrease press left arrow, to increase press right arrow. To go to "
-#~ "minimum press home, and for maximum press end."
+#~ "To decrease press left arrow, to increase press right arrow. To go to minimum "
+#~ "press home, and for maximum press end."
 #~ msgstr ""
-#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار "
-#~ "دهید. برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
+#~ "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
