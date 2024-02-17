@@ -793,7 +793,10 @@ class AXText:
                 return line, start, end
 
             if start < 0:
-                return result
+                tokens = ["AXText: Treating invalid offset as above", clip_rect]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                low = mid + 1
+                continue
 
             result = line, start, end
             previous_line, previous_start, previous_end = AXText.get_line_at_offset(obj, start - 1)
@@ -832,7 +835,10 @@ class AXText:
                 return line, start, end
 
             if end <= 0:
-                return result
+                tokens = ["AXText: Treating invalid offset as below", clip_rect]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                high = mid
+                continue
 
             result = line, start, end
             next_line, next_start, next_end = AXText.get_line_at_offset(obj, end)
