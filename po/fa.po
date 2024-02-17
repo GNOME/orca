@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2024-02-16 20:25+0000\n"
-"PO-Revision-Date: 2024-02-17 17:22+0330\n"
+"PO-Revision-Date: 2024-02-17 17:30+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -583,7 +583,7 @@ msgstr "هندی سطح ۱"
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -1039,7 +1039,7 @@ msgstr ""
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:381
 msgid "Pan the braille display to the left"
-msgstr ""
+msgstr "بردن نمایشگر بریل به چپ"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -1048,7 +1048,7 @@ msgstr ""
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:388
 msgid "Pan the braille display to the right"
-msgstr ""
+msgstr "بردن نمایشگر بریل به راست"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1060,7 +1060,7 @@ msgstr ""
 #. will return the flat review to the object with focus.
 #: src/orca/cmdnames.py:398
 msgid "Return to object with keyboard focus"
-msgstr ""
+msgstr "بازگشت به شی با تمرکز صفحه‌کلید"
 
 #. Translators: braille can be displayed in many ways. Contracted braille
 #. provides a more efficient means to represent text, especially long
@@ -1075,17 +1075,17 @@ msgstr ""
 #. the machine they are interested in a particular character on the display.
 #: src/orca/cmdnames.py:409
 msgid "Process a cursor routing key"
-msgstr ""
+msgstr "پردازش کلید مسیریابی مکان‌»ما"
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: src/orca/cmdnames.py:412
 msgid "Mark the beginning of a text selection"
-msgstr ""
+msgstr "علامت زدن ابتدای گزینش متن"
 
 #. Translators: this is used to indicate the end point of a text selection.
 #: src/orca/cmdnames.py:415
 msgid "Mark the end of a text selection"
-msgstr ""
+msgstr "علامت زدن انتهای گزینش متن"
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be. The effects
@@ -1094,49 +1094,49 @@ msgstr ""
 #. have a handler.
 #: src/orca/cmdnames.py:422
 msgid "Enter learn mode.  Press escape to exit learn mode"
-msgstr ""
+msgstr "ورود به حالت آموزش.  زدن گریز برای خروج"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:426
 msgid "Decrease the speech rate"
-msgstr ""
+msgstr "کاهش سرعت گفتار"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:430
 msgid "Increase the speech rate"
-msgstr ""
+msgstr "افزایش سرعت گفتار"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:434
 msgid "Decrease the speech pitch"
-msgstr ""
+msgstr "کاهش گام گفتار"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:438
 msgid "Increase the speech pitch"
-msgstr ""
+msgstr "افزایش گام گفتار"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:442
 msgid "Increase the speech volume"
-msgstr ""
+msgstr "افزایش حجم گفتار"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:446
 msgid "Decrease the speech volume"
-msgstr ""
+msgstr "کاهش حجم گفتار"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:450
 msgid "Toggle the silencing of speech"
-msgstr ""
+msgstr "تغییر وضعیت بی‌صدایی گفتار"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -1152,7 +1152,7 @@ msgstr ""
 #. for the app being used at the time the command is given.
 #: src/orca/cmdnames.py:464
 msgid "Toggle sleep mode for the current application"
-msgstr ""
+msgstr "تغییر وضعیت حلت خواب برای برنامهٔ کنونی"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -1160,25 +1160,25 @@ msgstr ""
 #. This string describes that command.
 #: src/orca/cmdnames.py:470
 msgid "Toggle speech verbosity level"
-msgstr ""
+msgstr "تغییر وضعیت سطح پرگویی گفتر"
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: src/orca/cmdnames.py:474
 msgid "Quit the screen reader"
-msgstr ""
+msgstr "خروج از صفحه‌خوان"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
 #: src/orca/cmdnames.py:478
 msgid "Display the preferences configuration dialog"
-msgstr ""
+msgstr "نمایش گفت‌وگوی پیکربندی ترجیحات"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:483
 msgid "Display the application preferences configuration dialog"
-msgstr ""
+msgstr "نمایش گفت‌وگوی پیکربندی ترجیحات برنامه"
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
@@ -7057,7 +7057,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "%s with underline"
-msgstr ""
+msgstr "%s با زیرخط"
 
 #. Translators: this is the spoken representation for the character '̸' (U+0338)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -7067,7 +7067,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "%s with slash"
-msgstr ""
+msgstr "%s با خط مورّب"
 
 #. Translators: this is the spoken representation for the character '⃒' (U+20D2)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -7077,7 +7077,7 @@ msgstr ""
 #, python-format
 msgctxt "math symbol"
 msgid "%s with vertical line"
-msgstr ""
+msgstr "%s با خط عمودی"
 
 #. Translators: Sometimes when we attempt to get the name of an accessible
 #. software application, we fail because the app or one of its elements is
@@ -11121,7 +11121,7 @@ msgstr "جزییاتی در %s دارد"
 #: src/orca/object_properties.py:111
 msgctxt "role"
 msgid "suggestion"
-msgstr ""
+msgstr "پیشنهاد"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11158,7 +11158,7 @@ msgstr "خوراک"
 #: src/orca/object_properties.py:138
 msgctxt "role"
 msgid "figure"
-msgstr ""
+msgstr "شکل"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
