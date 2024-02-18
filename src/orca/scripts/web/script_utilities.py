@@ -598,13 +598,12 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    @staticmethod
-    def getExtents(obj, startOffset, endOffset):
+    def getExtents(self, obj, startOffset, endOffset):
         if not obj:
             return [0, 0, 0, 0]
 
         result = [0, 0, 0, 0]
-        if AXText.get_character_count and 0 <= startOffset < endOffset:
+        if self.treatAsTextObject(obj) and 0 <= startOffset < endOffset:
             rect = AXText.get_range_rect(obj, startOffset, endOffset)
             result = [rect.x, rect.y, rect.width, rect.height]
             if result[0] and result[1] and result[2] == 0 and result[3] == 0 \
@@ -2996,8 +2995,8 @@ class Utilities(script_utilities.Utilities):
         targets = self.labelTargets(obj)
         if targets:
             end = max(1, AXText.get_character_count(obj))
-            x, y, width, height = self.getExtents(obj, 0, end)
-            if x < 0 or y < 0:
+            rect = AXText.get_range_rect(obj, 0, end)
+            if rect.x < 0 or rect.y < 0:
                 rv = True
 
         self._isOffScreenLabel[hash(obj)] = rv
