@@ -405,7 +405,7 @@ class AXText:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = [f"AXText: Reported result of setting offset to {offset} in", obj, f":{result}"]
+        tokens = [f"AXText: Reported result of setting offset to {offset} in", obj, f": {result}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 

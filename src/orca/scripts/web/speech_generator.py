@@ -770,7 +770,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         for i, content in enumerate(contents):
             obj, start, end, string = content
-            tokens = ["ITEM", i, ": ", obj, "start: ", start, ", end: ", end, "'", string, "'"]
+            tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             utterance = self.generateSpeech(
                 obj, startOffset=start, endOffset=end, string=string,
