@@ -951,8 +951,7 @@ class Script(default.Script):
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
 
-        text = self.utilities.queryNonEmptyText(obj)
-        if text and self.EMBEDDED_OBJECT_CHARACTER in text.getText(0, -1):
+        if "\ufffc" in AXText.get_all_text(obj):
             self.updateBraille(obj)
             return
 
@@ -966,7 +965,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
-        if self._inFocusMode:
+        if self._inFocusMode and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             super().updateBraille(obj, **args)

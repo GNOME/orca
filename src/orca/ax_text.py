@@ -460,6 +460,7 @@ class AXText:
         else:
             debug_string = result
 
+        debug_string = debug_string.replace("\n", "\\n")
         tokens = ["AXText: Text of", obj, f"'{debug_string}'"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
