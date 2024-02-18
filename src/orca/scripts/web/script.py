@@ -1861,15 +1861,15 @@ class Script(default.Script):
         if document:
             focus = focus_manager.getManager().get_locus_of_focus()
             if event.source == focus:
-                msg = "WEB: Dumping cache and context: source is focus"
+                msg = "WEB: Dumping cache: source is focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                self.utilities.dumpCache(document, preserveContext=False)
+                self.utilities.dumpCache(document, preserveContext=True)
             elif focus_manager.getManager().focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif AXObject.find_ancestor(focus, lambda x: x == event.source):
-                msg = "WEB: Dumping cache and context: source is ancestor of focus"
+                msg = "WEB: Dumping cache: source is ancestor of focus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
