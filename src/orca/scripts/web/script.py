@@ -1324,6 +1324,7 @@ class Script(default.Script):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            args['priorObj'] = oldFocus
         else:
             tokens = ["WEB: New focus", newFocus, "is not a special case. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
