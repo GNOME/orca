@@ -143,7 +143,8 @@ class Utilities(script_utilities.Utilities):
         documentFrameParent = AXObject.get_parent(documentFrame)
         context = self._caretContexts.get(hash(documentFrameParent))
 
-        tokens = ["WEB: Clearing all cached info for", documentFrame]
+        tokens = ["WEB: Clearing all cached info for", documentFrame,
+                  "Preserving context:", preserveContext, "Context:", context]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._script.structuralNavigation.clearCache(documentFrame)
