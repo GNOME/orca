@@ -966,6 +966,15 @@ class Utilities(script_utilities.Utilities):
         if self.isCustomImage(obj):
             return True
 
+        # Example: Some StackExchange instances have a focusable "note"/comment role
+        # with a name (e.g. "Accepted"), and a single child div which is empty.
+        if role in self._textBlockElementRoles() and AXUtilities.is_focusable(obj) \
+           and self.hasExplicitName(obj):
+            for child in AXObject.iter_children(obj):
+                if not self.isUselessEmptyElement(child):
+                    return False
+            return True
+
         return False
 
     def __findSentence(self, text, offset):
