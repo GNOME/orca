@@ -353,6 +353,7 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
+        script.presentationInterrupt()
         script.updateBraille(obj)
         script.sayCharacter(obj)
         return True
@@ -369,6 +370,7 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
+        script.presentationInterrupt()
         script.updateBraille(obj)
         script.sayCharacter(obj)
         return True
@@ -390,6 +392,7 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
+        script.presentationInterrupt()
         script.updateBraille(obj)
         script.sayWord(obj)
         return True
@@ -408,6 +411,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
+        script.presentationInterrupt()
         script.updateBraille(obj)
         script.sayWord(obj)
         return True
@@ -437,6 +441,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
+        script.presentationInterrupt()
         script.speakContents(contents, priorObj=line[-1][0])
         script.displayContents(contents)
         return True
@@ -462,6 +467,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
+        script.presentationInterrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True
@@ -480,6 +486,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = line[0][0], line[0][1]
         script.utilities.setCaretPosition(obj, start)
+        script.presentationInterrupt()
         script.sayCharacter(obj)
         script.displayContents(line)
         return True
@@ -501,6 +508,7 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
+        script.presentationInterrupt()
         script.sayCharacter(obj)
         script.displayContents(line)
         return True
@@ -520,6 +528,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, offset)
+        script.presentationInterrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True
@@ -552,6 +561,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
         script.utilities.setCaretPosition(obj, offset)
+        script.presentationInterrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True

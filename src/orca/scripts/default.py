@@ -1946,6 +1946,7 @@ class Script(script.Script):
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
         obj = otherObj or event.source
+        self.presentationInterrupt()
         self.updateBrailleForNewCaretPosition(obj)
         if self._inSayAll:
             msg = "DEFAULT: Not presenting text because SayAll is active"
