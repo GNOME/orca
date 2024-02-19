@@ -56,7 +56,7 @@ class EventManager:
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self._gilSleepTime = 0.00001
-        self._synchronousToolkits = ['VCL']
+        self._synchronousToolkits = []
         self._eventsSuspended = False
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
 

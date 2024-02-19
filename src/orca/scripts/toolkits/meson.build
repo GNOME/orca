@@ -8,7 +8,6 @@ subdir('WebKitGtk')
 
 lib_sources = [
   '__init__.py',
-  'VCL.py',
 ]
 
 python3.install_sources(
