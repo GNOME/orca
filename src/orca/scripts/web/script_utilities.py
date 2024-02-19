@@ -144,7 +144,7 @@ class Utilities(script_utilities.Utilities):
         context = self._caretContexts.get(hash(documentFrameParent))
 
         tokens = ["WEB: Clearing all cached info for", documentFrame,
-                  "Preserving context:", preserveContext, "Context:", context]
+                  "Preserving context:", preserveContext, "Context:", context[0], ",", context[1]]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._script.structuralNavigation.clearCache(documentFrame)
@@ -2940,7 +2940,6 @@ class Utilities(script_utilities.Utilities):
         # seems to be exposing that for non-editable things. Thanks Gecko.
         rv = not AXUtilities.is_editable(obj)
         if rv:
-            boundary = Atspi.TextBoundaryType.LINE_START
             for i in range(nChars):
                 char = AXText.get_character_at_offset(obj, i)[0]
                 if char.isspace() or char in ["\ufffc", "\ufffd"]:

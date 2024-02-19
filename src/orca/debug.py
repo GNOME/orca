@@ -225,6 +225,10 @@ def _asString(obj):
     if isinstance(obj, list):
         return f"[{', '.join(map(_asString, obj))}]"
 
+    if isinstance(obj, str) and len(obj) > 100:
+        obj = f"{obj[0:100]} (...)"
+        return obj
+
     if isinstance(obj, types.FunctionType):
         if hasattr(obj, "__self__"):
             return f"{obj.__module__}.{obj.__self__.__class__.__name__}.{obj.__name__}"
@@ -358,14 +362,8 @@ def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
         return
 
     level = max(level, eventDebugLevel)
-
-    anydata = event.any_data
-    if isinstance(anydata, str) and len(anydata) > 100:
-        anydata = f"{anydata[0:100]} (...)"
-
-    text = "OBJECT EVENT: %s (%d, %d, %s)" \
-           % (event.type, event.detail1, event.detail2, anydata)
-    println(level, text, timestamp)
+    tokens = ["OBJECT EVENT:", event]
+    printTokens(level, tokens, timestamp)
 
     if sourceInfo:
         println(level, f"{' ' * 18}{sourceInfo}", timestamp)

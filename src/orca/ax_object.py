@@ -1052,11 +1052,20 @@ class AXObject:
         def as_string(relations):
             return relations.value_name[15:].replace("_", "-").lower()
 
+        def obj_as_string(acc):
+            result = AXObject.get_role_name(obj)
+            name = AXObject.get_name(obj)
+            if name:
+                result += f": '{name}'"
+            if not result:
+                result = "DEAD"
+            return f"[{result}]"
+
         results = []
         for rel in AXObject.get_relations(obj):
             type_string = as_string(rel.get_relation_type())
             targets = AXObject.get_relation_targets(obj, rel.get_relation_type())
-            target_string = ",".join(map(str, targets))
+            target_string = ",".join(map(obj_as_string, targets))
             results.append(f"{type_string}: {target_string}")
 
         return "; ".join(results)
