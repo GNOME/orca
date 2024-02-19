@@ -870,6 +870,10 @@ SPEECH_VOICE_TYPE_UPPERCASE = C_("VoiceType", "Uppercase")
 # system. (http://devel.freebsoft.org/speechd)
 SPEECH_DISPATCHER = _("Speech Dispatcher")
 
+# Translators this label refers to the name of particular speech synthesis
+# system. (https://github.com/eeejay/spiel)
+SPIEL = _("Spiel")
+
 # Translators: This is a label for a group of options related to Orca's behavior
 # when presenting an application's spell check dialog.
 SPELL_CHECK = C_("OptionGroup", "Spell Check")

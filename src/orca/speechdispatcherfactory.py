@@ -38,6 +38,7 @@ from . import settings
 from . import script_manager
 from . import settings_manager
 from .acss import ACSS
+from .ssml import SSML, SSMLCapabilities
 
 try:
     import speechd
@@ -305,96 +306,8 @@ class SpeechServer(speechserver.SpeechServer):
     def _speak(self, text, acss, **kwargs):
         if isinstance(text, ACSS):
             text = ''
-
-        # Mark beginning of words with U+E000 (private use) and record the
-        # string offsets
-        # Note: we need to do this before disturbing the text offsets
-        # Note2: we assume that text mangling below leave U+E000 untouched
-        last_begin = None
-        is_numeric = None
-        marks_offsets = []
-        marks_endoffsets = []
-        marked_text = ""
-
-        for i in range(len(text)):
-            c = text[i]
-            if c == '\ue000':
-                # Original text already contains U+E000. But syntheses will not
-                # know what to do of it anyway, so discard it
-                continue
-
-            if not c.isspace() and last_begin is None:
-                # Word begin
-                marked_text += '\ue000'
-                last_begin = i
-                is_numeric = c.isnumeric()
-
-            elif c.isspace() and last_begin is not None:
-                # Word end
-                if is_numeric:
-                    # We had a wholy numeric word, possibly next word is as well.
-                    # Skip to next word
-                    for j in range(i+1, len(text)):
-                        if not text[j].isspace():
-                            break
-                    else:
-                        is_numeric = False
-                    # Check next word
-                    while is_numeric and j < len(text) and not text[j].isspace():
-                        if not text[j].isnumeric():
-                            is_numeric = False
-                        j += 1
-
-                if not is_numeric:
-                    # add a mark
-                    marks_offsets.append(last_begin)
-                    marks_endoffsets.append(i)
-                    last_begin = None
-                    is_numeric = None
-
-            elif is_numeric and not c.isnumeric():
-                is_numeric = False
-
-            marked_text += c
-
-        if last_begin is not None:
-            # Finished with a word
-            marks_offsets.append(last_begin)
-            marks_endoffsets.append(i + 1)
-
-        text = marked_text
-        script = script_manager.getManager().getActiveScript()
-        if script is not None:
-            text = script.utilities.adjustForPronunciation(text)
-
-        # Transcribe to SSML, translating U+E000 into marks
-        # Note: we need to do this after all mangling otherwise the ssml markup
-        # would get mangled too
-        ssml = "<speak>"
-        i = 0
-        for c in text:
-            if c == '\ue000':
-                if i >= len(marks_offsets):
-                    # This is really not supposed to happen
-                    msg = f"{i}th U+E000 does not have corresponding index"
-                    debug.printMessage(debug.LEVEL_WARNING, msg, True)
-                else:
-                    ssml += '<mark name="%u:%u"/>' % (marks_offsets[i], marks_endoffsets[i])
-                i += 1
-            # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
-            #elif c == '"':
-            #  ssml += '&quot;'
-            #elif c == "'":
-            #  ssml += '&apos;'
-            elif c == '<':
-              ssml += '&lt;'
-            elif c == '>':
-              ssml += '&gt;'
-            elif c == '&':
-              ssml += '&amp;'
-            else:
-              ssml += c
-        ssml += "</speak>"
+ 
+        ssml = SSML.markupText(text, SSMLCapabilities.MARK)
 
         self._apply_acss(acss)
         self._debug_sd_values(f"Speaking '{ssml}' ")

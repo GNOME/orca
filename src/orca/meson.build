@@ -120,6 +120,8 @@ lib_sources = [
   'speechdispatcherfactory.py',
   'speech_generator.py',
   'speechserver.py',
+  'spiel.py',
+  'ssml.py',
   'structural_navigation.py',
   'system_information_presenter.py',
   'table_navigator.py',

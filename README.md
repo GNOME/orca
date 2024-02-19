@@ -214,3 +214,41 @@ same as a regular/"polite" notification. Adding support for "assertive" notifica
 applications is planned and depends on Orca's
 [live-region support being made global](https://gitlab.gnome.org/GNOME/orca/-/issues/431)
 so that users have full control over when and how notifications are presented to them.
+
+## Experimental Features
+
+By default, Orca uses speech-dispatcher for its TTS support. In addition, there is
+basic support for [Spiel](https://github.com/eeejay/spiel) which allows choosing
+voices from multiple synthesizers, currently including eSpeak and Piper.
+
+To test Spiel, configure Orca to build from the latest source:
+
+```
+meson setup --force-fallback-for=spiel -Dspiel=true _build
+meson compile -C _build
+meson install -C _build
+```
+
+If you have existing build directory, don't forget to use `--reconfigure`. If
+you have problems after an update, you may need to update and re-install:
+
+```
+meson subprojects update
+meson setup --reconfigure --force-fallback-for=spiel -Dspiel=true _build 
+meson compile --clean -C _build
+meson install -C _build
+
+# Ensure any old Spiel providers get restarted
+flatpak kill ai.piper.Speech.Provider
+flatpak kill org.espeak.Speech.Provider
+```
+
+Then install the Flatpak for one or more providers:
+
+* [eSpeak](https://eeejay.github.io/spiel-demos/espeak.flatpakref)
+* [Piper](https://eeejay.github.io/spiel-demos/piper.flatpakref)
+
+To switch from Speech Dispatcher to Spiel, use `orca --replace --speech-system=spiel`. Using
+this flag is highly recommended while Orca's Spiel support is experimental. If you would like
+to use Spiel by default, you can select it in Orca's Preferences dialog. To then switch back
+to Speech Dispatcher, use `orca --replace --speech-system=speechdispatcherfactory`.

@@ -207,9 +207,10 @@ activeProfile   = ['Default', 'default']
 profile         = ['Default', 'default']
 
 # Speech
-speechFactoryModules         = ["speechdispatcherfactory"]
+speechFactoryModules         = ["speechdispatcherfactory", "spiel"]
 speechServerFactory          = "speechdispatcherfactory"
 speechServerInfo             = None # None means let the factory decide.
+speechSystemOverride         = None
 enableSpeech                 = True
 silenceSpeech                = False
 enableTutorialMessages       = False

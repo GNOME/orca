@@ -39,7 +39,6 @@ endif
 optional_modules = {
   'brlapi': 'braille output',
   'louis': 'contracted braille',
-  'speechd': 'speech output',
   'psutil': 'system information commands',
 }
 
@@ -52,6 +51,31 @@ foreach module, description : optional_modules
     summary += {description: f'no (missing @module@)'}
   endif
 endforeach
+
+# Optional synthesizer services
+speech_output = []
+if python.find_installation('python3', modules:['speechd'], required: false).found()
+  speech_output += ['speechd']
+endif
+
+# Experimental (checked via pkg-config)
+if get_option('spiel')
+  dependency('spiel-0.1',
+            fallback: ['spiel', 'spiel_lib_dep'],
+    default_options: [
+      'docs=false',
+      'tests=false',
+      'werror=false',
+    ],
+  )
+  speech_output += ['spiel']
+endif
+
+if speech_output.length() > 0
+  summary += {'speech output': 'yes (found @0@)'.format(', '.join(speech_output))}
+else
+  summary += {'speech output': 'no (missing speechd, spiel)'}
+endif
 
 i18n.merge_file(
   input: 'orca-autostart.desktop.in',

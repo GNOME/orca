@@ -1,0 +1,5 @@
+option('spiel',
+  description: 'Build experimental Spiel support',
+         type: 'boolean',
+        value: false,
+)

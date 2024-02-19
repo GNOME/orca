@@ -83,6 +83,13 @@ def init():
     if _speechserver:
         debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
         return
+    
+    # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
+    #       last-chance override exists to get the speech system loaded, without risking
+    #       it being written to disk unintentionally.
+    if settings.speechSystemOverride:
+        setattr(settings, 'speechServerFactory', settings.speechSystemOverride)
+        setattr(settings, 'speechServerInfo', ['Default Synthesizer', 'default'])
 
     try:
         moduleName = settings.speechServerFactory
