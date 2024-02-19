@@ -312,7 +312,7 @@ class Utilities(script_utilities.Utilities):
         positionAndCount = AXObject.get_name(dv).split(":")[1]
         position, count = positionAndCount.split("/")
         title = ""
-        for child in dv:
+        for child in enumerate(AXObject.iter_children(dv)):
             childCount = AXObject.get_child_count(child)
             if not childCount:
                 continue

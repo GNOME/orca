@@ -881,7 +881,7 @@ class Generator:
         if AXObject.get_child_count(obj) == 2:
             cellOrder = []
             hasToggle = [False, False]
-            for i, child in enumerate(obj):
+            for i, child in enumerate(AXObject.iter_children(obj)):
                 if self._script.utilities.hasMeaningfulToggleAction(child):
                     hasToggle[i] = True
                     break
@@ -913,7 +913,7 @@ class Generator:
         if AXObject.get_child_count(obj) == 2:
             cellOrder = []
             hasToggle = [False, False]
-            for i, child in enumerate(obj):
+            for i, child in enumerate(AXObject.iter_children(obj)):
                 if self._script.utilities.hasMeaningfulToggleAction(child):
                     hasToggle[i] = True
                     break

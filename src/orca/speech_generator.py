@@ -2492,7 +2492,7 @@ class SpeechGenerator(generator.Generator):
             separators.append(separators[-1])
         separators.append('')
 
-        for i, child in enumerate(obj):
+        for i, child in enumerate(AXObject.iter_children(obj)):
             result.extend(self._generateMath(child, **args))
             separatorName = mathsymbols.getCharacterName(separators[i])
             result.append(separatorName)
