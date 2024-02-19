@@ -1982,28 +1982,6 @@ class Utilities:
     def isErrorMessage(self, obj):
         return False
 
-    def queryNonEmptyText(self, obj):
-        """Get the text interface associated with an object, if it is
-        non-empty.
-
-        Arguments:
-        - obj: an accessible object
-        """
-
-        try:
-            text = obj.queryText()
-            charCount = text.characterCount
-        except NotImplementedError:
-            pass
-        except Exception:
-            tokens = ["SCRIPT UTILITIES: Exception getting character count of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        else:
-            if charCount:
-                return text
-
-        return None
-
     def deletedText(self, event):
         return event.any_data
 

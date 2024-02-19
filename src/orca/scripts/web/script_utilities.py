@@ -802,14 +802,13 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = AXObject.supports_text(obj)
-        if not rv:
-            tokens = ["WEB:", obj, "does not implement text interface"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not AXObject.supports_text(obj):
+            return False
 
-        if not self.inDocumentContent(obj):
-            return rv
+        if not self.inDocumentContent(obj) or self._script.browseModeIsSticky():
+            return True
 
+        rv = AXText.get_character_count(obj) > 0
         if rv and self._treatObjectAsWhole(obj, -1) and AXObject.get_name(obj) \
             and not self.isCellWithNameFromHeader(obj):
             tokens = ["WEB: Treating", obj, "as non-text: named object treated as whole."]
@@ -844,13 +843,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
-        if self._script.browseModeIsSticky():
-            return super().queryNonEmptyText(obj)
-
         if not self.treatAsTextObject(obj, excludeNonEntryTextWidgets):
             return None
 
-        return super().queryNonEmptyText(obj)
+        return obj.queryText()
 
     def hasNameAndActionAndNoUsefulChildren(self, obj):
         if not (obj and self.inDocumentContent(obj)):

@@ -107,7 +107,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         index = args.get('index', 0)
         total = args.get('total', 1)
         if index == total - 1 and role != Atspi.Role.HEADING \
-           and (role == Atspi.Role.IMAGE or self._script.utilities.queryNonEmptyText(obj)):
+           and (role == Atspi.Role.IMAGE or self._script.utilities.treatAsTextObject(obj)):
             heading = AXObject.find_ancestor(obj, AXUtilities.is_heading)
             if heading is not None:
                 result.extend(self._generateRoleName(heading))

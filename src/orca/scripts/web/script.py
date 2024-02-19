@@ -851,7 +851,7 @@ class Script(default.Script):
 
         contents = None
         if self.utilities.treatAsEndOfLine(obj, offset) and AXObject.supports_text(obj):
-            char = AXText.get_character_at_offset(offset)
+            char = AXText.get_character_at_offset(offset)[0]
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 char = ""
             contents = [[obj, offset, offset + 1, char]]
@@ -996,10 +996,8 @@ class Script(default.Script):
         # we think they are not "new." Commit bd877203f0 addressed that, but we need to stop
         # such side effects from happening in the first place.
         obj, offset = self.utilities.getCaretContext(documentFrame=document, getReplicant=True)
-        if offset > 0 and isContentEditable:
-            text = self.utilities.queryNonEmptyText(obj)
-            if text:
-                offset = min(offset, text.characterCount)
+        if offset > 0 and isContentEditable and self.utilities.treatAsTextObject(obj):
+            offset = min(offset, AXText.get_character_count(obj))
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.displayContents(contents, documentFrame=document)
@@ -1087,15 +1085,12 @@ class Script(default.Script):
            or self.utilities.isFocusModeWidget(obj):
             return super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
 
-        text = self.utilities.queryNonEmptyText(obj)
         if offset is None:
-            try:
-                offset = max(0, text.caretOffset)
-            except Exception:
-                offset = 0
+            offset = max(0, AXText.get_caret_offset(obj))
 
-        if text and startOffset is not None and endOffset is not None:
-            return text.getText(startOffset, endOffset), offset, startOffset
+        if self.utilities.treatAsTextObject(obj) \
+           and startOffset is not None and endOffset is not None:
+            return AXText.get_substring(obj, startOffset, endOffset), offset, startOffset
 
         contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=None)
         if contextObj == obj:
@@ -1262,9 +1257,10 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
 
-        text = self.utilities.queryNonEmptyText(newFocus)
-        if text and (0 <= text.caretOffset <= text.characterCount):
-            caretOffset = text.caretOffset
+        if self.utilities.treatAsTextObject(newFocus):
+            textOffset = AXText.get_caret_offset(newFocus)
+            if 0 <= textOffset <= AXText.get_character_count(newFocus):
+                caretOffset = textOffset
 
         self.utilities.setCaretContext(newFocus, caretOffset, document)
         self.updateBraille(newFocus, documentFrame=document)
@@ -1661,7 +1657,7 @@ class Script(default.Script):
             self._presentTextAtNewCaretPosition(event)
             return True
 
-        if not self.utilities.queryNonEmptyText(event.source) \
+        if not self.utilities.treatAsTextObject(event.source) \
            and not AXUtilities.is_editable(event.source):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1812,7 +1808,7 @@ class Script(default.Script):
 
             focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
-                notify = self.utilities.queryNonEmptyText(focused) is None
+                notify = not self.utilities.treatAsTextObject(focused)
                 tokens = ["WEB: Setting locusOfFocus and caret context to", focused]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.getManager().set_locus_of_focus(event, focused, notify)
@@ -2432,8 +2428,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self.structuralNavigation.clearCache(document)
 
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
+        if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2498,8 +2493,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
+        if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2515,8 +2509,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        offset = text.caretOffset
-        char = text.getText(offset, offset+1)
+        char = AXText.get_character_at_offset(event.source)[0]
         if char == self.EMBEDDED_OBJECT_CHARACTER \
            and not self.utilities.lastInputEventWasCaretNavWithSelection() \
            and not self.utilities.lastInputEventWasCommand():

@@ -41,6 +41,7 @@ from orca import speech_generator
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -290,8 +291,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if (lastKey in ['Down', 'Right'] or self._script.inSayAll()) and args.get('startOffset'):
             return []
         if lastKey in ['Up', 'Left']:
-            text = self._script.utilities.queryNonEmptyText(obj)
-            if text and args.get('endOffset') not in [None, text.characterCount]:
+            if self._script.utilities.treatAsTextObject(obj) \
+               and args.get('endOffset') not in [None, AXText.get_character_count(obj)]:
                 return []
 
         result = []
@@ -586,8 +587,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if ((lastKey in ["Down", "Right"] and not mods) or self._script.inSayAll()) and start:
                 return []
             if lastKey in ["Up", "Left"] and not mods:
-                text = self._script.utilities.queryNonEmptyText(obj)
-                if text and end not in [None, text.characterCount]:
+                if self._script.utilities.treatAsTextObject(obj) \
+                   and end not in [None, AXText.get_character_count(obj)]:
                     return []
             if role not in doNotSpeak:
                 result.append(self.getLocalizedRoleName(obj, **args))
