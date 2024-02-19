@@ -26,7 +26,7 @@ workflow:
     - if: '$CI_COMMIT_TAG'
     - if: '$CI_COMMIT_BRANCH'
 
-# Main build job; installs at-spi2-core and pyatspi2, and builds/installs Orca.
+# Main build job; installs at-spi2-core and builds/installs Orca.
 build-opensuse-x86_64:
   stage: build
   extends:
@@ -37,7 +37,6 @@ build-opensuse-x86_64:
       artifacts: false
   script:
     - bash -x ci/install_atspi.sh
-    - bash -x ci/install_pyatspi2.sh
     - bash -x ci/build_and_install.sh
 
 # Ruff linter for Python.
