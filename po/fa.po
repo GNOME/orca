@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-02-16 20:25+0000\n"
-"PO-Revision-Date: 2024-02-17 17:30+0330\n"
+"POT-Creation-Date: 2024-02-19 20:43+0000\n"
+"PO-Revision-Date: 2024-02-20 01:35+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -1192,7 +1192,7 @@ msgstr ""
 #. toggling between the two options.
 #: src/orca/cmdnames.py:494
 msgid "Change spoken number style"
-msgstr ""
+msgstr "تغییر سبک گفتن شماره"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -4507,9 +4507,15 @@ msgstr "حروف بزرگ"
 msgid "Speech Dispatcher"
 msgstr "پخش‌کنندهٔ گفتار"
 
+#. Translators this label refers to the name of particular speech synthesis
+#. system. (https://github.com/eeejay/spiel)
+#: src/orca/guilabels.py:875
+msgid "Spiel"
+msgstr ""
+
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: src/orca/guilabels.py:875
+#: src/orca/guilabels.py:879
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "بررسی نوشتار"
@@ -4518,7 +4524,7 @@ msgstr "بررسی نوشتار"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: src/orca/guilabels.py:881
+#: src/orca/guilabels.py:885
 msgid "Spell _error"
 msgstr "_خطای نوشتاری"
 
@@ -4527,21 +4533,21 @@ msgstr "_خطای نوشتاری"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: src/orca/guilabels.py:888
+#: src/orca/guilabels.py:892
 msgid "Spell _suggestion"
 msgstr "_پیشنهاد نوشتاری"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: src/orca/guilabels.py:893
+#: src/orca/guilabels.py:897
 msgid "Present _context of error"
 msgstr "ارائه _بافتار خطا"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
-#: src/orca/guilabels.py:898
+#: src/orca/guilabels.py:902
 msgid "Speak spreadsheet cell coordinates"
 msgstr "گفتن مختصات سلول صفحهٔ گسترده"
 
@@ -4552,51 +4558,51 @@ msgstr "گفتن مختصات سلول صفحهٔ گسترده"
 #. Some users, however, prefer to have Orca always announce the entire selected range,
 #. i.e. in the same scenario say "A1 through A9 selected." Those users should enable
 #. this option.
-#: src/orca/guilabels.py:907
+#: src/orca/guilabels.py:911
 msgid "Always speak selected spreadsheet range"
 msgstr "گفتن همیشگی بازهٔ صفحهٔ گستردهٔ گزیده"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: src/orca/guilabels.py:911
+#: src/orca/guilabels.py:915
 msgid "Announce cell _header"
 msgstr "اعلام _سرایند سلول"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: src/orca/guilabels.py:915
+#: src/orca/guilabels.py:919
 msgid "Table Navigation"
 msgstr "پویش جدول"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: src/orca/guilabels.py:919
+#: src/orca/guilabels.py:923
 msgid "Skip _blank cells"
 msgstr "پرش از _سلول‌های خالی"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
-#: src/orca/guilabels.py:924
+#: src/orca/guilabels.py:928
 msgid "Speak _cell"
 msgstr "گفتن _سلول"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: src/orca/guilabels.py:928
+#: src/orca/guilabels.py:932
 msgid "Speak _cell coordinates"
 msgstr "گفتن مختصات _سلول"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: src/orca/guilabels.py:933
+#: src/orca/guilabels.py:937
 msgid "Speak _multiple cell spans"
 msgstr ""
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: src/orca/guilabels.py:937
+#: src/orca/guilabels.py:941
 msgid "Attribute Name"
 msgstr "نام مشخصّه"
 
@@ -4605,20 +4611,20 @@ msgstr "نام مشخصّه"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:944
+#: src/orca/guilabels.py:948
 msgid "Control caret navigation"
 msgstr ""
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:949
+#: src/orca/guilabels.py:953
 msgid "Enable _structural navigation"
 msgstr ""
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:953 src/orca/orca-setup.ui:1480
+#: src/orca/guilabels.py:957 src/orca/orca-setup.ui:1480
 #: src/orca/orca-setup.ui:2224
 msgid "Brie_f"
 msgstr "_کوتاه"
@@ -4628,7 +4634,7 @@ msgstr "_کوتاه"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:963
+#: src/orca/guilabels.py:967
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
