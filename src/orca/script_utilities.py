@@ -2182,6 +2182,9 @@ class Utilities:
         adjusting for repeat character counts and punctuation.
         """
 
+        if segment.isnumeric():
+            return line + segment
+
         count = len(segment)
         if count >= settings.repeatCharacterLimit and segment[0] not in self._script.whitespace:
             repeatChar = segment[0]
