@@ -472,7 +472,7 @@ class Utilities(script_utilities.Utilities):
         if AXObject.get_name(obj):
             return False
 
-        return self.queryNonEmptyText(obj, False) is None
+        return not self.treatAsTextObject(obj, False)
 
     def isHidden(self, obj):
         attrs = AXObject.get_attributes_dict(obj, False)
@@ -526,10 +526,8 @@ class Utilities(script_utilities.Utilities):
 
         nextobj, nextoffset = self.findNextCaretInOrder(obj, offset)
         if skipSpace:
-            text = self.queryNonEmptyText(nextobj)
-            while text and text.getText(nextoffset, nextoffset + 1) in [" ", "\xa0"]:
+            while AXText.get_character_at_offset(nextobj, nextoffset)[0].isspace():
                 nextobj, nextoffset = self.findNextCaretInOrder(nextobj, nextoffset)
-                text = self.queryNonEmptyText(nextobj)
 
         return nextobj, nextoffset
 
@@ -539,18 +537,15 @@ class Utilities(script_utilities.Utilities):
 
         prevobj, prevoffset = self.findPreviousCaretInOrder(obj, offset)
         if skipSpace:
-            text = self.queryNonEmptyText(prevobj)
-            while text and text.getText(prevoffset, prevoffset + 1) in [" ", "\xa0"]:
+            while AXText.get_character_at_offset(prevobj, prevoffset)[0].isspace():
                 prevobj, prevoffset = self.findPreviousCaretInOrder(prevobj, prevoffset)
-                text = self.queryNonEmptyText(prevobj)
 
         return prevobj, prevoffset
 
     def lastContext(self, root):
         offset = 0
-        text = self.queryNonEmptyText(root)
-        if text:
-            offset = text.characterCount - 1
+        if self.treatAsTextObject(root):
+            offset = AXText.get_character_count(root) - 1
 
         def _isInRoot(o):
             return o == root or AXObject.find_ancestor(o, lambda x: x == root)
@@ -642,8 +637,7 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        text = self.queryNonEmptyText(obj)
-        if not text:
+        if not self.treatAsTextObject(obj):
             return ""
 
         if self._preserveTree(obj):
@@ -656,9 +650,8 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj):
             return super().substring(obj, startOffset, endOffset)
 
-        text = self.queryNonEmptyText(obj)
-        if text:
-            return text.getText(startOffset, endOffset)
+        if self.treatAsTextObject(obj):
+            return AXText.get_substring(obj, startOffset, endOffset)
 
         return ""
 
@@ -842,12 +835,6 @@ class Utilities(script_utilities.Utilities):
         self._treatAsTextObject[hash(obj)] = rv
         return rv
 
-    def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
-        if not self.treatAsTextObject(obj, excludeNonEntryTextWidgets):
-            return None
-
-        return obj.queryText()
-
     def hasNameAndActionAndNoUsefulChildren(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -974,21 +961,16 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def __findSentence(self, text, offset):
-        spans = []
-        allText = text.getText(0, -1)
-        charCount = text.characterCount
-        spans = [m.span() for m in re.finditer(
-            r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
-
-        rangeStart, rangeEnd = 0, charCount
+    def __findSentence(self, obj, offset):
+        # TODO - JD: Move this sad hack to AXText.
+        text = AXText.get_all_text(obj)
+        spans = [m.span() for m in re.finditer(r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", text)]
+        rangeStart, rangeEnd = 0, len(text)
         for span in spans:
             if span[0] <= offset <= span[1]:
                 rangeStart, rangeEnd = span[0], span[1] + 1
                 break
-
-        string = allText[rangeStart:rangeEnd]
-        return string, rangeStart, rangeEnd
+        return text[rangeStart:rangeEnd], rangeStart, rangeEnd
 
     def _getTextAtOffset(self, obj, offset, boundary):
         def stringForDebug(x):
@@ -1000,26 +982,25 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 0
 
-        text = self.queryNonEmptyText(obj)
-        if not text:
+        if not self.treatAsTextObject(obj):
             tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
-                      "'', Start: 0, End: 1. (queryNonEmptyText() returned None)"]
+                      "'', Start: 0, End: 1. (treatAsTextObject() returned False)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 1
 
+        allText = AXText.get_all_text(obj)
         if boundary is None:
-            string, start, end = text.getText(0, -1), 0, text.characterCount
+            string, start, end = allText, 0, len(allText)
             s = stringForDebug(string)
             tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
                       f"'{s}', Start: {start}, End: {end}."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return string, start, end
 
-        allText = text.getText(0, -1)
         if boundary == Atspi.TextBoundaryType.SENTENCE_START and not AXUtilities.is_editable(obj):
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
-                string, start, end = allText, 0, text.characterCount
+                string, start, end = allText, 0, len(allText)
                 s = stringForDebug(string)
                 tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
                           f"'{s}', Start: {start}, End: {end}."]
@@ -1033,7 +1014,20 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(0, offset)
-        string, start, end = text.getTextAtOffset(offset, boundary)
+
+        # TODO - JD: Audit callers so we don't have to use boundaries.
+        # Also, can the logic be entirely moved to AXText?
+        if boundary == Atspi.TextBoundaryType.LINE_START:
+            string, start, end = AXText.get_line_at_offset(obj, offset)
+        elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
+            string, start, end = AXText.get_sentence_at_offset(obj, offset)
+        elif boundary == Atspi.TextBoundaryType.WORD_START:
+            string, start, end = AXText.get_word_at_offset(obj, offset)
+        elif boundary == Atspi.TextBoundaryType.CHAR:
+            string, start, end = AXText.get_character_at_offset(obj, offset)
+        else:
+            string, start, end = AXText.get_line_at_offset(obj, offset)
+
         s = stringForDebug(string)
         tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
                   f"'{s}', Start: {start}, End: {end}."]
@@ -1044,7 +1038,7 @@ class Utilities(script_utilities.Utilities):
            and (string, start, end) == ("", 0, 0)
 
         if needSadHack:
-            sadString, sadStart, sadEnd = self.__findSentence(text, offset)
+            sadString, sadStart, sadEnd = self.__findSentence(obj, offset)
             s = stringForDebug(sadString)
             tokens = ["HACK: Attempting to recover from above failure. Result:",
                       f"'{s}', Start: {sadStart}, End: {sadEnd}."]
@@ -1060,9 +1054,9 @@ class Utilities(script_utilities.Utilities):
             return []
 
         if boundary == Atspi.TextBoundaryType.SENTENCE_START and self.isTime(obj):
-            text = self.queryNonEmptyText(obj)
-            if text:
-                return [[obj, 0, text.characterCount, text.getText(0, -1)]]
+            string = AXText.get_all_text(obj)
+            if string:
+                return [[obj, 0, len(string), string]]
 
         if boundary == Atspi.TextBoundaryType.LINE_START:
             if self.isMath(obj):
@@ -1072,23 +1066,22 @@ class Utilities(script_utilities.Utilities):
                     math = self.getMathAncestor(obj)
                 return [[math, 0, 1, '']]
 
-            text = self.queryNonEmptyText(obj)
-
+            treatAsText = self.treatAsTextObject(obj)
             if self.elementLinesAreSingleChars(obj):
-                if AXObject.get_name(obj) and text:
+                if AXObject.get_name(obj) and treatAsText:
                     tokens = ["WEB: Returning name as contents for", obj, "(single-char lines)"]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return [[obj, 0, text.characterCount, AXObject.get_name(obj)]]
+                    return [[obj, 0, AXText.get_character_count(obj), AXObject.get_name(obj)]]
 
                 tokens = ["WEB: Returning all text as contents for", obj, "(single-char lines)"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 boundary = None
 
             if self.elementLinesAreSingleWords(obj):
-                if AXObject.get_name(obj) and text:
+                if AXObject.get_name(obj) and treatAsText:
                     tokens = ["WEB: Returning name as contents for", obj, "(single-word lines)"]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return [[obj, 0, text.characterCount, AXObject.get_name(obj)]]
+                    return [[obj, 0, AXText.get_character_count(obj), AXObject.get_name(obj)]]
 
                 tokens = ["WEB: Returning all text as contents for", obj, "(single-word lines)"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1156,8 +1149,7 @@ class Utilities(script_utilities.Utilities):
             if not self.isTextBlockElement(xObj):
                 return False
 
-            text = self.queryNonEmptyText(xObj)
-            if text and 0 < text.characterCount <= xEnd:
+            if self.treatAsTextObject(xObj) and 0 < AXText.get_character_count(xObj) <= xEnd:
                 return True
 
             if 0 <= xStart <= 5:
@@ -1267,8 +1259,8 @@ class Utilities(script_utilities.Utilities):
         firstObj, firstStart, firstEnd, firstString = objects[0]
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
         while prevObj and firstString and prevObj != firstObj:
-            text = self.queryNonEmptyText(prevObj)
-            if not text or text.getText(pOffset, pOffset + 1).isspace():
+            char = AXText.get_character_at_offset(prevObj, pOffset)[0]
+            if not char or char.isspace():
                 break
 
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
@@ -1429,7 +1421,7 @@ class Utilities(script_utilities.Utilities):
         # for the line at that offset. Here we are trying to figure out where asking
         # for the line at offset will give us the next line rather than the line where
         # the cursor is physically blinking.
-        char = AXText.get_character_at_offset(obj, offset)
+        char = AXText.get_character_at_offset(obj, offset)[0]
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             prevExtents = self.getExtents(obj, offset - 1, offset)
             thisExtents = self.getExtents(obj, offset, offset + 1)
@@ -1556,11 +1548,12 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the left of this object.
         prevStartTime = time.time()
         while prevObj and self.getDocumentForObject(prevObj) == document:
-            text = self.queryNonEmptyText(prevObj)
-            if text and text.getText(pOffset, pOffset + 1) in [" ", "\xa0"]:
+            char = AXText.get_character_at_offset(prevObj, pOffset)[0]
+            if char.isspace():
                 prevObj, pOffset = self.findPreviousCaretInOrder(prevObj, pOffset)
 
-            if text and text.getText(pOffset, pOffset + 1) == "\n" and firstObj == prevObj:
+            char = AXText.get_character_at_offset(prevObj, pOffset)[0]
+            if char == "\n" and firstObj == prevObj:
                 break
 
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
@@ -1582,11 +1575,12 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the right of this object.
         nextStartTime = time.time()
         while nextObj and self.getDocumentForObject(nextObj) == document:
-            text = self.queryNonEmptyText(nextObj)
-            if text and text.getText(nOffset, nOffset + 1) in [" ", "\xa0"]:
+            char = AXText.get_character_at_offset(nextObj, nOffset)[0]
+            if char.isspace():
                 nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
 
-            if text and text.getText(nOffset, nOffset + 1) == "\n" and lastObj == nextObj:
+            char = AXText.get_character_at_offset(nextObj, nOffset)[0]
+            if char == "\n" and lastObj == nextObj:
                 break
 
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
@@ -2095,7 +2089,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _advanceCaretInEmptyObject(self, obj):
-        if AXUtilities.is_table_cell(obj) and not self.queryNonEmptyText(obj):
+        if AXUtilities.is_table_cell(obj) and not self.treatAsTextObject(obj):
             return not self._script.caretNavigation.last_input_event_was_navigation_command()
 
         return True
@@ -2876,16 +2870,11 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        text = self.queryNonEmptyText(obj)
-        if not text:
-            return False
-
-        try:
-            nChars = text.characterCount
-        except Exception:
-            return False
-
+        nChars = AXText.get_character_count(obj)
         if not nChars:
+            return False
+
+        if not self.treatAsTextObject(obj):
             return False
 
         # If we have a series of embedded object characters, there's a reasonable chance
@@ -2894,22 +2883,22 @@ class Utilities(script_utilities.Utilities):
         # CSSified text we're trying to detect can have embedded object characters. So
         # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
         # testing with problematic text.)
-        eocs = re.findall(self.EMBEDDED_OBJECT_CHARACTER, text.getText(0, -1))
+        string = AXText.get_all_text(obj)
+        eocs = re.findall("\ufffc", string)
         if len(eocs)/nChars > 0.3:
             return False
 
         # TODO - JD: Can we remove this?
         AXObject.clear_cache(obj, False, "Checking if element lines are single words.")
-        tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", text.getText(0, -1))))
+        tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", string)))
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
         rv = not AXUtilities.is_editable(obj) and len(tokens) > 1
         if rv:
-            boundary = Atspi.TextBoundaryType.LINE_START
             i = 0
             while i < nChars:
-                string, start, end = text.getTextAtOffset(i, boundary)
+                string, start, end = AXText.get_line_at_offset(obj, i)
                 if len(string.split()) != 1:
                     rv = False
                     break
@@ -2926,16 +2915,11 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        text = self.queryNonEmptyText(obj)
-        if not text:
-            return False
-
-        try:
-            nChars = text.characterCount
-        except Exception:
-            return False
-
+        nChars = AXText.get_character_count(obj)
         if not nChars:
+            return False
+
+        if not self.treatAsTextObject(obj):
             return False
 
         # If we have a series of embedded object characters, there's a reasonable chance
@@ -2944,7 +2928,8 @@ class Utilities(script_utilities.Utilities):
         # CSSified text we're trying to detect can have embedded object characters. So
         # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
         # testing with problematic text.)
-        eocs = re.findall(self.EMBEDDED_OBJECT_CHARACTER, text.getText(0, -1))
+        string = AXText.get_all_text(obj)
+        eocs = re.findall("\ufffc", string)
         if len(eocs)/nChars > 0.3:
             return False
 
@@ -2957,11 +2942,11 @@ class Utilities(script_utilities.Utilities):
         if rv:
             boundary = Atspi.TextBoundaryType.LINE_START
             for i in range(nChars):
-                char = text.getText(i, i + 1)
+                char = AXText.get_character_at_offset(obj, i)[0]
                 if char.isspace() or char in ["\ufffc", "\ufffd"]:
                     continue
 
-                string, start, end = text.getTextAtOffset(i, boundary)
+                string = AXText.get_line_at_offset(obj, i)[0]
                 if len(string.strip()) > 1:
                     rv = False
                     break
@@ -3123,13 +3108,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isEmptyAnchor(self, obj):
-        if not self.isAnchor(obj):
-            return False
-
-        return self.queryNonEmptyText(obj) is None
+        return self.isAnchor(obj) and not self.treatAsTextObject(obj)
 
     def isEmptyToolTip(self, obj):
-        return AXUtilities.is_tool_tip(obj) and self.queryNonEmptyText(obj) is None
+        return AXUtilities.is_tool_tip(obj) and not self.treatAsTextObject(obj)
 
     def isBrowserUIAlert(self, obj):
         if not AXUtilities.is_alert(obj):
@@ -3722,7 +3704,7 @@ class Utilities(script_utilities.Utilities):
                 if width > 25 and height > 25:
                     rv = False
         if rv and AXObject.supports_text(obj):
-            rv = self.queryNonEmptyText(obj) is None
+            rv = not self.treatAsTextObject(obj)
         if rv and AXObject.get_child_count(obj):
             for i in range(min(AXObject.get_child_count(obj), 50)):
                 if not self.isUselessImage(AXObject.get_child(obj, i)):
@@ -4268,16 +4250,13 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _rangeInParentWithLength(self, obj):
-        if not obj:
-            return -1, -1, 0
-
-        text = self.queryNonEmptyText(AXObject.get_parent(obj))
-        if not text:
+        parent = AXObject.get_parent(obj)
+        if not self.treatAsTextObject(parent):
             return -1, -1, 0
 
         start = AXHypertext.get_link_start_offset(obj)
         end = AXHypertext.get_link_end_offset(obj)
-        return start, end, text.characterCount
+        return start, end, AXText.get_character_count(parent)
 
     def getError(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -4774,15 +4753,16 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return self._findFirstCaretContext(firstChild, 0)
 
-        text = self.queryNonEmptyText(obj)
-        if not text and self._canHaveCaretContext(obj):
+        treatAsText = self.treatAsTextObject(obj)
+        if not treatAsText and self._canHaveCaretContext(obj):
             tokens = ["WEB: First caret context for non-text context is", obj, "0"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return obj, 0
 
-        if text and offset >= text.characterCount:
+        length = AXText.get_character_count(obj)
+        if treatAsText and offset >= length:
             if self.isContentEditableWithEmbeddedObjects(obj) and self.lastInputEventWasCharNav():
-                nextObj, nextOffset = self.nextContext(obj, text.characterCount)
+                nextObj, nextOffset = self.nextContext(obj, length)
                 if not nextObj:
                     tokens = ["WEB: No next object found at end of contenteditable", obj]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -4797,13 +4777,13 @@ class Utilities(script_utilities.Utilities):
                     return nextObj, nextOffset
 
             tokens = ["WEB: First caret context at end of", obj, ", ", offset, "is",
-                      obj, ", ", text.characterCount]
+                      obj, ", ", length]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return obj, text.characterCount
+            return obj, length
 
         offset = max(0, offset)
-        if text:
-            allText = text.getText(0, -1)
+        if treatAsText:
+            allText = AXText.get_all_text(obj)
             if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == Atspi.Role.ENTRY:
                 msg = "WEB: First caret context is unchanged"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4867,9 +4847,8 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._canHaveCaretContext(obj):
-            text = self.queryNonEmptyText(obj)
-            if text:
-                allText = text.getText(0, -1)
+            if self.treatAsTextObject(obj):
+                allText = AXText.get_all_text(obj)
                 for i in range(offset + 1, len(allText)):
                     child = AXHypertext.get_child_at_offset(obj, i)
                     if child and allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
@@ -4937,9 +4916,8 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._canHaveCaretContext(obj):
-            text = self.queryNonEmptyText(obj)
-            if text:
-                allText = text.getText(0, -1)
+            if self.treatAsTextObject(obj):
+                allText = AXText.get_all_text(obj)
                 if offset == -1 or offset > len(allText):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
