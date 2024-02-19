@@ -654,12 +654,6 @@ class Chat:
             return True
 
         elif self.isChatRoomMsg(event.source):
-            # We always automatically go back to focus tracking mode when
-            # someone sends us a message.
-            #
-            if self._script.flatReviewPresenter.is_active():
-                self._script.flatReviewPresenter.quit()
-
             if self.isNewConversation(event.source):
                 name = self.getChatRoomName(event.source)
                 conversation = Conversation(name, event.source)
