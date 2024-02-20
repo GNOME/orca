@@ -1028,6 +1028,65 @@ class BrailleEvent(InputEvent):
         """
         super().__init__(BRAILLE_EVENT)
         self.event = event
+        self._script = script_manager.getManager().getActiveScript()
+
+    def __str__(self):
+        return f"{self.type.upper()} {self.event}"
+
+    def getHandler(self):
+        """Returns the handler associated with this event."""
+
+        command = self.event["command"]
+        user_bindings = None
+        user_bindings_map = settings.brailleBindingsMap
+        if self._script.name in user_bindings_map:
+            user_bindings = user_bindings_map[self._script.name]
+        elif "default" in user_bindings_map:
+            user_bindings = user_bindings_map["default"]
+
+        if user_bindings and command in user_bindings:
+            handler = user_bindings[command]
+            tokens = [f"BRAILLE EVENT: User handler for command {command} is", handler]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return handler
+
+        handler = self._script.brailleBindings.get(command)
+        tokens = [f"BRAILLE EVENT: Handler for command {command} is", handler]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return handler
+
+    def process(self):
+        tokens = ["\nvvvvv PROCESS", self, "vvvvv"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, False)
+
+        start_time = time.time()
+        result = self._process()
+        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
+        debug.printMessage(debug.LEVEL_INFO, msg, False)
+
+        tokens = ["^^^^^ PROCESS", self, "^^^^^"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, False)
+        return result
+
+    def _process(self):
+        handler = self.getHandler()
+        if not handler:
+            if self._script.learnModePresenter.is_active():
+                tokens = ["BRAILLE EVENT: Learn mode presenter handles", self]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return True
+
+            tokens = ["BRAILLE EVENT: No handler found for", self]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        try:
+            handler.processInputEvent(self._script, self)
+        except Exception as error:
+            tokens = ["BRAILLE EVENT: Exception processing:", self, f": {error}"]
+            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+
+        return True
 
 class MouseButtonEvent(InputEvent):
 

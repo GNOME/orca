@@ -887,42 +887,9 @@ class EventManager:
     def process_braille_event(self, event):
         """Processes this BrailleEvent."""
 
-        script = script_manager.getManager().getActiveScript()
-        if script is None:
-            return False
-
         braille_event = input_event.BrailleEvent(event)
         orca_state.lastInputEvent = braille_event
-
-        data = f"'{repr(braille_event.event)}'"
-        eType = str(braille_event.type).upper()
-        startTime = time.time()
-
-        msg = f"\nvvvvv PROCESS {eType} {data} vvvvv"
-        debug.printMessage(debug.eventDebugLevel, msg, False)
-
-        if not script.consumesBrailleEvent(braille_event):
-            if script.learnModePresenter.is_active():
-                tokens = ["EVENT MANAGER: Learn mode presenter handles", braille_event]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
-            tokens = ["EVENT MANAGER: Script does not consume", braille_event]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        try:
-            script.processBrailleEvent(braille_event)
-        except Exception as error:
-            tokens = ["EVENT MANAGER: Exception processing:", braille_event, f": {error}"]
-            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
-
-        msg = (
-            f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
-            f"\n^^^^^ PROCESS {eType} {data} ^^^^^\n"
-        )
-        debug.printMessage(debug.eventDebugLevel, msg, False)
-        return True
+        return braille_event.process()
 
 _manager = EventManager()
 
