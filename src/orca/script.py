@@ -53,7 +53,6 @@ from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
 from . import script_utilities
-from . import settings
 from . import settings_manager
 from . import sleep_mode_manager
 from . import sound_generator
