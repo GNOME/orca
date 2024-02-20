@@ -382,15 +382,6 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._pruneEventsDuringFlood()
 
-        asyncMode = True
-        if AXUtilities.is_notification(e.source):
-            # TODO - JD: Is this still needed now that we can obsolete events?
-            # To decrease the likelihood that the popup will be destroyed before we
-            # have its contents.
-            msg = "EVENT MANAGER: Processing notification synchronously"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            asyncMode = False
-
         app = AXObject.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -400,14 +391,11 @@ class EventManager:
 
         self._gidleLock.acquire()
         self._eventQueue.put(e)
-        if asyncMode and not self._gidleId:
+        if not self._gidleId:
             if self._gilSleepTime:
                 time.sleep(self._gilSleepTime)
             self._gidleId = GLib.idle_add(self._dequeue_object_event)
         self._gidleLock.release()
-
-        if not asyncMode:
-            self._dequeue_object_event()
 
     def _onNoFocus(self):
         if focus_manager.getManager().focus_and_window_are_unknown():
