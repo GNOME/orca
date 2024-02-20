@@ -517,11 +517,6 @@ class Script(default.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.liveRegionManager.flushMessages()
 
-    def consumesBrailleEvent(self, brailleEvent):
-        """Returns True if the script will consume this braille event."""
-
-        return super().consumesBrailleEvent(brailleEvent)
-
     # TODO - JD: This needs to be moved out of the scripts.
     def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate document content."""
