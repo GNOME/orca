@@ -45,10 +45,8 @@ from .ax_utilities import AXUtilities
 
 class EventManager:
 
-    def __init__(self, asyncMode=True):
+    def __init__(self):
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
-        debug.printMessage(debug.LEVEL_INFO, f'EVENT MANAGER: Async Mode is {asyncMode}', True)
-        self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self._active = False
         self._paused = False
@@ -56,7 +54,6 @@ class EventManager:
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self._gilSleepTime = 0.00001
-        self._synchronousToolkits = []
         self._eventsSuspended = False
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
 
@@ -487,20 +484,14 @@ class EventManager:
         if self._shouldSuspendEventsFor(e):
             self._suspendEvents(e)
 
-        asyncMode = self._asyncMode
-        if isinstance(e, input_event.MouseButtonEvent):
-            asyncMode = True
-        elif AXObject.get_application_toolkit_name(e.source) in self._synchronousToolkits:
-            asyncMode = False
-        elif e.type.startswith("object:children-changed"):
-            asyncMode = AXUtilities.is_table(e.source)
-        elif AXUtilities.is_notification(e.source):
+        asyncMode = True
+        if AXUtilities.is_notification(e.source):
+            # TODO - JD: Is this still needed now that we can obsolete events?
             # To decrease the likelihood that the popup will be destroyed before we
             # have its contents.
+            msg = "EVENT MANAGER: Processing notification synchronously"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             asyncMode = False
-
-        msg = f"EVENT MANAGER: Use async mode: {asyncMode}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         app = AXObject.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
