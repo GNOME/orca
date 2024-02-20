@@ -53,7 +53,6 @@ class EventManager:
         self._eventQueue     = queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
-        self._gilSleepTime = 0.00001
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
         orca_state.device = None
         self.bypassedKey = None
@@ -392,8 +391,6 @@ class EventManager:
         self._gidleLock.acquire()
         self._eventQueue.put(e)
         if not self._gidleId:
-            if self._gilSleepTime:
-                time.sleep(self._gilSleepTime)
             self._gidleId = GLib.idle_add(self._dequeue_object_event)
         self._gidleLock.release()
 
