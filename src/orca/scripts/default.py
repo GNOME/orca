@@ -1539,6 +1539,13 @@ class Script(script.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
+        if AXUtilities.is_tree_or_tree_table(event.source):
+            active_window = focus_manager.getManager().get_active_window()
+            if not AXObject.find_ancestor(event.source, lambda x: x and x == active_window):
+                tokens = ["DEFAULT: Ignoring event:", event.source, "is not inside", active_window]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return
+
         # If the current item's selection is toggled, we'll present that
         # via the state-changed event.
         keyString, mods = self.utilities.lastKeyAndModifiers()
