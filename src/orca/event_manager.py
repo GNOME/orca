@@ -747,13 +747,15 @@ class EventManager:
         while not self._eventQueue.empty():
             try:
                 event = self._eventQueue.get()
-            except Exception:
-                continue
-
-            if self._processDuringFlood(event, focus):
-                newQueue.put(event)
-                self._queuePrintln(event, isPrune=False)
-            self._eventQueue.task_done()
+            except Exception as error:
+                msg = f"EVENT MANAGER: Exception pruning events: {error}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            else:
+                if self._processDuringFlood(event, focus):
+                    newQueue.put(event)
+                    self._queuePrintln(event, isPrune=False)
+            finally:
+                self._eventQueue.task_done()
 
         self._eventQueue = newQueue
         newSize = self._eventQueue.qsize()
