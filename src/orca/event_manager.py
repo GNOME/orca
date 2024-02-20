@@ -54,21 +54,7 @@ class EventManager:
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self._gilSleepTime = 0.00001
-        self._eventsSuspended = False
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
-
-        # Note: These must match what the scripts registered for, otherwise
-        # Atspi might segfault.
-        #
-        # Events we don't want to suspend include:
-        # object:text-changed:insert - marco
-        # object:property-change:accessible-name - gnome-shell issue #6925
-        self._suspendableEvents = ['object:children-changed:add',
-                                   'object:children-changed:remove',
-                                   'object:state-changed:sensitive',
-                                   'object:state-changed:showing',
-                                   'object:text-changed:delete']
-        self._eventsTriggeringSuspension = []
         orca_state.device = None
         self.bypassedKey = None
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
@@ -200,10 +186,6 @@ class EventManager:
         debug.printMessage(debug.LEVEL_INFO, '')
         tokens = ["EVENT MANAGER:", event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if self._eventsSuspended:
-            tokens = ["EVENT MANAGER: Suspended events:", ', '.join(self._suspendableEvents)]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active or self._paused:
             msg = 'EVENT MANAGER: Ignoring because manager is not active or queueing is paused'
@@ -387,87 +369,6 @@ class EventManager:
             tokens[0:0] = ["EVENT MANAGER: Dequeued"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    def _suspendEvents(self, triggeringEvent):
-        self._eventsTriggeringSuspension.append(triggeringEvent)
-
-        if self._eventsSuspended:
-            msg = "EVENT MANAGER: Events already suspended."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        msg = "EVENT MANAGER: Suspending events."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        for event in self._suspendableEvents:
-            self.deregisterListener(event)
-
-        self._eventsSuspended = True
-        msg = "EVENT MANAGER: Events suspended."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    def _unsuspendEvents(self, triggeringEvent, force=False):
-        if triggeringEvent in self._eventsTriggeringSuspension:
-            self._eventsTriggeringSuspension.remove(triggeringEvent)
-
-        if not self._eventsSuspended:
-            msg = "EVENT MANAGER: Events already unsuspended."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        if self._eventsTriggeringSuspension and not force:
-            msg = "EVENT MANAGER: Events are suspended for another event."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        msg = "EVENT MANAGER: Unsuspending events."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        for event in self._suspendableEvents:
-            self.registerListener(event)
-
-        self._eventsSuspended = False
-
-    def _shouldSuspendEventsFor(self, event):
-        if AXUtilities.is_frame(event.source) \
-           or (AXUtilities.is_window(event.source) \
-               and AXObject.get_application_toolkit_name(event.source) == "clutter"):
-            if event.type.startswith("window"):
-                msg = "EVENT MANAGER: Should suspend events for window event."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            if event.type.endswith("active"):
-                msg = "EVENT MANAGER: Should suspend events for active event on window."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-        if AXUtilities.is_document(event.source):
-            if event.type.endswith("busy") and event.detail1:
-                msg = "EVENT MANAGER: Should suspend events for busy:true event on document."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        return False
-
-    def _shouldUnsuspendEventsFor(self, event):
-        if event.type.startswith("object:state-changed:focused") and event.detail1:
-            msg = "EVENT MANAGER: Should unsuspend events for newly-focused object."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if AXUtilities.is_document(event.source):
-            if event.type.endswith("busy") and not event.detail1:
-                msg = "EVENT MANAGER: Should unsuspend events for busy:false event on document."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            if event.type.startswith("document:load-complete"):
-                msg = "EVENT MANAGER: Should unsuspend events for load-complete event on document."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-
-        return False
-
-    def _didSuspendEventsFor(self, event):
-        return event in self._eventsTriggeringSuspension
-
     def _enqueue_object_event(self, e):
         """Callback for Atspi object events."""
 
@@ -480,9 +381,6 @@ class EventManager:
             msg = 'EVENT MANAGER: Pruning event queue due to flood.'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._pruneEventsDuringFlood()
-
-        if self._shouldSuspendEventsFor(e):
-            self._suspendEvents(e)
 
         asyncMode = True
         if AXUtilities.is_notification(e.source):
@@ -540,11 +438,6 @@ class EventManager:
                 )
                 debug.printMessage(debug.eventDebugLevel, msg, False)
             self._processObjectEvent(event)
-            if self._didSuspendEventsFor(event):
-                self._unsuspendEvents(event)
-            elif self._eventsSuspended and self._shouldUnsuspendEventsFor(event):
-                self._unsuspendEvents(event, force=True)
-
             if debugging:
                 msg = (
                     f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
