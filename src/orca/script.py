@@ -477,10 +477,14 @@ class Script:
 
         if user_bindings and command in user_bindings:
             handler = user_bindings[command]
+            tokens = [f"SCRIPT: User handler for command {command} is", handler]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             consumed = handler.processInputEvent(self, brailleEvent)
 
-        if (not consumed) and command in self.brailleBindings:
+        if not consumed and command in self.brailleBindings:
             handler = self.brailleBindings[command]
+            tokens = [f"SCRIPT: Handler for command {command} is", handler]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             consumed = handler.processInputEvent(self, brailleEvent)
 
         return consumed
