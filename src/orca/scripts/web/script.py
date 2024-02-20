@@ -111,8 +111,6 @@ class Script(default.Script):
         """Called when this script is deactivated."""
 
         self._sayAllContents = []
-        self._inSayAll = False
-        self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastMouseButtonContext = None, -1
@@ -125,7 +123,7 @@ class Script(default.Script):
         self.structuralNavigation.suspend_commands(self, False, reason)
         self.liveRegionManager.suspend_commands(self, False, reason)
         self.tableNavigator.suspend_commands(self, False, reason)
-        self.removeKeyGrabs(reason)
+        super().deactivate()
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
