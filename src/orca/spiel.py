@@ -39,6 +39,9 @@ from . import settings_manager
 from .acss import ACSS
 from .ssml import SSML, SSMLCapabilities
 
+gi.require_version("GLib", "2.0")
+from gi.repository import GLib
+
 try:
     gi.require_version('Spiel', '1.0')
     from gi.repository import Spiel
@@ -585,6 +588,19 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(decrease and messages.SPEECH_SOFTER \
                    or messages.SPEECH_LOUDER, acss=acss)
 
+    def _maybe_shutdown(self):
+        # We're the last speaker, wrap things up
+        if len(SpeechServer._active_servers.values()) == 1:
+            while SpeechServer.DEFAULT_SPEAKER.props.speaking:
+                GLib.MainContext.default().iteration(False)
+
+            # Ensure nothing squeaks through
+            SpeechServer.DEFAULT_SPEAKER.pause()
+            SpeechServer.DEFAULT_SPEAKER = None
+            return True
+
+        return False
+
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate(step)
 
@@ -607,9 +623,9 @@ class SpeechServer(speechserver.SpeechServer):
         self._speaker.cancel()
 
     def shutdown(self):
-        self._speaker.cancel()
         if self._id != SpeechServer.DEFAULT_SERVER_ID:
             self._provider.props.voices.disconnect(self._voices_id)
+        self._maybe_shutdown()
         del SpeechServer._active_servers[self._id]
 
     def reset(self, text=None, acss=None):
