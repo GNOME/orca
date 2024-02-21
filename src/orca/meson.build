@@ -23,8 +23,13 @@ orca_i18n_py = configure_file(
   }
 )
 
-r = run_command('git', 'rev-parse', '--short', 'HEAD', check: false)
-revision = r.stdout().strip()
+git = find_program('git', required: false)
+if git.found()
+  r = run_command('git', 'rev-parse', '--short', 'HEAD', check: false)
+  revision = r.stdout().strip()
+else
+  revision = ''
+endif
 
 r = run_command('pkg-config', '--variable=tablesdir', 'liblouis', check: false)
 louis_tables_dir = r.stdout().strip()
