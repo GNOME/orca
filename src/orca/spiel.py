@@ -40,7 +40,7 @@ from .acss import ACSS
 from .ssml import SSML, SSMLCapabilities
 
 try:
-    gi.require_version('Spiel', '0.1')
+    gi.require_version('Spiel', '1.0')
     from gi.repository import Spiel
     _spiel_available = True
 except Exception:
