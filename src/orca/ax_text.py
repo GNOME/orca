@@ -53,9 +53,7 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        if offset < 0:
-            return "", 0, 0
-
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.CHAR)
         except Exception as error:
@@ -111,9 +109,7 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        if offset < 0:
-            return "", 0, 0
-
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.WORD)
         except Exception as error:
@@ -169,9 +165,7 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        if offset < 0:
-            return "", 0, 0
-
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
         except Exception as error:
@@ -228,9 +222,7 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        if offset < 0:
-            return "", 0, 0
-
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.SENTENCE)
         except Exception as error:
@@ -299,9 +291,7 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        if offset < 0:
-            return "", 0, 0
-
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.PARAGRAPH)
         except Exception as error:
