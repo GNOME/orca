@@ -1,5 +1,5 @@
 # Turkish translation of Orca.
-# Copyright (C) 2008-2023 Orca's COPYRIGHT HOLDER
+# Copyright (C) 2008-2024 Orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Orca package.
 #
 # Baris Cicek <baris@teamforce.name.tr>, 2008, 2009.
@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-02-16 20:25+0000\n"
-"PO-Revision-Date: 2024-02-18 02:48+0300\n"
+"POT-Creation-Date: 2024-02-19 20:43+0000\n"
+"PO-Revision-Date: 2024-02-20 00:05+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -4526,9 +4526,16 @@ msgstr "Büyük Harf"
 msgid "Speech Dispatcher"
 msgstr "Konuşma Sentezleyici"
 
+# Seslendirme sisteminin adı.
+#. Translators this label refers to the name of particular speech synthesis
+#. system. (https://github.com/eeejay/spiel)
+#: src/orca/guilabels.py:875
+msgid "Spiel"
+msgstr "Spiel"
+
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: src/orca/guilabels.py:875
+#: src/orca/guilabels.py:879
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Yazım Denetimi"
@@ -4537,7 +4544,7 @@ msgstr "Yazım Denetimi"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: src/orca/guilabels.py:881
+#: src/orca/guilabels.py:885
 msgid "Spell _error"
 msgstr "Yazım _hatası"
 
@@ -4546,21 +4553,21 @@ msgstr "Yazım _hatası"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: src/orca/guilabels.py:888
+#: src/orca/guilabels.py:892
 msgid "Spell _suggestion"
 msgstr "Yazım _önerisi"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: src/orca/guilabels.py:893
+#: src/orca/guilabels.py:897
 msgid "Present _context of error"
 msgstr "Hatanın _içeriğini sun"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
-#: src/orca/guilabels.py:898
+#: src/orca/guilabels.py:902
 msgid "Speak spreadsheet cell coordinates"
 msgstr "Hesap çizelgesi hücre koordinatlarını seslendir"
 
@@ -4571,51 +4578,51 @@ msgstr "Hesap çizelgesi hücre koordinatlarını seslendir"
 #. Some users, however, prefer to have Orca always announce the entire selected range,
 #. i.e. in the same scenario say "A1 through A9 selected." Those users should enable
 #. this option.
-#: src/orca/guilabels.py:907
+#: src/orca/guilabels.py:911
 msgid "Always speak selected spreadsheet range"
 msgstr "Seçilen hesap çizelgesi aralığını her zaman seslendir"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: src/orca/guilabels.py:911
+#: src/orca/guilabels.py:915
 msgid "Announce cell _header"
 msgstr "_Hücre başlığını duyur"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: src/orca/guilabels.py:915
+#: src/orca/guilabels.py:919
 msgid "Table Navigation"
 msgstr "Tablo Dolaşımı"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: src/orca/guilabels.py:919
+#: src/orca/guilabels.py:923
 msgid "Skip _blank cells"
 msgstr "_Boş hücreleri atla"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
-#: src/orca/guilabels.py:924
+#: src/orca/guilabels.py:928
 msgid "Speak _cell"
 msgstr "H_ücreyi seslendir"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: src/orca/guilabels.py:928
+#: src/orca/guilabels.py:932
 msgid "Speak _cell coordinates"
 msgstr "Hü_cre koordinatlarını seslendir"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: src/orca/guilabels.py:933
+#: src/orca/guilabels.py:937
 msgid "Speak _multiple cell spans"
 msgstr "_Çoklu hücre aralığını seslendir"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: src/orca/guilabels.py:937
+#: src/orca/guilabels.py:941
 msgid "Attribute Name"
 msgstr "Öznitelik Adı"
 
@@ -4624,20 +4631,20 @@ msgstr "Öznitelik Adı"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:944
+#: src/orca/guilabels.py:948
 msgid "Control caret navigation"
 msgstr "Düzeltme imi dolaşımını denetle"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:949
+#: src/orca/guilabels.py:953
 msgid "Enable _structural navigation"
 msgstr "_Yapısal dolaşımı etkinleştir"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:953 src/orca/orca-setup.ui:1480
+#: src/orca/guilabels.py:957 src/orca/orca-setup.ui:1480
 #: src/orca/orca-setup.ui:2224
 msgid "Brie_f"
 msgstr "Ö_zet"
@@ -4647,7 +4654,7 @@ msgstr "Ö_zet"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:963
+#: src/orca/guilabels.py:967
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
@@ -13527,611 +13534,3 @@ msgstr "düz"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "heceleme"
-
-#~ msgid "newline"
-#~ msgstr "yeni satır"
-
-#~ msgid "exclaim"
-#~ msgstr "ünlem"
-
-#~ msgid "quote"
-#~ msgstr "alıntı"
-
-#~ msgid "number"
-#~ msgstr "nümerik"
-
-#~ msgid "dollar"
-#~ msgstr "dolar"
-
-#~ msgid "percent"
-#~ msgstr "yüzde"
-
-#~ msgid "and"
-#~ msgstr "ve"
-
-#~ msgid "apostrophe"
-#~ msgstr "kesme işareti"
-
-#~ msgid "left paren"
-#~ msgstr "sol parantez"
-
-#~ msgid "right paren"
-#~ msgstr "sağ parantez"
-
-#~ msgid "star"
-#~ msgstr "yıldız"
-
-#~ msgid "comma"
-#~ msgstr "virgül"
-
-#~ msgid "dash"
-#~ msgstr "çizgi"
-
-#~ msgid "dot"
-#~ msgstr "nokta"
-
-#~ msgid "slash"
-#~ msgstr "eğik çizgi"
-
-#~ msgid "colon"
-#~ msgstr "iki nokta üst üste"
-
-#~ msgid "semicolon"
-#~ msgstr "noktalı virgül"
-
-#~ msgid "less"
-#~ msgstr "küçüktür"
-
-#~ msgid "equals"
-#~ msgstr "eşittir"
-
-#~ msgid "greater"
-#~ msgstr "büyüktür"
-
-#~ msgid "question"
-#~ msgstr "soru işareti"
-
-#~ msgid "at"
-#~ msgstr "at"
-
-#~ msgid "left bracket"
-#~ msgstr "sol köşeli parantez"
-
-#~ msgid "backslash"
-#~ msgstr "ters eğik çizgi"
-
-#~ msgid "right bracket"
-#~ msgstr "sağ köşeli parantez"
-
-#~ msgid "caret"
-#~ msgstr "düzeltme imi"
-
-#~ msgid "underline"
-#~ msgstr "alt çizgi"
-
-#~ msgid "left brace"
-#~ msgstr "sol parantez"
-
-#~ msgid "vertical bar"
-#~ msgstr "dik çizgi"
-
-#~ msgid "right brace"
-#~ msgstr "sağ parantez"
-
-#~ msgid "no break space"
-#~ msgstr "bölünmeyen boşluk"
-
-#~ msgid "inverted exclamation point"
-#~ msgstr "ters ünlem"
-
-#~ msgid "cents"
-#~ msgstr "sent"
-
-#~ msgid "pounds"
-#~ msgstr "ingiliz lirası"
-
-#~ msgid "currency sign"
-#~ msgstr "değer işareti"
-
-#~ msgid "yen"
-#~ msgstr "yen"
-
-#~ msgid "broken bar"
-#~ msgstr "dik çizgi"
-
-#~ msgid "section"
-#~ msgstr "paragraf"
-
-#~ msgid "copyright"
-#~ msgstr "telif hakkı"
-
-#~ msgid "superscript a"
-#~ msgstr "üstsimge a"
-
-#~ msgid "left double angle bracket"
-#~ msgstr "sol tek alıntı"
-
-#~ msgid "logical not"
-#~ msgstr "mantıksal değil işareti"
-
-#~ msgid "soft hyphen"
-#~ msgstr "koşullu kesme işareti"
-
-#~ msgid "registered"
-#~ msgstr "tescilli"
-
-#~ msgid "macron"
-#~ msgstr "uzatma işareti"
-
-#~ msgid "degrees"
-#~ msgstr "derece"
-
-#~ msgid "plus or minus"
-#~ msgstr "artı veya eksi"
-
-#~ msgid "superscript 2"
-#~ msgstr "üstsimge 2"
-
-#~ msgid "superscript 3"
-#~ msgstr "üstsimge 3"
-
-#~ msgid "mu"
-#~ msgstr "mu"
-
-#~ msgid "paragraph marker"
-#~ msgstr "paragraf işaretçisi"
-
-#~ msgid "middle dot"
-#~ msgstr "orta nokta"
-
-#~ msgid "superscript 1"
-#~ msgstr "üstsimge 1"
-
-#~ msgid "ordinal"
-#~ msgstr "sırasal"
-
-#~ msgid "right double angle bracket"
-#~ msgstr "sağ tek alıntı"
-
-#~ msgid "one fourth"
-#~ msgstr "dörtte bir"
-
-#~ msgid "one half"
-#~ msgstr "yarım"
-
-#~ msgid "three fourths"
-#~ msgstr "dörtte üç"
-
-#~ msgid "inverted question mark"
-#~ msgstr "ters soru işareti"
-
-#~ msgid "a acute"
-#~ msgstr "a akut"
-
-#~ msgid "A GRAVE"
-#~ msgstr "A GRAVE"
-
-#~ msgid "A ACUTE"
-#~ msgstr "A AKUT"
-
-#~ msgid "A CIRCUMFLEX"
-#~ msgstr "DÜZELTME İŞARETLİ A"
-
-#~ msgid "A TILDE"
-#~ msgstr "A TİLDA"
-
-#~ msgid "A UMLAUT"
-#~ msgstr "A UMLAUT"
-
-#~ msgid "A RING"
-#~ msgstr "A HALKA"
-
-#~ msgid "A E"
-#~ msgstr "A E"
-
-#~ msgid "C CEDILLA"
-#~ msgstr "Çengelli C"
-
-#~ msgid "E GRAVE"
-#~ msgstr "E GRAVE"
-
-#~ msgid "E ACUTE"
-#~ msgstr "E AKUT"
-
-#~ msgid "E CIRCUMFLEX"
-#~ msgstr "DÜZELTME İŞARETLİ E"
-
-#~ msgid "E UMLAUT"
-#~ msgstr "E UMLAUT"
-
-#~ msgid "I GRAVE"
-#~ msgstr "I GRAVE"
-
-#~ msgid "I ACUTE"
-#~ msgstr "I AKUT"
-
-#~ msgid "I CIRCUMFLEX"
-#~ msgstr "DÜZELTME İŞARETLİ I"
-
-#~ msgid "I UMLAUT"
-#~ msgstr "I UMLAUT"
-
-#~ msgid "ETH"
-#~ msgstr "ETH"
-
-#~ msgid "N TILDE"
-#~ msgstr "N TİLDA"
-
-#~ msgid "O GRAVE"
-#~ msgstr "O GRAVE"
-
-#~ msgid "O ACUTE"
-#~ msgstr "O AKUT"
-
-#~ msgid "O CIRCUMFLEX"
-#~ msgstr "DÜZELTME İŞARETLİ O"
-
-#~ msgid "O TILDE"
-#~ msgstr "O TİLDA"
-
-#~ msgid "O UMLAUT"
-#~ msgstr "O UMLAUT"
-
-#~ msgid "times"
-#~ msgstr "çarpı"
-
-#~ msgid "O STROKE"
-#~ msgstr "O YANÇİZGİ"
-
-#~ msgid "U GRAVE"
-#~ msgstr "U GRAVE"
-
-#~ msgid "U ACUTE"
-#~ msgstr "U AKUT"
-
-#~ msgid "U CIRCUMFLEX"
-#~ msgstr "DÜZELTME İŞARETLİ U"
-
-#~ msgid "U UMLAUT"
-#~ msgstr "U UMLAUT"
-
-#~ msgid "Y ACUTE"
-#~ msgstr "Y AKUT"
-
-#~ msgid "THORN"
-#~ msgstr "THORN"
-
-#~ msgid "s sharp"
-#~ msgstr "esszet"
-
-#~ msgid "a grave"
-#~ msgstr "a grave"
-
-#~ msgid "a circumflex"
-#~ msgstr "düzeltme işaretli a"
-
-#~ msgid "a tilde"
-#~ msgstr "a tilda"
-
-#~ msgid "a umlaut"
-#~ msgstr "a umlaut"
-
-#~ msgid "a ring"
-#~ msgstr "a halka"
-
-#~ msgid "a e"
-#~ msgstr "a e"
-
-#~ msgid "c cedilla"
-#~ msgstr "ç"
-
-#~ msgid "e grave"
-#~ msgstr "e grave"
-
-#~ msgid "e acute"
-#~ msgstr "e akut"
-
-#~ msgid "e circumflex"
-#~ msgstr "düzeltme işaretli e"
-
-#~ msgid "e umlaut"
-#~ msgstr "e umlaut"
-
-#~ msgid "i grave"
-#~ msgstr "i grave"
-
-#~ msgid "i acute"
-#~ msgstr "i akut"
-
-#~ msgid "i circumflex"
-#~ msgstr "düzeltme işaretli i"
-
-#~ msgid "i umlaut"
-#~ msgstr "i umlaut"
-
-#~ msgid "eth"
-#~ msgstr "eth"
-
-#~ msgid "n tilde"
-#~ msgstr "n tilda"
-
-#~ msgid "o grave"
-#~ msgstr "o grave"
-
-#~ msgid "o acute"
-#~ msgstr "o akut"
-
-#~ msgid "o circumflex"
-#~ msgstr "düzeltme işaretli o"
-
-#~ msgid "o tilde"
-#~ msgstr "o tilda"
-
-#~ msgid "o umlaut"
-#~ msgstr "o umlaut"
-
-#~ msgid "divided by"
-#~ msgstr "bölme işareti"
-
-#~ msgid "o stroke"
-#~ msgstr "o yançizgi"
-
-#~ msgid "thorn"
-#~ msgstr "thorn"
-
-#~ msgid "u acute"
-#~ msgstr "u akut"
-
-#~ msgid "u grave"
-#~ msgstr "u grave"
-
-#~ msgid "u circumflex"
-#~ msgstr "düzeltme işaretli u"
-
-#~ msgid "u umlaut"
-#~ msgstr "u umlaut"
-
-#~ msgid "y acute"
-#~ msgstr "y akut"
-
-#~ msgid "y umlaut"
-#~ msgstr "y umlaut"
-
-#~ msgid "Y UMLAUT"
-#~ msgstr "Y UMLAUT"
-
-#~ msgid "florin"
-#~ msgstr "florin"
-
-#~ msgid "en dash"
-#~ msgstr "çizgi"
-
-#~ msgid "left single quote"
-#~ msgstr "sol tek tırnak"
-
-#~ msgid "right single quote"
-#~ msgstr "sağ tek tırnak"
-
-#~ msgid "single low quote"
-#~ msgstr "tek alt tırnak"
-
-#~ msgid "left double quote"
-#~ msgstr "sol çift tırnak"
-
-#~ msgid "right double quote"
-#~ msgstr "sağ çift tırnak"
-
-#~ msgid "double low quote"
-#~ msgstr "çift alt tırnak"
-
-#~ msgid "dagger"
-#~ msgstr "kama"
-
-#~ msgid "double dagger"
-#~ msgstr "çift kama"
-
-#~ msgid "bullet"
-#~ msgstr "madde imi"
-
-#~ msgid "triangular bullet"
-#~ msgstr "üçgen madde imi"
-
-#~ msgid "per mille"
-#~ msgstr "mil başına"
-
-#~ msgid "prime"
-#~ msgstr "asal"
-
-#~ msgid "double prime"
-#~ msgstr "çift asal"
-
-#~ msgid "triple prime"
-#~ msgstr "üçlü asal"
-
-#~ msgid "hyphen bullet"
-#~ msgstr "çizgi madde imi"
-
-#~ msgid "euro"
-#~ msgstr "avro"
-
-#~ msgid "trademark"
-#~ msgstr "tescilli marka"
-
-#~ msgid "check mark"
-#~ msgstr "onay imi"
-
-#~ msgid "heavy check mark"
-#~ msgstr "kalın onay imi"
-
-#~ msgid "x-shaped bullet"
-#~ msgstr "x şeklinde madde imi"
-
-#~ msgid "superscript 0"
-#~ msgstr "üstsimge 0"
-
-#~ msgid "superscript 4"
-#~ msgstr "üstsimge 4"
-
-#~ msgid "superscript 5"
-#~ msgstr "üstsimge 5"
-
-#~ msgid "superscript 6"
-#~ msgstr "üstsimge 6"
-
-#~ msgid "superscript 7"
-#~ msgstr "üstsimge 7"
-
-#~ msgid "superscript 8"
-#~ msgstr "üstsimge 8"
-
-#~ msgid "superscript 9"
-#~ msgstr "üstsimge 9"
-
-#~ msgid "superscript plus"
-#~ msgstr "üstsimge artı"
-
-#~ msgid "superscript minus"
-#~ msgstr "üstsimge eksi"
-
-#~ msgid "superscript equals"
-#~ msgstr "üstsimge eşittir"
-
-#~ msgid "superscript left paren"
-#~ msgstr "üstsimge sol tek tırnak"
-
-#~ msgid "superscript right paren"
-#~ msgstr "üstsimge sağ tek tırnak"
-
-#~ msgid "superscript n"
-#~ msgstr "üstsimge n"
-
-#~ msgid "subscript 0"
-#~ msgstr "altsimge 0"
-
-#~ msgid "subscript 1"
-#~ msgstr "altsimge 1"
-
-#~ msgid "subscript 2"
-#~ msgstr "altsimge 2"
-
-#~ msgid "subscript 3"
-#~ msgstr "altsimge 3"
-
-#~ msgid "subscript 4"
-#~ msgstr "altsimge 4"
-
-#~ msgid "subscript 5"
-#~ msgstr "altsimge 5"
-
-#~ msgid "subscript 6"
-#~ msgstr "altsimge 6"
-
-#~ msgid "subscript 7"
-#~ msgstr "altsimge 7"
-
-#~ msgid "subscript 8"
-#~ msgstr "altsimge 8"
-
-#~ msgid "subscript 9"
-#~ msgstr "altsimge 9"
-
-#~ msgid "subscript plus"
-#~ msgstr "altsimge artı"
-
-#~ msgid "subscript minus"
-#~ msgstr "altsimge eksi"
-
-#~ msgid "subscript equals"
-#~ msgstr "altsimge eşittir"
-
-#~ msgid "subscript left paren"
-#~ msgstr "altsimge sol tek tırnak"
-
-#~ msgid "subscript right paren"
-#~ msgstr "altsimge sağ tek tırnak"
-
-#~ msgid "black square"
-#~ msgstr "içi dolu kare"
-
-#~ msgid "black diamond"
-#~ msgstr "siyah baklava dilimi"
-
-#~ msgid "object replacement character"
-#~ msgstr "nesne değiştirme karakteri"
-
-#~ msgid "Alt_L"
-#~ msgstr "Alt_L"
-
-#~ msgid "Report bugs to orca-list@gnome.org."
-#~ msgstr "Hataları orca-list@gnome.org adresine bildirin."
-
-#~ msgid "Press space to toggle."
-#~ msgstr "Lütfen seçim için boşluğa basın."
-
-#~ msgid "Press space to expand, and use up and down to select an item."
-#~ msgstr ""
-#~ "Genişletmek için boşluk, ardından bir öge seçmek için yukarı ve aşağı "
-#~ "tuşlarını kullanın."
-
-#~ msgid "Press alt+f6 to give focus to child windows."
-#~ msgstr "Odağı alt pencerelere vermek için alt+f6 tuşlarına bas."
-
-#~ msgid "To move to items, use either the arrow keys or type ahead searching."
-#~ msgstr ""
-#~ "Ögeleri taşımak için ok tuşlarını kullanın ya da arama için doğrudan "
-#~ "yazın."
-
-#~ msgid "To get to the system menus press the alt+f1 key."
-#~ msgstr "Sistem menüsünü almak için alt+f1 tuşlarına bakın."
-
-#~ msgid "Use up and down to select an item."
-#~ msgstr "Bir öge seçmek için yukarı ve aşağı kullanın."
-
-#~ msgid "To collapse, press shift plus left."
-#~ msgstr "Daraltmak için lütfen shift ile sola basın."
-
-#~ msgid "To expand, press shift plus right."
-#~ msgstr "Genişletmek için lütfen shift ile sağa basın."
-
-#~ msgid "To activate press return."
-#~ msgstr "Etkinleştirmek için giriş tuşuna basın."
-
-#~ msgid "Type in text."
-#~ msgstr "Metin içine yaz."
-
-#~ msgid "Use left and right to view other tabs."
-#~ msgstr "Sekmeler arasında geçiş için sol ve sağ ok tuşlarını kullanın."
-
-#~ msgid "To activate press space."
-#~ msgstr "Etkinleştirmek için boşluğa basın."
-
-#~ msgid ""
-#~ "Use up or down arrow to select value. Or type in the desired numerical "
-#~ "value."
-#~ msgstr ""
-#~ "Değer seçmek için yukarı ya da aşağı okları kullanın. Ya da istenen "
-#~ "rakamsal değeri yazın."
-
-#~ msgid "Use arrow keys to change."
-#~ msgstr "Değiştirmek için ok tuşlarını kullanın."
-
-#~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or "
-#~ "down arrow."
-#~ msgstr ""
-#~ "Gezmek için, lütfen sol ya da sağ ok. Ögeler arasında geçmek için yukarı "
-#~ "ya da aşağı oka basın."
-
-#~ msgid "To enter sub menu, press right arrow."
-#~ msgstr "Açmak için sağ ok tuşunu kullanın."
-
-#~ msgid ""
-#~ "To decrease press left arrow, to increase press right arrow. To go to "
-#~ "minimum press home, and for maximum press end."
-#~ msgstr ""
-#~ "Azaltmak için sol, artırmak için sağ ok tuşlarını kullanın. Değeri en az "
-#~ "ve en çok olarak ayarlamak için, home ve end tuşlarını kullanın."
-
-#~ msgctxt "structural navigation"
-#~ msgid "Interal Frames"
-#~ msgstr "Dahili Kareler"
