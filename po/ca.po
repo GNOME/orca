@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-08-11 17:30+0000\n"
-"PO-Revision-Date: 2023-09-11 13:18+0200\n"
+"PO-Revision-Date: 2024-02-21 13:18+0200\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -2517,7 +2517,7 @@ msgstr ""
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room"
 msgstr ""
-"Commuta el posar un prefix amb el nom de la sala de xat en els missatges de "
+"Commuta si es posa un prefix amb el nom de la sala de xat en els missatges de "
 "les sales de xat"
 
 #. Translators: this is a command for a button on a refreshable braille display
@@ -8776,7 +8776,7 @@ msgstr " superíndex %s"
 #. a dialog.
 #: src/orca/messages.py:524
 msgid "Not in a dialog"
-msgstr "No sou en una diàleg"
+msgstr "No sou en un diàleg"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9672,8 +9672,8 @@ msgid ""
 "shortcuts for the current application, press F3. To exit learn mode, press "
 "the escape key."
 msgstr ""
-"S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per a sentir-"
-"ne la seva funció. Per a veure la documentació del lector de pantalla, "
+"S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per a sentir "
+"la seva funció. Per a veure la documentació del lector de pantalla, "
 "premeu F1. Per a obtenir la llista de dreceres per defecte del lector de "
 "pantalla, premeu F2. Per a obtenir la llista de dreceres del lector de "
 "pantalla per l'aplicació actual, premeu F3. Per a sortir del mode "
