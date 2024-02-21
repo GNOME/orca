@@ -33,7 +33,7 @@ Short list of translation changes with author names and files:
 Quick-and-dirty formatted list of translation changes:
 
   git log ORCA_40_BETA.. --grep translation --pretty=format:"%s,%an" --name-only |
-    awk -F/ '/\.(po|am)/ {gsub("(\.po|Makefile.am)", "", $NF); printf(",%s",$NF); next;}
+    awk -F/ '/\.po/ {gsub("\\.po", "", $NF); printf(",%s",$NF); next;}
     {gsub("(Updated* |Add(ed)* | translation| help)", "", $0); printf("\n%s",$0);}' |
     awk -F, '!seen[$0]++ {if (NF == 3) printf("  %-15s %-25s %s\n", $3, $1, $2);}' |
     sort
@@ -45,13 +45,6 @@ Short list of non-translation commits:
 NOTE: You should also make sure the external dependencies listed in
 meson.build and README.md are accurate.
 
-
-BUILD THE RELEASE:
------------------
-
-meson setup builddir
-meson dist -C builddir
-
 COMMIT RELEASE CHANGES AND TAG THE RELEASE:
 -------------------------------------------
 
@@ -60,6 +53,11 @@ git push
 git tag -a -s ORCA_40_RC
 git push origin ORCA_40_RC
 
+BUILD THE RELEASE:
+-----------------
+
+meson setup builddir
+meson dist -C builddir
 
 UPLOAD THE RELEASE:
 ------------------
@@ -67,7 +65,6 @@ UPLOAD THE RELEASE:
 scp orca-40.rc.tar.xz yourusername@master.gnome.org:
 ssh master.gnome.org
 ftpadmin install orca-40.rc.tar.xz
-
 
 BUMP THE VERSION:
 -----------------

@@ -1,3 +1,83 @@
+46.beta - 21 February 2024
+
+Of Interest to Distros:
+
+* Orca now uses meson instead of autotools.
+
+* Orca no longer depends on the python3-pyatspi package; it accesses
+  AT-SPI2 directly through gobject introspection.
+
+* Orca now has an optional dependency on the Spiel library. Please
+  see "Experimental Features" in README.md for details.
+
+New and Updated Features:
+
+* Spiel support has been added to Orca. Spiel is a new speech synthesis
+  API that works with eSpeak and Piper, with other synthesizers planned.
+
+Web:
+
+* Handled several issues causing Orca to jump unexpectedly to the top
+  of the page.
+
+* Interrupt speech before presenting new line/location with caret nav.
+  This should improve behavior when arrowing rapidly within content.
+
+* Fix bug causing "\ufffc" to be shown in braille instead of the link.
+
+* Eliminate (nearly all of) our text sanity-checks and hacks that had
+  been in place for Firefox/Gecko bugs. Mozilla fixed those bugs as
+  part of their Cache The World work. This should improve performance.
+
+General:
+
+* Fix bug causing focus to be incorrectly changed when selection is
+  automatically updated in a related tree. This can happen with email
+  applications (e.g. incoming messages).
+
+* Fix bug causing us to skip certain named elements in StackExchange
+  and StackOverflow.
+
+* Fix several terminal-related flat review issues.
+
+* Fix notifications in KDE not being fully presented by Notification
+  Presenter.
+
+* Don't say "Window" when a MATE switcher window first appears.
+
+* Echo sentence after whitespace typed rather than punctuation so the
+  presentation does not get cut off.
+
+* Fix bug causing Orca to speak an object from the wrong window in
+  Mouse Review.
+
+* Listen for and present document:page-changed events.
+
+* Remove logic from the Event Manager that was obsoleted by the ability
+  to obsolete queued events. Make remaining logic more performant.
+
+* Convert Orca from using pyatspi to using AT-SPI2 directly. Much code
+  clean-up was also done in the process.
+
+* Miscellaneous code changes related to becoming more ready for Wayland.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  cs              Czech                     Daniel Rusek
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  pt_BR           Brazilian Portuguese      Juliano de Souza Camargo
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Matej Urbančič
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+
+=========
+
 46.alpha - 18 January 2024
 
 New and Updated Features:
