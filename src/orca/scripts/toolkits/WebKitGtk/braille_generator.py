@@ -96,12 +96,3 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return braille_generator.BrailleGenerator._generateAncestors(
             self, obj, **args)
-
-    def _generateEol(self, obj, **args):
-        if self._script.utilities.isWebKitGtk(obj) \
-           and AXObject.get_role(obj) == Atspi.Role.PARAGRAPH \
-           and not AXUtilities.is_editable(obj):
-            return []
-
-        return braille_generator.BrailleGenerator._generateEol(
-            self, obj, **args)

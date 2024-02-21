@@ -482,13 +482,16 @@ class BrailleGenerator(generator.Generator):
     #####################################################################
 
     def _generateEol(self, obj, **args):
-        result = []
-        if not settings_manager.getManager().getSetting('disableBrailleEOL'):
-            if not args.get('mode', None):
-                args['mode'] = self._mode
-            args['stringType'] = 'eol'
-            result.append(self._script.formatting.getString(**args))
-        return result
+        if settings_manager.getManager().getSetting("disableBrailleEOL"):
+            return []
+
+        if not (AXUtilities.is_editable(obj) or self._script.utilities.isCode(obj)):
+            return []
+
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'eol'
+        return [self._script.formatting.getString(**args)]
 
     def space(self, delimiter=" "):
         if delimiter == " ":

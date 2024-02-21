@@ -254,16 +254,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return result
 
-    def _generateEol(self, obj, **args):
-        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
-            return []
-
-        if AXUtilities.is_editable(obj) \
-           or not self._script.utilities.inDocumentContent(obj):
-            return super()._generateEol(obj, **args)
-
-        return []
-
     def generateContents(self, contents, **args):
         if not len(contents):
             return []
