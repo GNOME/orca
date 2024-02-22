@@ -526,6 +526,12 @@ class Script(script.Script):
     def addKeyGrabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
+        if not orca_state.device:
+            msg = "WARNING: Attempting to add key grabs without a device."
+            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
+            return
+
+        # TODO - JD: Move this logic into the Orca Modifier Manager.
         for modifier in ["Insert", "KP_Insert"]:
             if modifier in settings.orcaModifierKeys \
                and modifier not in orca_state.grabbedModifiers:
@@ -553,6 +559,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
             return
 
+        # TODO - JD: Move this logic into the Orca Modifier Manager.
         for modifier in ["Insert", "KP_Insert"]:
             if modifier in orca_state.grabbedModifiers:
                 orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
