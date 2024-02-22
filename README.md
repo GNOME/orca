@@ -252,3 +252,33 @@ To switch from Speech Dispatcher to Spiel, use `orca --replace --speech-system=s
 this flag is highly recommended while Orca's Spiel support is experimental. If you would like
 to use Spiel by default, you can select it in Orca's Preferences dialog. To then switch back
 to Speech Dispatcher, use `orca --replace --speech-system=speechdispatcherfactory`.
+
+### Building Spiel from Source
+
+For advanced users, Spiel and providers may be built from source. If you are
+unsure, consider using the available Flatpaks and consult the documentation for
+your distribution before proceeding.
+
+1. Build and install Orca with Spiel
+
+   Be sure to build Orca as described above, so the correct `libspeechprovider`
+   version is available when building a provider in the next step. If you
+   previously built Orca, follow the steps to update and re-build before
+   continuing.
+
+2. Next build and install a provider
+
+   ```sh
+   # Clone the repository, then select a provider in the "providers/" directory
+   git clone https://github.com/eeejay/spiel-demos.git
+   cd spiel-demos/providers/espeak
+
+   # Build and install
+   meson setup _build
+   meson compile -C _build
+   meson install -C _build
+   ```
+
+Now start Orca following the [instructions](#experimental-features) above and
+the Spiel providers you installed will start automatically.
+
