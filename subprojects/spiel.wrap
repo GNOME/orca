@@ -1,5 +1,5 @@
 [wrap-git]
 directory=spiel
 url=https://github.com/eeejay/spiel.git
-revision=main
+revision=SPIEL_1_0_0
 depth=1
