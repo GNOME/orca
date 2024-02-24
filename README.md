@@ -1,4 +1,4 @@
-# Orca v46.rc
+# Orca v47.alpha
 
 [TOC]
 
@@ -22,7 +22,7 @@ community, and where to log bugs and feature requests.
 
 ## Dependencies
 
-Orca v46.x is supported on GNOME 46.x only.  We highly suggest you
+Orca v47.x is supported on GNOME 47.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -42,7 +42,7 @@ Orca also has the following dependencies:
 * python3-psutil   - Process and system utilities (optional)
 
 You are strongly encouraged to also have the latest stable versions
-of AT-SPI2 and ATK for the GNOME 46.x release.
+of AT-SPI2 and ATK for the GNOME 47.x release.
 
 ## Note for Braille Users
 
