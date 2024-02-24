@@ -40,6 +40,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from . import ax_event_synthesizer
+from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
 from . import debug
@@ -102,6 +103,7 @@ class Script:
         self.notificationPresenter = self.getNotificationPresenter()
         self.flatReviewPresenter = self.getFlatReviewPresenter()
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
+        self.bypassModeManager = self.getBypassModeManager()
         self.systemInformationPresenter = self.getSystemInformationPresenter()
         self.objectNavigator = self.getObjectNavigator()
         self.tableNavigator = self.getTableNavigator()
@@ -245,6 +247,9 @@ class Script:
 
     def getSpeechAndVerbosityManager(self):
         return speech_and_verbosity_manager.getManager()
+
+    def getBypassModeManager(self):
+        return bypass_mode_manager.getManager()
 
     def getWhereAmIPresenter(self):
         return where_am_i_presenter.getPresenter()

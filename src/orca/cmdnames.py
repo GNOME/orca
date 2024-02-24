@@ -593,12 +593,14 @@ PRESENT_CURRENT_DATE = _("Present current date")
 # of keyboard shortcuts.
 PRESENT_SIZE_AND_POSITION = _("Present size and location of current object")
 
-# Translators: Orca normally intercepts all keyboard commands and only passes
-# them along to the current application when they are not Orca commands. This
-# command causes the next command issued to be passed along to the current
-# application, bypassing Orca's interception of it.
-BYPASS_NEXT_COMMAND = \
-    _("Pass the next command on to the current application")
+# Translators: This command toggles all (other) Orca commands so that the
+# associated keystroke can by consumed by the native application. For example,
+# if there were an Orca command bound to Alt+Down, normally pressing Alt+Down
+# would cause the Orca command to be used. This would mean Alt+Down could not
+# be used in editors to move the current line of text down. By temporarily
+# disabling Orca commands, Alt+Down would be ignored by Orca and work as
+# expected in the editor.
+BYPASS_MODE_TOGGLE = _("Toggle all Orca command keys")
 
 # Translators: Orca has a command to review previous chat room messages in
 # speech and braille. This string to be translated is associated with the

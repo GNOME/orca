@@ -30,15 +30,10 @@ __license__   = "LGPL"
 
 from . import keybindings
 
-# Storing values 
 defaultModifierMask = keybindings.defaultModifierMask
 ORCA_MODIFIER_MASK = keybindings.ORCA_MODIFIER_MASK
 NO_MODIFIER_MASK = keybindings.NO_MODIFIER_MASK
-ORCA_SHIFT_MODIFIER_MASK = keybindings.ORCA_SHIFT_MODIFIER_MASK
 ORCA_CTRL_MODIFIER_MASK = keybindings.ORCA_CTRL_MODIFIER_MASK
-ORCA_ALT_MODIFIER_MASK = keybindings.ORCA_ALT_MODIFIER_MASK
-ORCA_CTRL_ALT_MODIFIER_MASK = keybindings.ORCA_CTRL_ALT_MODIFIER_MASK
-SHIFT_ALT_MODIFIER_MASK = keybindings.SHIFT_ALT_MODIFIER_MASK
 
 keymap = (
 
@@ -47,10 +42,6 @@ keymap = (
 
     ("space", defaultModifierMask, ORCA_CTRL_MODIFIER_MASK,
     "appPreferencesSettingsHandler"),
-
-    ("BackSpace", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "bypassNextCommandHandler"),
-
 
     #####################################################################
     #                                                                   #

@@ -35,7 +35,6 @@ import time
 from . import debug
 from . import focus_manager
 from . import input_event
-from . import orca_modifier_manager
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -878,11 +877,7 @@ class EventManager:
                     script.refreshModifierKeyGrab(self.bypassedKey)
                     self.bypassedKey = None
 
-
         keyboardEvent.process()
-
-        # TODO - JD: Figure out exactly why this is here.
-        orca_modifier_manager.getManager().update_key_map(keyboardEvent)
 
     def process_braille_event(self, event):
         """Processes this BrailleEvent."""

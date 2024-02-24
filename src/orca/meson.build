@@ -71,6 +71,7 @@ lib_sources = [
   'braille_rolenames.py',
   'brlmon.py',
   'brltablenames.py',
+  'bypass_mode_manager.py',
   'caret_navigation.py',
   'chat.py',
   'cmdnames.py',

@@ -118,23 +118,6 @@ class OrcaModifierManager:
         self._original_xmodmap = subprocess.check_output(['xkbcomp', os.environ['DISPLAY'], '-'])
         self._create_orca_xmodmap()
 
-    def update_key_map(self, keyboard_event):
-        """Unsupported convenience method to call sad hacks which should go away."""
-
-        # TODO - JD: The only caller of this function is EventManager._processKeyboardEvent
-
-        msg = "ORCA MODIFIER MANAGER: Updating key map"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        if self.is_orca_modifier(keyboard_event.event_string) and orca_state.bypassNextCommand:
-            self.unset_orca_modifiers()
-            self._need_to_restore_orca_modifier = True
-            return
-
-        if self._need_to_restore_orca_modifier and not orca_state.bypassNextCommand:
-            self._create_orca_xmodmap()
-            self._need_to_restore_orca_modifier = False
-
     def _create_orca_xmodmap(self):
         """Makes an Orca-specific Xmodmap so that the Orca modifier works."""
 

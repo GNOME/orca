@@ -219,14 +219,10 @@ class Script(script.Script):
                 Script.cycleDebugLevel,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
-        self.inputEventHandlers["bypassNextCommandHandler"] = \
-            input_event.InputEventHandler(
-                Script.bypassNextCommand,
-                cmdnames.BYPASS_NEXT_COMMAND)
-
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
+        self.inputEventHandlers.update(self.bypassModeManager.get_handlers())
         self.inputEventHandlers.update(self.systemInformationPresenter.get_handlers())
         self.inputEventHandlers.update(self.bookmarks.get_handlers())
         self.inputEventHandlers.update(self.objectNavigator.get_handlers())
@@ -451,7 +447,8 @@ class Script(script.Script):
         keyBindings = keybindings.KeyBindings()
 
         layout = settings_manager.getManager().getSetting('keyboardLayout')
-        if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+        isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        if isDesktop:
             for keyBinding in self.__getDesktopBindings().keyBindings:
                 keyBindings.add(keyBinding)
         else:
@@ -460,6 +457,12 @@ class Script(script.Script):
 
         import orca.common_keyboardmap as common_keyboardmap
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
+
+        # TODO - JD: Move this into the extension commands. That will require a new string
+        # and GUI change.
+        bindings = self.bypassModeManager.get_bindings(refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
 
         return keyBindings
 
@@ -760,18 +763,6 @@ class Script(script.Script):
     # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
     #                                                                      #
     ########################################################################
-
-    def bypassNextCommand(self, inputEvent=None):
-        """Causes the next keyboard command to be ignored by Orca
-        and passed along to the current application.
-
-        Returns True to indicate the input event has been consumed.
-        """
-
-        self.presentMessage(messages.BYPASS_MODE_ENABLED)
-        orca_state.bypassNextCommand = True
-        self.removeKeyGrabs("bypass next command")
-        return True
 
     def findNext(self, inputEvent):
         """Searches forward for the next instance of the string

@@ -98,11 +98,25 @@ BOOKMARKS_NOT_FOUND = _("No bookmarks found.")
 # that index.
 BOOKMARK_NOT_FOUND = _("Bookmark not found.")
 
-# Translators: Orca normally intercepts all keyboard commands and only passes
-# them along to the current application when they are not Orca commands. This
-# command causes the next command issued to be passed along to the current
-# application, bypassing Orca's interception of it.
-BYPASS_MODE_ENABLED = _("Bypass mode enabled.")
+# Translators: Orca has a command which toggles all (other) Orca commands so that
+# the associated keystroke can by consumed by the native application. For example,
+# if there were an Orca command bound to Alt+Down, normally pressing Alt+Down
+# would cause the Orca command to be used. This would mean Alt+Down could not be
+# used in editors to move the current line of text down. By temporarily disabling
+# Orca commands, Alt+Down would be ignored by Orca and work as expected in the
+# editor. This string is what Orca presents to the user when Orca's commands are
+# being toggled off.
+BYPASS_MODE_ENABLED = _("Orca command keys off.")
+
+# Translators: Orca has a command which toggles all (other) Orca commands so that
+# the associated keystroke can by consumed by the native application. For example,
+# if there were an Orca command bound to Alt+Down, normally pressing Alt+Down
+# would cause the Orca command to be used. This would mean Alt+Down could not be
+# used in editors to move the current line of text down. By temporarily disabling
+# Orca commands, Alt+Down would be ignored by Orca and work as expected in the
+# editor. This string is what Orca presents to the user when Orca's commands are
+# being toggled back on.
+BYPASS_MODE_DISABLED = _("Orca command keys on.")
 
 # Translators: this is an indication that Orca is unable to obtain the display/
 # results area of the calculator being used (e.g. gcalctool).

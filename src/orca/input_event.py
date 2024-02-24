@@ -423,9 +423,6 @@ class KeyboardEvent(InputEvent):
         if not self.isModifierKey():
             self.setClickCount()
 
-        if orca_state.bypassNextCommand and pressed:
-            KeyboardEvent.orcaModifierPressed = False
-
         if KeyboardEvent.orcaModifierPressed:
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
@@ -624,9 +621,6 @@ class KeyboardEvent(InputEvent):
         if self.event_string not in lockingKeys:
             return False
 
-        if not orca_state.bypassNextCommand and not self._bypassOrca:
-            return self.event_string not in settings.orcaModifierKeys
-
         return True
 
     def isModifierKey(self):
@@ -657,9 +651,6 @@ class KeyboardEvent(InputEvent):
     def isOrcaModifier(self, checkBypassMode=True):
         """Return True if this is the Orca modifier key."""
 
-        if checkBypassMode and orca_state.bypassNextCommand:
-            return False
-
         if self.event_string in settings.orcaModifierKeys:
             return True
 
@@ -672,9 +663,6 @@ class KeyboardEvent(InputEvent):
 
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
-
-        if orca_state.bypassNextCommand:
-            return False
 
         return self.modifiers & keybindings.ORCA_MODIFIER_MASK
 
@@ -818,11 +806,7 @@ class KeyboardEvent(InputEvent):
         if orca_state.capturingKeys:
             return False, 'Capturing keys'
 
-        if orca_state.bypassNextCommand:
-            return False, 'Bypass next command'
-
-        self._handler = self._getUserHandler() \
-            or self._script.keyBindings.getInputHandler(self)
+        self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
 
         scriptConsumes = self._handler is not None and self._handler.is_enabled()
 
@@ -939,12 +923,6 @@ class KeyboardEvent(InputEvent):
 
         if self.isOrcaModifier():
             return True, 'Orca modifier'
-
-        if orca_state.bypassNextCommand:
-            if not self.isModifierKey():
-                orca_state.bypassNextCommand = False
-                self._script.addKeyGrabs("bypassed next command")
-            return False, 'Bypass next command'
 
         if not self._should_consume:
             return False, 'Should not consume'

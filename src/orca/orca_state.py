@@ -45,11 +45,6 @@ lastNonModifierKeyEvent = None
 #
 lastInputEvent = None
 
-# Used to determine if the user wishes Orca to pass the next command
-# along to the current application rather than consuming it.
-#
-bypassNextCommand = False
-
 # The last searchQuery
 #
 searchQuery = None
