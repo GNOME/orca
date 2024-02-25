@@ -1071,40 +1071,6 @@ class Script(default.Script):
         self.refreshBraille(False)
         return True
 
-    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
-        """To-be-removed. Returns the string, caretOffset, startOffset."""
-
-        if self._inFocusMode or not self.utilities.inDocumentContent(obj) \
-           or self.utilities.isFocusModeWidget(obj):
-            return super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
-
-        if offset is None:
-            offset = max(0, AXText.get_caret_offset(obj))
-
-        if self.utilities.treatAsTextObject(obj) \
-           and startOffset is not None and endOffset is not None:
-            return AXText.get_substring(obj, startOffset, endOffset), offset, startOffset
-
-        contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=None)
-        if contextObj == obj:
-            caretOffset = contextOffset
-        else:
-            caretOffset = offset
-
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
-        contents = list(filter(lambda x: x[0] == obj, contents))
-        if len(contents) == 1:
-            index = 0
-        else:
-            index = self.utilities.findObjectInContents(obj, offset, contents)
-
-        if index > -1:
-            candidate, startOffset, endOffset, string = contents[index]
-            if self.EMBEDDED_OBJECT_CHARACTER not in string:
-                return string, caretOffset, startOffset
-
-        return "", 0, 0
-
     def moveToMouseOver(self, inputEvent):
         """Moves the context to/from the mouseover which has just appeared."""
 

@@ -590,11 +590,9 @@ class Text(Region):
         self.caretOffset = 0
         self.lineOffset = 0
         if self.accessible:
-            script = script_manager.getManager().getActiveScript()
-            if script:
-                [string, self.caretOffset, self.lineOffset] = \
-                     script.getTextLineAtCaret(
-                         self.accessible, startOffset=startOffset, endOffset=endOffset)
+            self.caretOffset = AXText.get_caret_offset(self.accessible)
+            string, self.lineOffset = AXText.get_line_at_offset(self.accessible)[0:2]
+            string = string.replace("\ufffc", " ")
 
         try:
             endOffset = endOffset - self.lineOffset
@@ -648,8 +646,8 @@ class Text(Region):
         if not _regionWithFocus:
             return False
 
-        script = script_manager.getManager().getActiveScript()
-        [string, caretOffset, lineOffset] = script.getTextLineAtCaret(self.accessible)
+        string, lineOffset = AXText.get_line_at_offset(self.accessible)[0:2]
+        caretOffset = AXText.get_caret_offset(self.accessible)
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
         if lineOffset != self.lineOffset:

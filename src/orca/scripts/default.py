@@ -2181,7 +2181,7 @@ class Script(script.Script):
                interface
         """
 
-        [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
+        line, startOffset = AXText.get_line_at_offset(obj)[0:2]
         if len(line) and line != "\n":
             indentationDescription = self.utilities.indentationDescription(line)
             if indentationDescription:
@@ -2518,72 +2518,6 @@ class Script(script.Script):
         msg = "DEFAULT: textLines complete. Verifying SayAll status"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.inSayAll()
-
-    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
-        """To-be-removed. Returns the string, caretOffset, startOffset."""
-
-        # TODO - JD: Audit all callers and see if we can finally remove this function.
-
-        characterCount = AXText.get_character_count(obj)
-        if characterCount == 0:
-            return ["", 0, 0]
-
-        offset = AXText.get_caret_offset(obj)
-        targetOffset = startOffset
-        if targetOffset is None:
-            targetOffset = max(0, offset)
-
-        # The offset might be positioned at the very end of the text area.
-        # In these cases, calling text.getTextAtOffset on an offset that's
-        # not positioned to a character can yield unexpected results.  In
-        # particular, we'll see the Gecko toolkit return a start and end
-        # offset of (0, 0), and we'll see other implementations, such as
-        # gedit, return reasonable results (i.e., gedit will give us the
-        # last line).
-        #
-        # In order to accommodate the differing behavior of different
-        # AT-SPI implementations, we'll make sure we give getTextAtOffset
-        # the offset of an actual character.  Then, we'll do a little check
-        # to see if that character is a newline - if it is, we'll treat it
-        # as the line.
-        #
-        if targetOffset == characterCount:
-            fixedTargetOffset = max(0, targetOffset - 1)
-            character = AXText.get_substring(obj, fixedTargetOffset, fixedTargetOffset + 1)
-        else:
-            fixedTargetOffset = targetOffset
-            character = None
-
-        if (targetOffset == characterCount) \
-            and (character == "\n"):
-            lineString = ""
-            startOffset = fixedTargetOffset
-        else:
-            # Get the line containing the caret.  [[[TODO: HACK WDW - If
-            # there's only 1 character in the string, well, we get it.  We
-            # do this because Gecko's implementation of getTextAtOffset
-            # is broken if there is just one character in the string.]]]
-            #
-            if (characterCount == 1):
-                lineString = AXText.get_substring(obj, fixedTargetOffset, fixedTargetOffset + 1)
-                startOffset = fixedTargetOffset
-            else:
-                if fixedTargetOffset == -1:
-                    fixedTargetOffset = characterCount
-                lineString, startOffset, endOffset = \
-                    AXText.get_line_at_offset(obj, fixedTargetOffset)
-
-            # Sometimes we get the trailing line-feed-- remove it
-            # It is important that these are in order.
-            # In some circumstances we might get:
-            # word word\r\n
-            # so remove \n, and then remove \r.
-            # See bgo#619332.
-            #
-            lineString = lineString.rstrip('\n')
-            lineString = lineString.rstrip('\r')
-
-        return [lineString, offset, startOffset]
 
     def phoneticSpellCurrentItem(self, itemString):
         """Phonetically spell the current flat review word or line.

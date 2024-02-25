@@ -48,6 +48,7 @@ from . import settings_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
@@ -1065,7 +1066,7 @@ class Generator:
         if result:
             return result
 
-        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        text = AXText.get_line_at_offset(obj)[0]
         if text and self._script.EMBEDDED_OBJECT_CHARACTER not in text:
             return [text]
 

@@ -711,26 +711,6 @@ class Script(default.Script):
 
         super().onTextSelectionChanged(event)
 
-    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
-        """To-be-removed. Returns the string, caretOffset, startOffset."""
-
-        if AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.COMBO_BOX:
-            if AXText.get_caret_offset(obj) < 0:
-                lineString, startOffset, endOffset = AXText.get_line_at_offset(obj, 0)
-
-                # Sometimes we get the trailing line-feed -- remove it
-                #
-                if lineString[-1:] == "\n":
-                    lineString = lineString[:-1]
-
-                return [lineString, 0, startOffset]
-
-        textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
-        if not AXUtilities.is_focused(obj):
-            textLine[0] = self.utilities.displayedText(obj)
-
-        return textLine
-
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 

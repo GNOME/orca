@@ -168,7 +168,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: The SayLine, etc. code should be generated and not put
         # together in the scripts. In addition, the voice crap needs to go
         # here. Then it needs to be removed from the scripts.
-        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        text = AXText.get_line_at_offset(obj)[0]
         if not text:
             result = [messages.BLANK]
             result.extend(self.voice(string=text, obj=obj, **args))

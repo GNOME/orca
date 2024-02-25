@@ -1224,7 +1224,7 @@ class SpeechGenerator(generator.Generator):
         if result and result[0]:
             return result
 
-        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        text, startOffset = AXText.get_line_at_offset(obj)[0:2]
         if text == '\n' and settings_manager.getManager().getSetting('speakBlankLines') \
            and not self._script.inSayAll() and args.get('total', 1) == 1 \
            and args.get('formatType') != 'ancestor':
@@ -1447,7 +1447,7 @@ class SpeechGenerator(generator.Generator):
         if not settings_manager.getManager().getSetting('enableSpeechIndentation'):
             return []
 
-        line, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
+        line = AXText.get_line_at_offset(obj)[0]
         description = self._script.utilities.indentationDescription(line)
         if not description:
             return []
