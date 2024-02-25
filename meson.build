@@ -40,6 +40,7 @@ optional_modules = {
   'brlapi': 'braille output',
   'louis': 'contracted braille',
   'psutil': 'system information commands',
+  'gi.repository.Wnck': 'mouse review',
 }
 
 summary = {}

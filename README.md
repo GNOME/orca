@@ -40,6 +40,7 @@ Orca also has the following dependencies:
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 * python3-psutil   - Process and system utilities (optional)
+* libwnck3         - Used for mouse review (optional)
 
 You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 46.x release.
