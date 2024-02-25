@@ -38,6 +38,7 @@ from . import focus_manager
 from . import input_event
 from . import keybindings
 from . import messages
+from . import script_manager
 from .ax_object import AXObject
 
 
@@ -49,6 +50,7 @@ class ActionPresenter:
         self._bindings = keybindings.KeyBindings()
         self._gui = None
         self._obj = None
+        self._window = None
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the action-presenter keybindings."""
@@ -100,6 +102,23 @@ class ActionPresenter:
         msg = "ACTION PRESENTER: Bindings set up."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
+    def _restore_focus(self):
+        """Restores focus to the object associated with the actions menu."""
+
+        tokens = ["ACTION PRESENTER: Restoring focus to", self._obj, "in", self._window]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        # TODO - JD: Consider having set_locus_of_focus always update the active script.
+        reason = "Action Presenter menu is being destroyed"
+        app = AXObject.get_application(self._obj)
+        script = script_manager.getManager().getScript(app, self._obj)
+        script_manager.getManager().setActiveScript(script, reason)
+
+        manager = focus_manager.getManager()
+        manager.clear_state(reason)
+        manager.set_active_window(self._window)
+        manager.set_locus_of_focus(None, self._obj)
+
     def _perform_action(self, action):
         """Attempts to perform the named action."""
 
@@ -111,8 +130,8 @@ class ActionPresenter:
     def show_actions_menu(self, script, event=None):
         """Shows a menu with all the available accessible actions."""
 
-        obj = focus_manager.getManager().get_active_mode_and_object_of_interest()[1] \
-            or focus_manager.getManager().get_locus_of_focus()
+        manager = focus_manager.getManager()
+        obj = manager.get_active_mode_and_object_of_interest()[1] or manager.get_locus_of_focus()
         if obj is None:
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF
@@ -134,7 +153,8 @@ class ActionPresenter:
             return True
 
         self._obj = obj
-        self._gui = ActionMenu(actions, self._perform_action)
+        self._window = manager.get_active_window()
+        self._gui = ActionMenu(actions, self._perform_action, self._restore_focus)
         timeout = 500
         msg = f"ACTION PRESENTER: Delaying popup {timeout}ms due to GtkMenu grab conflict."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -145,10 +165,12 @@ class ActionPresenter:
 class ActionMenu(Gtk.Menu):
     """A simple Gtk.Menu containing a list of accessible actions."""
 
-    def __init__(self, actions, handler):
+    def __init__(self, actions, action_handler, cleanup_handler):
         super().__init__()
         self.connect("popped-up", self._on_popped_up)
-        self.on_option_selected = handler
+        self.connect("hide", self._on_hidden)
+        self.on_option_selected = action_handler
+        self.on_menu_hidden = cleanup_handler
         for name, description in actions.items():
             menu_item = Gtk.MenuItem(label=description)
             menu_item.connect("activate", self._on_activate, name)
@@ -164,6 +186,13 @@ class ActionMenu(Gtk.Menu):
 
         msg = "ACTION PRESENTER: ActionMenu popped up"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+    def _on_hidden(self, *args):
+        """Handler for the 'hide' menu signal"""
+
+        msg = "ACTION PRESENTER: ActionMenu hidden"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self.on_menu_hidden()
 
     def show_gui(self):
         """Shows the menu"""
