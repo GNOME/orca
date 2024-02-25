@@ -399,8 +399,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         features = voice.props.features
         if features & Spiel.VoiceFeature.SSML_SAY_AS_CHARACTERS_GLYPHS:
-            text = ("<speak>",
-                    f'<say-as interpret-as="characters" format="glyphs">{character}</say-as>',
+            text = ("<speak>"
+                    f'<say-as interpret-as="characters" format="glyphs">{character}</say-as>'
                     "</speak>")
         elif features & Spiel.VoiceFeature.SSML_SAY_AS_CHARACTERS:
             text = f'<speak><say-as interpret-as="characters">{character}</say-as></speak>'
