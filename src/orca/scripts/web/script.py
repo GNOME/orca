@@ -1231,7 +1231,7 @@ class Script(default.Script):
             if not document and self.utilities.isDocument(oldFocus):
                 oldDocument = oldFocus
 
-            if not oldDocument:
+            if oldFocus and not oldDocument:
                 msg = "WEB: Not refreshing grabs because we weren't in a document before"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
