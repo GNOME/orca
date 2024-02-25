@@ -145,7 +145,20 @@ class AXComponent:
         if not (rect.width or rect.height):
             return True
 
-        return rect.x == rect.y == rect.width == rect.height == -1
+        if rect.x == rect.y == rect.width == rect.height == -1:
+            return True
+
+        if (rect.width < -1 or rect.height < -1):
+            tokens = ["WARNING: ", obj, "has a broken rect:", rect]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.clear_cache(obj)
+            rect = AXComponent.get_rect(obj)
+            if (rect.width < -1 or rect.height < -1):
+                msg = "AXComponent: Clearing cache did not fix the rect"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+
+        return False
 
     @staticmethod
     def is_empty_rect(rect):
