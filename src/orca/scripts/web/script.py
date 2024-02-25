@@ -1227,6 +1227,18 @@ class Script(default.Script):
             self._madeFindAnnouncement = False
             self._inFocusMode = False
 
+            oldDocument = self.utilities.getTopLevelDocumentForObject(oldFocus)
+            if not document and self.utilities.isDocument(oldFocus):
+                oldDocument = oldFocus
+
+            if not oldDocument:
+                msg = "WEB: Not refreshing grabs because we weren't in a document before"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return False
+
+            tokens = ["WEB: Refreshing grabs because we left document", oldDocument]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
             reason = "locus of focus no longer in document"
             self.caretNavigation.suspend_commands(self, True, reason)
             self.structuralNavigation.suspend_commands(self, True, reason)
