@@ -119,7 +119,7 @@ class Script(default.Script):
         self.structuralNavigation.suspend_commands(self, not in_doc, reason)
         self.liveRegionManager.suspend_commands(self, not in_doc, reason)
         self.tableNavigator.suspend_commands(self, not in_doc, reason)
-        super().activate(self)
+        super().activate()
 
     def deactivate(self):
         """Called when this script is deactivated."""
