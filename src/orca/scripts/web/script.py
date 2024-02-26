@@ -107,6 +107,20 @@ class Script(default.Script):
         self.attributeNamesDict["text-align"] = "justification"
         self.attributeNamesDict["text-indent"] = "indent"
 
+    def activate(self):
+        """Called when this script is activated."""
+
+        tokens = ["WEB: Activating script for", self.app]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        in_doc = self.utilities.inDocumentContent()
+        reason = f"script activation, in document content: {in_doc}"
+        self.caretNavigation.suspend_commands(self, not in_doc, reason)
+        self.structuralNavigation.suspend_commands(self, not in_doc, reason)
+        self.liveRegionManager.suspend_commands(self, not in_doc, reason)
+        self.tableNavigator.suspend_commands(self, not in_doc, reason)
+        super().activate(self)
+
     def deactivate(self):
         """Called when this script is deactivated."""
 
