@@ -315,22 +315,6 @@ class Script(default.Script):
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return
 
-        # TODO - JD: Sad hack that wouldn't be needed if LO were fixed.
-        # If we are in the slide presentation scroll pane, also announce
-        # the current page tab. See bug #538056 for more details.
-        #
-        rolesList = [Atspi.Role.SCROLL_PANE,
-                     Atspi.Role.PANEL,
-                     Atspi.Role.PANEL,
-                     Atspi.Role.ROOT_PANE,
-                     Atspi.Role.FRAME,
-                     Atspi.Role.APPLICATION]
-        if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
-            parent = AXObject.get_parent(newLocusOfFocus)
-            for child in AXObject.iter_children(parent, AXUtilities.is_page_tab_list):
-                for tab in AXObject.iter_children(child, AXUtilities.is_selected):
-                    self.presentObject(tab)
-
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
         elif newLocusOfFocus and oldLocusOfFocus \
