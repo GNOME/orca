@@ -25,10 +25,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.focus_manager as focus_manager
 import orca.input_event as input_event
 import orca.orca_state as orca_state
@@ -87,12 +83,7 @@ class Script(default.Script):
         # Luckily, it only issues one value changed event.  So, we'll
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
-        #
-        isSpinBox = self.utilities.hasMatchingHierarchy(
-            event.source, [Atspi.Role.TEXT,
-                           Atspi.Role.PANEL,
-                           Atspi.Role.SPIN_BUTTON])
-        if isSpinBox:
+        if AXObject.find_ancestor(event.source, AXUtilities.is_spin_button):
             eventStr, mods = self.utilities.lastKeyAndModifiers()
             if eventStr in ["Up", "Down"] or isinstance(
                orca_state.lastInputEvent, input_event.MouseButtonEvent):
