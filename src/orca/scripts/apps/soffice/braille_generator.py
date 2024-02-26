@@ -100,25 +100,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return result
 
-    def _generateChildTab(self, obj, **args):
-        """If we are in the slide presentation scroll pane, also announce the
-        current page tab. See bug #538056 for more details.
-        """
-        result = []
-        rolesList = [Atspi.Role.SCROLL_PANE, \
-                     Atspi.Role.PANEL, \
-                     Atspi.Role.PANEL, \
-                     Atspi.Role.ROOT_PANE, \
-                     Atspi.Role.FRAME, \
-                     Atspi.Role.APPLICATION]
-        if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
-            parent = AXObject.get_parent(obj)
-            for child in AXObject.iter_children(parent, AXUtilities.is_page_tab_list):
-                for tab in AXObject.iter_children(child, AXUtilities.is_selected):
-                    args['role'] = AXObject.get_role(tab)
-                    result.extend(self.generate(tab, **args))
-        return result
-
     def _generateAncestors(self, obj, **args):
         if self._script.getTableNavigator().last_input_event_was_navigation_command():
             return []
