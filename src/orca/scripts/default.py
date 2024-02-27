@@ -2111,11 +2111,17 @@ class Script(script.Script):
         self.speakMessage(sentence, voice)
         return True
 
-    def echoPreviousWord(self, obj, offset=None):
+    def echoPreviousWord(self, obj):
         """Speaks the word prior to the caret if at a word boundary."""
 
-        start = AXText.get_character_at_offset(obj, offset)[1]
-        previousChar, previousStart = AXText.get_character_at_offset(obj, start - 1)[0:-1]
+        offset = AXText.get_caret_offset(obj)
+        if offset == -1:
+            offset = AXText.get_character_count(obj)
+
+        if offset <= 0:
+            return False
+
+        previousChar, previousStart = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
         if not self.utilities.isWordDelimiter(previousChar):
             return False
 
