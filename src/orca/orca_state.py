@@ -56,7 +56,3 @@ orcaOS = None
 # The AT-SPI device (needed for key grabs).
 #
 device = None
-
-# A list of AT-SPI key grabs for modifiers (ie, insert)
-#
-grabbedModifiers = {}

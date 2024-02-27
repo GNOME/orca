@@ -47,6 +47,7 @@ class OrcaModifierManager:
 
     def __init__(self):
         self._grabbed_modifiers = {}
+        self._toggled_modifier = None
 
         # Related to hacks which will soon die.
         self._original_xmodmap = ""
@@ -68,13 +69,19 @@ class OrcaModifierManager:
         """Adds grabs for all of the user's Orca modifier keys."""
 
         for modifier in settings_manager.getManager().getSetting("orcaModifierKeys"):
-            self.add_modifier_grab(modifier)
+            # TODO - JD: We currently handle CapsLock one way and Insert a different way.
+            # Ideally that will stop being the case at some point.
+            if modifier in ["Insert", "KP_Insert"]:
+                self.add_modifier_grab(modifier)
 
     def remove_grabs_for_orca_modifiers(self):
-        """Remove grabs for all of the user's Orca modifier keys."""
+        """Removes grabs for all of the user's Orca modifier keys."""
 
         for modifier in settings_manager.getManager().getSetting("orcaModifierKeys"):
-            self.remove_modifier_grab(modifier)
+            # TODO - JD: We currently handle CapsLock one way and Insert a different way.
+            # Ideally that will stop being the case at some point.
+            if modifier in ["Insert", "KP_Insert"]:
+                self.remove_modifier_grab(modifier)
 
     def add_modifier_grab(self, modifier):
         """Adds a grab for modifier."""
@@ -87,6 +94,8 @@ class OrcaModifierManager:
             debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
             return
 
+        msg = f"ORCA MODIFIER MANAGER: Adding modifier grab for {modifier}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         kd = Atspi.KeyDefinition()
         kd.keycode = keybindings.getKeycode(modifier)
         kd.modifiers = 0
@@ -103,8 +112,32 @@ class OrcaModifierManager:
             debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
             return
 
+        msg = f"ORCA MODIFIER MANAGER: Removing modifier grab for {modifier}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         orca_state.device.remove_key_grab(self._grabbed_modifiers[modifier])
         del self._grabbed_modifiers[modifier]
+
+    def toggle_modifier_grab(self, keyboard_event):
+        """Toggles the grab for a modifier to enable double-clicking causing normal behavior."""
+
+        if not keyboard_event.isPressedKey():
+            return
+
+        key = keyboard_event.keyval_name
+        if key in self._grabbed_modifiers:
+            # Temporarily toggle the modifier off just in case there's about to be a double click.
+            msg = f"ORCA MODIFIER MANAGER: Toggling modifier grab for {key}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self.remove_modifier_grab(key)
+            self._toggled_modifier = key
+            return
+
+        # Any key press causes us to restore the temporarily-toggled-off modifier.
+        if self._toggled_modifier is not None:
+            msg = f"ORCA MODIFIER MANAGER: Restoring toggled grab for {self._toggled_modifier}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self.add_modifier_grab(self._toggled_modifier)
+            self._toggled_modifier = None
 
     def refresh_orca_modifiers(self, reason=""):
         """Refreshes the Orca modifier keys."""

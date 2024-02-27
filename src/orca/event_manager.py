@@ -35,6 +35,7 @@ import time
 from . import debug
 from . import focus_manager
 from . import input_event
+from . import orca_modifier_manager
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -54,7 +55,6 @@ class EventManager:
         self._gidleLock      = threading.Lock()
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
         orca_state.device = None
-        self.bypassedKey = None
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
@@ -865,18 +865,8 @@ class EventManager:
         if not keyboardEvent.is_duplicate:
             debug.printMessage(debug.LEVEL_INFO, f"\n{keyboardEvent}")
 
-            # If pressing insert, then temporarily remove grab to allow toggling
-            # with a double press
-            script = script_manager.getManager().getActiveScript()
-            if pressed and script is not None:
-                if keyboardEvent.keyval_name in orca_state.grabbedModifiers:
-                    device.remove_key_grab(orca_state.grabbedModifiers[keyboardEvent.keyval_name])
-                    del orca_state.grabbedModifiers[keyboardEvent.keyval_name]
-                    self.bypassedKey = keyboardEvent.keyval_name
-                elif self.bypassedKey is not None:
-                    # This is a second key press. Re-enable the grab
-                    script.refreshModifierKeyGrab(self.bypassedKey)
-                    self.bypassedKey = None
+            # TODO - JD: Why is this not part of process()?
+            orca_modifier_manager.getManager().toggle_modifier_grab(keyboardEvent)
 
         keyboardEvent.process()
 

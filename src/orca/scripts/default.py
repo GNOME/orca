@@ -27,10 +27,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import gi
-gi.require_version('Atspi', '2.0')
-from gi.repository import Atspi
-
 import re
 import time
 
@@ -44,6 +40,7 @@ import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.orca as orca
+import orca.orca_modifier_manager as orca_modifier_manager
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
@@ -529,56 +526,21 @@ class Script(script.Script):
     def addKeyGrabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
-        if not orca_state.device:
-            msg = "WARNING: Attempting to add key grabs without a device."
-            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
-            return
-
-        # TODO - JD: Move this logic into the Orca Modifier Manager.
-        for modifier in ["Insert", "KP_Insert"]:
-            if modifier in settings.orcaModifierKeys \
-               and modifier not in orca_state.grabbedModifiers:
-                kd = Atspi.KeyDefinition()
-                kd.keycode = keybindings.getKeycode(modifier)
-                kd.modifiers = 0
-                orca_state.grabbedModifiers[modifier] = orca_state.device.add_key_grab(kd)
-
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = self.getKeyBindings()
         self.keyBindings.addKeyGrabs()
+        orca_modifier_manager.getManager().add_grabs_for_orca_modifiers()
 
     def removeKeyGrabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
 
+        orca_modifier_manager.getManager().add_grabs_for_orca_modifiers()
         self.keyBindings.removeKeyGrabs(reason)
 
         msg = "DEFAULT: Clearing key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = keybindings.KeyBindings()
-
-        if not orca_state.device:
-            msg = "WARNING: Attempting to remove key grabs without a device."
-            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
-            return
-
-        # TODO - JD: Move this logic into the Orca Modifier Manager.
-        for modifier in ["Insert", "KP_Insert"]:
-            if modifier in orca_state.grabbedModifiers:
-                orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
-                del orca_state.grabbedModifiers[modifier]
-
-    def refreshModifierKeyGrab(self, modifier):
-        """ Refreshes the key grab for an Orca modifier. """
-
-        if modifier in settings.orcaModifierKeys and modifier not in orca_state.grabbedModifiers:
-            kd = Atspi.KeyDefinition()
-            kd.keycode = keybindings.getKeycode(modifier)
-            kd.modifiers = 0
-            orca_state.grabbedModifiers[modifier] = orca_state.device.add_key_grab(kd)
-        elif modifier in orca_state.grabbedModifiers and modifier not in settings.orcaModifierKeys:
-            orca_state.device.remove_key_grab(orca_state.grabbedModifiers[modifier])
-            del orca_state.grabbedModifiers[modifier]
 
     def refreshKeyGrabs(self, reason=""):
         """ Refreshes the enabled key grabs for this script. """
