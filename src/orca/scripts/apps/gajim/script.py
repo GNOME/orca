@@ -25,40 +25,21 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.chat as chat
 import orca.scripts.default as default
 from orca.ax_utilities import AXUtilities
-
-########################################################################
-#                                                                      #
-# The Empathy script class.                                            #
-#                                                                      #
-########################################################################
 
 class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""
 
-        # So we can take an educated guess at identifying the buddy list.
-        #
-        self._buddyListAncestries = [[Atspi.Role.TABLE,
-                                      Atspi.Role.SCROLL_PANE,
-                                      Atspi.Role.FILLER,
-                                      Atspi.Role.SPLIT_PANE,
-                                      Atspi.Role.FILLER,
-                                      Atspi.Role.FRAME]]
-
         default.Script.__init__(self, app)
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
 
-        return chat.Chat(self, self._buddyListAncestries)
+        return chat.Chat(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be

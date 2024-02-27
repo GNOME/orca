@@ -283,19 +283,14 @@ class Chat:
     scripts.
     """
 
-    def __init__(self, script, buddyListAncestries):
+    def __init__(self, script):
         """Creates an instance of the Chat class.
 
         Arguments:
         - script: the script with which this instance is associated.
-        - buddyListAncestries: a list of lists of roles beginning
-          with the object serving as the actual buddy list (e.g.
-          ROLE_TREE_TABLE) and ending with the top level object (e.g.
-          ROLE_FRAME).
         """
 
         self._script = script
-        self._buddyListAncestries = buddyListAncestries
 
         # Keybindings to provide conversation message history. The message
         # review order will be based on the index within the list. Thus F1
@@ -733,45 +728,43 @@ class Chat:
 
         return AXUtilities.is_editable(obj) and AXUtilities.is_single_line(obj)
 
-    def isBuddyList(self, obj):
-        """Returns True if obj is the list of buddies in the buddy list
-        window. Note that this method relies upon a hierarchical check,
-        using a list of hierarchies provided by the script. Scripts
-        which have more reliable means of identifying the buddy list
-        can override this method.
+    def _is_scrollable_list(self, obj):
+        """Returns True if obj is a list-like scrollable widget."""
 
-        Arguments:
-        - obj: the accessible being examined
-        """
-
-        if obj is None:
+        scroll_pane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
+        if not scroll_pane:
             return False
 
-        for roleList in self._buddyListAncestries:
-            if self._script.utilities.hasMatchingHierarchy(obj, roleList):
-                return True
+        return AXUtilities.is_tree_or_tree_table(obj) \
+            or AXUtilities.is_list_box(obj) or AXUtilities.is_list(obj)
 
-        return False
+    def isBuddyList(self, obj):
+        """Returns True if obj is believed to be the buddy list."""
+
+        # Note: This is a very simple heuristic based on existing chat apps.
+        # Subclasses can override this function.
+
+        if not self._is_scrollable_list(obj):
+            return False
+
+        if AXObject.find_ancestor(obj, AXUtilities.is_frame) is None:
+            return False
+
+        tokens = ["CHAT:", obj, "believed to be buddy list."]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return True
 
     def isInBuddyList(self, obj, includeList=True):
-        """Returns True if obj is, or is inside of, the buddy list.
-
-        Arguments:
-        - obj: the accessible being examined
-        - includeList: whether or not the list itself should be
-          considered "in" the buddy list.
-        """
+        """Returns True if obj is, or is inside of, the buddy list."""
 
         if includeList and self.isBuddyList(obj):
             return True
 
-        for roleList in self._buddyListAncestries:
-            role = roleList[0]
-            candidate = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) == role)
-            if self.isBuddyList(candidate):
-                return True
+        buddy_list =  AXObject.find_ancestor(obj, self._is_scrollable_list)
+        if buddy_list is None:
+            return False
 
-        return False
+        return self.isBuddyList(buddy_list)
 
     def isNewConversation(self, obj):
         """Returns True if the given accessible is the chat history

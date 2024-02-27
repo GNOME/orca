@@ -419,44 +419,6 @@ class Utilities:
         return AXUtilities.is_combo_box(obj) \
             and not self.isSameObject(obj, focus_manager.getManager().get_locus_of_focus())
 
-    def hasMatchingHierarchy(self, obj, rolesList):
-        """Called to determine if the given object and it's hierarchy of
-        parent objects, each have the desired roles. Please note: You
-        should strongly consider an alternative means for determining
-        that a given object is the desired item. Failing that, you should
-        include only enough of the hierarchy to make the determination.
-        If the developer of the application you are providing access to
-        does so much as add an Adjustment to reposition a widget, this
-        method can fail. You have been warned.
-
-        Arguments:
-        - obj: the accessible object to check.
-        - rolesList: the list of desired roles for the components and the
-          hierarchy of its parents.
-
-        Returns True if all roles match.
-        """
-
-        current = obj
-        for role in rolesList:
-            if current is None:
-                return False
-
-            if not isinstance(role, list):
-                role = [role]
-
-            if isinstance(role[0], str):
-                current_role = AXObject.get_role_name(current)
-            else:
-                current_role = AXObject.get_role(current)
-
-            if current_role not in role:
-                return False
-
-            current = AXObject.get_parent_checked(current)
-
-        return True
-
     def inFindContainer(self, obj=None):
         if obj is None:
             obj = focus_manager.getManager().get_locus_of_focus()

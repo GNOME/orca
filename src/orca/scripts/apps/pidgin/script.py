@@ -26,10 +26,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.debug as debug
 import orca.messages as messages
 import orca.scripts.toolkits.gtk as gtk
@@ -44,28 +40,14 @@ from .speech_generator import SpeechGenerator
 class Script(gtk.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        # So we can take an educated guess at identifying the buddy list.
-        #
-        self._buddyListAncestries = [[Atspi.Role.TREE_TABLE,
-                                      Atspi.Role.SCROLL_PANE,
-                                      Atspi.Role.FILLER,
-                                      Atspi.Role.PAGE_TAB,
-                                      Atspi.Role.PAGE_TAB_LIST,
-                                      Atspi.Role.FILLER,
-                                      Atspi.Role.FRAME]]
+        """Creates a new script for the given application."""
 
         super().__init__(app)
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
 
-        return Chat(self, self._buddyListAncestries)
+        return Chat(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script. """
