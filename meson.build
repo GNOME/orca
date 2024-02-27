@@ -101,3 +101,10 @@ subdir('po')
 subdir('src')
 
 summary(summary)
+
+# This may be removed once Spiel is widely available
+if get_option('force_fallback_for').contains('spiel')
+  warning('Spiel is being built as a subproject that may need to be updated.\n\n' +
+          '    See the README.md in this directory or in the Orca repository at:\n' +
+          '    https://gitlab.gnome.org/GNOME/orca/blob/main/README.md#experimental-features\n')
+endif
