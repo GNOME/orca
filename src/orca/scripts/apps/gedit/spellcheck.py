@@ -27,10 +27,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -45,10 +41,10 @@ class SpellCheck(spellcheck.SpellCheck):
         if not window:
             return False
 
-        role = AXObject.get_role(window)
-        if role == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog(window):
             return True
-        if role != Atspi.Role.FRAME:
+
+        if not AXUtilities.is_frame(window):
             return False
 
         if AXObject.find_descendant(window, AXUtilities.is_split_pane):

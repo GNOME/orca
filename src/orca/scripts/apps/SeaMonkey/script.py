@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 """Custom script for SeaMonkey."""
 
 __id__        = "$Id$"
@@ -27,16 +30,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event
-from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import Gecko
 
 
@@ -86,12 +85,12 @@ class Script(Gecko.Script):
         if self.utilities.inDocumentContent(event.source):
             return
 
-        focusRole = AXObject.get_role(focus_manager.getManager().get_locus_of_focus())
-        if focusRole != Atspi.Role.ENTRY or not self.utilities.inDocumentContent():
+        focus = focus_manager.getManager().get_locus_of_focus()
+        if not AXUtilities.is_entry(focus) or not self.utilities.inDocumentContent():
             super().onFocus(event)
             return
 
-        if AXObject.get_role(event.source) == Atspi.Role.MENU:
+        if AXUtilities.is_menu(event.source):
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 

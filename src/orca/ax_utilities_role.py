@@ -18,15 +18,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""
-Utilities for obtaining role-related information.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
+# Too many public methods, too many lines.
+# pylint: disable=R0904, C0302
 
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining role-related information."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -192,6 +187,7 @@ class AXUtilitiesRole:
         roles = [Atspi.Role.CHECK_BOX,
                  Atspi.Role.COMBO_BOX,
                  Atspi.Role.ENTRY,
+                 Atspi.Role.LIST_BOX,
                  Atspi.Role.PASSWORD_TEXT,
                  Atspi.Role.PUSH_BUTTON,
                  Atspi.Role.RADIO_BUTTON,
@@ -467,6 +463,17 @@ class AXUtilitiesRole:
         """Returns True if obj has any dialog or alert role"""
 
         roles = AXUtilitiesRole.get_dialog_roles(True)
+        if role is None:
+            role = AXObject.get_role(obj)
+        return role in roles
+
+    @staticmethod
+    def is_dialog_or_window(obj, role=None):
+        """Returns True if obj has any dialog or window-related role"""
+
+        roles = AXUtilitiesRole.get_dialog_roles(False)
+        roles.extend((Atspi.Role.FRAME, Atspi.Role.WINDOW))
+        print(roles)
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -1455,6 +1462,14 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.VIEWPORT
+
+    @staticmethod
+    def is_widget(obj, role=None):
+        """Returns True if obj has a widget role"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+        return role in AXUtilitiesRole.get_widget_roles()
 
     @staticmethod
     def is_window(obj, role=None):

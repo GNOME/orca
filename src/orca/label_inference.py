@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 """Heuristic means to infer the functional/displayed label of a widget."""
 
 __id__        = "$Id$"
@@ -26,10 +29,6 @@ __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (C) 2011-2013 Igalia, S.L."
 __license__   = "LGPL"
-
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 from . import debug
 from .ax_component import AXComponent
@@ -186,19 +185,7 @@ class LabelInference:
         if rv is not None:
             return rv
 
-        widgetRoles = [Atspi.Role.CHECK_BOX,
-                       Atspi.Role.RADIO_BUTTON,
-                       Atspi.Role.TOGGLE_BUTTON,
-                       Atspi.Role.COMBO_BOX,
-                       Atspi.Role.LIST,
-                       Atspi.Role.LIST_BOX,
-                       Atspi.Role.MENU,
-                       Atspi.Role.MENU_ITEM,
-                       Atspi.Role.ENTRY,
-                       Atspi.Role.PASSWORD_TEXT,
-                       Atspi.Role.PUSH_BUTTON]
-
-        isWidget = AXObject.get_role(obj) in widgetRoles
+        isWidget = AXUtilities.is_widget(obj) or AXUtilities.is_menu_related(obj)
         if not isWidget and AXUtilities.is_editable(obj):
             isWidget = True
 

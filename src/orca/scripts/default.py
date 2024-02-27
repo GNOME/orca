@@ -1223,7 +1223,7 @@ class Script(script.Script):
         # so we handle the announcement of their state changes in the focus
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
-        if AXObject.get_role(event.source) == Atspi.Role.RADIO_BUTTON:
+        if AXUtilities.is_radio_button(event.source):
             eventString, mods = self.utilities.lastKeyAndModifiers()
             if eventString not in [" ", "space"]:
                 return
@@ -1620,8 +1620,7 @@ class Script(script.Script):
         """Callback for object:state-changed:showing accessibility events."""
 
         obj = event.source
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.NOTIFICATION:
+        if AXUtilities.is_notification(obj):
             if not event.detail1:
                 return
 
@@ -1631,7 +1630,7 @@ class Script(script.Script):
             self.notificationPresenter.save_notification(msg)
             return
 
-        if role == Atspi.Role.TOOL_TIP:
+        if AXUtilities.is_tool_tip(obj):
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString != "F1" \
                and not settings_manager.getManager().getSetting('presentToolTips'):
@@ -1872,7 +1871,7 @@ class Script(script.Script):
         focus_manager.getManager().set_active_window(window)
         if AXObject.get_child_count(window) == 1:
             child = AXObject.get_child(window, 0)
-            if AXObject.get_role(child) == Atspi.Role.MENU:
+            if AXUtilities.is_menu(child):
                 focus_manager.getManager().set_locus_of_focus(event, child)
                 return
 
@@ -2615,14 +2614,14 @@ class Script(script.Script):
         if not event.shouldEcho or event.isOrcaModified():
             return False
 
-        role = AXObject.get_role(focus_manager.getManager().get_locus_of_focus())
-        if role in [Atspi.Role.DIALOG, Atspi.Role.FRAME, Atspi.Role.WINDOW]:
+        focus = focus_manager.getManager().get_locus_of_focus()
+        if AXUtilities.is_dialog_or_window(focus):
             focusedObject = focus_manager.getManager().find_focused_object()
             if focusedObject:
                 focus_manager.getManager().set_locus_of_focus(None, focusedObject, False)
-                role = AXObject.get_role(focusedObject)
+                AXObject.get_role(focusedObject)
 
-        if role == Atspi.Role.PASSWORD_TEXT and not event.isLockingKey():
+        if AXUtilities.is_password_text(focus) and not event.isLockingKey():
             return False
 
         if not event.isPressedKey():

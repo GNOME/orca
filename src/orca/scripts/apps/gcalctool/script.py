@@ -17,6 +17,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 """Provides a custom script for gcalctool."""
 
 __id__        = "$Id$"
@@ -25,71 +28,45 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-import orca.scripts.toolkits.gtk as gtk
-import orca.messages as messages
+from orca import messages
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-
-########################################################################
-#                                                                      #
-# The GCalcTool script class.                                          #
-#                                                                      #
-########################################################################
+from orca.scripts.toolkits import gtk
 
 class Script(gtk.Script):
+    """The gcalctool script."""
 
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        gtk.Script.__init__(self, app)
-
-        self._resultsDisplay = None
-        self._statusLine = None
+        super().__init__(app)
+        self._results_display = None
+        self._status_line = None
 
     def onWindowActivated(self, event):
-        """Called whenever one of gcalctool's toplevel windows is activated.
+        """Callback for window:active accessibility events."""
 
-        Arguments:
-        - event: the window activated Event
-        """
-
-        if self._resultsDisplay and self._statusLine:
-            gtk.Script.onWindowActivated(self, event)
+        if self._results_display and self._status_line:
+            super().onWindowActivated(event)
             return
 
-        if AXObject.get_role(event.source) != Atspi.Role.FRAME:
-            gtk.Script.onWindowActivated(self, event)
+        if not AXUtilities.is_frame(event.source):
+            super().onWindowActivated(event)
             return
 
-        self._resultsDisplay = AXObject.find_descendant(event.source, AXUtilities.is_editbar)
-        if not self._resultsDisplay:
+        self._results_display = AXObject.find_descendant(event.source, AXUtilities.is_editbar)
+        if not self._results_display:
             self.presentMessage(messages.CALCULATOR_DISPLAY_NOT_FOUND)
 
-        def isStatusLine(x):
-            return AXObject.get_role(x) == Atspi.Role.TEXT and not AXUtilities.is_editable(x)
+        def is_status_line(x):
+            return AXUtilities.is_text(x) and not AXUtilities.is_editable(x)
 
-        self._statusLine = AXObject.find_descendant(event.source, isStatusLine)
-        gtk.Script.onWindowActivated(self, event)
+        self._status_line = AXObject.find_descendant(event.source, is_status_line)
+        super().onWindowActivated(event)
 
     def onTextInserted(self, event):
-        """Called whenever text is inserted into gcalctool's text display.
+        """Callback for object:text-changed:insert accessibility events."""
 
-        Arguments:
-        - event: the text inserted Event
-        """
-
-        if self.utilities.isSameObject(event.source, self._statusLine):
-            self.presentMessage(self.utilities.displayedText(self._statusLine))
+        if self.utilities.isSameObject(event.source, self._status_line):
+            self.presentMessage(self.utilities.displayedText(self._status_line))
             return
 
-        gtk.Script.onTextInserted(self, event)
+        super().onTextInserted(event)

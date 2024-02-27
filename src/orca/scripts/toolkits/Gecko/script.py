@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -27,13 +30,10 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 from orca import debug
 from orca import focus_manager
-from orca.ax_object import AXObject
+from orca.ax_utilities import AXUtilities
 from orca.scripts import default
 from orca.scripts import web
 from .script_utilities import Utilities
@@ -67,7 +67,7 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
-        if event.detail1 and AXObject.get_role(event.source) == Atspi.Role.FRAME \
+        if event.detail1 and AXUtilities.is_frame(event.source) \
            and not focus_manager.getManager().can_be_active_window(event.source):
             return
 
@@ -224,7 +224,7 @@ class Script(web.Script):
         if super().onFocusedChanged(event):
             return
 
-        if AXObject.get_role(event.source) == Atspi.Role.PANEL:
+        if AXUtilities.is_panel(event.source):
             if focus_manager.getManager().focus_is_active_window():
                 msg = "GECKO: Ignoring event believed to be noise."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)

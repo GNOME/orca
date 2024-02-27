@@ -25,10 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
@@ -79,7 +75,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateName(obj, **args)
 
     def _generateLabelAndName(self, obj, **args):
-        if AXObject.get_role(obj) != Atspi.Role.COMBO_BOX:
+        if not AXUtilities.is_combo_box(obj):
             return super()._generateLabelAndName(obj, **args)
 
         # TODO - JD: This should be the behavior by default because many
@@ -159,7 +155,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateCurrentLineText(self, obj, **args):
-        if AXObject.get_role(obj) == Atspi.Role.COMBO_BOX:
+        if AXUtilities.is_combo_box(obj):
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
             if entry:
                 return super()._generateCurrentLineText(entry)
@@ -179,18 +175,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
-        result = []
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.TOGGLE_BUTTON \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.TOOL_BAR:
-            if AXUtilities.is_checked(obj):
-                result.append(messages.ON)
-            else:
-                result.append(messages.OFF)
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        elif role == Atspi.Role.TOGGLE_BUTTON:
-            result.extend(speech_generator.SpeechGenerator._generateToggleState(
-                self, obj, **args))
+
+        if not AXUtilities.is_toggle_button(obj, args.get("role")):
+            return []
+
+        if not AXUtilities.is_tool_bar(AXObject.get_parent(obj)):
+            return super()._generateToggleState(obj, **args)
+
+        if AXUtilities.is_checked(obj):
+            result = [messages.ON]
+        else:
+            result = [messages.OFF]
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     def _generateTooLong(self, obj, **args):
@@ -315,8 +311,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            or self._script.inSayAll():
             return []
 
-        topLevel = self._script.utilities.topLevelObject(obj)
-        if topLevel and AXObject.get_role(topLevel) == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog_or_alert(self._script.utilities.topLevelObject(obj)):
             return []
 
         return super()._generateEndOfTableIndicator(obj, **args)

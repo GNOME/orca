@@ -18,6 +18,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 """Mouse review mode."""
 
 __id__        = "$Id$"
@@ -239,15 +242,14 @@ class _ItemContext:
 
         return _StringContext(self._obj, self._script, string, start, end)
 
-    def _getContainer(self):
-        roles = [Atspi.Role.DIALOG,
-                 Atspi.Role.FRAME,
-                 Atspi.Role.LAYERED_PANE,
-                 Atspi.Role.MENU,
-                 Atspi.Role.PAGE_TAB,
-                 Atspi.Role.TOOL_BAR,
-                 Atspi.Role.WINDOW]
-        return AXObject.find_ancestor(self._obj, lambda x: AXObject.get_role(x) in roles)
+    def _get_container(self):
+        def is_container(x):
+            return AXUtilities.is_dialog_or_window(x) \
+                or AXUtilities.is_layered_pane(x) \
+                or AXUtilities.is_menu(x) \
+                or AXUtilities.is_page_tab(x) \
+                or AXUtilities.is_tool_bar(x)
+        return AXObject.find_ancestor(self._obj, is_container)
 
     def _isSubstringOf(self, other):
         """Returns True if this is a substring of other."""

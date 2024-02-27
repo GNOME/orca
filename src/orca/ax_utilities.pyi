@@ -200,6 +200,9 @@ class AXUtilities:
     def is_dialog_or_alert(obj, role=None): ...
 
     @staticmethod
+    def is_dialog_or_window(obj, role=None): ...
+
+    @staticmethod
     def is_directory_pane(obj, role=None): ...
 
     @staticmethod
@@ -567,6 +570,9 @@ class AXUtilities:
 
     @staticmethod
     def is_viewport(obj, role=None): ...
+
+    @staticmethod
+    def is_widget(obj, role=None): ...
 
     @staticmethod
     def is_window(obj, role=None): ...

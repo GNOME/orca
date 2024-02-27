@@ -27,9 +27,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2013 The Orca Team."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 from gi.repository import Gtk
 
 import orca.cmdnames as cmdnames
@@ -317,10 +314,9 @@ class Script(default.Script):
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
-        elif newLocusOfFocus and oldLocusOfFocus \
-           and AXObject.get_role(newLocusOfFocus) == Atspi.Role.PARAGRAPH \
-           and AXObject.get_role(oldLocusOfFocus) == Atspi.Role.PARAGRAPH \
-           and newLocusOfFocus != oldLocusOfFocus:
+        elif newLocusOfFocus != oldLocusOfFocus \
+           and AXUtilities.is_paragraph(newLocusOfFocus) \
+           and AXUtilities.is_paragraph(oldLocusOfFocus):
             lastKey, mods = self.utilities.lastKeyAndModifiers()
             if lastKey == "Return" and settings_manager.getManager().getSetting('enableEchoByWord'):
                 self.echoPreviousWord(oldLocusOfFocus)
@@ -429,50 +425,31 @@ class Script(default.Script):
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits
         # during the remainder of the unstable (3.11) development cycle.
-
-        focus = focus_manager.getManager().get_locus_of_focus()
-        if self.utilities.isSameObject(focus, event.source):
-            return
+        # TODO - JD: That was a long time ago. We need to figure out who is failing
+        # to fire focus-changed events but still firing this event.
 
         if self.utilities.isFocusableLabel(event.source):
             focus_manager.getManager().set_locus_of_focus(event, event.source)
             return
 
-        role = AXObject.get_role(event.source)
-
-        if role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
+        if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
                 focus_manager.getManager().set_locus_of_focus(event, comboBox, True)
                 return
 
-        # This seems to be something we inherit from Gtk+
-        if role in [Atspi.Role.TEXT, Atspi.Role.PASSWORD_TEXT]:
+        if AXUtilities.is_widget(event.source):
             focus_manager.getManager().set_locus_of_focus(event, event.source)
             return
 
-        # Ditto.
-        if role == Atspi.Role.PUSH_BUTTON:
+        if AXUtilities.is_panel(event.source) and AXObject.get_name(event.source):
             focus_manager.getManager().set_locus_of_focus(event, event.source)
-            return
-
-        # Ditto.
-        if role == Atspi.Role.TOGGLE_BUTTON:
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
-            return
-
-        # Ditto.
-        if role == Atspi.Role.COMBO_BOX:
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
-            return
-
-        # Ditto.
-        if role == Atspi.Role.PANEL and AXObject.get_name(event.source):
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
-            return
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
+
+        if not event.detail1:
+            return
 
         if self._inSayAll:
             return
@@ -481,34 +458,27 @@ class Script(default.Script):
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if not event.detail1:
+        # We will present this when the selection changes.
+        # TODO - JD: Is this still needed? If so, why is the default script not handling it?
+        if AXUtilities.is_menu(event.source):
             return
 
-        role = AXObject.get_role(event.source)
-        if role in [Atspi.Role.TEXT, Atspi.Role.LIST]:
+        if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
                 focus_manager.getManager().set_locus_of_focus(event, comboBox, True)
                 return
 
-        parent = AXObject.get_parent(event.source)
-        if parent and AXObject.get_role(parent) == Atspi.Role.TOOL_BAR:
+        # TODO - JD: Why are we doing this early?
+        if AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
             default.Script.onFocusedChanged(self, event)
             return
 
-        # TODO - JD: Verify this is still needed
-        ignoreRoles = [Atspi.Role.FILLER, Atspi.Role.PANEL]
-        if role in ignoreRoles:
-            return
-
-        # We will present this when the selection changes.
-        if role == Atspi.Role.MENU:
-            return
-
+        # TODO - JD: This is private. Also why is it here?
         if self.utilities._flowsFromOrToSelection(event.source):
             return
 
-        if role == Atspi.Role.PARAGRAPH:
+        if AXUtilities.is_paragraph(event.source):
             obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
             start, end, string = self.utilities.getCachedTextSelection(obj)
             if start != end:
@@ -541,8 +511,7 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
-        if AXObject.get_role(event.source) == Atspi.Role.PARAGRAPH \
-           and not AXUtilities.is_focused(event.source):
+        if AXUtilities.is_paragraph(event.source) and not AXUtilities.is_focused(event.source):
             # TODO - JD: Can we remove this?
             AXObject.clear_cache(event.source,
                                  False,
@@ -570,15 +539,12 @@ class Script(default.Script):
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        obj = event.source
-        role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(AXObject.get_parent(obj))
-        if role not in [Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON] \
-           or not parentRole == Atspi.Role.TOOL_BAR:
+        if not AXUtilities.is_button(event.source) \
+           or not AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
             default.Script.onCheckedChanged(self, event)
             return
 
-        sourceWindow = self.utilities.topLevelObject(obj)
+        sourceWindow = self.utilities.topLevelObject(event.source)
         focusWindow = self.utilities.topLevelObject(focus_manager.getManager().get_locus_of_focus())
         if sourceWindow != focusWindow:
             return
@@ -586,7 +552,7 @@ class Script(default.Script):
         # Announce when the toolbar buttons are toggled if we just toggled
         # them; not if we navigated to some text.
         weToggledIt = False
-        if AXUtilities.is_focused(obj):
+        if AXUtilities.is_focused(event.source):
             weToggledIt = True
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
@@ -595,7 +561,7 @@ class Script(default.Script):
             wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
             weToggledIt = wasCommand and keyString not in navKeys
         if weToggledIt:
-            self.presentObject(obj, alreadyFocused=True, interrupt=True)
+            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
@@ -677,7 +643,7 @@ class Script(default.Script):
             return
 
         child = AXObject.get_child(event.source, 0)
-        if AXObject.get_role(child) == Atspi.Role.DIALOG:
+        if AXUtilities.is_dialog(child):
             focus_manager.getManager().set_locus_of_focus(event, child, False)
 
         self.spellcheck.presentErrorDetails()

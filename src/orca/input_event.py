@@ -334,8 +334,7 @@ class KeyboardEvent(InputEvent):
 
         self.keyType = None
 
-        role = AXObject.get_role(self._obj)
-        _mayEcho = pressed or role == Atspi.Role.TERMINAL
+        _mayEcho = pressed or AXUtilities.is_terminal(self._obj)
 
         if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
            and not KeyboardEvent.lastOrcaModifierAlone:

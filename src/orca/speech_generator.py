@@ -155,14 +155,13 @@ class SpeechGenerator(generator.Generator):
         needed a _generateDescription for whereAmI. :-) See below.
         """
 
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.LAYERED_PANE \
-           and settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        is_layered_pane = AXUtilities.is_layered_pane(obj, args.get("role"))
+        if is_layered_pane and settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = generator.Generator._generateName(self, obj, **args)
         if result:
-            if role == Atspi.Role.LAYERED_PANE:
+            if is_layered_pane:
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
             else:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -187,8 +186,8 @@ class SpeechGenerator(generator.Generator):
         If the name cannot be found, an empty array will be returned.
         """
 
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
+        if AXUtilities.is_menu(obj, args.get("role")) \
+           and self._script.utilities.isPopupMenuForCurrentItem(obj):
             tokens = ["SPEECH GENERATOR:", obj, "is popup menu for current item."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
@@ -244,8 +243,7 @@ class SpeechGenerator(generator.Generator):
         """
 
         alreadyUsed = False
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.ALERT:
+        if AXUtilities.is_alert(obj, args.get("role")):
             try:
                 alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
             except Exception:
@@ -537,23 +535,12 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateTextRole(self, obj, **args):
-        """A convenience method to prevent the Atspi.Role.PARAGRAPH role
-        from being spoken. In the case of a Atspi.Role.PARAGRAPH
-        role, an empty array will be returned. In all other cases, the
-        role name will be returned as an array of strings (and
-        possibly voice and audio specifications).  Note that a 'role'
-        attribute in args will override the accessible role of the
-        obj. [[[WDW - I wonder if this should be moved to
-        _generateRoleName.  Or, maybe make a 'do not speak roles' attribute
-        of a speech generator that we can update and the user can
-        override.]]]
-        """
+        # TODO - JD: This function is a hack. Remove it.
         if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
-        role = args.get('role', AXObject.get_role(obj))
-        if role != Atspi.Role.PARAGRAPH:
+        if not AXUtilities.is_paragraph(obj, args.get("role")):
             result.extend(self._generateRoleName(obj, **args))
         return result
 
@@ -585,7 +572,7 @@ class SpeechGenerator(generator.Generator):
                         Atspi.Role.EXTENDED]
 
         parent = AXObject.get_parent(obj)
-        if role == Atspi.Role.MENU and AXUtilities.is_combo_box(parent):
+        if AXUtilities.is_menu(obj, args.get("role")) and AXUtilities.is_combo_box(parent):
             return self._generateRoleName(parent)
 
         if self._script.utilities.isSingleLineAutocompleteEntry(obj):
@@ -593,8 +580,7 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        if role == Atspi.Role.PANEL \
-           and AXUtilities.is_selected(obj):
+        if AXUtilities.is_panel(obj, args.get("role")) and AXUtilities.is_selected(obj):
             return []
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
@@ -608,7 +594,7 @@ class SpeechGenerator(generator.Generator):
                 == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
-        if role == Atspi.Role.HEADING:
+        if AXUtilities.is_heading(obj):
             level = self._script.utilities.headingLevel(obj)
             if level:
                 result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
@@ -654,8 +640,7 @@ class SpeechGenerator(generator.Generator):
            or self._script.utilities.isEditableDescendantOfComboBox(obj):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.LINK and AXUtilities.is_visited(obj):
+        if AXUtilities.is_link(obj, args.get("role")) and AXUtilities.is_visited(obj):
             return object_properties.ROLE_VISITED_LINK
 
         return super().getLocalizedRoleName(obj, **args)
@@ -670,9 +655,9 @@ class SpeechGenerator(generator.Generator):
         visibleOnly = not self._script.utilities.isStatusBarNotification(obj)
 
         minimumWords = 1
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.PANEL or \
-           (role == Atspi.Role.DIALOG and not AXUtilities.is_message_dialog(obj)):
+        if AXUtilities.is_panel(obj, args.get("role")) \
+           or (AXUtilities.is_dialog(obj, args.get("role")) \
+               and not AXUtilities.is_message_dialog(obj)):
             minimumWords = 3
 
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
@@ -1586,8 +1571,8 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        role = args.get('role', AXObject.get_role(obj))
-        if role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
+        role = args.get("role")
+        if AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role):
             children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             setsize = len(children)
             if not setsize:
@@ -1634,18 +1619,18 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateFocusedItem(self, obj, **args):
-        result = []
-        role = args.get('role', AXObject.get_role(obj))
-        if role not in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
-            return result
+        role = args.get("role")
+        if not (AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role)):
+            return []
 
         if AXObject.supports_selection(obj):
             items = self._script.utilities.selectedChildren(obj)
         else:
             items = [AXUtilities.get_focused_object(obj)]
         if not (items and items[0]):
-            return result
+            return []
 
+        result = []
         for item in map(self._generateName, items):
             result.extend(item)
 

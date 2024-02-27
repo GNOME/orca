@@ -185,9 +185,9 @@ class Utilities(script_utilities.Utilities):
 
         parent = AXObject.get_parent_checked(obj)
         while parent:
-            if AXObject.get_role(parent) == Atspi.Role.FRAME:
+            if AXUtilities.is_frame(parent):
                 results[0] = parent
-            if AXObject.get_role(parent) == Atspi.Role.TABLE:
+            elif AXUtilities.is_table(parent):
                 results[1] = parent
             parent = AXObject.get_parent_checked(parent)
 
@@ -231,7 +231,7 @@ class Utilities(script_utilities.Utilities):
         - event: the accessible event being examined
         """
 
-        if AXObject.get_role(event.source) != Atspi.Role.PARAGRAPH:
+        if not AXUtilities.is_paragraph(event.source):
             return False
 
         lastKey, mods = self.lastKeyAndModifiers()
@@ -284,8 +284,7 @@ class Utilities(script_utilities.Utilities):
         return True
 
     def isComboBoxNoise(self, event):
-        role = AXObject.get_role(event.source)
-        if role == Atspi.Role.TEXT and event.type.startswith("object:text-"):
+        if AXUtilities.is_text(event.source) and event.type.startswith("object:text-"):
             return self.isComboBoxSelectionChange(event)
 
         return False

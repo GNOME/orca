@@ -87,6 +87,7 @@ class SpeechGenerator(web.SpeechGenerator):
         if self._script.utilities.inDocumentContent(obj):
             return super().generateSpeech(obj, **args)
 
+        # TODO - JD: A similar situation seems to exist regarding the role of items in Gtk4.
         oldRole = None
         if self._script.utilities.treatAsMenu(obj):
             tokens = ["CHROMIUM: HACK? Speaking menu item as menu", obj]

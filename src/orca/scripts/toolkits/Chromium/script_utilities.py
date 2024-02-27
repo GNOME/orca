@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# For the "AXUtilities has no ... member"
+# pylint: disable=E1101
+
 """Custom script utilities for Chromium"""
 
 __id__        = "$Id$"
@@ -69,8 +72,8 @@ class Utilities(web.Utilities):
         if rv is not None:
             return rv
 
-        roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
-        rv = AXObject.get_role(obj) in roles and self._getTag(obj) in (None, "", "br")
+        rv = AXUtilities.is_static(obj) or AXUtilities.is_text(obj) \
+            and self._getTag(obj) in (None, "", "br")
         if rv:
             tokens = ["CHROMIUM:", obj, "believed to be static text leaf"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
