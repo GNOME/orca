@@ -35,7 +35,6 @@ import time
 from . import debug
 from . import focus_manager
 from . import input_event
-from . import orca_modifier_manager
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -862,12 +861,6 @@ class EventManager:
 
     def _processKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
         keyboardEvent = input_event.KeyboardEvent(pressed, keycode, keysym, state, text)
-        if not keyboardEvent.is_duplicate:
-            debug.printMessage(debug.LEVEL_INFO, f"\n{keyboardEvent}")
-
-            # TODO - JD: Why is this not part of process()?
-            orca_modifier_manager.getManager().toggle_modifier_grab(keyboardEvent)
-
         keyboardEvent.process()
 
     def process_braille_event(self, event):

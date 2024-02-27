@@ -41,6 +41,7 @@ from . import focus_manager
 from . import keybindings
 from . import keynames
 from . import messages
+from . import orca_modifier_manager
 from . import orca_state
 from . import script_manager
 from . import settings
@@ -853,8 +854,12 @@ class KeyboardEvent(InputEvent):
         else:
             data = "(obscured)"
 
+        debug.printMessage(debug.LEVEL_INFO, f"\n{self}")
+
         if self.is_duplicate:
             data = '%s DUPLICATE EVENT #%i' % (data, KeyboardEvent.duplicateCount)
+        else:
+            orca_modifier_manager.getManager().toggle_modifier_grab(self)
 
         msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
