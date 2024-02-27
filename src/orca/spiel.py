@@ -435,8 +435,6 @@ class SpeechServer(speechserver.SpeechServer):
         # if interrupt:
         #     self._speaker.cancel()
 
-        utterance = self._create_utterance(text, acss)
-
         if len(text) == 1:
             msg = f"SPIEL: Speaking '{text}' as char"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -445,6 +443,7 @@ class SpeechServer(speechserver.SpeechServer):
         else:
             msg = f"SPIEL: Speaking '{text}' as string"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            utterance = self._create_utterance(text, acss)
             self._speak_utterance(utterance, acss)
 
     def sayAll(self, utteranceIterator, progressCallback):
