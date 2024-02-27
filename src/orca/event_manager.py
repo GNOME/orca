@@ -867,7 +867,6 @@ class EventManager:
         """Processes this BrailleEvent."""
 
         braille_event = input_event.BrailleEvent(event)
-        orca_state.lastInputEvent = braille_event
         return braille_event.process()
 
 _manager = EventManager()

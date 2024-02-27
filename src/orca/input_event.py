@@ -1051,6 +1051,7 @@ class BrailleEvent(InputEvent):
         return result
 
     def _process(self):
+        orca_state.lastInputEvent = self
         handler = self.getHandler()
         if not handler:
             if self._script.learnModePresenter.is_active():
