@@ -25,16 +25,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 import orca.braille as braille
 import orca.braille_generator as braille_generator
 import orca.object_properties as object_properties
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
-from orca.ax_utilities import AXUtilities
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
