@@ -1204,7 +1204,8 @@ class Generator:
         if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
             return self._generateDisplayedText(rad, **args)
 
-        content = set([self._script.utilities.displayedText(x).strip() for x in rad])
+        content = set([self._script.utilities.displayedText(x).strip() \
+            for x in AXObject.iter_children(rad)])
         rv = " ".join(filter(lambda x: x, content))
         if not rv:
             return self._generateDisplayedText(rad, **args)
