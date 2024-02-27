@@ -473,7 +473,6 @@ class AXUtilitiesRole:
 
         roles = AXUtilitiesRole.get_dialog_roles(False)
         roles.extend((Atspi.Role.FRAME, Atspi.Role.WINDOW))
-        print(roles)
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
