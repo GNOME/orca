@@ -729,7 +729,8 @@ class EventManager:
                     newQueue.put(event)
                     self._queuePrintln(event, isPrune=False)
             finally:
-                self._eventQueue.task_done()
+                if not self._eventQueue.empty():
+                    self._eventQueue.task_done()
 
         self._eventQueue = newQueue
         newSize = self._eventQueue.qsize()
