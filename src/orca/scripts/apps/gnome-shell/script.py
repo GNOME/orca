@@ -30,7 +30,6 @@ import orca.debug as debug
 import orca.focus_manager as focus_manager
 import orca.scripts.toolkits.clutter as clutter
 from orca.ax_object import AXObject
-from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 from .formatting import Formatting
@@ -131,19 +130,6 @@ class Script(clutter.Script):
                 return
 
         clutter.Script.onFocusedChanged(self, event)
-
-    def echoPreviousWord(self, obj, offset=None):
-        if offset is None:
-            caretOffset = AXText.get_caret_offset(obj)
-            if caretOffset == -1:
-                offset = AXText.get_character_count(obj) - 1
-            else:
-                offset = caretOffset - 1
-
-        if offset == 0:
-            return False
-
-        return super().echoPreviousWord(obj, offset)
 
     def isActivatableEvent(self, event):
         if event.type.startswith('object:state-changed:selected') and event.detail1:
