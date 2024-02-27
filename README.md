@@ -222,7 +222,8 @@ By default, Orca uses speech-dispatcher for its TTS support. In addition, there 
 basic support for [Spiel](https://github.com/eeejay/spiel) which allows choosing
 voices from multiple synthesizers, currently including eSpeak and Piper.
 
-To test Spiel, configure Orca to build from the latest source:
+To test Spiel, configure Orca to build from the latest source. Once compiled,
+`meson devenv` will be used to run Orca.
 
 ```
 meson setup --force-fallback-for=spiel -Dspiel=true _build
@@ -253,6 +254,17 @@ To switch from Speech Dispatcher to Spiel, use `orca --replace --speech-system=s
 this flag is highly recommended while Orca's Spiel support is experimental. If you would like
 to use Spiel by default, you can select it in Orca's Preferences dialog. To then switch back
 to Speech Dispatcher, use `orca --replace --speech-system=speechdispatcherfactory`.
+
+```
+# Enter the development environment
+meson devenv -C _build
+
+# Run Orca
+orca --replace --speech-system=spiel
+
+# Exit the development environment
+exit
+```
 
 ### Building Spiel from Source
 
