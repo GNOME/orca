@@ -153,16 +153,6 @@ class SpeechServer(speechserver.SpeechServer):
             debug.printMessage(debug.LEVEL_WARNING, msg, True)
             return
 
-        # Maintain a speaker singleton for all providers
-        if SpeechServer.DEFAULT_SPEAKER is None:
-            SpeechServer.DEFAULT_SPEAKER = Spiel.Speaker.new_sync(None)
-            SpeechServer.DEFAULT_SPEAKER.props.providers.connect('items-changed',
-                                                                 SpeechServer._updateProviders)
-            SpeechServer._updateProviders(SpeechServer.DEFAULT_SPEAKER.props.providers)
-
-        provider_name = SpeechServer._SERVER_NAMES.get(serverId, serverId)
-        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % provider_name
-
         try:
             self._init()
         except Exception as error:
@@ -297,10 +287,20 @@ class SpeechServer(speechserver.SpeechServer):
                 current[acss_property] = default
 
     def _init(self):
+        # Maintain a speaker singleton for all providers
+        if SpeechServer.DEFAULT_SPEAKER is None:
+            SpeechServer.DEFAULT_SPEAKER = Spiel.Speaker.new_sync(None)
+            SpeechServer.DEFAULT_SPEAKER.props.providers.connect('items-changed',
+                                                                 SpeechServer._updateProviders)
+            SpeechServer._updateProviders(SpeechServer.DEFAULT_SPEAKER.props.providers)
+
         self._speaker = SpeechServer.DEFAULT_SPEAKER
         self._current_voice_profiles = ()
         self._current_voice_properties = {}
+        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % \
+            SpeechServer._SERVER_NAMES.get(self._id, self._id)
 
+        # Load the provider voices for this server
         if self._id != SpeechServer.DEFAULT_SERVER_ID:
             self._provider = SpeechServer._active_providers[self._id]
             self._voices_id = self._provider.props.voices.connect('items-changed',
