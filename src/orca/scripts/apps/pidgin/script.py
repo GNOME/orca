@@ -35,7 +35,6 @@ import orca.messages as messages
 import orca.scripts.toolkits.gtk as gtk
 import orca.settings as settings
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 from .chat import Chat
@@ -107,42 +106,32 @@ class Script(gtk.Script):
     def onChildrenAdded(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        super().onChildrenAdded(event)
+        if not AXUtilities.is_page_tab_list(event.source):
+            return
 
-        # Check to see if a new chat room tab has been created and if it
-        # has, then announce its name. See bug #469098 for more details.
-        #
-        if event.type.startswith("object:children-changed:add"):
-            rolesList = [Atspi.Role.PAGE_TAB_LIST,
-                         Atspi.Role.FILLER,
-                         Atspi.Role.FRAME]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                # As it's possible to get this component hierarchy in other
-                # places than the chat room (i.e. the Preferences dialog),
-                # we check to see if the name of the frame is the same as one
-                # of its children. If it is, then it's a chat room tab event.
-                # For a final check, we only announce the new chat tab if the
-                # last child has a name.
-                #
-                nameFound = False
-                frame = AXObject.find_ancestor(event.source,
-                                               lambda x: AXObject.get_role(x) == Atspi.Role.FRAME)
-                frameName = AXObject.get_name(frame)
-                if not frameName:
-                    return
-                for child in AXObject.iter_children(event.source):
-                    if frameName == AXObject.get_name(child):
-                        nameFound = True
-                        break
-                if nameFound:
-                    child = AXObject.get_child(event.source, -1)
-                    childName = AXObject.get_name(child)
-                    if childName:
-                        line = messages.CHAT_NEW_TAB % childName
-                        voice = self.speechGenerator.voice(obj=child, string=line)
-                        self.speakMessage(line, voice=voice)
+        AXObject.clear_cache(event.source, True, "to ensure tab info is current.")
+
+        if AXUtilities.is_selected(event.any_data):
+            msg = "PIDGIN: Not presenting addition of already-selected tab"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
+        # In the chat window, the frame name changes to reflect the active chat.
+        # So if we don't have a matching tab, this isn't the chat window.
+        frame = AXObject.find_ancestor(event.source, AXUtilities.is_frame)
+        frame_name = AXObject.get_name(frame)
+        for child in AXObject.iter_children(event.source):
+            if frame_name == AXObject.get_name(child):
+                break
+        else:
+            tokens = ["PIDGIN:", frame, "does not seem to be a chat window"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
+        voice = self.speechGenerator.voice(obj=event.any_data, string=line)
+        self.speakMessage(line, voice=voice)
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
