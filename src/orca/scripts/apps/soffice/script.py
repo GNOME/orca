@@ -346,32 +346,6 @@ class Script(default.Script):
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-    def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        if self.spellcheck.isCheckWindow(event.source):
-            return
-
-        # Impress slide navigation.
-        #
-        if self.utilities.isInImpress(event.source) \
-           and self.utilities.isDrawingView(event.source):
-            title, position, count = \
-                self.utilities.slideTitleAndPosition(event.source)
-            if title:
-                title += "."
-
-            msg = messages.PRESENTATION_SLIDE_POSITION % \
-                    {"position" : position, "count" : count}
-            msg = self.utilities.appendString(title, msg)
-            self.presentMessage(msg)
-
-        default.Script.onNameChanged(self, event)
-
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
