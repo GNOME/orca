@@ -535,7 +535,7 @@ class Script(script.Script):
     def removeKeyGrabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
 
-        orca_modifier_manager.getManager().add_grabs_for_orca_modifiers()
+        orca_modifier_manager.getManager().remove_grabs_for_orca_modifiers()
         self.keyBindings.removeKeyGrabs(reason)
 
         msg = "DEFAULT: Clearing key bindings"
