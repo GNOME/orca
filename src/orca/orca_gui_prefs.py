@@ -385,6 +385,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def writeUserPreferences(self):
         """Write out the user's generic Orca preferences.
         """
+        settings.speechSystemOverride = None
         pronunciationDict = self.getModelDict(self.pronunciationModel)
         keyBindingsDict = self.getKeyBindingsModelDict(self.keyBindingsModel)
         self.prefsDict.update(self.script.getPreferencesFromGUI())
@@ -881,7 +882,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         combobox.set_model(self.speechServersModel)
-        self._setSpeechServersChoice(self.prefsDict["speechServerInfo"])
+        if settings.speechSystemOverride:
+            self._setSpeechServersChoice([guilabels.DEFAULT_SYNTHESIZER, 'default'])
+        else:
+            self._setSpeechServersChoice(self.prefsDict["speechServerInfo"])
 
     def _setSpeechSystemsChoice(self, systemName):
         """Set the active item in the speech systems combo box to the
@@ -960,7 +964,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             i += 1
 
         combobox.set_model(self.speechSystemsModel)
-        if self.prefsDict["speechServerFactory"]:
+        if settings.speechSystemOverride:
+            self._setSpeechSystemsChoice(settings.speechSystemOverride)
+        elif self.prefsDict["speechServerFactory"]:
             self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
         else:
             self.speechSystemsChoice = None
@@ -3388,13 +3394,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.suspendEvents()
 
-        factory = settings_manager.getManager().getSetting('speechServerFactory')
-        if factory:
-            self._setSpeechSystemsChoice(factory)
+        if not settings.speechSystemOverride:
+            factory = settings_manager.getManager().getSetting('speechServerFactory')
+            if factory:
+                self._setSpeechSystemsChoice(factory)
 
-        server = settings_manager.getManager().getSetting('speechServerInfo')
-        if server:
-            self._setSpeechServersChoice(server)
+            server = settings_manager.getManager().getSetting('speechServerInfo')
+            if server:
+                self._setSpeechServersChoice(server)
 
         self._cleanupSpeechServers()
         self.restoreSettings()
