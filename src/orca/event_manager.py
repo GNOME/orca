@@ -223,7 +223,12 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             app = AXObject.get_application(event.source)
-            if "remove" in event_type and AXObject.get_name(app).lower() == "gnome-shell":
+            app_name = AXObject.get_name(app).lower()
+            if "remove" in event_type and app_name == "gnome-shell":
+                msg = "EVENT MANAGER: Ignoring event based on type and app"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
+            if event_type.endswith("system") and app_name == "thunderbird":
                 msg = "EVENT MANAGER: Ignoring event based on type and app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
