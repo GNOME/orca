@@ -216,9 +216,8 @@ class SpeechServer(speechserver.SpeechServer):
             return None
 
         acss_name = acss_family.get(speechserver.VoiceFamily.NAME)
-        acss_lang = acss_family.get(speechserver.VoiceFamily.LANG)
-        acss_dialect = acss_family.get(speechserver.VoiceFamily.DIALECT)
-        acss_language = f"{acss_lang}-{acss_dialect}"
+        acss_lang, acss_dialect = self._get_language_and_dialect(acss_family)
+        accs_lang_dialect = f"{acss_lang}-{acss_dialect}"
 
         fallback = self._speaker.props.voices[0]
         fallback_lang = None
@@ -227,7 +226,7 @@ class SpeechServer(speechserver.SpeechServer):
             for language in voice.props.languages:
                 [lang, _, dialect] = language.partition("-")
                 if lang == acss_lang:
-                    if fallback_lang not in [acss_language, acss_lang]:
+                    if fallback_lang not in [accs_lang_dialect, acss_lang]:
                         fallback = voice
                         fallback_lang = language
 
