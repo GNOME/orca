@@ -3738,6 +3738,9 @@ class Utilities:
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
+        if event.type.endswith("system"):
+            return False
+
         return self.lastInputEventWasDelete()
 
     def isUndoCommandTextDeletionEvent(self, event):
