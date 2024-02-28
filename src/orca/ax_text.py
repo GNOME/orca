@@ -50,10 +50,14 @@ class AXText:
     def get_character_at_offset(obj, offset=None):
         """Returns the character, start, and end for the current or specified offset."""
 
+        length = AXText.get_character_count(obj)
+        if not length:
+            return "", 0, 0
+
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = max(0, offset)
+        offset = min(max(0, offset), length - 1)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.CHAR)
         except Exception as error:
@@ -106,10 +110,14 @@ class AXText:
     def get_word_at_offset(obj, offset=None):
         """Returns the word, start, and end for the current or specified offset."""
 
+        length = AXText.get_character_count(obj)
+        if not length:
+            return "", 0, 0
+
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = max(0, offset)
+        offset = min(max(0, offset), length - 1)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.WORD)
         except Exception as error:
@@ -162,10 +170,14 @@ class AXText:
     def get_line_at_offset(obj, offset=None):
         """Returns the line, start, and end for the current or specified offset."""
 
+        length = AXText.get_character_count(obj)
+        if not length:
+            return "", 0, 0
+
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = max(0, offset)
+        offset = min(max(0, offset), length - 1)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
         except Exception as error:
@@ -219,10 +231,14 @@ class AXText:
     def get_sentence_at_offset(obj, offset=None):
         """Returns the sentence, start, and end for the current or specified offset."""
 
+        length = AXText.get_character_count(obj)
+        if not length:
+            return "", 0, 0
+
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = max(0, offset)
+        offset = min(max(0, offset), length - 1)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.SENTENCE)
         except Exception as error:
@@ -288,10 +304,14 @@ class AXText:
     def get_paragraph_at_offset(obj, offset=None):
         """Returns the paragraph, start, and end for the current or specified offset."""
 
+        length = AXText.get_character_count(obj)
+        if not length:
+            return "", 0, 0
+
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = max(0, offset)
+        offset = min(max(0, offset), length - 1)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.PARAGRAPH)
         except Exception as error:

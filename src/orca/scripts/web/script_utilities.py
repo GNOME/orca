@@ -801,7 +801,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent(obj) or self._script.browseModeIsSticky():
             return True
 
-        rv = AXText.get_character_count(obj) > 0
+        rv = AXText.get_character_count(obj) > 0 or AXUtilities.is_editable(obj)
         if rv and self._treatObjectAsWhole(obj, -1) and AXObject.get_name(obj) \
             and not self.isCellWithNameFromHeader(obj):
             tokens = ["WEB: Treating", obj, "as non-text: named object treated as whole."]
