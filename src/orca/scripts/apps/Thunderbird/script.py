@@ -321,10 +321,6 @@ class Script(Gecko.Script):
             self.spellcheck.presentErrorDetails()
             return
 
-        if not self.utilities.lastInputEventWasDelete() \
-           or not self.utilities.isDocument(event.source):
-            return
-
         super().onNameChanged(event)
 
     def _presentMessage(self, documentFrame):
