@@ -2118,7 +2118,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        return True
+        return False
 
     def onRowReordered(self, event):
         """Callback for object:row-reordered accessibility events."""
