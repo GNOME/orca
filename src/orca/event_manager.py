@@ -338,6 +338,11 @@ class EventManager:
                 msg = "EVENT MANAGER: Ignoring because inserted text has more than 1000 chars"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
+            if event_type.endswith("system") and AXUtilities.is_selectable(focus):
+                # Thunderbird spams us with text changes every time the selected item changes.
+                msg = "EVENT MANAGER: Ignoring because event is suspected spam"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
             return False
 
         return False
