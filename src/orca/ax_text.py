@@ -57,7 +57,8 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = min(max(0, offset), length - 1)
+        # Don't adjust the length for characters because we want to say "blank" at the end.
+        offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.CHAR)
         except Exception as error:
