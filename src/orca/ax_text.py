@@ -42,6 +42,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 class AXText:
     """Utilities for obtaining information about accessible text."""
@@ -178,7 +179,11 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        offset = min(max(0, offset), length - 1)
+        # Don't adjust the length in multiline text because we want to say "blank" at the end.
+        if not AXUtilities.is_multi_line(obj):
+            offset = min(max(0, offset), length - 1)
+        else:
+            offset = max(0, offset)
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
         except Exception as error:
