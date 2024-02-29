@@ -1063,11 +1063,10 @@ class BrailleEvent(InputEvent):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        try:
-            handler.processInputEvent(self._script, self)
-        except Exception as error:
-            tokens = ["BRAILLE EVENT: Exception processing:", self, f": {error}"]
-            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+        if handler.function:
+            tokens = ["BRAILLE EVENT: Handler is:", handler]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            handler.function(self._script, self)
 
         return True
 
@@ -1189,26 +1188,3 @@ class InputEventHandler:
         """Sets this handler's enabled state."""
 
         self._enabled = enabled
-
-    def processInputEvent(self, script, inputEvent):
-        """Processes an input event.
-
-        This function is expected to return True if it consumes the
-        event; otherwise it is expected to return False.
-
-        Arguments:
-        - script:     the script (if any) associated with this event
-        - inputEvent: the input event to pass to the function bound
-                      to this InputEventHandler instance.
-        """
-
-        if not self._enabled:
-            return False
-
-        consumed = False
-        try:
-            consumed = self.function(script, inputEvent)
-        except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
-
-        return consumed
