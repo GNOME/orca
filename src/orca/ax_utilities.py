@@ -201,7 +201,7 @@ class AXUtilities:
     def is_message_dialog(obj):
         """Returns True if obj is a dialog that should be treated as a message dialog"""
 
-        if not AXUtilities.is_dialog_or_alert(obj):
+        if not AXUtilitiesRole.is_dialog_or_alert(obj):
             return False
 
         widgets = AXUtilities.get_all_widgets(obj, exclude_push_button=True)
