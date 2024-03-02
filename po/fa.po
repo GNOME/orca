@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-02-24 13:50+0000\n"
-"PO-Revision-Date: 2024-02-26 14:15+0330\n"
+"POT-Creation-Date: 2024-02-26 10:45+0000\n"
+"PO-Revision-Date: 2024-03-02 16:47+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
-"Language-Team: Persian <fa@li.org>\n"
+"Language-Team: \n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 
 #: orca-autostart.desktop.in:4
@@ -35,50 +35,50 @@ msgstr "؟؟؟"
 #. other rolenames, and they typically act like an abbreviation.
 #: src/orca/braille_rolenames.py:45
 msgid "alrt"
-msgstr ""
+msgstr "هشدار"
 
 #. Translators: short braille for the rolename of an animation widget.
 #: src/orca/braille_rolenames.py:48
 msgid "anim"
-msgstr ""
+msgstr "پویا"
 
 #. Translators: short braille for the rolename of an arrow widget.
 #: src/orca/braille_rolenames.py:51
 msgid "arw"
-msgstr ""
+msgstr "پیکان"
 
 #. Translators: short braille for the rolename of a calendar widget.
 #: src/orca/braille_rolenames.py:54
 msgid "cal"
-msgstr ""
+msgstr "تقویم"
 
 #. Translators: short braille for the rolename of a canvas widget.
 #: src/orca/braille_rolenames.py:57
 msgid "cnv"
-msgstr ""
+msgstr "بوم"
 
 #. Translators: short braille for the rolename of a caption (e.g.,
 #. table caption).
 #: src/orca/braille_rolenames.py:61
 msgid "cptn"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: short braille for the rolename of a checkbox.
 #. Translators: short braille for the rolename of a check menu item.
 #: src/orca/braille_rolenames.py:64 src/orca/braille_rolenames.py:67
 msgid "chk"
-msgstr ""
+msgstr "تیم"
 
 #. Translators: short braille for the rolename of a color chooser.
 #: src/orca/braille_rolenames.py:70
 msgid "clrchsr"
-msgstr ""
+msgstr "رنگ‌گزین"
 
 #. Translators: short braille for the rolename of a column header.
 #. Translators: short braille for the rolename of a table column header.
 #: src/orca/braille_rolenames.py:73 src/orca/braille_rolenames.py:232
 msgid "colhdr"
-msgstr ""
+msgstr "سرایند ستون"
 
 #. Translators: short braille for the rolename of a combo box.
 #: src/orca/braille_rolenames.py:76
@@ -88,19 +88,19 @@ msgstr ""
 #. Translators: short braille for the rolename of a date editor.
 #: src/orca/braille_rolenames.py:79
 msgid "dat"
-msgstr ""
+msgstr "ویرایشگر تاریخ"
 
 #. Translators: short braille for the rolename of a desktop icon.
 #. Translators: short braille for the rolename of a icon.
 #: src/orca/braille_rolenames.py:82 src/orca/braille_rolenames.py:133
 msgid "icn"
-msgstr ""
+msgstr "نقشک"
 
 #. Translators: short braille for the rolename of a desktop frame.
 #. Translators: short braille for the rolename of a frame.
 #: src/orca/braille_rolenames.py:85 src/orca/braille_rolenames.py:121
 msgid "frm"
-msgstr ""
+msgstr "قاب"
 
 #. Translators: short braille for the rolename of a dial.
 #. You should attempt to treat it as an abbreviation of
@@ -114,12 +114,12 @@ msgstr "شماره‌گیری"
 #. Translators: short braille for the rolename of a dialog.
 #: src/orca/braille_rolenames.py:94
 msgid "dlg"
-msgstr ""
+msgstr "گفتگو"
 
 #. Translators: short braille for the rolename of a directory pane.
 #: src/orca/braille_rolenames.py:97
 msgid "dip"
-msgstr ""
+msgstr "قاب شاخه"
 
 #. Translators: short braille for the rolename of an HTML document frame.
 #. Translators: short braille for the rolename of an html container.
@@ -135,17 +135,17 @@ msgstr "ترسیم"
 #. Translators: short braille for the rolename of a file chooser.
 #: src/orca/braille_rolenames.py:106
 msgid "fchsr"
-msgstr ""
+msgstr "پرونده‌گزین"
 
 #. Translators: short braille for the rolename of a filler.
 #: src/orca/braille_rolenames.py:109
 msgid "flr"
-msgstr ""
+msgstr "پرکن"
 
 #. Translators: short braille for the rolename of a font chooser.
 #: src/orca/braille_rolenames.py:112
 msgid "fnt"
-msgstr ""
+msgstr "قلم‌گزین"
 
 #. Translators: short braille for the rolename of a form.
 #. You should attempt to treat it as an abbreviation of
@@ -159,102 +159,102 @@ msgstr "از"
 #. Translators: short braille for the rolename of a glass pane.
 #: src/orca/braille_rolenames.py:124
 msgid "gpn"
-msgstr ""
+msgstr "قاب شیشه‌ای"
 
 #. Translators: short braille for the rolename of a heading.
 #: src/orca/braille_rolenames.py:127
 msgid "hdng"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: short braille for the rolename of a image.
 #: src/orca/braille_rolenames.py:136
 msgid "img"
-msgstr ""
+msgstr "تصویر"
 
 #. Translators: short braille for the rolename of an internal frame.
 #: src/orca/braille_rolenames.py:139
 msgid "ifrm"
-msgstr ""
+msgstr "قاب درونی"
 
 #. Translators: short braille for the rolename of a label.
 #: src/orca/braille_rolenames.py:142
 msgid "lbl"
-msgstr ""
+msgstr "برچسب"
 
 #. Translators: short braille for the rolename of a layered pane.
 #: src/orca/braille_rolenames.py:145
 msgid "lyrdpn"
-msgstr ""
+msgstr "قاب لایه‌ای"
 
 #. Translators: short braille for the rolename of a link.
 #: src/orca/braille_rolenames.py:148
 msgid "lnk"
-msgstr ""
+msgstr "پیوند"
 
 #. Translators: short braille for the rolename of a list.
 #: src/orca/braille_rolenames.py:151
 msgid "lst"
-msgstr ""
+msgstr "سیاهه"
 
 #. Translators: short braille for the rolename of a list item.
 #: src/orca/braille_rolenames.py:154
 msgid "lstitm"
-msgstr ""
+msgstr "مورد سیاهه"
 
 #. Translators: short braille for the rolename of a menu.
 #: src/orca/braille_rolenames.py:157
 msgid "mnu"
-msgstr ""
+msgstr "فهرست"
 
 #. Translators: short braille for the rolename of a menu bar.
 #: src/orca/braille_rolenames.py:160
 msgid "mnubr"
-msgstr ""
+msgstr "نوار فهرست"
 
 #. Translators: short braille for the rolename of a menu item.
 #: src/orca/braille_rolenames.py:163
 msgid "mnuitm"
-msgstr ""
+msgstr "مورد فهرست"
 
 #. Translators: short braille for the rolename of an option pane.
 #: src/orca/braille_rolenames.py:166
 msgid "optnpn"
-msgstr ""
+msgstr "قاب اختیاری"
 
 #. Translators: short braille for the rolename of a page tab.
 #: src/orca/braille_rolenames.py:169
 msgid "pgt"
-msgstr ""
+msgstr "زبانه صفحه"
 
 #. Translators: short braille for the rolename of a page tab list.
 #: src/orca/braille_rolenames.py:172
 msgid "tblst"
-msgstr ""
+msgstr "سیاهه زبانه"
 
 #. Translators: short braille for the rolename of a panel.
 #: src/orca/braille_rolenames.py:175
 msgid "pnl"
-msgstr ""
+msgstr "تابلو"
 
 #. Translators: short braille for the rolename of a password field.
 #: src/orca/braille_rolenames.py:178
 msgid "pwd"
-msgstr ""
+msgstr "جای گذرواژه"
 
 #. Translators: short braille for the rolename of a popup menu.
 #: src/orca/braille_rolenames.py:181
 msgid "popmnu"
-msgstr ""
+msgstr "فهرست بالاپریدنی"
 
 #. Translators: short braille for the rolename of a progress bar.
 #: src/orca/braille_rolenames.py:184
 msgid "pgbar"
-msgstr ""
+msgstr "نوار پیشرفت"
 
 #. Translators: short braille for the rolename of a push button.
 #: src/orca/braille_rolenames.py:187
 msgid "btn"
-msgstr ""
+msgstr "دکمخه"
 
 #. Translators: short braille for the rolename of a radio button.
 #: src/orca/braille_rolenames.py:190
@@ -264,68 +264,68 @@ msgstr "رادیو"
 #. Translators: short braille for the rolename of a radio menu item.
 #: src/orca/braille_rolenames.py:193
 msgid "rdmnuitm"
-msgstr ""
+msgstr "مورد فهرست رادیویی"
 
 #. Translators: short braille for the rolename of a root pane.
 #: src/orca/braille_rolenames.py:196
 msgid "rtpn"
-msgstr ""
+msgstr "قاب ریشه"
 
 #. Translators: short braille for the rolename of a row header.
 #. Translators: short braille for the rolename of a table row header.
 #: src/orca/braille_rolenames.py:199 src/orca/braille_rolenames.py:235
 msgid "rwhdr"
-msgstr ""
+msgstr "سرایند ردیف"
 
 #. Translators: short braille for the rolename of a scroll bar.
 #: src/orca/braille_rolenames.py:202
 msgid "scbr"
-msgstr ""
+msgstr "نوار لغزش"
 
 #. Translators: short braille for the rolename of a scroll pane.
 #: src/orca/braille_rolenames.py:205
 msgid "scpn"
-msgstr ""
+msgstr "قاب لغزش"
 
 #. Translators: short braille for the rolename of a section (e.g., in html).
 #: src/orca/braille_rolenames.py:208
 msgid "sctn"
-msgstr ""
+msgstr "بشخ"
 
 #. Translators: short braille for the rolename of a separator.
 #: src/orca/braille_rolenames.py:211
 msgid "seprtr"
-msgstr ""
+msgstr "حداساز"
 
 #. Translators: short braille for the rolename of a slider.
 #: src/orca/braille_rolenames.py:214
 msgid "sldr"
-msgstr ""
+msgstr "کشیدنی"
 
 #. Translators: short braille for the rolename of a split pane.
 #: src/orca/braille_rolenames.py:217
 msgid "spltpn"
-msgstr ""
+msgstr "قاب حداساز"
 
 #. Translators: short braille for the rolename of a spin button.
 #: src/orca/braille_rolenames.py:220
 msgid "spin"
-msgstr ""
+msgstr "چرخنده"
 
 #. Translators: short braille for the rolename of a statusbar.
 #: src/orca/braille_rolenames.py:223
 msgid "statbr"
-msgstr ""
+msgstr "نوار وضعیت"
 
 #. Translators: short braille for the rolename of a table.
 #: src/orca/braille_rolenames.py:226
 msgid "tbl"
-msgstr ""
+msgstr "جدول"
 
 #. Translators: short braille for the rolename of a table cell.
 #: src/orca/braille_rolenames.py:229
 msgid "cll"
-msgstr ""
+msgstr "سلول"
 
 #. Translators: short braille for the rolename of a tear off menu item.
 #: src/orca/braille_rolenames.py:238
@@ -335,87 +335,87 @@ msgstr ""
 #. Translators: short braille for the rolename of a terminal.
 #: src/orca/braille_rolenames.py:241
 msgid "term"
-msgstr ""
+msgstr "پایانه"
 
 #. Translators: short braille for the rolename of a text entry field.
 #: src/orca/braille_rolenames.py:244
 msgid "txt"
-msgstr ""
+msgstr "متن"
 
 #. Translators: short braille for the rolename of a toggle button.
 #: src/orca/braille_rolenames.py:247
 msgid "tglbtn"
-msgstr ""
+msgstr "تغییر وضعیت"
 
 #. Translators: short braille for the rolename of a toolbar.
 #: src/orca/braille_rolenames.py:250
 msgid "tbar"
-msgstr ""
+msgstr "نوار ابزار"
 
 #. Translators: short braille for the rolename of a tooltip.
 #: src/orca/braille_rolenames.py:253
 msgid "tip"
-msgstr ""
+msgstr "راهنما"
 
 #. Translators: short braille for the rolename of a tree.
 #: src/orca/braille_rolenames.py:256
 msgid "tre"
-msgstr ""
+msgstr "درخت"
 
 #. Translators: short braille for the rolename of a tree table.
 #: src/orca/braille_rolenames.py:259
 msgid "trtbl"
-msgstr ""
+msgstr "حدول درختی"
 
 #. Translators: short braille for when the rolename of an object is unknown.
 #: src/orca/braille_rolenames.py:262
 msgid "unk"
-msgstr ""
+msgstr "ناشناخته"
 
 #. Translators: short braille for the rolename of a viewport.
 #: src/orca/braille_rolenames.py:265
 msgid "vwprt"
-msgstr ""
+msgstr "درگاه دید"
 
 #. Translators: short braille for the rolename of a window.
 #: src/orca/braille_rolenames.py:268
 msgid "wnd"
-msgstr ""
+msgstr "پنجره"
 
 #. Translators: short braille for the rolename of a header.
 #: src/orca/braille_rolenames.py:271
 msgid "hdr"
-msgstr ""
+msgstr "عنوان"
 
 #. Translators: short braille for the rolename of a footer.
 #: src/orca/braille_rolenames.py:274
 msgid "ftr"
-msgstr ""
+msgstr "پانویس"
 
 #. Translators: short braille for the rolename of a paragraph.
 #: src/orca/braille_rolenames.py:277
 msgid "para"
-msgstr ""
+msgstr "بند"
 
 #. Translators: short braille for the rolename of a application.
 #: src/orca/braille_rolenames.py:280
 msgid "app"
-msgstr ""
+msgstr "کاره"
 
 #. Translators: short braille for the rolename of a autocomplete.
 #: src/orca/braille_rolenames.py:283
 msgid "auto"
-msgstr ""
+msgstr "خودکار"
 
 #. Translators: short braille for the rolename of an editbar.
 #: src/orca/braille_rolenames.py:286
 msgid "edtbr"
-msgstr ""
+msgstr "نوار ویرایش"
 
 #. Translators: short braille for the rolename of an embedded component.
 #: src/orca/braille_rolenames.py:289
 msgid "emb"
-msgstr ""
+msgstr "مولفه توکار"
 
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -709,13 +709,13 @@ msgstr ""
 #. the "OK" button.
 #: src/orca/cmdnames.py:109
 msgid "Open the Find dialog"
-msgstr ""
+msgstr "گشودن گفت‌وگوی بافتن"
 
 #. Translators: Orca has a command which presents a menu with accessible actions
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:113
 msgid "Show actions menu"
-msgstr ""
+msgstr "نمایش فهرست کنش‌ها"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -1466,7 +1466,7 @@ msgstr ""
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:704
 msgid "Cut Line"
-msgstr ""
+msgstr "برش خط"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
@@ -4642,6 +4642,7 @@ msgstr "_کوتاه"
 msgid "%d notification"
 msgid_plural "%d notifications"
 msgstr[0] "%d آگاهی"
+msgstr[1] "%d آگاهی"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
@@ -8744,7 +8745,7 @@ msgstr ""
 #: src/orca/messages.py:1283
 msgctxt "role"
 msgid "leaving feed."
-msgstr ""
+msgstr "ترک خوراک."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -8753,7 +8754,7 @@ msgstr ""
 #: src/orca/messages.py:1289
 msgctxt "role"
 msgid "leaving figure."
-msgstr ""
+msgstr "ترک شکل."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
@@ -8768,7 +8769,7 @@ msgstr ""
 #: src/orca/messages.py:1299
 msgctxt "role"
 msgid "leaving banner."
-msgstr ""
+msgstr "ترک بیرق."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8777,7 +8778,7 @@ msgstr ""
 #: src/orca/messages.py:1305
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr ""
+msgstr "ترک محتوای تکمیلی."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8786,7 +8787,7 @@ msgstr ""
 #: src/orca/messages.py:1311
 msgctxt "role"
 msgid "leaving information."
-msgstr ""
+msgstr "ترک اطّلاعات."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8795,7 +8796,7 @@ msgstr ""
 #: src/orca/messages.py:1317
 msgctxt "role"
 msgid "leaving main content."
-msgstr ""
+msgstr "ترک محتوای اصلی."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8804,7 +8805,7 @@ msgstr ""
 #: src/orca/messages.py:1323
 msgctxt "role"
 msgid "leaving navigation."
-msgstr ""
+msgstr "ترک پیمایش."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8813,7 +8814,7 @@ msgstr ""
 #: src/orca/messages.py:1329
 msgctxt "role"
 msgid "leaving region."
-msgstr ""
+msgstr "ترک ناحیه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -8822,7 +8823,7 @@ msgstr ""
 #: src/orca/messages.py:1335
 msgctxt "role"
 msgid "leaving search."
-msgstr ""
+msgstr "ترک جست‌وجو."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
@@ -8856,7 +8857,7 @@ msgstr ""
 #: src/orca/messages.py:1358
 msgctxt "role"
 msgid "leaving abstract."
-msgstr ""
+msgstr "ترک چکیده."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8865,7 +8866,7 @@ msgstr ""
 #: src/orca/messages.py:1364
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr ""
+msgstr "ترک سپاسگذاری‌ها."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8874,7 +8875,7 @@ msgstr ""
 #: src/orca/messages.py:1370
 msgctxt "role"
 msgid "leaving afterword."
-msgstr ""
+msgstr "ترک خاتمه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8883,7 +8884,7 @@ msgstr ""
 #: src/orca/messages.py:1376
 msgctxt "role"
 msgid "leaving appendix."
-msgstr ""
+msgstr "ترک ضمیمه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8892,7 +8893,7 @@ msgstr ""
 #: src/orca/messages.py:1382
 msgctxt "role"
 msgid "leaving bibliography."
-msgstr ""
+msgstr "ترک کتابشناسی."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8901,7 +8902,7 @@ msgstr ""
 #: src/orca/messages.py:1388
 msgctxt "role"
 msgid "leaving chapter."
-msgstr ""
+msgstr "ترک فصل."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8910,7 +8911,7 @@ msgstr ""
 #: src/orca/messages.py:1394
 msgctxt "role"
 msgid "leaving colophon."
-msgstr ""
+msgstr "ترک توضیحات."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8919,7 +8920,7 @@ msgstr ""
 #: src/orca/messages.py:1400
 msgctxt "role"
 msgid "leaving conclusion."
-msgstr ""
+msgstr "ترک نتیجه‌گیری."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8928,7 +8929,7 @@ msgstr ""
 #: src/orca/messages.py:1406
 msgctxt "role"
 msgid "leaving credit."
-msgstr ""
+msgstr "ترک اعتبار."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8937,7 +8938,7 @@ msgstr ""
 #: src/orca/messages.py:1412
 msgctxt "role"
 msgid "leaving credits."
-msgstr ""
+msgstr "ترک اعتبارها."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8946,7 +8947,7 @@ msgstr ""
 #: src/orca/messages.py:1418
 msgctxt "role"
 msgid "leaving dedication."
-msgstr ""
+msgstr "ترک اهدا."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8955,7 +8956,7 @@ msgstr ""
 #: src/orca/messages.py:1424
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr ""
+msgstr "ترک پی‌نوشت‌ها."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8964,7 +8965,7 @@ msgstr ""
 #: src/orca/messages.py:1430
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr ""
+msgstr "ترک واگویه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8973,7 +8974,7 @@ msgstr ""
 #: src/orca/messages.py:1436
 msgctxt "role"
 msgid "leaving epilogue."
-msgstr ""
+msgstr "ترک پایان‌نامه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8982,7 +8983,7 @@ msgstr ""
 #: src/orca/messages.py:1442
 msgctxt "role"
 msgid "leaving errata."
-msgstr ""
+msgstr "ترک غلط‌نامه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -8991,7 +8992,7 @@ msgstr ""
 #: src/orca/messages.py:1448
 msgctxt "role"
 msgid "leaving example."
-msgstr ""
+msgstr "ترک مثال."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9000,7 +9001,7 @@ msgstr ""
 #: src/orca/messages.py:1454
 msgctxt "role"
 msgid "leaving foreword."
-msgstr ""
+msgstr "ترک پیش‌گفتار."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9009,7 +9010,7 @@ msgstr ""
 #: src/orca/messages.py:1460
 msgctxt "role"
 msgid "leaving glossary."
-msgstr ""
+msgstr "ترک واژه‌نامه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9018,7 +9019,7 @@ msgstr ""
 #: src/orca/messages.py:1466
 msgctxt "role"
 msgid "leaving index."
-msgstr ""
+msgstr "ترک نمایه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9027,7 +9028,7 @@ msgstr ""
 #: src/orca/messages.py:1472
 msgctxt "role"
 msgid "leaving introduction."
-msgstr ""
+msgstr "ترک دیباچه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9036,7 +9037,7 @@ msgstr ""
 #: src/orca/messages.py:1478
 msgctxt "role"
 msgid "leaving page list."
-msgstr ""
+msgstr "ترک سیاههٔ صفحه‌ها."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9045,7 +9046,7 @@ msgstr ""
 #: src/orca/messages.py:1484
 msgctxt "role"
 msgid "leaving part."
-msgstr ""
+msgstr "ترک بخش."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9054,7 +9055,7 @@ msgstr ""
 #: src/orca/messages.py:1490
 msgctxt "role"
 msgid "leaving preface."
-msgstr ""
+msgstr "ترک پیش‌درامد."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9063,7 +9064,7 @@ msgstr ""
 #: src/orca/messages.py:1496
 msgctxt "role"
 msgid "leaving prologue."
-msgstr ""
+msgstr "ترک پیشینه."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9072,7 +9073,7 @@ msgstr ""
 #: src/orca/messages.py:1502
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr ""
+msgstr "ترک شاهد مثال."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9081,7 +9082,7 @@ msgstr ""
 #: src/orca/messages.py:1508
 msgctxt "role"
 msgid "leaving QNA."
-msgstr ""
+msgstr "ترک پرسش و پاسخ."
 
 #. Translators: This message is presented when a user is navigating within a
 #. suggestion and then navigates out of it. A "suggestion" is a container with
@@ -9091,7 +9092,7 @@ msgstr ""
 #: src/orca/messages.py:1515
 msgctxt "role"
 msgid "leaving suggestion."
-msgstr ""
+msgstr "ترک پیشنهاد."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9100,7 +9101,7 @@ msgstr ""
 #: src/orca/messages.py:1521
 msgctxt "role"
 msgid "leaving table of contents."
-msgstr ""
+msgstr "ترک فهرست."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10666,6 +10667,7 @@ msgstr "۰ مورد"
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
 msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: this represents the number of columns in a table.
 #: src/orca/messages.py:2660
@@ -10673,6 +10675,7 @@ msgstr[0] ""
 msgid " %d column"
 msgid_plural " %d columns"
 msgstr[0] " %d ستون"
+msgstr[1] " %d ستون"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -10682,6 +10685,7 @@ msgstr[0] " %d ستون"
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
 msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
@@ -10691,6 +10695,7 @@ msgstr[0] ""
 msgid "%d character too long"
 msgid_plural "%d characters too long"
 msgstr[0] "%d نویسه بیش از حد طولانی"
+msgstr[1] "%d نویسه بیش از حد طولانی"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -10700,6 +10705,7 @@ msgstr[0] "%d نویسه بیش از حد طولانی"
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
 msgstr[0] "(%d گفت‌وگو)"
+msgstr[1] "(%d گفت‌وگو)"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -10709,6 +10715,7 @@ msgstr[0] "(%d گفت‌وگو)"
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
 msgstr[0] "%d گفت‌وگوی بدون تمرکز"
+msgstr[1] "%d گفت‌وگوی بدون تمرکز"
 
 #. Translators: This is the size of a file in bytes
 #: src/orca/messages.py:2702
@@ -10716,6 +10723,7 @@ msgstr[0] "%d گفت‌وگوی بدون تمرکز"
 msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d بایت"
+msgstr[1] "%d بایت"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
@@ -10724,6 +10732,7 @@ msgstr[0] "%d بایت"
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d پرونده پیدا شد"
+msgstr[1] "%d پرونده پیدا شد"
 
 #. Translators: This message presents the number of forms in a document.
 #: src/orca/messages.py:2714
@@ -10731,6 +10740,7 @@ msgstr[0] "%d پرونده پیدا شد"
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d فرم"
+msgstr[1] "%d فرم"
 
 #. Translators: This message presents the number of headings in a document.
 #: src/orca/messages.py:2721
@@ -10738,6 +10748,7 @@ msgstr[0] "%d فرم"
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d عنوان"
+msgstr[1] "%d عنوان"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
@@ -10746,6 +10757,7 @@ msgstr[0] "%d عنوان"
 msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] "%d مورد"
+msgstr[1] "%d مورد"
 
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
@@ -10755,6 +10767,7 @@ msgstr[0] "%d مورد"
 msgid "%d landmark"
 msgid_plural "%d landmarks"
 msgstr[0] "%d نشانه"
+msgstr[1] "%d نشانه"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -10764,6 +10777,7 @@ msgstr[0] "%d نشانه"
 msgid "%d item found"
 msgid_plural "%d items found"
 msgstr[0] "%d مورد پیدا شد"
+msgstr[1] "%d مورد پیدا شد"
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
@@ -10773,6 +10787,7 @@ msgstr[0] "%d مورد پیدا شد"
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
 msgstr[0] "ترک %d نقل‌قول."
+msgstr[1] "ترک %d نقل‌قول."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
@@ -10781,6 +10796,7 @@ msgstr[0] "ترک %d نقل‌قول."
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
 msgstr[0] "ترک %d سیاهه."
+msgstr[1] "ترک %d سیاهه."
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -10798,6 +10814,7 @@ msgstr "سیاهه‌ای با اندازهٔ ناعلوم"
 msgid "List with %d item"
 msgid_plural "List with %d items"
 msgstr[0] "سیاهه‌ای با %d مورد"
+msgstr[1] "سیاهه‌ای با %d مورد"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
@@ -10806,6 +10823,7 @@ msgstr[0] "سیاهه‌ای با %d مورد"
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
 msgstr[0] "سیاههٔ تودرتو با %d مورد"
+msgstr[1] "سیاههٔ تودرتو با %d مورد"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -10823,6 +10841,7 @@ msgstr "خوراکی با اندازهٔ نامعلوم"
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
 msgstr[0] "خوراکی با %d مقاله"
+msgstr[1] "خوراکی با %d مقاله"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
@@ -10832,6 +10851,7 @@ msgstr[0] "خوراکی با %d مقاله"
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
 msgstr[0] "سیاههٔ شرحی با %d عبارت"
+msgstr[1] "سیاههٔ شرحی با %d عبارت"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
@@ -10842,6 +10862,7 @@ msgstr[0] "سیاههٔ شرحی با %d عبارت"
 msgid "%d value"
 msgid_plural "%d values"
 msgstr[0] "%d مقدار"
+msgstr[1] "%d مقدار"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -10850,6 +10871,7 @@ msgstr[0] "%d مقدار"
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
 msgstr[0] "جدول ریاضی با %d ردیف"
+msgstr[1] "جدول ریاضی با %d ردیف"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -10862,6 +10884,7 @@ msgstr[0] "جدول ریاضی با %d ردیف"
 msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d ردیف"
+msgstr[1] "%d ردیف"
 
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
@@ -10871,6 +10894,7 @@ msgstr[0] "%d ردیف"
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
 msgstr[0] "جدول ریاضی تودرتو با %d ردیف"
+msgstr[1] "جدول ریاضی تودرتو با %d ردیف"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -10879,6 +10903,7 @@ msgstr[0] "جدول ریاضی تودرتو با %d ردیف"
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
 msgstr[0] "%d پیام.\n"
+msgstr[1] "%d پیام.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
@@ -10887,6 +10912,7 @@ msgstr[0] "%d پیام.\n"
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "%d درصد."
+msgstr[1] "%d درصد."
 
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
@@ -10896,6 +10922,7 @@ msgstr[0] "%d درصد."
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
 msgstr[0] "%d درصد از سند خوانده شد"
+msgstr[1] "%d درصد از سند خوانده شد"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
@@ -10904,6 +10931,7 @@ msgstr[0] "%d درصد از سند خوانده شد"
 msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d پیکسل"
+msgstr[1] "%d پیکسل"
 
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
@@ -10913,6 +10941,7 @@ msgstr[0] "%d پیکسل"
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "%(count)d نویسهٔ %(repeatChar)s"
+msgstr[1] "%(count)d نویسهٔ %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
@@ -10921,6 +10950,7 @@ msgstr[0] "%(count)d نویسهٔ %(repeatChar)s"
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
 msgstr[0] "%(index)d از %(total)d مورد گزیده شد"
+msgstr[1] "%(index)d از %(total)d مورد گزیده شد"
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands which are not specific to the
@@ -10931,6 +10961,7 @@ msgstr[0] "%(index)d از %(total)d مورد گزیده شد"
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
 msgstr[0] "%d میان‌بر پیش‌گزیدهٔ صفحه‌خوان پیدا شد."
+msgstr[1] "%d میان‌بر پیش‌گزیدهٔ صفحه‌خوان پیدا شد."
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
@@ -10940,6 +10971,7 @@ msgstr[0] "%d میان‌بر پیش‌گزیدهٔ صفحه‌خوان پیدا
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] "%(count)d میان‌بر صفحه‌خوان برای %(application)s پیدا شد."
+msgstr[1] "%(count)d میان‌بر صفحه‌خوان برای %(application)s پیدا شد."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -10948,6 +10980,7 @@ msgstr[0] "%(count)d میان‌بر صفحه‌خوان برای %(application)
 msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d فاصله"
+msgstr[1] "%d فاصله"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
@@ -10956,6 +10989,7 @@ msgstr[0] "%d فاصله"
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d جهش"
+msgstr[1] "%d جهش"
 
 #. Translators: This message presents the number of tables in a document.
 #: src/orca/messages.py:2899
@@ -10963,6 +10997,7 @@ msgstr[0] "%d جهش"
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "%d جدول"
+msgstr[1] "%d جدول"
 
 #. Translators: This message describes a table for which both the
 #. number of rows and the number of columns are unknown. Normally
@@ -10980,6 +11015,7 @@ msgstr "جدولی با اندازهٔ نامعلوم"
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
 msgstr[0] "جدولی با %d ستون، شمار ردیف‌ها نامعلوم"
+msgstr[1] "جدولی با %d ستون، شمار ردیف‌ها نامعلوم"
 
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
@@ -10989,6 +11025,7 @@ msgstr[0] "جدولی با %d ستون، شمار ردیف‌ها نامعلوم
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
 msgstr[0] "جدولی با %d ردیف، شمار ستون‌ها نامعلوم"
+msgstr[1] "جدولی با %d ردیف، شمار ستون‌ها نامعلوم"
 
 #. Translators: this represents the number of rows in a table.
 #: src/orca/messages.py:2926
@@ -10996,6 +11033,7 @@ msgstr[0] "جدولی با %d ردیف، شمار ستون‌ها نامعلوم
 msgid "table with %d row"
 msgid_plural "table with %d rows"
 msgstr[0] "جدولی با %d ردیف"
+msgstr[1] "جدولی با %d ردیف"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
@@ -11004,6 +11042,7 @@ msgstr[0] "جدولی با %d ردیف"
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
 msgstr[0] "%d ثانیه پیش"
+msgstr[1] "%d ثانیه پیش"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
@@ -11012,6 +11051,7 @@ msgstr[0] "%d ثانیه پیش"
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] "%d دقیقه پیش"
+msgstr[1] "%d دقیقه پیش"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
@@ -11020,6 +11060,7 @@ msgstr[0] "%d دقیقه پیش"
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] "%d ساعت پیش"
+msgstr[1] "%d ساعت پیش"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
@@ -11028,6 +11069,7 @@ msgstr[0] "%d ساعت پیش"
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d روز پیش"
+msgstr[1] "%d روز پیش"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
@@ -11036,6 +11078,7 @@ msgstr[0] "%d روز پیش"
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
 msgstr[0] "%d پیوند دیده نشده"
+msgstr[1] "%d پیوند دیده نشده"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
@@ -11044,6 +11087,7 @@ msgstr[0] "%d پیوند دیده نشده"
 msgid "%d visited link"
 msgid_plural "%d visited links"
 msgstr[0] "%d پیوند دیده شده"
+msgstr[1] "%d پیوند دیده شده"
 
 #. Translators: this is the action name for the 'toggle' action. It must be the
 #. same string used in the *.po file for gail.
@@ -11255,7 +11299,7 @@ msgstr "فصل"
 #: src/orca/object_properties.py:186
 msgctxt "role"
 msgid "colophon"
-msgstr ""
+msgstr "توضیحات"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11327,7 +11371,7 @@ msgstr "پی‌نوشت‌ها"
 #: src/orca/object_properties.py:234
 msgctxt "role"
 msgid "epigraph"
-msgstr ""
+msgstr "واگویه"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11444,7 +11488,7 @@ msgstr "دیباچه"
 #: src/orca/object_properties.py:312
 msgctxt "role"
 msgid "pullquote"
-msgstr ""
+msgstr "شاهد مثال"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12966,7 +13010,7 @@ msgstr "هیچ"
 #: src/orca/text_attribute_names.py:359
 msgctxt "textattr"
 msgid "engrave"
-msgstr ""
+msgstr "تو رفته"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -12976,7 +13020,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:366
 msgctxt "textattr"
 msgid "emboss"
-msgstr ""
+msgstr "برجسته"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -12986,7 +13030,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:373
 msgctxt "textattr"
 msgid "outline"
-msgstr ""
+msgstr "طرح کلی"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -12996,7 +13040,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:380
 msgctxt "textattr"
 msgid "overline"
-msgstr ""
+msgstr "روی خط"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -13006,7 +13050,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:387
 msgctxt "textattr"
 msgid "line through"
-msgstr ""
+msgstr "خط خورده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -13016,7 +13060,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:394
 msgctxt "textattr"
 msgid "blink"
-msgstr ""
+msgstr "چشمک زن"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-shadow".
@@ -13036,7 +13080,7 @@ msgstr "سیاه"
 #: src/orca/text_attribute_names.py:408
 msgctxt "textattr"
 msgid "single"
-msgstr ""
+msgstr "تک"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "underline".
@@ -13056,7 +13100,7 @@ msgstr "دو برابر"
 #: src/orca/text_attribute_names.py:422
 msgctxt "textattr"
 msgid "low"
-msgstr ""
+msgstr "پایین"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
@@ -13066,7 +13110,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:429
 msgctxt "textattr"
 msgid "char"
-msgstr ""
+msgstr "نویسه"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode".
@@ -13089,7 +13133,7 @@ msgstr "واژه"
 #: src/orca/text_attribute_names.py:446
 msgctxt "textattr"
 msgid "word char"
-msgstr ""
+msgstr "نویسهٔ واژه"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -13168,7 +13212,7 @@ msgstr "پر کردن"
 #: src/orca/text_attribute_names.py:501
 msgctxt "textattr"
 msgid "ultra condensed"
-msgstr ""
+msgstr "فوق متراکم"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -13178,7 +13222,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:508
 msgctxt "textattr"
 msgid "extra condensed"
-msgstr ""
+msgstr "بیش متراکم"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -13188,7 +13232,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:515
 msgctxt "textattr"
 msgid "condensed"
-msgstr ""
+msgstr "متراکم"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -13198,7 +13242,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:522
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr ""
+msgstr "شبه متراکم"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -13218,7 +13262,7 @@ msgstr "معمولی"
 #: src/orca/text_attribute_names.py:536
 msgctxt "textattr"
 msgid "semi expanded"
-msgstr ""
+msgstr "شبه گسترده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -13238,7 +13282,7 @@ msgstr "گسترده"
 #: src/orca/text_attribute_names.py:550
 msgctxt "textattr"
 msgid "extra expanded"
-msgstr ""
+msgstr "بیش گسترده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -13248,7 +13292,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:557
 msgctxt "textattr"
 msgid "ultra expanded"
-msgstr ""
+msgstr "فوق گسترده"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
@@ -13258,7 +13302,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:564
 msgctxt "textattr"
 msgid "small caps"
-msgstr ""
+msgstr "حروف بزرگ ریز"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
@@ -13268,7 +13312,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:571
 msgctxt "textattr"
 msgid "oblique"
-msgstr ""
+msgstr "اریب"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
@@ -13278,7 +13322,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:578
 msgctxt "textattr"
 msgid "italic"
-msgstr ""
+msgstr "کج"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -13298,7 +13342,7 @@ msgstr "پیش‌گزیده"
 #: src/orca/text_attribute_names.py:592
 msgctxt "textattr"
 msgid "Text body"
-msgstr ""
+msgstr "بدنهٔ متن"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -13319,7 +13363,7 @@ msgstr "عنوان"
 #: src/orca/text_attribute_names.py:607
 msgctxt "textattr"
 msgid "baseline"
-msgstr ""
+msgstr "خط زمینه"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13329,7 +13373,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:614
 msgctxt "textattr"
 msgid "sub"
-msgstr ""
+msgstr "زیر"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13339,7 +13383,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:621
 msgctxt "textattr"
 msgid "super"
-msgstr ""
+msgstr "رو"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13349,7 +13393,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:628
 msgctxt "textattr"
 msgid "top"
-msgstr ""
+msgstr "بالا"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13359,7 +13403,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:635
 msgctxt "textattr"
 msgid "text-top"
-msgstr ""
+msgstr "سر"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13369,7 +13413,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:642
 msgctxt "textattr"
 msgid "middle"
-msgstr ""
+msgstr "ویط"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13379,7 +13423,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:649
 msgctxt "textattr"
 msgid "bottom"
-msgstr ""
+msgstr "پایین"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -13389,7 +13433,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:656
 msgctxt "textattr"
 msgid "text-bottom"
-msgstr ""
+msgstr "ته"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align" and "writing-mode".
@@ -13400,7 +13444,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:664
 msgctxt "textattr"
 msgid "inherit"
-msgstr ""
+msgstr "ارث‌بری"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13410,7 +13454,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:671
 msgctxt "textattr"
 msgid "lr-tb"
-msgstr ""
+msgstr "چ‌ر-ب‌پ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13420,7 +13464,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:678
 msgctxt "textattr"
 msgid "rl-tb"
-msgstr ""
+msgstr "رچ-ب‌پ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13430,7 +13474,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:685
 msgctxt "textattr"
 msgid "tb-rl"
-msgstr ""
+msgstr "ب‌پ-رچ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13440,7 +13484,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:692
 msgctxt "textattr"
 msgid "tb-lr"
-msgstr ""
+msgstr "ب‌پ-چ‌ر"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13450,7 +13494,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:699
 msgctxt "textattr"
 msgid "bt-rl"
-msgstr ""
+msgstr "پ‌ب-رچ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13460,7 +13504,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:706
 msgctxt "textattr"
 msgid "bt-lr"
-msgstr ""
+msgstr "پ‌ب-چ‌ر"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13470,7 +13514,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:713
 msgctxt "textattr"
 msgid "lr"
-msgstr ""
+msgstr "چ‌ر"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13480,7 +13524,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:720
 msgctxt "textattr"
 msgid "rl"
-msgstr ""
+msgstr "رچ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -13490,7 +13534,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:727
 msgctxt "textattr"
 msgid "tb"
-msgstr ""
+msgstr "ب‌پ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "strikethrough." It refers to the line style.
@@ -13498,7 +13542,7 @@ msgstr ""
 #: src/orca/text_attribute_names.py:732
 msgctxt "textattr"
 msgid "solid"
-msgstr ""
+msgstr "یک‌سره"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invalid". It is an indication that the text is not
