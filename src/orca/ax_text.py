@@ -680,7 +680,7 @@ class AXText:
         except Exception as error:
             msg = f"AXText: Exception in get_text_attributes_at_offset: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return {}, 0, 0
+            return {}, 0, AXText.get_character_count(obj)
 
         tokens = ["AXText: Attributes for", obj, f"at offset {offset} : {result}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
