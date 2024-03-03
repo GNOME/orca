@@ -3991,7 +3991,8 @@ class Utilities(script_utilities.Utilities):
             lastKey, mods = self.lastKeyAndModifiers()
             return lastKey == "Return"
         if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
-            return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source)
+            return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source) \
+                or AXUtilities.is_frame(event.source)
         if event.type.startswith("object:children-changed"):
             return True
 
