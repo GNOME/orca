@@ -684,8 +684,7 @@ class AXText:
 
         tokens = ["AXText: Attributes for", obj, f"at offset {offset} : {result}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return result[0], result[1], result[2]
-
+        return result[0] or {}, result[1] or 0, result[2] or AXText.get_character_count(obj)
 
     @staticmethod
     def get_all_text_attributes(obj, start_offset=0, end_offset=-1):
