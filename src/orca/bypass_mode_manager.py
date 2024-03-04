@@ -74,7 +74,7 @@ class BypassModeManager:
 
         self._handlers["bypass_mode_toggle"] = \
             input_event.InputEventHandler(
-                self._toggle_enabled,
+                self.toggle_enabled,
                 cmdnames.BYPASS_MODE_TOGGLE)
 
     def _setup_bindings(self):
@@ -100,18 +100,21 @@ class BypassModeManager:
 
         return self._is_active
 
-    def _toggle_enabled(self, script, event=None):
+    def toggle_enabled(self, script, event=None):
         """Toggles bypass mode."""
 
         self._is_active = not self._is_active
         if not self._is_active:
-            script.presentMessage(messages.BYPASS_MODE_DISABLED)
+            if event is not None:
+                script.presentMessage(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
             script.addKeyGrabs(reason)
             orca_modifier_manager.getManager().refresh_orca_modifiers(reason)
             return True
 
-        script.presentMessage(messages.BYPASS_MODE_ENABLED)
+        if event is not None:
+            script.presentMessage(messages.BYPASS_MODE_ENABLED)
+
         reason = "bypass mode enabled"
         script.removeKeyGrabs(reason)
         orca_modifier_manager.getManager().unset_orca_modifiers(reason)

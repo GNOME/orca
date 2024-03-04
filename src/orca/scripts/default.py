@@ -521,6 +521,9 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
+        if self.bypassModeManager.is_active():
+            self.bypassModeManager.toggle_enabled(self)
+
         self.removeKeyGrabs("script deactivation")
 
     def addKeyGrabs(self, reason=""):
