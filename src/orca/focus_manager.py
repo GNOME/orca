@@ -331,8 +331,6 @@ class FocusManager:
     def set_active_window(self, frame, app=None, set_window_as_focus=False, notify_script=False):
         """Sets the active window."""
 
-        # TODO - JD: Consider also updating the active script when the active window changes.
-
         tokens = ["FOCUS MANAGER: Request to set active window to", frame]
         if app is not None:
             tokens.extend(["in", app])
@@ -354,10 +352,14 @@ class FocusManager:
 
         if set_window_as_focus:
             self.set_locus_of_focus(None, self._window, notify_script)
-        elif self._window and self._focus and not self.focus_is_in_active_window():
+        elif not (self.focus_is_active_window() or self.focus_is_in_active_window()):
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
             debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
             self.set_locus_of_focus(None, self._window, notify_script=True)
+
+        app = AXObject.get_application(self._focus)
+        script = script_manager.getManager().getScript(app, self._focus)
+        script_manager.getManager().setActiveScript(script, "Setting active window")
 
 
 _manager = FocusManager()
