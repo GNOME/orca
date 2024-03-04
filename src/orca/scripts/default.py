@@ -2233,10 +2233,6 @@ class Script(script.Script):
 
 
         offset = AXText.get_caret_offset(obj)
-        if offset < 1:
-            self.sayCharacter(obj)
-            return
-
         word, startOffset, endOffset = \
             self.utilities.getWordAtOffsetAdjustedForNavigation(obj, offset)
 
