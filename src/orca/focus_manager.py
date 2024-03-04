@@ -331,6 +331,8 @@ class FocusManager:
     def set_active_window(self, frame, app=None, set_window_as_focus=False, notify_script=False):
         """Sets the active window."""
 
+        # TODO - JD: Consider also updating the active script when the active window changes.
+
         tokens = ["FOCUS MANAGER: Request to set active window to", frame]
         if app is not None:
             tokens.extend(["in", app])
