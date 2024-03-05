@@ -1448,7 +1448,8 @@ class Script(script.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
             focus = focus_manager.getManager().get_locus_of_focus()
-            if AXUtilities.is_editable(focus) and AXText.get_all_text(focus) in event.any_data:
+            if AXUtilities.is_editable(focus) and AXText.get_character_count(focus) \
+               and AXText.get_all_text(focus) in event.any_data:
                 msg = "DEFAULT: Event is redundant notification for the locusOfFocus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
