@@ -58,8 +58,11 @@ class AXText:
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        # Don't adjust the length for characters because we want to say "blank" at the end.
-        offset = max(0, offset)
+        if not 0 <= offset <= length:
+            msg = f"WARNING: Offset {offset} is not valid. No character can be provided."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
+
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.CHAR)
         except Exception as error:
