@@ -34,9 +34,6 @@ from orca.ax_table import AXTable
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateRoleName(self, obj, **args):
         if self._script.utilities.isDocument(obj):
             return []

@@ -37,9 +37,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(script_utilities.Utilities):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def clearCache(self):
         pass
 

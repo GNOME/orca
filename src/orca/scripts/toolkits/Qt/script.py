@@ -36,9 +36,6 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def __init__(self, app):
-        super().__init__(app)
-
     def getUtilities(self):
         return Utilities(self)
 

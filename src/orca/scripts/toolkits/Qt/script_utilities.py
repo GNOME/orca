@@ -33,9 +33,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(script_utilities.Utilities):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _isTopLevelObject(self, obj):
         # This is needed because Qt apps might insert some junk (e.g. a filler) in
         # between the window/frame/dialog and the application.

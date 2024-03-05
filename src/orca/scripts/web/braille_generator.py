@@ -44,9 +44,6 @@ from orca.ax_utilities import AXUtilities
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def getLocalizedRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super().getLocalizedRoleName(obj, **args)

@@ -35,9 +35,6 @@ from orca.ax_utilities import AXUtilities
 
 class Chat(chat.Chat):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused."""
 

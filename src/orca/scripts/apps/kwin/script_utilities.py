@@ -31,9 +31,6 @@ from orca.scripts import switcher
 
 class Utilities(switcher.Utilities):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""
 

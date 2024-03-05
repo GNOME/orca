@@ -32,11 +32,6 @@ from .chat import Chat
 
 class Script(gtk.Script):
 
-    def __init__(self, app):
-        """Creates a new script for the given application."""
-
-        super().__init__(app)
-
     def getChat(self):
         """Returns the 'chat' class for this script."""
 

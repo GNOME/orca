@@ -41,9 +41,6 @@ from orca.scripts.toolkits import Gecko
 
 class Script(Gecko.Script):
 
-    def __init__(self, app):
-        super().__init__(app)
-
     def setupInputEventHandlers(self):
         super().setupInputEventHandlers()
 

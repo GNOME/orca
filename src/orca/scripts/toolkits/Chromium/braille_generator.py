@@ -39,9 +39,6 @@ from orca.ax_object import AXObject
 
 class BrailleGenerator(web.BrailleGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateLabelOrName(self, obj, **args):
         if AXObject.get_role(obj) == Atspi.Role.FRAME:
             document = self._script.utilities.activeDocument(obj)

@@ -42,21 +42,8 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
 
 class Utilities(script_utilities.Utilities):
-
-    def __init__(self, script):
-        """Creates an instance of the Utilities class.
-
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
-        super().__init__(script)
 
     def isWebKitGtk(self, obj):
         """Returns True if this object is a WebKitGtk object."""

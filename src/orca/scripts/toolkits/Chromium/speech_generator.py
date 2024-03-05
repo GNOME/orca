@@ -44,9 +44,6 @@ from orca.ax_utilities import AXUtilities
 
 class SpeechGenerator(web.SpeechGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateNewAncestors(self, obj, **args):
         # Likely a refocused submenu whose functional child was just collapsed.
         # The new ancestors might technically be new, but they are not as far

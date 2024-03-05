@@ -47,9 +47,6 @@ from orca.ax_utilities import AXUtilities
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateOldAncestors(self, obj, **args):
         if args.get('index', 0) > 0:
             return []

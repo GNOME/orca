@@ -34,9 +34,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def isComposeMessageBody(self, obj):
         if not AXUtilities.is_editable(obj):
             return False

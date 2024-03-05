@@ -29,9 +29,6 @@ from orca import speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateDescription(self, obj, **args):
         # The text in the description is the same as the text in the page
         # tab and similar to (and sometimes the same as) the prompt.

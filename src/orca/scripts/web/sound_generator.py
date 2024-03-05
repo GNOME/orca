@@ -37,9 +37,6 @@ from orca import sound_generator
 
 class SoundGenerator(sound_generator.SoundGenerator):
 
-    def __init__(self, script):
-        super().__init__(script)
-
     def _generateClickable(self, obj, **args):
         """Returns an array of sounds indicating obj is clickable."""
 
