@@ -514,9 +514,13 @@ STATE_HORIZONTAL = _("horizontal")
 STATE_VERTICAL =  _("vertical")
 
 # Translators: This is a state which applies to a check box.
+# Please don't use the same translation as for "selected",
+# or it will be impossible to differentiate a checkbox in a list-item.
 STATE_CHECKED = C_("checkbox", "checked")
 
 # Translators: This is a state which applies to a check box.
+# Please don't use the same translation as for "not selected",
+# or it will be impossible to differentiate a checkbox in a list-item.
 STATE_NOT_CHECKED = C_("checkbox", "not checked")
 
 # Translators: This is a state which applies to a switch. For an example of
