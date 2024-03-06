@@ -2177,7 +2177,7 @@ class Utilities:
         adjusting for repeat character counts and punctuation.
         """
 
-        if segment.isnumeric():
+        if segment.isalnum():
             return line + segment
 
         count = len(segment)
