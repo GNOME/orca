@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-02-24 13:50+0000\n"
-"PO-Revision-Date: 2024-03-01 00:47+0200\n"
+"POT-Creation-Date: 2024-02-29 22:51+0000\n"
+"PO-Revision-Date: 2024-03-08 23:18+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -700,14 +700,12 @@ msgstr "Parādīt noklusējuma pogu"
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
 #: src/orca/cmdnames.py:100
-#| msgid "Speak the status bar"
 msgid "Present the status bar"
 msgstr "Parādīt statusa joslu"
 
 #. Translators: This command will cause the window's title to be spoken and
 #. displayed in braille.
 #: src/orca/cmdnames.py:104
-#| msgid "Speak the title bar"
 msgid "Present the title bar"
 msgstr "Parādīt virsraksta joslu"
 
@@ -721,7 +719,6 @@ msgstr "Atvērt meklētāja logu"
 #. Translators: Orca has a command which presents a menu with accessible actions
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:113
-#| msgid "fraction end"
 msgid "Show actions menu"
 msgstr "Rādīt darbību izvēlni"
 
@@ -757,7 +754,6 @@ msgstr "Ienākt un iziet no vienotā pārskata"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:140
-#| msgid "Move flat review to the end position"
 msgid "Toggle restricting flat review to the current object"
 msgstr "Pārslēgt, lai ierobežotu vienoto pārskatīšanu uz pašreizējo objektu"
 
@@ -1026,7 +1022,6 @@ msgstr "Pievienot saturu zem vienotā pārskata starpliktuvē"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:363
-#| msgid "Move flat review to the end position"
 msgid "Show flat review contents"
 msgstr "Rādīt vienotā pārskata saturu"
 
@@ -1163,7 +1158,6 @@ msgstr "Pārslēgt izrunas klusēšanu"
 #. resume working. This string is the command which toggles sleep mode on/off
 #. for the app being used at the time the command is given.
 #: src/orca/cmdnames.py:464
-#| msgid "Pass the next command on to the current application"
 msgid "Toggle sleep mode for the current application"
 msgstr "Pārslēgt gulēšanas režīmu uz pašreizējo lietotni"
 
@@ -1217,7 +1211,6 @@ msgstr "Iet cauri uz nākamo interpunkcijas izrunāšanas līmeni"
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
 #: src/orca/cmdnames.py:503
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next speech synthesizer"
 msgstr "Iet cauri uz nākamo runas sintezatoru"
 
@@ -1315,7 +1308,6 @@ msgstr "Pārslēgt peles pārskata režīmu"
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
 #: src/orca/cmdnames.py:577
-#| msgid "Present Unless"
 msgid "Present battery status"
 msgstr "Parādīt baterijas statusu"
 
@@ -1508,7 +1500,6 @@ msgstr "Parādīt iepriekšējo paziņojumu"
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:720
-#| msgid "Present last notification message"
 msgid "Present next notification message"
 msgstr "Parādīt nākamo paziņojumu"
 
@@ -1687,7 +1678,6 @@ msgstr "Pārslēgt strukturālās pārvietošanās taustiņus"
 #. next cell in a given direction. This string is the description of the command
 #. which enables/disables this support.
 #: src/orca/cmdnames.py:849
-#| msgid "Toggle structural navigation keys"
 msgid "Toggle table navigation keys"
 msgstr "Pārslēgt tabulas pārvietošanās taustiņus"
 
@@ -1851,19 +1841,16 @@ msgstr "Rādīt galveņu sarakstu %d līmenī"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:949
-#| msgid "Go to previous table"
 msgid "Go to previous internal frame"
 msgstr "Iet uz iepriekšējo iekšējo rāmi"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:952
-#| msgid "Go to next table"
 msgid "Go to next internal frame"
 msgstr "Iet uz nākamo iekšējo rāmi"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:955
-#| msgid "Display a list of tables"
 msgid "Display a list of internal frames"
 msgstr "Rādīt sarakstu ar iekšējiem rāmjiem"
 
@@ -2017,7 +2004,6 @@ msgstr "Iet uz objekta iepriekšējo vienaudzi ar navigatora fokusu."
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
 #: src/orca/cmdnames.py:1056
-#| msgid "Return to object with keyboard focus"
 msgid "Click on the object with navigator focus."
 msgstr "Spiest uz objektu ar navigatora fokusu."
 
@@ -2025,7 +2011,6 @@ msgstr "Spiest uz objektu ar navigatora fokusu."
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
 #: src/orca/cmdnames.py:1061
-#| msgid "Toggle structural navigation keys"
 msgid "Toggle simplified object navigation."
 msgstr "Pārslēgt vienkāršoto objekta navigāciju."
 
@@ -2118,25 +2103,21 @@ msgstr "Iet uz augšējo šūnu"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1117
-#| msgid "Go to the beginning of the line"
 msgid "Go to the beginning of the row"
 msgstr "Iet uz rindas sākumu"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1120
-#| msgid "Go to the end of the line"
 msgid "Go to the end of the row"
 msgstr "Iet uz rindas beigām"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1123
-#| msgid "Go to the top of the file"
 msgid "Go to the top of the column"
 msgstr "Iet uz kolonnas augšpusi"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1126
-#| msgid "Go to the bottom of the file"
 msgid "Go to the bottom of the column"
 msgstr "Iet uz kolonnas apakšu"
 
@@ -3678,7 +3659,6 @@ msgstr "Noklusējuma"
 #. are related to its "learn mode". Please use the same translation as done
 #. in cmdnames.py
 #: src/orca/guilabels.py:280
-#| msgid "Layout mode."
 msgctxt "keybindings"
 msgid "Learn mode"
 msgstr "Mācīšanās režīms"
@@ -3687,7 +3667,6 @@ msgstr "Mācīšanās režīms"
 #. are related to presenting and performing the accessible actions associated
 #. with the current object.
 #: src/orca/guilabels.py:285
-#| msgid "section"
 msgid "Actions"
 msgstr "Darbības"
 
@@ -3702,14 +3681,12 @@ msgstr "Braille Bindings"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
 #: src/orca/guilabels.py:295
-#| msgid "Save bookmarks"
 msgid "Bookmarks"
 msgstr "Grāmatzīmes"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
 #: src/orca/guilabels.py:299
-#| msgid "Time and Date"
 msgid "Date and time"
 msgstr "Datums un laiks"
 
@@ -3726,8 +3703,6 @@ msgstr "Datums un laiks"
 #. resume working. This string is a label for the group of Orca commands which
 #. are related to sleep mode.
 #: src/orca/guilabels.py:313
-#| msgctxt "textattr"
-#| msgid "wrap mode"
 msgid "Sleep mode"
 msgstr "Gulēšanas režīms"
 
@@ -3736,15 +3711,12 @@ msgstr "Gulēšanas režīms"
 #. and/or braille. The translation should be consistent with the string
 #. used in cmdnames.py.
 #: src/orca/guilabels.py:319
-#| msgid "Mouse review enabled."
 msgid "Mouse review"
 msgstr "Peles pārskats"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
 #: src/orca/guilabels.py:323
-#| msgctxt "role"
-#| msgid "navigation"
 msgid "Object navigation"
 msgstr "Pārvietošanās objektā"
 
@@ -3752,8 +3724,6 @@ msgstr "Pārvietošanās objektā"
 #. related to presenting information about the system, such as date, time,
 #. battery status, CPU status, etc.
 #: src/orca/guilabels.py:328
-#| msgctxt "role"
-#| msgid "information"
 msgid "System information"
 msgstr "Sistēmas informācija"
 
@@ -3761,7 +3731,6 @@ msgstr "Sistēmas informācija"
 #. are related to table navigation, such as moving to the next cell in a
 #. given direction.
 #: src/orca/guilabels.py:333
-#| msgid "Table Navigation"
 msgid "Table navigation"
 msgstr "Pārvietošanās tabulā"
 
@@ -3771,7 +3740,6 @@ msgstr "Pārvietošanās tabulā"
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:340
-#| msgid "Object mode."
 msgid "Object details"
 msgstr "Informācija par objektu"
 
@@ -3789,7 +3757,6 @@ msgstr "Nav saistīti"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:353
-#| msgid "Leaving flat review."
 msgid "Flat review"
 msgstr "Vienotais pārskats"
 
@@ -3799,7 +3766,6 @@ msgstr "Vienotais pārskats"
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:360
-#| msgid "Toggle speech verbosity level"
 msgid "Speech and verbosity"
 msgstr "Runa un detalizētība"
 
@@ -3813,8 +3779,6 @@ msgstr "Runa un detalizētība"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:371
-#| msgctxt "role"
-#| msgid "main content"
 msgid "Flat review contents"
 msgstr "Vienotā pārskata saturs"
 
@@ -3839,7 +3803,6 @@ msgstr "_DarbaVirsmas"
 #. column for the time of the notification. This string is a column header
 #. for the text of the notifications.
 #: src/orca/guilabels.py:388
-#| msgid "Notification"
 msgctxt "notification presenter"
 msgid "Notifications"
 msgstr "Paziņojumi"
@@ -3858,7 +3821,6 @@ msgstr "Saņemts"
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:400
-#| msgid "Notification"
 msgid "Notification presenter"
 msgstr "Paziņojumu rādītājs"
 
@@ -4688,7 +4650,6 @@ msgstr "Īs_s"
 #. substitution is for the number of messages in the list.
 #: src/orca/guilabels.py:967
 #, python-format
-#| msgid "Notification"
 msgid "%d notification"
 msgid_plural "%d notifications"
 msgstr[0] "%d paziņojums"
@@ -5049,8 +5010,6 @@ msgstr "Meta2"
 #. "alt" modifier.
 #.
 #: src/orca/keybindings.py:183
-#| msgctxt "keyboard"
-#| msgid "Alt"
 msgid "Alt"
 msgstr " Alt"
 
@@ -7222,7 +7181,6 @@ msgstr "grāmatzīmes nevarēja saglabāt"
 #. presented to the user when they try to go to a bookmark, but don't have
 #. any bookmarks.
 #: src/orca/messages.py:91
-#| msgid "No landmark found."
 msgid "No bookmarks found."
 msgstr "Nav atrastu grāmatzīmju."
 
@@ -7233,7 +7191,6 @@ msgstr "Nav atrastu grāmatzīmju."
 #. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
 #. that index.
 #: src/orca/messages.py:99
-#| msgid "No landmark found."
 msgid "Bookmark not found."
 msgstr "Grāmatzīme nav atrasta."
 
@@ -7246,7 +7203,6 @@ msgstr "Grāmatzīme nav atrasta."
 #. editor. This string is what Orca presents to the user when Orca's commands are
 #. being toggled off.
 #: src/orca/messages.py:109
-#| msgid "Structural navigation keys off."
 msgid "Orca command keys off."
 msgstr "Orca komandu taustiņi ir izslēgti."
 
@@ -7508,7 +7464,7 @@ msgstr "NOSAUKUMS"
 #. preferences.
 #: src/orca/messages.py:296
 msgid "Use alternate directory for user preferences"
-msgstr "Izmantot citu mapi lietotāja iestatījumiem"
+msgstr "Izmantot citu direktoriju lietotāja iestatījumiem"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-u, --user-prefs' command line option.
@@ -7521,7 +7477,6 @@ msgstr "DIR"
 #. various synthesizers with different voices and languages.
 #. This option can be used to override the configured default speech system.
 #: src/orca/messages.py:306
-#| msgid "Speech _system:"
 msgid "Speech system"
 msgstr "Izrunas sistēma"
 
@@ -7844,7 +7799,6 @@ msgstr "Noklusētā poga ir %s"
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:558
 #, python-format
-#| msgid "Default button is %s"
 msgid "Default button is %s. Grayed"
 msgstr "Noklusētā poga ir %s. Pelēkots"
 
@@ -7853,7 +7807,6 @@ msgstr "Noklusētā poga ir %s. Pelēkots"
 #. a command to present the default button. This is the message Orca will
 #. present if it could not find the default button.
 #: src/orca/messages.py:564
-#| msgid "Default button is %s"
 msgid "Default button not found"
 msgstr "Noklusējuma poga nav atrasta"
 
@@ -7879,7 +7832,6 @@ msgstr " augšraksts  %s"
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
 #: src/orca/messages.py:581
-#| msgid "Not in a table."
 msgid "Not in a dialog"
 msgstr "Nav pieejams dialoglodziņā."
 
@@ -8044,7 +7996,6 @@ msgstr "Pamet vienoto pārskatu."
 #. let the user know that flat review is being restricted to the current
 #. object of interest.
 #: src/orca/messages.py:701
-#| msgid "Move flat review to the word above the current word"
 msgid "Flat review restricted to the current object"
 msgstr "Vienotais pārskats ierobežots uz pašreizējo objektu"
 
@@ -8099,7 +8050,6 @@ msgstr "atver koku"
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a popup to appear if activated.
 #: src/orca/messages.py:739
-#| msgid "opens menu"
 msgid "opens popup"
 msgstr "atver uznirstošo"
 
@@ -9589,7 +9539,6 @@ msgstr "Objektu režīms."
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
 #: src/orca/messages.py:1845
-#| msgid "No more large objects."
 msgid "Pointer moved to object."
 msgstr "Rādītājs pārvietots uz objektu."
 
@@ -9642,8 +9591,6 @@ msgstr "Uz nākamo."
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
 #: src/orca/messages.py:1883
-#| msgid "%d percent."
-#| msgid_plural "%d percent."
 msgid "No parent."
 msgstr "Nav vecāka."
 
@@ -9651,7 +9598,6 @@ msgstr "Nav vecāka."
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
 #: src/orca/messages.py:1888
-#| msgid "Go to previous word"
 msgid "No previous."
 msgstr "Nav iepriekšējā."
 
@@ -9691,7 +9637,6 @@ msgstr "Tika pievienots jauns vienums"
 #. localized rolename if it does not.
 #: src/orca/messages.py:1915
 #, python-format
-#| msgid "No application has focus."
 msgid "No actions found on: %s"
 msgstr "Nav atrastu darbību uz: %s"
 
@@ -9784,7 +9729,6 @@ msgstr "Nav vairāk virsrakstu līmenī %d."
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
 #: src/orca/messages.py:1980
-#| msgid "No more tables."
 msgid "No more internal frames."
 msgstr "Vairāk nav iekšējo rāmju."
 
@@ -9992,7 +9936,6 @@ msgstr "Ielāde beigsies %s."
 #. The string substitution is the number of the current page.
 #: src/orca/messages.py:2125
 #, python-format
-#| msgid "Page has %s."
 msgid "Page %d"
 msgstr "Lapā %d"
 
@@ -10284,7 +10227,6 @@ msgstr "Izruna ieslēgta."
 #. For example "Sleep mode disabled for VirtualBox."
 #: src/orca/messages.py:2334
 #, python-format
-#| msgid "Speech disabled."
 msgid "Sleep mode disabled for %s."
 msgstr "Gulēšanas režīms ir izslēgts lietotnei %s."
 
@@ -10303,7 +10245,6 @@ msgstr "Gulēšanas režīms ir izslēgts lietotnei %s."
 #. For example "Sleep mode enabled for VirtualBox."
 #: src/orca/messages.py:2349
 #, python-format
-#| msgid "Bypass mode enabled."
 msgid "Sleep mode enabled for %s."
 msgstr "Gulēšanas režīms ir ieslēgts lietotnei %s."
 
@@ -10369,7 +10310,6 @@ msgstr "punkts punkts punkts"
 #. command specific to a spreadsheet, such as reading the input line, but is
 #. not in a spreadsheet.
 #: src/orca/messages.py:2392
-#| msgid "Not in a table."
 msgid "Not in a spreadsheet."
 msgstr "Nav izklājlapā."
 
@@ -10486,7 +10426,6 @@ msgstr "Nav pieejams tabulā."
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
 #: src/orca/messages.py:2473
-#| msgid "Table Navigation"
 msgid "Table navigation disabled."
 msgstr "Pārvietošanās tabulā ir izslēgta."
 
@@ -10494,7 +10433,6 @@ msgstr "Pārvietošanās tabulā ir izslēgta."
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
 #: src/orca/messages.py:2478
-#| msgid "Table Navigation"
 msgid "Table navigation enabled."
 msgstr "Pārvietošanās tabulā ir ieslēgta."
 
@@ -10924,8 +10862,6 @@ msgstr[2] "Saraksts ar %d vienumiem"
 #. that is inside of another list.
 #: src/orca/messages.py:2770
 #, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
 msgstr[0] "Ligzdots ar %d vienumu"
