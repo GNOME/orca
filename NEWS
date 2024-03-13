@@ -1,3 +1,48 @@
+46.0 - 13 March 2024
+
+Meson:
+
+* Allow building without git executable.
+
+Spiel:
+
+* Fix language and dialect fallback.
+
+* Catch all of Spiel's initialization errors.
+
+* Respect both speech system override, and user preference.
+
+* Avoid shutting Spiel down if still in use.
+
+Key handling:
+
+* Eliminate unnecessary keygrab refreshes in the web script.
+
+* Fix new-keyhandling regression in bypass mode.
+
+Thunderbird:
+
+* Adjust to Thunderbird's new way of doing things when a message
+  is deleted.
+
+General:
+
+* Fix false positive identifying redundant name-change events.
+
+* Fix regressions introduced by the accessible-text code rewrite.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas
+  en_GB           British English           Andi Chandler
+  gl              Galician                  Fran Dieguez
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  tr              Turkish                   Sabri Ünal
+
+=========
+
 46.beta - 21 February 2024
 
 Of Interest to Distros:
