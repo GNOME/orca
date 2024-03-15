@@ -43,7 +43,6 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca_state
 
 class NotificationPresenter:
     """Provides access to the notification history."""
@@ -348,10 +347,7 @@ class NotificationListGUI:
         """Shows the notifications list dialog."""
 
         self._gui.show_all()
-        time_stamp = orca_state.lastInputEvent.timestamp
-        if time_stamp == 0:
-            time_stamp = Gtk.get_current_event_time()
-        self._gui.present_with_time(time_stamp)
+        self._gui.present_with_time(Gtk.get_current_event_time())
 
 _presenter = NotificationPresenter()
 def getPresenter():

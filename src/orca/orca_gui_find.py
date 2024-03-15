@@ -75,10 +75,7 @@ class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         findDialog = self.get_widget("findDialog")
-        ts = orca_state.lastInputEvent.timestamp
-        if ts == 0:
-            ts = Gtk.get_current_event_time()
-        findDialog.present_with_time(ts)
+        findDialog.present_with_time(Gtk.get_current_event_time())
 
         # Populate the dialog box from the previous searchQuery, should
         # one exist.  Note:  This is necessary because we are destroying

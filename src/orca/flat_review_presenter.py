@@ -41,7 +41,6 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
-from . import orca_state
 from . import script_manager
 from . import settings_manager
 from . import settings
@@ -1202,10 +1201,7 @@ class FlatReviewContextGUI:
         """Shows the dialog."""
 
         self._gui.show_all()
-        time_stamp = orca_state.lastInputEvent.timestamp
-        if time_stamp == 0:
-            time_stamp = Gtk.get_current_event_time()
-        self._gui.present_with_time(time_stamp)
+        self._gui.present_with_time(Gtk.get_current_event_time())
 
 
 _presenter = FlatReviewPresenter()

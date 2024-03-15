@@ -1938,13 +1938,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                    modifierMask,
                                    0)
 
-        try:
-            ts = orca_state.lastInputEvent.timestamp
-        except Exception:
-            ts = 0
-        if ts == 0:
-            ts = Gtk.get_current_event_time()
-        orcaSetupWindow.present_with_time(ts)
+        orcaSetupWindow.present_with_time(Gtk.get_current_event_time())
 
         # We always want to re-order the text attributes page so that enabled
         # items are consistently at the top.
