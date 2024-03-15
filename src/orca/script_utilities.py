@@ -3869,20 +3869,6 @@ class Utilities:
     def eventIsSpinnerNoise(self, event):
         return False
 
-    def eventIsUserTriggered(self, event):
-        if not orca_state.lastInputEvent:
-            msg = "SCRIPT UTILITIES: Not user triggered: No last input event."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        delta = time.time() - orca_state.lastInputEvent.time
-        if delta > 1:
-            msg = f"SCRIPT UTILITIES: Not user triggered: Last input event {delta:.2f}s ago."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return True
-
     def presentFocusChangeReason(self):
         if self.handleUndoLocusOfFocusChange():
             return True

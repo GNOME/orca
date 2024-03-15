@@ -1129,11 +1129,6 @@ class Script(script.Script):
                     debug.printMessage(debug.LEVEL_INFO, msg, True)
                     return
 
-                if not self.utilities.eventIsUserTriggered(event):
-                    msg = "DEFAULT: Not clearing state. Event is not user triggered."
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
-                    return
-
                 msg = "DEFAULT: Event is for active window. Clearing state."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 focus_manager.getManager().set_active_window(None)
@@ -1882,11 +1877,6 @@ class Script(script.Script):
             self.learnModePresenter.quit()
 
         self.pointOfReference = {}
-
-        if not self.utilities.eventIsUserTriggered(event):
-            msg = "DEFAULT: Not clearing state. Event is not user triggered."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
 
         focus_manager.getManager().clear_state("Window deactivated")
         script_manager.getManager().setActiveScript(None, "Window deactivated")
