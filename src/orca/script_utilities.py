@@ -3828,7 +3828,6 @@ class Utilities:
         self._script.pointOfReference['undo'] = False
         self._script.pointOfReference['redo'] = False
         self._script.pointOfReference['paste'] = False
-        self._script.pointOfReference['last-selection-message'] = ''
 
     def handleUndoTextEvent(self, event):
         if self.lastInputEventWasUndo():
@@ -3955,7 +3954,10 @@ class Utilities:
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
-        if self._speakTextSelectionState(len(newString)):
+        if self.lastInputEventWasSelectAll() and newString:
+            if not self._script.pointOfReference.get('entireDocumentSelected'):
+                self._script.pointOfReference['entireDocumentSelected'] = True
+                self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
             return True
 
         # Even though we present a message, treat it as unhandled so the new location is
@@ -4010,77 +4012,6 @@ class Utilities:
             if endsWithChild:
                 child = AXHypertext.get_child_at_offset(obj, end)
                 self.handleTextSelectionChange(child, speakMessage)
-
-        return True
-
-    def _getCtrlShiftSelectionsStrings(self):
-        """Hacky and to-be-obsoleted method."""
-        return [messages.PARAGRAPH_SELECTED_DOWN,
-                messages.PARAGRAPH_UNSELECTED_DOWN,
-                messages.PARAGRAPH_SELECTED_UP,
-                messages.PARAGRAPH_UNSELECTED_UP]
-
-    def _speakTextSelectionState(self, nSelections):
-        """Hacky and to-be-obsoleted method."""
-
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
-            return False
-
-        eventStr, mods = self.lastKeyAndModifiers()
-        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
-        isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
-        selectedText = nSelections > 0
-
-        line = None
-        if (eventStr == "Page_Down") and isShiftKey and isControlKey:
-            line = messages.LINE_SELECTED_RIGHT
-        elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
-            line = messages.LINE_SELECTED_LEFT
-        elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
-            if selectedText:
-                line = messages.PAGE_SELECTED_DOWN
-            else:
-                line = messages.PAGE_UNSELECTED_DOWN
-        elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
-            if selectedText:
-                line = messages.PAGE_SELECTED_UP
-            else:
-                line = messages.PAGE_UNSELECTED_UP
-        elif (eventStr == "Down") and isShiftKey and isControlKey:
-            strings = self._getCtrlShiftSelectionsStrings()
-            if selectedText:
-                line = strings[0]
-            else:
-                line = strings[1]
-        elif (eventStr == "Up") and isShiftKey and isControlKey:
-            strings = self._getCtrlShiftSelectionsStrings()
-            if selectedText:
-                line = strings[2]
-            else:
-                line = strings[3]
-        elif (eventStr == "Home") and isShiftKey and isControlKey:
-            if selectedText:
-                line = messages.DOCUMENT_SELECTED_UP
-            else:
-                line = messages.DOCUMENT_UNSELECTED_UP
-        elif (eventStr == "End") and isShiftKey and isControlKey:
-            if selectedText:
-                line = messages.DOCUMENT_SELECTED_DOWN
-            else:
-                line = messages.DOCUMENT_SELECTED_UP
-        elif self.lastInputEventWasSelectAll() and selectedText:
-            if not self._script.pointOfReference.get('entireDocumentSelected'):
-                self._script.pointOfReference['entireDocumentSelected'] = True
-                line = messages.DOCUMENT_SELECTED_ALL
-            else:
-                return True
-
-        if not line:
-            return False
-
-        if line != self._script.pointOfReference.get('last-selection-message'):
-            self._script.pointOfReference['last-selection-message'] = line
-            self._script.speakMessage(line)
 
         return True
 

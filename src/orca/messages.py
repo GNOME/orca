@@ -593,30 +593,6 @@ DOCUMENT_SELECTED_ALL = _("entire document selected")
 # selection to be completely removed.
 DOCUMENT_UNSELECTED_ALL = _("entire document unselected")
 
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the end of the document by pressing Ctrl+Shift+End.
-DOCUMENT_SELECTED_DOWN = _("document selected from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text by pressing Ctrl+Shift+End.
-DOCUMENT_UNSELECTED_DOWN = _("document unselected from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the start of the document by pressing Ctrl+Shift+Home.
-DOCUMENT_SELECTED_UP = _("document selected to cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text by pressing Ctrl+Shift+Home.
-DOCUMENT_UNSELECTED_UP = _("document unselected to cursor position")
-
 # Translators: Orca allows you to dynamically define which row of a spreadsheet
 # or table should be treated as containing column headers. This message is
 # presented when the user sets the row to a particular row number.
@@ -1520,32 +1496,6 @@ LEAVING_SUGGESTION = C_("role", "leaving suggestion.")
 # for the corresponding term with context "role" found in object_properties.py
 LEAVING_TOC = C_("role", "leaving table of contents.")
 
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the end of the line by pressing Shift+Down.
-LINE_SELECTED_DOWN = _("line selected down from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the start of the line by pressing Shift+Up.
-LINE_SELECTED_UP = _("line selected up from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text from the current location to the end of the paragraph by
-# pressing Shift+Down.
-LINE_UNSELECTED_DOWN = _("line unselected down from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text from the current location to the start of the paragraph by
-# pressing Shift+Up.
-LINE_UNSELECTED_UP = _("line unselected up from cursor position")
-
 # Translators: Orca has a "Learn Mode" that will allow the user to type any key
 # on the keyboard and hear what the effects of that key would be.  The effects
 # might be what Orca would do if it had a handler for the particular key
@@ -1553,18 +1503,6 @@ LINE_UNSELECTED_UP = _("line unselected up from cursor position")
 # have a handler. This message is what is presented in speech and braille when
 # exiting Learn Mode.
 LEARN_MODE_STOP = _("Exiting learn mode.")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the start of the line by pressing Ctrl+Shift+Page_Up.
-LINE_SELECTED_LEFT = _("line selected from start to previous cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the end of the line by pressing Ctrl+Shift+Page_Down.
-LINE_SELECTED_RIGHT = _("line selected to end from previous cursor position")
 
 # Translators: this indicates that this piece of text is a hypertext link.
 LINK = _("link")
@@ -2130,56 +2068,6 @@ PAGE_NUMBER = _("Page %d")
 # presentation of the summary. The string substitution is a list of items, such
 # as "10 headings, 1 form, 52 links".
 PAGE_SUMMARY_PREFIX = _("Page has %s.")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the end of the page by pressing Shift+Page_Down.
-PAGE_SELECTED_DOWN = _("page selected from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the start of the page by pressing Shift+Page_Up.
-PAGE_SELECTED_UP = _("page selected to cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects a previously
-# selected page by pressing Shift+Page_Down.
-PAGE_UNSELECTED_DOWN = _("page unselected from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects a previously
-# selected page by pressing Shift+Page_Up.
-PAGE_UNSELECTED_UP = _("page unselected to cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the end of the paragraph by pressing Ctrl+Shift+Down.
-PARAGRAPH_SELECTED_DOWN = _("paragraph selected down from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user selects from the
-# current location to the start of the paragraph by pressing Ctrl+Shift+UP.
-PARAGRAPH_SELECTED_UP = _("paragraph selected up from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text from the current location to the end of the paragraph by
-# pressing Ctrl+Shift+Down.
-PARAGRAPH_UNSELECTED_DOWN = _("paragraph unselected down from cursor position")
-
-# Translators: when the user selects (highlights) or unselects text in a
-# document, Orca will speak information about what they have selected or
-# unselected. This message is presented when the user unselects previously
-# selected text from the current location to the start of the paragraph by
-# pressing Ctrl+Shift+UP.
-PARAGRAPH_UNSELECTED_UP = _("paragraph unselected up from cursor position")
 
 # Translators: This message appears in a warning dialog when the user performs
 # the command to get into Orca's preferences dialog when the preferences dialog

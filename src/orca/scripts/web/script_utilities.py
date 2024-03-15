@@ -37,7 +37,6 @@ import urllib
 from orca import debug
 from orca import focus_manager
 from orca import input_event
-from orca import messages
 from orca import orca_state
 from orca import script_utilities
 from orca import script_manager
@@ -5047,13 +5046,6 @@ class Utilities(script_utilities.Utilities):
 
         self._preferDescriptionOverName[hash(obj)] = rv
         return rv
-
-    def _getCtrlShiftSelectionsStrings(self):
-        """Hacky and to-be-obsoleted method."""
-        return [messages.LINE_SELECTED_DOWN,
-                messages.LINE_UNSELECTED_DOWN,
-                messages.LINE_SELECTED_UP,
-                messages.LINE_UNSELECTED_UP]
 
     def lastInputEventWasCopy(self):
         if super().lastInputEventWasCopy():
