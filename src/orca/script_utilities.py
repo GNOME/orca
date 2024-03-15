@@ -2361,20 +2361,6 @@ class Utilities:
 
         return text + delimiter + newText
 
-    def treatAsDuplicateEvent(self, event1, event2):
-        if not (event1 and event2):
-            return False
-
-        # The goal is to find event spam so we can ignore the event.
-        if event1 == event2:
-            return False
-
-        return event1.source == event2.source \
-            and event1.type == event2.type \
-            and event1.detail1 == event2.detail1 \
-            and event1.detail2 == event2.detail2 \
-            and event1.any_data == event2.any_data
-
     def isAutoTextEvent(self, event):
         """Returns True if event is associated with text being autocompleted
         or autoinserted or autocorrected or autosomethingelsed.
