@@ -1646,7 +1646,7 @@ class SpeechGenerator(generator.Generator):
         with focus.
         """
 
-        if AXUtilities.is_radio_button(obj):
+        if not AXUtilities.is_radio_button(obj):
             return []
 
         result = super()._generateRadioButtonGroup(obj, **args)
