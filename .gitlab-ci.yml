@@ -15,6 +15,7 @@ stages:
   - container-build
   - build
   - lint
+  - pages
 
 # Enable merge request pipelines and avoid duplicate pipelines
 # https://docs.gitlab.com/ee/ci/yaml/index.html#switch-between-branch-pipelines-and-merge-request-pipelines
@@ -27,6 +28,11 @@ workflow:
     - if: '$CI_COMMIT_BRANCH'
 
 # Main build job; installs at-spi2-core and builds/installs Orca.
+#
+# The build is done in a _build directory; see build_and_install.sh.
+#
+# At the end, prepares the Mallard docs with translations in _build and makes them
+# ready for rendering into HTML.  The rendering is done in the "pages" job below.
 build-opensuse-x86_64:
   stage: build
   extends:
@@ -38,6 +44,11 @@ build-opensuse-x86_64:
   script:
     - bash -x ci/install_atspi.sh
     - bash -x ci/build_and_install.sh
+    - bash -x ci/prepare_translated_docs.sh
+  artifacts:
+    paths:
+      - _build/help
+    expire_in: 1 day
 
 # Ruff linter for Python.
 #
@@ -54,3 +65,26 @@ ruff lint:
     - source ci/env.sh
     - ruff check src/orca
   allow_failure: true
+
+# Renders the documentation from Mallard into HTML, and publishes to GitLab pages.
+#
+# Assumes that a previous job put the translated docs in _build/help/{language_name}
+# for all available languages.
+pages:
+  stage: pages
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: opensuse-container@x86_64
+      artifacts: false
+    - job: build-opensuse-x86_64   # this one puts the translated docs in _build/help
+  script:
+    - bash -x ci/render_mallard_docs.sh
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
