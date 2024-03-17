@@ -583,8 +583,7 @@ class KeyBindings:
         clickCount = keyboardEvent.getClickCount()
         for keyBinding in self.keyBindings:
             if keyBinding.matches(keyboardEvent.hw_code, keyboardEvent.modifiers):
-                if keyBinding.modifier_mask == keyboardEvent.modifiers and \
-                   keyBinding.click_count == clickCount:
+                if keyBinding.click_count == clickCount:
                     matches.append(keyBinding)
                 # If there's no keysymstring, it's unbound and cannot be
                 # a match.
