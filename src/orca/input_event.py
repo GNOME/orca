@@ -267,8 +267,6 @@ class KeyboardEvent(InputEvent):
         self._obj_after_consuming = None
         self._handler = None
         self._consumer = None
-        self._should_consume = None
-        self._consume_reason = None
         self._did_consume = None
         self._result_reason = None
         self._bypassOrca = None
@@ -439,8 +437,6 @@ class KeyboardEvent(InputEvent):
                 # function.
                 KeyboardEvent.orcaStickyModifiers = 0
 
-        self._should_consume, self._consume_reason = self.shouldConsume()
-
     def _getDoubleClickCandidate(self):
         lastEvent = orca_state.lastNonModifierKeyEvent
         if isinstance(lastEvent, KeyboardEvent) \
@@ -515,7 +511,7 @@ class KeyboardEvent(InputEvent):
             return "(obscured)"
 
         return (
-            f"'{self.event_string}' ({self.keyval_name}) mods: {self.modifiers} "
+            f"'{self.keyval_name}' ({self.hw_code}) mods: {self.modifiers} "
             f"{self.type.value_nick}"
         )
 
@@ -791,45 +787,6 @@ class KeyboardEvent(InputEvent):
 
         return handler
 
-    def shouldConsume(self):
-        """Returns True if this event should be consumed."""
-
-        if not self.timestamp:
-            return False, 'No timestamp'
-
-        if not self._script:
-            return False, 'No active script when received'
-
-        if self.is_duplicate:
-            return False, 'Is duplicate'
-
-        if orca_state.capturingKeys:
-            return False, 'Capturing keys'
-
-        self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
-
-        scriptConsumes = self._handler is not None and self._handler.is_enabled()
-
-        if self._isReleaseForLastNonModifierKeyEvent():
-            return scriptConsumes, 'Is release for last non-modifier keyevent'
-
-        if self._script.learnModePresenter.is_active():
-            self._consumer = self._script.learnModePresenter.handle_event
-            return True, 'In Learn Mode'
-
-        if self.isModifierKey():
-            if not self.isOrcaModifier():
-                return False, 'Non-Orca modifier not in Learn Mode'
-            return True, 'Orca modifier'
-
-        if not self._handler:
-            return False, 'No handler'
-
-        if not self._handler.is_enabled():
-            return False, 'Handler is disabled'
-
-        return scriptConsumes, 'Script indication'
-
     def isHandledBy(self, method):
         if not self._handler:
             return False
@@ -873,8 +830,14 @@ class KeyboardEvent(InputEvent):
         tokens = ["LOCATION:", self._obj_after_consuming or self._obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        tokens = ["CONSUME:", self._should_consume, self._consume_reason]
+        self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
+        tokens = ["HANDLER:", self._handler]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        if self._script.learnModePresenter.is_active():
+            self._consumer = self._script.learnModePresenter.handle_event
+            tokens = ["CONSUMER:", self._consumer]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
         tokens = ["CONSUMED:", self._did_consume, self._result_reason]
@@ -919,24 +882,20 @@ class KeyboardEvent(InputEvent):
 
         self._present()
 
-        if not self.isPressedKey():
-            return self._should_consume, 'Consumed based on handler'
-
         if orca_state.capturingKeys:
             return False, 'Capturing keys'
 
         if self.isOrcaModifier():
             return True, 'Orca modifier'
 
-        if not self._should_consume:
-            return False, 'Should not consume'
-
         if not (self._consumer or self._handler):
             return False, 'No consumer or handler'
 
-        if self._consumer or self._handler.function:
-            GLib.timeout_add(1, self._consume)
-            return True, 'Will be consumed'
+        if self._consumer or (self._handler.function and self._handler.is_enabled()):
+            if self.isPressedKey():
+                GLib.timeout_add(1, self._consume)
+                return True, 'Will be consumed'
+            return True, 'Is release for consumed handler'
 
         return False, 'Unaddressed case'
 
@@ -978,12 +937,12 @@ class KeyboardEvent(InputEvent):
             msg = f'KEYBOARD EVENT: Consumer is {self._consumer.__name__}'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
-        elif self._handler.function:
+        elif self._handler.function and self._handler.is_enabled():
             msg = f'KEYBOARD EVENT: Handler is {self._handler}'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
-            msg = 'KEYBOARD EVENT: No handler or consumer'
+            msg = 'KEYBOARD EVENT: No enabled handler or consumer'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self._obj_after_consuming = focus_manager.getManager().get_locus_of_focus()
