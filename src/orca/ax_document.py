@@ -214,7 +214,8 @@ class AXDocument:
     def get_document_uri_fragment(document):
         """Returns the fragment portion of document's uri."""
 
-        return urllib.parse.urlparse(AXDocument.get_uri(document))
+        result = urllib.parse.urlparse(AXDocument.get_uri(document))
+        return result.fragment
 
     @staticmethod
     def _get_object_counts(document):
