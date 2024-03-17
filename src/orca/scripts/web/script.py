@@ -972,7 +972,7 @@ class Script(default.Script):
         self.pointOfReference["lastTextUnitSpoken"] = "line"
 
     def presentObject(self, obj, **args):
-        if not self.utilities.inDocumentContent(obj):
+        if not self.utilities.inDocumentContent(obj) or AXUtilities.is_document(obj):
             super().presentObject(obj, **args)
             return
 
