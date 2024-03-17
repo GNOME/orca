@@ -95,14 +95,6 @@ class KeyboardEvent(InputEvent):
     duplicateCount = 0
     orcaModifierPressed = False
 
-    # Whether last press of the Orca modifier was alone
-    lastOrcaModifierAlone = False
-    lastOrcaModifierAloneTime = None
-    # Whether the current press of the Orca modifier is alone
-    currentOrcaModifierAlone = False
-    currentOrcaModifierAloneTime = None
-    # When the second orca press happened
-    secondOrcaModifierTime = None
     # Sticky modifiers state, to be applied to the next keyboard event
     orcaStickyModifiers = 0
 
@@ -269,7 +261,6 @@ class KeyboardEvent(InputEvent):
         self._consumer = None
         self._did_consume = None
         self._result_reason = None
-        self._bypassOrca = None
         self._is_kp_with_numlock = False
 
         # Some implementors don't populate this field at all. More often than not,
@@ -335,22 +326,13 @@ class KeyboardEvent(InputEvent):
 
         _mayEcho = pressed or AXUtilities.is_terminal(self._obj)
 
-        if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
-           and not KeyboardEvent.lastOrcaModifierAlone:
+        if KeyboardEvent.stickyKeys and not self.isOrcaModifier():
             doubleEvent = self._getDoubleClickCandidate()
             if doubleEvent and \
                doubleEvent.modifiers & keybindings.ORCA_MODIFIER_MASK:
                 # this is the second event of a double-click, and sticky Orca
                 # affected the first, so copy over the modifiers to the second
                 KeyboardEvent.orcaStickyModifiers = doubleEvent.modifiers
-
-        if not self.isOrcaModifier():
-            if KeyboardEvent.orcaModifierPressed:
-                KeyboardEvent.currentOrcaModifierAlone = False
-                KeyboardEvent.currentOrcaModifierAloneTime = None
-            else:
-                KeyboardEvent.lastOrcaModifierAlone = False
-                KeyboardEvent.lastOrcaModifierAloneTime = None
 
         if self.isNavigationKey():
             self.keyType = KeyboardEvent.TYPE_NAVIGATION
@@ -362,27 +344,7 @@ class KeyboardEvent(InputEvent):
             self.keyType = KeyboardEvent.TYPE_MODIFIER
             self.shouldEcho = _mayEcho and settings.enableModifierKeys
             if self.isOrcaModifier() and not self.is_duplicate:
-                now = time.time()
-                if KeyboardEvent.lastOrcaModifierAlone:
-                    if pressed:
-                        KeyboardEvent.secondOrcaModifierTime = now
-                    if (KeyboardEvent.secondOrcaModifierTime <
-                        KeyboardEvent.lastOrcaModifierAloneTime + 0.5):
-                        # double-orca, let the real action happen
-                        self._bypassOrca = True
-                    if not pressed:
-                        KeyboardEvent.lastOrcaModifierAlone = False
-                        KeyboardEvent.lastOrcaModifierAloneTime = False
-                else:
-                    KeyboardEvent.orcaModifierPressed = pressed
-                    if pressed:
-                        KeyboardEvent.currentOrcaModifierAlone = True
-                        KeyboardEvent.currentOrcaModifierAloneTime = now
-                    else:
-                        KeyboardEvent.lastOrcaModifierAlone = \
-                            KeyboardEvent.currentOrcaModifierAlone
-                        KeyboardEvent.lastOrcaModifierAloneTime = \
-                            KeyboardEvent.currentOrcaModifierAloneTime
+                KeyboardEvent.orcaModifierPressed = pressed
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
             self.shouldEcho = _mayEcho and settings.enableFunctionKeys
@@ -418,8 +380,7 @@ class KeyboardEvent(InputEvent):
         if not self.isLockingKey():
             self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
 
-        if not self.isModifierKey():
-            self.setClickCount()
+        self.setClickCount()
 
         if KeyboardEvent.orcaModifierPressed:
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
@@ -438,7 +399,10 @@ class KeyboardEvent(InputEvent):
                 KeyboardEvent.orcaStickyModifiers = 0
 
     def _getDoubleClickCandidate(self):
-        lastEvent = orca_state.lastNonModifierKeyEvent
+        if not self.isModifierKey():
+            lastEvent = orca_state.lastNonModifierKeyEvent
+        else:
+            lastEvent = orca_state.lastInputEvent
         if isinstance(lastEvent, KeyboardEvent) \
            and lastEvent.event_string == self.event_string \
            and self.time - lastEvent.time <= settings.doubleClickTimeout:
@@ -458,6 +422,7 @@ class KeyboardEvent(InputEvent):
             return
 
         if self.type == Atspi.EventType.KEY_RELEASED_EVENT:
+            self._clickCount = doubleEvent.getClickCount()
             return
 
         if self._clickCount < 3:
@@ -644,21 +609,19 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string.isnumeric()
 
-    def isOrcaModifier(self, checkBypassMode=True):
+    def isOrcaModifier(self):
         """Return True if this is the Orca modifier key."""
 
-        if self.event_string in settings.orcaModifierKeys:
-            return True
+        if self.keyval_name == "KP_0" and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
+            return orca_modifier_manager.getManager().is_orca_modifier("KP_Insert")
 
-        if self.keyval_name == "KP_0" \
-           and "KP_Insert" in settings.orcaModifierKeys \
-           and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
-            return True
-
-        return False
+        return orca_modifier_manager.getManager().is_orca_modifier(self.keyval_name)
 
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
+
+        if self.isOrcaModifier():
+            return False
 
         return self.modifiers & keybindings.ORCA_MODIFIER_MASK
 
@@ -815,8 +778,6 @@ class KeyboardEvent(InputEvent):
 
         if self.is_duplicate:
             data = '%s DUPLICATE EVENT #%i' % (data, KeyboardEvent.duplicateCount)
-        else:
-            orca_modifier_manager.getManager().toggle_modifier_grab(self)
 
         msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
@@ -861,14 +822,14 @@ class KeyboardEvent(InputEvent):
     def _process(self):
         """Processes this input event."""
 
-        if self._bypassOrca:
-            if (self.event_string == "Caps_Lock" \
-                or self.event_string == "Shift_Lock") \
-               and self.type == Atspi.EventType.KEY_PRESSED_EVENT:
-                    self._lock_mod()
-                    self.keyType = KeyboardEvent.TYPE_LOCKING
-                    self._present()
-            return False, 'Bypassed orca modifier'
+        if self.is_duplicate:
+            return False, 'Is duplicate'
+
+        if self.isOrcaModifier() and self._clickCount == 2:
+            orca_modifier_manager.getManager().toggle_modifier(self)
+            if self.keyval_name in ["Caps_Lock", "Shift_Lock"]:
+                self.shouldEcho = True
+                self.keyType = KeyboardEvent.TYPE_LOCKING
 
         orca_state.lastInputEvent = self
         if not self.isModifierKey():
@@ -876,9 +837,6 @@ class KeyboardEvent(InputEvent):
 
         if not self._script:
             return False, 'No active script'
-
-        if self.is_duplicate:
-            return False, 'Is duplicate'
 
         self._present()
 
@@ -898,34 +856,6 @@ class KeyboardEvent(InputEvent):
             return True, 'Is release for consumed handler'
 
         return False, 'Unaddressed case'
-
-    def _lock_mod(self):
-        def lock_mod(modifiers, modifier):
-            def lockit():
-                try:
-                    if modifiers & modifier:
-                        lock = Atspi.KeySynthType.UNLOCKMODIFIERS
-                        debug.printMessage(debug.LEVEL_INFO, "Unlocking capslock", True)
-                    else:
-                        lock = Atspi.KeySynthType.LOCKMODIFIERS
-                        debug.printMessage(debug.LEVEL_INFO, "Locking capslock", True)
-                    Atspi.generate_keyboard_event(modifier, "", lock)
-                    debug.printMessage(debug.LEVEL_INFO, "Done with capslock", True)
-                except Exception:
-                    debug.printMessage(debug.LEVEL_INFO, "Could not trigger capslock, " \
-                        "at-spi2-core >= 2.32 is needed for triggering capslock", True)
-                    pass
-            return lockit
-        if self.event_string == "Caps_Lock":
-            modifier = 1 << Atspi.ModifierType.SHIFTLOCK
-        elif self.event_string == "Shift_Lock":
-            modifier = 1 << Atspi.ModifierType.SHIFT
-        else:
-            tokens = ["Unknown locking key", self.event_string]
-            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
-            return
-        debug.printMessage(debug.LEVEL_INFO, "Scheduling capslock", True)
-        GLib.timeout_add(1, lock_mod(self.modifiers, modifier))
 
     def _consume(self):
         startTime = time.time()

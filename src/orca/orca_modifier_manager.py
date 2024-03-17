@@ -35,6 +35,7 @@ import subprocess
 import gi
 gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from . import keybindings
@@ -54,11 +55,16 @@ class OrcaModifierManager:
         self._caps_lock_cleared = False
         self._need_to_restore_orca_modifier = False
 
-    @staticmethod
-    def is_orca_modifier(modifier):
+    def is_orca_modifier(self, modifier):
         """Returns True if modifier is one of the user's Orca modifier keys."""
 
-        return modifier in settings_manager.getManager().getSetting("orcaModifierKeys")
+        if modifier not in settings_manager.getManager().getSetting("orcaModifierKeys"):
+            return False
+
+        if modifier in ["Insert", "KP_Insert"]:
+            return self.is_modifier_grabbed(modifier)
+
+        return True
 
     def is_modifier_grabbed(self, modifier):
         """Returns True if there is an existing grab for modifier."""
@@ -117,27 +123,70 @@ class OrcaModifierManager:
         orca_state.device.remove_key_grab(self._grabbed_modifiers[modifier])
         del self._grabbed_modifiers[modifier]
 
-    def toggle_modifier_grab(self, keyboard_event):
+    def toggle_modifier(self, keyboard_event):
+        """Toggles the modifier to enable double-clicking causing normal behavior."""
+
+        if keyboard_event.keyval_name in ["Caps_Lock", "Shift_Lock"]:
+            self._toggle_modifier_lock(keyboard_event)
+            return
+
+        self._toggle_modifier_grab(keyboard_event)
+
+    def _toggle_modifier_grab(self, keyboard_event):
         """Toggles the grab for a modifier to enable double-clicking causing normal behavior."""
 
-        if not keyboard_event.isPressedKey():
+        # Because we will synthesize another press and release, wait until the real release.
+        if keyboard_event.isPressedKey():
             return
 
-        key = keyboard_event.keyval_name
-        if key in self._grabbed_modifiers:
-            # Temporarily toggle the modifier off just in case there's about to be a double click.
-            msg = f"ORCA MODIFIER MANAGER: Toggling modifier grab for {key}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.remove_modifier_grab(key)
-            self._toggled_modifier = key
+        def toggle(hw_code):
+            Atspi.generate_keyboard_event(hw_code, "", Atspi.KeySynthType.PRESSRELEASE)
+            return False
+
+        def restore_grab(modifier):
+            self.add_modifier_grab(modifier)
+            return False
+
+        msg = "ORCA MODIFIER MANAGER: Removing grab pre-toggle"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self.remove_modifier_grab(keyboard_event.keyval_name)
+
+        msg = f"ORCA MODIFIER MANAGER: Scheduling toggle of {keyboard_event.keyval_name}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        GLib.timeout_add(1, toggle, keyboard_event.hw_code)
+
+        msg = "ORCA MODIFIER MANAGER: Scheduling re-adding grab post-toggle"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        GLib.timeout_add(500, restore_grab, keyboard_event.keyval_name)
+
+    def _toggle_modifier_lock(self, keyboard_event):
+        """Toggles the lock for a modifier to enable double-clicking causing normal behavior."""
+
+        if not (keyboard_event.isPressedKey()):
             return
 
-        # Any key press causes us to restore the temporarily-toggled-off modifier.
-        if self._toggled_modifier is not None:
-            msg = f"ORCA MODIFIER MANAGER: Restoring toggled grab for {self._toggled_modifier}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.add_modifier_grab(self._toggled_modifier)
-            self._toggled_modifier = None
+        def toggle(modifiers, modifier):
+            if modifiers & modifier:
+                lock = Atspi.KeySynthType.UNLOCKMODIFIERS
+                msg = "ORCA MODIFIER MANAGER: Unlocking CapsLock"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            else:
+                lock = Atspi.KeySynthType.LOCKMODIFIERS
+                msg = "ORCA MODIFIER MANAGER: Locking CapsLock"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            Atspi.generate_keyboard_event(modifier, "", lock)
+            return
+
+        if keyboard_event.keyval_name == "Caps_Lock":
+            modifier = 1 << Atspi.ModifierType.SHIFTLOCK
+        elif keyboard_event.keyval_name == "Shift_Lock":
+            modifier = 1 << Atspi.ModifierType.SHIFT
+        else:
+            return
+
+        msg = "ORCA MODIFIER MANAGER: Scheduling lock change"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
     def refresh_orca_modifiers(self, reason=""):
         """Refreshes the Orca modifier keys."""
