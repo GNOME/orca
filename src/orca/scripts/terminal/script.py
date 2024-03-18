@@ -116,7 +116,7 @@ class Script(default.Script):
 
         self._sayAllIsInterrupted = False
         self.utilities.clearCachedCommandState()
-        if not event.shouldEcho or event.isOrcaModified() or event.isCharacterEchoable():
+        if not event.shouldEcho() or event.isOrcaModified() or event.isCharacterEchoable():
             return False
 
         # We have no reliable way of knowing a password is being entered into

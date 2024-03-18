@@ -2568,7 +2568,7 @@ class Script(script.Script):
             self._sayAllIsInterrupted = False
             self.utilities.clearCachedCommandState()
 
-        if not event.shouldEcho or event.isOrcaModified():
+        if not event.shouldEcho() or event.isOrcaModified():
             return False
 
         focus = focus_manager.getManager().get_locus_of_focus()

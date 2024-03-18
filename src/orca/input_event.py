@@ -324,8 +324,6 @@ class KeyboardEvent(InputEvent):
 
         self.keyType = None
 
-        _mayEcho = pressed or AXUtilities.is_terminal(self._obj)
-
         if KeyboardEvent.stickyKeys and not self.isOrcaModifier():
             doubleEvent = self._getDoubleClickCandidate()
             if doubleEvent and \
@@ -336,49 +334,28 @@ class KeyboardEvent(InputEvent):
 
         if self.isNavigationKey():
             self.keyType = KeyboardEvent.TYPE_NAVIGATION
-            self.shouldEcho = _mayEcho and settings.enableNavigationKeys
         elif self.isActionKey():
             self.keyType = KeyboardEvent.TYPE_ACTION
-            self.shouldEcho = _mayEcho and settings.enableActionKeys
         elif self.isModifierKey():
             self.keyType = KeyboardEvent.TYPE_MODIFIER
-            self.shouldEcho = _mayEcho and settings.enableModifierKeys
             if self.isOrcaModifier() and not self.is_duplicate:
                 KeyboardEvent.orcaModifierPressed = pressed
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
-            self.shouldEcho = _mayEcho and settings.enableFunctionKeys
         elif self.isDiacriticalKey():
             self.keyType = KeyboardEvent.TYPE_DIACRITICAL
-            self.shouldEcho = _mayEcho and settings.enableDiacriticalKeys
         elif self.isLockingKey():
             self.keyType = KeyboardEvent.TYPE_LOCKING
-            self.shouldEcho = settings.presentLockingKeys
-            if self.shouldEcho is None:
-                self.shouldEcho = not settings.onlySpeakDisplayedText
-            self.shouldEcho = self.shouldEcho and pressed
         elif self.isAlphabeticKey():
             self.keyType = KeyboardEvent.TYPE_ALPHABETIC
-            self.shouldEcho = _mayEcho \
-                and (settings.enableAlphabeticKeys or settings.enableEchoByCharacter)
         elif self.isNumericKey():
             self.keyType = KeyboardEvent.TYPE_NUMERIC
-            self.shouldEcho = _mayEcho \
-                and (settings.enableNumericKeys or settings.enableEchoByCharacter)
         elif self.isPunctuationKey():
             self.keyType = KeyboardEvent.TYPE_PUNCTUATION
-            self.shouldEcho = _mayEcho \
-                and (settings.enablePunctuationKeys or settings.enableEchoByCharacter)
         elif self.isSpace():
             self.keyType = KeyboardEvent.TYPE_SPACE
-            self.shouldEcho = _mayEcho \
-                and (settings.enableSpace or settings.enableEchoByCharacter)
         else:
             self.keyType = KeyboardEvent.TYPE_UNKNOWN
-            self.shouldEcho = False
-
-        if not self.isLockingKey():
-            self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
 
         self.setClickCount()
 
@@ -467,7 +444,6 @@ class KeyboardEvent(InputEvent):
              + f"                 time={time.time():f}\n" \
              + f"                 keyType={key_type}\n" \
              + f"                 clickCount={self._clickCount}\n" \
-             + f"                 shouldEcho={self.shouldEcho}\n"
 
     def asSingleLineString(self):
         """Returns a single-line string representation of this event."""
@@ -765,6 +741,41 @@ class KeyboardEvent(InputEvent):
 
         return self._script.presentKeyboardEvent(self)
 
+    def shouldEcho(self):
+        """Returns True if this input event should be echoed."""
+
+        if not (self.isPressedKey() or AXUtilities.is_terminal(self._obj)):
+            return False
+
+        if self.isLockingKey():
+            return settings.presentLockingKeys
+
+        if not settings.enableKeyEcho:
+            return False
+
+        if self.isNavigationKey():
+            return settings.enableNavigationKeys
+        if self.isActionKey():
+            return settings.enableActionKeys
+        if self.isModifierKey():
+            return settings.enableModifierKeys
+        if self.isFunctionKey():
+            return settings.enableFunctionKeys
+        if self.isDiacriticalKey():
+            if settings.enableDiacriticalKeys is None:
+                return not settings.onlySpeakDisplayedText
+            return settings.enableDiacriticalKeys
+        if self.isAlphabeticKey():
+            return settings.enableAlphabeticKeys or settings.enableEchoByCharacter
+        if self.isNumericKey():
+            return settings.enableNumericKeys or settings.enableEchoByCharacter
+        if self.isPunctuationKey():
+            return settings.enablePunctuationKeys or settings.enableEchoByCharacter
+        if self.isSpace():
+            return settings.enableSpace or settings.enableEchoByCharacter
+
+        return False
+
     def process(self):
         """Processes this input event."""
 
@@ -828,7 +839,6 @@ class KeyboardEvent(InputEvent):
         if self.isOrcaModifier() and self._clickCount == 2:
             orca_modifier_manager.getManager().toggle_modifier(self)
             if self.keyval_name in ["Caps_Lock", "Shift_Lock"]:
-                self.shouldEcho = True
                 self.keyType = KeyboardEvent.TYPE_LOCKING
 
         orca_state.lastInputEvent = self
