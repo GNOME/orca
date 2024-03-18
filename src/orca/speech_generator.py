@@ -655,9 +655,9 @@ class SpeechGenerator(generator.Generator):
         visibleOnly = not self._script.utilities.isStatusBarNotification(obj)
 
         minimumWords = 1
-        if AXUtilities.is_panel(obj, args.get("role")) \
-           or (AXUtilities.is_dialog(obj, args.get("role")) \
-               and not AXUtilities.is_message_dialog(obj)):
+        role = args.get("role")
+        if AXUtilities.is_panel(obj, role) \
+           or (AXUtilities.is_dialog(obj, role) and not AXUtilities.is_message_dialog(obj)):
             minimumWords = 3
 
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)

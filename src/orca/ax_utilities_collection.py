@@ -1687,3 +1687,47 @@ class AXUtilitiesCollection:
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
         rule = AXCollection.create_match_rule(roles=roles, states=states)
         return AXCollection.get_first_match(root, rule)
+
+    @staticmethod
+    def has_combo_box_or_list_box(root):
+        """Returns True if there's a showing, visible combobox or listbox inside root"""
+
+        roles = [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        return bool(AXCollection.get_first_match(root, rule))
+
+    @staticmethod
+    def has_editable_object(root):
+        """Returns True if there's a showing, visible, editable object inside root"""
+
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE, Atspi.StateType.EDITABLE]
+        rule = AXCollection.create_match_rule(states=states)
+        return bool(AXCollection.get_first_match(root, rule))
+
+    @staticmethod
+    def has_scroll_pane(root):
+        """Returns True if there's a showing, visible scroll pane inside root"""
+
+        roles = [Atspi.Role.SCROLL_PANE]
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        return bool(AXCollection.get_first_match(root, rule))
+
+    @staticmethod
+    def has_split_pane(root):
+        """Returns True if there's a showing, visible split pane inside root"""
+
+        roles = [Atspi.Role.SPLIT_PANE]
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        return bool(AXCollection.get_first_match(root, rule))
+
+    @staticmethod
+    def has_tree_or_tree_table(root):
+        """Returns True if there's a showing, visible tree or tree table inside root"""
+
+        roles = [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        return bool(AXCollection.get_first_match(root, rule))
