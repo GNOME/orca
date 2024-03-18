@@ -253,7 +253,6 @@ class KeyboardEvent(InputEvent):
         self.is_duplicate = self in [orca_state.lastInputEvent,
                                      orca_state.lastNonModifierKeyEvent]
         self._script = None
-        self._app = None
         self._window = None
         self._obj = None
         self._obj_after_consuming = None
@@ -285,26 +284,18 @@ class KeyboardEvent(InputEvent):
         # We typically do little to nothing in the case of a key release. Therefore skip doing
         # this work.
         if pressed:
-            self._script = script_manager.getManager().getActiveScript()
             self._window = focus_manager.getManager().get_active_window()
-            if self._script:
-                self._app = self._script.app
-                if not focus_manager.getManager().can_be_active_window(self._window):
-                    self._window = focus_manager.getManager().find_active_window()
-                    tokens = ["INPUT EVENT: Updating window and active window to", self._window]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    focus_manager.getManager().set_active_window(self._window)
+            if not focus_manager.getManager().can_be_active_window(self._window):
+                self._window = focus_manager.getManager().find_active_window()
+                tokens = ["INPUT EVENT: Updating window and active window to", self._window]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                focus_manager.getManager().set_active_window(self._window)
 
             # We set this after getting the window because changing the window can cause focus to
             # be updated if the current locus of focus is not in the window we just set as active.
+            # Setting the active window can also update the active script.
             self._obj = focus_manager.getManager().get_locus_of_focus()
-
-            if self._window and self._app != AXObject.get_application(self._window):
-                self._script = script_manager.getManager().getScript(
-                    AXObject.get_application(self._window))
-                self._app = self._script.app
-                tokens = ["INPUT EVENT: Updated script to", self._script]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            self._script = script_manager.getManager().getActiveScript()
 
         elif self._isReleaseForLastNonModifierKeyEvent():
             self._script = orca_state.lastNonModifierKeyEvent._script
@@ -644,11 +635,6 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in ["space", " "]
 
-    def isFromApplication(self, app):
-        """Return True if this is associated with the specified app."""
-
-        return self._app == app
-
     def isCharacterEchoable(self):
         """Returns True if the script will echo this event as part of
         character echo. We do this to not double-echo a given printable
@@ -793,7 +779,7 @@ class KeyboardEvent(InputEvent):
         msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
 
-        tokens = ["HOST_APP:", self._app]
+        tokens = ["SCRIPT:", self._script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["WINDOW:", self._window]
@@ -814,13 +800,6 @@ class KeyboardEvent(InputEvent):
         self._did_consume, self._result_reason = self._process()
         tokens = ["CONSUMED:", self._did_consume, self._result_reason]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        script = script_manager.getManager().getActiveScript()
-        if debug.LEVEL_INFO >= debug.debugLevel and script is not None:
-            attributes = script.getTransferableAttributes()
-            for key, value in attributes.items():
-                msg = f"INPUT EVENT: {key}: {value}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)

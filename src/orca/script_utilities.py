@@ -3345,13 +3345,6 @@ class Utilities:
         text = f"{text}{separator}{newText}"
         clipboard.set_text(text, -1)
 
-    def lastInputEventCameFromThisApp(self):
-        if not isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            return False
-
-        event = orca_state.lastNonModifierKeyEvent
-        return event and event.isFromApplication(self._script.app)
-
     def lastInputEventWasPrintableKey(self):
         event = orca_state.lastInputEvent
         if not isinstance(event, input_event.KeyboardEvent):
