@@ -204,8 +204,38 @@ class AXUtilities:
         if not AXUtilitiesRole.is_dialog_or_alert(obj):
             return False
 
-        widgets = AXUtilities.get_all_widgets(obj, exclude_push_button=True)
-        return not widgets
+        if not AXObject.supports_collection(obj):
+            widgets = AXUtilities.get_all_widgets(obj, exclude_push_button=True)
+            return not widgets
+
+        if AXUtilitiesCollection.has_scroll_pane(obj):
+            tokens = ["AXUtilities:", obj, "is not a message dialog: has scroll pane"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesCollection.has_split_pane(obj):
+            tokens = ["AXUtilities:", obj, "is not a message dialog: has split pane"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesCollection.has_tree_or_tree_table(obj):
+            tokens = ["AXUtilities:", obj, "is not a message dialog: has tree or tree table"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesCollection.has_combo_box_or_list_box(obj):
+            tokens = ["AXUtilities:", obj, "is not a message dialog: has combo box or list box"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesCollection.has_editable_object(obj):
+            tokens = ["AXUtilities:", obj, "is not a message dialog: has editable object"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        tokens = ["AXUtilities:", obj, "is believed to be a message dialog"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return True
 
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
