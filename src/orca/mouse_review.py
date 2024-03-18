@@ -318,7 +318,7 @@ class _ItemContext:
             return False
 
         if self._obj and self._obj != prior._obj and not self._isInlineChild(prior):
-            priorObj = prior._obj or self._getContainer()
+            priorObj = prior._obj or self._get_container()
             focus_manager.getManager().emit_region_changed(
                 self._obj, mode=focus_manager.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
