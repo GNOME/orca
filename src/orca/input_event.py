@@ -734,6 +734,8 @@ class KeyboardEvent(InputEvent):
             return False
 
         if self.isLockingKey():
+            if settings.presentLockingKeys is None:
+                return not settings.onlySpeakDisplayedText
             return settings.presentLockingKeys
 
         if not settings.enableKeyEcho:
