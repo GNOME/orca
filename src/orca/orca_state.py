@@ -36,15 +36,6 @@ __license__   = "LGPL"
 #
 capturingKeys   = False
 
-# The last non-modifier key event received.
-#
-lastNonModifierKeyEvent = None
-
-# The InputEvent instance representing the last input event.  This is
-# set each time a mouse, keyboard or braille event is received.
-#
-lastInputEvent = None
-
 # The last searchQuery
 #
 searchQuery = None
@@ -52,7 +43,3 @@ searchQuery = None
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None
-
-# The AT-SPI device (needed for key grabs).
-#
-device = None

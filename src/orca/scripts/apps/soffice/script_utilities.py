@@ -34,7 +34,7 @@ from gi.repository import Atspi
 
 import orca.debug as debug
 import orca.focus_manager as focus_manager
-import orca.keybindings as keybindings
+import orca.input_event_manager as input_event_manager
 import orca.messages as messages
 import orca.script_utilities as script_utilities
 from orca.ax_object import AXObject
@@ -234,18 +234,18 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_paragraph(event.source):
             return False
 
-        lastKey, mods = self.lastKeyAndModifiers()
+        manager = input_event_manager.getManager()
         if event.type.startswith("object:text-changed:insert"):
             if not event.any_data:
                 return False
 
-            if lastKey == "Tab" and event.any_data != "\t":
+            if manager.last_event_was_tab() and event.any_data != "\t":
                 return True
 
-            if lastKey in ["BackSpace", "ISO_Left_Tab"]:
+            if manager.last_event_was_backspace():
                 return True
 
-        if event.type.startswith("focus:") and lastKey == "Return":
+        if event.type.startswith("focus:") and manager.last_event_was_return():
             return AXText.get_character_count(event.source) > 0
 
         return False
@@ -273,15 +273,11 @@ class Utilities(script_utilities.Utilities):
         return comboBox
 
     def isComboBoxSelectionChange(self, event):
-        comboBox = self.containingComboBox(event.source)
-        if not comboBox:
+        if not self.containingComboBox(event.source):
             return False
 
-        lastKey, mods = self.lastKeyAndModifiers()
-        if lastKey not in ["Down", "Up"]:
-            return False
-
-        return True
+        manager = input_event_manager.getManager()
+        return manager.last_event_was_down() or manager.last_event_was_up()
 
     def isComboBoxNoise(self, event):
         if AXUtilities.is_text(event.source) and event.type.startswith("object:text-"):
@@ -305,19 +301,10 @@ class Utilities(script_utilities.Utilities):
 
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return self.lastInputEventWasDelete() and focus_manager.getManager().focus_is_dead()
+            return input_event_manager.getManager().last_event_was_delete() \
+                and focus_manager.getManager().focus_is_dead()
 
         return super().isSelectedTextDeletionEvent(event)
-
-    def lastInputEventWasRedo(self):
-        if super().lastInputEventWasRedo():
-            return True
-
-        keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'y':
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
 
     def selectedChildren(self, obj):
         # TODO - JD: Are these overrides still needed? They appear to be
@@ -351,8 +338,7 @@ class Utilities(script_utilities.Utilities):
         if self._script.getTableNavigator().last_input_event_was_navigation_command():
             return False
 
-        lastKey, mods = self.lastKeyAndModifiers()
-        if lastKey in ["Tab", "ISO_Left_Tab"]:
+        if input_event_manager.getManager().last_event_was_tab_navigation():
             return False
 
         return super().shouldReadFullRow(obj, prevObj)

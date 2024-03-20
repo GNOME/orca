@@ -36,8 +36,7 @@ import urllib
 
 from orca import debug
 from orca import focus_manager
-from orca import input_event
-from orca import orca_state
+from orca import input_event_manager
 from orca import script_utilities
 from orca import script_manager
 from orca import settings_manager
@@ -2686,10 +2685,10 @@ class Utilities(script_utilities.Utilities):
         if self.isGridDescendant(obj):
             return not self._script.inFocusMode()
 
-        if self.lastInputEventWasLineNav():
+        if input_event_manager.getManager().last_event_was_line_navigation():
             return False
 
-        if self.lastInputEventWasMouseButton():
+        if input_event_manager.getManager().last_event_was_mouse_button():
             return False
 
         return True
@@ -3964,19 +3963,14 @@ class Utilities(script_utilities.Utilities):
         if not self.isSpinnerEntry(event.source):
             return False
 
-        if event.type.startswith("object:text-changed") \
-           or event.type.startswith("object:text-selection-changed"):
-            lastKey, mods = self.lastKeyAndModifiers()
-            if lastKey in ["Down", "Up"]:
-                return True
-
-        return False
+        return (event.type.startswith("object:text-changed") \
+           or event.type.startswith("object:text-selection-changed")) \
+            and input_event_manager.getManager().last_event_was_up_or_down()
 
     def treatEventAsSpinnerValueChange(self, event):
         if event.type.startswith("object:text-caret-moved") and self.isSpinnerEntry(event.source):
-            lastKey, mods = self.lastKeyAndModifiers()
-            if lastKey in ["Down", "Up"]:
-                obj, offset = self.getCaretContext()
+            if input_event_manager.getManager().last_event_was_up_or_down():
+                obj = self.getCaretContext()[0]
                 return event.source == obj
 
         return False
@@ -3987,8 +3981,7 @@ class Utilities(script_utilities.Utilities):
 
         if event.type.startswith("object:text-") \
            and self.isSingleLineAutocompleteEntry(event.source):
-            lastKey, mods = self.lastKeyAndModifiers()
-            return lastKey == "Return"
+            return input_event_manager.getManager().last_event_was_return()
         if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
             return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source) \
                 or AXUtilities.is_frame(event.source)
@@ -4017,9 +4010,8 @@ class Utilities(script_utilities.Utilities):
             if isListBoxItem(obj) or isMenuItem(obj):
                 return True
 
-            if obj == event.source and isComboBoxItem(obj):
-                lastKey, mods = self.lastKeyAndModifiers()
-                if lastKey in ["Down", "Up"]:
+            if obj == event.source and isComboBoxItem(obj) \
+               and input_event_manager.getManager().last_event_was_up_or_down():
                     return True
 
         return False
@@ -4043,8 +4035,7 @@ class Utilities(script_utilities.Utilities):
 
         focus = focus_manager.getManager().get_locus_of_focus()
         if AXUtilities.is_entry(focus) and AXUtilities.is_focused(focus):
-            lastKey, mods = self.lastKeyAndModifiers()
-            if lastKey not in ["Down", "Up"]:
+            if not input_event_manager.getManager().last_event_was_up_or_down():
                 return True
 
         return False
@@ -4058,10 +4049,8 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_selectable(focus):
             return False
 
-        if AXUtilities.is_menu_item_of_any_kind(focus) \
-           or AXUtilities.is_list_item(focus):
-            lastKey, mods = self.lastKeyAndModifiers()
-            return lastKey in ["Down", "Up"]
+        if AXUtilities.is_menu_item_of_any_kind(focus) or AXUtilities.is_list_item(focus):
+            return input_event_manager.getManager().last_event_was_up_or_down()
 
         return False
 
@@ -4157,11 +4146,7 @@ class Utilities(script_utilities.Utilities):
         if event.source != focus_manager.getManager().get_locus_of_focus():
             return False
 
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            inputEvent = orca_state.lastNonModifierKeyEvent
-            return inputEvent and inputEvent.isPrintableKey() and not inputEvent.modifiers
-
-        return False
+        return input_event_manager.getManager().last_event_was_printable_key()
 
     def textEventIsForNonNavigableTextObject(self, event):
         if not event.type.startswith("object:text-"):
@@ -4614,9 +4599,8 @@ class Utilities(script_utilities.Utilities):
 
         obj, offset = None, -1
         notify = True
-        keyString, mods = self.lastKeyAndModifiers()
         childCount = AXObject.get_child_count(event.source)
-        if keyString == "Up":
+        if input_event_manager.getManager().last_event_was_up():
             if event.detail1 >= childCount:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4633,7 +4617,7 @@ class Utilities(script_utilities.Utilities):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 obj, offset = self.previousContext(prevObj, -1)
 
-        elif keyString == "Down":
+        elif input_event_manager.getManager().last_event_was_down():
             if event.detail1 == 0:
                 msg = "WEB: First child removed. Getting new location from start of parent."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4760,7 +4744,8 @@ class Utilities(script_utilities.Utilities):
 
         length = AXText.get_character_count(obj)
         if treatAsText and offset >= length:
-            if self.isContentEditableWithEmbeddedObjects(obj) and self.lastInputEventWasCharNav():
+            if self.isContentEditableWithEmbeddedObjects(obj) \
+               and input_event_manager.getManager().last_event_was_character_navigation():
                 nextObj, nextOffset = self.nextContext(obj, length)
                 if not nextObj:
                     tokens = ["WEB: No next object found at end of contenteditable", obj]
@@ -5046,20 +5031,3 @@ class Utilities(script_utilities.Utilities):
 
         self._preferDescriptionOverName[hash(obj)] = rv
         return rv
-
-    def lastInputEventWasCopy(self):
-        if super().lastInputEventWasCopy():
-            return True
-
-        if not self.inDocumentContent():
-            return False
-
-        if not self.topLevelObjectIsActiveAndCurrent():
-            return False
-
-        if AXObject.supports_action(focus_manager.getManager().get_locus_of_focus()):
-            msg = "WEB: Treating locus of focus as source of copy"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False

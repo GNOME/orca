@@ -38,6 +38,7 @@ import urllib.parse
 from . import acss
 from . import debug
 from . import generator
+from . import input_event_manager
 from . import mathsymbols
 from . import messages
 from . import object_properties
@@ -1073,8 +1074,7 @@ class SpeechGenerator(generator.Generator):
 
         table = AXTable.get_table(obj)
         if table:
-            lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-            if lastKey in ["Left", "Right"]:
+            if input_event_manager.getManager().last_event_was_left_or_right():
                 return []
             if self._script.utilities.isLayoutOnly(table):
                 return []

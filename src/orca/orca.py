@@ -51,6 +51,7 @@ from . import braille
 from . import debug
 from . import event_manager
 from . import focus_manager
+from . import input_event_manager
 from . import logger
 from . import messages
 from . import mouse_review
@@ -156,7 +157,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         msg = 'ORCA: About to enable braille'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         try:
-            braille.init(event_manager.getManager().process_braille_event)
+            braille.init(input_event_manager.getManager().process_braille_event)
         except Exception:
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'

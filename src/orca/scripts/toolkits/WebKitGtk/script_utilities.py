@@ -33,7 +33,7 @@ from gi.repository import Atspi
 import re
 
 import orca.focus_manager as focus_manager
-import orca.keybindings as keybindings
+import orca.input_event_manager as input_event_manager
 import orca.script_utilities as script_utilities
 
 from orca.ax_component import AXComponent
@@ -135,8 +135,7 @@ class Utilities(script_utilities.Utilities):
         if offset is None:
             offset = AXText.get_caret_offset(obj)
         if boundary == Atspi.TextBoundaryType.CHAR:
-            key, mods = self.lastKeyAndModifiers()
-            if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
+            if input_event_manager.getManager().last_event_was_forward_caret_selection():
                 offset -= 1
             start, end = AXText.get_character_at_offset(obj, offset)[1:]
         elif boundary in (None, Atspi.TextBoundaryType.LINE_START):
@@ -146,7 +145,7 @@ class Utilities(script_utilities.Utilities):
         elif boundary == Atspi.TextBoundaryType.WORD_START:
             start, end = AXText.get_word_at_offset(obj, offset)[1:]
         else:
-            start, end = string, 0, AXText.get_character_count(obj)
+            start, end = 0, AXText.get_character_count(obj)
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
         offsets = [m.start(0) for m in re.finditer(pattern, string)]

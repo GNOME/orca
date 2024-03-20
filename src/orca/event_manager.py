@@ -35,7 +35,7 @@ import time
 from . import debug
 from . import focus_manager
 from . import input_event
-from . import orca_state
+from . import input_event_manager
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
@@ -53,18 +53,13 @@ class EventManager:
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
-        orca_state.device = None
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
         """Called when this event manager is activated."""
 
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
-        orca_state.device = Atspi.Device.new()
-        orca_state.device.event_count = 0
-        orca_state.device.key_watcher = \
-            orca_state.device.add_key_watcher(self._processKeyboardEvent)
-
+        input_event_manager.getManager().start_key_watcher()
         self._active = True
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
@@ -72,10 +67,10 @@ class EventManager:
         """Called when this event manager is deactivated."""
 
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
+        input_event_manager.getManager().stop_key_watcher()
         self._active = False
         self._eventQueue = queue.Queue(0)
         self._scriptListenerCounts = {}
-        orca_state.device = None
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
     def pauseQueuing(self, pause=True, clearQueue=False, reason=""):
@@ -868,16 +863,6 @@ class EventManager:
             for key, value in attributes.items():
                 msg = f"EVENT MANAGER: {key}: {value}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    def _processKeyboardEvent(self, device, pressed, keycode, keysym, state, text):
-        keyboardEvent = input_event.KeyboardEvent(pressed, keycode, keysym, state, text)
-        keyboardEvent.process()
-
-    def process_braille_event(self, event):
-        """Processes this BrailleEvent."""
-
-        braille_event = input_event.BrailleEvent(event)
-        return braille_event.process()
 
 _manager = EventManager()
 

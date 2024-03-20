@@ -37,9 +37,9 @@ from orca import debug
 from orca import focus_manager
 from orca import guilabels
 from orca import input_event
+from orca import input_event_manager
 from orca import liveregions
 from orca import messages
-from orca import orca_state
 from orca import settings
 from orca import settings_manager
 from orca import speech
@@ -728,15 +728,15 @@ class Script(default.Script):
             return
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            manager = input_event_manager.getManager()
+            if manager.last_event_was_keyboard():
                 self._sayAllIsInterrupted = True
-                lastKey = orca_state.lastInputEvent.event_string
-                if lastKey == "Down" and self._fastForwardSayAll(context):
+                if manager.last_event_was_down() and self._fastForwardSayAll(context):
                     return
-                elif lastKey == "Up" and self._rewindSayAll(context):
+                if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
-                elif not self.structuralNavigation.last_input_event_was_navigation_command() \
-                     and not self.tableNavigator.last_input_event_was_navigation_command():
+                if not self.structuralNavigation.last_input_event_was_navigation_command() \
+                   and not self.tableNavigator.last_input_event_was_navigation_command():
                     focus_manager.getManager().emit_region_changed(
                         context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
@@ -818,7 +818,8 @@ class Script(default.Script):
             return True
 
         doNotToggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)
-        if self._inFocusMode and doNotToggle and self.utilities.lastInputEventWasUnmodifiedArrow():
+        if self._inFocusMode and doNotToggle \
+           and input_event_manager.getManager().last_event_was_unmodified_arrow():
             tokens = ["WEB: Staying in focus mode due to arrowing in role of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -890,8 +891,7 @@ class Script(default.Script):
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if keyString == "Right":
+        if input_event_manager.getManager().last_event_was_right():
             offset -= 1
 
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
@@ -992,7 +992,7 @@ class Script(default.Script):
            and not self.tableNavigator.last_input_event_was_navigation_command() \
            and not isContentEditable \
            and not AXDocument.is_plain_text(document) \
-           and not self.utilities.lastInputEventWasCaretNavWithSelection():
+           and not input_event_manager.getManager().last_event_was_caret_selection():
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             super().updateBraille(obj, **args)
@@ -1256,7 +1256,7 @@ class Script(default.Script):
         lastCommandWasStructNav = \
             self.structuralNavigation.last_input_event_was_navigation_command() \
             or self.tableNavigator.last_input_event_was_navigation_command()
-        if self.utilities.lastInputEventWasMouseButton() and event \
+        if input_event_manager.getManager().last_event_was_mouse_button() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1272,7 +1272,7 @@ class Script(default.Script):
             tokens = ["WEB: New focus", newFocus, "is anchor. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
-        elif self.utilities.lastInputEventWasPageNav() \
+        elif input_event_manager.getManager().last_event_was_page_navigation() \
              and not AXTable.get_table(newFocus) \
              and not self.utilities.isFeedArticle(newFocus):
             tokens = ["WEB: New focus", newFocus, "was scrolled to. Generating line."]
@@ -1295,11 +1295,12 @@ class Script(default.Script):
             tokens = ["WEB: New focus", newFocus,
                       "is recovery from removed child. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        elif self.utilities.lastInputEventWasLineNav() and not AXObject.is_valid(oldFocus):
+        elif input_event_manager.getManager().last_event_was_line_navigation() \
+             and not AXObject.is_valid(oldFocus):
             msg = "WEB: Last input event was line nav; oldFocus is invalid. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif self.utilities.lastInputEventWasLineNav() and event \
+        elif input_event_manager.getManager().last_event_was_line_navigation() and event \
              and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1561,7 +1562,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.lastInputEventWasMouseButton():
+        if input_event_manager.getManager().last_event_was_mouse_button():
             msg = "WEB: Last input event was mouse button"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -1584,10 +1585,7 @@ class Script(default.Script):
             focus_manager.getManager().set_locus_of_focus(event, event.source, notify, True)
             return True
 
-        if self.utilities.lastInputEventWasTab():
-            msg = "WEB: Last input event was Tab."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-
+        if input_event_manager.getManager().last_event_was_tab_navigation():
             if self.utilities.isDocument(event.source):
                 msg = "WEB: Event ignored: Caret moved in document due to Tab."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1619,8 +1617,8 @@ class Script(default.Script):
 
         focus = focus_manager.getManager().get_locus_of_focus()
         if self.utilities.isItemForEditableComboBox(focus, event.source) \
-           and not self.utilities.lastInputEventWasCharNav() \
-           and not self.utilities.lastInputEventWasLineBoundaryNav():
+           and not input_event_manager.getManager().last_event_was_character_navigation() \
+           and not input_event_manager.getManager().last_event_was_line_boundary_navigation():
             msg = "WEB: Event ignored: Editable combobox noise"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1652,7 +1650,7 @@ class Script(default.Script):
         notify = force = handled = False
         AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
 
-        if self.utilities.lastInputEventWasPageNav():
+        if input_event_manager.getManager().last_event_was_page_navigation():
             msg = "WEB: Caret moved due to scrolling."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
@@ -1662,7 +1660,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
-        elif self.utilities.lastInputEventWasCaretNav():
+        elif input_event_manager.getManager().last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -1878,7 +1876,6 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
         header = self.utilities.containingTableHeader(focus)
         if header:
@@ -2073,7 +2070,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.lastInputEventWasPageNav():
+        if input_event_manager.getManager().last_event_was_page_navigation():
             msg = "WEB: Event handled: Focus changed due to scrolling"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             focus_manager.getManager().set_locus_of_focus(event, obj)
@@ -2134,7 +2131,6 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
         header = self.utilities.containingTableHeader(focus)
         if header:
@@ -2259,7 +2255,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.lastInputEventWasPageSwitch():
+        if input_event_manager.getManager().last_event_was_page_switch():
             msg = "WEB: Deletion is believed to be due to page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2351,7 +2347,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.lastInputEventWasPageSwitch():
+        if input_event_manager.getManager().last_event_was_page_switch():
             msg = "WEB: Insertion is believed to be due to page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2495,9 +2491,10 @@ class Script(default.Script):
             return False
 
         char = AXText.get_character_at_offset(event.source)[0]
+        manager = input_event_manager.getManager()
         if char == self.EMBEDDED_OBJECT_CHARACTER \
-           and not self.utilities.lastInputEventWasCaretNavWithSelection() \
-           and not self.utilities.lastInputEventWasCommand():
+           and not manager.last_event_was_caret_selection() \
+           and not manager.last_event_was_command():
             msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True

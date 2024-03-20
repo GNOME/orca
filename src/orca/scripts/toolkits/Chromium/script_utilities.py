@@ -37,6 +37,7 @@ import re
 
 from orca import debug
 from orca import focus_manager
+from orca import input_event_manager
 from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -241,9 +242,7 @@ class Utilities(web.Utilities):
             return False
 
         if event.type.startswith("object:text-caret-moved"):
-            lastKey, mods = self.lastKeyAndModifiers()
-            if lastKey in ["Down", "Up"]:
-                return True
+            return input_event_manager.getManager().last_event_was_up_or_down()
 
         return False
 

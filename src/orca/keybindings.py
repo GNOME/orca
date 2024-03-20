@@ -26,21 +26,19 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from gi.repository import Gdk
 
+import functools
 import gi
 gi.require_version('Atspi', '2.0') 
 from gi.repository import Atspi
-
-import functools
+from gi.repository import Gdk
 
 from . import debug
+from . import input_event_manager
 from . import settings
-from . import orca_state
 
 from .orca_i18n import _
 
-_keysymsCache = {}
 _keycodeCache = {}
 
 MODIFIER_ORCA = 8
@@ -273,6 +271,11 @@ class KeyBinding:
         else:
             return False
 
+    def is_bound(self):
+        """Returns True if this KeyBinding is bound to a key"""
+
+        return bool(self.keysymstring)
+
     def is_enabled(self):
         """Returns True if this KeyBinding is enabled."""
 
@@ -311,17 +314,16 @@ class KeyBinding:
             self.keycode = getKeycode(self.keysymstring)
 
         if self.modifiers & ORCA_MODIFIER_MASK:
-            device = orca_state.device
-            if device is None:
-                return ret
             modList = []
             otherMods = self.modifiers & ~ORCA_MODIFIER_MASK
+            manager = input_event_manager.getManager()
             for key in settings.orcaModifierKeys:
                 keycode = getKeycode(key)
                 if keycode == 0 and key == "Shift_Lock":
                     keycode = getKeycode("Caps_Lock")
-                mod = device.map_modifier(keycode)
-                modList.append(mod | otherMods)
+                mod = manager.map_keycode_to_modifier(keycode)
+                if mod:
+                    modList.append(mod | otherMods)
         else:
             modList = [self.modifiers]
         for mod in modList:
@@ -331,6 +333,11 @@ class KeyBinding:
             ret.append(kd)
         return ret
 
+    def getGrabIDs(self):
+        """Returns the grab IDs for this KeyBinding."""
+
+        return self._grab_ids
+
     def hasGrabs(self):
         """Returns True if there are existing grabs associated with this KeyBinding."""
 
@@ -339,32 +346,13 @@ class KeyBinding:
     def addGrabs(self):
         """Adds key grabs for this KeyBinding."""
 
-        if not (self.keysymstring and self._enabled):
-            return
-
-        if orca_state.device is None:
-            return
-
-        for kd in self.keyDefs():
-            self._grab_ids.append(orca_state.device.add_key_grab(kd, None))
-
-        msg = f"GRABS ADDED: {self}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        input_event_manager.getManager().add_grabs_for_keybinding(self)
 
     def removeGrabs(self):
         """Removes key grabs for this KeyBinding."""
 
-        if self._grab_ids and not orca_state.device:
-            msg = "WARNING: Have grab to remove but no device."
-            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
-            return
-
-        for id in self._grab_ids:
-            orca_state.device.remove_key_grab(id)
+        input_event_manager.getManager().remove_grabs_for_keybinding(self)
         self._grab_ids = []
-
-        msg = f"GRABS REMOVED: {self}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.

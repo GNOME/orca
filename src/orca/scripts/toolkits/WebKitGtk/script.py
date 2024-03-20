@@ -35,6 +35,7 @@ import orca.scripts.default as default
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.focus_manager as focus_manager
+import orca.input_event_manager as input_event_manager
 import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.messages as messages
@@ -183,12 +184,12 @@ class Script(default.Script):
             super().onCaretMoved(event)
             return
 
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        if lastKey in ['Tab', 'ISO_Left_Tab']:
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_tab_navigation():
             return
 
         focus = focus_manager.getManager().get_locus_of_focus()
-        if lastKey == 'Down' \
+        if manager.last_event_was_down() \
            and AXObject.get_index_in_parent(event.source) == 0 \
            and focus == AXObject.get_parent(event.source) \
            and AXUtilities.is_link(focus):
