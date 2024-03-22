@@ -124,8 +124,8 @@ outside of `default.py`.
 
 ## Getting Orca to Speak Your Application's Custom Message
 
-AT-SPI2 v2.46 added support for the `announcement` signal which can be used with
-Orca v45.2 and later. Here's a simple example:
+AT-SPI2/ATK v2.46 added an `announcement` signal which can be used with
+Orca v45.2. Here's a simple example:
 
 ```python
 #!/usr/bin/python3
@@ -152,7 +152,7 @@ app.run(None)
 If you are running Orca v45.2 or later, launch the sample application above and press the
 "Make an announcement" button. You should hear Orca say "Hello world. I am an announcement."
 
-Beginning with AT-SPI2 v2.50, the `announcement` signal was deprecated in favor of a new
+Beginning with ATK v2.50, the `announcement` signal was deprecated in favor of a new
 `notification` signal to provide native applications similar functionality to ARIA's live
 regions which allow web applications to specify that a notification is urgent/"assertive."
 
