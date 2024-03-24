@@ -219,7 +219,7 @@ so that users have full control over when and how notifications are presented to
 ## Experimental Features
 
 By default, Orca uses speech-dispatcher for its TTS support. In addition, there is
-basic support for [Spiel](https://github.com/eeejay/spiel) which allows choosing
+basic support for [Spiel](https://github.com/project-spiel) which allows choosing
 voices from multiple synthesizers, currently including eSpeak and Piper.
 
 To test Spiel, configure Orca to build from the latest source. Once compiled,
