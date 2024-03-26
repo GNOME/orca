@@ -232,10 +232,10 @@ meson install -C _build
 ```
 
 If you have existing build directory, don't forget to use `--reconfigure`. If
-you have problems after an update, you may need to update and re-install:
+you have problems after an update, you may need to re-build and re-install:
 
 ```
-meson subprojects update
+meson subprojects purge --confirm
 meson setup --reconfigure --force-fallback-for=spiel -Dspiel=true _build 
 meson compile --clean -C _build
 meson install -C _build

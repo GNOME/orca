@@ -62,7 +62,7 @@ endif
 # Experimental (checked via pkg-config)
 if get_option('spiel')
   dependency('spiel-1.0',
-            version: '>= 1.0.0',
+            version: '>= 1.0.1',
            fallback: ['spiel', 'spiel_lib_dep'],
     default_options: [
       'docs=false',
