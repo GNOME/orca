@@ -2565,6 +2565,16 @@ def cellSpan(rowspan, colspan):
 
     return spanString
 
+def selectedCharacterCount(count):
+    # Translators: This message describes the number of characters that were just
+    # selected in a body of text.
+    return ngettext("%d character selected", "%d characters selected", count) % count
+
+def unselectedCharacterCount(count):
+    # Translators: This message describes the number of characters that were just
+    # unselected in a body of text.
+    return ngettext("%d character unselected", "%d characters unselected", count) % count
+
 def charactersTooLong(count):
     # Translators: People can enter a string of text that is too wide to be
     # fully displayed in a spreadsheet cell. This message will be spoken if

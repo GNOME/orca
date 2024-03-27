@@ -3970,9 +3970,15 @@ class Utilities:
             if endsWithChild:
                 end -= 1
 
-            self._script.sayPhrase(obj, start, end)
-            if speakMessage and not endsWithChild:
-                self._script.speakMessage(message, interrupt=False)
+            if len(string) > 5000 and speakMessage:
+                if message == messages.TEXT_SELECTED:
+                    self._script.speakMessage(messages.selectedCharacterCount(len(string)))
+                else:
+                    self._script.speakMessage(messages.unselectedCharacterCount(len(string)))
+            else:
+                self._script.sayPhrase(obj, start, end)
+                if speakMessage and not endsWithChild:
+                    self._script.speakMessage(message, interrupt=False)
 
             if endsWithChild:
                 child = AXHypertext.get_child_at_offset(obj, end)
