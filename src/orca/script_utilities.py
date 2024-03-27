@@ -3607,7 +3607,7 @@ class Utilities:
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
-        if self.lastInputEventWasSelectAll() and newString:
+        if input_event_manager.getManager().last_event_was_select_all() and newString:
             if not self._script.pointOfReference.get('entireDocumentSelected'):
                 self._script.pointOfReference['entireDocumentSelected'] = True
                 self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
