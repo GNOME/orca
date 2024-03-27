@@ -346,7 +346,7 @@ class KeyBinding:
     def addGrabs(self):
         """Adds key grabs for this KeyBinding."""
 
-        input_event_manager.getManager().add_grabs_for_keybinding(self)
+        self._grab_ids = input_event_manager.getManager().add_grabs_for_keybinding(self)
 
     def removeGrabs(self):
         """Removes key grabs for this KeyBinding."""
@@ -423,11 +423,16 @@ class KeyBindings:
         msg = "KEYBINDINGS: Adding key grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
+        count = 0
         for binding in self.keyBindings:
             if binding.is_enabled() and not binding.hasGrabs():
+                count += 1
                 binding.addGrabs()
+
+        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.keyBindings)} added."
+        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
     def removeKeyGrabs(self, reason=""):
         """Removes all grabs for this set of keybindings."""
@@ -435,11 +440,16 @@ class KeyBindings:
         msg = "KEYBINDINGS: Removing key grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
+        count = 0
         for binding in self.keyBindings:
             if binding.hasGrabs():
+                count += 1
                 binding.removeGrabs()
+
+        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.keyBindings)} removed."
+        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
     def hasHandler(self, handler):
         """Returns True if the handler is found in this set of keybindings."""

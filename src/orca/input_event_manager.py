@@ -96,7 +96,7 @@ class InputEventManager:
         if self._device is None:
             tokens = ["INPUT EVENT MANAGER: No device to remove grab from", binding]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
+            return
 
         grab_ids = binding.getGrabIDs()
         if not grab_ids:
@@ -118,10 +118,7 @@ class InputEventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return 0
 
-        modifier = self._device.map_modifier(keycode)
-        msg = f"INPUT EVENT MANAGER: Mapped keycode {keycode} to modifier {modifier}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return modifier
+        return self._device.map_modifier(keycode)
 
     def add_grab_for_modifier(self, modifier, keycode):
         """Adds grab for modifier, returns grab id."""
@@ -206,10 +203,14 @@ class InputEventManager:
             event.setWindow(window)
             event.setObject(manager.get_locus_of_focus())
             event.setScript(script_manager.getManager().getActiveScript())
-        else:
+        elif self.last_event_was_keyboard():
             event.setWindow(self._last_input_event.getWindow())
             event.setObject(self._last_input_event.getObject())
             event.setScript(self._last_input_event.getScript())
+        else:
+            event.setWindow(manager.get_active_window())
+            event.setObject(manager.get_locus_of_focus())
+            event.setScript(script_manager.getManager().getActiveScript())
 
         event.setClickCount(self._determine_keyboard_event_click_count(event))
         result = event.process()
@@ -250,7 +251,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return 1
         if not event.pressed:
-            return
+            return self._last_input_event.getClickCount()
         if self._last_input_event.button != event.button:
             return 1
         if event.time - self._last_input_event.time > settings.doubleClickTimeout:

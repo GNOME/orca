@@ -533,7 +533,7 @@ class Script(script.Script):
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = self.getKeyBindings()
-        self.keyBindings.addKeyGrabs()
+        self.keyBindings.addKeyGrabs(reason)
         orca_modifier_manager.getManager().add_grabs_for_orca_modifiers()
 
     def removeKeyGrabs(self, reason=""):
