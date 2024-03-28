@@ -609,6 +609,9 @@ class KeyboardEvent(InputEvent):
         return method.__func__ == self._handler.function
 
     def _present(self, inputEvent=None):
+        if not self._script:
+            return False
+
         if self.isPressedKey():
             self._script.presentationInterrupt()
 
@@ -677,14 +680,15 @@ class KeyboardEvent(InputEvent):
         tokens = ["LOCATION:", self._obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
-        tokens = ["HANDLER:", self._handler]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        if self._script.learnModePresenter.is_active():
-            self._consumer = self._script.learnModePresenter.handle_event
-            tokens = ["CONSUMER:", self._consumer]
+        if self._script:
+            self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
+            tokens = ["HANDLER:", self._handler]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+            if self._script.learnModePresenter.is_active():
+                self._consumer = self._script.learnModePresenter.handle_event
+                tokens = ["CONSUMER:", self._consumer]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
         tokens = ["CONSUMED:", self._did_consume, self._result_reason]
@@ -705,9 +709,6 @@ class KeyboardEvent(InputEvent):
             orca_modifier_manager.getManager().toggle_modifier(self)
             if self.keyval_name in ["Caps_Lock", "Shift_Lock"]:
                 self.keyType = KeyboardEvent.TYPE_LOCKING
-
-        if not self._script:
-            return False, 'No active script'
 
         self._present()
 
