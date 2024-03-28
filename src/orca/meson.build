@@ -80,8 +80,8 @@ lib_sources = [
   'debug.py',
   'desktop_keyboardmap.py',
   'event_manager.py',
-  'find.py',
   'flat_review.py',
+  'flat_review_finder.py',
   'flat_review_presenter.py',
   'focus_manager.py',
   'formatting.py',
@@ -105,7 +105,6 @@ lib_sources = [
   'object_properties.py',
   'orca.py',
   'orca_gtkbuilder.py',
-  'orca_gui_find.py',
   'orca_gui_navlist.py',
   'orca_gui_prefs.py',
   'orca_gui_profile.py',
@@ -137,7 +136,6 @@ lib_sources = [
 ]
 
 ui_sources = [
-  'orca-find.ui',
   'orca-setup.ui',
 ]
 

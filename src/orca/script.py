@@ -45,6 +45,7 @@ from . import action_presenter
 from . import braille_generator
 from . import debug
 from . import event_manager
+from . import flat_review_finder
 from . import flat_review_presenter
 from . import formatting
 from . import keybindings
@@ -101,6 +102,7 @@ class Script:
         self.bookmarks = self.getBookmarks()
         self.liveRegionManager = self.getLiveRegionManager()
         self.notificationPresenter = self.getNotificationPresenter()
+        self.flatReviewFinder = self.getFlatReviewFinder()
         self.flatReviewPresenter = self.getFlatReviewPresenter()
         self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
         self.bypassModeManager = self.getBypassModeManager()
@@ -232,6 +234,9 @@ class Script:
 
     def getNotificationPresenter(self):
         return notification_presenter.getPresenter()
+
+    def getFlatReviewFinder(self):
+        return flat_review_finder.getFinder()
 
     def getFlatReviewPresenter(self):
         return flat_review_presenter.getPresenter()

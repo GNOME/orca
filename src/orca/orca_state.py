@@ -36,10 +36,6 @@ __license__   = "LGPL"
 #
 capturingKeys   = False
 
-# The last searchQuery
-#
-searchQuery = None
-
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None

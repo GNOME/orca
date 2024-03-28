@@ -238,6 +238,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound
             items += len(bound)
 
+            bound = script.getFlatReviewFinder().get_bindings(
+                is_desktop=is_desktop).getBoundBindings()
+            bindings[guilabels.KB_GROUP_FIND] = bound
+            items += len(bound)
+
             bound = script.getObjectNavigator().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound

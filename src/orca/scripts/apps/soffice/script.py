@@ -301,7 +301,7 @@ class Script(default.Script):
         if self.findCommandRun and \
            event.type.startswith("object:state-changed:focused"):
             self.findCommandRun = False
-            self.find()
+            self.flatReviewFinder.find(self)
             return
 
         if self.flatReviewPresenter.is_active():

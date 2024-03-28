@@ -33,7 +33,6 @@ import time
 import orca.braille as braille
 import orca.cmdnames as cmdnames
 import orca.debug as debug
-import orca.find as find
 import orca.focus_manager as focus_manager
 import orca.flat_review as flat_review
 import orca.input_event_manager as input_event_manager
@@ -140,21 +139,6 @@ class Script(script.Script):
                 Script.sayAll,
                 cmdnames.SAY_ALL)
 
-        self.inputEventHandlers["findHandler"] = \
-            input_event.InputEventHandler(
-                orca.showFindGUI,
-                cmdnames.SHOW_FIND_GUI)
-
-        self.inputEventHandlers["findNextHandler"] = \
-            input_event.InputEventHandler(
-                Script.findNext,
-                cmdnames.FIND_NEXT)
-
-        self.inputEventHandlers["findPreviousHandler"] = \
-            input_event.InputEventHandler(
-                Script.findPrevious,
-                cmdnames.FIND_PREVIOUS)
-
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
@@ -218,6 +202,7 @@ class Script(script.Script):
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
         self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
+        self.inputEventHandlers.update(self.flatReviewFinder.get_handlers())
         self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
         self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
         self.inputEventHandlers.update(self.bypassModeManager.get_handlers())
@@ -357,6 +342,10 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.notificationPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.flatReviewFinder.get_bindings(refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
@@ -729,38 +718,6 @@ class Script(script.Script):
     # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
     #                                                                      #
     ########################################################################
-
-    def findNext(self, inputEvent):
-        """Searches forward for the next instance of the string
-        searched for via the Orca Find dialog.  Other than direction
-        and the starting point, the search options initially specified
-        (case sensitivity, window wrap, and full/partial match) are
-        preserved.
-        """
-
-        lastQuery = find.getLastQuery()
-        if lastQuery:
-            lastQuery.searchBackwards = False
-            lastQuery.startAtTop = False
-            self.find(lastQuery)
-        else:
-            orca.showFindGUI()
-
-    def findPrevious(self, inputEvent):
-        """Searches backwards for the next instance of the string
-        searched for via the Orca Find dialog.  Other than direction
-        and the starting point, the search options initially specified
-        (case sensitivity, window wrap, and full/or partial match) are
-        preserved.
-        """
-
-        lastQuery = find.getLastQuery()
-        if lastQuery:
-            lastQuery.searchBackwards = True
-            lastQuery.startAtTop = False
-            self.find(lastQuery)
-        else:
-            orca.showFindGUI()
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the left.  If panAmount is non-zero,
@@ -1143,7 +1100,7 @@ class Script(script.Script):
 
         if self.findCommandRun:
             self.findCommandRun = False
-            self.find()
+            self.flatReviewFinder.find(self)
 
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
@@ -2374,27 +2331,6 @@ class Script(script.Script):
                 region.zone.index,
                 0, # word index
                 0) # character index
-
-    def find(self, query=None):
-        """Searches for the specified query.  If no query is specified,
-        it searches for the query specified in the Orca Find dialog.
-
-        Arguments:
-        - query: The search query to find.
-        """
-
-        if not query:
-            query = find.getLastQuery()
-        if query:
-            context = self.getFlatReviewContext()
-            location = query.findQuery(context)
-            if not location:
-                self.presentMessage(messages.STRING_NOT_FOUND)
-            else:
-                context.setCurrent(location.lineIndex, location.zoneIndex, \
-                                   location.wordIndex, location.charIndex)
-                self.flatReviewPresenter.present_item(self)
-                self.targetCursorCell = self.getBrailleCursorCell()
 
     def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line

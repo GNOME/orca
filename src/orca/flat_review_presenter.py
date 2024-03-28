@@ -157,7 +157,7 @@ class FlatReviewPresenter:
         """Returns the flat-review-presenter handlers."""
 
         if refresh:
-            msg = "WHERE AM I PRESENTER: Refreshing handlers."
+            msg = "FLAT REVIEW PRESENTER: Refreshing handlers."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
@@ -525,7 +525,7 @@ class FlatReviewPresenter:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _setup_laptop_bindings(self):
-        """Sets up and returns the flat-review-presenter laptop key bindings."""
+        """Sets up the flat-review-presenter laptop key bindings."""
 
         self._laptop_bindings = keybindings.KeyBindings()
 

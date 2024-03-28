@@ -247,18 +247,6 @@ def quitOrca(script=None, inputEvent=None):
 
     return True
 
-def showFindGUI(script=None, inputEvent=None):
-    """Displays the user interface to perform an Orca Find.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    try:
-        module = importlib.import_module('.orca_gui_find', 'orca')
-        module.showFindUI()
-    except Exception:
-        debug.printException(debug.LEVEL_SEVERE)
-
 # If True, this module has been initialized.
 #
 _initialized = False

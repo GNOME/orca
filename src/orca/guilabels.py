@@ -233,10 +233,66 @@ ECHO_CHARACTER = _("Enable echo by cha_racter")
 ECHO_DIACRITICAL = _("Enable non-spacing _diacritical keys")
 
 # Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This string is the title
+# of the dialog box.
+FIND_DIALOG_TITLE = _("Find")
+KB_GROUP_FIND = FIND_DIALOG_TITLE
+
+# Translators: Orca has a "find" feature which allows the user to search the
 # active application for on screen text and widgets. This label is associated
-# with the setting to begin the search from the current location rather than
-# from the top of the screen.
+# with the text entry where the user types the term to search for.
+FIND_SEARCH_FOR = _("_Search for:")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with a group of options related to where the search should begin. The options
+# are to begin the search from the current location or from the top of the window.
+FIND_START_FROM = _("Start from:")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the radio button to begin the search from the current location rather
+# than from the top of the window.
 FIND_START_AT_CURRENT_LOCATION = _("C_urrent location")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the radio button to begin the search from the top of the window rather
+# than the current location.
+FIND_START_AT_TOP_OF_WINDOW = _("_Top of window")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with a group of options related to the direction of the search. The options
+# are to search backwards and to wrap.
+FIND_SEARCH_DIRECTION = _("Search direction:")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the checkbox to perform the search in the reverse direction.
+FIND_SEARCH_BACKWARDS = _("Search _backwards")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the checkbox to wrap around when the top/bottom of the window has been
+# reached.
+FIND_WRAP_AROUND = _("_Wrap around")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with a group of options related to what constitutes a match. The options are
+# to match case and to match the entire word only.
+FIND_MATCH_OPTIONS = _("Match options:")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the checkbox to make the search case-sensitive.
+FIND_MATCH_CASE = _("_Match case")
+
+# Translators: Orca has a "find" feature which allows the user to search the
+# active application for on screen text and widgets. This label is associated
+# with the checkbox to only match if the full word consists of the search term.
+FIND_MATCH_ENTIRE_WORD = _("Match _entire word only")
 
 # Translators: This is the label for a spinbutton. This option allows the user
 # to specify the number of matched characters that must be present before Orca

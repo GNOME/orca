@@ -2188,6 +2188,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
         iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
+        iterFind = self._createNode(guilabels.KB_GROUP_FIND)
         iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
         iterSystemInfo = self._createNode(guilabels.KB_GROUP_SYSTEM_INFORMATION)
         iterSleepMode = self._createNode(guilabels.KB_GROUP_SLEEP_MODE)
@@ -2229,6 +2230,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             frKeyBindings = self.script.getFlatReviewPresenter().get_bindings(
                 is_desktop=isDesktop)
+            findKeyBindings = self.script.getFlatReviewFinder().get_bindings(
+                is_desktop=isDesktop)
             waiKeyBindings = self.script.getWhereAmIPresenter().get_bindings(
                 is_desktop=isDesktop)
 
@@ -2243,6 +2246,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterTableNav)
                     elif frKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterFlatReviewPresenter)
+                    elif findKeyBindings.hasKeyBinding(kb, "description"):
+                        self._insertRow(handl, kb, iterFind)
                     elif waiKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterWhereAmIPresenter)
                     elif svKeyBindings.hasKeyBinding(kb, "description"):

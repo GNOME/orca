@@ -30,16 +30,9 @@ __license__   = "LGPL"
 
 from . import keybindings
 
-# Storing values 
-defaultModifierMask = keybindings.defaultModifierMask
-ORCA_MODIFIER_MASK = keybindings.ORCA_MODIFIER_MASK
-NO_MODIFIER_MASK = keybindings.NO_MODIFIER_MASK
-ORCA_SHIFT_MODIFIER_MASK = keybindings.ORCA_SHIFT_MODIFIER_MASK
-ORCA_CTRL_MODIFIER_MASK = keybindings.ORCA_CTRL_MODIFIER_MASK
 
 keymap = (
-    
-    ("9", defaultModifierMask, ORCA_MODIFIER_MASK,
+    ("9", keybindings.defaultModifierMask, keybindings.ORCA_MODIFIER_MASK,
     "routePointerToItemHandler"),
 
     # We want the user to be able to combine modifiers with the
@@ -47,23 +40,11 @@ keymap = (
     # do not "care" about the modifiers (other than the Orca
     # modifier).
     #
-
-    ("7", ORCA_MODIFIER_MASK, ORCA_MODIFIER_MASK,
+    ("7", keybindings.ORCA_MODIFIER_MASK, keybindings.ORCA_MODIFIER_MASK,
     "leftClickReviewItemHandler"),
-
-    ("8", ORCA_MODIFIER_MASK, ORCA_MODIFIER_MASK,
+    ("8", keybindings.ORCA_MODIFIER_MASK, keybindings.ORCA_MODIFIER_MASK,
     "rightClickReviewItemHandler"),
 
-    ("semicolon", defaultModifierMask, ORCA_MODIFIER_MASK,
+    ("semicolon", keybindings.defaultModifierMask, keybindings.ORCA_MODIFIER_MASK,
     "sayAllHandler", 1),
-
-    ("bracketleft", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "findHandler"),
-
-    ("bracketright", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "findNextHandler"),
-
-    ("bracketright", defaultModifierMask, ORCA_CTRL_MODIFIER_MASK,
-    "findPreviousHandler"),
-
 )
