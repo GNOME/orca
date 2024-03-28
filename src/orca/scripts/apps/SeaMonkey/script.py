@@ -34,6 +34,7 @@ from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event
+from orca import input_event_manager
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import Gecko
@@ -91,7 +92,7 @@ class Script(Gecko.Script):
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-            if self.utilities.lastInputEventWasPrintableKey():
+            if input_event_manager.getManager().last_event_was_printable_key():
                 msg = "SEAMONKEY: Ignoring, believed to be result of printable input"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return

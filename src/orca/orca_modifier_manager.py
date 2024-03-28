@@ -39,7 +39,7 @@ from gi.repository import GLib
 
 from . import debug
 from . import keybindings
-from . import orca_state
+from . import input_event_manager
 from . import settings_manager
 
 
@@ -95,32 +95,19 @@ class OrcaModifierManager:
         if modifier in self._grabbed_modifiers:
             return
 
-        if orca_state.device is None:
-            msg = "WARNING: Attempting to add modifier grabs without a device."
-            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
-            return
-
-        msg = f"ORCA MODIFIER MANAGER: Adding modifier grab for {modifier}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        kd = Atspi.KeyDefinition()
-        kd.keycode = keybindings.getKeycode(modifier)
-        kd.modifiers = 0
-        self._grabbed_modifiers[modifier] = orca_state.device.add_key_grab(kd)
+        keycode = keybindings.getKeycode(modifier)
+        grab_id = input_event_manager.getManager().add_grab_for_modifier(modifier, keycode)
+        if grab_id != -1:
+            self._grabbed_modifiers[modifier] = grab_id
 
     def remove_modifier_grab(self, modifier):
         """Removes the grab for modifier."""
 
-        if modifier not in self._grabbed_modifiers:
+        grab_id = self._grabbed_modifiers.get(modifier)
+        if grab_id is None:
             return
 
-        if orca_state.device is None:
-            msg = "WARNING: Attempting to remove modifier grabs without a device."
-            debug.printMessage(debug.LEVEL_WARNING, msg, True, True)
-            return
-
-        msg = f"ORCA MODIFIER MANAGER: Removing modifier grab for {modifier}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        orca_state.device.remove_key_grab(self._grabbed_modifiers[modifier])
+        input_event_manager.getManager().remove_grab_for_modifier(modifier, grab_id)
         del self._grabbed_modifiers[modifier]
 
     def toggle_modifier(self, keyboard_event):

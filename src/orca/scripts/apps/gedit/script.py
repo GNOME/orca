@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.focus_manager as focus_manager
+import orca.input_event_manager as input_event_manager
 import orca.scripts.toolkits.gtk as gtk
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -147,8 +148,8 @@ class Script(gtk.Script):
             return
 
         # To avoid extreme chattiness.
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if keyString in ["BackSpace", "Delete"]:
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_backspace() or manager.last_event_was_delete():
             return
 
         self.sayLine(event.source)

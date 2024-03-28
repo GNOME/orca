@@ -29,9 +29,9 @@ __license__ = "LGPL"
 from . import cmdnames
 from . import debug
 from . import input_event
+from . import input_event_manager
 from . import keybindings
 from . import messages
-from . import orca_state
 from . import settings_manager
 
 from .ax_text import AXText
@@ -278,10 +278,8 @@ class CaretNavigation:
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
 
-        result = self._last_input_event is not None \
-            and (self._last_input_event == orca_state.lastNonModifierKeyEvent \
-                or orca_state.lastNonModifierKeyEvent.isReleaseFor(self._last_input_event))
-
+        manager = input_event_manager.getManager()
+        result = manager.last_event_equals_or_is_release_for_event(self._last_input_event)
         if self._last_input_event is not None:
             string = self._last_input_event.asSingleLineString()
         else:

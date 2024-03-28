@@ -36,6 +36,7 @@ import orca.debug as debug
 import orca.find as find
 import orca.focus_manager as focus_manager
 import orca.flat_review as flat_review
+import orca.input_event_manager as input_event_manager
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
@@ -532,7 +533,7 @@ class Script(script.Script):
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.keyBindings = self.getKeyBindings()
-        self.keyBindings.addKeyGrabs()
+        self.keyBindings.addKeyGrabs(reason)
         orca_modifier_manager.getManager().add_grabs_for_orca_modifiers()
 
     def removeKeyGrabs(self, reason=""):
@@ -1183,10 +1184,9 @@ class Script(script.Script):
         # so we handle the announcement of their state changes in the focus
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
-        if AXUtilities.is_radio_button(event.source):
-            eventString, mods = self.utilities.lastKeyAndModifiers()
-            if eventString not in [" ", "space"]:
-                return
+        if AXUtilities.is_radio_button(event.source) \
+           and input_event_manager.getManager().last_event_was_space():
+            return
 
         oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
         if hash(oldObj) == hash(event.source) and oldState == event.detail1:
@@ -1361,16 +1361,7 @@ class Script(script.Script):
     def onMouseButton(self, event):
         """Callback for mouse:button events."""
 
-        mouseEvent = input_event.MouseButtonEvent(event)
-        orca_state.lastInputEvent = mouseEvent
-        if not mouseEvent.pressed:
-            return
-
-        self.presentationInterrupt()
-        windowChanged = focus_manager.getManager().get_active_window() != mouseEvent.window
-        if windowChanged:
-            focus_manager.getManager().set_active_window(
-                mouseEvent.window, set_window_as_focus=True)
+        input_event_manager.getManager().process_mouse_button_event(event)
 
     def onAnnouncement(self, event):
         """Callback for object:announcement events."""
@@ -1467,10 +1458,11 @@ class Script(script.Script):
             return
 
         announceState = False
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if keyString == "space":
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_space():
             announceState = True
-        elif keyString in ["Down", "Up"] and AXUtilities.is_table_cell(event.source):
+        elif (manager.last_event_was_up() or manager.last_event_was_down()) \
+                and AXUtilities.is_table_cell(event.source):
             announceState = isSelected
 
         if not announceState:
@@ -1512,8 +1504,7 @@ class Script(script.Script):
 
         # If the current item's selection is toggled, we'll present that
         # via the state-changed event.
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if keyString == "space":
+        if input_event_manager.getManager().last_event_was_space():
             return
 
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
@@ -1597,16 +1588,15 @@ class Script(script.Script):
             return
 
         if AXUtilities.is_tool_tip(obj):
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            if keyString != "F1" \
-               and not settings_manager.getManager().getSetting('presentToolTips'):
+            was_f1 = input_event_manager.getManager().last_event_was_f1()
+            if not was_f1 and not settings_manager.getManager().getSetting('presentToolTips'):
                 return
             if event.detail1:
                 self.presentObject(obj, interrupt=True)
                 return
 
             focus = focus_manager.getManager().get_locus_of_focus()
-            if focus and keyString == "F1":
+            if focus and was_f1:
                 obj = focus
                 self.presentObject(obj, priorObj=event.source, interrupt=True)
                 return
@@ -1705,11 +1695,12 @@ class Script(script.Script):
         # Because some implementations are broken.
         string = self.utilities.insertedText(event)
 
-        if self.utilities.lastInputEventWasPageSwitch():
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_page_switch():
             msg = "DEFAULT: Insertion is believed to be due to page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             speakString = False
-        elif self.utilities.lastInputEventWasCommand():
+        elif manager.last_event_was_command():
             msg = "DEFAULT: Insertion is believed to be due to command"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif self.utilities.isMiddleMouseButtonTextInsertionEvent(event):
@@ -1763,26 +1754,24 @@ class Script(script.Script):
         """Callback for object:column-reordered accessibility events."""
 
         AXTable.clear_cache_now("column-reordered event.")
-        if not self.utilities.lastInputEventWasTableSort():
+        if not input_event_manager.getManager().last_event_was_table_sort():
             return
 
         if event.source != AXTable.get_table(focus_manager.getManager().get_locus_of_focus()):
             return
 
-        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
 
     def onRowReordered(self, event):
         """Callback for object:row-reordered accessibility events."""
 
         AXTable.clear_cache_now("row-reordered event.")
-        if not self.utilities.lastInputEventWasTableSort():
+        if not input_event_manager.getManager().last_event_was_table_sort():
             return
 
         if event.source != AXTable.get_table(focus_manager.getManager().get_locus_of_focus()):
             return
 
-        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
 
     def onValueChanged(self, event):
@@ -1891,11 +1880,12 @@ class Script(script.Script):
         if not self.utilities.topLevelObjectIsActiveAndCurrent():
             return
 
-        if self.utilities.lastInputEventWasCopy():
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_copy():
             self.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
             return
 
-        if not self.utilities.lastInputEventWasCut():
+        if not manager.last_event_was_cut():
             return
 
         if AXUtilities.is_editable(focus_manager.getManager().get_locus_of_focus()):
@@ -1910,57 +1900,40 @@ class Script(script.Script):
     ########################################################################
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
+        """Presents text at the new position, based on heuristics. Returns True if handled."""
+
         obj = otherObj or event.source
         self.updateBrailleForNewCaretPosition(obj)
         if self._inSayAll:
             msg = "DEFAULT: Not presenting text because SayAll is active"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
-        if self.utilities.lastInputEventWasLineNav():
-            msg = "DEFAULT: Presenting result of line nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+        manager = input_event_manager.getManager()
+        if manager.last_event_was_line_navigation():
             self.sayLine(obj)
-            return
-
-        if self.utilities.lastInputEventWasWordNav():
-            msg = "DEFAULT: Presenting result of word nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+        if manager.last_event_was_word_navigation():
             self.sayWord(obj)
-            return
-
-        if self.utilities.lastInputEventWasCharNav():
-            msg = "DEFAULT: Presenting result of char nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+        if manager.last_event_was_character_navigation():
             self.sayCharacter(obj)
-            return
-
-        if self.utilities.lastInputEventWasPageNav():
-            msg = "DEFAULT: Presenting result of page nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+        if manager.last_event_was_page_navigation():
             self.sayLine(obj)
-            return
-
-        if self.utilities.lastInputEventWasLineBoundaryNav():
-            msg = "DEFAULT: Presenting result of line boundary nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+        if manager.last_event_was_line_boundary_navigation():
             self.sayCharacter(obj)
-            return
-
-        if self.utilities.lastInputEventWasFileBoundaryNav():
-            msg = "DEFAULT: Presenting result of file boundary nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+        if manager.last_event_was_file_boundary_navigation():
             self.sayLine(obj)
-            return
-
-        if self.utilities.lastInputEventWasPrimaryMouseClick() \
-           or self.utilities.lastInputEventWasPrimaryMouseRelease():
-            start, end, string = self.utilities.getCachedTextSelection(event.source)
+            return True
+        if manager.last_event_was_primary_click_or_release():
+            string = self.utilities.getCachedTextSelection(event.source)[-1]
             if not string:
-                msg = "DEFAULT: Presenting result of primary mouse button event"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.sayLine(obj)
-                return
+                return True
+        return False
 
     def _rewindSayAll(self, context, minCharCount=10):
         if not settings_manager.getManager().getSetting('rewindAndFastForwardInSayAll'):
@@ -2006,12 +1979,12 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            manager = input_event_manager.getManager()
+            if manager.last_event_was_keyboard():
                 self._sayAllIsInterrupted = True
-                lastKey = orca_state.lastInputEvent.event_string
-                if lastKey == "Down" and self._fastForwardSayAll(context):
+                if manager.last_event_was_down() and self._fastForwardSayAll(context):
                     return
-                elif lastKey == "Up" and self._rewindSayAll(context):
+                if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
 
             self._inSayAll = False
@@ -2103,10 +2076,7 @@ class Script(script.Script):
         # If we have selected text and the last event was a move to the
         # right, then speak the character to the left of where the text
         # caret is (i.e. the selected character).
-        #
-        eventString, mods = self.utilities.lastKeyAndModifiers()
-        if (mods & keybindings.SHIFT_MODIFIER_MASK) \
-           and eventString in ["Right", "Down"]:
+        if input_event_manager.getManager().last_event_was_forward_caret_selection():
             offset -= 1
 
         character, startOffset, endOffset = AXText.get_character_at_offset(obj, offset)

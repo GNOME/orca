@@ -33,6 +33,7 @@ from gi.repository import Atspi
 
 from orca import debug
 from orca import focus_manager
+from orca import input_event_manager
 from orca import messages
 from orca import object_properties
 from orca import settings
@@ -284,13 +285,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get('leaving'):
             return []
 
-        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        if (lastKey in ['Down', 'Right'] or self._script.inSayAll()) and args.get('startOffset'):
+        manager = input_event_manager.getManager()
+        if (manager.last_event_was_forward_caret_navigation() or self._script.inSayAll()) \
+           and args.get('startOffset'):
             return []
-        if lastKey in ['Up', 'Left']:
-            if self._script.utilities.treatAsTextObject(obj) \
-               and args.get('endOffset') not in [None, AXText.get_character_count(obj)]:
-                return []
+        if manager.last_event_was_backward_caret_navigation() \
+           and self._script.utilities.treatAsTextObject(obj) \
+           and args.get('endOffset') not in [None, AXText.get_character_count(obj)]:
+            return []
 
         result = []
         objArgs = {'stringType': 'detailsfor', 'mode': args.get('mode')}
@@ -338,11 +340,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
-           or self._script.utilities.isDocument(obj):
-            lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-            if lastKey in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
-                return []
+        if (self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
+                or self._script.utilities.isDocument(obj)) \
+                and input_event_manager.getManager().last_event_was_caret_navigation():
+            return []
 
         if AXUtilities.is_page_tab(priorObj) and AXObject.get_name(priorObj) == objName:
             return []
@@ -577,16 +578,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isMenuInCollapsedSelectElement(obj):
                 doNotSpeak.append(Atspi.Role.MENU)
 
-        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
         isEditable = AXUtilities.is_editable(obj)
-
+        mgr = input_event_manager.getManager()
         if isEditable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
-            if ((lastKey in ["Down", "Right"] and not mods) or self._script.inSayAll()) and start:
+            if (mgr.last_event_was_forward_caret_navigation() or self._script.inSayAll()) and start:
                 return []
-            if lastKey in ["Up", "Left"] and not mods:
-                if self._script.utilities.treatAsTextObject(obj) \
-                   and end not in [None, AXText.get_character_count(obj)]:
-                    return []
+            if mgr.last_event_was_backward_caret_navigation() \
+               and self._script.utilities.treatAsTextObject(obj) \
+               and end not in [None, AXText.get_character_count(obj)]:
+                return []
             if role not in doNotSpeak:
                 result.append(self.getLocalizedRoleName(obj, **args))
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -594,8 +594,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif isEditable and self._script.utilities.isDocument(obj):
             parent = AXObject.get_parent(obj)
             if parent and not AXUtilities.is_editable(parent) \
-               and lastKey not in \
-                    ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
+               and not mgr.last_event_was_caret_navigation():
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 

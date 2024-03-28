@@ -328,6 +328,8 @@ class ScriptManager:
             return
 
         if self._activeScript is not None:
+            tokens = ["SCRIPT MANAGER: Deactivating", self._activeScript, "reason:", reason]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._activeScript.deactivate()
 
         self._activeScript = newScript

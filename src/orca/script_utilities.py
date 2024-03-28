@@ -44,10 +44,9 @@ from . import debug
 from . import focus_manager
 from . import keynames
 from . import keybindings
-from . import input_event
+from . import input_event_manager
 from . import mathsymbols
 from . import messages
-from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
 from . import script_manager
@@ -2382,14 +2381,14 @@ class Utilities:
                 if not AXUtilities.is_focused(event.source):
                     return False
 
-            lastKey, mods = self.lastKeyAndModifiers()
-            if lastKey == "Tab" and event.any_data != "\t":
+            manager = input_event_manager.getManager()
+            if manager.last_event_was_tab() and event.any_data != "\t":
                 return True
-            if lastKey == "Return" and event.any_data != "\n":
+            if manager.last_event_was_return() and event.any_data != "\n":
                 return True
-            if lastKey in ["Up", "Down", "Page_Up", "Page_Down"]:
+            if manager.last_event_was_up_or_down() or manager.last_event_was_page_up_or_page_down():
                 return self.isEditableDescendantOfComboBox(event.source)
-            if not self.lastInputEventWasPrintableKey():
+            if not input_event_manager.getManager().last_event_was_printable_key():
                 return False
 
             string = AXText.get_all_text(event.source)
@@ -2397,9 +2396,6 @@ class Utilities:
                 selection, start, end = AXText.get_selected_text(event.source)
                 if selection == event.any_data:
                     return True
-                if string == event.any_data and string.endswith(selection):
-                    beginning = string[:string.find(selection)]
-                    return beginning.lower().endswith(lastKey.lower())
 
         return False
 
@@ -2434,43 +2430,6 @@ class Utilities:
         return character in self._script.whitespace \
                or character in r'!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
-
-    @staticmethod
-    def _allNamesForKeyCode(keycode):
-        keymap = Gdk.Keymap.get_default()
-        entries = keymap.get_entries_for_keycode(keycode)[-1]
-        return list(map(Gdk.keyval_name, set(entries)))
-
-    @staticmethod
-    def _lastKeyCodeAndModifiers():
-        if not isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            return 0, 0
-
-        event = orca_state.lastNonModifierKeyEvent
-        if event:
-            return event.hw_code, event.modifiers
-
-        return 0, 0
-
-    @staticmethod
-    def lastKeyAndModifiers():
-        """Convenience method which returns a tuple containing the event
-        string and modifiers of the last non-modifier key event or ("", 0)
-        if there is no such event."""
-
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            event = orca_state.lastNonModifierKeyEvent
-            if event.keyval_name in ["BackSpace", "Delete"]:
-                eventStr = event.keyval_name
-            else:
-                eventStr = event.event_string
-            mods = orca_state.lastInputEvent.modifiers
-        else:
-            eventStr = ""
-            mods = 0
-
-        return (eventStr, mods)
 
     @staticmethod
     def labelFromKeySequence(sequence):
@@ -2929,14 +2888,18 @@ class Utilities:
         if prevObj != obj:
             return word, start, end
 
+        manager = input_event_manager.getManager()
+        wasPreviousWordNav = manager.last_event_was_previous_word_navigation()
+        wasNextWordNav = manager.last_event_was_next_word_navigation()
+
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
         prevWord, prevStart, prevEnd = AXText.get_word_at_offset(prevObj, prevOffset)
         if self._script.pointOfReference.get("lastTextUnitSpoken") == "word":
-            if self.lastInputEventWasPrevWordNav():
+            if wasPreviousWordNav:
                 start = offset
                 end = prevOffset
-            elif self.lastInputEventWasNextWordNav():
+            elif wasNextWordNav:
                 start = prevOffset
                 end = offset
 
@@ -2951,7 +2914,7 @@ class Utilities:
 
         # Otherwise, attempt some smarts so that the user winds up with the same presentation
         # they would get were this an ongoing series of native navigation-by-word commands.
-        if self.lastInputEventWasPrevWordNav():
+        if wasPreviousWordNav:
             # If we moved left via native nav, this should be the start of a native-navigation
             # word boundary, regardless of what ATK/AT-SPI2 tells us.
             start = offset
@@ -2962,7 +2925,7 @@ class Utilities:
             if not (word[-1].isspace() or word[-1].isalnum()):
                 end -= 1
 
-        elif self.lastInputEventWasNextWordNav():
+        elif wasNextWordNav:
             # If we moved right via native nav, this should be the end of a native-navigation
             # word boundary, regardless of what ATK/AT-SPI2 tells us.
             end = offset
@@ -3345,278 +3308,6 @@ class Utilities:
         text = f"{text}{separator}{newText}"
         clipboard.set_text(text, -1)
 
-    def lastInputEventWasPrintableKey(self):
-        event = orca_state.lastInputEvent
-        if not isinstance(event, input_event.KeyboardEvent):
-            return False
-
-        return event.isPrintableKey()
-
-    def lastInputEventWasCommand(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasPageSwitch(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString.isnumeric():
-            return mods & keybindings.ALT_MODIFIER_MASK
-
-        if keyString in ["Page_Up", "Page_Down"]:
-            return mods & keybindings.CTRL_MODIFIER_MASK
-
-        return False
-
-    def lastInputEventWasUnmodifiedArrow(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Left", "Right", "Up", "Down"]:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK \
-           or mods & keybindings.SHIFT_MODIFIER_MASK \
-           or mods & keybindings.ALT_MODIFIER_MASK \
-           or mods & keybindings.ORCA_MODIFIER_MASK:
-            return False
-
-        return True
-
-    def lastInputEventWasCaretNav(self):
-        return self.lastInputEventWasCharNav() \
-            or self.lastInputEventWasWordNav() \
-            or self.lastInputEventWasLineNav() \
-            or self.lastInputEventWasLineBoundaryNav()
-
-    def lastInputEventWasCharNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Left", "Right"]:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK \
-           or mods & keybindings.ALT_MODIFIER_MASK:
-            return False
-
-        return True
-
-    def lastInputEventWasWordNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Left", "Right"]:
-            return False
-
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasPrevWordNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if not keyString == "Left":
-            return False
-
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasNextWordNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if not keyString == "Right":
-            return False
-
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasLineNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Up", "Down"]:
-            return False
-
-        if self.isEditableDescendantOfComboBox(focus_manager.getManager().get_locus_of_focus()):
-            return False
-
-        return not (mods & keybindings.CTRL_MODIFIER_MASK)
-
-    def lastInputEventWasLineBoundaryNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Home", "End"]:
-            return False
-
-        return not (mods & keybindings.CTRL_MODIFIER_MASK)
-
-    def lastInputEventWasPageNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Page_Up", "Page_Down"]:
-            return False
-
-        if self.isEditableDescendantOfComboBox(focus_manager.getManager().get_locus_of_focus()):
-            return False
-
-        return not (mods & keybindings.CTRL_MODIFIER_MASK)
-
-    def lastInputEventWasFileBoundaryNav(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Home", "End"]:
-            return False
-
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasCaretNavWithSelection(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.SHIFT_MODIFIER_MASK:
-            return keyString in ["Home", "End", "Up", "Down", "Left", "Right"]
-
-        return False
-
-    def lastInputEventWasUndo(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'z' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
-
-    def lastInputEventWasRedo(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'z' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return mods & keybindings.SHIFT_MODIFIER_MASK
-
-        return False
-
-    def lastInputEventWasCut(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'x' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
-
-    def lastInputEventWasCopy(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'c' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
-
-    def lastInputEventWasPaste(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'v' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
-
-    def lastInputEventWasSelectAll(self):
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'a' not in keynames:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
-
-        return False
-
-    def lastInputEventWasDelete(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString in ["Delete", "KP_Delete"]:
-            return True
-
-        keycode, mods = self._lastKeyCodeAndModifiers()
-        keynames = self._allNamesForKeyCode(keycode)
-        if 'd' not in keynames:
-            return False
-
-        return mods & keybindings.CTRL_MODIFIER_MASK
-
-    def lastInputEventWasTab(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString not in ["Tab", "ISO_Left_Tab"]:
-            return False
-
-        if mods & keybindings.CTRL_MODIFIER_MASK \
-           or mods & keybindings.ALT_MODIFIER_MASK \
-           or mods & keybindings.ORCA_MODIFIER_MASK:
-            return False
-
-        return True
-
-    def lastInputEventWasMouseButton(self):
-        return isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent)
-
-    def lastInputEventWasPrimaryMouseClick(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "1" and event.pressed
-
-        return False
-
-    def lastInputEventWasMiddleMouseClick(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "2" and event.pressed
-
-        return False
-
-    def lastInputEventWasSecondaryMouseClick(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "3" and event.pressed
-
-        return False
-
-    def lastInputEventWasPrimaryMouseRelease(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "1" and not event.pressed
-
-        return False
-
-    def lastInputEventWasMiddleMouseRelease(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "2" and not event.pressed
-
-        return False
-
-    def lastInputEventWasSecondaryMouseRelease(self):
-        event = orca_state.lastInputEvent
-        if isinstance(event, input_event.MouseButtonEvent):
-            return event.button == "3" and not event.pressed
-
-        return False
-
-    def lastInputEventWasTableSort(self, delta=0.5):
-        event = orca_state.lastInputEvent
-        if not event:
-            return False
-
-        now = time.time()
-        if now - event.time > delta:
-            return False
-
-        lastSortTime = self._script.pointOfReference.get('last-table-sort-time', 0.0)
-        if now - lastSortTime < delta:
-            return False
-
-        if isinstance(event, input_event.MouseButtonEvent):
-            if not self.lastInputEventWasPrimaryMouseRelease():
-                return False
-        elif isinstance(event, input_event.KeyboardEvent):
-            if not event.isHandledBy(self._script.leftClickReviewItem):
-                keyString, mods = self.lastKeyAndModifiers()
-                if keyString not in ["Return", "space", " "]:
-                    return False
-
-        return AXUtilities.is_table_header(focus_manager.getManager().get_locus_of_focus())
-
     def isPresentableExpandedChangedEvent(self, event):
         if self.isSameObject(event.source, focus_manager.getManager().get_locus_of_focus()):
             return True
@@ -3669,11 +3360,7 @@ class Utilities:
         if self.isHidden(event.source):
             return False
 
-        keyString, mods = self.lastKeyAndModifiers()
-        if keyString == "BackSpace":
-            return True
-
-        return False
+        return input_event_manager.getManager().last_event_was_backspace()
 
     def isDeleteCommandTextDeletionEvent(self, event):
         if not event.type.startswith("object:text-changed:delete"):
@@ -3682,13 +3369,13 @@ class Utilities:
         if event.type.endswith("system"):
             return False
 
-        return self.lastInputEventWasDelete()
+        return input_event_manager.getManager().last_event_was_delete()
 
     def isUndoCommandTextDeletionEvent(self, event):
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
-        if not self.lastInputEventWasUndo():
+        if not input_event_manager.getManager().last_event_was_undo():
             return False
 
         start, end, string = self.getCachedTextSelection(event.source)
@@ -3698,7 +3385,7 @@ class Utilities:
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
-        if self.lastInputEventWasPaste():
+        if input_event_manager.getManager().last_event_was_paste():
             return False
 
         start, end, string = self.getCachedTextSelection(event.source)
@@ -3713,7 +3400,7 @@ class Utilities:
         return string and string == event.any_data and start == event.detail1
 
     def isSelectedTextRestoredEvent(self, event):
-        if not self.lastInputEventWasUndo():
+        if not input_event_manager.getManager().last_event_was_undo():
             return False
 
         if self.isSelectedTextInsertionEvent(event):
@@ -3725,7 +3412,7 @@ class Utilities:
         if not event.type.startswith("object:text-changed:insert"):
             return False
 
-        return self.lastInputEventWasMiddleMouseClick()
+        return input_event_manager.getManager().last_event_was_middle_click()
 
     def isEchoableTextInsertionEvent(self, event):
         if not event.type.startswith("object:text-changed:insert"):
@@ -3756,13 +3443,14 @@ class Utilities:
         if not event.type.startswith("object:text-changed"):
             return False
 
-        if not self.lastInputEventWasCommand() or self.lastInputEventWasUndo():
+        manager = input_event_manager.getManager()
+        if not manager.last_event_was_command() or manager.last_event_was_undo():
             return False
 
         if self.isBackSpaceCommandTextDeletionEvent(event):
             return False
 
-        if "delete" in event.type and self.lastInputEventWasPaste():
+        if "delete" in event.type and input_event_manager.getManager().last_event_was_paste():
             return False
 
         if not self.isEditableTextArea(event.source):
@@ -3809,14 +3497,14 @@ class Utilities:
         self._script.pointOfReference['paste'] = False
 
     def handleUndoTextEvent(self, event):
-        if self.lastInputEventWasUndo():
+        if input_event_manager.getManager().last_event_was_undo():
             if not self._script.pointOfReference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
                 self._script.pointOfReference['undo'] = True
             self.updateCachedTextSelection(event.source)
             return True
 
-        if self.lastInputEventWasRedo():
+        if input_event_manager.getManager().last_event_was_redo():
             if not self._script.pointOfReference.get('redo'):
                 self._script.presentMessage(messages.REDO)
                 self._script.pointOfReference['redo'] = True
@@ -3829,13 +3517,13 @@ class Utilities:
         if self._locusOfFocusIsTopLevelObject():
             return False
 
-        if self.lastInputEventWasUndo():
+        if input_event_manager.getManager().last_event_was_undo():
             if not self._script.pointOfReference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
                 self._script.pointOfReference['undo'] = True
             return True
 
-        if self.lastInputEventWasRedo():
+        if input_event_manager.getManager().last_event_was_redo():
             if not self._script.pointOfReference.get('redo'):
                 self._script.presentMessage(messages.REDO)
                 self._script.pointOfReference['redo'] = True
@@ -3847,7 +3535,7 @@ class Utilities:
         if self._locusOfFocusIsTopLevelObject():
             return False
 
-        if self.lastInputEventWasPaste():
+        if input_event_manager.getManager().last_event_was_paste():
             if not self._script.pointOfReference.get('paste'):
                 self._script.presentMessage(
                     messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
@@ -3900,7 +3588,7 @@ class Utilities:
             return True
 
         self._script.pointOfReference['allItemsSelected'] = allCurrentlySelected
-        if self.lastInputEventWasSelectAll() and allCurrentlySelected:
+        if input_event_manager.getManager().last_event_was_select_all() and allCurrentlySelected:
             self._script.presentMessage(messages.CONTAINER_SELECTED_ALL)
             focus_manager.getManager().set_locus_of_focus(None, obj, False)
             return True
@@ -3919,7 +3607,7 @@ class Utilities:
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
-        if self.lastInputEventWasSelectAll() and newString:
+        if input_event_manager.getManager().last_event_was_select_all() and newString:
             if not self._script.pointOfReference.get('entireDocumentSelected'):
                 self._script.pointOfReference['entireDocumentSelected'] = True
                 self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
@@ -3927,7 +3615,8 @@ class Utilities:
 
         # Even though we present a message, treat it as unhandled so the new location is
         # still presented.
-        if not self.lastInputEventWasCaretNavWithSelection() and oldString and not newString:
+        if not input_event_manager.getManager().last_event_was_caret_selection() \
+           and oldString and not newString:
             self._script.speakMessage(messages.SELECTION_REMOVED)
             return False
 

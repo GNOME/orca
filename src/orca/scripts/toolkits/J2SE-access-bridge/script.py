@@ -26,8 +26,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
 __license__   = "LGPL"
 
 import orca.focus_manager as focus_manager
-import orca.input_event as input_event
-import orca.orca_state as orca_state
+import orca.input_event_manager as input_event_manager
 import orca.scripts.default as default
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
@@ -84,9 +83,8 @@ class Script(default.Script):
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
         if AXObject.find_ancestor(event.source, AXUtilities.is_spin_button):
-            eventStr, mods = self.utilities.lastKeyAndModifiers()
-            if eventStr in ["Up", "Down"] or isinstance(
-               orca_state.lastInputEvent, input_event.MouseButtonEvent):
+            manager = input_event_manager.getManager()
+            if manager.last_event_was_up_or_down() or manager.last_event_was_mouse_button():
                 return
 
         default.Script.onCaretMoved(self, event)

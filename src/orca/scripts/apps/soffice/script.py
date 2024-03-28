@@ -32,6 +32,7 @@ from gi.repository import Gtk
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.focus_manager as focus_manager
+import orca.input_event_manager as input_event_manager
 import orca.scripts.default as default
 import orca.guilabels as guilabels
 import orca.keybindings as keybindings
@@ -314,21 +315,17 @@ class Script(default.Script):
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
-        elif newLocusOfFocus != oldLocusOfFocus \
-           and AXUtilities.is_paragraph(newLocusOfFocus) \
-           and AXUtilities.is_paragraph(oldLocusOfFocus):
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey == "Return" and settings_manager.getManager().getSetting('enableEchoByWord'):
+        elif newLocusOfFocus != oldLocusOfFocus and AXUtilities.is_paragraph(newLocusOfFocus) \
+               and AXUtilities.is_paragraph(oldLocusOfFocus):
+            if input_event_manager.getManager().last_event_was_return() \
+               and settings_manager.getManager().getSetting('enableEchoByWord'):
                 self.echoPreviousWord(oldLocusOfFocus)
                 return
 
             # TODO - JD: And this hack is another one that needs to be done better.
             # But this will get us to speak the entire paragraph when navigation by
             # paragraph has occurred.
-            event_string, mods = self.utilities.lastKeyAndModifiers()
-            isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
-            isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
-            if event_string in ["Up", "Down"] and isControlKey and not isShiftKey:
+            if input_event_manager.getManager().last_event_was_paragraph_navigation():
                 string = self.utilities.displayedText(newLocusOfFocus)
                 if string:
                     voice = self.speechGenerator.voice(obj=newLocusOfFocus, string=string)
@@ -484,8 +481,8 @@ class Script(default.Script):
             if start != end:
                 return
 
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            if keyString in ["Left", "Right"]:
+            manager = input_event_manager.getManager()
+            if manager.last_event_was_left() or manager.last_event_was_right():
                 focus_manager.getManager().set_locus_of_focus(event, event.source, False)
                 return
 
@@ -549,18 +546,7 @@ class Script(default.Script):
         if sourceWindow != focusWindow:
             return
 
-        # Announce when the toolbar buttons are toggled if we just toggled
-        # them; not if we navigated to some text.
-        weToggledIt = False
         if AXUtilities.is_focused(event.source):
-            weToggledIt = True
-        else:
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            navKeys = ["Up", "Down", "Left", "Right", "Page_Up", "Page_Down",
-                       "Home", "End", "N"]
-            wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
-            weToggledIt = wasCommand and keyString not in navKeys
-        if weToggledIt:
             self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def onSelectedChanged(self, event):

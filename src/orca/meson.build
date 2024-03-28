@@ -89,6 +89,7 @@ lib_sources = [
   'guilabels.py',
   'highlighter.py',
   'input_event.py',
+  'input_event_manager.py',
   'keybindings.py',
   'keynames.py',
   'label_inference.py',

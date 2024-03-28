@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.focus_manager as focus_manager
+import orca.input_event_manager as input_event_manager
 import orca.spellcheck as spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -46,13 +47,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not AXUtilities.is_push_button(focus):
             return False
 
-        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        keys = self._script.utilities.mnemonicShortcutAccelerator(focus)
-        for key in keys:
-            if key.endswith(lastKey.upper()):
-                return True
-
-        return False
+        return input_event_manager.getManager().last_event_was_shortcut_for(focus)
 
     def _isCandidateWindow(self, window):
         if not AXUtilities.is_dialog(window):

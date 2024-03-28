@@ -28,6 +28,7 @@ __license__   = "LGPL"
 from . import cmdnames
 from . import debug
 from . import focus_manager
+from . import input_event_manager
 from . import guilabels
 from . import input_event
 from . import keybindings
@@ -896,8 +897,8 @@ class Chat:
         if not AXUtilities.is_text(event.source):
             return False
 
-        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        if lastKey == "Tab" and event.any_data and event.any_data != "\t":
+        if input_event_manager.getManager().last_event_was_tab() \
+           and event.any_data and event.any_data != "\t":
             return True
 
         return False
