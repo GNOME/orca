@@ -10,16 +10,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2022-01-21 09:36+0000\n"
-"PO-Revision-Date: 2022-01-26 08:53-0300\n"
+"POT-Creation-Date: 2024-03-15 08:53+0000\n"
+"PO-Revision-Date: 2024-03-16 21:42-0300\n"
 "Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
-"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/tradução>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: orca\n"
 "X-DL-Branch: master\n"
@@ -131,8 +131,8 @@ msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 msgstr ""
-"Salva um marcador numa posição numerada: <keyseq><key>Tecla modificadora do "
-"Orca</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+"Salva um marcador numa posição numerada: <keyseq><key>Modificador Orca</key> "
+"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:32
@@ -141,8 +141,7 @@ msgid ""
 "Modifier</key><key>Alt</key><key>B</key></keyseq>"
 msgstr ""
 "Salva os marcadores definidos para o aplicativo ou a página: "
-"<keyseq><key>Tecla modificadora do Orca</key><key>Alt</key><key>B</key></"
-"keyseq>"
+"<keyseq><key>Modificador Orca</key><key>Alt</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:38
@@ -150,8 +149,8 @@ msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
 "<key>1</key></keyseq>-<key>6</key>"
 msgstr ""
-"Vai para um marcador numerado específico: <keyseq><key>Tecla modificadora do "
-"Orca</key> <key>1</key></keyseq>-<key>6</key>"
+"Vai para um marcador numerado específico: <keyseq><key>Modificador Orca</"
+"key> <key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:44
@@ -159,8 +158,8 @@ msgid ""
 "Go to the previous bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>B</key> </keyseq>"
 msgstr ""
-"Vai para o marcador anterior para o aplicativo ou página: <keyseq><key>Tecla "
-"modificadora do Orca</key><key>Shift</key><key>B</key> </keyseq>"
+"Vai para o marcador anterior para o aplicativo ou página: "
+"<keyseq><key>Modificador Orca</key><key>Shift</key><key>B</key> </keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:51
@@ -168,8 +167,8 @@ msgid ""
 "Go to the next bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>B</key></keyseq>"
 msgstr ""
-"Vai para o próximo marcador para o aplicativo ou página: <keyseq><key>Tecla "
-"modificadora do Orca</key><key>B</key></keyseq>"
+"Vai para o próximo marcador para o aplicativo ou página: "
+"<keyseq><key>Modificador Orca</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -255,7 +254,8 @@ msgstr "Marca o final de uma seleção de texto: Linha de corte"
 #. (itstool) path: item/p
 #: C/commands_braille.page:35
 msgid "Processes a cursor routing key: Cursor Routing"
-msgstr "Processa uma chave de encaminhamento do cursor: Encaminhamento do cursor"
+msgstr ""
+"Processa uma chave de encaminhamento do cursor: Encaminhamento do cursor"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:36
@@ -295,9 +295,9 @@ msgid ""
 msgstr ""
 "Os comandos a seguir podem ser usados para acessar as informações em "
 "clientes de mensageiros instantâneos e IRC com suporte pelo <app>Orca</app>. "
-"Você notará que vários destes comandos “sem atalhos definidos”. Veja "
-"<link xref=\"howto_key_bindings\">Associações de teclas</link> "
-"para informações de como vincular estes comandos a teclas de atalho."
+"Você notará que vários destes comandos “sem atalhos definidos”. Veja <link "
+"xref=\"howto_key_bindings\">Associações de teclas</link> para informações de "
+"como vincular estes comandos a teclas de atalho."
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
@@ -305,8 +305,8 @@ msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
-"Apresenta a mensagem anterior na sala de bate-papo: <keyseq><key>Tecla "
-"modificadora do Orca</key><key>F1</key></keyseq> até <key>F9</key>"
+"Apresenta a mensagem anterior na sala de bate-papo: <keyseq><key>Modificador "
+"Orca</key><key>F1</key></keyseq> até <key>F9</key>"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:36
@@ -373,8 +373,8 @@ msgid ""
 "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Ative ou desative o <app>Orca</app> no GNOME: "
-"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
+"Ative ou desative o <app>Orca</app> no GNOME: <keyseq><key>Super</"
+"key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -386,11 +386,11 @@ msgid ""
 "for information on how to bind unbound commands."
 msgstr ""
 "Se você estiver usando o <app>Orca</app> em outro ambiente de desktop no "
-"qual não há comando para ativar e desativá-lo, você pode achar útil o comando "
-"para sair do <app>Orca</app>. Este comando não tem atalho de teclado "
+"qual não há comando para ativar e desativá-lo, você pode achar útil o "
+"comando para sair do <app>Orca</app>. Este comando não tem atalho de teclado "
 "definido por padrão. Consulte <link xref=\"howto_key_bindings\">Associações "
-"de teclas</link> para obter informações sobre como vincular "
-"comandos a um atalho de teclado."
+"de teclas</link> para obter informações sobre como vincular comandos a um "
+"atalho de teclado."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:44
@@ -399,8 +399,7 @@ msgid ""
 "Modifier</key><key>Space</key></keyseq>."
 msgstr ""
 "<link xref=\"preferences\">Preferências do Orca</link> Diálogo: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>barra de espaço</key></"
-"keyseq>."
+"<keyseq><key>Modificador Orca</key><key>barra de espaço</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:50
@@ -409,7 +408,7 @@ msgid ""
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
 "Preferências do Orca para o aplicativo atual: <keyseq><key>Ctrl</"
-"key><key>Tecla Modificadora do Orca</key><key>barra de espaço</key></keyseq>."
+"key><key>Modificador Orca</key><key>barra de espaço</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
@@ -417,8 +416,8 @@ msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
 msgstr ""
-"Envia o próximo comando para o aplicativo atual: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>BackSpace</key></keyseq>"
+"Envia o próximo comando para o aplicativo atual: <keyseq><key>Modificador "
+"Orca</key><key>BackSpace</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_controlling_orca.page:64
@@ -443,8 +442,8 @@ msgstr ""
 #: C/commands_controlling_orca.page:73
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
-"Entra no Modo de Aprendizado: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>H</key></keyseq>"
+"Entra no Modo de Aprendizado: <keyseq><key>Modificador Orca</key><key>H</"
+"key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
@@ -484,9 +483,9 @@ msgid ""
 msgstr ""
 "Você pode ser solicitado pelos desenvolvedores a fornecer algumas "
 "informações de depuração para ajudá-los a identificar a origem de um "
-"problema que você está enfrentando. O comando a seguir não está \"vinculado"
-"\" a um atalho de de teclado. Se você precisar vinculá-lo, consulte <link "
-"xref=\"howto_key_bindings\">Associações de teclas</link>."
+"problema que você está enfrentando. O comando a seguir não está "
+"\"vinculado\" a um atalho de de teclado. Se você precisar vinculá-lo, "
+"consulte <link xref=\"howto_key_bindings\">Associações de teclas</link>."
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
@@ -523,8 +522,9 @@ msgid ""
 "context for elements located within the current window."
 msgstr ""
 "O <link xref=\"howto_orca_find\">recurso Busca</link> do <app>Orca</app> "
-"permite que você pesquise no contexto da <link xref=\"howto_flat_review"
-"\">Revisão Plana</link> por elementos localizados na janela atual."
+"permite que você pesquise no contexto da <link "
+"xref=\"howto_flat_review\">Revisão Plana</link> por elementos localizados na "
+"janela atual."
 
 #. (itstool) path: item/p
 #: C/commands_find.page:27
@@ -541,8 +541,8 @@ msgstr "Desktop: <keyseq><key>NUM Delete</key></keyseq>"
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Fecha colchetes</"
-"key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Fecha colchetes</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:38
@@ -553,16 +553,15 @@ msgstr "Move o cursor da revisão plana para a próxima ocorrência de um texto:
 #: C/commands_find.page:41
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Delete</key></"
-"keyseq>"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Delete</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:47
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla modificador do Orca</key><key>Abre colchetes</"
-"key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Abre colchetes</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:55
@@ -575,8 +574,8 @@ msgid ""
 "Desktop: <keyseq> <key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key> </keyseq>"
 msgstr ""
-"Desktop: <keyseq> <key>Tecla Modificadora do Orca</key><key>Shift</"
-"key><key>NUM Delete</key> </keyseq>"
+"Desktop: <keyseq> <key>Modificador Orca</key><key>Shift</key><key>NUM "
+"Delete</key> </keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:66
@@ -584,8 +583,8 @@ msgid ""
 "Laptop: <keyseq> <key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
 "key> </keyseq>"
 msgstr ""
-"Notebook: <keyseq> <key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>Abre colchetes</key> </keyseq>"
+"Notebook: <keyseq> <key>Modificador Orca</key><key>Ctrl</key><key>Abre "
+"colchetes</key> </keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_flat_review.page:6
@@ -640,17 +639,15 @@ msgstr "Primeira linha (a Posição \"Inicial\"):"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:34
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificador do Orca</key><key>NUM 7</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 7</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:35
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>U</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>U</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:39
@@ -665,8 +662,7 @@ msgstr "Desktop: <keyseq><key>NUM 7</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:42
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>U</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>U</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:46
@@ -681,8 +677,7 @@ msgstr "Desktop: <keyseq><key>NUM 8</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:49 C/commands_reading.page:54
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>I</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:52
@@ -700,8 +695,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>I</key></keyseq> "
-"(clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>I</key></keyseq> (clique "
+"duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:58
@@ -719,7 +714,7 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>I</key></keyseq> "
+"Notebook: <keyseq><key>Modificador Orca</key><key>I</key></keyseq> "
 "(pressionada três vezes)"
 
 #. (itstool) path: item/p
@@ -735,8 +730,7 @@ msgstr "Desktop: <keyseq><key>NUM 9</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:67
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>O</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>O</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>O</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:70
@@ -746,17 +740,15 @@ msgstr "Última linha (posição \"final\"):"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:72
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM 9</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 9</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:73
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>O</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>O</key></"
+"keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:79
@@ -771,17 +763,15 @@ msgstr "Palavra acima:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:83
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM 4</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 4</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:84
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>J</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>J</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:87
@@ -796,8 +786,7 @@ msgstr "Desktop: <keyseq><key>NUM 4</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:90
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>J</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>J</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>J</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:93
@@ -812,8 +801,7 @@ msgstr "Desktop: <keyseq><key>NUM 5</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:96 C/commands_reading.page:69
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>K</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:99
@@ -831,8 +819,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>K</key></keyseq> "
-"(clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>K</key></keyseq> (clique "
+"duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:105
@@ -850,7 +838,7 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>K</key></keyseq> "
+"Notebook: <keyseq><key>Modificador Orca</key><key>K</key></keyseq> "
 "(pressionada três vezes)"
 
 #. (itstool) path: item/p
@@ -866,8 +854,7 @@ msgstr "Desktop: <keyseq><key>NUM 6</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:114
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>L</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>L</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:117
@@ -877,17 +864,15 @@ msgstr "Palavra abaixo:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:119
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM 6</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 6</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:120
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>L</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>L</key></"
+"keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:126
@@ -907,8 +892,7 @@ msgstr "Desktop: <keyseq><key>NUM 1</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:131
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>M</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>M</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:134
@@ -924,8 +908,7 @@ msgstr "Desktop: <keyseq><key>NUM 2</key></keyseq>"
 #: C/commands_flat_review.page:137 C/commands_reading.page:116
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Vírgula</key></"
-"keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Vírgula</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:140
@@ -943,8 +926,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Virgula</key></"
-"keyseq> (clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Virgula</key></keyseq> "
+"(clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:146
@@ -962,8 +945,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Vírgula</key></"
-"keyseq> (pressionada três vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Vírgula</key></keyseq> "
+"(pressionada três vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:152
@@ -978,9 +961,7 @@ msgstr "Desktop: <keyseq><key>NUM 3</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:155
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ponto</key></"
-"keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>Ponto</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:158
@@ -990,17 +971,15 @@ msgstr "Último caractere na linha atual:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:160
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM 1</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 1</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:161
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>M</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>M</key></"
+"keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:167
@@ -1010,21 +989,19 @@ msgstr "Comandos Adicionais"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:169
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr "Alterna para a revisão plana (atualiza o conteúdo da revisão plana) "
+msgstr "Alterna para a revisão plana (atualiza o conteúdo da revisão plana):"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:171
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Ífen</key></"
-"keyseq>"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Ífen</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:172
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>P</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:175
@@ -1034,17 +1011,15 @@ msgstr "Revisa o item/controle atual:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:177
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM 5</key></"
-"keyseq>"
+msgstr "Desktop: <keyseq><key>Modificador Orca</key><key>NUM 5</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:178
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ctrl</"
-"key><key>K</key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ctrl</key><key>K</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:181
@@ -1062,8 +1037,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ponto e vírgula</"
-"key></keyseq> (clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ponto e vírgula</key></"
+"keyseq> (clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:188
@@ -1116,8 +1091,8 @@ msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Backslash</key></keyseq>"
 msgstr ""
-"Monitora regiões dinâmicas: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>Shift</key><key>Barra invertida</key></keyseq>"
+"Monitora regiões dinâmicas: <keyseq><key>Modificador Orca</key><key>Shift</"
+"key><key>Barra invertida</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
@@ -1158,8 +1133,8 @@ msgid ""
 "Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
 "key></keyseq> through <key>F9</key>"
 msgstr ""
-"Revisa mensagens da região dinâmica: <keyseq><key>Tecla Modificadora do "
-"Orca</key><key>F1</key></keyseq> até <key>F9</key>"
+"Revisa mensagens da região dinâmica: <keyseq><key>Modificador Orca</"
+"key><key>F1</key></keyseq> até <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -1196,8 +1171,8 @@ msgstr ""
 "manipular o ponteiro do mouse e ler o conteúdo sob ele. Todos os comandos "
 "possuem teclas de atalho \"atribuídas\", com uma exceção: Alternando o Modo "
 "de Revisão do Mouse. Consulte <link xref=\"howto_key_bindings\">Associações "
-"de teclas</link> para informações sobre como associar este comando "
-"a uma tecla."
+"de teclas</link> para informações sobre como associar este comando a uma "
+"tecla."
 
 # Revisar o que siginifica "KP". Verificar se a sigla pode ser adaptada no português.
 #. (itstool) path: note/p
@@ -1231,8 +1206,7 @@ msgstr "Desktop: <keyseq><key>NUM Barra</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_mouse.page:44
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>7</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>7</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:48
@@ -1247,8 +1221,7 @@ msgstr "Desktop: <keyseq><key>NUM Asterisco</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_mouse.page:51
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>8</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>8</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:55
@@ -1259,14 +1232,12 @@ msgstr "Envia o ponteiro para o item atual:"
 #: C/commands_mouse.page:57
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Barra</key></"
-"keyseq>"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Barra</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:58
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>9</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>9</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:62
@@ -1279,14 +1250,12 @@ msgstr ""
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Asterisco</"
-"key></keyseq>"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Asterisco</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:65
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>0</key></keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>0</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:69
@@ -1492,8 +1461,8 @@ msgstr "Desktop: <key>NUM Mais</key>"
 #: C/commands_reading.page:167
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Ponto e vírgula</"
-"key></keyseq>"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Ponto e vírgula</key></"
+"keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:174
@@ -1522,8 +1491,8 @@ msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
 msgstr ""
-"Apresenta os atributos do texto: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>F</key></keyseq>"
+"Apresenta os atributos do texto: <keyseq><key>Modificador Orca</key><key>F</"
+"key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
@@ -1538,9 +1507,7 @@ msgstr "Desktop: <key>NUM Enter</key>"
 #. (itstool) path: item/p
 #: C/commands_reading.page:199 C/commands_where_am_i.page:37
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Enter</key></"
-"keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>Enter</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
@@ -1558,8 +1525,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Enter</key></"
-"keyseq> (clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Enter</key></keyseq> "
+"(clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:222
@@ -1567,8 +1534,8 @@ msgid ""
 "Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Up</key></keyseq>"
 msgstr ""
-"Fala a seleção atual: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>Shift</key><key>Para Cima</key></keyseq>"
+"Fala a seleção atual: <keyseq><key>Modificador Orca</key><key>Shift</"
+"key><key>Para Cima</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:230
@@ -1582,17 +1549,17 @@ msgid ""
 "to announce the details associated with the link such as the link type, if "
 "the link is visited, the site description, and file size. If you would "
 "instead prefer a dedicated command for this purpose, you can bind <app>Orca</"
-"app>'s Speak Link Details command to a keystroke. Please see <link xref="
-"\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
-"to do so."
+"app>'s Speak Link Details command to a keystroke. Please see <link "
+"xref=\"howto_key_bindings\"> Modifying Keybindings</link> for information on "
+"how to do so."
 msgstr ""
 "Se você estiver em um link, o comando Onde Estou Básico do <app>Orca</app> "
 "pode ser usado para anunciar os detalhes associados ao link, como o tipo de "
 "link, se o link foi visitado, a descrição do site e tamanho do arquivo. Se "
 "você preferir um comando dedicado para essa finalidade, você pode vincular o "
 "comando Falar detalhes do link do <app>Orca</app> a um pressionamento de "
-"tecla. Consulte <link xref=\"howto_key_bindings\"> Associações de "
-"teclas</link> para obter informações sobre como fazê-lo."
+"tecla. Consulte <link xref=\"howto_key_bindings\"> Associações de teclas</"
+"link> para obter informações sobre como fazê-lo."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:241
@@ -1619,8 +1586,8 @@ msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
 msgstr ""
-"Alterna entre o modo de navegação e o modo de foco: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>A</key></keyseq>"
+"Alterna entre o modo de navegação e o modo de foco: <keyseq><key>Modificador "
+"Orca</key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
@@ -1628,8 +1595,8 @@ msgid ""
 "Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Habilita o modo de foco fixo: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>A</key></keyseq> (clique duas vezes)"
+"Habilita o modo de foco fixo: <keyseq><key>Modificador Orca</key><key>A</"
+"key></keyseq> (clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
@@ -1637,7 +1604,7 @@ msgid ""
 "Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
-"Habilita o modo de navegação fixo: <keyseq><key>Tecla Modificadora do Orca</"
+"Habilita o modo de navegação fixo: <keyseq><key>Modificador Orca</"
 "key><key>A</key></keyseq> (clique três vezes)"
 
 #. (itstool) path: section/title
@@ -1665,14 +1632,14 @@ msgstr ""
 #: C/commands_reading.page:281
 msgid ""
 "<app>Orca</app> provides a command to switch between Layout mode and Object "
-"mode. This command is unbound by default. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to bind unbound commands."
+"mode. This command is unbound by default. Please see <link "
+"xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
+"how to bind unbound commands."
 msgstr ""
 "O <app>Orca</app> fornece um comando para alternar entre o modo Layout e o "
 "modo Objeto. Este comando não possui atalho definido por padrão. Consulte "
-"<link xref=\"howto_key_bindings\">Associações de teclas</link> para "
-"obter informações sobre como vincular comandos Sem atalho definidos."
+"<link xref=\"howto_key_bindings\">Associações de teclas</link> para obter "
+"informações sobre como vincular comandos Sem atalho definidos."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
@@ -1712,17 +1679,17 @@ msgid ""
 msgstr ""
 "Os comandos a seguir podem ser usados para personalizar a saída de fala do "
 "<app>Orca</app>. Você perceberá que alguns desses comandos estão \"sem "
-"teclas de atalho definidas.\" Por favor veja <link xref=\"howto_key_bindings"
-"\">Associações de teclas</link> para informações de como "
-"atribuir teclas de atalhos a esses comandos."
+"teclas de atalho definidas.\" Por favor veja <link "
+"xref=\"howto_key_bindings\">Associações de teclas</link> para informações de "
+"como atribuir teclas de atalhos a esses comandos."
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:29
 msgid ""
 "Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
 msgstr ""
-"Habilita/desabilita fala: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>S</key></keyseq>"
+"Habilita/desabilita fala: <keyseq><key>Modificador Orca</key><key>S</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:34 C/commands_table.page:51
@@ -1730,8 +1697,8 @@ msgid ""
 "Toggle between cell and row reading in a table: <keyseq><key>Orca Modifier</"
 "key><key>F11</key></keyseq>"
 msgstr ""
-"Alterna entre leitura de célula ou de linha numa tabela: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>F11</key></keyseq>"
+"Alterna entre leitura de célula ou de linha numa tabela: "
+"<keyseq><key>Modificador Orca</key><key>F11</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
@@ -1739,8 +1706,8 @@ msgid ""
 "Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
 "Modifier</key><key>V</key></keyseq>"
 msgstr ""
-"Alterne entre os níveis de verbosidade curto e detalhado: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>V</key></keyseq>"
+"Alterne entre os níveis de verbosidade curto e detalhado: "
+"<keyseq><key>Modificador Orca</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:46
@@ -1840,8 +1807,8 @@ msgid ""
 "Enable/disable Structural Navigation keys: <keyseq><key>Orca Modifier</"
 "key><key>Z</key></keyseq>"
 msgstr ""
-"Habilita/desabilita teclas de Navegação Estrutural: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>Z</key></keyseq>"
+"Habilita/desabilita teclas de Navegação Estrutural: <keyseq><key>Modificador "
+"Orca</key><key>Z</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:34
@@ -1982,13 +1949,11 @@ msgstr "Formulários"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Próximo campo de formulário e campo de formulário anterior: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Tab</key></keyseq> e "
-"<keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>"
+"Campo de formulário seguinte e anterior: <keyseq><key>F</key></keyseq> e "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2426,9 +2391,9 @@ msgstr "Comandos de navegação em tabela"
 #. (itstool) path: page/p
 #: C/commands_table.page:20
 msgid ""
-"Orca's support for navigation by table cell is part of its <link xref="
-"\"commands_structural_navigation#tables\">Structural Navigation commands</"
-"link>. In addition you can:"
+"Orca's support for navigation by table cell is part of its <link "
+"xref=\"commands_structural_navigation#tables\">Structural Navigation "
+"commands</link>. In addition you can:"
 msgstr ""
 "O suporte do Orca à navegação por célula de uma tabela faz parte de seus "
 "<link xref=\"commands_structural_navigation#tables\">Comandos de navegação "
@@ -2441,7 +2406,7 @@ msgid ""
 "key><key>C</key></keyseq>"
 msgstr ""
 "Ajusta os cabeçalhos de linha dinâmica para a coluna atual: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>C</key></keyseq>"
+"<keyseq><key>Modificador Orca</key><key>C</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:33
@@ -2450,7 +2415,7 @@ msgid ""
 "key><key>R</key></keyseq>"
 msgstr ""
 "Ajusta os cabeçalhos de coluna dinâmica para a linha atual: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>R</key></keyseq>"
+"<keyseq><key>Modificador Orca</key><key>R</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:39
@@ -2458,8 +2423,8 @@ msgid ""
 "Clear dynamic row headers: <keyseq><key>Orca Modifier</key><key>C</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Limpar cabeçalhos de linha dinâmicos: <keyseq><key>Tecla Modificadora do "
-"Orca</key><key>C</key></keyseq> (clique duas vezes)"
+"Limpar cabeçalhos de linha dinâmicos: <keyseq><key>Modificador Orca</"
+"key><key>C</key></keyseq> (clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:45
@@ -2467,8 +2432,8 @@ msgid ""
 "Clear dynamic column headers: <keyseq><key>Orca Modifier</key><key>R</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Limpar cabeçalhos de coluna dinâmicos: <keyseq><key>Tecla Modificadora do "
-"Orca</key><key>R</key></keyseq> (clique duas vezes)"
+"Limpar cabeçalhos de coluna dinâmicos: <keyseq><key>Modificador Orca</"
+"key><key>R</key></keyseq> (clique duas vezes)"
 
 #. (itstool) path: info/title
 #: C/commands_time_date_notifications.page:6
@@ -2510,8 +2475,7 @@ msgstr "Obtendo a hora e data"
 #: C/commands_time_date_notifications.page:28
 msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
 msgstr ""
-"Anuncia a hora: <keyseq><key>Tecla Modificadora do Orca</key><key>T</key></"
-"keyseq>"
+"Anuncia a hora: <keyseq><key>Modificador Orca</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:33
@@ -2519,8 +2483,8 @@ msgid ""
 "Present the date: <keyseq><key>Orca Modifier</key><key>T</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Anuncia a data: <keyseq><key>Tecla Modificadora do Orca</key><key>T</key></"
-"keyseq> (clique duas vezes)"
+"Anuncia a data: <keyseq><key>Modificador Orca</key><key>T</key></keyseq> "
+"(clique duas vezes)"
 
 #. (itstool) path: section/title
 #: C/commands_time_date_notifications.page:41
@@ -2537,9 +2501,9 @@ msgid ""
 msgstr ""
 "O Orca tem três comandos sem teclas de atalho associadas para acessar <link "
 "xref=\"howto_notifications\">mensagens de notificação</link> previamente "
-"exibidas. Por favor veja <link xref=\"howto_key_bindings\">"
-"Associações de teclas</link> para informações de como associar estes comandos "
-"a teclas de atalho."
+"exibidas. Por favor veja <link xref=\"howto_key_bindings\">Associações de "
+"teclas</link> para informações de como associar estes comandos a teclas de "
+"atalho."
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:50
@@ -2555,6 +2519,11 @@ msgstr "Apresenta a mensagem de notificação anterior: (Sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Apresenta a próxima mensagem de notificação: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr ""
 "Apresenta uma lista de todas as mensagens de notificação: (Sem atalho "
@@ -2624,15 +2593,12 @@ msgstr "Apresenta a barra de título:"
 #: C/commands_where_am_i.page:65
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Enter</key></"
-"keyseq>"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Enter</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:70
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
-msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Barra</key></"
-"keyseq>"
+msgstr "Notebook: <keyseq><key>Modificador Orca</key><key>Barra</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:77
@@ -2645,8 +2611,8 @@ msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Desktop: <keyseq><key>Tecla Modificadora do Orca</key><key>NUM Enter</key></"
-"keyseq> (clique duas vezes)"
+"Desktop: <keyseq><key>Modificador Orca</key><key>NUM Enter</key></keyseq> "
+"(clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:86
@@ -2654,8 +2620,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Notebook: <keyseq><key>Tecla Modificadora do Orca</key><key>Barra</key></"
-"keyseq> (clique duas vezes)"
+"Notebook: <keyseq><key>Modificador Orca</key><key>Barra</key></keyseq> "
+"(clique duas vezes)"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:92
@@ -2715,8 +2681,8 @@ msgstr ""
 "marcadores associados ao seu ambiente atual. A navegação pode ser baseada no "
 "número do marcador, caso você queira pular diretamente para um item "
 "específico. Alternativamente, você pode navegar para o próximo marcador ou "
-"para o anterior, assim como faz com um objeto de <link xref="
-"\"howto_structural_navigation\">Navegação Estrutural</link>."
+"para o anterior, assim como faz com um objeto de <link "
+"xref=\"howto_structural_navigation\">Navegação Estrutural</link>."
 
 #. (itstool) path: item/p
 #: C/howto_bookmarks.page:39
@@ -2732,9 +2698,9 @@ msgstr ""
 "objetos na página da web que você está lendo. O ambiente em que você está "
 "determina o que acontece enquanto você navega entre os marcadores: se você "
 "estiver em conteúdo da web, o cursor será movido para o marcador para que "
-"você possa continuar lendo; caso contrário, a <link xref=\"howto_flat_review"
-"\">Revisão Plana</link> será ativada, com o marcador se tornando o item de "
-"revisão atual."
+"você possa continuar lendo; caso contrário, a <link "
+"xref=\"howto_flat_review\">Revisão Plana</link> será ativada, com o marcador "
+"se tornando o item de revisão atual."
 
 #. (itstool) path: page/p
 #: C/howto_bookmarks.page:50
@@ -2829,8 +2795,8 @@ msgstr ""
 msgid ""
 "In addition to reading a document by caret navigation, you may find it "
 "helpful to read, spell, and obtain the Unicode value for the current text. "
-"You can do these things through <app>Orca</app>'s <link xref="
-"\"howto_flat_review\">Flat Review feature</link>."
+"You can do these things through <app>Orca</app>'s <link "
+"xref=\"howto_flat_review\">Flat Review feature</link>."
 msgstr ""
 "Além de ler um documento com a navegação do cursor, você pode achar útil "
 "ler, soletrar e obter o valor unicode para o texto atual. Você pode fazer "
@@ -2850,8 +2816,8 @@ msgstr ""
 "Finalmente, para que o <app>Orca</app> fale todo o documento de sua "
 "localização atual, use o comando Ler Tudo. Ele, juntamente com uma lista "
 "mais completa dos comandos do <app>Orca</app> para acessar o texto do "
-"documento, pode ser encontrado no guia <link xref=\"commands_reading"
-"\">Comandos de Leitura</link>."
+"documento, pode ser encontrado no guia <link "
+"xref=\"commands_reading\">Comandos de Leitura</link>."
 
 #. (itstool) path: info/title
 #: C/howto_flat_review.page:5
@@ -2890,9 +2856,9 @@ msgid ""
 "The \"flattened\" contents, also known as the Flat Review context, can be "
 "<link xref=\"commands_flat_review\">navigated</link> by line, by word, by "
 "character, and by object. In addition, you can perform a left-click or right-"
-"click on the object being reviewed. Finally, you can use <link xref="
-"\"howto_orca_find\">Orca Find</link>, a Flat-Review-based feature to search "
-"the active window's contents."
+"click on the object being reviewed. Finally, you can use <link "
+"xref=\"howto_orca_find\">Orca Find</link>, a Flat-Review-based feature to "
+"search the active window's contents."
 msgstr ""
 "O conteúdo \"plano\", também conhecido como revisão plana, pode ser <link "
 "xref=\"commands_flat_review\">navegado</link> por linha, por palavra, por "
@@ -3012,8 +2978,8 @@ msgstr ""
 "Para usar os comandos de navegação de cursor ou de navegação estrutural do "
 "<app>Orca</app> para navegar até um campo de formulário, você deve estar no "
 "modo de navegação. Se estiver no modo de foco, você pode alternar para o "
-"modo de navegação pressionando <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>A</key></keyseq>."
+"modo de navegação pressionando <keyseq><key>Modificador Orca</key><key>A</"
+"key></keyseq>."
 
 #. (itstool) path: section/title
 #: C/howto_forms.page:59
@@ -3067,8 +3033,8 @@ msgstr ""
 "Para usar os comandos de navegação de cursor ou de navegação estrutural do "
 "<app>Orca</app> para sair de um campo de formulário, você deve estar no modo "
 "de navegação. Se estiver no modo de foco, você pode alternar para o modo de "
-"navegação pressionando <keyseq><key>Tecla Modificadora do Orca</key><key>A</"
-"key></keyseq>."
+"navegação pressionando <keyseq><key>Modificador Orca</key><key>A</key></"
+"keyseq>."
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -3105,14 +3071,14 @@ msgstr "Associando um Comando Sem atalho definido Definido"
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:23 C/howto_key_bindings.page:60
 #: C/howto_key_bindings.page:92 C/howto_key_bindings.page:113
-#: C/howto_keyboard_layout.page:45 C/howto_the_orca_modifier.page:53
+#: C/howto_keyboard_layout.page:45
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
 "Acesse o diálogo <link xref=\"preferences\">Preferências do Orca</link> "
-"pressionando <keyseq><key>Tecla Modificadora do Orca</key><key>Barra de "
-"espaço</key></keyseq>."
+"pressionando <keyseq><key>Modificador Orca</key><key>Barra de espaço</key></"
+"keyseq>."
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:29 C/howto_key_bindings.page:66
@@ -3254,7 +3220,7 @@ msgid ""
 "<key>CapsLock</key>"
 msgstr ""
 "Se você estiver usando a disposição de teclado de notebook, por padrão, a "
-"Tecla Modificadora do Orca será o <key>CapsLock</key>"
+"Modificador Orca será o <key>CapsLock</key>"
 
 #. (itstool) path: item/p
 #: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
@@ -3263,9 +3229,9 @@ msgid ""
 "<key>Insert</key> and <key>KP_Insert</key>, the latter being the same key as "
 "<key>KP_0</key>."
 msgstr ""
-"Se você estiver usando a disposição de teclado Computador de Mesa, a Tecla "
-"Modificadora do Orca será tanto <key>Insert</key> quanto <key>NUM_Insert</"
-"key>, sendo este último a mesma chave que <key>NUM_0</key>."
+"Se você estiver usando a disposição de teclado Computador de Mesa, a "
+"Modificador Orca será tanto <key>Insert</key> quanto <key>NUM_Insert</key>, "
+"sendo este último a mesma chave que <key>NUM_0</key>."
 
 #. (itstool) path: page/p
 #: C/howto_keyboard_layout.page:35
@@ -3320,8 +3286,8 @@ msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key> <key>H</"
 "key></keyseq>."
 msgstr ""
-"Entre no Modo de Aprendizado pressionando <keyseq><key>Tecla Modificadora do "
-"Orca</key> <key>H</key></keyseq>."
+"Entre no Modo de Aprendizado pressionando <keyseq><key>Modificador Orca</"
+"key> <key>H</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:33
@@ -3411,8 +3377,8 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or \"assertive"
-"\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or "
+"\"assertive\" to the point of being \"rude.\""
 msgstr ""
 "As regiões dinâmicas têm um nível de \"cortesia\" associado que é definido "
 "pelo autor como um meio de transmitir a importância da informação e sugerir "
@@ -3481,8 +3447,8 @@ msgstr "Revisão por Mouse"
 #: C/howto_mouse_review.page:16
 msgid ""
 "<app>Orca</app>'s Mouse Review feature causes <app>Orca</app> to present the "
-"object under the mouse pointer. Unlike <app>Orca</app>'s <link xref="
-"\"howto_flat_review\">Flat Review</link> feature, Mouse Review is not "
+"object under the mouse pointer. Unlike <app>Orca</app>'s <link "
+"xref=\"howto_flat_review\">Flat Review</link> feature, Mouse Review is not "
 "limited to the active window; instead, <app>Orca</app> will attempt to "
 "identify what accessible object, if any, is visually under the pointer as "
 "you move the mouse. If you have moved the pointer over an accessible object "
@@ -3504,25 +3470,26 @@ msgid ""
 "Because enabling Mouse Review causes <app>Orca</app> to listen for, and then "
 "process, all changes in the position of the Mouse Pointer, this feature is "
 "disabled by default. To have it always enabled, check the <gui>Speak object "
-"under mouse</gui> checkbox found on the <link xref=\"preferences_general"
-"\">General page of <app>Orca</app>'s Preferences dialog</link>. In addition, "
-"you will find an unbound command named <gui>Toggle mouse review mode</gui> "
-"on the <link xref=\"preferences_key_bindings\">Key Bindings page</link> of "
-"that same dialog box. By binding this command, as described in the <link "
+"under mouse</gui> checkbox found on the <link "
+"xref=\"preferences_general\">General page of <app>Orca</app>'s Preferences "
+"dialog</link>. In addition, you will find an unbound command named "
+"<gui>Toggle mouse review mode</gui> on the <link "
+"xref=\"preferences_key_bindings\">Key Bindings page</link> of that same "
+"dialog box. By binding this command, as described in the <link "
 "xref=\"howto_key_bindings\">Introduction to Key Bindings</link>, you can "
 "enable and disable Mouse Review on an as-needed basis."
 msgstr ""
 "Como habilitar a Revisão por Mouse faz com que o <app>Orca</app> escute e "
 "processe todas as alterações na posição do ponteiro do mouse, esse recurso "
 "está desabilitado por padrão. Para tê-lo sempre ativado, marque a caixa de "
-"seleção <gui>Falar o objeto sob o mouse</gui> encontrada na <link xref="
-"\"preferences_general\">Página geral da caixa de diálogo Preferências do "
-"<app>Orca</app></link>. Além disso, você encontrará um comando Sem atalho "
-"definido chamado <gui>Alternar modo de revisão do mouse</gui> na <link xref="
-"\"preferences_key_bindings\">Página de Atalhos do Teclado</link> dessa mesma "
-"caixa de diálogo. Ao vincular este comando, conforme descrito na <link xref="
-"\"howto_key_bindings\">Introdução aos Atalhos de Teclado</link>, você pode "
-"habilitar e desabilitar a Revisão por Mouse, conforme necessário."
+"seleção <gui>Falar o objeto sob o mouse</gui> encontrada na <link "
+"xref=\"preferences_general\">Página geral da caixa de diálogo Preferências "
+"do <app>Orca</app></link>. Além disso, você encontrará um comando Sem atalho "
+"definido chamado <gui>Alternar modo de revisão do mouse</gui> na <link "
+"xref=\"preferences_key_bindings\">Página de Atalhos do Teclado</link> dessa "
+"mesma caixa de diálogo. Ao vincular este comando, conforme descrito na <link "
+"xref=\"howto_key_bindings\">Introdução aos Atalhos de Teclado</link>, você "
+"pode habilitar e desabilitar a Revisão por Mouse, conforme necessário."
 
 #. (itstool) path: note/title
 #: C/howto_mouse_review.page:40
@@ -3666,8 +3633,8 @@ msgstr ""
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
-"choose. How to do so is described in the <link xref=\"howto_key_bindings"
-"\">Introduction to Key Bindings</link>."
+"choose. How to do so is described in the <link "
+"xref=\"howto_key_bindings\">Introduction to Key Bindings</link>."
 msgstr ""
 "Cada um dos comandos de revisão de notificação do <app>Orca</app> é "
 "desvinculado de atalho de teclado por padrão. Você pode vincular qualquer um "
@@ -3698,8 +3665,8 @@ msgid ""
 "Review</link>-based search designed to help you quickly locate objects that "
 "are visible on-screen within the current window."
 msgstr ""
-"O recurso Busca do <app>Orca</app> é uma pesquisa baseada em <link xref="
-"\"howto_flat_review\">Revisão Plana</link> projetada para ajudá-lo a "
+"O recurso Busca do <app>Orca</app> é uma pesquisa baseada em <link "
+"xref=\"howto_flat_review\">Revisão Plana</link> projetada para ajudá-lo a "
 "localizar rapidamente objetos visíveis na tela na janela atual."
 
 #. (itstool) path: note/title
@@ -3714,17 +3681,17 @@ msgid ""
 "your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
 msgstr ""
 "Para abrir o diálogo <gui>Localização</gui> do Orca, use os seguintes "
-"comandos conforme a escolha de sua <link xref=\"howto_keyboard_layout"
-"\">Disposição de teclado</link>:"
+"comandos conforme a escolha de sua <link "
+"xref=\"howto_keyboard_layout\">Disposição de teclado</link>:"
 
 #. (itstool) path: note/p
 #: C/howto_orca_find.page:38
 msgid ""
-"For a list of additional tasks you can perform, see the <link xref="
-"\"commands_find\">Orca Find commands</link>"
+"For a list of additional tasks you can perform, see the <link "
+"xref=\"commands_find\">Orca Find commands</link>"
 msgstr ""
-"Para uma lista de tarefas adicionais que você pode executar, veja <link xref="
-"\"commands_find\">Comandos de Busca do Orca</link>"
+"Para uma lista de tarefas adicionais que você pode executar, veja <link "
+"xref=\"commands_find\">Comandos de Busca do Orca</link>"
 
 #. (itstool) path: page/p
 #: C/howto_orca_find.page:43
@@ -3779,7 +3746,7 @@ msgid ""
 "phrase"
 msgstr ""
 "Limitar ou não a pesquisa a ocorrências que coincidam com a palavra ou frase "
-"inteira."
+"inteira"
 
 # Verificar opção na interface do Orca
 #. (itstool) path: item/p
@@ -3839,8 +3806,8 @@ msgid ""
 "when there is a match, Flat Review will automatically be activated and the "
 "matching item or text will become the current review item. Note that focus "
 "within the application will not be modified, nor will the caret be "
-"repositioned. If you need to accomplish either, please see <link xref="
-"\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
+"repositioned. If you need to accomplish either, please see <link "
+"xref=\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
 msgstr ""
 "Por ser um recurso de <link xref=\"howto_flat_review\">Revisão Plana</link>, "
 "quando houver uma correspondência, a Revisão Plana será ativada "
@@ -4031,19 +3998,20 @@ msgstr "Configuração do Orca"
 #. (itstool) path: page/p
 #: C/howto_setting_up_orca.page:21
 msgid ""
-"If you want to configure <app>Orca</app>, get into the <link xref="
-"\"preferences\">Preferences</link> dialog by pressing <keyseq><key>Orca "
+"If you want to configure <app>Orca</app>, get into the <link "
+"xref=\"preferences\">Preferences</link> dialog by pressing <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq> from within any accessible "
 "application. Alternatively, you can type <cmd>orca</cmd> followed by either "
 "<cmd>-s</cmd> or <cmd>--setup</cmd> in a terminal window or within the "
 "<gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
 "Se você deseja configurar o <app>Orca</app>, acesse a caixa de diálogo <link "
-"xref=\"preferences\">Preferências</link> pressionando <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>Espaço</key></keyseq> de dentro de qualquer "
-"aplicativo acessível. Alternativamente, você pode digitar <cmd>orca</cmd> "
-"seguido por <cmd>-s</cmd> ou <cmd>--setup</cmd> em uma janela de terminal ou "
-"dentro do <gui>Executar</gui > e então pressione <key>Enter</key>."
+"xref=\"preferences\">Preferências</link> pressionando "
+"<keyseq><key>Modificador Orca</key><key>Espaço</key></keyseq> de dentro de "
+"qualquer aplicativo acessível. Alternativamente, você pode digitar "
+"<cmd>orca</cmd> seguido por <cmd>-s</cmd> ou <cmd>--setup</cmd> em uma "
+"janela de terminal ou dentro do <gui>Executar</gui > e então pressione "
+"<key>Enter</key>."
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
@@ -4186,10 +4154,10 @@ msgstr ""
 "<app>Orca</app> identificar exatamente o que você esperava que acontecesse "
 "como resultado do pressionamento do 'H'. Portanto, antes de você usar "
 "qualquer comando da navegação estrutural num documento editável, você "
-"precisa primeiro ativá-la pressionando <keyseq><key>Tecla Modificadora do "
-"Orca</key><key>Z</key></keyseq>. Quando tiver terminado a navegação e pronto "
-"para continuar escrevendo, pressione novamente <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>Z</key></keyseq> para desativá-la."
+"precisa primeiro ativá-la pressionando <keyseq><key>Modificador Orca</"
+"key><key>Z</key></keyseq>. Quando tiver terminado a navegação e pronto para "
+"continuar escrevendo, pressione novamente <keyseq><key>Modificador Orca</"
+"key><key>Z</key></keyseq> para desativá-la."
 
 #. (itstool) path: section/title
 #: C/howto_structural_navigation.page:82
@@ -4230,7 +4198,7 @@ msgid ""
 msgstr ""
 "Acesse a caixa de diálogo <link xref=\"preferences\">Preferências do Orca</"
 "link> para o aplicativo atual pressionando <keyseq> <key>Ctrl</"
-"key><key>Tecla Modificadora do Orca</key><key>Barra de Espaço</key> </keyseq>"
+"key><key>Modificador Orca</key><key>Barra de Espaço</key> </keyseq>."
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:106
@@ -4267,9 +4235,9 @@ msgid ""
 msgstr ""
 "O <app>Orca</app> fornece vários recursos projetados especificamente para "
 "melhorar o acesso a tabelas encontradas em páginas da Web e outros "
-"documentos: células configuráveis versus leitura de linha, <link xref="
-"\"howto_structural_navigation\">Navegação Estrutural</link> e Cabeçalhos "
-"Dinâmicos."
+"documentos: células configuráveis versus leitura de linha, <link "
+"xref=\"howto_structural_navigation\">Navegação Estrutural</link> e "
+"Cabeçalhos Dinâmicos."
 
 #. (itstool) path: section/title
 #: C/howto_tables.page:25
@@ -4315,14 +4283,14 @@ msgid ""
 "You can set each of <app>Orca</app>'s table reading preferences <app>Orca</"
 "app> wide as well as on an application-by-application basis. How to do each "
 "is described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
-"preferences dialogs</link>. The settings can be found on the <link xref="
-"\"preferences_speech\"> <gui>Speech</gui> page</link>."
+"preferences dialogs</link>. The settings can be found on the <link "
+"xref=\"preferences_speech\"> <gui>Speech</gui> page</link>."
 msgstr ""
 "Você pode definir cada uma das preferências de leitura de tabela do "
 "<app>Orca</app> aplicativo por aplicativo. Como fazer cada um é descrito no "
 "guia nas <link xref=\"preferences\">caixas de diálogo de preferências do "
-"<app>Orca</app></link>. As configurações podem ser encontradas na <link xref="
-"\"preferences_speech\">página <gui>Fala</gui></link>."
+"<app>Orca</app></link>. As configurações podem ser encontradas na <link "
+"xref=\"preferences_speech\">página <gui>Fala</gui></link>."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:50
@@ -4333,7 +4301,7 @@ msgid ""
 msgstr ""
 "Por fim, há também um comando do <app>Orca</app> que permite alternar a "
 "leitura de células versus linhas em tempo real para a tabela atualmente "
-"ativa: <keyseq><key>Tecla Modificadora do Orca</key><key>F11 </key></keyseq>."
+"ativa: <keyseq><key>Modificador Orca</key><key>F11 </key></keyseq>."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:58
@@ -4364,17 +4332,18 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/howto_tables.page:71
 msgid ""
-"In addition, <app>Orca</app> provides configurable <link xref="
-"\"preferences_table_navigation\">presentation options</link> which work in "
-"conjunction with Structural Navigation and allow you to control whether or "
-"not cell coordinates are presented, multiple cell spans are indicated, and "
-"cell headers are announced."
+"In addition, <app>Orca</app> provides configurable <link "
+"xref=\"preferences_table_navigation\">presentation options</link> which work "
+"in conjunction with Structural Navigation and allow you to control whether "
+"or not cell coordinates are presented, multiple cell spans are indicated, "
+"and cell headers are announced."
 msgstr ""
-"Além disso, o <app>Orca</app> fornece <link xref="
-"\"preferences_table_navigation\">opções de apresentação</link> configuráveis "
-"que funcionam em conjunto com a Navegação Estrutural e permitem controlar se "
-"as coordenadas das células são ou não faladas, se a existência de várias "
-"células é anunciada, e se as células de cabeçalhos são anunciadas."
+"Além disso, o <app>Orca</app> fornece <link "
+"xref=\"preferences_table_navigation\">opções de apresentação</link> "
+"configuráveis que funcionam em conjunto com a Navegação Estrutural e "
+"permitem controlar se as coordenadas das células são ou não faladas, se a "
+"existência de várias células é anunciada, e se as células de cabeçalhos são "
+"anunciadas."
 
 #. (itstool) path: note/p
 #: C/howto_tables.page:80
@@ -4385,8 +4354,8 @@ msgid ""
 "Structural Navigation on is required.</link>"
 msgstr ""
 "Dependendo de onde você estiver, pode ser necessário ativar explicitamente a "
-"Navegação Estrutural antes de poder usá-la. Para saber mais, leia <link xref="
-"\"howto_structural_navigation#toggling_required\"> quando é necessário "
+"Navegação Estrutural antes de poder usá-la. Para saber mais, leia <link "
+"xref=\"howto_structural_navigation#toggling_required\"> quando é necessário "
 "ativar a Navegação Estrutural.</link>"
 
 #. (itstool) path: section/title
@@ -4431,9 +4400,8 @@ msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>R</key></keyseq> to tell "
 "<app>Orca</app> that the current row is the one with the headers."
 msgstr ""
-"Pressione <keyseq><key>Tecla Modificadora do Orca</key><key>R</key></keyseq> "
-"para informar ao <app>Orca</app> que a linha atual é a que possui os "
-"cabeçalhos."
+"Pressione <keyseq><key>Modificador Orca</key><key>R</key></keyseq> para "
+"informar ao <app>Orca</app> que a linha atual é a que possui os cabeçalhos."
 
 #. (itstool) path: steps/title
 #: C/howto_tables.page:115
@@ -4451,9 +4419,8 @@ msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell "
 "<app>Orca</app> that the current column is the one with the headers."
 msgstr ""
-"Pressione <keyseq><key>Tecla Modificadora do Orca</key><key>C</key></keyseq> "
-"para informar ao <app>Orca</app> que a coluna atual é a que possui "
-"cabeçalhos."
+"Pressione <keyseq><key>Modificador Orca</key><key>C</key></keyseq> para "
+"informar ao <app>Orca</app> que a coluna atual é a que possui cabeçalhos."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:128
@@ -4489,11 +4456,11 @@ msgid ""
 "there are no row headers."
 msgstr ""
 "Para limpar os cabeçalhos, simplesmente tecle duas vezes o comando que você "
-"usou para defini-los. Assim a <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>R</key></keyseq>, clique duas vezes, informa ao <app>Orca</app> que "
-"não há cabeçalhos de coluna. <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>C</key></keyseq>, clique duas vezes, informa ao <app>Orca</app> que "
-"não há cabeçalhos de linha."
+"usou para defini-los. Assim a <keyseq><key>Modificador Orca</key><key>R</"
+"key></keyseq>, clique duas vezes, informa ao <app>Orca</app> que não há "
+"cabeçalhos de coluna. <keyseq><key>Modificador Orca</key><key>C</key></"
+"keyseq>, clique duas vezes, informa ao <app>Orca</app> que não há cabeçalhos "
+"de linha."
 
 #. (itstool) path: info/title
 #: C/howto_text_attributes.page:5
@@ -4535,10 +4502,10 @@ msgid ""
 "In addition, <app>Orca</app> will optionally indicate text attributes in "
 "braille by \"underlining\" them as you navigate a document."
 msgstr ""
-"Quando você pressiona <keyseq><key>Tecla Modificadora do Orca</key><key>F</"
-"key> </keyseq>, o <app>Orca</app> falará informação de texto e atributo de "
-"um objeto. Além disto, o <app>Orca</app> indicará, opcionalmente, atributos "
-"de texto \"sublinhando\" em Braille enquanto você navega num documento."
+"Quando você pressiona <keyseq><key>Modificador Orca</key><key>F</key> </"
+"keyseq>, o <app>Orca</app> falará informação de texto e atributo de um "
+"objeto. Além disto, o <app>Orca</app> indicará, opcionalmente, atributos de "
+"texto \"sublinhando\" em Braille enquanto você navega num documento."
 
 #. (itstool) path: section/p
 #: C/howto_text_attributes.page:32
@@ -4625,7 +4592,7 @@ msgstr ""
 #: C/howto_the_orca_modifier.page:5
 msgctxt "sort"
 msgid "3. The Orca Modifier"
-msgstr "3. A Tecla Modificadora do Orca"
+msgstr "3. O Modificador Orca"
 
 #. (itstool) path: info/desc
 #: C/howto_the_orca_modifier.page:6
@@ -4638,7 +4605,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/howto_the_orca_modifier.page:18
 msgid "The Orca Modifier"
-msgstr "A Tecla Modificadora do Orca"
+msgstr "O Modificador Orca"
 
 #. (itstool) path: page/p
 #: C/howto_the_orca_modifier.page:19
@@ -4678,6 +4645,20 @@ msgstr ""
 #: C/howto_the_orca_modifier.page:51
 msgid "Changing the Orca Modifier"
 msgstr "Alterando a Tecla Modificadora Orca"
+
+#. (itstool) path: item/p
+#: C/howto_the_orca_modifier.page:53
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>. "
+"Alternatively, you can start Orca with the preferences dialog open from a "
+"terminal: type <cmd>orca -s</cmd> and press <key>Return</key>."
+msgstr ""
+"Entre na caixa de diálogo <link xref=\"preferences\">Preferências do Orca</"
+"link> pressionando <keyseq><key>Modificador Orca</key><key>Espaço</"
+"key></keyseq>. Alternativamente, você pode iniciar o Orca com a caixa de "
+"diálogo de preferências aberta em um terminal: digite <cmd>orca -s</cmd> e "
+"pressione <key>Return</key>."
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
@@ -4720,7 +4701,7 @@ msgstr "7. CapsLock em Disposição do Teclado de Notebook"
 #. (itstool) path: info/desc
 #: C/howto_toggling_caps_lock.page:6
 msgid "Toggling it when it is the <key>Orca Modifier</key>"
-msgstr "Alternando quando ela é a <key>Tecla Modificadora do Orca</key>"
+msgstr "Alternando quando ela é o <key>Modificador Orca</key>"
 
 #. (itstool) path: page/title
 #: C/howto_toggling_caps_lock.page:15
@@ -4758,7 +4739,7 @@ msgid ""
 "key> </keyseq>, to tell <app>Orca</app> that the next command should be "
 "ignored."
 msgstr ""
-"Pressione a combinação de teclado <keyseq><key>Tecla Modificadora do Orca</"
+"Pressione a combinação de teclado <keyseq><key>Modificador Orca</"
 "key><key>BackSpace</key> </keyseq>, para informar ao <app>Orca</app> que o "
 "próximo comando deve ser ignorado."
 
@@ -4935,8 +4916,8 @@ msgstr ""
 msgid ""
 "And so on. Again, the goal of <app>Orca</app>'s Where Am I is to provide you "
 "with the details you are most likely interested in knowing about the object "
-"you are currently in. To give Where Am I a try, see the list of <link xref="
-"\"commands_where_am_i\">Where Am I commands</link>."
+"you are currently in. To give Where Am I a try, see the list of <link "
+"xref=\"commands_where_am_i\">Where Am I commands</link>."
 msgstr ""
 "E assim por diante. Novamente, o objetivo do Onde Estou do <app>Orca</app> é "
 "fornecer os detalhes que você provavelmente está interessado em saber sobre "
@@ -5383,10 +5364,9 @@ msgstr ""
 "O grupo de botões de opção para <gui>indicador de seleção</gui> e "
 "<gui>indicador de link</gui> permite-lhe configurar o comportamento do "
 "<app>Orca</app> quando exibe textos selecionados e links. Por padrão, quando "
-"você encontra um deles, o <app>Orca</app> irá sublinhar o texto em sua "
-"linha Braille com os pontos 7 e 8. Se preferir, você pode alterar o "
-"indicador para ser apenas o ponto 7, ser apenas o ponto 8, ou não estar "
-"presente."
+"você encontra um deles, o <app>Orca</app> irá sublinhar o texto em sua linha "
+"Braille com os pontos 7 e 8. Se preferir, você pode alterar o indicador para "
+"ser apenas o ponto 7, ser apenas o ponto 8, ou não estar presente."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:112
@@ -5408,8 +5388,9 @@ msgid ""
 msgstr ""
 "Opcionalmente, você pode ter os atributos de texto indicados em sua linha "
 "Braille. Habilitando este recurso e escolhendo quais são os atributos que "
-"lhe interessam, o que é feito na <link xref=\"preferences_text_attributes"
-"\">página <gui>atributos de textos</gui></link> do diálogo de Preferências."
+"lhe interessam, o que é feito na <link "
+"xref=\"preferences_text_attributes\">página <gui>atributos de textos</gui></"
+"link> do diálogo de Preferências."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:126
@@ -5715,7 +5696,7 @@ msgid ""
 "Modifier</key><key>F12</key></keyseq>."
 msgstr ""
 "Para ativar esta configuração temporariamente sem a salvar, use a "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>F12</key></keyseq>."
+"<keyseq><key>Modificador Orca</key><key>F12</key></keyseq>."
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:47
@@ -5760,8 +5741,8 @@ msgid ""
 "browse mode and focus mode."
 msgstr ""
 "Para iniciar ou parar de interagir com o campo de formulário focado, use "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>A</key></keyseq> para "
-"alternar entre o modo de navegação e o modo de foco."
+"<keyseq><key>Modificador Orca</key><key>A</key></keyseq> para alternar entre "
+"o modo de navegação e o modo de foco."
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:71
@@ -5771,15 +5752,15 @@ msgstr "Habilitar navegação estrutural"
 #. (itstool) path: section/p
 #: C/preferences_web.page:72
 msgid ""
-"This checkbox toggles <app>Orca</app>'s <link xref="
-"\"howto_structural_navigation\">Structural Navigation</link> on and off. "
-"Structural Navigation allows you to navigate by elements such as headings, "
-"links, and form fields."
+"This checkbox toggles <app>Orca</app>'s <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
+"off. Structural Navigation allows you to navigate by elements such as "
+"headings, links, and form fields."
 msgstr ""
-"Esta caixa de seleção habilita/desabilita a <link xref="
-"\"howto_structural_navigation\">Navegação Estrutural</link> do <app>Orca</"
-"app>. A navegação estrutural permite-lhe navegar pelos elementos como "
-"cabeçalhos, links e campos de formulário."
+"Esta caixa de seleção habilita/desabilita a <link "
+"xref=\"howto_structural_navigation\">Navegação Estrutural</link> do "
+"<app>Orca</app>. A navegação estrutural permite-lhe navegar pelos elementos "
+"como cabeçalhos, links e campos de formulário."
 
 #. (itstool) path: note/p
 #: C/preferences_web.page:83
@@ -5787,8 +5768,8 @@ msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
 msgstr ""
-"Para ativar esta configuração temporariamente sem a salvar, use a "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Z</key></keyseq>."
+"Para ativar esta configuração temporariamente sem a salvar, use o "
+"<keyseq><key>Modificador Orca</key><key>Z</key></keyseq>."
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:90
@@ -5981,9 +5962,9 @@ msgid ""
 msgstr ""
 "Este botão de rotação editável é onde você pode especificar o número de "
 "caracteres correspondentes antes que o <app>Orca</app> anuncie a linha "
-"correspondente. Esta opção também foi projetada para evitar \"excesso de fala"
-"\" caso existam muitas ocorrências quando você começa a digitar o texto que "
-"você está procurando."
+"correspondente. Esta opção também foi projetada para evitar \"excesso de "
+"fala\" caso existam muitas ocorrências quando você começa a digitar o texto "
+"que você está procurando."
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:218
@@ -6033,8 +6014,8 @@ msgstr ""
 "O grupo de botões de opção <gui>Disposição do teclado</gui> permite que você "
 "especifique se você estará trabalhando em um Computador de mesa (isto é com "
 "um teclado numérico) ou em um Notebook. A disposição que você escolher irá "
-"determinar tanto a <key>Tecla Modificadora do Orca</key> bem como uma série "
-"de atalhos de teclado para executar comandos."
+"determinar tanto o <key>Modificador Orca</key> bem como uma série de atalhos "
+"de teclado para executar comandos."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:33
@@ -6095,8 +6076,8 @@ msgid ""
 msgstr ""
 "Quando marcada, essa opção irá instruir o <app>Orca</app> a apresentar "
 "informações sobre o objeto que está sob o ponteiro do mouse assim que você "
-"se move por ele ao redor da tela, usando o recurso de <link xref="
-"\"howto_mouse_review\">Revisão do mouse</link> do <app>Orca</app>."
+"se move por ele ao redor da tela, usando o recurso de <link "
+"xref=\"howto_mouse_review\">Revisão do mouse</link> do <app>Orca</app>."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:76
@@ -6239,13 +6220,13 @@ msgstr "Anunciar tabelas no Ler Tudo"
 msgid ""
 "Whether or not <app>Orca</app> makes these announcements during navigation "
 "is also configurable. You will find similar checkboxes on the <gui>Speech</"
-"gui> page. For more information, see <link xref="
-"\"preferences_speech#spoken_context\">Spoken Context</link>."
+"gui> page. For more information, see <link "
+"xref=\"preferences_speech#spoken_context\">Spoken Context</link>."
 msgstr ""
 "Se o <app>Orca</app> faz ou não esses anúncios durante a navegação também é "
 "configurável. Você encontrará caixas de seleção semelhantes na página <gui "
-">Fala</gui >. Para obter mais informações, consulte <link xref="
-"\"preferences_speech#spoken_context\">Contexto Falado</link>."
+">Fala</gui >. Para obter mais informações, consulte <link "
+"xref=\"preferences_speech#spoken_context\">Contexto Falado</link>."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:154
@@ -6265,8 +6246,8 @@ msgstr "Ler tudo por"
 #: C/preferences_general.page:160
 msgid ""
 "The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
-"app> speaks a sentence at a time or a line at a time when doing a \"Say All"
-"\" of a document."
+"app> speaks a sentence at a time or a line at a time when doing a \"Say "
+"All\" of a document."
 msgstr ""
 "A caixa de combinação <gui>Ler tudo por</gui> permite que você especifique "
 "se o <app>Orca</app> fala uma frase ou uma linha de cada vez ao fazer um "
@@ -6511,8 +6492,8 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</app>'s "
 "Preferences"
 msgstr ""
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Space</key></keyseq>: "
-"Preferências do <app>Orca</app>"
+"<keyseq><key>Modificador Orca</key><key>Space</key></keyseq>: Preferências "
+"do <app>Orca</app>"
 
 #. (itstool) path: item/p
 #: C/preferences_introduction.page:39
@@ -6520,8 +6501,8 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key> </keyseq>: "
 "<app>Orca</app>'s Preferences for the current application"
 msgstr ""
-"<keyseq><key>Ctrl</key><key>Tecla Modificadora do Orca</key><key>Espaço</"
-"key></keyseq>: Preferências do <app>Orca</app> para o aplicativo atual"
+"<keyseq><key>Ctrl</key><key>Modificador Orca</key><key>Espaço</key></"
+"keyseq>: Preferências do <app>Orca</app> para o aplicativo atual"
 
 #. (itstool) path: section/title
 #: C/preferences_introduction.page:49 C/preferences.page:19
@@ -6827,8 +6808,8 @@ msgid ""
 msgstr ""
 "Esta opção controla se <key>Esquerda</key>, <key>Direita</key>, <key>Acima</"
 "key>, e <key>Baixo</key> devem ser faladas ou não quando pressionadas. Esta "
-"opção também se aplica à qualquer combinação de teclas na qual a <key>Tecla "
-"Modificadora do Orca</key> está sendo pressionada, por exemplo, quando a "
+"opção também se aplica à qualquer combinação de teclas na qual o "
+"<key>Modificador Orca</key> está sendo pressionado, por exemplo, quando a "
 "revisão plana está sendo utilizada."
 
 #. (itstool) path: section/title
@@ -7187,8 +7168,8 @@ msgid ""
 msgstr ""
 "Escolher um nível de pontuação <gui>Algum</gui> faz com que todos os "
 "símbolos mencionados anteriormente sejam falados. Além disso, o <app>Orca</"
-"app> falará símbolos matemáticos conhecidos, símbolos de moeda e \"^\", \"@"
-"\", \"/\", \"&amp;\", \"#\"."
+"app> falará símbolos matemáticos conhecidos, símbolos de moeda e \"^\", "
+"\"@\", \"/\", \"&amp;\", \"#\"."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:74
@@ -7438,14 +7419,15 @@ msgid ""
 "If <gui>Announce blockquotes during navigation</gui> is checked, <app>Orca</"
 "app> will tell you when you navigate into or out of a blockquote. Note that "
 "this setting is independent of whether or not this announcement is made "
-"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
-"\">Announce Contextual Information in Say All</link> for more information."
+"during Say All. See <link "
+"xref=\"preferences_general#say_all_announce_context\">Announce Contextual "
+"Information in Say All</link> for more information."
 msgstr ""
 "Se a opção <gui>Anunciar citações durante a navegação</gui> estiver marcada, "
 "o <app>Orca</app> informará quando você entrar ou sair de uma bloco de "
 "citação. Observe que essa configuração é independente de esse anúncio ser "
-"feito ou não durante o Ler Tudo. Consulte <link xref="
-"\"preferences_general#say_all_announce_context\">Anunciar informações "
+"feito ou não durante o Ler Tudo. Consulte <link "
+"xref=\"preferences_general#say_all_announce_context\">Anunciar informações "
 "contextuais em Ler Tudo</link> para obter mais informações."
 
 #. (itstool) path: section/title
@@ -7486,14 +7468,15 @@ msgid ""
 "If <gui>Announce landmarks during navigation</gui> is checked, <app>Orca</"
 "app> will tell you when you navigate into or out of an ARIA landmark. Note "
 "that this setting is independent of whether or not this announcement is made "
-"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
-"\">Announce Contextual Information in Say All</link> for more information."
+"during Say All. See <link "
+"xref=\"preferences_general#say_all_announce_context\">Announce Contextual "
+"Information in Say All</link> for more information."
 msgstr ""
 "Se <gui>Anunciar marcos durante a navegação</gui> estiver marcado, o "
 "<app>Orca</app> informará quando você entrar ou sair de um ponto de "
 "referência ARIA. Observe que essa configuração é independente de esse "
-"anúncio ser feito ou não durante o Ler Tudo. Consulte <link xref="
-"\"preferences_general#say_all_announce_context\">Anunciar informações "
+"anúncio ser feito ou não durante o Ler Tudo. Consulte <link "
+"xref=\"preferences_general#say_all_announce_context\">Anunciar informações "
 "contextuais em Ler Tudo</link> para obter mais informações."
 
 #. (itstool) path: section/title
@@ -7507,14 +7490,15 @@ msgid ""
 "If <gui>Announce lists during navigation</gui> is checked, <app>Orca</app> "
 "will tell you when you navigate into or out of a list. Note that this "
 "setting is independent of whether or not this announcement is made during "
-"Say All. See <link xref=\"preferences_general#say_all_announce_context"
-"\">Announce Contextual Information in Say All</link> for more information."
+"Say All. See <link "
+"xref=\"preferences_general#say_all_announce_context\">Announce Contextual "
+"Information in Say All</link> for more information."
 msgstr ""
 "Se a opção <gui>Anunciar listas durante a navegação</gui> estiver marcada, o "
 "<app>Orca</app> informará quando você entrar ou sair de uma lista. Observe "
 "que essa configuração é independente de esse anúncio ser feito ou não "
-"durante o Ler Tudo. Consulte <link xref="
-"\"preferences_general#say_all_announce_context\">Anunciar informações "
+"durante o Ler Tudo. Consulte <link "
+"xref=\"preferences_general#say_all_announce_context\">Anunciar informações "
 "contextuais em Ler Tudo</link> para obter mais informações."
 
 #. (itstool) path: section/title
@@ -7528,14 +7512,15 @@ msgid ""
 "If <gui>Announce panels during navigation</gui> is checked, <app>Orca</app> "
 "will tell you when you navigate into or out of a panel. Note that this "
 "setting is independent of whether or not this announcement is made during "
-"Say All. See <link xref=\"preferences_general#say_all_announce_context"
-"\">Announce Contextual Information in Say All</link> for more information."
+"Say All. See <link "
+"xref=\"preferences_general#say_all_announce_context\">Announce Contextual "
+"Information in Say All</link> for more information."
 msgstr ""
 "Se a opção <gui>Anunciar painéis durante a navegação</gui> estiver marcada, "
 "o <app>Orca</app> informará quando você entrar ou sair de um painel. Observe "
 "que essa configuração é independente de esse anúncio ser feito ou não "
-"durante o Ler Tudo. Consulte <link xref="
-"\"preferences_general#say_all_announce_context\">Anunciar informações "
+"durante o Ler Tudo. Consulte <link "
+"xref=\"preferences_general#say_all_announce_context\">Anunciar informações "
 "contextuais em Ler Tudo</link> para obter mais informações."
 
 #. (itstool) path: section/title
@@ -7549,14 +7534,15 @@ msgid ""
 "If <gui>Announce tables during navigation</gui> is checked, <app>Orca</app> "
 "will tell you when you navigate into or out of a table. Note that this "
 "setting is independent of whether or not this announcement is made during "
-"Say All. See <link xref=\"preferences_general#say_all_announce_context"
-"\">Announce Contextual Information in Say All</link> for more information."
+"Say All. See <link "
+"xref=\"preferences_general#say_all_announce_context\">Announce Contextual "
+"Information in Say All</link> for more information."
 msgstr ""
 "Se a opção <gui>Anunciar tabelas durante a navegação</gui> estiver marcada, "
 "o <app>Orca</app> informará quando você entrar ou sair de uma tabela. "
 "Observe que essa configuração é independente de esse anúncio ser feito ou "
-"não durante o Ler Tudo. Consulte <link xref="
-"\"preferences_general#say_all_announce_context\">Anunciar informações "
+"não durante o Ler Tudo. Consulte <link "
+"xref=\"preferences_general#say_all_announce_context\">Anunciar informações "
 "contextuais em Ler Tudo</link> para obter mais informações."
 
 #. (itstool) path: section/title
@@ -7670,9 +7656,10 @@ msgstr ""
 "Se você normalmente deseja pouquíssima verbosidade ao usar um corretor "
 "ortográfico, mas ocasionalmente precisa de informações detalhadas sobre um "
 "determinado erro, você pode desabilitar essas opções. Quando você precisar "
-"de detalhes adicionais, basta usar o comando <link xref=\"howto_whereami"
-"\">Onde Estou</link> detalhado do <app>Orca</app> para que o ele apresente o "
-"erro atual como se todas essas opções estivessem habilitadas."
+"de detalhes adicionais, basta usar o comando <link "
+"xref=\"howto_whereami\">Onde Estou</link> detalhado do <app>Orca</app> para "
+"que o ele apresente o erro atual como se todas essas opções estivessem "
+"habilitadas."
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
@@ -7736,12 +7723,13 @@ msgstr "Preferências de Navegação de Tabelas"
 #: C/preferences_table_navigation.page:22
 msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
-"when navigating within a table in <link xref=\"howto_structural_navigation"
-"\">Structural-Navigation</link>-enabled applications."
+"when navigating within a table in <link "
+"xref=\"howto_structural_navigation\">Structural-Navigation</link>-enabled "
+"applications."
 msgstr ""
 "As opções a seguir permitem que você personalize como o <app>Orca</app> se "
-"comporta ao navegar em uma tabela em aplicativos habilitados para <link xref="
-"\"howto_structural_navigation\">Navegação Estrutural</link>."
+"comporta ao navegar em uma tabela em aplicativos habilitados para <link "
+"xref=\"howto_structural_navigation\">Navegação Estrutural</link>."
 
 #. (itstool) path: section/title
 #: C/preferences_table_navigation.page:29
@@ -7870,8 +7858,8 @@ msgid ""
 "key></keyseq>."
 msgstr ""
 "<gui>Fala</gui>: Marque esta caixa de seleção se desejar que o <app>Orca</"
-"app> fale este atributo quando você pressionar <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>F</key ></keyseq>."
+"app> fale este atributo quando você pressionar <keyseq><key>Modificador "
+"Orca</key><key>F</key ></keyseq>."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:50
@@ -8125,12 +8113,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Esta caixa de combinação permite-lhe definir que \"personagem\" ou \"orador"
-"\" deve ser utilizado com a voz selecionada. Por exemplo, você pode querer "
-"ter a voz David por padrão, mas possuir vínculos dinãmicos (hyperlinks) "
-"falados pela Alice. Observe que o que você localiza na caixa de combinação "
-"<gui>Personagem</gui> dependerá de quais sintetizadores de fala estiverem "
-"instalados."
+"Esta caixa de combinação permite-lhe definir que \"personagem\" ou "
+"\"orador\" deve ser utilizado com a voz selecionada. Por exemplo, você pode "
+"querer ter a voz David por padrão, mas possuir vínculos dinãmicos "
+"(hyperlinks) falados pela Alice. Observe que o que você localiza na caixa de "
+"combinação <gui>Personagem</gui> dependerá de quais sintetizadores de fala "
+"estiverem instalados."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:63
@@ -8173,8 +8161,9 @@ msgid ""
 "Settings Commands</link> for more information."
 msgstr ""
 "O <app>Orca</app> também tem um comando para alternar entre os estilos de "
-"letras maiúsculas disponíveis. Consulte <link xref=\"commands_speech_settings"
-"\"> Comandos de Configuração de Fala</link> para obter mais informações."
+"letras maiúsculas disponíveis. Consulte <link "
+"xref=\"commands_speech_settings\"> Comandos de Configuração de Fala</link> "
+"para obter mais informações."
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:83
@@ -8235,8 +8224,8 @@ msgid ""
 "\"MultiCaseString.\" Speech synthesizers do not always pronounce such "
 "multicase strings correctly. Checking the <gui>Speak multicase strings as "
 "words</gui> checkbox will cause <app>Orca</app> to break a word like "
-"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and \"String"
-"\") prior to passing it along to the speech synthesizer."
+"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
+"\"String\") prior to passing it along to the speech synthesizer."
 msgstr ""
 "Em alguns textos, e especialmente ao trabalhar com código, muitas vezes "
 "encontramos uma \"palavra\" composta por várias palavras alternadas entre "
@@ -8262,6 +8251,15 @@ msgstr ""
 "Marcar a caixa de seleção <gui>Falar números como dígitos</gui> fará com que "
 "o <app>Orca</app> divida um número como \"123\" em dígitos separados (\"1\", "
 "\"2\" e \"3\") antes para passá-lo ao sintetizador de voz."
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Próximo campo de formulário e campo de formulário anterior: "
+#~ "<keyseq><key>Tecla Modificadora do Orca</key><key>Tab</key></keyseq> e "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>"
 
 #~ msgctxt "_"
 #~ msgid ""
@@ -8331,8 +8329,8 @@ msgstr ""
 #~ "there are different keystrokes depending upon whether you are using a "
 #~ "desktop or a laptop -- or more accurately, whether you are using "
 #~ "<app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout. "
-#~ "For additional information, please see the <link xref="
-#~ "\"howto_keyboard_layout\">Keyboard Layout</link> topic."
+#~ "For additional information, please see the <link "
+#~ "xref=\"howto_keyboard_layout\">Keyboard Layout</link> topic."
 #~ msgstr ""
 #~ "Na lista a seguir você verá muitas referências a \"NUM\". Todas as teclas "
 #~ "\"NUM\" estão localizadas no teclado numérico. Você também perceberá que "
@@ -8340,8 +8338,8 @@ msgstr ""
 #~ "um computador de mesa ou um notebook -- ou mais precisamente, se você "
 #~ "está usando a disposição de teclado de computador de mesa, ou a "
 #~ "disposição de teclado de notebook do <app>Orca</app>. Para mais "
-#~ "informações, por favor veja o tópico <link xref=\"howto_keyboard_layout"
-#~ "\">Disposição de teclado</link>."
+#~ "informações, por favor veja o tópico <link "
+#~ "xref=\"howto_keyboard_layout\">Disposição de teclado</link>."
 
 #~ msgid ""
 #~ "Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
@@ -8394,10 +8392,11 @@ msgstr ""
 #~ "formulário que esteja com o foco. Para isto, você tem várias opções:"
 
 #~ msgid ""
-#~ "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
-#~ "\"> structural navigation</link> to move to the next/previous form field: "
-#~ "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> "
-#~ "<key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+#~ "Use <app>Orca</app>'s <link "
+#~ "xref=\"commands_structural_navigation#forms\"> structural navigation</"
+#~ "link> to move to the next/previous form field: <keyseq><key>Orca "
+#~ "Modifier</key><key>Tab</key></keyseq>/<keyseq> <key>Orca Modifier</"
+#~ "key><key>Shift</key><key>Tab</key></keyseq>."
 #~ msgstr ""
 #~ "Use a <link xref=\"commands_structural_navigation#forms\"> navegação "
 #~ "estrutural</link> do <app>Orca</app> para movimentar para o próximo/"
@@ -8486,15 +8485,6 @@ msgstr ""
 #~ "If you want to configure <app>Orca</app>, you can do one of the following:"
 #~ msgstr ""
 #~ "Se você deseja configurar o <app>Orca</app>, você pode fazer o seguinte:"
-
-#~ msgid ""
-#~ "Get into the <link xref=\"preferences\">Preferences</link> dialog by "
-#~ "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
-#~ "within any accessible application."
-#~ msgstr ""
-#~ "Acesse o diálogo <link xref=\"preferences\">Preferências</link> "
-#~ "pressionando a <keyseq><key>Tecla modificadora do Orca</key><key>Barra de "
-#~ "espaço</key> </keyseq> a partir de qualquer aplicativo acessível."
 
 #~ msgid ""
 #~ "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
@@ -8868,11 +8858,11 @@ msgstr ""
 #~ "pressing <key>Return</key> again."
 #~ msgstr ""
 #~ "A <gui>tecla de atalho</gui> é a forma existente para executar uma função "
-#~ "a partir do teclado. Note que a tecla de atalho incluirá a palavra \"Orca"
-#~ "\". Isto indica que a <key>tecla modificadora do Orca</key> deve ser "
-#~ "pressionada juntamente com as outras teclas. Você pode modificar o valor "
-#~ "dessa coluna pressionando <key>Enter</key>, pressionando as teclas para o "
-#~ "novo atalho, e pressionando <key>Enter</key> novamente."
+#~ "a partir do teclado. Note que a tecla de atalho incluirá a palavra "
+#~ "\"Orca\". Isto indica que a <key>tecla modificadora do Orca</key> deve "
+#~ "ser pressionada juntamente com as outras teclas. Você pode modificar o "
+#~ "valor dessa coluna pressionando <key>Enter</key>, pressionando as teclas "
+#~ "para o novo atalho, e pressionando <key>Enter</key> novamente."
 
 #~ msgctxt "_"
 #~ msgid ""
@@ -9113,14 +9103,15 @@ msgstr ""
 
 #~ msgid ""
 #~ "If accessibility support has already been enabled for your session, you "
-#~ "will be placed in the <app>Orca</app> <link xref=\"preferences"
-#~ "\">Preferences</link> dialog box where you can customize <app>Orca</app> "
-#~ "completely and then use it immediately."
+#~ "will be placed in the <app>Orca</app> <link "
+#~ "xref=\"preferences\">Preferences</link> dialog box where you can "
+#~ "customize <app>Orca</app> completely and then use it immediately."
 #~ msgstr ""
 #~ "Se o suporte à acessibilidade já estiver habilitada para a sua sessão, "
-#~ "você será posicionado na caixa de diálogo <link xref=\"preferences"
-#~ "\">Preferências</link> do <app>Orca</app> onde será possível personalizar "
-#~ "completamente o <app>Orca</app> e então usá-lo imediatamente."
+#~ "você será posicionado na caixa de diálogo <link "
+#~ "xref=\"preferences\">Preferências</link> do <app>Orca</app> onde será "
+#~ "possível personalizar completamente o <app>Orca</app> e então usá-lo "
+#~ "imediatamente."
 
 #~ msgid ""
 #~ "If accessibility support has not already been enabled for your session, "
@@ -9142,8 +9133,8 @@ msgstr ""
 
 #~ msgid ""
 #~ "Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you "
-#~ "run it to automatically be placed in the <link xref=\"preferences"
-#~ "\">Preferences</link> dialog box."
+#~ "run it to automatically be placed in the <link "
+#~ "xref=\"preferences\">Preferences</link> dialog box."
 #~ msgstr ""
 #~ "Passe a opção de <cmd>--setup</cmd> ao <app>Orca</app> na próxima vez que "
 #~ "você executá-lo a fim de que você seja automaticamente direcionado para a "
