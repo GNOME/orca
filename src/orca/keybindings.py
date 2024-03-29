@@ -617,31 +617,3 @@ class KeyBindings:
                 return candidate.handler
 
         return None
-
-    def load(self, keymap, handlers):
-        """ Takes the keymappings and tries to find a matching named
-           function in handlers.
-           keymap is a list of lists, each list contains 5 elements
-           If addUnbound is set to true, then at the end of loading all the
-           keybindings, any remaining functions will be unbound.
-        """
-
-        # TODO - JD: This won't be needed once the remaining bindings have
-        # been removed from the keymap files.
-
-        for i in keymap:
-            keysymstring = i[0]
-            modifierMask = i[1]
-            modifiers = i[2]
-            handler = i[3]
-            try:
-                clickCount = i[4]
-            except Exception:
-                clickCount = 1
-
-            if handler in handlers:
-                self.add(KeyBinding(
-                    keysymstring, modifierMask, modifiers, handlers[handler], clickCount))
-            else:
-                tokens = ["KEYBINDINGS: Could not find", handler, "handler for keybinding."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)

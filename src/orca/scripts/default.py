@@ -315,9 +315,39 @@ class Script(script.Script):
         numeric keypad for focus tracking and flat review.
         """
 
-        import orca.desktop_keyboardmap as desktop_keyboardmap
         keyBindings = keybindings.KeyBindings()
-        keyBindings.load(desktop_keyboardmap.keymap, self.inputEventHandlers)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Add",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("sayAllHandler"),
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Divide",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("routePointerToItemHandler")))
+
+        # We want the user to be able to combine modifiers with the mouse click, therefore we
+        # do not "care" about the modifiers -- unless it's the Orca modifier.
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Divide",
+                keybindings.ORCA_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("leftClickReviewItemHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Multiply",
+                keybindings.ORCA_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("rightClickReviewItemHandler")))
+
         return keyBindings
 
     def __getLaptopBindings(self):
@@ -325,9 +355,39 @@ class Script(script.Script):
         the main keyboard keys for focus tracking and flat review.
         """
 
-        import orca.laptop_keyboardmap as laptop_keyboardmap
         keyBindings = keybindings.KeyBindings()
-        keyBindings.load(laptop_keyboardmap.keymap, self.inputEventHandlers)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "semicolon",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("sayAllHandler"),
+                1))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "9",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("routePointerToItemHandler")))
+
+        # We want the user to be able to combine modifiers with the mouse click, therefore we
+        # do not "care" about the modifiers -- unless it's the Orca modifier.
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "7",
+                keybindings.ORCA_MODIFIER_MASK,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("leftClickReviewItemHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "8",
+                keybindings.ORCA_MODIFIER_MASK,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("rightClickReviewItemHandler")))
+
         return keyBindings
 
     def getExtensionBindings(self):
@@ -441,8 +501,54 @@ class Script(script.Script):
             for keyBinding in self.__getLaptopBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
-        import orca.common_keyboardmap as common_keyboardmap
-        keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("cycleSettingsProfileHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("cycleDebugLevelHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("panBrailleLeftHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("panBrailleRightHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("shutdownHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "space",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("preferencesSettingsHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "space",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+                self.inputEventHandlers.get("appPreferencesSettingsHandler")))
 
         # TODO - JD: Move this into the extension commands. That will require a new string
         # and GUI change.
