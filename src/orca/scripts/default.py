@@ -41,7 +41,6 @@ import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.orca as orca
 import orca.orca_modifier_manager as orca_modifier_manager
-import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
 import orca.script_manager as script_manager
@@ -612,7 +611,6 @@ class Script(script.Script):
         self.utilities.presentFocusChangeReason()
 
         if not newLocusOfFocus:
-            orca_state.noFocusTimeStamp = time.time()
             return
 
         if AXUtilities.is_defunct(newLocusOfFocus):
