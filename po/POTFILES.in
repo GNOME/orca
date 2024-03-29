@@ -11,7 +11,6 @@ src/orca/keybindings.py
 src/orca/mathsymbols.py
 src/orca/messages.py
 src/orca/object_properties.py
-src/orca/orca-find.ui
 src/orca/orca-setup.ui
 src/orca/phonnames.py
 src/orca/text_attribute_names.py
