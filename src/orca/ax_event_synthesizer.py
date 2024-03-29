@@ -38,6 +38,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import debug
+from . import focus_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -52,19 +53,36 @@ class AXEventSynthesizer:
     def _window_coordinates_to_screen_coordinates(x, y):
         # TODO - JD: This is a workaround to keep things working until we have something like
         # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/158
-        active_window = Gtk.Window().get_screen().get_active_window()
+        active_window = focus_manager.getManager().get_active_window()
         if active_window is None:
             msg = "AXEventSynthesizer: Could not get active window to adjust coordinates"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return x, y
 
-        window_x, window_y = active_window.get_position()
-        msg = f"AXEventSynthesizer: Active window position: {window_x}, {window_y}"
+        try:
+            point = Atspi.Component.get_position(active_window, Atspi.CoordType.SCREEN)
+        except Exception as error:
+            msg = f"AXEventSynthesizer: Exception in calling get_position: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return x, y
+
+        msg = f"AXEventSynthesizer: Active window position: {point.x}, {point.y}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        msg = f"AXEventSynthesizer: x: {x}->{x + window_x}, y: {y}->{y + window_y}"
+        # Unfortunately, the position we get does not seem to include window decorations.
+        # So we have to do more work to adjust. This is why we cannot have nice things.
+        gdk_window = Gtk.Window().get_screen().get_active_window()
+        frame_extents = gdk_window.get_frame_extents()
+        title_bar_height = frame_extents.height - gdk_window.get_height()
+        msg = f"AXEventSynthesizer: Title bar height believed to be: {title_bar_height}px"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return x + window_x, y + window_y
+
+        new_x = x + point.x
+        new_y = y + point.y + title_bar_height
+
+        msg = f"AXEventSynthesizer: x: {x}->{new_x}, y: {y}->{new_y}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return new_x, new_y
 
     @staticmethod
     def _get_mouse_coordinates():
