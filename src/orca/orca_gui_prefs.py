@@ -2877,15 +2877,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Starts user input of a Key for a selected key binding"""
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
-        orca_state.capturingKeys = True
-        script_manager.getManager().getActiveScript().removeKeyGrabs()
+        script_manager.getManager().getActiveScript().removeKeyGrabs("Capturing keys")
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 
     def editingCanceledKey(self, editable):
         """Stops user input of a Key for a selected key binding"""
 
-        orca_state.capturingKeys = False
         self._capturedKey = []
         script_manager.getManager().getActiveScript().refreshKeyGrabs("Done capturing keys")
         return
@@ -2993,7 +2991,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         the treeview.
         """
 
-        orca_state.capturingKeys = False
         self._capturedKey = []
         script_manager.getManager().getActiveScript().refreshKeyGrabs("Done capturing keys")
         myiter = treeModel.get_iter_from_string(path)

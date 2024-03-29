@@ -32,10 +32,6 @@ __license__   = "LGPL"
 # easily cause circular imports.
 #
 
-# Used to capture keys to redefine key bindings by the user.
-#
-capturingKeys   = False
-
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None

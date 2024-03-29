@@ -44,7 +44,6 @@ from . import keybindings
 from . import keynames
 from . import messages
 from . import orca_modifier_manager
-from . import orca_state
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
@@ -711,9 +710,6 @@ class KeyboardEvent(InputEvent):
                 self.keyType = KeyboardEvent.TYPE_LOCKING
 
         self._present()
-
-        if orca_state.capturingKeys:
-            return False, 'Capturing keys'
 
         if self.isOrcaModifier():
             return True, 'Orca modifier'
