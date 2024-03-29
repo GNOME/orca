@@ -45,7 +45,6 @@ from . import messages
 from . import orca
 from . import orca_gtkbuilder
 from . import orca_gui_profile
-from . import orca_state
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -94,6 +93,8 @@ if louis and not tablesdir:
 
 class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
+    DIALOG = None
+
     def __init__(self, fileName, windowName, prefsDict):
         """Initialize the Orca configuration GUI.
 
@@ -102,6 +103,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - windowName: name of the component to get from the GtkBuilder file.
         - prefsDict: dictionary of preferences to use during initialization
         """
+
+        if OrcaSetupGUI.DIALOG is not None:
+            return
 
         orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
         self.prefsDict = prefsDict
@@ -159,6 +163,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         support and populate the combo box lists on the Speech Tab pane
         accordingly.
         """
+
+        if OrcaSetupGUI.DIALOG is not None:
+            return
 
         self.script = script
 
@@ -1926,23 +1933,19 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         the GUI has already been created.
         """
 
-        orcaSetupWindow = self.get_widget("orcaSetupWindow")
+        if OrcaSetupGUI.DIALOG is not None:
+            OrcaSetupGUI.DIALOG.present()
+            return
 
+        OrcaSetupGUI.DIALOG = self.get_widget("orcaSetupWindow")
         accelGroup = Gtk.AccelGroup()
-        orcaSetupWindow.add_accel_group(accelGroup)
+        OrcaSetupGUI.DIALOG.add_accel_group(accelGroup)
         helpButton = self.get_widget("helpButton")
         (keyVal, modifierMask) = Gtk.accelerator_parse("F1")
-        helpButton.add_accelerator("clicked",
-                                   accelGroup,
-                                   keyVal,
-                                   modifierMask,
-                                   0)
-
-        orcaSetupWindow.present_with_time(Gtk.get_current_event_time())
+        helpButton.add_accelerator("clicked", accelGroup, keyVal, modifierMask, 0)
 
         # We always want to re-order the text attributes page so that enabled
         # items are consistently at the top.
-        #
         self._setSpokenTextAttributes(
                 self.getTextAttributesView,
                 settings_manager.getManager().getSetting('enabledSpokenTextAttributes'),
@@ -1950,9 +1953,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if self.script.app:
             title = guilabels.PREFERENCES_APPLICATION_TITLE % AXObject.get_name(self.script.app)
-            orcaSetupWindow.set_title(title)
+            OrcaSetupGUI.DIALOG.set_title(title)
 
-        orcaSetupWindow.show()
+        OrcaSetupGUI.DIALOG.show_all()
+        OrcaSetupGUI.DIALOG.present_with_time(Gtk.get_current_event_time())
 
     def _initComboBox(self, combobox):
         """Initialize the given combo box to take a list of int/str pairs.
@@ -3408,14 +3412,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         debug.printMessage(debug.LEVEL_ALL, msg, True)
 
     def windowDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the orcaSetupWindow
-           GtkWindow widget. Reset orca_state.orcaOS to None, so that the 
-           GUI can be rebuilt from the GtkBuilder file the next time the user
-           wants to display the configuration GUI.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+        """Signal handler for the "destroyed" signal for the Preferences dialog."""
 
         msg = "PREFERENCES DIALOG: Window is being destroyed"
         debug.printMessage(debug.LEVEL_ALL, msg, True)
@@ -3429,7 +3426,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.keyBindView.hide()
         self.getTextAttributesView.hide()
         self.pronunciationView.hide()
-        orca_state.orcaOS = None
+        OrcaSetupGUI.DIALOG = None
 
         msg = "PREFERENCES DIALOG: Window destruction complete"
         debug.printMessage(debug.LEVEL_ALL, msg, True)

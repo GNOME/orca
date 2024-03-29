@@ -56,7 +56,6 @@ from . import logger
 from . import messages
 from . import mouse_review
 from . import orca_modifier_manager
-from . import orca_state
 from . import orca_platform
 from . import script_manager
 from . import settings
@@ -186,10 +185,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     return True
 
 def _showPreferencesUI(script, prefs):
-    if orca_state.orcaOS:
-        orca_state.orcaOS.showGUI()
-        return
-
     try:
         module = importlib.import_module('.orca_gui_prefs', 'orca')
     except Exception:
@@ -201,9 +196,9 @@ def _showPreferencesUI(script, prefs):
                           "ui",
                           "orca-setup.ui")
 
-    orca_state.orcaOS = module.OrcaSetupGUI(uiFile, "orcaSetupWindow", prefs)
-    orca_state.orcaOS.init(script)
-    orca_state.orcaOS.showGUI()
+    ui = module.OrcaSetupGUI(uiFile, "orcaSetupWindow", prefs)
+    ui.init(script)
+    ui.showGUI()
 
 def showAppPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interface to configure the settings for a

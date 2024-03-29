@@ -109,7 +109,6 @@ lib_sources = [
   'orca_gui_prefs.py',
   'orca_gui_profile.py',
   'orca_modifier_manager.py',
-  'orca_state.py',
   'phonnames.py',
   'pronunciation_dict.py',
   'script.py',
