@@ -156,13 +156,3 @@ class Script(default.Script):
                 return
 
         default.Script.on_value_changed(self, event)
-
-    def skipObjectEvent(self, event):
-
-        # Accessibility support for menus in Java is badly broken. One problem
-        # is bogus focus claims following menu-related focus claims. Therefore
-        # in this particular toolkit, we mustn't skip events for menus.
-        if AXUtilities.is_menu_related(event.source):
-            return False
-
-        return default.Script.skipObjectEvent(self, event)
