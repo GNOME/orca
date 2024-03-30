@@ -378,49 +378,9 @@ class Script:
         return cachedEvent
 
     def skipObjectEvent(self, event):
-        """Gives us, and scripts, the ability to decide an event isn't
-        worth taking the time to process under the current circumstances.
+        """Returns True if we shouldn't bother processing this object event."""
 
-        Arguments:
-        - event: the Event
-
-        Returns True if we shouldn't bother processing this object event.
-        """
-
-        cachedEvent, eventTime = self.eventCache.get(event.type, [None, 0])
-        if not cachedEvent or cachedEvent == event:
-            return False
-
-        focus    = ["object:state-changed:focused"]
-        typing   = ["object:text-changed:insert", "object:text-changed:delete"]
-        arrowing = ["object:text-caret-moved", "object:text-selection-changed",
-                    "object:selection-changed", "object:active-descendant-changed"]
-
-        skip = False
-        if (event.type in arrowing or event.type in typing) \
-           and event.source == cachedEvent.source:
-            skip = True
-            reason = "more recent event of the same type in the same object"
-        elif event.type in focus and event.source != cachedEvent.source \
-             and event.type == cachedEvent.type \
-             and event.detail1 == cachedEvent.detail1:
-            skip = True
-            reason = "more recent event of the same type in a different object"
-        elif event.type.endswith("system") and event.source == cachedEvent.source:
-            skip = True
-            reason = "more recent system event in the same object"
-        elif event.type.startswith("object:state-changed") \
-             and event.type == cachedEvent.type \
-             and event.source == cachedEvent.source \
-             and event.detail1 == cachedEvent.detail1:
-            skip = True
-            reason = "appears to be duplicate state-changed event"
-
-        if skip:
-            tokens = ["SCRIPT: Skipping object event:", reason, cachedEvent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        return skip
+        return False
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Updates state and presents changes to the user in response to a
