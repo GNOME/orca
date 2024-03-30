@@ -176,13 +176,6 @@ class Backend:
             settingsFile.truncate()
             dump(prefs, settingsFile, indent=4)
 
-    def setFirstStart(self, value=False):
-        """Set firstStart. This user-configurable setting is primarily
-        intended to serve as an indication as to whether or not initial
-        configuration is needed."""
-        self.general['firstStart'] = value
-        self._setProfileKey('firstStart', value)
-
     def availableProfiles(self):
         """ List available profiles. """
         self._getSettings()
