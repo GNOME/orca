@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.scripts.default as default
+from orca import debug
+from orca import focus_manager
+from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

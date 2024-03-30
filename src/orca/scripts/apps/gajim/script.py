@@ -25,8 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import orca.chat as chat
-import orca.scripts.default as default
+from orca import chat
+from orca.scripts import default
 from orca.ax_utilities import AXUtilities
 
 class Script(default.Script):

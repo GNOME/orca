@@ -31,18 +31,18 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.scripts.default as default
-import orca.cmdnames as cmdnames
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.guilabels as guilabels
-import orca.input_event as input_event
-import orca.messages as messages
-import orca.settings as settings
-import orca.settings_manager as settings_manager
-import orca.speech as speech
-import orca.structural_navigation as structural_navigation
+from orca.scripts import default
+from orca import cmdnames
+from orca import debug
+from orca import focus_manager
+from orca import input_event_manager
+from orca import guilabels
+from orca import input_event
+from orca import messages
+from orca import settings
+from orca import settings_manager
+from orca import speech
+from orca import structural_navigation
 
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject

@@ -29,16 +29,16 @@ __license__   = "LGPL"
 
 from gi.repository import Gtk
 
-import orca.cmdnames as cmdnames
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.scripts.default as default
-import orca.guilabels as guilabels
-import orca.keybindings as keybindings
-import orca.input_event as input_event
-import orca.messages as messages
-import orca.settings_manager as settings_manager
+from orca import cmdnames
+from orca import debug
+from orca import focus_manager
+from orca import input_event_manager
+from orca.scripts import default
+from orca import guilabels
+from orca import keybindings
+from orca import input_event
+from orca import messages
+from orca import settings_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText

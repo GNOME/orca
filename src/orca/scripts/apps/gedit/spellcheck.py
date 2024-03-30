@@ -27,7 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.spellcheck as spellcheck
+from orca import spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

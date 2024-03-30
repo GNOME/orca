@@ -26,7 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.scripts.default as default
+from orca.scripts import default
 from .script_utilities import Utilities
 
 

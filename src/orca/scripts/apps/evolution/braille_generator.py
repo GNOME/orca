@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.braille as braille
-import orca.braille_generator as braille_generator
-import orca.scripts.toolkits.WebKitGtk as WebKitGtk
+from orca import braille
+from orca import braille_generator
+from orca.scripts.toolkits import WebKitGtk
 
 class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGenerator):
 

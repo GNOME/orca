@@ -28,7 +28,7 @@ __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
 
-import orca.chat as chat
+from orca import chat
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

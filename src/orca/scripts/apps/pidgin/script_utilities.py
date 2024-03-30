@@ -32,7 +32,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.scripts.toolkits.gtk as gtk
+from orca.scripts.toolkits import gtk
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities

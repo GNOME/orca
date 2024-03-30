@@ -25,8 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.scripts.toolkits.gtk as gtk
-import orca.scripts.toolkits.WebKitGtk as WebKitGtk
+from orca.scripts.toolkits import gtk
+from orca.scripts.toolkits import WebKitGtk
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities

@@ -30,26 +30,27 @@ __license__   = "LGPL"
 import re
 import time
 
-import orca.braille as braille
-import orca.cmdnames as cmdnames
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.flat_review as flat_review
-import orca.input_event_manager as input_event_manager
-import orca.input_event as input_event
-import orca.keybindings as keybindings
-import orca.messages as messages
-import orca.orca as orca
-import orca.orca_gui_prefs as orca_gui_prefs
-import orca.orca_modifier_manager as orca_modifier_manager
-import orca.phonnames as phonnames
-import orca.script as script
-import orca.script_manager as script_manager
-import orca.settings as settings
-import orca.settings_manager as settings_manager
-import orca.sound as sound
-import orca.speech as speech
-import orca.speechserver as speechserver
+from orca import braille
+from orca import cmdnames
+from orca import debug
+from orca import focus_manager
+from orca import flat_review
+from orca import input_event_manager
+from orca import input_event
+from orca import keybindings
+from orca import messages
+from orca import orca
+from orca import orca_gui_prefs
+from orca import orca_modifier_manager
+from orca import phonnames
+from orca import script
+from orca import script_manager
+from orca import settings
+from orca import settings_manager
+from orca import sound
+from orca import speech
+from orca import speechserver
+
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable

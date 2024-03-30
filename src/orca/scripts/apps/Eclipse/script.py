@@ -26,10 +26,10 @@ __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
 
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.scripts.toolkits.gtk as gtk
+from orca import debug
+from orca import focus_manager
+from orca import input_event_manager
+from orca.scripts.toolkits import gtk
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 

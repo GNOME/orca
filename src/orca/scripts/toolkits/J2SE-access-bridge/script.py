@@ -25,9 +25,9 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.scripts.default as default
+from orca import focus_manager
+from orca import input_event_manager
+from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities

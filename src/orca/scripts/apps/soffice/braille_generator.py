@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braille as braille
-import orca.braille_generator as braille_generator
-import orca.object_properties as object_properties
+from orca import braille
+from orca import braille_generator
+from orca import object_properties
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 

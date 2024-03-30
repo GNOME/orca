@@ -32,11 +32,11 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.messages as messages
-import orca.script_utilities as script_utilities
+from orca import debug
+from orca import focus_manager
+from orca import input_event_manager
+from orca import messages
+from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable

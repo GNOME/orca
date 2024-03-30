@@ -29,10 +29,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.messages as messages
-import orca.settings as settings
-import orca.settings_manager as settings_manager
-import orca.speech_generator as speech_generator
+from orca import messages
+from orca import settings
+from orca import settings_manager
+from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

@@ -31,8 +31,8 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-import orca.object_properties as object_properties
-import orca.braille_generator as braille_generator
+from orca import object_properties
+from orca import braille_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

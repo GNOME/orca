@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import orca.chat as chat
+from orca import chat
 from orca.ax_text import AXText
 
 ########################################################################

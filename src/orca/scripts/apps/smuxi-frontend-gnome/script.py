@@ -27,7 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.scripts.toolkits.gtk as gtk
+from orca.scripts.toolkits import gtk
 from .chat import Chat
 
 class Script(gtk.Script):

@@ -32,9 +32,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 import re
 
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.script_utilities as script_utilities
+from orca import focus_manager
+from orca import input_event_manager
+from orca import script_utilities
 
 from orca.ax_component import AXComponent
 from orca.ax_hypertext import AXHypertext

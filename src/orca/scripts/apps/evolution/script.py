@@ -28,14 +28,13 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.scripts.toolkits.gtk as gtk
-import orca.scripts.toolkits.WebKitGtk as WebKitGtk
-import orca.settings_manager as settings_manager
+from orca import debug
+from orca import focus_manager
+from orca import settings_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-
+from orca.scripts.toolkits import gtk
+from orca.scripts.toolkits import WebKitGtk
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities

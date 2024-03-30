@@ -25,13 +25,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.cmdnames as cmdnames
-import orca.debug as debug
-import orca.focus_manager as focus_manager
-import orca.input_event as input_event
-import orca.scripts.default as default
-import orca.settings_manager as settings_manager
-import orca.scripts.toolkits.Gecko as Gecko
+from orca import cmdnames
+from orca import debug
+from orca import focus_manager
+from orca import input_event
+from orca.scripts import default
+from orca import settings_manager
+from orca.scripts.toolkits import Gecko
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_text import AXText

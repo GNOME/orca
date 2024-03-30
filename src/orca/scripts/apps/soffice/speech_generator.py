@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.messages as messages
-import orca.settings_manager as settings_manager
-import orca.speech_generator as speech_generator
+from orca import messages
+from orca import settings_manager
+from orca import speech_generator
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable

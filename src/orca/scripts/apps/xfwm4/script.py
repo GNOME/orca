@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011 The Orca Team."
 __license__   = "LGPL"
 
-import orca.scripts.default as default
+from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

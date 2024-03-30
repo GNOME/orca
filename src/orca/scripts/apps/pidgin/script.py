@@ -26,10 +26,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import orca.debug as debug
-import orca.messages as messages
-import orca.scripts.toolkits.gtk as gtk
-import orca.settings as settings
+from orca import debug
+from orca import messages
+from orca.scripts.toolkits import gtk
+from orca import settings
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

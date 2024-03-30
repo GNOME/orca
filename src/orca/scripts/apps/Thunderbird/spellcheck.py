@@ -27,9 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.spellcheck as spellcheck
+from orca import focus_manager
+from orca import input_event_manager
+from orca import spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

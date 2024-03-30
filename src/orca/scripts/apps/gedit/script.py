@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.focus_manager as focus_manager
-import orca.input_event_manager as input_event_manager
-import orca.scripts.toolkits.gtk as gtk
+from orca import focus_manager
+from orca import input_event_manager
+from orca.scripts.toolkits import gtk
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from .spellcheck import SpellCheck

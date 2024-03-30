@@ -23,7 +23,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speech_generator as speech_generator
+from orca import speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
