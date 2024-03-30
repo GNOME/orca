@@ -361,22 +361,6 @@ class Script(default.Script):
 
         self.pointOfReference["lastTextUnitSpoken"] = "phrase"
 
-    def skipObjectEvent(self, event):
-        """Gives us, and scripts, the ability to decide an event isn't
-        worth taking the time to process under the current circumstances.
-
-        Arguments:
-        - event: the Event
-
-        Returns True if we shouldn't bother processing this object event.
-        """
-
-        if event.type.startswith('object:state-changed:focused') and event.detail1 \
-           and AXUtilities.is_link(event.source):
-                return False
-
-        return default.Script.skipObjectEvent(self, event)
-
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
