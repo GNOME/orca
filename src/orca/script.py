@@ -327,9 +327,6 @@ class Script:
         - event: the Event
         """
 
-        if self.skipObjectEvent(event):
-            return
-
         # Clear the generator cache for each event.
         #
         self.generatorCache = {}
@@ -376,11 +373,6 @@ class Script:
         tokens = ["SCRIPT: Found matching queued event:", cachedEvent]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return cachedEvent
-
-    def skipObjectEvent(self, event):
-        """Returns True if we shouldn't bother processing this object event."""
-
-        return False
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Updates state and presents changes to the user in response to a
