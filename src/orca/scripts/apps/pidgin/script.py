@@ -80,10 +80,10 @@ class Script(gtk.Script):
 
         return self.chat.getPreferencesFromGUI()
 
-    def onChildrenAdded(self, event):
+    def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        super().onChildrenAdded(event)
+        super().on_children_added(event)
         if not AXUtilities.is_page_tab_list(event.source):
             return
 
@@ -110,58 +110,45 @@ class Script(gtk.Script):
         voice = self.speechGenerator.voice(obj=event.any_data, string=line)
         self.speakMessage(line, voice=voice)
 
-    def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_name_changed(self, event):
+        """Callback for object:property-change:accessible-name events."""
 
         if self.chat.isInBuddyList(event.source):
             return
 
-        super().onNameChanged(event)
+        super().on_name_changed(event)
 
-    def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_text_deleted(self, event):
+        """Callback for object:text-changed:delete accessibility events."""
 
         if self.chat.isInBuddyList(event.source):
             return
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
 
-    def onTextInserted(self, event):
-        """Called whenever text is added to an object."""
+    def on_text_inserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
 
         if self.chat.presentInsertedText(event):
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)
 
-    def onValueChanged(self, event):
-        """Called whenever an object's value changes.  Currently, the
-        value changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_value_changed(self, event):
+        """Callback for object:property-change:accessible-value accessibility events."""
 
         if self.chat.isInBuddyList(event.source):
             return
 
-        super().onValueChanged(event)
+        super().on_value_changed(event)
 
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated."""
+    def on_window_activated(self, event):
+        """Callback for window:activate accessibility events."""
 
         if not settings.enableSadPidginHack:
             msg = "PIDGIN: Hack for missing events disabled"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            super().onWindowActivated(event)
+            super().on_window_activated(event)
             return
 
         msg = "PIDGIN: Starting hack for missing events"
@@ -174,9 +161,9 @@ class Script(gtk.Script):
 
         msg = "PIDGIN: Hack to work around missing events complete"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        super().onWindowActivated(event)
+        super().on_window_activated(event)
 
-    def onExpandedChanged(self, event):
+    def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
         # Overridden here because the event.source is in a hidden column.
@@ -186,4 +173,4 @@ class Script(gtk.Script):
             self.presentObject(obj, alreadyFocused=True)
             return
 
-        super().onExpandedChanged(event)
+        super().on_expanded_changed(event)

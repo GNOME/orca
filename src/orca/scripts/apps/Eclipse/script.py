@@ -59,7 +59,7 @@ class Script(gtk.Script):
         self._saveLastTextPosition(obj)
         return True
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
@@ -75,9 +75,9 @@ class Script(gtk.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onFocus(event)
+        super().on_focus(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if self.utilities.isTextArea(event.source) \
@@ -87,20 +87,20 @@ class Script(gtk.Script):
             # if not discarded, orca will speak all the text of the file.
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)
         self._saveLastTextPosition(event.source)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
         self._saveLastTextPosition(event.source)
 
     def _saveLastTextPosition(self, obj):
         if self.utilities.isTextArea(obj):
             self._saveLastCursorPosition(obj, AXText.get_caret_offset(obj))
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         # Sometimes Eclipse fires an object:selection-changed event for non-focused
@@ -108,5 +108,5 @@ class Script(gtk.Script):
         if not (AXUtilities.is_focused(event.source) or AXUtilities.is_menu_bar(event.source)):
             return
 
-        super().onSelectionChanged(event)
+        super().on_selection_changed(event)
 

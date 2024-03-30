@@ -30,16 +30,9 @@ import orca.scripts.default as default
 import orca.settings as settings
 from orca.ax_utilities import AXUtilities
 
-
-########################################################################
-#                                                                      #
-# The notification-daemon script class.                                #
-#                                                                      #
-########################################################################
-
 class Script(default.Script):
 
-    def onWindowCreated(self, event):
+    def on_window_created(self, event):
         """Callback for window:create accessibility events."""
 
         allLabels = AXUtilities.find_all_labels(event.source)

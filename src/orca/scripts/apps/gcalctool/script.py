@@ -41,15 +41,15 @@ class Script(gtk.Script):
         self._results_display = None
         self._status_line = None
 
-    def onWindowActivated(self, event):
-        """Callback for window:active accessibility events."""
+    def on_window_activated(self, event):
+        """Callback for window:activate accessibility events."""
 
         if self._results_display and self._status_line:
-            super().onWindowActivated(event)
+            super().on_window_activated(event)
             return
 
         if not AXUtilities.is_frame(event.source):
-            super().onWindowActivated(event)
+            super().on_window_activated(event)
             return
 
         self._results_display = AXObject.find_descendant(event.source, AXUtilities.is_editbar)
@@ -60,13 +60,13 @@ class Script(gtk.Script):
             return AXUtilities.is_text(x) and not AXUtilities.is_editable(x)
 
         self._status_line = AXObject.find_descendant(event.source, is_status_line)
-        super().onWindowActivated(event)
+        super().on_window_activated(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if self.utilities.isSameObject(event.source, self._status_line):
             self.presentMessage(self.utilities.displayedText(self._status_line))
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)

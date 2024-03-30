@@ -61,13 +61,13 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # https://bugzilla.gnome.org/show_bug.cgi?id=748311
         focus_manager.getManager().set_locus_of_focus(event, event.source)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
         if self.utilities.treatEventAsNoise(event):
@@ -75,15 +75,15 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if not self.utilities.treatEventAsCommand(event):
             msg = "TERMINAL: Passing along event to default script."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            super().onTextInserted(event)
+            super().on_text_inserted(event)
             return
 
         msg = "TERMINAL: Insertion is believed to be due to terminal command"

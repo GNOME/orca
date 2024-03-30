@@ -38,9 +38,6 @@ from .script_utilities import Utilities
 
 class Script(clutter.Script):
 
-    def __init__(self, app):
-        clutter.Script.__init__(self, app)
-
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
@@ -74,11 +71,11 @@ class Script(clutter.Script):
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if not AXUtilities.is_label(event.source):
-            clutter.Script.onNameChanged(self, event)
+            clutter.Script.on_name_changed(self, event)
             return
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
@@ -92,7 +89,7 @@ class Script(clutter.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentMessage(AXObject.get_name(event.source))
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         # Some buttons, like the Wikipedia button, claim to be selected but
@@ -109,9 +106,9 @@ class Script(clutter.Script):
                 focus_manager.getManager().set_locus_of_focus(event, event.source)
             return
 
-        clutter.Script.onSelectedChanged(self, event)
+        clutter.Script.on_selected_changed(self, event)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -129,7 +126,7 @@ class Script(clutter.Script):
                 focus_manager.getManager().set_locus_of_focus(event, descendant)
                 return
 
-        clutter.Script.onFocusedChanged(self, event)
+        clutter.Script.on_focused_changed(self, event)
 
     def isActivatableEvent(self, event):
         if event.type.startswith('object:state-changed:selected') and event.detail1:

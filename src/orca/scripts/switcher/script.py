@@ -81,66 +81,66 @@ class Script(default.Script):
 
         super().locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onFocusedChanged(event)
+        super().on_focused_changed(event)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onNameChanged(event)
+        super().on_name_changed(event)
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onSelectedChanged(event)
+        super().on_selected_changed(event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onSelectionChanged(event)
+        super().on_selection_changed(event)
 
-    def onShowingChanged(self, event):
+    def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onShowingChanged(event)
+        super().on_showing_changed(event)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onCaretMoved(event)
+        super().on_caret_moved(event)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if self._handleSwitcherEvent(event):
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)

@@ -169,14 +169,14 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         if self._inSayAll:
             return
 
         if not self.utilities.isWebKitGtk(event.source):
-            super().onCaretMoved(event)
+            super().on_caret_moved(event)
             return
 
         manager = input_event_manager.getManager()
@@ -192,15 +192,15 @@ class Script(default.Script):
             return
 
         self.utilities.setCaretContext(event.source, event.detail1)
-        super().onCaretMoved(event)
+        super().on_caret_moved(event)
 
-    def onDocumentReload(self, event):
+    def on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
 
         if self.utilities.treatAsBrowser(event.source):
             self._loadingDocumentContent = True
 
-    def onDocumentLoadComplete(self, event):
+    def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
         if not self.utilities.treatAsBrowser(event.source):
@@ -219,20 +219,20 @@ class Script(default.Script):
            and settings_manager.getManager().getSetting('enableSpeech'):
             self.sayAll(None)
 
-    def onDocumentLoadStopped(self, event):
+    def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
         if self.utilities.treatAsBrowser(event.source):
             self._loadingDocumentContent = False
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if self._inSayAll or not event.detail1:
             return
 
         if not self.utilities.isWebKitGtk(event.source):
-            super().onFocusedChanged(event)
+            super().on_focused_changed(event)
             return
 
         contextObj, offset = self.utilities.getCaretContext()
@@ -250,9 +250,9 @@ class Script(default.Script):
            or (role == Atspi.Role.LIST_ITEM and AXObject.get_child_count(obj)):
             return
 
-        super().onFocusedChanged(event)
+        super().on_focused_changed(event)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         if not self.utilities.treatAsBrowser(event.source):

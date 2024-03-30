@@ -57,12 +57,6 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_value import AXValue
 
-########################################################################
-#                                                                      #
-# The Default script class.                                            #
-#                                                                      #
-########################################################################
-
 class Script(script.Script):
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
@@ -78,12 +72,7 @@ class Script(script.Script):
     REAL_ACTIVE_DESCENDANT = 'realActiveDescendant'
 
     def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-        script.Script.__init__(self, app)
+        super().__init__(app)
 
         self.targetCursorCell = None
 
@@ -227,88 +216,47 @@ class Script(script.Script):
         return None
 
     def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = script.Script.getListeners(self)
-        listeners["focus:"]                                 = \
-            self.onFocus
-        #listeners["keyboard:modifiers"]                     = \
-        #    self.noOp
-        listeners["document:reload"]                        = \
-            self.onDocumentReload
-        listeners["document:attributes-changed"]            = \
-            self.onDocumentAttributesChanged
-        listeners["document:load-complete"]                 = \
-            self.onDocumentLoadComplete
-        listeners["document:load-stopped"]                  = \
-            self.onDocumentLoadStopped
-        listeners["document:page-changed"]                  = \
-            self.onDocumentPageChanged
-        listeners["mouse:button"]                           = \
-            self.onMouseButton
-        listeners["object:announcement"]                    = \
-            self.onAnnouncement
-        listeners["object:attributes-changed"]              = \
-            self.onObjectAttributesChanged
-        listeners["object:property-change:accessible-name"] = \
-            self.onNameChanged
-        listeners["object:property-change:accessible-description"] = \
-            self.onDescriptionChanged
-        listeners["object:text-caret-moved"]                = \
-            self.onCaretMoved
-        listeners["object:text-changed:delete"]             = \
-            self.onTextDeleted
-        listeners["object:text-changed:insert"]             = \
-            self.onTextInserted
-        listeners["object:active-descendant-changed"]       = \
-            self.onActiveDescendantChanged
-        listeners["object:children-changed:add"]            = \
-            self.onChildrenAdded
-        listeners["object:children-changed:remove"]         = \
-            self.onChildrenRemoved
-        listeners["object:state-changed:active"]            = \
-            self.onActiveChanged
-        listeners["object:state-changed:busy"]              = \
-            self.onBusyChanged
-        listeners["object:state-changed:focused"]           = \
-            self.onFocusedChanged
-        listeners["object:state-changed:showing"]           = \
-            self.onShowingChanged
-        listeners["object:state-changed:checked"]           = \
-            self.onCheckedChanged
-        listeners["object:state-changed:pressed"]           = \
-            self.onPressedChanged
-        listeners["object:state-changed:indeterminate"]     = \
-            self.onIndeterminateChanged
-        listeners["object:state-changed:expanded"]          = \
-            self.onExpandedChanged
-        listeners["object:state-changed:selected"]          = \
-            self.onSelectedChanged
-        listeners["object:state-changed:sensitive"]         = \
-            self.onSensitiveChanged
-        listeners["object:text-attributes-changed"]         = \
-            self.onTextAttributesChanged
-        listeners["object:text-selection-changed"]          = \
-            self.onTextSelectionChanged
-        listeners["object:selection-changed"]               = \
-            self.onSelectionChanged
-        listeners["object:property-change:accessible-value"] = \
-            self.onValueChanged
-        listeners["object:value-changed"]                   = \
-            self.onValueChanged
-        listeners["object:column-reordered"]                = \
-            self.onColumnReordered
-        listeners["object:row-reordered"]                   = \
-            self.onRowReordered
-        listeners["window:activate"]                        = \
-            self.onWindowActivated
-        listeners["window:deactivate"]                      = \
-            self.onWindowDeactivated
-        listeners["window:create"]                          = \
-            self.onWindowCreated
-        listeners["window:destroy"]                          = \
-            self.onWindowDestroyed
+        """Sets up the AT-SPI event listeners for this script."""
 
+        listeners = script.Script.getListeners(self)
+        listeners["document:attributes-changed"] = self.on_document_attributes_changed
+        listeners["document:reload"] = self.on_document_reload
+        listeners["document:load-complete"] = self.on_document_load_complete
+        listeners["document:load-stopped"] = self.on_document_load_stopped
+        listeners["document:page-changed"] = self.on_document_page_changed
+        listeners["focus:"] = self.on_focus
+        listeners["mouse:button"] = self.on_mouse_button
+        listeners["object:announcement"] = self.on_announcement
+        listeners["object:active-descendant-changed"] = self.on_active_descendant_changed
+        listeners["object:attributes-changed"] = self.on_object_attributes_changed
+        listeners["object:children-changed:add"] = self.on_children_added
+        listeners["object:children-changed:remove"] = self.on_children_removed
+        listeners["object:column-reordered"] = self.on_column_reordered
+        listeners["object:property-change:accessible-description"] = self.on_description_changed
+        listeners["object:property-change:accessible-name"] = self.on_name_changed
+        listeners["object:property-change:accessible-value"] =  self.on_value_changed
+        listeners["object:row-reordered"] = self.on_row_reordered
+        listeners["object:selection-changed"] = self.on_selection_changed
+        listeners["object:state-changed:active"] = self.on_active_changed
+        listeners["object:state-changed:busy"] = self.on_busy_changed
+        listeners["object:state-changed:checked"] = self.on_checked_changed
+        listeners["object:state-changed:expanded"] = self.on_expanded_changed
+        listeners["object:state-changed:focused"] = self.on_focused_changed
+        listeners["object:state-changed:indeterminate"] = self.on_indeterminate_changed
+        listeners["object:state-changed:pressed"] = self.on_pressed_changed
+        listeners["object:state-changed:selected"] = self.on_selected_changed
+        listeners["object:state-changed:sensitive"] = self.on_sensitive_changed
+        listeners["object:state-changed:showing"] = self.on_showing_changed
+        listeners["object:text-attributes-changed"] = self.on_text_attributes_changed
+        listeners["object:text-caret-moved"] = self.on_caret_moved
+        listeners["object:text-changed:delete"] = self.on_text_deleted
+        listeners["object:text-changed:insert"] = self.on_text_inserted
+        listeners["object:text-selection-changed"] = self.on_text_selection_changed
+        listeners["object:value-changed"] = self.on_value_changed
+        listeners["window:activate"] = self.on_window_activated
+        listeners["window:create"] = self.on_window_created
+        listeners["window:deactivate"] = self.on_window_deactivated
+        listeners["window:destroy"] = self.on_window_destroyed
         return listeners
 
     def __getDesktopBindings(self):
@@ -1200,7 +1148,7 @@ class Script(script.Script):
         """
         pass
 
-    def onActiveChanged(self, event):
+    def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
         window = event.source
@@ -1234,7 +1182,7 @@ class Script(script.Script):
             self.findCommandRun = False
             self.flatReviewFinder.find(self)
 
-    def onActiveDescendantChanged(self, event):
+    def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not event.any_data:
@@ -1255,11 +1203,11 @@ class Script(script.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.getManager().set_locus_of_focus(event, event.any_data)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
         pass
 
-    def onCheckedChanged(self, event):
+    def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
         if not self.utilities.isSameObject(
@@ -1284,21 +1232,21 @@ class Script(script.Script):
         self.presentObject(event.source, alreadyFocused=True, interrupt=True)
         self.pointOfReference['checkedChange'] = hash(event.source), event.detail1
 
-    def onChildrenAdded(self, event):
+    def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
         AXObject.clear_cache_now("children-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("children-changed event.")
 
-    def onChildrenRemoved(self, event):
+    def on_children_removed(self, event):
         """Callback for object:children-changed:remove accessibility events."""
 
         AXObject.clear_cache_now("children-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("children-changed event.")
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
@@ -1353,7 +1301,7 @@ class Script(script.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._presentTextAtNewCaretPosition(event)
 
-    def onDescriptionChanged(self, event):
+    def on_description_changed(self, event):
         """Callback for object:property-change:accessible-description events."""
 
         obj = event.source
@@ -1374,27 +1322,27 @@ class Script(script.Script):
         if event.any_data:
             self.presentMessage(event.any_data)
 
-    def onDocumentAttributesChanged(self, event):
+    def on_document_attributes_changed(self, event):
         """Callback for document:attributes-changed accessibility events."""
 
         pass
 
-    def onDocumentReload(self, event):
+    def on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
 
         pass
 
-    def onDocumentLoadComplete(self, event):
+    def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
         pass
 
-    def onDocumentLoadStopped(self, event):
+    def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
         pass
 
-    def onDocumentPageChanged(self, event):
+    def on_document_page_changed(self, event):
         """Callback for document:page-changed accessibility events."""
 
         if event.detail1 < 0:
@@ -1405,7 +1353,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.PAGE_NUMBER % event.detail1)
 
-    def onExpandedChanged(self, event):
+    def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
         if AXUtilities.is_table_related(event.source):
@@ -1426,7 +1374,7 @@ class Script(script.Script):
         for detail in details:
             self.speakMessage(detail, interrupt=False)
 
-    def onIndeterminateChanged(self, event):
+    def on_indeterminate_changed(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
 
         # If this state is cleared, the new state will become checked or unchecked
@@ -1447,18 +1395,18 @@ class Script(script.Script):
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['indeterminateChange'] = hash(obj), event.detail1
 
-    def onMouseButton(self, event):
+    def on_mouse_button(self, event):
         """Callback for mouse:button events."""
 
         input_event_manager.getManager().process_mouse_button_event(event)
 
-    def onAnnouncement(self, event):
+    def on_announcement(self, event):
         """Callback for object:announcement events."""
 
         if isinstance(event.any_data, str):
             self.presentMessage(event.any_data)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         names = self.pointOfReference.get('names', {})
@@ -1494,14 +1442,14 @@ class Script(script.Script):
         if event.any_data:
             self.presentMessage(event.any_data)
 
-    def onObjectAttributesChanged(self, event):
+    def on_object_attributes_changed(self, event):
         """Callback for object:attributes-changed accessibility events."""
 
         AXObject.clear_cache_now("object-attributes-changed event.")
         if AXUtilities.is_table_related(event.source):
             AXTable.clear_cache_now("object-attributes-changed event.")
 
-    def onPressedChanged(self, event):
+    def on_pressed_changed(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
 
         obj = event.source
@@ -1515,7 +1463,7 @@ class Script(script.Script):
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
         self.pointOfReference['pressedChange'] = hash(obj), event.detail1
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         # TODO - JD: Is this still needed?
@@ -1569,7 +1517,7 @@ class Script(script.Script):
 
         self.pointOfReference['selectedChange'] = hash(event.source), event.detail1
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         if self.utilities.handlePasteLocusOfFocusChange():
@@ -1632,16 +1580,16 @@ class Script(script.Script):
                 focus_manager.getManager().set_locus_of_focus(event, child)
                 break
 
-    def onSensitiveChanged(self, event):
+    def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
         pass
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         pass
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -1662,7 +1610,7 @@ class Script(script.Script):
 
         focus_manager.getManager().set_locus_of_focus(event, obj)
 
-    def onShowingChanged(self, event):
+    def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         obj = event.source
@@ -1690,7 +1638,7 @@ class Script(script.Script):
                 self.presentObject(obj, priorObj=event.source, interrupt=True)
                 return
 
-    def onTextAttributesChanged(self, event):
+    def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
@@ -1704,7 +1652,7 @@ class Script(script.Script):
                or AXText.is_word_misspelled(event.source, offset + 1):
                 self.speakMessage(messages.MISSPELLED)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
@@ -1750,7 +1698,7 @@ class Script(script.Script):
             string = self.utilities.adjustForRepeats(string)
             self.speakMessage(string, voice)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
@@ -1827,7 +1775,7 @@ class Script(script.Script):
         if settings_manager.getManager().getSetting('enableEchoByWord'):
             self.echoPreviousWord(event.source)
 
-    def onTextSelectionChanged(self, event):
+    def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
@@ -1839,7 +1787,7 @@ class Script(script.Script):
         self.utilities.handleTextSelectionChange(obj)
         self.updateBraille(obj)
 
-    def onColumnReordered(self, event):
+    def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
 
         AXTable.clear_cache_now("column-reordered event.")
@@ -1851,7 +1799,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
 
-    def onRowReordered(self, event):
+    def on_row_reordered(self, event):
         """Callback for object:row-reordered accessibility events."""
 
         AXTable.clear_cache_now("row-reordered event.")
@@ -1863,13 +1811,8 @@ class Script(script.Script):
 
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
 
-    def onValueChanged(self, event):
-        """Called whenever an object's value changes.  Currently, the
-        value changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_value_changed(self, event):
+        """Callback for object:property-change:accessible-value accessibility events."""
 
         if not AXValue.did_value_change(event.source):
             return
@@ -1893,12 +1836,8 @@ class Script(script.Script):
         self.__play(self.soundGenerator.generateSound(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_window_activated(self, event):
+        """Callback for window:activate accessibility events."""
 
         window = AXObject.find_real_app_and_window_for(event.source)[1]
         if not focus_manager.getManager().can_be_active_window(window):
@@ -1921,22 +1860,18 @@ class Script(script.Script):
 
         focus_manager.getManager().set_locus_of_focus(event, window)
 
-    def onWindowCreated(self, event):
+    def on_window_created(self, event):
         """Callback for window:create accessibility events."""
 
         pass
 
-    def onWindowDestroyed(self, event):
+    def on_window_destroyed(self, event):
         """Callback for window:destroy accessibility events."""
 
         pass
 
-    def onWindowDeactivated(self, event):
-        """Called whenever a toplevel window is deactivated.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_window_deactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
 
         if self.utilities.inMenu():
             msg = "DEFAULT: Ignoring event. In menu."
@@ -2330,7 +2265,7 @@ class Script(script.Script):
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
-        locusOfFocus in onActiveDescendantChanged.
+        locusOfFocus in on_active_descendant_changed.
 
         Arguments:
         - event: the Event

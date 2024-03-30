@@ -35,10 +35,9 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def __init__(self, app):
-        default.Script.__init__(self, app)
-
     def getUtilities(self):
+        """Returns the utilities for this script."""
+
         return Utilities(self)
 
     def deactivate(self):
@@ -60,25 +59,25 @@ class Script(default.Script):
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
-    def onActiveDescendantChanged(self, event):
+    def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not self.utilities.isTypeahead(focus_manager.getManager().get_locus_of_focus()):
             msg = "GTK: locusOfFocus is not typeahead. Passing along to default script."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            super().onActiveDescendantChanged(event)
+            super().on_active_descendant_changed(event)
             return
 
         msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.presentObject(event.any_data, interrupt=True)
 
-    def onCheckedChanged(self, event):
+    def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
         obj = event.source
         if self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
-            default.Script.onCheckedChanged(self, event)
+            default.Script.on_checked_changed(self, event)
             return
 
         # Present changes of child widgets of GtkListBox items
@@ -87,7 +86,7 @@ class Script(default.Script):
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
@@ -129,7 +128,7 @@ class Script(default.Script):
 
         focus_manager.getManager().set_locus_of_focus(event, event.source)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if self.utilities.isUselessPanel(event.source):
@@ -143,9 +142,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onFocusedChanged(event)
+        super().on_focused_changed(event)
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         if self.utilities.isEntryCompletionPopupItem(event.source):
@@ -160,15 +159,15 @@ class Script(default.Script):
            and self.utilities.handleContainerSelectionChange(AXObject.get_parent(event.source)):
             return
 
-        super().onSelectedChanged(event)
+        super().on_selected_changed(event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         focus = focus_manager.getManager().get_locus_of_focus()
         if self.utilities.isComboBoxWithToggleDescendant(event.source) \
             and self.utilities.isOrDescendsFrom(focus, event.source):
-            super().onSelectionChanged(event)
+            super().on_selection_changed(event)
             return
 
         isFocused = AXUtilities.is_focused(event.source)
@@ -189,13 +188,13 @@ class Script(default.Script):
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 
-        super().onSelectionChanged(event)
+        super().on_selection_changed(event)
 
-    def onShowingChanged(self, event):
+    def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         if not event.detail1:
-            super().onShowingChanged(event)
+            super().on_showing_changed(event)
             return
 
         if self.utilities.isPopOver(event.source) \
@@ -206,9 +205,9 @@ class Script(default.Script):
             self.presentObject(event.source, interrupt=True)
             return
 
-        super().onShowingChanged(event)
+        super().on_showing_changed(event)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
         if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
@@ -216,9 +215,9 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
@@ -226,16 +225,16 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)
 
-    def onTextSelectionChanged(self, event):
+    def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
         if not self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
             return
 
-        default.Script.onTextSelectionChanged(self, event)
+        default.Script.on_text_selection_changed(self, event)
 
     def isActivatableEvent(self, event):
         if self.utilities.eventIsCanvasNoise(event):

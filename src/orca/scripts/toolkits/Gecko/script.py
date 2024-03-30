@@ -61,10 +61,10 @@ class Script(web.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
 
-    def onActiveChanged(self, event):
+    def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        if super().onActiveChanged(event):
+        if super().on_active_changed(event):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
@@ -73,19 +73,19 @@ class Script(web.Script):
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onActiveChanged(self, event)
+        default.Script.on_active_changed(self, event)
 
-    def onActiveDescendantChanged(self, event):
+    def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if super().onActiveDescendantChanged(event):
+        if super().on_active_descendant_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onActiveDescendantChanged(self, event)
+        default.Script.on_active_descendant_changed(self, event)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         if self.utilities.isNotRealDocument(event.source):
@@ -93,64 +93,64 @@ class Script(web.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if super().onBusyChanged(event):
+        if super().on_busy_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onBusyChanged(self, event)
+        default.Script.on_busy_changed(self, event)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if super().onCaretMoved(event):
+        if super().on_caret_moved(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onCaretMoved(self, event)
+        default.Script.on_caret_moved(self, event)
 
-    def onCheckedChanged(self, event):
+    def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        if super().onCheckedChanged(event):
+        if super().on_checked_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onCheckedChanged(self, event)
+        default.Script.on_checked_changed(self, event)
 
-    def onColumnReordered(self, event):
+    def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
 
-        if super().onColumnReordered(event):
+        if super().on_column_reordered(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onColumnReordered(self, event)
+        default.Script.on_column_reordered(self, event)
 
-    def onChildrenAdded(self, event):
+    def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        if super().onChildrenAdded(event):
+        if super().on_children_added(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onChildrenAdded(self, event)
+        default.Script.on_children_added(self, event)
 
-    def onChildrenRemoved(self, event):
+    def on_children_removed(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
-        if super().onChildrenRemoved(event):
+        if super().on_children_removed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onChildrenRemoved(self, event)
+        default.Script.on_children_removed(self, event)
 
-    def onDocumentLoadComplete(self, event):
+    def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
         if self.utilities.isNotRealDocument(event.source):
@@ -158,50 +158,50 @@ class Script(web.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if super().onDocumentLoadComplete(event):
+        if super().on_document_load_complete(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onDocumentLoadComplete(self, event)
+        default.Script.on_document_load_complete(self, event)
 
-    def onDocumentLoadStopped(self, event):
+    def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        if super().onDocumentLoadStopped(event):
+        if super().on_document_load_stopped(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onDocumentLoadStopped(self, event)
+        default.Script.on_document_load_stopped(self, event)
 
-    def onDocumentReload(self, event):
+    def on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
 
-        if super().onDocumentReload(event):
+        if super().on_document_reload(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onDocumentReload(self, event)
+        default.Script.on_document_reload(self, event)
 
-    def onExpandedChanged(self, event):
+    def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        if super().onExpandedChanged(event):
+        if super().on_expanded_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onExpandedChanged(self, event)
+        default.Script.on_expanded_changed(self, event)
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # This event is deprecated. We should get object:state-changed:focused
         # events instead.
 
-        if super().onFocus(event):
+        if super().on_focus(event):
             return
 
         if self.utilities.isLayoutOnly(event.source):
@@ -218,10 +218,10 @@ class Script(web.Script):
         # case of Gecko dialogs, that seems to happen a lot.
         focus_manager.getManager().set_locus_of_focus(event, event.source)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        if super().onFocusedChanged(event):
+        if super().on_focused_changed(event):
             return
 
         if AXUtilities.is_panel(event.source):
@@ -232,127 +232,127 @@ class Script(web.Script):
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onFocusedChanged(self, event)
+        default.Script.on_focused_changed(self, event)
 
-    def onMouseButton(self, event):
+    def on_mouse_button(self, event):
         """Callback for mouse:button accessibility events."""
 
-        if super().onMouseButton(event):
+        if super().on_mouse_button(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onMouseButton(self, event)
+        default.Script.on_mouse_button(self, event)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if super().onNameChanged(event):
+        if super().on_name_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onNameChanged(self, event)
+        default.Script.on_name_changed(self, event)
 
-    def onRowReordered(self, event):
+    def on_row_reordered(self, event):
         """Callback for object:row-reordered accessibility events."""
 
-        if super().onRowReordered(event):
+        if super().on_row_reordered(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onRowReordered(self, event)
+        default.Script.on_row_reordered(self, event)
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if super().onSelectedChanged(event):
+        if super().on_selected_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onSelectedChanged(self, event)
+        default.Script.on_selected_changed(self, event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if super().onSelectionChanged(event):
+        if super().on_selection_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onSelectionChanged(self, event)
+        default.Script.on_selection_changed(self, event)
 
-    def onShowingChanged(self, event):
+    def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
-        if super().onShowingChanged(event):
+        if super().on_showing_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onShowingChanged(self, event)
+        default.Script.on_showing_changed(self, event)
 
-    def onTextAttributesChanged(self, event):
+    def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
-        if super().onTextAttributesChanged(event):
+        if super().on_text_attributes_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onTextAttributesChanged(self, event)
+        default.Script.on_text_attributes_changed(self, event)
 
-    def onTextDeleted(self, event):
+    def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
-        if super().onTextDeleted(event):
+        if super().on_text_deleted(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onTextDeleted(self, event)
+        default.Script.on_text_deleted(self, event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        if super().onTextInserted(event):
+        if super().on_text_inserted(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onTextInserted(self, event)
+        default.Script.on_text_inserted(self, event)
 
-    def onTextSelectionChanged(self, event):
+    def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        if super().onTextSelectionChanged(event):
+        if super().on_text_selection_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onTextSelectionChanged(self, event)
+        default.Script.on_text_selection_changed(self, event)
 
-    def onWindowActivated(self, event):
+    def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
         if not focus_manager.getManager().can_be_active_window(event.source):
             return
 
-        if super().onWindowActivated(event):
+        if super().on_window_activated(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onWindowActivated(self, event)
+        default.Script.on_window_activated(self, event)
 
-    def onWindowDeactivated(self, event):
+    def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        if super().onWindowDeactivated(event):
+        if super().on_window_deactivated(event):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.onWindowDeactivated(self, event)
+        default.Script.on_window_deactivated(self, event)

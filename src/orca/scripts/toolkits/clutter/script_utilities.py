@@ -29,9 +29,6 @@ import orca.script_utilities as script_utilities
 
 class Utilities(script_utilities.Utilities):
 
-    def __init__(self, script):
-        script_utilities.Utilities.__init__(self, script)
-
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,
         determine if the script is likely to echo it as a character."""

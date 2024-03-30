@@ -39,12 +39,6 @@ from orca.ax_utilities import AXUtilities
 
 from .spellcheck import SpellCheck
 
-########################################################################
-#                                                                      #
-# The Thunderbird script class.                                        #
-#                                                                      #
-########################################################################
-
 class Script(Gecko.Script):
     """The script for Thunderbird."""
 
@@ -157,7 +151,7 @@ class Script(Gecko.Script):
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -170,16 +164,16 @@ class Script(Gecko.Script):
             self.updateBraille(event.source)
 
         if not self.utilities.inDocumentContent(obj):
-            super().onFocusedChanged(event)
+            super().on_focused_changed(event)
             return
 
         if self.utilities.isEditableMessage(obj):
-            super().onFocusedChanged(event)
+            super().on_focused_changed(event)
             return
 
-        super().onFocusedChanged(event)
+        super().on_focused_changed(event)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         if self.utilities.isEditableMessage(event.source):
@@ -199,7 +193,7 @@ class Script(Gecko.Script):
                 self.speakMessage(AXObject.get_name(obj))
                 self._presentMessage(obj)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         if self.utilities.isEditableMessage(event.source):
@@ -209,9 +203,9 @@ class Script(Gecko.Script):
             if self.spellcheck.isActive():
                 return
 
-        super().onCaretMoved(event)
+        super().on_caret_moved(event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         # We present changes when the list has focus via focus-changed events.
@@ -222,18 +216,18 @@ class Script(Gecko.Script):
         if AXUtilities.is_combo_box(parent) and not AXUtilities.is_focused(parent):
             return
 
-        super().onSelectionChanged(event)
+        super().on_selection_changed(event)
 
-    def onSensitiveChanged(self, event):
+    def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
 
         if event.source == self.spellcheck.getChangeToEntry() \
            and self.spellcheck.presentCompletionMessage():
             return
 
-        super().onSensitiveChanged(event)
+        super().on_sensitive_changed(event)
 
-    def onShowingChanged(self, event):
+    def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         # TODO - JD: Once there are separate scripts for the Gecko toolkit
@@ -246,22 +240,18 @@ class Script(Gecko.Script):
             focus_manager.getManager().set_locus_of_focus(event, event.source, True)
             return
 
-        default.Script.onShowingChanged(self, event)
+        default.Script.on_showing_changed(self, event)
 
-    def onTextDeleted(self, event):
-        """Called whenever text is from an object.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_text_deleted(self, event):
+        """Callback for object:text-changed:delete accessibility events."""
 
         if AXUtilities.is_label(event.source) \
            and AXUtilities.is_status_bar(AXObject.get_parent(event.source)):
             return
 
-        super().onTextDeleted(event)
+        super().on_text_deleted(event)
 
-    def onTextInserted(self, event):
+    def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         parent = AXObject.get_parent(event.source)
@@ -282,7 +272,7 @@ class Script(Gecko.Script):
         # address so that we're not too "chatty." See bug #533042.
         if AXUtilities.is_autocomplete(parent):
             if len(event.any_data) == 1:
-                default.Script.onTextInserted(self, event)
+                default.Script.on_text_inserted(self, event)
                 return
 
             if self._lastAutoComplete and self._lastAutoComplete in event.any_data:
@@ -296,9 +286,9 @@ class Script(Gecko.Script):
                 self._lastAutoComplete = event.any_data
                 return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)
 
-    def onTextSelectionChanged(self, event):
+    def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
@@ -312,16 +302,16 @@ class Script(Gecko.Script):
                 self.spellcheck.setDocumentPosition(obj, selStart)
             return
 
-        super().onTextSelectionChanged(event)
+        super().on_text_selection_changed(event)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if AXObject.get_name(event.source) == self.spellcheck.getMisspelledWord():
             self.spellcheck.presentErrorDetails()
             return
 
-        super().onNameChanged(event)
+        super().on_name_changed(event)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,
@@ -350,10 +340,10 @@ class Script(Gecko.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
 
-    def onWindowActivated(self, event):
+    def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        super().onWindowActivated(event)
+        super().on_window_activated(event)
         if not self.spellcheck.isCheckWindow(event.source):
             self.spellcheck.deactivate()
             return
@@ -363,9 +353,9 @@ class Script(Gecko.Script):
         focus_manager.getManager().set_locus_of_focus(None, entry, False)
         self.updateBraille(entry)
 
-    def onWindowDeactivated(self, event):
+    def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        super().onWindowDeactivated(event)
+        super().on_window_deactivated(event)
         self.spellcheck.deactivate()
         self.utilities.clearContentCache()

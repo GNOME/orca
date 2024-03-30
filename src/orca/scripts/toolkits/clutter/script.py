@@ -32,8 +32,7 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def __init__(self, app):
-        default.Script.__init__(self, app)
-
     def getUtilities(self):
+        """Returns the utilities for this script."""
+
         return Utilities(self)

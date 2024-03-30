@@ -53,13 +53,7 @@ from .speech_generator import SpeechGenerator
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        default.Script.__init__(self, app)
+        super().__init__(app)
 
         self.speakSpreadsheetCoordinatesCheckButton = None
         self.alwaysSpeakSelectedSpreadsheetRangeCheckButton = None
@@ -69,13 +63,13 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
 
     def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
+        """Returns the braille generator for this script."""
+
         return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
+        """Returns the speech generator for this script."""
+
         return SpeechGenerator(self)
 
     def getSpellCheck(self):
@@ -339,7 +333,7 @@ class Script(default.Script):
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-    def onActiveChanged(self, event):
+    def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
         if not AXObject.get_parent(event.source):
@@ -352,9 +346,9 @@ class Script(default.Script):
         if self.findCommandRun:
             return
 
-        default.Script.onActiveChanged(self, event)
+        default.Script.on_active_changed(self, event)
 
-    def onActiveDescendantChanged(self, event):
+    def on_active_descendant_changed(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
 
@@ -381,9 +375,9 @@ class Script(default.Script):
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
 
-        default.Script.onActiveDescendantChanged(self, event)
+        default.Script.on_active_descendant_changed(self, event)
 
-    def onChildrenAdded(self, event):
+    def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
         if self.utilities.isSpreadSheetCell(event.any_data):
@@ -414,9 +408,9 @@ class Script(default.Script):
             self.presentMessage(full, brief)
             return
 
-        default.Script.onChildrenAdded(self, event)
+        default.Script.on_children_added(self, event)
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
@@ -442,7 +436,7 @@ class Script(default.Script):
         if AXUtilities.is_panel(event.source) and AXObject.get_name(event.source):
             focus_manager.getManager().set_locus_of_focus(event, event.source)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -468,7 +462,7 @@ class Script(default.Script):
 
         # TODO - JD: Why are we doing this early?
         if AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
-            default.Script.onFocusedChanged(self, event)
+            default.Script.on_focused_changed(self, event)
             return
 
         # TODO - JD: This is private. Also why is it here?
@@ -500,9 +494,9 @@ class Script(default.Script):
                 focus_manager.getManager().set_locus_of_focus(event, event.source, False)
                 return
 
-        default.Script.onFocusedChanged(self, event)
+        default.Script.on_focused_changed(self, event)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         if event.detail1 == -1:
@@ -531,14 +525,14 @@ class Script(default.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
-        super().onCaretMoved(event)
+        super().on_caret_moved(event)
 
-    def onCheckedChanged(self, event):
+    def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
         if not AXUtilities.is_button(event.source) \
            or not AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
-            default.Script.onCheckedChanged(self, event)
+            default.Script.on_checked_changed(self, event)
             return
 
         sourceWindow = self.utilities.topLevelObject(event.source)
@@ -549,7 +543,7 @@ class Script(default.Script):
         if AXUtilities.is_focused(event.source):
             self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
-    def onSelectedChanged(self, event):
+    def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         full, brief = "", ""
@@ -568,9 +562,9 @@ class Script(default.Script):
             self.utilities.updateCachedTextSelection(event.source)
             return
 
-        super().onSelectedChanged(event)
+        super().on_selected_changed(event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         if self.utilities.isSpreadSheetTable(event.source):
@@ -597,7 +591,7 @@ class Script(default.Script):
             return
 
         if not self.utilities.isComboBoxSelectionChange(event):
-            super().onSelectionChanged(event)
+            super().on_selection_changed(event)
             return
 
         selectedChildren = self.utilities.selectedChildren(event.source)
@@ -606,7 +600,7 @@ class Script(default.Script):
                self.utilities.containingComboBox(focus_manager.getManager().get_locus_of_focus()):
             focus_manager.getManager().set_locus_of_focus(event, selectedChildren[0], True)
 
-    def onTextSelectionChanged(self, event):
+    def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         if self.utilities.isComboBoxNoise(event):
@@ -619,12 +613,12 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onTextSelectionChanged(event)
+        super().on_text_selection_changed(event)
 
-    def onWindowActivated(self, event):
+    def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        super().onWindowActivated(event)
+        super().on_window_activated(event)
         if not self.spellcheck.isCheckWindow(event.source):
             return
 
@@ -634,8 +628,8 @@ class Script(default.Script):
 
         self.spellcheck.presentErrorDetails()
 
-    def onWindowDeactivated(self, event):
+    def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        super().onWindowDeactivated(event)
+        super().on_window_deactivated(event)
         self.spellcheck.deactivate()

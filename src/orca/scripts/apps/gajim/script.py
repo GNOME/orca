@@ -31,11 +31,6 @@ from orca.ax_utilities import AXUtilities
 
 class Script(default.Script):
 
-    def __init__(self, app):
-        """Creates a new script for the given application."""
-
-        default.Script.__init__(self, app)
-
     def getChat(self):
         """Returns the 'chat' class for this script."""
 
@@ -67,19 +62,19 @@ class Script(default.Script):
 
         return self.chat.getPreferencesFromGUI()
 
-    def onTextInserted(self, event):
-        """Called whenever text is added to an object."""
+    def on_text_inserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
 
         if self.chat.presentInsertedText(event):
             return
 
-        default.Script.onTextInserted(self, event)
+        default.Script.on_text_inserted(self, event)
 
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated."""
+    def on_window_activated(self, event):
+        """Callback for window:activate accessibility events."""
 
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
         AXUtilities.find_all_page_tabs(event.source)
-        default.Script.onWindowActivated(self, event)
+        default.Script.on_window_activated(self, event)

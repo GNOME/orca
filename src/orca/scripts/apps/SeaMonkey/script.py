@@ -60,7 +60,7 @@ class Script(Gecko.Script):
                 Script.enableStickyBrowseMode,
                 cmdnames.SET_BROWSE_MODE_STICKY)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
@@ -74,9 +74,9 @@ class Script(Gecko.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onBusyChanged(event)
+        super().on_busy_changed(event)
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         # We should get proper state-changed events for these.
@@ -85,7 +85,7 @@ class Script(Gecko.Script):
 
         focus = focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_entry(focus) or not self.utilities.inDocumentContent():
-            super().onFocus(event)
+            super().on_focus(event)
             return
 
         if AXUtilities.is_menu(event.source):
@@ -97,7 +97,7 @@ class Script(Gecko.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
-        super().onFocus(event)
+        super().on_focus(event)
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):

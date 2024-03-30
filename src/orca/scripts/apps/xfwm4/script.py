@@ -29,46 +29,19 @@ import orca.scripts.default as default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-########################################################################
-#                                                                      #
-# The xfwm4 script class.                                              #
-#                                                                      #
-########################################################################
-
 class Script(default.Script):
 
-    def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        default.Script.__init__(self, app)
-
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object. Overridden
-        here so that we will speak each item as the user is switching
-        windows.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_text_inserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            default.Script.onTextInserted(self, event)
+            default.Script.on_text_inserted(self, event)
             return
 
         self.presentMessage(AXObject.get_name(event.source))
 
-    def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object. Overridden
-        here because we wish to ignore text deletion events associated
-        with window switching.
-
-        Arguments:
-        - event: the Event
-        """
+    def on_text_deleted(self, event):
+        """Callback for object:text-changed:delete accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            default.Script.onTextDeleted(self, event)
+            default.Script.on_text_deleted(self, event)

@@ -41,12 +41,6 @@ from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
 
-########################################################################
-#                                                                      #
-# The Evolution script class.                                          #
-#                                                                      #
-########################################################################
-
 class Script(WebKitGtk.Script, gtk.Script):
 
     def __init__(self, app):
@@ -92,7 +86,7 @@ class Script(WebKitGtk.Script, gtk.Script):
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
-        locusOfFocus in onActiveDescendantChanged.
+        locusOfFocus in on_active_descendant_changed.
 
         Arguments:
         - event: the Event
@@ -108,7 +102,7 @@ class Script(WebKitGtk.Script, gtk.Script):
     #                                                                      #
     ########################################################################
 
-    def onActiveDescendantChanged(self, event):
+    def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
         if not event.any_data:
@@ -144,13 +138,13 @@ class Script(WebKitGtk.Script, gtk.Script):
 
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        super().onActiveDescendantChanged(event)
+        super().on_active_descendant_changed(event)
 
-    def onBusyChanged(self, event):
+    def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
         pass
 
-    def onFocus(self, event):
+    def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
         if self.utilities.isWebKitGtk(event.source):
@@ -163,21 +157,21 @@ class Script(WebKitGtk.Script, gtk.Script):
             focus_manager.getManager().set_locus_of_focus(event, obj)
             return
 
-        gtk.Script.onFocus(self, event)
+        gtk.Script.on_focus(self, event)
 
-    def onNameChanged(self, event):
+    def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if self.utilities.isWebKitGtk(event.source):
             return
 
-        gtk.Script.onNameChanged(self, event)
+        gtk.Script.on_name_changed(self, event)
 
-    def onSelectionChanged(self, event):
+    def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         if AXUtilities.is_combo_box(event.source) \
            and not AXUtilities.is_focused(event.source):
             return
 
-        gtk.Script.onSelectionChanged(self, event)
+        gtk.Script.on_selection_changed(self, event)

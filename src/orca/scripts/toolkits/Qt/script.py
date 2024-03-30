@@ -39,7 +39,7 @@ class Script(default.Script):
     def getUtilities(self):
         return Utilities(self)
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         if AXUtilities.is_accelerator_label(event.source):
@@ -47,9 +47,9 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().onCaretMoved(event)
+        super().on_caret_moved(event)
 
-    def onFocusedChanged(self, event):
+    def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -77,7 +77,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilities.is_focused(event.source):
-            super().onFocusedChanged(event)
+            super().on_focused_changed(event)
             return
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."

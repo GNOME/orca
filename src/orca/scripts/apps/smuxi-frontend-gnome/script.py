@@ -58,10 +58,10 @@ class Script(gtk.Script):
 
         return self.chat.getPreferencesFromGUI()
 
-    def onTextInserted(self, event):
-        """Called whenever text is added to an object."""
+    def on_text_inserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
 
         if self.chat.presentInsertedText(event):
             return
 
-        super().onTextInserted(event)
+        super().on_text_inserted(event)

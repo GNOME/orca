@@ -35,23 +35,7 @@ from orca.scripts.toolkits import gtk
 from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
-
-########################################################################
-#                                                                      #
-# The evince script class.                                             #
-#                                                                      #
-########################################################################
-
 class Script(gtk.Script):
-
-    def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        gtk.Script.__init__(self, app)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -102,11 +86,11 @@ class Script(gtk.Script):
 
         return enabledTypes
 
-    def onCaretMoved(self, event):
+    def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         obj = event.source
         if AXUtilities.is_focused(obj):
             focus_manager.getManager().set_locus_of_focus(event, event.source, False)
 
-        gtk.Script.onCaretMoved(self, event)
+        gtk.Script.on_caret_moved(self, event)
