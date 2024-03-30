@@ -2706,34 +2706,6 @@ class Script(script.Script):
         line.addRegions(regions)
 
     @staticmethod
-    def addToLineAsBrailleRegion(string, line):
-        """Creates a Braille Region out of string and adds it to the line.
-
-        Arguments:
-        - string: the string to be displayed
-        - line: a braille.Line
-        """
-
-        line.addRegion(braille.Region(string))
-
-    @staticmethod
-    def brailleRegionsFromStrings(strings):
-        """Creates a list of braille regions from the list of strings.
-
-        Arguments:
-        - strings: a list of strings from which to create the list of
-          braille Region instances
-
-        Returns the list of braille Region instances
-        """
-
-        brailleRegions = []
-        for string in strings:
-            brailleRegions.append(braille.Region(string))
-
-        return brailleRegions
-
-    @staticmethod
     def clearBraille():
         """Clears the logical structure, but keeps the Braille display as is
         (until a refresh operation)."""
@@ -2762,41 +2734,6 @@ class Script(script.Script):
             return
 
         braille.displayMessage(message, cursor, flashTime)
-
-    @staticmethod
-    def displayBrailleRegions(regionInfo, flashTime=0):
-        """Displays a list of regions on a single line, setting focus to the
-        specified region.  The regionInfo parameter is something that is
-        typically returned by a call to braille_generator.generateBraille.
-
-        Arguments:
-        - regionInfo: a list where the first element is a list of regions
-          to display and the second element is the region with focus (must
-          be in the list from element 0)
-        - flashTime:  if non-0, the number of milliseconds to display the
-          regions before reverting back to what was there before. A 0 means
-          to not do any flashing. A negative number means to display the
-          message until some other message comes along or the user presses
-          a cursor routing key.
-        """
-
-        if not settings_manager.getManager().getSetting('enableBraille') \
-           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
-            debug.printMessage(debug.LEVEL_INFO, "BRAILLE: display regions disabled", True)
-            return
-
-        braille.displayRegions(regionInfo, flashTime)
-
-    def displayBrailleForObject(self, obj):
-        """Convenience method for scripts combining the call to the braille
-        generator for the script with the call to displayBrailleRegions.
-
-        Arguments:
-        - obj: the accessible object to display in braille
-        """
-
-        regions = self.brailleGenerator.generateBraille(obj)
-        self.displayBrailleRegions(regions)
 
     @staticmethod
     def getBrailleCaretContext(event):
@@ -2839,54 +2776,6 @@ class Script(script.Script):
         return line
 
     @staticmethod
-    def getNewBrailleComponent(accessible, string, cursorOffset=0,
-                               indicator='', expandOnCursor=False):
-        """Creates a new braille Component.
-
-        Arguments:
-        - accessible: the accessible associated with this region
-        - string: the string to be displayed
-        - cursorOffset: a 0-based index saying where to draw the cursor
-          for this Region if it gets focus
-
-        Returns the new Component.
-        """
-
-        return braille.Component(accessible, string, cursorOffset,
-                                 indicator, expandOnCursor)
-
-    @staticmethod
-    def getNewBrailleRegion(string, cursorOffset=0, expandOnCursor=False):
-        """Creates a new braille Region.
-
-        Arguments:
-        - string: the string to be displayed
-        - cursorOffset: a 0-based index saying where to draw the cursor
-          for this Region if it gets focus
-
-        Returns the new Region.
-        """
-
-        return braille.Region(string, cursorOffset, expandOnCursor)
-
-    @staticmethod
-    def getNewBrailleText(accessible, label="", eol="", startOffset=None,
-                          endOffset=None):
-
-        """Creates a new braille Text region.
-
-        Arguments:
-        - accessible: the accessible associated with this region and which
-          implements AtkText
-        - label: an optional label to display
-        - eol: the endOfLine indicator
-
-        Returns the new Text region.
-        """
-
-        return braille.Text(accessible, label, eol, startOffset, endOffset)
-
-    @staticmethod
     def isBrailleBeginningShowing():
         """If True, the beginning of the line is showing on the braille
         display."""
@@ -2923,22 +2812,6 @@ class Script(script.Script):
         is showing."""
 
         braille.panToOffset(offset)
-
-    @staticmethod
-    def presentItemsInBraille(items):
-        """Method to braille a list of items. Scripts should call this
-        method rather than handling the creation and displaying of a
-        braille line directly.
-
-        Arguments:
-        - items: a list of strings to be presented
-        """
-
-        line = braille.getShowingLine()
-        for item in items:
-            line.addRegion(braille.Region(" " + item))
-
-        braille.refresh()
 
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
@@ -3080,19 +2953,3 @@ class Script(script.Script):
 
             settings_manager.getManager().setSetting('verbalizePunctuationStyle', punctStyle)
             self.speechAndVerbosityManager.update_punctuation_level()
-
-    @staticmethod
-    def presentItemsInSpeech(items):
-        """Method to speak a list of items. Scripts should call this
-        method rather than handling the creation and speaking of
-        utterances directly.
-
-        Arguments:
-        - items: a list of strings to be presented
-        """
-
-        utterances = []
-        for item in items:
-            utterances.append(item)
-
-        speech.speak(utterances)

@@ -34,23 +34,11 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
-    def isComposeMessageBody(self, obj):
-        if not AXUtilities.is_editable(obj):
-            return False
-
-        return self.isEmbeddedDocument(obj)
-
     def isReceivedMessage(self, obj):
         if AXUtilities.is_editable(obj):
             return False
 
         return self.isEmbeddedDocument(obj)
-
-    def isReceivedMessageHeader(self, obj):
-        if not AXUtilities.is_table(obj):
-            return False
-
-        return self.isReceivedMessage(AXObject.get_parent(obj))
 
     def isReceivedMessageContent(self, obj):
         if not AXUtilities.is_section(obj):
