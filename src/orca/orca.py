@@ -31,7 +31,6 @@ __license__   = "LGPL"
 
 import faulthandler
 import gi
-import importlib
 import os
 import signal
 import sys
@@ -181,64 +180,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     script_manager.getManager().activate()
 
     debug.printMessage(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
-
-    return True
-
-def _showPreferencesUI(script, prefs):
-    try:
-        module = importlib.import_module('.orca_gui_prefs', 'orca')
-    except Exception:
-        debug.printException(debug.LEVEL_SEVERE)
-        return
-
-    uiFile = os.path.join(orca_platform.datadir,
-                          orca_platform.package,
-                          "ui",
-                          "orca-setup.ui")
-
-    ui = module.OrcaSetupGUI(uiFile, "orcaSetupWindow", prefs)
-    ui.init(script)
-    ui.showGUI()
-
-def showAppPreferencesGUI(script=None, inputEvent=None):
-    """Displays the user interface to configure the settings for a
-    specific applications within Orca and set up those app-specific
-    user preferences using a GUI.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    prefs = {}
-    for key in settings.userCustomizableSettings:
-        prefs[key] = settings_manager.getManager().getSetting(key)
-
-    if script is None:
-        script = script_manager.getManager().getActiveScript()
-    _showPreferencesUI(script, prefs)
-
-    return True
-
-def showPreferencesGUI(script=None, inputEvent=None):
-    """Displays the user interface to configure Orca and set up
-    user preferences using a GUI.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    prefs = settings_manager.getManager().getGeneralSettings(settings_manager.getManager().profile)
-    script = script_manager.getManager().getDefaultScript()
-    _showPreferencesUI(script, prefs)
-
-    return True
-
-def quitOrca(script=None, inputEvent=None):
-    """Quit Orca. Check if the user wants to confirm this action.
-    If so, show the confirmation GUI otherwise just shutdown.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    shutdown()
 
     return True
 

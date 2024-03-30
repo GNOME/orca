@@ -40,6 +40,7 @@ import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.orca as orca
+import orca.orca_gui_prefs as orca_gui_prefs
 import orca.orca_modifier_manager as orca_modifier_manager
 import orca.phonnames as phonnames
 import orca.script as script
@@ -177,17 +178,17 @@ class Script(script.Script):
 
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
-                orca.quitOrca,
+                Script.quitOrca,
                 cmdnames.QUIT_ORCA)
 
         self.inputEventHandlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                orca.showPreferencesGUI,
+                Script.showPreferencesGUI,
                 cmdnames.SHOW_PREFERENCES_GUI)
 
         self.inputEventHandlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                orca.showAppPreferencesGUI,
+                Script.showAppPreferencesGUI,
                 cmdnames.SHOW_APP_PREFERENCES_GUI)
 
         self.inputEventHandlers["cycleSettingsProfileHandler"] = \
@@ -822,6 +823,33 @@ class Script(script.Script):
     # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
     #                                                                      #
     ########################################################################
+
+    def showAppPreferencesGUI(self, inputEvent=None):
+        """Shows the app Preferences dialog."""
+
+        prefs = {}
+        manager = settings_manager.getManager()
+        for key in settings.userCustomizableSettings:
+            prefs[key] = manager.getSetting(key)
+
+        ui = orca_gui_prefs.OrcaSetupGUI(self, prefs)
+        ui.showGUI()
+        return True
+
+    def showPreferencesGUI(self, inputEvent=None):
+        """Displays the Preferences dialog."""
+
+        manager = settings_manager.getManager()
+        prefs = manager.getGeneralSettings(manager.profile)
+        ui = orca_gui_prefs.OrcaSetupGUI(script_manager.getManager().getDefaultScript(), prefs)
+        ui.showGUI()
+        return True
+
+    def quitOrca(self, inputEvent=None):
+        """Quit Orca."""
+
+        orca.shutdown()
+        return True
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the left.  If panAmount is non-zero,

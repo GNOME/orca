@@ -45,6 +45,7 @@ from . import messages
 from . import orca
 from . import orca_gtkbuilder
 from . import orca_gui_profile
+from . import orca_platform
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -95,19 +96,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     DIALOG = None
 
-    def __init__(self, fileName, windowName, prefsDict):
-        """Initialize the Orca configuration GUI.
-
-        Arguments:
-        - fileName: name of the GtkBuilder file.
-        - windowName: name of the component to get from the GtkBuilder file.
-        - prefsDict: dictionary of preferences to use during initialization
-        """
+    def __init__(self, script, prefsDict):
+        """Initialize the Orca configuration GUI."""
 
         if OrcaSetupGUI.DIALOG is not None:
             return
 
-        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
+        fileName = os.path.join(orca_platform.datadir, orca_platform.package, "ui","orca-setup.ui")
+        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, "orcaSetupWindow")
         self.prefsDict = prefsDict
 
         self._defaultProfile = ['Default', 'default']
@@ -155,9 +151,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.profilesComboModel = None
         self.startingProfileCombo = None
         self._capturedKey = []
-        self.script = None
+        self.script = script
+        self.init()
 
-    def init(self, script):
+    def init(self):
         """Initialize the Orca configuration GUI. Read the users current
         set of preferences and set the GUI state to match. Setup speech
         support and populate the combo box lists on the Speech Tab pane
@@ -166,8 +163,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if OrcaSetupGUI.DIALOG is not None:
             return
-
-        self.script = script
 
         # Restore the default rate/pitch/gain,
         # in case the user played with the sliders.
