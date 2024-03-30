@@ -104,14 +104,3 @@ class Utilities(script_utilities.Utilities):
 
         self._isLayoutOnly[hash(obj)] = rv
         return rv
-
-
-    def isBogusWindowFocusClaim(self, event):
-        if event.type.startswith('object:state-changed:focused') and event.detail1 \
-           and AXUtilities.is_window(event.source) \
-           and not focus_manager.getManager().can_be_active_window(event.source):
-            msg = "GNOME SHELL: Event is believed to be bogus window focus claim"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False

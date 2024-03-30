@@ -51,15 +51,6 @@ class Script(clutter.Script):
         self.utilities.clearCachedObjects()
         super().deactivate()
 
-    def skipObjectEvent(self, event):
-        """Determines whether or not this event should be skipped due to
-        being redundant, part of an event flood, etc."""
-
-        if AXUtilities.is_window(event.source):
-            return self.utilities.isBogusWindowFocusClaim(event)
-
-        return clutter.Script.skipObjectEvent(self, event)
-
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         if event is not None and event.type == "window:activate" \
           and newFocus is not None and not AXObject.get_name(newFocus):
@@ -131,8 +122,5 @@ class Script(clutter.Script):
     def isActivatableEvent(self, event):
         if event.type.startswith('object:state-changed:selected') and event.detail1:
             return True
-
-        if self.utilities.isBogusWindowFocusClaim(event):
-            return False
 
         return super().isActivatableEvent(event)
