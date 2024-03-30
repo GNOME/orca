@@ -216,11 +216,6 @@ class Script(default.Script):
         self.inputEventHandlers.update(self.caretNavigation.get_handlers(True))
         self.inputEventHandlers.update(self.liveRegionManager.get_handlers(True))
 
-        self.inputEventHandlers["sayAllHandler"] = \
-            input_event.InputEventHandler(
-                Script.sayAll,
-                cmdnames.SAY_ALL)
-
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
@@ -666,23 +661,6 @@ class Script(default.Script):
             self.presentMessage(resultsCount)
 
         self._madeFindAnnouncement = True
-
-    def sayAll(self, inputEvent, obj=None, offset=None):
-        """Speaks the contents of the document beginning with the present
-        location.  Overridden in this script because the sayAll could have
-        been started on an object without text (such as an image).
-        """
-
-        if not self.utilities.inDocumentContent():
-            tokens = ["WEB: SayAll called for non-document content", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return super().sayAll(inputEvent, obj, offset)
-
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
-        tokens = ["WEB: SayAll called for document content", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
-        return True
 
     def _rewindSayAll(self, context, minCharCount=10):
         if not self.utilities.inDocumentContent():

@@ -1086,6 +1086,9 @@ class Script(script.Script):
 
     def sayAll(self, inputEvent, obj=None, offset=None):
         obj = obj or focus_manager.getManager().get_locus_of_focus()
+        tokens = ["DEFAULT: SayAll requested starting from", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         if not obj or AXObject.is_dead(obj):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
@@ -1094,9 +1097,6 @@ class Script(script.Script):
             utterances = self.speechGenerator.generateSpeech(obj)
             speech.speak(utterances)
             return True
-
-        if offset is None:
-            offset = AXText.get_caret_offset(obj)
 
         speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
@@ -2452,6 +2452,9 @@ class Script(script.Script):
         self._inSayAll = True
         priorObj = obj
         document = self.utilities.getDocumentForObject(obj)
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
 
         while obj:
             speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))

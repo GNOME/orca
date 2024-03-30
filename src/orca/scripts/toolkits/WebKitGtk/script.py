@@ -82,11 +82,6 @@ class Script(default.Script):
         default.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
 
-        self.inputEventHandlers["sayAllHandler"] = \
-            input_event.InputEventHandler(
-                Script.sayAll,
-                cmdnames.SAY_ALL)
-
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
@@ -428,19 +423,6 @@ class Script(default.Script):
             pass
         self.refreshBraille(False)
 
-        return True
-
-    def sayAll(self, inputEvent, obj=None, offset=None):
-        """Speaks the contents of the document beginning with the present
-        location.  Overridden in this script because the sayAll could have
-        been started on an object without text (such as an image).
-        """
-
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
-        if not self.utilities.isWebKitGtk(obj):
-            return default.Script.sayAll(self, inputEvent, obj, offset)
-
-        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
     def updateBraille(self, obj, **args):
