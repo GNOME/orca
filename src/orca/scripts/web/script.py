@@ -506,18 +506,6 @@ class Script(default.Script):
             'skipBlankCells': self._skipBlankCellsCheckButton.get_active()
         }
 
-    def skipObjectEvent(self, event):
-        """Returns True if this object event should be skipped."""
-
-        if event.type.startswith('object:state-changed:focused') and event.detail1:
-            if AXUtilities.is_link(event.source):
-                return False
-        elif event.type.startswith('object:children-changed'):
-            if AXUtilities.is_dialog(event.any_data):
-                return False
-
-        return super().skipObjectEvent(event)
-
     def presentationInterrupt(self, killFlash=True):
         super().presentationInterrupt(killFlash)
         msg = "WEB: Flushing live region messages"
