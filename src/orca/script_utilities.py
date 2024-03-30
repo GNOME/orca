@@ -2532,22 +2532,6 @@ class Utilities:
 
         return [keys, dictionary]
 
-    @staticmethod
-    def unicodeValueString(character):
-        """ Returns a four hex digit representation of the given character
-
-        Arguments:
-        - The character to return representation
-
-        Returns a string representaition of the given character unicode vlue
-        """
-
-        try:
-            return f"{ord(character):04x}"
-        except Exception:
-            debug.printException(debug.LEVEL_WARNING)
-            return ""
-
     def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return []
 

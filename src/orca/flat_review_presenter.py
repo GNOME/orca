@@ -1145,7 +1145,7 @@ class FlatReviewPresenter:
                 if line_string == "\n" and speech_type != 3:
                     script.speakMessage(messages.BLANK)
                 elif speech_type == 3:
-                    script.speakUnicodeCharacter(char_string)
+                    script.speakMessage(messages.UNICODE % f"{ord(char_string):04x}")
                 elif speech_type == 2:
                     script.phoneticSpellCurrentItem(char_string)
                 else:

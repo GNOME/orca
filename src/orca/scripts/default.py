@@ -3096,14 +3096,3 @@ class Script(script.Script):
             utterances.append(item)
 
         speech.speak(utterances)
-
-    def speakUnicodeCharacter(self, character):
-        """ Speaks some information about an unicode character.
-        At the moment it just announces the character unicode number but
-        this information may be changed in the future
-
-        Arguments:
-        - character: the character to speak information of
-        """
-        speech.speak(messages.UNICODE % \
-                         self.utilities.unicodeValueString(character))
