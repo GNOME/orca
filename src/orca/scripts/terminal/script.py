@@ -131,25 +131,3 @@ class Script(default.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.speakKeyEvent(event)
         return True
-
-    def skipObjectEvent(self, event):
-        if event.type == "object:text-changed:insert":
-            return False
-
-        newEvent, newTime = None, 0
-        if event.type == "object:text-changed:delete":
-            if self.utilities.isBackSpaceCommandTextDeletionEvent(event):
-                return False
-
-            newEvent, newTime = self.eventCache.get("object:text-changed:insert", [None, 0])
-
-        if newEvent is None or newEvent.source != event.source:
-            return super().skipObjectEvent(event)
-
-        if event.detail1 != newEvent.detail1:
-            return False
-
-        data = "\n%s%s" % (" " * 11, str(newEvent).replace("\t", " " * 11))
-        tokens = ["TERMINAL: Skipping due to more recent event at offset", data]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return True
