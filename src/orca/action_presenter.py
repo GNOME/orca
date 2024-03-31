@@ -59,7 +59,7 @@ class ActionPresenter:
             msg = "ACTION PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -95,7 +95,7 @@ class ActionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("show_actions_menu")))
 

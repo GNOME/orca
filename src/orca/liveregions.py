@@ -131,7 +131,7 @@ class LiveRegionManager:
             msg = "LIVE REGION MANAGER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -186,7 +186,7 @@ class LiveRegionManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("advanceLivePoliteness"),
                 1,
@@ -195,7 +195,7 @@ class LiveRegionManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers.get("setLivePolitenessOff"),
                 1,
@@ -204,7 +204,7 @@ class LiveRegionManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("monitorLiveRegions"),
                 1,
@@ -214,7 +214,7 @@ class LiveRegionManager:
             self._bindings.add(
                 keybindings.KeyBinding(
                     key,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.ORCA_MODIFIER_MASK,
                     self._handlers.get("reviewLiveAnnouncement"),
                     1,
@@ -239,13 +239,13 @@ class LiveRegionManager:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, includeGrabs=True)
+            script.key_bindings.remove(binding, include_grabs=True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, includeGrabs=not self._suspended)
+            script.key_bindings.add(binding, include_grabs=not self._suspended)
 
     def suspend_commands(self, script, suspended, reason=""):
         """Suspends live region commands independent of the enabled setting."""

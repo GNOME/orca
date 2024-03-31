@@ -52,7 +52,7 @@ class Bookmarks:
             msg = "BOOKMARKS: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -108,21 +108,21 @@ class Bookmarks:
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("goToNextBookmark")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("goToPrevBookmark")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_MODIFIER_MASK,
                 self._handlers.get("saveBookmarks")))
 
@@ -130,14 +130,14 @@ class Bookmarks:
             self._bindings.add(
                 keybindings.KeyBinding(
                     str(i + 1),
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.ORCA_MODIFIER_MASK,
                     self._handlers.get("goToBookmark")))
 
             self._bindings.add(
                 keybindings.KeyBinding(
                     str(i + 1),
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.ORCA_ALT_MODIFIER_MASK,
                     self._handlers.get("addBookmark")))
 

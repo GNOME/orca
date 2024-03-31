@@ -111,7 +111,7 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers["presentInputLineHandler"]))
 

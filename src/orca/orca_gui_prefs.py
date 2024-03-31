@@ -2088,7 +2088,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             else:
                 clickCount = self._clickCountToString(kb.click_count)
                 keysymstring = kb.keysymstring
-                text = keybindings.getModifierNames(kb.modifiers) \
+                text = keybindings.get_modifier_names(kb.modifiers) \
                        + keysymstring \
                        + clickCount
 
@@ -2158,8 +2158,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     descrip = treeModel.get_value(iterChild, DESCRIP)
                     keyBind.handler = \
                         input_event.InputEventHandler(None, descrip)
-                    if keyBinds.hasKeyBinding(keyBind,
-                                              typeOfSearch="description"):
+                    if keyBinds.has_key_binding(keyBind,
+                                              type_of_search="description"):
                         treeModel.set_value(iterChild, MODIF, True)
                     iterChild = treeModel.iter_next(iterChild)
                 myiter = treeModel.iter_next(myiter)
@@ -2241,35 +2241,35 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
 
             for kb in allKeyBindings.key_bindings:
-                if not self.kbindings.hasKeyBinding(kb, "strict"):
+                if not self.kbindings.has_key_binding(kb, "strict"):
                     handl = self._get_input_event_handler_key(kb.handler)
-                    if npKeyBindings.hasKeyBinding(kb, "description"):
+                    if npKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterNotificationPresenter)
-                    elif onKeyBindings.hasKeyBinding(kb, "description"):
+                    elif onKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterObjectNav)
-                    elif tnKeyBindings.hasKeyBinding(kb, "description"):
+                    elif tnKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterTableNav)
-                    elif frKeyBindings.hasKeyBinding(kb, "description"):
+                    elif frKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterFlatReviewPresenter)
-                    elif findKeyBindings.hasKeyBinding(kb, "description"):
+                    elif findKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterFind)
-                    elif waiKeyBindings.hasKeyBinding(kb, "description"):
+                    elif waiKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterWhereAmIPresenter)
-                    elif svKeyBindings.hasKeyBinding(kb, "description"):
+                    elif svKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterSpeechAndVerbosity)
-                    elif sysKeyBindings.hasKeyBinding(kb, "description"):
+                    elif sysKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterSystemInfo)
-                    elif smKeyBindings.hasKeyBinding(kb, "description"):
+                    elif smKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterSleepMode)
-                    elif bmKeyBindings.hasKeyBinding(kb, "description"):
+                    elif bmKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterBookmarks)
-                    elif lmKeyBindings.hasKeyBinding(kb, "description"):
+                    elif lmKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterLearnMode)
-                    elif acKeyBindings.hasKeyBinding(kb, "description"):
+                    elif acKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterActionPresenter)
-                    elif mrKeyBindings.hasKeyBinding(kb, "description"):
+                    elif mrKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterMouseReviewer)
-                    elif not defKeyBindings.hasKeyBinding(kb, "description"):
+                    elif not defKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:
                         self._insertRow(handl, kb, iterOrca)
@@ -2882,7 +2882,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Starts user input of a Key for a selected key binding"""
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
-        script_manager.get_manager().get_active_script().removeKeyGrabs("Capturing keys")
+        script_manager.get_manager().get_active_script().remove_key_grabs("Capturing keys")
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 
@@ -2960,11 +2960,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             return True
 
         self.newBinding = keybindings.KeyBinding(keyName,
-                                                 keybindings.defaultModifierMask,
+                                                 keybindings.DEFAULT_MODIFIER_MASK,
                                                  modifiers,
                                                  None,
                                                  clickCount)
-        modifierNames = keybindings.getModifierNames(modifiers)
+        modifierNames = keybindings.get_modifier_names(modifiers)
         clickCountString = self._clickCountToString(clickCount)
         newString = modifierNames + keyName + clickCountString
         description = self.pendingKeyBindings.get(newString)
@@ -3020,7 +3020,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             mods ^= (1 << Atspi.ModifierType.SHIFTLOCK)
 
         treeModel.set(myiter,
-                      modMask, str(keybindings.defaultModifierMask),
+                      modMask, str(keybindings.DEFAULT_MODIFIER_MASK),
                       modUsed, str(int(mods)),
                       key, string,
                       text, new_text,

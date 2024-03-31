@@ -17,8 +17,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Provides support for defining keybindings and matching them to input
-events."""
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-arguments
+
+"""Provides support for defining keybindings and matching them to input events."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -29,7 +33,8 @@ __license__   = "LGPL"
 
 import functools
 import gi
-gi.require_version('Atspi', '2.0') 
+gi.require_version('Atspi', '2.0')
+gi.require_version('Gdk', '3.0')
 from gi.repository import Atspi
 from gi.repository import Gdk
 
@@ -76,9 +81,9 @@ NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.META2 |
                                  1 << Atspi.ModifierType.META3 |
                                  1 << MODIFIER_ORCA)
-defaultModifierMask = NON_LOCKING_MODIFIER_MASK
+DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
 
-def getKeycode(keysym):
+def get_keycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
     should match the event.hw_code for key events.
 
@@ -122,7 +127,7 @@ def getKeycode(keysym):
         # entry is of the form [keycode, group, level]).
         #
         _keycodeCache[keysym] = 0
-        success, entries = keymap.get_entries_for_keyval(keyval)
+        _success, entries = keymap.get_entries_for_keyval(keyval)
 
         for entry in entries:
             if entry.group == 0:
@@ -135,7 +140,7 @@ def getKeycode(keysym):
 
     return _keycodeCache[keysym]
 
-def getModifierNames(mods):
+def get_modifier_names(mods):
     """Gets the modifier names of a numeric modifier mask as a human
     consumable string.
     """
@@ -191,7 +196,7 @@ def getModifierNames(mods):
         text += _("Shift") + "+"
     return text
 
-def getClickCountString(count):
+def get_click_count_string(count):
     """Returns a human-consumable string representing the number of
     clicks, such as 'double click' and 'triple click'."""
 
@@ -263,13 +268,13 @@ class KeyBinding:
         # keybindings in the user's preferences file.
         #
         if not self.keycode:
-            self.keycode = getKeycode(self.keysymstring)
+            self.keycode = get_keycode(self.keysymstring)
 
         if self.keycode == keycode:
             result = modifiers & self.modifier_mask
             return result == self.modifiers
-        else:
-            return False
+
+        return False
 
     def is_bound(self):
         """Returns True if this KeyBinding is bound to a key"""
@@ -294,98 +299,92 @@ class KeyBinding:
         except Exception:
             return ''
 
-    def asString(self):
+    def as_string(self):
         """Returns a more human-consumable string representing this binding."""
 
-        mods = getModifierNames(self.modifiers)
-        clickCount = getClickCountString(self.click_count)
+        mods = get_modifier_names(self.modifiers)
+        click_count = get_click_count_string(self.click_count)
         keysym = self.keysymstring
-        string = f'{mods}{keysym} {clickCount}'
+        string = f'{mods}{keysym} {click_count}'
 
         return string.strip()
 
-    def keyDefs(self):
-        """ return a list of Atspi key definitions for the given binding.
-            This may return more than one binding if the Orca modifier is bound
-            to more than one key.
-        """
+    def key_definitions(self):
+        """return a list of Atspi key definitions for the given binding."""
+
         ret = []
         if not self.keycode:
-            self.keycode = getKeycode(self.keysymstring)
+            self.keycode = get_keycode(self.keysymstring)
 
         if self.modifiers & ORCA_MODIFIER_MASK:
-            modList = []
-            otherMods = self.modifiers & ~ORCA_MODIFIER_MASK
+            modifier_list = []
+            other_modifiers = self.modifiers & ~ORCA_MODIFIER_MASK
             manager = input_event_manager.get_manager()
             for key in settings.orcaModifierKeys:
-                keycode = getKeycode(key)
+                keycode = get_keycode(key)
                 if keycode == 0 and key == "Shift_Lock":
-                    keycode = getKeycode("Caps_Lock")
+                    keycode = get_keycode("Caps_Lock")
                 mod = manager.map_keycode_to_modifier(keycode)
                 if mod:
-                    modList.append(mod | otherMods)
+                    modifier_list.append(mod | other_modifiers)
         else:
-            modList = [self.modifiers]
-        for mod in modList:
+            modifier_list = [self.modifiers]
+        for mod in modifier_list:
             kd = Atspi.KeyDefinition()
             kd.keycode = self.keycode
             kd.modifiers = mod
             ret.append(kd)
         return ret
 
-    def getGrabIDs(self):
+    def get_grab_ids(self):
         """Returns the grab IDs for this KeyBinding."""
 
         return self._grab_ids
 
-    def hasGrabs(self):
+    def has_grabs(self):
         """Returns True if there are existing grabs associated with this KeyBinding."""
 
         return bool(self._grab_ids)
 
-    def addGrabs(self):
+    def add_grabs(self):
         """Adds key grabs for this KeyBinding."""
 
         self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(self)
 
-    def removeGrabs(self):
+    def remove_grabs(self):
         """Removes key grabs for this KeyBinding."""
 
         input_event_manager.get_manager().remove_grabs_for_keybinding(self)
         self._grab_ids = []
 
 class KeyBindings:
-    """Structure that maintains a set of KeyBinding instances.
-    """
+    """Structure that maintains a set of KeyBinding instances."""
 
     def __init__(self):
         self.key_bindings = []
 
     def __str__(self):
-        result = ""
-        for keyBinding in self.key_bindings:
-            result += f"{keyBinding}\n"
-        return result
+        return "\n".join(map(str, self.key_bindings))
 
-    def add(self, keyBinding, includeGrabs=False):
+    def add(self, key_binding, include_grabs=False):
         """Adds KeyBinding instance to this set of keybindings, optionally updating grabs."""
 
-        if keyBinding.keysymstring and self.hasKeyBinding(keyBinding, "keysNoMask"):
+        if key_binding.keysymstring and self.has_key_binding(key_binding, "keysNoMask"):
             msg = (
-               f"KEYBINDINGS: '{keyBinding.asString()}' "
-               f"({keyBinding.description()}) already in keybindings"
+               f"KEYBINDINGS: '{key_binding.as_string()}' "
+               f"({key_binding.description()}) already in keybindings"
             )
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.key_bindings.append(keyBinding)
-        if includeGrabs:
-            keyBinding.addGrabs()
+        self.key_bindings.append(key_binding)
+        if include_grabs:
+            key_binding.add_grabs()
 
-    def remove(self, keyBinding, includeGrabs=False):
+    def remove(self, key_binding, include_grabs=False):
         """Removes KeyBinding from this set of keybindings, optionally updating grabs."""
 
-        if keyBinding not in self.key_bindings:
-            candidates = self.getBindingsForHandler(keyBinding.handler)
+        if key_binding not in self.key_bindings:
+            candidates = self.get_bindings_for_handler(key_binding.handler)
             # If there are no candidates, we could be in a situation where we went from outside
             # of web content to inside web content in focus mode. When that occurs, refreshing
             # keybindings will attempt to remove grabs for browse-mode commands that were already
@@ -395,29 +394,29 @@ class KeyBindings:
 
             # TODO - JD: This shouldn't happen, but it does when trying to remove an overridden
             # binding. This function gets called with the original binding.
-            tokens = ["KEYBINDINGS: Warning: No binding in set to remove for", keyBinding,
+            tokens = ["KEYBINDINGS: Warning: No binding in set to remove for", key_binding,
                       "Alternates:", candidates]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
-            for candidate in self.getBindingsForHandler(keyBinding.handler):
-                self.remove(candidate, includeGrabs)
+            for candidate in self.get_bindings_for_handler(key_binding.handler):
+                self.remove(candidate, include_grabs)
             return
 
-        if keyBinding.hasGrabs():
-            if includeGrabs:
-                keyBinding.removeGrabs()
+        if key_binding.has_grabs():
+            if include_grabs:
+                key_binding.remove_grabs()
             else:
                 # TODO - JD: This better not happen. Be sure that is indeed the case.
-                tokens = ["KEYBINDINGS: Warning:", keyBinding, "will be removed but has grabs."]
+                tokens = ["KEYBINDINGS: Warning:", key_binding, "will be removed but has grabs."]
                 debug.printTokens(debug.LEVEL_WARNING, tokens, True)
 
-        self.key_bindings.remove(keyBinding)
+        self.key_bindings.remove(key_binding)
 
-    def isEmpty(self):
+    def is_empty(self):
         """Returns True if there are no bindings in this set of keybindings."""
 
         return not self.key_bindings
 
-    def addKeyGrabs(self, reason=""):
+    def add_key_grabs(self, reason=""):
         """Adds grabs for all enabled bindings in this set of keybindings."""
 
         msg = "KEYBINDINGS: Adding key grabs"
@@ -427,14 +426,14 @@ class KeyBindings:
 
         count = 0
         for binding in self.key_bindings:
-            if binding.is_enabled() and not binding.hasGrabs():
+            if binding.is_enabled() and not binding.has_grabs():
                 count += 1
-                binding.addGrabs()
+                binding.add_grabs()
 
         msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} added."
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
-    def removeKeyGrabs(self, reason=""):
+    def remove_key_grabs(self, reason=""):
         """Removes all grabs for this set of keybindings."""
 
         msg = "KEYBINDINGS: Removing key grabs"
@@ -444,14 +443,14 @@ class KeyBindings:
 
         count = 0
         for binding in self.key_bindings:
-            if binding.hasGrabs():
+            if binding.has_grabs():
                 count += 1
-                binding.removeGrabs()
+                binding.remove_grabs()
 
         msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} removed."
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
-    def hasHandler(self, handler):
+    def has_handler(self, handler):
         """Returns True if the handler is found in this set of keybindings."""
 
         for binding in self.key_bindings:
@@ -460,7 +459,7 @@ class KeyBindings:
 
         return False
 
-    def hasEnabledHandler(self, handler):
+    def has_enabled_handler(self, handler):
         """Returns True if the handler is found in this set of keybindings and is enabled."""
 
         for binding in self.key_bindings:
@@ -469,59 +468,51 @@ class KeyBindings:
 
         return False
 
-    def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
-        """Return True if keyBinding is already in self.key_bindings.
+    def has_key_binding(self, key_binding, type_of_search="strict"):
+        """Return True if binding is already in self.key_bindings.
 
-           The typeOfSearch can be:
+           The type_of_search can be:
               "strict":      matches description, modifiers, key, and click count
               "description": matches only description
               "keys":        matches the modifiers, key, modifier mask, and click count
               "keysNoMask":  matches the modifiers, key, and click count
         """
 
-        for keyBinding in self.key_bindings:
-            if typeOfSearch == "strict":
-                if keyBinding.handler and newKeyBinding.handler \
-                   and keyBinding.handler.description == newKeyBinding.handler.description \
-                   and keyBinding.keysymstring == newKeyBinding.keysymstring \
-                   and keyBinding.modifier_mask == newKeyBinding.modifier_mask \
-                   and keyBinding.modifiers == newKeyBinding.modifiers \
-                   and keyBinding.click_count == newKeyBinding.click_count:
+        # pylint:disable=too-many-boolean-expressions
+        for binding in self.key_bindings:
+            if type_of_search == "strict":
+                if binding.handler and key_binding.handler \
+                   and binding.handler.description == key_binding.handler.description \
+                   and binding.keysymstring == key_binding.keysymstring \
+                   and binding.modifier_mask == key_binding.modifier_mask \
+                   and binding.modifiers == key_binding.modifiers \
+                   and binding.click_count == key_binding.click_count:
                     return True
-            elif typeOfSearch == "description":
-                if keyBinding.handler and newKeyBinding.handler \
-                   and keyBinding.handler.description == newKeyBinding.handler.description:
+            elif type_of_search == "description":
+                if binding.handler and key_binding.handler \
+                   and binding.handler.description == key_binding.handler.description:
                     return True
-            elif typeOfSearch == "keys":
-                if keyBinding.keysymstring == newKeyBinding.keysymstring \
-                   and keyBinding.modifier_mask == newKeyBinding.modifier_mask \
-                   and keyBinding.modifiers == newKeyBinding.modifiers \
-                   and keyBinding.click_count == newKeyBinding.click_count:
+            elif type_of_search == "keys":
+                if binding.keysymstring == key_binding.keysymstring \
+                   and binding.modifier_mask == key_binding.modifier_mask \
+                   and binding.modifiers == key_binding.modifiers \
+                   and binding.click_count == key_binding.click_count:
                     return True
-            elif typeOfSearch == "keysNoMask":
-                if keyBinding.keysymstring == newKeyBinding.keysymstring \
-                   and keyBinding.modifiers == newKeyBinding.modifiers \
-                   and keyBinding.click_count == newKeyBinding.click_count:
+            elif type_of_search == "keysNoMask":
+                if binding.keysymstring == key_binding.keysymstring \
+                   and binding.modifiers == key_binding.modifiers \
+                   and binding.click_count == key_binding.click_count:
                     return True
 
         return False
 
-    def getBoundBindings(self, uniqueOnly=False):
-        """Returns the KeyBinding instances which are bound to a keystroke.
-
-        Arguments:
-        - uniqueOnly: Should alternative bindings for the same handler be
-          filtered out (default: False)
-        """
+    def get_bound_bindings(self):
+        """Returns the KeyBinding instances which are bound to a keystroke."""
 
         bound = [kb for kb in self.key_bindings if kb.keysymstring]
-        if uniqueOnly:
-            handlers = [kb.handler.description for kb in bound]
-            bound = [bound[i] for i in map(handlers.index, set(handlers))]
-
         bindings = {}
         for kb in bound:
-            string = kb.asString()
+            string = kb.as_string()
             match = bindings.get(string)
             if match is not None:
                 tokens = ["WARNING: '", string, "' (", kb.description(), ") also matches:", match]
@@ -530,12 +521,12 @@ class KeyBindings:
 
         return bound
 
-    def getBindingsForHandler(self, handler):
+    def get_bindings_for_handler(self, handler):
         """Returns the KeyBinding instances associated with handler."""
 
         return [kb for kb in self.key_bindings if kb.handler == handler]
 
-    def _checkMatchingBindings(self, keyboardEvent, result):
+    def _check_matching_bindings(self, keyboard_event, result):
         if debug.debugLevel > debug.LEVEL_INFO:
             return
 
@@ -547,58 +538,50 @@ class KeyBindings:
         if len(set(map(lambda x: x.click_count, result))) == len(result):
             return
 
-        def toString(x):
+        def to_string(x):
             return f"{x.handler} ({x.click_count}x)"
 
         msg = (
-            f"KEYBINDINGS: '{keyboardEvent.as_single_line_string()}' "
-            f"matches multiple handlers: {', '.join(map(toString, result))}"
+            f"KEYBINDINGS: '{keyboard_event.as_single_line_string()}' "
+            f"matches multiple handlers: {', '.join(map(to_string, result))}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def getInputHandler(self, keyboardEvent):
-        """Returns the input handler of the key binding that matches the
-        given keycode and modifiers, or None if no match exists.
-        """
+    def get_input_handler(self, event):
+        """Returns the input handler matching keyboardEvent)"""
 
         matches = []
         candidates = []
-        clickCount = keyboardEvent.get_click_count()
-        for keyBinding in self.key_bindings:
-            if keyBinding.matches(keyboardEvent.hw_code, keyboardEvent.modifiers):
+        click_count = event.get_click_count()
+        for binding in self.key_bindings:
+            if binding.matches(event.hw_code, event.modifiers):
                 # Checking the modifier mask ensures we don't consume flat review commands
                 # when NumLock is on.
-                if keyBinding.modifier_mask == keyboardEvent.modifiers and \
-                   keyBinding.click_count == clickCount:
-                    matches.append(keyBinding)
-                # If there's no keysymstring, it's unbound and cannot be
-                # a match.
-                #
-                if keyBinding.keysymstring:
-                    candidates.append(keyBinding)
+                if binding.modifier_mask == event.modifiers and binding.click_count == click_count:
+                    matches.append(binding)
+                # If there's no keysymstring, it's unbound and cannot be a match.
+                if binding.keysymstring:
+                    candidates.append(binding)
 
-        tokens = [f"KEYBINDINGS: {keyboardEvent.as_single_line_string()} matches", matches]
+        tokens = [f"KEYBINDINGS: {event.as_single_line_string()} matches", matches]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        self._checkMatchingBindings(keyboardEvent, matches)
+        self._check_matching_bindings(event, matches)
         if matches:
             return matches[0].handler
 
-        if keyboardEvent.is_keypad_key_with_numlock_on():
+        if event.is_keypad_key_with_numlock_on():
             return None
 
-        tokens = [f"KEYBINDINGS: {keyboardEvent.as_single_line_string()} fallback candidates",
-                  candidates]
+        tokens = [f"KEYBINDINGS: {event.as_single_line_string()} fallback candidates", candidates]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        # If we're still here, we don't have an exact match. Prefer
-        # the one whose click count is closest to, but does not exceed,
-        # the actual click count.
-        #
+        # If we're still here, we don't have an exact match. Prefer the one whose click count is
+        # closest to, but does not exceed, the actual click count.
         candidates.sort(key=functools.cmp_to_key(lambda x, y: y.click_count - x.click_count))
-        self._checkMatchingBindings(keyboardEvent, candidates)
+        self._check_matching_bindings(event, candidates)
         for candidate in candidates:
-            if candidate.click_count <= clickCount:
+            if candidate.click_count <= click_count:
                 return candidate.handler
 
         return None

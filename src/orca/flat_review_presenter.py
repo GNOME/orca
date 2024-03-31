@@ -123,9 +123,9 @@ class FlatReviewPresenter:
             msg = "FLAT REVIEW PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.isEmpty():
+        elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.isEmpty():
+        elif not is_desktop and self._laptop_bindings.is_empty():
             self._setup_bindings()
 
         if is_desktop:
@@ -325,14 +325,14 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Subtract",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("toggleFlatReviewModeHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Add",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewSayAllHandler"),
                 2))
@@ -340,21 +340,21 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewHomeHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousLineHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentLineHandler"),
                 1))
@@ -362,7 +362,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentLineHandler"),
                 2))
@@ -370,7 +370,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewPhoneticCurrentLineHandler"),
                 3))
@@ -378,35 +378,35 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewNextLineHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewEndHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousItemHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewAboveHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentItemHandler"),
                 1))
@@ -414,7 +414,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentItemHandler"),
                 2))
@@ -422,7 +422,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewPhoneticCurrentItemHandler"),
                 3))
@@ -430,42 +430,42 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentAccessibleHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewNextItemHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewBelowHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousCharacterHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewEndOfLineHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentCharacterHandler"),
                 1))
@@ -473,7 +473,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentCharacterHandler"),
                 2))
@@ -481,7 +481,7 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewUnicodeCurrentCharacterHandler"),
                 3))
@@ -489,35 +489,35 @@ class FlatReviewPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("reviewNextCharacterHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("showContentsHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewCopyHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewAppendHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewToggleRestrictHandler")))
 
@@ -532,14 +532,14 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "p",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("toggleFlatReviewModeHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "semicolon",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("flatReviewSayAllHandler"),
                 2))
@@ -547,21 +547,21 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "u",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousLineHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "u",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewHomeHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentLineHandler"),
                 1))
@@ -569,7 +569,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentLineHandler"),
                 2))
@@ -577,7 +577,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewPhoneticCurrentLineHandler"),
                 3))
@@ -585,35 +585,35 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "o",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewNextLineHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "o",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewEndHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "j",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousItemHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "j",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewAboveHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentItemHandler"),
                 1))
@@ -621,7 +621,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentItemHandler"),
                 2))
@@ -629,7 +629,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewPhoneticCurrentItemHandler"),
                 3))
@@ -637,42 +637,42 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentAccessibleHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "l",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewNextItemHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "l",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewBelowHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "m",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewPreviousCharacterHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "m",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("reviewEndOfLineHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "comma",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewCurrentCharacterHandler"),
                 1))
@@ -680,7 +680,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "comma",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewSpellCurrentCharacterHandler"),
                 2))
@@ -688,7 +688,7 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "comma",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewUnicodeCurrentCharacterHandler"),
                 3))
@@ -696,35 +696,35 @@ class FlatReviewPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "period",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("reviewNextCharacterHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("showContentsHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewCopyHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewAppendHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("flatReviewToggleRestrictHandler")))
 

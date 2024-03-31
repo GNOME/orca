@@ -67,7 +67,7 @@ class TableNavigator:
             msg = "TABLE NAVIGATOR: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -109,7 +109,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("table_navigator_toggle_enabled"),
                 1,
@@ -118,7 +118,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_left"),
                 1,
@@ -127,7 +127,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_right"),
                 1,
@@ -136,7 +136,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_up"),
                 1,
@@ -145,7 +145,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_down"),
                 1,
@@ -154,7 +154,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_first"),
                 1,
@@ -163,7 +163,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers.get("table_cell_last"),
                 1,
@@ -172,7 +172,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers.get("table_cell_beginning_of_row"),
                 1,
@@ -181,7 +181,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers.get("table_cell_end_of_row"),
                 1,
@@ -190,7 +190,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers.get("table_cell_top_of_column"),
                 1,
@@ -199,7 +199,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers.get("table_cell_bottom_of_column"),
                 1,
@@ -208,7 +208,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["set_dynamic_column_headers_row"],
                 1,
@@ -217,7 +217,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["clear_dynamic_column_headers_row"],
                 2,
@@ -226,7 +226,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["set_dynamic_row_headers_column"],
                 1,
@@ -235,7 +235,7 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["clear_dynamic_row_headers_column"],
                 2,
@@ -358,13 +358,13 @@ class TableNavigator:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, includeGrabs=True)
+            script.key_bindings.remove(binding, include_grabs=True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, includeGrabs=not self._suspended)
+            script.key_bindings.add(binding, include_grabs=not self._suspended)
 
     def _toggle_enabled(self, script, event=None):
         """Toggles table navigation."""

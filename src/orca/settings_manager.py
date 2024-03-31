@@ -607,18 +607,18 @@ class SettingsManager:
                 continue
 
             if enabled_only:
-                if not bindings.hasHandler(handler):
+                if not bindings.has_handler(handler):
                     tokens = ["SETTINGS MANAGER:", handler, "is not in the bindings provided."]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
-                if not bindings.hasEnabledHandler(handler):
+                if not bindings.has_enabled_handler(handler):
                     tokens = ["SETTINGS MANAGER:", handler.function,
                               "is not enabled. Not overriding."]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
-            oldBindings = bindings.getBindingsForHandler(handler)
+            oldBindings = bindings.get_bindings_for_handler(handler)
             wasEnabled = None
             for b in oldBindings:
                 tokens = ["SETTINGS MANAGER: Removing old binding for", b]

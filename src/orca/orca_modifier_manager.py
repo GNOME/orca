@@ -95,7 +95,7 @@ class OrcaModifierManager:
         if modifier in self._grabbed_modifiers:
             return
 
-        keycode = keybindings.getKeycode(modifier)
+        keycode = keybindings.get_keycode(modifier)
         grab_id = input_event_manager.get_manager().add_grab_for_modifier(modifier, keycode)
         if grab_id != -1:
             self._grabbed_modifiers[modifier] = grab_id

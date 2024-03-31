@@ -609,7 +609,7 @@ class KeyboardEvent(InputEvent):
                 bindings = None
 
         try:
-            handler = bindings.getInputHandler(self)
+            handler = bindings.get_input_handler(self)
         except Exception:
             handler = None
 
@@ -693,7 +693,7 @@ class KeyboardEvent(InputEvent):
 
         if self._script:
             self._handler = self._get_user_handler() \
-                or self._script.key_bindings.getInputHandler(self)
+                or self._script.key_bindings.get_input_handler(self)
             tokens = ["HANDLER:", self._handler]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 

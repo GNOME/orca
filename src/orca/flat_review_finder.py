@@ -122,9 +122,9 @@ class FlatReviewFinder:
             msg = "FLAT REVIEW FINDER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.isEmpty():
+        elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.isEmpty():
+        elif not is_desktop and self._laptop_bindings.is_empty():
             self._setup_bindings()
 
         if is_desktop:
@@ -155,21 +155,21 @@ class FlatReviewFinder:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("findHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("findNextHandler")))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers.get("findPreviousHandler")))
 
@@ -184,21 +184,21 @@ class FlatReviewFinder:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketleft",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("findHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("findNextHandler")))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("findPreviousHandler")))
 

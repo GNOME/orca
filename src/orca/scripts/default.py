@@ -259,7 +259,7 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Add",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("sayAllHandler"),
                 1))
@@ -267,7 +267,7 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Divide",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers.get("routePointerToItemHandler")))
 
@@ -299,7 +299,7 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "semicolon",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers.get("sayAllHandler"),
                 1))
@@ -307,7 +307,7 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "9",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers.get("routePointerToItemHandler")))
 
@@ -453,49 +453,49 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("cycleSettingsProfileHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("cycleDebugLevelHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("panBrailleLeftHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("panBrailleRightHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("shutdownHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers.get("preferencesSettingsHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self.input_event_handlers.get("appPreferencesSettingsHandler")))
 
@@ -574,22 +574,22 @@ class Script(script.Script):
         if self.get_bypass_mode_manager().is_active():
             self.get_bypass_mode_manager().toggle_enabled(self)
 
-        self.removeKeyGrabs("script deactivation")
+        self.remove_key_grabs("script deactivation")
 
-    def addKeyGrabs(self, reason=""):
+    def add_key_grabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.key_bindings = self.get_key_bindings()
-        self.key_bindings.addKeyGrabs(reason)
+        self.key_bindings.add_key_grabs(reason)
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
-    def removeKeyGrabs(self, reason=""):
+    def remove_key_grabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
 
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        self.key_bindings.removeKeyGrabs(reason)
+        self.key_bindings.remove_key_grabs(reason)
 
         msg = "DEFAULT: Clearing key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -606,8 +606,8 @@ class Script(script.Script):
         # TODO: Should probably avoid removing key grabs and re-adding them.
         # Otherwise, a key could conceivably leak through while the script is
         # in the process of updating the bindings.
-        self.removeKeyGrabs("refreshing")
-        self.addKeyGrabs("refreshing")
+        self.remove_key_grabs("refreshing")
+        self.add_key_grabs("refreshing")
 
     def registerEventListeners(self):
         event_manager.get_manager().register_script_listeners(self)
@@ -735,7 +735,7 @@ class Script(script.Script):
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
 
-        self.addKeyGrabs("script activation")
+        self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 

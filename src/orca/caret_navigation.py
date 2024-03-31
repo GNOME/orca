@@ -66,7 +66,7 @@ class CaretNavigation:
             msg = "CARET NAVIGATION: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -166,7 +166,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "F12",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("toggle_enabled"),
                 1,
@@ -178,7 +178,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("next_character"),
                 1,
@@ -187,7 +187,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("previous_character"),
                 1,
@@ -196,7 +196,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("next_word"),
                 1,
@@ -205,7 +205,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("previous_word"),
                 1,
@@ -214,7 +214,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("next_line"),
                 1,
@@ -223,7 +223,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("previous_line"),
                 1,
@@ -232,7 +232,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("end_of_line"),
                 1,
@@ -241,7 +241,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("start_of_line"),
                 1,
@@ -250,7 +250,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("end_of_file"),
                 1,
@@ -259,7 +259,7 @@ class CaretNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
                 self._handlers.get("start_of_file"),
                 1,
@@ -298,13 +298,13 @@ class CaretNavigation:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, includeGrabs=True)
+            script.key_bindings.remove(binding, include_grabs=True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, includeGrabs=not self._suspended)
+            script.key_bindings.add(binding, include_grabs=not self._suspended)
 
     def toggle_enabled(self, script, event):
         """Toggles caret navigation."""

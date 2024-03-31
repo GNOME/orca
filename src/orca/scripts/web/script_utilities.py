@@ -463,7 +463,7 @@ class Utilities(script_utilities.Utilities):
 
         return super().inFindContainer(obj)
 
-    def isEmpty(self, obj):
+    def is_empty(self, obj):
         if not self.isTextBlockElement(obj):
             return False
 

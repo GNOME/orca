@@ -55,7 +55,7 @@ class ObjectNavigator:
             msg = "OBJECT NAVIGATOR: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -78,42 +78,42 @@ class ObjectNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_up")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_down")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_next")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_previous")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Return",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_perform_action")))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "s",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers.get("object_navigator_toggle_simplify")))
 

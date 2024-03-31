@@ -367,7 +367,7 @@ class MouseReviewer:
             msg = f"MOUSE REVIEW: Refreshing bindings. Is desktop: {is_desktop}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -403,7 +403,7 @@ class MouseReviewer:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers.get("toggleMouseReviewHandler")))
 

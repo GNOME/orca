@@ -51,14 +51,14 @@ class Script(default.Script):
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
-        self.addKeyGrabs("script activation")
+        self.add_key_grabs("script activation")
 
     def deactivate(self):
         """Called when this script is deactivated."""
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        self.removeKeyGrabs("script deactivation")
+        self.remove_key_grabs("script deactivation")
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Exiting sleep mode.")
 
     def get_braille_generator(self):
@@ -88,16 +88,16 @@ class Script(default.Script):
 
         return self.get_sleep_mode_manager().get_bindings()
 
-    def addKeyGrabs(self, reason=""):
+    def add_key_grabs(self, reason=""):
         """Adds key grabs for this script."""
 
         self.key_bindings = self.get_key_bindings()
-        self.key_bindings.addKeyGrabs()
+        self.key_bindings.add_key_grabs()
 
-    def removeKeyGrabs(self, reason=""):
+    def remove_key_grabs(self, reason=""):
         """Adds key grabs for this script."""
 
-        self.key_bindings.removeKeyGrabs(reason)
+        self.key_bindings.remove_key_grabs(reason)
 
     def setup_input_event_handlers(self):
         """Defines the input event handlers for this script."""

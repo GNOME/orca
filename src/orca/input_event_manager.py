@@ -75,7 +75,7 @@ class InputEventManager:
         if not (binding.is_enabled() and binding.is_bound()):
             return []
 
-        if binding.hasGrabs():
+        if binding.has_grabs():
             tokens = ["INPUT EVENT MANAGER:", binding, "already has grabs."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
@@ -86,7 +86,7 @@ class InputEventManager:
             return []
 
         grab_ids = []
-        for kd in binding.keyDefs():
+        for kd in binding.key_definitions():
             grab_ids.append(self._device.add_key_grab(kd, None))
 
         tokens = ["INPUT EVENT MANAGER: Grab IDs for", binding, ":", grab_ids]
@@ -101,7 +101,7 @@ class InputEventManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        grab_ids = binding.getGrabIDs()
+        grab_ids = binding.get_grab_ids()
         if not grab_ids:
             tokens = ["INPUT EVENT MANAGER:", binding, "doesn't have grabs to remove."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)

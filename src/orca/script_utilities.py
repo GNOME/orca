@@ -497,7 +497,7 @@ class Utilities:
     def isLastItemInInlineContentSuggestion(self, obj):
         return False
 
-    def isEmpty(self, obj):
+    def is_empty(self, obj):
         return False
 
     def isHidden(self, obj):

@@ -69,7 +69,7 @@ class LearnModePresenter:
             msg = "LEARN MODE PRESENTER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -105,7 +105,7 @@ class LearnModePresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "h",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers.get("enterLearnModeHandler")))
 
@@ -209,80 +209,80 @@ class LearnModePresenter:
         items = 0
         bindings = {}
         if event is None or event.event_string == "F2":
-            bound = script.getDefaultKeyBindings().getBoundBindings()
+            bound = script.getDefaultKeyBindings().get_bound_bindings()
             bindings[guilabels.KB_GROUP_DEFAULT] = bound
             items += len(bound)
 
             bound = script.get_learn_mode_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_LEARN_MODE] = bound
             items += len(bound)
 
             bound = script.get_where_am_i_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_WHERE_AM_I] = bound
             items += len(bound)
 
             bound = script.get_speech_and_verbosity_manager().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_SPEECH_VERBOSITY] = bound
             items += len(bound)
 
             bound = script.get_sleep_mode_manager().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_SLEEP_MODE] = bound
             items += len(bound)
 
             bound = script.get_flat_review_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound
             items += len(bound)
 
             bound = script.get_flat_review_finder().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_FIND] = bound
             items += len(bound)
 
             bound = script.get_object_navigator().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
             items += len(bound)
 
             bound = script.get_table_navigator().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_TABLE_NAVIGATION] = bound
             items += len(bound)
 
             bound = script.get_system_information_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_SYSTEM_INFORMATION] = bound
             items += len(bound)
 
             bound = script.get_notification_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
             items += len(bound)
 
             bound = script.get_bookmarks().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_BOOKMARKS] = bound
             items += len(bound)
 
             bound = script.get_mouse_reviewer().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
             items += len(bound)
 
             bound = script.get_action_presenter().get_bindings(
-                is_desktop=is_desktop).getBoundBindings()
+                is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_ACTIONS] = bound
             items += len(bound)
 
             title = messages.shortcutsFoundOrca(items)
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
-            bound = script.get_app_key_bindings().getBoundBindings()
-            bound.extend(script.get_toolkit_key_bindings().getBoundBindings())
+            bound = script.get_app_key_bindings().get_bound_bindings()
+            bound.extend(script.get_toolkit_key_bindings().get_bound_bindings())
             if bound:
                 bindings[app_name] = bound
             title = messages.shortcutsFoundApp(len(bound), app_name)
@@ -351,7 +351,7 @@ class CommandListGUI:
                 continue
             group_iter = self._model.append(None, [group, ""])
             for binding in bindings:
-                self._model.append(group_iter, [binding.handler.description, binding.asString()])
+                self._model.append(group_iter, [binding.handler.description, binding.as_string()])
 
         tree.set_model(self._model)
         tree.expand_all()

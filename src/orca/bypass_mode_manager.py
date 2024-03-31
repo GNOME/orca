@@ -52,7 +52,7 @@ class BypassModeManager:
             msg = "BYPASS MODE MANAGER: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -85,7 +85,7 @@ class BypassModeManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "BackSpace",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ALT_MODIFIER_MASK,
                 self._handlers.get("bypass_mode_toggle"),
                 1,
@@ -108,7 +108,7 @@ class BypassModeManager:
             if event is not None:
                 script.presentMessage(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
-            script.addKeyGrabs(reason)
+            script.add_key_grabs(reason)
             orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
@@ -116,10 +116,10 @@ class BypassModeManager:
             script.presentMessage(messages.BYPASS_MODE_ENABLED)
 
         reason = "bypass mode enabled"
-        script.removeKeyGrabs(reason)
+        script.remove_key_grabs(reason)
         orca_modifier_manager.get_manager().unset_orca_modifiers(reason)
         for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, includeGrabs=True)
+            script.key_bindings.add(binding, include_grabs=True)
 
         return True
 

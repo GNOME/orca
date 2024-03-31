@@ -123,7 +123,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -139,7 +139,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -155,7 +155,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -177,7 +177,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -196,7 +196,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -215,7 +215,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -250,7 +250,7 @@ class StructuralNavigationObject:
             self.key_bindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    keybindings.defaultModifierMask,
+                    keybindings.DEFAULT_MODIFIER_MASK,
                     modifiers,
                     self.input_event_handlers[handlerName]))
 
@@ -272,7 +272,7 @@ class StructuralNavigationObject:
         def _isValidMatch(x):
             if AXObject.is_dead(x):
                 return False
-            return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
+            return not (script.utilities.isHidden(x) or script.utilities.is_empty(x))
 
         objects = list(filter(_isValidMatch, objects))
 
@@ -343,7 +343,7 @@ class StructuralNavigationObject:
             objects = self.structural_navigation._getAll(self, arg=level)
 
             def _isValidMatch(x):
-                return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
+                return not (script.utilities.isHidden(x) or script.utilities.is_empty(x))
 
             objects = list(filter(_isValidMatch, objects))
             if self.predicate is not None:
@@ -627,7 +627,7 @@ class StructuralNavigation:
             msg = "STRUCTURAL NAVIGATION: Refreshing bindings."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
-        elif self._bindings.isEmpty():
+        elif self._bindings.is_empty():
             self._setup_bindings()
 
         return self._bindings
@@ -642,7 +642,7 @@ class StructuralNavigation:
         self._bindings.add(
             keybindings.KeyBinding(
                 "z",
-                keybindings.defaultModifierMask,
+                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["toggleStructuralNavigationHandler"],
                 1,
@@ -687,13 +687,13 @@ class StructuralNavigation:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, includeGrabs=True)
+            script.key_bindings.remove(binding, include_grabs=True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, includeGrabs=not self._suspended)
+            script.key_bindings.add(binding, include_grabs=not self._suspended)
 
     def toggleStructuralNavigation(self, script, inputEvent, presentMessage=True):
         """Toggles structural navigation keys."""
@@ -845,7 +845,7 @@ class StructuralNavigation:
         def _isValidMatch(obj):
             if AXObject.is_dead(obj):
                 return False
-            if self._script.utilities.isHidden(obj) or self._script.utilities.isEmpty(obj):
+            if self._script.utilities.isHidden(obj) or self._script.utilities.is_empty(obj):
                 return False
             if structuralNavigationObject.predicate is None:
                 return True
