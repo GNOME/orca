@@ -338,7 +338,7 @@ class NotificationListGUI:
 
         if response == Gtk.ResponseType.APPLY and self._model is not None:
             self._model.clear()
-            getPresenter().clear_list()
+            get_presenter().clear_list()
             self._script.presentMessage(messages.NOTIFICATION_NO_MESSAGES)
             time.sleep(1)
             self._gui.destroy()
@@ -350,7 +350,7 @@ class NotificationListGUI:
         self._gui.present_with_time(Gtk.get_current_event_time())
 
 _presenter = NotificationPresenter()
-def getPresenter():
+def get_presenter():
     """Returns the Notification Presenter"""
 
     return _presenter

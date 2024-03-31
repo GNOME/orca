@@ -86,8 +86,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represents the number of children the
         object has."""
 
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
-           or settings_manager.getManager().getSetting('speechVerbosityLevel') \
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
+           or settings_manager.get_manager().get_setting('speechVerbosityLevel') \
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
@@ -109,7 +109,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         object in a list.
         """
 
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
         listObj = None
@@ -139,7 +139,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if nextName == name:
                 position = index
 
-        if (settings_manager.getManager().getSetting('enablePositionSpeaking') \
+        if (settings_manager.get_manager().get_setting('enablePositionSpeaking') \
             or args.get('forceList', False)) \
            and position >= 0:
             result.append(self._script.formatting.getString(

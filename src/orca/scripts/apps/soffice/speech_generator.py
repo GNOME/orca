@@ -125,10 +125,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        if not settings_manager.getManager().getSetting('speakDescription'):
+        if not settings_manager.get_manager().get_setting('speakDescription'):
             return []
 
         if not args.get('formatType', '').endswith('WhereAmI'):
@@ -197,7 +197,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
         # TODO - JD: Can this be moved to AXText?
@@ -251,12 +251,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.getTableNavigator().last_input_event_was_navigation_command():
                 return result
 
-            if settings_manager.getManager().getSetting('speakCellCoordinates'):
+            if settings_manager.get_manager().get_setting('speakCellCoordinates'):
                 result.append(AXObject.get_name(obj))
             return result
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
-        speakCoordinates = settings_manager.getManager().getSetting('speakSpreadsheetCoordinates')
+        speakCoordinates = settings_manager.get_manager().get_setting('speakSpreadsheetCoordinates')
         if speakCoordinates or isBasicWhereAmI:
             label = AXTable.get_label_for_cell_coordinates(obj) \
                 or self._script.utilities.spreadSheetCellName(obj)

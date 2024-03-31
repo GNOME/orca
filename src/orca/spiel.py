@@ -260,7 +260,7 @@ class SpeechServer(speechserver.SpeechServer):
                   settings.PUNCTUATION_STYLE_SOME: "SOME",
                   settings.PUNCTUATION_STYLE_MOST: "MOST",
                   settings.PUNCTUATION_STYLE_ALL: "ALL"}
-        manager = settings_manager.getManager()
+        manager = settings_manager.get_manager()
 
         msg = (
             f"SPIEL: {prefix}\n"
@@ -269,7 +269,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(manager.getSetting('verbalizePunctuationStyle'))}\n"
+            f"{styles.get(manager.get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {rate}, pitch {pitch}, volume {volume}, language {language}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)

@@ -55,10 +55,10 @@ MOUSE_BUTTON_EVENT = "mouse:button"
 
 class InputEvent:
 
-    def __init__(self, eventType):
+    def __init__(self, event_type):
         """Creates a new KEYBOARD_EVENT, BRAILLE_EVENT, or MOUSE_BUTTON_EVENT."""
 
-        self.type = eventType
+        self.type = event_type
         self.time = time.time()
         self._clickCount = 0
 
@@ -435,9 +435,9 @@ class KeyboardEvent(InputEvent):
         """Return True if this is the Orca modifier key."""
 
         if self.keyval_name == "KP_0" and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
-            return orca_modifier_manager.getManager().is_orca_modifier("KP_Insert")
+            return orca_modifier_manager.get_manager().is_orca_modifier("KP_Insert")
 
-        return orca_modifier_manager.getManager().is_orca_modifier(self.keyval_name)
+        return orca_modifier_manager.get_manager().is_orca_modifier(self.keyval_name)
 
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
@@ -498,7 +498,7 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         return script and script.utilities.willEchoCharacter(self)
 
     def getLockingState(self):
@@ -564,7 +564,7 @@ class KeyboardEvent(InputEvent):
 
         self._window = window
 
-    def getScript(self):
+    def get_script(self):
         """Returns the script believed to be associated with this key event."""
 
         return self._script
@@ -659,7 +659,7 @@ class KeyboardEvent(InputEvent):
     def process(self):
         """Processes this input event."""
 
-        startTime = time.time()
+        start_time = time.time()
         if not self._shouldObscure():
             data = "'%s' (%d)" % (self.event_string, self.hw_code)
         else:
@@ -693,7 +693,7 @@ class KeyboardEvent(InputEvent):
         tokens = ["CONSUMED:", self._did_consume, self._result_reason]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
@@ -705,7 +705,7 @@ class KeyboardEvent(InputEvent):
         """Processes this input event."""
 
         if self.isOrcaModifier() and self._clickCount == 2:
-            orca_modifier_manager.getManager().toggle_modifier(self)
+            orca_modifier_manager.get_manager().toggle_modifier(self)
             if self.keyval_name in ["Caps_Lock", "Shift_Lock"]:
                 self.keyType = KeyboardEvent.TYPE_LOCKING
 
@@ -726,7 +726,7 @@ class KeyboardEvent(InputEvent):
         return False, 'Unaddressed case'
 
     def _consume(self):
-        startTime = time.time()
+        start_time = time.time()
         data = "'%s' (%d)" % (self.event_string, self.hw_code)
         msg = f'\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
         debug.printMessage(debug.LEVEL_INFO, msg, False)
@@ -743,7 +743,7 @@ class KeyboardEvent(InputEvent):
             msg = 'KEYBOARD EVENT: No enabled handler or consumer'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        msg = f'TOTAL PROCESSING TIME: {time.time() - startTime:.4f}'
+        msg = f'TOTAL PROCESSING TIME: {time.time() - start_time:.4f}'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^\n'
@@ -761,7 +761,7 @@ class BrailleEvent(InputEvent):
         """
         super().__init__(BRAILLE_EVENT)
         self.event = event
-        self._script = script_manager.getManager().getActiveScript()
+        self._script = script_manager.get_manager().get_active_script()
 
     def __str__(self):
         return f"{self.type.upper()} {self.event}"
@@ -837,8 +837,8 @@ class MouseButtonEvent(InputEvent):
         self.y = event.detail2
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
-        self._script = script_manager.getManager().getActiveScript()
-        self.window = focus_manager.getManager().get_active_window()
+        self._script = script_manager.get_manager().get_active_script()
+        self.window = focus_manager.get_manager().get_active_window()
         self.app = None
 
         if self.pressed:
@@ -847,8 +847,8 @@ class MouseButtonEvent(InputEvent):
         if not self._script:
             return
 
-        if not focus_manager.getManager().can_be_active_window(self.window):
-            self.window = focus_manager.getManager().find_active_window()
+        if not focus_manager.get_manager().can_be_active_window(self.window):
+            self.window = focus_manager.get_manager().find_active_window()
 
         if not self.window:
             return

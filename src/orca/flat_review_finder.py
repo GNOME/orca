@@ -308,7 +308,7 @@ class FlatReviewFinder:
             if not query.window_wrap or self._wrapped:
                 return False
             self._wrapped = True
-            script = script_manager.getManager().getActiveScript()
+            script = script_manager.get_manager().get_active_script()
             if query.search_backwards:
                 script.presentMessage(messages.WRAPPING_TO_BOTTOM)
                 moved = context.goPrevious(Context.LINE, Context.WRAP_ALL)

@@ -200,7 +200,7 @@ class Utilities(web.Utilities):
 
     def inFindContainer(self, obj=None):
         if not obj:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         if not obj or self.inDocumentContent(obj):
             return False

@@ -94,7 +94,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateRoleName(self, obj, **args):
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -174,10 +174,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         an empty array if no mnemonic can be found.
         """
 
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        if not (settings_manager.getManager().getSetting('enableMnemonicSpeaking') \
+        if not (settings_manager.get_manager().get_setting('enableMnemonicSpeaking') \
                 or args.get('forceMnemonic', False)):
             return []
 
@@ -189,7 +189,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         mnemonic, shortcut, accelerator = \
             self._script.utilities.mnemonicShortcutAccelerator(obj)
         if shortcut:
-            if settings_manager.getManager().getSetting('speechVerbosityLevel') == \
+            if settings_manager.get_manager().get_setting('speechVerbosityLevel') == \
                settings.VERBOSITY_LEVEL_VERBOSE:
                 shortcut = f'Alt Shift {shortcut}'
             result = [keynames.localizeKeySequence(shortcut)]

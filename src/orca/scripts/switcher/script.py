@@ -67,8 +67,8 @@ class Script(default.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.presentationInterrupt()
-        focus_manager.getManager().set_active_window(self.utilities.topLevelObject(event.source))
-        focus_manager.getManager().set_locus_of_focus(event, event.source, False)
+        focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(event.source))
+        focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.presentMessage(self.utilities.getSelectionName(event.source),
                             resetStyles=False, force=True)
         return True

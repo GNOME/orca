@@ -89,12 +89,12 @@ class BrailleGenerator(generator.Generator):
         return AXObject.get_name(obj) == AXObject.get_name(region.accessible)
 
     def generateBraille(self, obj, **args):
-        if not settings_manager.getManager().getSetting('enableBraille') \
-           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
+        if not settings_manager.get_manager().get_setting('enableBraille') \
+           and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
             return [[], None]
 
-        if obj == focus_manager.getManager().get_locus_of_focus() \
+        if obj == focus_manager.get_manager().get_locus_of_focus() \
            and not args.get('formatType', None):
             args['formatType'] = 'focused'
         result = self.generate(obj, **args)
@@ -156,12 +156,12 @@ class BrailleGenerator(generator.Generator):
         """
 
         if args.get('isProgressBarUpdate') \
-           and not settings_manager.getManager().getSetting('brailleProgressBarUpdates'):
+           and not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
             return []
 
         result = []
         role = args.get('role', AXObject.get_role(obj))
-        verbosityLevel = settings_manager.getManager().getSetting('brailleVerbosityLevel')
+        verbosityLevel = settings_manager.get_manager().get_setting('brailleVerbosityLevel')
 
         doNotPresent = [Atspi.Role.UNKNOWN,
                         Atspi.Role.REDUNDANT_OBJECT,
@@ -193,7 +193,7 @@ class BrailleGenerator(generator.Generator):
         - obj: an Accessible object
         """
 
-        if settings_manager.getManager().getSetting('brailleRolenameStyle') \
+        if settings_manager.get_manager().get_setting('brailleRolenameStyle') \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:
             role = args.get('role', AXObject.get_role(obj))
             rv = shortRoleNames.get(role)
@@ -223,7 +223,7 @@ class BrailleGenerator(generator.Generator):
         or an empty array if no accelerator can be found.
         """
 
-        verbosityLevel = settings_manager.getManager().getSetting('brailleVerbosityLevel')
+        verbosityLevel = settings_manager.get_manager().get_setting('brailleVerbosityLevel')
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
@@ -268,7 +268,7 @@ class BrailleGenerator(generator.Generator):
         previous object with focus.
         """
         result = []
-        if not settings_manager.getManager().getSetting('enableBrailleContext'):
+        if not settings_manager.get_manager().get_setting('enableBrailleContext'):
             return result
         args['includeContext'] = False
 
@@ -397,7 +397,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = self._generatePercentage(obj, **args)
-        if obj == focus_manager.getManager().get_locus_of_focus() and not result:
+        if obj == focus_manager.get_manager().get_locus_of_focus() and not result:
             return ['']
 
         return result
@@ -410,14 +410,14 @@ class BrailleGenerator(generator.Generator):
         return []
 
     def _getProgressBarUpdateInterval(self):
-        interval = settings_manager.getManager().getSetting('progressBarBrailleInterval')
+        interval = settings_manager.get_manager().get_setting('progressBarBrailleInterval')
         if interval is None:
             return super()._getProgressBarUpdateInterval()
 
         return int(interval)
 
     def _shouldPresentProgressBarUpdate(self, obj, **args):
-        if not settings_manager.getManager().getSetting('brailleProgressBarUpdates'):
+        if not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
             return False
 
         return super()._shouldPresentProgressBarUpdate(obj, **args)
@@ -463,7 +463,7 @@ class BrailleGenerator(generator.Generator):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        include = settings_manager.getManager().getSetting('enableBrailleContext')
+        include = settings_manager.get_manager().get_setting('enableBrailleContext')
         if not include:
             return include
 
@@ -482,7 +482,7 @@ class BrailleGenerator(generator.Generator):
     #####################################################################
 
     def _generateEol(self, obj, **args):
-        if settings_manager.getManager().getSetting("disableBrailleEOL"):
+        if settings_manager.get_manager().get_setting("disableBrailleEOL"):
             return []
 
         if not (AXUtilities.is_editable(obj) or self._script.utilities.isCode(obj)):

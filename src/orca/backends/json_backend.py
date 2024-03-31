@@ -66,7 +66,7 @@ class Backend:
         dump(prefs, settingsFile, indent=4)
         settingsFile.close()
 
-    def getAppSettings(self, appName):
+    def get_app_settings(self, appName):
         fileName = os.path.join(self.appPrefsDir, f"{appName}.conf")
         if os.path.exists(fileName):
             settingsFile = open(fileName, 'r')
@@ -78,7 +78,7 @@ class Backend:
         return prefs
 
     def saveAppSettings(self, appName, profile, general, pronunciations, keybindings):
-        prefs = self.getAppSettings(appName)
+        prefs = self.get_app_settings(appName)
         profiles = prefs.get('profiles', {})
         profiles[profile] = {'general': general,
                              'pronunciations': pronunciations,
@@ -141,7 +141,7 @@ class Backend:
             generalSettings['activeProfile'] = defaultProfile
         return generalSettings
 
-    def getPronunciations(self, profile='default'):
+    def get_pronunciations(self, profile='default'):
         """ Get pronunciation settings from default settings and
             override with profile values. """
         self._getSettings()
@@ -151,7 +151,7 @@ class Backend:
             pronunciations = profileSettings['pronunciations']
         return pronunciations
 
-    def getKeybindings(self, profile='default'):
+    def get_keybindings(self, profile='default'):
         """ Get keybindings settings from default settings and
             override with profile values. """
         self._getSettings()
@@ -161,7 +161,7 @@ class Backend:
             keybindings = profileSettings['keybindings']
         return keybindings
 
-    def isFirstStart(self):
+    def is_first_start(self):
         """ Check if we're in first start. """
  
         return not os.path.exists(self.settingsFile)
@@ -176,7 +176,7 @@ class Backend:
             settingsFile.truncate()
             dump(prefs, settingsFile, indent=4)
 
-    def availableProfiles(self):
+    def available_profiles(self):
         """ List available profiles. """
         self._getSettings()
         profiles = []
@@ -187,7 +187,7 @@ class Backend:
 
         return profiles
 
-    def removeProfile(self, profile):
+    def remove_profile(self, profile):
         """Remove an existing profile"""
         def removeProfileFrom(dict):
             del dict[profile]

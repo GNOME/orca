@@ -92,7 +92,7 @@ class CaretNavigation:
                 cmdnames.CARET_NAVIGATION_TOGGLE,
                 enabled = not self._suspended)
 
-        enabled = settings_manager.getManager().getSetting('caretNavigationEnabled') \
+        enabled = settings_manager.get_manager().get_setting('caretNavigationEnabled') \
             and not self._suspended
 
         self._handlers["next_character"] = \
@@ -172,7 +172,7 @@ class CaretNavigation:
                 1,
                 not self._suspended))
 
-        enabled = settings_manager.getManager().getSetting('caretNavigationEnabled') \
+        enabled = settings_manager.get_manager().get_setting('caretNavigationEnabled') \
             and not self._suspended
 
         self._bindings.add(
@@ -266,7 +266,7 @@ class CaretNavigation:
                 enabled))
 
         # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.getManager().overrideKeyBindings(
+        self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
         msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
@@ -278,7 +278,7 @@ class CaretNavigation:
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         result = manager.last_event_equals_or_is_release_for_event(self._last_input_event)
         if self._last_input_event is not None:
             string = self._last_input_event.asSingleLineString()
@@ -312,15 +312,15 @@ class CaretNavigation:
         if not event:
             return False
 
-        _settings_manager = settings_manager.getManager()
-        enabled = not _settings_manager.getSetting('caretNavigationEnabled')
+        _settings_manager = settings_manager.get_manager()
+        enabled = not _settings_manager.get_setting('caretNavigationEnabled')
         if enabled:
             string = messages.CARET_CONTROL_ORCA
         else:
             string = messages.CARET_CONTROL_APP
 
         script.presentMessage(string)
-        _settings_manager.setSetting('caretNavigationEnabled', enabled)
+        _settings_manager.set_setting('caretNavigationEnabled', enabled)
         self._last_input_event = None
         self.refresh_bindings_and_grabs(script, "toggling caret navigation")
         return True
@@ -421,8 +421,8 @@ class CaretNavigation:
             return False
 
         if script.inSayAll():
-            _settings_manager = settings_manager.getManager()
-            if _settings_manager.getSetting('rewindAndFastForwardInSayAll'):
+            _settings_manager = settings_manager.get_manager()
+            if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
                 msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
                 debug.printMessage(debug.LEVEL_INFO, msg)
                 return True
@@ -451,8 +451,8 @@ class CaretNavigation:
             return False
 
         if script.inSayAll():
-            _settings_manager = settings_manager.getManager()
-            if _settings_manager.getSetting('rewindAndFastForwardInSayAll'):
+            _settings_manager = settings_manager.get_manager()
+            if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
                 msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
                 debug.printMessage(debug.LEVEL_INFO, msg)
                 return True

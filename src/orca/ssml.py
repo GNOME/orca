@@ -157,7 +157,7 @@ class SSML(dict):
         (text, offsets) = SSML._mark_words(text)
 
         # Apply scripted formatting (must not change the U+E000 marks!)
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if script is not None:
             text = script.utilities.adjustForPronunciation(text)
 

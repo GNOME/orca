@@ -47,19 +47,19 @@ _speechserver = None
 # The last time something was spoken.
 _timestamp = 0
 
-def _initSpeechServer(moduleName, speechServerInfo):
+def _initSpeechServer(module_name, speechServerInfo):
 
     global _speechserver
 
-    if not moduleName:
+    if not module_name:
         return
 
     factory = None
     try:
-        factory = importlib.import_module(f'orca.{moduleName}')
+        factory = importlib.import_module(f'orca.{module_name}')
     except Exception:
         try:
-            factory = importlib.import_module(moduleName)
+            factory = importlib.import_module(module_name)
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
@@ -76,7 +76,7 @@ def _initSpeechServer(moduleName, speechServerInfo):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if not _speechserver:
-        raise Exception(f"ERROR: No speech server for factory: {moduleName}")
+        raise Exception(f"ERROR: No speech server for factory: {module_name}")
 
 def init():
     debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
@@ -92,21 +92,21 @@ def init():
         setattr(settings, 'speechServerInfo', ['Default Synthesizer', 'default'])
 
     try:
-        moduleName = settings.speechServerFactory
-        _initSpeechServer(moduleName, settings.speechServerInfo)
+        module_name = settings.speechServerFactory
+        _initSpeechServer(module_name, settings.speechServerInfo)
     except Exception:
-        moduleNames = settings.speechFactoryModules
-        for moduleName in moduleNames:
-            if moduleName != settings.speechServerFactory:
+        module_names = settings.speechFactoryModules
+        for module_name in module_names:
+            if module_name != settings.speechServerFactory:
                 try:
-                    _initSpeechServer(moduleName, None)
+                    _initSpeechServer(module_name, None)
                     if _speechserver:
                         break
                 except Exception:
                     debug.printException(debug.LEVEL_SEVERE)
 
     if _speechserver:
-        tokens = ["SPEECH: Using speech server factory:", moduleName]
+        tokens = ["SPEECH: Using speech server factory:", module_name]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
     else:
         msg = 'SPEECH: Not available'

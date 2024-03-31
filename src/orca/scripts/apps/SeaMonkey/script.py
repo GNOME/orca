@@ -68,7 +68,7 @@ class Script(Gecko.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        table = AXTable.get_table(focus_manager.getManager().get_locus_of_focus())
+        table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table and not self.utilities.isTextDocumentTable(table):
             msg = "SEAMONKEY: Ignoring, table is not text-document table"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -83,7 +83,7 @@ class Script(Gecko.Script):
         if self.utilities.inDocumentContent(event.source):
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_entry(focus) or not self.utilities.inDocumentContent():
             super().on_focus(event)
             return
@@ -92,7 +92,7 @@ class Script(Gecko.Script):
             msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-            if input_event_manager.getManager().last_event_was_printable_key():
+            if input_event_manager.get_manager().last_event_was_printable_key():
                 msg = "SEAMONKEY: Ignoring, believed to be result of printable input"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
@@ -110,20 +110,20 @@ class Script(Gecko.Script):
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
+        if self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
             return
 
         super().enableStickyBrowseMode(inputEvent, forceMessage)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
+        if self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
             return
 
         super().enableStickyFocusMode(inputEvent, forceMessage)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
         if self._inFocusMode \
-           and self.utilities.isEditableMessage(focus_manager.getManager().get_locus_of_focus()):
+           and self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
             return
 
         super().togglePresentationMode(inputEvent, documentFrame)

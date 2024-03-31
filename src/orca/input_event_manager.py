@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
+
 """Provides utilities for managing input events."""
 
 __id__        = "$Id$"
@@ -143,7 +146,7 @@ class InputEventManager:
         if self._device is None:
             tokens = ["INPUT EVENT MANAGER: No device to remove grab from", modifier]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
+            return
 
         self._device.remove_key_grab(grab_id)
         tokens = ["INPUT EVENT MANAGER: Grab ID removed for", modifier, ":", grab_id]
@@ -183,7 +186,8 @@ class InputEventManager:
         mouse_event.setClickCount(self._determine_mouse_event_click_count(mouse_event))
         self._last_input_event = mouse_event
 
-    def process_keyboard_event(self, device, pressed, keycode, keysym, modifiers, text):
+    # pylint: disable=too-many-arguments
+    def process_keyboard_event(self, _device, pressed, keycode, keysym, modifiers, text):
         """Processes this Atspi keyboard event."""
 
         event = input_event.KeyboardEvent(pressed, keycode, keysym, modifiers, text)
@@ -192,7 +196,7 @@ class InputEventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        manager = focus_manager.getManager()
+        manager = focus_manager.get_manager()
         if pressed:
             window = manager.get_active_window()
             if not manager.can_be_active_window(window):
@@ -202,15 +206,15 @@ class InputEventManager:
                 manager.set_active_window(window)
             event.setWindow(window)
             event.setObject(manager.get_locus_of_focus())
-            event.setScript(script_manager.getManager().getActiveScript())
+            event.setScript(script_manager.get_manager().get_active_script())
         elif self.last_event_was_keyboard():
             event.setWindow(self._last_input_event.getWindow())
             event.setObject(self._last_input_event.getObject())
-            event.setScript(self._last_input_event.getScript())
+            event.setScript(self._last_input_event.get_script())
         else:
             event.setWindow(manager.get_active_window())
             event.setObject(manager.get_locus_of_focus())
-            event.setScript(script_manager.getManager().getActiveScript())
+            event.setScript(script_manager.get_manager().get_active_script())
 
         event.setClickCount(self._determine_keyboard_event_click_count(event))
         result = event.process()
@@ -231,11 +235,9 @@ class InputEventManager:
         else:
             last_event = self._last_non_modifier_key_event or self._last_input_event
 
-        if event.time - last_event.time > settings.doubleClickTimeout:
-            return 1
-        if event.keyval_name != last_event.keyval_name:
-            return 1
-        if event.getObject() != last_event.getObject():
+        if (event.time - last_event.time > settings.doubleClickTimeout) or \
+           (event.keyval_name != last_event.keyval_name) or \
+           (event.getObject() != last_event.getObject()):
             return 1
 
         last_count = last_event.getClickCount()
@@ -493,7 +495,7 @@ class InputEventManager:
         elif mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         else:
-            focus = focus_manager.getManager().get_locus_of_focus()
+            focus = focus_manager.get_manager().get_locus_of_focus()
             rv = not AXObject.find_ancestor(focus, AXUtilities.is_combo_box)
 
         msg = f"INPUT EVENT MANAGER: Last event was line navigation: {rv}"
@@ -548,7 +550,7 @@ class InputEventManager:
         elif mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         else:
-            focus = focus_manager.getManager().get_locus_of_focus()
+            focus = focus_manager.get_manager().get_locus_of_focus()
             rv = not AXObject.find_ancestor(focus, AXUtilities.is_combo_box)
 
         msg = f"INPUT EVENT MANAGER: Last event was page navigation: {rv}"
@@ -588,7 +590,7 @@ class InputEventManager:
     def last_event_was_table_sort(self):
         """Returns True if the last event is believed to be a table sort."""
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_table_header(focus):
             rv = False
         elif self.last_event_was_mouse_button():
@@ -887,5 +889,6 @@ class InputEventManager:
 
 
 _manager = InputEventManager()
-def getManager():
+def get_manager():
+    """Returns the Input Event Manager singleton."""
     return _manager

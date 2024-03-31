@@ -30,7 +30,7 @@ script manager.
 This Script class is not intended to be instantiated directly.
 Instead, it is expected that subclasses of the Script class will be
 created in their own module.  The module defining the Script subclass
-is also required to have a 'getScript(app)' method that returns an
+is also required to have a 'get_script(app)' method that returns an
 instance of the Script subclass.  See default.py for an example."""
 
 __id__        = "$Id$"
@@ -225,7 +225,7 @@ class Script:
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script."""
         types = self.getEnabledStructuralNavigationTypes()
-        enable = settings_manager.getManager().getSetting('structuralNavigationEnabled')
+        enable = settings_manager.get_manager().get_setting('structuralNavigationEnabled')
         return structural_navigation.StructuralNavigation(self, types, enable)
 
     def getLiveRegionManager(self):
@@ -233,16 +233,16 @@ class Script:
         return None
 
     def getNotificationPresenter(self):
-        return notification_presenter.getPresenter()
+        return notification_presenter.get_presenter()
 
     def getFlatReviewFinder(self):
         return flat_review_finder.getFinder()
 
     def getFlatReviewPresenter(self):
-        return flat_review_presenter.getPresenter()
+        return flat_review_presenter.get_presenter()
 
     def getSystemInformationPresenter(self):
-        return system_information_presenter.getPresenter()
+        return system_information_presenter.get_presenter()
 
     def getObjectNavigator(self):
         return object_navigator.getNavigator()
@@ -251,22 +251,22 @@ class Script:
         return table_navigator.getNavigator()
 
     def getSpeechAndVerbosityManager(self):
-        return speech_and_verbosity_manager.getManager()
+        return speech_and_verbosity_manager.get_manager()
 
     def getBypassModeManager(self):
-        return bypass_mode_manager.getManager()
+        return bypass_mode_manager.get_manager()
 
     def getWhereAmIPresenter(self):
-        return where_am_i_presenter.getPresenter()
+        return where_am_i_presenter.get_presenter()
 
     def getLearnModePresenter(self):
-        return learn_mode_presenter.getPresenter()
+        return learn_mode_presenter.get_presenter()
 
     def getActionPresenter(self):
-        return action_presenter.getPresenter()
+        return action_presenter.get_presenter()
 
     def getSleepModeManager(self):
-        return sleep_mode_manager.getManager()
+        return sleep_mode_manager.get_manager()
 
     def getMouseReviewer(self):
         return mouse_review.getReviewer()
@@ -302,7 +302,7 @@ class Script:
         - script: the script.
         """
 
-        event_manager.getManager().registerScriptListeners(self)
+        event_manager.get_manager().register_script_listeners(self)
 
     def deregisterEventListeners(self):
         """Tells the event manager to stop listening for all the event types
@@ -312,7 +312,7 @@ class Script:
         - script: the script.
         """
 
-        event_manager.getManager().deregisterScriptListeners(self)
+        event_manager.get_manager().deregister_script_listeners(self)
 
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this
@@ -345,10 +345,10 @@ class Script:
             if event.type.startswith(key):
                 self.listeners[key](event)
 
-    def _getQueuedEvent(self, eventType, detail1=None, detail2=None, any_data=None):
-        cachedEvent, eventTime = self.eventCache.get(eventType, [None, 0])
+    def _getQueuedEvent(self, event_type, detail1=None, detail2=None, any_data=None):
+        cachedEvent, eventTime = self.eventCache.get(event_type, [None, 0])
         if not cachedEvent:
-            tokens = ["SCRIPT: No queued event of type", eventType]
+            tokens = ["SCRIPT: No queued event of type", event_type]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 

@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=unused-argument
+
 """Module for sleep mode"""
 
 __id__        = "$Id$"
@@ -47,7 +49,7 @@ class SleepModeManager:
         """Returns the sleep-mode-manager keybindings."""
 
         if refresh:
-            msg = "SLEEP MODE MANAGER: Refreshing bindings."
+            msg = f"SLEEP MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.isEmpty():
@@ -108,23 +110,24 @@ class SleepModeManager:
         if not (script and script.app):
             return True
 
-        _script_manager = script_manager.getManager()
+        _script_manager = script_manager.get_manager()
         if self.is_active_for_app(script.app):
             self._apps.remove(hash(script.app))
-            new_script = _script_manager.getScript(script.app)
+            new_script = _script_manager.get_script(script.app)
             new_script.presentMessage(
                 messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app))
-            _script_manager.setActiveScript(new_script, "Sleep mode toggled off")
+            _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
         script.clearBraille()
         script.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
-        _script_manager.setActiveScript(_script_manager.getOrCreateSleepModeScript(script.app),
-                                        "Sleep mode toggled on")
+        _script_manager.set_active_script(
+            _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on")
         self._apps.append(hash(script.app))
         return True
 
 
 _manager = SleepModeManager()
-def getManager():
+def get_manager():
+    """Returns the Sleep Mode Manager singleton."""
     return _manager

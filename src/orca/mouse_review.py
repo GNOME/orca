@@ -153,7 +153,7 @@ class _StringContext:
         voice = self._script.speechGenerator.voice(obj=self._obj, string=self._string)
         string = self._script.utilities.adjustForRepeats(self._string)
 
-        focus_manager.getManager().emit_region_changed(
+        focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)
         self._script.speakMessage(string, voice=voice, interrupt=False)
         self._script.displayBrailleMessage(self._string, -1)
@@ -319,7 +319,7 @@ class _ItemContext:
 
         if self._obj and self._obj != prior._obj and not self._isInlineChild(prior):
             priorObj = prior._obj or self._get_container()
-            focus_manager.getManager().emit_region_changed(
+            focus_manager.get_manager().emit_region_changed(
                 self._obj, mode=focus_manager.MOUSE_REVIEW)
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
             if self._string.getString() == AXObject.get_name(self._obj):
@@ -340,7 +340,7 @@ class MouseReviewer:
     """Main class for the mouse-review feature."""
 
     def __init__(self):
-        self._active = settings_manager.getManager().getSetting("enableMouseReview")
+        self._active = settings_manager.get_manager().get_setting("enableMouseReview")
         self._currentMouseOver = _ItemContext()
         self._workspace = None
         self._windows = []
@@ -422,11 +422,11 @@ class MouseReviewer:
 
         # Set up the initial object as the one with the focus to avoid
         # presenting irrelevant info the first time.
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         script = None
         frame = None
         if obj:
-            script = script_manager.getManager().getScript(AXObject.get_application(obj), obj)
+            script = script_manager.get_manager().get_script(AXObject.get_application(obj), obj)
         if script:
             frame = script.utilities.topLevelObject(obj)
         self._currentMouseOver = _ItemContext(obj=obj, frame=frame, script=script)
@@ -491,7 +491,7 @@ class MouseReviewer:
             return
 
         self._active = not self._active
-        settings_manager.getManager().setSetting("enableMouseReview", self._active)
+        settings_manager.get_manager().set_setting("enableMouseReview", self._active)
 
         if not self._active:
             self.deactivate()
@@ -500,7 +500,7 @@ class MouseReviewer:
             self.activate()
             msg = messages.MOUSE_REVIEW_ENABLED
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if script is not None:
             script.presentMessage(msg)
 
@@ -578,11 +578,11 @@ class MouseReviewer:
         if not window:
             return
 
-        script = script_manager.getManager().getScript(AXObject.get_application(window))
+        script = script_manager.get_manager().get_script(AXObject.get_application(window))
         if not script:
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_dead(focus):
             menu = None
         elif AXUtilities.is_menu(focus):
@@ -601,7 +601,7 @@ class MouseReviewer:
             tokens = ["MOUSE REVIEW: Object in", window, f"at ({windowX}, {windowY}) is", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.getManager().getScript(AXObject.get_application(window), obj)
+        script = script_manager.get_manager().get_script(AXObject.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if AXComponent.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
@@ -644,7 +644,7 @@ class MouseReviewer:
         if len(self._event_queue):
             return
 
-        startTime = time.time()
+        start_time = time.time()
         tokens = ["\nvvvvv PROCESS OBJECT EVENT", event.type, "vvvvv"]
         debug.printTokens(debug.LEVEL_INFO, tokens, False)
 
@@ -652,7 +652,7 @@ class MouseReviewer:
         self._on_mouse_moved(event)
         self.inMouseEvent = False
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}\n"
+        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}\n"
         msg += f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
         debug.printMessage(debug.LEVEL_INFO, msg, False)
 

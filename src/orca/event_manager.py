@@ -1,7 +1,7 @@
 # Orca
 #
-# Copyright 2011. Orca Team.
-# Author: Joanmarie Diggs <joanmarie.diggs@gmail.com>
+# Copyright 2011-2024 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -18,19 +18,25 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+
+"""Manager for accessible object events."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2011. Orca Team."
+__copyright__ = "Copyright (c) 2011-2024 Igalia, S.L."
 __license__   = "LGPL"
+
+import queue
+import threading
+import time
 
 import gi
 gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
 from gi.repository import GLib
-import queue
-import threading
-import time
 
 from . import debug
 from . import focus_manager
@@ -43,15 +49,16 @@ from .ax_utilities import AXUtilities
 
 
 class EventManager:
+    """Manager for accessible object events."""
 
     def __init__(self):
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
-        self._scriptListenerCounts = {}
+        self._script_listener_counts = {}
         self._active = False
         self._paused = False
-        self._eventQueue     = queue.Queue(0)
-        self._gidleId        = 0
-        self._gidleLock      = threading.Lock()
+        self._event_queue     = queue.Queue(0)
+        self._gidle_id        = 0
+        self._gidle_lock      = threading.Lock()
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
 
@@ -59,7 +66,7 @@ class EventManager:
         """Called when this event manager is activated."""
 
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
-        input_event_manager.getManager().start_key_watcher()
+        input_event_manager.get_manager().start_key_watcher()
         self._active = True
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
@@ -67,32 +74,32 @@ class EventManager:
         """Called when this event manager is deactivated."""
 
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
-        input_event_manager.getManager().stop_key_watcher()
+        input_event_manager.get_manager().stop_key_watcher()
         self._active = False
-        self._eventQueue = queue.Queue(0)
-        self._scriptListenerCounts = {}
+        self._event_queue = queue.Queue(0)
+        self._script_listener_counts = {}
         debug.printMessage(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
-    def pauseQueuing(self, pause=True, clearQueue=False, reason=""):
+    def pause_queuing(self, pause=True, clear_queue=False, reason=""):
         """Pauses/unpauses event queuing."""
 
-        msg = f"EVENT MANAGER: Pause queueing: {pause}. Clear queue: {clearQueue}. {reason}"
+        msg = f"EVENT MANAGER: Pause queueing: {pause}. Clear queue: {clear_queue}. {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._paused = pause
-        if clearQueue:
-            self._eventQueue = queue.Queue(0)
+        if clear_queue:
+            self._event_queue = queue.Queue(0)
 
-    def _isObsoletedBy(self, event):
+    def _is_obsoleted_by(self, event):
         """Returns the event which renders this one no longer worthy of being processed."""
 
-        def isSame(x):
+        def is_same(x):
             return x.type == event.type \
                 and x.source == event.source \
                 and x.detail1 == event.detail1 \
                 and x.detail2 == event.detail2 \
                 and x.any_data == event.any_data
 
-        def obsoletesIfSameTypeAndObject(x):
+        def obsoletes_if_same_type_and_object(x):
             skippable = {
                 "document:page-changed",
                 "object:active-descendant-changed",
@@ -108,7 +115,7 @@ class EventManager:
                 return False
             return x.source == event.source and x.type == event.type
 
-        def obsoletesIfSameTypeInSibling(x):
+        def obsoletes_if_same_type_in_sibling(x):
             if x.type != event.type or x.detail1 != event.detail1 or x.detail2 != event.detail2 \
                or x.any_data != event.any_data:
                 return False
@@ -121,7 +128,7 @@ class EventManager:
                 return False
             return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
 
-        def obsoletesWindowEvent(x):
+        def obsoletes_window_event(x):
             skippable = {
                 "window:activate",
                 "window:deactivate",
@@ -134,35 +141,33 @@ class EventManager:
                 return True
             return False
 
-        self._eventQueue.mutex.acquire()
-        try:
-            events = list(reversed(self._eventQueue.queue))
-        except Exception as error:
-            msg = f"EVENT MANAGER: Exception in _isObsoletedBy: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            events = []
-        finally:
-            self._eventQueue.mutex.release()
+        with self._event_queue.mutex:
+            try:
+                events = list(reversed(self._event_queue.queue))
+            except Exception as error:
+                msg = f"EVENT MANAGER: Exception in _isObsoletedBy: {error}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                events = []
 
         for e in events:
             if e == event:
                 return None
-            if isSame(e):
+            if is_same(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent duplicate"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if obsoletesIfSameTypeAndObject(e):
+            if obsoletes_if_same_type_and_object(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent event of same type for same object"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if obsoletesIfSameTypeInSibling(e):
+            if obsoletes_if_same_type_in_sibling(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent event of same type from sibling"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return e
-            if obsoletesWindowEvent(e):
+            if obsoletes_window_event(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e,
                           "more recent window (de)activation event"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -174,6 +179,10 @@ class EventManager:
 
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
+
+        # pylint: disable=too-many-return-statements
+        # pylint: disable=too-many-branches
+        # pylint: disable=too-many-statements
 
         debug.printMessage(debug.LEVEL_INFO, '')
         tokens = ["EVENT MANAGER:", event]
@@ -188,14 +197,14 @@ class EventManager:
         if event_type.startswith('window') or event_type.startswith('mouse:button'):
             return False
 
-        if self._inDeluge() and self._ignoreDuringDeluge(event):
+        if self._in_deluge() and self._ignore_during_deluge(event):
             msg = 'EVENT MANAGER: Ignoring event type due to deluge'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if focus == event.source or AXUtilities.is_focused(event.source):
             return False
         if focus == event.any_data:
@@ -227,7 +236,7 @@ class EventManager:
                 msg = "EVENT MANAGER: Ignoring event based on type and app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
-            script = script_manager.getManager().getActiveScript()
+            script = script_manager.get_manager().get_active_script()
             if script is None:
                 msg = "EVENT MANAGER: Ignoring because there is no active script"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -345,7 +354,7 @@ class EventManager:
 
         return False
 
-    def _queuePrintln(self, e, isEnqueue=True, isPrune=None):
+    def _queue_println(self, e, is_enqueue=True, is_prune=None):
         """Convenience method to output queue-related debugging info."""
 
         if debug.LEVEL_INFO < debug.debugLevel:
@@ -361,11 +370,11 @@ class EventManager:
         else:
             return
 
-        if isPrune:
+        if is_prune:
             tokens[0:0] = ["EVENT MANAGER: Pruning"]
-        elif isPrune is not None:
+        elif is_prune is not None:
             tokens[0:0] = ["EVENT MANAGER: Not pruning"]
-        elif isEnqueue:
+        elif is_enqueue:
             tokens[0:0] = ["EVENT MANAGER: Queueing"]
         else:
             tokens[0:0] = ["EVENT MANAGER: Dequeued"]
@@ -377,34 +386,33 @@ class EventManager:
         if self._ignore(e):
             return
 
-        self._queuePrintln(e)
+        self._queue_println(e)
 
-        if self._inFlood() and self._prioritizeDuringFlood(e):
+        if self._in_flood() and self._prioritize_during_flood(e):
             msg = 'EVENT MANAGER: Pruning event queue due to flood.'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self._pruneEventsDuringFlood()
+            self._prune_events_during_flood()
 
         app = AXObject.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.getManager().getScript(app, e.source)
+        script = script_manager.get_manager().get_script(app, e.source)
         script.eventCache[e.type] = (e, time.time())
 
-        self._gidleLock.acquire()
-        self._eventQueue.put(e)
-        if not self._gidleId:
-            self._gidleId = GLib.idle_add(self._dequeue_object_event)
-        self._gidleLock.release()
+        with self._gidle_lock:
+            self._event_queue.put(e)
+            if not self._gidle_id:
+                self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
-    def _onNoFocus(self):
-        if focus_manager.getManager().focus_and_window_are_unknown():
+    def _on_no_focus(self):
+        if focus_manager.get_manager().focus_and_window_are_unknown():
             return False
 
-        if script_manager.getManager().getActiveScript() is None:
-            defaultScript = script_manager.getManager().getDefaultScript()
-            script_manager.getManager().setActiveScript(defaultScript, 'No focus')
-            defaultScript.idleMessage()
+        if script_manager.get_manager().get_active_script() is None:
+            default_script = script_manager.get_manager().get_default_script()
+            script_manager.get_manager().set_active_script(default_script, 'No focus')
+            default_script.idleMessage()
 
         return False
 
@@ -413,79 +421,78 @@ class EventManager:
 
         rerun = True
         try:
-            event = self._eventQueue.get_nowait()
-            self._queuePrintln(event, isEnqueue=False)
+            event = self._event_queue.get_nowait()
+            self._queue_println(event, is_enqueue=False)
             debug.objEvent = event
             debugging = not debug.eventDebugFilter \
                         or debug.eventDebugFilter.match(event.type)
             if debugging:
-                startTime = time.time()
+                start_time = time.time()
                 msg = (
                     f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
-                    f"(queue size: {self._eventQueue.qsize()}) vvvvv"
+                    f"(queue size: {self._event_queue.qsize()}) vvvvv"
                 )
                 debug.printMessage(debug.eventDebugLevel, msg, False)
-            self._processObjectEvent(event)
+            self._process_object_event(event)
             if debugging:
                 msg = (
-                    f"TOTAL PROCESSING TIME: {time.time() - startTime:.4f}"
+                    f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
                     f"\n^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
                 )
                 debug.printMessage(debug.eventDebugLevel, msg, False)
 
             debug.objEvent = None
+            with self._gidle_lock:
+                if self._event_queue.empty():
+                    GLib.timeout_add(2500, self._on_no_focus)
+                    self._gidle_id = 0
+                    rerun = False  # destroy and don't call again
 
-            self._gidleLock.acquire()
-            if self._eventQueue.empty():
-                GLib.timeout_add(2500, self._onNoFocus)
-                self._gidleId = 0
-                rerun = False # destroy and don't call again
-            self._gidleLock.release()
         except queue.Empty:
             msg = 'EVENT MANAGER: Attempted dequeue, but the event queue is empty'
             debug.printMessage(debug.LEVEL_SEVERE, msg, True)
-            self._gidleId = 0
+            self._gidle_id = 0
             rerun = False # destroy and don't call again
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
         return rerun
 
-    def registerListener(self, eventType):
+    def register_listener(self, event_type):
         """Tells this module to listen for the given event type.
 
         Arguments:
-        - eventType: the event type.
+        - event_type: the event type.
         """
 
-        msg = f'EVENT MANAGER: registering listener for: {eventType}'
+        msg = f'EVENT MANAGER: registering listener for: {event_type}'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if eventType in self._scriptListenerCounts:
-            self._scriptListenerCounts[eventType] += 1
+        if event_type in self._script_listener_counts:
+            self._script_listener_counts[event_type] += 1
         else:
-            self._listener.register(eventType)
-            self._scriptListenerCounts[eventType] = 1
+            self._listener.register(event_type)
+            self._script_listener_counts[event_type] = 1
 
-    def deregisterListener(self, eventType):
+    def deregister_listener(self, event_type):
         """Tells this module to stop listening for the given event type.
 
         Arguments:
-        - eventType: the event type.
+        - event_type: the event type.
         """
 
-        msg = f'EVENT MANAGER: deregistering listener for: {eventType}'
+        msg = f'EVENT MANAGER: deregistering listener for: {event_type}'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if eventType not in self._scriptListenerCounts:
+        if event_type not in self._script_listener_counts:
             return
 
-        self._scriptListenerCounts[eventType] -= 1
-        if self._scriptListenerCounts[eventType] == 0:
-            self._listener.deregister(eventType)
-            del self._scriptListenerCounts[eventType]
+        self._script_listener_counts[event_type] -= 1
+        if self._script_listener_counts[event_type] == 0:
+            self._listener.deregister(event_type)
+            del self._script_listener_counts[event_type]
 
-    def registerScriptListeners(self, script):
+    def register_script_listeners(self, script):
         """Tells the event manager to start listening for all the event types
         of interest to the script.
 
@@ -496,10 +503,10 @@ class EventManager:
         tokens = ["EVENT MANAGER: Registering listeners for:", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        for eventType in script.listeners.keys():
-            self.registerListener(eventType)
+        for event_type in script.listeners.keys():
+            self.register_listener(event_type)
 
-    def deregisterScriptListeners(self, script):
+    def deregister_script_listeners(self, script):
         """Tells the event manager to stop listening for all the event types
         of interest to the script.
 
@@ -510,16 +517,17 @@ class EventManager:
         tokens = ["EVENT MANAGER: De-registering listeners for:", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        for eventType in script.listeners.keys():
-            self.deregisterListener(eventType)
+        for event_type in script.listeners.keys():
+            self.deregister_listener(event_type)
 
     @staticmethod
-    def _getScriptForEvent(event):
+    def _get_script_for_event(event):
         """Returns the script associated with event."""
 
         if event.type.startswith("mouse:"):
-            mouseEvent = input_event.MouseButtonEvent(event)
-            script = script_manager.getManager().getScript(mouseEvent.app, mouseEvent.window, False)
+            mouse_event = input_event.MouseButtonEvent(event)
+            script = script_manager.get_manager().get_script(
+                mouse_event.app, mouse_event.window, False)
             tokens = ["EVENT MANAGER: Script for event is", script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return script
@@ -531,7 +539,7 @@ class EventManager:
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
-        skipCheck = {
+        skip_check = {
             "object:children-changed",
             "object:column-reordered",
             "object:row-reordered",
@@ -547,33 +555,30 @@ class EventManager:
             "object:text-changed",
         }
 
-        check = not any(event.type.startswith(x) for x in skipCheck)
+        check = not any(event.type.startswith(x) for x in skip_check)
         tokens = ["EVENT MANAGER: Getting script for event for", app, "check:", check]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.getManager().getScript(app, event.source, sanityCheck=check)
+        script = script_manager.get_manager().get_script(app, event.source, sanity_check=check)
         tokens = ["EVENT MANAGER: Script for event is", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
 
-    def _isActivatableEvent(self, event, script=None):
-        """Determines if the event is one which should cause us to
-        change which script is currently active.
+    def _is_activatable_event(self, event, script=None):
+        """Determines if event should cause us to change the active script."""
 
-        Returns a (boolean, string) tuple indicating whether or not
-        this is an activatable event, and our reason (for the purpose
-        of debugging).
-        """
+        # pylint: disable=too-many-return-statements
+        # pylint: disable=too-many-branches
 
         if not event.source:
             return False, "event.source? What event.source??"
 
         if not script:
-            script = self._getScriptForEvent(event)
+            script = self._get_script_for_event(event)
             if not script:
                 return False, "There is no script for this event."
 
-        if script == script_manager.getManager().getActiveScript():
+        if script == script_manager.get_manager().get_active_script():
             return False, "The script for this event is already active."
 
         if not script.isActivatableEvent(event):
@@ -582,38 +587,37 @@ class EventManager:
         if script.forceScriptActivation(event):
             return True, "The script insists it should be activated for this event."
 
-        eType = event.type
+        event_type = event.type
 
-        if eType.startswith('window:activate'):
-            windowActivation = True
+        if event_type.startswith('window:activate'):
+            window_activation = True
         else:
-            windowActivation = eType.startswith('object:state-changed:active') \
+            window_activation = event_type.startswith('object:state-changed:active') \
                 and event.detail1 and AXUtilities.is_frame(event.source)
 
-        if windowActivation:
-            if event.source != focus_manager.getManager().get_active_window():
+        if window_activation:
+            if event.source != focus_manager.get_manager().get_active_window():
                 return True, "Window activation"
-            else:
-                return False, "Window activation for already-active window"
+            return False, "Window activation for already-active window"
 
-        if eType.startswith('focus') \
-           or (eType.startswith('object:state-changed:focused')
+        if event_type.startswith('focus') \
+           or (event_type.startswith('object:state-changed:focused')
                and event.detail1):
             return True, "Event source claimed focus."
 
-        if eType.startswith('object:state-changed:selected') and event.detail1 \
+        if event_type.startswith('object:state-changed:selected') and event.detail1 \
            and AXUtilities.is_menu(event.source) and AXUtilities.is_focusable(event.source):
             return True, "Selection change in focused menu"
 
         # This condition appears with gnome-screensaver-dialog.
         # See bug 530368.
-        if eType.startswith('object:state-changed:showing') \
+        if event_type.startswith('object:state-changed:showing') \
            and AXUtilities.is_panel(event.source) and AXUtilities.is_modal(event.source):
             return True, "Modal panel is showing."
 
         return False, "No reason found to activate a different script."
 
-    def _eventSourceIsDead(self, event):
+    def _event_source_is_dead(self, event):
         if AXObject.is_dead(event.source):
             tokens = ["EVENT MANAGER: source of", event.type, "is dead"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -621,10 +625,10 @@ class EventManager:
 
         return False
 
-    def _ignoreDuringDeluge(self, event):
+    def _ignore_during_deluge(self, event):
         """Returns true if this event should be ignored during a deluge."""
 
-        if self._eventSourceIsDead(event):
+        if self._event_source_is_dead(event):
             return True
 
         ignore = ["object:text-changed:delete",
@@ -646,103 +650,12 @@ class EventManager:
         if event.type not in ignore:
             return False
 
-        return event.source != focus_manager.getManager().get_locus_of_focus()
+        return event.source != focus_manager.get_manager().get_locus_of_focus()
 
-    def _inDeluge(self):
-        size = self._eventQueue.qsize()
-        if size > 100:
-            msg = f"EVENT MANAGER: DELUGE! Queue size is {size}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
+    def _in_flood(self):
+        """Returns True if we're in an event flood."""
 
-        return False
-
-    def _processDuringFlood(self, event, focus=None):
-        """Returns true if this event should be processed during a flood."""
-
-        if self._eventSourceIsDead(event):
-            return False
-
-        ignore = ["object:text-changed:delete",
-                  "object:text-changed:insert",
-                  "object:text-changed:delete:system",
-                  "object:text-changed:insert:system",
-                  "object:text-attributes-changed",
-                  "object:text-caret-moved",
-                  "object:children-changed:add",
-                  "object:children-changed:add:system",
-                  "object:children-changed:remove",
-                  "object:children-changed:remove:system",
-                  "object:property-change:accessible-name",
-                  "object:property-change:accessible-description",
-                  "object:selection-changed",
-                  "object:state-changed:showing",
-                  "object:state-changed:sensitive"]
-
-        if event.type not in ignore:
-            return True
-
-        focus = focus or focus_manager.getManager().get_locus_of_focus()
-        return event.source == focus
-
-    def _prioritizeDuringFlood(self, event):
-        """Returns true if this event should be prioritized during a flood."""
-
-        if event.type.startswith("object:state-changed:focused"):
-            return event.detail1
-
-        if event.type.startswith("object:state-changed:selected"):
-            return event.detail1
-
-        if event.type.startswith("object:text-selection-changed"):
-            return True
-
-        if event.type.startswith("window:activate"):
-            return True
-
-        if event.type.startswith("window:deactivate"):
-            return True
-
-        if event.type.startswith("object:state-changed:active"):
-            return AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source)
-
-        if event.type.startswith("document:load-complete"):
-            return True
-
-        if event.type.startswith("object:state-changed:busy"):
-            return True
-
-        return False
-
-    def _pruneEventsDuringFlood(self):
-        """Gets rid of events we don't care about during a flood."""
-
-        oldSize = self._eventQueue.qsize()
-
-        newQueue = queue.Queue(0)
-        focus = focus_manager.getManager().get_locus_of_focus()
-        while not self._eventQueue.empty():
-            try:
-                event = self._eventQueue.get()
-            except Exception as error:
-                msg = f"EVENT MANAGER: Exception pruning events: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            else:
-                if self._processDuringFlood(event, focus):
-                    newQueue.put(event)
-                    self._queuePrintln(event, isPrune=False)
-            finally:
-                if not self._eventQueue.empty():
-                    self._eventQueue.task_done()
-
-        self._eventQueue = newQueue
-        newSize = self._eventQueue.qsize()
-
-        msg = f"EVENT MANAGER: {oldSize - newSize} events pruned. New size: {newSize}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-    def _inFlood(self):
-        size = self._eventQueue.qsize()
+        size = self._event_queue.qsize()
         if size > 50:
             msg = f"EVENT MANAGER: FLOOD? Queue size is {size}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -750,13 +663,103 @@ class EventManager:
 
         return False
 
-    def _shouldProcessEvent(self, event, eventScript, activeScript):
-        if eventScript == activeScript:
+    def _in_deluge(self):
+        """Returns True if we're in a deluge / huge flood."""
+
+        size = self._event_queue.qsize()
+        if size > 100:
+            msg = f"EVENT MANAGER: DELUGE! Queue size is {size}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
+    def _process_during_flood(self, event, focus=None):
+        """Returns true if this event should be processed during a flood."""
+
+        if self._event_source_is_dead(event):
+            return False
+
+        ignore = ["object:text-changed:delete",
+                  "object:text-changed:insert",
+                  "object:text-changed:delete:system",
+                  "object:text-changed:insert:system",
+                  "object:text-attributes-changed",
+                  "object:text-caret-moved",
+                  "object:children-changed:add",
+                  "object:children-changed:add:system",
+                  "object:children-changed:remove",
+                  "object:children-changed:remove:system",
+                  "object:property-change:accessible-name",
+                  "object:property-change:accessible-description",
+                  "object:selection-changed",
+                  "object:state-changed:showing",
+                  "object:state-changed:sensitive"]
+
+        if event.type not in ignore:
+            return True
+
+        focus = focus or focus_manager.get_manager().get_locus_of_focus()
+        return event.source == focus
+
+    def _prioritize_during_flood(self, event):
+        """Returns true if this event should be prioritized during a flood."""
+
+        if event.type.startswith("object:state-changed:focused") \
+           or event.type.startswith("object:state-changed:selected"):
+            return event.detail1
+
+        if event.type.startswith("object:text-selection-changed"):
+            return True
+
+        if event.type.startswith("window:activate") or event.type.startswith("window:deactivate"):
+            return True
+
+        if event.type.startswith("object:state-changed:active"):
+            return AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source)
+
+        if event.type.startswith("document:load-complete") \
+           or event.type.startswith("object:state-changed:busy"):
+            return True
+
+        return False
+
+    def _prune_events_during_flood(self):
+        """Gets rid of events we don't care about during a flood."""
+
+        old_size = self._event_queue.qsize()
+
+        new_queue = queue.Queue(0)
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        while not self._event_queue.empty():
+            try:
+                event = self._event_queue.get()
+            except Exception as error:
+                msg = f"EVENT MANAGER: Exception pruning events: {error}"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            else:
+                if self._process_during_flood(event, focus):
+                    new_queue.put(event)
+                    self._queue_println(event, is_prune=False)
+            finally:
+                if not self._event_queue.empty():
+                    self._event_queue.task_done()
+
+        self._event_queue = new_queue
+        new_size = self._event_queue.qsize()
+
+        msg = f"EVENT MANAGER: {old_size - new_size} events pruned. New size: {new_size}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+    def _should_process_event(self, event, event_script, active_script):
+        """Returns True if this event should be processed."""
+
+        if event_script == active_script:
             msg = f"EVENT MANAGER: Processing {event.type}: script for event is active"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if eventScript.presentIfInactive:
+        if event_script.presentIfInactive:
             msg = f"EVENT MANAGER: Processing {event.type}: script handles events when inactive"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -771,84 +774,79 @@ class EventManager:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _processObjectEvent(self, event):
-        """Handles all object events destined for scripts.
+    def _process_object_event(self, event):
+        """Handles all object events destined for scripts."""
 
-        Arguments:
-        - e: an at-spi event.
-        """
+        # pylint: disable=too-many-return-statements
+        # pylint: disable=too-many-branches
+        # pylint: disable=too-many-statements
 
-        if self._isObsoletedBy(event):
+        if self._is_obsoleted_by(event):
             return
 
-        eType = event.type
-        if eType.startswith("object:children-changed:remove") \
+        script_mgr = script_manager.get_manager()
+        focus_mgr = focus_manager.get_manager()
+
+        event_type = event.type
+        if event_type.startswith("object:children-changed:remove") \
            and event.source == AXUtilities.get_desktop():
-            script_manager.getManager().reclaimScripts()
+            script_mgr.reclaim_scripts()
             return
 
         if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-            if eType.startswith("window:deactivate") or eType.startswith("window:destroy") \
-               and focus_manager.getManager().get_active_window() == event.source:
-                focus_manager.getManager().clear_state("Active window is dead or defunct")
-                script_manager.getManager().setActiveScript(
-                    None, "Active window is dead or defunct")
+            if event_type.startswith("window:de") and focus_mgr.get_active_window() == event.source:
+                focus_mgr.clear_state("Active window is dead or defunct")
+                script_mgr.set_active_script(None, "Active window is dead or defunct")
             return
 
-        if eType.startswith("window:") and not eType.endswith("create"):
-            script_manager.getManager().reclaimScripts()
-        elif eType.startswith("object:state-changed:active") \
-           and AXUtilities.is_frame(event.source):
-            script_manager.getManager().reclaimScripts()
+        if event_type.startswith("window:") and not event_type.endswith("create"):
+            script_mgr.reclaim_scripts()
+        elif event_type.endswith("state-changed:active") and AXUtilities.is_frame(event.source):
+            script_mgr.reclaim_scripts()
 
         if AXUtilities.is_iconified(event.source):
             tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        if self._inFlood():
-            if not self._processDuringFlood(event):
+        if self._in_flood():
+            if not self._process_during_flood(event):
                 msg = 'EVENT MANAGER: Not processing this event due to flood.'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
-            if self._prioritizeDuringFlood(event):
+            if self._prioritize_during_flood(event):
                 msg = 'EVENT MANAGER: Pruning event queue due to flood.'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                self._pruneEventsDuringFlood()
+                self._prune_events_during_flood()
 
         debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
-        if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
-           and not eType.startswith("mouse:"):
+        if not debug.eventDebugFilter or debug.eventDebugFilter.match(event_type) \
+           and not event_type.startswith("mouse:"):
             indent = " " * 32
             debug.printDetails(debug.LEVEL_INFO, indent, event.source)
             if isinstance(event.any_data, Atspi.Accessible):
                 debug.printMessage(debug.LEVEL_INFO, f"{indent}ANY DATA:")
                 debug.printDetails(debug.LEVEL_INFO, indent, event.any_data, includeApp=False)
 
-        script = self._getScriptForEvent(event)
+        script = self._get_script_for_event(event)
         if not script:
             msg = "ERROR: Could not get script for event"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        setNewActiveScript, reason = self._isActivatableEvent(event, script)
-        msg = f'EVENT MANAGER: Change active script: {setNewActiveScript} ({reason})'
+        set_new_active_script, reason = self._is_activatable_event(event, script)
+        msg = f'EVENT MANAGER: Change active script: {set_new_active_script} ({reason})'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if setNewActiveScript:
-            try:
-                script_manager.getManager().setActiveScript(script, reason)
-            except Exception as error:
-                tokens = ["EVENT MANAGER: Exception setting active script for",
-                          event.source, ":", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return
-
-        activeScript = script_manager.getManager().getActiveScript()
-        if not self._shouldProcessEvent(event, script, activeScript):
+        if set_new_active_script:
+            script_mgr.set_active_script(script, reason)
+            active_script = script
+        else:
+            active_script = script_mgr.get_active_script()
+        if not self._should_process_event(event, script, active_script):
             return
 
         try:
@@ -858,13 +856,8 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-        if debug.LEVEL_INFO >= debug.debugLevel and script:
-            attributes = script.getTransferableAttributes()
-            for key, value in attributes.items():
-                msg = f"EVENT MANAGER: {key}: {value}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-
 _manager = EventManager()
 
-def getManager():
+def get_manager():
+    """Returns the Event Manager singleton."""
     return _manager

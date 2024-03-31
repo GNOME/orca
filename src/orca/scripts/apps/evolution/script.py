@@ -49,8 +49,8 @@ class Script(WebKitGtk.Script, gtk.Script):
         - app: the application to create a script for.
         """
 
-        if settings_manager.getManager().getSetting('sayAllOnLoad') is None:
-            settings_manager.getManager().setSetting('sayAllOnLoad', False)
+        if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
+            settings_manager.get_manager().set_setting('sayAllOnLoad', False)
 
         super().__init__(app)
         self.presentIfInactive = False
@@ -113,14 +113,14 @@ class Script(WebKitGtk.Script, gtk.Script):
             if AXUtilities.is_selected(event.any_data):
                 msg = "EVOLUTION: Source is compose autocomplete with selected child."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                focus_manager.getManager().set_locus_of_focus(event, event.any_data)
+                focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
             else:
                 msg = "EVOLUTION: Source is compose autocomplete without selected child."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                focus_manager.getManager().set_locus_of_focus(event, event.source)
+                focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_table_cell(focus):
             table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
@@ -132,7 +132,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         if child is not None and child != event.any_data:
             tokens = ["EVOLUTION: Bogus any_data suspected. Setting focus to", child]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.getManager().set_locus_of_focus(event, child)
+            focus_manager.get_manager().set_locus_of_focus(event, child)
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
@@ -153,7 +153,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         # up in the hierarchy or emit object:state-changed:focused events.
         if AXUtilities.is_layered_pane(event.source):
             obj = self.utilities.realActiveDescendant(event.source)
-            focus_manager.getManager().set_locus_of_focus(event, obj)
+            focus_manager.get_manager().set_locus_of_focus(event, obj)
             return
 
         gtk.Script.on_focus(self, event)

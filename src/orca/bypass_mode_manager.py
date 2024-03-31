@@ -92,7 +92,7 @@ class BypassModeManager:
                 True))
 
         # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.getManager().overrideKeyBindings(
+        self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
     def is_active(self):
@@ -109,7 +109,7 @@ class BypassModeManager:
                 script.presentMessage(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
             script.addKeyGrabs(reason)
-            orca_modifier_manager.getManager().refresh_orca_modifiers(reason)
+            orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
         if event is not None:
@@ -117,12 +117,12 @@ class BypassModeManager:
 
         reason = "bypass mode enabled"
         script.removeKeyGrabs(reason)
-        orca_modifier_manager.getManager().unset_orca_modifiers(reason)
+        orca_modifier_manager.get_manager().unset_orca_modifiers(reason)
         for binding in self._bindings.keyBindings:
             script.keyBindings.add(binding, includeGrabs=True)
 
         return True
 
 _manager = BypassModeManager()
-def getManager():
+def get_manager():
     return _manager

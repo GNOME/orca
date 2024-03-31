@@ -72,7 +72,7 @@ class Script(clutter.Script):
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
         dialog = AXObject.find_ancestor(
-            focus_manager.getManager().get_locus_of_focus(), AXUtilities.is_dialog)
+            focus_manager.get_manager().get_locus_of_focus(), AXUtilities.is_dialog)
         tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):
@@ -94,7 +94,7 @@ class Script(clutter.Script):
             if AXUtilities.is_panel(event.source):
                 AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
             if AXUtilities.is_selected(event.source):
-                focus_manager.getManager().set_locus_of_focus(event, event.source)
+                focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         clutter.Script.on_selected_changed(self, event)
@@ -114,7 +114,7 @@ class Script(clutter.Script):
            and not self.utilities.labelsForObject(event.source):
             descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
             if descendant is not None:
-                focus_manager.getManager().set_locus_of_focus(event, descendant)
+                focus_manager.get_manager().set_locus_of_focus(event, descendant)
                 return
 
         clutter.Script.on_focused_changed(self, event)

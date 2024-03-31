@@ -221,7 +221,7 @@ class LiveRegionManager:
                     not self._suspended))
 
         # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.getManager().overrideKeyBindings(
+        self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
         msg = f"LIVE REGION MANAGER: Bindings set up. Suspended: {self._suspended}"
@@ -285,7 +285,7 @@ class LiveRegionManager:
 
     def handleEvent(self, event):
         """Main live region event handler"""
-        politeness = self._getLiveType(event.source)
+        politeness = self._getLivevent_type(event.source)
         if politeness == LIVE_OFF:
             return
         if politeness == LIVE_NONE:
@@ -362,11 +362,11 @@ class LiveRegionManager:
     def advancePoliteness(self, script, inputEvent):
         """Advance the politeness level of the given object"""
 
-        if not settings_manager.getManager().getSetting('inferLiveRegions'):
+        if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
@@ -405,7 +405,7 @@ class LiveRegionManager:
         """Speak the given number cached message"""
 
         msgnum = int(inputEvent.event_string[1:])
-        if not settings_manager.getManager().getSetting('inferLiveRegions'):
+        if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
@@ -418,7 +418,7 @@ class LiveRegionManager:
         """User toggle to set all live regions to LIVE_OFF or back to their
         original politeness."""
 
-        if not settings_manager.getManager().getSetting('inferLiveRegions'):
+        if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return
 
@@ -495,7 +495,7 @@ class LiveRegionManager:
         # get the politeness level as a string
         try:
             livepriority = self._politenessOverrides[(uri, objectid)]
-            liveprioritystr = self._liveTypeToString(livepriority)
+            liveprioritystr = self._livevent_typeToString(livepriority)
         except KeyError:
             liveprioritystr = 'none'
 
@@ -571,7 +571,7 @@ class LiveRegionManager:
         if len(self.msg_cache) > CACHE_SIZE:
             self.msg_cache.pop(0)
 
-    def _getLiveType(self, obj):
+    def _getLivevent_type(self, obj):
         """Returns the live politeness setting for a given object. Also,
         registers LIVE_NONE objects in politeness overrides when monitoring."""
         objectid = self._getObjectId(obj)
@@ -616,7 +616,7 @@ class LiveRegionManager:
         except KeyError:
             return LIVE_NONE
 
-    def _liveTypeToString(self, politeness):
+    def _livevent_typeToString(self, politeness):
         """Returns the politeness level as a string given a politeness enum"""
         if politeness == LIVE_OFF:
             return 'off'
@@ -647,10 +647,10 @@ class LiveRegionManager:
             obj = AXObject.get_parent(obj)
 
     def toggleMonitoring(self, script, inputEvent):
-        if not settings_manager.getManager().getSetting('inferLiveRegions'):
-            settings_manager.getManager().setSetting('inferLiveRegions', True)
+        if not settings_manager.get_manager().get_setting('inferLiveRegions'):
+            settings_manager.get_manager().set_setting('inferLiveRegions', True)
             self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
         else:
-            settings_manager.getManager().setSetting('inferLiveRegions', False)
+            settings_manager.get_manager().set_setting('inferLiveRegions', False)
             self.flushMessages()
             self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)

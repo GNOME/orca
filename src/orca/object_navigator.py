@@ -229,8 +229,8 @@ class ObjectNavigator:
     def update(self):
         """Updates the navigator focus to Orca's object of interest."""
 
-        mode, region = focus_manager.getManager().get_active_mode_and_object_of_interest()
-        obj = region or focus_manager.getManager().get_locus_of_focus()
+        mode, region = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+        obj = region or focus_manager.get_manager().get_locus_of_focus()
         if self._last_locus_of_focus == obj \
            or (region is None and mode == focus_manager.FLAT_REVIEW):
             return
@@ -243,7 +243,7 @@ class ObjectNavigator:
 
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.getManager().emit_region_changed(
+        focus_manager.get_manager().emit_region_changed(
             self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 

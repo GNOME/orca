@@ -72,8 +72,8 @@ class Script(default.Script):
         self._lastCaretContext = None, -1
         self.sayAllOnLoadCheckButton = None
 
-        if settings_manager.getManager().getSetting('sayAllOnLoad') is None:
-            settings_manager.getManager().setSetting('sayAllOnLoad', True)
+        if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
+            settings_manager.get_manager().set_setting('sayAllOnLoad', True)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -97,7 +97,7 @@ class Script(default.Script):
     def getToolkitKeyBindings(self):
         """Returns the toolkit-specific keybindings for this script."""
 
-        layout = settings_manager.getManager().getSetting('keyboardLayout')
+        layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         return self.structuralNavigation.get_bindings(refresh=True, is_desktop=isDesktop)
 
@@ -114,7 +114,7 @@ class Script(default.Script):
         self.sayAllOnLoadCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(
-            settings_manager.getManager().getSetting('sayAllOnLoad'))
+            settings_manager.get_manager().get_setting('sayAllOnLoad'))
         grid.attach(self.sayAllOnLoadCheckButton, 0, 0, 1, 1)
 
         grid.show_all()
@@ -179,11 +179,11 @@ class Script(default.Script):
             super().on_caret_moved(event)
             return
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         if manager.last_event_was_tab_navigation():
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if manager.last_event_was_down() \
            and AXObject.get_index_in_parent(event.source) == 0 \
            and focus == AXObject.get_parent(event.source) \
@@ -215,8 +215,8 @@ class Script(default.Script):
         self.utilities.setCaretContext(obj, offset)
 
         self.updateBraille(obj)
-        if settings_manager.getManager().getSetting('sayAllOnLoad') \
-           and settings_manager.getManager().getSetting('enableSpeech'):
+        if settings_manager.get_manager().get_setting('sayAllOnLoad') \
+           and settings_manager.get_manager().get_setting('enableSpeech'):
             self.sayAll(None)
 
     def on_document_load_stopped(self, event):
@@ -366,14 +366,14 @@ class Script(default.Script):
         entire document.
         """
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleBeginningShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
         obj = self.utilities.findPreviousObject(focus)
-        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
@@ -390,14 +390,14 @@ class Script(default.Script):
         entire document.
         """
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.flatReviewPresenter.is_active() \
            or not self.isBrailleEndShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
         obj = self.utilities.findNextObject(focus)
-        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         self.updateBraille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
@@ -416,8 +416,8 @@ class Script(default.Script):
         - obj: the Accessible
         """
 
-        if not settings_manager.getManager().getSetting('enableBraille') \
-           and not settings_manager.getManager().getSetting('enableBrailleMonitor'):
+        if not settings_manager.get_manager().get_setting('enableBraille') \
+           and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
             return
 

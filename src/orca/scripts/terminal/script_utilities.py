@@ -126,7 +126,7 @@ class Utilities(script_utilities.Utilities):
         if len(event.any_data) <= 1:
             return False
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         if manager.last_event_was_tab():
             return event.any_data != "\t"
         if manager.last_event_was_return() and event.any_data.startswith("\n"):
@@ -135,18 +135,18 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def treatEventAsCommand(self, event):
-        if event.source != focus_manager.getManager().get_locus_of_focus():
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
             return False
 
         if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
             # To let default script handle presentation.
-            if input_event_manager.getManager().last_event_was_paste():
+            if input_event_manager.get_manager().last_event_was_paste():
                 return False
 
             if event.any_data.count("\n~"):
                 return False
 
-            manager = input_event_manager.getManager()
+            manager = input_event_manager.get_manager()
             if manager.last_event_was_return_tab_or_space():
                 return re.search(r"[^\d\s]", event.any_data)
             # TODO - JD: What condition specifically is this here for?
@@ -160,11 +160,11 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def treatEventAsNoise(self, event):
-        if input_event_manager.getManager().last_event_was_command():
+        if input_event_manager.get_manager().last_event_was_command():
             return False
 
         if event.type.startswith("object:text-changed:delete") and event.any_data.strip():
-            manager = input_event_manager.getManager()
+            manager = input_event_manager.get_manager()
             if manager.last_event_was_return_tab_or_space():
                 return True
             # TODO - JD: What condition specifically is this here for?
@@ -176,7 +176,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def willEchoCharacter(self, event):
-        if not settings_manager.getManager().getSetting("enableEchoByCharacter"):
+        if not settings_manager.get_manager().get_setting("enableEchoByCharacter"):
             return False
 
         # TODO - JD: What case is the modifier check handling?

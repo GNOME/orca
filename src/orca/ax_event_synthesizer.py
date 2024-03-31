@@ -18,6 +18,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+
 """Provides support for synthesizing accessible input events."""
 
 __id__        = "$Id$"
@@ -30,11 +33,9 @@ __license__   = "LGPL"
 import time
 
 import gi
-
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 gi.require_version("Gtk", "3.0")
+from gi.repository import Atspi
 from gi.repository import Gtk
 
 from . import debug
@@ -53,7 +54,7 @@ class AXEventSynthesizer:
     def _window_coordinates_to_screen_coordinates(x, y):
         # TODO - JD: This is a workaround to keep things working until we have something like
         # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/158
-        active_window = focus_manager.getManager().get_active_window()
+        active_window = focus_manager.get_manager().get_active_window()
         if active_window is None:
             msg = "AXEventSynthesizer: Could not get active window to adjust coordinates"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

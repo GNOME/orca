@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+
 """
 Utilities for obtaining information about accessible text.
 These utilities are app-type- and toolkit-agnostic. Utilities that might have

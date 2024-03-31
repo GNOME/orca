@@ -58,7 +58,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         obj, offset = self._script._lastCaretContext
-        if not obj and self.isWebKitGtk(focus_manager.getManager().get_locus_of_focus()):
+        if not obj and self.isWebKitGtk(focus_manager.get_manager().get_locus_of_focus()):
             obj, offset = super().getCaretContext()
 
         return obj, offset
@@ -67,7 +67,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private, but it's only here temporarily until we
         # have the shared web content support.
         self._script._lastCaretContext = obj, offset
-        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
 
     def setCaretPosition(self, obj, offset):
         self.setCaretContext(obj, offset)
@@ -135,7 +135,7 @@ class Utilities(script_utilities.Utilities):
         if offset is None:
             offset = AXText.get_caret_offset(obj)
         if boundary == Atspi.TextBoundaryType.CHAR:
-            if input_event_manager.getManager().last_event_was_forward_caret_selection():
+            if input_event_manager.get_manager().last_event_was_forward_caret_selection():
                 offset -= 1
             start, end = AXText.get_character_at_offset(obj, offset)[1:]
         elif boundary in (None, Atspi.TextBoundaryType.LINE_START):
@@ -265,5 +265,5 @@ class Utilities(script_utilities.Utilities):
         return self.isEmbeddedDocument(obj)
 
     def inDocumentContent(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         return self.isWebKitGtk(obj)

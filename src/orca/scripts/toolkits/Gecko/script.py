@@ -68,7 +68,7 @@ class Script(web.Script):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not focus_manager.getManager().can_be_active_window(event.source):
+           and not focus_manager.get_manager().can_be_active_window(event.source):
             return
 
         msg = "GECKO: Passing along event to default script"
@@ -207,7 +207,7 @@ class Script(web.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
-        if event.source == focus_manager.getManager().get_active_window():
+        if event.source == focus_manager.get_manager().get_active_window():
             msg = "GECKO: Ignoring event for active window."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -216,7 +216,7 @@ class Script(web.Script):
         # This callback remains just to handle bugs in applications and toolkits
         # in which object:state-changed:focused events are missing. And in the
         # case of Gecko dialogs, that seems to happen a lot.
-        focus_manager.getManager().set_locus_of_focus(event, event.source)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -225,7 +225,7 @@ class Script(web.Script):
             return
 
         if AXUtilities.is_panel(event.source):
-            if focus_manager.getManager().focus_is_active_window():
+            if focus_manager.get_manager().focus_is_active_window():
                 msg = "GECKO: Ignoring event believed to be noise."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
@@ -337,7 +337,7 @@ class Script(web.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not focus_manager.getManager().can_be_active_window(event.source):
+        if not focus_manager.get_manager().can_be_active_window(event.source):
             return
 
         if super().on_window_activated(event):

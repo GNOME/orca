@@ -58,7 +58,7 @@ class OrcaModifierManager:
     def is_orca_modifier(self, modifier):
         """Returns True if modifier is one of the user's Orca modifier keys."""
 
-        if modifier not in settings_manager.getManager().getSetting("orcaModifierKeys"):
+        if modifier not in settings_manager.get_manager().get_setting("orcaModifierKeys"):
             return False
 
         if modifier in ["Insert", "KP_Insert"]:
@@ -74,7 +74,7 @@ class OrcaModifierManager:
     def add_grabs_for_orca_modifiers(self):
         """Adds grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings_manager.getManager().getSetting("orcaModifierKeys"):
+        for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
             # TODO - JD: We currently handle CapsLock one way and Insert a different way.
             # Ideally that will stop being the case at some point.
             if modifier in ["Insert", "KP_Insert"]:
@@ -83,7 +83,7 @@ class OrcaModifierManager:
     def remove_grabs_for_orca_modifiers(self):
         """Removes grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings_manager.getManager().getSetting("orcaModifierKeys"):
+        for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
             # TODO - JD: We currently handle CapsLock one way and Insert a different way.
             # Ideally that will stop being the case at some point.
             if modifier in ["Insert", "KP_Insert"]:
@@ -96,7 +96,7 @@ class OrcaModifierManager:
             return
 
         keycode = keybindings.getKeycode(modifier)
-        grab_id = input_event_manager.getManager().add_grab_for_modifier(modifier, keycode)
+        grab_id = input_event_manager.get_manager().add_grab_for_modifier(modifier, keycode)
         if grab_id != -1:
             self._grabbed_modifiers[modifier] = grab_id
 
@@ -107,7 +107,7 @@ class OrcaModifierManager:
         if grab_id is None:
             return
 
-        input_event_manager.getManager().remove_grab_for_modifier(modifier, grab_id)
+        input_event_manager.get_manager().remove_grab_for_modifier(modifier, grab_id)
         del self._grabbed_modifiers[modifier]
 
     def toggle_modifier(self, keyboard_event):
@@ -284,5 +284,5 @@ class OrcaModifierManager:
 
 
 _manager = OrcaModifierManager()
-def getManager():
+def get_manager():
     return _manager

@@ -51,18 +51,18 @@ class Script(default.Script):
 
         if self.utilities.isToggleDescendantOfComboBox(newFocus):
             newFocus = AXObject.find_ancestor(newFocus, AXUtilities.is_combo_box) or newFocus
-            focus_manager.getManager().set_locus_of_focus(event, newFocus, False)
+            focus_manager.get_manager().set_locus_of_focus(event, newFocus, False)
         elif self.utilities.isInOpenMenuBarMenu(newFocus):
             window = self.utilities.topLevelObject(newFocus)
-            if window and focus_manager.getManager().get_active_window() != window:
-                focus_manager.getManager().set_active_window(window)
+            if window and focus_manager.get_manager().get_active_window() != window:
+                focus_manager.get_manager().set_active_window(window)
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if not self.utilities.isTypeahead(focus_manager.getManager().get_locus_of_focus()):
+        if not self.utilities.isTypeahead(focus_manager.get_manager().get_locus_of_focus()):
             msg = "GTK: locusOfFocus is not typeahead. Passing along to default script."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().on_active_descendant_changed(event)
@@ -76,7 +76,7 @@ class Script(default.Script):
         """Callback for object:state-changed:checked accessibility events."""
 
         obj = event.source
-        if self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
+        if self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
             default.Script.on_checked_changed(self, event)
             return
 
@@ -104,7 +104,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.isTypeahead(focus) \
            and AXObject.supports_table(event.source) \
            and not AXUtilities.is_focused(event.source):
@@ -112,7 +112,7 @@ class Script(default.Script):
 
         ancestor = AXObject.find_ancestor(focus, lambda x: x == event.source)
         if not ancestor:
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         if AXObject.supports_table(ancestor):
@@ -126,7 +126,7 @@ class Script(default.Script):
             msg = "GTK: Event source is ancestor of unselected focus. Updating focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        focus_manager.getManager().set_locus_of_focus(event, event.source)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -136,7 +136,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
             msg = "GTK: Ignoring focus change on ancestor of still-focused locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -149,10 +149,10 @@ class Script(default.Script):
 
         if self.utilities.isEntryCompletionPopupItem(event.source):
             if event.detail1:
-                focus_manager.getManager().set_locus_of_focus(event, event.source)
+                focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return
-            if focus_manager.getManager().get_locus_of_focus() == event.source:
-                focus_manager.getManager().set_locus_of_focus(event, None)
+            if focus_manager.get_manager().get_locus_of_focus() == event.source:
+                focus_manager.get_manager().set_locus_of_focus(event, None)
                 return
 
         if AXUtilities.is_icon_or_canvas(event.source) \
@@ -164,7 +164,7 @@ class Script(default.Script):
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.isComboBoxWithToggleDescendant(event.source) \
             and self.utilities.isOrDescendsFrom(focus, event.source):
             super().on_selection_changed(event)
@@ -231,7 +231,7 @@ class Script(default.Script):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
-        if not self.utilities.isSameObject(obj, focus_manager.getManager().get_locus_of_focus()):
+        if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
             return
 
         default.Script.on_text_selection_changed(self, event)

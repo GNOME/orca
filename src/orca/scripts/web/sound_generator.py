@@ -40,7 +40,7 @@ class SoundGenerator(sound_generator.SoundGenerator):
     def _generateClickable(self, obj, **args):
         """Returns an array of sounds indicating obj is clickable."""
 
-        if not settings_manager.getManager().getSetting('playSoundForState'):
+        if not settings_manager.get_manager().get_setting('playSoundForState'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -61,7 +61,7 @@ class SoundGenerator(sound_generator.SoundGenerator):
     def _generateHasLongDesc(self, obj, **args):
         """Returns an array of sounds indicating obj has a longdesc."""
 
-        if not settings_manager.getManager().getSetting('playSoundForState'):
+        if not settings_manager.get_manager().get_setting('playSoundForState'):
             return []
 
         if not self._script.utilities.inDocumentContent(obj):

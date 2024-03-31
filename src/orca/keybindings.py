@@ -316,7 +316,7 @@ class KeyBinding:
         if self.modifiers & ORCA_MODIFIER_MASK:
             modList = []
             otherMods = self.modifiers & ~ORCA_MODIFIER_MASK
-            manager = input_event_manager.getManager()
+            manager = input_event_manager.get_manager()
             for key in settings.orcaModifierKeys:
                 keycode = getKeycode(key)
                 if keycode == 0 and key == "Shift_Lock":
@@ -346,12 +346,12 @@ class KeyBinding:
     def addGrabs(self):
         """Adds key grabs for this KeyBinding."""
 
-        self._grab_ids = input_event_manager.getManager().add_grabs_for_keybinding(self)
+        self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(self)
 
     def removeGrabs(self):
         """Removes key grabs for this KeyBinding."""
 
-        input_event_manager.getManager().remove_grabs_for_keybinding(self)
+        input_event_manager.get_manager().remove_grabs_for_keybinding(self)
         self._grab_ids = []
 
 class KeyBindings:

@@ -239,7 +239,7 @@ class Utilities(script_utilities.Utilities):
 
     def inDocumentContent(self, obj=None):
         if not obj:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
 
         if self.isDocument(obj):
@@ -257,9 +257,9 @@ class Utilities(script_utilities.Utilities):
     def _getDocumentsEmbeddedBy(self, frame):
         return AXObject.get_relation_targets(frame, Atspi.RelationType.EMBEDS, self.isDocument)
 
-    def sanityCheckActiveWindow(self):
+    def sanity_check_active_window(self):
         app = self._script.app
-        window = focus_manager.getManager().get_active_window()
+        window = focus_manager.get_manager().get_active_window()
         if AXObject.get_parent(window) == app:
             return True
 
@@ -268,7 +268,7 @@ class Utilities(script_utilities.Utilities):
 
         # TODO - JD: Is this exception handling still needed?
         try:
-            script = script_manager.getManager().getScript(app, window)
+            script = script_manager.get_manager().get_script(app, window)
             tokens = ["WEB: Script for active Window is", script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         except Exception:
@@ -282,15 +282,15 @@ class Utilities(script_utilities.Utilities):
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     setattr(self._script, attr, value)
 
-        window = focus_manager.getManager().find_active_window(app)
+        window = focus_manager.get_manager().find_active_window(app)
         self._script.app = AXObject.get_application(window)
         tokens = ["WEB: updating script's app to", self._script.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.getManager().set_active_window(window)
+        focus_manager.get_manager().set_active_window(window)
         return True
 
     def activeDocument(self, window=None):
-        window = window or focus_manager.getManager().get_active_window()
+        window = window or focus_manager.get_manager().get_active_window()
         documents = self._getDocumentsEmbeddedBy(window)
         documents = list(filter(AXUtilities.is_showing, documents))
         if len(documents) == 1:
@@ -298,12 +298,12 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def documentFrame(self, obj=None):
-        if not obj and self.sanityCheckActiveWindow():
+        if not obj and self.sanity_check_active_window():
             document = self.activeDocument()
             if document:
                 return document
 
-        return self.getDocumentForObject(obj or focus_manager.getManager().get_locus_of_focus())
+        return self.getDocumentForObject(obj or focus_manager.get_manager().get_locus_of_focus())
 
     def grabFocusWhenSettingCaret(self, obj):
         # To avoid triggering popup lists.
@@ -328,9 +328,9 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
-        oldFocus = focus_manager.getManager().get_locus_of_focus()
+        oldFocus = focus_manager.get_manager().get_locus_of_focus()
         AXText.clear_all_selected_text(oldFocus)
-        focus_manager.getManager().set_locus_of_focus(None, obj, notify_script=False)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         if grabFocus:
             AXObject.grab_focus(obj)
 
@@ -456,7 +456,7 @@ class Utilities(script_utilities.Utilities):
 
     def inFindContainer(self, obj=None):
         if not obj:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         if self.inDocumentContent(obj):
             return False
@@ -1438,7 +1438,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
-        startTime = time.time()
+        start_time = time.time()
         if not obj:
             return []
 
@@ -1463,7 +1463,7 @@ class Utilities(script_utilities.Utilities):
                 return self._currentLineContents
 
         if layoutMode is None:
-            layoutMode = settings_manager.getManager().getSetting('layoutMode') \
+            layoutMode = settings_manager.get_manager().get_setting('layoutMode') \
                 or self._script.inFocusMode()
 
         objects = []
@@ -1608,7 +1608,7 @@ class Utilities(script_utilities.Utilities):
         if useCache:
             self._currentLineContents = objects
 
-        msg = f"INFO: Time to get line contents: {time.time() - startTime:.4f}s"
+        msg = f"INFO: Time to get line contents: {time.time() - start_time:.4f}s"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self._debugContentsInfo(obj, offset, objects, "Line (layout mode)")
@@ -1854,7 +1854,7 @@ class Utilities(script_utilities.Utilities):
 
     def inTopLevelWebApp(self, obj=None):
         if not obj:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         rv = self._inTopLevelWebApp.get(hash(obj))
         if rv is not None:
@@ -2273,11 +2273,11 @@ class Utilities(script_utilities.Utilities):
         return suggestion[-1] == obj
 
     def speakMathSymbolNames(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         return self.isMath(obj)
 
     def isInMath(self):
-        return self.isMath(focus_manager.getManager().get_locus_of_focus())
+        return self.isMath(focus_manager.get_manager().get_locus_of_focus())
 
     def isMath(self, obj):
         tag = self._getTag(obj)
@@ -2685,10 +2685,10 @@ class Utilities(script_utilities.Utilities):
         if self.isGridDescendant(obj):
             return not self._script.inFocusMode()
 
-        if input_event_manager.getManager().last_event_was_line_navigation():
+        if input_event_manager.get_manager().last_event_was_line_navigation():
             return False
 
-        if input_event_manager.getManager().last_event_was_mouse_button():
+        if input_event_manager.get_manager().last_event_was_mouse_button():
             return False
 
         return True
@@ -3965,11 +3965,11 @@ class Utilities(script_utilities.Utilities):
 
         return (event.type.startswith("object:text-changed") \
            or event.type.startswith("object:text-selection-changed")) \
-            and input_event_manager.getManager().last_event_was_up_or_down()
+            and input_event_manager.get_manager().last_event_was_up_or_down()
 
     def treatEventAsSpinnerValueChange(self, event):
         if event.type.startswith("object:text-caret-moved") and self.isSpinnerEntry(event.source):
-            if input_event_manager.getManager().last_event_was_up_or_down():
+            if input_event_manager.get_manager().last_event_was_up_or_down():
                 obj = self.getCaretContext()[0]
                 return event.source == obj
 
@@ -3981,7 +3981,7 @@ class Utilities(script_utilities.Utilities):
 
         if event.type.startswith("object:text-") \
            and self.isSingleLineAutocompleteEntry(event.source):
-            return input_event_manager.getManager().last_event_was_return()
+            return input_event_manager.get_manager().last_event_was_return()
         if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
             return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source) \
                 or AXUtilities.is_frame(event.source)
@@ -4011,7 +4011,7 @@ class Utilities(script_utilities.Utilities):
                 return True
 
             if obj == event.source and isComboBoxItem(obj) \
-               and input_event_manager.getManager().last_event_was_up_or_down():
+               and input_event_manager.get_manager().last_event_was_up_or_down():
                     return True
 
         return False
@@ -4033,9 +4033,9 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_menu_related(event.source):
             return False
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_entry(focus) and AXUtilities.is_focused(focus):
-            if not input_event_manager.getManager().last_event_was_up_or_down():
+            if not input_event_manager.get_manager().last_event_was_up_or_down():
                 return True
 
         return False
@@ -4045,12 +4045,12 @@ class Utilities(script_utilities.Utilities):
            or not self.isSingleLineAutocompleteEntry(event.source):
             return False
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_selectable(focus):
             return False
 
         if AXUtilities.is_menu_item_of_any_kind(focus) or AXUtilities.is_list_item(focus):
-            return input_event_manager.getManager().last_event_was_up_or_down()
+            return input_event_manager.get_manager().last_event_was_up_or_down()
 
         return False
 
@@ -4065,17 +4065,17 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(event.source):
             return False
 
-        if not self.inDocumentContent(focus_manager.getManager().get_locus_of_focus()):
+        if not self.inDocumentContent(focus_manager.get_manager().get_locus_of_focus()):
             return False
 
         return True
 
     def eventIsFromLocusOfFocusDocument(self, event):
-        if focus_manager.getManager().focus_is_active_window():
+        if focus_manager.get_manager().focus_is_active_window():
             focus = self.activeDocument()
             source = self.getTopLevelDocumentForObject(event.source)
         else:
-            focus = self.getDocumentForObject(focus_manager.getManager().get_locus_of_focus())
+            focus = self.getDocumentForObject(focus_manager.get_manager().get_locus_of_focus())
             source = self.getDocumentForObject(event.source)
 
         tokens = ["WEB: Event doc:", source, ". Focus doc:", focus, "."]
@@ -4099,7 +4099,7 @@ class Utilities(script_utilities.Utilities):
         if event.type != "object:selection-changed":
             return False
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not focus:
             msg = "WEB: Selection changed event is relevant (no locusOfFocus)"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4143,10 +4143,10 @@ class Utilities(script_utilities.Utilities):
            or not AXUtilities.is_editable(event.source):
             return False
 
-        if event.source != focus_manager.getManager().get_locus_of_focus():
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
             return False
 
-        return input_event_manager.getManager().last_event_was_printable_key()
+        return input_event_manager.get_manager().last_event_was_printable_key()
 
     def textEventIsForNonNavigableTextObject(self, event):
         if not event.type.startswith("object:text-"):
@@ -4168,7 +4168,7 @@ class Utilities(script_utilities.Utilities):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        oldFocus = oldFocus or focus_manager.getManager().get_locus_of_focus()
+        oldFocus = oldFocus or focus_manager.get_manager().get_locus_of_focus()
         if not self.isGridDescendant(oldFocus):
             return False
 
@@ -4189,7 +4189,7 @@ class Utilities(script_utilities.Utilities):
         if sourceID and fragment == sourceID:
             return True
 
-        oldFocus = oldFocus or focus_manager.getManager().get_locus_of_focus()
+        oldFocus = oldFocus or focus_manager.get_manager().get_locus_of_focus()
         if self.isLink(oldFocus):
             link = oldFocus
         else:
@@ -4305,7 +4305,7 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        startTime = time.time()
+        start_time = time.time()
         rv = None
         if AXUtilities.is_focusable(obj):
             tokens = ["WEB: Focusable object can have caret context", obj]
@@ -4375,12 +4375,12 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = True
         else:
-            tokens = ["WEB: ", obj, f"can have caret context. ({time.time() - startTime:.4f}s)"]
+            tokens = ["WEB: ", obj, f"can have caret context. ({time.time() - start_time:.4f}s)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = True
 
         self._canHaveCaretContextDecision[hash(obj)] = rv
-        msg = f"INFO: _canHaveCaretContext took {time.time() - startTime:.4f}s"
+        msg = f"INFO: _canHaveCaretContext took {time.time() - start_time:.4f}s"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -4414,7 +4414,7 @@ class Utilities(script_utilities.Utilities):
         return None, -1
 
     def _getCaretContextViaLocusOfFocus(self):
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         msg = "WEB: Getting caret context via locusOfFocus"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         if not self.inDocumentContent(obj):
@@ -4506,7 +4506,7 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not focus_manager.getManager().focus_is_dead():
+        if not focus_manager.get_manager().focus_is_dead():
             msg = "WEB: Not event from context replicant, locus of focus is not dead."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
@@ -4533,7 +4533,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Is event from context replicant. Notify:", notify]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        focus_manager.getManager().set_locus_of_focus(event, replicant, notify)
+        focus_manager.get_manager().set_locus_of_focus(event, replicant, notify)
         self.setCaretContext(replicant, offset, documentFrame)
         return True
 
@@ -4563,24 +4563,24 @@ class Utilities(script_utilities.Utilities):
             return False
 
         names = self._script.pointOfReference.get('names', {})
-        oldName = names.get(hash(focus_manager.getManager().get_locus_of_focus()))
+        oldName = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
         notify = AXObject.get_name(item) != oldName
 
         tokens = ["WEB: Recovered from removed child. New focus is: ", item, "0"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.getManager().set_locus_of_focus(event, item, notify)
+        focus_manager.get_manager().set_locus_of_focus(event, item, notify)
         self.setCaretContext(item, 0)
         return True
 
     def handleEventForRemovedChild(self, event):
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if event.any_data == focus:
             msg = "WEB: Removed child is locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         elif AXObject.find_ancestor(focus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-        elif focus_manager.getManager().focus_is_dead() \
+        elif focus_manager.get_manager().focus_is_dead() \
            and self.isSameObject(event.any_data, focus, True, True):
             msg = "WEB: Removed child appears to be replicant of locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4600,7 +4600,7 @@ class Utilities(script_utilities.Utilities):
         obj, offset = None, -1
         notify = True
         childCount = AXObject.get_child_count(event.source)
-        if input_event_manager.getManager().last_event_was_up():
+        if input_event_manager.get_manager().last_event_was_up():
             if event.detail1 >= childCount:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4617,7 +4617,7 @@ class Utilities(script_utilities.Utilities):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 obj, offset = self.previousContext(prevObj, -1)
 
-        elif input_event_manager.getManager().last_event_was_down():
+        elif input_event_manager.get_manager().last_event_was_down():
             if event.detail1 == 0:
                 msg = "WEB: First child removed. Getting new location from start of parent."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -4647,14 +4647,14 @@ class Utilities(script_utilities.Utilities):
 
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
-            if obj and focus_manager.getManager().focus_is_dead() and AXUtilities.is_focused(obj):
+            if obj and focus_manager.get_manager().focus_is_dead() and AXUtilities.is_focused(obj):
                 names = self._script.pointOfReference.get('names', {})
-                oldName = names.get(hash(focus_manager.getManager().get_locus_of_focus()))
+                oldName = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
                 notify = AXObject.get_name(obj) != oldName
 
         if obj:
             msg = "WEB: Setting locusOfFocus and context to: %s, %i" % (obj, offset)
-            focus_manager.getManager().set_locus_of_focus(event, obj, notify)
+            focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
             self.setCaretContext(obj, offset)
             return True
 
@@ -4745,7 +4745,7 @@ class Utilities(script_utilities.Utilities):
         length = AXText.get_character_count(obj)
         if treatAsText and offset >= length:
             if self.isContentEditableWithEmbeddedObjects(obj) \
-               and input_event_manager.getManager().last_event_was_character_navigation():
+               and input_event_manager.get_manager().last_event_was_character_navigation():
                 nextObj, nextOffset = self.nextContext(obj, length)
                 if not nextObj:
                     tokens = ["WEB: No next object found at end of contenteditable", obj]
@@ -4816,10 +4816,10 @@ class Utilities(script_utilities.Utilities):
         return self._findFirstCaretContext(child, 0)
 
     def findNextCaretInOrder(self, obj=None, offset=-1):
-        startTime = time.time()
+        start_time = time.time()
         rv = self._findNextCaretInOrder(obj, offset)
         tokens = ["WEB: Next caret in order for", obj, ", ", offset, ":",
-                  rv[0], ", ", rv[1], f"({time.time() - startTime:.4f}s)"]
+                  rv[0], ", ", rv[1], f"({time.time() - start_time:.4f}s)"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
@@ -4885,10 +4885,10 @@ class Utilities(script_utilities.Utilities):
         return None, -1
 
     def findPreviousCaretInOrder(self, obj=None, offset=-1):
-        startTime = time.time()
+        start_time = time.time()
         rv = self._findPreviousCaretInOrder(obj, offset)
         tokens = ["WEB: Previous caret in order for", obj, ", ", offset, ":",
-                  rv[0], ", ", rv[1], f"({time.time() - startTime:.4f}s)"]
+                  rv[0], ", ", rv[1], f"({time.time() - start_time:.4f}s)"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
@@ -4969,13 +4969,13 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def handleAsLiveRegion(self, event):
-        if not settings_manager.getManager().getSetting('inferLiveRegions'):
+        if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             return False
 
         if not self.isLiveRegion(event.source):
             return False
 
-        if not settings_manager.getManager().getSetting('presentLiveRegionFromInactiveTab') \
+        if not settings_manager.get_manager().get_setting('presentLiveRegionFromInactiveTab') \
            and self.getTopLevelDocumentForObject(event.source) != self.activeDocument():
             msg = "WEB: Live region source is not in active tab."
             debug.printMessage(debug.LEVEL_INFO, msg, True)

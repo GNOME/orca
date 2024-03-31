@@ -82,4 +82,4 @@ class Script(default.Script):
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        focus_manager.getManager().set_locus_of_focus(event, event.source)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source)

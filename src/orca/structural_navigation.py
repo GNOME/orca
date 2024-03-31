@@ -655,7 +655,7 @@ class StructuralNavigation:
                 self._bindings.add(keybinding)
 
         # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.getManager().overrideKeyBindings(
+        self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
         msg = f"STRUCTURAL NAVIGATION: Bindings set up. Suspended: {self._suspended}"
@@ -667,7 +667,7 @@ class StructuralNavigation:
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         result = manager.last_event_equals_or_is_release_for_event(self._last_input_event)
         if self._last_input_event is not None:
             string = self._last_input_event.asSingleLineString()
@@ -738,7 +738,7 @@ class StructuralNavigation:
         """Returns all the instances of structuralNavigationObject."""
 
         modalDialog = self._script.utilities.getModalDialog(
-            focus_manager.getManager().get_locus_of_focus())
+            focus_manager.get_manager().get_locus_of_focus())
         inModalDialog = bool(modalDialog)
         if self._inModalDialog != inModalDialog:
             msg = (
@@ -1030,7 +1030,7 @@ class StructuralNavigation:
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
-           and settings_manager.getManager().getSetting('structNavInSayAll'):
+           and settings_manager.get_manager().get_setting('structNavInSayAll'):
             self._script.sayAll(obj, offset)
             return True
 
@@ -1739,7 +1739,7 @@ class StructuralNavigation:
 
         thisList = None
         priorList = None
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_list_item(obj):
             thisList = AXObject.find_ancestor(obj, AXUtilities.is_list)
             priorList = AXObject.find_ancestor(focus, AXUtilities.is_list)

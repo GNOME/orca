@@ -112,7 +112,7 @@ class BrlCell(Gtk.Button):
         to what occurs when a user presses the cursor routing key on his/her
         hardware braille display."""
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if script is None:
             return
 

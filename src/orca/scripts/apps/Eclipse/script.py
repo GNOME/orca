@@ -47,7 +47,7 @@ class Script(gtk.Script):
         # the text selected because probably we are in a parameter list
         # and we are jumping between the parameters with the tab key.
         hasSelection = False
-        if input_event_manager.getManager().last_event_was_tab_navigation():
+        if input_event_manager.get_manager().last_event_was_tab_navigation():
             text, startOffset, endOffset = AXText.get_selected_text(obj)
             hasSelection = endOffset > 0
 
@@ -65,11 +65,11 @@ class Script(gtk.Script):
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits.
         if AXUtilities.is_panel(event.source):
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         if AXUtilities.is_text(event.source) \
-           and input_event_manager.getManager().last_event_was_unmodified_arrow() \
+           and input_event_manager.get_manager().last_event_was_unmodified_arrow() \
            and self.utilities.inMenu():
             msg = "ECLIPSE: Ignoring event. In menu."
             debug.printMessage(debug.LEVEL_INFO, msg, True)

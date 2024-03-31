@@ -116,7 +116,7 @@ class Script(gtk.Script):
 
         # If we're here, the locusOfFocus was in the selection list when
         # that list got destroyed and repopulated. Focus is still there.
-        focus_manager.getManager().set_locus_of_focus(event, event.source, False)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.updateBraille(event.source)
 
     def on_sensitive_changed(self, event):
@@ -131,7 +131,7 @@ class Script(gtk.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source == focus:
             gtk.Script.on_text_selection_changed(self, event)
             return
@@ -143,7 +143,7 @@ class Script(gtk.Script):
             return
 
         # To avoid extreme chattiness.
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         if manager.last_event_was_backspace() or manager.last_event_was_delete():
             return
 
@@ -158,7 +158,7 @@ class Script(gtk.Script):
 
         self.spellcheck.presentErrorDetails()
         entry = self.spellcheck.getChangeToEntry()
-        focus_manager.getManager().set_locus_of_focus(None, entry, False)
+        focus_manager.get_manager().set_locus_of_focus(None, entry, False)
         self.updateBraille(entry)
 
     def on_window_deactivated(self, event):

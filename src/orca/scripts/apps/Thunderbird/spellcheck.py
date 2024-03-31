@@ -43,11 +43,11 @@ class SpellCheck(spellcheck.SpellCheck):
         if event.source != self._changeToEntry:
             return False
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_push_button(focus):
             return False
 
-        return input_event_manager.getManager().last_event_was_shortcut_for(focus)
+        return input_event_manager.get_manager().last_event_was_shortcut_for(focus)
 
     def _isCandidateWindow(self, window):
         if not AXUtilities.is_dialog(window):

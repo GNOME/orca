@@ -121,14 +121,14 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = script_manager.getManager().getActiveScript()
+            script = script_manager.get_manager().get_active_script()
 
         if script is not None:
             script.presentMessage(messages.VERSION)
             script.speakMessage(messages.LEARN_MODE_START_SPEECH)
             script.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
 
-        input_event_manager.getManager().grab_keyboard("Entering learn mode")
+        input_event_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._is_active = True
@@ -143,12 +143,12 @@ class LearnModePresenter:
             return True
 
         if script is None:
-            script = script_manager.getManager().getActiveScript()
+            script = script_manager.get_manager().get_active_script()
 
         if script is not None:
             script.presentMessage(messages.LEARN_MODE_STOP)
 
-        input_event_manager.getManager().ungrab_keyboard("Exiting learn mode")
+        input_event_manager.get_manager().ungrab_keyboard("Exiting learn mode")
         msg = "LEARN MODE PRESENTER: Is now inactive"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._is_active = False
@@ -163,7 +163,7 @@ class LearnModePresenter:
         if not isinstance(event, input_event.KeyboardEvent):
             return False
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         script.speakKeyEvent(event)
         if event.isPrintableKey() and event.getClickCount() == 2 \
            and event.getHandler() is None:
@@ -195,7 +195,7 @@ class LearnModePresenter:
             return True
 
         if handler.learnModeEnabled and handler.description:
-            script = script_manager.getManager().getActiveScript()
+            script = script_manager.get_manager().get_active_script()
             script.presentMessage(handler.description)
 
         return True
@@ -203,7 +203,7 @@ class LearnModePresenter:
     def list_orca_shortcuts(self, script, event):
         """Shows a simple gui listing Orca's bound commands."""
 
-        layout = settings_manager.getManager().getSetting("keyboardLayout")
+        layout = settings_manager.get_manager().get_setting("keyboardLayout")
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
         items = 0
@@ -373,7 +373,7 @@ class CommandListGUI:
 
 
 _presenter = LearnModePresenter()
-def getPresenter():
+def get_presenter():
     """Returns the Learn Mode Presenter"""
 
     return _presenter

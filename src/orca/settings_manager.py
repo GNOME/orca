@@ -19,8 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Settings manager module. This will load/save user settings from a 
-defined settings backend."""
+"""Settings backend manager."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -41,7 +40,7 @@ from .ax_object import AXObject
 from .keybindings import KeyBinding
 
 try:
-    _proxy = Gio.DBusProxy.new_for_bus_sync(
+    _PROXY = Gio.DBusProxy.new_for_bus_sync(
         Gio.BusType.SESSION,
         Gio.DBusProxyFlags.NONE,
         None,
@@ -50,12 +49,12 @@ try:
         'org.freedesktop.DBus.Properties',
         None)
 except Exception:
-    _proxy = None
+    _PROXY = None
 
 
-class SettingsManager(object):
-    """Settings backend manager. This class manages orca user's settings
-    using different backends"""
+class SettingsManager:
+    """Settings backend manager"""
+
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -73,25 +72,25 @@ class SettingsManager(object):
 
         debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
 
-        self.backendModule = None
+        self.backend_module = None
         self._backend = None
         self.profile = None
-        self.backendName = backend
-        self._prefsDir = None
+        self.backend_name = backend
+        self._prefs_dir = None
 
         # Dictionaries for store the default values
         # The keys and values are defined at orca.settings
         #
-        self.defaultGeneral = {}
-        self.defaultPronunciations = {}
-        self.defaultKeybindings = {}
+        self.default_general = {}
+        self.default_pronunciations = {}
+        self.default_keybindings = {}
 
         # Dictionaries that store the key:value pairs which values are
         # different from the current profile and the default ones
         #
-        self.profileGeneral = {}
-        self.profilePronunciations = {}
-        self.profileKeybindings = {}
+        self.profile_general = {}
+        self.profile_pronunciations = {}
+        self.profile_keybindings = {}
 
         # Dictionaries that store the current settings.
         # They are result to overwrite the default values with
@@ -100,16 +99,16 @@ class SettingsManager(object):
         self.pronunciations = {}
         self.keybindings = {}
 
-        self._activeApp = ""
-        self._appGeneral = {}
+        self._active_app = ""
+        self._app_general = {}
         self._appPronunciations = {}
         self._appKeybindings = {}
 
-        if not self._loadBackend():
-            raise Exception('SettingsManager._loadBackend failed.')
+        if not self._load_backend():
+            raise Exception('SettingsManager._load_backend failed.')
 
-        self.customizedSettings = {}
-        self._customizationCompleted = False
+        self.customized_settings = {}
+        self._customization_completed = False
 
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
@@ -117,28 +116,30 @@ class SettingsManager(object):
         debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
 
     def activate(self, prefsDir=None, customSettings={}):
+        """Activates this manager."""
+
         debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
 
-        self.customizedSettings.update(customSettings)
-        self._prefsDir = prefsDir \
+        self.customized_settings.update(customSettings)
+        self._prefs_dir = prefsDir \
             or os.path.join(GLib.get_user_data_dir(), "orca")
 
         # Load the backend and the default values
-        self._backend = self.backendModule.Backend(self._prefsDir)
-        self._setDefaultGeneral()
-        self._setDefaultPronunciations()
-        self._setDefaultKeybindings()
-        self.general = self.defaultGeneral.copy()
-        if not self.isFirstStart():
+        self._backend = self.backend_module.Backend(self._prefs_dir)
+        self._set_default_general()
+        self._set_default_pronunciations()
+        self._set_default_keybindings()
+        self.general = self.default_general.copy()
+        if not self.is_first_start():
             self.general.update(self._backend.getGeneral())
-        self.pronunciations = self.defaultPronunciations.copy()
-        self.keybindings = self.defaultKeybindings.copy()
+        self.pronunciations = self.default_pronunciations.copy()
+        self.keybindings = self.default_keybindings.copy()
 
         # If this is the first time we launch Orca, there is no user settings
         # yet, so we need to create the user config directories and store the
         # initial default settings
         #
-        self._createDefaults()
+        self._create_defaults()
 
         debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
@@ -151,104 +152,103 @@ class SettingsManager(object):
             tokens = ["SETTINGS MANAGER: Current profile is now", self.profile]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        self.setProfile(self.profile)
+        self.set_profile(self.profile)
 
-    def _loadBackend(self):
-        """Load specific backend for manage user settings"""
+    def _load_backend(self):
+        """Loads backend for managing user settings"""
 
         try:
-            backend = f'.backends.{self.backendName}_backend'
-            self.backendModule = importlib.import_module(backend, 'orca')
+            backend = f'.backends.{self.backend_name}_backend'
+            self.backend_module = importlib.import_module(backend, 'orca')
             return True
         except Exception:
             return False
 
-    def _createDefaults(self):
-        """Let the active backend to create the initial structure
-        for storing the settings and save the default ones from
-        orca.settings"""
-        def _createDir(dirName):
+    def _create_defaults(self):
+        """Creates the initial structure for storing the default settings."""
+
+        def _create_dir(dirName):
             if not os.path.isdir(dirName):
                 os.makedirs(dirName)
 
         # Set up the user's preferences directory
         # ($XDG_DATA_HOME/orca by default).
         #
-        orcaDir = self._prefsDir
-        _createDir(orcaDir)
+        orca_dir = self._prefs_dir
+        _create_dir(orca_dir)
 
         # Set up $XDG_DATA_HOME/orca/orca-scripts as a Python package
         #
-        orcaScriptDir = os.path.join(orcaDir, "orca-scripts")
-        _createDir(orcaScriptDir)
-        initFile = os.path.join(orcaScriptDir, "__init__.py")
+        orca_script_dir = os.path.join(orca_dir, "orca-scripts")
+        _create_dir(orca_script_dir)
+        initFile = os.path.join(orca_script_dir, "__init__.py")
         if not os.path.exists(initFile):
             os.close(os.open(initFile, os.O_CREAT, 0o700))
 
-        orcaSettingsDir = os.path.join(orcaDir, "app-settings")
-        _createDir(orcaSettingsDir)
+        orcaSettingsDir = os.path.join(orca_dir, "app-settings")
+        _create_dir(orcaSettingsDir)
 
-        orcaSoundsDir = os.path.join(orcaDir, "sounds")
-        _createDir(orcaSoundsDir)
+        orcaSoundsDir = os.path.join(orca_dir, "sounds")
+        _create_dir(orcaSoundsDir)
 
         # Set up $XDG_DATA_HOME/orca/orca-customizations.py empty file and
-        # define orcaDir as a Python package.
-        initFile = os.path.join(orcaDir, "__init__.py")
+        # define orca_dir as a Python package.
+        initFile = os.path.join(orca_dir, "__init__.py")
         if not os.path.exists(initFile):
             os.close(os.open(initFile, os.O_CREAT, 0o700))
 
-        userCustomFile = os.path.join(orcaDir, "orca-customizations.py")
+        userCustomFile = os.path.join(orca_dir, "orca-customizations.py")
         if not os.path.exists(userCustomFile):
             os.close(os.open(userCustomFile, os.O_CREAT, 0o700))
 
-        if self.isFirstStart():
-            self._backend.saveDefaultSettings(self.defaultGeneral,
-                                              self.defaultPronunciations,
-                                              self.defaultKeybindings)
+        if self.is_first_start():
+            self._backend.saveDefaultSettings(self.default_general,
+                                              self.default_pronunciations,
+                                              self.default_keybindings)
 
-    def _setDefaultPronunciations(self):
+    def _set_default_pronunciations(self):
         """Get the pronunciations by default from orca.settings"""
-        self.defaultPronunciations = {}
+        self.default_pronunciations = {}
 
-    def _setDefaultKeybindings(self):
+    def _set_default_keybindings(self):
         """Get the keybindings by default from orca.settings"""
-        self.defaultKeybindings = {}
+        self.default_keybindings = {}
 
-    def _setDefaultGeneral(self):
+    def _set_default_general(self):
         """Get the general settings by default from orca.settings"""
-        self._getCustomizedSettings()
-        self.defaultGeneral = {}
+        self._get_customized_settings()
+        self.default_general = {}
         for key in settings.userCustomizableSettings:
-            value = self.customizedSettings.get(key)
+            value = self.customized_settings.get(key)
             if value is None:
                 try:
                     value = getattr(settings, key)
                 except Exception:
                     pass
-            self.defaultGeneral[key] = value
+            self.default_general[key] = value
 
-    def _getCustomizedSettings(self):
-        if self._customizationCompleted:
-            return self.customizedSettings
+    def _get_customized_settings(self):
+        if self._customization_completed:
+            return self.customized_settings
 
         originalSettings = {}
         for key, value in settings.__dict__.items():
             originalSettings[key] = value
 
-        self._customizationCompleted = self._loadUserCustomizations()
+        self._customization_completed = self._load_user_customizations()
 
         for key, value in originalSettings.items():
             customValue = settings.__dict__.get(key)
             if value != customValue:
-                self.customizedSettings[key] = customValue
+                self.customized_settings[key] = customValue
 
-    def _loadUserCustomizations(self):
+    def _load_user_customizations(self):
         """Attempt to load the user's orca-customizations. Returns a boolean
         indicating our success at doing so, where success is measured by the
         likelihood that the results won't be different if we keep trying."""
 
         success = False
-        pathList = [self._prefsDir]
+        pathList = [self._prefs_dir]
         tokens = ["SETTINGS MANAGER: Attempt to load orca-customizations"]
         module_path = pathList[0] + "/orca-customizations.py"
 
@@ -271,17 +271,17 @@ class SettingsManager(object):
         debug.printTokens(debug.LEVEL_ALL, tokens, True)
         return success
 
-    def getPrefsDir(self):
-        return self._prefsDir
+    def get_prefs_dir(self):
+        return self._prefs_dir
 
-    def setSetting(self, settingName, settingValue):
-        self._setSettingsRuntime({settingName:settingValue})
+    def set_setting(self, settingName, settingValue):
+        self._set_settings_runtime({settingName:settingValue})
 
-    def getSetting(self, settingName):
+    def get_setting(self, settingName):
         return getattr(settings, settingName, None)
 
-    def getVoiceLocale(self, voice='default'):
-        voices = self.getSetting('voices')
+    def get_voice_locale(self, voice='default'):
+        voices = self.get_setting('voices')
         v = ACSS(voices.get(voice, {}))
         lang = v.getLocale()
         dialect = v.getDialect()
@@ -289,23 +289,23 @@ class SettingsManager(object):
             lang = f"{lang}_{dialect.upper()}"
         return lang
 
-    def getSpeechServerFactories(self):
+    def get_speech_server_factories(self):
         """Imports all known SpeechServer factory modules."""
 
         factories = []
-        for moduleName in self.getSetting('speechFactoryModules'):
+        for module_name in self.get_setting('speechFactoryModules'):
             try:
-                module = importlib.import_module(f'orca.{moduleName}')
+                module = importlib.import_module(f'orca.{module_name}')
                 factories.append(module)
-                tokens = ["SETTINGS MANAGER: Valid speech server factory:", moduleName]
+                tokens = ["SETTINGS MANAGER: Valid speech server factory:", module_name]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             except Exception:
-                tokens = ["SETTINGS MANAGER: Invalid speech server factory:", moduleName]
+                tokens = ["SETTINGS MANAGER: Invalid speech server factory:", module_name]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         return factories
 
-    def _loadProfileSettings(self, profile=None):
+    def _load_profile_settings(self, profile=None):
         """Get from the active backend all the settings for the current
         profile and store them in the object's attributes.
         A profile can be passed as a parameter. This could be useful for
@@ -316,32 +316,32 @@ class SettingsManager(object):
 
         if profile is None:
             profile = self.profile
-        self.profileGeneral = self.getGeneralSettings(profile) or {}
-        self.profilePronunciations = self.getPronunciations(profile) or {}
-        self.profileKeybindings = self.getKeybindings(profile) or {}
+        self.profile_general = self.get_general_settings(profile) or {}
+        self.profile_pronunciations = self.get_pronunciations(profile) or {}
+        self.profile_keybindings = self.get_keybindings(profile) or {}
 
         tokens = ["SETTINGS MANAGER: Settings for", profile, "profile loaded"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    def _mergeSettings(self):
+    def _merge_settings(self):
         """Update the changed values on the profile settings
         over the current and active settings"""
 
         msg = 'SETTINGS MANAGER: Merging settings.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.profileGeneral.update(self._appGeneral)
-        self.profilePronunciations.update(self._appPronunciations)
-        self.profileKeybindings.update(self._appKeybindings)
+        self.profile_general.update(self._app_general)
+        self.profile_pronunciations.update(self._appPronunciations)
+        self.profile_keybindings.update(self._appKeybindings)
 
-        self.general.update(self.profileGeneral)
-        self.pronunciations.update(self.profilePronunciations)
-        self.keybindings.update(self.profileKeybindings)
+        self.general.update(self.profile_general)
+        self.pronunciations.update(self.profile_pronunciations)
+        self.keybindings.update(self.profile_keybindings)
 
         msg = 'SETTINGS MANAGER: Settings merged.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _enableAccessibility(self):
+    def _enable_accessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and
         then back in for this to take effect.
 
@@ -349,68 +349,68 @@ class SettingsManager(object):
         set prior to this call).
         """
 
-        alreadyEnabled = self.isAccessibilityEnabled()
+        alreadyEnabled = self.is_accessibility_enabled()
         if not alreadyEnabled:
-            self.setAccessibility(True)
+            self.set_accessibility(True)
 
         return not alreadyEnabled
 
-    def isAccessibilityEnabled(self):
+    def is_accessibility_enabled(self):
         msg = 'SETTINGS MANAGER: Checking if accessibility is enabled.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         msg = 'SETTINGS MANAGER: Accessibility enabled: '
-        if not _proxy:
+        if not _PROXY:
             rv = False
             msg += 'Error (no proxy)'
         else:
-            rv = _proxy.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
+            rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
             msg += str(rv)
 
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
-    def setAccessibility(self, enable):
+    def set_accessibility(self, enable):
         msg = f'SETTINGS MANAGER: Attempting to set accessibility to {enable}.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if not _proxy:
+        if not _PROXY:
             msg = 'SETTINGS MANAGER: Error (no proxy)'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         vEnable = GLib.Variant('b', enable)
-        _proxy.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
+        _PROXY.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
 
         msg = f'SETTINGS MANAGER: Finished setting accessibility to {enable}.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def isScreenReaderServiceEnabled(self):
+    def is_screen_reader_service_enabled(self):
         """Returns True if the screen reader service is enabled. Note that
         this does not necessarily mean that Orca (or any other screen reader)
         is running at the moment."""
 
         msg = 'SETTINGS MANAGER: Is screen reader service enabled? '
 
-        if not _proxy:
+        if not _PROXY:
             rv = False
             msg += 'Error (no proxy)'
         else:
-            rv = _proxy.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
+            rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
             msg += str(rv)
 
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
 
-    def setStartingProfile(self, profile=None):
+    def set_starting_profile(self, profile=None):
         if profile is None:
             profile = settings.profile
         self._backend._setProfileKey('startingProfile', profile)
 
-    def getProfile(self):
+    def get_profile(self):
         return self.profile
 
-    def setProfile(self, profile='default', updateLocale=False):
+    def set_profile(self, profile='default', updateLocale=False):
         """Set a specific profile as the active one.
         Also the settings from that profile will be loading
         and updated the current settings with them."""
@@ -418,16 +418,16 @@ class SettingsManager(object):
         tokens = ["SETTINGS MANAGER: Setting profile to:", profile]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        oldVoiceLocale = self.getVoiceLocale('default')
+        oldVoiceLocale = self.get_voice_locale('default')
         self.profile = profile
-        self._loadProfileSettings(profile)
-        self._mergeSettings()
-        self._setSettingsRuntime(self.general)
+        self._load_profile_settings(profile)
+        self._merge_settings()
+        self._set_settings_runtime(self.general)
 
         if not updateLocale:
             return
 
-        newVoiceLocale = self.getVoiceLocale('default')
+        newVoiceLocale = self.get_voice_locale('default')
         if oldVoiceLocale != newVoiceLocale:
             orca_i18n.setLocaleForNames(newVoiceLocale)
             orca_i18n.setLocaleForMessages(newVoiceLocale)
@@ -436,111 +436,111 @@ class SettingsManager(object):
         tokens = ["SETTINGS MANAGER: Profile set to:", profile]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    def removeProfile(self, profile):
-        self._backend.removeProfile(profile)
+    def remove_profile(self, profile):
+        self._backend.remove_profile(profile)
 
-    def _setSettingsRuntime(self, settingsDict):
+    def _set_settings_runtime(self, settingsDict):
         msg = 'SETTINGS MANAGER: Setting runtime settings.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         for key, value in settingsDict.items():
             setattr(settings, str(key), value)
-        self._getCustomizedSettings()
-        for key, value in self.customizedSettings.items():
+        self._get_customized_settings()
+        for key, value in self.customized_settings.items():
             setattr(settings, str(key), value)
 
         msg = 'SETTINGS MANAGER: Runtime settings set.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _setPronunciationsRuntime(self, pronunciationsDict):
+    def _set_pronunciations_runtime(self, pronunciationsDict):
         pronunciation_dict.pronunciation_dict = {}
         for key, value in pronunciationsDict.values():
             if key and value:
                 pronunciation_dict.setPronunciation(key, value)
 
-    def getGeneralSettings(self, profile='default'):
+    def get_general_settings(self, profile='default'):
         """Return the current general settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
         return self._backend.getGeneral(profile)
 
-    def getPronunciations(self, profile='default'):
+    def get_pronunciations(self, profile='default'):
         """Return the current pronunciations settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
-        return self._backend.getPronunciations(profile)
+        return self._backend.get_pronunciations(profile)
 
-    def getKeybindings(self, profile='default'):
+    def get_keybindings(self, profile='default'):
         """Return the current keybindings settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
-        return self._backend.getKeybindings(profile)
+        return self._backend.get_keybindings(profile)
 
-    def _setProfileGeneral(self, general):
+    def _set_profile_general(self, general):
         """Set the changed general settings from the defaults' ones
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting general settings for profile'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.profileGeneral = {}
+        self.profile_general = {}
 
         for key, value in general.items():
             if key in ['startingProfile', 'activeProfile']:
                 continue
             elif key == 'profile':
-                self.profileGeneral[key] = value
-            elif value != self.defaultGeneral.get(key):
-                self.profileGeneral[key] = value
+                self.profile_general[key] = value
+            elif value != self.default_general.get(key):
+                self.profile_general[key] = value
             elif self.general.get(key) != value:
-                self.profileGeneral[key] = value
+                self.profile_general[key] = value
 
         msg = 'SETTINGS MANAGER: General settings for profile set'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _setProfilePronunciations(self, pronunciations):
+    def _set_profile_pronunciations(self, pronunciations):
         """Set the changed pronunciations settings from the defaults' ones
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting pronunciation settings for profile.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.profilePronunciations = self.defaultPronunciations.copy()
-        self.profilePronunciations.update(pronunciations)
+        self.profile_pronunciations = self.default_pronunciations.copy()
+        self.profile_pronunciations.update(pronunciations)
 
         msg = 'SETTINGS MANAGER: Pronunciation settings for profile set.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _setProfileKeybindings(self, keybindings):
+    def _set_profile_keybindings(self, keybindings):
         """Set the changed keybindings settings from the defaults' ones
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting keybindings settings for profile.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.profileKeybindings = self.defaultKeybindings.copy()
-        self.profileKeybindings.update(keybindings)
+        self.profile_keybindings = self.default_keybindings.copy()
+        self.profile_keybindings.update(keybindings)
 
         msg = 'SETTINGS MANAGER: Keybindings settings for profile set.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def _saveAppSettings(self, appName, general, pronunciations, keybindings):
+    def _save_app_settings(self, appName, general, pronunciations, keybindings):
         appGeneral = {}
-        profileGeneral = self.getGeneralSettings(self.profile)
+        profile_general = self.get_general_settings(self.profile)
         for key, value in general.items():
-            if value != profileGeneral.get(key):
+            if value != profile_general.get(key):
                 appGeneral[key] = value
 
         appPronunciations = {}
-        profilePronunciations = self.getPronunciations(self.profile)
+        profile_pronunciations = self.get_pronunciations(self.profile)
         for key, value in pronunciations.items():
-            if value != profilePronunciations.get(key):
+            if value != profile_pronunciations.get(key):
                 appPronunciations[key] = value
 
         appKeybindings = {}
-        profileKeybindings = self.getKeybindings(self.profile)
+        profile_keybindings = self.get_keybindings(self.profile)
         for key, value in keybindings.items():
-            if value != profileKeybindings.get(key):
+            if value != profile_keybindings.get(key):
                 appKeybindings[key] = value
 
         self._backend.saveAppSettings(appName,
@@ -549,14 +549,14 @@ class SettingsManager(object):
                                       appPronunciations,
                                       appKeybindings)
 
-    def saveSettings(self, script, general, pronunciations, keybindings):
+    def save_settings(self, script, general, pronunciations, keybindings):
         """Save the settings provided for the script provided."""
 
         tokens = ["SETTINGS MANAGER: Saving settings for", script, "(app:", script.app, ")"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         app = script.app
         if app:
-            self._saveAppSettings(AXObject.get_name(app), general, pronunciations, keybindings)
+            self._save_app_settings(AXObject.get_name(app), general, pronunciations, keybindings)
             return
 
         # Assign current profile
@@ -566,26 +566,26 @@ class SettingsManager(object):
         self.profile = currentProfile
 
         # Elements that need to stay updated in main configuration.
-        self.defaultGeneral['startingProfile'] = general.get('startingProfile',
+        self.default_general['startingProfile'] = general.get('startingProfile',
                                                               _profile)
 
-        self._setProfileGeneral(general)
-        self._setProfilePronunciations(pronunciations)
-        self._setProfileKeybindings(keybindings)
+        self._set_profile_general(general)
+        self._set_profile_pronunciations(pronunciations)
+        self._set_profile_keybindings(keybindings)
 
         tokens = ["SETTINGS MANAGER: Saving for backend", self._backend]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._backend.saveProfileSettings(self.profile,
-                                          self.profileGeneral,
-                                          self.profilePronunciations,
-                                          self.profileKeybindings)
+                                          self.profile_general,
+                                          self.profile_pronunciations,
+                                          self.profile_keybindings)
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return self._enableAccessibility()
+        return self._enable_accessibility()
 
-    def _adjustBindingTupleValues(self, bindingTuple):
+    def _adjust_binding_tuple_values(self, bindingTuple):
         """Converts the values of bindingTuple into KeyBinding-ready values."""
 
         keysym, mask, mods, clicks = bindingTuple
@@ -596,11 +596,11 @@ class SettingsManager(object):
 
         return bindingTuple
 
-    def overrideKeyBindings(self, handlers, bindings, enabledOnly=True):
+    def override_key_bindings(self, handlers, bindings, enabledOnly=True):
         # TODO - JD: See about moving this logic, along with any callers, into KeyBindings.
         # Establishing and maintaining grabs should JustWork(tm) as part of the overall
         # keybinding/command process.
-        keybindingsSettings = self.profileKeybindings
+        keybindingsSettings = self.profile_keybindings
         for handlerString, bindingTuples in keybindingsSettings.items():
             handler = handlers.get(handlerString)
             if not handler:
@@ -632,7 +632,7 @@ class SettingsManager(object):
                 bindings.remove(b, True)
 
             for bindingTuple in bindingTuples:
-                bindingTuple = self._adjustBindingTupleValues(bindingTuple)
+                bindingTuple = self._adjust_binding_tuple_values(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
                 newBinding = KeyBinding(keysym, mask, mods, handler, clicks, enabled=wasEnabled)
                 bindings.add(newBinding)
@@ -641,20 +641,22 @@ class SettingsManager(object):
 
         return bindings
 
-    def isFirstStart(self):
+    def is_first_start(self):
         """Check if the firstStart key is True or false"""
-        return self._backend.isFirstStart()
+        return self._backend.is_first_start()
 
-    def availableProfiles(self):
+    def available_profiles(self):
         """Get available profiles from active backend"""
 
-        return self._backend.availableProfiles()
+        return self._backend.available_profiles()
 
-    def getAppSetting(self, app, settingName, fallbackOnDefault=True):
+    def get_app_setting(self, app, settingName, fallbackOnDefault=True):
+        """Returns the specified setting for app."""
+
         if not app:
             return None
 
-        appPrefs = self._backend.getAppSettings(AXObject.get_name(app))
+        appPrefs = self._backend.get_app_settings(AXObject.get_name(app))
         profiles = appPrefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
         general = profilePrefs.get('general', {})
@@ -665,12 +667,8 @@ class SettingsManager(object):
 
         return appSetting
 
-    def loadAppSettings(self, script):
-        """Load the users application specific settings for an app.
-
-        Arguments:
-        - script: the current active script.
-        """
+    def load_app_settings(self, script):
+        """Load the users application specific settings for an app."""
 
         if not (script and script.app):
             return
@@ -678,21 +676,22 @@ class SettingsManager(object):
         for key in self._appPronunciations.keys():
             self.pronunciations.pop(key)
 
-        prefs = self._backend.getAppSettings(AXObject.get_name(script.app))
+        prefs = self._backend.get_app_settings(AXObject.get_name(script.app))
         profiles = prefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
 
-        self._appGeneral = profilePrefs.get('general', {})
+        self._app_general = profilePrefs.get('general', {})
         self._appKeybindings = profilePrefs.get('keybindings', {})
         self._appPronunciations = profilePrefs.get('pronunciations', {})
-        self._activeApp = AXObject.get_name(script.app)
+        self._active_app = AXObject.get_name(script.app)
 
-        self._loadProfileSettings()
-        self._mergeSettings()
-        self._setSettingsRuntime(self.general)
-        self._setPronunciationsRuntime(self.pronunciations)
+        self._load_profile_settings()
+        self._merge_settings()
+        self._set_settings_runtime(self.general)
+        self._set_pronunciations_runtime(self.pronunciations)
 
 _manager = SettingsManager()
 
-def getManager():
+def get_manager():
+    """Returns the Settings Manager singleton."""
     return _manager

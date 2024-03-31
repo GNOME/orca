@@ -79,7 +79,7 @@ class Script(web.Script):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not focus_manager.getManager().can_be_active_window(event.source):
+           and not focus_manager.get_manager().can_be_active_window(event.source):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
@@ -383,7 +383,7 @@ class Script(web.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not focus_manager.getManager().can_be_active_window(event.source):
+        if not focus_manager.get_manager().can_be_active_window(event.source):
             return
 
         # If this is a frame for a popup menu, we don't want to treat
@@ -391,7 +391,7 @@ class Script(web.Script):
         # far as the end-user experience is concerned.
         menu = self.utilities.popupMenuForFrame(event.source)
         if menu:
-            focus_manager.getManager().set_active_window(event.source)
+            focus_manager.get_manager().set_active_window(event.source)
 
             activeItem = None
             selected = self.utilities.selectedChildren(menu)
@@ -402,16 +402,16 @@ class Script(web.Script):
                 # If this is the popup menu for the locusOfFocus, we don't want to
                 # present the popup menu as part of the new ancestry of activeItem.
                 if self.utilities.isPopupMenuForCurrentItem(menu):
-                    focus_manager.getManager().set_locus_of_focus(event, menu, False)
+                    focus_manager.get_manager().set_locus_of_focus(event, menu, False)
 
                 tokens = ["CHROMIUM: Setting locusOfFocus to active item", activeItem]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                focus_manager.getManager().set_locus_of_focus(event, activeItem)
+                focus_manager.get_manager().set_locus_of_focus(event, activeItem)
                 return
 
             tokens = ["CHROMIUM: Setting locusOfFocus to popup menu", menu]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.getManager().set_locus_of_focus(event, menu)
+            focus_manager.get_manager().set_locus_of_focus(event, menu)
 
         if super().on_window_activated(event):
             return

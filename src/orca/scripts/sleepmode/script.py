@@ -50,7 +50,7 @@ class Script(default.Script):
 
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        orca_modifier_manager.getManager().unset_orca_modifiers("Entering sleep mode.")
+        orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
         self.addKeyGrabs("script activation")
 
     def deactivate(self):
@@ -59,7 +59,7 @@ class Script(default.Script):
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.removeKeyGrabs("script deactivation")
-        orca_modifier_manager.getManager().refresh_orca_modifiers("Exiting sleep mode.")
+        orca_modifier_manager.get_manager().refresh_orca_modifiers("Exiting sleep mode.")
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
@@ -120,7 +120,7 @@ class Script(default.Script):
         tokens = ["SLEEP MODE: focus changed from", oldFocus, "to", newFocus, "due to", event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if oldFocus is None and AXUtilities.is_application(AXObject.get_parent(newFocus)):
-            focus_manager.getManager().clear_state("Sleep mode enabled for this app.")
+            focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
             self.clearBraille()
             self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
             return
@@ -270,7 +270,7 @@ class Script(default.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        focus_manager.getManager().clear_state("Sleep mode enabled for this app.")
+        focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
         self.clearBraille()
         self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
 

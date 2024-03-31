@@ -275,7 +275,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(settings_manager.getManager().getSetting('verbalizePunctuationStyle'))}\n"
+            f"{styles.get(settings_manager.get_manager().get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -487,7 +487,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._apply_acss(acss)
 
         name = character
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if script and script.utilities.speakMathSymbolNames():
             name = mathsymbols.getCharacterName(character)
 

@@ -200,7 +200,7 @@ class Generator:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return []
 
-        startTime = time.time()
+        start_time = time.time()
         result = []
         globalsDict = {}
         self._addGlobals(globalsDict)
@@ -283,7 +283,7 @@ class Generator:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
-        duration = f"{time.time() - startTime:.4f}"
+        duration = f"{time.time() - start_time:.4f}"
         debug.printMessage(debug.LEVEL_ALL, f"{' ' * 18}COMPLETION TIME: {duration}")
         self._debugResultInfo(result)
         if args.get('isProgressBarUpdate') and result and result[0]:
@@ -1250,7 +1250,7 @@ class Generator:
         return []
 
     def _getProgressBarUpdateInterval(self):
-        return int(settings_manager.getManager().getSetting('progressBarUpdateInterval'))
+        return int(settings_manager.get_manager().get_setting('progressBarUpdateInterval'))
 
     def _shouldPresentProgressBarUpdate(self, obj, **args):
         percent = AXValue.get_value_as_percent(obj)

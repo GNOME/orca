@@ -144,14 +144,14 @@ class SystemInformationPresenter:
     def present_time(self, script, event=None):
         """Presents the current time."""
 
-        time_format = settings_manager.getManager().getSetting('presentTimeFormat')
+        time_format = settings_manager.get_manager().get_setting('presentTimeFormat')
         script.presentMessage(time.strftime(time_format, time.localtime()))
         return True
 
     def present_date(self, script, event=None):
         """Presents the current date."""
 
-        data_format = settings_manager.getManager().getSetting('presentDateFormat')
+        data_format = settings_manager.get_manager().get_setting('presentDateFormat')
         script.presentMessage(time.strftime(data_format, time.localtime()))
         return True
 
@@ -193,5 +193,5 @@ class SystemInformationPresenter:
 
 
 _presenter = SystemInformationPresenter()
-def getPresenter():
+def get_presenter():
     return _presenter

@@ -121,8 +121,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def spreadSheetCellName(self, cell):
-        nameList = AXObject.get_name(cell).split()
-        for name in nameList:
+        name_list = AXObject.get_name(cell).split()
+        for name in name_list:
             name = name.replace('.', '')
             if not name.isalpha() and name.isalnum():
                 return name
@@ -160,7 +160,7 @@ class Utilities(script_utilities.Utilities):
             return super().isLayoutOnly(obj)
 
         if AXUtilities.is_frame(obj):
-            return name == AXObject.get_name(focus_manager.getManager().get_active_window())
+            return name == AXObject.get_name(focus_manager.get_manager().get_active_window())
 
         if AXUtilities.is_panel(obj) and AXObject.get_child_count(obj):
             if AXObject.get_name(AXObject.get_child(obj, 0)) == name:
@@ -206,7 +206,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj:
             return False
 
@@ -234,7 +234,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_paragraph(event.source):
             return False
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         if event.type.startswith("object:text-changed:insert"):
             if not event.any_data:
                 return False
@@ -276,7 +276,7 @@ class Utilities(script_utilities.Utilities):
         if not self.containingComboBox(event.source):
             return False
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         return manager.last_event_was_down() or manager.last_event_was_up()
 
     def isComboBoxNoise(self, event):
@@ -301,8 +301,8 @@ class Utilities(script_utilities.Utilities):
 
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return input_event_manager.getManager().last_event_was_delete() \
-                and focus_manager.getManager().focus_is_dead()
+            return input_event_manager.get_manager().last_event_was_delete() \
+                and focus_manager.get_manager().focus_is_dead()
 
         return super().isSelectedTextDeletionEvent(event)
 
@@ -338,7 +338,7 @@ class Utilities(script_utilities.Utilities):
         if self._script.getTableNavigator().last_input_event_was_navigation_command():
             return False
 
-        if input_event_manager.getManager().last_event_was_tab_navigation():
+        if input_event_manager.get_manager().last_event_was_tab_navigation():
             return False
 
         return super().shouldReadFullRow(obj, prevObj)
@@ -425,7 +425,7 @@ class Utilities(script_utilities.Utilities):
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
-        focusCoords = AXTable.get_cell_coordinates(focus_manager.getManager().get_locus_of_focus())
+        focusCoords = AXTable.get_cell_coordinates(focus_manager.get_manager().get_locus_of_focus())
         if focusCoords in selected:
             selected.remove(focusCoords)
 

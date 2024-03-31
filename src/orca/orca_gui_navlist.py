@@ -48,7 +48,7 @@ class OrcaNavListGUI:
         self._gui.set_keep_above(True)
         self._gui.set_focus_on_map(True)
         self._gui.set_accept_focus(True)
-        self._script = script_manager.getManager().getActiveScript()
+        self._script = script_manager.get_manager().get_active_script()
         self._document = None
 
     def _createNavListDialog(self, columnHeaders, rows, selectedRow):

@@ -49,7 +49,7 @@ class Script(gtk.Script):
 
         keyBindings = keybindings.KeyBindings()
 
-        layout = settings_manager.getManager().getSetting('keyboardLayout')
+        layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
         structNavBindings = self.structuralNavigation.get_bindings(
@@ -91,6 +91,6 @@ class Script(gtk.Script):
 
         obj = event.source
         if AXUtilities.is_focused(obj):
-            focus_manager.getManager().set_locus_of_focus(event, event.source, False)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
 
         gtk.Script.on_caret_moved(self, event)

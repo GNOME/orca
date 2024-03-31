@@ -74,7 +74,7 @@ class Script(default.Script):
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
         if AXObject.find_ancestor(event.source, AXUtilities.is_spin_button):
-            manager = input_event_manager.getManager()
+            manager = input_event_manager.get_manager()
             if manager.last_event_was_up_or_down() or manager.last_event_was_mouse_button():
                 return
 
@@ -102,7 +102,7 @@ class Script(default.Script):
            or AXUtilities.is_tree(event.source)) \
            and AXUtilities.is_focused(event.source):
             newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
-            focus_manager.getManager().set_locus_of_focus(event, newFocus)
+            focus_manager.get_manager().set_locus_of_focus(event, newFocus)
         else:
             default.Script.on_selection_changed(self, event)
 
@@ -119,11 +119,11 @@ class Script(default.Script):
         # fingers and hope that's true.
         if AXUtilities.is_menu_related(event.source) \
            or AXUtilities.is_menu_related(AXObject.get_parent(event.source)):
-            focus_manager.getManager().set_locus_of_focus(event, event.source)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         if AXUtilities.is_root_pane(event.source) \
-           and AXUtilities.is_menu_related(focus_manager.getManager().get_locus_of_focus()):
+           and AXUtilities.is_menu_related(focus_manager.get_manager().get_locus_of_focus()):
             return
 
         default.Script.on_focused_changed(self, event)
@@ -148,7 +148,7 @@ class Script(default.Script):
         # just process the single value changed event.
         #
         if AXUtilities.is_spin_button(event.source):
-            focus = focus_manager.getManager().get_locus_of_focus()
+            focus = focus_manager.get_manager().get_locus_of_focus()
             parent = AXObject.get_parent(focus)
             grandparent = AXObject.get_parent(parent)
             if grandparent == event.source:

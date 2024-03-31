@@ -314,7 +314,7 @@ class StateZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if attr == "string":
             generator = script.speechGenerator
         else:
@@ -339,7 +339,7 @@ class ValueZone(Zone):
         if attr not in ["string", "brailleString"]:
             return super().__getattribute__(attr)
 
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if attr == "string":
             generator = script.speechGenerator
         else:
@@ -481,7 +481,7 @@ class Context:
         self.targetCharInfo = None
         self.focusZone = None
         self.container = None
-        self.focusObj = focus_manager.getManager().get_locus_of_focus()
+        self.focusObj = focus_manager.get_manager().get_locus_of_focus()
         self.topLevel = None
         self.bounds = Atspi.Rect()
 

@@ -286,12 +286,12 @@ class WhereAmIPresenter:
     def present_character_attributes(self, script, event=None):
         """Presents the font and formatting details for the current character."""
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         attrs = AXText.get_text_attributes_at_offset(focus)[0]
 
         # Get a dictionary of text attributes that the user cares about.
         [user_attr_list, user_attr_dict] = script.utilities.stringToKeysAndDict(
-            settings_manager.getManager().getSetting('enabledSpokenTextAttributes'))
+            settings_manager.get_manager().get_setting('enabledSpokenTextAttributes'))
 
         null_values = ['0', '0mm', 'none', 'false']
         for key in user_attr_list:
@@ -313,7 +313,7 @@ class WhereAmIPresenter:
         if script.flatReviewPresenter.is_active():
             obj = script.flatReviewPresenter.get_current_object(script, event)
         else:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         rect = AXComponent.get_rect(obj)
         if AXComponent.is_empty_rect(rect):
@@ -330,9 +330,9 @@ class WhereAmIPresenter:
     def present_title(self, script, event=None):
         """Presents the title of the current window."""
 
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_dead(obj):
-            obj = focus_manager.getManager().get_active_window()
+            obj = focus_manager.get_manager().get_active_window()
 
         if obj is None or AXObject.is_dead(obj):
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
@@ -346,7 +346,7 @@ class WhereAmIPresenter:
     def _present_default_button(self, script, event=None, dialog=None, error_messages=True):
         """Presents the default button of the current dialog."""
 
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         frame, dialog = script.utilities.frameAndDialog(obj)
         if dialog is None:
             if error_messages:
@@ -370,7 +370,7 @@ class WhereAmIPresenter:
     def present_status_bar(self, script, event=None):
         """Presents the status bar of the current window."""
 
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         frame, dialog = script.utilities.frameAndDialog(obj)
         if frame:
             statusbar = AXUtilities.get_status_bar(frame)
@@ -401,7 +401,7 @@ class WhereAmIPresenter:
     def present_link(self, script, event=None, link=None):
         """Presents details about the current link."""
 
-        link = link or focus_manager.getManager().get_locus_of_focus()
+        link = link or focus_manager.get_manager().get_locus_of_focus()
         if not script.utilities.isLink(link):
             script.presentMessage(messages.NOT_ON_A_LINK)
             return True
@@ -411,7 +411,7 @@ class WhereAmIPresenter:
     def present_selected_text(self, script, event=None, obj=None):
         """Presents the selected text."""
 
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
             script.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
@@ -431,7 +431,7 @@ class WhereAmIPresenter:
     def present_selection(self, script, event=None, obj=None):
         """Presents the selected text or selected objects."""
 
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
             script.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
@@ -467,9 +467,9 @@ class WhereAmIPresenter:
             script.spellcheck.presentErrorDetails(not basic_only)
 
         if obj is None:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_dead(obj):
-            obj = focus_manager.getManager().get_active_window()
+            obj = focus_manager.get_manager().get_active_window()
 
         if obj is None or AXObject.is_dead(obj):
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
@@ -507,7 +507,7 @@ class WhereAmIPresenter:
         return self._do_where_am_i(script, event, False)
 
 _presenter = WhereAmIPresenter()
-def getPresenter():
+def get_presenter():
     """Returns the Where Am I Presenter"""
 
     return _presenter

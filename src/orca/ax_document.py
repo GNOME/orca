@@ -19,6 +19,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+
 """
 Utilities for obtaining document-related information about accessible objects.
 These utilities are app-type- and toolkit-agnostic. Utilities that might have
@@ -191,7 +194,7 @@ class AXDocument:
             return ""
 
         attributes = AXDocument._get_attributes_dict(document)
-        return attributes.get("MimeType", "")
+        return attributes.get("Mimevent_type", "")
 
     @staticmethod
     def is_plain_text(document):

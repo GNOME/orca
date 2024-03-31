@@ -143,7 +143,7 @@ class Utilities(web.Utilities):
         # is opened/expanded, a menu with that same name appears. It would be
         # nice if there were a connection (parent/child or an accessible relation)
         # between the two....
-        return self.treatAsMenu(focus_manager.getManager().get_locus_of_focus()) \
+        return self.treatAsMenu(focus_manager.get_manager().get_locus_of_focus()) \
             and super().isPopupMenuForCurrentItem(obj)
 
     def isFrameForPopupMenu(self, obj):
@@ -242,7 +242,7 @@ class Utilities(web.Utilities):
             return False
 
         if event.type.startswith("object:text-caret-moved"):
-            return input_event_manager.getManager().last_event_was_up_or_down()
+            return input_event_manager.get_manager().last_event_was_up_or_down()
 
         return False
 
@@ -338,7 +338,7 @@ class Utilities(web.Utilities):
         return True
 
     def inFindContainer(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
         if self.inDocumentContent(obj):

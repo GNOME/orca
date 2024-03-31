@@ -65,7 +65,7 @@ class Script(default.Script):
         """Callback for focus: accessibility events."""
 
         # https://bugzilla.gnome.org/show_bug.cgi?id=748311
-        focus_manager.getManager().set_locus_of_focus(event, event.source)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source)
 
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""

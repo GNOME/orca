@@ -18,6 +18,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+# pylint: disable=wrong-import-position
+
 """
 Utilities for obtaining objects via the collection interface.
 These utilities are app-type- and toolkit-agnostic. Utilities that might have

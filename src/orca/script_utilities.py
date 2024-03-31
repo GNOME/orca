@@ -348,7 +348,7 @@ class Utilities:
         if document:
             return document
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_document(focus):
             return focus
 
@@ -359,7 +359,7 @@ class Utilities:
 
         results = [None, None]
 
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj:
             msg = "SCRIPT UTILITIES: frameAndDialog() called without valid object"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -395,7 +395,7 @@ class Utilities:
         return results
 
     def presentEventFromNonShowingObject(self, event):
-        if event.source == focus_manager.getManager().get_locus_of_focus():
+        if event.source == focus_manager.get_manager().get_locus_of_focus():
             return True
 
         return False
@@ -416,11 +416,11 @@ class Utilities:
         """
 
         return AXUtilities.is_combo_box(obj) \
-            and not self.isSameObject(obj, focus_manager.getManager().get_locus_of_focus())
+            and not self.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus())
 
     def inFindContainer(self, obj=None):
         if obj is None:
-            obj = focus_manager.getManager().get_locus_of_focus()
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         if not AXUtilities.is_entry(obj):
             return False
@@ -803,12 +803,12 @@ class Utilities:
 
     def topLevelObjectIsActiveWindow(self, obj):
         return self.isSameObject(
-            self.topLevelObject(obj), focus_manager.getManager().get_active_window())
+            self.topLevelObject(obj), focus_manager.get_manager().get_active_window())
 
     def isProgressBarUpdate(self, obj):
-        if not settings_manager.getManager().getSetting('speakProgressBarUpdates') \
-           and not settings_manager.getManager().getSetting('brailleProgressBarUpdates') \
-           and not settings_manager.getManager().getSetting('beepProgressBarUpdates'):
+        if not settings_manager.get_manager().get_setting('speakProgressBarUpdates') \
+           and not settings_manager.get_manager().get_setting('brailleProgressBarUpdates') \
+           and not settings_manager.get_manager().get_setting('beepProgressBarUpdates'):
             return False, "Updates not enabled"
 
         if not self.isProgressBar(obj):
@@ -817,11 +817,11 @@ class Utilities:
         if AXComponent.has_no_size(obj):
             return False, "Has no size"
 
-        if settings_manager.getManager().getSetting('ignoreStatusBarProgressBars'):
+        if settings_manager.get_manager().get_setting('ignoreStatusBarProgressBars'):
             if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
                 return False, "Is status bar descendant"
 
-        verbosity = settings_manager.getManager().getSetting('progressBarVerbosity')
+        verbosity = settings_manager.get_manager().get_setting('progressBarVerbosity')
         if verbosity == settings.PROGRESS_BAR_ALL:
             return True, "Verbosity is all"
 
@@ -832,7 +832,7 @@ class Utilities:
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
             app = AXObject.get_application(obj)
-            activeApp = script_manager.getManager().getActiveScriptApp()
+            activeApp = script_manager.get_manager().get_active_script_app()
             if app == activeApp:
                 return True, "Verbosity is app"
             return False, "App is not active app"
@@ -873,11 +873,11 @@ class Utilities:
         return AXUtilities.is_document(obj)
 
     def inDocumentContent(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         return self.getDocumentForObject(obj) is not None
 
     def activeDocument(self, window=None):
-        return self.getTopLevelDocumentForObject(focus_manager.getManager().get_locus_of_focus())
+        return self.getTopLevelDocumentForObject(focus_manager.get_manager().get_locus_of_focus())
 
     def isTopLevelDocument(self, obj):
         return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
@@ -990,12 +990,12 @@ class Utilities:
             return False
 
         if not self.getDocumentForObject(table):
-            return settings_manager.getManager().getSetting('readFullRowInGUITable')
+            return settings_manager.get_manager().get_setting('readFullRowInGUITable')
 
         if self.isSpreadSheetTable(table):
-            return settings_manager.getManager().getSetting('readFullRowInSpreadSheet')
+            return settings_manager.get_manager().get_setting('readFullRowInSpreadSheet')
 
-        return settings_manager.getManager().getSetting('readFullRowInDocumentTable')
+        return settings_manager.get_manager().get_setting('readFullRowInDocumentTable')
 
     def isSorted(self, obj):
         return False
@@ -1157,7 +1157,7 @@ class Utilities:
         - obj: an Accessible object
         """
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not (obj and focus):
             return False
 
@@ -1633,7 +1633,7 @@ class Utilities:
         return roles
 
     def _locusOfFocusIsTopLevelObject(self):
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not focus:
             return False
 
@@ -1692,7 +1692,7 @@ class Utilities:
         return rv
 
     def topLevelObjectIsActiveAndCurrent(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         topLevel = self.topLevelObject(obj)
         if not topLevel:
             return False
@@ -1701,7 +1701,7 @@ class Utilities:
         if not AXUtilities.is_active(topLevel) or AXUtilities.is_defunct(topLevel):
             return False
 
-        if not self.isSameObject(topLevel, focus_manager.getManager().get_active_window()):
+        if not self.isSameObject(topLevel, focus_manager.get_manager().get_active_window()):
             return False
 
         return True
@@ -1820,7 +1820,7 @@ class Utilities:
                 and (AXObject.get_name(x) or AXObject.get_child_count(x))
 
         def cannotBeActiveWindow(x):
-            return not focus_manager.getManager().can_be_active_window(x)
+            return not focus_manager.get_manager().can_be_active_window(x)
 
         presentable = list(filter(isPresentable, set(dialogs)))
         unfocused = list(filter(cannotBeActiveWindow, presentable))
@@ -1965,7 +1965,7 @@ class Utilities:
         return ""
 
     def getCaretContext(self):
-        obj = focus_manager.getManager().get_locus_of_focus()
+        obj = focus_manager.get_manager().get_locus_of_focus()
         offset = AXText.get_caret_offset(obj)
         return obj, offset
 
@@ -1975,7 +1975,7 @@ class Utilities:
         return obj, 0
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
-        focus_manager.getManager().set_locus_of_focus(None, obj, False)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
         self.setCaretOffset(obj, offset)
 
     def setCaretOffset(self, obj, offset):
@@ -2104,7 +2104,7 @@ class Utilities:
         determine if the script is likely to echo it as a character.
         """
 
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if not focus or not settings.enableEchoByCharacter:
             return False
 
@@ -2158,7 +2158,7 @@ class Utilities:
         # If the user has set their punctuation level to All, then the synthesizer will
         # do the work for us. If the user has set their punctuation level to None, then
         # they really don't want punctuation and we mustn't override that.
-        style = settings_manager.getManager().getSetting("verbalizePunctuationStyle")
+        style = settings_manager.get_manager().get_setting("verbalizePunctuationStyle")
         if style in [settings.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_NONE]:
             return False
 
@@ -2316,8 +2316,8 @@ class Utilities:
         return string
 
     def indentationDescription(self, line):
-        if settings_manager.getManager().getSetting('onlySpeakDisplayedText') \
-           or not settings_manager.getManager().getSetting('enableSpeechIndentation'):
+        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
+           or not settings_manager.get_manager().get_setting('enableSpeechIndentation'):
             return ""
 
         line = line.replace("\u00a0", " ")
@@ -2381,14 +2381,14 @@ class Utilities:
                 if not AXUtilities.is_focused(event.source):
                     return False
 
-            manager = input_event_manager.getManager()
+            manager = input_event_manager.get_manager()
             if manager.last_event_was_tab() and event.any_data != "\t":
                 return True
             if manager.last_event_was_return() and event.any_data != "\n":
                 return True
             if manager.last_event_was_up_or_down() or manager.last_event_was_page_up_or_page_down():
                 return self.isEditableDescendantOfComboBox(event.source)
-            if not input_event_manager.getManager().last_event_was_printable_key():
+            if not input_event_manager.get_manager().last_event_was_printable_key():
                 return False
 
             string = AXText.get_all_text(event.source)
@@ -2650,7 +2650,7 @@ class Utilities:
         return AXUtilities.is_button(obj) and AXUtilities.has_popup(obj)
 
     def isPopupMenuForCurrentItem(self, obj):
-        focus = focus_manager.getManager().get_locus_of_focus()
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if obj == focus:
             return False
 
@@ -2670,7 +2670,7 @@ class Utilities:
         return AXUtilities.is_button(obj) and self.popupMenuFor(obj) is not None
 
     def inMenu(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
             return False
 
@@ -2683,7 +2683,7 @@ class Utilities:
         return False
 
     def inContextMenu(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not self.inMenu(obj):
             return False
 
@@ -2872,7 +2872,7 @@ class Utilities:
         if prevObj != obj:
             return word, start, end
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         wasPreviousWordNav = manager.last_event_was_previous_word_navigation()
         wasNextWordNav = manager.last_event_was_next_word_navigation()
 
@@ -3248,7 +3248,7 @@ class Utilities:
 
     @staticmethod
     def onClipboardContentsChanged(*args):
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if script is None:
             return
 
@@ -3293,7 +3293,7 @@ class Utilities:
         clipboard.set_text(text, -1)
 
     def isPresentableExpandedChangedEvent(self, event):
-        if self.isSameObject(event.source, focus_manager.getManager().get_locus_of_focus()):
+        if self.isSameObject(event.source, focus_manager.get_manager().get_locus_of_focus()):
             return True
 
         if AXUtilities.is_table_row(event.source) or AXUtilities.is_list_box(event.source):
@@ -3322,14 +3322,14 @@ class Utilities:
                 return True
             if AXUtilities.is_password_text(event.source):
                 return True
-            if focus_manager.getManager().focus_is_dead():
+            if focus_manager.get_manager().focus_is_dead():
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
             msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if focus_manager.getManager().get_locus_of_focus() in \
+        if focus_manager.get_manager().get_locus_of_focus() in \
             [event.source, AXObject.get_parent(event.source)]:
             return True
 
@@ -3344,7 +3344,7 @@ class Utilities:
         if self.isHidden(event.source):
             return False
 
-        return input_event_manager.getManager().last_event_was_backspace()
+        return input_event_manager.get_manager().last_event_was_backspace()
 
     def isDeleteCommandTextDeletionEvent(self, event):
         if not event.type.startswith("object:text-changed:delete"):
@@ -3353,13 +3353,13 @@ class Utilities:
         if event.type.endswith("system"):
             return False
 
-        return input_event_manager.getManager().last_event_was_delete()
+        return input_event_manager.get_manager().last_event_was_delete()
 
     def isUndoCommandTextDeletionEvent(self, event):
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
-        if not input_event_manager.getManager().last_event_was_undo():
+        if not input_event_manager.get_manager().last_event_was_undo():
             return False
 
         start, end, string = self.getCachedTextSelection(event.source)
@@ -3369,7 +3369,7 @@ class Utilities:
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
-        if input_event_manager.getManager().last_event_was_paste():
+        if input_event_manager.get_manager().last_event_was_paste():
             return False
 
         start, end, string = self.getCachedTextSelection(event.source)
@@ -3384,7 +3384,7 @@ class Utilities:
         return string and string == event.any_data and start == event.detail1
 
     def isSelectedTextRestoredEvent(self, event):
-        if not input_event_manager.getManager().last_event_was_undo():
+        if not input_event_manager.get_manager().last_event_was_undo():
             return False
 
         if self.isSelectedTextInsertionEvent(event):
@@ -3396,7 +3396,7 @@ class Utilities:
         if not event.type.startswith("object:text-changed:insert"):
             return False
 
-        return input_event_manager.getManager().last_event_was_middle_click()
+        return input_event_manager.get_manager().last_event_was_middle_click()
 
     def isEchoableTextInsertionEvent(self, event):
         if not event.type.startswith("object:text-changed:insert"):
@@ -3404,17 +3404,17 @@ class Utilities:
 
         if AXUtilities.is_focusable(event.source) \
            and not AXUtilities.is_focused(event.source) \
-           and event.source != focus_manager.getManager().get_locus_of_focus():
+           and event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "SCRIPT UTILITIES: Not echoable text insertion event: " \
                  "focusable source is not focused"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_password_text(event.source):
-            return settings_manager.getManager().getSetting("enableKeyEcho")
+            return settings_manager.get_manager().get_setting("enableKeyEcho")
 
         if len(event.any_data.strip()) == 1:
-            return settings_manager.getManager().getSetting("enableEchoByCharacter")
+            return settings_manager.get_manager().get_setting("enableEchoByCharacter")
 
         return False
 
@@ -3427,14 +3427,14 @@ class Utilities:
         if not event.type.startswith("object:text-changed"):
             return False
 
-        manager = input_event_manager.getManager()
+        manager = input_event_manager.get_manager()
         if not manager.last_event_was_command() or manager.last_event_was_undo():
             return False
 
         if self.isBackSpaceCommandTextDeletionEvent(event):
             return False
 
-        if "delete" in event.type and input_event_manager.getManager().last_event_was_paste():
+        if "delete" in event.type and input_event_manager.get_manager().last_event_was_paste():
             return False
 
         if not self.isEditableTextArea(event.source):
@@ -3457,7 +3457,7 @@ class Utilities:
         return False
 
     def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or focus_manager.getManager().get_locus_of_focus()
+        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj or AXObject.is_dead(obj):
             return False
 
@@ -3481,14 +3481,14 @@ class Utilities:
         self._script.pointOfReference['paste'] = False
 
     def handleUndoTextEvent(self, event):
-        if input_event_manager.getManager().last_event_was_undo():
+        if input_event_manager.get_manager().last_event_was_undo():
             if not self._script.pointOfReference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
                 self._script.pointOfReference['undo'] = True
             self.updateCachedTextSelection(event.source)
             return True
 
-        if input_event_manager.getManager().last_event_was_redo():
+        if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.pointOfReference.get('redo'):
                 self._script.presentMessage(messages.REDO)
                 self._script.pointOfReference['redo'] = True
@@ -3501,13 +3501,13 @@ class Utilities:
         if self._locusOfFocusIsTopLevelObject():
             return False
 
-        if input_event_manager.getManager().last_event_was_undo():
+        if input_event_manager.get_manager().last_event_was_undo():
             if not self._script.pointOfReference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
                 self._script.pointOfReference['undo'] = True
             return True
 
-        if input_event_manager.getManager().last_event_was_redo():
+        if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.pointOfReference.get('redo'):
                 self._script.presentMessage(messages.REDO)
                 self._script.pointOfReference['redo'] = True
@@ -3519,7 +3519,7 @@ class Utilities:
         if self._locusOfFocusIsTopLevelObject():
             return False
 
-        if input_event_manager.getManager().last_event_was_paste():
+        if input_event_manager.get_manager().last_event_was_paste():
             if not self._script.pointOfReference.get('paste'):
                 self._script.presentMessage(
                     messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
@@ -3572,9 +3572,9 @@ class Utilities:
             return True
 
         self._script.pointOfReference['allItemsSelected'] = allCurrentlySelected
-        if input_event_manager.getManager().last_event_was_select_all() and allCurrentlySelected:
+        if input_event_manager.get_manager().last_event_was_select_all() and allCurrentlySelected:
             self._script.presentMessage(messages.CONTAINER_SELECTED_ALL)
-            focus_manager.getManager().set_locus_of_focus(None, obj, False)
+            focus_manager.get_manager().set_locus_of_focus(None, obj, False)
             return True
 
         return False
@@ -3591,7 +3591,7 @@ class Utilities:
         self.updateCachedTextSelection(obj)
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
-        if input_event_manager.getManager().last_event_was_select_all() and newString:
+        if input_event_manager.get_manager().last_event_was_select_all() and newString:
             if not self._script.pointOfReference.get('entireDocumentSelected'):
                 self._script.pointOfReference['entireDocumentSelected'] = True
                 self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
@@ -3599,7 +3599,7 @@ class Utilities:
 
         # Even though we present a message, treat it as unhandled so the new location is
         # still presented.
-        if not input_event_manager.getManager().last_event_was_caret_selection() \
+        if not input_event_manager.get_manager().last_event_was_caret_selection() \
            and oldString and not newString:
             self._script.speakMessage(messages.SELECTION_REMOVED)
             return False
@@ -3636,7 +3636,7 @@ class Utilities:
                     self.handleTextSelectionChange(child, False)
 
         speakMessage = speakMessage \
-            and not settings_manager.getManager().getSetting('onlySpeakDisplayedText')
+            and not settings_manager.get_manager().get_setting('onlySpeakDisplayedText')
         for start, end, message in changes:
             string = AXText.get_substring(obj, start, end)
             endsWithChild = string.endswith(self.EMBEDDED_OBJECT_CHARACTER)

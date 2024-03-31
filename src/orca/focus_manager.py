@@ -177,11 +177,11 @@ class FocusManager:
             return
 
         # TODO - JD: Consider always updating the active script here.
-        script = script_manager.getManager().getActiveScript()
+        script = script_manager.get_manager().get_active_script()
         if event and (script and not script.app):
             app = AXObject.get_application(event.source)
-            script = script_manager.getManager().getScript(app, event.source)
-            script_manager.getManager().setActiveScript(script, "Setting locus of focus")
+            script = script_manager.get_manager().get_script(app, event.source)
+            script_manager.get_manager().set_active_script(script, "Setting locus of focus")
 
         old_focus = self._focus
         if AXObject.is_dead(old_focus):
@@ -358,10 +358,10 @@ class FocusManager:
             self.set_locus_of_focus(None, self._window, notify_script=True)
 
         app = AXObject.get_application(self._focus)
-        script = script_manager.getManager().getScript(app, self._focus)
-        script_manager.getManager().setActiveScript(script, "Setting active window")
+        script = script_manager.get_manager().get_script(app, self._focus)
+        script_manager.get_manager().set_active_script(script, "Setting active window")
 
 
 _manager = FocusManager()
-def getManager():
+def get_manager():
     return _manager

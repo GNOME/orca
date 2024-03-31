@@ -90,7 +90,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         elif self._script.utilities.isLink(obj) \
-                and obj == focus_manager.getManager().get_locus_of_focus():
+                and obj == focus_manager.get_manager().get_locus_of_focus():
             if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
 

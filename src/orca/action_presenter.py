@@ -111,10 +111,10 @@ class ActionPresenter:
         # TODO - JD: Consider having set_locus_of_focus always update the active script.
         reason = "Action Presenter menu is being destroyed"
         app = AXObject.get_application(self._obj)
-        script = script_manager.getManager().getScript(app, self._obj)
-        script_manager.getManager().setActiveScript(script, reason)
+        script = script_manager.get_manager().get_script(app, self._obj)
+        script_manager.get_manager().set_active_script(script, reason)
 
-        manager = focus_manager.getManager()
+        manager = focus_manager.get_manager()
         manager.clear_state(reason)
         manager.set_active_window(self._window)
         manager.set_locus_of_focus(None, self._obj)
@@ -130,7 +130,7 @@ class ActionPresenter:
     def show_actions_menu(self, script, event=None):
         """Shows a menu with all the available accessible actions."""
 
-        manager = focus_manager.getManager()
+        manager = focus_manager.get_manager()
         obj = manager.get_active_mode_and_object_of_interest()[1] or manager.get_locus_of_focus()
         if obj is None:
             full = messages.LOCATION_NOT_FOUND_FULL
@@ -221,5 +221,5 @@ class ActionMenu(Gtk.Menu):
 
 
 _presenter = ActionPresenter()
-def getPresenter():
+def get_presenter():
     return _presenter
