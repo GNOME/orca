@@ -666,7 +666,7 @@ class Script(default.Script):
         self.utilities.setCaretContext(obj, start)
 
         prevObj, prevOffset = self.utilities.findPreviousCaretInOrder(obj, start)
-        self.sayAll(None, prevObj, prevOffset)
+        self.say_all(None, prevObj, prevOffset)
         return True
 
     def _fastForwardSayAll(self, context):
@@ -685,7 +685,7 @@ class Script(default.Script):
         self.utilities.setCaretContext(obj, end)
 
         nextObj, nextOffset = self.utilities.findNextCaretInOrder(obj, end)
-        self.sayAll(None, nextObj, nextOffset)
+        self.say_all(None, nextObj, nextOffset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
@@ -841,7 +841,7 @@ class Script(default.Script):
 
         if string:
             self.speakMisspelledIndicator(obj, start)
-            self.speakCharacter(string)
+            self.speak_character(string)
         else:
             self.speakContents(contents)
 
@@ -1477,7 +1477,7 @@ class Script(default.Script):
         elif settings_manager.get_manager().get_setting('enableSpeech'):
             msg = "WEB: Doing SayAll"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.sayAll(None)
+            self.say_all(None)
         else:
             msg = "WEB: Not doing SayAll due to enableSpeech being False"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

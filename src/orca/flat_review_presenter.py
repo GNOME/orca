@@ -1149,7 +1149,7 @@ class FlatReviewPresenter:
                 elif speech_type == 2:
                     script.phoneticSpellCurrentItem(char_string)
                 else:
-                    script.speakCharacter(char_string)
+                    script.speak_character(char_string)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)

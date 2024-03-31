@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=broad-exception-caught
+
 """Manages the default speech server for orca.  A script can use this
 as its speech server, or it can feel free to create one of its own."""
 
@@ -47,7 +49,7 @@ _speechserver = None
 # The last time something was spoken.
 _timestamp = 0
 
-def _initSpeechServer(module_name, speechServerInfo):
+def _init_speech_server(module_name, speech_server_info):
 
     global _speechserver
 
@@ -65,25 +67,27 @@ def _initSpeechServer(module_name, speechServerInfo):
 
     # Now, get the speech server we care about.
     #
-    speechServerInfo = settings.speechServerInfo
-    if speechServerInfo:
-        _speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
+    speech_server_info = settings.speechServerInfo
+    if speech_server_info:
+        _speechserver = factory.SpeechServer.get_speech_server(speech_server_info)
 
     if not _speechserver:
-        _speechserver = factory.SpeechServer.getSpeechServer()
-        if speechServerInfo:
-            tokens = ["SPEECH: Invalid speechServerInfo:", speechServerInfo]
+        _speechserver = factory.SpeechServer.get_speech_server()
+        if speech_server_info:
+            tokens = ["SPEECH: Invalid speechServerInfo:", speech_server_info]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     if not _speechserver:
-        raise Exception(f"ERROR: No speech server for factory: {module_name}")
+        raise RuntimeError(f"ERROR: No speech server for factory: {module_name}")
 
 def init():
+    """Initializes the speech server."""
+
     debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
     if _speechserver:
         debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
         return
-    
+
     # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
     #       last-chance override exists to get the speech system loaded, without risking
     #       it being written to disk unintentionally.
@@ -93,13 +97,13 @@ def init():
 
     try:
         module_name = settings.speechServerFactory
-        _initSpeechServer(module_name, settings.speechServerInfo)
+        _init_speech_server(module_name, settings.speechServerInfo)
     except Exception:
         module_names = settings.speechFactoryModules
         for module_name in module_names:
             if module_name != settings.speechServerFactory:
                 try:
-                    _initSpeechServer(module_name, None)
+                    _init_speech_server(module_name, None)
                     if _speechserver:
                         break
                 except Exception:
@@ -114,7 +118,9 @@ def init():
 
     debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
-def checkSpeechSetting():
+def check_speech_setting():
+    """Starts up or shuts down speech based on the current setting."""
+
     msg = "SPEECH: Checking speech setting."
     debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -123,7 +129,7 @@ def checkSpeechSetting():
     else:
         init()
 
-def __resolveACSS(acss=None):
+def __resolve_acss(acss=None):
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
         try:
@@ -132,45 +138,46 @@ def __resolveACSS(acss=None):
             family = VoiceFamily({})
         acss[acss.FAMILY] = family
         return acss
-    elif isinstance(acss, list) and len(acss) == 1:
+    if isinstance(acss, list) and len(acss) == 1:
         return ACSS(acss[0])
-    elif isinstance(acss, dict):
+    if isinstance(acss, dict):
         return ACSS(acss)
-    else:
-        voices = settings.voices
-        return ACSS(voices[settings.DEFAULT_VOICE])
+    voices = settings.voices
+    return ACSS(voices[settings.DEFAULT_VOICE])
 
-def sayAll(utteranceIterator, progressCallback):
+def say_all(utterance_iterator, progress_callback):
+    """Speaks each item in the utterance_iterator."""
+
     if settings.silenceSpeech:
         return
     if _speechserver:
-        _speechserver.sayAll(utteranceIterator, progressCallback)
+        _speechserver.say_all(utterance_iterator, progress_callback)
     else:
-        for [context, acss] in utteranceIterator:
-            logLine = f"SPEECH OUTPUT: '{context.utterance}'"
-            debug.printMessage(debug.LEVEL_INFO, logLine, True)
-            log.info(logLine)
+        for [context, _acss] in utterance_iterator:
+            log_line = f"SPEECH OUTPUT: '{context.utterance}'"
+            debug.printMessage(debug.LEVEL_INFO, log_line, True)
+            log.info(log_line)
 
 def _speak(text, acss, interrupt):
     """Speaks the individual string using the given ACSS."""
 
     if not _speechserver:
-        logLine = f"SPEECH OUTPUT: '{text}' {acss}"
-        debug.printMessage(debug.LEVEL_INFO, logLine, True)
-        log.info(logLine)
+        log_line = f"SPEECH OUTPUT: '{text}' {acss}"
+        debug.printMessage(debug.LEVEL_INFO, log_line, True)
+        log.info(log_line)
         return
 
     voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
     try:
-        voice.update(__resolveACSS(acss))
+        voice.update(__resolve_acss(acss))
     except Exception as error:
         msg = f"SPEECH: Exception updated voice with {acss}: {error}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    resolvedVoice = __resolveACSS(voice)
-    msg = f"SPEECH OUTPUT: '{text}' {resolvedVoice}"
+    resolved_voice = __resolve_acss(voice)
+    msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
     debug.printMessage(debug.LEVEL_INFO, msg, True)
-    _speechserver.speak(text, resolvedVoice, interrupt)
+    _speechserver.speak(text, resolved_voice, interrupt)
 
 def speak(content, acss=None, interrupt=True):
     """Speaks the given content.  The content can be either a simple
@@ -180,10 +187,10 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
-    validTypes = (str, list, speech_generator.Pause,
+    valid_types = (str, list, speech_generator.Pause,
                   speech_generator.LineBreak, ACSS)
     error = "SPEECH: Bad content sent to speak():"
-    if not isinstance(content, validTypes):
+    if not isinstance(content, valid_types):
         debug.printMessage(debug.LEVEL_INFO, error + str(content), True, True)
         return
 
@@ -205,51 +212,47 @@ def speak(content, acss=None, interrupt=True):
     if not isinstance(content, list):
         return
 
-    toSpeak = []
-    activeVoice = acss
+    to_speak = []
+    active_voice = acss
     if acss is not None:
-        activeVoice = ACSS(acss)
+        active_voice = ACSS(acss)
 
     for element in content:
-        if not isinstance(element, validTypes):
+        if not isinstance(element, valid_types):
             debug.printMessage(debug.LEVEL_INFO, error + str(element), True, True)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
         elif isinstance(element, str):
             if len(element):
-                toSpeak.append(element)
-        elif toSpeak:
-            newVoice = ACSS(acss)
-            newItemsToSpeak = []
+                to_speak.append(element)
+        elif to_speak:
+            new_voice = ACSS(acss)
+            new_items_to_speak = []
             if isinstance(element, speech_generator.Pause):
-                if toSpeak[-1] and toSpeak[-1][-1].isalnum():
-                    toSpeak[-1] += '.'
+                if to_speak[-1] and to_speak[-1][-1].isalnum():
+                    to_speak[-1] += '.'
             elif isinstance(element, ACSS):
-                newVoice.update(element)
-                if activeVoice is None:
-                    activeVoice = newVoice
-                if newVoice == activeVoice:
+                new_voice.update(element)
+                if active_voice is None:
+                    active_voice = new_voice
+                if new_voice == active_voice:
                     continue
-                tokens = ["SPEECH: New voice", newVoice, " != active voice", activeVoice]
+                tokens = ["SPEECH: New voice", new_voice, " != active voice", active_voice]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                newItemsToSpeak.append(toSpeak.pop())
+                new_items_to_speak.append(to_speak.pop())
 
-            if toSpeak:
-                string = " ".join(toSpeak)
-                _speak(string, activeVoice, interrupt)
-            activeVoice = newVoice
-            toSpeak = newItemsToSpeak
+            if to_speak:
+                string = " ".join(to_speak)
+                _speak(string, active_voice, interrupt)
+            active_voice = new_voice
+            to_speak = new_items_to_speak
 
-    if toSpeak:
-        string = " ".join(toSpeak)
-        _speak(string, activeVoice, interrupt)
+    if to_speak:
+        string = " ".join(to_speak)
+        _speak(string, active_voice, interrupt)
 
-def speakKeyEvent(event, acss=None):
-    """Speaks a key event immediately.
-
-    Arguments:
-    - event: input_event.KeyboardEvent to speak.
-    """
+def speak_key_event(event, acss=None):
+    """Speaks event immediately using the voice specified by acss."""
 
     if settings.silenceSpeech:
         return
@@ -260,28 +263,19 @@ def speakKeyEvent(event, acss=None):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
-    keyname = event.get_key_name()
-    lockingStateString = event.get_locking_state_string()
-    acss = __resolveACSS(acss)
-    msg = f"{keyname} {lockingStateString}"
-    logLine = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
-    debug.printMessage(debug.LEVEL_INFO, logLine, True)
-    log.info(logLine)
+    key_name = event.get_key_name()
+    acss = __resolve_acss(acss)
+    msg = f"{key_name} {event.get_locking_state_string()}"
+    log_line = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
+    debug.printMessage(debug.LEVEL_INFO, log_line, True)
+    log.info(log_line)
 
     if _speechserver:
-        _speechserver.speakKeyEvent(event, acss)
+        _speechserver.speak_key_event(event, acss)
 
-def speakCharacter(character, acss=None):
-    """Speaks a single character immediately.
+def speak_character(character, acss=None):
+    """Speaks character immediately using the voice specified by acss."""
 
-    Arguments:
-    - character: text to be spoken
-    - acss:      acss.ACSS instance; if None,
-                 the default voice settings will be used.
-                 Otherwise, the acss settings will be
-                 used to augment/override the default
-                 voice settings.
-    """
     if settings.silenceSpeech:
         return
 
@@ -291,26 +285,33 @@ def speakCharacter(character, acss=None):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
-    acss = __resolveACSS(acss)
-    tokens = [f"SPEECH OUTPUT: '{character}'", acss]
+    acss = __resolve_acss(acss)
+    log_line = f"SPEECH OUTPUT: '{character}'"
+    tokens = [log_line, acss]
     debug.printTokens(debug.LEVEL_INFO, tokens, True)
-    log.info(f"SPEECH OUTPUT: '{character}'")
+    log.info(log_line)
 
     if _speechserver:
-        _speechserver.speakCharacter(character, acss=acss)
+        _speechserver.speak_character(character, acss=acss)
 
-def getInfo():
+def get_info():
+    """Returns the speech server info."""
+
     info = None
     if _speechserver:
-        info = _speechserver.getInfo()
+        info = _speechserver.get_info()
 
     return info
 
 def stop():
+    """Stops the speech server."""
+
     if _speechserver:
         _speechserver.stop()
 
 def shutdown():
+    """Shuts down the speech server."""
+
     debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
     global _speechserver
     if _speechserver:
@@ -318,8 +319,12 @@ def shutdown():
         _speechserver = None
 
 def reset(text=None, acss=None):
+    """Resets the speech server."""
+
     if _speechserver:
         _speechserver.reset(text, acss)
 
-def getSpeechServer():
+def get_speech_server():
+    """Returns the current speech server."""
+
     return _speechserver

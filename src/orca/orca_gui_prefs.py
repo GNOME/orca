@@ -833,12 +833,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # that this preference has never been set.
         #
         if not serverInfo:
-            serverInfo = speech.getInfo()
+            serverInfo = speech.get_info()
 
         valueSet = False
         i = 0
         for server in self.speechServersChoices:
-            if serverInfo == server.getInfo():
+            if serverInfo == server.get_info():
                 self.get_widget("speechServers").set_active(i)
                 self.speechServersChoice = server
                 valueSet = True
@@ -878,7 +878,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         i = 0
         for server in self.speechServersChoices:
-            name = server.getInfo()[0]
+            name = server.get_info()[0]
             self.speechServersModel.append((i, name))
             i += 1
 
@@ -3294,7 +3294,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if self.speechServersChoice:
             self.prefsDict["speechServerInfo"] = \
-                self.speechServersChoice.getInfo()
+                self.speechServersChoice.get_info()
 
         if self.defaultVoice is not None:
             self.prefsDict["voices"] = {

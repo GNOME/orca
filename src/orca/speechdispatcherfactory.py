@@ -68,15 +68,15 @@ class SpeechServer(speechserver.SpeechServer):
     @staticmethod
     def getSpeechServers():
         servers = []
-        default = SpeechServer._getSpeechServer(SpeechServer.DEFAULT_SERVER_ID)
+        default = SpeechServer._get_speech_server(SpeechServer.DEFAULT_SERVER_ID)
         if default is not None:
             servers.append(default)
             for module in default.list_output_modules():
-                servers.append(SpeechServer._getSpeechServer(module))
+                servers.append(SpeechServer._get_speech_server(module))
         return servers
 
     @classmethod
-    def _getSpeechServer(cls, serverId):
+    def _get_speech_server(cls, serverId):
         """Return an active server for given id.
 
         Attempt to create the server if it doesn't exist yet.  Returns None
@@ -90,9 +90,9 @@ class SpeechServer(speechserver.SpeechServer):
         return cls._active_servers.get(serverId)
 
     @staticmethod
-    def getSpeechServer(info=None):
+    def get_speech_server(info=None):
         thisId = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
-        return SpeechServer._getSpeechServer(thisId)
+        return SpeechServer._get_speech_server(thisId)
 
     @staticmethod
     def shutdownActiveServers():
@@ -397,7 +397,7 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(decrease and messages.SPEECH_SOFTER \
                    or messages.SPEECH_LOUDER, acss=acss)
 
-    def getInfo(self):
+    def get_info(self):
         return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
     def getVoiceFamilies(self):
@@ -480,10 +480,10 @@ class SpeechServer(speechserver.SpeechServer):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self._speak(text, acss)
 
-    def sayAll(self, utteranceIterator, progressCallback):
-        GLib.idle_add(self._say_all, utteranceIterator, progressCallback)
+    def say_all(self, utterance_iterator, progress_callback):
+        GLib.idle_add(self._say_all, utterance_iterator, progress_callback)
 
-    def speakCharacter(self, character, acss=None):
+    def speak_character(self, character, acss=None):
         self._apply_acss(acss)
 
         name = character
@@ -499,7 +499,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         self.speak(name, acss)
 
-    def speakKeyEvent(self, event, acss=None):
+    def speak_key_event(self, event, acss=None):
         event_string = event.get_key_name()
         lockingStateString = event.get_locking_state_string()
         event_string = f"{event_string} {lockingStateString}".strip()

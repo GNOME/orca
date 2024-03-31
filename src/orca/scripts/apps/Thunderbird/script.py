@@ -334,7 +334,7 @@ class Script(Gecko.Script):
         if settings_manager.get_manager().get_setting('enableSpeech'):
             msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.sayAll(None)
+            self.say_all(None)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""

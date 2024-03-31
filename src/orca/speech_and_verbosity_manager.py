@@ -268,7 +268,7 @@ class SpeechAndVerbosityManager:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def _get_server(self):
-        return speech.getSpeechServer()
+        return speech.get_speech_server()
 
     def decrease_rate(self, script, event=None):
         """Decreases the speech rate"""

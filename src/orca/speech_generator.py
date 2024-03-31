@@ -2774,7 +2774,7 @@ class SpeechGenerator(generator.Generator):
         # fixed.
         checkVoicesForLanguage = False
         if language and checkVoicesForLanguage:
-            server = speech.getSpeechServer()
+            server = speech.get_speech_server()
             server.shouldChangeVoiceForLanguage(language, dialect)
 
         if key in [None, DEFAULT]:

@@ -126,7 +126,7 @@ class Script(script.Script):
 
         self.input_event_handlers["sayAllHandler"] = \
             input_event.InputEventHandler(
-                Script.sayAll,
+                Script.say_all,
                 cmdnames.SAY_ALL)
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
@@ -731,7 +731,7 @@ class Script(script.Script):
         settings_manager.get_manager().load_app_settings(self)
         braille.checkBrailleSetting()
         braille.setupKeyRanges(self.braille_bindings.keys())
-        speech.checkSpeechSetting()
+        speech.check_speech_setting()
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
 
@@ -1064,9 +1064,9 @@ class Script(script.Script):
         """
 
         for character in itemString:
-            self.speakCharacter(character)
+            self.speak_character(character)
 
-    def sayAll(self, inputEvent, obj=None, offset=None):
+    def say_all(self, inputEvent, obj=None, offset=None):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         tokens = ["DEFAULT: SayAll requested starting from", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1080,7 +1080,7 @@ class Script(script.Script):
             speech.speak(utterances)
             return True
 
-        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
+        speech.say_all(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
     def cycleSettingsProfile(self, inputEvent=None):
@@ -1699,7 +1699,7 @@ class Script(script.Script):
             return
 
         if len(string) == 1:
-            self.speakCharacter(string)
+            self.speak_character(string)
         else:
             voice = self.speech_generator.voice(string=string)
             string = self.utilities.adjustForRepeats(string)
@@ -1766,7 +1766,7 @@ class Script(script.Script):
 
         if speakString:
             if len(string) == 1:
-                self.speakCharacter(string)
+                self.speak_character(string)
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=string)
                 string = self.utilities.adjustForRepeats(string)
@@ -1981,7 +1981,7 @@ class Script(script.Script):
         if AXText.set_caret_offset(context.obj, context.startOffset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.sayAll(None, context.obj, context.startOffset)
+        self.say_all(None, context.obj, context.startOffset)
         return True
 
     def _fastForwardSayAll(self, context):
@@ -1992,7 +1992,7 @@ class Script(script.Script):
         if AXText.set_caret_offset(context.obj, context.endOffset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.sayAll(None, context.obj, context.endOffset)
+        self.say_all(None, context.obj, context.endOffset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
@@ -2135,7 +2135,7 @@ class Script(script.Script):
             return
         else:
             self.speakMisspelledIndicator(obj, offset)
-            self.speakCharacter(character)
+            self.speak_character(character)
 
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
@@ -2219,7 +2219,7 @@ class Script(script.Script):
             utterance.extend(voice)
             speech.speak(utterance)
         else:
-            self.speakCharacter(phrase)
+            self.speak_character(phrase)
 
         self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
@@ -2234,7 +2234,7 @@ class Script(script.Script):
         # Announce when we cross a hard line boundary.
         if "\n" in word:
             if settings_manager.get_manager().get_setting('enableSpeechIndentation'):
-                self.speakCharacter("\n")
+                self.speak_character("\n")
             if word.startswith("\n"):
                 startOffset += 1
             elif word.endswith("\n"):
@@ -2574,7 +2574,7 @@ class Script(script.Script):
 
         msg = "DEFAULT: Presenting keyboard event"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self.speakKeyEvent(event)
+        self.speak_key_event(event)
         return True
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True,
@@ -2867,7 +2867,7 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def speakKeyEvent(self, event):
+    def speak_key_event(self, event):
         """Method to speak a keyboard event. Scripts should use this method
         rather than calling speech.speakKeyEvent directly."""
 
@@ -2876,14 +2876,14 @@ class Script(script.Script):
             string = event.event_string
 
         voice = self.speech_generator.voice(string=string)
-        speech.speakKeyEvent(event, voice)
+        speech.speak_key_event(event, voice)
 
-    def speakCharacter(self, character):
+    def speak_character(self, character):
         """Method to speak a single character. Scripts should use this
         method rather than calling speech.speakCharacter directly."""
 
         voice = self.speech_generator.voice(string=character)
-        speech.speakCharacter(character, voice)
+        speech.speak_character(character, voice)
 
     def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True, force=False):
         """Method to speak a single string. Scripts should use this

@@ -205,7 +205,7 @@ class Script(default.Script):
         self.updateBraille(obj)
         if settings_manager.get_manager().get_setting('sayAllOnLoad') \
            and settings_manager.get_manager().get_setting('enableSpeech'):
-            self.sayAll(None)
+            self.say_all(None)
 
     def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
@@ -271,7 +271,7 @@ class Script(default.Script):
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             if string:
-                self.speakCharacter(string)
+                self.speak_character(string)
             else:
                 speech.speak(self.speech_generator.generateSpeech(obj))
 

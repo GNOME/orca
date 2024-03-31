@@ -121,9 +121,9 @@ class SpeechServer(object):
         pass
 
     @staticmethod
-    def getSpeechServer(info):
+    def get_speech_server(info):
         """Gets a given SpeechServer based upon the info.
-        See SpeechServer.getInfo() for more info.
+        See SpeechServer.get_info() for more info.
         """
         pass
 
@@ -136,7 +136,7 @@ class SpeechServer(object):
     def __init__(self):
         pass
 
-    def getInfo(self):
+    def get_info(self):
         """Returns [name, id]
         """
         pass
@@ -146,7 +146,7 @@ class SpeechServer(object):
         voice families known by the speech server."""
         pass
 
-    def speakCharacter(self, character, acss=None):
+    def speak_character(self, character, acss=None):
         """Speaks a single character immediately.
 
         Arguments:
@@ -159,7 +159,7 @@ class SpeechServer(object):
         """
         pass
 
-    def speakKeyEvent(self, event, acss=None):
+    def speak_key_event(self, event, acss=None):
         """Speaks a key event immediately.
 
         Arguments:
@@ -183,16 +183,16 @@ class SpeechServer(object):
         """
         pass
 
-    def sayAll(self, utteranceIterator, progressCallback):
-        """Iterates through the given utteranceIterator, speaking
+    def say_all(self, utterance_iterator, progress_callback):
+        """Iterates through the given utterance_iterator, speaking
         each utterance one at a time.  Subclasses may postpone
         getting a new element until the current element has been
         spoken.
 
         Arguments:
-        - utteranceIterator: iterator/generator whose next() function
+        - utterance_iterator: iterator/generator whose next() function
                              returns a [SayAllContext, acss] tuple
-        - progressCallback:  called as speech progress is made - has a
+        - progress_callback:  called as speech progress is made - has a
                              signature of (SayAllContext, type), where
                              type is one of PROGRESS, INTERRUPTED, or
                              COMPLETED.

@@ -1031,7 +1031,7 @@ class StructuralNavigation:
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
            and settings_manager.get_manager().get_setting('structNavInSayAll'):
-            self._script.sayAll(obj, offset)
+            self._script.say_all(obj, offset)
             return True
 
         return False

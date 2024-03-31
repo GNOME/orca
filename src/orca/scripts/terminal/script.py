@@ -93,7 +93,7 @@ class Script(default.Script):
 
         newString = self.utilities.insertedText(event)
         if len(newString) == 1:
-            self.speakCharacter(newString)
+            self.speak_character(newString)
         else:
             voice = self.speech_generator.voice(obj=event.source, string=newString)
             self.speakMessage(newString, voice=voice)
@@ -129,5 +129,5 @@ class Script(default.Script):
 
         tokens = ["TERMINAL: Presenting keyboard event", string]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        self.speakKeyEvent(event)
+        self.speak_key_event(event)
         return True
