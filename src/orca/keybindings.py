@@ -530,21 +530,6 @@ class KeyBindings:
 
         return bound
 
-    def getEnabledBindings(self, boundOnly=False):
-        """Returns the KeyBindings instances which can be bound and used."""
-
-        if boundOnly:
-            bindings = [kb for kb in self.key_bindings if kb.keysymstring]
-            boundString = "bound bindings"
-        else:
-            bindings = self.key_bindings
-            boundString = "bindings"
-
-        enabled = [kb for kb in bindings if kb.is_enabled()]
-        msg = f"KEY BINDINGS: {len(enabled)} {boundString} found out of {len(self.key_bindings)}."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return enabled
-
     def getBindingsForHandler(self, handler):
         """Returns the KeyBinding instances associated with handler."""
 
