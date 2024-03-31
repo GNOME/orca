@@ -218,7 +218,7 @@ class FocusManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        script.locusOfFocusChanged(event, old_focus, self._focus)
+        script.locus_of_focus_changed(event, old_focus, self._focus)
 
     def active_window_is_active(self):
         """Returns True if the window we think is currently active is actually active."""

@@ -44,22 +44,22 @@ class Script(web.Script):
     def __init__(self, app):
         super().__init__(app)
 
-        self.presentIfInactive = False
+        self.present_if_inactive = False
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if super().locusOfFocusChanged(event, oldFocus, newFocus):
+        if super().locus_of_focus_changed(event, old_focus, new_focus):
             return
 
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+        default.Script.locus_of_focus_changed(self, event, old_focus, new_focus)
 
     def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""

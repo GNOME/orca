@@ -35,12 +35,12 @@ from .spellcheck import SpellCheck
 
 class Script(gtk.Script):
 
-    def getSpellCheck(self):
+    def get_spellcheck(self):
         """Returns the spellcheck for this script."""
 
         return SpellCheck(self)
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Returns a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
@@ -48,26 +48,26 @@ class Script(gtk.Script):
 
         grid = Gtk.Grid()
         grid.set_border_width(12)
-        grid.attach(self.spellcheck.getAppPreferencesGUI(), 0, 0, 1, 1)
+        grid.attach(self.spellcheck.get_app_preferences_gui(), 0, 0, 1, 1)
         grid.show_all()
 
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        return self.spellcheck.getPreferencesFromGUI()
+        return self.spellcheck.get_preferences_from_gui()
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if self.spellcheck.isSuggestionsItem(newFocus):
-            includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
-            self.updateBraille(newFocus)
+        if self.spellcheck.isSuggestionsItem(new_focus):
+            includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
+            self.updateBraille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return
 
-        super().locusOfFocusChanged(event, oldFocus, newFocus)
+        super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""

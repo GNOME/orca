@@ -61,46 +61,48 @@ class Script(default.Script):
         self.removeKeyGrabs("script deactivation")
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Exiting sleep mode.")
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def getBrailleBindings(self):
+    def get_braille_bindings(self):
         """Returns the braille bindings for this script."""
 
         msg = "SLEEP MODE: Has no braille bindings."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return {}
 
-    def getKeyBindings(self, enabledOnly=True):
-        """Returns the keybindings for this script."""
+    def get_key_bindings(self, enabled_only=True):
+        """Defines and returns the key bindings for this script."""
 
-        return self.sleepModeManager.get_bindings()
+        return self.get_sleep_mode_manager().get_bindings()
 
     def addKeyGrabs(self, reason=""):
         """Adds key grabs for this script."""
 
-        self.keyBindings = self.getKeyBindings()
-        self.keyBindings.addKeyGrabs()
+        self.key_bindings = self.get_key_bindings()
+        self.key_bindings.addKeyGrabs()
 
     def removeKeyGrabs(self, reason=""):
         """Adds key grabs for this script."""
 
-        self.keyBindings.removeKeyGrabs(reason)
+        self.key_bindings.removeKeyGrabs(reason)
 
-    def setupInputEventHandlers(self):
-        return self.sleepModeManager.get_handlers()
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
+
+        return self.get_sleep_mode_manager().get_handlers()
 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object."""
@@ -114,12 +116,12 @@ class Script(default.Script):
         msg = "SLEEP MODE: Not presenting keyboard event."
         debug.printMessage(debug.LEVEL_INFO, msg, True, True)
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        tokens = ["SLEEP MODE: focus changed from", oldFocus, "to", newFocus, "due to", event]
+        tokens = ["SLEEP MODE: focus changed from", old_focus, "to", new_focus, "due to", event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        if oldFocus is None and AXUtilities.is_application(AXObject.get_parent(newFocus)):
+        if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
             self.clearBraille()
             self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))

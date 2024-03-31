@@ -398,7 +398,7 @@ class EventManager:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_script(app, e.source)
-        script.eventCache[e.type] = (e, time.time())
+        script.event_cache[e.type] = (e, time.time())
 
         with self._gidle_lock:
             self._event_queue.put(e)
@@ -581,10 +581,10 @@ class EventManager:
         if script == script_manager.get_manager().get_active_script():
             return False, "The script for this event is already active."
 
-        if not script.isActivatableEvent(event):
+        if not script.is_activatable_event(event):
             return False, "The script says not to activate for this event."
 
-        if script.forceScriptActivation(event):
+        if script.force_script_activation(event):
             return True, "The script insists it should be activated for this event."
 
         event_type = event.type
@@ -759,7 +759,7 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if event_script.presentIfInactive:
+        if event_script.present_if_inactive:
             msg = f"EVENT MANAGER: Processing {event.type}: script handles events when inactive"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -849,8 +849,17 @@ class EventManager:
         if not self._should_process_event(event, script, active_script):
             return
 
+        script.generator_cache = {}
+        listener = script.listeners.get(event.type)
+        # The listener can be None if the event type has a suffix such as "system".
+        if listener is None:
+            for key, value in script.listeners.items():
+                if event.type.startswith(key):
+                    listener = value
+                    break
+
         try:
-            script.processObjectEvent(event)
+            listener(event)
         except Exception as error:
             msg = f"EVENT MANAGER: Exception processing {event.type}: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

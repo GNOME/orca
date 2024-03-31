@@ -213,67 +213,67 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_DEFAULT] = bound
             items += len(bound)
 
-            bound = script.getLearnModePresenter().get_bindings(
+            bound = script.get_learn_mode_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_LEARN_MODE] = bound
             items += len(bound)
 
-            bound = script.getWhereAmIPresenter().get_bindings(
+            bound = script.get_where_am_i_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_WHERE_AM_I] = bound
             items += len(bound)
 
-            bound = script.getSpeechAndVerbosityManager().get_bindings(
+            bound = script.get_speech_and_verbosity_manager().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_SPEECH_VERBOSITY] = bound
             items += len(bound)
 
-            bound = script.getSleepModeManager().get_bindings(
+            bound = script.get_sleep_mode_manager().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_SLEEP_MODE] = bound
             items += len(bound)
 
-            bound = script.getFlatReviewPresenter().get_bindings(
+            bound = script.get_flat_review_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound
             items += len(bound)
 
-            bound = script.getFlatReviewFinder().get_bindings(
+            bound = script.get_flat_review_finder().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_FIND] = bound
             items += len(bound)
 
-            bound = script.getObjectNavigator().get_bindings(
+            bound = script.get_object_navigator().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
             items += len(bound)
 
-            bound = script.getTableNavigator().get_bindings(
+            bound = script.get_table_navigator().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_TABLE_NAVIGATION] = bound
             items += len(bound)
 
-            bound = script.getSystemInformationPresenter().get_bindings(
+            bound = script.get_system_information_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_SYSTEM_INFORMATION] = bound
             items += len(bound)
 
-            bound = script.getNotificationPresenter().get_bindings(
+            bound = script.get_notification_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
             items += len(bound)
 
-            bound = script.getBookmarks().get_bindings(
+            bound = script.get_bookmarks().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_BOOKMARKS] = bound
             items += len(bound)
 
-            bound = script.getMouseReviewer().get_bindings(
+            bound = script.get_mouse_reviewer().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
             items += len(bound)
 
-            bound = script.getActionPresenter().get_bindings(
+            bound = script.get_action_presenter().get_bindings(
                 is_desktop=is_desktop).getBoundBindings()
             bindings[guilabels.KB_GROUP_ACTIONS] = bound
             items += len(bound)
@@ -281,8 +281,8 @@ class LearnModePresenter:
             title = messages.shortcutsFoundOrca(items)
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
-            bound = script.getAppKeyBindings().getBoundBindings()
-            bound.extend(script.getToolkitKeyBindings().getBoundBindings())
+            bound = script.get_app_key_bindings().getBoundBindings()
+            bound.extend(script.get_toolkit_key_bindings().getBoundBindings())
             if bound:
                 bindings[app_name] = bound
             title = messages.shortcutsFoundApp(len(bound), app_name)

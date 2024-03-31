@@ -131,6 +131,6 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         return True

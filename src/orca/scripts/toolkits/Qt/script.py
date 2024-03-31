@@ -36,7 +36,7 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def getUtilities(self):
+    def get_utilities(self):
         return Utilities(self)
 
     def on_caret_moved(self, event):

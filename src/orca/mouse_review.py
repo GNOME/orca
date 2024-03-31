@@ -150,7 +150,7 @@ class _StringContext:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        voice = self._script.speechGenerator.voice(obj=self._obj, string=self._string)
+        voice = self._script.speech_generator.voice(obj=self._obj, string=self._string)
         string = self._script.utilities.adjustForRepeats(self._string)
 
         focus_manager.get_manager().emit_region_changed(

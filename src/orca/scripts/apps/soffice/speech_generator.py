@@ -248,7 +248,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = super()._generateRealTableCell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):
-            if self._script.getTableNavigator().last_input_event_was_navigation_command():
+            if self._script.get_table_navigator().last_input_event_was_navigation_command():
                 return result
 
             if settings_manager.get_manager().get_setting('speakCellCoordinates'):
@@ -307,7 +307,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         dialog).
         """
 
-        if self._script.getTableNavigator().last_input_event_was_navigation_command() \
+        if self._script.get_table_navigator().last_input_event_was_navigation_command() \
            or self._script.inSayAll():
             return []
 

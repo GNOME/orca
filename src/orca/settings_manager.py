@@ -596,7 +596,7 @@ class SettingsManager:
 
         return bindingTuple
 
-    def override_key_bindings(self, handlers, bindings, enabledOnly=True):
+    def override_key_bindings(self, handlers, bindings, enabled_only=True):
         # TODO - JD: See about moving this logic, along with any callers, into KeyBindings.
         # Establishing and maintaining grabs should JustWork(tm) as part of the overall
         # keybinding/command process.
@@ -606,7 +606,7 @@ class SettingsManager:
             if not handler:
                 continue
 
-            if enabledOnly:
+            if enabled_only:
                 if not bindings.hasHandler(handler):
                     tokens = ["SETTINGS MANAGER:", handler, "is not in the bindings provided."]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)

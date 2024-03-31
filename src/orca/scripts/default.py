@@ -33,6 +33,7 @@ import time
 from orca import braille
 from orca import cmdnames
 from orca import debug
+from orca import event_manager
 from orca import focus_manager
 from orca import flat_review
 from orca import input_event_manager
@@ -63,7 +64,7 @@ class Script(script.Script):
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     NO_BREAK_SPACE_CHARACTER  = '\u00a0'
 
-    # generatorCache
+    # generator_cache
     #
     DISPLAYED_LABEL = 'displayedLabel'
     DISPLAYED_TEXT = 'displayedText'
@@ -105,121 +106,120 @@ class Script(script.Script):
         self._sayAllContexts = []
         self.grab_ids = []
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        self.inputEventHandlers["routePointerToItemHandler"] = \
+        self.input_event_handlers["routePointerToItemHandler"] = \
             input_event.InputEventHandler(
                 Script.routePointerToItem,
                 cmdnames.ROUTE_POINTER_TO_ITEM)
 
-        self.inputEventHandlers["leftClickReviewItemHandler"] = \
+        self.input_event_handlers["leftClickReviewItemHandler"] = \
             input_event.InputEventHandler(
                 Script.leftClickReviewItem,
                 cmdnames.LEFT_CLICK_REVIEW_ITEM)
 
-        self.inputEventHandlers["rightClickReviewItemHandler"] = \
+        self.input_event_handlers["rightClickReviewItemHandler"] = \
              input_event.InputEventHandler(
                 Script.rightClickReviewItem,
                 cmdnames.RIGHT_CLICK_REVIEW_ITEM)
 
-        self.inputEventHandlers["sayAllHandler"] = \
+        self.input_event_handlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
                 cmdnames.SAY_ALL)
 
-        self.inputEventHandlers["panBrailleLeftHandler"] = \
+        self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["panBrailleRightHandler"] = \
+        self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["goBrailleHomeHandler"] = \
+        self.input_event_handlers["goBrailleHomeHandler"] = \
             input_event.InputEventHandler(
                 Script.goBrailleHome,
                 cmdnames.GO_BRAILLE_HOME)
 
-        self.inputEventHandlers["contractedBrailleHandler"] = \
+        self.input_event_handlers["contractedBrailleHandler"] = \
             input_event.InputEventHandler(
                 Script.setContractedBraille,
                 cmdnames.SET_CONTRACTED_BRAILLE)
 
-        self.inputEventHandlers["processRoutingKeyHandler"] = \
+        self.input_event_handlers["processRoutingKeyHandler"] = \
             input_event.InputEventHandler(
                 Script.processRoutingKey,
                 cmdnames.PROCESS_ROUTING_KEY)
 
-        self.inputEventHandlers["processBrailleCutBeginHandler"] = \
+        self.input_event_handlers["processBrailleCutBeginHandler"] = \
             input_event.InputEventHandler(
                 Script.processBrailleCutBegin,
                 cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
 
-        self.inputEventHandlers["processBrailleCutLineHandler"] = \
+        self.input_event_handlers["processBrailleCutLineHandler"] = \
             input_event.InputEventHandler(
                 Script.processBrailleCutLine,
                 cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
-        self.inputEventHandlers["shutdownHandler"] = \
+        self.input_event_handlers["shutdownHandler"] = \
             input_event.InputEventHandler(
                 Script.quitOrca,
                 cmdnames.QUIT_ORCA)
 
-        self.inputEventHandlers["preferencesSettingsHandler"] = \
+        self.input_event_handlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 Script.showPreferencesGUI,
                 cmdnames.SHOW_PREFERENCES_GUI)
 
-        self.inputEventHandlers["appPreferencesSettingsHandler"] = \
+        self.input_event_handlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 Script.showAppPreferencesGUI,
                 cmdnames.SHOW_APP_PREFERENCES_GUI)
 
-        self.inputEventHandlers["cycleSettingsProfileHandler"] = \
+        self.input_event_handlers["cycleSettingsProfileHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleSettingsProfile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
 
-        self.inputEventHandlers["cycleDebugLevelHandler"] = \
+        self.input_event_handlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleDebugLevel,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
-        self.inputEventHandlers.update(self.notificationPresenter.get_handlers())
-        self.inputEventHandlers.update(self.flatReviewFinder.get_handlers())
-        self.inputEventHandlers.update(self.flatReviewPresenter.get_handlers())
-        self.inputEventHandlers.update(self.speechAndVerbosityManager.get_handlers())
-        self.inputEventHandlers.update(self.bypassModeManager.get_handlers())
-        self.inputEventHandlers.update(self.systemInformationPresenter.get_handlers())
-        self.inputEventHandlers.update(self.bookmarks.get_handlers())
-        self.inputEventHandlers.update(self.objectNavigator.get_handlers())
-        self.inputEventHandlers.update(self.tableNavigator.get_handlers())
-        self.inputEventHandlers.update(self.whereAmIPresenter.get_handlers())
-        self.inputEventHandlers.update(self.learnModePresenter.get_handlers())
-        self.inputEventHandlers.update(self.mouseReviewer.get_handlers())
-        self.inputEventHandlers.update(self.actionPresenter.get_handlers())
+        self.input_event_handlers.update(self.get_notification_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_flat_review_finder().get_handlers())
+        self.input_event_handlers.update(self.get_flat_review_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_speech_and_verbosity_manager().get_handlers())
+        self.input_event_handlers.update(self.get_bypass_mode_manager().get_handlers())
+        self.input_event_handlers.update(self.get_system_information_presenter().get_handlers())
+        self.input_event_handlers.update(self.bookmarks.get_handlers())
+        self.input_event_handlers.update(self.get_object_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_table_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
+        self.input_event_handlers.update(self.get_action_presenter().get_handlers())
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler
         passed as argument
         """
 
-        for keyName, handler in self.inputEventHandlers.items():
+        for keyName, handler in self.input_event_handlers.items():
             if handler == inputEventHandler:
                 return keyName
 
         return None
 
-    def getListeners(self):
+    def get_listeners(self):
         """Sets up the AT-SPI event listeners for this script."""
 
-        listeners = script.Script.getListeners(self)
+        listeners = script.Script.get_listeners(self)
         listeners["document:attributes-changed"] = self.on_document_attributes_changed
         listeners["document:reload"] = self.on_document_reload
         listeners["document:load-complete"] = self.on_document_load_complete
@@ -272,7 +272,7 @@ class Script(script.Script):
                 "KP_Add",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("sayAllHandler"),
+                self.input_event_handlers.get("sayAllHandler"),
                 1))
 
         keyBindings.add(
@@ -280,7 +280,7 @@ class Script(script.Script):
                 "KP_Divide",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("routePointerToItemHandler")))
+                self.input_event_handlers.get("routePointerToItemHandler")))
 
         # We want the user to be able to combine modifiers with the mouse click, therefore we
         # do not "care" about the modifiers -- unless it's the Orca modifier.
@@ -289,14 +289,14 @@ class Script(script.Script):
                 "KP_Divide",
                 keybindings.ORCA_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("leftClickReviewItemHandler")))
+                self.input_event_handlers.get("leftClickReviewItemHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Multiply",
                 keybindings.ORCA_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("rightClickReviewItemHandler")))
+                self.input_event_handlers.get("rightClickReviewItemHandler")))
 
         return keyBindings
 
@@ -312,7 +312,7 @@ class Script(script.Script):
                 "semicolon",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("sayAllHandler"),
+                self.input_event_handlers.get("sayAllHandler"),
                 1))
 
         keyBindings.add(
@@ -320,7 +320,7 @@ class Script(script.Script):
                 "9",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("routePointerToItemHandler")))
+                self.input_event_handlers.get("routePointerToItemHandler")))
 
         # We want the user to be able to combine modifiers with the mouse click, therefore we
         # do not "care" about the modifiers -- unless it's the Orca modifier.
@@ -329,14 +329,14 @@ class Script(script.Script):
                 "7",
                 keybindings.ORCA_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("leftClickReviewItemHandler")))
+                self.input_event_handlers.get("leftClickReviewItemHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "8",
                 keybindings.ORCA_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("rightClickReviewItemHandler")))
+                self.input_event_handlers.get("rightClickReviewItemHandler")))
 
         return keyBindings
 
@@ -346,90 +346,100 @@ class Script(script.Script):
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        bindings = self.sleepModeManager.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_sleep_mode_manager().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.notificationPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_notification_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.flatReviewFinder.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_flat_review_finder().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.flatReviewPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_flat_review_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.whereAmIPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_where_am_i_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.learnModePresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_learn_mode_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.speechAndVerbosityManager.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_speech_and_verbosity_manager().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.systemInformationPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_system_information_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.objectNavigator.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_object_navigator().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.tableNavigator.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_table_navigator().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.bookmarks.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.bookmarks.get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.mouseReviewer.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_mouse_reviewer().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.actionPresenter.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_action_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
         return keyBindings
 
-    def getKeyBindings(self, enabledOnly=True):
-        """Defines the key bindings for this script.
-
-        Returns an instance of keybindings.KeyBindings.
-        """
+    def get_key_bindings(self, enabled_only=True):
+        """Returns the key bindings for this script."""
 
         tokens = ["DEFAULT: Getting keybindings for", self]
         debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
 
-        keyBindings = script.Script.getKeyBindings(self)
+        keyBindings = script.Script.get_key_bindings(self)
 
         bindings = self.getDefaultKeyBindings()
-        for keyBinding in bindings.keyBindings:
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.getToolkitKeyBindings()
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_toolkit_key_bindings()
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.getAppKeyBindings()
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_app_key_bindings()
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
         bindings = self.getExtensionBindings()
-        for keyBinding in bindings.keyBindings:
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
         try:
             keyBindings = settings_manager.get_manager().override_key_bindings(
-                self.inputEventHandlers, keyBindings, enabledOnly)
+                self.input_event_handlers, keyBindings, enabled_only)
         except Exception as error:
             tokens = ["DEFAULT: Exception when overriding keybindings in", self, ":", error]
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
@@ -445,10 +455,10 @@ class Script(script.Script):
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         if isDesktop:
-            for keyBinding in self.__getDesktopBindings().keyBindings:
+            for keyBinding in self.__getDesktopBindings().key_bindings:
                 keyBindings.add(keyBinding)
         else:
-            for keyBinding in self.__getLaptopBindings().keyBindings:
+            for keyBinding in self.__getLaptopBindings().key_bindings:
                 keyBindings.add(keyBinding)
 
         keyBindings.add(
@@ -456,94 +466,90 @@ class Script(script.Script):
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("cycleSettingsProfileHandler")))
+                self.input_event_handlers.get("cycleSettingsProfileHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("cycleDebugLevelHandler")))
+                self.input_event_handlers.get("cycleDebugLevelHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("panBrailleLeftHandler")))
+                self.input_event_handlers.get("panBrailleLeftHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("panBrailleRightHandler")))
+                self.input_event_handlers.get("panBrailleRightHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("shutdownHandler")))
+                self.input_event_handlers.get("shutdownHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("preferencesSettingsHandler")))
+                self.input_event_handlers.get("preferencesSettingsHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self.inputEventHandlers.get("appPreferencesSettingsHandler")))
+                self.input_event_handlers.get("appPreferencesSettingsHandler")))
 
         # TODO - JD: Move this into the extension commands. That will require a new string
         # and GUI change.
-        bindings = self.bypassModeManager.get_bindings(refresh=True, is_desktop=isDesktop)
-        for keyBinding in bindings.keyBindings:
+        bindings = self.get_bypass_mode_manager().get_bindings(refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
         return keyBindings
 
-    def getBrailleBindings(self):
-        """Defines the braille bindings for this script.
-
-        Returns a dictionary where the keys are BrlTTY commands and the
-        values are InputEventHandler instances.
-        """
+    def get_braille_bindings(self):
+        """Returns the braille bindings for this script."""
 
         msg = 'DEFAULT: Getting braille bindings.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        brailleBindings = script.Script.getBrailleBindings(self)
+        braille_bindings = script.Script.get_braille_bindings(self)
         try:
-            brailleBindings[braille.brlapi.KEY_CMD_HWINLT]     = \
-                self.inputEventHandlers["panBrailleLeftHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FWINLT]     = \
-                self.inputEventHandlers["panBrailleLeftHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FWINLTSKIP] = \
-                self.inputEventHandlers["panBrailleLeftHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_HWINRT]     = \
-                self.inputEventHandlers["panBrailleRightHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FWINRT]     = \
-                self.inputEventHandlers["panBrailleRightHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \
-                self.inputEventHandlers["panBrailleRightHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_HOME]       = \
-                self.inputEventHandlers["goBrailleHomeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]     = \
-                self.inputEventHandlers["contractedBrailleHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_ROUTE]     = \
-                self.inputEventHandlers["processRoutingKeyHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN]   = \
-                self.inputEventHandlers["processBrailleCutBeginHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_CUTLINE]   = \
-                self.inputEventHandlers["processBrailleCutLineHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_HOME] = \
-                self.inputEventHandlers["goBrailleHomeHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_HWINLT]     = \
+                self.input_event_handlers["panBrailleLeftHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_FWINLT]     = \
+                self.input_event_handlers["panBrailleLeftHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_FWINLTSKIP] = \
+                self.input_event_handlers["panBrailleLeftHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_HWINRT]     = \
+                self.input_event_handlers["panBrailleRightHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_FWINRT]     = \
+                self.input_event_handlers["panBrailleRightHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \
+                self.input_event_handlers["panBrailleRightHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_HOME]       = \
+                self.input_event_handlers["goBrailleHomeHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_SIXDOTS]     = \
+                self.input_event_handlers["contractedBrailleHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_ROUTE]     = \
+                self.input_event_handlers["processRoutingKeyHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_CUTBEGIN]   = \
+                self.input_event_handlers["processBrailleCutBeginHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_CUTLINE]   = \
+                self.input_event_handlers["processBrailleCutLineHandler"]
+            braille_bindings[braille.brlapi.KEY_CMD_HOME] = \
+                self.input_event_handlers["goBrailleHomeHandler"]
         except AttributeError:
             tokens = ["DEFAULT: Braille bindings unavailable in", self]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -551,23 +557,33 @@ class Script(script.Script):
             tokens = ["DEFAULT: Exception getting braille bindings in", self, ":", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        reviewBindings = self.flatReviewPresenter.get_braille_bindings()
-        brailleBindings.update(reviewBindings)
+        reviewBindings = self.get_flat_review_presenter().get_braille_bindings()
+        braille_bindings.update(reviewBindings)
 
         msg = 'DEFAULT: Finished getting braille bindings.'
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        return brailleBindings
+        return braille_bindings
+
+    def get_app_preferences_gui(self):
+        """Return a GtkGrid, or None if there's no app-specific UI."""
+
+        return None
+
+    def get_preferences_from_gui(self):
+        """Returns a dictionary with the app-specific preferences."""
+
+        return {}
 
     def deactivate(self):
         """Called when this script is deactivated."""
 
         self._inSayAll = False
         self._sayAllIsInterrupted = False
-        self.pointOfReference = {}
+        self.point_of_reference = {}
 
-        if self.bypassModeManager.is_active():
-            self.bypassModeManager.toggle_enabled(self)
+        if self.get_bypass_mode_manager().is_active():
+            self.get_bypass_mode_manager().toggle_enabled(self)
 
         self.removeKeyGrabs("script deactivation")
 
@@ -576,19 +592,19 @@ class Script(script.Script):
 
         msg = "DEFAULT: Setting up key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self.keyBindings = self.getKeyBindings()
-        self.keyBindings.addKeyGrabs(reason)
+        self.key_bindings = self.get_key_bindings()
+        self.key_bindings.addKeyGrabs(reason)
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
     def removeKeyGrabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
 
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        self.keyBindings.removeKeyGrabs(reason)
+        self.key_bindings.removeKeyGrabs(reason)
 
         msg = "DEFAULT: Clearing key bindings"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self.keyBindings = keybindings.KeyBindings()
+        self.key_bindings = keybindings.KeyBindings()
 
     def refreshKeyGrabs(self, reason=""):
         """ Refreshes the enabled key grabs for this script. """
@@ -605,16 +621,16 @@ class Script(script.Script):
         self.addKeyGrabs("refreshing")
 
     def registerEventListeners(self):
-        super().registerEventListeners()
+        event_manager.get_manager().register_script_listeners(self)
         self.utilities.connectToClipboard()
 
     def deregisterEventListeners(self):
-        super().deregisterEventListeners()
+        event_manager.get_manager().deregister_script_listeners(self)
         self.utilities.disconnectFromClipboard()
 
     def _saveFocusedObjectInfo(self, obj):
         """Saves some basic information about obj. Note that this method is
-        intended to be called primarily (if not only) by locusOfFocusChanged().
+        intended to be called primarily (if not only) by locus_of_focus_changed().
         It is expected that accessible event callbacks will update the point
         of reference data specific to that event. The goal here is to weed
         out duplicate events."""
@@ -626,16 +642,16 @@ class Script(script.Script):
         # changes after the focus or selection has changed, even though the
         # name has not.
         name = AXObject.get_name(obj)
-        names = self.pointOfReference.get('names', {})
+        names = self.point_of_reference.get('names', {})
         names[hash(obj)] = name
         window = focus_manager.get_manager().get_active_window()
         if window:
             names[hash(window)] = AXObject.get_name(window)
-        self.pointOfReference['names'] = names
+        self.point_of_reference['names'] = names
 
-        descriptions = self.pointOfReference.get('descriptions', {})
+        descriptions = self.point_of_reference.get('descriptions', {})
         descriptions[hash(obj)] = AXObject.get_description(obj)
-        self.pointOfReference['descriptions'] = descriptions
+        self.point_of_reference['descriptions'] = descriptions
 
         # We want to save the offset for text objects because some apps and
         # toolkits emit caret-moved events immediately after a text object
@@ -648,31 +664,31 @@ class Script(script.Script):
         # or selected table cell so that on subsequent cell focus/selection
         # we only present the changed location.
         row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
-        self.pointOfReference['lastColumn'] = column
-        self.pointOfReference['lastRow'] = row
+        self.point_of_reference['lastColumn'] = column
+        self.point_of_reference['lastRow'] = row
 
-        self.pointOfReference['checkedChange'] = hash(obj), AXUtilities.is_checked(obj)
-        self.pointOfReference['selectedChange'] = hash(obj), AXUtilities.is_selected(obj)
-        self.pointOfReference['expandedChange'] = hash(obj), AXUtilities.is_expanded(obj)
+        self.point_of_reference['checkedChange'] = hash(obj), AXUtilities.is_checked(obj)
+        self.point_of_reference['selectedChange'] = hash(obj), AXUtilities.is_selected(obj)
+        self.point_of_reference['expandedChange'] = hash(obj), AXUtilities.is_expanded(obj)
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes.
 
         Arguments:
         - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
+        - old_focus: Accessible that is the old locus of focus
+        - new_focus: Accessible that is the new locus of focus
         """
 
         self.utilities.presentFocusChangeReason()
 
-        if not newLocusOfFocus:
+        if not new_focus:
             return
 
-        if AXUtilities.is_defunct(newLocusOfFocus):
+        if AXUtilities.is_defunct(new_focus):
             return
 
-        if oldLocusOfFocus == newLocusOfFocus:
+        if old_focus == new_focus:
             msg = 'DEFAULT: old focus == new focus'
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -681,16 +697,16 @@ class Script(script.Script):
         # One scenario is email client message lists. When you delete a message
         # and land on the next one, the cells likely occupy the same space,
         # have the same role, and might even have the same name, same path, etc.
-        if not AXUtilities.is_table_cell(oldLocusOfFocus) \
-           and not AXUtilities.is_table_cell(newLocusOfFocus) \
-           and self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
-            tokens = ["DEFAULT: old focus", oldLocusOfFocus,
-                      "believed to be same as new focus", newLocusOfFocus]
+        if not AXUtilities.is_table_cell(old_focus) \
+           and not AXUtilities.is_table_cell(new_focus) \
+           and self.utilities.isSameObject(old_focus, new_focus):
+            tokens = ["DEFAULT: old focus", old_focus,
+                      "believed to be same as new focus", new_focus]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
         try:
-            if self.findCommandRun:
+            if self.run_find_command:
                 # Then the Orca Find dialog has just given up focus
                 # to the original window.  We don't want to speak
                 # the window title, current line, etc.
@@ -698,24 +714,24 @@ class Script(script.Script):
         except Exception:
             pass
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
 
-        if self.learnModePresenter.is_active():
-            self.learnModePresenter.quit()
+        if self.get_learn_mode_presenter().is_active():
+            self.get_learn_mode_presenter().quit()
 
-        focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(newLocusOfFocus))
-        self.updateBraille(newLocusOfFocus)
+        focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(new_focus))
+        self.updateBraille(new_focus)
 
-        utterances = self.speechGenerator.generateSpeech(
-            newLocusOfFocus,
-            priorObj=oldLocusOfFocus)
+        utterances = self.speech_generator.generateSpeech(
+            new_focus,
+            priorObj=old_focus)
 
         if self.utilities.shouldInterruptForLocusOfFocusChange(
-           oldLocusOfFocus, newLocusOfFocus, event):
+           old_focus, new_focus, event):
             self.presentationInterrupt()
         speech.speak(utterances, interrupt=False)
-        self._saveFocusedObjectInfo(newLocusOfFocus)
+        self._saveFocusedObjectInfo(new_focus)
 
     def activate(self):
         """Called when this script is activated."""
@@ -725,10 +741,10 @@ class Script(script.Script):
 
         settings_manager.get_manager().load_app_settings(self)
         braille.checkBrailleSetting()
-        braille.setupKeyRanges(self.brailleBindings.keys())
+        braille.setupKeyRanges(self.braille_bindings.keys())
         speech.checkSpeechSetting()
-        self.speechAndVerbosityManager.update_punctuation_level()
-        self.speechAndVerbosityManager.update_capitalization_style()
+        self.get_speech_and_verbosity_manager().update_punctuation_level()
+        self.get_speech_and_verbosity_manager().update_capitalization_style()
 
         self.addKeyGrabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
@@ -749,7 +765,7 @@ class Script(script.Script):
         if not obj:
             return
 
-        result, focusedRegion = self.brailleGenerator.generateBraille(obj, **args)
+        result, focusedRegion = self.braille_generator.generateBraille(obj, **args)
         if not result:
             return
 
@@ -817,10 +833,10 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.flatReviewPresenter.is_active():
+        if self.get_flat_review_presenter().is_active():
             if self.isBrailleBeginningShowing():
-                self.flatReviewPresenter.go_start_of_line(self, inputEvent)
-                self.flatReviewPresenter.go_previous_character(self, inputEvent)
+                self.get_flat_review_presenter().go_start_of_line(self, inputEvent)
+                self.get_flat_review_presenter().go_previous_character(self, inputEvent)
             else:
                 self.panBrailleInDirection(panAmount, panToLeft=True)
 
@@ -851,7 +867,7 @@ class Script(script.Script):
             if not movedCaret and AXUtilities.is_terminal(focus):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
-                self.flatReviewPresenter.go_previous_character(self, inputEvent)
+                self.get_flat_review_presenter().go_previous_character(self, inputEvent)
         else:
             self.panBrailleInDirection(panAmount, panToLeft=True)
             # We might be panning through a flashed message.
@@ -887,12 +903,12 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.flatReviewPresenter.is_active():
+        if self.get_flat_review_presenter().is_active():
             if self.isBrailleEndShowing():
-                self.flatReviewPresenter.go_end_of_line(self, inputEvent)
+                self.get_flat_review_presenter().go_end_of_line(self, inputEvent)
                 # Reviewing the next character also updates the braille output
                 # and refreshes the display.
-                self.flatReviewPresenter.go_next_character(self, inputEvent)
+                self.get_flat_review_presenter().go_next_character(self, inputEvent)
                 return True
             self.panBrailleInDirection(panAmount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
@@ -933,8 +949,8 @@ class Script(script.Script):
     def goBrailleHome(self, inputEvent=None):
         """Returns to the component with focus."""
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
             return True
 
         return braille.returnToRegionWithFocus(inputEvent)
@@ -992,13 +1008,13 @@ class Script(script.Script):
         #
         self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.route_pointer_to_object(self, inputEvent)
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().route_pointer_to_object(self, inputEvent)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.eventSynthesizer.route_to_character(focus) \
-           or self.eventSynthesizer.route_to_object(focus):
+        if self.get_event_synthesizer().route_to_character(focus) \
+           or self.get_event_synthesizer().route_to_object(focus):
             self.presentMessage(messages.MOUSE_MOVED_SUCCESS)
             return True
 
@@ -1010,21 +1026,21 @@ class Script(script.Script):
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
 
-        if self.flatReviewPresenter.is_active():
-            obj = self.flatReviewPresenter.get_current_object(self, inputEvent)
-            if self.eventSynthesizer.try_all_clickable_actions(obj):
+        if self.get_flat_review_presenter().is_active():
+            obj = self.get_flat_review_presenter().get_current_object(self, inputEvent)
+            if self.get_event_synthesizer().try_all_clickable_actions(obj):
                 return True
-            return self.flatReviewPresenter.left_click_on_object(self, inputEvent)
+            return self.get_flat_review_presenter().left_click_on_object(self, inputEvent)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.eventSynthesizer.try_all_clickable_actions(focus):
+        if self.get_event_synthesizer().try_all_clickable_actions(focus):
             return True
 
         if AXText.get_character_count(focus):
-            if self.eventSynthesizer.click_character(focus, 1):
+            if self.get_event_synthesizer().click_character(focus, 1):
                 return True
 
-        if self.eventSynthesizer.click_object(focus, 1):
+        if self.get_event_synthesizer().click_object(focus, 1):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -1035,15 +1051,15 @@ class Script(script.Script):
     def rightClickReviewItem(self, inputEvent=None):
         """Performs a right mouse button click on the current item."""
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.right_click_on_object(self, inputEvent)
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().right_click_on_object(self, inputEvent)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.eventSynthesizer.click_character(focus, 3):
+        if self.get_event_synthesizer().click_character(focus, 3):
             return True
 
-        if self.eventSynthesizer.click_object(focus, 3):
+        if self.get_event_synthesizer().click_object(focus, 3):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -1071,7 +1087,7 @@ class Script(script.Script):
             return True
 
         if AXText.is_whitespace_or_empty(obj):
-            utterances = self.speechGenerator.generateSpeech(obj)
+            utterances = self.speech_generator.generateSpeech(obj)
             speech.speak(utterances)
             return True
 
@@ -1104,7 +1120,7 @@ class Script(script.Script):
 
         # TODO: This is another "too close to code freeze" hack to cause the
         # command names to be presented in the correct language.
-        self.setupInputEventHandlers()
+        self.setup_input_event_handlers()
 
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
@@ -1179,9 +1195,9 @@ class Script(script.Script):
                 focus_manager.get_manager().set_active_window(
                     window, set_window_as_focus=True, notify_script=True)
 
-        if self.findCommandRun:
-            self.findCommandRun = False
-            self.flatReviewFinder.find(self)
+        if self.run_find_command:
+            self.run_find_command = False
+            self.get_flat_review_finder().find(self)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
@@ -1226,12 +1242,12 @@ class Script(script.Script):
            and input_event_manager.get_manager().last_event_was_space():
             return
 
-        oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('checkedChange', (None, 0))
         if hash(oldObj) == hash(event.source) and oldState == event.detail1:
             return
 
         self.presentObject(event.source, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['checkedChange'] = hash(event.source), event.detail1
+        self.point_of_reference['checkedChange'] = hash(event.source), event.detail1
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -1250,7 +1266,7 @@ class Script(script.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+        obj, offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
         if offset == event.detail1 and obj == event.source:
             msg = "DEFAULT: Event is for last saved cursor position"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1280,8 +1296,8 @@ class Script(script.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
 
 
         offset = AXText.get_caret_offset(event.source)
@@ -1306,7 +1322,7 @@ class Script(script.Script):
         """Callback for object:property-change:accessible-description events."""
 
         obj = event.source
-        descriptions = self.pointOfReference.get('description', {})
+        descriptions = self.point_of_reference.get('description', {})
         oldDescription = descriptions.get(hash(obj))
         if oldDescription == event.any_data:
             tokens = ["DEFAULT: Old description (", oldDescription, ") is the same as new one"]
@@ -1319,7 +1335,7 @@ class Script(script.Script):
             return
 
         descriptions[hash(obj)] = event.any_data
-        self.pointOfReference['descriptions'] = descriptions
+        self.point_of_reference['descriptions'] = descriptions
         if event.any_data:
             self.presentMessage(event.any_data)
 
@@ -1364,12 +1380,12 @@ class Script(script.Script):
             return
 
         obj = event.source
-        oldObj, oldState = self.pointOfReference.get('expandedChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('expandedChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['expandedChange'] = hash(obj), event.detail1
+        self.point_of_reference['expandedChange'] = hash(obj), event.detail1
 
         details = self.utilities.detailsContentForObject(obj)
         for detail in details:
@@ -1389,12 +1405,12 @@ class Script(script.Script):
         if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
             return
 
-        oldObj, oldState = self.pointOfReference.get('indeterminateChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('indeterminateChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['indeterminateChange'] = hash(obj), event.detail1
+        self.point_of_reference['indeterminateChange'] = hash(obj), event.detail1
 
     def on_mouse_button(self, event):
         """Callback for mouse:button events."""
@@ -1410,7 +1426,7 @@ class Script(script.Script):
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        names = self.pointOfReference.get('names', {})
+        names = self.point_of_reference.get('names', {})
         oldName = names.get(hash(event.source))
         if oldName == event.any_data:
             tokens = ["DEFAULT: Old name (", oldName, ") is the same as new name"]
@@ -1439,7 +1455,7 @@ class Script(script.Script):
             return
 
         names[hash(event.source)] = event.any_data
-        self.pointOfReference['names'] = names
+        self.point_of_reference['names'] = names
         if event.any_data:
             self.presentMessage(event.any_data)
 
@@ -1457,12 +1473,12 @@ class Script(script.Script):
         if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
             return
 
-        oldObj, oldState = self.pointOfReference.get('pressedChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('pressedChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['pressedChange'] = hash(obj), event.detail1
+        self.point_of_reference['pressedChange'] = hash(obj), event.detail1
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
@@ -1489,7 +1505,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        oldObj, oldState = self.pointOfReference.get('selectedChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('selectedChange', (None, 0))
         if hash(oldObj) == hash(event.source) and oldState == event.detail1:
             msg = "DEFAULT: Duplicate or spam event"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1516,7 +1532,7 @@ class Script(script.Script):
         else:
             self.speakMessage(messages.TEXT_UNSELECTED, interrupt=False)
 
-        self.pointOfReference['selectedChange'] = hash(event.source), event.detail1
+        self.point_of_reference['selectedChange'] = hash(event.source), event.detail1
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
@@ -1548,14 +1564,15 @@ class Script(script.Script):
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
             if AXUtilities.is_focused(self.utilities.getEntryForEditableComboBox(event.source)):
                 return
-        elif AXUtilities.is_page_tab_list(event.source) and self.flatReviewPresenter.is_active():
+        elif AXUtilities.is_page_tab_list(event.source) \
+            and self.get_flat_review_presenter().is_active():
             # If a wizard-like notebook page being reviewed changes, we might not get
             # any events to update the locusOfFocus. As a result, subsequent flat
             # review commands will continue to present the stale content.
             # TODO - JD: We can potentially do some automatic reading here.
-            self.flatReviewPresenter.quit()
+            self.get_flat_review_presenter().quit()
 
-        mouseReviewItem = self.mouseReviewer.getCurrentItem()
+        mouseReviewItem = self.get_mouse_reviewer().getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
         for child in selectedChildren:
@@ -1619,10 +1636,10 @@ class Script(script.Script):
             if not event.detail1:
                 return
 
-            speech.speak(self.speechGenerator.generateSpeech(obj))
+            speech.speak(self.speech_generator.generateSpeech(obj))
             msg = self.utilities.getNotificationContent(obj)
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
-            self.notificationPresenter.save_notification(msg)
+            self.get_notification_presenter().save_notification(msg)
             return
 
         if AXUtilities.is_tool_tip(obj):
@@ -1695,7 +1712,7 @@ class Script(script.Script):
         if len(string) == 1:
             self.speakCharacter(string)
         else:
-            voice = self.speechGenerator.voice(string=string)
+            voice = self.speech_generator.voice(string=string)
             string = self.utilities.adjustForRepeats(string)
             self.speakMessage(string, voice)
 
@@ -1762,7 +1779,7 @@ class Script(script.Script):
             if len(string) == 1:
                 self.speakCharacter(string)
             else:
-                voice = self.speechGenerator.voice(obj=event.source, string=string)
+                voice = self.speech_generator.voice(obj=event.source, string=string)
                 string = self.utilities.adjustForRepeats(string)
                 self.speakMessage(string, voice)
 
@@ -1832,9 +1849,9 @@ class Script(script.Script):
             self._saveFocusedObjectInfo(event.source)
 
         self.updateBraille(event.source, isProgressBarUpdate=isProgressBarUpdate)
-        speech.speak(self.speechGenerator.generateSpeech(
+        speech.speak(self.speech_generator.generateSpeech(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
-        self.__play(self.soundGenerator.generateSound(
+        self.__play(self.sound_generator.generateSound(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
     def on_window_activated(self, event):
@@ -1850,7 +1867,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        self.pointOfReference = {}
+        self.point_of_reference = {}
 
         focus_manager.get_manager().set_active_window(window)
         if AXObject.get_child_count(window) == 1:
@@ -1884,19 +1901,19 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
 
-        if self.learnModePresenter.is_active():
-            self.learnModePresenter.quit()
+        if self.get_learn_mode_presenter().is_active():
+            self.get_learn_mode_presenter().quit()
 
-        self.pointOfReference = {}
+        self.point_of_reference = {}
 
         focus_manager.get_manager().clear_state("Window deactivated")
         script_manager.get_manager().set_active_script(None, "Window deactivated")
 
     def onClipboardContentsChanged(self, *args):
-        if self.flatReviewPresenter.is_active():
+        if self.get_flat_review_presenter().is_active():
             return
 
         if not self.utilities.objectContentsAreInClipboard():
@@ -2055,7 +2072,7 @@ class Script(script.Script):
         if not sentence:
             return False
 
-        voice = self.speechGenerator.voice(obj=obj, string=sentence)
+        voice = self.speech_generator.voice(obj=obj, string=sentence)
         sentence = self.utilities.adjustForRepeats(sentence)
         self.speakMessage(sentence, voice)
         return True
@@ -2083,7 +2100,7 @@ class Script(script.Script):
         if not word:
             return False
 
-        voice = self.speechGenerator.voice(obj=obj, string=word)
+        voice = self.speech_generator.voice(obj=obj, string=word)
         word = self.utilities.adjustForRepeats(word)
         self.speakMessage(word, voice)
         return True
@@ -2131,7 +2148,7 @@ class Script(script.Script):
             self.speakMisspelledIndicator(obj, offset)
             self.speakCharacter(character)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "char"
+        self.point_of_reference["lastTextUnitSpoken"] = "char"
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
@@ -2158,7 +2175,7 @@ class Script(script.Script):
                 if not string:
                     continue
 
-                voice = self.speechGenerator.voice(
+                voice = self.speech_generator.voice(
                     obj=obj, string=string, language=language, dialect=dialect)
                 string = self.utilities.adjustForLinks(obj, string, start)
                 string = self.utilities.adjustForRepeats(string)
@@ -2179,7 +2196,7 @@ class Script(script.Script):
             #
             self.sayCharacter(obj)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "line"
+        self.point_of_reference["lastTextUnitSpoken"] = "line"
 
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the start and
@@ -2204,7 +2221,7 @@ class Script(script.Script):
             focus_manager.get_manager().emit_region_changed(
                 obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
-            voice = self.speechGenerator.voice(obj=obj, string=phrase)
+            voice = self.speech_generator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
             if self.utilities.shouldVerbalizeAllPunctuation(obj):
                 phrase = self.utilities.verbalizeAllPunctuation(phrase)
@@ -2215,7 +2232,7 @@ class Script(script.Script):
         else:
             self.speakCharacter(phrase)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "phrase"
+        self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
     def sayWord(self, obj):
         """Speaks the word at the caret, taking into account the previous caret position."""
@@ -2252,7 +2269,7 @@ class Script(script.Script):
 
         self.speakMisspelledIndicator(obj, startOffset)
         self.sayPhrase(obj, startOffset, endOffset)
-        self.pointOfReference["lastTextUnitSpoken"] = "word"
+        self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def presentObject(self, obj, **args):
         interrupt = args.get("interrupt", False)
@@ -2261,7 +2278,7 @@ class Script(script.Script):
 
         if not args.get("speechonly", False):
             self.updateBraille(obj, **args)
-        utterances = self.speechGenerator.generateSpeech(obj, **args)
+        utterances = self.speech_generator.generateSpeech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
@@ -2287,7 +2304,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if focus == event.any_data:
-            names = self.pointOfReference.get('names', {})
+            names = self.point_of_reference.get('names', {})
             oldName = names.get(hash(focus), '')
             if not oldName or AXObject.get_name(event.any_data) == oldName:
                 return False
@@ -2300,7 +2317,7 @@ class Script(script.Script):
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
 
-        return self.flatReviewPresenter.get_or_create_context(self)
+        return self.get_flat_review_presenter().get_or_create_context(self)
 
     def updateBrailleReview(self, targetCursorCell=0):
         """Obtains the braille regions for the current flat review line
@@ -2314,7 +2331,7 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
             return
 
-        [regions, regionWithFocus] = self.flatReviewPresenter.get_braille_regions(self)
+        [regions, regionWithFocus] = self.get_flat_review_presenter().get_braille_regions(self)
         if not regions:
             regions = []
             regionWithFocus = None
@@ -2343,7 +2360,7 @@ class Script(script.Script):
         def isTextOrComponent(x):
             return isinstance(x, (braille.ReviewText, braille.ReviewComponent))
 
-        regions = self.flatReviewPresenter.get_braille_regions(self)[0]
+        regions = self.get_flat_review_presenter().get_braille_regions(self)[0]
         regions = list(filter(isTextOrComponent, regions))
         tokens = ["DEFAULT: Text/Component regions on line:"]
         for region in regions:
@@ -2421,7 +2438,7 @@ class Script(script.Script):
             offset = AXText.get_caret_offset(obj)
 
         while obj:
-            speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))
+            speech.speak(self.speech_generator.generateContext(obj, priorObj=priorObj))
 
             style = settings_manager.get_manager().get_setting('sayAllStyle')
             if style == settings.SAYALL_STYLE_SENTENCE and AXText.supports_sentence_iteration(obj):
@@ -2430,7 +2447,7 @@ class Script(script.Script):
                 iterator = AXText.iter_line
 
             for string, start, end in iterator(obj, offset):
-                voice = self.speechGenerator.voice(obj=obj, string=string)
+                voice = self.speech_generator.voice(obj=obj, string=string)
                 if voice and isinstance(voice, list):
                     voice = voice[0]
 
@@ -2442,7 +2459,7 @@ class Script(script.Script):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
                 self._sayAllContexts.append(context)
-                self.eventSynthesizer.scroll_into_view(obj, start, end)
+                self.get_event_synthesizer().scroll_into_view(obj, start, end)
                 yield [context, voice]
 
             priorObj = obj
@@ -2466,7 +2483,7 @@ class Script(script.Script):
         """
 
         for (charIndex, character) in enumerate(itemString):
-            voice = self.speechGenerator.voice(string=character)
+            voice = self.speech_generator.voice(string=character)
             phoneticString = phonnames.getPhoneticName(character.lower())
             self.speakMessage(phoneticString, voice)
 
@@ -2478,9 +2495,9 @@ class Script(script.Script):
         - caretOffset: the cursor position within this object
         """
 
-        prevObj, prevOffset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        self.pointOfReference["penultimateCursorPosition"] = prevObj, prevOffset
-        self.pointOfReference["lastCursorPosition"] = obj, caretOffset
+        prevObj, prevOffset = self.point_of_reference.get("lastCursorPosition", (None, -1))
+        self.point_of_reference["penultimateCursorPosition"] = prevObj, prevOffset
+        self.point_of_reference["lastCursorPosition"] = obj, caretOffset
 
     def systemBeep(self):
         """Rings the system bell. This is really a hack. Ideally, we want
@@ -2869,14 +2886,14 @@ class Script(script.Script):
         if event.isPrintableKey():
             string = event.event_string
 
-        voice = self.speechGenerator.voice(string=string)
+        voice = self.speech_generator.voice(string=string)
         speech.speakKeyEvent(event, voice)
 
     def speakCharacter(self, character):
         """Method to speak a single character. Scripts should use this
         method rather than calling speech.speakCharacter directly."""
 
-        voice = self.speechGenerator.voice(string=character)
+        voice = self.speech_generator.voice(string=character)
         speech.speakCharacter(character, voice)
 
     def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True, force=False):
@@ -2890,8 +2907,9 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        if not settings_manager.get_manager().get_setting('enableSpeech') \
-           or (settings_manager.get_manager().get_setting('onlySpeakDisplayedText') and not force):
+        manager = settings_manager.get_manager()
+        if not manager.get_setting('enableSpeech') \
+           or (manager.get_setting('onlySpeakDisplayedText') and not force):
             return
 
         voices = settings_manager.get_manager().get_setting('voices')
@@ -2900,20 +2918,18 @@ class Script(script.Script):
         voice = voice or systemVoice
         if voice == systemVoice and resetStyles:
             capStyle = settings_manager.get_manager().get_setting('capitalizationStyle')
-            settings_manager.get_manager().set_setting(
-                'capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
-            self.speechAndVerbosityManager.update_capitalization_style()
+            manager.set_setting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
+            self.get_speech_and_verbosity_manager().update_capitalization_style()
 
-            punctStyle = settings_manager.get_manager().get_setting('verbalizePunctuationStyle')
-            settings_manager.get_manager().set_setting('verbalizePunctuationStyle',
-                                         settings.PUNCTUATION_STYLE_NONE)
-            self.speechAndVerbosityManager.update_punctuation_level()
+            punctStyle = manager.get_setting('verbalizePunctuationStyle')
+            manager.set_setting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
+            self.get_speech_and_verbosity_manager().update_punctuation_level()
 
         speech.speak(string, voice, interrupt)
 
         if voice == systemVoice and resetStyles:
-            settings_manager.get_manager().set_setting('capitalizationStyle', capStyle)
-            self.speechAndVerbosityManager.update_capitalization_style()
+            manager.set_setting('capitalizationStyle', capStyle)
+            self.get_speech_and_verbosity_manager().update_capitalization_style()
 
-            settings_manager.get_manager().set_setting('verbalizePunctuationStyle', punctStyle)
-            self.speechAndVerbosityManager.update_punctuation_level()
+            manager.set_setting('verbalizePunctuationStyle', punctStyle)
+            self.get_speech_and_verbosity_manager().update_punctuation_level()

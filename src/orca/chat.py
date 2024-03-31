@@ -280,17 +280,9 @@ class ConversationList:
 #############################################################################
 
 class Chat:
-    """This class implements the chat functionality which is available to
-    scripts.
-    """
+    """Provides chat functionality available to scripts for chat apps."""
 
     def __init__(self, script):
-        """Creates an instance of the Chat class.
-
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
-
         self._script = script
 
         # Keybindings to provide conversation message history. The message
@@ -304,9 +296,9 @@ class Chat:
         self.messageKeys = \
             ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
         self.messageKeyModifier = keybindings.ORCA_MODIFIER_MASK
-        self.inputEventHandlers = {}
-        self.setupInputEventHandlers()
-        self.keyBindings = self.getKeyBindings()
+        self.input_event_handlers = {}
+        self.setup_input_event_handlers()
+        self.key_bindings = self.get_key_bindings()
 
         # The length of the message history will be based on how many keys
         # are bound to the task of providing it.
@@ -321,38 +313,33 @@ class Chat:
         self.chatRoomHistoriesCheckButton = None
         self.speakNameCheckButton = None
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for chat functions which
-        will be used by the script associated with this chat instance."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this chat instance."""
 
-        self.inputEventHandlers["togglePrefixHandler"] = \
+        self.input_event_handlers["togglePrefixHandler"] = \
             input_event.InputEventHandler(
                 self.togglePrefix,
                 cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX)
 
-        self.inputEventHandlers["toggleBuddyTypingHandler"] = \
+        self.input_event_handlers["toggleBuddyTypingHandler"] = \
             input_event.InputEventHandler(
                 self.toggleBuddyTyping,
                 cmdnames.CHAT_TOGGLE_BUDDY_TYPING)
 
-        self.inputEventHandlers["toggleMessageHistoriesHandler"] = \
+        self.input_event_handlers["toggleMessageHistoriesHandler"] = \
             input_event.InputEventHandler(
                 self.toggleMessageHistories,
                 cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES)
 
-        self.inputEventHandlers["reviewMessage"] = \
+        self.input_event_handlers["reviewMessage"] = \
             input_event.InputEventHandler(
                 self.readPreviousMessage,
                 cmdnames.CHAT_PREVIOUS_MESSAGE)
 
         return
 
-    def getKeyBindings(self):
-        """Defines the chat-related key bindings which will be used by
-        the script associated with this chat instance.
-
-        Returns: an instance of keybindings.KeyBindings.
-        """
+    def get_key_bindings(self):
+        """Defines and returns the key bindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
 
@@ -361,21 +348,21 @@ class Chat:
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["togglePrefixHandler"]))
+                self.input_event_handlers["togglePrefixHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["toggleBuddyTypingHandler"]))
+                self.input_event_handlers["toggleBuddyTypingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["toggleMessageHistoriesHandler"]))
+                self.input_event_handlers["toggleMessageHistoriesHandler"]))
 
         for messageKey in self.messageKeys:
             keyBindings.add(
@@ -383,11 +370,11 @@ class Chat:
                     messageKey,
                     self.messageKeyModifier,
                     keybindings.ORCA_MODIFIER_MASK,
-                    self.inputEventHandlers["reviewMessage"]))
+                    self.input_event_handlers["reviewMessage"]))
 
         return keyBindings
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application. """
 
@@ -454,7 +441,7 @@ class Chat:
 
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
         if self.allChannelsRadioButton.get_active():
@@ -596,7 +583,7 @@ class Chat:
             text = self._script.utilities.appendString(message, text)
 
         if len(text.strip()):
-            voice = self._script.speechGenerator.voice(string=text)
+            voice = self._script.speech_generator.voice(string=text)
             self._script.speakMessage(text, voice=voice)
         self._script.displayBrailleMessage(text)
 
@@ -672,7 +659,7 @@ class Chat:
 
         elif self.isAutoCompletedTextEvent(event):
             text = event.any_data
-            voice = self._script.speechGenerator.voice(string=text)
+            voice = self._script.speech_generator.voice(string=text)
             self._script.speakMessage(text, voice=voice)
             return True
 
@@ -692,7 +679,7 @@ class Chat:
         if settings_manager.get_manager().get_setting('chatAnnounceBuddyTyping'):
             conversation = self.getConversation(event.source)
             if conversation and (status != conversation.getTypingStatus()):
-                voice = self._script.speechGenerator.voice(string=status)
+                voice = self._script.speech_generator.voice(string=status)
                 self._script.speakMessage(status, voice=voice)
                 conversation.setTypingStatus(status)
                 return True

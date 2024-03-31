@@ -53,26 +53,19 @@ class Script(WebKitGtk.Script, gtk.Script):
             settings_manager.get_manager().set_setting('sayAllOnLoad', False)
 
         super().__init__(app)
-        self.presentIfInactive = False
+        self.present_if_inactive = False
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         return BrailleGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         return SpeechGenerator(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         return Utilities(self)
 
-    def isActivatableEvent(self, event):
-        """Returns True if the given event is one that should cause this
-        script to become the active script.  This is only a hint to
-        the focus tracking manager and it is not guaranteed this
-        request will be honored.  Note that by the time the focus
-        tracking manager calls this method, it thinks the script
-        should become active.  This is an opportunity for the script
-        to say it shouldn't.
-        """
+    def is_activatable_event(self, event):
+        """Returns True if event should cause this script to become active."""
 
         if event.type.startswith("focus:") and AXUtilities.is_menu(event.source):
             return True

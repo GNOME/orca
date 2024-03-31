@@ -38,11 +38,11 @@ from .script_utilities import Utilities
 
 class Script(clutter.Script):
 
-    def getFormatting(self):
+    def get_formatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         return Utilities(self)
 
     def deactivate(self):
@@ -51,16 +51,18 @@ class Script(clutter.Script):
         self.utilities.clearCachedObjects()
         super().deactivate()
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
+        """Handles changes of focus of interest to the script."""
+
         if event is not None and event.type == "window:activate" \
-          and newFocus is not None and not AXObject.get_name(newFocus):
-            queuedEvent = self._getQueuedEvent("object:state-changed:focused", True)
+          and new_focus is not None and not AXObject.get_name(new_focus):
+            queuedEvent = self._get_queued_event("object:state-changed:focused", True)
             if queuedEvent and queuedEvent.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
 
-        super().locusOfFocusChanged(event, oldFocus, newFocus)
+        super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -119,8 +121,10 @@ class Script(clutter.Script):
 
         clutter.Script.on_focused_changed(self, event)
 
-    def isActivatableEvent(self, event):
+    def is_activatable_event(self, event):
+        """Returns True if event should cause this script to become active."""
+
         if event.type.startswith('object:state-changed:selected') and event.detail1:
             return True
 
-        return super().isActivatableEvent(event)
+        return super().is_activatable_event(event)

@@ -52,21 +52,10 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-########################################################################
-#                                                                      #
-# The WebKitGtk script class.                                          #
-#                                                                      #
-########################################################################
 
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for WebKitGtk applications.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
         super().__init__(app)
         self._loadingDocumentContent = False
         self._lastCaretContext = None, -1
@@ -75,33 +64,32 @@ class Script(default.Script):
         if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
             settings_manager.get_manager().set_setting('sayAllOnLoad', True)
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
+        default.Script.setup_input_event_handlers(self)
+        self.input_event_handlers.update(self.structural_navigation.get_handlers(True))
 
-        self.inputEventHandlers["panBrailleLeftHandler"] = \
+        self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["panBrailleRightHandler"] = \
+        self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-    def getToolkitKeyBindings(self):
+    def get_toolkit_key_bindings(self):
         """Returns the toolkit-specific keybindings for this script."""
 
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        return self.structuralNavigation.get_bindings(refresh=True, is_desktop=isDesktop)
+        return self.structural_navigation.get_bindings(refresh=True, is_desktop=isDesktop)
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
@@ -121,22 +109,22 @@ class Script(default.Script):
 
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
         return {'sayAllOnLoad': self.sayAllOnLoadCheckButton.get_active()}
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
-    def getEnabledStructuralNavigationTypes(self):
+    def get_enabled_structural_navigation_types(self):
         """Returns a list of the structural navigation object types
         enabled in this script."""
 
@@ -164,7 +152,7 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.UNVISITED_LINK,
                 structural_navigation.StructuralNavigation.VISITED_LINK]
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
@@ -285,9 +273,9 @@ class Script(default.Script):
             if string:
                 self.speakCharacter(string)
             else:
-                speech.speak(self.speechGenerator.generateSpeech(obj))
+                speech.speak(self.speech_generator.generateSpeech(obj))
 
-        self.pointOfReference["lastTextUnitSpoken"] = "char"
+        self.point_of_reference["lastTextUnitSpoken"] = "char"
 
     def sayWord(self, obj):
         """Speaks the word at the caret.
@@ -305,7 +293,7 @@ class Script(default.Script):
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "word"
+        self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def sayLine(self, obj):
         """Speaks the line at the caret.
@@ -329,9 +317,9 @@ class Script(default.Script):
 
             rolesToSpeak = [Atspi.Role.HEADING, Atspi.Role.LINK]
             if AXObject.get_role(obj) in rolesToSpeak:
-                speech.speak(self.speechGenerator.getRoleName(obj))
+                speech.speak(self.speech_generator.getRoleName(obj))
 
-        self.pointOfReference["lastTextUnitSpoken"] = "line"
+        self.point_of_reference["lastTextUnitSpoken"] = "line"
 
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the given offsets.
@@ -348,7 +336,7 @@ class Script(default.Script):
 
         phrase = self.utilities.substring(obj, startOffset, endOffset)
         if len(phrase) and phrase != "\n":
-            voice = self.speechGenerator.voice(obj=obj, string=phrase)
+            voice = self.speech_generator.voice(obj=obj, string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
             links = [x for x in AXObject.iter_children(obj, AXUtilities.is_link)]
             if links:
@@ -359,7 +347,7 @@ class Script(default.Script):
             #
             self.sayCharacter(obj)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "phrase"
+        self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
@@ -367,7 +355,7 @@ class Script(default.Script):
         """
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleBeginningShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
@@ -391,7 +379,7 @@ class Script(default.Script):
         """
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleEndShowing() \
            or not self.utilities.isWebKitGtk(focus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
@@ -434,11 +422,11 @@ class Script(default.Script):
         for child in AXObject.iter_children(obj):
             if not AXComponent.on_same_line(child, AXObject.get_child(obj, 0)):
                 break
-            [regions, fRegion] = self.brailleGenerator.generateBraille(child)
+            [regions, fRegion] = self.braille_generator.generateBraille(child)
             self.addBrailleRegionsToLine(regions, brailleLine)
 
         if not brailleLine.regions:
-            [regions, fRegion] = self.brailleGenerator.generateBraille(
+            [regions, fRegion] = self.braille_generator.generateBraille(
                 obj, role=Atspi.Role.PARAGRAPH)
             self.addBrailleRegionsToLine(regions, brailleLine)
             self.setBrailleFocus(fRegion)

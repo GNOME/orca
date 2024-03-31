@@ -17,6 +17,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint:disable=too-many-instance-attributes
+# pylint:disable=too-many-public-methods
+# pylint:disable=unused-argument
+
 """Each script maintains a set of key bindings, braille bindings, and
 AT-SPI event listeners.  The key bindings are an instance of
 KeyBindings.  The braille bindings are also a dictionary where the
@@ -44,7 +48,6 @@ from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
 from . import debug
-from . import event_manager
 from . import flat_review_finder
 from . import flat_review_presenter
 from . import formatting
@@ -69,346 +72,264 @@ from .ax_object import AXObject
 
 
 class Script:
-    """The specific focus tracking scripts for applications.
-    """
+    """The base Script class."""
 
     def __init__(self, app):
-        """Creates a script for the given application, if necessary.
-        This method should not be called by anyone except the
-        script manager.
-
-        Arguments:
-        - app: the Python Accessible application to create a script for
-        """
         self.app = app
+        self.name = f"{AXObject.get_name(self.app) or 'default'} (module={self.__module__})"
+        self.present_if_inactive = True
+        self.run_find_command = False
+        self.input_event_handlers = {}
+        self.point_of_reference = {}
+        self.generator_cache = {}
+        self.event_cache = {}
+        self.key_bindings = keybindings.KeyBindings()
 
-        if app:
-            self.name = AXObject.get_name(self.app) or "default"
-        else:
-            self.name = "default"
+        self.formatting = self.get_formatting()
+        self.listeners = self.get_listeners()
+        self.utilities = self.get_utilities()
 
-        self.name += " (module=" + self.__module__ + ")"
+        self.braille_generator = self.get_braille_generator()
+        self.sound_generator = self.get_sound_generator()
+        self.speech_generator = self.get_speech_generator()
 
-        self.listeners = self.getListeners()
+        self.bookmarks = self.get_bookmarks()
+        self.label_inference = self.get_label_inference()
+        self.structural_navigation = self.get_structural_navigation()
 
-        # By default, handle events for non-active applications.
-        #
-        self.presentIfInactive = True
+        # pylint:disable=assignment-from-none
+        self.caret_navigation = self.get_caret_navigation()
+        self.live_region_manager = self.get_live_region_manager()
+        self.chat = self.get_chat()
+        self.spellcheck = self.get_spellcheck()
 
-        self.utilities = self.getUtilities()
-        self.labelInference = self.getLabelInference()
-        self.structuralNavigation = self.getStructuralNavigation()
-        self.caretNavigation = self.getCaretNavigation()
-        self.bookmarks = self.getBookmarks()
-        self.liveRegionManager = self.getLiveRegionManager()
-        self.notificationPresenter = self.getNotificationPresenter()
-        self.flatReviewFinder = self.getFlatReviewFinder()
-        self.flatReviewPresenter = self.getFlatReviewPresenter()
-        self.speechAndVerbosityManager = self.getSpeechAndVerbosityManager()
-        self.bypassModeManager = self.getBypassModeManager()
-        self.systemInformationPresenter = self.getSystemInformationPresenter()
-        self.objectNavigator = self.getObjectNavigator()
-        self.tableNavigator = self.getTableNavigator()
-        self.whereAmIPresenter = self.getWhereAmIPresenter()
-        self.learnModePresenter = self.getLearnModePresenter()
-        self.mouseReviewer = self.getMouseReviewer()
-        self.eventSynthesizer = self.getEventSynthesizer()
-        self.actionPresenter = self.getActionPresenter()
-        self.sleepModeManager = self.getSleepModeManager()
+        self.setup_input_event_handlers()
+        self.braille_bindings = self.get_braille_bindings()
 
-        self.chat = self.getChat()
-        self.inputEventHandlers = {}
-        self.pointOfReference = {}
-        self.setupInputEventHandlers()
-        self.keyBindings = keybindings.KeyBindings()
-        self.brailleBindings = self.getBrailleBindings()
-
-        self.formatting = self.getFormatting()
-        self.brailleGenerator = self.getBrailleGenerator()
-        self.soundGenerator = self.getSoundGenerator()
-        self.speechGenerator = self.getSpeechGenerator()
-        self.generatorCache = {}
-        self.eventCache = {}
-        self.spellcheck = self.getSpellCheck()
-
-        self.findCommandRun = False
-
-        msg = f'SCRIPT: {self.name} initialized'
+        msg = f"SCRIPT: {self.name} initialized"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def __str__(self):
         return f"{self.name}"
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
+    def get_listeners(self):
+        """Returns a dictionary of the event listeners for this script."""
 
-        Returns a dictionary where the keys are AT-SPI event names
-        and the values are script methods.
-        """
         return {}
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings."""
-        pass
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-    def getKeyBindings(self, enabledOnly=True):
-        """Defines the key bindings for this script.
+    def get_key_bindings(self, enabled_only=True):
+        """Returns the key bindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
         return keybindings.KeyBindings()
 
-    def getToolkitKeyBindings(self):
+    def get_toolkit_key_bindings(self):
         """Returns the toolkit-specific keybindings for this script."""
 
         return keybindings.KeyBindings()
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
         return keybindings.KeyBindings()
 
-    def getBrailleBindings(self):
-        """Defines the braille bindings for this script.
+    def get_braille_bindings(self):
+        """Returns the braille bindings for this script."""
 
-        Returns a dictionary where the keys are BrlTTY commands and the
-        values are InputEventHandler instances.
-        """
         return {}
 
-    def getFormatting(self):
+    def get_formatting(self):
         """Returns the formatting strings for this script."""
+
         return formatting.Formatting(self)
 
-    def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
+    def get_braille_generator(self):
+        """Returns the braille generator for this script."""
+
         return braille_generator.BrailleGenerator(self)
 
-    def getSoundGenerator(self):
+    def get_sound_generator(self):
         """Returns the sound generator for this script."""
+
         return sound_generator.SoundGenerator(self)
 
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
+    def get_speech_generator(self):
+        """Returns the speech generator for this script."""
+
         return speech_generator.SpeechGenerator(self)
 
-    def getChat(self):
-        """Returns the 'chat' class for this script.
-        """
+    def get_chat(self):
+        """Returns the 'chat' class for this script."""
+
         return None
 
-    def getSpellCheck(self):
+    def get_spellcheck(self):
         """Returns the spellcheck support for this script."""
+
         return None
 
-    def getCaretNavigation(self):
+    def get_caret_navigation(self):
         """Returns the caret navigation support for this script."""
+
         return None
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
+
         return script_utilities.Utilities(self)
 
-    def getLabelInference(self):
+    def get_label_inference(self):
         """Returns the label inference functionality for this script."""
+
         return label_inference.LabelInference(self)
 
-    def getEnabledStructuralNavigationTypes(self):
-        """Returns a list of the structural navigation object types
-        enabled in this script.
-        """
+    def get_enabled_structural_navigation_types(self):
+        """Returns a list of structural navigation objects enabled for this script."""
+
         return []
 
-    def getStructuralNavigation(self):
+    def get_structural_navigation(self):
         """Returns the 'structural navigation' class for this script."""
-        types = self.getEnabledStructuralNavigationTypes()
+
+        types = self.get_enabled_structural_navigation_types()
         enable = settings_manager.get_manager().get_setting('structuralNavigationEnabled')
         return structural_navigation.StructuralNavigation(self, types, enable)
 
-    def getLiveRegionManager(self):
-        """Returns the live region support for this script."""
+    def get_live_region_manager(self):
+        """Returns the live region manager for this script."""
+
         return None
 
-    def getNotificationPresenter(self):
+    def get_notification_presenter(self):
+        """Returns the notification presenter for this script."""
+
         return notification_presenter.get_presenter()
 
-    def getFlatReviewFinder(self):
+    def get_flat_review_finder(self):
+        """Returns the flat review finder for this script."""
+
         return flat_review_finder.getFinder()
 
-    def getFlatReviewPresenter(self):
+    def get_flat_review_presenter(self):
+        """Returns the flat review presenter for this script."""
+
         return flat_review_presenter.get_presenter()
 
-    def getSystemInformationPresenter(self):
+    def get_system_information_presenter(self):
+        """Returns the system information presenter for this script."""
+
         return system_information_presenter.get_presenter()
 
-    def getObjectNavigator(self):
+    def get_object_navigator(self):
+        """Returns the object navigator for this script."""
+
         return object_navigator.getNavigator()
 
-    def getTableNavigator(self):
+    def get_table_navigator(self):
+        """Returns the table navigator for this script."""
+
         return table_navigator.getNavigator()
 
-    def getSpeechAndVerbosityManager(self):
+    def get_speech_and_verbosity_manager(self):
+        """Returns the speech and verbosity manager for this script."""
+
         return speech_and_verbosity_manager.get_manager()
 
-    def getBypassModeManager(self):
+    def get_bypass_mode_manager(self):
+        """Returns the bypass mode manager for this script."""
+
         return bypass_mode_manager.get_manager()
 
-    def getWhereAmIPresenter(self):
+    def get_where_am_i_presenter(self):
+        """Returns the where-am-I presenter for this script."""
+
         return where_am_i_presenter.get_presenter()
 
-    def getLearnModePresenter(self):
+    def get_learn_mode_presenter(self):
+        """Returns the learn-mode presenter for this script."""
+
         return learn_mode_presenter.get_presenter()
 
-    def getActionPresenter(self):
+    def get_action_presenter(self):
+        """Returns the action presenter for this script."""
+
         return action_presenter.get_presenter()
 
-    def getSleepModeManager(self):
+    def get_sleep_mode_manager(self):
+        """Returns the sleep mode manager for this script."""
+
         return sleep_mode_manager.get_manager()
 
-    def getMouseReviewer(self):
+    def get_mouse_reviewer(self):
+        """Returns the mouse reviewer for this script."""
+
         return mouse_review.getReviewer()
 
-    def getEventSynthesizer(self):
+    def get_event_synthesizer(self):
+        """Returns the event synthesizer for this script."""
+
         return ax_event_synthesizer.getSynthesizer()
 
-    def getBookmarks(self):
-        """Returns the "bookmarks" class for this script.
-        """
+    def get_bookmarks(self):
+        """Returns the bookmarks support for this script."""
+
         try:
             return self.bookmarks
         except AttributeError:
             self.bookmarks = bookmarks.Bookmarks(self)
             return self.bookmarks
 
-    def getAppPreferencesGUI(self):
-        """Return a GtkGrid containing the application unique configuration
-        GUI items for the current application.
-        """
-        return None
-
-    def getPreferencesFromGUI(self):
-        """Returns a dictionary with the app-specific preferences."""
-
-        return {}
-
-    def registerEventListeners(self):
-        """Tells the event manager to start listening for all the event types
-        of interest to the script.
-
-        Arguments:
-        - script: the script.
-        """
-
-        event_manager.get_manager().register_script_listeners(self)
-
-    def deregisterEventListeners(self):
-        """Tells the event manager to stop listening for all the event types
-        of interest to the script.
-
-        Arguments:
-        - script: the script.
-        """
-
-        event_manager.get_manager().deregister_script_listeners(self)
-
-    def processObjectEvent(self, event):
-        """Processes all AT-SPI object events of interest to this
-        script.  The interest in events is specified via the
-        'listeners' field that was defined during the construction of
-        this script.
-
-        Note that this script may be passed events it doesn't care
-        about, so it needs to react accordingly.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # Clear the generator cache for each event.
-        #
-        self.generatorCache = {}
-
-        # This calls the first listener it finds whose key *begins with* or is
-        # the same as the event.type.  The reason we do this is that the event
-        # type in the listeners dictionary may not be as specific as the event
-        # type we received (e.g., the listeners dictionary might contain the
-        # key "object:state-changed:" and the event.type might be
-        # "object:state-changed:focused".  [[[TODO: WDW - the order of the
-        # keys is *not* deterministic, and is not guaranteed to be related
-        # to the order in which they were added.  So...we need to do something
-        # different here.  Logged as bugzilla bug 319781.]]]
-        #
-        for key in self.listeners.keys():
-            if event.type.startswith(key):
-                self.listeners[key](event)
-
-    def _getQueuedEvent(self, event_type, detail1=None, detail2=None, any_data=None):
-        cachedEvent, eventTime = self.eventCache.get(event_type, [None, 0])
-        if not cachedEvent:
+    def _get_queued_event(self, event_type, detail1=None, detail2=None, any_data=None):
+        cached_event = self.event_cache.get(event_type, [None, 0])[0]
+        if not cached_event:
             tokens = ["SCRIPT: No queued event of type", event_type]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        if detail1 is not None and detail1 != cachedEvent.detail1:
-            tokens = ["SCRIPT: Queued event's detail1 (", cachedEvent.detail1,
+        if detail1 is not None and detail1 != cached_event.detail1:
+            tokens = ["SCRIPT: Queued event's detail1 (", cached_event.detail1,
                       ") doesn't match", detail1]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        if detail2 is not None and detail2 != cachedEvent.detail2:
-            tokens = ["SCRIPT: Queued event's detail2 (", cachedEvent.detail2,
+        if detail2 is not None and detail2 != cached_event.detail2:
+            tokens = ["SCRIPT: Queued event's detail2 (", cached_event.detail2,
                       ") doesn't match", detail2]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        if any_data is not None and any_data != cachedEvent.any_data:
+        if any_data is not None and any_data != cached_event.any_data:
             tokens = ["SCRIPT: Queued event's any_data (",
-                      cachedEvent.any_data, ") doesn't match", any_data]
+                      cached_event.any_data, ") doesn't match", any_data]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        tokens = ["SCRIPT: Found matching queued event:", cachedEvent]
+        tokens = ["SCRIPT: Found matching queued event:", cached_event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return cachedEvent
+        return cached_event
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        """Updates state and presents changes to the user in response to a
-        notification from the FocusManager. Do not call this method outside
-        of the FocusManager.
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
+        """Handles changes of focus of interest to the script."""
 
-        Arguments:
-        - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
-        """
-        pass
+    def is_activatable_event(self, event):
+        """Returns True if event should cause this script to become active."""
 
-    def isActivatableEvent(self, event):
-        """Returns True if the given event is one that should cause this
-        script to become the active script.  This is only a hint to
-        the focus tracking manager and it is not guaranteed this
-        request will be honored.  Note that by the time the focus
-        tracking manager calls this method, it thinks the script
-        should become active.  This is an opportunity for the script
-        to say it shouldn't.
-        """
         return True
 
-    def forceScriptActivation(self, event):
+    def force_script_activation(self, event):
         """Allows scripts to insist that they should become active."""
 
         return False
 
     def activate(self):
         """Called when this script is activated."""
-        pass
 
     def deactivate(self):
         """Called when this script is deactivated."""
-        pass
 
-    def getTransferableAttributes(self):
+    def get_transferable_attributes(self):
+        """Returns the transferable attributes of this script."""
+
         return {}

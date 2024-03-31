@@ -145,7 +145,7 @@ class Utilities(script_utilities.Utilities):
                   "Preserving context:", preserveContext, "Context:", context[0], ",", context[1]]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        self._script.structuralNavigation.clearCache(documentFrame)
+        self._script.structural_navigation.clearCache(documentFrame)
         self.clearCaretContext(documentFrame)
         self.clearCachedObjects()
 
@@ -276,7 +276,7 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
         else:
             if isinstance(script, type(self._script)):
-                attrs = script.getTransferableAttributes()
+                attrs = script.get_transferable_attributes()
                 for attr, value in attrs.items():
                     tokens = ["WEB: Setting", attr, "to", value]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -319,8 +319,8 @@ class Utilities(script_utilities.Utilities):
         return AXUtilities.is_focusable(obj)
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
-        if self._script.flatReviewPresenter.is_active():
-            self._script.flatReviewPresenter.quit()
+        if self._script.get_flat_review_presenter().is_active():
+            self._script.get_flat_review_presenter().quit()
         grabFocus = self.grabFocusWhenSettingCaret(obj)
 
         obj, offset = self.findFirstCaretContext(obj, offset)
@@ -328,14 +328,14 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
-        oldFocus = focus_manager.get_manager().get_locus_of_focus()
-        AXText.clear_all_selected_text(oldFocus)
+        old_focus = focus_manager.get_manager().get_locus_of_focus()
+        AXText.clear_all_selected_text(old_focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         if grabFocus:
             AXObject.grab_focus(obj)
 
         AXText.set_caret_offset(obj, offset)
-        if self._script.useFocusMode(obj, oldFocus) != self._script.inFocusMode():
+        if self._script.useFocusMode(obj, old_focus) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
 
         # TODO - JD: Can we remove this?
@@ -639,8 +639,8 @@ class Utilities(script_utilities.Utilities):
             return ""
 
         if self._preserveTree(obj):
-            utterances = self._script.speechGenerator.generateSpeech(obj)
-            return self._script.speechGenerator.utterancesToString(utterances)
+            utterances = self._script.speech_generator.generateSpeech(obj)
+            return self._script.speech_generator.utterancesToString(utterances)
 
         return super().expandEOCs(obj, startOffset, endOffset).strip()
 
@@ -1826,9 +1826,9 @@ class Utilities(script_utilities.Utilities):
             return super().handleTextSelectionChange(obj)
 
         oldStart, oldEnd = \
-            self._script.pointOfReference.get('selectionAnchorAndFocus', (None, None))
+            self._script.point_of_reference.get('selectionAnchorAndFocus', (None, None))
         start, end = self._getSelectionAnchorAndFocus(obj)
-        self._script.pointOfReference['selectionAnchorAndFocus'] = (start, end)
+        self._script.point_of_reference['selectionAnchorAndFocus'] = (start, end)
 
         def _cmp(obj1, obj2):
             return self.pathComparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
@@ -2088,7 +2088,7 @@ class Utilities(script_utilities.Utilities):
 
     def _advanceCaretInEmptyObject(self, obj):
         if AXUtilities.is_table_cell(obj) and not self.treatAsTextObject(obj):
-            return not self._script.caretNavigation.last_input_event_was_navigation_command()
+            return not self._script.caret_navigation.last_input_event_was_navigation_command()
 
         return True
 
@@ -3879,7 +3879,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = self._script.labelInference.infer(obj, False)
+        rv = self._script.label_inference.infer(obj, False)
         self._inferredLabels[hash(obj)] = rv
         return rv
 
@@ -3888,7 +3888,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = self._shouldInferLabelFor.get(hash(obj))
-        if rv and not self._script.caretNavigation.last_input_event_was_navigation_command():
+        if rv and not self._script.caret_navigation.last_input_event_was_navigation_command():
             return not self._script.inSayAll()
         if rv is False:
             return rv
@@ -3910,7 +3910,7 @@ class Utilities(script_utilities.Utilities):
 
         self._shouldInferLabelFor[hash(obj)] = rv
 
-        if self._script.caretNavigation.last_input_event_was_navigation_command() \
+        if self._script.caret_navigation.last_input_event_was_navigation_command() \
            and role not in [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]:
             return False
 
@@ -4164,17 +4164,17 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def caretMovedOutsideActiveGrid(self, event, oldFocus=None):
+    def caretMovedOutsideActiveGrid(self, event, old_focus=None):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
-        oldFocus = oldFocus or focus_manager.get_manager().get_locus_of_focus()
-        if not self.isGridDescendant(oldFocus):
+        old_focus = old_focus or focus_manager.get_manager().get_locus_of_focus()
+        if not self.isGridDescendant(old_focus):
             return False
 
         return not self.isGridDescendant(event.source)
 
-    def caretMovedToSamePageFragment(self, event, oldFocus=None):
+    def caretMovedToSamePageFragment(self, event, old_focus=None):
         if not (event and event.type.startswith("object:text-caret-moved")):
             return False
 
@@ -4189,11 +4189,11 @@ class Utilities(script_utilities.Utilities):
         if sourceID and fragment == sourceID:
             return True
 
-        oldFocus = oldFocus or focus_manager.get_manager().get_locus_of_focus()
-        if self.isLink(oldFocus):
-            link = oldFocus
+        old_focus = old_focus or focus_manager.get_manager().get_locus_of_focus()
+        if self.isLink(old_focus):
+            link = old_focus
         else:
-            link = AXObject.find_ancestor(oldFocus, self.isLink)
+            link = AXObject.find_ancestor(old_focus, self.isLink)
 
         return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(self.documentFrame())
 
@@ -4562,7 +4562,7 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        names = self._script.pointOfReference.get('names', {})
+        names = self._script.point_of_reference.get('names', {})
         oldName = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
         notify = AXObject.get_name(item) != oldName
 
@@ -4648,7 +4648,7 @@ class Utilities(script_utilities.Utilities):
             # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
             # focused and has a different name than the last known focused object.
             if obj and focus_manager.get_manager().focus_is_dead() and AXUtilities.is_focused(obj):
-                names = self._script.pointOfReference.get('names', {})
+                names = self._script.point_of_reference.get('names', {})
                 oldName = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
                 notify = AXObject.get_name(obj) != oldName
 

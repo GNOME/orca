@@ -42,20 +42,22 @@ from orca.scripts.toolkits import Gecko
 
 class Script(Gecko.Script):
 
-    def setupInputEventHandlers(self):
-        super().setupInputEventHandlers()
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        self.inputEventHandlers["togglePresentationModeHandler"] = \
+        super().setup_input_event_handlers()
+
+        self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
 
-        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+        self.input_event_handlers["enableStickyFocusModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyFocusMode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
-        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+        self.input_event_handlers["enableStickyBrowseModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyBrowseMode,
                 cmdnames.SET_BROWSE_MODE_STICKY)

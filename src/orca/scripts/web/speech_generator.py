@@ -190,13 +190,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         formatType = args.get('formatType')
         if formatType == 'basicWhereAmI' and self._script.utilities.isLiveRegion(obj):
-            return self._script.liveRegionManager.generateLiveRegionDescription(obj, **args)
+            return self._script.live_region_manager.generateLiveRegionDescription(obj, **args)
 
         if role == Atspi.Role.TEXT and formatType != 'basicWhereAmI':
             return []
 
         if role == Atspi.Role.LINK \
-           and self._script.caretNavigation.last_input_event_was_navigation_command():
+           and self._script.caret_navigation.last_input_event_was_navigation_command():
             return []
 
         return super()._generateDescription(obj, **args)

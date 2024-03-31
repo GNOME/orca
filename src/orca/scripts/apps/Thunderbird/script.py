@@ -43,12 +43,6 @@ class Script(Gecko.Script):
     """The script for Thunderbird."""
 
     def __init__(self, app):
-        """ Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
         # Store the last autocompleted string for the address fields
         # so that we're not too 'chatty'.  See bug #533042.
         #
@@ -61,66 +55,68 @@ class Script(Gecko.Script):
 
         super().__init__(app)
 
-    def setupInputEventHandlers(self):
-        super().setupInputEventHandlers()
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        self.inputEventHandlers["togglePresentationModeHandler"] = \
+        super().setup_input_event_handlers()
+
+        self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
 
-        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+        self.input_event_handlers["enableStickyFocusModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyFocusMode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
-        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+        self.input_event_handlers["enableStickyBrowseModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyBrowseMode,
                 cmdnames.SET_BROWSE_MODE_STICKY)
 
-    def getSpellCheck(self):
+    def get_spellcheck(self):
         """Returns the spellcheck support for this script."""
 
         return SpellCheck(self)
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
-        grid = super().getAppPreferencesGUI()
+        grid = super().get_app_preferences_gui()
 
         self._sayAllOnLoadCheckButton.set_active(
             settings_manager.get_manager().get_setting('sayAllOnLoad'))
         self._pageSummaryOnLoadCheckButton.set_active(
             settings_manager.get_manager().get_setting('pageSummaryOnLoad'))
 
-        spellcheck = self.spellcheck.getAppPreferencesGUI()
+        spellcheck = self.spellcheck.get_app_preferences_gui()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
         grid.show_all()
 
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        prefs = super().getPreferencesFromGUI()
+        prefs = super().get_preferences_from_gui()
         prefs['sayAllOnLoad'] = self._sayAllOnLoadCheckButton.get_active()
         prefs['pageSummaryOnLoad'] = self._pageSummaryOnLoadCheckButton.get_active()
-        prefs.update(self.spellcheck.getPreferencesFromGUI())
+        prefs.update(self.spellcheck.get_preferences_from_gui())
 
         return prefs
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if self.spellcheck.isSuggestionsItem(newFocus):
-            includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
-            self.updateBraille(newFocus)
+        if self.spellcheck.isSuggestionsItem(new_focus):
+            includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
+            self.updateBraille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return
 
-        super().locusOfFocusChanged(event, oldFocus, newFocus)
+        super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
@@ -281,7 +277,7 @@ class Script(Gecko.Script):
             # Mozilla cannot seem to get their ":system" suffix right
             # to save their lives, so we'll add yet another sad hack.
             if isSystemEvent or AXText.has_selected_text(event.source):
-                voice = self.speechGenerator.voice(obj=event.source, string=event.any_data)
+                voice = self.speech_generator.voice(obj=event.source, string=event.any_data)
                 self.speakMessage(event.any_data, voice=voice)
                 self._lastAutoComplete = event.any_data
                 return

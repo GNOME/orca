@@ -50,15 +50,15 @@ class Script(default.Script):
         #
         self.lastDescendantChangedSource = None
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
         return SpeechGenerator(self)
 
-    def getFormatting(self):
+    def get_formatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
         return Utilities(self)
 
@@ -101,8 +101,8 @@ class Script(default.Script):
            or AXUtilities.is_page_tab_list(event.source) \
            or AXUtilities.is_tree(event.source)) \
            and AXUtilities.is_focused(event.source):
-            newFocus = AXSelection.get_selected_child(event.source, 0) or event.source
-            focus_manager.get_manager().set_locus_of_focus(event, newFocus)
+            new_focus = AXSelection.get_selected_child(event.source, 0) or event.source
+            focus_manager.get_manager().set_locus_of_focus(event, new_focus)
         else:
             default.Script.on_selection_changed(self, event)
 

@@ -39,46 +39,43 @@ from .speech_generator import SpeechGenerator
 
 class Script(gtk.Script):
 
-    def getChat(self):
+    def get_chat(self):
         """Returns the 'chat' class for this script."""
 
         return Chat(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script. """
 
         return SpeechGenerator(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings. Here we need to add the
-        handlers for chat functionality.
-        """
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        super().setupInputEventHandlers()
-        self.inputEventHandlers.update(self.chat.inputEventHandlers)
+        super().setup_input_event_handlers()
+        self.input_event_handlers.update(self.chat.input_event_handlers)
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
-        return self.chat.keyBindings
+        return self.chat.key_bindings
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application. The chat-related options get
         created by the chat module."""
 
-        return self.chat.getAppPreferencesGUI()
+        return self.chat.get_app_preferences_gui()
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        return self.chat.getPreferencesFromGUI()
+        return self.chat.get_preferences_from_gui()
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -107,7 +104,7 @@ class Script(gtk.Script):
             return
 
         line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
-        voice = self.speechGenerator.voice(obj=event.any_data, string=line)
+        voice = self.speech_generator.voice(obj=event.any_data, string=line)
         self.speakMessage(line, voice=voice)
 
     def on_name_changed(self, event):

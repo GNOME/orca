@@ -155,8 +155,8 @@ class ScriptManager:
                     script = module.Script(app)
                 break
             except Exception as error:
-                tokens = ["SCRIPT MANAGER: Could not load", module_name, ":", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                tokens = ["EXCEPTION: Could not load", module_name, ":", error]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
 
         return script
 
@@ -268,11 +268,11 @@ class ScriptManager:
                 app_script = self._create_script(app, None)
                 self.app_scripts[app] = app_script
         except Exception as error:
-            tokens = ["SCRIPT MANAGER: Exception getting app script for", app, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            tokens = ["EXCEPTION: Exception getting app script for", app, ":", error]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
             app_script = self.get_default_script()
 
-        if app_script.getSleepModeManager().is_active_for_app(app):
+        if app_script.get_sleep_mode_manager().is_active_for_app(app):
             tokens = ["SCRIPT MANAGER: Sleep-mode toggled on for", app_script, app]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return self.get_or_create_sleep_mode_script(app)
@@ -391,7 +391,7 @@ class ScriptManager:
             if new_script:
                 tokens = ["SCRIPT MANAGER: Transferring attributes:", new_script, new_script.app]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                attrs = app_script.getTransferableAttributes()
+                attrs = app_script.get_transferable_attributes()
                 for attr, value in attrs.items():
                     tokens = ["SCRIPT MANAGER: Setting", attr, "to", value]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)

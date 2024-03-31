@@ -165,7 +165,7 @@ class Bookmarks:
             self._script.presentMessage(messages.BOOKMARK_NOT_FOUND)
             return
 
-        self._script.flatReviewPresenter.present_item(script, inputEvent)
+        self._script.get_flat_review_presenter().present_item(script, inputEvent)
 
         # update the currentbookmark
         self._currentbookmarkindex = index

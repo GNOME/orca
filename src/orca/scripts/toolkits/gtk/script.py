@@ -35,7 +35,7 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
@@ -46,18 +46,19 @@ class Script(default.Script):
         self.utilities.clearCachedObjects()
         super().deactivate()
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if self.utilities.isToggleDescendantOfComboBox(newFocus):
-            newFocus = AXObject.find_ancestor(newFocus, AXUtilities.is_combo_box) or newFocus
-            focus_manager.get_manager().set_locus_of_focus(event, newFocus, False)
-        elif self.utilities.isInOpenMenuBarMenu(newFocus):
-            window = self.utilities.topLevelObject(newFocus)
-            if window and focus_manager.get_manager().get_active_window() != window:
-                focus_manager.get_manager().set_active_window(window)
+        manager = focus_manager.get_manager()
+        if self.utilities.isToggleDescendantOfComboBox(new_focus):
+            new_focus = AXObject.find_ancestor(new_focus, AXUtilities.is_combo_box) or new_focus
+            manager.set_locus_of_focus(event, new_focus, False)
+        elif self.utilities.isInOpenMenuBarMenu(new_focus):
+            window = self.utilities.topLevelObject(new_focus)
+            if window and manager.get_active_window() != window:
+                manager.set_active_window(window)
 
-        super().locusOfFocusChanged(event, oldFocus, newFocus)
+        super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
@@ -99,7 +100,7 @@ class Script(default.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
-        if event.source == self.mouseReviewer.getCurrentItem():
+        if event.source == self.get_mouse_reviewer().getCurrentItem():
             msg = "GTK: Event source is current mouse review item"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
@@ -236,11 +237,13 @@ class Script(default.Script):
 
         default.Script.on_text_selection_changed(self, event)
 
-    def isActivatableEvent(self, event):
+    def is_activatable_event(self, event):
+        """Returns True if event should cause this script to become active."""
+
         if self.utilities.eventIsCanvasNoise(event):
             return False
 
         if self.utilities.isUselessPanel(event.source):
             return False
 
-        return super().isActivatableEvent(event)
+        return super().is_activatable_event(event)

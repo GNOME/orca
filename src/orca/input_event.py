@@ -614,7 +614,7 @@ class KeyboardEvent(InputEvent):
         if self.isPressedKey():
             self._script.presentationInterrupt()
 
-        if self._script.learnModePresenter.is_active():
+        if self._script.get_learn_mode_presenter().is_active():
             return False
 
         return self._script.presentKeyboardEvent(self)
@@ -680,12 +680,13 @@ class KeyboardEvent(InputEvent):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if self._script:
-            self._handler = self._getUserHandler() or self._script.keyBindings.getInputHandler(self)
+            self._handler = self._getUserHandler() \
+                or self._script.key_bindings.getInputHandler(self)
             tokens = ["HANDLER:", self._handler]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-            if self._script.learnModePresenter.is_active():
-                self._consumer = self._script.learnModePresenter.handle_event
+            if self._script.get_learn_mode_presenter().is_active():
+                self._consumer = self._script.get_learn_mode_presenter().handle_event
                 tokens = ["CONSUMER:", self._consumer]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
@@ -783,7 +784,7 @@ class BrailleEvent(InputEvent):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return handler
 
-        handler = self._script.brailleBindings.get(command)
+        handler = self._script.braille_bindings.get(command)
         tokens = [f"BRAILLE EVENT: Handler for command {command} is", handler]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return handler
@@ -804,7 +805,7 @@ class BrailleEvent(InputEvent):
     def _process(self):
         handler = self.getHandler()
         if not handler:
-            if self._script.learnModePresenter.is_active():
+            if self._script.get_learn_mode_presenter().is_active():
                 tokens = ["BRAILLE EVENT: Learn mode presenter handles", self]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return True

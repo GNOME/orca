@@ -39,7 +39,7 @@ class Script(default.Script):
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
-        voice = self.speechGenerator.voice(obj=event.source, string=text)
+        voice = self.speech_generator.voice(obj=event.source, string=text)
         self.speakMessage(text, voice=voice)
         self.displayBrailleMessage(text, flashTime=settings.brailleFlashTime)
-        self.notificationPresenter.save_notification(text)
+        self.get_notification_presenter().save_notification(text)

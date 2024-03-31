@@ -1018,7 +1018,7 @@ class FlatReviewPresenter:
 
         for string in self._get_all_lines(script, event):
             if not string.isspace():
-                script.speakMessage(string, script.speechGenerator.voice(string=string))
+                script.speakMessage(string, script.speech_generator.voice(string=string))
 
         return True
 
@@ -1078,7 +1078,7 @@ class FlatReviewPresenter:
 
         self._context = self.get_or_create_context(script)
         line_string = self._context.getCurrent(flat_review.Context.LINE)[0] or ""
-        voice = script.speechGenerator.voice(string=line_string)
+        voice = script.speech_generator.voice(string=line_string)
 
         if not isinstance(event, input_event.BrailleEvent):
             if not line_string or line_string == "\n":
@@ -1106,7 +1106,7 @@ class FlatReviewPresenter:
 
         self._context = self.get_or_create_context(script)
         word_string = self._context.getCurrent(flat_review.Context.WORD)[0] or ""
-        voice = script.speechGenerator.voice(string=word_string)
+        voice = script.speech_generator.voice(string=word_string)
         if not isinstance(event, input_event.BrailleEvent):
             if not word_string or word_string == "\n":
                 script.speakMessage(messages.BLANK)

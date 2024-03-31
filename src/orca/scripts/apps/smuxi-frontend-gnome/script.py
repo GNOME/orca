@@ -32,31 +32,31 @@ from .chat import Chat
 
 class Script(gtk.Script):
 
-    def getChat(self):
+    def get_chat(self):
         """Returns the 'chat' class for this script."""
 
         return Chat(self)
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        super().setupInputEventHandlers()
-        self.inputEventHandlers.update(self.chat.inputEventHandlers)
+        super().setup_input_event_handlers()
+        self.input_event_handlers.update(self.chat.input_event_handlers)
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
-        return self.chat.keyBindings
+        return self.chat.key_bindings
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration."""
 
-        return self.chat.getAppPreferencesGUI()
+        return self.chat.get_app_preferences_gui()
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        return self.chat.getPreferencesFromGUI()
+        return self.chat.get_preferences_from_gui()
 
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""

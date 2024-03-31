@@ -37,14 +37,13 @@ from orca.structural_navigation import StructuralNavigation
 
 class Script(gtk.Script):
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        gtk.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
+        super().setup_input_event_handlers()
+        self.input_event_handlers.update(self.structural_navigation.get_handlers(True))
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
@@ -52,20 +51,20 @@ class Script(gtk.Script):
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        structNavBindings = self.structuralNavigation.get_bindings(
+        structNavBindings = self.structural_navigation.get_bindings(
             refresh=True, is_desktop=isDesktop)
-        for keyBinding in structNavBindings.keyBindings:
+        for keyBinding in structNavBindings.key_bindings:
             keyBindings.add(keyBinding)
 
         return keyBindings
 
-    def getStructuralNavigation(self):
+    def get_structural_navigation(self):
         """Returns the 'structural navigation' class for this script."""
 
-        types = self.getEnabledStructuralNavigationTypes()
+        types = self.get_enabled_structural_navigation_types()
         return StructuralNavigation(self, types, True)
 
-    def getEnabledStructuralNavigationTypes(self):
+    def get_enabled_structural_navigation_types(self):
         """Returns a list of the structural navigation object types
         enabled in this script."""
 

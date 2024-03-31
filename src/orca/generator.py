@@ -248,9 +248,9 @@ class Generator:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             # Reset 'usedDescriptionFor*' if a previous generator used it.
-            self._script.pointOfReference['usedDescriptionForName'] = False
-            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = False
-            self._script.pointOfReference['usedDescriptionForAlert'] = False
+            self._script.point_of_reference['usedDescriptionForName'] = False
+            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = False
+            self._script.point_of_reference['usedDescriptionForAlert'] = False
 
             def debuginfo(x):
                 return self._resultElementToString(x, False)
@@ -342,7 +342,7 @@ class Generator:
         needed a _generateDescription for whereAmI. :-) See below.
         """
         result = []
-        self._script.pointOfReference['usedDescriptionForName'] = False
+        self._script.point_of_reference['usedDescriptionForName'] = False
         name = AXObject.get_name(obj)
         role = args.get('role', AXObject.get_role(obj))
         parent = AXObject.get_parent(obj)
@@ -352,7 +352,7 @@ class Generator:
             description = AXObject.get_description(obj)
             if description:
                 result.append(description)
-                self._script.pointOfReference['usedDescriptionForName'] = True
+                self._script.point_of_reference['usedDescriptionForName'] = True
             else:
                 link = None
                 if role == Atspi.Role.LINK:
@@ -437,12 +437,12 @@ class Generator:
     def _generateUnrelatedLabelsOrDescription(self, obj, **args):
         result = self._generateUnrelatedLabels(obj, **args)
         if result:
-            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = False
+            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = False
             return result
 
         result = self._generateDescription(obj, **args)
         if result:
-            self._script.pointOfReference['usedDescriptionForUnrelatedLabels'] = True
+            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = True
 
         return result
 
@@ -452,13 +452,13 @@ class Generator:
         is different from that of the name and label.
         """
 
-        if self._script.pointOfReference.get('usedDescriptionForName'):
+        if self._script.point_of_reference.get('usedDescriptionForName'):
             return []
 
-        if self._script.pointOfReference.get('usedDescriptionForAlert'):
+        if self._script.point_of_reference.get('usedDescriptionForAlert'):
             return []
 
-        if self._script.pointOfReference.get('usedDescriptionForUnrelatedLabels'):
+        if self._script.point_of_reference.get('usedDescriptionForUnrelatedLabels'):
             return []
 
         description = AXObject.get_description(obj) \

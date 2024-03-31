@@ -62,12 +62,6 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
-
 class Utilities:
 
     _last_clipboard_update = time.time()
@@ -87,7 +81,7 @@ class Utilities:
     SUBSCRIPTS_RE = re.compile(f"[{''.join(SUBSCRIPT_DIGITS)}]+", flags)
     PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
-    # generatorCache
+    # generator_cache
     #
     DISPLAYED_DESCRIPTION = 'displayedDescription'
     DISPLAYED_LABEL = 'displayedLabel'
@@ -224,10 +218,10 @@ class Utilities:
         """
 
         try:
-            return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
+            return self._script.generator_cache[self.DISPLAYED_LABEL][obj]
         except Exception:
-            if self.DISPLAYED_LABEL not in self._script.generatorCache:
-                self._script.generatorCache[self.DISPLAYED_LABEL] = {}
+            if self.DISPLAYED_LABEL not in self._script.generator_cache:
+                self._script.generator_cache[self.DISPLAYED_LABEL] = {}
             labelString = None
 
         labels = self.labelsForObject(obj)
@@ -235,8 +229,8 @@ class Utilities:
             labelString = \
                 self.appendString(labelString, self.displayedText(label))
 
-        self._script.generatorCache[self.DISPLAYED_LABEL][obj] = labelString
-        return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
+        self._script.generator_cache[self.DISPLAYED_LABEL][obj] = labelString
+        return self._script.generator_cache[self.DISPLAYED_LABEL][obj]
 
     def preferDescriptionOverName(self, obj):
         return False
@@ -284,14 +278,14 @@ class Utilities:
         """Returns the text being displayed for the object describing obj."""
 
         try:
-            return self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj]
+            return self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj]
         except Exception:
-            if self.DISPLAYED_DESCRIPTION not in self._script.generatorCache:
-                self._script.generatorCache[self.DISPLAYED_DESCRIPTION] = {}
+            if self.DISPLAYED_DESCRIPTION not in self._script.generator_cache:
+                self._script.generator_cache[self.DISPLAYED_DESCRIPTION] = {}
 
         string = " ".join(map(self.displayedText, self.descriptionsForObject(obj)))
-        self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj] = string
-        return self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj]
+        self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj] = string
+        return self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj]
 
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
@@ -306,7 +300,7 @@ class Utilities:
         # TODO - JD: It's finally time to consider killing this for real.
 
         try:
-            return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
+            return self._script.generator_cache[self.DISPLAYED_TEXT][obj]
         except Exception:
             displayedText = None
 
@@ -331,11 +325,11 @@ class Utilities:
                 labels = self.unrelatedLabels(obj, onlyShowing=False, minimumWords=1)
             displayedText = " ".join(map(self.displayedText, labels))
 
-        if self.DISPLAYED_TEXT not in self._script.generatorCache:
-            self._script.generatorCache[self.DISPLAYED_TEXT] = {}
+        if self.DISPLAYED_TEXT not in self._script.generator_cache:
+            self._script.generator_cache[self.DISPLAYED_TEXT] = {}
 
-        self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
-        return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
+        self._script.generator_cache[self.DISPLAYED_TEXT][obj] = displayedText
+        return self._script.generator_cache[self.DISPLAYED_TEXT][obj]
 
     def documentFrame(self, obj=None):
         """Returns the document frame which is displaying the content.
@@ -958,7 +952,7 @@ class Utilities:
             return False
 
         if prevCell is None:
-            lastColumn = self._script.pointOfReference.get("lastColumn")
+            lastColumn = self._script.point_of_reference.get("lastColumn")
         else:
             lastColumn = AXTable.get_cell_coordinates(prevCell)[1]
 
@@ -970,7 +964,7 @@ class Utilities:
             return False
 
         if prevCell is None:
-            lastRow = self._script.pointOfReference.get("lastRow")
+            lastRow = self._script.point_of_reference.get("lastRow")
         else:
             lastRow = AXTable.get_cell_coordinates(prevCell)[0]
         return row != lastRow
@@ -979,7 +973,7 @@ class Utilities:
         if self._script.inSayAll():
             return False
 
-        if self._script.getTableNavigator().last_input_event_was_navigation_command():
+        if self._script.get_table_navigator().last_input_event_was_navigation_command():
             return False
 
         if not self.cellRowChanged(obj, prevObj):
@@ -1298,10 +1292,10 @@ class Utilities:
             return 0
 
         try:
-            return self._script.generatorCache[self.NESTING_LEVEL][obj]
+            return self._script.generator_cache[self.NESTING_LEVEL][obj]
         except Exception:
-            if self.NESTING_LEVEL not in self._script.generatorCache:
-                self._script.generatorCache[self.NESTING_LEVEL] = {}
+            if self.NESTING_LEVEL not in self._script.generator_cache:
+                self._script.generator_cache[self.NESTING_LEVEL] = {}
 
         def pred(x):
             if self.isBlockquote(obj):
@@ -1317,8 +1311,8 @@ class Utilities:
             ancestor = AXObject.find_ancestor(ancestor, pred)
 
         nestingLevel = len(ancestors)
-        self._script.generatorCache[self.NESTING_LEVEL][obj] = nestingLevel
-        return self._script.generatorCache[self.NESTING_LEVEL][obj]
+        self._script.generator_cache[self.NESTING_LEVEL][obj] = nestingLevel
+        return self._script.generator_cache[self.NESTING_LEVEL][obj]
 
     def nodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree
@@ -1333,10 +1327,10 @@ class Utilities:
             return -1
 
         try:
-            return self._script.generatorCache[self.NODE_LEVEL][obj]
+            return self._script.generator_cache[self.NODE_LEVEL][obj]
         except Exception:
-            if self.NODE_LEVEL not in self._script.generatorCache:
-                self._script.generatorCache[self.NODE_LEVEL] = {}
+            if self.NODE_LEVEL not in self._script.generator_cache:
+                self._script.generator_cache[self.NODE_LEVEL] = {}
 
         nodes = []
         node = obj
@@ -1363,8 +1357,8 @@ class Utilities:
             else:
                 done = True
 
-        self._script.generatorCache[self.NODE_LEVEL][obj] = len(nodes) - 1
-        return self._script.generatorCache[self.NODE_LEVEL][obj]
+        self._script.generator_cache[self.NODE_LEVEL][obj] = len(nodes) - 1
+        return self._script.generator_cache[self.NODE_LEVEL][obj]
 
     def isOnScreen(self, obj, boundingbox=None):
         if AXObject.is_dead(obj):
@@ -1605,14 +1599,14 @@ class Utilities:
             return []
 
         start = time.time()
-        items = self._script.pointOfReference.get('statusBarItems')
+        items = self._script.point_of_reference.get('statusBarItems')
         if not items:
 
             def include(x):
                 return not AXUtilities.is_status_bar(x)
 
             items = list(filter(include, self.getOnScreenObjects(obj)))
-            self._script.pointOfReference['statusBarItems'] = items
+            self._script.point_of_reference['statusBarItems'] = items
 
         end = time.time()
         msg = f"SCRIPT UTILITIES: Time getting status bar items: {end - start:.4f}"
@@ -1870,7 +1864,7 @@ class Utilities:
 
         # TODO - JD: Move to AXText if possible
         textContents, startOffset, endOffset = AXText.get_selected_text(obj)
-        if textContents and self._script.pointOfReference.get('entireDocumentSelected'):
+        if textContents and self._script.point_of_reference.get('entireDocumentSelected'):
             return textContents, startOffset, endOffset
 
         if self.isSpreadSheetCell(obj):
@@ -2460,15 +2454,15 @@ class Utilities:
         """
 
         try:
-            return self._script.generatorCache[self.KEY_BINDING][obj]
+            return self._script.generator_cache[self.KEY_BINDING][obj]
         except Exception:
-            if self.KEY_BINDING not in self._script.generatorCache:
-                self._script.generatorCache[self.KEY_BINDING] = {}
+            if self.KEY_BINDING not in self._script.generator_cache:
+                self._script.generator_cache[self.KEY_BINDING] = {}
 
         keybinding = AXObject.get_action_key_binding(obj, 0)
         if not keybinding:
-            self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
-            return self._script.generatorCache[self.KEY_BINDING][obj]
+            self._script.generator_cache[self.KEY_BINDING][obj] = ["", "", ""]
+            return self._script.generator_cache[self.KEY_BINDING][obj]
 
         # Action is a string in the format, where the mnemonic and/or
         # accelerator can be missing.
@@ -2500,12 +2494,12 @@ class Utilities:
         mnemonic = self.labelFromKeySequence(mnemonic)
         accelerator = self.labelFromKeySequence(accelerator)
 
-        if self.KEY_BINDING not in self._script.generatorCache:
-            self._script.generatorCache[self.KEY_BINDING] = {}
+        if self.KEY_BINDING not in self._script.generator_cache:
+            self._script.generator_cache[self.KEY_BINDING] = {}
 
-        self._script.generatorCache[self.KEY_BINDING][obj] = \
+        self._script.generator_cache[self.KEY_BINDING][obj] = \
             [mnemonic, fullShortcut, accelerator]
-        return self._script.generatorCache[self.KEY_BINDING][obj]
+        return self._script.generator_cache[self.KEY_BINDING][obj]
 
     @staticmethod
     def stringToKeysAndDict(string):
@@ -2867,7 +2861,7 @@ class Utilities:
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         word, start, end = AXText.get_word_at_offset(obj, offset)
-        prevObj, prevOffset = self._script.pointOfReference.get(
+        prevObj, prevOffset = self._script.point_of_reference.get(
             "penultimateCursorPosition", (None, -1))
         if prevObj != obj:
             return word, start, end
@@ -2879,7 +2873,7 @@ class Utilities:
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
         prevWord, prevStart, prevEnd = AXText.get_word_at_offset(prevObj, prevOffset)
-        if self._script.pointOfReference.get("lastTextUnitSpoken") == "word":
+        if self._script.point_of_reference.get("lastTextUnitSpoken") == "word":
             if wasPreviousWordNav:
                 start = offset
                 end = prevOffset
@@ -3218,20 +3212,20 @@ class Utilities:
         return ""
 
     def getCachedTextSelection(self, obj):
-        textSelections = self._script.pointOfReference.get('textSelections', {})
+        textSelections = self._script.point_of_reference.get('textSelections', {})
         start, end, string = textSelections.get(hash(obj), (0, 0, ''))
         tokens = ["SCRIPT UTILITIES: Cached selection for", obj, f"is '{string}' ({start}, {end})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return start, end, string
 
     def updateCachedTextSelection(self, obj):
-        if self._script.pointOfReference.get('entireDocumentSelected'):
+        if self._script.point_of_reference.get('entireDocumentSelected'):
             selectedText = self.allSelectedText(obj)[0]
             if not selectedText:
-                self._script.pointOfReference['entireDocumentSelected'] = False
-                self._script.pointOfReference['textSelections'] = {}
+                self._script.point_of_reference['entireDocumentSelected'] = False
+                self._script.point_of_reference['textSelections'] = {}
 
-        textSelections = self._script.pointOfReference.get('textSelections', {})
+        textSelections = self._script.point_of_reference.get('textSelections', {})
 
         # Because some apps and toolkits create, destroy, and duplicate objects
         # and events.
@@ -3244,7 +3238,7 @@ class Utilities:
         tokens = ["SCRIPT UTILITIES: New selection for", obj, f"is '{string}' ({start}, {end})"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         textSelections[hash(obj)] = start, end, string
-        self._script.pointOfReference['textSelections'] = textSelections
+        self._script.point_of_reference['textSelections'] = textSelections
 
     @staticmethod
     def onClipboardContentsChanged(*args):
@@ -3476,22 +3470,22 @@ class Utilities:
         return obj and AXObject.get_name(obj) in contents
 
     def clearCachedCommandState(self):
-        self._script.pointOfReference['undo'] = False
-        self._script.pointOfReference['redo'] = False
-        self._script.pointOfReference['paste'] = False
+        self._script.point_of_reference['undo'] = False
+        self._script.point_of_reference['redo'] = False
+        self._script.point_of_reference['paste'] = False
 
     def handleUndoTextEvent(self, event):
         if input_event_manager.get_manager().last_event_was_undo():
-            if not self._script.pointOfReference.get('undo'):
+            if not self._script.point_of_reference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
-                self._script.pointOfReference['undo'] = True
+                self._script.point_of_reference['undo'] = True
             self.updateCachedTextSelection(event.source)
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
-            if not self._script.pointOfReference.get('redo'):
+            if not self._script.point_of_reference.get('redo'):
                 self._script.presentMessage(messages.REDO)
-                self._script.pointOfReference['redo'] = True
+                self._script.point_of_reference['redo'] = True
             self.updateCachedTextSelection(event.source)
             return True
 
@@ -3502,15 +3496,15 @@ class Utilities:
             return False
 
         if input_event_manager.get_manager().last_event_was_undo():
-            if not self._script.pointOfReference.get('undo'):
+            if not self._script.point_of_reference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
-                self._script.pointOfReference['undo'] = True
+                self._script.point_of_reference['undo'] = True
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
-            if not self._script.pointOfReference.get('redo'):
+            if not self._script.point_of_reference.get('redo'):
                 self._script.presentMessage(messages.REDO)
-                self._script.pointOfReference['redo'] = True
+                self._script.point_of_reference['redo'] = True
             return True
 
         return False
@@ -3520,10 +3514,10 @@ class Utilities:
             return False
 
         if input_event_manager.get_manager().last_event_was_paste():
-            if not self._script.pointOfReference.get('paste'):
+            if not self._script.point_of_reference.get('paste'):
                 self._script.presentMessage(
                     messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
-                self._script.pointOfReference['paste'] = True
+                self._script.point_of_reference['paste'] = True
             return True
 
         return False
@@ -3566,12 +3560,12 @@ class Utilities:
         return AXTable.all_cells_are_selected(obj)
 
     def handleContainerSelectionChange(self, obj):
-        allAlreadySelected = self._script.pointOfReference.get('allItemsSelected')
+        allAlreadySelected = self._script.point_of_reference.get('allItemsSelected')
         allCurrentlySelected = self.allItemsSelected(obj)
         if allAlreadySelected and allCurrentlySelected:
             return True
 
-        self._script.pointOfReference['allItemsSelected'] = allCurrentlySelected
+        self._script.point_of_reference['allItemsSelected'] = allCurrentlySelected
         if input_event_manager.get_manager().last_event_was_select_all() and allCurrentlySelected:
             self._script.presentMessage(messages.CONTAINER_SELECTED_ALL)
             focus_manager.get_manager().set_locus_of_focus(None, obj, False)
@@ -3592,8 +3586,8 @@ class Utilities:
         newStart, newEnd, newString = self.getCachedTextSelection(obj)
 
         if input_event_manager.get_manager().last_event_was_select_all() and newString:
-            if not self._script.pointOfReference.get('entireDocumentSelected'):
-                self._script.pointOfReference['entireDocumentSelected'] = True
+            if not self._script.point_of_reference.get('entireDocumentSelected'):
+                self._script.point_of_reference['entireDocumentSelected'] = True
                 self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
             return True
 
@@ -3659,7 +3653,7 @@ class Utilities:
 
         return True
 
-    def shouldInterruptForLocusOfFocusChange(self, oldLocusOfFocus, newLocusOfFocus, event=None):
+    def shouldInterruptForLocusOfFocusChange(self, old_focus, new_focus, event=None):
         msg = "SCRIPT UTILITIES: Not interrupting for locusOfFocus change: "
         if event is None:
             msg += "event is None"
@@ -3669,38 +3663,38 @@ class Utilities:
         if event is not None and event.type.startswith("object:active-descendant-changed"):
             return self._script.stopSpeechOnActiveDescendantChanged(event)
 
-        if AXUtilities.is_table_cell(oldLocusOfFocus) and AXUtilities.is_text(newLocusOfFocus) \
-           and AXUtilities.is_editable(newLocusOfFocus):
+        if AXUtilities.is_table_cell(old_focus) and AXUtilities.is_text(new_focus) \
+           and AXUtilities.is_editable(new_focus):
             msg += "suspected editable cell"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not AXUtilities.is_menu_related(newLocusOfFocus) \
-           and (AXUtilities.is_check_menu_item(oldLocusOfFocus) \
-                or AXUtilities.is_radio_menu_item(oldLocusOfFocus)):
+        if not AXUtilities.is_menu_related(new_focus) \
+           and (AXUtilities.is_check_menu_item(old_focus) \
+                or AXUtilities.is_radio_menu_item(old_focus)):
             msg += "suspected menuitem state change"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if AXObject.is_ancestor(newLocusOfFocus, oldLocusOfFocus):
-            if AXObject.get_name(oldLocusOfFocus):
+        if AXObject.is_ancestor(new_focus, old_focus):
+            if AXObject.get_name(old_focus):
                 msg += "old locusOfFocus is ancestor with name of new locusOfFocus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
             return True
 
         def isOld(target):
-            return target == oldLocusOfFocus
+            return target == old_focus
 
         def isNew(target):
-            return target == newLocusOfFocus
+            return target == new_focus
 
-        if AXObject.get_relation_targets(newLocusOfFocus,
+        if AXObject.get_relation_targets(new_focus,
                                          Atspi.RelationType.CONTROLLER_FOR, isOld):
             msg += "new locusOfFocus controls old locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
-        if AXObject.get_relation_targets(oldLocusOfFocus,
+        if AXObject.get_relation_targets(old_focus,
                                          Atspi.RelationType.CONTROLLER_FOR, isNew):
             msg += "old locusOfFocus controls new locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

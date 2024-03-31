@@ -279,7 +279,7 @@ class FlatReviewFinder:
         else:
             context.setCurrent(location.lineIndex, location.zoneIndex, \
                                 location.wordIndex, location.charIndex)
-            script.flatReviewPresenter.present_item(script)
+            script.get_flat_review_presenter().present_item(script)
             script.targetCursorCell = script.getBrailleCursorCell()
 
     def _move(self, query, context, context_type):
@@ -538,7 +538,7 @@ class FlatReviewFinderGUI:
             # the original window has fully regained focus.
             dialog.destroy()
 
-            self._script.findCommandRun = True
+            self._script.run_find_command = True
 
     def show_gui(self):
         """Shows the notifications list dialog."""

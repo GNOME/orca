@@ -118,8 +118,8 @@ class BypassModeManager:
         reason = "bypass mode enabled"
         script.removeKeyGrabs(reason)
         orca_modifier_manager.get_manager().unset_orca_modifiers(reason)
-        for binding in self._bindings.keyBindings:
-            script.keyBindings.add(binding, includeGrabs=True)
+        for binding in self._bindings.key_bindings:
+            script.key_bindings.add(binding, includeGrabs=True)
 
         return True
 

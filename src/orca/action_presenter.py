@@ -148,7 +148,7 @@ class ActionPresenter:
             actions[name] = description or name
 
         if not actions.items():
-            name = AXObject.get_name(obj) or script.speechGenerator.getLocalizedRoleName(obj)
+            name = AXObject.get_name(obj) or script.speech_generator.getLocalizedRoleName(obj)
             script.presentMessage(messages.NO_ACTIONS_FOUND_ON % name)
             return True
 

@@ -37,18 +37,18 @@ from .script_utilities import Utilities
 
 class Script(default.Script):
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def forceScriptActivation(self, event):
+    def force_script_activation(self, event):
         """Allows scripts to insist that they should become active."""
 
         if self.utilities.isSwitcherSelectionChangeEventType(event):
             return True
 
-        return super().forceScriptActivation(event)
+        return super().force_script_activation(event)
 
     def _handleSwitcherEvent(self, event):
         """Presents the currently selected item, if appropriate."""
@@ -73,13 +73,13 @@ class Script(default.Script):
                             resetStyles=False, force=True)
         return True
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        if AXUtilities.is_window(newLocusOfFocus) and not AXObject.get_name(newLocusOfFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
+        if AXUtilities.is_window(new_focus) and not AXObject.get_name(new_focus):
             msg = "SWITCHER: Not presenting newly-focused nameless window."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        super().locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus)
+        super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""

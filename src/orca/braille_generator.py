@@ -53,10 +53,7 @@ class Space:
 SPACE = [Space()]
 
 class BrailleGenerator(generator.Generator):
-    """Takes accessible objects and produces a list of braille Regions
-    for those objects.  See the generateBraille method, which is the
-    primary entry point.  Subclasses can feel free to override/extend
-    the brailleGenerators instance field as they see fit."""
+    """Produces a list of braille Regions for accessible objects."""
 
     SKIP_CONTEXT_ROLES = (Atspi.Role.MENU,
                           Atspi.Role.MENU_BAR,

@@ -335,7 +335,7 @@ class Utilities(script_utilities.Utilities):
         return AXText.get_word_at_offset(obj, offset)
 
     def shouldReadFullRow(self, obj, prevObj=None):
-        if self._script.getTableNavigator().last_input_event_was_navigation_command():
+        if self._script.get_table_navigator().last_input_event_was_navigation_command():
             return False
 
         if input_event_manager.get_manager().last_event_was_tab_navigation():

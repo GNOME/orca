@@ -310,8 +310,8 @@ class WhereAmIPresenter:
     def present_size_and_position(self, script, event=None):
         """Presents the size and position of the current object."""
 
-        if script.flatReviewPresenter.is_active():
-            obj = script.flatReviewPresenter.get_current_object(script, event)
+        if script.get_flat_review_presenter().is_active():
+            obj = script.get_flat_review_presenter().get_current_object(script, event)
         else:
             obj = focus_manager.get_manager().get_locus_of_focus()
 
@@ -338,7 +338,7 @@ class WhereAmIPresenter:
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        title = script.speechGenerator.generateTitle(obj)
+        title = script.speech_generator.generateTitle(obj)
         for (string, voice) in title:
             script.presentMessage(string, voice=voice)
         return True
@@ -375,9 +375,9 @@ class WhereAmIPresenter:
         if frame:
             statusbar = AXUtilities.get_status_bar(frame)
             if statusbar:
-                script.pointOfReference['statusBarItems'] = None
+                script.point_of_reference['statusBarItems'] = None
                 script.presentObject(statusbar, interrupt=True)
-                script.pointOfReference['statusBarItems'] = None
+                script.point_of_reference['statusBarItems'] = None
             else:
                 full = messages.STATUS_BAR_NOT_FOUND_FULL
                 brief = messages.STATUS_BAR_NOT_FOUND_BRIEF

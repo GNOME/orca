@@ -115,10 +115,10 @@ class Script(default.Script):
 
         in_doc = self.utilities.inDocumentContent()
         reason = f"script activation, in document content: {in_doc}"
-        self.caretNavigation.suspend_commands(self, not in_doc, reason)
-        self.structuralNavigation.suspend_commands(self, not in_doc, reason)
-        self.liveRegionManager.suspend_commands(self, not in_doc, reason)
-        self.tableNavigator.suspend_commands(self, not in_doc, reason)
+        self.caret_navigation.suspend_commands(self, not in_doc, reason)
+        self.structural_navigation.suspend_commands(self, not in_doc, reason)
+        self.live_region_manager.suspend_commands(self, not in_doc, reason)
+        self.get_table_navigator().suspend_commands(self, not in_doc, reason)
         super().activate()
 
     def deactivate(self):
@@ -133,13 +133,13 @@ class Script(default.Script):
         self._inMouseOverObject = False
         self.utilities.clearCachedObjects()
         reason = "script deactivation"
-        self.caretNavigation.suspend_commands(self, False, reason)
-        self.structuralNavigation.suspend_commands(self, False, reason)
-        self.liveRegionManager.suspend_commands(self, False, reason)
-        self.tableNavigator.suspend_commands(self, False, reason)
+        self.caret_navigation.suspend_commands(self, False, reason)
+        self.structural_navigation.suspend_commands(self, False, reason)
+        self.live_region_manager.suspend_commands(self, False, reason)
+        self.get_table_navigator().suspend_commands(self, False, reason)
         super().deactivate()
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
@@ -147,19 +147,19 @@ class Script(default.Script):
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        structNavBindings = self.structuralNavigation.get_bindings(
+        structNavBindings = self.structural_navigation.get_bindings(
             refresh=True, is_desktop=isDesktop)
-        for keyBinding in structNavBindings.keyBindings:
+        for keyBinding in structNavBindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        caretNavBindings = self.caretNavigation.get_bindings(
+        caretNavBindings = self.caret_navigation.get_bindings(
             refresh=True, is_desktop=isDesktop)
-        for keyBinding in caretNavBindings.keyBindings:
+        for keyBinding in caretNavBindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        liveRegionBindings = self.liveRegionManager.get_bindings(
+        liveRegionBindings = self.live_region_manager.get_bindings(
             refresh=True, is_desktop=isDesktop)
-        for keyBinding in liveRegionBindings.keyBindings:
+        for keyBinding in liveRegionBindings.key_bindings:
             keyBindings.add(keyBinding)
 
         keyBindings.add(
@@ -167,14 +167,14 @@ class Script(default.Script):
                 "a",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("togglePresentationModeHandler")))
+                self.input_event_handlers.get("togglePresentationModeHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "a",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("enableStickyFocusModeHandler"),
+                self.input_event_handlers.get("enableStickyFocusModeHandler"),
                 2))
 
         keyBindings.add(
@@ -182,7 +182,7 @@ class Script(default.Script):
                 "a",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("enableStickyBrowseModeHandler"),
+                self.input_event_handlers.get("enableStickyBrowseModeHandler"),
                 3))
 
         keyBindings.add(
@@ -190,7 +190,7 @@ class Script(default.Script):
                 "",
                 keybindings.defaultModifierMask,
                 keybindings.NO_MODIFIER_MASK,
-                self.inputEventHandlers.get("toggleLayoutModeHandler")))
+                self.input_event_handlers.get("toggleLayoutModeHandler")))
 
 
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
@@ -204,56 +204,56 @@ class Script(default.Script):
                 key,
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers.get("moveToMouseOverHandler")))
+                self.input_event_handlers.get("moveToMouseOverHandler")))
 
         return keyBindings
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandlers for this script."""
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        super().setupInputEventHandlers()
-        self.inputEventHandlers.update(self.structuralNavigation.get_handlers(True))
-        self.inputEventHandlers.update(self.caretNavigation.get_handlers(True))
-        self.inputEventHandlers.update(self.liveRegionManager.get_handlers(True))
+        super().setup_input_event_handlers()
+        self.input_event_handlers.update(self.structural_navigation.get_handlers(True))
+        self.input_event_handlers.update(self.caret_navigation.get_handlers(True))
+        self.input_event_handlers.update(self.live_region_manager.get_handlers(True))
 
-        self.inputEventHandlers["panBrailleLeftHandler"] = \
+        self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["panBrailleRightHandler"] = \
+        self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["moveToMouseOverHandler"] = \
+        self.input_event_handlers["moveToMouseOverHandler"] = \
             input_event.InputEventHandler(
                 Script.moveToMouseOver,
                 cmdnames.MOUSE_OVER_MOVE)
 
-        self.inputEventHandlers["togglePresentationModeHandler"] = \
+        self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
 
-        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+        self.input_event_handlers["enableStickyFocusModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyFocusMode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
-        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+        self.input_event_handlers["enableStickyBrowseModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enableStickyBrowseMode,
                 cmdnames.SET_BROWSE_MODE_STICKY)
 
-        self.inputEventHandlers["toggleLayoutModeHandler"] = \
+        self.input_event_handlers["toggleLayoutModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleLayoutMode,
                 cmdnames.TOGGLE_LAYOUT_MODE)
 
-    def getBookmarks(self):
+    def get_bookmarks(self):
         """Returns the "bookmarks" class for this script."""
 
         try:
@@ -262,17 +262,17 @@ class Script(default.Script):
             self.bookmarks = Bookmarks(self)
             return self.bookmarks
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def getCaretNavigation(self):
+    def get_caret_navigation(self):
         """Returns the caret navigation support for this script."""
 
         return caret_navigation.CaretNavigation()
 
-    def getEnabledStructuralNavigationTypes(self):
+    def get_enabled_structural_navigation_types(self):
         """Returns the structural navigation object types for this script."""
 
         return [structural_navigation.StructuralNavigation.BLOCKQUOTE,
@@ -299,27 +299,27 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.UNVISITED_LINK,
                 structural_navigation.StructuralNavigation.VISITED_LINK]
 
-    def getLiveRegionManager(self):
+    def get_live_region_manager(self):
         """Returns the live region support for this script."""
 
         return liveregions.LiveRegionManager(self)
 
-    def getSoundGenerator(self):
+    def get_sound_generator(self):
         """Returns the sound generator for this script."""
 
         return SoundGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing app-unique configuration items."""
 
         grid = Gtk.Grid()
@@ -352,7 +352,7 @@ class Script(default.Script):
         generalGrid.attach(self._autoFocusModeCaretNavCheckButton, 0, 1, 1, 1)
 
         label = guilabels.USE_STRUCTURAL_NAVIGATION
-        value = self.structuralNavigation.enabled
+        value = self.structural_navigation.enabled
         self._structuralNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._structuralNavigationCheckButton.set_active(value)
@@ -479,7 +479,7 @@ class Script(default.Script):
         grid.show_all()
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
         if not self._speakResultsDuringFindCheckButton.get_active():
@@ -510,7 +510,7 @@ class Script(default.Script):
         super().presentationInterrupt(killFlash)
         msg = "WEB: Flushing live region messages"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self.liveRegionManager.flushMessages()
+        self.live_region_manager.flushMessages()
 
     # TODO - JD: This needs to be moved out of the scripts.
     def textLines(self, obj, offset=None):
@@ -575,7 +575,7 @@ class Script(default.Script):
                 if self.utilities.isLinkAncestorOfImageInContents(obj, contents):
                     continue
 
-                utterances = self.speechGenerator.generateContents(
+                utterances = self.speech_generator.generateContents(
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
 
@@ -589,7 +589,7 @@ class Script(default.Script):
                     tokens = ["WEB", context]
                     debug.printTokens(debug.LEVEL_INFO, tokens, True)
                     self._sayAllContexts.append(context)
-                    self.eventSynthesizer.scroll_into_view(obj, startOffset, endOffset)
+                    self.get_event_synthesizer().scroll_into_view(obj, startOffset, endOffset)
                     yield [context, voices[i]]
 
             lastObj, lastOffset = contents[-1][0], contents[-1][2]
@@ -701,8 +701,8 @@ class Script(default.Script):
                     return
                 if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
-                if not self.structuralNavigation.last_input_event_was_navigation_command() \
-                   and not self.tableNavigator.last_input_event_was_navigation_command():
+                if not self.structural_navigation.last_input_event_was_navigation_command() \
+                   and not self.get_table_navigator().last_input_event_was_navigation_command():
                     focus_manager.get_manager().emit_region_changed(
                         context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
@@ -753,8 +753,8 @@ class Script(default.Script):
             return False
 
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command() \
-            or self.tableNavigator.last_input_event_was_navigation_command()
+            self.structural_navigation.last_input_event_was_navigation_command() \
+            or self.get_table_navigator().last_input_event_was_navigation_command()
         if not settings_manager.get_manager().get_setting('structNavTriggersFocusMode') \
            and lastCommandWasStructNav:
             msg = "WEB: Not using focus mode due to struct nav settings"
@@ -764,7 +764,7 @@ class Script(default.Script):
         if prevObj and AXObject.is_dead(prevObj):
             prevObj = None
 
-        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
+        lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
         if not settings_manager.get_manager().get_setting('caretNavTriggersFocusMode') \
            and  lastCommandWasCaretNav \
            and not self.utilities.isNavigableToolTipDescendant(prevObj):
@@ -807,13 +807,13 @@ class Script(default.Script):
     def speakContents(self, contents, **args):
         """Speaks the specified contents."""
 
-        utterances = self.speechGenerator.generateContents(contents, **args)
+        utterances = self.speech_generator.generateContents(contents, **args)
         speech.speak(utterances)
 
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
 
-        if not self.caretNavigation.last_input_event_was_navigation_command() \
+        if not self.caret_navigation.last_input_event_was_navigation_command() \
            and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
             super().sayCharacter(obj)
             return
@@ -845,13 +845,13 @@ class Script(default.Script):
         else:
             self.speakContents(contents)
 
-        self.pointOfReference["lastTextUnitSpoken"] = "char"
+        self.point_of_reference["lastTextUnitSpoken"] = "char"
 
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
         isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
-        if not self.caretNavigation.last_input_event_was_navigation_command() and not isEditable:
+        if not self.caret_navigation.last_input_event_was_navigation_command() and not isEditable:
             super().sayWord(obj)
             return
 
@@ -864,15 +864,15 @@ class Script(default.Script):
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
         self.speakContents(wordContents)
-        self.pointOfReference["lastTextUnitSpoken"] = "word"
+        self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
+        lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command() \
-            or self.tableNavigator.last_input_event_was_navigation_command()
+            self.structural_navigation.last_input_event_was_navigation_command() \
+            or self.get_table_navigator().last_input_event_was_navigation_command()
 
         isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
         if not (lastCommandWasCaretNav or lastCommandWasStructNav) and not isEditable:
@@ -887,7 +887,7 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         self.speakContents(contents, priorObj=priorObj)
-        self.pointOfReference["lastTextUnitSpoken"] = "line"
+        self.point_of_reference["lastTextUnitSpoken"] = "line"
 
     def presentObject(self, obj, **args):
         if not self.utilities.inDocumentContent(obj) or AXUtilities.is_document(obj):
@@ -899,7 +899,7 @@ class Script(default.Script):
             return
 
         priorObj = args.get("priorObj")
-        if self.caretNavigation.last_input_event_was_navigation_command() \
+        if self.caret_navigation.last_input_event_was_navigation_command() \
            or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
@@ -953,9 +953,9 @@ class Script(default.Script):
 
         isContentEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
 
-        if not self.caretNavigation.last_input_event_was_navigation_command() \
-           and not self.structuralNavigation.last_input_event_was_navigation_command() \
-           and not self.tableNavigator.last_input_event_was_navigation_command() \
+        if not self.caret_navigation.last_input_event_was_navigation_command() \
+           and not self.structural_navigation.last_input_event_was_navigation_command() \
+           and not self.get_table_navigator().last_input_event_was_navigation_command() \
            and not isContentEditable \
            and not AXDocument.is_plain_text(document) \
            and not input_event_manager.get_manager().last_event_was_caret_selection():
@@ -985,7 +985,7 @@ class Script(default.Script):
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
         document = args.get("documentFrame")
-        contents = self.brailleGenerator.generateContents(contents, documentFrame=document)
+        contents = self.braille_generator.generateContents(contents, documentFrame=document)
         if not contents:
             return
 
@@ -1002,7 +1002,7 @@ class Script(default.Script):
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans braille to the left."""
 
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleBeginningShowing():
             super().panBrailleLeft(inputEvent, panAmount)
@@ -1028,7 +1028,7 @@ class Script(default.Script):
     def panBrailleRight(self, inputEvent=None, panAmount=0):
         """Pans braille to the right."""
 
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleEndShowing():
             super().panBrailleRight(inputEvent, panAmount)
@@ -1060,7 +1060,7 @@ class Script(default.Script):
 
         if self._inMouseOverObject:
             x, y = self.oldMouseCoordinates
-            self.eventSynthesizer.route_to_point(x, y)
+            self.get_event_synthesizer().route_to_point(x, y)
             self.restorePreMouseOverContext()
             return
 
@@ -1096,10 +1096,10 @@ class Script(default.Script):
         self._focusModeIsSticky = False
         self._browseModeIsSticky = True
         reason = "enable sticky browse mode"
-        self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
-        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
+        self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
+        self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
@@ -1109,10 +1109,10 @@ class Script(default.Script):
         self._focusModeIsSticky = True
         self._browseModeIsSticky = False
         reason = "enable sticky focus mode"
-        self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
-        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
+        self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
+        self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
     def toggleLayoutMode(self, inputEvent):
         layoutMode = not settings_manager.get_manager().get_setting('layoutMode')
@@ -1134,9 +1134,9 @@ class Script(default.Script):
                 self.presentMessage(messages.MODE_BROWSE)
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
-               and (self.caretNavigation.last_input_event_was_navigation_command() \
-                    or self.structuralNavigation.last_input_event_was_navigation_command() \
-                    or self.tableNavigator.last_input_event_was_navigation_command() \
+               and (self.caret_navigation.last_input_event_was_navigation_command() \
+                    or self.structural_navigation.last_input_event_was_navigation_command() \
+                    or self.get_table_navigator().last_input_event_was_navigation_command() \
                     or inputEvent):
                 AXObject.grab_focus(obj)
 
@@ -1146,26 +1146,26 @@ class Script(default.Script):
         self._browseModeIsSticky = False
 
         reason = "toggling focus/browse mode"
-        self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
-        self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
-        self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
+        self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
+        self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        tokens = ["WEB: Focus changing from", oldFocus, "to", newFocus]
+        tokens = ["WEB: Focus changing from", old_focus, "to", new_focus]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if newFocus and not AXObject.is_valid(newFocus):
+        if new_focus and not AXObject.is_valid(new_focus):
             return True
 
-        if newFocus and AXObject.is_dead(newFocus):
+        if new_focus and AXObject.is_dead(new_focus):
             return True
 
-        document = self.utilities.getTopLevelDocumentForObject(newFocus)
-        if not document and self.utilities.isDocument(newFocus):
-            document = newFocus
+        document = self.utilities.getTopLevelDocumentForObject(new_focus)
+        if not document and self.utilities.isDocument(new_focus):
+            document = new_focus
 
         if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
@@ -1173,11 +1173,11 @@ class Script(default.Script):
             self._madeFindAnnouncement = False
             self._inFocusMode = False
 
-            oldDocument = self.utilities.getTopLevelDocumentForObject(oldFocus)
-            if not document and self.utilities.isDocument(oldFocus):
-                oldDocument = oldFocus
+            oldDocument = self.utilities.getTopLevelDocumentForObject(old_focus)
+            if not document and self.utilities.isDocument(old_focus):
+                oldDocument = old_focus
 
-            if oldFocus and not oldDocument:
+            if old_focus and not oldDocument:
                 msg = "WEB: Not refreshing grabs because we weren't in a document before"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return False
@@ -1186,101 +1186,101 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             reason = "locus of focus no longer in document"
-            self.caretNavigation.suspend_commands(self, True, reason)
-            self.structuralNavigation.suspend_commands(self, True, reason)
-            self.liveRegionManager.suspend_commands(self, True, reason)
-            self.tableNavigator.suspend_commands(self, True, reason)
+            self.caret_navigation.suspend_commands(self, True, reason)
+            self.structural_navigation.suspend_commands(self, True, reason)
+            self.live_region_manager.suspend_commands(self, True, reason)
+            self.get_table_navigator().suspend_commands(self, True, reason)
             return False
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
 
         caretOffset = 0
-        if self.utilities.inFindContainer(oldFocus) \
-           or (self.utilities.isDocument(newFocus) \
-               and oldFocus == focus_manager.get_manager().get_active_window()):
+        if self.utilities.inFindContainer(old_focus) \
+           or (self.utilities.isDocument(new_focus) \
+               and old_focus == focus_manager.get_manager().get_active_window()):
             contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
             if contextObj and AXObject.is_valid(contextObj):
-                newFocus, caretOffset = contextObj, contextOffset
+                new_focus, caretOffset = contextObj, contextOffset
 
-        if AXUtilities.is_unknown_or_redundant(newFocus):
+        if AXUtilities.is_unknown_or_redundant(new_focus):
             msg = "WEB: Event source has bogus role. Likely browser bug."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
+            new_focus, offset = self.utilities.findFirstCaretContext(new_focus, 0)
 
-        if self.utilities.treatAsTextObject(newFocus):
-            textOffset = AXText.get_caret_offset(newFocus)
-            if 0 <= textOffset <= AXText.get_character_count(newFocus):
+        if self.utilities.treatAsTextObject(new_focus):
+            textOffset = AXText.get_caret_offset(new_focus)
+            if 0 <= textOffset <= AXText.get_character_count(new_focus):
                 caretOffset = textOffset
 
-        self.utilities.setCaretContext(newFocus, caretOffset, document)
-        self.updateBraille(newFocus, documentFrame=document)
+        self.utilities.setCaretContext(new_focus, caretOffset, document)
+        self.updateBraille(new_focus, documentFrame=document)
 
         contents = None
         args = {}
-        lastCommandWasCaretNav = self.caretNavigation.last_input_event_was_navigation_command()
+        lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
         lastCommandWasStructNav = \
-            self.structuralNavigation.last_input_event_was_navigation_command() \
-            or self.tableNavigator.last_input_event_was_navigation_command()
+            self.structural_navigation.last_input_event_was_navigation_command() \
+            or self.get_table_navigator().last_input_event_was_navigation_command()
         if input_event_manager.get_manager().last_event_was_mouse_button() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            args['priorObj'] = oldFocus
-        elif self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            args['priorObj'] = old_focus
+        elif self.utilities.isContentEditableWithEmbeddedObjects(new_focus) \
            and (lastCommandWasCaretNav or lastCommandWasStructNav) \
-           and not (AXUtilities.is_table_cell(newFocus) and AXObject.get_name(newFocus)):
-            tokens = ["WEB: New focus", newFocus, "content editable. Generating line."]
+           and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
+            tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif self.utilities.isAnchor(newFocus):
-            tokens = ["WEB: New focus", newFocus, "is anchor. Generating line."]
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+        elif self.utilities.isAnchor(new_focus):
+            tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
+            contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
         elif input_event_manager.get_manager().last_event_was_page_navigation() \
-             and not AXTable.get_table(newFocus) \
-             and not self.utilities.isFeedArticle(newFocus):
-            tokens = ["WEB: New focus", newFocus, "was scrolled to. Generating line."]
+             and not AXTable.get_table(new_focus) \
+             and not self.utilities.isFeedArticle(new_focus):
+            tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif self.utilities.isFocusedWithMathChild(newFocus):
-            tokens = ["WEB: New focus", newFocus, "has math child. Generating line."]
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+        elif self.utilities.isFocusedWithMathChild(new_focus):
+            tokens = ["WEB: New focus", new_focus, "has math child. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-        elif AXUtilities.is_heading(newFocus):
-            tokens = ["WEB: New focus", newFocus, "is heading. Generating object."]
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+        elif AXUtilities.is_heading(new_focus):
+            tokens = ["WEB: New focus", new_focus, "is heading. Generating object."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
-        elif self.utilities.caretMovedToSamePageFragment(event, oldFocus):
+            contents = self.utilities.getObjectContentsAtOffset(new_focus, 0)
+        elif self.utilities.caretMovedToSamePageFragment(event, old_focus):
             tokens = ["WEB: Source", event.source, "is same page fragment. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
+            contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
         elif event and event.type.startswith("object:children-changed:remove") \
-             and self.utilities.isFocusModeWidget(newFocus):
-            tokens = ["WEB: New focus", newFocus,
+             and self.utilities.isFocusModeWidget(new_focus):
+            tokens = ["WEB: New focus", new_focus,
                       "is recovery from removed child. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         elif input_event_manager.get_manager().last_event_was_line_navigation() \
-             and not AXObject.is_valid(oldFocus):
-            msg = "WEB: Last input event was line nav; oldFocus is invalid. Generating line."
+             and not AXObject.is_valid(old_focus):
+            msg = "WEB: Last input event was line nav; old_focus is invalid. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif input_event_manager.get_manager().last_event_was_line_navigation() and event \
              and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
-            args['priorObj'] = oldFocus
+            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            args['priorObj'] = old_focus
         else:
-            tokens = ["WEB: New focus", newFocus, "is not a special case. Generating speech."]
+            tokens = ["WEB: New focus", new_focus, "is not a special case. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            args['priorObj'] = oldFocus
+            args['priorObj'] = old_focus
 
-        if newFocus and AXObject.is_dead(newFocus):
+        if new_focus and AXObject.is_dead(new_focus):
             msg = "WEB: New focus has since died"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            if self._getQueuedEvent("object:state-changed:focused", True):
+            if self._get_queued_event("object:state-changed:focused", True):
                 msg = "WEB: Have matching focused event. Not speaking contents"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
@@ -1288,27 +1288,27 @@ class Script(default.Script):
         if contents:
             self.speakContents(contents, **args)
         else:
-            utterances = self.speechGenerator.generateSpeech(newFocus, **args)
+            utterances = self.speech_generator.generateSpeech(new_focus, **args)
             speech.speak(utterances)
 
-        self._saveFocusedObjectInfo(newFocus)
+        self._saveFocusedObjectInfo(new_focus)
 
-        if self.utilities.inTopLevelWebApp(newFocus) and not self._browseModeIsSticky:
-            announce = not self.utilities.inDocumentContent(oldFocus)
+        if self.utilities.inTopLevelWebApp(new_focus) and not self._browseModeIsSticky:
+            announce = not self.utilities.inDocumentContent(old_focus)
             self.enableStickyFocusMode(None, announce)
             return True
 
         if not self._focusModeIsSticky \
            and not self._browseModeIsSticky \
-           and self.useFocusMode(newFocus, oldFocus) != self._inFocusMode:
+           and self.useFocusMode(new_focus, old_focus) != self._inFocusMode:
             self.togglePresentationMode(None, document)
 
-        if not self.utilities.inDocumentContent(oldFocus):
+        if not self.utilities.inDocumentContent(old_focus):
             reason = "locus of focus now in document"
-            self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
-            self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
-            self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
-            self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
+            self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
+            self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+            self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
+            self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
         return True
 
@@ -1363,7 +1363,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        self.structuralNavigation.clearCache()
+        self.structural_navigation.clearCache()
 
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
@@ -1514,17 +1514,17 @@ class Script(default.Script):
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if self.caretNavigation.last_input_event_was_navigation_command():
+        if self.caret_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.structuralNavigation.last_input_event_was_navigation_command():
+        if self.structural_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.tableNavigator.last_input_event_was_navigation_command():
+        if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1658,20 +1658,20 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
+        oldObj, oldState = self.point_of_reference.get('checkedChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             msg = "WEB: Ignoring event, state hasn't changed"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not (self.caretNavigation.last_input_event_was_navigation_command() \
+        if not (self.caret_navigation.last_input_event_was_navigation_command() \
            and AXUtilities.is_radio_button(obj)):
             msg = "WEB: Event is something default can handle"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.pointOfReference['checkedChange'] = hash(obj), event.detail1
+        self.point_of_reference['checkedChange'] = hash(obj), event.detail1
         return True
 
     def on_children_added(self, event):
@@ -1711,7 +1711,7 @@ class Script(default.Script):
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
-                self.liveRegionManager.handleEvent(event)
+                self.live_region_manager.handleEvent(event)
             else:
                 msg = "WEB: Ignoring because live region event not to be handled."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1768,7 +1768,7 @@ class Script(default.Script):
         if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
             utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(self.speechGenerator.generateSpeech(event.any_data, force=True))
+            utterances.extend(self.speech_generator.generateSpeech(event.any_data, force=True))
             speech.speak(utterances)
             self._lastMouseOverObject = event.any_data
             self.preMouseOverContext = self.utilities.getCaretContext()
@@ -1861,7 +1861,7 @@ class Script(default.Script):
         msg = "WEB: Updating loading state and resetting live regions"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
-        self.liveRegionManager.reset()
+        self.live_region_manager.reset()
         return True
 
     def on_document_load_stopped(self, event):
@@ -1998,26 +1998,26 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
                 if not notify and prevDocument is None:
                     reason = "updating locus of focus without notification"
-                    self.caretNavigation.suspend_commands(self, self._inFocusMode, reason)
-                    self.structuralNavigation.suspend_commands(self, self._inFocusMode, reason)
-                    self.liveRegionManager.suspend_commands(self, self._inFocusMode, reason)
-                    self.tableNavigator.suspend_commands(self, self._inFocusMode, reason)
+                    self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
+                    self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+                    self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
+                    self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if self.caretNavigation.last_input_event_was_navigation_command():
+        if self.caret_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.structuralNavigation.last_input_event_was_navigation_command():
+        if self.structural_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.tableNavigator.last_input_event_was_navigation_command():
+        if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -2291,7 +2291,7 @@ class Script(default.Script):
         if document:
             tokens = ["WEB: Clearing structural navigation cache for", document]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            self.structuralNavigation.clearCache(document)
+            self.structural_navigation.clearCache(document)
 
         if not AXUtilities.is_editable(event.source) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
@@ -2322,7 +2322,7 @@ class Script(default.Script):
         if self.utilities.handleAsLiveRegion(event):
             msg = "WEB: Event to be handled as live region"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.liveRegionManager.handleEvent(event)
+            self.live_region_manager.handleEvent(event)
             return True
 
         if self.utilities.isLiveRegion(event.source):
@@ -2374,7 +2374,7 @@ class Script(default.Script):
         else:
             tokens = ["WEB: Clearing structural navigation cache for", document]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            self.structuralNavigation.clearCache(document)
+            self.structural_navigation.clearCache(document)
 
         if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
@@ -2483,7 +2483,7 @@ class Script(default.Script):
         self._lastMouseButtonContext = None, -1
         return False
 
-    def getTransferableAttributes(self):
+    def get_transferable_attributes(self):
         return {"_inFocusMode": self._inFocusMode,
                 "_focusModeIsSticky": self._focusModeIsSticky,
                 "_browseModeIsSticky": self._browseModeIsSticky,

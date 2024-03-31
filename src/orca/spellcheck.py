@@ -162,7 +162,7 @@ class SpellCheck:
             return False
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         return True
 
@@ -172,7 +172,7 @@ class SpellCheck:
 
         self._script.clearBraille()
         msg = self.getCompletionMessage()
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.presentMessage(msg, voice=voice)
         return True
 
@@ -197,7 +197,7 @@ class SpellCheck:
             return False
 
         msg = messages.MISSPELLED_WORD % word
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellError'):
             self._script.spellCurrentItem(word)
@@ -218,7 +218,7 @@ class SpellCheck:
         label = self._script.utilities.displayedLabel(entry) or AXObject.get_name(entry)
         string = self._script.utilities.substring(entry, 0, -1)
         msg = f"{label} {string}"
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
@@ -245,7 +245,7 @@ class SpellCheck:
         string = AXObject.get_name(items[0])
 
         msg = f"{label} {string}"
-        voice = self._script.speechGenerator.voice(string=msg)
+        voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg.strip(), voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
@@ -280,7 +280,7 @@ class SpellCheck:
     def _getSuggestionIndexAndPosition(self, suggestion):
         return -1, -1
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
 
         from gi.repository import Gtk
 
@@ -316,7 +316,7 @@ class SpellCheck:
 
         return frame
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
         return {

@@ -34,7 +34,7 @@ from .script_utilities import Utilities
 
 class Script(switcher.Script, Qt.Script):
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)

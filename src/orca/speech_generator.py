@@ -105,7 +105,7 @@ class SpeechGenerator(generator.Generator):
     """Takes accessible objects and produces a string to speak for
     those objects.  See the generateSpeech method, which is the primary
     entry point.  Subclasses can feel free to override/extend the
-    speechGenerators instance field as they see fit."""
+    speech_generators instance field as they see fit."""
 
     def __init__(self, script):
         generator.Generator.__init__(self, script, "speech")
@@ -227,13 +227,13 @@ class SpeechGenerator(generator.Generator):
         result = self._generateExpandedEOCs(obj, **args) \
                  or self._generateUnrelatedLabels(obj, **args)
         if result:
-            self._script.pointOfReference['usedDescriptionForAlert'] = False
+            self._script.point_of_reference['usedDescriptionForAlert'] = False
             return result
 
         args['alerttext'] = True
         result = self._generateDescription(obj, **args)
         if result:
-            self._script.pointOfReference['usedDescriptionForAlert'] = True
+            self._script.point_of_reference['usedDescriptionForAlert'] = True
 
         return result
 
@@ -246,12 +246,13 @@ class SpeechGenerator(generator.Generator):
         alreadyUsed = False
         if AXUtilities.is_alert(obj, args.get("role")):
             try:
-                alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForAlert')
+                alreadyUsed = self._script.point_of_reference.pop('usedDescriptionForAlert')
             except Exception:
                 pass
         else:
             try:
-                alreadyUsed = self._script.pointOfReference.pop('usedDescriptionForUnrelatedLabels')
+                alreadyUsed = self._script.point_of_reference.pop(
+                    'usedDescriptionForUnrelatedLabels')
             except Exception:
                 pass
 
@@ -1270,12 +1271,12 @@ class SpeechGenerator(generator.Generator):
         C. if the current line is blank/empty, 'blank'
 
         Also sets up a 'textInformation' attribute in
-        self._script.generatorCache to prevent computing this
+        self._script.generator_cache to prevent computing this
         information repeatedly while processing a single event.
         """
 
         try:
-            return self._script.generatorCache['textInformation']
+            return self._script.generator_cache['textInformation']
         except Exception:
             pass
 
@@ -1295,10 +1296,10 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
             textContents = self._script.utilities.verbalizeAllPunctuation(textContents)
 
-        self._script.generatorCache['textInformation'] = \
+        self._script.generator_cache['textInformation'] = \
             [textContents, startOffset, endOffset, selected]
 
-        return self._script.generatorCache['textInformation']
+        return self._script.generator_cache['textInformation']
 
     def _generateTextContent(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

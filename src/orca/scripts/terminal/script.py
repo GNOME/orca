@@ -38,7 +38,7 @@ class Script(default.Script):
 
     def __init__(self, app):
         super().__init__(app)
-        self.presentIfInactive = False
+        self.present_if_inactive = False
 
     def deactivate(self):
         """Called when this script is deactivated."""
@@ -46,17 +46,17 @@ class Script(default.Script):
         self.utilities.clearCache()
         super().deactivate()
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
@@ -95,10 +95,10 @@ class Script(default.Script):
         if len(newString) == 1:
             self.speakCharacter(newString)
         else:
-            voice = self.speechGenerator.voice(obj=event.source, string=newString)
+            voice = self.speech_generator.voice(obj=event.source, string=newString)
             self.speakMessage(newString, voice=voice)
 
-        if self.flatReviewPresenter.is_active():
+        if self.get_flat_review_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

@@ -62,52 +62,48 @@ class Script(default.Script):
         self.speakCellHeadersCheckButton = None
         self.speakCellSpanCheckButton = None
 
-    def getBrailleGenerator(self):
+    def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def getSpeechGenerator(self):
+    def get_speech_generator(self):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
-    def getSpellCheck(self):
+    def get_spellcheck(self):
         """Returns the spellcheck for this script."""
 
         return SpellCheck(self)
 
-    def getUtilities(self):
+    def get_utilities(self):
         """Returns the utilities for this script."""
 
         return Utilities(self)
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings. In this particular case,
-        we just want to be able to add a handler to return the contents of
-        the input line.
-        """
+    def setup_input_event_handlers(self):
+        """Defines the input event handlers for this script."""
 
-        default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers["presentInputLineHandler"] = \
+        default.Script.setup_input_event_handlers(self)
+        self.input_event_handlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
                 Script.presentInputLine,
                 cmdnames.PRESENT_INPUT_LINE)
 
-        self.inputEventHandlers["panBrailleLeftHandler"] = \
+        self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["panBrailleRightHandler"] = \
+        self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-    def getAppKeyBindings(self):
+    def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
@@ -117,12 +113,12 @@ class Script(default.Script):
                 "a",
                 keybindings.defaultModifierMask,
                 keybindings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["presentInputLineHandler"]))
+                self.input_event_handlers["presentInputLineHandler"]))
 
 
         return keyBindings
 
-    def getAppPreferencesGUI(self):
+    def get_app_preferences_gui(self):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
@@ -184,13 +180,13 @@ class Script(default.Script):
         self.skipBlankCellsCheckButton.set_active(value)
         tableGrid.attach(self.skipBlankCellsCheckButton, 0, 3, 1, 1)
 
-        spellcheck = self.spellcheck.getAppPreferencesGUI()
+        spellcheck = self.spellcheck.get_app_preferences_gui()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
         grid.show_all()
 
         return grid
 
-    def getPreferencesFromGUI(self):
+    def get_preferences_from_gui(self):
         """Returns a dictionary with the app-specific preferences."""
 
         prefs = {
@@ -208,7 +204,7 @@ class Script(default.Script):
                 self.alwaysSpeakSelectedSpreadsheetRangeCheckButton.get_active(),
         }
 
-        prefs.update(self.spellcheck.getPreferencesFromGUI())
+        prefs.update(self.spellcheck.get_preferences_from_gui())
         return prefs
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
@@ -217,7 +213,7 @@ class Script(default.Script):
         """
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleBeginningShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
            or not self.utilities.isTextArea(focus):
@@ -242,7 +238,7 @@ class Script(default.Script):
         """
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.flatReviewPresenter.is_active() \
+        if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleEndShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
            or not self.utilities.isTextArea(focus):
@@ -280,58 +276,58 @@ class Script(default.Script):
         self.presentMessage(text)
         return True
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+    def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes.
 
         Arguments:
         - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
+        - old_focus: Accessible that is the old locus of focus
+        - new_focus: Accessible that is the new locus of focus
         """
 
         # Check to see if this is this is for the find command. See
         # comment #18 of bug #354463.
         #
-        if self.findCommandRun and \
+        if self.run_find_command and \
            event.type.startswith("object:state-changed:focused"):
-            self.findCommandRun = False
-            self.flatReviewFinder.find(self)
+            self.run_find_command = False
+            self.get_flat_review_finder().find(self)
             return
 
-        if self.flatReviewPresenter.is_active():
-            self.flatReviewPresenter.quit()
+        if self.get_flat_review_presenter().is_active():
+            self.get_flat_review_presenter().quit()
 
-        if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
-           and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):
-            self.updateBraille(newLocusOfFocus)
+        if self.spellcheck.isSuggestionsItem(new_focus) \
+           and not self.spellcheck.isSuggestionsItem(old_focus):
+            self.updateBraille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
-        elif newLocusOfFocus != oldLocusOfFocus and AXUtilities.is_paragraph(newLocusOfFocus) \
-               and AXUtilities.is_paragraph(oldLocusOfFocus):
+        elif new_focus != old_focus \
+             and AXUtilities.is_paragraph(new_focus) and AXUtilities.is_paragraph(old_focus):
             if input_event_manager.get_manager().last_event_was_return() \
                and settings_manager.get_manager().get_setting('enableEchoByWord'):
-                self.echoPreviousWord(oldLocusOfFocus)
+                self.echoPreviousWord(old_focus)
                 return
 
             # TODO - JD: And this hack is another one that needs to be done better.
             # But this will get us to speak the entire paragraph when navigation by
             # paragraph has occurred.
             if input_event_manager.get_manager().last_event_was_paragraph_navigation():
-                string = self.utilities.displayedText(newLocusOfFocus)
+                string = self.utilities.displayedText(new_focus)
                 if string:
-                    voice = self.speechGenerator.voice(obj=newLocusOfFocus, string=string)
+                    voice = self.speech_generator.voice(obj=new_focus, string=string)
                     self.speakMessage(string, voice=voice)
-                    self.updateBraille(newLocusOfFocus)
-                    offset = AXText.get_caret_offset(newLocusOfFocus)
-                    self._saveLastCursorPosition(newLocusOfFocus,offset)
+                    self.updateBraille(new_focus)
+                    offset = AXText.get_caret_offset(new_focus)
+                    self._saveLastCursorPosition(new_focus,offset)
                     return
 
         # Pass the event onto the parent class to be handled in the default way.
-        default.Script.locusOfFocusChanged(self, event,
-                                           oldLocusOfFocus, newLocusOfFocus)
+        default.Script.locus_of_focus_changed(self, event,
+                                           old_focus, new_focus)
 
     def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
@@ -343,7 +339,7 @@ class Script(default.Script):
 
         # Prevent this events from activating the find operation.
         # See comment #18 of bug #354463.
-        if self.findCommandRun:
+        if self.run_find_command:
             return
 
         default.Script.on_active_changed(self, event)
@@ -389,8 +385,8 @@ class Script(default.Script):
             AXTable.clear_cache_now("children-changed event.")
 
         if AXTable.is_last_cell(event.any_data):
-            activeRow = self.pointOfReference.get('lastRow', -1)
-            activeCol = self.pointOfReference.get('lastColumn', -1)
+            activeRow = self.point_of_reference.get('lastRow', -1)
+            activeCol = self.point_of_reference.get('lastColumn', -1)
             if activeRow < 0 or activeCol < 0:
                 return
 
@@ -445,7 +441,7 @@ class Script(default.Script):
         if self._inSayAll:
             return
 
-        if self.tableNavigator.last_input_event_was_navigation_command():
+        if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -470,7 +466,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_paragraph(event.source):
-            obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+            obj, offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
             start, end, string = self.utilities.getCachedTextSelection(obj)
             if start != end:
                 return
@@ -514,7 +510,7 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
-        if self.tableNavigator.last_input_event_was_navigation_command():
+        if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

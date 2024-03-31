@@ -357,14 +357,14 @@ class TableNavigator:
             msg += f": {reason}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        for binding in self._bindings.keyBindings:
-            script.keyBindings.remove(binding, includeGrabs=True)
+        for binding in self._bindings.key_bindings:
+            script.key_bindings.remove(binding, includeGrabs=True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
-        for binding in self._bindings.keyBindings:
-            script.keyBindings.add(binding, includeGrabs=not self._suspended)
+        for binding in self._bindings.key_bindings:
+            script.key_bindings.add(binding, includeGrabs=not self._suspended)
 
     def _toggle_enabled(self, script, event=None):
         """Toggles table navigation."""

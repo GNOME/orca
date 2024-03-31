@@ -359,11 +359,11 @@ class KeyBindings:
     """
 
     def __init__(self):
-        self.keyBindings = []
+        self.key_bindings = []
 
     def __str__(self):
         result = ""
-        for keyBinding in self.keyBindings:
+        for keyBinding in self.key_bindings:
             result += f"{keyBinding}\n"
         return result
 
@@ -377,14 +377,14 @@ class KeyBindings:
             )
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.keyBindings.append(keyBinding)
+        self.key_bindings.append(keyBinding)
         if includeGrabs:
             keyBinding.addGrabs()
 
     def remove(self, keyBinding, includeGrabs=False):
         """Removes KeyBinding from this set of keybindings, optionally updating grabs."""
 
-        if keyBinding not in self.keyBindings:
+        if keyBinding not in self.key_bindings:
             candidates = self.getBindingsForHandler(keyBinding.handler)
             # If there are no candidates, we could be in a situation where we went from outside
             # of web content to inside web content in focus mode. When that occurs, refreshing
@@ -410,12 +410,12 @@ class KeyBindings:
                 tokens = ["KEYBINDINGS: Warning:", keyBinding, "will be removed but has grabs."]
                 debug.printTokens(debug.LEVEL_WARNING, tokens, True)
 
-        self.keyBindings.remove(keyBinding)
+        self.key_bindings.remove(keyBinding)
 
     def isEmpty(self):
         """Returns True if there are no bindings in this set of keybindings."""
 
-        return not self.keyBindings
+        return not self.key_bindings
 
     def addKeyGrabs(self, reason=""):
         """Adds grabs for all enabled bindings in this set of keybindings."""
@@ -426,12 +426,12 @@ class KeyBindings:
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
         count = 0
-        for binding in self.keyBindings:
+        for binding in self.key_bindings:
             if binding.is_enabled() and not binding.hasGrabs():
                 count += 1
                 binding.addGrabs()
 
-        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.keyBindings)} added."
+        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} added."
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
     def removeKeyGrabs(self, reason=""):
@@ -443,18 +443,18 @@ class KeyBindings:
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
         count = 0
-        for binding in self.keyBindings:
+        for binding in self.key_bindings:
             if binding.hasGrabs():
                 count += 1
                 binding.removeGrabs()
 
-        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.keyBindings)} removed."
+        msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} removed."
         debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
 
     def hasHandler(self, handler):
         """Returns True if the handler is found in this set of keybindings."""
 
-        for binding in self.keyBindings:
+        for binding in self.key_bindings:
             if binding.handler == handler:
                 return True
 
@@ -463,14 +463,14 @@ class KeyBindings:
     def hasEnabledHandler(self, handler):
         """Returns True if the handler is found in this set of keybindings and is enabled."""
 
-        for binding in self.keyBindings:
+        for binding in self.key_bindings:
             if binding.handler == handler and binding.handler.is_enabled():
                 return True
 
         return False
 
     def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
-        """Return True if keyBinding is already in self.keyBindings.
+        """Return True if keyBinding is already in self.key_bindings.
 
            The typeOfSearch can be:
               "strict":      matches description, modifiers, key, and click count
@@ -479,7 +479,7 @@ class KeyBindings:
               "keysNoMask":  matches the modifiers, key, and click count
         """
 
-        for keyBinding in self.keyBindings:
+        for keyBinding in self.key_bindings:
             if typeOfSearch == "strict":
                 if keyBinding.handler and newKeyBinding.handler \
                    and keyBinding.handler.description == newKeyBinding.handler.description \
@@ -514,7 +514,7 @@ class KeyBindings:
           filtered out (default: False)
         """
 
-        bound = [kb for kb in self.keyBindings if kb.keysymstring]
+        bound = [kb for kb in self.key_bindings if kb.keysymstring]
         if uniqueOnly:
             handlers = [kb.handler.description for kb in bound]
             bound = [bound[i] for i in map(handlers.index, set(handlers))]
@@ -534,21 +534,21 @@ class KeyBindings:
         """Returns the KeyBindings instances which can be bound and used."""
 
         if boundOnly:
-            bindings = [kb for kb in self.keyBindings if kb.keysymstring]
+            bindings = [kb for kb in self.key_bindings if kb.keysymstring]
             boundString = "bound bindings"
         else:
-            bindings = self.keyBindings
+            bindings = self.key_bindings
             boundString = "bindings"
 
         enabled = [kb for kb in bindings if kb.is_enabled()]
-        msg = f"KEY BINDINGS: {len(enabled)} {boundString} found out of {len(self.keyBindings)}."
+        msg = f"KEY BINDINGS: {len(enabled)} {boundString} found out of {len(self.key_bindings)}."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return enabled
 
     def getBindingsForHandler(self, handler):
         """Returns the KeyBinding instances associated with handler."""
 
-        return [kb for kb in self.keyBindings if kb.handler == handler]
+        return [kb for kb in self.key_bindings if kb.handler == handler]
 
     def _checkMatchingBindings(self, keyboardEvent, result):
         if debug.debugLevel > debug.LEVEL_INFO:
@@ -579,7 +579,7 @@ class KeyBindings:
         matches = []
         candidates = []
         clickCount = keyboardEvent.getClickCount()
-        for keyBinding in self.keyBindings:
+        for keyBinding in self.key_bindings:
             if keyBinding.matches(keyboardEvent.hw_code, keyboardEvent.modifiers):
                 # Checking the modifier mask ensures we don't consume flat review commands
                 # when NumLock is on.
