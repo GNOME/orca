@@ -301,7 +301,7 @@ __keynames["minus"]      = _("minus")
 __keynames["plus"]      = _("plus")
 
 
-def getKeyName(key):
+def get_key_name(key):
     """Given a keyboard key, return its name as people might refer to it
     in ordinary conversation.
 
@@ -326,7 +326,7 @@ def localizeKeySequence(keys):
 
     keyList = keys.split()
     for key in keyList:
-        keyName = getKeyName(key)
+        keyName = get_key_name(key)
         keys = keys.replace(key, keyName)
 
     return keys

@@ -100,7 +100,7 @@ class Script(default.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
-        if event.source == self.get_mouse_reviewer().getCurrentItem():
+        if event.source == self.get_mouse_reviewer().get_current_item():
             msg = "GTK: Event source is current mouse review item"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

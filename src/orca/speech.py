@@ -260,8 +260,8 @@ def speakKeyEvent(event, acss=None):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
     _timestamp = time.time()
 
-    keyname = event.getKeyName()
-    lockingStateString = event.getLockingStateString()
+    keyname = event.get_key_name()
+    lockingStateString = event.get_locking_state_string()
     acss = __resolveACSS(acss)
     msg = f"{keyname} {lockingStateString}"
     logLine = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"

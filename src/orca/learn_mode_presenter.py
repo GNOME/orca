@@ -165,8 +165,8 @@ class LearnModePresenter:
 
         script = script_manager.get_manager().get_active_script()
         script.speakKeyEvent(event)
-        if event.isPrintableKey() and event.getClickCount() == 2 \
-           and event.getHandler() is None:
+        if event.is_printable_key() and event.get_click_count() == 2 \
+           and event.get_handler() is None:
             script.phoneticSpellCurrentItem(event.event_string)
 
         if event.event_string == "Escape":
@@ -190,11 +190,11 @@ class LearnModePresenter:
         if not isinstance(event, input_event.KeyboardEvent):
             return True
 
-        handler = event.getHandler()
+        handler = event.get_handler()
         if handler is None:
             return True
 
-        if handler.learnModeEnabled and handler.description:
+        if handler.learn_mode_enabled and handler.description:
             script = script_manager.get_manager().get_active_script()
             script.presentMessage(handler.description)
 

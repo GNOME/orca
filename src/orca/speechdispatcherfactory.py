@@ -500,8 +500,8 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(name, acss)
 
     def speakKeyEvent(self, event, acss=None):
-        event_string = event.getKeyName()
-        lockingStateString = event.getLockingStateString()
+        event_string = event.get_key_name()
+        lockingStateString = event.get_locking_state_string()
         event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
             msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"

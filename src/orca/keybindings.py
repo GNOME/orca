@@ -566,7 +566,7 @@ class KeyBindings:
             return f"{x.handler} ({x.click_count}x)"
 
         msg = (
-            f"KEYBINDINGS: '{keyboardEvent.asSingleLineString()}' "
+            f"KEYBINDINGS: '{keyboardEvent.as_single_line_string()}' "
             f"matches multiple handlers: {', '.join(map(toString, result))}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -578,7 +578,7 @@ class KeyBindings:
 
         matches = []
         candidates = []
-        clickCount = keyboardEvent.getClickCount()
+        clickCount = keyboardEvent.get_click_count()
         for keyBinding in self.key_bindings:
             if keyBinding.matches(keyboardEvent.hw_code, keyboardEvent.modifiers):
                 # Checking the modifier mask ensures we don't consume flat review commands
@@ -592,17 +592,17 @@ class KeyBindings:
                 if keyBinding.keysymstring:
                     candidates.append(keyBinding)
 
-        tokens = [f"KEYBINDINGS: {keyboardEvent.asSingleLineString()} matches", matches]
+        tokens = [f"KEYBINDINGS: {keyboardEvent.as_single_line_string()} matches", matches]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self._checkMatchingBindings(keyboardEvent, matches)
         if matches:
             return matches[0].handler
 
-        if keyboardEvent.isKeyPadKeyWithNumlockOn():
+        if keyboardEvent.is_keypad_key_with_numlock_on():
             return None
 
-        tokens = [f"KEYBINDINGS: {keyboardEvent.asSingleLineString()} fallback candidates",
+        tokens = [f"KEYBINDINGS: {keyboardEvent.as_single_line_string()} fallback candidates",
                   candidates]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 

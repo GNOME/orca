@@ -1586,9 +1586,9 @@ def displayKeyEvent(event):
     """Displays a KeyboardEvent. Typically reserved for locking keys like
     Caps Lock and Num Lock."""
 
-    lockingStateString = event.getLockingStateString()
+    lockingStateString = event.get_locking_state_string()
     if lockingStateString:
-        keyname = event.getKeyName()
+        keyname = event.get_key_name()
         msg = f"{keyname} {lockingStateString}"
         displayMessage(msg, flashTime=settings.brailleFlashTime)
 

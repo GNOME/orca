@@ -166,9 +166,9 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
 
     if settings_manager.get_manager().get_setting('enableMouseReview'):
-        mouse_review.getReviewer().activate()
+        mouse_review.get_reviewer().activate()
     else:
-        mouse_review.getReviewer().deactivate()
+        mouse_review.get_reviewer().deactivate()
 
     if settings_manager.get_manager().get_setting('enableSound'):
         player.init()

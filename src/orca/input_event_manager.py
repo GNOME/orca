@@ -183,7 +183,7 @@ class InputEventManager:
         """Processes this Mouse event."""
 
         mouse_event = input_event.MouseButtonEvent(event)
-        mouse_event.setClickCount(self._determine_mouse_event_click_count(mouse_event))
+        mouse_event.set_click_count(self._determine_mouse_event_click_count(mouse_event))
         self._last_input_event = mouse_event
 
     # pylint: disable=too-many-arguments
@@ -204,22 +204,22 @@ class InputEventManager:
                 tokens = ["INPUT EVENT MANAGER: Updating window and active window to", window]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 manager.set_active_window(window)
-            event.setWindow(window)
-            event.setObject(manager.get_locus_of_focus())
-            event.setScript(script_manager.get_manager().get_active_script())
+            event.set_window(window)
+            event.set_object(manager.get_locus_of_focus())
+            event.set_script(script_manager.get_manager().get_active_script())
         elif self.last_event_was_keyboard():
-            event.setWindow(self._last_input_event.getWindow())
-            event.setObject(self._last_input_event.getObject())
-            event.setScript(self._last_input_event.get_script())
+            event.set_window(self._last_input_event.get_window())
+            event.set_object(self._last_input_event.get_object())
+            event.set_script(self._last_input_event.get_script())
         else:
-            event.setWindow(manager.get_active_window())
-            event.setObject(manager.get_locus_of_focus())
-            event.setScript(script_manager.get_manager().get_active_script())
+            event.set_window(manager.get_active_window())
+            event.set_object(manager.get_locus_of_focus())
+            event.set_script(script_manager.get_manager().get_active_script())
 
-        event.setClickCount(self._determine_keyboard_event_click_count(event))
+        event.set_click_count(self._determine_keyboard_event_click_count(event))
         result = event.process()
         self._last_input_event = event
-        if not event.isModifierKey():
+        if not event.is_modifier_key():
             self._last_non_modifier_key_event = event
 
         return result
@@ -230,20 +230,20 @@ class InputEventManager:
         if not self.last_event_was_keyboard():
             return 1
 
-        if event.isModifierKey():
+        if event.is_modifier_key():
             last_event = self._last_input_event
         else:
             last_event = self._last_non_modifier_key_event or self._last_input_event
 
         if (event.time - last_event.time > settings.doubleClickTimeout) or \
            (event.keyval_name != last_event.keyval_name) or \
-           (event.getObject() != last_event.getObject()):
+           (event.get_object() != last_event.get_object()):
             return 1
 
-        last_count = last_event.getClickCount()
-        if not event.isPressedKey():
+        last_count = last_event.get_click_count()
+        if not event.is_pressed_key():
             return last_count
-        if (event.isModifierKey() and last_count == 2) or last_count == 3:
+        if (event.is_modifier_key() and last_count == 2) or last_count == 3:
             return 1
         return last_count + 1
 
@@ -253,13 +253,13 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return 1
         if not event.pressed:
-            return self._last_input_event.getClickCount()
+            return self._last_input_event.get_click_count()
         if self._last_input_event.button != event.button:
             return 1
         if event.time - self._last_input_event.time > settings.doubleClickTimeout:
             return 1
 
-        return self._last_input_event.getClickCount() + 1
+        return self._last_input_event.get_click_count() + 1
 
     def last_event_was_keyboard(self):
         """Returns True if the last event is a keyboard event."""
@@ -277,7 +277,7 @@ class InputEventManager:
         if event1 is None or event2 is None:
             return False
 
-        if event1.isPressedKey() or not event2.isPressedKey():
+        if event1.is_pressed_key() or not event2.is_pressed_key():
             return False
 
         result = event1.id == event2.id \
@@ -286,8 +286,8 @@ class InputEventManager:
             and event1.keyval_name == event2.keyval_name \
 
         msg = (
-            f"INPUT EVENT MANAGER: {event1.asSingleLineString()} "
-            f"is release for {event2.asSingleLineString()}: {result}"
+            f"INPUT EVENT MANAGER: {event1.as_single_line_string()} "
+            f"is release for {event2.as_single_line_string()}: {result}"
         )
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return result
@@ -365,7 +365,7 @@ class InputEventManager:
         if not self.last_event_was_keyboard():
             return False
 
-        rv = self._last_input_event.isPrintableKey()
+        rv = self._last_input_event.is_printable_key()
         msg = f"INPUT EVENT MANAGER: Last event was printable key: {rv}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return rv
@@ -737,7 +737,7 @@ class InputEventManager:
         keynames = self._all_names_for_key_code(keycode)
         if "c" not in keynames or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
-        elif AXUtilities.is_terminal(self._last_input_event.getObject()):
+        elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
         else:
             rv = not mods & 1 << Atspi.ModifierType.SHIFT
@@ -753,7 +753,7 @@ class InputEventManager:
         keynames = self._all_names_for_key_code(keycode)
         if "v" not in keynames or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
-        elif AXUtilities.is_terminal(self._last_input_event.getObject()):
+        elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
         else:
             rv = not mods & 1 << Atspi.ModifierType.SHIFT

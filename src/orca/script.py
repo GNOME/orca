@@ -265,7 +265,7 @@ class Script:
     def get_mouse_reviewer(self):
         """Returns the mouse reviewer for this script."""
 
-        return mouse_review.getReviewer()
+        return mouse_review.get_reviewer()
 
     def get_event_synthesizer(self):
         """Returns the event synthesizer for this script."""

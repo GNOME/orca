@@ -93,7 +93,7 @@ class TableNavigator:
         manager = input_event_manager.get_manager()
         result = manager.last_event_equals_or_is_release_for_event(self._last_input_event)
         if self._last_input_event is not None:
-            string = self._last_input_event.asSingleLineString()
+            string = self._last_input_event.as_single_line_string()
         else:
             string = "None"
 

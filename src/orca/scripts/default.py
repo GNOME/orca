@@ -1572,7 +1572,7 @@ class Script(script.Script):
             # TODO - JD: We can potentially do some automatic reading here.
             self.get_flat_review_presenter().quit()
 
-        mouseReviewItem = self.get_mouse_reviewer().getCurrentItem()
+        mouseReviewItem = self.get_mouse_reviewer().get_current_item()
         selectedChildren = self.utilities.selectedChildren(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
         for child in selectedChildren:
@@ -2558,11 +2558,11 @@ class Script(script.Script):
         """Convenience method to present the KeyboardEvent event. Returns True
         if we fully present the event; False otherwise."""
 
-        if not event.isPressedKey():
+        if not event.is_pressed_key():
             self._sayAllIsInterrupted = False
             self.utilities.clearCachedCommandState()
 
-        if not event.shouldEcho() or event.isOrcaModified():
+        if not event.should_echo() or event.is_orca_modified():
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -2572,15 +2572,15 @@ class Script(script.Script):
                 focus_manager.get_manager().set_locus_of_focus(None, focusedObject, False)
                 AXObject.get_role(focusedObject)
 
-        if AXUtilities.is_password_text(focus) and not event.isLockingKey():
+        if AXUtilities.is_password_text(focus) and not event.is_locking_key():
             return False
 
-        if not event.isPressedKey():
+        if not event.is_pressed_key():
             return False
 
         braille.displayKeyEvent(event)
-        orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
-        if event.isCharacterEchoable() and not orcaModifierPressed:
+        orcaModifierPressed = event.is_orca_modifier() and event.is_pressed_key()
+        if event.is_character_echoable() and not orcaModifierPressed:
             return False
 
         msg = "DEFAULT: Presenting keyboard event"
@@ -2883,7 +2883,7 @@ class Script(script.Script):
         rather than calling speech.speakKeyEvent directly."""
 
         string = None
-        if event.isPrintableKey():
+        if event.is_printable_key():
             string = event.event_string
 
         voice = self.speech_generator.voice(string=string)

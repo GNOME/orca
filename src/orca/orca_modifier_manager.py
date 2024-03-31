@@ -123,7 +123,7 @@ class OrcaModifierManager:
         """Toggles the grab for a modifier to enable double-clicking causing normal behavior."""
 
         # Because we will synthesize another press and release, wait until the real release.
-        if keyboard_event.isPressedKey():
+        if keyboard_event.is_pressed_key():
             return
 
         def toggle(hw_code):
@@ -149,7 +149,7 @@ class OrcaModifierManager:
     def _toggle_modifier_lock(self, keyboard_event):
         """Toggles the lock for a modifier to enable double-clicking causing normal behavior."""
 
-        if not (keyboard_event.isPressedKey()):
+        if not (keyboard_event.is_pressed_key()):
             return
 
         def toggle(modifiers, modifier):

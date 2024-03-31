@@ -2920,8 +2920,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             return True
 
         string, modifiers, clickCount = self._capturedKey
-        isOrcaModifier = modifiers & keybindings.ORCA_MODIFIER_MASK
-        if isOrcaModifier:
+        is_orca_modifier = modifiers & keybindings.ORCA_MODIFIER_MASK
+        if is_orca_modifier:
             eventState |= keybindings.ORCA_MODIFIER_MASK
             self._capturedKey = [eventString, eventState, clickCount + 1]
 
@@ -2944,8 +2944,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not keyName or keyName in ["Return", "Escape"]:
             return False
 
-        isOrcaModifier = modifiers & keybindings.ORCA_MODIFIER_MASK
-        if keyName in ["Delete", "BackSpace"] and not isOrcaModifier:
+        is_orca_modifier = modifiers & keybindings.ORCA_MODIFIER_MASK
+        if keyName in ["Delete", "BackSpace"] and not is_orca_modifier:
             editable.set_text("")
             self._presentMessage(messages.KB_DELETED)
             self._capturedKey = []

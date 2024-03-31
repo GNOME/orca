@@ -108,21 +108,21 @@ class Script(default.Script):
         self.utilities.updateCachedTextSelection(event.source)
 
     def presentKeyboardEvent(self, event):
-        if not event.isPrintableKey():
+        if not event.is_printable_key():
             return super().presentKeyboardEvent(event)
 
-        if event.isPressedKey():
+        if event.is_pressed_key():
             return False
 
         self._sayAllIsInterrupted = False
         self.utilities.clearCachedCommandState()
-        if not event.shouldEcho() or event.isOrcaModified() or event.isCharacterEchoable():
+        if not event.should_echo() or event.is_orca_modified() or event.is_character_echoable():
             return False
 
         # We have no reliable way of knowing a password is being entered into
         # a terminal -- other than the fact that the text typed isn't there.
-        char, start = AXText.get_character_at_offset(event.getObject())[0:2]
-        prevChar = AXText.get_character_at_offset(event.getObject(), start - 1)[0]
+        char, start = AXText.get_character_at_offset(event.get_object())[0:2]
+        prevChar = AXText.get_character_at_offset(event.get_object(), start - 1)[0]
         string = event.event_string
         if string not in [prevChar, "space", char]:
             return False
