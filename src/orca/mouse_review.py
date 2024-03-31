@@ -104,7 +104,7 @@ class _StringContext:
         if this_box == (0, 0, 0, 0):
             return False
 
-        other_box = other.getBoundingBox()
+        other_box = other.get_bounding_box()
         if other_box == (0, 0, 0, 0):
             return False
 
