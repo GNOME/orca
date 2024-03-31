@@ -205,17 +205,6 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
         self.input_event_handlers.update(self.get_action_presenter().get_handlers())
 
-    def getInputEventHandlerKey(self, inputEventHandler):
-        """Returns the name of the key that contains an inputEventHadler
-        passed as argument
-        """
-
-        for keyName, handler in self.input_event_handlers.items():
-            if handler == inputEventHandler:
-                return keyName
-
-        return None
-
     def get_listeners(self):
         """Sets up the AT-SPI event listeners for this script."""
 

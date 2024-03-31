@@ -2166,6 +2166,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         except Exception:
             debug.printException(debug.LEVEL_SEVERE)
 
+    def _get_input_event_handler_key(self, event_handler):
+        for key_name, handler in self.script.input_event_handlers.items():
+            if handler == event_handler:
+                return key_name
+
+        return None
+
     def _populateKeyBindings(self, clearModel=True):
         """Fills the TreeView with the list of Orca keybindings
 
@@ -2235,7 +2242,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
             for kb in allKeyBindings.key_bindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):
-                    handl = self.script.getInputEventHandlerKey(kb.handler)
+                    handl = self._get_input_event_handler_key(kb.handler)
                     if npKeyBindings.hasKeyBinding(kb, "description"):
                         self._insertRow(handl, kb, iterNotificationPresenter)
                     elif onKeyBindings.hasKeyBinding(kb, "description"):
@@ -2281,7 +2288,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterBB = self._createNode(guilabels.KB_GROUP_BRAILLE)
         self.bbindings = self.script.get_braille_bindings()
         for com, inputEvHand in self.bbindings.items():
-            handl = self.script.getInputEventHandlerKey(inputEvHand)
+            handl = self._get_input_event_handler_key(inputEvHand)
             self._insertRowBraille(handl, com, inputEvHand, iterBB)
 
         self.keyBindView.set_model(self.keyBindingsModel)
