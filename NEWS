@@ -1,3 +1,36 @@
+46.1 - 1 April 2024
+
+Bug fixes:
+
+* Fix issue causing flat review clicking to fail in some Gtk apps.
+
+* Fix regression in SayAll upon page load.
+
+* Fix presentation of new radio button groups.
+
+* Avoid triggering crash in Pidgin.
+
+* Fix issue in which Orca appeared to hang when where am I was used
+  immediately after page load of a large document.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  da              Danish                    Ask Hjorth Larsen
+  de              German                    Jürgen Benvenuti
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Sarasua Garmendia
+  fr              French                    Alexandre Franke
+  kab             Kabyle                    Athmane MOKRAOUI
+  ka              Georgian                  Ekaterine Papava
+  lt              Lithuanian                Aurimas Černius
+  lv              Latvian                   Rūdolfs Mazurs
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Juliano de Souza Camargo
+  sv              Swedish                   Anders Jonsson
+  zh_CN           Chinese (China)           Boyuan Yang
+
+=========
+
 46.0 - 13 March 2024
 
 Meson:
