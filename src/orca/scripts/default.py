@@ -926,15 +926,6 @@ class Script(script.Script):
 
         return True
 
-    def panBrailleRightOneChar(self, inputEvent=None):
-        """Nudges the braille display one character to the right.
-
-        In focus tracking mode, the cursor stays at its logical position.
-        In flat review mode, the review cursor moves to character
-        associated with cell 0."""
-
-        self.panBrailleRight(inputEvent, 1)
-
     def goBrailleHome(self, inputEvent=None):
         """Returns to the component with focus."""
 
@@ -1146,14 +1137,6 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def noOp(self, event):
-        """Just here to capture events.
-
-        Arguments:
-        - event: the Event
-        """
-        pass
-
     def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
@@ -1331,22 +1314,14 @@ class Script(script.Script):
     def on_document_attributes_changed(self, event):
         """Callback for document:attributes-changed accessibility events."""
 
-        pass
-
     def on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
-
-        pass
 
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        pass
-
     def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
-
-        pass
 
     def on_document_page_changed(self, event):
         """Callback for document:page-changed accessibility events."""
@@ -1589,12 +1564,9 @@ class Script(script.Script):
 
     def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
-        pass
 
     def on_focus(self, event):
         """Callback for focus: accessibility events."""
-
-        pass
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -1870,12 +1842,8 @@ class Script(script.Script):
     def on_window_created(self, event):
         """Callback for window:create accessibility events."""
 
-        pass
-
     def on_window_destroyed(self, event):
         """Callback for window:destroy accessibility events."""
-
-        pass
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

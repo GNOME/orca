@@ -1142,21 +1142,6 @@ class Utilities:
 
         return layoutOnly
 
-    @staticmethod
-    def isInActiveApp(obj):
-        """Returns True if the given object is from the same application that
-        currently has keyboard focus.
-
-        Arguments:
-        - obj: an Accessible object
-        """
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not (obj and focus):
-            return False
-
-        return AXObject.get_application(focus) == AXObject.get_application(obj)
-
     def isLink(self, obj):
         """Returns True if obj is a link."""
 
@@ -2812,52 +2797,8 @@ class Utilities:
     def rowOrColumnCountUnknown(self, obj):
         return AXUtilities.is_indeterminate(obj)
 
-    def _boundsIncludeChildren(self, obj):
-        if obj is None:
-            return False
-
-        if AXComponent.has_no_size(obj):
-            return False
-
-        return not (AXUtilities.is_menu(obj) or AXUtilities.is_page_tab(obj))
-
     def treatAsEntry(self, obj):
         return False
-
-    def _treatAsLeafNode(self, obj):
-        if obj is None or AXObject.is_dead(obj):
-            return False
-
-        if not AXObject.get_child_count(obj):
-            return True
-
-        if AXUtilities.is_autocomplete(obj) or AXUtilities.is_table_row(obj):
-            return False
-
-        if AXUtilities.is_combo_box(obj):
-            return AXObject.find_descendant(obj, AXUtilities.is_entry) is None
-
-        if AXUtilities.is_link(obj) and AXObject.get_name(obj):
-            return True
-
-        if AXUtilities.is_expandable(obj):
-            return not AXUtilities.is_expanded(obj)
-
-        if AXUtilities.is_button(obj):
-            return True
-
-        return False
-
-    def isMultiParagraphObject(self, obj):
-        if not obj:
-            return False
-
-        if not AXObject.supports_text(obj):
-            return False
-
-        string = AXText.get_all_text(obj)
-        chunks = list(filter(lambda x: x.strip(), string.split("\n\n")))
-        return len(chunks) > 1
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         word, start, end = AXText.get_word_at_offset(obj, offset)

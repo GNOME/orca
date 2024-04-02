@@ -566,6 +566,13 @@ class MouseReviewer:
 
         return None, -1, -1
 
+    def _is_multi_paragraph_object(self, obj):
+        """Returns True if obj has multiple paragraphs of text."""
+
+        string = AXText.get_all_text(obj)
+        chunks = list(filter(lambda x: x.strip(), string.split("\n\n")))
+        return len(chunks) > 1
+
     def _on_mouse_moved(self, event):
         """Callback for mouse:abs events."""
 
@@ -622,7 +629,7 @@ class MouseReviewer:
             boundary = Atspi.TextBoundaryType.LINE_START
         elif AXUtilities.is_selectable(obj):
             boundary = Atspi.TextBoundaryType.LINE_START
-        elif script.utilities.isMultiParagraphObject(obj):
+        elif self._is_multi_paragraph_object(obj):
             boundary = Atspi.TextBoundaryType.LINE_START
 
         if len(self._event_queue):
