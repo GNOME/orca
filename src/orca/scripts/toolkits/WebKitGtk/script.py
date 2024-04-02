@@ -72,13 +72,13 @@ class Script(default.Script):
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleLeft,
+                Script.pan_braille_left,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleRight,
+                Script.pan_braille_right,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
@@ -176,7 +176,7 @@ class Script(default.Script):
            and AXObject.get_index_in_parent(event.source) == 0 \
            and focus == AXObject.get_parent(event.source) \
            and AXUtilities.is_link(focus):
-            self.updateBraille(event.source)
+            self.update_braille(event.source)
             return
 
         self.utilities.setCaretContext(event.source, event.detail1)
@@ -202,7 +202,7 @@ class Script(default.Script):
         obj, offset = self.utilities.setCaretAtStart(event.source)
         self.utilities.setCaretContext(obj, offset)
 
-        self.updateBraille(obj)
+        self.update_braille(obj)
         if settings_manager.get_manager().get_setting('sayAllOnLoad') \
            and settings_manager.get_manager().get_setting('enableSpeech'):
             self.say_all(None)
@@ -349,7 +349,7 @@ class Script(default.Script):
 
         self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
-    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+    def pan_braille_left(self, inputEvent=None, pan_amount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
         """
@@ -358,11 +358,11 @@ class Script(default.Script):
         if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleBeginningShowing() \
            or not self.utilities.isWebKitGtk(focus):
-            return default.Script.panBrailleLeft(self, inputEvent, panAmount)
+            return default.Script.pan_braille_left(self, inputEvent, pan_amount)
 
         obj = self.utilities.findPreviousObject(focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
         # the right/bottom of each new object. For now, we'll pan there.
@@ -373,7 +373,7 @@ class Script(default.Script):
 
         return True
 
-    def panBrailleRight(self, inputEvent=None, panAmount=0):
+    def pan_braille_right(self, inputEvent=None, pan_amount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
         """
@@ -382,11 +382,11 @@ class Script(default.Script):
         if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleEndShowing() \
            or not self.utilities.isWebKitGtk(focus):
-            return default.Script.panBrailleRight(self, inputEvent, panAmount)
+            return default.Script.pan_braille_right(self, inputEvent, pan_amount)
 
         obj = self.utilities.findNextObject(focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
         # the left/top of each new object. For now, we'll pan there. When time
@@ -397,7 +397,7 @@ class Script(default.Script):
 
         return True
 
-    def updateBraille(self, obj, **args):
+    def update_braille(self, obj, **args):
         """Updates the braille display to show the given object.
 
         Arguments:
@@ -415,7 +415,7 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(obj) \
            or (not self.utilities.isInlineContainer(obj) \
                and not self.utilities.isTextListItem(obj)):
-            default.Script.updateBraille(self, obj, **args)
+            default.Script.update_braille(self, obj, **args)
             return
 
         brailleLine = self.getNewBrailleLine(clearBraille=True, addLine=True)

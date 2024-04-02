@@ -1008,7 +1008,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        self._script.updateBraille(obj)
+        self._script.update_braille(obj)
         self._script.sayLine(obj)
 
     def _presentObject(self, obj, offset, priorObj=None):

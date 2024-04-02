@@ -343,7 +343,7 @@ class Utilities(script_utilities.Utilities):
             AXObject.clear_cache(obj, False, "Set caret in object.")
 
         # TODO - JD: This is private.
-        self._script._saveFocusedObjectInfo(obj)
+        self._script._save_focused_object_info(obj)
 
     def getNextObjectInDocument(self, obj, documentFrame):
         if not obj:
@@ -516,7 +516,7 @@ class Utilities(script_utilities.Utilities):
 
     def setCaretOffset(self, obj, characterOffset):
         self.setCaretPosition(obj, characterOffset)
-        self._script.updateBraille(obj)
+        self._script.update_braille(obj)
 
     def nextContext(self, obj=None, offset=-1, skipSpace=False):
         if not obj:

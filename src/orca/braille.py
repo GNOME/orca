@@ -368,7 +368,7 @@ class Region:
     def __str__(self):
         return "Region: '%s', %d" % (self.string, self.cursorOffset)
 
-    def processRoutingKey(self, offset):
+    def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
@@ -449,7 +449,7 @@ class Region:
 
         return offset
 
-    def setContractedBraille(self, contracted):
+    def set_contracted_braille(self, contracted):
         if contracted:
             self.contractionTable = settings.brailleContractionTable or _defaultContractionTable
             self.contractRegion()
@@ -513,7 +513,7 @@ class Component(Region):
         """
         return -1
 
-    def processRoutingKey(self, offset):
+    def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
@@ -680,7 +680,7 @@ class Text(Region):
 
         return min(self.lineOffset + offset, self._maxCaretOffset)
 
-    def processRoutingKey(self, offset):
+    def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of text
         associated with this region.  Note that the zeroeth character may have
@@ -802,8 +802,8 @@ class Text(Region):
         offset -= len(self.label)
         return offset
 
-    def setContractedBraille(self, contracted):
-        Region.setContractedBraille(self, contracted)
+    def set_contracted_braille(self, contracted):
+        Region.set_contracted_braille(self, contracted)
         if not contracted:
             self.string += self.eol
 
@@ -865,7 +865,7 @@ class ReviewText(Region):
 
         return self.lineOffset + offset
 
-    def processRoutingKey(self, offset):
+    def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of text
         associated with this region.  Note that the zeroeth character may have
@@ -979,7 +979,7 @@ class Line:
         else:
             return [foundRegion, offset - pos]
 
-    def processRoutingKey(self, offset):
+    def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
         associated with this line.  Note that the zeroeth character may have
@@ -987,11 +987,11 @@ class Line:
 
         [region, regionOffset] = self.getRegionAtOffset(offset)
         if region:
-            region.processRoutingKey(regionOffset)
+            region.process_routing_key(regionOffset)
 
-    def setContractedBraille(self, contracted):
+    def set_contracted_braille(self, contracted):
         for region in self.regions:
-            region.setContractedBraille(contracted)
+            region.set_contracted_braille(contracted)
 
 def getRegionAtCell(cell):
     """Given a 1-based cell offset, return the braille region
@@ -1626,53 +1626,53 @@ def _getRangeForOffset(offset):
 
     return [0, 0]
 
-def panLeft(panAmount=0):
+def panLeft(pan_amount=0):
     """Pans the display to the left, limiting the pan to the beginning
     of the line being displayed.
 
     Arguments:
-    - panAmount: the amount to pan.  A value of 0 means the entire
+    - pan_amount: the amount to pan.  A value of 0 means the entire
                  width of the physical display.
 
     Returns True if a pan actually happened.
     """
 
     oldX = viewport[0]
-    if panAmount == 0:
+    if pan_amount == 0:
         oldStart, oldEnd = _getRangeForOffset(oldX)
         newStart, newEnd = _getRangeForOffset(oldStart - _displaySize[0])
-        panAmount = max(0, min(oldStart - newStart, _displaySize[0]))
+        pan_amount = max(0, min(oldStart - newStart, _displaySize[0]))
 
-    viewport[0] = max(0, viewport[0] - panAmount)
-    msg = f"BRAILLE: Panning left. Amount: {panAmount} (from {oldX} to {viewport[0]})"
+    viewport[0] = max(0, viewport[0] - pan_amount)
+    msg = f"BRAILLE: Panning left. Amount: {pan_amount} (from {oldX} to {viewport[0]})"
     debug.printMessage(debug.LEVEL_INFO, msg, True)
     return oldX != viewport[0]
 
-def panRight(panAmount=0):
+def panRight(pan_amount=0):
     """Pans the display to the right, limiting the pan to the length
     of the line being displayed.
 
     Arguments:
-    - panAmount: the amount to pan.  A value of 0 means the entire
+    - pan_amount: the amount to pan.  A value of 0 means the entire
                  width of the physical display.
 
     Returns True if a pan actually happened.
     """
 
     oldX = viewport[0]
-    if panAmount == 0:
+    if pan_amount == 0:
         oldStart, oldEnd = _getRangeForOffset(oldX)
         newStart, newEnd = _getRangeForOffset(oldEnd)
-        panAmount = max(0, min(newStart - oldStart, _displaySize[0]))
+        pan_amount = max(0, min(newStart - oldStart, _displaySize[0]))
 
     if len(_lines) > 0:
         lineNum = viewport[1]
-        newX = viewport[0] + panAmount
+        newX = viewport[0] + pan_amount
         string, focusOffset, attributeMask, ranges = _lines[lineNum].getLineInfo()
         if newX < len(string):
             viewport[0] = newX
 
-    msg = f"BRAILLE: Panning right. Amount: {panAmount} (from {oldX} to {viewport[0]})"
+    msg = f"BRAILLE: Panning right. Amount: {pan_amount} (from {oldX} to {viewport[0]})"
     debug.printMessage(debug.LEVEL_INFO, msg, True)
     return oldX != viewport[0]
 
@@ -1705,7 +1705,7 @@ def returnToRegionWithFocus(inputEvent=None):
 
     return True
 
-def setContractedBraille(event):
+def set_contracted_braille(event):
     """Turns contracted braille on or off based upon the event.
 
     Arguments:
@@ -1716,10 +1716,10 @@ def setContractedBraille(event):
     settings.enableContractedBraille = \
         (event.event["flags"] & brlapi.KEY_FLG_TOGGLE_ON) != 0
     for line in _lines:
-        line.setContractedBraille(settings.enableContractedBraille)
+        line.set_contracted_braille(settings.enableContractedBraille)
     refresh()
 
-def processRoutingKey(event):
+def process_routing_key(event):
     """Processes a cursor routing key event.
 
     Arguments:
@@ -1738,7 +1738,7 @@ def processRoutingKey(event):
     if len(_lines) > 0:
         cursor = cell + viewport[0]
         lineNum = viewport[1]
-        _lines[lineNum].processRoutingKey(cursor)
+        _lines[lineNum].process_routing_key(cursor)
 
     return True
 

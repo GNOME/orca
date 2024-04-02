@@ -112,7 +112,7 @@ class Script(Gecko.Script):
 
         if self.spellcheck.isSuggestionsItem(new_focus):
             includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
-            self.updateBraille(new_focus)
+            self.update_braille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return
 
@@ -157,7 +157,7 @@ class Script(Gecko.Script):
         obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
             focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-            self.updateBraille(event.source)
+            self.update_braille(event.source)
 
         if not self.utilities.inDocumentContent(obj):
             super().on_focused_changed(event)
@@ -315,7 +315,7 @@ class Script(Gecko.Script):
 
         [obj, offset] = self.utilities.findFirstCaretContext(documentFrame, 0)
         self.utilities.setCaretPosition(obj, offset)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         if settings_manager.get_manager().get_setting('pageSummaryOnLoad'):
             tokens = ["THUNDERBIRD: Getting page summary for", documentFrame]
@@ -347,7 +347,7 @@ class Script(Gecko.Script):
         self.spellcheck.presentErrorDetails()
         entry = self.spellcheck.getChangeToEntry()
         focus_manager.get_manager().set_locus_of_focus(None, entry, False)
-        self.updateBraille(entry)
+        self.update_braille(entry)
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

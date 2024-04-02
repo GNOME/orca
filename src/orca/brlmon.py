@@ -120,7 +120,7 @@ class BrlCell(Gtk.Button):
         fakeKeyPress['command'] = brlapi.KEY_CMD_ROUTE
         fakeKeyPress['argument'] = self._position
         event = BrailleEvent(fakeKeyPress)
-        script.processRoutingKey(event)
+        script.process_routing_key(event)
 
     def clear(self):
         """Clears the braille cell."""

@@ -281,7 +281,7 @@ def main():
 
     if args.setup:
         cleanup(signal.SIGKILL)
-        orca.showPreferencesGUI()
+        orca.show_preferences_gui()
 
     if otherOrcas():
         print(messages.CLI_OTHER_ORCAS_ERROR)

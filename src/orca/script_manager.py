@@ -55,7 +55,7 @@ class ScriptManager:
 
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activating", True)
         self._default_script = self.get_script(None)
-        self._default_script.registerEventListeners()
+        self._default_script.register_event_listeners()
         self.set_active_script(self._default_script, "activate")
         self._active = True
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Activated", True)
@@ -65,7 +65,7 @@ class ScriptManager:
 
         debug.printMessage(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivating", True)
         if self._default_script:
-            self._default_script.deregisterEventListeners()
+            self._default_script.deregister_event_listeners()
         self._default_script = None
         self.set_active_script(None, "deactivate")
         self.app_scripts = {}

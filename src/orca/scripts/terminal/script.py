@@ -89,7 +89,7 @@ class Script(default.Script):
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        self.updateBraille(event.source)
+        self.update_braille(event.source)
 
         newString = self.utilities.insertedText(event)
         if len(newString) == 1:

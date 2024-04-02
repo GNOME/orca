@@ -200,7 +200,7 @@ class SpellCheck:
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellError'):
-            self._script.spellCurrentItem(word)
+            self._script.spell_item(word)
 
         return True
 
@@ -221,7 +221,7 @@ class SpellCheck:
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellSuggestion'):
-            self._script.spellCurrentItem(string)
+            self._script.spell_item(string)
 
         return True
 
@@ -248,7 +248,7 @@ class SpellCheck:
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg.strip(), voice=voice)
         if detailed or settings_manager.get_manager().get_setting('spellcheckSpellSuggestion'):
-            self._script.spellCurrentItem(string)
+            self._script.spell_item(string)
 
         if settings_manager.get_manager().get_setting('enablePositionSpeaking') \
            and items[0] == focus_manager.get_manager().get_locus_of_focus():

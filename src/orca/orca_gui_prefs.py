@@ -2890,7 +2890,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Stops user input of a Key for a selected key binding"""
 
         self._capturedKey = []
-        script_manager.get_manager().get_active_script().refreshKeyGrabs("Done capturing keys")
+        script_manager.get_manager().get_active_script().refresh_key_grabs("Done capturing keys")
         return
 
     def _processKeyCaptured(self, keyPressedEvent):
@@ -2997,7 +2997,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self._capturedKey = []
-        script_manager.get_manager().get_active_script().refreshKeyGrabs("Done capturing keys")
+        script_manager.get_manager().get_active_script().refresh_key_grabs("Done capturing keys")
         myiter = treeModel.get_iter_from_string(path)
         try:
             originalBinding = treeModel.get_value(myiter, text)

@@ -774,7 +774,7 @@ class FlatReviewPresenter:
         if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
            != settings.VERBOSITY_LEVEL_BRIEF:
             script.presentMessage(messages.FLAT_REVIEW_STOP)
-        script.updateBraille(focus)
+        script.update_braille(focus)
 
     def toggle_flat_review_mode(self, script, event=None):
         """Toggles between flat review mode and focus tracking mode."""
@@ -1088,7 +1088,7 @@ class FlatReviewPresenter:
             elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
                 script.speakMessage(line_string, voice)
             elif speech_type == 2:
-                script.spellCurrentItem(line_string)
+                script.spell_item(line_string)
             elif speech_type == 3:
                 script.phoneticSpellCurrentItem(line_string)
             else:
@@ -1119,7 +1119,7 @@ class FlatReviewPresenter:
                 elif word_string.isupper() and speech_type == 1:
                     script.speakMessage(word_string, voice)
                 elif speech_type == 2:
-                    script.spellCurrentItem(word_string)
+                    script.spell_item(word_string)
                 elif speech_type == 3:
                     script.phoneticSpellCurrentItem(word_string)
                 elif speech_type == 1:

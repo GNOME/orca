@@ -218,13 +218,13 @@ class Script(default.Script):
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleLeft,
+                Script.pan_braille_left,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleRight,
+                Script.pan_braille_right,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
@@ -642,7 +642,7 @@ class Script(default.Script):
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.speakContents(contents)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         resultsCount = self.utilities.getFindResultsCount()
         if resultsCount:
@@ -706,7 +706,7 @@ class Script(default.Script):
                     focus_manager.get_manager().emit_region_changed(
                         context.obj, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
-                    self.updateBraille(context.obj)
+                    self.update_braille(context.obj)
 
             self._inSayAll = False
             self._sayAllContents = []
@@ -925,12 +925,12 @@ class Script(default.Script):
         """Try to reposition the cursor without having to do a full update."""
 
         if "\ufffc" in AXText.get_all_text(obj):
-            self.updateBraille(obj)
+            self.update_braille(obj)
             return
 
         super().updateBrailleForNewCaretPosition(obj)
 
-    def updateBraille(self, obj, **args):
+    def update_braille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
         if not settings_manager.get_manager().get_setting('enableBraille') \
@@ -941,14 +941,14 @@ class Script(default.Script):
         if self._inFocusMode and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            super().updateBraille(obj, **args)
+            super().update_braille(obj, **args)
             return
 
         document = args.get("documentFrame", self.utilities.getTopLevelDocumentForObject(obj))
         if not document:
             tokens = ["WEB: updating braille for non-document object", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            super().updateBraille(obj, **args)
+            super().update_braille(obj, **args)
             return
 
         isContentEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
@@ -961,7 +961,7 @@ class Script(default.Script):
            and not input_event_manager.get_manager().last_event_was_caret_selection():
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            super().updateBraille(obj, **args)
+            super().update_braille(obj, **args)
             return
 
         # TODO - JD: Getting the caret context can, by side effect, update it. This in turn
@@ -999,13 +999,13 @@ class Script(default.Script):
         self.setBrailleFocus(focusedRegion, getLinkMask=False)
         self.refreshBraille(panToCursor=True, getLinkMask=False)
 
-    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+    def pan_braille_left(self, inputEvent=None, pan_amount=0):
         """Pans braille to the left."""
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleBeginningShowing():
-            super().panBrailleLeft(inputEvent, panAmount)
+            super().pan_braille_left(inputEvent, pan_amount)
             return
 
         contents = self.utilities.getPreviousLineContents()
@@ -1014,7 +1014,7 @@ class Script(default.Script):
 
         obj, start, end, string = contents[0]
         self.utilities.setCaretPosition(obj, start)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
         # the right/bottom of each new object. For now, we'll pan there.
@@ -1025,13 +1025,13 @@ class Script(default.Script):
         self.refreshBraille(False)
         return True
 
-    def panBrailleRight(self, inputEvent=None, panAmount=0):
+    def pan_braille_right(self, inputEvent=None, pan_amount=0):
         """Pans braille to the right."""
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
            or not self.isBrailleEndShowing():
-            super().panBrailleRight(inputEvent, panAmount)
+            super().pan_braille_right(inputEvent, pan_amount)
             return
 
         contents = self.utilities.getNextLineContents()
@@ -1040,7 +1040,7 @@ class Script(default.Script):
 
         obj, start, end, string = contents[0]
         self.utilities.setCaretPosition(obj, start)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
         # the left/top of each new object. For now, we'll pan there. When time
@@ -1075,7 +1075,7 @@ class Script(default.Script):
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.utilities.setCaretPosition(obj, offset)
         self.speakContents(contents)
-        self.updateBraille(obj)
+        self.update_braille(obj)
         self._inMouseOverObject = True
 
     def restorePreMouseOverContext(self):
@@ -1084,7 +1084,7 @@ class Script(default.Script):
         obj, offset = self._preMouseOverContext
         self.utilities.setCaretPosition(obj, offset)
         self.speakContents(self.utilities.getObjectContentsAtOffset(obj, offset))
-        self.updateBraille(obj)
+        self.update_braille(obj)
         self._inMouseOverObject = False
         self._lastMouseOverObject = None
 
@@ -1214,7 +1214,7 @@ class Script(default.Script):
                 caretOffset = textOffset
 
         self.utilities.setCaretContext(new_focus, caretOffset, document)
-        self.updateBraille(new_focus, documentFrame=document)
+        self.update_braille(new_focus, documentFrame=document)
 
         contents = None
         args = {}
@@ -1291,7 +1291,7 @@ class Script(default.Script):
             utterances = self.speech_generator.generateSpeech(new_focus, **args)
             speech.speak(utterances)
 
-        self._saveFocusedObjectInfo(new_focus)
+        self._save_focused_object_info(new_focus)
 
         if self.utilities.inTopLevelWebApp(new_focus) and not self._browseModeIsSticky:
             announce = not self.utilities.inDocumentContent(old_focus)
@@ -1466,7 +1466,7 @@ class Script(default.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj, False)
 
-        self.updateBraille(obj)
+        self.update_braille(obj)
         if AXDocument.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1562,7 +1562,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Presenting find results"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
-            self._saveFocusedObjectInfo(focus_manager.get_manager().get_locus_of_focus())
+            self._save_focused_object_info(focus_manager.get_manager().get_locus_of_focus())
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -1603,7 +1603,7 @@ class Script(default.Script):
         if self.utilities.treatEventAsSpinnerValueChange(event):
             msg = "WEB: Event handled as the value-change event we wish we'd get"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.updateBraille(event.source)
+            self.update_braille(event.source)
             self._presentTextAtNewCaretPosition(event)
             return True
 

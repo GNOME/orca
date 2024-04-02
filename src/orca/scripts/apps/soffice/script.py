@@ -93,13 +93,13 @@ class Script(default.Script):
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleLeft,
+                Script.pan_braille_left,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleRight,
+                Script.pan_braille_right,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
@@ -207,7 +207,7 @@ class Script(default.Script):
         prefs.update(self.spellcheck.get_preferences_from_gui())
         return prefs
 
-    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+    def pan_braille_left(self, inputEvent=None, pan_amount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
         """
@@ -217,7 +217,7 @@ class Script(default.Script):
            or not self.isBrailleBeginningShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
            or not self.utilities.isTextArea(focus):
-            return default.Script.panBrailleLeft(self, inputEvent, panAmount)
+            return default.Script.pan_braille_left(self, inputEvent, pan_amount)
 
         startOffset = AXText.get_line_at_offset(focus)[1]
         if 0 < startOffset:
@@ -230,9 +230,9 @@ class Script(default.Script):
             AXText.set_caret_offset_to_end(obj)
             return True
 
-        return default.Script.panBrailleLeft(self, inputEvent, panAmount)
+        return default.Script.pan_braille_left(self, inputEvent, pan_amount)
 
-    def panBrailleRight(self, inputEvent=None, panAmount=0):
+    def pan_braille_right(self, inputEvent=None, pan_amount=0):
         """In document content, we want to use the panning keys to browse the
         entire document.
         """
@@ -242,7 +242,7 @@ class Script(default.Script):
            or not self.isBrailleEndShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
            or not self.utilities.isTextArea(focus):
-            return default.Script.panBrailleRight(self, inputEvent, panAmount)
+            return default.Script.pan_braille_right(self, inputEvent, pan_amount)
 
         endOffset = AXText.get_line_at_offset(focus)[2]
         if endOffset < AXText.get_character_count(focus):
@@ -255,7 +255,7 @@ class Script(default.Script):
             AXText.set_caret_offset_to_start(obj)
             return True
 
-        return default.Script.panBrailleRight(self, inputEvent, panAmount)
+        return default.Script.pan_braille_right(self, inputEvent, pan_amount)
 
     def presentInputLine(self, inputEvent):
         """Presents the contents of the input line for the current cell.
@@ -299,7 +299,7 @@ class Script(default.Script):
 
         if self.spellcheck.isSuggestionsItem(new_focus) \
            and not self.spellcheck.isSuggestionsItem(old_focus):
-            self.updateBraille(new_focus)
+            self.update_braille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=True)
             return
 
@@ -320,7 +320,7 @@ class Script(default.Script):
                 if string:
                     voice = self.speech_generator.voice(obj=new_focus, string=string)
                     self.speakMessage(string, voice=voice)
-                    self.updateBraille(new_focus)
+                    self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
                     self._saveLastCursorPosition(new_focus,offset)
                     return
@@ -359,7 +359,7 @@ class Script(default.Script):
         if event.source == self.spellcheck.getSuggestionsList():
             if AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
-                self.updateBraille(focus)
+                self.update_braille(focus)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()
@@ -581,7 +581,7 @@ class Script(default.Script):
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
-                self.updateBraille(event.any_data)
+                self.update_braille(event.any_data)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()

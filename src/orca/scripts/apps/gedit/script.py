@@ -63,7 +63,7 @@ class Script(gtk.Script):
 
         if self.spellcheck.isSuggestionsItem(new_focus):
             includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
-            self.updateBraille(new_focus)
+            self.update_braille(new_focus)
             self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
             return
 
@@ -117,7 +117,7 @@ class Script(gtk.Script):
         # If we're here, the locusOfFocus was in the selection list when
         # that list got destroyed and repopulated. Focus is still there.
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.updateBraille(event.source)
+        self.update_braille(event.source)
 
     def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
@@ -159,7 +159,7 @@ class Script(gtk.Script):
         self.spellcheck.presentErrorDetails()
         entry = self.spellcheck.getChangeToEntry()
         focus_manager.get_manager().set_locus_of_focus(None, entry, False)
-        self.updateBraille(entry)
+        self.update_braille(entry)
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

@@ -111,17 +111,17 @@ class Script(script.Script):
 
         self.input_event_handlers["routePointerToItemHandler"] = \
             input_event.InputEventHandler(
-                Script.routePointerToItem,
+                Script.route_pointer_to_item,
                 cmdnames.ROUTE_POINTER_TO_ITEM)
 
         self.input_event_handlers["leftClickReviewItemHandler"] = \
             input_event.InputEventHandler(
-                Script.leftClickReviewItem,
+                Script.left_click_item,
                 cmdnames.LEFT_CLICK_REVIEW_ITEM)
 
         self.input_event_handlers["rightClickReviewItemHandler"] = \
              input_event.InputEventHandler(
-                Script.rightClickReviewItem,
+                Script.right_click_item,
                 cmdnames.RIGHT_CLICK_REVIEW_ITEM)
 
         self.input_event_handlers["sayAllHandler"] = \
@@ -131,64 +131,64 @@ class Script(script.Script):
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleLeft,
+                Script.pan_braille_left,
                 cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.input_event_handlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
-                Script.panBrailleRight,
+                Script.pan_braille_right,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
         self.input_event_handlers["goBrailleHomeHandler"] = \
             input_event.InputEventHandler(
-                Script.goBrailleHome,
+                Script.go_braille_home,
                 cmdnames.GO_BRAILLE_HOME)
 
         self.input_event_handlers["contractedBrailleHandler"] = \
             input_event.InputEventHandler(
-                Script.setContractedBraille,
+                Script.set_contracted_braille,
                 cmdnames.SET_CONTRACTED_BRAILLE)
 
         self.input_event_handlers["processRoutingKeyHandler"] = \
             input_event.InputEventHandler(
-                Script.processRoutingKey,
+                Script.process_routing_key,
                 cmdnames.PROCESS_ROUTING_KEY)
 
         self.input_event_handlers["processBrailleCutBeginHandler"] = \
             input_event.InputEventHandler(
-                Script.processBrailleCutBegin,
+                Script.process_braille_cut_begin,
                 cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
 
         self.input_event_handlers["processBrailleCutLineHandler"] = \
             input_event.InputEventHandler(
-                Script.processBrailleCutLine,
+                Script.process_braille_cut_line,
                 cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
         self.input_event_handlers["shutdownHandler"] = \
             input_event.InputEventHandler(
-                Script.quitOrca,
+                Script.quit_orca,
                 cmdnames.QUIT_ORCA)
 
         self.input_event_handlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                Script.showPreferencesGUI,
+                Script.show_preferences_gui,
                 cmdnames.SHOW_PREFERENCES_GUI)
 
         self.input_event_handlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
-                Script.showAppPreferencesGUI,
+                Script.show_app_preferences_gui,
                 cmdnames.SHOW_APP_PREFERENCES_GUI)
 
         self.input_event_handlers["cycleSettingsProfileHandler"] = \
             input_event.InputEventHandler(
-                Script.cycleSettingsProfile,
+                Script.cycle_settings_profile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
 
         self.input_event_handlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
-                Script.cycleDebugLevel,
+                Script.cycle_debug_level,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
         self.input_event_handlers.update(self.get_notification_presenter().get_handlers())
@@ -595,7 +595,7 @@ class Script(script.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.key_bindings = keybindings.KeyBindings()
 
-    def refreshKeyGrabs(self, reason=""):
+    def refresh_key_grabs(self, reason=""):
         """ Refreshes the enabled key grabs for this script. """
 
         msg = "DEFAULT: refreshing key grabs"
@@ -609,15 +609,15 @@ class Script(script.Script):
         self.remove_key_grabs("refreshing")
         self.add_key_grabs("refreshing")
 
-    def registerEventListeners(self):
+    def register_event_listeners(self):
         event_manager.get_manager().register_script_listeners(self)
         self.utilities.connectToClipboard()
 
-    def deregisterEventListeners(self):
+    def deregister_event_listeners(self):
         event_manager.get_manager().deregister_script_listeners(self)
         self.utilities.disconnectFromClipboard()
 
-    def _saveFocusedObjectInfo(self, obj):
+    def _save_focused_object_info(self, obj):
         """Saves some basic information about obj. Note that this method is
         intended to be called primarily (if not only) by locus_of_focus_changed().
         It is expected that accessible event callbacks will update the point
@@ -710,7 +710,7 @@ class Script(script.Script):
             self.get_learn_mode_presenter().quit()
 
         focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(new_focus))
-        self.updateBraille(new_focus)
+        self.update_braille(new_focus)
 
         utterances = self.speech_generator.generateSpeech(
             new_focus,
@@ -720,7 +720,7 @@ class Script(script.Script):
            old_focus, new_focus, event):
             self.presentationInterrupt()
         speech.speak(utterances, interrupt=False)
-        self._saveFocusedObjectInfo(new_focus)
+        self._save_focused_object_info(new_focus)
 
     def activate(self):
         """Called when this script is activated."""
@@ -739,12 +739,8 @@ class Script(script.Script):
         tokens = ["DEFAULT: Script for", self.app, "activated"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-    def updateBraille(self, obj, **args):
-        """Updates the braille display to show the give object.
-
-        Arguments:
-        - obj: the Accessible
-        """
+    def update_braille(self, obj, **args):
+        """Updates the braille display to show obj."""
 
         if not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
@@ -778,7 +774,7 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def showAppPreferencesGUI(self, inputEvent=None):
+    def show_app_preferences_gui(self, _event=None):
         """Shows the app Preferences dialog."""
 
         prefs = {}
@@ -790,7 +786,7 @@ class Script(script.Script):
         ui.showGUI()
         return True
 
-    def showPreferencesGUI(self, inputEvent=None):
+    def show_preferences_gui(self, _event=None):
         """Displays the Preferences dialog."""
 
         manager = settings_manager.get_manager()
@@ -799,14 +795,14 @@ class Script(script.Script):
         ui.showGUI()
         return True
 
-    def quitOrca(self, inputEvent=None):
+    def quit_orca(self, _event=None):
         """Quit Orca."""
 
         orca.shutdown()
         return True
 
-    def panBrailleLeft(self, inputEvent=None, panAmount=0):
-        """Pans the braille display to the left.  If panAmount is non-zero,
+    def pan_braille_left(self, event=None, pan_amount=0):
+        """Pans the braille display to the left.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
         beyond the beginning will take you to the end of the previous line.
@@ -815,7 +811,7 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if isinstance(inputEvent, input_event.KeyboardEvent) \
+        if isinstance(event, input_event.KeyboardEvent) \
            and not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
             msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
@@ -824,10 +820,10 @@ class Script(script.Script):
 
         if self.get_flat_review_presenter().is_active():
             if self.isBrailleBeginningShowing():
-                self.get_flat_review_presenter().go_start_of_line(self, inputEvent)
-                self.get_flat_review_presenter().go_previous_character(self, inputEvent)
+                self.get_flat_review_presenter().go_start_of_line(self, event)
+                self.get_flat_review_presenter().go_previous_character(self, event)
             else:
-                self.panBrailleInDirection(panAmount, panToLeft=True)
+                self.panBrailleInDirection(pan_amount, panToLeft=True)
 
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
             self.targetCursorCell = 1
@@ -856,9 +852,9 @@ class Script(script.Script):
             if not movedCaret and AXUtilities.is_terminal(focus):
                 context = self.getFlatReviewContext()
                 context.goBegin(flat_review.Context.LINE)
-                self.get_flat_review_presenter().go_previous_character(self, inputEvent)
+                self.get_flat_review_presenter().go_previous_character(self, event)
         else:
-            self.panBrailleInDirection(panAmount, panToLeft=True)
+            self.panBrailleInDirection(pan_amount, panToLeft=True)
             # We might be panning through a flashed message.
             #
             braille.resetFlashTimer()
@@ -866,8 +862,8 @@ class Script(script.Script):
 
         return True
 
-    def panBrailleRight(self, inputEvent=None, panAmount=0):
-        """Pans the braille display to the right.  If panAmount is non-zero,
+    def pan_braille_right(self, event=None, pan_amount=0):
+        """Pans the braille display to the right.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
         beyond the end will take you to the beginning of the next line.
@@ -876,7 +872,7 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if isinstance(inputEvent, input_event.KeyboardEvent) \
+        if isinstance(event, input_event.KeyboardEvent) \
            and not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
             msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
@@ -885,12 +881,12 @@ class Script(script.Script):
 
         if self.get_flat_review_presenter().is_active():
             if self.isBrailleEndShowing():
-                self.get_flat_review_presenter().go_end_of_line(self, inputEvent)
+                self.get_flat_review_presenter().go_end_of_line(self, event)
                 # Reviewing the next character also updates the braille output
                 # and refreshes the display.
-                self.get_flat_review_presenter().go_next_character(self, inputEvent)
+                self.get_flat_review_presenter().go_next_character(self, event)
                 return True
-            self.panBrailleInDirection(panAmount, panToLeft=False)
+            self.panBrailleInDirection(pan_amount, panToLeft=False)
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -909,7 +905,7 @@ class Script(script.Script):
             if endOffset < AXText.get_character_count(focus):
                 AXText.set_caret_offset(focus, endOffset)
         else:
-            self.panBrailleInDirection(panAmount, panToLeft=False)
+            self.panBrailleInDirection(pan_amount, panToLeft=False)
             # We might be panning through a flashed message.
             #
             braille.resetFlashTimer()
@@ -917,33 +913,33 @@ class Script(script.Script):
 
         return True
 
-    def goBrailleHome(self, inputEvent=None):
+    def go_braille_home(self, event=None):
         """Returns to the component with focus."""
 
         if self.get_flat_review_presenter().is_active():
             self.get_flat_review_presenter().quit()
             return True
 
-        return braille.returnToRegionWithFocus(inputEvent)
+        return braille.returnToRegionWithFocus(event)
 
-    def setContractedBraille(self, inputEvent=None):
+    def set_contracted_braille(self, event=None):
         """Toggles contracted braille."""
 
-        self._setContractedBraille(inputEvent)
+        self._set_contracted_braille(event)
         return True
 
-    def processRoutingKey(self, inputEvent=None):
+    def process_routing_key(self, event=None):
         """Processes a cursor routing key."""
 
-        braille.processRoutingKey(inputEvent)
+        braille.process_routing_key(event)
         return True
 
-    def processBrailleCutBegin(self, inputEvent=None):
+    def process_braille_cut_begin(self, event=None):
         """Clears the selection and moves the caret offset in the currently
         active text area.
         """
 
-        obj, offset = self.getBrailleCaretContext(inputEvent)
+        obj, offset = self.getBrailleCaretContext(event)
         if offset < 0:
             return True
 
@@ -951,11 +947,11 @@ class Script(script.Script):
         self.utilities.setCaretOffset(obj, offset)
         return True
 
-    def processBrailleCutLine(self, inputEvent=None):
+    def process_braille_cut_line(self, event=None):
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
-        obj, offset = self.getBrailleCaretContext(inputEvent)
+        obj, offset = self.getBrailleCaretContext(event)
         if offset < 0:
             return True
 
@@ -971,7 +967,7 @@ class Script(script.Script):
         self.utilities.setClipboardText(text)
         return True
 
-    def routePointerToItem(self, inputEvent=None):
+    def route_pointer_to_item(self, event=None):
         """Moves the mouse pointer to the current item."""
 
         # Store the original location for scripts which want to restore
@@ -980,7 +976,7 @@ class Script(script.Script):
         self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
         if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().route_pointer_to_object(self, inputEvent)
+            self.get_flat_review_presenter().route_pointer_to_object(self, event)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -994,14 +990,14 @@ class Script(script.Script):
         self.presentMessage(full, brief)
         return False
 
-    def leftClickReviewItem(self, inputEvent=None):
+    def left_click_item(self, event=None):
         """Performs a left mouse button click on the current item."""
 
         if self.get_flat_review_presenter().is_active():
-            obj = self.get_flat_review_presenter().get_current_object(self, inputEvent)
+            obj = self.get_flat_review_presenter().get_current_object(self, event)
             if self.get_event_synthesizer().try_all_clickable_actions(obj):
                 return True
-            return self.get_flat_review_presenter().left_click_on_object(self, inputEvent)
+            return self.get_flat_review_presenter().left_click_on_object(self, event)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.get_event_synthesizer().try_all_clickable_actions(focus):
@@ -1019,11 +1015,11 @@ class Script(script.Script):
         self.presentMessage(full, brief)
         return False
 
-    def rightClickReviewItem(self, inputEvent=None):
+    def right_click_item(self, event=None):
         """Performs a right mouse button click on the current item."""
 
         if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().right_click_on_object(self, inputEvent)
+            self.get_flat_review_presenter().right_click_on_object(self, event)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -1038,17 +1034,9 @@ class Script(script.Script):
         self.presentMessage(full, brief)
         return False
 
-    def spellCurrentItem(self, itemString):
-        """Spell the current flat review word or line.
+    def say_all(self, _event, obj=None, offset=None):
+        """Speaks the contents of obj."""
 
-        Arguments:
-        - itemString: the string to spell.
-        """
-
-        for character in itemString:
-            self.speak_character(character)
-
-    def say_all(self, inputEvent, obj=None, offset=None):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         tokens = ["DEFAULT: SayAll requested starting from", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -1065,7 +1053,7 @@ class Script(script.Script):
         speech.say_all(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
-    def cycleSettingsProfile(self, inputEvent=None):
+    def cycle_settings_profile(self, _event=None):
         """Cycle through the user's existing settings profiles."""
 
         profiles = settings_manager.get_manager().available_profiles()
@@ -1096,7 +1084,8 @@ class Script(script.Script):
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 
-    def cycleDebugLevel(self, inputEvent=None):
+    def cycle_debug_level(self, _event=None):
+        """Cycles through the existing debug levels"""
         levels = [debug.LEVEL_ALL, "all",
                   debug.LEVEL_FINEST, "finest",
                   debug.LEVEL_FINER, "finer",
@@ -1534,7 +1523,7 @@ class Script(script.Script):
             if AXObject.find_ancestor(focus, lambda x: x == child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                self._saveFocusedObjectInfo(focus)
+                self._save_focused_object_info(focus)
                 return
 
             if child == mouseReviewItem:
@@ -1631,7 +1620,7 @@ class Script(script.Script):
         self.utilities.handleUndoTextEvent(event)
 
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.updateBraille(event.source)
+        self.update_braille(event.source)
 
         full, brief = "", ""
         if self.utilities.isClipboardTextChangedEvent(event):
@@ -1678,9 +1667,9 @@ class Script(script.Script):
 
         if event.source == focus_manager.get_manager().get_locus_of_focus() \
            and self.utilities.isAutoTextEvent(event):
-            self._saveFocusedObjectInfo(event.source)
+            self._save_focused_object_info(event.source)
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.updateBraille(event.source)
+        self.update_braille(event.source)
 
         full, brief = "", ""
         if self.utilities.isClipboardTextChangedEvent(event):
@@ -1755,7 +1744,7 @@ class Script(script.Script):
         # missing upon undo, handle them in an app or toolkit script.
 
         self.utilities.handleTextSelectionChange(obj)
-        self.updateBraille(obj)
+        self.update_braille(obj)
 
     def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
@@ -1798,9 +1787,9 @@ class Script(script.Script):
             return
 
         if AXUtilities.is_spin_button(event.source):
-            self._saveFocusedObjectInfo(event.source)
+            self._save_focused_object_info(event.source)
 
-        self.updateBraille(event.source, isProgressBarUpdate=isProgressBarUpdate)
+        self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speech_generator.generateSpeech(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
         self.__play(self.sound_generator.generateSound(
@@ -2225,7 +2214,7 @@ class Script(script.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if not args.get("speechonly", False):
-            self.updateBraille(obj, **args)
+            self.update_braille(obj, **args)
         utterances = self.speech_generator.generateSpeech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
 
@@ -2718,12 +2707,12 @@ class Script(script.Script):
         return braille.endIsShowing
 
     @staticmethod
-    def panBrailleInDirection(panAmount=0, panToLeft=True):
+    def panBrailleInDirection(pan_amount=0, panToLeft=True):
         """Pans the display to the left, limiting the pan to the beginning
         of the line being displayed.
 
         Arguments:
-        - panAmount: the amount to pan.  A value of 0 means the entire
+        - pan_amount: the amount to pan.  A value of 0 means the entire
           width of the physical display.
         - panToLeft: if True, pan to the left; otherwise to the right
 
@@ -2731,9 +2720,9 @@ class Script(script.Script):
         """
 
         if panToLeft:
-            return braille.panLeft(panAmount)
+            return braille.panLeft(pan_amount)
         else:
-            return braille.panRight(panAmount)
+            return braille.panRight(pan_amount)
 
     @staticmethod
     def panBrailleToOffset(offset):
@@ -2760,7 +2749,7 @@ class Script(script.Script):
                 break
 
         if brailleNeedsRepainting:
-            self.updateBraille(obj)
+            self.update_braille(obj)
 
     @staticmethod
     def refreshBraille(panToCursor=True, targetCursorCell=0, getLinkMask=True,
@@ -2809,7 +2798,7 @@ class Script(script.Script):
         braille.setFocus(region, panToFocus, getLinkMask)
 
     @staticmethod
-    def _setContractedBraille(event):
+    def _set_contracted_braille(event):
         """Turns contracted braille on or off based upon the event.
 
         Arguments:
@@ -2817,7 +2806,7 @@ class Script(script.Script):
           the dictionary form of the expanded BrlAPI event.
         """
 
-        braille.setContractedBraille(event)
+        braille.set_contracted_braille(event)
 
     ########################################################################
     #                                                                      #
@@ -2836,6 +2825,12 @@ class Script(script.Script):
 
         voice = self.speech_generator.voice(string=string)
         speech.speak_key_event(event, voice)
+
+    def spell_item(self, string):
+        """Speak the characters in the string one by one."""
+
+        for character in string:
+            self.speak_character(character)
 
     def speak_character(self, character):
         """Method to speak a single character. Scripts should use this

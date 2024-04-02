@@ -104,7 +104,7 @@ class Script(default.Script):
 
         return self.get_sleep_mode_manager().get_handlers()
 
-    def updateBraille(self, obj, **args):
+    def update_braille(self, obj, **args):
         """Updates the braille display to show the give object."""
 
         msg = "SLEEP MODE: Not updating braille."
