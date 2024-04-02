@@ -866,15 +866,6 @@ class Script(script.Script):
 
         return True
 
-    def panBrailleLeftOneChar(self, inputEvent=None):
-        """Nudges the braille display one character to the left.
-
-        In focus tracking mode, the cursor stays at its logical position.
-        In flat review mode, the review cursor moves to character
-        associated with cell 0."""
-
-        self.panBrailleLeft(inputEvent, 1)
-
     def panBrailleRight(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the right.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
