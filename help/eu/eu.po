@@ -5,14 +5,14 @@
 #
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-11-01 12:51+0000\n"
-"PO-Revision-Date: 2023-11-25 12:51+0000\n"
+"POT-Creation-Date: 2024-03-29 06:57+0000\n"
+"PO-Revision-Date: 2024-04-03 12:51+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: eu\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -55,13 +55,13 @@ msgstr "Objektuen laster-markak egiteko eta atzitzeko komandoak"
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
 #: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
 #: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_web.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14 C/preferences_text_attributes.page:13
-#: C/preferences_voice.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
 msgid "Joanmarie Diggs"
 msgstr "Joanmarie Diggs"
 
@@ -85,12 +85,12 @@ msgstr "Joanmarie Diggs"
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
 #: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_web.page:16 C/preferences_general.page:15
-#: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
-#: C/preferences_key_echo.page:15 C/preferences.page:11
-#: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
-#: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
@@ -111,14 +111,14 @@ msgstr "<app>Orca</app> aplikazioak hainbat komando eskaintzen ditu objektu jaki
 msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
+msgstr "Gorde zenbakitutako artekaren laster-marka bat: <keyseq><key>Orca aldatzailea</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:32
 msgid ""
 "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
+msgstr "Gorde aplikaziorako edo orrirako definitutako laster-markak: <keyseq><key>Orca aldatzailea</key><key>Alt</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:38
@@ -324,7 +324,7 @@ msgstr ""
 msgid ""
 "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
-msgstr ""
+msgstr "Aktibatu/desaktibatu <app>Orca</app> GNOMEn: <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -341,7 +341,7 @@ msgstr ""
 msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
-msgstr ""
+msgstr "<link xref=\"preferences\">Orcaren hobespenen</link> elkarrizketa-koadroa: <keyseq><key>Orca aldatzailea</key><key>Space</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:50
@@ -360,7 +360,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_controlling_orca.page:64
 msgid "Commands for Learning to Use <app>Orca</app>"
-msgstr ""
+msgstr "<app>Orca</app> erabiltzen ikasteko komandoak"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
@@ -375,12 +375,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
-msgstr ""
+msgstr "Sartu ikasteko moduan: <keyseq><key>Orca aldatzailea</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
-msgstr ""
+msgstr "Irten ikasteko modutik: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
@@ -457,7 +457,7 @@ msgstr "Ireki <app>Orca</app>-ren 'Bilatu' elkarrizketa-koadroa:"
 #. (itstool) path: item/p
 #: C/commands_find.page:30 C/howto_orca_find.page:30
 msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>ZT Ezabatu</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:33 C/howto_orca_find.page:33
@@ -504,23 +504,23 @@ msgstr ""
 #: C/commands_flat_review.page:6
 msgctxt "sort"
 msgid "1. Flat Review"
-msgstr ""
+msgstr "1. Berrikuspen laua"
 
 #. (itstool) path: info/title
 #: C/commands_flat_review.page:7
 msgctxt "link"
 msgid "Flat Review"
-msgstr ""
+msgstr "Berrikuspen laua"
 
 #. (itstool) path: info/desc
 #: C/commands_flat_review.page:8
 msgid "Commands for spatially reviewing windows"
-msgstr ""
+msgstr "Leihoak modu espazialean berrikusteko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_flat_review.page:19
 msgid "Flat Review Commands"
-msgstr ""
+msgstr "Berrikuspen laurako komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_flat_review.page:20
@@ -587,24 +587,24 @@ msgstr "Eramangarria: <keyseq><key>Orca aldatzailea</key><key>I</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:52
 msgid "Spell current line:"
-msgstr ""
+msgstr "Letreiatu uneko lerroa:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:54
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>ZT 8</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:55
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
 "clicked)"
-msgstr ""
+msgstr "Eramangarria: <keyseq><key>Orca aldatzailea</key><key>I</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:58
 msgid "Phonetically spell current line:"
-msgstr ""
+msgstr "Letreiatu uneko lerroa fonetikoki:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:60
@@ -703,7 +703,7 @@ msgstr "Eramangarria: <keyseq><key>Orca aldatzailea</key><key>K</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:99
 msgid "Spell current word:"
-msgstr ""
+msgstr "Letreiatu uneko hitza:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:101 C/commands_reading.page:79
@@ -720,7 +720,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:105
 msgid "Phonetically spell current word:"
-msgstr ""
+msgstr "Letreiatu uneko hitza fonetikoki:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:107 C/commands_reading.page:95
@@ -793,7 +793,7 @@ msgstr "Uneko karakterea:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:136 C/commands_reading.page:111
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>ZT 2</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:137 C/commands_reading.page:116
@@ -803,12 +803,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:140
 msgid "Phonetically speak current character:"
-msgstr ""
+msgstr "Fonetikoki ahoskatu uneko karakterea:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:142 C/commands_reading.page:126
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>ZT 2</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:143 C/commands_reading.page:131
@@ -837,12 +837,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:152
 msgid "Next character:"
-msgstr ""
+msgstr "Hurrengo karakterea:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:154
 msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>ZT 3</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:155
@@ -852,28 +852,28 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:158
 msgid "Last character on current line:"
-msgstr ""
+msgstr "Uneko lerroko azken karakterea:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:160
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
-msgstr ""
+msgstr "Mahaigaina: <keyseq><key>Orca aldatzailea</key><key>ZT 1</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:161
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
-msgstr ""
+msgstr "Eramangarria: <keyseq><key>Orca aldatzailea</key><key>Ctrl</key><key>M</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:167
 msgid "Additional Commands"
-msgstr ""
+msgstr "Komando gehigarriak"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:169
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr ""
+msgstr "Aktibatu/desaktibatu berrikuspen laua (berrikuspen lauaren testuingurua freskatzen du):"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:171
@@ -889,7 +889,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:175
 msgid "Review current item/widget:"
-msgstr ""
+msgstr "Berrikusi uneko elementua/trepeta:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:177
@@ -933,23 +933,23 @@ msgstr ""
 #: C/commands_live_regions.page:6
 msgctxt "sort"
 msgid "1. Live Regions"
-msgstr ""
+msgstr "1. Eskualde aktiboak"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:7
 msgctxt "link"
 msgid "Live Regions"
-msgstr ""
+msgstr "Eskualde aktiboak"
 
 #. (itstool) path: info/desc
 #: C/commands_live_regions.page:8
 msgid "Commands for accessing web live regions"
-msgstr ""
+msgstr "Web-eskualde aktiboak atzitzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_live_regions.page:20
 msgid "Live Region Commands"
-msgstr ""
+msgstr "Eskualde aktiboen komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_live_regions.page:21
@@ -1044,7 +1044,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_mouse.page:41
 msgid "Left-click on current item:"
-msgstr ""
+msgstr "Ezkerreko klik uneko elementuan:"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:43
@@ -1111,7 +1111,7 @@ msgstr ""
 #: C/commands.page:5
 msgctxt "sort"
 msgid "4. <app>Orca</app>'s Commands"
-msgstr ""
+msgstr "4. <app>Orcaren</app> komandoak"
 
 #. (itstool) path: info/title
 #: C/commands.page:6
@@ -1147,7 +1147,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands.page:29
 msgid "Accessing Dynamic Information"
-msgstr ""
+msgstr "Informazio dinamikoa atzitzea"
 
 #. (itstool) path: section/title
 #: C/commands.page:32
@@ -1169,7 +1169,7 @@ msgstr "Profilak"
 #. (itstool) path: info/desc
 #: C/commands_profiles.page:8
 msgid "Commands to access saved configurations"
-msgstr ""
+msgstr "Gordetako konfigurazioak atzitzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_profiles.page:19
@@ -1520,12 +1520,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:63
 msgid "Decrease the rate: (Unbound)"
-msgstr ""
+msgstr "Txikiagotu tasa: (Lotu gabea)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:66
 msgid "Increase the rate: (Unbound)"
-msgstr ""
+msgstr "Handiagotu tasa: (Lotu gabea)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:69
@@ -1540,34 +1540,34 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:75
 msgid "Decrease the volume: (Unbound)"
-msgstr ""
+msgstr "Txikiagotu bolumena: (Lotu gabea)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
-msgstr ""
+msgstr "Handiagotu bolumena: (Lotu gabea)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
 msgctxt "sort"
 msgid "2. Structural Navigation"
-msgstr ""
+msgstr "2. Egitura-nabigazioa"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:7
 msgctxt "link"
 msgid "Structural Navigation"
-msgstr ""
+msgstr "Egitura-nabigazioa"
 
 #. (itstool) path: info/desc
 #: C/commands_structural_navigation.page:8
 msgid "Commands for navigating by elements"
-msgstr ""
+msgstr "Elementuen arabera nabigatzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_structural_navigation.page:19
 msgid "Structural Navigation Commands"
-msgstr ""
+msgstr "Egitura-nabigaziorako komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_structural_navigation.page:20
@@ -1587,21 +1587,21 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:34
 msgid "Headings"
-msgstr ""
+msgstr "Izenburuak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:37
 msgid ""
 "Next and previous heading: <keyseq><key>H</key></keyseq> and "
 "<keyseq><key>Shift</key><key>H</key></keyseq>"
-msgstr ""
+msgstr "Hurrengo eta aurreko izenburua: <keyseq><key>H</key></keyseq> eta <keyseq><key>Shift</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:44
 msgid ""
 "Display a list of headings: <keyseq><key>Alt</key><key>Shift</key><key>H</"
 "key></keyseq>"
-msgstr ""
+msgstr "Bistaratu izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:50
@@ -1615,7 +1615,7 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 1: <keyseq><key>Alt</key><key>Shift</"
 "key><key>1</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 1. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:63
@@ -1629,7 +1629,7 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 2: <keyseq><key>Alt</key><key>Shift</"
 "key><key>2</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 2. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>2</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:76
@@ -1643,7 +1643,7 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 3: <keyseq><key>Alt</key><key>Shift</"
 "key><key>3</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 3. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>3</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:89
@@ -1657,7 +1657,7 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 4: <keyseq><key>Alt</key><key>Shift</"
 "key><key>4</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 4. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>4</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:102
@@ -1671,7 +1671,7 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 5: <keyseq><key>Alt</key><key>Shift</"
 "key><key>5</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 5. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>5</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:115
@@ -1685,12 +1685,12 @@ msgstr ""
 msgid ""
 "Display a list of headings at level 6: <keyseq><key>Alt</key><key>Shift</"
 "key><key>6</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu 6. mailako izenburuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>6</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:130
 msgid "Forms"
-msgstr ""
+msgstr "Inprimakiak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
@@ -1781,7 +1781,7 @@ msgstr ""
 #: C/commands_structural_navigation.page:213
 #: C/howto_structural_navigation.page:28
 msgid "Links"
-msgstr ""
+msgstr "Estekak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:216
@@ -1795,7 +1795,7 @@ msgstr ""
 msgid ""
 "Display a list of links: <keyseq><key>Alt</key><key>Shift</key><key>K</key></"
 "keyseq>"
-msgstr ""
+msgstr "Bistaratu esteken zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:229
@@ -1828,7 +1828,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:257
 msgid "Lists"
-msgstr ""
+msgstr "Zerrendak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:260
@@ -1842,7 +1842,7 @@ msgstr ""
 msgid ""
 "Display a list of lists: <keyseq><key>Alt</key><key>Shift</key><key>L</key></"
 "keyseq>"
-msgstr ""
+msgstr "Bistaratu zerrenden zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:273
@@ -1862,7 +1862,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/commands_structural_navigation.page:288 C/howto_tables.page:17
 msgid "Tables"
-msgstr ""
+msgstr "Taulak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:291
@@ -1920,7 +1920,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:342
 msgid "Text Blocks"
-msgstr ""
+msgstr "Testu-blokeak"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:345
@@ -1967,7 +1967,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:386
 msgid "Other Elements"
-msgstr ""
+msgstr "Beste elementu batzuk"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:389
@@ -2029,23 +2029,23 @@ msgstr ""
 #: C/commands_table.page:6
 msgctxt "sort"
 msgid "3. Table Navigation"
-msgstr ""
+msgstr "3. Taula-nabigazioa"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:7 C/preferences_table_navigation.page:9
 msgctxt "link"
 msgid "Table Navigation"
-msgstr ""
+msgstr "Taula-nabigazioa"
 
 #. (itstool) path: info/desc
 #: C/commands_table.page:8
 msgid "Commands for accessing tabular information"
-msgstr ""
+msgstr "Taula-informazioa atzitzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_table.page:19
 msgid "Table Navigation Commands"
-msgstr ""
+msgstr "Taula-nabigaziorako komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_table.page:20
@@ -2087,23 +2087,23 @@ msgstr ""
 #: C/commands_time_date_notifications.page:6
 msgctxt "sort"
 msgid "4. Time, Date, and Notification"
-msgstr ""
+msgstr "4. Ordua, data eta jakinarazpenak"
 
 #. (itstool) path: info/title
 #: C/commands_time_date_notifications.page:7
 msgctxt "link"
 msgid "Time, Date, and Notification"
-msgstr ""
+msgstr "Ordua, data eta jakinarazpenak"
 
 #. (itstool) path: info/desc
 #: C/commands_time_date_notifications.page:8
 msgid "Commands for getting the time, date, and notification messages"
-msgstr ""
+msgstr "Ordua, data eta jakinarazpenak eskuratzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_time_date_notifications.page:19
 msgid "Time, Date, and Notification Commands"
-msgstr ""
+msgstr "Orduaren, dataren eta jakinarazpenen komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_time_date_notifications.page:20
@@ -2115,7 +2115,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_time_date_notifications.page:25
 msgid "Obtaining the Time and Date"
-msgstr ""
+msgstr "Ordua eta data eskuratzea"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:28
@@ -2167,23 +2167,23 @@ msgstr ""
 #: C/commands_where_am_i.page:6
 msgctxt "sort"
 msgid "3. Where Am I"
-msgstr ""
+msgstr "3. Non nago"
 
 #. (itstool) path: info/title
 #: C/commands_where_am_i.page:7
 msgctxt "link"
 msgid "Where Am I"
-msgstr ""
+msgstr "Non nago"
 
 #. (itstool) path: info/desc
 #: C/commands_where_am_i.page:8
 msgid "Commands to learn about your location"
-msgstr ""
+msgstr "Zure kokalekua ezagutzeko komandoak"
 
 #. (itstool) path: page/title
 #: C/commands_where_am_i.page:19
 msgid "Where Am I Commands"
-msgstr ""
+msgstr "Non zauden jakiteko komandoak"
 
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:20
@@ -2631,7 +2631,7 @@ msgstr ""
 #: C/howto_key_bindings.page:107 C/howto_key_bindings.page:138
 #: C/howto_keyboard_layout.page:59 C/howto_the_orca_modifier.page:73
 msgid "Press the <gui>Apply</gui> button."
-msgstr ""
+msgstr "Sakatu <gui>Aplikatu</gui> botoia."
 
 #. (itstool) path: steps/title
 #: C/howto_key_bindings.page:58
@@ -2824,7 +2824,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/howto_live_regions.page:17
 msgid "Live Regions"
-msgstr ""
+msgstr "Eskualde aktiboak"
 
 #. (itstool) path: page/p
 #: C/howto_live_regions.page:18
@@ -2950,7 +2950,7 @@ msgstr ""
 #: C/howto_notifications.page:5
 msgctxt "sort"
 msgid "5. Notifications"
-msgstr ""
+msgstr "5. Jakinarazpenak"
 
 #. (itstool) path: info/desc
 #: C/howto_notifications.page:6
@@ -2960,7 +2960,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/howto_notifications.page:15
 msgid "Notifications"
-msgstr ""
+msgstr "Jakinarazpenak"
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:16
@@ -2987,17 +2987,17 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_notifications.page:35
 msgid "Present the last (most recent) notification message"
-msgstr ""
+msgstr "Aurkeztu azken jakinarazpen-mezua (berriena)"
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:38
 msgid "Present the previous notification message"
-msgstr ""
+msgstr "Aurkeztu aurreko jakinarazpen-mezua"
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:41
 msgid "Present list of all notification messages"
-msgstr ""
+msgstr "Aurkeztu jakinarazpen-mezu guztien zerrenda"
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:44
@@ -3017,7 +3017,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_notifications.page:54
 msgid "Press H for help."
-msgstr ""
+msgstr "Sakatu H letra laguntza jasotzeko."
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:55
@@ -3027,7 +3027,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_notifications.page:56
 msgid "Press Escape to exit."
-msgstr ""
+msgstr "Sakatu Esc irteteko."
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:57
@@ -3373,7 +3373,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_structural_navigation.page:19 C/howto_tables.page:57
 msgid "Structural Navigation"
-msgstr ""
+msgstr "Egitura-nabigazioa"
 
 #. (itstool) path: page/p
 #: C/howto_structural_navigation.page:20
@@ -3386,17 +3386,17 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:26
 msgid "Headings and other text blocks"
-msgstr ""
+msgstr "Izenburuak eta beste testu-bloke batzuk"
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:27
 msgid "Form controls"
-msgstr ""
+msgstr "Inprimaki-kontrolak"
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:29
 msgid "Lists and list items"
-msgstr ""
+msgstr "Zerrendak eta zerrenda-elementuak"
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:30
@@ -3406,7 +3406,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:31
 msgid "Tables and table cells"
-msgstr ""
+msgstr "Taulak eta taula-gelaxkak"
 
 #. (itstool) path: page/p
 #: C/howto_structural_navigation.page:33
@@ -3419,7 +3419,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_structural_navigation.page:39
 msgid "Supported Applications"
-msgstr ""
+msgstr "Onartutako aplikazioak"
 
 #. (itstool) path: section/p
 #: C/howto_structural_navigation.page:40
@@ -3623,7 +3623,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_tables.page:89
 msgid "Dynamic Headers"
-msgstr ""
+msgstr "Goiburu dinamikoak"
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:90
@@ -3641,7 +3641,7 @@ msgstr ""
 #. (itstool) path: steps/title
 #: C/howto_tables.page:101
 msgid "Setting Column Headers"
-msgstr ""
+msgstr "Zutabe-goiburuak konfiguratzea"
 
 #. (itstool) path: item/p
 #: C/howto_tables.page:103
@@ -3658,7 +3658,7 @@ msgstr ""
 #. (itstool) path: steps/title
 #: C/howto_tables.page:115
 msgid "Setting Row Headers"
-msgstr ""
+msgstr "Errenkada-goiburuak konfiguratzeak"
 
 #. (itstool) path: item/p
 #: C/howto_tables.page:117
@@ -4294,17 +4294,17 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_web.page:58
+#: C/preferences_chat.page:54 C/preferences_general.page:52
+#: C/preferences_general.page:70 C/preferences_general.page:119
+#: C/preferences_general.page:228 C/preferences_general.page:239
+#: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
+#: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
+#: C/preferences_speech.page:105 C/preferences_speech.page:135
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
+#: C/preferences_voice.page:133 C/preferences_web.page:58
 #: C/preferences_web.page:100 C/preferences_web.page:205
-#: C/preferences_general.page:52 C/preferences_general.page:70
-#: C/preferences_general.page:119 C/preferences_general.page:228
-#: C/preferences_general.page:239 C/preferences_key_echo.page:112
-#: C/preferences_key_echo.page:122 C/preferences_key_echo.page:157
-#: C/preferences_key_echo.page:179 C/preferences_speech.page:105
-#: C/preferences_speech.page:135 C/preferences_speech.page:160
-#: C/preferences_speech.page:171 C/preferences_speech.page:183
-#: C/preferences_speech.page:343 C/preferences_table_navigation.page:65
-#: C/preferences_voice.page:122 C/preferences_voice.page:133
 msgid "Default value: not checked"
 msgstr ""
 
@@ -4461,32 +4461,32 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_web.page:35 C/preferences_web.page:78
-#: C/preferences_web.page:123 C/preferences_web.page:165
-#: C/preferences_web.page:193 C/preferences_general.page:140
-#: C/preferences_general.page:217 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:148
-#: C/preferences_speech.page:195 C/preferences_speech.page:208
-#: C/preferences_speech.page:220 C/preferences_speech.page:234
-#: C/preferences_speech.page:251 C/preferences_speech.page:265
-#: C/preferences_speech.page:279 C/preferences_speech.page:293
-#: C/preferences_speech.page:307 C/preferences_speech.page:319
-#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193
 msgid "Default value: checked"
-msgstr ""
+msgstr "Balio lehenetsia: markatuta"
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:146
 msgid "Messages are detailed"
-msgstr ""
+msgstr "Mezuak xeheak dira"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:147
@@ -4501,7 +4501,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
 msgid "Messages are persistent"
-msgstr ""
+msgstr "Mezua iraunkorrak dira"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:160
@@ -4515,7 +4515,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
 msgid "Duration (secs)"
-msgstr ""
+msgstr "Iraupena (segundoak)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:172
@@ -4625,273 +4625,6 @@ msgstr ""
 #: C/preferences_chat.page:75
 msgid "Default value: all channels"
 msgstr "Balio lehenetsia: kanal guztiak"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:5
-msgctxt "sort"
-msgid "1. Web Navigation"
-msgstr "1. Web-nabigazioa"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:6
-msgctxt "link"
-msgid "Web Navigation"
-msgstr "Web-nabigazioa"
-
-#. (itstool) path: info/desc
-#: C/preferences_web.page:7
-msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
-"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
-msgstr ""
-
-#. (itstool) path: page/title
-#: C/preferences_web.page:19
-msgid "Web Navigation Preferences"
-msgstr "Web-nabigazioaren hobespenak"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:21
-msgid "Page Navigation"
-msgstr "Orri-nabigazioa"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:22
-msgid ""
-"The <gui>Page Navigation</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents, and allow you to interact with, text "
-"and other content."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:28
-msgid "Control caret navigation"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:29
-msgid ""
-"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
-"is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, the browser's native caret navigation is active."
-msgstr ""
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:39 C/preferences_web.page:82
-#: C/preferences_voice.page:76
-msgid "This setting can be toggled on the fly"
-msgstr ""
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:40
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>F12</key></keyseq>."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:47
-msgid "Automatic focus mode during caret navigation"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:48
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use caret navigation commands to navigate to a form "
-"field. For example, pressing <key>Down</key> would allow you to move into an "
-"entry but once you had done so, Orca would switch to focus mode and "
-"subsequent presses of <key>Down</key> would be controlled by the web browser "
-"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
-"continue to control what happens when you press <key>Down</key>, thus making "
-"it possible to arrow out of the entry and continue reading."
-msgstr ""
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:62 C/preferences_web.page:104
-#: C/preferences_web.page:127
-msgid "Manually switching between browse mode and focus mode"
-msgstr ""
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:63 C/preferences_web.page:105
-#: C/preferences_web.page:128
-msgid ""
-"In order to start or stop interacting with the focused form field, use "
-"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
-"browse mode and focus mode."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:71
-msgid "Enable structural navigation"
-msgstr "Gaitu egitura-nabigazioa"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:72
-msgid ""
-"This checkbox toggles <app>Orca</app>'s <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
-"off. Structural Navigation allows you to navigate by elements such as "
-"headings, links, and form fields."
-msgstr ""
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:83
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>Z</key></keyseq>."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:90
-msgid "Automatic focus mode during structural navigation"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:91
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use structural navigation commands to navigate to a form "
-"field. For example, pressing <key>E</key> to move to the next entry would "
-"move focus there and also turn focus mode on so that your next press of "
-"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:113
-msgid "Automatic focus mode during native navigation"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:114
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use native browser navigation commands to navigate to a "
-"form field. For example, pressing <key>Tab</key> to move to the next entry "
-"would move focus there and also turn focus mode on so that your next press "
-"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:136
-msgid "Automatically start speaking a page when it is first loaded"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:137
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
-"newly opened web page or email."
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:141 C/preferences_web.page:152
-msgid "Default value: checked for Firefox; not checked for Thunderbird"
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:146
-msgid "Present summary of a page when it is first loaded"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:147
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will summarize details about "
-"the newly opened web page or email, such as the number of headings, "
-"landmarks, and links."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:157
-msgid "Enable layout mode for content"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:158
-msgid ""
-"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
-"the on-screen layout of the content and present the full line, including any "
-"links or form fields on that line. If this checkbox is not checked, "
-"<app>Orca</app> will treat objects such as links and form fields as if they "
-"were on separate lines, both for presentation and navigation."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:171
-msgid "Table Options"
-msgstr ""
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:173
-msgid ""
-"To learn more about <app>Orca</app>'s options for navigating within tables, "
-"please see <link xref=\"preferences_table_navigation\">Table Navigation "
-"Preferences</link>."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:181
-msgid "Find Options"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:182
-msgid ""
-"The <gui>Find Options</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents the results of a search conducted "
-"using the application's built-in search functionality."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:188
-msgid "Speak results during find"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:189
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will read the line which "
-"matches your current search query."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:198
-msgid "Only speak changed lines during find"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:199
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will not present the matching "
-"line if it is the same line as the previous match. This option is designed "
-"to prevent \"chattiness\" on a line with multiple instances of the string "
-"for which you are searching."
-msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:210
-msgid "Minimum length of matched text"
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:211
-msgid ""
-"This editable spin button is where you can specify the number of characters "
-"which must match before <app>Orca</app> announces the matching line. This "
-"option is also designed to prevent \"chattiness\" as there are many matches "
-"when you first begin typing the string for which you are searching."
-msgstr ""
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:218
-msgid "Default value: 4"
-msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
@@ -5218,12 +4951,12 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_general.page:248
 msgid "Default value: 10"
-msgstr ""
+msgstr "Balio lehenetsia: 10"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:253
 msgid "Applies to"
-msgstr ""
+msgstr "Honi aplikatzen zaio:"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:254
@@ -5339,13 +5072,13 @@ msgstr ""
 #: C/preferences_key_bindings.page:6
 msgctxt "sort"
 msgid "6. Key Bindings"
-msgstr ""
+msgstr "6. Later-teklak"
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:7
 msgctxt "link"
 msgid "Key Bindings"
-msgstr ""
+msgstr "Laster-teklak"
 
 #. (itstool) path: info/desc
 #: C/preferences_key_bindings.page:8
@@ -5355,12 +5088,12 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/preferences_key_bindings.page:19
 msgid "Key Bindings Preferences"
-msgstr ""
+msgstr "Later-teklen hobespenak"
 
 #. (itstool) path: section/title
 #: C/preferences_key_bindings.page:21
 msgid "Orca Modifier Keys"
-msgstr ""
+msgstr "Orcaren tekla aldatzaileak"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
@@ -5536,7 +5269,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:82
 msgid "Enable function keys"
-msgstr ""
+msgstr "Gaitu tekla aldatzaileak"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:83
@@ -5548,7 +5281,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:92
 msgid "Enable action keys"
-msgstr ""
+msgstr "Gaitu ekintza-teklak"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:93
@@ -5562,7 +5295,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:104
 msgid "Enable navigation keys"
-msgstr ""
+msgstr "Gaitu nabigazio-teklak"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:105
@@ -5781,22 +5514,22 @@ msgstr ""
 #: C/preferences_speech.page:5
 msgctxt "sort"
 msgid "2.1 Speech"
-msgstr ""
+msgstr "2.1 Irakurketa"
 
 #. (itstool) path: info/desc
 #: C/preferences_speech.page:7
 msgid "Configuring what gets spoken"
-msgstr ""
+msgstr "Ahotsez zer adieraziko den konfiguratzea"
 
 #. (itstool) path: page/title
 #: C/preferences_speech.page:18
 msgid "Speech Preferences"
-msgstr ""
+msgstr "Irakurketa-hobespenak"
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:20
 msgid "Enable speech"
-msgstr ""
+msgstr "Gaitu irakurketa"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:21
@@ -5819,7 +5552,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:44
 msgid "Punctuation Level"
-msgstr ""
+msgstr "Puntuazio-maila"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:45
@@ -5837,7 +5570,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:55
 msgid "None"
-msgstr ""
+msgstr "Bat ere ez"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:56
@@ -5852,7 +5585,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:65
 msgid "Some"
-msgstr ""
+msgstr "Batzuk"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:66
@@ -5866,7 +5599,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:74
 msgid "Most"
-msgstr ""
+msgstr "Gehienak"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:75
@@ -5880,7 +5613,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:83
 msgid "All"
-msgstr ""
+msgstr "Denak"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:84
@@ -5906,7 +5639,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:99
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "Irakurri bistaratutako testua soilik"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:100
@@ -5926,7 +5659,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:116
 msgid "Speak blank lines"
-msgstr ""
+msgstr "Irakurri lerro zuriak"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:117
@@ -5939,7 +5672,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:128
 msgid "Speak indentation and justification"
-msgstr ""
+msgstr "Irakurri koskatzeak eta justifikazioa"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:129
@@ -6347,13 +6080,13 @@ msgstr ""
 #: C/preferences_text_attributes.page:7
 msgctxt "sort"
 msgid "8. Text Attributes"
-msgstr ""
+msgstr "8. Testu-atributuak"
 
 #. (itstool) path: info/title
 #: C/preferences_text_attributes.page:8
 msgctxt "link"
 msgid "Text Attributes"
-msgstr ""
+msgstr "Testu-atributuak"
 
 #. (itstool) path: info/desc
 #: C/preferences_text_attributes.page:9
@@ -6363,7 +6096,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/preferences_text_attributes.page:20
 msgid "Text Attributes Preferences"
-msgstr ""
+msgstr "Testu-atributuen hobespenak"
 
 #. (itstool) path: page/p
 #: C/preferences_text_attributes.page:21
@@ -6379,7 +6112,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:30
 msgid "The text attributes table"
-msgstr ""
+msgstr "Testu-atributuen taula"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:31
@@ -6430,7 +6163,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:74
 msgid "Undoing changes"
-msgstr ""
+msgstr "Aldaketak desegitea"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
@@ -6443,7 +6176,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:83
 msgid "Rearranging the order of presentation"
-msgstr ""
+msgstr "Aurkezpenaren ordena berrantolatzea"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
@@ -6522,33 +6255,33 @@ msgstr ""
 #: C/preferences_voice.page:5
 msgctxt "sort"
 msgid "2.0 Voice"
-msgstr ""
+msgstr "2.0 Ahotsa"
 
 #. (itstool) path: info/title
 #: C/preferences_voice.page:6
 msgctxt "link"
 msgid "Voice"
-msgstr ""
+msgstr "Ahotsa"
 
 #. (itstool) path: info/desc
 #: C/preferences_voice.page:7
 msgid "Configuring the voice used by <app>Orca</app>"
-msgstr ""
+msgstr "<app>Orca</app> aplikazioak darabilen ahotsa konfiguratzea"
 
 #. (itstool) path: page/title
 #: C/preferences_voice.page:18
 msgid "Voice Preferences"
-msgstr ""
+msgstr "Ahots-hobespenak"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:20
 msgid "Voice Type Settings"
-msgstr ""
+msgstr "Ahots moten ezarpenak"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:22
 msgid "Voice type"
-msgstr ""
+msgstr "Ahots mota"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:23
@@ -6561,7 +6294,7 @@ msgstr ""
 #. (itstool) path: note/title
 #: C/preferences_voice.page:29
 msgid "Configuring Multiple Voices"
-msgstr ""
+msgstr "Ahots anitz konfiguratzea"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:30
@@ -6574,7 +6307,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_voice.page:39
 msgid "Speech system"
-msgstr ""
+msgstr "Irakurketa-sistema"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:40
@@ -6586,7 +6319,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_voice.page:46
 msgid "Speech synthesizer"
-msgstr ""
+msgstr "Irakurketa-sintetizatzailea"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:47
@@ -6598,7 +6331,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_voice.page:53
 msgid "Person"
-msgstr ""
+msgstr "Pertsona"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:54
@@ -6637,6 +6370,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
 msgid "<gui>None</gui>"
+msgstr ""
+
+#. (itstool) path: note/title
+#: C/preferences_voice.page:76 C/preferences_web.page:39
+#: C/preferences_web.page:82
+msgid "This setting can be toggled on the fly"
 msgstr ""
 
 #. (itstool) path: note/p
@@ -6712,4 +6451,265 @@ msgid ""
 "Checking the <gui>Speak numbers as digits</gui> checkbox will cause "
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
 "\"2,\" and \"3\") prior to passing it along to the speech synthesizer."
+msgstr ""
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:5
+msgctxt "sort"
+msgid "1. Web Navigation"
+msgstr "1. Web-nabigazioa"
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:6
+msgctxt "link"
+msgid "Web Navigation"
+msgstr "Web-nabigazioa"
+
+#. (itstool) path: info/desc
+#: C/preferences_web.page:7
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
+msgstr ""
+
+#. (itstool) path: page/title
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Web-nabigazioaren hobespenak"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:21
+msgid "Page Navigation"
+msgstr "Orri-nabigazioa"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:22
+msgid ""
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:28
+msgid "Control caret navigation"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:29
+msgid ""
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, the browser's native caret navigation is active."
+msgstr ""
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:40
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>F12</key></keyseq>."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+
+#. (itstool) path: note/title
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
+msgid "Manually switching between browse mode and focus mode"
+msgstr ""
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:71
+msgid "Enable structural navigation"
+msgstr "Gaitu egitura-nabigazioa"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:72
+msgid ""
+"This checkbox toggles <app>Orca</app>'s <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
+"off. Structural Navigation allows you to navigate by elements such as "
+"headings, links, and form fields."
+msgstr ""
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:83
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:90
+msgid "Automatic focus mode during structural navigation"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:91
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
+msgid "Automatically start speaking a page when it is first loaded"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:137
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
+"newly opened web page or email."
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:141 C/preferences_web.page:152
+msgid "Default value: checked for Firefox; not checked for Thunderbird"
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:146
+msgid "Present summary of a page when it is first loaded"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:147
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will summarize details about "
+"the newly opened web page or email, such as the number of headings, "
+"landmarks, and links."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:157
+msgid "Enable layout mode for content"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:158
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:171
+msgid "Table Options"
+msgstr ""
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:173
+msgid ""
+"To learn more about <app>Orca</app>'s options for navigating within tables, "
+"please see <link xref=\"preferences_table_navigation\">Table Navigation "
+"Preferences</link>."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:181
+msgid "Find Options"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:182
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:188
+msgid "Speak results during find"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:189
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:198
+msgid "Only speak changed lines during find"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:199
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:210
+msgid "Minimum length of matched text"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:211
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which must match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing the string for which you are searching."
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:218
+msgid "Default value: 4"
 msgstr ""
