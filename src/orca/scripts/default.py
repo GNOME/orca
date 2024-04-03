@@ -920,6 +920,7 @@ class Script(script.Script):
             self.get_flat_review_presenter().quit()
             return True
 
+        self.presentationInterrupt()
         return braille.returnToRegionWithFocus(event)
 
     def set_contracted_braille(self, event=None):
@@ -931,6 +932,7 @@ class Script(script.Script):
     def process_routing_key(self, event=None):
         """Processes a cursor routing key."""
 
+        self.presentationInterrupt()
         braille.process_routing_key(event)
         return True
 
@@ -943,6 +945,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
+        self.presentationInterrupt()
         AXText.clear_all_selected_text(obj)
         self.utilities.setCaretOffset(obj, offset)
         return True
@@ -955,6 +958,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
+        self.presentationInterrupt()
         startOffset = AXText.get_selection_start_offset(obj)
         endOffset = AXText.get_selection_end_offset(obj)
         if (startOffset < 0 or endOffset < 0):

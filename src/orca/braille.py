@@ -102,16 +102,6 @@ except Exception:
     settings.enableBrailleMonitor = False
 
 
-# brlapi keys which are not allowed to interrupt speech:
-#
-dontInteruptSpeechKeys = []
-if _brlAPIAvailable:
-    dontInteruptSpeechKeys = [ \
-        brlapi.KEY_CMD_HWINLT, brlapi.KEY_CMD_HWINRT, \
-        brlapi.KEY_CMD_FWINLT, brlapi.KEY_CMD_FWINRT, \
-        brlapi.KEY_CMD_FWINLTSKIP, brlapi.KEY_CMD_FWINRTSKIP, \
-        brlapi.KEY_CMD_LNUP, brlapi.KEY_CMD_LNDN]
-
 # Common names for most used BrlTTY commands, to be shown in the GUI:
 # ATM, the ones used in default.py are:
 #
@@ -1752,16 +1742,6 @@ def _processBrailleEvent(event):
 
     tokens = ["BRAILLE: Processing event", event]
     debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-    script = script_manager.get_manager().get_active_script()
-    if script and event['command'] not in dontInteruptSpeechKeys:
-        # We aren't killing flash here because we were not doing so before, when
-        # this logic was in orca.py; instead, we were calling speech.stop. But that
-        # code predated the existence of presentationInterrupt. Maybe flash should
-        # be killed as well?
-        script.presentationInterrupt(killFlash=False)
-
-    consumed = False
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
