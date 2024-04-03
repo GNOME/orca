@@ -1598,16 +1598,6 @@ LIVE_REGIONS_LEVEL_POLITE = _("setting live region to polite")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-# The "politeness" level is an indication of when the user wishes to be notified
-# about a change to live region content. Examples include: never ("off"), when
-# idle ("polite"), and when there is a change ("assertive"). Orca has several
-# features to facilitate accessing live regions. This message is presented to
-# inform the user that Orca's live region's "politeness" level has changed for
-# the current live region.
-LIVE_REGIONS_LEVEL_RUDE = _("setting live region to rude")
-
-# Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 # Orca has several features to facilitate accessing live regions. This message
 # is presented in response to a command that toggles whether or not Orca pays
 # attention to changes in live regions. Note that turning off monitoring of live

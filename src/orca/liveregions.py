@@ -18,12 +18,10 @@ from .ax_collection import AXCollection
 from .ax_object import AXObject
 from .ax_text import AXText
 
-# define 'live' property types
 LIVE_OFF       = -1
 LIVE_NONE      = 0
 LIVE_POLITE    = 1
 LIVE_ASSERTIVE = 2
-LIVE_RUDE      = 3
 
 # Seconds a message is held in the queue before it is discarded
 MSG_KEEPALIVE_TIME = 45  # in seconds
@@ -299,8 +297,6 @@ class LiveRegionManager:
             pass
         elif politeness ==  LIVE_ASSERTIVE:
             self.msg_queue.purgeByPriority(LIVE_POLITE)
-        elif politeness == LIVE_RUDE:
-            self.msg_queue.purgeByPriority(LIVE_ASSERTIVE)
 
         message = self._getMessage(event)
         if message:
@@ -386,12 +382,8 @@ class LiveRegionManager:
             self._politenessOverrides[(uri, objectid)] = LIVE_ASSERTIVE
             self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
         elif cur_priority == LIVE_ASSERTIVE:
-            self._politenessOverrides[(uri, objectid)] = LIVE_RUDE
-            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_RUDE)
-        elif cur_priority == LIVE_RUDE:
             self._politenessOverrides[(uri, objectid)] = LIVE_OFF
             self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_OFF)
-
 
     def goLastLiveRegion(self):
         """Move the caret to the last announced live region and speak the
@@ -609,8 +601,6 @@ class LiveRegionManager:
                 return LIVE_POLITE
             elif attrs['container-live'] == 'assertive':
                 return LIVE_ASSERTIVE
-            elif attrs['container-live'] == 'rude':
-                return LIVE_RUDE
             else:
                 return LIVE_NONE
         except KeyError:
@@ -624,8 +614,6 @@ class LiveRegionManager:
             return 'polite'
         elif politeness == LIVE_ASSERTIVE:
             return 'assertive'
-        elif politeness == LIVE_RUDE:
-            return 'rude'
         elif politeness == LIVE_NONE:
             return 'none'
         else:
