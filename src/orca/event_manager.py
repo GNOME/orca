@@ -202,6 +202,14 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
+        # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
+        # is used and something else has claimed focus. We don't want to update our
+        # location or the keygrabs in response.
+        if AXUtilities.is_window(event.source) and "focused" in event_type:
+            msg = "EVENT MANAGER: Ignoring event based on type and role"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
         focus = focus_manager.get_manager().get_locus_of_focus()
