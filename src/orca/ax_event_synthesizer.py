@@ -396,7 +396,7 @@ class AXEventSynthesizer:
     def try_all_clickable_actions(obj):
         """Attempts to perform a click-like action if one is available."""
 
-        actions = ["click", "press", "jump", "open"]
+        actions = ["click", "press", "jump", "open", "activate"]
         for action in actions:
             if AXObject.do_named_action(obj, action):
                 tokens = ["AXEventSynthesizer: '", action, "' on", obj, "performed successfully"]
