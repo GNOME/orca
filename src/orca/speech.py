@@ -29,7 +29,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import importlib
-import time
 
 from . import debug
 from . import logger
@@ -45,9 +44,6 @@ log = _logger.newLog("speech")
 # The speech server to use for all speech operations.
 #
 _speechserver = None
-
-# The last time something was spoken.
-_timestamp = 0
 
 def _init_speech_server(module_name, speech_server_info):
 
@@ -194,12 +190,6 @@ def speak(content, acss=None, interrupt=True):
         debug.printMessage(debug.LEVEL_INFO, error + str(content), True, True)
         return
 
-    global _timestamp
-    if _timestamp:
-        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-    _timestamp = time.time()
-
     if isinstance(content, str):
         msg = f"SPEECH: Speak '{content}' acss: {acss}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -257,12 +247,6 @@ def speak_key_event(event, acss=None):
     if settings.silenceSpeech:
         return
 
-    global _timestamp
-    if _timestamp:
-        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-    _timestamp = time.time()
-
     key_name = event.get_key_name()
     acss = __resolve_acss(acss)
     msg = f"{key_name} {event.get_locking_state_string()}"
@@ -278,12 +262,6 @@ def speak_character(character, acss=None):
 
     if settings.silenceSpeech:
         return
-
-    global _timestamp
-    if _timestamp:
-        msg = f"SPEECH: Last spoke {time.time() - _timestamp:.4f} seconds ago"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-    _timestamp = time.time()
 
     acss = __resolve_acss(acss)
     log_line = f"SPEECH OUTPUT: '{character}'"
