@@ -40,8 +40,6 @@ from . import settings_manager
 from . import speech
 from .ax_table import AXTable
 
-_settings_manager = settings_manager.get_manager()
-
 class SpeechAndVerbosityManager:
     """Configures speech and verbosity settings."""
 
@@ -398,7 +396,8 @@ class SpeechAndVerbosityManager:
     def cycle_capitalization_style(self, script, event=None):
         """Cycle through the speech-dispatcher capitalization styles."""
 
-        current_style = _settings_manager.get_setting('capitalizationStyle')
+        manager = settings_manager.get_manager()
+        current_style = manager.get_setting('capitalizationStyle')
         if current_style == settings.CAPITALIZATION_STYLE_NONE:
             new_style = settings.CAPITALIZATION_STYLE_SPELL
             full = messages.CAPITALIZATION_SPELL_FULL
@@ -412,7 +411,7 @@ class SpeechAndVerbosityManager:
             full = messages.CAPITALIZATION_NONE_FULL
             brief = messages.CAPITALIZATION_NONE_BRIEF
 
-        _settings_manager.set_setting('capitalizationStyle', new_style)
+        manager.set_setting('capitalizationStyle', new_style)
         script.presentMessage(full, brief)
         self.update_capitalization_style()
         return True
@@ -420,7 +419,8 @@ class SpeechAndVerbosityManager:
     def cycle_punctuation_level(self, script, event=None):
         """Cycle through the punctuation levels for speech."""
 
-        current_level = _settings_manager.get_setting('verbalizePunctuationStyle')
+        manager = settings_manager.get_manager()
+        current_level = manager.get_setting('verbalizePunctuationStyle')
         if current_level == settings.PUNCTUATION_STYLE_NONE:
             new_level = settings.PUNCTUATION_STYLE_SOME
             full = messages.PUNCTUATION_SOME_FULL
@@ -438,17 +438,19 @@ class SpeechAndVerbosityManager:
             full = messages.PUNCTUATION_NONE_FULL
             brief = messages.PUNCTUATION_NONE_BRIEF
 
-        _settings_manager.set_setting('verbalizePunctuationStyle', new_level)
+        manager.set_setting('verbalizePunctuationStyle', new_level)
         script.presentMessage(full, brief)
         self.update_punctuation_level()
         return True
 
     def cycle_key_echo(self, script, event=None):
         """Cycle through the key echo levels."""
+
+        manager = settings_manager.get_manager()
         (new_key, new_word, new_sentence) = (False, False, False)
-        key = _settings_manager.get_setting('enableKeyEcho')
-        word = _settings_manager.get_setting('enableEchoByWord')
-        sentence = _settings_manager.get_setting('enableEchoBySentence')
+        key = manager.get_setting('enableKeyEcho')
+        word = manager.get_setting('enableEchoByWord')
+        sentence = manager.get_setting('enableEchoBySentence')
 
         if (key, word, sentence) == (False, False, False):
             (new_key, new_word, new_sentence) = (True, False, False)
@@ -475,16 +477,17 @@ class SpeechAndVerbosityManager:
             full = messages.KEY_ECHO_NONE_FULL
             brief = messages.KEY_ECHO_NONE_BRIEF
 
-        _settings_manager.set_setting('enableKeyEcho', new_key)
-        _settings_manager.set_setting('enableEchoByWord', new_word)
-        _settings_manager.set_setting('enableEchoBySentence', new_sentence)
+        manager.set_setting('enableKeyEcho', new_key)
+        manager.set_setting('enableEchoByWord', new_word)
+        manager.set_setting('enableEchoBySentence', new_sentence)
         script.presentMessage(full, brief)
         return True
 
     def change_number_style(self, script, event=None):
         """Changes spoken number style between digits and words."""
 
-        speak_digits = _settings_manager.get_setting('speakNumbersAsDigits')
+        manager = settings_manager.get_manager()
+        speak_digits = manager.get_setting('speakNumbersAsDigits')
         if speak_digits:
             brief = messages.NUMBER_STYLE_WORDS_BRIEF
             full = messages.NUMBER_STYLE_WORDS_FULL
@@ -492,44 +495,47 @@ class SpeechAndVerbosityManager:
             brief = messages.NUMBER_STYLE_DIGITS_BRIEF
             full = messages.NUMBER_STYLE_DIGITS_FULL
 
-        _settings_manager.set_setting('speakNumbersAsDigits', not speak_digits)
+        manager.set_setting('speakNumbersAsDigits', not speak_digits)
         script.presentMessage(full, brief)
         return True
 
     def toggle_speech(self, script, event=None):
         """Toggles speech."""
 
+        manager = settings_manager.get_manager()
         script.presentationInterrupt()
-        if _settings_manager.get_setting('silenceSpeech'):
-            _settings_manager.set_setting('silenceSpeech', False)
+        if manager.get_setting('silenceSpeech'):
+            manager.set_setting('silenceSpeech', False)
             script.presentMessage(messages.SPEECH_ENABLED)
-        elif not _settings_manager.get_setting('enableSpeech'):
-            _settings_manager.set_setting('enableSpeech', True)
+        elif not manager.get_setting('enableSpeech'):
+            manager.set_setting('enableSpeech', True)
             speech.init()
             script.presentMessage(messages.SPEECH_ENABLED)
         else:
             script.presentMessage(messages.SPEECH_DISABLED)
-            _settings_manager.set_setting('silenceSpeech', True)
+            manager.set_setting('silenceSpeech', True)
         return True
 
     def toggle_verbosity(self, script, event=None):
         """Toggles speech verbosity level between verbose and brief."""
 
-        value = _settings_manager.get_setting('speechVerbosityLevel')
+        manager = settings_manager.get_manager()
+        value = manager.get_setting('speechVerbosityLevel')
         if value == settings.VERBOSITY_LEVEL_BRIEF:
             script.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
-            _settings_manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_VERBOSE)
+            manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_VERBOSE)
         else:
             script.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
-            _settings_manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
+            manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
     def toggle_indentation_and_justification(self, script, event=None):
         """Toggles the speaking of indentation and justification."""
 
-        value = _settings_manager.get_setting('enableSpeechIndentation')
-        _settings_manager.set_setting('enableSpeechIndentation', not value)
-        if _settings_manager.get_setting('enableSpeechIndentation'):
+        manager = settings_manager.get_manager()
+        value = manager.get_setting('enableSpeechIndentation')
+        manager.set_setting('enableSpeechIndentation', not value)
+        if manager.get_setting('enableSpeechIndentation'):
             full = messages.INDENTATION_JUSTIFICATION_ON_FULL
             brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
         else:
@@ -553,8 +559,9 @@ class SpeechAndVerbosityManager:
         else:
             setting_name = 'readFullRowInDocumentTable'
 
-        speak_row = _settings_manager.get_setting(setting_name)
-        _settings_manager.set_setting(setting_name, not speak_row)
+        manager = settings_manager.get_manager()
+        speak_row = manager.get_setting(setting_name)
+        manager.set_setting(setting_name, not speak_row)
 
         if not speak_row:
             msg = messages.TABLE_MODE_ROW
