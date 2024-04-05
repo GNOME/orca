@@ -296,12 +296,6 @@ def shutdown():
         _speechserver.shutdownActiveServers()
         _speechserver = None
 
-def reset(text=None, acss=None):
-    """Resets the speech server."""
-
-    if _speechserver:
-        _speechserver.reset(text, acss)
-
 def get_speech_server():
     """Returns the current speech server."""
 
