@@ -99,6 +99,8 @@ class SettingsManager:
         self.pronunciations = {}
         self.keybindings = {}
 
+        self._runtime_settings = {}
+
         self._active_app = ""
         self._app_general = {}
         self._appPronunciations = {}
@@ -274,8 +276,11 @@ class SettingsManager:
     def get_prefs_dir(self):
         return self._prefs_dir
 
-    def set_setting(self, settingName, settingValue):
-        self._set_settings_runtime({settingName:settingValue})
+    def set_setting(self, name, value):
+        """Updates the named setting to value."""
+
+        self._runtime_settings[name] = value
+        self._set_settings_runtime({name:value})
 
     def get_setting(self, settingName):
         return getattr(settings, settingName, None)
@@ -549,6 +554,11 @@ class SettingsManager:
                                       appPronunciations,
                                       appKeybindings)
 
+    def get_runtime_settings(self):
+        """Returns a dictionary with settings toggled at runtime."""
+
+        return self._runtime_settings
+
     def save_settings(self, script, general, pronunciations, keybindings):
         """Save the settings provided for the script provided."""
 
@@ -672,6 +682,8 @@ class SettingsManager:
 
         if not (script and script.app):
             return
+
+        self._runtime_settings = {}
 
         for key in self._appPronunciations.keys():
             self.pronunciations.pop(key)

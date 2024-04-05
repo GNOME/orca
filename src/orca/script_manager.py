@@ -30,7 +30,13 @@ __license__   = "LGPL"
 
 import importlib
 
+# TODO - JD: The script manager should not be interacting with speech or braille directly.
+# When the presentation manager is created, it should handle speech and braille.
+
+from . import braille
 from . import debug
+from . import settings_manager
+from . import speech
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, default, sleepmode, toolkits
@@ -314,12 +320,8 @@ class ScriptManager:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return self._active_script.app
 
-    def set_active_script(self, new_script, reason=None):
-        """Set the new active script.
-
-        Arguments:
-        - new_script: the new script to be made active.
-        """
+    def set_active_script(self, new_script, reason=""):
+        """Set the active script to new_script."""
 
         if self._active_script == new_script:
             return
@@ -329,13 +331,27 @@ class ScriptManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             self._active_script.deactivate()
 
+        old_script = self._active_script
         self._active_script = new_script
         if new_script is None:
             return
 
+        manager = settings_manager.get_manager()
+        runtime_settings = {}
+        if old_script and old_script.app == new_script.app:
+            # Example: old_script is terminal, new_script is mate-terminal (e.g. for UI)
+            runtime_settings = manager.get_runtime_settings()
+
         tokens = ["SCRIPT MANAGER: Setting active script to", new_script, "reason:", reason]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         new_script.activate()
+
+        for key, value in runtime_settings.items():
+            manager.set_setting(key, value)
+
+        braille.checkBrailleSetting()
+        braille.setupKeyRanges(new_script.braille_bindings.keys())
+        speech.check_speech_setting()
 
     def _get_script_for_app_replicant(self, app):
         if not self._active:

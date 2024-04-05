@@ -729,9 +729,6 @@ class Script(script.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         settings_manager.get_manager().load_app_settings(self)
-        braille.checkBrailleSetting()
-        braille.setupKeyRanges(self.braille_bindings.keys())
-        speech.check_speech_setting()
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
 
