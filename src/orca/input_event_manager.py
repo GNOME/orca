@@ -243,6 +243,8 @@ class InputEventManager:
         last_count = last_event.get_click_count()
         if not event.is_pressed_key():
             return last_count
+        if last_event.is_pressed_key():
+            return last_count
         if (event.is_modifier_key() and last_count == 2) or last_count == 3:
             return 1
         return last_count + 1
