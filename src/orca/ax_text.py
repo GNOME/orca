@@ -457,7 +457,8 @@ class AXText:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return ""
 
-        tokens = ["AXText: Text of", obj, f"({start_offset}-{end_offset}): '{result}'"]
+        debug_string = result.replace("\n", "\\n")
+        tokens = ["AXText: Text of", obj, f"({start_offset}-{end_offset}): '{debug_string}'"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return result
 

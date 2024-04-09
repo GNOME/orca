@@ -933,6 +933,9 @@ class Script(default.Script):
     def update_braille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
+        tokens = ["WEB: updating braille for", obj, args]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+
         if not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
             debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
@@ -978,18 +981,26 @@ class Script(default.Script):
     def displayContents(self, contents, **args):
         """Displays contents in braille."""
 
+        tokens = ["WEB: Displaying", contents, args]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+
         if not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
-            debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
+            debug.printMessage(debug.LEVEL_INFO, "WEB: Braille disabled", True)
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
         document = args.get("documentFrame")
-        contents = self.braille_generator.generateContents(contents, documentFrame=document)
-        if not contents:
+        result = self.braille_generator.generateContents(contents, documentFrame=document)
+        if not result:
+            msg = "WEB: Generating braille contents failed"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        regions, focusedRegion = contents
+        regions, focusedRegion = result
+        tokens = ["WEB: Generated result", regions, "focused region", focusedRegion]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         for region in regions:
             self.addBrailleRegionsToLine(region, line)
 

@@ -225,6 +225,9 @@ def _asString(obj):
     if isinstance(obj, list):
         return f"[{', '.join(map(_asString, obj))}]"
 
+    if isinstance(obj, dict):
+        return str({key: _asString(value) for key, value in obj.items()})
+
     if isinstance(obj, str) and len(obj) > 100:
         obj = f"{obj[0:100]} (...)"
         return obj
@@ -247,7 +250,7 @@ def _asString(obj):
         module_name = inspect.getmodulename(obj.filename)
         return f"{module_name}.{obj.function}"
 
-    return str(obj)
+    return str(obj).replace("\n", "\\n")
 
 def printTokens(level, tokens, timestamp=False, stack=False):
     if level < debugLevel:
