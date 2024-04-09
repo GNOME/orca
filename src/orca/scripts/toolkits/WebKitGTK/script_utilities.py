@@ -41,12 +41,6 @@ class Utilities(web.Utilities):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('toolkit', '') in ['WebKitGtk', 'WebKitGTK']
 
-    def _attemptBrokenTextRecovery(self, obj, **args):
-        """Returns True if we should sanity-check text at offset and try to recover."""
-
-        # TODO - JD: Remove this once we've verified the text implementation is correct.
-        return True
-
     def inDocumentContent(self, obj=None):
         """Returns True if obj is in document content."""
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
