@@ -250,7 +250,7 @@ def _asString(obj):
         module_name = inspect.getmodulename(obj.filename)
         return f"{module_name}.{obj.function}"
 
-    return str(obj).replace("\n", "\\n")
+    return str(obj)
 
 def printTokens(level, tokens, timestamp=False, stack=False):
     if level < debugLevel:

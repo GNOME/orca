@@ -221,8 +221,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return super().generateBraille(obj, **args)
 
-        tokens = ["WEB: Generating braille for document object", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        tokens = ["WEB: Generating braille for document object", obj, args]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
 
         result = []
 
