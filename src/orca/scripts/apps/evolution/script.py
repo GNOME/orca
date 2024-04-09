@@ -30,88 +30,37 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import focus_manager
-from orca import settings_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import gtk
-from orca.scripts.toolkits import WebKitGtk
+from orca.scripts.toolkits import WebKitGTK
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
 
-class Script(WebKitGtk.Script, gtk.Script):
-
-    def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
-        if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
-            settings_manager.get_manager().set_setting('sayAllOnLoad', False)
-
-        super().__init__(app)
-        self.present_if_inactive = False
+class Script(WebKitGTK.Script, gtk.Script):
 
     def get_braille_generator(self):
+        """Returns the braille generator for this script."""
+
         return BrailleGenerator(self)
 
     def get_speech_generator(self):
+        """Returns the speech generator for this script."""
+
         return SpeechGenerator(self)
 
     def get_utilities(self):
+        """Returns the utilities for this script."""
+
         return Utilities(self)
 
-    def is_activatable_event(self, event):
-        """Returns True if event should cause this script to become active."""
-
-        if event.type.startswith("focus:") and AXUtilities.is_menu(event.source):
-            return True
-
-        window = self.utilities.topLevelObject(event.source)
-        if not AXUtilities.is_active(window):
-            return False
-
-        return True
-
     def stopSpeechOnActiveDescendantChanged(self, event):
-        """Whether or not speech should be stopped prior to setting the
-        locusOfFocus in on_active_descendant_changed.
-
-        Arguments:
-        - event: the Event
-
-        Returns True if speech should be stopped; False otherwise.
-        """
-
         return False
-
-    ########################################################################
-    #                                                                      #
-    # AT-SPI OBJECT EVENT HANDLERS                                         #
-    #                                                                      #
-    ########################################################################
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
-
-        if not event.any_data:
-            msg = "EVOLUTION: Ignoring event. No any_data."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        if self.utilities.isComposeAutocomplete(event.source):
-            if AXUtilities.is_selected(event.any_data):
-                msg = "EVOLUTION: Source is compose autocomplete with selected child."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
-            else:
-                msg = "EVOLUTION: Source is compose autocomplete without selected child."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                focus_manager.get_manager().set_locus_of_focus(event, event.source)
-            return
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_table_cell(focus):
@@ -131,39 +80,3 @@ class Script(WebKitGtk.Script, gtk.Script):
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         super().on_active_descendant_changed(event)
-
-    def on_busy_changed(self, event):
-        """Callback for object:state-changed:busy accessibility events."""
-        pass
-
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        if self.utilities.isWebKitGtk(event.source):
-            return
-
-        # This is some mystery child of the 'Messages' panel which fails to show
-        # up in the hierarchy or emit object:state-changed:focused events.
-        if AXUtilities.is_layered_pane(event.source):
-            obj = self.utilities.realActiveDescendant(event.source)
-            focus_manager.get_manager().set_locus_of_focus(event, obj)
-            return
-
-        gtk.Script.on_focus(self, event)
-
-    def on_name_changed(self, event):
-        """Callback for object:property-change:accessible-name events."""
-
-        if self.utilities.isWebKitGtk(event.source):
-            return
-
-        gtk.Script.on_name_changed(self, event)
-
-    def on_selection_changed(self, event):
-        """Callback for object:selection-changed accessibility events."""
-
-        if AXUtilities.is_combo_box(event.source) \
-           and not AXUtilities.is_focused(event.source):
-            return
-
-        gtk.Script.on_selection_changed(self, event)

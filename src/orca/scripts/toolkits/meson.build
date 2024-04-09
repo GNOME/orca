@@ -4,7 +4,7 @@ subdir('Gecko')
 subdir('gtk')
 subdir('J2SE-access-bridge')
 subdir('Qt')
-subdir('WebKitGtk')
+subdir('WebKitGTK')
 
 lib_sources = [
   '__init__.py',

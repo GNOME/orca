@@ -123,7 +123,7 @@ class ScriptManager:
     def _toolkit_for_object(self, obj):
         """Returns the name of the toolkit associated with obj."""
 
-        names = {'WebKitGTK': 'WebKitGtk', 'GTK': 'gtk', 'GAIL': 'gtk'}
+        names = {'GTK': 'gtk', 'GAIL': 'gtk'}
         name = AXObject.get_attribute(obj, 'toolkit')
         return names.get(name, name)
 

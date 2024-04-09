@@ -26,41 +26,13 @@ __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca.scripts.toolkits import gtk
-from orca.scripts.toolkits import WebKitGtk
+from orca.scripts.toolkits import WebKitGTK
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 
-class Utilities(WebKitGtk.Utilities, gtk.Utilities):
-
-    def isReceivedMessage(self, obj):
-        if AXUtilities.is_editable(obj):
-            return False
-
-        return self.isEmbeddedDocument(obj)
-
-    def isReceivedMessageContent(self, obj):
-        if not AXUtilities.is_section(obj):
-            return False
-
-        return self.isReceivedMessage(AXObject.get_parent(obj))
-
-    def isComposeAutocomplete(self, obj):
-        if not AXUtilities.is_table(obj):
-            return False
-
-        if not AXUtilities.manages_descendants(obj):
-            return False
-
-        return AXUtilities.is_window(self.topLevelObject(obj))
-
-    def findMessageBodyChild(self, root):
-        candidate = AXObject.find_descendant(root, self.isDocument)
-        if self.isEmbeddedDocument(candidate):
-            return self.findMessageBodyChild(candidate)
-
-        return candidate
+class Utilities(WebKitGTK.Utilities, gtk.Utilities):
 
     def isMessageListStatusCell(self, obj):
         if not self.isMessageListToggleCell(obj):
@@ -73,7 +45,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         return headers[0] and AXObject.get_name(headers[0]) != AXObject.get_name(obj)
 
     def isMessageListToggleCell(self, obj):
-        if self.isWebKitGtk(obj):
+        if self.isWebKitGTK(obj):
             return False
 
         if not gtk.Utilities.hasMeaningfulToggleAction(self, obj):
@@ -85,31 +57,13 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         return True
 
     def realActiveDescendant(self, obj):
-        if self.isWebKitGtk(obj):
+        if self.isWebKitGTK(obj):
             return super().realActiveDescendant(obj)
 
+        # TODO - JD: Is this still needed?
         # This is some mystery child of the 'Messages' panel which fails to show
         # up in the hierarchy or emit object:state-changed:focused events.
         if AXUtilities.is_layered_pane(obj):
             return AXObject.find_descendant(obj, AXUtilities.is_tree_table) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
-
-    def setCaretAtStart(self, obj):
-        if self.isReceivedMessageContent(obj):
-            obj = self.findMessageBodyChild(obj) or obj
-
-        child, index = super().setCaretAtStart(obj)
-        if child and index == -1:
-            child, index = super().setCaretAtStart(child)
-
-        return child, index
-
-    def treatAsBrowser(self, obj):
-        if not self.isEmbeddedDocument(obj):
-            return False
-
-        if AXObject.find_ancestor(obj, AXUtilities.is_split_pane) is not None:
-            return False
-
-        return True

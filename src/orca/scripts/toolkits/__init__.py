@@ -4,4 +4,4 @@ __all__ = ['clutter',
            'Gecko',
            'J2SE-access-bridge',
            'Qt',
-           'WebKitGtk']
+           'WebKitGTK']

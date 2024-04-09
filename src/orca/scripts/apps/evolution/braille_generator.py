@@ -27,15 +27,15 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
-from orca.scripts.toolkits import WebKitGtk
+from orca.scripts.toolkits import WebKitGTK
 
-class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGenerator):
+class BrailleGenerator(WebKitGTK.BrailleGenerator, braille_generator.BrailleGenerator):
 
     def __init__(self, script):
         super().__init__(script)
         self._cache = {}
 
-    def _isMessageListToggleCell(self, obj):
+    def _is_message_list_toggle_cell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListToggleCell")
         if rv is None:
@@ -46,7 +46,7 @@ class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGene
         return rv
 
     def _generateRealActiveDescendantDisplayedText(self, obj, **args):
-        if self._isMessageListToggleCell(obj):
+        if self._is_message_list_toggle_cell(obj):
             return []
 
         return super()._generateRealActiveDescendantDisplayedText(obj, **args)
