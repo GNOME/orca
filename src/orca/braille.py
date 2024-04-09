@@ -584,11 +584,10 @@ class Text(Region):
         self.caretOffset = 0
         self.lineOffset = 0
         if self.accessible:
-            self.caretOffset = AXText.get_caret_offset(self.accessible)
-            if self.caretOffset < 0 and startOffset is not None:
-                msg = "BRAILLE: Adjusting caret offset to startOffset"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            if startOffset is not None:
                 self.caretOffset = startOffset
+            else:
+                self.caretOffset = AXText.get_caret_offset(self.accessible)
             string, self.lineOffset = AXText.get_line_at_offset(
                 self.accessible, self.caretOffset)[0:2]
             string = string.replace("\ufffc", " ")
