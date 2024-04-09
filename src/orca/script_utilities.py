@@ -68,17 +68,8 @@ class Utilities:
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
-    SUPERSCRIPT_DIGITS = \
-        ['\u2070', '\u00b9', '\u00b2', '\u00b3', '\u2074',
-         '\u2075', '\u2076', '\u2077', '\u2078', '\u2079']
-    SUBSCRIPT_DIGITS = \
-        ['\u2080', '\u2081', '\u2082', '\u2083', '\u2084',
-         '\u2085', '\u2086', '\u2087', '\u2088', '\u2089']
-
     flags = re.UNICODE
     WORDS_RE = re.compile(r"(\W+)", flags)
-    SUPERSCRIPTS_RE = re.compile(f"[{''.join(SUPERSCRIPT_DIGITS)}]+", flags)
-    SUBSCRIPTS_RE = re.compile(f"[{''.join(SUBSCRIPT_DIGITS)}]+", flags)
     PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
     # generator_cache
@@ -2214,8 +2205,6 @@ class Utilities:
             words = self.WORDS_RE.split(line)
             line = ''.join(map(self._convertWordToDigits, words))
 
-        line = self.adjustForDigits(line)
-
         if len(line) == 1 and not self._script.inSayAll() and self.isInMath():
             charname = mathsymbols.getCharacterName(line)
             if charname != line:
@@ -2268,31 +2257,6 @@ class Utilities:
             lastChar = line[i]
 
         return self._addRepeatSegment(segment, newLine)
-
-    def adjustForDigits(self, string):
-        """Adjusts the string to convert digit-like text, such as subscript
-        and superscript numbers, into actual digits.
-
-        Arguments:
-        - string: the string to be adjusted
-
-        Returns: a new string which contains actual digits.
-        """
-
-        subscripted = set(re.findall(self.SUBSCRIPTS_RE, string))
-        superscripted = set(re.findall(self.SUPERSCRIPTS_RE, string))
-
-        for number in superscripted:
-            new = [str(self.SUPERSCRIPT_DIGITS.index(d)) for d in number]
-            newString = messages.DIGITS_SUPERSCRIPT % "".join(new)
-            string = re.sub(number, newString, string)
-
-        for number in subscripted:
-            new = [str(self.SUBSCRIPT_DIGITS.index(d)) for d in number]
-            newString = messages.DIGITS_SUBSCRIPT % "".join(new)
-            string = re.sub(number, newString, string)
-
-        return string
 
     def indentationDescription(self, line):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
