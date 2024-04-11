@@ -7,7 +7,6 @@ echo 'application_name is the name of the application to run'
 echo '0 = start and stop orca inside this shell script'
 echo '1 = assume orca is already running'
 echo " " # for a blank line
-	echo 'See http://live.gnome.org/Orca/RegressionTesting for more info.'
 
 exit 1
 }
