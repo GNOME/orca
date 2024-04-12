@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-02-19 20:43+0000\n"
+"POT-Creation-Date: 2024-04-04 14:42+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: \n"
@@ -5084,8 +5084,6 @@ msgstr ""
 #. "alt" modifier.
 #.
 #: src/orca/keybindings.py:183
-#| msgctxt "keyboard"
-#| msgid "Alt"
 msgid "Alt"
 msgstr "Alt"
 
@@ -10094,10 +10092,9 @@ msgstr "טעינת %s הסתיימה."
 #. current document changes, e.g. as a result of navigation or scrolling.
 #. The string substitution is the number of the current page.
 #: src/orca/messages.py:2111
-#, fuzzy, python-format
-#| msgid "Page"
+#, python-format
 msgid "Page %d"
-msgstr "עמוד"
+msgstr "עמוד %d"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically summarize details about the page, such as the number of elements
@@ -10186,26 +10183,20 @@ msgstr "השורה נבחרה לסוף מהמיקום האחרון של הסמן
 #. the command to get into Orca's preferences dialog when the preferences dialog
 #. is already open.
 #: src/orca/messages.py:2174
-#, fuzzy
-#| msgid ""
-#| "You already have an instance of an Orca preferences dialog open.\n"
-#| "\n"
-#| "Please close it before opening a new one."
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
 msgstr ""
-"חלון העדפות של Orca אחד כבר פעיל.\n"
-"\n"
-"נא לסגור אותו לפני פתיחת אחד חדש."
+"כבר יש עותק של חלונית העדפות של Orca פתוח.\n"
+"נא לסגור אותה לפני פתיחת אחת חדשה."
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
 #: src/orca/messages.py:2179
-#, fuzzy, python-format
+#, python-format
 #| msgid "column %(index)d of %(total)d"
 msgid "slide %(position)d of %(count)d"
-msgstr "עמודה %(index)d מתוך %(total)d"
+msgstr "שקופית %(position)d מתוך %(count)d"
 
 #. Translators: This is a detailed message which will be presented as the user
 #. cycles amongst his/her saved profiles. A "profile" is a collection of settings
@@ -10402,10 +10393,9 @@ msgstr "הדיבור מופעל."
 #. disabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode disabled for VirtualBox."
 #: src/orca/messages.py:2320
-#, fuzzy, python-format
-#| msgid "Speech disabled."
+#, python-format
 msgid "Sleep mode disabled for %s."
-msgstr "הדיבור מכובה."
+msgstr "מצב שינה הושבת למשך %s."
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -10421,10 +10411,9 @@ msgstr "הדיבור מכובה."
 #. enabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode enabled for VirtualBox."
 #: src/orca/messages.py:2335
-#, fuzzy, python-format
-#| msgid "Bypass mode enabled."
+#, python-format
 msgid "Sleep mode enabled for %s."
-msgstr "מצב מעקף מופעל."
+msgstr "מצב שינה הופעל למשך %s."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2338
@@ -10604,19 +10593,15 @@ msgstr "לא טבלה."
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
 #: src/orca/messages.py:2459
-#, fuzzy
-#| msgid "Simplified navigation disabled."
 msgid "Table navigation disabled."
-msgstr "הושבת ניווט מפושט."
+msgstr "ניווט בטבלאות הושבת."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
 #: src/orca/messages.py:2464
-#, fuzzy
-#| msgid "Simplified navigation enabled."
 msgid "Table navigation enabled."
-msgstr "הופעל ניווט מפושט."
+msgstr "ניווט בטבלאות הופעל."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -11061,15 +11046,13 @@ msgstr[3] "רשימה עם %d פריטים"
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
 #: src/orca/messages.py:2756
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
-msgstr[0] "רשימה עם פריט %d"
-msgstr[1] "רשימה עם %d פריטים"
-msgstr[2] "רשימה עם %d פריטים"
-msgstr[3] "רשימה עם %d פריטים"
+msgstr[0] "רשימה מקוננת עם פריט %d"
+msgstr[1] "רשימה מקוננת עם שני (%d) פריטים"
+msgstr[2] "רשימה מקוננת עם %d פריטים"
+msgstr[3] "רשימה מקוננת עם %d פריטים"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
