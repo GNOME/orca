@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-03-12 16:06+0000\n"
-"PO-Revision-Date: 2024-03-13 15:46+0100\n"
+"POT-Creation-Date: 2024-03-28 17:33+0000\n"
+"PO-Revision-Date: 2024-04-13 03:05+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -7539,7 +7539,7 @@ msgstr "ორიგინალი"
 #: src/orca/mathsymbols.py:1922
 msgctxt "math symbol"
 msgid "image of"
-msgstr ""
+msgstr "გამოსახულება"
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: src/orca/mathsymbols.py:1925
@@ -8446,7 +8446,7 @@ msgstr "ამჟამად გაშვებული ამ ეკრან
 #. which lists all the available command line options.
 #: src/orca/messages.py:281
 msgid "Show this help message and exit"
-msgstr ""
+msgstr "ამ დახმარების შეტყობინების ჩვენება და გასვლა"
 
 #. Translators: This is the description of command line option '--debug' which
 #. causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
@@ -9477,7 +9477,7 @@ msgstr "დახრილი ხაზის დასასრული"
 #. expression such as a fraction.
 #: src/orca/messages.py:1068
 msgid "square root of"
-msgstr ""
+msgstr "კვადრატული ფესვი"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is a cube root. For instance, for the cube root of 9 Orca would
@@ -9487,7 +9487,7 @@ msgstr ""
 #. of another expression such as a fraction.
 #: src/orca/messages.py:1076
 msgid "cube root of"
-msgstr ""
+msgstr "კუბური ფესვი"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is an nth root. https://en.wikipedia.org/wiki/Nth_root. For instance,
@@ -10180,7 +10180,7 @@ msgstr "ყველა ცოცხალი რეგიონი გამო
 #. regions has been restored to their original values.
 #: src/orca/messages.py:1559
 msgid "live regions politeness levels restored"
-msgstr ""
+msgstr "ცოცხალი რეგიონების ზრდილობის დონეები აღდგენილია"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -12159,7 +12159,7 @@ msgstr "ყდა"
 #: src/orca/object_properties.py:204
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "კრედიტი"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12168,7 +12168,7 @@ msgstr ""
 #: src/orca/object_properties.py:210
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "კრედიტები"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13857,7 +13857,7 @@ msgstr "ამოტვიფვრა"
 #: src/orca/text_attribute_names.py:366
 msgctxt "textattr"
 msgid "emboss"
-msgstr ""
+msgstr "ამოტვიფრვა"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -14397,36 +14397,37 @@ msgstr "მართლწერა"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: src/orca/tutorialgenerator.py:166
 msgid "Press space to toggle."
-msgstr ""
+msgstr "ჰარე გადასართველად."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
 #: src/orca/tutorialgenerator.py:193
 msgid "Press space to expand, and use up and down to select an item."
-msgstr ""
+msgstr "ჰარე გასაშლელად. ზემოთ და ქვემოთ ისრები ელემენტის მოსანიშნად."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: src/orca/tutorialgenerator.py:221
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
+msgstr "Alt+F6 ფოკუსის შვილი ფანჯრებისთვის მისაცემად."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
 #: src/orca/tutorialgenerator.py:283
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr ""
+"ელემენტების გადასატანად, ან ისრის ღილაკები გამოიყენეთ, ან აკრიფეთ, რას ეძებთ."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
 #: src/orca/tutorialgenerator.py:289
 msgid "To get to the system menus press the alt+f1 key."
-msgstr ""
+msgstr "სისტემურ მენიუში შესასვლელად დააწექით ღილაკს Alt+F11."
 
 #. Translators: this is the tutorial string when navigating lists.
 #: src/orca/tutorialgenerator.py:323
 msgid "Use up and down to select an item."
-msgstr ""
+msgstr "ელემენტის მოსანიშნად გამოიყენეთ ზემოთ და ქვემოთ ღილაკები."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -14434,7 +14435,7 @@ msgstr ""
 #. this string informs the user how to collapse the node.
 #: src/orca/tutorialgenerator.py:353 src/orca/tutorialgenerator.py:532
 msgid "To collapse, press shift plus left."
-msgstr ""
+msgstr "ჩამოსაშლელად, დააწექით Shift+მარცხნივ."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -14442,12 +14443,12 @@ msgstr ""
 #. this string informs the user how to expand the node.
 #: src/orca/tutorialgenerator.py:359 src/orca/tutorialgenerator.py:538
 msgid "To expand, press shift plus right."
-msgstr ""
+msgstr "ასაკეცად, დააწექით Shift+მარჯვნივ."
 
 #. Translators: this is the tutorial string for activating a menu item
 #: src/orca/tutorialgenerator.py:390
 msgid "To activate press return."
-msgstr ""
+msgstr "გასააქტიურებლად დააწექით Enter."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
@@ -14460,12 +14461,12 @@ msgstr "ჩაწერეთ ტექსტი."
 #. user how to navigate these.
 #: src/orca/tutorialgenerator.py:448
 msgid "Use left and right to view other tabs."
-msgstr ""
+msgstr "გამოიყენეთ მარჯვნივ და მარცხივ ღილაკები სხვა ჩანართების სანახავად."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: src/orca/tutorialgenerator.py:473
 msgid "To activate press space."
-msgstr ""
+msgstr "გასააქტიურებლად დააწექით ჰარეს."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
@@ -14473,11 +14474,13 @@ msgstr ""
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
+"გამოიყენეთ ზემოთ და ქვემოთ ისრები მნიშვნელობის მოსანიშნად. ან აკრიფეთ "
+"სასურველი რიცხვითი მნიშვნელობა."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: src/orca/tutorialgenerator.py:644
 msgid "Use arrow keys to change."
-msgstr ""
+msgstr "შესაცვლელად გამოიყენეთ ისრის ღილაკები."
 
 #. Translators: this is a tip for the user, how to navigate menus.
 #: src/orca/tutorialgenerator.py:669
@@ -14485,12 +14488,14 @@ msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
 msgstr ""
+"ნავიგაციისთვის მარცხენა და მარჯვენა ისრები გამოიყენეთ. ელემენტებს შორის "
+"სამოძრაოდ ზემოთ და ქვემოთ ისრის ღილაკები დაგჭირდებათ."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menus.
 #: src/orca/tutorialgenerator.py:674
 msgid "To enter sub menu, press right arrow."
-msgstr ""
+msgstr "ქვემენიუში შესასვლელად დააწექით მარჯვენა ისარს."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
@@ -14499,3 +14504,5 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
+"შესამცირებლად დააწექით მარცხენა ისარს. გასაზრდელად კი მარჯვენას. მინიმუმზე "
+"გადასასვლელად ღილაკი Home, მაქსიმუმზე კი End."
