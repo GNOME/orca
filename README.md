@@ -16,8 +16,8 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also <http://wiki.gnome.org/Projects/Orca> for detailed information
-on Orca, including how to run Orca, how to communicate with the Orca user
+See also <https://orca.gnome.org> for detailed information on Orca,
+including how to run Orca, how to communicate with the Orca user
 community, and where to log bugs and feature requests.
 
 ## Dependencies
@@ -93,7 +93,7 @@ learn mode, press "Escape."  Finally, the preferences dialog contains
 a "Key Bindings" tab that lists the keyboard binding for Orca.
 
 For more information, see the Orca documentation which is available
-within Orca as well as at: <https://help.gnome.org/users/orca/stable/>
+within Orca as well as at <https://gnome.pages.gitlab.gnome.org/orca/help>.
 
 ## Orca's Scripts and Features
 
