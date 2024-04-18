@@ -2482,6 +2482,17 @@ class Script(default.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
+        manager = focus_manager.get_manager()
+        if not manager.can_be_active_window(event.source):
+            if self.utilities.isAriaDialog(event.source):
+                msg = "WEB: Setting locus of focus to ARIA dialog."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                manager.set_locus_of_focus(event, event.source)
+            else:
+                msg = "WEB: Ignoring event from inactive window."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
         msg = "WEB: Deferring to app/toolkit script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return False

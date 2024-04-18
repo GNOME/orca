@@ -337,9 +337,6 @@ class Script(web.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not focus_manager.get_manager().can_be_active_window(event.source):
-            return
-
         if super().on_window_activated(event):
             return
 

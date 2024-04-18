@@ -2152,6 +2152,9 @@ class Utilities(script_utilities.Utilities):
     def isAriaAlert(self, obj):
         return 'alert' in self._getXMLRoles(obj)
 
+    def isAriaDialog(self, obj):
+        return 'dialog' in self._getXMLRoles(obj)
+
     def isBlockquote(self, obj):
         if super().isBlockquote(obj):
             return True
