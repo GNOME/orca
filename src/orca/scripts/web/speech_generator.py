@@ -327,15 +327,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if priorObj and priorObj in self._script.utilities.labelsForObject(obj):
             return []
 
-        objName = AXObject.get_name(obj)
-        descendant = args.get("ancestorOf")
-        if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
-            tokens = ["WEB: ", descendant, "'s ancestor", obj, "has same name as priorObj",
-                      priorObj, ". Not generating labelOrName."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
         role = args.get('role', AXObject.get_role(obj))
+        objName = AXObject.get_name(obj)
+        if not AXUtilities.is_dialog_or_alert(obj, role):
+            descendant = args.get("ancestorOf")
+            if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
+                tokens = ["WEB: ", descendant, "'s ancestor", obj, "has same name as priorObj",
+                        priorObj, ". Not generating labelOrName."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return []
+
         if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
             tokens = ["WEB: ", obj, "is popup menu for current item."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
