@@ -1,5 +1,5 @@
 ## Orca Version
-*Note that versions prior to version 45.x are unsupported.*
+*Note that versions prior to version 45.x are unsupported for non-critical issues.*
 
 * Version of Orca where the bug is present
 * If known, version of Orca where the bug is not present

@@ -78,5 +78,11 @@ The minor version proceeds as follows: alpha, beta, rc, 0, 1, 2, 3, etc.
 
 Modify ./README.md to make sure it has the right Orca version.
 
+If this is a .0 release, modify this line in .gitlab/issue_templates/Default.md:
+
+   *Note that versions prior to version XX.x are unsupported for non-critical issues.*
+
+setting "XX" to the major release preceding this one.
+
 git commit -a
 git push
