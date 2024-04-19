@@ -190,26 +190,23 @@ formatting = {
             'focused': 'labelOrName + roleName',
             'unfocused': 'labelOrName + roleName + pause + currentLineText + allTextSelection',
             },
-        # TODO - JD: When we bump dependencies to 2.34, remove this fake role and use the real one.
-        'ROLE_CONTENT_DELETION': {
+        Atspi.Role.CONTENT_DELETION: {
             'focused': 'leaving or deletionStart',
             'unfocused': 'deletionStart + pause + displayedText + pause + deletionEnd',
             },
         'ROLE_CONTENT_ERROR': {
             'unfocused': 'displayedText + pause + invalid',
             },
-        # TODO - JD: When we bump dependencies to 2.34, remove this fake role and use the real one.
-        'ROLE_CONTENT_INSERTION': {
+
+        Atspi.Role.CONTENT_INSERTION: {
             'focused': 'leaving or insertionStart',
             'unfocused': 'insertionStart + pause + displayedText + pause + insertionEnd',
             },
-        # TODO - JD: When we bump dependencies to 2.36, remove this fake role and use the real one.
-        'ROLE_CONTENT_MARK': {
+        Atspi.Role.MARK: {
             'focused': 'leaving or markStart',
             'unfocused': 'markStart + pause + displayedText + pause + markEnd',
             },
-        # TODO - JD: When we bump dependencies to 2.36, remove this fake role and use the real one.
-        'ROLE_CONTENT_SUGGESTION': {
+        Atspi.Role.SUGGESTION: {
             'focused': 'leaving or roleName',
             },
         Atspi.Role.DESCRIPTION_LIST: {

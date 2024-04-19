@@ -1715,10 +1715,10 @@ class SpeechGenerator(generator.Generator):
 
     def _getEnabledAndDisabledContextRoles(self):
         allRoles = [Atspi.Role.BLOCK_QUOTE,
-                    'ROLE_CONTENT_DELETION',
-                    'ROLE_CONTENT_INSERTION',
-                    'ROLE_CONTENT_MARK',
-                    'ROLE_CONTENT_SUGGESTION',
+                    Atspi.Role.CONTENT_DELETION,
+                    Atspi.Role.CONTENT_INSERTION,
+                    Atspi.Role.MARK,
+                    Atspi.Role.SUGGESTION,
                     'ROLE_DPUB_LANDMARK',
                     'ROLE_DPUB_SECTION',
                     Atspi.Role.DESCRIPTION_LIST,
@@ -1744,10 +1744,10 @@ class SpeechGenerator(generator.Generator):
             if settings_manager.get_manager().get_setting('sayAllContextPanel'):
                 enabled.extend([Atspi.Role.PANEL,
                                 Atspi.Role.TOOL_TIP,
-                                'ROLE_CONTENT_DELETION',
-                                'ROLE_CONTENT_INSERTION',
-                                'ROLE_CONTENT_MARK',
-                                'ROLE_CONTENT_SUGGESTION',
+                                Atspi.Role.CONTENT_DELETION,
+                                Atspi.Role.CONTENT_INSERTION,
+                                Atspi.Role.MARK,
+                                Atspi.Role.SUGGESTION,
                                 'ROLE_DPUB_SECTION'])
             if settings_manager.get_manager().get_setting('sayAllContextNonLandmarkForm'):
                 enabled.append(Atspi.Role.FORM)
@@ -1765,10 +1765,10 @@ class SpeechGenerator(generator.Generator):
             if settings_manager.get_manager().get_setting('speakContextPanel'):
                 enabled.extend([Atspi.Role.PANEL,
                                 Atspi.Role.TOOL_TIP,
-                                'ROLE_CONTENT_DELETION',
-                                'ROLE_CONTENT_INSERTION',
-                                'ROLE_CONTENT_MARK',
-                                'ROLE_CONTENT_SUGGESTION',
+                                Atspi.Role.CONTENT_DELETION,
+                                Atspi.Role.CONTENT_INSERTION,
+                                Atspi.Role.MARK,
+                                Atspi.Role.SUGGESTION,
                                 'ROLE_DPUB_SECTION'])
             if settings_manager.get_manager().get_setting('speakContextNonLandmarkForm'):
                 enabled.append(Atspi.Role.FORM)
@@ -1893,14 +1893,13 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.LEAVING_FORM)
         elif role == Atspi.Role.TOOL_TIP:
             result.append(messages.LEAVING_TOOL_TIP)
-        elif role == 'ROLE_CONTENT_DELETION':
+        elif role == Atspi.Role.CONTENT_DELETION:
             result.append(messages.CONTENT_DELETION_END)
-        elif role == 'ROLE_CONTENT_INSERTION':
+        elif role == Atspi.Role.CONTENT_INSERTION:
             result.append(messages.CONTENT_INSERTION_END)
-        elif role == 'ROLE_CONTENT_MARK':
+        elif role == Atspi.Role.MARK:
             result.append(messages.CONTENT_MARK_END)
-        elif role == 'ROLE_CONTENT_SUGGESTION' \
-             and not self._script.utilities.isInlineSuggestion(obj):
+        elif role == Atspi.Role.SUGGESTION and not self._script.utilities.isInlineSuggestion(obj):
             result.append(messages.LEAVING_SUGGESTION)
         else:
             result = ['']
@@ -2052,10 +2051,10 @@ class SpeechGenerator(generator.Generator):
                                Atspi.Role.DESCRIPTION_LIST,
                                Atspi.Role.FORM,
                                Atspi.Role.LANDMARK,
-                               'ROLE_CONTENT_DELETION',
-                               'ROLE_CONTENT_INSERTION',
-                               'ROLE_CONTENT_MARK',
-                               'ROLE_CONTENT_SUGGESTION',
+                               Atspi.Role.CONTENT_DELETION,
+                               Atspi.Role.CONTENT_INSERTION,
+                               Atspi.Role.MARK,
+                               Atspi.Role.SUGGESTION,
                                'ROLE_DPUB_LANDMARK',
                                'ROLE_DPUB_SECTION',
                                'ROLE_FEED',

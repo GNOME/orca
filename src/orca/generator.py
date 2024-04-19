@@ -1286,16 +1286,8 @@ class Generator:
             return Atspi.Role.BLOCK_QUOTE
         if self._script.utilities.isComment(obj):
             return Atspi.Role.COMMENT
-        if self._script.utilities.isContentDeletion(obj):
-            return 'ROLE_CONTENT_DELETION'
         if self._script.utilities.isContentError(obj):
             return 'ROLE_CONTENT_ERROR'
-        if self._script.utilities.isContentInsertion(obj):
-            return 'ROLE_CONTENT_INSERTION'
-        if self._script.utilities.isContentMarked(obj):
-            return 'ROLE_CONTENT_MARK'
-        if self._script.utilities.isContentSuggestion(obj):
-            return 'ROLE_CONTENT_SUGGESTION'
         if self._script.utilities.isDescriptionList(obj):
             return Atspi.Role.DESCRIPTION_LIST
         if self._script.utilities.isDescriptionListTerm(obj):

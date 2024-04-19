@@ -1983,6 +1983,8 @@ class Utilities(script_utilities.Utilities):
                  Atspi.Role.CAPTION,
                  Atspi.Role.COLUMN_HEADER,
                  Atspi.Role.COMMENT,
+                 Atspi.Role.CONTENT_DELETION,
+                 Atspi.Role.CONTENT_INSERTION,
                  Atspi.Role.DEFINITION,
                  Atspi.Role.DESCRIPTION_LIST,
                  Atspi.Role.DESCRIPTION_TERM,
@@ -1994,26 +1996,14 @@ class Utilities(script_utilities.Utilities):
                  Atspi.Role.HEADING,
                  Atspi.Role.LIST,
                  Atspi.Role.LIST_ITEM,
+                 Atspi.Role.MARK,
                  Atspi.Role.PARAGRAPH,
                  Atspi.Role.ROW_HEADER,
                  Atspi.Role.SECTION,
                  Atspi.Role.STATIC,
+                 Atspi.Role.SUGGESTION,
                  Atspi.Role.TEXT,
                  Atspi.Role.TABLE_CELL]
-
-        # Remove this check when we bump dependencies to 2.34
-        try:
-            roles.append(Atspi.Role.CONTENT_DELETION)
-            roles.append(Atspi.Role.CONTENT_INSERTION)
-        except Exception:
-            pass
-
-        # Remove this check when we bump dependencies to 2.36
-        try:
-            roles.append(Atspi.Role.MARK)
-            roles.append(Atspi.Role.SUGGESTION)
-        except Exception:
-            pass
 
         return roles
 
@@ -2171,10 +2161,7 @@ class Utilities(script_utilities.Utilities):
         return 'comment' in self._getXMLRoles(obj)
 
     def isContentDeletion(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isContentDeletion(obj)
-
-        if AXUtilities.is_content_deletion(obj):
+        if super().isContentDeletion(obj):
             return True
 
         return 'deletion' in self._getXMLRoles(obj) or 'del' == self._getTag(obj)
@@ -2189,27 +2176,18 @@ class Utilities(script_utilities.Utilities):
         return AXUtilities.is_invalid_entry(obj)
 
     def isContentInsertion(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isContentInsertion(obj)
-
-        if AXUtilities.is_content_insertion(obj):
+        if super().isContentInsertion(obj):
             return True
 
         return 'insertion' in self._getXMLRoles(obj) or 'ins' == self._getTag(obj)
 
     def isContentMarked(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isContentMarked(obj)
-
-        if AXUtilities.is_mark(obj):
+        if super().isContentMarked(obj):
             return True
 
         return 'mark' in self._getXMLRoles(obj) or 'mark' == self._getTag(obj)
 
     def isContentSuggestion(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isContentSuggestion(obj)
-
         if AXUtilities.is_suggestion(obj):
             return True
 

@@ -465,19 +465,19 @@ class Utilities:
         return False
 
     def isContentDeletion(self, obj):
-        return False
+        return AXUtilities.is_content_deletion(obj)
 
     def isContentError(self, obj):
         return False
 
     def isContentInsertion(self, obj):
-        return False
+        return AXUtilities.is_content_insertion(obj)
 
     def isContentMarked(self, obj):
-        return False
+        return AXUtilities.is_mark(obj)
 
     def isContentSuggestion(self, obj):
-        return False
+        return AXUtilities.is_suggestion(obj)
 
     def isInlineSuggestion(self, obj):
         return False
