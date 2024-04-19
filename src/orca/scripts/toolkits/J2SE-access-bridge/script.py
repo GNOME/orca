@@ -34,7 +34,6 @@ from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
-from .formatting import Formatting
 
 class Script(default.Script):
 
@@ -53,10 +52,6 @@ class Script(default.Script):
     def get_speech_generator(self):
         """Returns the speech generator for this script."""
         return SpeechGenerator(self)
-
-    def get_formatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def get_utilities(self):
         """Returns the utilities for this script."""

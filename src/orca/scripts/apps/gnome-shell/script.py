@@ -32,15 +32,10 @@ from orca.scripts.toolkits import clutter
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-from .formatting import Formatting
 from .script_utilities import Utilities
 
 
 class Script(clutter.Script):
-
-    def get_formatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def get_utilities(self):
         return Utilities(self)
