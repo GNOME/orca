@@ -267,7 +267,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         for i, content in enumerate(contents):
             acc, start, end, string = content
             regions, fRegion = self.generateBraille(
-                acc, startOffset=start, endOffset=end, string=string,
+                acc, startOffset=start, endOffset=end, caretOffset=offset, string=string,
                 index=i, total=len(contents))
             if not regions:
                 continue

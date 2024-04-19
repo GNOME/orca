@@ -567,7 +567,7 @@ class Text(Region):
     as bugzilla bug 319754.]]]"""
 
     def __init__(self, accessible, label="", eol="",
-                 startOffset=None, endOffset=None):
+                 startOffset=None, endOffset=None, caretOffset=None):
         """Creates a new Text region.
 
         Arguments:
@@ -576,7 +576,7 @@ class Text(Region):
         """
 
         tokens = ["BRAILLE: Creating text region for", accessible,
-                  f"label:'{label}', offsets: {startOffset}-{endOffset}"]
+                  f"label:'{label}', offsets: {startOffset}-{endOffset}, caret: {caretOffset}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         self.accessible = accessible
@@ -584,10 +584,12 @@ class Text(Region):
         self.caretOffset = 0
         self.lineOffset = 0
         if self.accessible:
-            if startOffset is not None:
-                self.caretOffset = startOffset
+            if caretOffset is not None:
+                self.caretOffset = caretOffset
             else:
                 self.caretOffset = AXText.get_caret_offset(self.accessible)
+            if startOffset is not None:
+                self.caretOffset = max(startOffset, self.caretOffset)
             string, self.lineOffset = AXText.get_line_at_offset(
                 self.accessible, self.caretOffset)[0:2]
             string = string.replace("\ufffc", " ")

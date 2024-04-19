@@ -1056,6 +1056,9 @@ class Generator:
     def _generateEndOffset(self, obj, **args):
         return args.get('endOffset')
 
+    def _generateCaretOffset(self, obj, **args):
+        return args.get('caretOffset')
+
     def _generateCurrentLineText(self, obj, **args ):
         """Returns an array of strings for use by speech and braille
         that represents the current line of text, if
