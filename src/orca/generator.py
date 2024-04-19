@@ -94,57 +94,12 @@ class Generator:
             name = method.__name__[len(METHOD_PREFIX):]
             name = name[0].lower() + name[1:]
             self._methodsDict[name] = method
-        self._verifyFormatting()
 
     def _addGlobals(self, globalsDict):
         """Other things to make available from the formatting string.
         """
         globalsDict['obj'] = None
         globalsDict['role'] = None
-
-    def _verifyFormatting(self):
-
-        # Verify the formatting strings are OK.  This is only
-        # for verification and does not effect the function of
-        # Orca at all.
-        #
-        # TODO - JD: Given the above, can this just be killed?
-        #
-        # Populate the entire globals with empty arrays
-        # for the results of all the legal method names.
-        #
-        globalsDict = {}
-        for key in self._methodsDict.keys():
-            globalsDict[key] = []
-        self._addGlobals(globalsDict)
-
-        for roleKey in self._script.formatting[self._mode]:
-            for key in ["focused", "unfocused"]:
-                try:
-                    evalString = \
-                        self._script.formatting[self._mode][roleKey][key]
-                except Exception:
-                    continue
-                else:
-                    if not evalString:
-                        # It's legal to have an empty string.
-                        #
-                        continue
-                    while True:
-                        try:
-                            eval(evalString, globalsDict)
-                            break
-                        except NameError:
-                            info = _formatExceptionInfo()
-                            arg = info[1][0]
-                            arg = arg.replace("name '", "")
-                            arg = arg.replace("' is not defined", "")
-                            if arg not in self._methodsDict:
-                                debug.printException(debug.LEVEL_SEVERE)
-                            globalsDict[arg] = []
-                        except Exception:
-                            debug.printException(debug.LEVEL_SEVERE)
-                            break
 
     def _overrideRole(self, newRole, args):
         """Convenience method to allow you to temporarily override the role in
