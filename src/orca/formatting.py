@@ -495,7 +495,7 @@ formatting = {
             },
         Atspi.Role.TABLE_CELL: {
             'ancestor': 'newRowHeader + newColumnHeader + pause + newRow + pause + newColumn',
-            'focused': 'cellCheckedState + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))',
+            'focused': 'cellCheckedState + pause + expandableState + pause + numberOfChildren + pause',
             'unfocused': 'tableCellRow + pause',
             'basicWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + tableCellRow + pause + columnAndRow',
             'detailedWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause',
@@ -506,11 +506,10 @@ formatting = {
             # read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
             # maybe it can be done in a cleaner way?
             #
-            'focused':   '(cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
             'unfocused': '(newRowHeader + (newColumnHeader or columnHeaderIfToggleAndNoText) \
                               + cellCheckedState\
                               + (realActiveDescendantDisplayedText or imageDescription + image)\
-                              + (expandableState and (expandableState + numberOfChildren))\
+                              + expandableState + numberOfChildren\
                               + required + pause + invalid)'
             },
         Atspi.Role.TABLE_ROW: {
