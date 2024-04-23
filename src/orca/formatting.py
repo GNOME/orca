@@ -495,7 +495,7 @@ formatting = {
             },
         Atspi.Role.TABLE_CELL: {
             'ancestor': 'newRowHeader + newColumnHeader + pause + newRow + pause + newColumn',
-            'focused': '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))',
+            'focused': 'cellCheckedState + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))',
             'unfocused': 'tableCellRow + pause',
             'basicWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + tableCellRow + pause + columnAndRow',
             'detailedWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause',
@@ -506,10 +506,8 @@ formatting = {
             # read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
             # maybe it can be done in a cleaner way?
             #
-            'focused':   '(tableCell2ChildLabel + tableCell2ChildToggle)\
-                          or (cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
-            'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle)\
-                          or (newRowHeader + (newColumnHeader or columnHeaderIfToggleAndNoText) \
+            'focused':   '(cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
+            'unfocused': '(newRowHeader + (newColumnHeader or columnHeaderIfToggleAndNoText) \
                               + cellCheckedState\
                               + (realActiveDescendantDisplayedText or imageDescription + image)\
                               + (expandableState and (expandableState + numberOfChildren))\
@@ -834,8 +832,7 @@ formatting = {
             'unfocused': '((substring and ' + BRAILLE_TEXT + ') or tableCellRow)',
             },
         'REAL_ROLE_TABLE_CELL': {
-            'unfocused': '((tableCell2ChildToggle + tableCell2ChildLabel)\
-                          or (substring and ' + BRAILLE_TEXT + ') \
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ') \
                           or (cellCheckedState\
                               + (columnHeaderIfToggleAndNoText and [Region(" "), Component(obj, asString(columnHeaderIfToggleAndNoText))])\
                               + ((realActiveDescendantDisplayedText and [Component(obj, asString(realActiveDescendantDisplayedText))])\
