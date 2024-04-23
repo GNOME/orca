@@ -103,6 +103,8 @@ class AXCollection:
         """Returns a list of objects matching the specified rule."""
 
         if not AXObject.supports_collection(obj):
+            tokens = ["AXCollection:", obj, "does not implement this interface."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if rule is None:
@@ -127,6 +129,8 @@ class AXCollection:
         """Returns the first object matching the specified rule."""
 
         if not AXObject.supports_collection(obj):
+            tokens = ["AXCollection:", obj, "does not implement this interface."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if rule is None:
