@@ -901,6 +901,11 @@ class Generator:
         result = []
         cells = self._script.utilities.getShowingCellsInSameRow(obj, forceFullRow=True)
 
+        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
+        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
+            print("generating row", obj, row)
+            return self.generate(row)
+
         # Remove any pre-calcuated values which only apply to obj and not row cells.
         doNotInclude = ['startOffset', 'endOffset', 'string']
         otherCellArgs = args.copy()

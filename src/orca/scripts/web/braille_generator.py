@@ -202,19 +202,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         rad = self._script.utilities.realActiveDescendant(obj)
         return self._generateDisplayedText(rad, **args)
 
-    def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.inDocumentContent(obj):
-            return super()._generateTableCellRow(obj, **args)
-
-        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
-            return self._generateRealTableCell(obj, **args)
-
-        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
-        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
-            return self.generate(row, includeContext=False)
-
-        return super()._generateTableCellRow(obj, **args)
-
     def generateBraille(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default braille generator."]

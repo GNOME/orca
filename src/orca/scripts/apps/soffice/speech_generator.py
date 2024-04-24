@@ -282,23 +282,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
-            return self._generateRealTableCell(obj, **args)
-
-        if not self._script.utilities.isSpreadSheetCell(obj):
-            return super()._generateTableCellRow(obj, **args)
-
-        cells = self._script.utilities.getShowingCellsInSameRow(obj)
-        if not cells:
-            return []
-
-        result = []
-        for cell in cells:
-            result.extend(self._generateRealTableCell(cell, **args))
-
-        return result
-
     def _generateEndOfTableIndicator(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) indicating that this cell is the last cell

@@ -707,19 +707,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.inDocumentContent(obj):
-            return super()._generateTableCellRow(obj, **args)
-
-        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
-            return self._generateRealTableCell(obj, **args)
-
-        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
-        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
-            return self.generate(row)
-
-        return super()._generateTableCellRow(obj, **args)
-
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default speech generator."]

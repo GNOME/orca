@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
-from orca import object_properties
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 
@@ -68,29 +67,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         return [braille.Component(obj, " ".join((objectText, cellName)))]
-
-    def _generateTableCellDelimiter(self, obj, **args):
-        return braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE)
-
-    def _generateTableCellRow(self, obj, **args):
-        if not self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
-            return self._generateRealTableCell(obj, **args)
-
-        if not self._script.utilities.isSpreadSheetCell(obj):
-            return super()._generateTableCellRow(obj, **args)
-
-        cells = self._script.utilities.getShowingCellsInSameRow(obj)
-        if not cells:
-            return []
-
-        result = []
-        for cell in cells:
-            cellResult = self._generateRealTableCell(cell, **args)
-            if cellResult and result:
-                result.append(self._generateTableCellDelimiter(obj, **args))
-            result.extend(cellResult)
-
-        return result
 
     def _generateAncestors(self, obj, **args):
         if self._script.get_table_navigator().last_input_event_was_navigation_command():
