@@ -741,15 +741,12 @@ class TableNavigator:
         if script.utilities.grabFocusWhenSettingCaret(cell):
             AXObject.grab_focus(cell)
 
-        if not script.utilities.isGUICell(cell):
-            if AXObject.supports_text(cell):
-                obj = cell
-            else:
-                obj = AXObject.find_descendant(cell, AXObject.supports_text)
-            if obj:
-                script.utilities.setCaretPosition(obj, 0)
+        obj, offset = script.utilities.getFirstCaretPosition(cell)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
+        if AXObject.supports_text(obj) and not script.utilities.isGUICell(cell):
+            script.utilities.setCaretPosition(obj, offset)
 
-        script.presentObject(cell, offset=0, priorObj=previous_cell, interrupt=True)
+        script.presentObject(cell, offset=offset, priorObj=previous_cell, interrupt=True)
 
         # TODO - JD: This should be part of the normal table cell presentation.
         if settings_manager.get_manager().get_setting("speakCellCoordinates"):
