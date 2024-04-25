@@ -383,6 +383,9 @@ class Script(web.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
+        if not focus_manager.get_manager().can_be_active_window(event.source):
+            return
+
         # If this is a frame for a popup menu, we don't want to treat
         # it like a proper window:activate event because it's not as
         # far as the end-user experience is concerned.
