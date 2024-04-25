@@ -889,9 +889,10 @@ class Generator:
         current cell.
         """
 
+        isSpreadSheetCell = self._script.utilities.isSpreadSheetCell(obj)
         presentAll = args.get('readingRow') is True \
             or args.get('formatType') == 'detailedWhereAmI' \
-            or self._mode == 'braille' \
+            or (self._mode == 'braille' and not isSpreadSheetCell) \
             or self._script.utilities.shouldReadFullRow(obj, args.get('priorObj'))
 
         if not presentAll:
@@ -900,7 +901,7 @@ class Generator:
         args['readingRow'] = True
         result = []
         cells = self._script.utilities.getShowingCellsInSameRow(
-            obj, forceFullRow=not self._script.utilities.isSpreadSheetCell(obj))
+            obj, forceFullRow=not isSpreadSheetCell)
 
         row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
