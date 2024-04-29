@@ -103,51 +103,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _generatePositionInList(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the relative position of an
-        object in a list.
-        """
-
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
-            return []
-
-        listObj = None
-        if AXUtilities.is_combo_box(obj):
-            allLists = AXUtilities.find_all_lists(obj)
-            if len(allLists) == 1:
-                listObj = allLists[0]
-
-        if listObj is None:
-            return speech_generator.SpeechGenerator._generatePositionInList(
-                self, obj, **args)
-
-        result = []
-        name = self._generateName(obj)
-        position = -1
-        index = total = 0
-
-        for child in AXObject.iter_children(listObj):
-            nextName = self._generateName(child)
-            if not nextName or nextName[0] in ["", "Empty", "separator"] \
-               or not AXUtilities.is_visible(child):
-                continue
-
-            index += 1
-            total += 1
-
-            if nextName == name:
-                position = index
-
-        if (settings_manager.get_manager().get_setting('enablePositionSpeaking') \
-            or args.get('forceList', False)) \
-           and position >= 0:
-            result.append(self._script.formatting.getString(
-                              mode='speech', stringType='groupindex') \
-                              %  {"index" : position, "total" : total})
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        return result
-
     def generateSpeech(self, obj, **args):
         result = []
         if AXUtilities.is_check_box(obj) and AXUtilities.is_menu(AXObject.get_parent(obj)):

@@ -162,7 +162,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'clickable'
         if self._script.utilities.isClickableElement(obj):
-            result = [self._script.formatting.getString(**args)]
+            result = [object_properties.STATE_CLICKABLE]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
@@ -213,7 +213,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'haslongdesc'
         if self._script.utilities.hasLongDesc(obj):
-            result = [self._script.formatting.getString(**args)]
+            result = [object_properties.STATE_HAS_LONGDESC]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
@@ -235,8 +235,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         toPresent = ", ".join(set(map(objString, objs)))
 
-        args['stringType'] = 'hasdetails'
-        result = [self._script.formatting.getString(**args) % toPresent]
+        result = [object_properties.RELATION_HAS_DETAILS % toPresent]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
@@ -252,8 +251,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        args['stringType'] = 'hasdetails'
-        result = [self._script.formatting.getString(**args) % ""]
+        result = [object_properties.RELATION_HAS_DETAILS % ""]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         result = []
@@ -302,7 +300,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if len(words) > 5:
                 words = words[0:5] + ['...']
 
-            result.append(self._script.formatting.getString(**objArgs) % " ".join(words))
+            result.append(object_properties.RELATION_DETAILS_FOR % " ".join(words))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             result.extend(self._generatePause(o, **objArgs))
 

@@ -166,6 +166,9 @@ class Generator:
             tokens = ["GENERATOR: Cannot generate presentation for", obj, ":", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return result
+
+        tokens = ["GENERATOR: Globals dict", globalsDict]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
@@ -187,6 +190,8 @@ class Generator:
                     args['formatType'] = 'unfocused'
 
             formatting = self._script.formatting.getFormat(**args)
+            tokens = ["GENERATOR: Formatting for", obj, "with args", args, ":", formatting]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             # Add in the context if this is the first time
             # we've been called.
