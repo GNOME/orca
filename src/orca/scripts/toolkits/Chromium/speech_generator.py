@@ -37,7 +37,6 @@ from gi.repository import Atspi
 
 from orca import debug
 from orca.scripts import web
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

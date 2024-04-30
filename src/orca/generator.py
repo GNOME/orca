@@ -34,7 +34,6 @@ from gi.repository import Atspi
 gi.require_version('Atk', '1.0')
 from gi.repository import Atk
 
-import re
 import sys
 import time
 import traceback
