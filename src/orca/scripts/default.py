@@ -2649,7 +2649,7 @@ class Script(script.Script):
         # If we're on whitespace, we cannot be on a misspelled word.
         char = AXText.get_character_at_offset(obj, offset)[0]
         if not char.strip() or self.utilities.isWordDelimiter(char):
-            self._lastWordCheckedForSpelling = char[0]
+            self._lastWordCheckedForSpelling = char
             return
 
         if not AXText.is_word_misspelled(obj, offset):
