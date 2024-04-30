@@ -74,30 +74,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generateName(obj, **args)
 
-    def _generateLabelAndName(self, obj, **args):
-        if not AXUtilities.is_combo_box(obj):
-            return super()._generateLabelAndName(obj, **args)
-
-        # TODO - JD: This should be the behavior by default because many
-        # toolkits use the label for the name.
-        result = []
-        label = self._script.utilities.displayedLabel(obj) or AXObject.get_name(obj)
-        if label:
-            result.append(label)
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-
-        name = AXObject.get_name(obj)
-        if label == name or not name:
-            selected = self._script.utilities.selectedChildren(obj)
-            if selected:
-                name = AXObject.get_name(selected[0])
-
-        if name:
-            result.append(name)
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-
-        return result
-
     def _generateAnyTextSelection(self, obj, **args):
         comboBoxEntry = self._script.utilities.getEntryForEditableComboBox(obj)
         if comboBoxEntry:

@@ -303,34 +303,6 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
-    def _generateLabelOrName(self, obj, **args):
-        """Returns the label as an array of strings for speech and braille.
-        If the label cannot be found, the name will be used instead.
-        If the name cannot be found, an empty array will be returned.
-        """
-
-        if AXUtilities.is_menu(obj, args.get("role")) \
-           and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            tokens = ["SPEECH GENERATOR:", obj, "is popup menu for current item."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        result = []
-        result.extend(self._generateLabel(obj, **args))
-        if not result:
-            name = AXObject.get_name(obj)
-            if name:
-                result.append(name)
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if result:
-            return result
-
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_autocomplete(parent):
-            result = self._generateLabelOrName(parent, **args)
-
-        return result
-
     def _generatePlaceholderText(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the 'placeholder' text. This is typically text that
@@ -2910,7 +2882,7 @@ class SpeechGenerator(generator.Generator):
         if format_type in ["focused", "ancestor"]:
             return result
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateAvailability(obj, **args)
         result += self._generateMnemonic(obj, **args)
@@ -2954,7 +2926,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateRoleName(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generatePause(obj, **args)
         result += self._generateAlertText(obj, **args)
         return result
@@ -2978,7 +2950,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the article role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
@@ -2995,7 +2967,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the article role when the article is in a feed."""
 
         result = []
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         if not result:
             result += self._generateCurrentLineText(obj, **args)
         if not result:
@@ -3044,7 +3016,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateParentRoleName(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += (self._generateImageDescription(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generatePause(obj, **args)
@@ -3067,7 +3039,7 @@ class SpeechGenerator(generator.Generator):
         if self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return self._generate_default_prefix(obj, **args) + result
@@ -3088,7 +3060,7 @@ class SpeechGenerator(generator.Generator):
         if format_type.endswith("WhereAmI"):
             result += self._generateNamedContainingPanel(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCheckedState(obj, **args)
@@ -3112,7 +3084,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateAncestors(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCheckedState(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -3132,7 +3104,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
 
@@ -3151,7 +3123,7 @@ class SpeechGenerator(generator.Generator):
         if format_type != "focused" and self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateSortOrder(obj, **args)
         result += self._generatePause(obj, **args)
@@ -3165,7 +3137,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the combo-box role."""
 
         result = []
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
@@ -3183,7 +3155,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the comment role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
@@ -3261,7 +3233,7 @@ class SpeechGenerator(generator.Generator):
                 return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += (self._generateNumberOfChildren(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generateNestingLevel(obj, **args)
@@ -3272,7 +3244,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the description-term role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         if not result:
             result += self._generateDisplayedText(obj, **args)
             result += self._generateAllTextSelection(obj, **args)
@@ -3289,7 +3261,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the description-value role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         if not result:
             result += self._generateDisplayedText(obj, **args)
             result += self._generateAllTextSelection(obj, **args)
@@ -3318,7 +3290,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
         result += self._generateRequired(obj, **args)
@@ -3338,7 +3310,7 @@ class SpeechGenerator(generator.Generator):
             if result:
                 return result
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateUnrelatedLabelsOrDescription(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -3353,7 +3325,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for document-related roles."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
@@ -3395,7 +3367,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the dpub section role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
@@ -3412,7 +3384,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the dpub section role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
@@ -3434,7 +3406,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the editbar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generatePause(obj, **args)
         result += self._generateRoleName(obj, **args)
@@ -3450,7 +3422,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the embedded role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type != "focused":
@@ -3466,7 +3438,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the entry role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += (self._generateCurrentLineText(obj, **args) \
@@ -3489,7 +3461,7 @@ class SpeechGenerator(generator.Generator):
             if result:
                 return result
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += (self._generateNumberOfChildren(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generate_default_suffix(obj, **args)
@@ -3504,7 +3476,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the filler role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -3539,13 +3511,13 @@ class SpeechGenerator(generator.Generator):
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
             return self._generateLeaving(obj, **args) \
-                or (self._generateLabelOrName(obj, **args) + self._generateRoleName(obj, **args))
+                or (self._generateLabelAndName(obj, **args) + self._generateRoleName(obj, **args))
 
         result = self._generate_default_prefix(obj, **args)
         if self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         else:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -3555,10 +3527,10 @@ class SpeechGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateLabelOrName(obj, **args)
+            return self._generateLabelAndName(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateUnfocusedDialogCount(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -3608,7 +3580,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateParentRoleName(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += (self._generateImageDescription(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generatePause(obj, **args)
@@ -3628,7 +3600,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the image role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateHasLongDesc(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -3638,7 +3610,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the image-map role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -3647,7 +3619,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the info-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateUnrelatedLabels(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -3662,7 +3634,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the internal-frame role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -3686,12 +3658,12 @@ class SpeechGenerator(generator.Generator):
             result = self._generateLeaving(obj, **args)
             if not result:
                 result += self._generateRoleName(obj, **args)
-                result += self._generateLabelOrName(obj, **args)
+                result += self._generateLabelAndName(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateRoleName(obj, **args)
-        result += (self._generateLabelOrName(obj, **args) \
+        result += (self._generateLabelAndName(obj, **args) \
             or self._generateCurrentLineText(obj, **args))
         result += self._generatePause(obj, **args)
         result += self._generateUnrelatedLabels(obj, **args)
@@ -3702,7 +3674,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the layered-pane role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += (self._generateLabelOrName(obj, **args) or self._generateRoleName(obj, **args))
+        result += (self._generateLabelAndName(obj, **args) or self._generateRoleName(obj, **args))
         result += self._generateAvailability(obj, **args)
         result += self._generateNoShowingChildren(obj, **args)
 
@@ -3724,7 +3696,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = []
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -3745,7 +3717,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateFileSize(obj, **args)
             return result
 
-        result += (self._generateLabelOrName(obj, **args) \
+        result += (self._generateLabelAndName(obj, **args) \
             or self._generateDisplayedText(obj, **args))
         result += self._generateRoleName(obj, **args)
         result += self._generateExpandableState(obj, **args)
@@ -3762,7 +3734,7 @@ class SpeechGenerator(generator.Generator):
             if result:
                 return result
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += (self._generateNumberOfChildren(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generateNestingLevel(obj, **args)
@@ -3774,7 +3746,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
 
         if format_type != "focused":
             result += self._generateFocusedItem(obj, **args)
@@ -3797,7 +3769,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateExpandableState(obj, **args)
             return result
 
-        result += (self._generateLabelOrName(obj, **args) or \
+        result += (self._generateLabelAndName(obj, **args) or \
             (self._generateDisplayedText(obj, **args) +
              self._generateAllTextSelection(obj, **args)))
         result += self._generateCheckedStateIfCheckable(obj, **args)
@@ -3967,7 +3939,7 @@ class SpeechGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
             result += self._generateRoleName(obj, **args)
             return result
 
@@ -3976,7 +3948,7 @@ class SpeechGenerator(generator.Generator):
                 or self._generateParentRoleName(obj, **args))
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -3992,7 +3964,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the menu-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -4009,7 +3981,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateAncestors(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4026,7 +3998,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         result += self._generateRoleName(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generatePause(obj, **args)
         result += (self._generateExpandedEOCs(obj, **args) \
             or self._generateUnrelatedLabelsOrDescription(obj, **args))
@@ -4042,7 +4014,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the page role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
@@ -4054,7 +4026,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the page-tab role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4082,7 +4054,7 @@ class SpeechGenerator(generator.Generator):
         if self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
 
         result += self._generateRoleName(obj, **args)
         result += self._generateUnrelatedLabels(obj, **args)
@@ -4093,7 +4065,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the paragraph role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateTextIndentation(obj, **args)
@@ -4107,7 +4079,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the password-text role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
@@ -4127,7 +4099,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generateProgressBarIndex(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type != "focused":
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += (self._generateProgressBarValue(obj, **args) \
             or self._generateRoleName(obj, **args))
         result += self._generate_default_suffix(obj, **args)
@@ -4141,7 +4113,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateExpandableState(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4168,7 +4140,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateNewRadioButtonGroup(obj, **args)
 
         result += self._generatePause(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRadioState(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4190,7 +4162,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateAncestors(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateRadioState(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4211,7 +4183,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the region landmark role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
@@ -4237,7 +4209,7 @@ class SpeechGenerator(generator.Generator):
         if format_type != "focused" and self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateSortOrder(obj, **args)
         result += self._generatePause(obj, **args)
@@ -4260,7 +4232,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
         result += self._generatePercentage(obj, **args)
@@ -4273,7 +4245,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the scroll-pane role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
@@ -4284,7 +4256,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the section role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         if not result:
             result += self._generateCurrentLineText(obj, **args)
             result += self._generateAllTextSelection(obj, **args)
@@ -4305,7 +4277,7 @@ class SpeechGenerator(generator.Generator):
         if format_type in ["focused", "ancestor"]:
             return result
 
-        result += (self._generateLabelOrName(obj, **args) \
+        result += (self._generateLabelAndName(obj, **args) \
             or self._generateDisplayedText(obj, **args) \
             or self._generateValue(obj, **args))
         result += self._generateMnemonic(obj, **args)
@@ -4320,7 +4292,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
         result += self._generatePercentage(obj, **args)
@@ -4337,7 +4309,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateDisplayedText(obj, **args) or self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args) + result
+        result += self._generateLabelAndName(obj, **args) + result
         result += self._generateRoleName(obj, **args)
         result += self._generateRequired(obj, **args)
         result += self._generatePause(obj, **args)
@@ -4355,7 +4327,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateValue(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateValue(obj, **args)
         result += self._generatePercentage(obj, **args)
@@ -4377,7 +4349,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the status-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
@@ -4430,7 +4402,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateSwitchState(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateSwitchState(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4448,7 +4420,7 @@ class SpeechGenerator(generator.Generator):
                 return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generatePause(obj, **args)
         # TODO - JD: Move this logic here.
         result += self._generateTable(obj, **args)
@@ -4529,7 +4501,7 @@ class SpeechGenerator(generator.Generator):
         if format_type != "focused" and self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateSortOrder(obj, **args)
         if result and not isinstance(result[-1], Pause):
@@ -4549,7 +4521,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateExpandableState(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += (self._generateLabelOrName(obj, **args) \
+        result += (self._generateLabelAndName(obj, **args) \
             or self._generateDisplayedText(obj, **args))
         result += self._generatePause(obj, **args)
         result += self._generateExpandableState(obj, **args)
@@ -4566,7 +4538,7 @@ class SpeechGenerator(generator.Generator):
         if format_type != "focused" and self._generateSubstring(obj, **args):
             result += self._generateCurrentLineText(obj, **args)
         if not result:
-            result += self._generateLabelOrName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateSortOrder(obj, **args)
         if result and not isinstance(result[-1], Pause):
@@ -4582,7 +4554,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the tearoff-menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateAvailability(obj, **args)
@@ -4602,7 +4574,7 @@ class SpeechGenerator(generator.Generator):
             return self._generateTextContent(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateTextContent(obj, **args)
         result += self._generateAnyTextSelection(obj, **args)
@@ -4613,7 +4585,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the text role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generatePause(obj, **args)
@@ -4643,7 +4615,7 @@ class SpeechGenerator(generator.Generator):
                 or self._generateToggleState(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += (self._generateExpandableState(obj, **args) \
                 or self._generateToggleState(obj, **args))
@@ -4666,7 +4638,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateRoleName(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -4687,7 +4659,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateAncestors(obj, **args)
             result += self._generatePause(obj, **args)
 
-        result += (self._generateLabelOrName(obj, **args) \
+        result += (self._generateLabelAndName(obj, **args) \
             or self._generateDisplayedText(obj, **args))
         result += self._generatePause(obj, **args)
         result += self._generateExpandableState(obj, **args)
@@ -4709,7 +4681,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the unknown role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelOrName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
