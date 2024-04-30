@@ -464,9 +464,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
-        if obj == args.get('priorObj'):
-            return []
-
         result = []
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
@@ -561,7 +558,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(self.getLocalizedRoleName(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-        elif role not in doNotSpeak and args.get('priorObj') != obj:
+        elif role not in doNotSpeak:
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
