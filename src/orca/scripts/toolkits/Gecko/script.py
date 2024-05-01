@@ -195,29 +195,6 @@ class Script(web.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         default.Script.on_expanded_changed(self, event)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # This event is deprecated. We should get object:state-changed:focused
-        # events instead.
-
-        if super().on_focus(event):
-            return
-
-        if self.utilities.isLayoutOnly(event.source):
-            return
-
-        if event.source == focus_manager.get_manager().get_active_window():
-            msg = "GECKO: Ignoring event for active window."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        # NOTE: This event type is deprecated and Orca should no longer use it.
-        # This callback remains just to handle bugs in applications and toolkits
-        # in which object:state-changed:focused events are missing. And in the
-        # case of Gecko dialogs, that seems to happen a lot.
-        focus_manager.get_manager().set_locus_of_focus(event, event.source)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 

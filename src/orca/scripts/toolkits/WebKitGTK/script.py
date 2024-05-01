@@ -209,19 +209,6 @@ class Script(web.Script, gtk.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_expanded_changed(self, event)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # This event is deprecated. We should get object:state-changed:focused
-        # events instead.
-
-        if super().on_focus(event):
-            return
-
-        msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        gtk.Script.on_focus(self, event)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 

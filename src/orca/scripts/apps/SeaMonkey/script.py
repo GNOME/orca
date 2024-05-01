@@ -34,9 +34,7 @@ from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event
-from orca import input_event_manager
 from orca.ax_table import AXTable
-from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import Gecko
 
 
@@ -77,29 +75,6 @@ class Script(Gecko.Script):
             return
 
         super().on_busy_changed(event)
-
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # We should get proper state-changed events for these.
-        if self.utilities.inDocumentContent(event.source):
-            return
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not AXUtilities.is_entry(focus) or not self.utilities.inDocumentContent():
-            super().on_focus(event)
-            return
-
-        if AXUtilities.is_menu(event.source):
-            msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-            if input_event_manager.get_manager().last_event_was_printable_key():
-                msg = "SEAMONKEY: Ignoring, believed to be result of printable input"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
-
-        super().on_focus(event)
 
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):

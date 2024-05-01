@@ -241,19 +241,6 @@ class Script(web.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         default.Script.on_expanded_changed(self, event)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # This event is deprecated. We should get object:state-changed:focused
-        # events instead.
-
-        if super().on_focus(event):
-            return
-
-        msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        default.Script.on_focus(self, event)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
