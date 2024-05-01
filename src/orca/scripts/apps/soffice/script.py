@@ -406,32 +406,6 @@ class Script(default.Script):
 
         default.Script.on_children_added(self, event)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # NOTE: This event type is deprecated and Orca should no longer use it.
-        # This callback remains just to handle bugs in applications and toolkits
-        # during the remainder of the unstable (3.11) development cycle.
-        # TODO - JD: That was a long time ago. We need to figure out who is failing
-        # to fire focus-changed events but still firing this event.
-
-        if self.utilities.isFocusableLabel(event.source):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
-            return
-
-        if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
-            comboBox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
-            if comboBox:
-                focus_manager.get_manager().set_locus_of_focus(event, comboBox, True)
-                return
-
-        if AXUtilities.is_widget(event.source):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
-            return
-
-        if AXUtilities.is_panel(event.source) and AXObject.get_name(event.source):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
