@@ -1344,16 +1344,6 @@ class Script(default.Script):
 
         return False
 
-    def on_active_descendant_changed(self, event):
-        """Callback for object:active-descendant-changed accessibility events."""
-
-        if not self.utilities.inDocumentContent(event.source):
-            msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return True
-
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
