@@ -87,48 +87,6 @@ class Script(default.Script):
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        # NOTE: This event type is deprecated and Orca should no longer use it.
-        # This callback remains just to handle bugs in applications and toolkits
-        # that fail to reliably emit object:state-changed:focused events.
-
-        if self.utilities.eventIsCanvasNoise(event):
-            return
-
-        if self.utilities.isLayoutOnly(event.source):
-            return
-
-        if event.source == self.get_mouse_reviewer().get_current_item():
-            msg = "GTK: Event source is current mouse review item"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.utilities.isTypeahead(focus) \
-           and AXObject.supports_table(event.source) \
-           and not AXUtilities.is_focused(event.source):
-            return
-
-        ancestor = AXObject.find_ancestor(focus, lambda x: x == event.source)
-        if not ancestor:
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
-            return
-
-        if AXObject.supports_table(ancestor):
-            return
-
-        if AXUtilities.is_menu(ancestor):
-            if AXUtilities.is_selected(focus):
-                msg = "GTK: Event source is ancestor of selected focus. Ignoring."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
-            msg = "GTK: Event source is ancestor of unselected focus. Updating focus."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        focus_manager.get_manager().set_locus_of_focus(event, event.source)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
