@@ -250,49 +250,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def containingComboBox(self, obj):
-        if AXUtilities.is_combo_box(obj):
-            comboBox = obj
-        else:
-            comboBox = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)
-
-        if not comboBox:
-            return None
-
-        if AXObject.is_valid(comboBox):
-            return comboBox
-
-        parent = AXObject.get_parent(comboBox)
-        if not parent:
-            return comboBox
-
-        replicant = self.findReplicant(parent, comboBox)
-        if replicant and AXObject.is_valid(replicant):
-            comboBox = replicant
-
-        return comboBox
-
-    def isComboBoxSelectionChange(self, event):
-        if not self.containingComboBox(event.source):
-            return False
-
-        manager = input_event_manager.get_manager()
-        return manager.last_event_was_down() or manager.last_event_was_up()
-
-    def isComboBoxNoise(self, event):
-        if AXUtilities.is_text(event.source) and event.type.startswith("object:text-"):
-            return self.isComboBoxSelectionChange(event)
-
-        return False
-
-    def isPresentableTextChangedEventForLocusOfFocus(self, event):
-        if self.isComboBoxNoise(event):
-            msg = "SOFFICE: Event is believed to be combo box noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return super().isPresentableTextChangedEventForLocusOfFocus(event)
-
     def isReadOnlyTextArea(self, obj):
         if not super().isReadOnlyTextArea(obj):
             return False

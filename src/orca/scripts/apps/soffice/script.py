@@ -420,7 +420,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
-            comboBox = self.utilities.containingComboBox(event.source)
+            comboBox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
             if comboBox:
                 focus_manager.get_manager().set_locus_of_focus(event, comboBox, True)
                 return
@@ -451,7 +451,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
-            comboBox = self.utilities.containingComboBox(event.source)
+            comboBox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
             if comboBox:
                 focus_manager.get_manager().set_locus_of_focus(event, comboBox, True)
                 return
@@ -587,30 +587,7 @@ class Script(default.Script):
                 self.spellcheck.presentErrorDetails()
             return
 
-        if not self.utilities.isComboBoxSelectionChange(event):
-            super().on_selection_changed(event)
-            return
-
-        selectedChildren = self.utilities.selectedChildren(event.source)
-        if len(selectedChildren) == 1 \
-           and self.utilities.containingComboBox(event.source) == \
-               self.utilities.containingComboBox(focus_manager.get_manager().get_locus_of_focus()):
-            focus_manager.get_manager().set_locus_of_focus(event, selectedChildren[0], True)
-
-    def on_text_selection_changed(self, event):
-        """Callback for object:text-selection-changed accessibility events."""
-
-        if self.utilities.isComboBoxNoise(event):
-            msg = "SOFFICE: Event is believed to be combo box noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        if AXObject.is_dead(event.source):
-            msg = "SOFFICE: Ignoring event from dead source."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        super().on_text_selection_changed(event)
+        super().on_selection_changed(event)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
