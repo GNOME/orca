@@ -121,7 +121,6 @@ class EventManager:
                 return False
 
             skippable = {
-                "focus",
                 "object:state-changed:focused",
             }
             if not any(x.type.startswith(etype) for etype in skippable):
@@ -608,9 +607,7 @@ class EventManager:
                 return True, "Window activation"
             return False, "Window activation for already-active window"
 
-        if event_type.startswith('focus') \
-           or (event_type.startswith('object:state-changed:focused')
-               and event.detail1):
+        if event_type.startswith('object:state-changed:focused') and event.detail1:
             return True, "Event source claimed focus."
 
         if event_type.startswith('object:state-changed:selected') and event.detail1 \

@@ -25,7 +25,6 @@ __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
-from orca import focus_manager
 from orca.scripts import default
 from orca.ax_text import AXText
 

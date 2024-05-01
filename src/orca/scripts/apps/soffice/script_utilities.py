@@ -245,9 +245,6 @@ class Utilities(script_utilities.Utilities):
             if manager.last_event_was_backspace():
                 return True
 
-        if event.type.startswith("focus:") and manager.last_event_was_return():
-            return AXText.get_character_count(event.source) > 0
-
         return False
 
     def isReadOnlyTextArea(self, obj):

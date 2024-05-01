@@ -214,7 +214,6 @@ class Script(script.Script):
         listeners["document:load-complete"] = self.on_document_load_complete
         listeners["document:load-stopped"] = self.on_document_load_stopped
         listeners["document:page-changed"] = self.on_document_page_changed
-        listeners["focus:"] = self.on_focus
         listeners["mouse:button"] = self.on_mouse_button
         listeners["object:announcement"] = self.on_announcement
         listeners["object:active-descendant-changed"] = self.on_active_descendant_changed
@@ -1545,12 +1544,6 @@ class Script(script.Script):
 
     def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
-
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        msg = "DEFAULT: Ignoring deprecated event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
