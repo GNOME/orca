@@ -1549,6 +1549,9 @@ class Script(script.Script):
     def on_focus(self, event):
         """Callback for focus: accessibility events."""
 
+        msg = "DEFAULT: Ignoring deprecated event."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 

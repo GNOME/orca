@@ -203,12 +203,6 @@ class Script(default.Script):
         msg = "SLEEP MODE: Ignoring event."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-    def on_focus(self, event):
-        """Callback for focus: accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
