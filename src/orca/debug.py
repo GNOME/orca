@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import inspect
+import pprint
 import traceback
 import os
 import re
@@ -226,7 +227,9 @@ def _asString(obj):
         return f"[{', '.join(map(_asString, obj))}]"
 
     if isinstance(obj, dict):
-        return str({key: _asString(value) for key, value in obj.items()})
+        stringified = {key: _asString(value) for key, value in obj.items()}
+        formatter = pprint.PrettyPrinter(width=150)
+        return f"{formatter.pformat(stringified)}"
 
     if isinstance(obj, str) and len(obj) > 100:
         obj = f"{obj[0:100]} (...)"

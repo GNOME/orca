@@ -37,7 +37,6 @@ from gi.repository import Atspi
 
 from orca import debug
 from orca.scripts import web
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -64,15 +63,6 @@ class SpeechGenerator(web.SpeechGenerator):
             return []
 
         return super()._generateListBoxItemWidgets(obj, **args)
-
-    def _generateLabelOrName(self, obj, **args):
-        if AXUtilities.is_frame(obj):
-            document = self._script.utilities.activeDocument(obj)
-            if document and not AXDocument.get_uri(document):
-                # Eliminates including "untitled" in the frame name.
-                return super()._generateLabelOrName(AXObject.get_parent(obj))
-
-        return super()._generateLabelOrName(obj, **args)
 
     def _generateRoleName(self, obj, **args):
         if self._script.utilities.isListItemMarker(obj):

@@ -89,12 +89,6 @@ class SpeechGenerator(WebKitGTK.SpeechGenerator, speech_generator.SpeechGenerato
 
         return super()._generateName(obj, **args)
 
-    def _generateLabelOrName(self, obj, **args):
-        if self._is_message_list_toggle_cell(obj) and not self._is_message_list_status_cell(obj):
-            return []
-
-        return super()._generateLabelOrName(obj, **args)
-
     def _generateRealActiveDescendantDisplayedText(self, obj, **args):
         if self._is_message_list_toggle_cell(obj) and not self._is_message_list_status_cell(obj):
             if not AXUtilities.is_checked(obj):

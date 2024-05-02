@@ -109,12 +109,134 @@ class SpeechGenerator(generator.Generator):
 
     def __init__(self, script):
         generator.Generator.__init__(self, script, "speech")
+        self._generators = {
+            Atspi.Role.ALERT: self._generate_alert,
+            Atspi.Role.ANIMATION: self._generate_animation,
+            Atspi.Role.ARTICLE: self._generate_article,
+            'ROLE_ARTICLE_IN_FEED': self._generate_article_in_feed,
+            Atspi.Role.BLOCK_QUOTE: self._generate_block_quote,
+            Atspi.Role.CANVAS: self._generate_canvas,
+            Atspi.Role.CAPTION: self._generate_caption,
+            Atspi.Role.CHECK_BOX: self._generate_check_box,
+            Atspi.Role.CHECK_MENU_ITEM: self._generate_check_menu_item,
+            Atspi.Role.COLOR_CHOOSER: self._generate_color_chooser,
+            Atspi.Role.COLUMN_HEADER: self._generate_column_header,
+            Atspi.Role.COMBO_BOX: self._generate_combo_box,
+            Atspi.Role.COMMENT: self._generate_comment,
+            Atspi.Role.CONTENT_DELETION: self._generate_content_deletion,
+            'ROLE_CONTENT_ERROR': self._generate_content_error,
+            Atspi.Role.CONTENT_INSERTION: self._generate_content_insertion,
+            Atspi.Role.DEFINITION: self._generate_definition,
+            Atspi.Role.DESCRIPTION_LIST: self._generate_description_list,
+            Atspi.Role.DESCRIPTION_TERM: self._generate_description_term,
+            Atspi.Role.DESCRIPTION_VALUE: self._generate_description_value,
+            Atspi.Role.DIAL: self._generate_dial,
+            Atspi.Role.DIALOG: self._generate_dialog,
+            Atspi.Role.DOCUMENT_FRAME: self._generate_document_frame,
+            Atspi.Role.DOCUMENT_WEB: self._generate_document_web,
+            'ROLE_DPUB_LANDMARK': self._generate_dpub_landmark,
+            'ROLE_DPUB_SECTION': self._generate_dpub_section,
+            Atspi.Role.EMBEDDED: self._generate_embedded,
+            Atspi.Role.ENTRY: self._generate_entry,
+            'ROLE_FEED': self._generate_feed,
+            Atspi.Role.FOOTNOTE: self._generate_footnote,
+            Atspi.Role.FOOTER: self._generate_footer,
+            Atspi.Role.FORM: self._generate_form,
+            Atspi.Role.FRAME: self._generate_frame,
+            Atspi.Role.HEADER: self._generate_header,
+            Atspi.Role.HEADING: self._generate_heading,
+            Atspi.Role.ICON: self._generate_icon,
+            Atspi.Role.IMAGE: self._generate_image,
+            Atspi.Role.INFO_BAR: self._generate_info_bar,
+            Atspi.Role.INTERNAL_FRAME: self._generate_internal_frame,
+            Atspi.Role.LABEL: self._generate_label,
+            Atspi.Role.LANDMARK: self._generate_landmark,
+            Atspi.Role.LAYERED_PANE: self._generate_layered_pane,
+            Atspi.Role.LINK: self._generate_link,
+            Atspi.Role.LEVEL_BAR: self._generate_level_bar,
+            Atspi.Role.LIST: self._generate_list,
+            Atspi.Role.LIST_BOX: self._generate_list_box,
+            Atspi.Role.LIST_ITEM: self._generate_list_item,
+            Atspi.Role.MATH: self._generate_math,
+            'ROLE_MATH_ENCLOSED': self._generate_math_enclosed,
+            'ROLE_MATH_FENCED': self._generate_math_fenced,
+            Atspi.Role.MATH_FRACTION: self._generate_math_fraction,
+            Atspi.Role.MATH_ROOT: self._generate_math_root,
+            'ROLE_MATH_MULTISCRIPT': self._generate_math_multiscript,
+            'ROLE_MATH_SCRIPT_SUBSUPER': self._generate_math_script_subsuper,
+            'ROLE_MATH_SCRIPT_UNDEROVER': self._generate_math_script_underover,
+            'ROLE_MATH_TABLE': self._generate_math_table,
+            'ROLE_MATH_TABLE_ROW': self._generate_math_row,
+            Atspi.Role.MARK: self._generate_mark,
+            Atspi.Role.MENU: self._generate_menu,
+            Atspi.Role.MENU_ITEM: self._generate_menu_item,
+            Atspi.Role.NOTIFICATION: self._generate_notification,
+            Atspi.Role.PAGE: self._generate_page,
+            Atspi.Role.PAGE_TAB: self._generate_page_tab,
+            Atspi.Role.PANEL: self._generate_panel,
+            Atspi.Role.PARAGRAPH: self._generate_paragraph,
+            Atspi.Role.PASSWORD_TEXT: self._generate_password_text,
+            Atspi.Role.PROGRESS_BAR: self._generate_progress_bar,
+            Atspi.Role.PUSH_BUTTON: self._generate_push_button,
+            Atspi.Role.RADIO_BUTTON: self._generate_radio_button,
+            Atspi.Role.RADIO_MENU_ITEM: self._generate_radio_menu_item,
+            'ROLE_REGION': self._generate_region,
+            Atspi.Role.ROW_HEADER: self._generate_row_header,
+            Atspi.Role.SCROLL_BAR: self._generate_scroll_bar,
+            Atspi.Role.SCROLL_PANE: self._generate_scroll_pane,
+            Atspi.Role.SECTION: self._generate_section,
+            Atspi.Role.SLIDER: self._generate_slider,
+            Atspi.Role.SPIN_BUTTON: self._generate_spin_button,
+            Atspi.Role.SEPARATOR: self._generate_separator,
+            Atspi.Role.SPLIT_PANE: self._generate_split_pane,
+            Atspi.Role.STATIC: self._generate_static,
+            Atspi.Role.STATUS_BAR: self._generate_status_bar,
+            Atspi.Role.SUBSCRIPT: self._generate_subscript,
+            Atspi.Role.SUGGESTION: self._generate_suggestion,
+            Atspi.Role.SUPERSCRIPT: self._generate_superscript,
+            'ROLE_SWITCH': self._generate_switch,
+            Atspi.Role.TABLE: self._generate_table,
+            Atspi.Role.TABLE_CELL: self._generate_table_cell_in_row,
+            'REAL_ROLE_TABLE_CELL': self._generate_table_cell,
+            Atspi.Role.TABLE_ROW: self._generate_table_row,
+            Atspi.Role.TEAROFF_MENU_ITEM: self._generate_tearoff_menu_item,
+            Atspi.Role.TERMINAL: self._generate_terminal,
+            Atspi.Role.TEXT: self._generate_text,
+            Atspi.Role.TOGGLE_BUTTON: self._generate_toggle_button,
+            Atspi.Role.TOOL_BAR: self._generate_tool_bar,
+            Atspi.Role.TOOL_TIP: self._generate_tool_tip,
+            Atspi.Role.TREE: self._generate_tree,
+            Atspi.Role.TREE_ITEM: self._generate_tree_item,
+            Atspi.Role.WINDOW: self._generate_window,
+        }
 
     def _addGlobals(self, globalsDict):
         """Other things to make available from the formatting string.
         """
         generator.Generator._addGlobals(self, globalsDict)
         globalsDict['voice'] = self.voice
+
+    def generate(self, obj, **args):
+        _generator = self._generators.get(args.get("role") or AXObject.get_role(obj))
+        if _generator is None:
+            tokens = ["SPEECH GENERATOR:", obj, "lacks dedicated generator"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            _generator = self._generate_default_presentation
+
+        args['mode'] = self._mode
+        if not args.get('formatType', None):
+            if args.get('alreadyFocused', False):
+                args['formatType'] = 'focused'
+            else:
+                args['formatType'] = 'unfocused'
+
+        tokens = ["SPEECH GENERATOR:", _generator, "for", obj, "args:", args]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        result = _generator(obj, **args)
+        tokens = ["SPEECH GENERATOR: Results:", result]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return result
 
     def generateSpeech(self, obj, **args):
         rv = self.generate(obj, **args)
@@ -179,34 +301,6 @@ class SpeechGenerator(generator.Generator):
         result = generator.Generator._generateLabel(self, obj, **args)
         if result:
             result.extend(self.voice(DEFAULT, obj=obj, **args))
-        return result
-
-    def _generateLabelOrName(self, obj, **args):
-        """Returns the label as an array of strings for speech and braille.
-        If the label cannot be found, the name will be used instead.
-        If the name cannot be found, an empty array will be returned.
-        """
-
-        if AXUtilities.is_menu(obj, args.get("role")) \
-           and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            tokens = ["SPEECH GENERATOR:", obj, "is popup menu for current item."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        result = []
-        result.extend(self._generateLabel(obj, **args))
-        if not result:
-            name = AXObject.get_name(obj)
-            if name:
-                result.append(name)
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if result:
-            return result
-
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_autocomplete(parent):
-            result = self._generateLabelOrName(parent, **args)
-
         return result
 
     def _generatePlaceholderText(self, obj, **args):
@@ -491,9 +585,11 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        result = generator.Generator._generateAvailability(self, obj, **args)
-        if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        if AXUtilities.is_sensitive(obj):
+            return []
+
+        result = [object_properties.STATE_INSENSITIVE_SPEECH]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     def _generateInvalid(self, obj, **args):
@@ -1659,9 +1755,7 @@ class SpeechGenerator(generator.Generator):
         selectedCount = len(self._script.utilities.selectedChildren(container))
         result.append(messages.selectedItemsCount(selectedCount, childCount))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
-        result.append(self._script.formatting.getString(
-                          mode='speech',
-                          stringType='iconindex') \
+        result.append(object_properties.ICON_INDEX_SPEECH \
                       % {"index" : AXObject.get_index_in_parent(obj) + 1,
                          "total" : childCount})
         result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -2140,18 +2234,6 @@ class SpeechGenerator(generator.Generator):
             obj = parent
         return self._generateRoleName(AXObject.get_parent(obj))
 
-    def _generateToolbar(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) containing the name and role of the toolbar
-        which contains obj.
-        """
-        result = []
-        ancestor = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
-        if ancestor:
-            result.extend(self._generateLabelAndName(ancestor))
-            result.extend(self._generateRoleName(ancestor))
-        return result
-
     def _generatePositionInGroup(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the relative position of an
@@ -2178,11 +2260,8 @@ class SpeechGenerator(generator.Generator):
             return AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
 
         members = sorted(members, key=functools.cmp_to_key(cmp))
-        result.append(self._script.formatting.getString(
-                              mode='speech',
-                              stringType='groupindex') \
-                          % {"index" : members.index(obj) + 1,
-                             "total" : len(members)})
+        result.append(object_properties.GROUP_INDEX_SPEECH % {"index": members.index(obj) + 1,
+                                                              "total": len(members)})
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -2208,21 +2287,17 @@ class SpeechGenerator(generator.Generator):
         if position < 0:
             return []
 
-        stringType = 'groupindex'
+        string = object_properties.GROUP_INDEX_SPEECH
         if total < 0:
             if not self._script.utilities.setSizeUnknown(obj):
                 return []
-            stringType += 'totalunknown'
+            string = object_properties.GROUP_INDEX_TOTAL_UNKNOWN_SPEECH
 
         if total == 1 and AXUtilities.is_menu(obj):
             return []
 
         position += 1
-        result.append(self._script.formatting.getString(
-                              mode='speech',
-                              stringType=stringType) \
-                          % {"index" : position,
-                             "total" : total})
+        result.append(string % {"index": position, "total": total})
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -2404,9 +2479,6 @@ class SpeechGenerator(generator.Generator):
             self._restoreRole(oldRole, args)
 
         return result
-
-    def _generateEnclosedBase(self, obj, **args):
-        return self._generateMath(obj, **args)
 
     def _generateEnclosedEnclosures(self, obj, **args):
         strings = []
@@ -2707,19 +2779,6 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
-    def _generateMathRow(self, obj, **args):
-        result = []
-
-        result.append(messages.TABLE_ROW % (AXObject.get_index_in_parent(obj) + 1))
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
-        result.extend(self._generatePause(obj, **args))
-
-        for child in AXObject.iter_children(obj):
-            result.extend(self._generateMath(child))
-            result.extend(self._generatePause(child, **args))
-
-        return result
-
     def _generateMathTableEnd(self, obj, **args):
         nestingLevel = self._script.utilities.getMathNestingLevel(obj)
         if nestingLevel > 0:
@@ -2799,3 +2858,1844 @@ class SpeechGenerator(generator.Generator):
                 string += "."
 
         return string.strip()
+
+#########################################################################################
+
+    def _generate_default_prefix(self, obj, **args):
+        """Provides the default/role-agnostic information to present before obj."""
+
+        if args.get("includeContext") is False:
+            return []
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateDetailsFor(obj, **args)
+        if format_type == "unfocused":
+            return self._generateOldAncestors(obj, **args) + self._generateNewAncestors(obj, **args)
+        return []
+
+    def _generate_default_presentation(self, obj, **args):
+        """Provides a default/role-agnostic presentation of obj."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return result
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_default_suffix(self, obj, **args):
+        """Provides the default/role-agnostic information to present after obj."""
+
+        if args.get("includeContext") is False:
+            return []
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return []
+
+        result = []
+        if format_type.endswith("WhereAmI"):
+            result += self._generateTutorial(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+
+        result += self._generateClickable(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateHasDetails(obj, **args)
+        result += self._generateDetailsFor(obj, **args)
+        result += self._generateDescription(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateHasPopup(obj, **args)
+        return result
+
+    def _generate_accelerator_label(self, obj, **args):
+        """Generates speech for the accelerator-label role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_alert(self, obj, **args):
+        """Generates speech for the alert role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAlertText(obj, **args)
+        return result
+
+    def _generate_animation(self, obj, **args):
+        """Generates speech for the animation role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_application(self, obj, **args):
+        """Generates speech for the application role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_arrow(self, obj, **args):
+        """Generates speech for the arrow role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_article(self, obj, **args):
+        """Generates speech for the article role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return result
+
+        result += self._generatePause(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_article_in_feed(self, obj, **args):
+        """Generates speech for the article role when the article is in a feed."""
+
+        result = []
+        result += self._generateLabelAndName(obj, **args)
+        if not result:
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateRoleName(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return self._generate_default_prefix(obj, **args) + result
+
+    def _generate_audio(self, obj, **args):
+        """Generates speech for the audio role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_autocomplete(self, obj, **args):
+        """Generates speech for the autocomplete role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_block_quote(self, obj, **args):
+        """Generates speech for the block-quote role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateNestingLevel(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or result
+
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_calendar(self, obj, **args):
+        """Generates speech for the calendar role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_canvas(self, obj, **args):
+        """Generates speech for the canvas role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type.endswith("WhereAmI"):
+            result += self._generateParentRoleName(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += (self._generateImageDescription(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generatePause(obj, **args)
+
+        if format_type.endswith("WhereAmI"):
+            result += self._generateSelectedItemCount(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateSelectedItems(obj, **args)
+        else:
+            result += self._generatePositionInList(obj, **args)
+
+        result += self._generateUnselectedCell(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_caption(self, obj, **args):
+        """Generates speech for the caption role."""
+
+        result = []
+        if self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return self._generate_default_prefix(obj, **args) + result
+
+    def _generate_chart(self, obj, **args):
+        """Generates speech for the chart role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_check_box(self, obj, **args):
+        """Generates speech for the check-box role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateCheckedState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateNamedContainingPanel(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCheckedState(obj, **args)
+        result += self._generateRequired(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateInvalid(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_check_menu_item(self, obj, **args):
+        """Generates speech for the check-menu-item role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateCheckedState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateAncestors(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCheckedState(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAccelerator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_color_chooser(self, obj, **args):
+        """Generates speech for the color-chooser role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+
+        if format_type.endswith("WhereAmI"):
+            result += self._generatePercentage(obj, **args)
+
+        result += self._generateAccelerator(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_column_header(self, obj, **args):
+        """Generates speech for the column-header role."""
+
+        result = []
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused" and self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateSortOrder(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateNewRow(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateNewColumn(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return self._generate_default_prefix(obj, **args) + result
+
+    def _generate_combo_box(self, obj, **args):
+        """Generates speech for the combo-box role."""
+
+        result = []
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateExpandableState(obj, **args)
+            return result
+
+        result += self._generateValue(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_comment(self, obj, **args):
+        """Generates speech for the comment role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return result
+
+        result += self._generatePause(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_content_deletion(self, obj, **args):
+        """Generates speech for the content-deletion role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or self._generateDeletionStart(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateDeletionStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateDeletionEnd(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_content_error(self, obj, **args):
+        """Generates speech for a role with a content-related error."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateInvalid(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_content_insertion(self, obj, **args):
+        """Generates speech for the content-insertion role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or self._generateInsertionStart(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateInsertionStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateInsertionEnd(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_date_editor(self, obj, **args):
+        """Generates speech for the date-editor role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_definition(self, obj, **args):
+        """Generates speech for the definition role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_description_list(self, obj, **args):
+        """Generates speech for the description-list role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generateLeaving(obj, **args)
+            if result:
+                return result
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += (self._generateNumberOfChildren(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generateNestingLevel(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_description_term(self, obj, **args):
+        """Generates speech for the description-term role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        if not result:
+            result += self._generateDisplayedText(obj, **args)
+            result += self._generateAllTextSelection(obj, **args)
+
+        result += self._generateRoleName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateTermValueCount(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_description_value(self, obj, **args):
+        """Generates speech for the description-value role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        if not result:
+            result += self._generateDisplayedText(obj, **args)
+            result += self._generateAllTextSelection(obj, **args)
+
+        result += self._generateRoleName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_desktop_frame(self, obj, **args):
+        """Generates speech for the desktop-frame role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_desktop_icon(self, obj, **args):
+        """Generates speech for the desktop-icon role."""
+
+        return self._generate_icon(obj, **args)
+
+    def _generate_dial(self, obj, **args):
+        """Generates speech for the dial role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+        result += self._generateRequired(obj, **args)
+        result += self._generatePercentage(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_dialog(self, obj, **args):
+        """Generates speech for the dialog role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused":
+            result = self._generateExpandedEOCs(obj, **args)
+            if result:
+                return result
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateUnrelatedLabelsOrDescription(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_directory_pane(self, obj, **args):
+        """Generates speech for the directory_pane role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_document(self, obj, **args):
+        """Generates speech for document-related roles."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAnyTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_document_email(self, obj, **args):
+        """Generates speech for the document-email role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_document_frame(self, obj, **args):
+        """Generates speech for the document-frame role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_document_presentation(self, obj, **args):
+        """Generates speech for the document-presentation role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_document_spreadsheet(self, obj, **args):
+        """Generates speech for the document-spreadsheet role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_document_text(self, obj, **args):
+        """Generates speech for the document-text role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_document_web(self, obj, **args):
+        """Generates speech for the document-web role."""
+
+        return self._generate_document(obj, **args)
+
+    def _generate_dpub_landmark(self, obj, **args):
+        """Generates speech for the dpub section role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or result
+
+        result += self._generatePause(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_dpub_section(self, obj, **args):
+        """Generates speech for the dpub section role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or result
+
+        result += self._generatePause(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_drawing_area(self, obj, **args):
+        """Generates speech for the drawing-area role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_editbar(self, obj, **args):
+        """Generates speech for the editbar role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateTextIndentation(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_embedded(self, obj, **args):
+        """Generates speech for the embedded role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused":
+            result += (self._generateExpandedEOCs(obj, **args) \
+                or self._generateUnrelatedLabels(obj, **args))
+
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_entry(self, obj, **args):
+        """Generates speech for the entry role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += (self._generateCurrentLineText(obj, **args) \
+            or self._generatePlaceholderText(obj, **args))
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generateRequired(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateInvalid(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_feed(self, obj, **args):
+        """Generates speech for the feed role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateLeaving(obj, **args)
+            if result:
+                return result
+
+        result += self._generateLabelAndName(obj, **args)
+        result += (self._generateNumberOfChildren(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_file_chooser(self, obj, **args):
+        """Generates speech for the file-chooser role."""
+
+        return self._generate_dialog(obj, **args)
+
+    def _generate_filler(self, obj, **args):
+        """Generates speech for the filler role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_font_chooser(self, obj, **args):
+        """Generates speech for the font-chooser role."""
+
+        return self._generate_dialog(obj, **args)
+
+    def _generate_footer(self, obj, **args):
+        """Generates speech for the footer role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_footnote(self, obj, **args):
+        """Generates speech for the footnote role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_form(self, obj, **args):
+        """Generates speech for the form role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) \
+                or (self._generateLabelAndName(obj, **args) + self._generateRoleName(obj, **args))
+
+        result = self._generate_default_prefix(obj, **args)
+        if self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        else:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_frame(self, obj, **args):
+        """Generates speech for the frame role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLabelAndName(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateUnfocusedDialogCount(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_glass_pane(self, obj, **args):
+        """Generates speech for the glass-pane role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_grouping(self, obj, **args):
+        """Generates speech for the grouping role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_header(self, obj, **args):
+        """Generates speech for the header role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_heading(self, obj, **args):
+        """Generates speech for the heading role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_html_container(self, obj, **args):
+        """Generates speech for the html-container role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_icon(self, obj, **args):
+        """Generates speech for the icon role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type.endswith("WhereAmI"):
+            result += self._generateParentRoleName(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += (self._generateImageDescription(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generatePause(obj, **args)
+
+        if format_type.endswith("WhereAmI"):
+            result += self._generateSelectedItemCount(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateSelectedItems(obj, **args)
+        else:
+            result += self._generatePositionInList(obj, **args)
+
+        result += self._generateUnselectedCell(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_image(self, obj, **args):
+        """Generates speech for the image role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateHasLongDesc(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_image_map(self, obj, **args):
+        """Generates speech for the image-map role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_info_bar(self, obj, **args):
+        """Generates speech for the info-bar role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateUnrelatedLabels(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_input_method_window(self, obj, **args):
+        """Generates speech for the input-method-window role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_internal_frame(self, obj, **args):
+        """Generates speech for the internal-frame role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_label(self, obj, **args):
+        """Generates speech for the label role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabel(obj, **args)
+        result += (self._generateDisplayedText(obj) or self._generateName(obj))
+        result += self._generateAllTextSelection(obj)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_landmark(self, obj, **args):
+        """Generates speech for the landmark role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generateLeaving(obj, **args)
+            if not result:
+                result += self._generateRoleName(obj, **args)
+                result += self._generateLabelAndName(obj, **args)
+            return result
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += (self._generateLabelAndName(obj, **args) \
+            or self._generateCurrentLineText(obj, **args))
+        result += self._generatePause(obj, **args)
+        result += self._generateUnrelatedLabels(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_layered_pane(self, obj, **args):
+        """Generates speech for the layered-pane role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += (self._generateLabelAndName(obj, **args) or self._generateRoleName(obj, **args))
+        result += self._generateAvailability(obj, **args)
+        result += self._generateNoShowingChildren(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if not format_type.endswith("WhereAmI"):
+            return result
+
+        result += self._generateSelectedItemCount(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateSelectedItems(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_level_bar(self, obj, **args):
+        """Generates speech for the level-bar role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = []
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_link(self, obj, **args):
+        """Generates speech for the link role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type.endswith("WhereAmI"):
+            result += self._generateLinkInfo(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateSiteDescription(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateFileSize(obj, **args)
+            return result
+
+        result += (self._generateLabelAndName(obj, **args) \
+            or self._generateDisplayedText(obj, **args))
+        result += self._generateRoleName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_list(self, obj, **args):
+        """Generates speech for the list role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateLeaving(obj, **args)
+            if result:
+                return result
+
+        result += self._generateLabelAndName(obj, **args)
+        result += (self._generateNumberOfChildren(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generateNestingLevel(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_list_box(self, obj, **args):
+        """Generates speech for the list-box role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        result += self._generateLabelAndName(obj, **args)
+
+        if format_type != "focused":
+            result += self._generateFocusedItem(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateMultiselectableState(obj, **args)
+        result += (self._generateNumberOfChildren(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_list_item(self, obj, **args):
+        """Generates speech for the list-item role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateCheckedStateIfCheckable(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateExpandableState(obj, **args)
+            return result
+
+        result += (self._generateLabelAndName(obj, **args) or \
+            (self._generateDisplayedText(obj, **args) +
+             self._generateAllTextSelection(obj, **args)))
+        result += self._generateCheckedStateIfCheckable(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateUnselectedStateIfSelectable(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateListBoxItemWidgets(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_log(self, obj, **args):
+        """Generates speech for the log role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_mark(self, obj, **args):
+        """Generates speech for the mark role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or self._generateMarkStart(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateMarkStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateMarkEnd(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_marquee(self, obj, **args):
+        """Generates speech for the marquee role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_math(self, obj, **args):
+        """Generates speech for the math role."""
+
+        # TODO - JD: Move this logic here.
+        return self._generateMath(obj, **args)
+
+    def _generate_math_enclosed(self, obj, **args):
+        """Generates speech for the math-enclosed role."""
+
+        result = []
+        result += self._generate_math(obj, **args)
+        # TODO - JD: Move this logic here.
+        result += self._generateEnclosedEnclosures(obj, **args)
+        return result
+
+    def _generate_math_fenced(self, obj, **args):
+        """Generates speech for the math-fenced role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateFencedStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateFencedContents(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateFencedEnd(obj, **args)
+        return result
+
+    def _generate_math_fraction(self, obj, **args):
+        """Generates speech for the math-fraction role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateFractionStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateFractionNumerator(obj, **args)
+        result += self._generateFractionLine(obj, **args)
+        result += self._generateFractionDenominator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateFractionEnd(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_math_multiscript(self, obj, **args):
+        """Generates speech for the math-multiscript role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateScriptBase(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptPrescripts(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptPostscripts(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_math_root(self, obj, **args):
+        """Generates speech for the math-root role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateRootStart(obj, **args)
+        result += self._generateRootBase(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateRootEnd(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_math_row(self, obj, **args):
+        """Generates speech for the math-row role."""
+
+        result = [messages.TABLE_ROW % (AXObject.get_index_in_parent(obj) + 1)]
+        result += (self.voice(SYSTEM, obj=obj, **args))
+        result += self._generatePause(obj, **args)
+        for child in AXObject.iter_children(obj):
+            result += self._generateMath(child)
+            result += self._generatePause(child, **args)
+        return result
+
+    def _generate_math_script_subsuper(self, obj, **args):
+        """Generates speech for the math script subsuper role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateScriptBase(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptSubscript(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptSuperscript(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_math_script_underover(self, obj, **args):
+        """Generates speech for the math script underover role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateScriptBase(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptUnderscript(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateScriptOverscript(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_math_table(self, obj, **args):
+        """Generates speech for the math-table role."""
+
+        # TODO - JD: Move the logic from these functions here.
+
+        result = []
+        result += self._generateMathTableStart(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateMathTableRows(obj, **args)
+        result += self._generateMathTableEnd(obj, **args)
+        result += self._generatePause(obj, **args)
+        return result
+
+    def _generate_menu(self, obj, **args):
+        """Generates speech for the menu role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateLabelAndName(obj, **args)
+            result += self._generateRoleName(obj, **args)
+            return result
+
+        if format_type.endswith("WhereAmI"):
+            result += (self._generateAncestors(obj, **args) \
+                or self._generateParentRoleName(obj, **args))
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAccelerator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_menu_bar(self, obj, **args):
+        """Generates speech for the menu-bar role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_menu_item(self, obj, **args):
+        """Generates speech for the menu-item role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateExpandableState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateAncestors(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAccelerator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_notification(self, obj, **args):
+        """Generates speech for the notification role."""
+
+        result = []
+        result += self._generateRoleName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += (self._generateExpandedEOCs(obj, **args) \
+            or self._generateUnrelatedLabelsOrDescription(obj, **args))
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_option_pane(self, obj, **args):
+        """Generates speech for the option-pane role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_page(self, obj, **args):
+        """Generates speech for the page role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_page_tab(self, obj, **args):
+        """Generates speech for the page-tab role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_page_tab_list(self, obj, **args):
+        """Generates speech for the page-tab-list role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_panel(self, obj, **args):
+        """Generates speech for the panel role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generateLeaving(obj, **args)
+            if result:
+                return result
+
+        if self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+
+        result += self._generateRoleName(obj, **args)
+        result += self._generateUnrelatedLabels(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_paragraph(self, obj, **args):
+        """Generates speech for the paragraph role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateTextIndentation(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_password_text(self, obj, **args):
+        """Generates speech for the password-text role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_popup_menu(self, obj, **args):
+        """Generates speech for the popup-menu role."""
+
+        return self._generate_menu(obj, **args)
+
+    def _generate_progress_bar(self, obj, **args):
+        """Generates speech for the progress-bar role."""
+
+        result = []
+        result += self._generateProgressBarIndex(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused":
+            result += self._generateLabelAndName(obj, **args)
+        result += (self._generateProgressBarValue(obj, **args) \
+            or self._generateRoleName(obj, **args))
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_push_button(self, obj, **args):
+        """Generates speech for the push-button role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateExpandableState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_push_button_menu(self, obj, **args):
+        """Generates speech for the push-button-menu role."""
+
+        return self._generate_push_button(obj, **args)
+
+    def _generate_radio_button(self, obj, **args):
+        """Generates speech for the radio-button role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateRadioState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateRadioButtonGroup(obj, **args)
+        else:
+            result += self._generateNewRadioButtonGroup(obj, **args)
+
+        result += self._generatePause(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRadioState(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInGroup(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_radio_menu_item(self, obj, **args):
+        """Generates speech for the radio-menu-item role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateRadioState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateAncestors(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateRadioState(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAccelerator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_rating(self, obj, **args):
+        """Generates speech for the rating role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_region(self, obj, **args):
+        """Generates speech for the region landmark role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or result
+
+        result += self._generatePause(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_root_pane(self, obj, **args):
+        """Generates speech for the root-pane role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_row_header(self, obj, **args):
+        """Generates speech for the row-header role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused" and self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateSortOrder(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateNewRow(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateNewColumn(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_ruler(self, obj, **args):
+        """Generates speech for the ruler role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_scroll_bar(self, obj, **args):
+        """Generates speech for the scroll-bar role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+        result += self._generatePercentage(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_scroll_pane(self, obj, **args):
+        """Generates speech for the scroll-pane role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_section(self, obj, **args):
+        """Generates speech for the section role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        if not result:
+            result += self._generateCurrentLineText(obj, **args)
+            result += self._generateAllTextSelection(obj, **args)
+
+        result += self._generateRoleName(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_separator(self, obj, **args):
+        """Generates speech for the separator role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return result
+
+        result += (self._generateLabelAndName(obj, **args) \
+            or self._generateDisplayedText(obj, **args) \
+            or self._generateValue(obj, **args))
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_slider(self, obj, **args):
+        """Generates speech for the slider role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+        result += self._generatePercentage(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_spin_button(self, obj, **args):
+        """Generates speech for the spin-button role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateDisplayedText(obj, **args) or self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args) + result
+        result += self._generateRoleName(obj, **args)
+        result += self._generateRequired(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateInvalid(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_split_pane(self, obj, **args):
+        """Generates speech for the split-pane role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateValue(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
+        result += self._generatePercentage(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_static(self, obj, **args):
+        """Generates speech for the static role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += (self._generateDisplayedText(obj, **args) or self._generateName(obj, **args))
+        result += self._generateRoleName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_status_bar(self, obj, **args):
+        """Generates speech for the status-bar role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return result
+
+        result += self._generatePause(obj, **args)
+        # TODO - JD: Move this logic here.
+        result += self._generateStatusBar(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_subscript(self, obj, **args):
+        """Generates speech for the subscript role."""
+
+        result = []
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_suggestion(self, obj, **args):
+        """Generates speech for the suggestion role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or self._generateRoleName(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateDisplayedText(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_superscript(self, obj, **args):
+        """Generates speech for the superscript role."""
+
+        result = []
+        result += self._generateRoleName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_switch(self, obj, **args):
+        """Generates speech for the switch role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateSwitchState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateSwitchState(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_table(self, obj, **args):
+        """Generates speech for the table role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generateLeaving(obj, **args)
+            if result:
+                return result
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generatePause(obj, **args)
+        # TODO - JD: Move this logic here.
+        result += self._generateTable(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_table_cell(self, obj, **args):
+        """Generates speech for the table-cell role."""
+
+        # TODO - JD: There should be separate generators for each type of cell.
+        result = self._generate_default_prefix(obj, **args)
+        result = self._generateNewRowHeader(obj, **args)
+        result += (self._generateNewColumnHeader(obj, **args) \
+            or self._generateColumnHeaderIfToggleAndNoText(obj, **args))
+        result += self._generateCellCheckedState(obj, **args)
+        result += (self._generateRealActiveDescendantDisplayedText(obj, **args) \
+            or self._generateImageDescription(obj, **args))
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateNumberOfChildren(obj, **args)
+        result += self._generateRequired(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateInvalid(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewNodeLevel(obj, **args)
+        result += self._generateUnselectedCell(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_table_cell_in_row(self, obj, **args):
+        """Generates speech for the table-cell role in the context of its row."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generateCellCheckedState(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateExpandableState(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateNumberOfChildren(obj, **args)
+            return result
+
+        if format_type == "ancestor":
+            result = self._generateNewRowHeader(obj, **args)
+            result += self._generateNewColumnHeader(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateNewRow(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateNewColumn(obj, **args)
+            return result
+
+        if format_type.endswith("WhereAmI"):
+            result += self._generateRowHeader(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result = self._generateColumnHeader(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateRoleName(obj, **args)
+            result += self._generateTableCellRow(obj, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generatePause(obj, **args)
+            result += self._generateColumnAndRow(obj, **args)
+            return result
+
+        result = self._generateTableCellRow(obj, **args)
+        return result
+
+    def _generate_table_column_header(self, obj, **args):
+        """Generates speech for the table-column-header role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused" and self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateSortOrder(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewRow(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewColumn(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_table_row(self, obj, **args):
+        """Generates speech for the table-row role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateExpandableState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += (self._generateLabelAndName(obj, **args) \
+            or self._generateDisplayedText(obj, **args))
+        result += self._generatePause(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_table_row_header(self, obj, **args):
+        """Generates speech for the table-row-header role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type != "focused" and self._generateSubstring(obj, **args):
+            result += self._generateCurrentLineText(obj, **args)
+        if not result:
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateSortOrder(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewRow(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewColumn(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_tearoff_menu_item(self, obj, **args):
+        """Generates speech for the tearoff-menu-item role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateAccelerator(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_terminal(self, obj, **args):
+        """Generates speech for the terminal role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if not format_type.endswith("WhereAmI"):
+            return self._generateTextContent(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateTextContent(obj, **args)
+        result += self._generateAnyTextSelection(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_text(self, obj, **args):
+        """Generates speech for the text role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generatePause(obj, **args)
+        result += self._generateTextIndentation(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_timer(self, obj, **args):
+        """Generates speech for the timer role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_title_bar(self, obj, **args):
+        """Generates speech for the title-bar role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_toggle_button(self, obj, **args):
+        """Generates speech for the toggle-button role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateExpandableState(obj, **args) \
+                or self._generateToggleState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += (self._generateExpandableState(obj, **args) \
+                or self._generateToggleState(obj, **args))
+        result += self._generateAvailability(obj, **args)
+        result += self._generateMnemonic(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_tool_bar(self, obj, **args):
+        """Generates speech for the tool-bar role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_tool_tip(self, obj, **args):
+        """Generates speech for the tool-tip role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateLeaving(obj, **args) or self._generateRoleName(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateRoleName(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_tree(self, obj, **args):
+        """Generates speech for the tree role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_tree_item(self, obj, **args):
+        """Generates speech for the tree-item role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return self._generateExpandableState(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        if format_type.endswith("WhereAmI"):
+            result += self._generateAncestors(obj, **args)
+            result += self._generatePause(obj, **args)
+
+        result += (self._generateLabelAndName(obj, **args) \
+            or self._generateDisplayedText(obj, **args))
+        result += self._generatePause(obj, **args)
+        result += self._generateExpandableState(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generatePositionInList(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generatePause(obj, **args)
+        result += self._generateNewNodeLevel(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_tree_table(self, obj, **args):
+        """Generates speech for the tree-table role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_unknown(self, obj, **args):
+        """Generates speech for the unknown role."""
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generateLabelAndName(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
+
+    def _generate_video(self, obj, **args):
+        """Generates speech for the video role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_viewport(self, obj, **args):
+        """Generates speech for the viewport role."""
+
+        return self._generate_default_presentation(obj, **args)
+
+    def _generate_window(self, obj, **args):
+        """Generates speech for the window role."""
+
+        return self._generate_default_presentation(obj, **args)

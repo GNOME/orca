@@ -34,7 +34,6 @@ from gi.repository import Atspi
 gi.require_version('Atk', '1.0')
 from gi.repository import Atk
 
-import re
 import sys
 import time
 import traceback
@@ -166,6 +165,9 @@ class Generator:
             tokens = ["GENERATOR: Cannot generate presentation for", obj, ":", error]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return result
+
+        tokens = ["GENERATOR: Globals dict", globalsDict]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
@@ -187,6 +189,8 @@ class Generator:
                     args['formatType'] = 'unfocused'
 
             formatting = self._script.formatting.getFormat(**args)
+            tokens = ["GENERATOR: Formatting for", obj, "with args", args, ":", formatting]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
             # Add in the context if this is the first time
             # we've been called.
@@ -348,6 +352,13 @@ class Generator:
         and braille.  The name will only be present if the name is
         different from the label.
         """
+
+        if AXUtilities.is_menu(obj, args.get("role")) \
+           and self._script.utilities.isPopupMenuForCurrentItem(obj):
+            tokens = ["GENERATOR:", obj, "is popup menu for current item."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
         result = []
         label = self._generateLabel(obj, **args)
         name = self._generateName(obj, **args)
@@ -364,18 +375,17 @@ class Generator:
         if not name:
             return result
 
-        # Try to eliminate names which are redundant to the label.
-        # Convert all non-alphanumeric characters to space and get the words.
-        nameWords = re.sub(r"[\W_]", " ", name[0]).split()
-        labelWords = re.sub(r"[\W_]", " ", label[0]).split()
-
-        # If all of the words in the name are in the label, the name is redundant.
-        if set(nameWords).issubset(set(labelWords)):
-            tokens = ["GENERATOR: name '", name[0], "' is redundant to label '", label[0], "'"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if self._script.utilities.stringsAreRedundant(name[0], label[0]):
             return result
 
         result.extend(name)
+        if result:
+            return result
+
+        parent = AXObject.get_parent(obj)
+        if AXUtilities.is_autocomplete(parent):
+            result = self._generateLabelAndName(parent, **args)
+
         return result
 
     def _generateLabelOrName(self, obj, **args):

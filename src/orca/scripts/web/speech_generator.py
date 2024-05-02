@@ -162,7 +162,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'clickable'
         if self._script.utilities.isClickableElement(obj):
-            result = [self._script.formatting.getString(**args)]
+            result = [object_properties.STATE_CLICKABLE]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
@@ -213,7 +213,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'haslongdesc'
         if self._script.utilities.hasLongDesc(obj):
-            result = [self._script.formatting.getString(**args)]
+            result = [object_properties.STATE_HAS_LONGDESC]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
@@ -235,8 +235,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         toPresent = ", ".join(set(map(objString, objs)))
 
-        args['stringType'] = 'hasdetails'
-        result = [self._script.formatting.getString(**args) % toPresent]
+        result = [object_properties.RELATION_HAS_DETAILS % toPresent]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
@@ -252,8 +251,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        args['stringType'] = 'hasdetails'
-        result = [self._script.formatting.getString(**args) % ""]
+        result = [object_properties.RELATION_HAS_DETAILS % ""]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         result = []
@@ -302,71 +300,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if len(words) > 5:
                 words = words[0:5] + ['...']
 
-            result.append(self._script.formatting.getString(**objArgs) % " ".join(words))
+            result.append(object_properties.RELATION_DETAILS_FOR % " ".join(words))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             result.extend(self._generatePause(o, **objArgs))
 
         return result
-
-    def _generateLabelOrName(self, obj, **args):
-        if not self._script.utilities.inDocumentContent(obj):
-            return super()._generateLabelOrName(obj, **args)
-
-        if self._script.utilities.isTextBlockElement(obj) \
-           and not self._script.utilities.isLandmark(obj) \
-           and not self._script.utilities.isDocument(obj) \
-           and not self._script.utilities.isDPub(obj) \
-           and not self._script.utilities.isContentSuggestion(obj):
-            return []
-
-        priorObj = args.get("priorObj")
-        if obj == priorObj:
-            return []
-
-        if priorObj and priorObj in self._script.utilities.labelsForObject(obj):
-            return []
-
-        role = args.get('role', AXObject.get_role(obj))
-        objName = AXObject.get_name(obj)
-        if not AXUtilities.is_dialog_or_alert(obj, role):
-            descendant = args.get("ancestorOf")
-            if descendant and priorObj and objName and objName == AXObject.get_name(priorObj):
-                tokens = ["WEB: ", descendant, "'s ancestor", obj, "has same name as priorObj",
-                        priorObj, ". Not generating labelOrName."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return []
-
-        if role == Atspi.Role.MENU and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            tokens = ["WEB: ", obj, "is popup menu for current item."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        if (self._script.utilities.isContentEditableWithEmbeddedObjects(obj) \
-                or self._script.utilities.isDocument(obj)) \
-                and input_event_manager.get_manager().last_event_was_caret_navigation():
-            return []
-
-        if AXUtilities.is_page_tab(priorObj) and AXObject.get_name(priorObj) == objName:
-            return []
-
-        if objName:
-            name = objName
-            if not self._script.utilities.hasExplicitName(obj):
-                name = name.strip()
-
-            if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
-                name = self._script.utilities.verbalizeAllPunctuation(name)
-
-            result = [name]
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-            return result
-
-        if AXUtilities.is_check_box(obj):
-            gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
-            if gridCell:
-                return super()._generateLabelOrName(gridCell, **args)
-
-        return super()._generateLabelOrName(obj, **args)
 
     def _generateName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
@@ -526,9 +464,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
-        if obj == args.get('priorObj'):
-            return []
-
         result = []
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
@@ -623,7 +558,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(self.getLocalizedRoleName(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-        elif role not in doNotSpeak and args.get('priorObj') != obj:
+        elif role not in doNotSpeak:
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
