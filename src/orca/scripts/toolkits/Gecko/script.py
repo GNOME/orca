@@ -257,6 +257,13 @@ class Script(web.Script):
         if super().on_showing_changed(event):
             return
 
+        if event.detail1 and AXUtilities.is_menu(event.source) \
+           and not self.utilities.inDocumentContent(event.source):
+            msg = "GECKO: Setting locus of focus to newly shown menu."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
+            return
+
         msg = "GECKO: Passing along event to default script"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         default.Script.on_showing_changed(self, event)
