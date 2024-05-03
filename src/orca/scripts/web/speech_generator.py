@@ -306,6 +306,27 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    def _generateLabelAndName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabelAndName(obj, **args)
+
+        if self._script.utilities.isTextBlockElement(obj) \
+           and not self._script.utilities.isLandmark(obj) \
+           and not self._script.utilities.isDocument(obj) \
+           and not self._script.utilities.isDPub(obj) \
+           and not self._script.utilities.isContentSuggestion(obj):
+            return []
+
+        priorObj = args.get("priorObj")
+        if obj == priorObj:
+            return []
+
+        role = args.get('role', AXObject.get_role(obj))
+        if role == Atspi.Role.LABEL and AXObject.supports_text(obj):
+            return []
+
+        return super()._generateLabelAndName(obj, **args)
+
     def _generateName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateName(obj, **args)
