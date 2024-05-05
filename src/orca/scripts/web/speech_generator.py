@@ -318,7 +318,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         priorObj = args.get("priorObj")
-        if obj == priorObj:
+        if obj == priorObj and AXUtilities.is_editable(obj):
             return []
 
         role = args.get('role', AXObject.get_role(obj))
