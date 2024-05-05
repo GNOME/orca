@@ -54,6 +54,7 @@ class ScriptManager:
              'gnome-calculator': 'gcalctool',
              'gtk-window-decorator': 'switcher',
              'marco': 'switcher',
+             'xfce4-notifyd': 'notification-daemon',
              'mate-notification-daemon': 'notification-daemon',
              'metacity': 'switcher',
              'pluma': 'gedit',
