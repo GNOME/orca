@@ -4257,10 +4257,8 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
-        if not result:
-            result += self._generateCurrentLineText(obj, **args)
-            result += self._generateAllTextSelection(obj, **args)
-
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateMnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
