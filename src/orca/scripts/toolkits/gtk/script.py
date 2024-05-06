@@ -73,6 +73,13 @@ class Script(default.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self.presentObject(event.any_data, interrupt=True)
 
+    def on_caret_moved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        if not AXUtilities.is_focused(event.source):
+            AXObject.clear_cache(event.source, False, "Work around possibly-missing focused state.")
+        super().on_caret_moved(event)
+
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
