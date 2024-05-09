@@ -1558,6 +1558,10 @@ class Script(default.Script):
                 msg = "WEB: Event ignored: Caret moved in document due to Tab."
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
+            if self.utilities.isLink(event.source):
+                msg = "WEB: Event ignored: Caret moved in link due to Tab."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
 
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
