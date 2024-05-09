@@ -2989,16 +2989,20 @@ class SpeechGenerator(generator.Generator):
     def _generate_block_quote(self, obj, **args):
         """Generates speech for the block-quote role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePause(obj, **args)
-        result += self._generateNestingLevel(obj, **args)
+        result = []
+        if args.get("priorObj") != obj:
+            result += self._generate_default_prefix(obj, **args)
+            result += self._generateRoleName(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateNestingLevel(obj, **args)
+
+        result += self._generateCurrentLineText(obj, **args)
+        result += self._generateAllTextSelection(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
             return self._generateLeaving(obj, **args) or result
 
-        result += self._generateDisplayedText(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
