@@ -1628,18 +1628,17 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
+        elif event.source != focus and AXUtilities.is_editable(event.source) and \
+             (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source)):
+            msg = "WEB: Editable object is not (yet) the locus of focus."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            notify = force = handled = True
+
         elif input_event_manager.get_manager().last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        elif self.utilities.isTextField(event.source) \
-           and AXUtilities.is_focused(event.source) \
-           and event.source != focus:
-            msg = "WEB: Focused text field is not (yet) the locus of focus."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            notify = force = handled = True
-
-        tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset]
+        tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset, f", notify: {notify}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.setCaretContext(obj, offset, document)
         focus_manager.get_manager().set_locus_of_focus(event, obj, notify, force)
