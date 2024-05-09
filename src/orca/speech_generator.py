@@ -210,12 +210,6 @@ class SpeechGenerator(generator.Generator):
             Atspi.Role.WINDOW: self._generate_window,
         }
 
-    def _addGlobals(self, globalsDict):
-        """Other things to make available from the formatting string.
-        """
-        generator.Generator._addGlobals(self, globalsDict)
-        globalsDict['voice'] = self.voice
-
     def generate(self, obj, **args):
         _generator = self._generators.get(args.get("role") or AXObject.get_role(obj))
         if _generator is None:
