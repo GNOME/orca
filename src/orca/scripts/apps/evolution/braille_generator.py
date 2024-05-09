@@ -27,9 +27,9 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
-from orca.scripts.toolkits import WebKitGTK
+from orca.scripts import web
 
-class BrailleGenerator(WebKitGTK.BrailleGenerator, braille_generator.BrailleGenerator):
+class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator):
 
     def __init__(self, script):
         super().__init__(script)

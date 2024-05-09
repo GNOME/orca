@@ -35,9 +35,7 @@ from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 from orca.scripts.toolkits import gtk
 
-from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
-from .speech_generator import SpeechGenerator
 
 class Script(web.Script, gtk.Script):
 
@@ -47,16 +45,6 @@ class Script(web.Script, gtk.Script):
         # To ensure that when the Gtk script is active, events from document content
         # are not ignored.
         self.present_if_inactive = True
-
-    def get_braille_generator(self):
-        """Returns the braille generator for this script."""
-
-        return BrailleGenerator(self)
-
-    def get_speech_generator(self):
-        """Returns the speech generator for this script."""
-
-        return SpeechGenerator(self)
 
     def get_utilities(self):
         """Returns the utilities for this script."""

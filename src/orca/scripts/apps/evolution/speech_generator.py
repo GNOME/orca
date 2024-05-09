@@ -25,13 +25,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
-from orca.scripts.toolkits import WebKitGTK
 from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+from orca.scripts import web
 
-
-class SpeechGenerator(WebKitGTK.SpeechGenerator, speech_generator.SpeechGenerator):
+class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
 
     def __init__(self, script):
         super().__init__(script)
