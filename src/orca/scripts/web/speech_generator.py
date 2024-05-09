@@ -126,9 +126,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        if not self._script.utilities.inDocumentContent(obj):
-            return []
-
         result = []
         popupType = self._script.utilities.popupType(obj)
         if popupType == 'dialog':
@@ -144,8 +141,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if result:
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+            return result
 
-        return result
+        return super()._generateHasPopup(obj, **args)
 
     def _generateClickable(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):

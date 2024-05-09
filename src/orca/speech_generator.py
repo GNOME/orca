@@ -408,12 +408,10 @@ class SpeechGenerator(generator.Generator):
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
-        result = []
-        if AXUtilities.has_popup(obj):
-            result.append(messages.HAS_POPUP)
-        if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
-        return result
+        if AXUtilities.is_menu(obj) or not AXUtilities.has_popup(obj):
+            return []
+
+        return [messages.HAS_POPUP, self.voice(SYSTEM, obj=obj, **args)]
 
     def _generateClickable(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
@@ -3986,7 +3984,6 @@ class SpeechGenerator(generator.Generator):
             result += self._generatePause(obj, **args)
 
         result += self._generateLabelAndName(obj, **args)
-        result += self._generateRoleName(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateAvailability(obj, **args)
         result += self._generateMnemonic(obj, **args)
