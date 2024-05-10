@@ -4562,11 +4562,11 @@ class SpeechGenerator(generator.Generator):
     def _generate_terminal(self, obj, **args):
         """Generates speech for the terminal role."""
 
+        result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if not format_type.endswith("WhereAmI"):
-            return self._generateTextContent(obj, **args)
+            return result + self._generateTextContent(obj, **args)
 
-        result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
         result += self._generateRoleName(obj, **args)
         result += self._generateTextContent(obj, **args)
