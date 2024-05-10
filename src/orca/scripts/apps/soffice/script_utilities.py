@@ -230,6 +230,9 @@ class Utilities(script_utilities.Utilities):
         Arguments:
         - event: the accessible event being examined
         """
+        # default logic for editable comboboxes works for LibreOffice >= 24.8
+        if self.isEditableDescendantOfComboBox(event.source):
+            return super().isAutoTextEvent(event)
 
         if not AXUtilities.is_paragraph(event.source):
             return False
