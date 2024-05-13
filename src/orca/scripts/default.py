@@ -1191,7 +1191,7 @@ class Script(script.Script):
         # handling code.  However, we do need to handle radio buttons where
         # the user needs to press the space key to select them.
         if AXUtilities.is_radio_button(event.source) \
-           and input_event_manager.get_manager().last_event_was_space():
+           and not input_event_manager.get_manager().last_event_was_space():
             return
 
         oldObj, oldState = self.point_of_reference.get('checkedChange', (None, 0))
