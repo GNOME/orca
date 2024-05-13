@@ -3978,6 +3978,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generatePause(obj, **args)
 
         result += self._generateLabelAndName(obj, **args)
+        result += self._generateCheckedStateIfCheckable(obj, **args)
         result += self._generateExpandableState(obj, **args)
         result += self._generateAvailability(obj, **args)
         result += self._generateMnemonic(obj, **args)
