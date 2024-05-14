@@ -4,7 +4,6 @@ lib_sources = [
   'braille_generator.py',
   'script.py',
   'script_utilities.py',
-  'sound_generator.py',
   'speech_generator.py',
 ]
 

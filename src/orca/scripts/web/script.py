@@ -55,7 +55,6 @@ from orca.ax_utilities import AXUtilities
 
 from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
-from .sound_generator import SoundGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
@@ -303,11 +302,6 @@ class Script(default.Script):
         """Returns the live region support for this script."""
 
         return liveregions.LiveRegionManager(self)
-
-    def get_sound_generator(self):
-        """Returns the sound generator for this script."""
-
-        return SoundGenerator(self)
 
     def get_speech_generator(self):
         """Returns the speech generator for this script."""
