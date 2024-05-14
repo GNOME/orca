@@ -209,6 +209,33 @@ app.run(None)
 
 Note that in older GTK 4 releases there is no way how to do this, as you can't emit raw AT-SPI2 events, or do similar platform-specific things.
 
+For Qt applications, the announcement signal can be sent like this from Qt 6.8 on:
+
+```python
+#!/usr/bin/python3
+
+import sys
+from PySide6.QtCore import Slot
+from PySide6.QtGui import QAccessible, QAccessibleAnnouncementEvent
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+
+@Slot()
+def on_button_clicked(checked):
+    announcement_event = QAccessibleAnnouncementEvent(button, "Hello world. I am a notification.")
+    # prio could be set like this (Polite is the default anyway)
+    announcement_event.setPriority(QAccessible.AnnouncementPriority.Polite)
+    QAccessible.updateAccessibility(announcement_event)
+
+app = QApplication(sys.argv)
+main_window = QMainWindow()
+button = QPushButton("Make a notification", main_window)
+button.resize(200, 50)
+button.clicked.connect(on_button_clicked)
+
+main_window.show()
+app.exec()
+```
+
 **Please note:** Because "assertive" messages can be disruptive if presented at the wrong
 time, Orca *currently* treats an "assertive" notification from non-web applications the
 same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
