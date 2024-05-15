@@ -4584,7 +4584,8 @@ class SpeechGenerator(generator.Generator):
         result += self._generateRoleName(obj, **args)
         result += self._generatePause(obj, **args)
         result += self._generateTextIndentation(obj, **args)
-        result += self._generateCurrentLineText(obj, **args)
+        result += (self._generateCurrentLineText(obj, **args) \
+            or self._generatePlaceholderText(obj, **args))
         result += self._generateAllTextSelection(obj, **args)
         result += self._generateMnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
