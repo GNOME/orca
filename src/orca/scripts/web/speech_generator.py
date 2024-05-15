@@ -373,16 +373,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateLabel(obj, **args)
 
-        if self._script.utilities.isTextBlockElement(obj):
-            return []
-
         label, objects = self._script.utilities.inferLabelFor(obj)
         if label:
             result = [label]
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
-        return super()._generateLabel(obj, **args)
+        return []
 
     def _generateNewNodeLevel(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
