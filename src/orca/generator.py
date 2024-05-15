@@ -376,7 +376,9 @@ class Generator:
             return result
 
         if self._script.utilities.stringsAreRedundant(name[0], label[0]):
-            return result
+            if len(name[0]) < len(label[0]):
+                return label
+            return name
 
         result.extend(name)
         if result:
