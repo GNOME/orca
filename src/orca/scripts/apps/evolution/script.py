@@ -80,3 +80,42 @@ class Script(WebKitGTK.Script, gtk.Script):
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         super().on_active_descendant_changed(event)
+
+    def on_busy_changed(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
+
+        if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
+            msg = "EVOLUTION: Ignoring event from document preview"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "EVOLUTION: Passing event to super class for processing."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        super().on_busy_changed(event)
+
+    def on_caret_moved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
+            msg = "EVOLUTION: Ignoring event from document preview"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "EVOLUTION: Passing event to super class for processing."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        super().on_caret_moved(event)
+
+    def on_focused_changed(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        # TODO - JD: Figure out what's causing this in Evolution or WebKit and file a bug.
+        # When the selected message changes and the preview panel is showing, a panel with the
+        # `iframe` tag claims focus. We don't want to update our location in response.
+        if AXUtilities.is_internal_frame(event.source):
+            tokens = ["EVOLUTION: Ignoring event from internal frame", event.source]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        msg = "EVOLUTION: Passing event to super class for processing."
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        super().on_focused_changed(event)

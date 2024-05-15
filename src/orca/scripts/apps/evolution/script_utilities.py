@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
+from orca import input_event_manager
+from orca import focus_manager
 from orca.scripts.toolkits import gtk
 from orca.scripts.toolkits import WebKitGTK
 from orca.ax_object import AXObject
@@ -55,6 +57,38 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
             return False
 
         return True
+
+    def isIgnorableEventFromDocumentPreview(self, obj):
+        if not self.isDocumentPreview(obj):
+            return False
+
+        if not input_event_manager.get_manager().last_event_was_unmodified_arrow():
+            return False
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if self.isWebKitGTK(focus):
+            return False
+        if not AXUtilities.is_table_cell(focus):
+            return False
+        if not AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table):
+            return False
+
+        return True
+
+    def isDocumentPreview(self, obj):
+        """Returns True if obj is or descends from the preview document."""
+
+        if not self.isWebKitGTK(obj):
+            return False
+
+        if AXUtilities.is_document(obj):
+            document = obj
+        else:
+            document = AXObject.find_ancestor(obj, AXUtilities.is_document)
+        if not document:
+            return False
+
+        return AXObject.find_ancestor(document, AXUtilities.is_page_tab)
 
     def realActiveDescendant(self, obj):
         if self.isWebKitGTK(obj):

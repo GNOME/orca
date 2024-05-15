@@ -39,6 +39,11 @@ class AXUtilitiesRole:
     """Utilities for obtaining role-related information."""
 
     @staticmethod
+    def _get_tag(obj):
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("tag")
+
+    @staticmethod
     def get_dialog_roles(include_alert_as_dialog=True):
         """Returns the list of roles we consider documents"""
 
@@ -769,7 +774,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.INTERNAL_FRAME
+        return role == Atspi.Role.INTERNAL_FRAME or AXUtilitiesRole._get_tag(obj) == "iframe"
 
     @staticmethod
     def is_invalid_role(obj, role=None):

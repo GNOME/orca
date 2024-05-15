@@ -62,6 +62,9 @@ class AXUtilities:
 
     # From ax_utilities_role.py
     @staticmethod
+    def _get_tag(obj): ...
+
+    @staticmethod
     def get_dialog_roles(include_alert_as_dialog=True): ...
 
     @staticmethod
