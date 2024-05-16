@@ -37,74 +37,12 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import object_properties
-
 BRAILLE_TEXT = '[Text(obj, asString(labelOrName or placeholderText), asString(eol), startOffset, endOffset, caretOffset)]\
                 + (invalid and [Region(" " + asString(invalid))])\
                 + (required and [Region(" " + asString(required))])\
                 + (readOnly and [Region(" " + asString(readOnly))])'
 
 formatting = {
-
-    ####################################################################
-    #                                                                  #
-    # Strings Orca includes on its own (versus getting them from the   #
-    # application.                                                     #
-    #                                                                  #
-    ####################################################################
-
-    'strings' : {
-        'speech': {
-            'invalid': object_properties.INVALID_INDICATORS_SPEECH,
-            'required': object_properties.STATE_REQUIRED_SPEECH,
-            'readonly': object_properties.STATE_READ_ONLY_SPEECH,
-            'insensitive': object_properties.STATE_INSENSITIVE_SPEECH,
-            'checkbox': object_properties.CHECK_BOX_INDICATORS_SPEECH,
-            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SPEECH,
-            'switch': object_properties.SWITCH_INDICATORS_SPEECH,
-            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SPEECH,
-            'expansion': object_properties.EXPANSION_INDICATORS_SPEECH,
-            'nodelevel': object_properties.NODE_LEVEL_SPEECH,
-            'nestinglevel': object_properties.NESTING_LEVEL_SPEECH,
-            'multiselect': object_properties.STATE_MULTISELECT_SPEECH,
-            'iconindex': object_properties.ICON_INDEX_SPEECH,
-            'groupindex': object_properties.GROUP_INDEX_SPEECH,
-            'groupindextotalunknown':object_properties.GROUP_INDEX_TOTAL_UNKNOWN_SPEECH,
-            'clickable': object_properties.STATE_CLICKABLE,
-            'haslongdesc': object_properties.STATE_HAS_LONGDESC,
-            'hasdetails': object_properties.RELATION_HAS_DETAILS,
-            'detailsfor': object_properties.RELATION_DETAILS_FOR
-        },
-        'braille': {
-            'eol': object_properties.EOL_INDICATOR_BRAILLE,
-            'required': object_properties.STATE_REQUIRED_BRAILLE,
-            'readonly': object_properties.STATE_READ_ONLY_BRAILLE,
-            'insensitive': object_properties.STATE_INSENSITIVE_BRAILLE,
-            'invalid': object_properties.INVALID_INDICATORS_BRAILLE,
-            'checkbox': object_properties.CHECK_BOX_INDICATORS_BRAILLE,
-            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_BRAILLE,
-            'switch': object_properties.SWITCH_INDICATORS_BRAILLE,
-            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE,
-            'expansion': object_properties.EXPANSION_INDICATORS_BRAILLE,
-            'nodelevel': object_properties.NODE_LEVEL_BRAILLE,
-            'nestinglevel': object_properties.NESTING_LEVEL_BRAILLE,
-        },
-        'sound': {
-            'invalid': object_properties.INVALID_INDICATORS_SOUND,
-            'required': object_properties.STATE_REQUIRED_SOUND,
-            'readonly': object_properties.STATE_READ_ONLY_SOUND,
-            'insensitive': object_properties.STATE_INSENSITIVE_SOUND,
-            'checkbox': object_properties.CHECK_BOX_INDICATORS_SOUND,
-            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SOUND,
-            'switch': object_properties.SWITCH_INDICATORS_SOUND,
-            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SOUND,
-            'expansion': object_properties.EXPANSION_INDICATORS_SOUND,
-            'multiselect': object_properties.STATE_MULTISELECT_SOUND,
-            'clickable': object_properties.STATE_CLICKABLE_SOUND,
-            'haslongdesc': object_properties.STATE_HAS_LONGDESC_SOUND,
-            'visited': object_properties.STATE_VISITED_SOUND,
-        },
-    },
 
     ####################################################################
     #                                                                  #
@@ -470,16 +408,6 @@ class Formatting(dict):
         """
         suffix = self[args['mode']]['suffix'][args['formatType']]
         return suffix
-
-    def getString(self, **args):
-        """Gets a human consumable string for a specific value
-        (e.g., an indicator for a checkbox state).
-
-        Arguments expected in args:
-        - mode: output mode, such as 'speech', 'braille'.
-        - stringType: the type of the string to get (see the dictionary above).
-        """
-        return self['strings'][args['mode']][args['stringType']]
 
     def getFormat(self, **args):
         """Get a formatting string for the given mode and formatType for a

@@ -526,25 +526,34 @@ class Generator:
         object, but only if it is insensitive (i.e., grayed out and
         inactive).  Otherwise, and empty array will be returned.
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'insensitive'
-        if not AXUtilities.is_sensitive(obj):
-            result.append(self._script.formatting.getString(**args))
-        return result
+
+        if AXUtilities.is_sensitive(obj):
+            return []
+
+        if self._mode == "braille":
+            return [object_properties.STATE_INSENSITIVE_BRAILLE]
+        if self._mode == "speech":
+            return [object_properties.STATE_INSENSITIVE_SPEECH]
+        if self._mode == "sound":
+            return [object_properties.STATE_INSENSITIVE_SOUND]
+
+        return []
 
     def _generateInvalid(self, obj, **args):
         error = self._script.utilities.getError(obj)
         if not error:
             return []
 
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'invalid'
-        indicators = self._script.formatting.getString(**args)
+        if self._mode == "braille":
+            indicators = object_properties.INVALID_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.INVALID_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.INVALID_INDICATORS_SOUND
+        else:
+            return []
 
+        result = []
         if error == 'spelling':
             indicator = indicators[1]
         elif error == 'grammar':
@@ -567,31 +576,39 @@ class Generator:
         user must give it a value).  Otherwise, and empty array will
         be returned.
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'required'
-        isRequired = AXUtilities.is_required(obj)
-        if not isRequired and AXUtilities.is_radio_button(obj):
-            parent = AXObject.get_parent(obj)
-            isRequired = AXUtilities.is_required(parent)
-        if isRequired:
-            result.append(self._script.formatting.getString(**args))
-        return result
+
+        is_required = AXUtilities.is_required(obj)
+        if not is_required and AXUtilities.is_radio_button(obj):
+            is_required = AXUtilities.is_required(AXObject.get_parent(obj))
+        if not is_required:
+            return []
+
+        if self._mode == "braille":
+            return [object_properties.STATE_REQUIRED_BRAILLE]
+        if self._mode == "speech":
+            return [object_properties.STATE_REQUIRED_SPEECH]
+        if self._mode == "sound":
+            return [object_properties.STATE_REQUIRED_SOUND]
+
+        return []
 
     def _generateReadOnly(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the read only state of this object, but only if it
         is read only (i.e., it is a text area that cannot be edited).
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'readonly'
-        if AXUtilities.is_read_only(obj) \
-           or self._script.utilities.isReadOnlyTextArea(obj):
-            result.append(self._script.formatting.getString(**args))
-        return result
+
+        if not (AXUtilities.is_read_only(obj) or self._script.utilities.isReadOnlyTextArea(obj)):
+            return []
+
+        if self._mode == "braille":
+            return [object_properties.STATE_READ_ONLY_BRAILLE]
+        if self._mode == "speech":
+            return [object_properties.STATE_READ_ONLY_SPEECH]
+        if self._mode == "sound":
+            return [object_properties.STATE_READ_ONLY_SOUND]
+
+        return []
 
     def _generateCellCheckedState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
@@ -613,18 +630,21 @@ class Generator:
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'checkbox'
-        indicators = self._script.formatting.getString(**args)
-        if AXUtilities.is_checked(obj):
-            result.append(indicators[1])
-        elif AXUtilities.is_indeterminate(obj):
-            result.append(indicators[2])
+
+        if self._mode == "braille":
+            indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.CHECK_BOX_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.CHECK_BOX_INDICATORS_SOUND
         else:
-            result.append(indicators[0])
-        return result
+            return []
+
+        if AXUtilities.is_checked(obj):
+            return [indicators[1]]
+        if AXUtilities.is_indeterminate(obj):
+            return [indicators[2]]
+        return [indicators[0]]
 
     def _generateRadioState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
@@ -632,16 +652,19 @@ class Generator:
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'radiobutton'
-        indicators = self._script.formatting.getString(**args)
-        if AXUtilities.is_checked(obj):
-            result.append(indicators[1])
+
+        if self._mode == "braille":
+            indicators = object_properties.RADIO_BUTTON_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.RADIO_BUTTON_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.RADIO_BUTTON_INDICATORS_SOUND
         else:
-            result.append(indicators[0])
-        return result
+            return []
+
+        if AXUtilities.is_checked(obj):
+            return [indicators[1]]
+        return [indicators[0]]
 
     def _generateChildWidget(self, obj, **args):
         widgetRoles = [Atspi.Role.CHECK_BOX,
@@ -663,16 +686,18 @@ class Generator:
         return []
 
     def _generateSwitchState(self, obj, **args):
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'switch'
-        indicators = self._script.formatting.getString(**args)
-        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
-            result.append(indicators[1])
+        if self._mode == "braille":
+            indicators = object_properties.SWITCH_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.SWITCH_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.SWITCH_INDICATORS_SOUND
         else:
-            result.append(indicators[0])
-        return result
+            return []
+
+        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
+            return [indicators[1]]
+        return [indicators[0]]
 
     def _generateToggleState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
@@ -680,16 +705,19 @@ class Generator:
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'togglebutton'
-        indicators = self._script.formatting.getString(**args)
-        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
-            result.append(indicators[1])
+
+        if self._mode == "braille":
+            indicators = object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.TOGGLE_BUTTON_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.TOGGLE_BUTTON_INDICATORS_SOUND
         else:
-            result.append(indicators[0])
-        return result
+            return []
+
+        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
+            return [indicators[1]]
+        return [indicators[0]]
 
     def _generateCheckedStateIfCheckable(self, obj, **args):
         if AXUtilities.is_checkable(obj) or AXUtilities.is_check_menu_item(obj):
@@ -702,17 +730,20 @@ class Generator:
 
     def _generateMenuItemCheckedState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
-        represent the checked state of the menu item, only if it is
-        checked. Otherwise, and empty array will be returned.
+        represent the checked state of the menu item.
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'checkbox'
-        indicators = self._script.formatting.getString(**args)
+        if self._mode == "braille":
+            indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.CHECK_BOX_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.CHECK_BOX_INDICATORS_SOUND
+        else:
+            return []
+
         if AXUtilities.is_checked(obj):
-            result.append(indicators[1])
-        return result
+            return [indicators[1]]
+        return [indicators[0]]
 
     def _generateExpandableState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
@@ -720,19 +751,22 @@ class Generator:
         tree node. If the object is not expandable, an empty array
         will be returned.
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'expansion'
-        indicators = self._script.formatting.getString(**args)
-        if AXUtilities.is_collapsed(obj):
-            result.append(indicators[0])
-        elif AXUtilities.is_expanded(obj):
-            result.append(indicators[1])
-        elif AXUtilities.is_expandable(obj):
-            result.append(indicators[0])
+        if self._mode == "braille":
+            indicators = object_properties.EXPANSION_INDICATORS_BRAILLE
+        elif self._mode == "speech":
+            indicators = object_properties.EXPANSION_INDICATORS_SPEECH
+        elif self._mode == "sound":
+            indicators = object_properties.EXPANSION_INDICATORS_SOUND
+        else:
+            return []
 
-        return result
+        if AXUtilities.is_collapsed(obj):
+            return [indicators[0]]
+        if AXUtilities.is_expanded(obj):
+            return [indicators[1]]
+        if AXUtilities.is_expandable(obj):
+            return [indicators[0]]
+        return []
 
     def _generateMultiselectableState(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -741,13 +775,17 @@ class Generator:
         is not multiselectable, an empty array will be returned.
         """
 
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'multiselect'
-        if AXUtilities.is_multiselectable(obj) and AXObject.get_child_count(obj):
-            result.append(self._script.formatting.getString(**args))
-        return result
+        if not (AXUtilities.is_multiselectable(obj) and AXObject.get_child_count(obj)):
+            return []
+
+        # TODO - JD: There is no braille property and the braille generation
+        # doesn't generate this state. Shouldn't it be presented in braille?
+
+        if self._mode == "speech":
+            return [object_properties.STATE_MULTISELECT_SPEECH]
+        if self._mode == "sound":
+            return [object_properties.STATE_MULTISELECT_SOUND]
+        return []
 
     #####################################################################
     #                                                                   #
@@ -1007,15 +1045,16 @@ class Generator:
         represents the tree node level of the object, or an empty
         array if the object is not a tree node.
         """
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'nodelevel'
+
         level = self._script.utilities.nodeLevel(obj)
-        if level >= 0:
-            result.append(self._script.formatting.getString(**args)\
-                          % (level + 1))
-        return result
+        if level < 0:
+            return []
+
+        if self._mode == "braille":
+            return [object_properties.NODE_LEVEL_BRAILLE % (level + 1)]
+        if self._mode == "speech":
+            return [object_properties.NODE_LEVEL_SPEECH % (level + 1)]
+        return []
 
     #####################################################################
     #                                                                   #
@@ -1069,15 +1108,15 @@ class Generator:
         if start is not None and end is not None:
             return []
 
-        result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'nestinglevel'
-        nestingLevel = self._script.utilities.nestingLevel(obj)
-        if nestingLevel:
-            result.append(self._script.formatting.getString(**args)\
-                          % nestingLevel)
-        return result
+        level = self._script.utilities.nestingLevel(obj)
+        if not level:
+            return []
+
+        if self._mode == "braille":
+            return [object_properties.NESTING_LEVEL_BRAILLE % (level)]
+        if self._mode == "speech":
+            return [object_properties.NESTING_LEVEL_SPEECH % (level)]
+        return []
 
     def _generateRadioButtonGroup(self, obj, **args):
         """Returns an array of strings for use by speech and braille that

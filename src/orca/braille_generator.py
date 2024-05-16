@@ -485,10 +485,7 @@ class BrailleGenerator(generator.Generator):
         if not (AXUtilities.is_editable(obj) or self._script.utilities.isCode(obj)):
             return []
 
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'eol'
-        return [self._script.formatting.getString(**args)]
+        return [object_properties.EOL_INDICATOR_BRAILLE]
 
     def space(self, delimiter=" "):
         if delimiter == " ":

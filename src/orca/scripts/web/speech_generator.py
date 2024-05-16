@@ -155,16 +155,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isFeedArticle(obj):
             return []
 
-        if not args.get('mode', None):
-            args['mode'] = self._mode
+        if not self._script.utilities.isClickableElement(obj):
+            return []
 
-        args['stringType'] = 'clickable'
-        if self._script.utilities.isClickableElement(obj):
-            result = [object_properties.STATE_CLICKABLE]
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-            return result
-
-        return []
+        result = [object_properties.STATE_CLICKABLE]
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+        return result
 
     def _generateDescription(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
@@ -206,16 +202,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
-        if not args.get('mode', None):
-            args['mode'] = self._mode
+        if not self._script.utilities.hasLongDesc(obj):
+            return []
 
-        args['stringType'] = 'haslongdesc'
-        if self._script.utilities.hasLongDesc(obj):
-            result = [object_properties.STATE_HAS_LONGDESC]
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-            return result
-
-        return []
+        result = [object_properties.STATE_HAS_LONGDESC]
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+        return result
 
     def _generateHasDetails(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
@@ -291,7 +283,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        objArgs = {'stringType': 'detailsfor', 'mode': args.get('mode')}
         for o in objs:
             string = self._script.utilities.displayedText(o) or self.getLocalizedRoleName(o)
             words = string.split()
@@ -300,7 +291,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
             result.append(object_properties.RELATION_DETAILS_FOR % " ".join(words))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-            result.extend(self._generatePause(o, **objArgs))
+            result.extend(self._generatePause(o, **args))
 
         return result
 
