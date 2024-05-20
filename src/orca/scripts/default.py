@@ -1488,7 +1488,8 @@ class Script(script.Script):
             return
         elif AXUtilities.manages_descendants(event.source):
             return
-        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
+        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)) \
+             and not AXObject.find_ancestor(event.source, AXUtilities.is_combo_box):
             tokens = ["DEFAULT: Ignoring event: source is not showing and visible", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
