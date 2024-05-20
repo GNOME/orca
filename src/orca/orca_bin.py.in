@@ -47,6 +47,7 @@ sys.path.insert(1, '@libdir@')
 from orca import debug
 from orca import messages
 from orca import settings
+from orca import script_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.orca_platform import version
@@ -281,7 +282,8 @@ def main():
 
     if args.setup:
         cleanup(signal.SIGKILL)
-        orca.show_preferences_gui()
+        script = script_manager.get_manager().get_default_script()
+        script.show_preferences_gui()
 
     if otherOrcas():
         print(messages.CLI_OTHER_ORCAS_ERROR)
