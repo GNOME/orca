@@ -443,10 +443,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    # TODO - JD: Yet another dumb generator method we should kill.
-    def _generateTextRole(self, obj, **args):
-        return self._generateRoleName(obj, **args)
-
     def getLocalizedRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super().getLocalizedRoleName(obj, **args)

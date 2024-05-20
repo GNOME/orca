@@ -624,16 +624,6 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
-    def _generateTextRole(self, obj, **args):
-        # TODO - JD: This function is a hack. Remove it.
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
-            return []
-
-        result = []
-        if not AXUtilities.is_paragraph(obj, args.get("role")):
-            result.extend(self._generateRoleName(obj, **args))
-        return result
-
     def _generateRoleName(self, obj, **args):
         """Returns the role name for the object in an array of strings (and
         possibly voice and audio specifications), with the exception
@@ -3514,7 +3504,6 @@ class SpeechGenerator(generator.Generator):
             result += self._generateCurrentLineText(obj, **args)
         else:
             result += self._generateLabelAndName(obj, **args)
-        result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -4063,7 +4052,6 @@ class SpeechGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
-        result += self._generateRoleName(obj, **args)
         result += self._generateTextIndentation(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
@@ -4255,7 +4243,6 @@ class SpeechGenerator(generator.Generator):
         result += self._generateLabelAndName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
-        result += self._generateRoleName(obj, **args)
         result += self._generateMnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
