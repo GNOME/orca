@@ -2933,7 +2933,6 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
-        result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
