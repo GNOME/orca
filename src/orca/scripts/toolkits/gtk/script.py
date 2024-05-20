@@ -29,6 +29,7 @@ from orca import debug
 from orca import focus_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
+from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 from .script_utilities import Utilities
 
@@ -63,15 +64,34 @@ class Script(default.Script):
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if not self.utilities.isTypeahead(focus_manager.get_manager().get_locus_of_focus()):
-            msg = "GTK: locusOfFocus is not typeahead. Passing along to default script."
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if self.utilities.isTypeahead(focus):
+            msg = "GTK: Locus of focus believed to be typeahead. Presenting change."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            super().on_active_descendant_changed(event)
+            self.presentObject(event.any_data, interrupt=True)
             return
 
-        msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
+        if AXUtilities.is_table_related(event.source):
+            AXObject.clear_cache(event.any_data, True, "active-descendant-changed event.")
+            AXTable.clear_cache_now("active-descendant-changed event.")
+
+        if AXUtilities.is_table_cell(focus):
+            table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
+            if table is not None and table != event.source:
+                msg = "GTK: Event is from a different tree or tree table."
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return
+
+        child = AXObject.get_active_descendant_checked(event.source, event.any_data)
+        if child is not None and child != event.any_data:
+            tokens = ["GTK: Bogus any_data suspected. Setting focus to", child]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            focus_manager.get_manager().set_locus_of_focus(event, child)
+            return
+
+        msg = "GTK: Passing event to super class for processing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-        self.presentObject(event.any_data, interrupt=True)
+        super().on_active_descendant_changed(event)
 
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""

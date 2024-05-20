@@ -29,8 +29,6 @@ __license__   = "LGPL"
 
 
 from orca import debug
-from orca import focus_manager
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import gtk
 from orca.scripts.toolkits import WebKitGTK
@@ -58,28 +56,6 @@ class Script(WebKitGTK.Script, gtk.Script):
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         return False
-
-    def on_active_descendant_changed(self, event):
-        """Callback for object:active-descendant-changed accessibility events."""
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_table_cell(focus):
-            table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
-            if table is not None and table != event.source:
-                msg = "EVOLUTION: Event is from a different tree or tree table."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
-
-        child = AXObject.get_active_descendant_checked(event.source, event.any_data)
-        if child is not None and child != event.any_data:
-            tokens = ["EVOLUTION: Bogus any_data suspected. Setting focus to", child]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.get_manager().set_locus_of_focus(event, child)
-            return
-
-        msg = "EVOLUTION: Passing event to super class for processing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        super().on_active_descendant_changed(event)
 
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
