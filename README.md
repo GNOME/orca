@@ -32,7 +32,6 @@ Orca also has the following dependencies:
 * Python 3         - Python platform
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - GTK+ toolkit
-* json-py          - a JSON (<https://json.org/>) reader and writer in Python
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY (<https://mielke.cc/brltty/>) support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
