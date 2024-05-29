@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-05-05 12:36+0000\n"
-"PO-Revision-Date: 2023-06-09 16:50-0300\n"
+"POT-Creation-Date: 2024-04-28 18:06+0000\n"
+"PO-Revision-Date: 2024-05-28 17:36-0300\n"
 "Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: orca\n"
 "X-DL-Branch: master\n"
@@ -69,15 +69,15 @@ msgstr "Comandos para marcar e recuperar objetos"
 #: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
 #: C/howto_structural_navigation.page:12 C/howto_tables.page:10
 #: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
 #: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_web.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14 C/preferences_text_attributes.page:13
-#: C/preferences_voice.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
 msgid "Joanmarie Diggs"
 msgstr "Joanmarie Diggs"
 
@@ -99,14 +99,14 @@ msgstr "Joanmarie Diggs"
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
 #: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
 #: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_web.page:16 C/preferences_general.page:15
-#: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
-#: C/preferences_key_echo.page:15 C/preferences.page:11
-#: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
-#: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Atribuição Compartilhada Igual 3.0 — Creative Commons"
 
@@ -1012,7 +1012,7 @@ msgstr "Comandos Adicionais"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:169
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr "Alterna para a revisão plana (atualiza o conteúdo da revisão plana) "
+msgstr "Alternar revisão plana (atualiza o contexto da revisão plana):"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:171
@@ -1313,7 +1313,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Comandos do <app>Orca</app>"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:36
+#: C/commands.page:17 C/index.page:35
 msgid "Getting Started"
 msgstr "Primeiros Passos"
 
@@ -1328,7 +1328,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Leitura de páginas da web e outros documentos"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:42
+#: C/commands.page:26 C/index.page:41
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Revisando e Interagindo com o conteúdo da tela"
 
@@ -1984,13 +1984,11 @@ msgstr "Formulários"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Próximo campo de formulário e campo de formulário anterior: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Tab</key></keyseq> e "
-"<keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>"
+"Campos de formulário seguinte e anterior: <keyseq><key>F</key></keyseq> e "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2557,6 +2555,11 @@ msgstr "Apresenta a mensagem de notificação anterior: (Sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Apresentar a próxima mensagem de notificação: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr ""
 "Apresenta uma lista de todas as mensagens de notificação: (Sem atalho "
@@ -3782,7 +3785,7 @@ msgid ""
 "phrase"
 msgstr ""
 "Limitar ou não a pesquisa a ocorrências que coincidam com a palavra ou frase "
-"inteira."
+"inteira"
 
 # Verificar opção na interface do Orca
 #. (itstool) path: item/p
@@ -4965,17 +4968,23 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/index.page:6
 msgctxt "text"
-msgid "Orca Screen Reader"
-msgstr "Leitor de telas Orca"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Leitor de tela <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/index.page:7
+msgctxt "link:trail"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Leitor de tela <app>Orca</app>"
+
+#. (itstool) path: info/title
+#: C/index.page:8
 msgctxt "link"
-msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr "Introdução ao Leitor de tela <app>Orca</app>"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Leitor de tela <app>Orca</app>"
 
 #. (itstool) path: info/desc
-#: C/index.page:16
+#: C/index.page:17
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -4983,23 +4992,18 @@ msgstr ""
 "O Orca é um leitor de tela gratuito, de código aberto, flexível e extensível "
 "que fornece acesso à área de trabalho gráfica via fala e braille atualizável."
 
-#. (itstool) path: media/span
-#: C/index.page:23
-msgid "<app>Orca</app>'s logo"
-msgstr "Logo do <app>Orca</app>"
-
 #. (itstool) path: page/title
-#: C/index.page:21
+#: C/index.page:22
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgstr "<_:media-1/> <app>Orca</app> Leitor de tela"
 
 #. (itstool) path: note/title
-#: C/index.page:28
+#: C/index.page:27
 msgid "Before You Begin"
 msgstr "Antes de Você Começar"
 
 #. (itstool) path: note/p
-#: C/index.page:29
+#: C/index.page:28
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -5009,12 +5013,12 @@ msgstr ""
 "primeiro."
 
 #. (itstool) path: section/title
-#: C/index.page:39
+#: C/index.page:38
 msgid "Reading Documents and Web Pages"
 msgstr "Lendo documentos e páginas da web"
 
 #. (itstool) path: section/title
-#: C/index.page:45
+#: C/index.page:44
 msgid "Quick Reference"
 msgstr "Guia Rápido"
 
@@ -5256,17 +5260,17 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_web.page:58
+#: C/preferences_chat.page:54 C/preferences_general.page:52
+#: C/preferences_general.page:70 C/preferences_general.page:119
+#: C/preferences_general.page:228 C/preferences_general.page:239
+#: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
+#: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
+#: C/preferences_speech.page:105 C/preferences_speech.page:135
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
+#: C/preferences_voice.page:133 C/preferences_web.page:58
 #: C/preferences_web.page:100 C/preferences_web.page:205
-#: C/preferences_general.page:52 C/preferences_general.page:70
-#: C/preferences_general.page:119 C/preferences_general.page:228
-#: C/preferences_general.page:239 C/preferences_key_echo.page:112
-#: C/preferences_key_echo.page:122 C/preferences_key_echo.page:157
-#: C/preferences_key_echo.page:179 C/preferences_speech.page:105
-#: C/preferences_speech.page:135 C/preferences_speech.page:160
-#: C/preferences_speech.page:171 C/preferences_speech.page:183
-#: C/preferences_speech.page:343 C/preferences_table_navigation.page:65
-#: C/preferences_voice.page:122 C/preferences_voice.page:133
 msgid "Default value: not checked"
 msgstr "Valor padrão: não selecionado"
 
@@ -5467,25 +5471,25 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_web.page:35 C/preferences_web.page:78
-#: C/preferences_web.page:123 C/preferences_web.page:165
-#: C/preferences_web.page:193 C/preferences_general.page:140
-#: C/preferences_general.page:217 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:148
-#: C/preferences_speech.page:195 C/preferences_speech.page:208
-#: C/preferences_speech.page:220 C/preferences_speech.page:234
-#: C/preferences_speech.page:251 C/preferences_speech.page:265
-#: C/preferences_speech.page:279 C/preferences_speech.page:293
-#: C/preferences_speech.page:307 C/preferences_speech.page:319
-#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193
 msgid "Default value: checked"
 msgstr "Valor padrão: selecionado"
 
@@ -5661,353 +5665,6 @@ msgstr "<gui>Todos os canais quando qualquer janela de chat está ativa</gui>"
 #: C/preferences_chat.page:75
 msgid "Default value: all channels"
 msgstr "Valor padrão: todos os canais"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:5
-msgctxt "sort"
-msgid "1. Web Navigation"
-msgstr "1. Navegação Web"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:6
-msgctxt "link"
-msgid "Web Navigation"
-msgstr "Navegação web"
-
-#. (itstool) path: info/desc
-#: C/preferences_web.page:7
-msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
-"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
-msgstr ""
-"Configurando o suporte do <app>Orca</app> para <app>Firefox</app>, "
-"<app>Thunderbird</app> e <app>Chrome</app>/<app>Chromium</app>"
-
-#. (itstool) path: page/title
-#: C/preferences_web.page:19
-msgid "Web Navigation Preferences"
-msgstr "Preferências de Navegação na Web"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:21
-msgid "Page Navigation"
-msgstr "Navegação por página"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:22
-msgid ""
-"The <gui>Page Navigation</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents, and allow you to interact with, text "
-"and other content."
-msgstr ""
-"O grupo de controles da <gui>navegação da página</gui> possibilita que você "
-"personalize como o <app>Orca</app> apresenta textos e outros conteúdos, e "
-"como permite-lhe interagir com eles."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:28
-msgid "Control caret navigation"
-msgstr "Controlar a navegação do cursor"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:29
-msgid ""
-"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
-"is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, the browser's native caret navigation is active."
-msgstr ""
-"Esta caixa de seleção ativa e desativa a navegação de cursor do <app>Orca</"
-"app>. Quando está ativado, o <app>Orca</app> assume o controle do cursor "
-"enquanto você navega pela página; quando está desativado, a navegação de "
-"cursor nativa do navegador está ativa."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:39 C/preferences_web.page:82
-#: C/preferences_voice.page:76
-msgid "This setting can be toggled on the fly"
-msgstr "Esta configuração pode ser ativada a qualquer momento"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:40
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>F12</key></keyseq>."
-msgstr ""
-"Para ativar esta configuração temporariamente sem a salvar, use a "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>F12</key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:47
-msgid "Automatic focus mode during caret navigation"
-msgstr "Modo de foco automático durante a navegação de cursor"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:48
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use caret navigation commands to navigate to a form "
-"field. For example, pressing <key>Down</key> would allow you to move into an "
-"entry but once you had done so, Orca would switch to focus mode and "
-"subsequent presses of <key>Down</key> would be controlled by the web browser "
-"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
-"continue to control what happens when you press <key>Down</key>, thus making "
-"it possible to arrow out of the entry and continue reading."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
-"automaticamente o modo de foco quando você usar comandos de navegação de "
-"cursor para navegar até um campo de formulário. Por exemplo, pressionar "
-"<key>Para Baixo</key> permitiria que você uma entrada, mas depois de fazer "
-"isso, o Orca alternaria para o modo de foco e os pressionamentos "
-"subsequentes de <key>Para Baixo</key> seriam controlados pelo botão "
-"navegador da web e não pelo Orca. Se esta caixa de seleção não estiver "
-"marcada, o <app>Orca</app> continuará controlando o que acontece quando você "
-"pressiona <key>Para Baixo</key>, tornando possível sair da entrada e "
-"continuar lendo."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:62 C/preferences_web.page:104
-#: C/preferences_web.page:127
-msgid "Manually switching between browse mode and focus mode"
-msgstr "Alternar manualmente entre o modo de navegação e o modo de foco"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:63 C/preferences_web.page:105
-#: C/preferences_web.page:128
-msgid ""
-"In order to start or stop interacting with the focused form field, use "
-"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
-"browse mode and focus mode."
-msgstr ""
-"Para iniciar ou parar de interagir com o campo de formulário focado, use "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>A</key></keyseq> para "
-"alternar entre o modo de navegação e o modo de foco."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:71
-msgid "Enable structural navigation"
-msgstr "Habilitar navegação estrutural"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:72
-msgid ""
-"This checkbox toggles <app>Orca</app>'s <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
-"off. Structural Navigation allows you to navigate by elements such as "
-"headings, links, and form fields."
-msgstr ""
-"Esta caixa de seleção habilita/desabilita a <link "
-"xref=\"howto_structural_navigation\">Navegação Estrutural</link> do "
-"<app>Orca</app>. A navegação estrutural permite-lhe navegar pelos elementos "
-"como cabeçalhos, links e campos de formulário."
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:83
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>Z</key></keyseq>."
-msgstr ""
-"Para ativar esta configuração temporariamente sem a salvar, use a "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Z</key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:90
-msgid "Automatic focus mode during structural navigation"
-msgstr "Modo de foco automático durante a navegação estrutural"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:91
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use structural navigation commands to navigate to a form "
-"field. For example, pressing <key>E</key> to move to the next entry would "
-"move focus there and also turn focus mode on so that your next press of "
-"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
-"automaticamente o modo de foco quando você usar comandos de navegação "
-"estrutural para navegar para um campo de formulário. Por exemplo, pressionar "
-"<key>E</key> para mover para a próxima entrada moveria o foco para lá e "
-"também ativaria o modo de foco para que seu próximo pressionamento de "
-"<key>E</key> digite um \"e\" nesse entrada. Se esta caixa de seleção não "
-"estiver marcada, então o <app>Orca</app> o deixará no modo de navegação e "
-"seu próximo pressionamento de <key>E</key> o moverá para a próxima entrada "
-"na página."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:113
-msgid "Automatic focus mode during native navigation"
-msgstr "Modo de foco automático durante a navegação nativa"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:114
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use native browser navigation commands to navigate to a "
-"form field. For example, pressing <key>Tab</key> to move to the next entry "
-"would move focus there and also turn focus mode on so that your next press "
-"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
-"automaticamente o modo de foco quando você usar comandos de navegação do "
-"navegador nativo para passar para um campo de formulário. Por exemplo, "
-"pressionar <key>Tab</key> para mover para a próxima entrada levaria o foco "
-"para lá e também ativaria o modo de foco para que, na próxima vez que você "
-"pressionar <key>E</key> digite um \"e\" nesse entrada. Se esta caixa de "
-"seleção não estiver marcada, então o <app>Orca</app> o deixará no modo de "
-"navegação e seu próximo pressionamento de <key>E</key> o moverá para a "
-"próxima entrada na página."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:136
-msgid "Automatically start speaking a page when it is first loaded"
-msgstr ""
-"Comece a falar uma página automaticamente quando ela for carregada pela "
-"primeira vez"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:137
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
-"newly opened web page or email."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> executará um Ler "
-"Tudo na página da Web ou no e-mail recém-aberto."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:141 C/preferences_web.page:152
-msgid "Default value: checked for Firefox; not checked for Thunderbird"
-msgstr ""
-"Valor padrão: selecionado para Firefox; não selecionado para Thunderbird"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:146
-msgid "Present summary of a page when it is first loaded"
-msgstr ""
-"Apresentar resumo de uma página quando ela é carregada pela primeira vez"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:147
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will summarize details about "
-"the newly opened web page or email, such as the number of headings, "
-"landmarks, and links."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> resumirá os "
-"detalhes sobre a página da Web ou e-mail recém-aberto, como o número de "
-"títulos, pontos de referência e links."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:157
-msgid "Enable layout mode for content"
-msgstr "Ativar o modo de layout para conteúdo"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:158
-msgid ""
-"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
-"the on-screen layout of the content and present the full line, including any "
-"links or form fields on that line. If this checkbox is not checked, "
-"<app>Orca</app> will treat objects such as links and form fields as if they "
-"were on separate lines, both for presentation and navigation."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, a navegação de cursor do "
-"<app>Orca</app> respeitará o layout do conteúdo na tela e apresentará a "
-"linha completa, incluindo quaisquer links ou campos de formulário nessa "
-"linha. Se esta caixa de seleção não estiver marcada, o <app>Orca</app> "
-"tratará objetos como links e campos de formulário como se estivessem em "
-"linhas separadas, tanto para apresentação quanto para navegação."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:171
-msgid "Table Options"
-msgstr "Opções de Tabela"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:173
-msgid ""
-"To learn more about <app>Orca</app>'s options for navigating within tables, "
-"please see <link xref=\"preferences_table_navigation\">Table Navigation "
-"Preferences</link>."
-msgstr ""
-"Para saber mais sobre as opções do <app>Orca</app> para navegar em tabelas, "
-"consulte <link xref=\"preferences_table_navigation\">Preferências de "
-"Navegação de Tabela</link>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:181
-msgid "Find Options"
-msgstr "Opções de Busca"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:182
-msgid ""
-"The <gui>Find Options</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents the results of a search conducted "
-"using the application's built-in search functionality."
-msgstr ""
-"O grupo de controles das <gui>opções de busca</gui> permite-lhe personalizar "
-"como o <app>Orca</app> apresenta o resultado de uma pesquisa realizada com "
-"as funcionalidades de busca próprias do aplicativo."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:188
-msgid "Speak results during find"
-msgstr "Falar resultados durante a busca"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:189
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will read the line which "
-"matches your current search query."
-msgstr ""
-"Se esta caixa de seleção for marcada, o <app>Orca</app> lerá a linha que "
-"combina com a sua pesquisa atual."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:198
-msgid "Only speak changed lines during find"
-msgstr "Somente falar as linhas alteradas durante a pesquisa"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:199
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will not present the matching "
-"line if it is the same line as the previous match. This option is designed "
-"to prevent \"chattiness\" on a line with multiple instances of the string "
-"for which you are searching."
-msgstr ""
-"Se esta caixa de seleção estiver marcada, o <app>Orca</app> não apresentará "
-"a linha correspondente se for a mesma linha da correspondência anterior. "
-"Essa opção foi projetada para evitar \"chattiness\" em uma linha com várias "
-"instâncias da string que você está procurando."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:210
-msgid "Minimum length of matched text"
-msgstr "Tamanho mínimo de textos encontrados"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:211
-msgid ""
-"This editable spin button is where you can specify the number of characters "
-"which must match before <app>Orca</app> announces the matching line. This "
-"option is also designed to prevent \"chattiness\" as there are many matches "
-"when you first begin typing the string for which you are searching."
-msgstr ""
-"Este botão de rotação editável é onde você pode especificar o número de "
-"caracteres correspondentes antes que o <app>Orca</app> anuncie a linha "
-"correspondente. Esta opção também foi projetada para evitar \"excesso de "
-"fala\" caso existam muitas ocorrências quando você começa a digitar o texto "
-"que você está procurando."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:218
-msgid "Default value: 4"
-msgstr "Valor padrão: 4"
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
@@ -8191,6 +7848,12 @@ msgstr "<gui>Soletrar</gui>: Fala a palavra \"capitular\""
 msgid "<gui>None</gui>"
 msgstr "<gui>Nenhum</gui>"
 
+#. (itstool) path: note/title
+#: C/preferences_voice.page:76 C/preferences_web.page:39
+#: C/preferences_web.page:82
+msgid "This setting can be toggled on the fly"
+msgstr "Esta configuração pode ser ativada a qualquer momento"
+
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
 msgid ""
@@ -8289,6 +7952,367 @@ msgstr ""
 "Marcar a caixa de seleção <gui>Falar números como dígitos</gui> fará com que "
 "o <app>Orca</app> divida um número como \"123\" em dígitos separados (\"1\", "
 "\"2\" e \"3\") antes para passá-lo ao sintetizador de voz."
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:5
+msgctxt "sort"
+msgid "1. Web Navigation"
+msgstr "1. Navegação Web"
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:6
+msgctxt "link"
+msgid "Web Navigation"
+msgstr "Navegação web"
+
+#. (itstool) path: info/desc
+#: C/preferences_web.page:7
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
+msgstr ""
+"Configurando o suporte do <app>Orca</app> para <app>Firefox</app>, "
+"<app>Thunderbird</app> e <app>Chrome</app>/<app>Chromium</app>"
+
+#. (itstool) path: page/title
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Preferências de Navegação na Web"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:21
+msgid "Page Navigation"
+msgstr "Navegação por página"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:22
+msgid ""
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
+msgstr ""
+"O grupo de controles da <gui>navegação da página</gui> possibilita que você "
+"personalize como o <app>Orca</app> apresenta textos e outros conteúdos, e "
+"como permite-lhe interagir com eles."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:28
+msgid "Control caret navigation"
+msgstr "Controlar a navegação do cursor"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:29
+msgid ""
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, the browser's native caret navigation is active."
+msgstr ""
+"Esta caixa de seleção ativa e desativa a navegação de cursor do <app>Orca</"
+"app>. Quando está ativado, o <app>Orca</app> assume o controle do cursor "
+"enquanto você navega pela página; quando está desativado, a navegação de "
+"cursor nativa do navegador está ativa."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:40
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>F12</key></keyseq>."
+msgstr ""
+"Para ativar esta configuração temporariamente sem a salvar, use a "
+"<keyseq><key>Tecla Modificadora do Orca</key><key>F12</key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr "Modo de foco automático durante a navegação de cursor"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
+"automaticamente o modo de foco quando você usar comandos de navegação de "
+"cursor para navegar até um campo de formulário. Por exemplo, pressionar "
+"<key>Para Baixo</key> permitiria que você uma entrada, mas depois de fazer "
+"isso, o Orca alternaria para o modo de foco e os pressionamentos "
+"subsequentes de <key>Para Baixo</key> seriam controlados pelo botão "
+"navegador da web e não pelo Orca. Se esta caixa de seleção não estiver "
+"marcada, o <app>Orca</app> continuará controlando o que acontece quando você "
+"pressiona <key>Para Baixo</key>, tornando possível sair da entrada e "
+"continuar lendo."
+
+#. (itstool) path: note/title
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
+msgid "Manually switching between browse mode and focus mode"
+msgstr "Alternar manualmente entre o modo de navegação e o modo de foco"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+"Para iniciar ou parar de interagir com o campo de formulário focado, use "
+"<keyseq><key>Tecla Modificadora do Orca</key><key>A</key></keyseq> para "
+"alternar entre o modo de navegação e o modo de foco."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:71
+msgid "Enable structural navigation"
+msgstr "Habilitar navegação estrutural"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:72
+msgid ""
+"This checkbox toggles <app>Orca</app>'s <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
+"off. Structural Navigation allows you to navigate by elements such as "
+"headings, links, and form fields."
+msgstr ""
+"Esta caixa de seleção habilita/desabilita a <link "
+"xref=\"howto_structural_navigation\">Navegação Estrutural</link> do "
+"<app>Orca</app>. A navegação estrutural permite-lhe navegar pelos elementos "
+"como cabeçalhos, links e campos de formulário."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:83
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
+msgstr ""
+"Para ativar esta configuração temporariamente sem a salvar, use a "
+"<keyseq><key>Tecla Modificadora do Orca</key><key>Z</key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:90
+msgid "Automatic focus mode during structural navigation"
+msgstr "Modo de foco automático durante a navegação estrutural"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:91
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
+"automaticamente o modo de foco quando você usar comandos de navegação "
+"estrutural para navegar para um campo de formulário. Por exemplo, pressionar "
+"<key>E</key> para mover para a próxima entrada moveria o foco para lá e "
+"também ativaria o modo de foco para que seu próximo pressionamento de "
+"<key>E</key> digite um \"e\" nesse entrada. Se esta caixa de seleção não "
+"estiver marcada, então o <app>Orca</app> o deixará no modo de navegação e "
+"seu próximo pressionamento de <key>E</key> o moverá para a próxima entrada "
+"na página."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr "Modo de foco automático durante a navegação nativa"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> ativará "
+"automaticamente o modo de foco quando você usar comandos de navegação do "
+"navegador nativo para passar para um campo de formulário. Por exemplo, "
+"pressionar <key>Tab</key> para mover para a próxima entrada levaria o foco "
+"para lá e também ativaria o modo de foco para que, na próxima vez que você "
+"pressionar <key>E</key> digite um \"e\" nesse entrada. Se esta caixa de "
+"seleção não estiver marcada, então o <app>Orca</app> o deixará no modo de "
+"navegação e seu próximo pressionamento de <key>E</key> o moverá para a "
+"próxima entrada na página."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
+msgid "Automatically start speaking a page when it is first loaded"
+msgstr ""
+"Comece a falar uma página automaticamente quando ela for carregada pela "
+"primeira vez"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:137
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
+"newly opened web page or email."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> executará um Ler "
+"Tudo na página da Web ou no e-mail recém-aberto."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:141 C/preferences_web.page:152
+msgid "Default value: checked for Firefox; not checked for Thunderbird"
+msgstr ""
+"Valor padrão: selecionado para Firefox; não selecionado para Thunderbird"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:146
+msgid "Present summary of a page when it is first loaded"
+msgstr ""
+"Apresentar resumo de uma página quando ela é carregada pela primeira vez"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:147
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will summarize details about "
+"the newly opened web page or email, such as the number of headings, "
+"landmarks, and links."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> resumirá os "
+"detalhes sobre a página da Web ou e-mail recém-aberto, como o número de "
+"títulos, pontos de referência e links."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:157
+msgid "Enable layout mode for content"
+msgstr "Ativar o modo de layout para conteúdo"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:158
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, a navegação de cursor do "
+"<app>Orca</app> respeitará o layout do conteúdo na tela e apresentará a "
+"linha completa, incluindo quaisquer links ou campos de formulário nessa "
+"linha. Se esta caixa de seleção não estiver marcada, o <app>Orca</app> "
+"tratará objetos como links e campos de formulário como se estivessem em "
+"linhas separadas, tanto para apresentação quanto para navegação."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:171
+msgid "Table Options"
+msgstr "Opções de Tabela"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:173
+msgid ""
+"To learn more about <app>Orca</app>'s options for navigating within tables, "
+"please see <link xref=\"preferences_table_navigation\">Table Navigation "
+"Preferences</link>."
+msgstr ""
+"Para saber mais sobre as opções do <app>Orca</app> para navegar em tabelas, "
+"consulte <link xref=\"preferences_table_navigation\">Preferências de "
+"Navegação de Tabela</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:181
+msgid "Find Options"
+msgstr "Opções de Busca"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:182
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+"O grupo de controles das <gui>opções de busca</gui> permite-lhe personalizar "
+"como o <app>Orca</app> apresenta o resultado de uma pesquisa realizada com "
+"as funcionalidades de busca próprias do aplicativo."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:188
+msgid "Speak results during find"
+msgstr "Falar resultados durante a busca"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:189
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+"Se esta caixa de seleção for marcada, o <app>Orca</app> lerá a linha que "
+"combina com a sua pesquisa atual."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:198
+msgid "Only speak changed lines during find"
+msgstr "Somente falar as linhas alteradas durante a pesquisa"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:199
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+"Se esta caixa de seleção estiver marcada, o <app>Orca</app> não apresentará "
+"a linha correspondente se for a mesma linha da correspondência anterior. "
+"Essa opção foi projetada para evitar \"chattiness\" em uma linha com várias "
+"instâncias da string que você está procurando."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:210
+msgid "Minimum length of matched text"
+msgstr "Tamanho mínimo de textos encontrados"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:211
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which must match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing the string for which you are searching."
+msgstr ""
+"Este botão de rotação editável é onde você pode especificar o número de "
+"caracteres correspondentes antes que o <app>Orca</app> anuncie a linha "
+"correspondente. Esta opção também foi projetada para evitar \"excesso de "
+"fala\" caso existam muitas ocorrências quando você começa a digitar o texto "
+"que você está procurando."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:218
+msgid "Default value: 4"
+msgstr "Valor padrão: 4"
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Próximo campo de formulário e campo de formulário anterior: "
+#~ "<keyseq><key>Tecla Modificadora do Orca</key><key>Tab</key></keyseq> e "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>"
+
+#~ msgctxt "text"
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Leitor de telas Orca"
+
+#~ msgctxt "link"
+#~ msgid "Introduction to the <app>Orca</app> Screen Reader"
+#~ msgstr "Introdução ao Leitor de tela <app>Orca</app>"
+
+#~ msgid "<app>Orca</app>'s logo"
+#~ msgstr "Logo do <app>Orca</app>"
 
 #~ msgctxt "_"
 #~ msgid ""
