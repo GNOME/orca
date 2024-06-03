@@ -2884,8 +2884,10 @@ class SpeechGenerator(generator.Generator):
             return []
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "focused":
             return []
+        if format_type == "ancestor":
+            return self._generateUnrelatedLabelsOrDescription(obj, **args)
 
         result = []
         if format_type.endswith("WhereAmI"):
