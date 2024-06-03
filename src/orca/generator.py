@@ -402,14 +402,14 @@ class Generator:
         return result
 
     def _generateUnrelatedLabelsOrDescription(self, obj, **args):
-        result = self._generateUnrelatedLabels(obj, **args)
-        if result:
-            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = False
-            return result
-
         result = self._generateDescription(obj, **args)
         if result:
             self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = True
+            return result
+
+        result = self._generateUnrelatedLabels(obj, **args)
+        if result:
+            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = False
 
         return result
 
