@@ -1718,6 +1718,8 @@ class Utilities:
         labelRoles = [Atspi.Role.LABEL, Atspi.Role.STATIC]
         skipRoles = [Atspi.Role.COMBO_BOX,
                      Atspi.Role.LIST_BOX,
+                     Atspi.Role.LIST,
+                     Atspi.Role.LIST_ITEM,
                      Atspi.Role.MENU,
                      Atspi.Role.MENU_BAR,
                      Atspi.Role.SCROLL_PANE,
