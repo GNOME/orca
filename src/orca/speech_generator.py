@@ -3654,11 +3654,12 @@ class SpeechGenerator(generator.Generator):
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += (self._generateLabelAndName(obj, **args) \
-            or self._generateCurrentLineText(obj, **args))
+        prior_obj = args.get("priorObj")
+        if prior_obj and obj != prior_obj and not AXObject.is_ancestor(prior_obj, obj):
+            result += self._generateRoleName(obj, **args)
+            result += self._generateLabelAndName(obj, **args)
+        result += self._generateCurrentLineText(obj, **args)
         result += self._generatePause(obj, **args)
-        result += self._generateUnrelatedLabels(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
