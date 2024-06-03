@@ -1717,6 +1717,13 @@ class Utilities:
 
         labelRoles = [Atspi.Role.LABEL, Atspi.Role.STATIC]
         skipRoles = [Atspi.Role.COMBO_BOX,
+                     Atspi.Role.DOCUMENT_EMAIL,
+                     Atspi.Role.DOCUMENT_FRAME,
+                     Atspi.Role.DOCUMENT_PRESENTATION,
+                     Atspi.Role.DOCUMENT_SPREADSHEET,
+                     Atspi.Role.DOCUMENT_TEXT,
+                     Atspi.Role.DOCUMENT_WEB,
+                     Atspi.Role.FRAME,
                      Atspi.Role.LIST_BOX,
                      Atspi.Role.LIST,
                      Atspi.Role.LIST_ITEM,
@@ -1728,7 +1735,8 @@ class Utilities:
                      Atspi.Role.TABLE,
                      Atspi.Role.TOGGLE_BUTTON,
                      Atspi.Role.TREE,
-                     Atspi.Role.TREE_TABLE]
+                     Atspi.Role.TREE_TABLE,
+                     Atspi.Role.WINDOW]
 
         def _include(x):
             if not (x and AXObject.get_role(x) in labelRoles):
