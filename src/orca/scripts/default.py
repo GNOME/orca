@@ -1281,8 +1281,9 @@ class Script(script.Script):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        if obj != focus_manager.get_manager().get_locus_of_focus():
-            msg = "DEFAULT: Event is for object other than the locusOfFocus"
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if obj != focus and not AXObject.is_ancestor(focus, obj):
+            msg = "DEFAULT: Event is for object other than the locusOfFocus or ancestor"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
