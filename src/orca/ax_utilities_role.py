@@ -1090,7 +1090,7 @@ class AXUtilitiesRole:
         return role == Atspi.Role.RATING
 
     @staticmethod
-    def is_redundant_object(obj, role=None):
+    def is_redundant_object_role(obj, role=None):
         """Returns True if obj has the redundant object role"""
 
         if role is None:

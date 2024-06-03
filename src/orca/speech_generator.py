@@ -2070,8 +2070,14 @@ class SpeechGenerator(generator.Generator):
             elif self._script.utilities.isButtonWithPopup(parent):
                 pass
             elif parent != commonAncestor or presentCommonAncestor:
-                ancestors.append(parent)
-                ancestorRoles.append(parentRole)
+                isRedundant = False
+                for ancestor in ancestors:
+                    if AXUtilities.is_redundant_object(ancestor, parent):
+                        isRedundant = True
+                        break
+                if not isRedundant:
+                    ancestors.append(parent)
+                    ancestorRoles.append(parentRole)
 
             if parent == commonAncestor or parentRole in stopAfterRoles:
                 break

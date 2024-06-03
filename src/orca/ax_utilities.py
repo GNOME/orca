@@ -240,6 +240,20 @@ class AXUtilities:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
 
+    @staticmethod
+    def is_redundant_object(obj1, obj2):
+        """Returns True if obj2 is redundant to obj1."""
+
+        if obj1 == obj2:
+            return False
+
+        if AXObject.get_name(obj1) != AXObject.get_name(obj2) \
+           or AXObject.get_role(obj1) != AXObject.get_role(obj2):
+            return False
+
+        tokens = ["AXUtilities:", obj2, "is redundant to", obj1]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return True
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
     setattr(AXUtilities, name, method)
