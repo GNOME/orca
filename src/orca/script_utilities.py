@@ -3606,7 +3606,7 @@ class Utilities:
             return False
         return True
 
-    def stringsAreRedundant(self, str1, str2, threshold=0.5):
+    def stringsAreRedundant(self, str1, str2, threshold=0.7):
         if not (str1 and str2):
             return False
 
