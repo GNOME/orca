@@ -1722,9 +1722,11 @@ class Utilities:
                      Atspi.Role.LIST_ITEM,
                      Atspi.Role.MENU,
                      Atspi.Role.MENU_BAR,
+                     Atspi.Role.PUSH_BUTTON,
                      Atspi.Role.SCROLL_PANE,
                      Atspi.Role.SPLIT_PANE,
                      Atspi.Role.TABLE,
+                     Atspi.Role.TOGGLE_BUTTON,
                      Atspi.Role.TREE,
                      Atspi.Role.TREE_TABLE]
 
