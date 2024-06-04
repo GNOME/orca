@@ -4049,8 +4049,8 @@ class SpeechGenerator(generator.Generator):
         if not result:
             result += self._generateLabelAndName(obj, **args)
 
-        result += self._generateRoleName(obj, **args)
         result += self._generateUnrelatedLabelsOrDescription(obj, **args)
+        result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
