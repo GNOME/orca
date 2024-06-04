@@ -4179,8 +4179,10 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the region landmark role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateLabelAndName(obj, **args)
-        result += self._generateRoleName(obj, **args)
+        prior_obj = args.get("priorObj")
+        if prior_obj and obj != prior_obj and not AXObject.is_ancestor(prior_obj, obj):
+            result += self._generateLabelAndName(obj, **args)
+            result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
