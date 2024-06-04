@@ -1738,6 +1738,9 @@ class Utilities:
                      Atspi.Role.TREE_TABLE,
                      Atspi.Role.WINDOW]
 
+        if AXObject.get_role(root) in skipRoles:
+            return []
+
         def _include(x):
             if not (x and AXObject.get_role(x) in labelRoles):
                 return False
