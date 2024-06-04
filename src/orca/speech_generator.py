@@ -4050,7 +4050,11 @@ class SpeechGenerator(generator.Generator):
             result += self._generateLabelAndName(obj, **args)
 
         result += self._generateUnrelatedLabelsOrDescription(obj, **args)
-        result += self._generateRoleName(obj, **args)
+
+        child = args.get("ancestorOf")
+        if child and AXUtilities.is_widget(child):
+            result += self._generateRoleName(obj, **args)
+
         result += self._generate_default_suffix(obj, **args)
         return result
 
