@@ -708,8 +708,12 @@ class Script(script.Script):
         if self.get_learn_mode_presenter().is_active():
             self.get_learn_mode_presenter().quit()
 
-        focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(new_focus))
+        active_window = self.utilities.topLevelObject(new_focus)
+        focus_manager.get_manager().set_active_window(active_window)
         self.update_braille(new_focus)
+
+        if old_focus is None:
+            old_focus = active_window
 
         utterances = self.speech_generator.generateSpeech(
             new_focus,
