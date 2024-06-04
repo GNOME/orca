@@ -223,6 +223,12 @@ class EventManager:
                 msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
+            app = AXObject.get_application(event.source)
+            app_name = AXObject.get_name(app).lower()
+            if "remove" in event_type and app_name in ["gnome-shell", ""]:
+                msg = "EVENT MANAGER: Ignoring event based on type and app"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return True
             if "remove" in event_type and AXObject.is_dead(focus):
                 return False
             if AXObject.is_dead(child):
@@ -231,12 +237,6 @@ class EventManager:
                 return True
             if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
                 msg = 'EVENT_MANAGER: Ignoring due to role of event.any_data'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            app = AXObject.get_application(event.source)
-            app_name = AXObject.get_name(app).lower()
-            if "remove" in event_type and app_name == "gnome-shell":
-                msg = "EVENT MANAGER: Ignoring event based on type and app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if event_type.endswith("system") and app_name == "thunderbird":
