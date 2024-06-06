@@ -248,7 +248,8 @@ Please note: Help text should *not* be used to announce mnemonics. Mnemonics are
 exposed to Orca via the accessible Action interface via the toolkit. Orca has a setting, disabled
 by default, to present mnemonics to the user.
 
-Help text is supported in Orca v46 and later. It is presented by default when focus changes, but
+Help text is supported in Orca v46 and later. Prior to Orca v47.alpha, this feature was disabled by
+default. Starting with Orca v47.alpha, help text is presented by default when focus changes, but
 that presentation can be disabled by the user either globally or on per-app basis. However, even
 when disabled for focus changes, users can always obtain the help text on demand by using Orca's
 "Where Am I?" command.
