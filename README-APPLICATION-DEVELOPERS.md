@@ -260,10 +260,9 @@ Here's a simple example:
 #!/usr/bin/python
 
 import gi
-gi.require_version("Atk", "1.0")
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Atk, Gtk
+from gi.repository import Gtk
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
