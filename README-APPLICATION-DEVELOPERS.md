@@ -14,7 +14,7 @@ Orca has many commands and modes which make it possible for users to interact wi
 However, the most basic need for applications is presentation of changes in location, such as focus
 changes and navigation within text. In order for Orca to present such changes, it must be notified
 via one or more accessible events. Unless you have created a custom widget, you should expect that
-accessibility events will be fired by your application's toolkit.
+accessible events will be fired by your application's toolkit.
 
 Examples of accessible events include:
 
