@@ -2904,6 +2904,9 @@ class SpeechGenerator(generator.Generator):
         if result and not isinstance(result[-1], Pause):
             result += self._generatePause(obj, **args)
         result += self._generateHasPopup(obj, **args)
+        if format_type == "unfocused":
+            result += self._generateTutorial(obj, **args)
+
         return result
 
     def _generate_accelerator_label(self, obj, **args):
