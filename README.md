@@ -2,6 +2,11 @@
 
 [TOC]
 
+## Attention Application Developers
+
+If you are an application developer trying to make your application work with Orca, please see the
+[README for application developers](README-APPLICATION-DEVELOPERS.md).
+
 ## Introduction
 
 Orca is a free, open source, flexible, and extensible screen reader
@@ -120,127 +125,6 @@ Moving features outside of scripts is still a work in progress. Thus if you're
 wondering why some features are inside `src/orca/scripts/default.py` and others
 are not, the answer is that we haven't yet gotten around to migrating the features
 outside of `default.py`.
-
-## Getting Orca to Speak Your Application's Custom Message
-
-AT-SPI2/ATK v2.46 added an `announcement` signal which can be used with
-Orca v45.2. Here's a simple example:
-
-```python
-#!/usr/bin/python3
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
-def on_button_clicked(button):
-    button.get_accessible().emit("announcement", "Hello world. I am an announcement.")
-
-def on_activate(application):
-    window = Gtk.ApplicationWindow(application=application)
-    button = Gtk.Button(label="Make an announcement")
-    button.connect("clicked", on_button_clicked)
-    window.add(button)
-    window.show_all()
-
-app = Gtk.Application()
-app.connect("activate", on_activate)
-app.run(None)
-```
-
-If you are running Orca v45.2 or later, launch the sample application above and press the
-"Make an announcement" button. You should hear Orca say "Hello world. I am an announcement."
-
-Beginning with ATK v2.50, the `announcement` signal was deprecated in favor of a new
-`notification` signal to provide native applications similar functionality to ARIA's live
-regions which allow web applications to specify that a notification is urgent/"assertive."
-
-Here is an example of using the `notification` signal:
-
-```python
-#!/usr/bin/python3
-
-import gi
-gi.require_version("Atk", "1.0")
-gi.require_version("Gtk", "3.0")
-
-from gi.repository import Atk, Gtk
-
-def on_button_clicked(button):
-    button.get_accessible().emit("notification", "Hello world. I am a notification.", Atk.Live.POLITE)
-
-def on_activate(application):
-    window = Gtk.ApplicationWindow(application=application)
-    button = Gtk.Button(label="Make a notification")
-    button.connect("clicked", on_button_clicked)
-    window.add(button)
-    window.show_all()
-
-app = Gtk.Application()
-app.connect("activate", on_activate)
-app.run(None)
-```
-
-You can fire the announcement signal in GTK 4 starting from 4.14 as well:
-
-```python
-#!/usr/bin/python3
-
-import gi
-gi.require_version("Gtk", "4.0")
-
-from gi.repository import Gtk
-
-def on_button_clicked(button):
-    button.announce("Hello world. I am a notification.", Gtk.AccessibleAnnouncementPriority.MEDIUM)
-
-def on_activate(application):
-    window = Gtk.ApplicationWindow(application=application)
-    button = Gtk.Button(label="Make a notification")
-    button.connect("clicked", on_button_clicked)
-    window.set_child(button)
-    window.present()
-
-app = Gtk.Application()
-app.connect("activate", on_activate)
-app.run(None)
-```
-
-Note that in older GTK 4 releases there is no way how to do this, as you can't emit raw AT-SPI2 events, or do similar platform-specific things.
-
-For Qt applications, the announcement signal can be sent like this from Qt 6.8 on:
-
-```python
-#!/usr/bin/python3
-
-import sys
-from PySide6.QtCore import Slot
-from PySide6.QtGui import QAccessible, QAccessibleAnnouncementEvent
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
-
-@Slot()
-def on_button_clicked(checked):
-    announcement_event = QAccessibleAnnouncementEvent(button, "Hello world. I am a notification.")
-    # prio could be set like this (Polite is the default anyway)
-    announcement_event.setPriority(QAccessible.AnnouncementPriority.Polite)
-    QAccessible.updateAccessibility(announcement_event)
-
-app = QApplication(sys.argv)
-main_window = QMainWindow()
-button = QPushButton("Make a notification", main_window)
-button.resize(200, 50)
-button.clicked.connect(on_button_clicked)
-
-main_window.show()
-app.exec()
-```
-
-**Please note:** Because "assertive" messages can be disruptive if presented at the wrong
-time, Orca *currently* treats an "assertive" notification from non-web applications the
-same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
-applications is planned and depends on Orca's
-[live-region support being made global](https://gitlab.gnome.org/GNOME/orca/-/issues/431)
-so that users have full control over when and how notifications are presented to them.
 
 ## Experimental Features
 
