@@ -393,8 +393,10 @@ class Formatting(dict):
         - formatType: the type of formatting, such as
           'focused', 'basicWhereAmI', etc.
         """
-        prefix = self[args['mode']]['prefix'][args['formatType']]
-        return prefix
+        try:
+            return self[args['mode']]['prefix'][args['formatType']]
+        except:
+            return []
 
     def getSuffix(self, **args):
         """Get a formatting string to add on to the end of
@@ -406,8 +408,10 @@ class Formatting(dict):
         - formatType: the type of formatting, such as
           'focused', 'basicWhereAmI', etc.
         """
-        suffix = self[args['mode']]['suffix'][args['formatType']]
-        return suffix
+        try:
+            return self[args['mode']]['suffix'][args['formatType']]
+        except:
+            return []
 
     def getFormat(self, **args):
         """Get a formatting string for the given mode and formatType for a
