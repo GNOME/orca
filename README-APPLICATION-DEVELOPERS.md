@@ -238,7 +238,7 @@ so that users have full control over when and how notifications are presented to
 
 AT-SPI2/ATK v2.52 added support for setting and retrieving "help text" on accessible objects.
 Help text makes it possible to provide context-sensitive information that might not be
-immediately obvious to the user. For instance in slide presentation editor, when the user tabs to a
+immediately obvious to the user. For instance in a slide presentation editor, when the user tabs to a
 placeholder on a slide, an appropriate message might be "You are on a placeholder. Use the arrow
 keys to reposition it on the slide. Press Return to edit its contents." (As the user moves the
 placeholder on the slide, the Announcement feature described above could be used to inform the user
