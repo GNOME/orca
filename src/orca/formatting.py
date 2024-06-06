@@ -395,7 +395,7 @@ class Formatting(dict):
         """
         try:
             return self[args['mode']]['prefix'][args['formatType']]
-        except:
+        except Exception:
             return []
 
     def getSuffix(self, **args):
@@ -410,7 +410,7 @@ class Formatting(dict):
         """
         try:
             return self[args['mode']]['suffix'][args['formatType']]
-        except:
+        except Exception:
             return []
 
     def getFormat(self, **args):
