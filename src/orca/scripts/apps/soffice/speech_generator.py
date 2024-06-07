@@ -39,21 +39,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _generateLabel(self, obj, **args):
-        """Returns the label for an object as an array of strings (and
-        possibly voice and audio specifications).  The label is
-        determined by the displayedLabel method of the script utility,
-        and an empty array will be returned if no label can be found.
-        """
-        result = []
-        label = self._script.utilities.displayedLabel(obj) or ""
-        if not label:
-            label = self._script.utilities.displayedLabel(AXObject.get_parent(obj)) or ""
-        if label:
-            result.append(label.strip())
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-        return result
-
     def _generateName(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the name of the object.  If the object is directly
