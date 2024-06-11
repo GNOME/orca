@@ -391,51 +391,6 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
-    def _shouldCalculatePositionAndSetSize(self, obj):
-        return True
-
-    def getPositionAndSetSize(self, obj, **args):
-        posinset = self.getPositionInSet(obj)
-        setsize = self.getSetSize(obj)
-        if posinset is not None and setsize is not None:
-            # ARIA posinset is 1-based
-            return posinset - 1, setsize
-
-        if self._shouldCalculatePositionAndSetSize(obj):
-            return super().getPositionAndSetSize(obj, **args)
-
-        return -1, -1
-
-    def getPositionInSet(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        position = attrs.get('posinset')
-        if position is not None:
-            return int(position)
-
-        if AXUtilities.is_table_row(obj):
-            rowindex = attrs.get('rowindex')
-            if rowindex is None and AXObject.get_child_count(obj):
-                cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell_or_header)
-                rowindex = AXObject.get_attributes_dict(cell, False).get('rowindex')
-
-            if rowindex is not None:
-                return int(rowindex)
-
-        return None
-
-    def getSetSize(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        setsize = attrs.get('setsize')
-        if setsize is not None:
-            return int(setsize)
-
-        if AXUtilities.is_table_row(obj):
-            rows = AXTable.get_row_count(AXTable.get_table(obj))
-            if rows != -1:
-                return rows
-
-        return None
-
     def _getID(self, obj):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('id')

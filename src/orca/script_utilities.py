@@ -2815,8 +2815,21 @@ class Utilities:
             return relation.get_target(0)
         return AXObject.get_parent(obj)
 
+    def _shouldCalculatePositionAndSetSize(self, obj):
+        return True
+
     def getPositionAndSetSize(self, obj, **args):
         if obj is None:
+            return -1, -1
+
+        posinset = AXUtilities.get_position_in_set(obj)
+        setsize = AXUtilities.get_set_size(obj)
+        if posinset is not None and setsize is not None:
+            tokens = ["SCRIPT UTILITIES:", obj, f"posinset:{posinset} setsize:{setsize}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return posinset, setsize
+
+        if not self._shouldCalculatePositionAndSetSize(obj):
             return -1, -1
 
         if AXUtilities.is_table_cell(obj) and args.get("readingRow"):

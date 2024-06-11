@@ -391,7 +391,7 @@ class Utilities(web.Utilities):
         # will not jibe with the values of its siblings. Thus if a sibling has a value,
         # assume that the missing attributes are missing on purpose.
         for sibling in AXObject.iter_children(AXObject.get_parent(obj)):
-            if self.getPositionInSet(sibling) is not None:
+            if isinstance(AXUtilities.get_position_in_set(sibling), int):
                 tokens = ["CHROMIUM:", obj, "'s sibling", sibling, "has posinset."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return False
