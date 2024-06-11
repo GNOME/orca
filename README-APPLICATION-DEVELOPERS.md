@@ -286,6 +286,33 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
+And in QT from 6.8, you can do it in the following way:
+```python
+#!/usr/bin/python
+import sys
+from PySide6.QtWidgets import QMainWindow, QLabel, QLineEdit, QHBoxLayout, QApplication, QWidget
+
+app = QApplication(sys.argv)
+window = QMainWindow()
+central_widget = QWidget()
+box = QHBoxLayout(central_widget)
+window.setCentralWidget(central_widget)
+label = QLabel("Type something here:")
+box.addWidget(label)
+entry = QLineEdit()
+box.addWidget(entry)
+
+# Setting the label's buddy will cause the accessible label-for relation to be
+# set. Orca uses that to say "Type something here:" when the entry gains focus.
+label.setBuddy(entry)
+
+# This text is presented by Orca as a "tutorial message."
+entry.setWhatsThis("Enter 10 characters.")
+window.show()
+
+app.exec()
+```
+
 ## Stand-Alone Tools For Debugging
 
 ### Dump The Focused Object And Its Ancestors
