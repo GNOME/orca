@@ -482,7 +482,7 @@ class BrailleGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("disableBrailleEOL"):
             return []
 
-        if not (AXUtilities.is_editable(obj) or self._script.utilities.isCode(obj)):
+        if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):
             return []
 
         return [object_properties.EOL_INDICATOR_BRAILLE]

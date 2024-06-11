@@ -174,7 +174,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if result and result[0] and not self._script.utilities.hasExplicitName(obj):
             result[0] = result[0].strip()
         elif not result and AXUtilities.is_check_box(obj):
-            gridCell = AXObject.find_ancestor(obj, self._script.utilities.isGridCell)
+            gridCell = AXObject.find_ancestor(obj, AXUtilities.is_grid_cell)
             if gridCell:
                 return super()._generateName(gridCell, **args)
 

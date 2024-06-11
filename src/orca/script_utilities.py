@@ -418,9 +418,6 @@ class Utilities:
     def isAnchor(self, obj):
         return False
 
-    def isCode(self, obj):
-        return False
-
     def isCodeDescendant(self, obj):
         return False
 
@@ -461,23 +458,8 @@ class Utilities:
 
         return False
 
-    def isComment(self, obj):
-        return False
-
-    def isContentDeletion(self, obj):
-        return AXUtilities.is_content_deletion(obj)
-
     def isContentError(self, obj):
         return False
-
-    def isContentInsertion(self, obj):
-        return AXUtilities.is_content_insertion(obj)
-
-    def isContentMarked(self, obj):
-        return AXUtilities.is_mark(obj)
-
-    def isContentSuggestion(self, obj):
-        return AXUtilities.is_suggestion(obj)
 
     def isInlineSuggestion(self, obj):
         return False
@@ -494,217 +476,10 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
-    def isDPub(self, obj):
-        return False
-
-    def isDPubAbstract(self, obj):
-        return False
-
-    def isDPubAcknowledgments(self, obj):
-        return False
-
-    def isDPubAfterword(self, obj):
-        return False
-
-    def isDPubAppendix(self, obj):
-        return False
-
-    def isDPubBibliography(self, obj):
-        return False
-
-    def isDPubBacklink(self, obj):
-        return False
-
-    def isDPubBiblioref(self, obj):
-        return False
-
-    def isDPubChapter(self, obj):
-        return False
-
-    def isDPubColophon(self, obj):
-        return False
-
-    def isDPubConclusion(self, obj):
-        return False
-
-    def isDPubCover(self, obj):
-        return False
-
-    def isDPubCredit(self, obj):
-        return False
-
-    def isDPubCredits(self, obj):
-        return False
-
-    def isDPubDedication(self, obj):
-        return False
-
-    def isDPubEndnote(self, obj):
-        return False
-
-    def isDPubEndnotes(self, obj):
-        return False
-
-    def isDPubEpigraph(self, obj):
-        return False
-
-    def isDPubEpilogue(self, obj):
-        return False
-
-    def isDPubErrata(self, obj):
-        return False
-
-    def isDPubExample(self, obj):
-        return False
-
-    def isDPubFootnote(self, obj):
-        return False
-
-    def isDPubForeword(self, obj):
-        return False
-
-    def isDPubGlossary(self, obj):
-        return False
-
-    def isDPubGlossref(self, obj):
-        return False
-
-    def isDPubIndex(self, obj):
-        return False
-
-    def isDPubIntroduction(self, obj):
-        return False
-
-    def isDPubPagelist(self, obj):
-        return False
-
-    def isDPubPagebreak(self, obj):
-        return False
-
-    def isDPubPart(self, obj):
-        return False
-
-    def isDPubPreface(self, obj):
-        return False
-
-    def isDPubPrologue(self, obj):
-        return False
-
-    def isDPubPullquote(self, obj):
-        return False
-
-    def isDPubQna(self, obj):
-        return False
-
-    def isDPubSubtitle(self, obj):
-        return False
-
-    def isDPubToc(self, obj):
-        return False
-
-    def isFeed(self, obj):
-        return False
-
-    def isFeedArticle(self, obj):
-        return False
-
-    def isFigure(self, obj):
-        return False
-
-    def isGrid(self, obj):
-        return False
-
-    def isGridCell(self, obj):
-        return False
-
-    def isLandmark(self, obj):
-        return False
-
-    def isLandmarkWithoutType(self, obj):
-        return False
-
-    def isLandmarkBanner(self, obj):
-        return False
-
-    def isLandmarkComplementary(self, obj):
-        return False
-
-    def isLandmarkContentInfo(self, obj):
-        return False
-
-    def isLandmarkForm(self, obj):
-        return False
-
-    def isLandmarkMain(self, obj):
-        return False
-
-    def isLandmarkNavigation(self, obj):
-        return False
-
-    def isDPubNoteref(self, obj):
-        return False
-
-    def isLandmarkRegion(self, obj):
-        return False
-
-    def isLandmarkSearch(self, obj):
-        return False
-
-    def isSVG(self, obj):
-        return False
-
     def speakMathSymbolNames(self, obj=None):
         return False
 
     def isInMath(self):
-        return False
-
-    def isMath(self, obj):
-        return False
-
-    def isMathLayoutOnly(self, obj):
-        return False
-
-    def isMathMultiline(self, obj):
-        return False
-
-    def isMathEnclosed(self, obj):
-        return False
-
-    def isMathFenced(self, obj):
-        return False
-
-    def isMathFractionWithoutBar(self, obj):
-        return False
-
-    def isMathPhantom(self, obj):
-        return False
-
-    def isMathMultiScript(self, obj):
-        return False
-
-    def isMathSubOrSuperScript(self, obj):
-        return False
-
-    def isMathUnderOrOverScript(self, obj):
-        return False
-
-    def isMathSquareRoot(self, obj):
-        return False
-
-    def isMathTable(self, obj):
-        return False
-
-    def isMathTableRow(self, obj):
-        return False
-
-    def isMathTableCell(self, obj):
-        return False
-
-    def isMathToken(self, obj):
-        return False
-
-    def isMathTopLevel(self, obj):
         return False
 
     def getMathDenominator(self, obj):
@@ -824,24 +599,12 @@ class Utilities:
 
         return True, "Not handled by any other case"
 
-    def isBlockquote(self, obj):
-        return AXUtilities.is_block_quote(obj)
-
-    def isDescriptionList(self, obj):
-        return AXUtilities.is_description_list(obj)
-
-    def isDescriptionListTerm(self, obj):
-        return AXUtilities.is_description_term(obj)
-
-    def isDescriptionListDescription(self, obj):
-        return AXUtilities.is_description_value(obj)
-
     def descriptionListTerms(self, obj):
-        if not self.isDescriptionList(obj):
+        if not AXUtilities.is_description_list(obj):
             return []
 
-        _include = self.isDescriptionListTerm
-        _exclude = self.isDescriptionList
+        _include = AXUtilities.is_description_term
+        _exclude = AXUtilities.is_description_list
         return self.findAllDescendants(obj, _include, _exclude)
 
     def isDocumentList(self, obj):
@@ -1078,7 +841,7 @@ class Utilities:
             elif parentRole == Atspi.Role.TABLE:
                 layoutOnly = self.isLayoutOnly(AXObject.get_parent(obj))
         elif role == Atspi.Role.SECTION:
-            layoutOnly = not self.isBlockquote(obj)
+            layoutOnly = not AXUtilities.is_block_quote(obj)
         elif role == Atspi.Role.BLOCK_QUOTE:
             layoutOnly = False
         elif role == Atspi.Role.FILLER:
@@ -1148,9 +911,6 @@ class Utilities:
             return True
 
         return AXUtilities.is_focusable(obj) and not AXUtilities.is_editable(obj)
-
-    def isSwitch(self, obj):
-        return False
 
     def getObjectFromPath(self, path):
         start = self._script.app
@@ -1274,8 +1034,8 @@ class Utilities:
                 self._script.generator_cache[self.NESTING_LEVEL] = {}
 
         def pred(x):
-            if self.isBlockquote(obj):
-                return self.isBlockquote(x)
+            if AXUtilities.is_block_quote(obj):
+                return AXUtilities.is_block_quote(x)
             if AXUtilities.is_list_item(obj):
                 return AXUtilities.is_list(AXObject.get_parent(x))
             return AXUtilities.have_same_role(obj, x)
@@ -2137,7 +1897,7 @@ class Utilities:
         return line
 
     def shouldVerbalizeAllPunctuation(self, obj):
-        if not (self.isCode(obj) or self.isCodeDescendant(obj)):
+        if not (AXUtilities.is_code(obj) or self.isCodeDescendant(obj)):
             return False
 
         # If the user has set their punctuation level to All, then the synthesizer will
@@ -3043,9 +2803,9 @@ class Utilities:
         result = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
         if result:
             return result
-        if self.isDescriptionListTerm(sibling):
+        if AXUtilities.is_description_term(sibling):
             return self.descriptionListTerms(obj)
-        if self.isDescriptionListDescription(sibling):
+        if AXUtilities.is_description_value(sibling):
             return self.valuesForTerm(self.termForValue(sibling))
         return [x for x in AXObject.iter_children(obj)]
 
@@ -3105,21 +2865,21 @@ class Utilities:
         return position, setSize
 
     def termForValue(self, obj):
-        if not self.isDescriptionListDescription(obj):
+        if not AXUtilities.is_description_value(obj):
             return None
 
-        while obj and not self.isDescriptionListTerm(obj):
+        while obj and not AXUtilities.is_description_term(obj):
             obj = AXObject.get_previous_sibling(obj)
 
         return obj
 
     def valuesForTerm(self, obj):
-        if not self.isDescriptionListTerm(obj):
+        if not AXUtilities.is_description_term(obj):
             return []
 
         values = []
         obj = AXObject.get_next_sibling(obj)
-        while obj and self.isDescriptionListDescription(obj):
+        while obj and AXUtilities.is_description_value(obj):
             values.append(obj)
             obj = AXObject.get_next_sibling(obj)
 

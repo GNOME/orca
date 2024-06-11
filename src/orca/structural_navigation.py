@@ -928,8 +928,8 @@ class StructuralNavigation:
             return False
 
         if role == Atspi.Role.SECTION \
-           and not self._script.utilities.isLandmark(obj) \
-           and not self._script.utilities.isBlockquote(obj):
+           and not AXUtilities.is_landmark(obj) \
+           and not AXUtilities.is_block_quote(obj):
             return False
 
         return self._script.utilities.inDocumentContent(obj)

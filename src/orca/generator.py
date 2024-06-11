@@ -1070,12 +1070,11 @@ class Generator:
         consider returning an empty array if there is no value.
         """
 
-        role = args.get('role', AXObject.get_role(obj))
-        if role == Atspi.Role.COMBO_BOX:
+        if AXUtilities.is_combo_box(obj, args.get("role")):
             value = self._script.utilities.getComboBoxValue(obj)
             return [value]
 
-        if role == Atspi.Role.SEPARATOR and not AXUtilities.is_focused(obj):
+        if AXUtilities.is_separator(obj, args.get("role")) and not AXUtilities.is_focused(obj):
             return []
 
         result = AXValue.get_current_value_text(obj)
@@ -1249,48 +1248,48 @@ class Generator:
         self._activeProgressBars[obj] = lastTime, lastValue
 
     def _getAlternativeRole(self, obj, **args):
-        if self._script.utilities.isMath(obj):
-            if self._script.utilities.isMathSubOrSuperScript(obj):
+        if AXUtilities.is_math_related(obj):
+            if AXUtilities.is_math_sub_or_super_script(obj):
                 return 'ROLE_MATH_SCRIPT_SUBSUPER'
-            if self._script.utilities.isMathUnderOrOverScript(obj):
+            if AXUtilities.is_math_under_or_over_script(obj):
                 return 'ROLE_MATH_SCRIPT_UNDEROVER'
-            if self._script.utilities.isMathMultiScript(obj):
+            if AXUtilities.is_math_multi_script(obj):
                 return 'ROLE_MATH_MULTISCRIPT'
-            if self._script.utilities.isMathEnclose(obj):
+            if AXUtilities.is_math_enclose(obj):
                 return 'ROLE_MATH_ENCLOSED'
-            if self._script.utilities.isMathFenced(obj):
+            if AXUtilities.is_math_fenced(obj):
                 return 'ROLE_MATH_FENCED'
-            if self._script.utilities.isMathTable(obj):
+            if AXUtilities.is_math_table(obj):
                 return 'ROLE_MATH_TABLE'
-            if self._script.utilities.isMathTableRow(obj):
+            if AXUtilities.is_math_table_row(obj):
                 return 'ROLE_MATH_TABLE_ROW'
-        if self._script.utilities.isDPub(obj):
-            if self._script.utilities.isLandmark(obj):
+        if AXUtilities.is_dpub(obj):
+            if AXUtilities.is_landmark(obj):
                 return 'ROLE_DPUB_LANDMARK'
             if AXUtilities.is_section(obj):
                 return 'ROLE_DPUB_SECTION'
-        if self._script.utilities.isSwitch(obj):
+        if AXUtilities.is_switch(obj):
             return 'ROLE_SWITCH'
         if self._script.utilities.isAnchor(obj):
             return Atspi.Role.STATIC
-        if self._script.utilities.isBlockquote(obj):
+        if AXUtilities.is_block_quote(obj):
             return Atspi.Role.BLOCK_QUOTE
-        if self._script.utilities.isComment(obj):
+        if AXUtilities.is_comment(obj):
             return Atspi.Role.COMMENT
         if self._script.utilities.isContentError(obj):
             return 'ROLE_CONTENT_ERROR'
-        if self._script.utilities.isDescriptionList(obj):
+        if AXUtilities.is_description_list(obj):
             return Atspi.Role.DESCRIPTION_LIST
-        if self._script.utilities.isDescriptionListTerm(obj):
+        if AXUtilities.is_description_term(obj):
             return Atspi.Role.DESCRIPTION_TERM
-        if self._script.utilities.isDescriptionListDescription(obj):
+        if AXUtilities.is_description_value(obj):
             return Atspi.Role.DESCRIPTION_VALUE
-        if self._script.utilities.isFeedArticle(obj):
+        if AXUtilities.is_feed_article(obj):
             return 'ROLE_ARTICLE_IN_FEED'
-        if self._script.utilities.isFeed(obj):
+        if AXUtilities.is_feed(obj):
             return 'ROLE_FEED'
-        if self._script.utilities.isLandmark(obj):
-            if self._script.utilities.isLandmarkRegion(obj):
+        if AXUtilities.is_landmark(obj):
+            if AXUtilities.is_landmark_region(obj):
                 return 'ROLE_REGION'
             return Atspi.Role.LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
@@ -1324,111 +1323,111 @@ class Generator:
                 if AXUtilities.is_vertical(obj):
                     return object_properties.ROLE_SPLITTER_HORIZONTAL
 
-        if self._script.utilities.isContentSuggestion(obj):
+        if AXUtilities.is_suggestion(obj):
             return object_properties.ROLE_CONTENT_SUGGESTION
 
-        if self._script.utilities.isFeed(obj):
+        if AXUtilities.is_feed(obj):
             return object_properties.ROLE_FEED
 
-        if self._script.utilities.isFigure(obj):
+        if AXUtilities.is_figure(obj):
             return object_properties.ROLE_FIGURE
 
         if self._script.utilities.isMenuButton(obj):
             return object_properties.ROLE_MENU_BUTTON
 
-        if self._script.utilities.isSwitch(obj):
+        if AXUtilities.is_switch(obj):
             return object_properties.ROLE_SWITCH
 
-        if self._script.utilities.isDPub(obj):
-            if self._script.utilities.isLandmark(obj):
-                if self._script.utilities.isDPubAcknowledgments(obj):
+        if AXUtilities.is_dpub(obj):
+            if AXUtilities.is_landmark(obj):
+                if AXUtilities.is_dpub_acknowledgments(obj):
                     return object_properties.ROLE_ACKNOWLEDGMENTS
-                if self._script.utilities.isDPubAfterword(obj):
+                if AXUtilities.is_dpub_afterword(obj):
                     return object_properties.ROLE_AFTERWORD
-                if self._script.utilities.isDPubAppendix(obj):
+                if AXUtilities.is_dpub_appendix(obj):
                     return object_properties.ROLE_APPENDIX
-                if self._script.utilities.isDPubBibliography(obj):
+                if AXUtilities.is_dpub_bibliography(obj):
                     return object_properties.ROLE_BIBLIOGRAPHY
-                if self._script.utilities.isDPubChapter(obj):
+                if AXUtilities.is_dpub_chapter(obj):
                     return object_properties.ROLE_CHAPTER
-                if self._script.utilities.isDPubConclusion(obj):
+                if AXUtilities.is_dpub_conclusion(obj):
                     return object_properties.ROLE_CONCLUSION
-                if self._script.utilities.isDPubCredits(obj):
+                if AXUtilities.is_dpub_credits(obj):
                     return object_properties.ROLE_CREDITS
-                if self._script.utilities.isDPubEndnotes(obj):
+                if AXUtilities.is_dpub_endnotes(obj):
                     return object_properties.ROLE_ENDNOTES
-                if self._script.utilities.isDPubEpilogue(obj):
+                if AXUtilities.is_dpub_epilogue(obj):
                     return object_properties.ROLE_EPILOGUE
-                if self._script.utilities.isDPubErrata(obj):
+                if AXUtilities.is_dpub_errata(obj):
                     return object_properties.ROLE_ERRATA
-                if self._script.utilities.isDPubForeword(obj):
+                if AXUtilities.is_dpub_foreword(obj):
                     return object_properties.ROLE_FOREWORD
-                if self._script.utilities.isDPubGlossary(obj):
+                if AXUtilities.is_dpub_glossary(obj):
                     return object_properties.ROLE_GLOSSARY
-                if self._script.utilities.isDPubIndex(obj):
+                if AXUtilities.is_dpub_index(obj):
                     return object_properties.ROLE_INDEX
-                if self._script.utilities.isDPubIntroduction(obj):
+                if AXUtilities.is_dpub_introduction(obj):
                     return object_properties.ROLE_INTRODUCTION
-                if self._script.utilities.isDPubPagelist(obj):
+                if AXUtilities.is_dpub_pagelist(obj):
                     return object_properties.ROLE_PAGELIST
-                if self._script.utilities.isDPubPart(obj):
+                if AXUtilities.is_dpub_part(obj):
                     return object_properties.ROLE_PART
-                if self._script.utilities.isDPubPreface(obj):
+                if AXUtilities.is_dpub_preface(obj):
                     return object_properties.ROLE_PREFACE
-                if self._script.utilities.isDPubPrologue(obj):
+                if AXUtilities.is_dpub_prologue(obj):
                     return object_properties.ROLE_PROLOGUE
-                if self._script.utilities.isDPubToc(obj):
+                if AXUtilities.is_dpub_toc(obj):
                     return object_properties.ROLE_TOC
             elif role == "ROLE_DPUB_SECTION":
-                if self._script.utilities.isDPubAbstract(obj):
+                if AXUtilities.is_dpub_abstract(obj):
                     return object_properties.ROLE_ABSTRACT
-                if self._script.utilities.isDPubColophon(obj):
+                if AXUtilities.is_dpub_colophon(obj):
                     return object_properties.ROLE_COLOPHON
-                if self._script.utilities.isDPubCredit(obj):
+                if AXUtilities.is_dpub_credit(obj):
                     return object_properties.ROLE_CREDIT
-                if self._script.utilities.isDPubDedication(obj):
+                if AXUtilities.is_dpub_dedication(obj):
                     return object_properties.ROLE_DEDICATION
-                if self._script.utilities.isDPubEpigraph(obj):
+                if AXUtilities.is_dpub_epigraph(obj):
                     return object_properties.ROLE_EPIGRAPH
-                if self._script.utilities.isDPubExample(obj):
+                if AXUtilities.is_dpub_example(obj):
                     return object_properties.ROLE_EXAMPLE
-                if self._script.utilities.isDPubPullquote(obj):
+                if AXUtilities.is_dpub_pullquote(obj):
                     return object_properties.ROLE_PULLQUOTE
-                if self._script.utilities.isDPubQna(obj):
+                if AXUtilities.is_dpub_qna(obj):
                     return object_properties.ROLE_QNA
             elif role == Atspi.Role.LIST_ITEM:
-                if self._script.utilities.isDPubBiblioentry(obj):
+                if AXUtilities.is_dpub_biblioentry(obj):
                     return object_properties.ROLE_BIBLIOENTRY
-                if self._script.utilities.isDPubEndnote(obj):
+                if AXUtilities.is_dpub_endnote(obj):
                     return object_properties.ROLE_ENDNOTE
             else:
-                if self._script.utilities.isDPubCover(obj):
+                if AXUtilities.is_dpub_cover(obj):
                     return object_properties.ROLE_COVER
-                if self._script.utilities.isDPubPagebreak(obj):
+                if AXUtilities.is_dpub_pagebreak(obj):
                     return object_properties.ROLE_PAGEBREAK
-                if self._script.utilities.isDPubSubtitle(obj):
+                if AXUtilities.is_dpub_subtitle(obj):
                     return object_properties.ROLE_SUBTITLE
 
-        if self._script.utilities.isLandmark(obj):
-            if self._script.utilities.isLandmarkWithoutType(obj):
+        if AXUtilities.is_landmark(obj):
+            if AXUtilities.is_landmark_without_type(obj):
                 return ''
-            if self._script.utilities.isLandmarkBanner(obj):
+            if AXUtilities.is_landmark_banner(obj):
                 return object_properties.ROLE_LANDMARK_BANNER
-            if self._script.utilities.isLandmarkComplementary(obj):
+            if AXUtilities.is_landmark_complementary(obj):
                 return object_properties.ROLE_LANDMARK_COMPLEMENTARY
-            if self._script.utilities.isLandmarkContentInfo(obj):
+            if AXUtilities.is_landmark_contentinfo(obj):
                 return object_properties.ROLE_LANDMARK_CONTENTINFO
-            if self._script.utilities.isLandmarkMain(obj):
+            if AXUtilities.is_landmark_main(obj):
                 return object_properties.ROLE_LANDMARK_MAIN
-            if self._script.utilities.isLandmarkNavigation(obj):
+            if AXUtilities.is_landmark_navigation(obj):
                 return object_properties.ROLE_LANDMARK_NAVIGATION
-            if self._script.utilities.isLandmarkRegion(obj):
+            if AXUtilities.is_landmark_region(obj):
                 return object_properties.ROLE_LANDMARK_REGION
-            if self._script.utilities.isLandmarkSearch(obj):
+            if AXUtilities.is_landmark_search(obj):
                 return object_properties.ROLE_LANDMARK_SEARCH
-            if self._script.utilities.isLandmarkForm(obj):
+            if AXUtilities.is_landmark_form(obj):
                 role = Atspi.Role.FORM
-        elif self._script.utilities.isComment(obj):
+        elif AXUtilities.is_comment(obj):
             role = Atspi.Role.COMMENT
 
         if not isinstance(role, Atspi.Role):
@@ -1445,7 +1444,7 @@ class Generator:
         return Atk.role_get_localized_name(atkRole)
 
     def getStateIndicator(self, obj, **args):
-        if self._script.utilities.isSwitch(obj):
+        if AXUtilities.is_switch(obj):
             return self._generateSwitchState(obj, **args)
 
         role = args.get('role', AXObject.get_role(obj))

@@ -77,8 +77,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result = [super()._generateName(doc)]
 
         if not AXTable.get_table(obj) \
-           and (self._script.utilities.isLandmark(obj) \
-                or self._script.utilities.isMath(obj) \
+           and (AXUtilities.is_landmark(obj) \
+                or AXUtilities.is_math_related(obj) \
                 or AXUtilities.is_tool_tip(obj) \
                 or AXUtilities.is_status_bar(obj)):
             return result
@@ -152,7 +152,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
-        if self._script.utilities.isFeedArticle(obj):
+        if AXUtilities.is_feed_article(obj):
             return []
 
         if not self._script.utilities.isClickableElement(obj):
@@ -300,10 +300,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generateLabelAndName(obj, **args)
 
         if self._script.utilities.isTextBlockElement(obj) \
-           and not self._script.utilities.isLandmark(obj) \
+           and not AXUtilities.is_landmark(obj) \
            and not self._script.utilities.isDocument(obj) \
-           and not self._script.utilities.isDPub(obj) \
-           and not self._script.utilities.isContentSuggestion(obj):
+           and not AXUtilities.is_dpub(obj) \
+           and not AXUtilities.is_suggestion(obj):
             return []
 
         priorObj = args.get("priorObj")
@@ -321,15 +321,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generateName(obj, **args)
 
         if self._script.utilities.isTextBlockElement(obj) \
-           and not self._script.utilities.isLandmark(obj) \
-           and not self._script.utilities.isDPub(obj) \
+           and not AXUtilities.is_landmark(obj) \
+           and not AXUtilities.is_dpub(obj) \
            and not args.get('inFlatReview'):
             return []
 
         if self._script.utilities.hasVisibleCaption(obj):
             return []
 
-        if self._script.utilities.isFigure(obj) and args.get('ancestorOf'):
+        if AXUtilities.is_figure(obj) and args.get('ancestorOf'):
             caption = args.get('ancestorOf')
             if not AXUtilities.is_caption(caption):
                 caption = AXObject.find_ancestor(caption, AXUtilities.is_caption)
@@ -425,7 +425,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         setsize = self._script.utilities.getSetSize(AXObject.get_child(obj, 0))
         if setsize is None:
-            if self._script.utilities.isDescriptionList(obj):
+            if AXUtilities.is_description_list(obj):
                 children = self._script.utilities.descriptionListTerms(obj)
             elif role in [Atspi.Role.LIST, Atspi.Role.LIST_BOX]:
                 children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
@@ -434,7 +434,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not setsize:
             return []
 
-        if self._script.utilities.isDescriptionList(obj):
+        if AXUtilities.is_description_list(obj):
             result = [messages.descriptionListTermCount(setsize)]
         elif role == 'ROLE_FEED':
             result = [messages.feedArticleCount(setsize)]
@@ -565,7 +565,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-        if self._script.utilities.isMath(obj) and not self._script.utilities.isMathTopLevel(obj):
+        if AXUtilities.is_math_related(obj) and not AXUtilities.is_math(obj):
             return result
 
         def speakRoles(x):

@@ -496,7 +496,7 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
             container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
-            if self._script.utilities.isContentSuggestion(container):
+            if AXUtilities.is_suggestion(container):
                 result.extend(self._generatePause(obj, **args))
                 result.extend(self._generateHasDetails(container, mode=args.get('mode')))
 
@@ -539,7 +539,7 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
             container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
-            if self._script.utilities.isContentSuggestion(container):
+            if AXUtilities.is_suggestion(container):
                 result.extend(self._generatePause(obj, **args))
                 result.extend(self._generateHasDetails(container, mode=args.get('mode')))
 
@@ -748,7 +748,7 @@ class SpeechGenerator(generator.Generator):
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
         for label in labels:
             name = self._generateName(label, **args)
-            if name and len(name[0]) == 1 and self._script.utilities.isMath(obj):
+            if name and len(name[0]) == 1 and AXUtilities.is_math_related(obj):
                 charname = mathsymbols.getCharacterName(name[0])
                 if charname:
                     name[0] = charname
@@ -1337,7 +1337,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         string = result[0].strip()
-        if len(string) == 1 and self._script.utilities.isMath(obj):
+        if len(string) == 1 and AXUtilities.is_math_related(obj):
             charname = mathsymbols.getCharacterName(string)
             if charname != string:
                 result[0] = charname
@@ -1887,7 +1887,7 @@ class SpeechGenerator(generator.Generator):
         elif role == 'ROLE_FEED':
             result.append(messages.LEAVING_FEED)
         elif role == Atspi.Role.PANEL:
-            if self._script.utilities.isFigure(obj):
+            if AXUtilities.is_figure(obj):
                 result.append(messages.LEAVING_FIGURE)
             elif self._script.utilities.isDocumentPanel(obj):
                 result.append(messages.LEAVING_PANEL)
@@ -1896,77 +1896,77 @@ class SpeechGenerator(generator.Generator):
         elif role == Atspi.Role.TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
         elif role == 'ROLE_DPUB_LANDMARK':
-            if self._script.utilities.isDPubAcknowledgments(obj):
+            if AXUtilities.is_dpub_acknowledgments(obj):
                 result.append(messages.LEAVING_ACKNOWLEDGMENTS)
-            elif self._script.utilities.isDPubAfterword(obj):
+            elif AXUtilities.is_dpub_afterword(obj):
                 result.append(messages.LEAVING_AFTERWORD)
-            elif self._script.utilities.isDPubAppendix(obj):
+            elif AXUtilities.is_dpub_appendix(obj):
                 result.append(messages.LEAVING_APPENDIX)
-            elif self._script.utilities.isDPubBibliography(obj):
+            elif AXUtilities.is_dpub_bibliography(obj):
                 result.append(messages.LEAVING_BIBLIOGRAPHY)
-            elif self._script.utilities.isDPubChapter(obj):
+            elif AXUtilities.is_dpub_chapter(obj):
                 result.append(messages.LEAVING_CHAPTER)
-            elif self._script.utilities.isDPubConclusion(obj):
+            elif AXUtilities.is_dpub_conclusion(obj):
                 result.append(messages.LEAVING_CONCLUSION)
-            elif self._script.utilities.isDPubCredits(obj):
+            elif AXUtilities.is_dpub_credits(obj):
                 result.append(messages.LEAVING_CREDITS)
-            elif self._script.utilities.isDPubEndnotes(obj):
+            elif AXUtilities.is_dpub_endnotes(obj):
                 result.append(messages.LEAVING_ENDNOTES)
-            elif self._script.utilities.isDPubEpilogue(obj):
+            elif AXUtilities.is_dpub_epilogue(obj):
                 result.append(messages.LEAVING_EPILOGUE)
-            elif self._script.utilities.isDPubErrata(obj):
+            elif AXUtilities.is_dpub_errata(obj):
                 result.append(messages.LEAVING_ERRATA)
-            elif self._script.utilities.isDPubForeword(obj):
+            elif AXUtilities.is_dpub_foreword(obj):
                 result.append(messages.LEAVING_FOREWORD)
-            elif self._script.utilities.isDPubGlossary(obj):
+            elif AXUtilities.is_dpub_glossary(obj):
                 result.append(messages.LEAVING_GLOSSARY)
-            elif self._script.utilities.isDPubIndex(obj):
+            elif AXUtilities.is_dpub_index(obj):
                 result.append(messages.LEAVING_INDEX)
-            elif self._script.utilities.isDPubIntroduction(obj):
+            elif AXUtilities.is_dpub_introduction(obj):
                 result.append(messages.LEAVING_INTRODUCTION)
-            elif self._script.utilities.isDPubPagelist(obj):
+            elif AXUtilities.is_dpub_pagelist(obj):
                 result.append(messages.LEAVING_PAGELIST)
-            elif self._script.utilities.isDPubPart(obj):
+            elif AXUtilities.is_dpub_part(obj):
                 result.append(messages.LEAVING_PART)
-            elif self._script.utilities.isDPubPreface(obj):
+            elif AXUtilities.is_dpub_preface(obj):
                 result.append(messages.LEAVING_PREFACE)
-            elif self._script.utilities.isDPubPrologue(obj):
+            elif AXUtilities.is_dpub_prologue(obj):
                 result.append(messages.LEAVING_PROLOGUE)
-            elif self._script.utilities.isDPubToc(obj):
+            elif AXUtilities.is_dpub_toc(obj):
                 result.append(messages.LEAVING_TOC)
         elif role == 'ROLE_DPUB_SECTION':
-            if self._script.utilities.isDPubAbstract(obj):
+            if AXUtilities.is_dpub_abstract(obj):
                 result.append(messages.LEAVING_ABSTRACT)
-            elif self._script.utilities.isDPubColophon(obj):
+            elif AXUtilities.is_dpub_colophon(obj):
                 result.append(messages.LEAVING_COLOPHON)
-            elif self._script.utilities.isDPubCredit(obj):
+            elif AXUtilities.is_dpub_credit(obj):
                 result.append(messages.LEAVING_CREDIT)
-            elif self._script.utilities.isDPubDedication(obj):
+            elif AXUtilities.is_dpub_dedication(obj):
                 result.append(messages.LEAVING_DEDICATION)
-            elif self._script.utilities.isDPubEpigraph(obj):
+            elif AXUtilities.is_dpub_epigraph(obj):
                 result.append(messages.LEAVING_EPIGRAPH)
-            elif self._script.utilities.isDPubExample(obj):
+            elif AXUtilities.is_dpub_example(obj):
                 result.append(messages.LEAVING_EXAMPLE)
-            elif self._script.utilities.isDPubPullquote(obj):
+            elif AXUtilities.is_dpub_pullquote(obj):
                 result.append(messages.LEAVING_PULLQUOTE)
-            elif self._script.utilities.isDPubQna(obj):
+            elif AXUtilities.is_dpub_qna(obj):
                 result.append(messages.LEAVING_QNA)
-        elif self._script.utilities.isLandmark(obj):
-            if self._script.utilities.isLandmarkBanner(obj):
+        elif AXUtilities.is_landmark(obj):
+            if AXUtilities.is_landmark_banner(obj):
                 result.append(messages.LEAVING_LANDMARK_BANNER)
-            elif self._script.utilities.isLandmarkComplementary(obj):
+            elif AXUtilities.is_landmark_complementary(obj):
                 result.append(messages.LEAVING_LANDMARK_COMPLEMENTARY)
-            elif self._script.utilities.isLandmarkContentInfo(obj):
+            elif AXUtilities.is_landmark_contentinfo(obj):
                 result.append(messages.LEAVING_LANDMARK_CONTENTINFO)
-            elif self._script.utilities.isLandmarkMain(obj):
+            elif AXUtilities.is_landmark_main(obj):
                 result.append(messages.LEAVING_LANDMARK_MAIN)
-            elif self._script.utilities.isLandmarkNavigation(obj):
+            elif AXUtilities.is_landmark_navigation(obj):
                 result.append(messages.LEAVING_LANDMARK_NAVIGATION)
-            elif self._script.utilities.isLandmarkRegion(obj):
+            elif AXUtilities.is_landmark_region(obj):
                 result.append(messages.LEAVING_LANDMARK_REGION)
-            elif self._script.utilities.isLandmarkSearch(obj):
+            elif AXUtilities.is_landmark_search(obj):
                 result.append(messages.LEAVING_LANDMARK_SEARCH)
-            elif self._script.utilities.isLandmarkForm(obj):
+            elif AXUtilities.is_landmark_form(obj):
                 result.append(messages.LEAVING_FORM)
             else:
                 result = ['']
@@ -2152,7 +2152,7 @@ class SpeechGenerator(generator.Generator):
                                Atspi.Role.TOOL_TIP]
 
         result = []
-        if self._script.utilities.isBlockquote(priorObj):
+        if AXUtilities.is_block_quote(priorObj):
             oldRole = self._getAlternativeRole(priorObj)
             self._overrideRole(oldRole, args)
             result.extend(self.generate(
@@ -2458,11 +2458,11 @@ class SpeechGenerator(generator.Generator):
     def _generateMath(self, obj, **args):
         result = []
         children = [child for child in AXObject.iter_children(obj)]
-        if not children and not self._script.utilities.isMathTopLevel(obj):
+        if not children and not AXUtilities.is_math(obj):
             children = [obj]
 
         for child in children:
-            if self._script.utilities.isMathLayoutOnly(child) and AXObject.get_child_count(child):
+            if AXUtilities.is_math_layout_only(child) and AXObject.get_child_count(child):
                 result.extend(self._generateMath(child))
                 continue
 
@@ -2563,7 +2563,7 @@ class SpeechGenerator(generator.Generator):
         return []
 
     def _generateFractionStart(self, obj, **args):
-        if self._script.utilities.isMathFractionWithoutBar(obj):
+        if AXUtilities.is_math_fraction_without_bar(obj):
             result = [messages.MATH_FRACTION_WITHOUT_BAR_START]
         else:
             result = [messages.MATH_FRACTION_START]
@@ -2572,7 +2572,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateFractionNumerator(self, obj, **args):
         numerator = self._script.utilities.getMathNumerator(obj)
-        if self._script.utilities.isMathLayoutOnly(numerator):
+        if AXUtilities.is_math_layout_only(numerator):
             return self._generateMath(numerator)
 
         oldRole = self._getAlternativeRole(numerator)
@@ -2583,7 +2583,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateFractionDenominator(self, obj, **args):
         denominator = self._script.utilities.getMathDenominator(obj)
-        if self._script.utilities.isMathLayoutOnly(denominator):
+        if AXUtilities.is_math_layout_only(denominator):
             return self._generateMath(denominator)
 
         oldRole = self._getAlternativeRole(denominator)
@@ -2604,7 +2604,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateRootStart(self, obj, **args):
         result = []
-        if self._script.utilities.isMathSquareRoot(obj):
+        if AXUtilities.is_math_square_root(obj):
             result = [messages.MATH_SQUARE_ROOT_OF]
         else:
             index = self._script.utilities.getMathRootIndex(obj)
@@ -2616,7 +2616,7 @@ class SpeechGenerator(generator.Generator):
             elif string:
                 result = [string]
                 result.extend([messages.MATH_ROOT_OF])
-            elif self._script.utilities.isMathLayoutOnly(index):
+            elif AXUtilities.is_math_layout_only(index):
                 result = self._generateMath(index)
                 result.extend([messages.MATH_ROOT_OF])
             else:
@@ -2636,9 +2636,9 @@ class SpeechGenerator(generator.Generator):
         if not base:
             return []
 
-        if self._script.utilities.isMathSquareRoot(obj) \
-           or self._script.utilities.isMathToken(base) \
-           or self._script.utilities.isMathLayoutOnly(base):
+        if AXUtilities.is_math_square_root(obj) \
+           or AXUtilities.is_math_token(base) \
+           or AXUtilities.is_math_layout_only(base):
             return self._generateMath(base)
 
         result = [self._generatePause(obj, **args)]
@@ -2662,7 +2662,7 @@ class SpeechGenerator(generator.Generator):
         return self._generateMath(base)
 
     def _generateScriptScript(self, obj, **args):
-        if self._script.utilities.isMathLayoutOnly(obj):
+        if AXUtilities.is_math_layout_only(obj):
             return self._generateMath(obj)
 
         oldRole = self._getAlternativeRole(obj)
@@ -2720,7 +2720,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         prescripts = self._script.utilities.getMathPrescripts(obj)
         for i, script in enumerate(prescripts):
-            if self._script.utilities.isNoneElement(script):
+            if AXUtilities.is_math_layout_only(script):
                 continue
             if i % 2:
                 rv = [messages.MATH_PRE_SUPERSCRIPT]
@@ -2736,7 +2736,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         postscripts = self._script.utilities.getMathPostscripts(obj)
         for i, script in enumerate(postscripts):
-            if self._script.utilities.isNoneElement(script):
+            if AXUtilities.is_math_layout_only(script):
                 continue
             if i % 2:
                 rv = [messages.MATH_SUPERSCRIPT]

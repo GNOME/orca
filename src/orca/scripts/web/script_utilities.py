@@ -93,7 +93,6 @@ class Utilities(script_utilities.Utilities):
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
-        self._isLandmark = {}
         self._isLink = {}
         self._isListDescendant = {}
         self._isNonNavigablePopup = {}
@@ -189,7 +188,6 @@ class Utilities(script_utilities.Utilities):
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
-        self._isLandmark = {}
         self._isLink = {}
         self._isListDescendant = {}
         self._isNonNavigablePopup = {}
@@ -450,7 +448,7 @@ class Utilities(script_utilities.Utilities):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('tag')
 
-    def _getXMLRoles(self, obj):
+    def _get_xml_roles(self, obj):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('xml-roles', '').split()
 
@@ -621,7 +619,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and AXObject.get_child_count(obj)):
             return False
 
-        if self.isMathTopLevel(obj):
+        if AXUtilities.is_math(obj):
             return True
 
         return False
@@ -1051,14 +1049,14 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        if boundary == Atspi.TextBoundaryType.SENTENCE_START and self.isTime(obj):
+        if boundary == Atspi.TextBoundaryType.SENTENCE_START and AXUtilities.is_time(obj):
             string = AXText.get_all_text(obj)
             if string:
                 return [[obj, 0, len(string), string]]
 
         if boundary == Atspi.TextBoundaryType.LINE_START:
-            if self.isMath(obj):
-                if self.isMathTopLevel(obj):
+            if AXUtilities.is_math_related(obj):
+                if AXUtilities.is_math(obj):
                     math = obj
                 else:
                     math = self.getMathAncestor(obj)
@@ -1326,7 +1324,7 @@ class Utilities(script_utilities.Utilities):
                     obj, offset, self._currentObjectContents, "Object (cached)")
                 return self._currentObjectContents
 
-        objIsLandmark = self.isLandmark(obj)
+        objIsLandmark = AXUtilities.is_landmark(obj)
 
         def _isInObject(x):
             if not x:
@@ -1343,7 +1341,7 @@ class Utilities(script_utilities.Utilities):
             if xStart == xEnd:
                 return False
 
-            if objIsLandmark and self.isLandmark(xObj) and obj != xObj:
+            if objIsLandmark and AXUtilities.is_landmark(xObj) and obj != xObj:
                 return False
 
             return _isInObject(xObj)
@@ -1477,7 +1475,7 @@ class Utilities(script_utilities.Utilities):
             if container:
                 extents = self.getExtents(container, 0, 1)
 
-        objBanner = AXObject.find_ancestor(obj, self.isLandmarkBanner)
+        objBanner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
 
         def _include(x):
             if x in objects:
@@ -1490,10 +1488,10 @@ class Utilities(script_utilities.Utilities):
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
 
             if obj != xObj:
-                if self.isLandmark(obj) and self.isLandmark(xObj):
+                if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(xObj):
                     return False
                 if self.isLink(obj) and self.isLink(xObj):
-                    xObjBanner = AXObject.find_ancestor(xObj, self.isLandmarkBanner)
+                    xObjBanner = AXObject.find_ancestor(xObj, AXUtilities.is_landmark_banner)
                     if (objBanner or xObjBanner) and objBanner != xObjBanner:
                         return False
                     if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
@@ -1508,7 +1506,7 @@ class Utilities(script_utilities.Utilities):
                 elif AXUtilities.is_heading(xObj) and AXComponent.has_no_size(xObj):
                     return False
 
-            if self.isMathTopLevel(xObj) or self.isMath(obj):
+            if AXUtilities.is_math(xObj) or AXUtilities.is_math_related(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
             elif self.isTextSubscriptOrSuperscript(xObj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, xExtents[3])
@@ -1531,11 +1529,11 @@ class Utilities(script_utilities.Utilities):
             return []
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
-        if (extents[2] == 0 and extents[3] == 0) or self.isMath(firstObj):
+        if (extents[2] == 0 and extents[3] == 0) or AXUtilities.is_math_related(firstObj):
             extents = self.getExtents(firstObj, firstStart, firstEnd)
 
         lastObj, lastStart, lastEnd, lastString = objects[-1]
-        if self.isMathTopLevel(lastObj):
+        if AXUtilities.is_math(lastObj):
             lastObj, lastEnd = self.lastContext(lastObj)
             lastEnd += 1
 
@@ -1591,7 +1589,7 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
-            if self.isMathTopLevel(lastObj):
+            if AXUtilities.is_math(lastObj):
                 lastObj, lastEnd = self.lastContext(lastObj)
                 lastEnd += 1
 
@@ -1640,7 +1638,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: First context on line is: ", firstObj, ", ", firstOffset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not self.elementIsPreformattedText(firstObj)
+        skipSpace = not AXUtilities.is_code(firstObj)
         obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
         if not obj and firstObj:
             tokens = ["WEB: Previous context is: ", obj, ", ", offset, ". Trying again."]
@@ -1703,7 +1701,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Last context on line is: ", lastObj, ", ", lastOffset]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not self.elementIsPreformattedText(lastObj)
+        skipSpace = not AXUtilities.is_code(lastObj)
         obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
         if not obj and lastObj:
             tokens = ["WEB: Next context is: ", obj, ", ", offset, ". Trying again."]
@@ -2034,7 +2032,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if AXUtilities.is_focusable(obj) \
             and not self.isDocument(obj):
-            for child in AXObject.iter_children(obj, self.isMathTopLevel):
+            for child in AXObject.iter_children(obj, AXUtilities.is_math):
                 rv = True
                 break
 
@@ -2062,7 +2060,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif AXUtilities.is_editable(obj):
             rv = False
-        elif self.isGridCell(obj):
+        elif AXUtilities.is_grid_cell(obj):
             rv = False
         elif AXUtilities.is_document(obj):
             rv = True
@@ -2101,7 +2099,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        if self.isDescriptionList(obj):
+        if AXUtilities.is_description_list(obj):
             return False
 
         if AXUtilities.is_list(obj) and offset is not None:
@@ -2140,28 +2138,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isAriaAlert(self, obj):
-        return 'alert' in self._getXMLRoles(obj)
-
-    def isBlockquote(self, obj):
-        if super().isBlockquote(obj):
-            return True
-
-        return self._getTag(obj) == 'blockquote'
-
-    def isComment(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isComment(obj)
-
-        if AXUtilities.is_comment(obj):
-            return True
-
-        return 'comment' in self._getXMLRoles(obj)
-
-    def isContentDeletion(self, obj):
-        if super().isContentDeletion(obj):
-            return True
-
-        return 'deletion' in self._getXMLRoles(obj) or 'del' == self._getTag(obj)
+        return 'alert' in self._get_xml_roles(obj)
 
     def isContentError(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2171,24 +2148,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return AXUtilities.is_invalid_entry(obj)
-
-    def isContentInsertion(self, obj):
-        if super().isContentInsertion(obj):
-            return True
-
-        return 'insertion' in self._getXMLRoles(obj) or 'ins' == self._getTag(obj)
-
-    def isContentMarked(self, obj):
-        if super().isContentMarked(obj):
-            return True
-
-        return 'mark' in self._getXMLRoles(obj) or 'mark' == self._getTag(obj)
-
-    def isContentSuggestion(self, obj):
-        if AXUtilities.is_suggestion(obj):
-            return True
-
-        return 'suggestion' in self._getXMLRoles(obj)
 
     def isCustomElement(self, obj):
         tag = self._getTag(obj)
@@ -2218,14 +2177,11 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isInlineSuggestion(self, obj):
-        if not self.isContentSuggestion(obj):
+        if not AXUtilities.is_suggestion(obj):
             return False
 
         displayStyle = self._getDisplayStyle(obj)
         return "inline" in displayStyle
-
-    def isSVG(self, obj):
-        return 'svg' == self._getTag(obj)
 
     def isTextField(self, obj):
         if AXUtilities.is_text_input(obj):
@@ -2252,145 +2208,19 @@ class Utilities(script_utilities.Utilities):
 
     def speakMathSymbolNames(self, obj=None):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        return self.isMath(obj)
+        return AXUtilities.is_math_related(obj)
 
     def isInMath(self):
-        return self.isMath(focus_manager.get_manager().get_locus_of_focus())
-
-    def isMath(self, obj):
-        tag = self._getTag(obj)
-        rv = tag in ['math',
-                     'maction',
-                     'maligngroup',
-                     'malignmark',
-                     'menclose',
-                     'merror',
-                     'mfenced',
-                     'mfrac',
-                     'mglyph',
-                     'mi',
-                     'mlabeledtr',
-                     'mlongdiv',
-                     'mmultiscripts',
-                     'mn',
-                     'mo',
-                     'mover',
-                     'mpadded',
-                     'mphantom',
-                     'mprescripts',
-                     'mroot',
-                     'mrow',
-                     'ms',
-                     'mscarries',
-                     'mscarry',
-                     'msgroup',
-                     'msline',
-                     'mspace',
-                     'msqrt',
-                     'msrow',
-                     'mstack',
-                     'mstyle',
-                     'msub',
-                     'msup',
-                     'msubsup',
-                     'mtable',
-                     'mtd',
-                     'mtext',
-                     'mtr',
-                     'munder',
-                     'munderover']
-
-        return rv
-
-    def isNoneElement(self, obj):
-        return self._getTag(obj) == 'none'
-
-    def isMathLayoutOnly(self, obj):
-        return self._getTag(obj) in ['mrow', 'mstyle', 'merror', 'mpadded']
-
-    def isMathMultiline(self, obj):
-        return self._getTag(obj) in ['mtable', 'mstack', 'mlongdiv']
-
-    def isMathEnclose(self, obj):
-        return self._getTag(obj) == 'menclose'
-
-    def isMathFenced(self, obj):
-        return self._getTag(obj) == 'mfenced'
-
-    def isMathFractionWithoutBar(self, obj):
-        if not AXUtilities.is_math_fraction(obj):
-            return False
-
-        attrs = AXObject.get_attributes_dict(obj)
-        linethickness = attrs.get('linethickness')
-        if not linethickness:
-            return False
-
-        for char in linethickness:
-            if char.isnumeric() and char != '0':
-                return False
-
-        return True
-
-    def isMathPhantom(self, obj):
-        return self._getTag(obj) == 'mphantom'
-
-    def isMathMultiScript(self, obj):
-        return self._getTag(obj) == 'mmultiscripts'
-
-    def _isMathPrePostScriptSeparator(self, obj):
-        return self._getTag(obj) == 'mprescripts'
-
-    def isMathSubOrSuperScript(self, obj):
-        return self._getTag(obj) in ['msub', 'msup', 'msubsup']
-
-    def isMathTable(self, obj):
-        return self._getTag(obj) == 'mtable'
-
-    def isMathTableRow(self, obj):
-        return self._getTag(obj) in ['mtr', 'mlabeledtr']
-
-    def isMathTableCell(self, obj):
-        return self._getTag(obj) == 'mtd'
-
-    def isMathUnderOrOverScript(self, obj):
-        return self._getTag(obj) in ['mover', 'munder', 'munderover']
-
-    def _isMathSubElement(self, obj):
-        return self._getTag(obj) == 'msub'
-
-    def _isMathSupElement(self, obj):
-        return self._getTag(obj) == 'msup'
-
-    def _isMathSubsupElement(self, obj):
-        return self._getTag(obj) == 'msubsup'
-
-    def _isMathUnderElement(self, obj):
-        return self._getTag(obj) == 'munder'
-
-    def _isMathOverElement(self, obj):
-        return self._getTag(obj) == 'mover'
-
-    def _isMathUnderOverElement(self, obj):
-        return self._getTag(obj) == 'munderover'
-
-    def isMathSquareRoot(self, obj):
-        return self._getTag(obj) == 'msqrt'
-
-    def isMathToken(self, obj):
-        return self._getTag(obj) in ['mi', 'mn', 'mo', 'mtext', 'ms', 'mspace']
-
-    def isMathTopLevel(self, obj):
-        return AXUtilities.is_math(obj)
+        return AXUtilities.is_math_related(focus_manager.get_manager().get_locus_of_focus())
 
     def getMathAncestor(self, obj):
-        if not self.isMath(obj):
+        if not AXUtilities.is_math_related(obj):
             return None
 
-        if self.isMathTopLevel(obj):
+        if AXUtilities.is_math(obj):
             return obj
 
-        return AXObject.find_ancestor(obj, self.isMathTopLevel)
+        return AXObject.find_ancestor(obj, AXUtilities.is_math)
 
     def getMathDenominator(self, obj):
         return AXObject.get_child(obj, 1)
@@ -2399,7 +2229,7 @@ class Utilities(script_utilities.Utilities):
         return AXObject.get_child(obj, 0)
 
     def getMathRootBase(self, obj):
-        if self.isMathSquareRoot(obj):
+        if AXUtilities.is_math_square_root(obj):
             return obj
 
         return AXObject.get_child(obj, 0)
@@ -2408,46 +2238,48 @@ class Utilities(script_utilities.Utilities):
         return AXObject.get_child(obj, 1)
 
     def getMathScriptBase(self, obj):
-        if self.isMathSubOrSuperScript(obj) \
-           or self.isMathUnderOrOverScript(obj) \
-           or self.isMathMultiScript(obj):
+        if AXUtilities.is_math_sub_or_super_script(obj) \
+           or AXUtilities.is_math_under_or_over_script(obj) \
+           or AXUtilities.is_math_multi_script(obj):
             return AXObject.get_child(obj, 0)
 
         return None
 
     def getMathScriptSubscript(self, obj):
-        if self._isMathSubElement(obj) or self._isMathSubsupElement(obj):
+        if self._getTag(obj) in ["msub", "msubsup"]:
             return AXObject.get_child(obj, 1)
 
         return None
 
     def getMathScriptSuperscript(self, obj):
-        if self._isMathSupElement(obj):
+        tag = self._getTag(obj)
+        if tag == "msup":
             return AXObject.get_child(obj, 1)
 
-        if self._isMathSubsupElement(obj):
+        if tag == "msubsup":
             return AXObject.get_child(obj, 2)
 
         return None
 
     def getMathScriptUnderscript(self, obj):
-        if self._isMathUnderElement(obj) or self._isMathUnderOverElement(obj):
+        if self._getTag(obj) in ["munder", "munderover"]:
             return AXObject.get_child(obj, 1)
 
         return None
 
     def getMathScriptOverscript(self, obj):
-        if self._isMathOverElement(obj):
+        tag = self._getTag(obj)
+        if tag == "mover":
             return AXObject.get_child(obj, 1)
 
-        if self._isMathUnderOverElement(obj):
+        if tag == "munderover":
             return AXObject.get_child(obj, 2)
 
         return None
 
     def _getMathPrePostScriptSeparator(self, obj):
         for child in AXObject.iter_children(obj):
-            if self._isMathPrePostScriptSeparator(child):
+            if self._getTag(child) == "mprescripts":
                 return child
 
         return None
@@ -2476,21 +2308,21 @@ class Utilities(script_utilities.Utilities):
         return children
 
     def getMathEnclosures(self, obj):
-        if not self.isMathEnclose(obj):
+        if not AXUtilities.is_math_enclose(obj):
             return []
 
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get('notation', 'longdiv').split()
 
     def getMathFencedSeparators(self, obj):
-        if not self.isMathFenced(obj):
+        if not AXUtilities.is_math_fenced(obj):
             return ['']
 
         attrs = AXObject.get_attributes_dict(obj)
         return list(attrs.get('separators', ','))
 
     def getMathFences(self, obj):
-        if not self.isMathFenced(obj):
+        if not AXUtilities.is_math_fenced(obj):
             return ['', '']
 
         attrs = AXObject.get_attributes_dict(obj)
@@ -2738,9 +2570,6 @@ class Utilities(script_utilities.Utilities):
         self._isNavigableToolTipDescendant[hash(obj)] = rv
         return rv
 
-    def isTime(self, obj):
-        return 'time' in self._getXMLRoles(obj) or 'time' == self._getTag(obj)
-
     def isToolBarDescendant(self, obj):
         if not obj:
             return False
@@ -2778,31 +2607,31 @@ class Utilities(script_utilities.Utilities):
 
         if AXUtilities.is_list(obj):
             rv = self.treatAsDiv(obj)
-        elif self.isDescriptionList(obj):
+        elif AXUtilities.is_description_list(obj):
             rv = False
-        elif self.isDescriptionListTerm(obj):
+        elif AXUtilities.is_description_term(obj):
             rv = False
-        elif self.isDescriptionListDescription(obj):
+        elif AXUtilities.is_description_value(obj):
             rv = False
-        elif self.isMath(obj):
+        elif AXUtilities.is_math_related(obj):
             rv = False
-        elif self.isLandmark(obj):
+        elif AXUtilities.is_landmark(obj):
             rv = False
-        elif self.isContentDeletion(obj):
+        elif AXUtilities.is_content_deletion(obj):
             rv = False
-        elif self.isContentInsertion(obj):
+        elif AXUtilities.is_content_insertion(obj):
             rv = False
-        elif self.isContentMarked(obj):
+        elif AXUtilities.is_mark(obj):
             rv = False
-        elif self.isContentSuggestion(obj):
+        elif AXUtilities.is_suggestion(obj):
             rv = False
-        elif self.isDPub(obj):
+        elif AXUtilities.is_dpub(obj):
             rv = False
-        elif self.isFeed(obj):
+        elif AXUtilities.is_feed(obj):
             rv = False
-        elif self.isFigure(obj):
+        elif AXUtilities.is_figure(obj):
             rv = False
-        elif self.isGrid(obj):
+        elif AXUtilities.is_grid(obj):
             rv = False
         elif self.isInlineIframe(obj):
             rv = not self.hasExplicitName(obj)
@@ -2826,20 +2655,11 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly[hash(obj)] = rv
         return rv
 
-    def elementIsPreformattedText(self, obj):
-        if self._getTag(obj) in ["pre", "code"]:
-            return True
-
-        if "code" in self._getXMLRoles(obj):
-            return True
-
-        return False
-
     def elementLinesAreSingleWords(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        if self.elementIsPreformattedText(obj):
+        if AXUtilities.is_code(obj):
             return False
 
         rv = self._elementLinesAreSingleWords.get(hash(obj))
@@ -3076,7 +2896,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_link(obj) \
            and not AXUtilities.is_focusable(obj) \
            and not AXObject.has_action(obj, "jump") \
-           and not self._getXMLRoles(obj):
+           and not self._get_xml_roles(obj):
             rv = True
 
         self._isAnchor[hash(obj)] = rv
@@ -3150,33 +2970,9 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        rv = AXObject.find_ancestor(obj, self.isCode) is not None
+        rv = AXObject.find_ancestor(obj, AXUtilities.is_code) is not None
         self._isCodeDescendant[hash(obj)] = rv
         return rv
-
-    def isCode(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isCode(obj)
-
-        return self._getTag(obj) == "code" or "code" in self._getXMLRoles(obj)
-
-    def isDescriptionList(self, obj):
-        if super().isDescriptionList(obj):
-            return True
-
-        return self._getTag(obj) == "dl"
-
-    def isDescriptionListTerm(self, obj):
-        if super().isDescriptionListTerm(obj):
-            return True
-
-        return self._getTag(obj) == "dt"
-
-    def isDescriptionListDescription(self, obj):
-        if super().isDescriptionListDescription(obj):
-            return True
-
-        return self._getTag(obj) == "dd"
 
     def descriptionListTerms(self, obj):
         if not obj:
@@ -3254,122 +3050,6 @@ class Utilities(script_utilities.Utilities):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
-    def isDPub(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        roles = self._getXMLRoles(obj)
-        rv = bool(list(filter(lambda x: x.startswith("doc-"), roles)))
-        return rv
-
-    def isDPubAbstract(self, obj):
-        return 'doc-abstract' in self._getXMLRoles(obj)
-
-    def isDPubAcknowledgments(self, obj):
-        return 'doc-acknowledgments' in self._getXMLRoles(obj)
-
-    def isDPubAfterword(self, obj):
-        return 'doc-afterword' in self._getXMLRoles(obj)
-
-    def isDPubAppendix(self, obj):
-        return 'doc-appendix' in self._getXMLRoles(obj)
-
-    def isDPubBacklink(self, obj):
-        return 'doc-backlink' in self._getXMLRoles(obj)
-
-    def isDPubBiblioref(self, obj):
-        return 'doc-biblioref' in self._getXMLRoles(obj)
-
-    def isDPubBibliography(self, obj):
-        return 'doc-bibliography' in self._getXMLRoles(obj)
-
-    def isDPubChapter(self, obj):
-        return 'doc-chapter' in self._getXMLRoles(obj)
-
-    def isDPubColophon(self, obj):
-        return 'doc-colophon' in self._getXMLRoles(obj)
-
-    def isDPubConclusion(self, obj):
-        return 'doc-conclusion' in self._getXMLRoles(obj)
-
-    def isDPubCover(self, obj):
-        return 'doc-cover' in self._getXMLRoles(obj)
-
-    def isDPubCredit(self, obj):
-        return 'doc-credit' in self._getXMLRoles(obj)
-
-    def isDPubCredits(self, obj):
-        return 'doc-credits' in self._getXMLRoles(obj)
-
-    def isDPubDedication(self, obj):
-        return 'doc-dedication' in self._getXMLRoles(obj)
-
-    def isDPubEndnote(self, obj):
-        return 'doc-endnote' in self._getXMLRoles(obj)
-
-    def isDPubEndnotes(self, obj):
-        return 'doc-endnotes' in self._getXMLRoles(obj)
-
-    def isDPubEpigraph(self, obj):
-        return 'doc-epigraph' in self._getXMLRoles(obj)
-
-    def isDPubEpilogue(self, obj):
-        return 'doc-epilogue' in self._getXMLRoles(obj)
-
-    def isDPubErrata(self, obj):
-        return 'doc-errata' in self._getXMLRoles(obj)
-
-    def isDPubExample(self, obj):
-        return 'doc-example' in self._getXMLRoles(obj)
-
-    def isDPubFootnote(self, obj):
-        return 'doc-footnote' in self._getXMLRoles(obj)
-
-    def isDPubForeword(self, obj):
-        return 'doc-foreword' in self._getXMLRoles(obj)
-
-    def isDPubGlossary(self, obj):
-        return 'doc-glossary' in self._getXMLRoles(obj)
-
-    def isDPubGlossref(self, obj):
-        return 'doc-glossref' in self._getXMLRoles(obj)
-
-    def isDPubIndex(self, obj):
-        return 'doc-index' in self._getXMLRoles(obj)
-
-    def isDPubIntroduction(self, obj):
-        return 'doc-introduction' in self._getXMLRoles(obj)
-
-    def isDPubNoteref(self, obj):
-        return 'doc-noteref' in self._getXMLRoles(obj)
-
-    def isDPubPagelist(self, obj):
-        return 'doc-pagelist' in self._getXMLRoles(obj)
-
-    def isDPubPagebreak(self, obj):
-        return 'doc-pagebreak' in self._getXMLRoles(obj)
-
-    def isDPubPart(self, obj):
-        return 'doc-part' in self._getXMLRoles(obj)
-
-    def isDPubPreface(self, obj):
-        return 'doc-preface' in self._getXMLRoles(obj)
-
-    def isDPubPrologue(self, obj):
-        return 'doc-prologue' in self._getXMLRoles(obj)
-
-    def isDPubPullquote(self, obj):
-        return 'doc-pullquote' in self._getXMLRoles(obj)
-
-    def isDPubQna(self, obj):
-        return 'doc-qna' in self._getXMLRoles(obj)
-
-    def isDPubSubtitle(self, obj):
-        return 'doc-subtitle' in self._getXMLRoles(obj)
-
-    def isDPubToc(self, obj):
-        return 'doc-toc' in self._getXMLRoles(obj)
-
     def isErrorMessage(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isErrorMessage(obj)
@@ -3403,12 +3083,6 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return AXObject.find_descendant(obj, _isMatch) is not None
-
-    def isGrid(self, obj):
-        return 'grid' in self._getXMLRoles(obj)
-
-    def isGridCell(self, obj):
-        return 'gridcell' in self._getXMLRoles(obj)
 
     def isInlineListItem(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3469,68 +3143,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXObject.find_ancestor(obj, AXUtilities.is_list)
 
-    def isFeed(self, obj):
-        return 'feed' in self._getXMLRoles(obj)
-
-    def isFeedArticle(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        if not AXUtilities.is_article(obj):
-            return False
-
-        return AXObject.find_ancestor(obj, self.isFeed) is not None
-
-    def isFigure(self, obj):
-        return 'figure' in self._getXMLRoles(obj) or self._getTag(obj) == 'figure'
-
-    def isLandmark(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isLandmark.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        if AXUtilities.is_landmark(obj):
-            rv = True
-        elif self.isLandmarkRegion(obj):
-            rv = bool(AXObject.get_name(obj))
-        else:
-            roles = self._getXMLRoles(obj)
-            rv = bool(list(filter(lambda x: x in self.getLandmarkTypes(), roles)))
-
-        self._isLandmark[hash(obj)] = rv
-        return rv
-
-    def isLandmarkWithoutType(self, obj):
-        roles = self._getXMLRoles(obj)
-        return not roles
-
-    def isLandmarkBanner(self, obj):
-        return 'banner' in self._getXMLRoles(obj)
-
-    def isLandmarkComplementary(self, obj):
-        return 'complementary' in self._getXMLRoles(obj)
-
-    def isLandmarkContentInfo(self, obj):
-        return 'contentinfo' in self._getXMLRoles(obj)
-
-    def isLandmarkForm(self, obj):
-        return 'form' in self._getXMLRoles(obj)
-
-    def isLandmarkMain(self, obj):
-        return 'main' in self._getXMLRoles(obj)
-
-    def isLandmarkNavigation(self, obj):
-        return 'navigation' in self._getXMLRoles(obj)
-
-    def isLandmarkRegion(self, obj):
-        return 'region' in self._getXMLRoles(obj)
-
-    def isLandmarkSearch(self, obj):
-        return 'search' in self._getXMLRoles(obj)
-
     def isLiveRegion(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3576,16 +3188,10 @@ class Utilities(script_utilities.Utilities):
         return len(AXUtilities.find_all_canvases(obj, self.isUselessImage)) > 0
 
     def isTextSubscriptOrSuperscript(self, obj):
-        if self.isMath(obj):
+        if AXUtilities.is_math_related(obj):
             return False
 
         return AXUtilities.is_subscript_or_superscript(obj)
-
-    def isSwitch(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isSwitch(obj)
-
-        return 'switch' in self._getXMLRoles(obj)
 
     def isNonNavigableEmbeddedDocument(self, obj):
         rv = self._isNonNavigableEmbeddedDocument.get(hash(obj))
@@ -3605,7 +3211,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isRedundantSVG(self, obj):
-        if not self.isSVG(obj) or AXObject.get_child_count(AXObject.get_parent(obj)) == 1:
+        if not AXUtilities.is_svg(obj) or AXObject.get_child_count(AXObject.get_parent(obj)) == 1:
             return False
 
         rv = self._isRedundantSVG.get(hash(obj))
@@ -3614,7 +3220,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = False
         parent = AXObject.get_parent(obj)
-        children = [x for x in AXObject.iter_children(parent, self.isSVG)]
+        children = [x for x in AXObject.iter_children(parent, AXUtilities.is_svg)]
         if len(children) == AXObject.get_child_count(parent):
             sortedChildren = AXComponent.sort_objects_by_size(children)
             if obj != sortedChildren[-1]:
@@ -3640,7 +3246,7 @@ class Utilities(script_utilities.Utilities):
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', AXText.get_all_text(obj)):
             for child in AXObject.iter_children(obj):
-                if not (AXUtilities.is_image_or_canvas(child) or self.isSVG(child)):
+                if not (AXUtilities.is_image_or_canvas(child) or AXUtilities.is_svg(child)):
                     break
             else:
                 rv = True
@@ -3657,7 +3263,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
-        if not (AXUtilities.is_image_or_canvas(obj) or self.isSVG(obj)):
+        if not (AXUtilities.is_image_or_canvas(obj) or AXUtilities.is_svg(obj)):
             rv = False
         if rv and (AXObject.get_name(obj) \
                    or AXObject.get_description(obj) \
@@ -3787,7 +3393,7 @@ class Utilities(script_utilities.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().hasVisibleCaption(obj)
 
-        if not (self.isFigure(obj) or AXObject.supports_table(obj)):
+        if not (AXUtilities.is_figure(obj) or AXObject.supports_table(obj)):
             return False
 
         rv = self._hasVisibleCaption.get(hash(obj))
@@ -3875,7 +3481,7 @@ class Utilities(script_utilities.Utilities):
         name = AXObject.get_name(obj)
         if name:
             rv = False
-        elif self._getXMLRoles(obj):
+        elif self._get_xml_roles(obj):
             rv = False
         elif not rv:
             roles = [Atspi.Role.CHECK_BOX,

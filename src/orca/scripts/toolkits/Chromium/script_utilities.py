@@ -366,7 +366,7 @@ class Utilities(web.Utilities):
 
         # Don't bother if the root is a 'pre' or 'code' element. Those often have
         # nothing but a TON of static text leaf nodes, which we want to ignore.
-        if self._getTag(root) in ('pre', 'code'):
+        if AXUtilities.is_code(root):
             tokens = ["CHROMIUM: Returning 0 descendants for pre/code", root]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return []
@@ -377,7 +377,7 @@ class Utilities(web.Utilities):
         # Chromium calculates posinset and setsize for description lists based on the
         # number of terms present. If we want to present the number of values associated
         # with a given term, we need to work those values out ourselves.
-        if self.isDescriptionListDescription(obj):
+        if AXUtilities.is_description_value(obj):
             return True
 
         if self.inDocumentContent(obj):

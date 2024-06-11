@@ -18,8 +18,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# Too many public methods, too many lines.
-# pylint: disable=R0904, C0302
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 
 """Utilities for obtaining role-related information."""
 
@@ -42,6 +43,11 @@ class AXUtilitiesRole:
     def _get_tag(obj):
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get("tag")
+
+    @staticmethod
+    def _get_xml_roles(obj):
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("xml-roles", "").split()
 
     @staticmethod
     def get_dialog_roles(include_alert_as_dialog=True):
@@ -278,7 +284,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.BLOCK_QUOTE
+        return role == Atspi.Role.BLOCK_QUOTE or AXUtilitiesRole._get_tag(obj) == "blockquote"
 
     @staticmethod
     def is_button(obj, role=None):
@@ -337,6 +343,13 @@ class AXUtilitiesRole:
         return role == Atspi.Role.CHECK_MENU_ITEM
 
     @staticmethod
+    def is_code(obj, _role=None):
+        """Returns True if obj has the code or code-like role"""
+
+        return "code" in AXUtilitiesRole._get_xml_roles(obj) \
+            or AXUtilitiesRole._get_tag(obj) in ["code", "pre"]
+
+    @staticmethod
     def is_color_chooser(obj, role=None):
         """Returns True if obj has the color_chooser role"""
 
@@ -366,7 +379,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.COMMENT
+        return role == Atspi.Role.COMMENT or "comment" in AXUtilitiesRole._get_xml_roles(obj)
 
     @staticmethod
     def is_content_deletion(obj, role=None):
@@ -374,7 +387,9 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.CONTENT_DELETION
+        return role == Atspi.Role.CONTENT_DELETION \
+                or "deletion" in AXUtilitiesRole._get_xml_roles(obj) \
+                or "del" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_content_insertion(obj, role=None):
@@ -382,7 +397,9 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.CONTENT_INSERTION
+        return role == Atspi.Role.CONTENT_INSERTION \
+                or "insertion" in AXUtilitiesRole._get_xml_roles(obj) \
+                or "ins" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_date_editor(obj, role=None):
@@ -413,7 +430,8 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_LIST
+        return role == Atspi.Role.DESCRIPTION_LIST \
+            or "dl" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_description_term(obj, role=None):
@@ -421,7 +439,8 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_TERM
+        return role == Atspi.Role.DESCRIPTION_TERM \
+            or "dt" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_description_value(obj, role=None):
@@ -429,7 +448,8 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_VALUE
+        return role == Atspi.Role.DESCRIPTION_VALUE \
+            or "dd" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_desktop_frame(obj, role=None):
@@ -548,6 +568,230 @@ class AXUtilitiesRole:
         return role == Atspi.Role.DOCUMENT_WEB
 
     @staticmethod
+    def is_dpub(obj, _role=None):
+        """Returns True if obj has a DPub role."""
+
+        roles = AXUtilitiesRole._get_xml_roles(obj)
+        rv = bool(list(filter(lambda x: x.startswith("doc-"), roles)))
+        return rv
+
+    @staticmethod
+    def is_dpub_abstract(obj, _role=None):
+        """Returns True if obj has the DPub abstract role."""
+
+        return "doc-abstract" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_acknowledgments(obj, _role=None):
+        """Returns True if obj has the DPub acknowledgments role."""
+
+        return "doc-acknowledgments" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_afterword(obj, _role=None):
+        """Returns True if obj has the DPub afterword role."""
+
+        return "doc-afterword" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_appendix(obj, _role=None):
+        """Returns True if obj has the DPub appendix role."""
+
+        return "doc-appendix" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_backlink(obj, _role=None):
+        """Returns True if obj has the DPub backlink role."""
+
+        return "doc-backlink" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_biblioref(obj, _role=None):
+        """Returns True if obj has the DPub biblioref role."""
+
+        return "doc-biblioref" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_bibliography(obj, _role=None):
+        """Returns True if obj has the DPub bibliography role."""
+
+        return "doc-bibliography" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_chapter(obj, _role=None):
+        """Returns True if obj has the DPub chapter role."""
+
+        return "doc-chapter" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_colophon(obj, _role=None):
+        """Returns True if obj has the DPub colophon role."""
+
+        return "doc-colophon" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_conclusion(obj, _role=None):
+        """Returns True if obj has the DPub conclusion role."""
+
+        return "doc-conclusion" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_cover(obj, _role=None):
+        """Returns True if obj has the DPub cover role."""
+
+        return "doc-cover" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_credit(obj, _role=None):
+        """Returns True if obj has the DPub credit role."""
+
+        return "doc-credit" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_credits(obj, _role=None):
+        """Returns True if obj has the DPub credits role."""
+
+        return "doc-credits" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_dedication(obj, _role=None):
+        """Returns True if obj has the DPub dedication role."""
+
+        return "doc-dedication" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_endnote(obj, _role=None):
+        """Returns True if obj has the DPub endnote role."""
+
+        return "doc-endnote" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_endnotes(obj, _role=None):
+        """Returns True if obj has the DPub endnotes role."""
+
+        return "doc-endnotes" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_epigraph(obj, _role=None):
+        """Returns True if obj has the DPub epigraph role."""
+
+        return "doc-epigraph" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_epilogue(obj, _role=None):
+        """Returns True if obj has the DPub epilogue role."""
+
+        return "doc-epilogue" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_errata(obj, _role=None):
+        """Returns True if obj has the DPub errata role."""
+
+        return "doc-errata" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_example(obj, _role=None):
+        """Returns True if obj has the DPub example role."""
+
+        return "doc-example" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_footnote(obj, _role=None):
+        """Returns True if obj has the DPub footnote role."""
+
+        return "doc-footnote" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_foreword(obj, _role=None):
+        """Returns True if obj has the DPub foreword role."""
+
+        return "doc-foreword" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_glossary(obj, _role=None):
+        """Returns True if obj has the DPub glossary role."""
+
+        return "doc-glossary" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_glossref(obj, _role=None):
+        """Returns True if obj has the DPub glossref role."""
+
+        return "doc-glossref" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_index(obj, _role=None):
+        """Returns True if obj has the DPub index role."""
+
+        return "doc-index" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_introduction(obj, _role=None):
+        """Returns True if obj has the DPub introduction role."""
+
+        return "doc-introduction" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_noteref(obj, _role=None):
+        """Returns True if obj has the DPub noteref role."""
+
+        return "doc-noteref" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_pagelist(obj, _role=None):
+        """Returns True if obj has the DPub pagelist role."""
+
+        return "doc-pagelist" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_pagebreak(obj, _role=None):
+        """Returns True if obj has the DPub pagebreak role."""
+
+        return "doc-pagebreak" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_part(obj, _role=None):
+        """Returns True if obj has the DPub part role."""
+
+        return "doc-part" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_preface(obj, _role=None):
+        """Returns True if obj has the DPub preface role."""
+
+        return "doc-preface" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_prologue(obj, _role=None):
+        """Returns True if obj has the DPub prologue role."""
+
+        return "doc-prologue" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_pullquote(obj, _role=None):
+        """Returns True if obj has the DPub pullquote role."""
+
+        return "doc-pullquote" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_qna(obj, _role=None):
+        """Returns True if obj has the DPub qna role."""
+
+        return "doc-qna" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_subtitle(obj, _role=None):
+        """Returns True if obj has the DPub subtitle role."""
+
+        return "doc-subtitle" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_dpub_toc(obj, _role=None):
+        """Returns True if obj has the DPub toc role."""
+
+        return "doc-toc" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
     def is_drawing_area(obj, role=None):
         """Returns True if obj has the drawing area role"""
 
@@ -586,6 +830,28 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.EXTENDED
+
+    @staticmethod
+    def is_feed(obj, _role=None):
+        """Returns True if obj has the feed role"""
+
+        return "feed" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_feed_article(obj, role=None):
+        """Returns True if obj has the article role and descends from a feed."""
+
+        if not AXUtilitiesRole.is_article(obj, role):
+            return False
+
+        return AXObject.find_ancestor(obj, AXUtilitiesRole.is_feed) is not None
+
+    @staticmethod
+    def is_figure(obj, _role=None):
+        """Returns True if obj has the figure role or tag."""
+
+        return "figure" in AXUtilitiesRole._get_xml_roles(obj) \
+            or AXUtilitiesRole._get_tag(obj) == "figure"
 
     @staticmethod
     def is_file_chooser(obj, role=None):
@@ -666,6 +932,29 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.GROUPING
+
+    @staticmethod
+    def is_grid(obj, role=None):
+        """Returns True if obj has the grid role."""
+
+        if not AXUtilitiesRole.is_table(obj, role):
+            return False
+
+        return "grid" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_grid_cell(obj, role=None):
+        """Returns True if obj has the gridcell role or the cell role and is in a grid."""
+
+        if not AXUtilitiesRole.is_table_cell(obj, role):
+            return False
+
+        roles = AXUtilitiesRole._get_xml_roles(obj)
+        if "gridcell" in roles:
+            return True
+        if "cell" in roles:
+            return AXObject.find_ancestor(obj, AXUtilitiesRole.is_grid)
+        return False
 
     @staticmethod
     def is_header(obj, role=None):
@@ -809,6 +1098,64 @@ class AXUtilitiesRole:
         return role == Atspi.Role.LANDMARK
 
     @staticmethod
+    def is_landmark_banner(obj, _role=None):
+        """Returns True if obj has the banner landmark role"""
+
+        return "banner" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_complementary(obj, _role=None):
+        """Returns True if obj has the complementary landmark role"""
+
+        return "complementary" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_contentinfo(obj, _role=None):
+        """Returns True if obj has the contentinfo landmark role"""
+
+        return "contentinfo" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_form(obj, _role=None):
+        """Returns True if obj has the form landmark role"""
+
+        return "form" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_main(obj, _role=None):
+        """Returns True if obj has the main landmark role"""
+
+        return "main" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_navigation(obj, _role=None):
+        """Returns True if obj has the navigation landmark role"""
+
+        return "navigation" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_region(obj, _role=None):
+        """Returns True if obj has the region landmark role"""
+
+        return "region" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_search(obj, _role=None):
+        """Returns True if obj has the search landmark role"""
+
+        return "search" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_landmark_without_type(obj, role=None):
+        """Returns True if obj has the landmark role but no type"""
+
+        if not AXUtilitiesRole.is_landmark(obj, role):
+            return False
+
+        roles = AXUtilitiesRole._get_xml_roles(obj)
+        return not roles
+
+    @staticmethod
     def is_layered_pane(obj, role=None):
         """Returns True if obj has the layered pane role"""
 
@@ -870,7 +1217,9 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.MARK
+        return role == Atspi.Role.MARK \
+               or "mark" in AXUtilitiesRole._get_xml_roles(obj) \
+               or "mark" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_marquee(obj, role=None):
@@ -889,6 +1238,18 @@ class AXUtilitiesRole:
         return role == Atspi.Role.MATH
 
     @staticmethod
+    def is_math_enclose(obj):
+        """Returns True if obj has the math enclose role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) == "menclose"
+
+    @staticmethod
+    def is_math_fenced(obj):
+        """Returns True if obj has the math fenced role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) == "mfenced"
+
+    @staticmethod
     def is_math_fraction(obj, role=None):
         """Returns True if obj has the math fraction role"""
 
@@ -897,12 +1258,126 @@ class AXUtilitiesRole:
         return role == Atspi.Role.MATH_FRACTION
 
     @staticmethod
+    def is_math_fraction_without_bar(obj, role=None):
+        """Returns True if obj has the math fraction role and lacks the fraction bar"""
+
+        if not AXUtilitiesRole.is_math_fraction(obj, role):
+            return False
+
+        line_thickness = AXObject.get_attribute(obj, "linethickness")
+        if not line_thickness:
+            return False
+
+        for char in line_thickness:
+            if char.isnumeric() and char != "0":
+                return False
+
+        return True
+
+    @staticmethod
+    def is_math_layout_only(obj):
+        """Returns True if obj has a layout-only math role"""
+
+        return AXUtilitiesRole._get_tag(obj) in ["mrow", "mstyle", "merror", "mpadded", "none"]
+
+    @staticmethod
+    def is_math_multi_script(obj):
+        """Returns True if obj has the math multi-scripts role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) == "mmultiscripts"
+
+    @staticmethod
+    def is_math_related(obj, role=None):
+        """Returns True if obj has a math-related role"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+        if role in [Atspi.Role.MATH, Atspi.Role.MATH_FRACTION, Atspi.Role.MATH_ROOT]:
+            return True
+        return AXUtilitiesRole._get_tag(obj) in ["math",
+                                                 "maction",
+                                                 "maligngroup",
+                                                 "malignmark",
+                                                 "menclose",
+                                                 "merror",
+                                                 "mfenced",
+                                                 "mfrac",
+                                                 "mglyph",
+                                                 "mi",
+                                                 "mlabeledtr",
+                                                 "mlongdiv",
+                                                 "mmultiscripts",
+                                                 "mn",
+                                                 "mo",
+                                                 "mover",
+                                                 "mpadded",
+                                                 "mphantom",
+                                                 "mprescripts",
+                                                 "mroot",
+                                                 "mrow",
+                                                 "ms",
+                                                 "mscarries",
+                                                 "mscarry",
+                                                 "msgroup",
+                                                 "msline",
+                                                 "mspace",
+                                                 "msqrt",
+                                                 "msrow",
+                                                 "mstack",
+                                                 "mstyle",
+                                                 "msub",
+                                                 "msup",
+                                                 "msubsup",
+                                                 "mtable",
+                                                 "mtd",
+                                                 "mtext",
+                                                 "mtr",
+                                                 "munder",
+                                                 "munderover"]
+
+    @staticmethod
     def is_math_root(obj, role=None):
         """Returns True if obj has the math root role"""
 
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.MATH_ROOT
+
+    @staticmethod
+    def is_math_square_root(obj):
+        """Returns True if obj has the math root role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) == "msqrt"
+
+    @staticmethod
+    def is_math_sub_or_super_script(obj):
+        """Returns True if obj has the math subscript or superscript role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) in ["msub", "msup", "msubsup"]
+
+    @staticmethod
+    def is_math_table(obj):
+        """Returns True if obj has the math table role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) == "mtable"
+
+    @staticmethod
+    def is_math_table_row(obj):
+        """Returns True if obj has the math table row role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) in ["mtr", "mlabeledtr"]
+
+    @staticmethod
+    def is_math_token(obj):
+        """Returns True if obj has a math token role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) in ["mi", "mn", "mo", "mtext", "ms", "mspace"]
+
+    @staticmethod
+    def is_math_under_or_over_script(obj):
+        """Returns True if obj has the math under-script or over-script role/tag"""
+
+        return AXUtilitiesRole._get_tag(obj) in ["mover", "munder", "munderover"]
 
     @staticmethod
     def is_menu(obj, role=None):
@@ -1222,7 +1697,8 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.SUGGESTION
+        return role == Atspi.Role.SUGGESTION \
+              or "suggestion" in AXUtilitiesRole._get_xml_roles(obj)
 
     @staticmethod
     def is_superscript(obj, role=None):
@@ -1231,6 +1707,18 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.SUPERSCRIPT
+
+    @staticmethod
+    def is_svg(obj):
+        """Returns True if obj is an svg."""
+
+        return AXUtilitiesRole._get_tag(obj) == "svg"
+
+    @staticmethod
+    def is_switch(obj, _role=None):
+        """Returns True if obj has the switch role."""
+
+        return "switch" in AXUtilitiesRole._get_xml_roles(obj)
 
     @staticmethod
     def is_table(obj, role=None):
@@ -1330,6 +1818,13 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
+
+    @staticmethod
+    def is_time(obj, _role=None):
+        """Returns True if obj has the time role"""
+
+        return "time" in AXUtilitiesRole._get_xml_roles(obj) \
+            or "time" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_timer(obj, role=None):

@@ -1245,7 +1245,7 @@ class Script(default.Script):
             contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
         elif input_event_manager.get_manager().last_event_was_page_navigation() \
              and not AXTable.get_table(new_focus) \
-             and not self.utilities.isFeedArticle(new_focus):
+             and not AXUtilities.is_feed_article(new_focus):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
