@@ -20,6 +20,7 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
 
 """Provides support for synthesizing accessible input events."""
 
@@ -43,7 +44,7 @@ from . import focus_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
-from .ax_utilities import AXUtilities
+from .ax_utilities_role import AXUtilitiesRole
 
 class AXEventSynthesizer:
     """Provides support for synthesizing accessible input events."""
@@ -90,7 +91,7 @@ class AXEventSynthesizer:
         """Returns the current mouse coordinates."""
 
         root_window = Gtk.Window().get_screen().get_root_window()
-        window, x_coord, y_coord, modifiers = root_window.get_pointer()
+        _window, x_coord, y_coord, _modifiers = root_window.get_pointer()
         tokens = ["AXEventSynthesizer: Mouse coordinates:", x_coord, ",", y_coord]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return x_coord, y_coord
@@ -283,9 +284,9 @@ class AXEventSynthesizer:
     def _containing_document(obj):
         """Returns the document containing obj"""
 
-        document = AXObject.find_ancestor(obj, AXUtilities.is_document)
+        document = AXObject.find_ancestor(obj, AXUtilitiesRole.is_document)
         while document:
-            ancestor = AXObject.find_ancestor(document, AXUtilities.is_document)
+            ancestor = AXObject.find_ancestor(document, AXUtilitiesRole.is_document)
             if ancestor is None or ancestor == document:
                 break
             document = ancestor
@@ -411,5 +412,7 @@ class AXEventSynthesizer:
         return False
 
 _synthesizer = AXEventSynthesizer()
-def getSynthesizer():
+def get_synthesizer():
+    """Returns the Event Synthesizer."""
+
     return _synthesizer

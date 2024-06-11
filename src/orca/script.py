@@ -270,7 +270,7 @@ class Script:
     def get_event_synthesizer(self):
         """Returns the event synthesizer for this script."""
 
-        return ax_event_synthesizer.getSynthesizer()
+        return ax_event_synthesizer.get_synthesizer()
 
     def get_bookmarks(self):
         """Returns the bookmarks support for this script."""

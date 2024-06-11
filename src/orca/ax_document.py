@@ -52,7 +52,8 @@ from . import messages
 from .ax_collection import AXCollection
 from .ax_object import AXObject
 from .ax_table import AXTable
-from .ax_utilities import AXUtilities
+from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_state import AXUtilitiesState
 
 class AXDocument:
     """Utilities for obtaining document-related information about accessible objects."""
@@ -241,18 +242,18 @@ class AXDocument:
         matches = AXCollection.get_all_matches(document, rule)
 
         for obj in matches:
-            if AXUtilities.is_heading(obj):
+            if AXUtilitiesRole.is_heading(obj):
                 result["headings"] += 1
-            elif AXUtilities.is_form(obj):
+            elif AXUtilitiesRole.is_form(obj):
                 result["forms"] += 1
-            elif AXUtilities.is_table(obj) and not AXTable.is_layout_table(obj):
+            elif AXUtilitiesRole.is_table(obj) and not AXTable.is_layout_table(obj):
                 result["tables"] += 1
-            elif AXUtilities.is_link(obj):
-                if AXUtilities.is_visited(obj):
+            elif AXUtilitiesRole.is_link(obj):
+                if AXUtilitiesState.is_visited(obj):
                     result["visited_links"] += 1
                 else:
                     result["unvisited_links"] += 1
-            elif AXUtilities.is_landmark(obj):
+            elif AXUtilitiesRole.is_landmark(obj):
                 result["landmarks"] += 1
 
         return result

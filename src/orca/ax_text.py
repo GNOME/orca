@@ -21,6 +21,8 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-public-methods
 
 """
 Utilities for obtaining information about accessible text.
@@ -45,7 +47,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
-from .ax_utilities import AXUtilities
+from .ax_utilities_state import AXUtilitiesState
 
 class AXText:
     """Utilities for obtaining information about accessible text."""
@@ -75,10 +77,10 @@ class AXText:
                 msg = f"AXText: Exception in get_character_at_offset: {error2}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return "", 0, 0
-            else:
-                # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-                msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
+            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Character at offset {offset} in", obj,
@@ -136,10 +138,10 @@ class AXText:
                 msg = f"AXText: Exception in get_word_at_offset: {error2}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return "", 0, 0
-            else:
-                # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-                msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
+            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         tokens = [f"AXText: Word at offset {offset} in", obj,
                   f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
@@ -186,7 +188,7 @@ class AXText:
             offset = AXText.get_caret_offset(obj)
 
         # Don't adjust the length in multiline text because we want to say "blank" at the end.
-        if not AXUtilities.is_multi_line(obj):
+        if not AXUtilitiesState.is_multi_line(obj):
             offset = min(max(0, offset), length - 1)
         else:
             offset = max(0, offset)
@@ -200,10 +202,10 @@ class AXText:
                 msg = f"AXText: Exception in get_line_at_offset: {error2}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return "", 0, 0
-            else:
-                # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-                msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
+            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Line at offset {offset} in", obj,
@@ -261,10 +263,10 @@ class AXText:
                 msg = f"AXText: Exception in get_sentence_at_offset: {error2}"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return "", 0, 0
-            else:
-                # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-                msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
+            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         tokens = [f"AXText: Sentence at offset {offset} in", obj,
                   f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
