@@ -41,8 +41,6 @@ from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
-METHOD_PREFIX = "_generate"
-
 class Icon:
     """Sound file representing a particular aspect of an object."""
 

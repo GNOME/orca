@@ -50,7 +50,6 @@ from . import braille_generator
 from . import debug
 from . import flat_review_finder
 from . import flat_review_presenter
-from . import formatting
 from . import keybindings
 from . import label_inference
 from . import learn_mode_presenter
@@ -85,7 +84,6 @@ class Script:
         self.event_cache = {}
         self.key_bindings = keybindings.KeyBindings()
 
-        self.formatting = self.get_formatting()
         self.listeners = self.get_listeners()
         self.utilities = self.get_utilities()
 
@@ -139,11 +137,6 @@ class Script:
         """Returns the braille bindings for this script."""
 
         return {}
-
-    def get_formatting(self):
-        """Returns the formatting strings for this script."""
-
-        return formatting.Formatting(self)
 
     def get_braille_generator(self):
         """Returns the braille generator for this script."""

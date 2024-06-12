@@ -76,15 +76,6 @@ class LineBreak:
 
 LINE_BREAK = [LineBreak()]
 
-# [[[WDW - general note -- for all the _generate* methods, it would be great if
-# we could return an empty array if we can determine the method does not
-# apply to the object.  This would allow us to reduce the number of strings
-# needed in formatting.py.]]]
-
-# The prefix to use for the individual generator methods
-#
-METHOD_PREFIX = "_generate"
-
 DEFAULT        = "default"
 UPPERCASE      = "uppercase"
 HYPERLINK      = "hyperlink"
@@ -264,17 +255,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateName(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
-        represent the name of the object.  If the object is directly
-        displaying any text, that text will be treated as the name.
-        Otherwise, the accessible name of the object will be used.  If
-        there is no accessible name, then the description of the
-        object will be used.  This method will return an empty array
-        if nothing can be found.  [[[WDW - I wonder if we should just
-        have _generateName, _generateDescription,
-        _generateDisplayedText, etc., that don't do any fallback.
-        Then, we can allow the formatting to do the fallback (e.g.,
-        'displayedText or name or description'). [[[JD to WDW - I
-        needed a _generateDescription for whereAmI. :-) See below.
+        represent the name of the object.
         """
 
         is_layered_pane = AXUtilities.is_layered_pane(obj, args.get("role"))

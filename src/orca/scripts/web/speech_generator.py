@@ -339,8 +339,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         role = args.get('role', AXObject.get_role(obj))
 
-        # TODO - JD: Once the formatting strings are vastly cleaned up
-        # or simply removed, hacks like this won't be needed.
+        # TODO - JD: Once the generators are vastly cleaned up, hacks like this won't be needed.
         if role in [Atspi.Role.COMBO_BOX, Atspi.Role.SPIN_BUTTON]:
             return super()._generateName(obj, **args)
 

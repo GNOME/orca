@@ -83,7 +83,6 @@ lib_sources = [
   'flat_review_finder.py',
   'flat_review_presenter.py',
   'focus_manager.py',
-  'formatting.py',
   'generator.py',
   'guilabels.py',
   'highlighter.py',

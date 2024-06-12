@@ -34,9 +34,7 @@ from gi.repository import Atspi
 gi.require_version('Atk', '1.0')
 from gi.repository import Atk
 
-import sys
 import time
-import traceback
 
 from . import braille
 from . import debug
@@ -51,31 +49,6 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
-# Python 3.10 compatibility:
-try:
-    import collections.abc as collections_abc
-except ImportError:
-    import collections as collections_abc
-
-def _formatExceptionInfo(maxTBlevel=5):
-    cla, exc, trbk = sys.exc_info()
-    excName = cla.__name__
-    try:
-        excArgs = exc.args
-    except KeyError:
-        excArgs = "<no args>"
-    excTb = traceback.format_tb(trbk, maxTBlevel)
-    return (excName, excArgs, excTb)
-
-# [[[WDW - general note -- for all the _generate* methods, it would be great if
-# we could return an empty array if we can determine the method does not
-# apply to the object.  This would allow us to reduce the number of strings
-# needed in formatting.py.]]]
-
-# The prefix to use for the individual generator methods
-#
-METHOD_PREFIX = "_generate"
-
 class Generator:
     """Takes accessible objects and generates a presentation for those
     objects.  See the generate method, which is the primary entry
@@ -85,20 +58,6 @@ class Generator:
         self._mode = mode
         self._script = script
         self._activeProgressBars = {}
-        self._methodsDict = {}
-        for method in \
-            [z for z in [getattr(self, y).__get__(self, self.__class__) \
-                         for y in [x for x in dir(self) if x.startswith(METHOD_PREFIX)]] \
-                            if isinstance(z, collections_abc.Callable)]:
-            name = method.__name__[len(METHOD_PREFIX):]
-            name = name[0].lower() + name[1:]
-            self._methodsDict[name] = method
-
-    def _addGlobals(self, globalsDict):
-        """Other things to make available from the formatting string.
-        """
-        globalsDict['obj'] = None
-        globalsDict['role'] = None
 
     def _overrideRole(self, newRole, args):
         """Convenience method to allow you to temporarily override the role in
@@ -127,128 +86,7 @@ class Generator:
         return []
 
     def generate(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the complete presentation for the
-        object.  The presentation to be generated depends highly upon the
-        formatting strings in formatting.py.
-
-        args is a dictionary that may contain any of the following:
-        - alreadyFocused: if True, we're getting an object
-          that previously had focus
-        - priorObj: if set, represents the object that had focus before
-          this object
-        - includeContext: boolean (default=True) which says whether
-          the context for an object should be included as a prefix
-          and suffix
-        - role: a role to override the object's role
-        - formatType: the type of formatting, such as
-          'focused', 'basicWhereAmI', etc.
-        - forceMnemonic: boolean (default=False) which says if we
-          should ignore the settings.enableMnemonicSpeaking setting
-        - forceTutorial: boolean (default=False) which says if we
-          should force a tutorial to be spoken or not
-        """
-
-        if AXObject.is_dead(obj):
-            msg = "GENERATOR: Cannot generate presentation for dead obj"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return []
-
-        start_time = time.time()
-        result = []
-        globalsDict = {}
-        self._addGlobals(globalsDict)
-        globalsDict['obj'] = obj
-        try:
-            globalsDict['role'] = args.get('role', AXObject.get_role(obj))
-        except Exception as error:
-            tokens = ["GENERATOR: Cannot generate presentation for", obj, ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return result
-
-        tokens = ["GENERATOR: Globals dict", globalsDict]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        try:
-            # We sometimes want to override the role.  We'll keep the
-            # role in the args dictionary as a means to let us do so.
-            #
-            args['role'] = globalsDict['role']
-
-            # We loop through the format string, catching each error
-            # as we go.  Each error should always be a NameError,
-            # where the name is the name of one of our generator
-            # functions.  When we encounter this, we call the function
-            # and get its results, placing them in the globals for the
-            # the call to eval.
-            #
-            args['mode'] = self._mode
-            if not args.get('formatType', None):
-                if args.get('alreadyFocused', False):
-                    args['formatType'] = 'focused'
-                else:
-                    args['formatType'] = 'unfocused'
-
-            formatting = self._script.formatting.getFormat(**args)
-            tokens = ["GENERATOR: Formatting for", obj, "with args", args, ":", formatting]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-            # Add in the context if this is the first time
-            # we've been called.
-            #
-            if not args.get('recursing', False):
-                if args.get('includeContext', True):
-                    prefix = self._script.formatting.getPrefix(**args)
-                    suffix = self._script.formatting.getSuffix(**args)
-                    formatting = f'{prefix} + {formatting} + {suffix}'
-                args['recursing'] = True
-
-            tokens = [self._mode.upper(), "GENERATOR: Starting", args.get('formatType'),
-                      "generation for", obj, "(using role:", args.get('role'), ")"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-            # Reset 'usedDescriptionFor*' if a previous generator used it.
-            self._script.point_of_reference['usedDescriptionForName'] = False
-            self._script.point_of_reference['usedDescriptionForUnrelatedLabels'] = False
-            self._script.point_of_reference['usedDescriptionForAlert'] = False
-
-            def debuginfo(x):
-                return self._resultElementToString(x, False)
-
-            assert(formatting)
-            while True:
-                currentTime = time.time()
-                try:
-                    result = eval(formatting, globalsDict)
-                    break
-                except NameError:
-                    result = []
-                    info = _formatExceptionInfo()
-                    arg = info[1][0]
-                    arg = arg.replace("name '", "")
-                    arg = arg.replace("' is not defined", "")
-                    if arg not in self._methodsDict:
-                        debug.printException(debug.LEVEL_SEVERE)
-                        break
-                    globalsDict[arg] = self._methodsDict[arg](obj, **args)
-                    duration = f"{time.time() - currentTime:.4f}"
-                    if isinstance(globalsDict[arg], list):
-                        stringResult = " ".join(filter(lambda x: x,
-                                                        map(debuginfo, globalsDict[arg])))
-                        debug.printMessage(
-                            debug.LEVEL_ALL,
-                            f"{' ' * 18}GENERATION TIME: {duration} ----> {arg}=[{stringResult}]")
-
-        except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
-            result = []
-
-        duration = f"{time.time() - start_time:.4f}"
-        debug.printMessage(debug.LEVEL_ALL, f"{' ' * 18}COMPLETION TIME: {duration}")
-        self._debugResultInfo(result)
-        if args.get('isProgressBarUpdate') and result and result[0]:
-            self.setProgressBarUpdateTimeAndValue(obj)
-
-        return result
+        return []
 
     def _resultElementToString(self, element, includeAll=True):
         if not includeAll:
